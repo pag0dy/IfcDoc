@@ -1,0 +1,399 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{BD604C7F-1CA2-4399-AC38-AD9CA45E7413}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>IfcDoc</RootNamespace>
+    <AssemblyName>IfcDoc</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <StartupObject>
+    </StartupObject>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CtlCheckGrid.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CtlCheckGrid.Designer.cs">
+      <DependentUpon>CtlCheckGrid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CtlConcept.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CtlConcept.Designer.cs">
+      <DependentUpon>CtlConcept.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CtlExpressG.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CtlExpressG.Designer.cs">
+      <DependentUpon>CtlExpressG.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ThemedTreeView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="FormatCSC.cs" />
+    <Compile Include="FormatCSV.cs" />
+    <Compile Include="FormatEXP.cs" />
+    <Compile Include="FormatIFD.cs" />
+    <Compile Include="FormatJAV.cs" />
+    <Compile Include="FormatPNG.cs" />
+    <Compile Include="FormatXSD.cs" />
+    <Compile Include="FormCode.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormCode.Designer.cs">
+      <DependentUpon>FormCode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormConstraint.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormConstraint.Designer.cs">
+      <DependentUpon>FormConstraint.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormDownload.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormDownload.Designer.cs">
+      <DependentUpon>FormDownload.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormFilter.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormFilter.Designer.cs">
+      <DependentUpon>FormFilter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormMerge.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormMerge.Designer.cs">
+      <DependentUpon>FormMerge.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormProgress.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormProgress.Designer.cs">
+      <DependentUpon>FormProgress.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormPublish.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormPublish.Designer.cs">
+      <DependentUpon>FormPublish.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormReference.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormReference.Designer.cs">
+      <DependentUpon>FormReference.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormRule.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormRule.Designer.cs">
+      <DependentUpon>FormRule.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormSelectItem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSelectItem.Designer.cs">
+      <DependentUpon>FormSelectItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormSelectLocale.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSelectLocale.Designer.cs">
+      <DependentUpon>FormSelectLocale.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormSelectPropertyEnum.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSelectPropertyEnum.Designer.cs">
+      <DependentUpon>FormSelectPropertyEnum.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormSelectSchema.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSelectSchema.Designer.cs">
+      <DependentUpon>FormSelectSchema.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormSelectTemplate.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSelectTemplate.Designer.cs">
+      <DependentUpon>FormSelectTemplate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormAbout.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormAbout.Designer.cs">
+      <DependentUpon>FormAbout.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormatHTM.cs" />
+    <Compile Include="FormatMDB.cs" />
+    <Compile Include="FormGenerate.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormGenerate.Designer.cs">
+      <DependentUpon>FormGenerate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormSelectAttribute.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSelectAttribute.Designer.cs">
+      <DependentUpon>FormSelectAttribute.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormProperties.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormProperties.Designer.cs">
+      <DependentUpon>FormProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormSelectEntity.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSelectEntity.Designer.cs">
+      <DependentUpon>FormSelectEntity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormSelectView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSelectView.Designer.cs">
+      <DependentUpon>FormSelectView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IfcGloballyUniqueId.cs" />
+    <Compile Include="NBIMS.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="SchemaCNF.cs" />
+    <Compile Include="SchemaIfc.cs" />
+    <Compile Include="SchemaMvd.cs" />
+    <Compile Include="SchemaPsd.cs" />
+    <Compile Include="FormatXML.cs" />
+    <Compile Include="FormEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormEdit.Designer.cs">
+      <DependentUpon>FormEdit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Schema.cs" />
+    <Compile Include="SchemaDoc.cs" />
+    <Compile Include="FormatSPF.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SchemaSch.cs" />
+    <Compile Include="SchemaVex.cs" />
+    <Compile Include="ValuePath.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="ADOX">
+      <Guid>{00000600-0000-0010-8000-00AA006D2EA4}</Guid>
+      <VersionMajor>6</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="CtlCheckGrid.resx">
+      <DependentUpon>CtlCheckGrid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CtlExpressG.resx">
+      <DependentUpon>CtlExpressG.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormCode.resx">
+      <DependentUpon>FormCode.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormConstraint.resx">
+      <DependentUpon>FormConstraint.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormDownload.resx">
+      <DependentUpon>FormDownload.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormFilter.resx">
+      <DependentUpon>FormFilter.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormMerge.resx">
+      <DependentUpon>FormMerge.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormProgress.resx">
+      <DependentUpon>FormProgress.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormPublish.resx">
+      <DependentUpon>FormPublish.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormReference.resx">
+      <DependentUpon>FormReference.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormRule.resx">
+      <DependentUpon>FormRule.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSelectItem.resx">
+      <DependentUpon>FormSelectItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSelectLocale.resx">
+      <DependentUpon>FormSelectLocale.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSelectPropertyEnum.resx">
+      <DependentUpon>FormSelectPropertyEnum.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSelectSchema.resx">
+      <DependentUpon>FormSelectSchema.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSelectTemplate.resx">
+      <DependentUpon>FormSelectTemplate.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormAbout.resx">
+      <DependentUpon>FormAbout.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormEdit.resx">
+      <DependentUpon>FormEdit.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormGenerate.resx">
+      <DependentUpon>FormGenerate.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSelectAttribute.resx">
+      <DependentUpon>FormSelectAttribute.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormProperties.resx">
+      <DependentUpon>FormProperties.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSelectEntity.resx">
+      <DependentUpon>FormSelectEntity.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSelectView.resx">
+      <DependentUpon>FormSelectView.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="images\" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="xsd1.txt" />
+    <EmbeddedResource Include="xsd2.txt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

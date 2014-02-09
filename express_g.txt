@@ -1,0 +1,627 @@
+SCHEMA express_g;
+
+CONSTANT
+    nr_of_object : INTEGER := 25;
+END_CONSTANT;
+
+TYPE PSTRING = STRING;  END_TYPE;
+
+TYPE ADVANCED_STRING = STRING;  END_TYPE;
+
+TYPE UINTEGER = INTEGER;  END_TYPE;
+
+TYPE FLOAT = REAL;  END_TYPE;
+
+ENTITY color;
+    red                                     : UINTEGER;
+    green                                   : UINTEGER;
+    blue                                    : UINTEGER;
+END_ENTITY;
+
+ENTITY object;
+    objecttype                              : UINTEGER;
+    flag                                    : UINTEGER;
+    objectpageref                           : OPTIONAL object;
+    objectpagerefto                         : OPTIONAL object;
+END_ENTITY;
+
+ENTITY style_set;
+    name                                    : STRING (32);
+    fontname                                : STRING (32);
+    fontsize                                : FLOAT;
+    fontorientation                         : UINTEGER;
+    fontcolor                               : UINTEGER;
+    fontstyle                               : UINTEGER;
+    indent                                  : FLOAT;
+    deltafirstline                          : FLOAT;
+    spacebefore                             : FLOAT;
+    spaceafter                              : FLOAT;
+    tab                                     : LIST OF FLOAT;
+END_ENTITY;
+
+ENTITY background_html;
+    flag                                    : UINTEGER;
+    image                                   : STRING;
+    color                                   : UINTEGER;
+END_ENTITY;
+
+ENTITY outlook_html;
+    flag                                    : UINTEGER;
+    color                                   : UINTEGER;
+END_ENTITY;
+
+ENTITY font_html;
+    name                                    : STRING (32);
+    size                                    : INTEGER;
+    outlook                                 : outlook_html;
+END_ENTITY;
+
+ENTITY description_content_html;
+    font                                    : font_html;
+    nameoutlook                             : outlook_html;
+    namewidth                               : INTEGER;
+END_ENTITY;
+
+ENTITY express_html;
+    flag                                    : UINTEGER;
+    keyword                                 : outlook_html;
+    textwidth                               : INTEGER;
+    indent0                                 : INTEGER;
+    indent1                                 : INTEGER;
+    indent2                                 : INTEGER;
+    attributewidth                          : INTEGER;
+    constraintwidth                         : INTEGER;
+END_ENTITY;
+
+ENTITY image_map_html;
+    hyperlink                               : STRING;
+    left                                    : INTEGER;
+    top                                     : INTEGER;
+    right                                   : INTEGER;
+    bottom                                  : INTEGER;
+END_ENTITY;
+
+ENTITY navbar_html;
+    name                                    : STRING (32);
+    image                                   : STRING;
+    dx                                      : INTEGER;
+    dy                                      : INTEGER;
+    map                                     : LIST [1:?] OF image_map_html;
+END_ENTITY;
+
+ENTITY diagram_html;
+    flag                                    : UINTEGER;
+    imagetype                               : INTEGER;
+    jpegquality                             : INTEGER;
+    pngtype                                 : INTEGER;
+    border                                  : INTEGER;
+    color                                   : UINTEGER;
+    width                                   : INTEGER;
+END_ENTITY;
+
+ENTITY report_html;
+    homepage                                : STRING;
+    styletoplevel                           : LIST [1:?] OF font_html;
+    stylesecondlevel                        : LIST [1:?] OF description_content_html;
+    background                              : background_html;
+    express                                 : express_html;
+    diagram                                 : diagram_html;
+    navbar                                  : navbar_html;
+END_ENTITY;
+
+ENTITY report_set;
+    expgscale                               : FLOAT;
+    flag                                    : UINTEGER;
+    sortlevel                               : LIST OF INTEGER;
+    style                                   : LIST OF style_set;
+    headertext                              : PSTRING;
+    footertext                              : PSTRING;
+    spesificationname                       : LIST OF PSTRING;
+    html                                    : report_html;
+END_ENTITY;
+
+ENTITY text_set;
+    orientation                             : INTEGER;
+    style                                   : INTEGER;
+    size                                    : FLOAT;
+    fontname                                : PSTRING;
+    color                                   : color;
+END_ENTITY;
+
+ENTITY line_set;
+    color                                   : color;
+    thickness                               : FLOAT;
+    dash                                    : INTEGER;
+END_ENTITY;
+
+ENTITY circle_set;
+    line                                    : line_set;
+    background                              : background_set;
+    radius                                  : FLOAT;
+    style                                   : INTEGER;
+END_ENTITY;
+
+ENTITY background_set;
+    color                                   : color;
+    style                                   : INTEGER;
+END_ENTITY;
+
+ENTITY pline_set;
+    line                                    : line_set;
+    text                                    : text_set;
+    circle                                  : circle_set;
+END_ENTITY;
+
+ENTITY rect_set;
+    line                                    : line_set;
+    text                                    : text_set;
+    vline                                   : vline;
+    flag                                    : UINTEGER;
+    background                              : background_set;
+    size                                    : world_point;
+END_ENTITY;
+
+ENTITY grid_set;
+    on                                      : BOOLEAN;
+    dx                                      : FLOAT;
+    dy                                      : FLOAT;
+    pixelmin                                : INTEGER;
+    color                                   : color;
+END_ENTITY;
+
+ENTITY selection_set;
+    size                                    : INTEGER;
+END_ENTITY;
+
+ENTITY visible_set;
+    object                                  : LIST OF BOOLEAN;
+END_ENTITY;
+
+ENTITY page_set;
+    line                                    : line_set;
+    leftmargin                              : REAL;
+    topmargin                               : REAL;
+    rightmargin                             : REAL;
+    bottommargin                            : REAL;
+    toptextsize                             : REAL;
+    bottomtextsize                          : REAL;
+    width                                   : REAL;
+    height                                  : REAL;
+    nhorizontalpages                        : INTEGER;
+    nverticalpages                          : INTEGER;
+    paperwidth                              : REAL;
+    paperheight                             : REAL;
+    papersizeindex                          : INTEGER;
+    flag                                    : UINTEGER;
+END_ENTITY;
+
+ENTITY save_set;
+    autosave                                : UINTEGER;
+    autosaveintervall                       : UINTEGER;
+    safesave                                : INTEGER;
+    nversions                               : INTEGER;
+END_ENTITY;
+
+ENTITY express_set;
+    compiler_options                        : UINTEGER;
+END_ENTITY;
+
+ENTITY settings;
+    flag                                    : UINTEGER;
+    showstate                               : UINTEGER;
+    selectstate                             : UINTEGER;
+    background                              : background_set;
+    grid                                    : grid_set;
+    selection                               : selection_set;
+    entities                                : rect_set;
+    supertypes                              : pline_set;
+    attributes                              : pline_set;
+    optattributes                           : pline_set;
+    defineddef                              : pline_set;
+    selectdef                               : pline_set;
+    pagerefline                             : pline_set;
+    deftype                                 : rect_set;
+    selecttype                              : rect_set;
+    enumerationtype                         : rect_set;
+    primtype                                : rect_set;
+    pageref                                 : rect_set;
+    pagerefto                               : rect_set;
+    visibleset                              : visible_set;
+    page                                    : page_set;
+    dxtext                                  : REAL;
+    dytext                                  : REAL;
+    save                                    : save_set;
+    report                                  : report_set;
+    comment                                 : rect_set;
+    express                                 : express_set;
+    basedonline                             : OPTIONAL pline_set;
+END_ENTITY;
+
+ENTITY text_type;
+    orientation                             : INTEGER;
+    style                                   : INTEGER;
+END_ENTITY;
+
+ENTITY text_layout;
+    x                                       : FLOAT;
+    y                                       : FLOAT;
+    width                                   : FLOAT;
+    height                                  : FLOAT;
+    style                                   : text_type;
+END_ENTITY;
+
+ENTITY interface_to;
+    theschema                               : OPTIONAL object;
+    aliasname                               : OPTIONAL text;
+END_ENTITY;
+
+ENTITY text
+  SUBTYPE OF (object);
+    text                                    : PSTRING;
+    vtext                                   : OPTIONAL PSTRING;
+    layout                                  : OPTIONAL text_layout;
+END_ENTITY;
+
+ENTITY vline;
+    reffrom                                 : INTEGER;
+    dx                                      : FLOAT;
+END_ENTITY;
+
+ENTITY round;
+    rx                                      : FLOAT;
+    ry                                      : FLOAT;
+END_ENTITY;
+
+ENTITY rectangle;
+    x                                       : FLOAT;
+    y                                       : FLOAT;
+    dx                                      : FLOAT;
+    dy                                      : FLOAT;
+END_ENTITY;
+
+ENTITY type_layout;
+    rect                                    : rectangle;
+END_ENTITY;
+
+ENTITY text_placement;
+    npos                                    : INTEGER;
+    placement                               : INTEGER;
+END_ENTITY;
+
+ENTITY world_point;
+    wx                                      : FLOAT;
+    wy                                      : FLOAT;
+END_ENTITY;
+
+ENTITY world_pline;
+    startpoint                              : world_point;
+    startdirection                          : INTEGER;
+    radius                                  : FLOAT;
+    rpoint                                  : LIST [1:?] OF FLOAT;
+    endlinepos                              : FLOAT;
+    endlinelenght                           : FLOAT;
+END_ENTITY;
+
+ENTITY object_line_layout;
+    textplacement                           : text_placement;
+    pline                                   : world_pline;
+END_ENTITY;
+
+ENTITY aggregates;
+    next                                    : aggregates;
+    aggrtype                                : INTEGER;
+    lower                                   : INTEGER;
+    upper                                   : INTEGER;
+    flag                                    : UINTEGER;
+END_ENTITY;
+
+ENTITY comment
+  SUBTYPE OF (object);
+    text                                    : text;
+    layout                                  : OPTIONAL type_layout;
+END_ENTITY;
+
+ENTITY constraint;
+    name                                    : STRING;
+    rule_context                            : ADVANCED_STRING;
+END_ENTITY;
+
+ENTITY unique_rule;
+    name                                    : STRING;
+    for_attribute                           : LIST OF object;
+END_ENTITY;
+
+ENTITY where_rule
+  SUBTYPE OF (constraint);
+    comment                                 : OPTIONAL comment;
+END_ENTITY;
+
+ENTITY tree
+  SUBTYPE OF (object);
+    operator                                : INTEGER;
+    object                                  : LIST OF object;
+END_ENTITY;
+
+ENTITY supertype_def
+  SUBTYPE OF (object);
+    the_supertype                           : object;
+END_ENTITY;
+
+ENTITY subtype_def
+  SUBTYPE OF (object);
+    the_subtype                             : object;
+    layout                                  : OPTIONAL object_line_layout;
+END_ENTITY;
+
+ENTITY page_ref_line
+  SUBTYPE OF (object);
+    pageref                                 : object;
+    layout                                  : OPTIONAL object_line_layout;
+END_ENTITY;
+
+ENTITY attribute_def
+  SUBTYPE OF (object);
+    name                                    : text;
+    aggregates                              : aggregates;
+    is_derived                              : OPTIONAL ADVANCED_STRING;
+    attribute_flag                          : UINTEGER;
+    is_inverse                              : OPTIONAL object;
+    inversefor                              : LIST OF object;
+    retyped                                 : OPTIONAL object;
+    the_attribute                           : object;
+    layout                                  : OPTIONAL object_line_layout;
+    comment                                 : OPTIONAL comment;
+    user_redeclaration                      : OPTIONAL STRING;
+    name_before_redeclaration               : OPTIONAL STRING;
+END_ENTITY;
+
+ENTITY defined_def
+  SUBTYPE OF (object);
+    aggregates                              : aggregates;
+    defined                                 : object;
+    layout                                  : OPTIONAL object_line_layout;
+    name                                    : text;
+END_ENTITY;
+
+ENTITY based_on_line
+  SUBTYPE OF (object);
+    BasedOn                                 : object;
+    layout                                  : OPTIONAL object_line_layout;
+END_ENTITY;
+
+ENTITY extended_by_line
+  SUBTYPE OF (object);
+    BasedOn                                 : object;
+    layout                                  : OPTIONAL object_line_layout;
+END_ENTITY;
+
+ENTITY select_def
+  SUBTYPE OF (object);
+    the_select                              : object;
+    layout                                  : OPTIONAL object_line_layout;
+END_ENTITY;
+
+ENTITY entities
+  SUBTYPE OF (object);
+    name                                    : text;
+    supertypes                              : OPTIONAL LIST OF supertype_def;
+    subtypes                                : OPTIONAL LIST OF supertype_def;
+    attributes                              : OPTIONAL LIST OF attribute_def;
+    uniquenes                               : OPTIONAL LIST OF unique_rule;
+    wheres                                  : OPTIONAL LIST OF where_rule;
+    inglobalrules                           : INTEGER;
+    layout                                  : OPTIONAL type_layout;
+    comment                                 : OPTIONAL comment;
+    interfaceto                             : OPTIONAL interface_to;
+END_ENTITY;
+
+ENTITY unresolved_object
+  SUBTYPE OF (object);
+    name                                    : text;
+    layout                                  : OPTIONAL type_layout;
+END_ENTITY;
+
+ENTITY defined_type
+  SUBTYPE OF (object);
+    name                                    : text;
+    defined                                 : defined_def;
+    wheres                                  : OPTIONAL LIST OF where_rule;
+    layout                                  : OPTIONAL type_layout;
+    comment                                 : OPTIONAL comment;
+    interfaceto                             : OPTIONAL interface_to;
+END_ENTITY;
+
+ENTITY primitive_type
+  SUBTYPE OF (object);
+    name                                    : text;
+    the_primitive                           : INTEGER;
+    layout                                  : OPTIONAL type_layout;
+    constraints                             : OPTIONAL INTEGER;
+END_ENTITY;
+
+ENTITY enumerations
+  SUBTYPE OF (object);
+    name                                    : text;
+    enumerations                            : LIST [1:?] OF PSTRING;
+    wheres                                  : OPTIONAL LIST OF where_rule;
+    layout                                  : OPTIONAL type_layout;
+    comment                                 : OPTIONAL comment;
+    interfaceto                             : OPTIONAL interface_to;
+    BasedOn                                 : OPTIONAL based_on_line;
+    ExtendedBy                              : OPTIONAL LIST OF extended_by_line;
+    Is_Extensible                           : OPTIONAL BOOLEAN;
+END_ENTITY;
+
+ENTITY selects
+  SUBTYPE OF (object);
+    name                                    : text;
+    selects                                 : LIST [1:?] OF select_def;
+    wheres                                  : OPTIONAL LIST OF where_rule;
+    layout                                  : OPTIONAL type_layout;
+    comment                                 : OPTIONAL comment;
+    interfaceto                             : OPTIONAL interface_to;
+    BasedOn                                 : OPTIONAL based_on_line;
+    ExtendedBy                              : OPTIONAL LIST OF extended_by_line;
+    Is_Extensible                           : OPTIONAL BOOLEAN;
+    Is_Generic_Entity                       : OPTIONAL BOOLEAN;
+END_ENTITY;
+
+ENTITY page_ref
+  SUBTYPE OF (object);
+    name                                    : text;
+    pagenr                                  : INTEGER;
+    id                                      : INTEGER;
+    showrefpages                            : INTEGER;
+    pageline                                : object;
+    pagerefto                               : LIST [1:?] OF object;
+    layout                                  : OPTIONAL type_layout;
+END_ENTITY;
+
+ENTITY page_ref_to
+  SUBTYPE OF (object);
+    name                                    : text;
+    pagenr                                  : INTEGER;
+    pageref                                 : object;
+    index                                   : INTEGER;
+    layout                                  : OPTIONAL type_layout;
+    primitivetype                           : INTEGER;
+END_ENTITY;
+
+ENTITY global_rule
+  SUBTYPE OF (object);
+    name                                    : STRING;
+    rule_context                            : ADVANCED_STRING;
+    for_entities                            : LIST [1:?] OF object;
+    where_rule                              : LIST [1:?] OF where_rule;
+    comment                                 : OPTIONAL comment;
+    interfaceto                             : OPTIONAL interface_to;
+END_ENTITY;
+
+ENTITY parameter;
+    name                                    : STRING;
+    parameter_type                          : object;
+END_ENTITY;
+
+ENTITY user_function
+  SUBTYPE OF (constraint,
+		      object);
+    return_value                            : object;
+    parameter_list                          : OPTIONAL LIST [1:?] OF parameter;
+    comment                                 : OPTIONAL comment;
+    interfaceto                             : OPTIONAL interface_to;
+END_ENTITY;
+
+ENTITY user_procedure
+  SUBTYPE OF (constraint,
+		      object);
+    parameter_list                          : OPTIONAL LIST [1:?] OF parameter;
+    comment                                 : OPTIONAL comment;
+    interfaceto                             : OPTIONAL interface_to;
+END_ENTITY;
+
+ENTITY interface_item
+  SUBTYPE OF (object);
+    name                                    : PSTRING;
+    alias_name                              : OPTIONAL PSTRING;
+END_ENTITY;
+
+ENTITY interface_schema
+  SUBTYPE OF (object);
+    ref_or_use                              : INTEGER;
+    schema_name                             : PSTRING;
+    item                                    : OPTIONAL LIST [1:?] OF object;
+    express_g_model_id                      : OPTIONAL UINTEGER;
+    default_item                            : OPTIONAL object;
+END_ENTITY;
+
+ENTITY schema_ref
+  SUBTYPE OF (object);
+    name                                    : text;
+    aliasname                               : text;
+    interface                               : OPTIONAL interface_item;
+    layout                                  : OPTIONAL type_layout;
+    interfaceto                             : OPTIONAL interface_to;
+END_ENTITY;
+
+ENTITY user_constant;
+    name                                    : PSTRING;
+    value_type                              : PSTRING;
+    value_content                           : PSTRING;
+    comment                                 : OPTIONAL comment;
+END_ENTITY;
+
+ENTITY section;
+    name                                    : PSTRING;
+    page                                    : OPTIONAL LIST [1:?] OF INTEGER;
+    description                             : OPTIONAL PSTRING;
+END_ENTITY;
+
+ENTITY section_list;
+    flag                                    : UINTEGER;
+    number_of_pages                         : INTEGER;
+    section                                 : OPTIONAL LIST [1:?] OF section;
+END_ENTITY;
+
+ENTITY schemata;
+    id                                      : INTEGER;
+    name                                    : PSTRING;
+    layoutname                              : PSTRING;
+    flag                                    : UINTEGER;
+    showstate                               : UINTEGER;
+    selectstate                             : UINTEGER;
+    time                                    : UINTEGER;
+    settings                                : settings;
+    scale                                   : REAL;
+    xpos                                    : REAL;
+    ypos                                    : REAL;
+    objects                                 : LIST OF object;
+    global_rules                            : OPTIONAL LIST [1:?] OF global_rule;
+    user_functions                          : OPTIONAL LIST [1:?] OF user_function;
+    comment                                 : OPTIONAL comment;
+    version                                 : OPTIONAL INTEGER;
+    constants                               : OPTIONAL LIST [1:?] OF user_constant;
+    section                                 : section_list;
+    enabled_express_version                 : OPTIONAL INTEGER;
+    language_id                             : OPTIONAL PSTRING;
+    version_id                              : OPTIONAL PSTRING;
+END_ENTITY;
+
+ENTITY subconstraints
+  SUBTYPE OF (object);
+    name                                    : text;
+    totalovers                              : OPTIONAL LIST OF totalover_line;
+    subtypes                                : OPTIONAL LIST OF subconstraint_line;
+    SubConstraintDef                        : OPTIONAL subconstraint_def;
+    is_abstract                             : OPTIONAL BOOLEAN;
+    layout                                  : OPTIONAL type_layout;
+    comment                                 : OPTIONAL comment;
+    interfaceto                             : OPTIONAL interface_to;
+END_ENTITY;
+
+ENTITY subconstraint_line
+  SUBTYPE OF (object);
+    the_subtype                             : object;
+    layout                                  : OPTIONAL object_line_layout;
+END_ENTITY;
+
+ENTITY subconstraint_def
+  SUBTYPE OF (object);
+    a_subtype                               : object;
+    layout                                  : OPTIONAL object_line_layout;
+END_ENTITY;
+
+ENTITY totalover_line
+  SUBTYPE OF (object);
+    a_subtype                               : object;
+    layout                                  : OPTIONAL object_line_layout;
+END_ENTITY;
+
+
+   ENTITY _FILE;   END_ENTITY;
+   ENTITY _BLOB;   END_ENTITY;
+   TYPE _SEQUENCENUMBER = INTEGER;   END_TYPE;
+   TYPE _INDEX = INTEGER;   END_TYPE;
+   TYPE _NAME = STRING;   END_TYPE;
+   TYPE _TIMESTAMP = INTEGER;   END_TYPE;
+   ENTITY _DATETIME;   END_ENTITY;
+END_SCHEMA;
