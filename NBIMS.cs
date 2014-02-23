@@ -41,18 +41,18 @@ namespace IfcDoc
             return "<br/><img src=\"" + docTemplate.Name.ToLower().Replace(' ', '-') + ".png\" width=\"" + cx + "\" height=\"" + cy + "\"/>";
         }
 
-        private static void WriteConceptTemplates(DocProject project, FormatHTM format, bool descriptions, bool all, string path, Dictionary<string, DocObject> mapEntity)
+        private static void WriteConceptTemplates(DocProject project, FormatHTM format, bool descriptions, bool all, string path, Dictionary<string, DocObject> mapEntity, Dictionary<DocObject, bool> included)
         {
             foreach (DocTemplateDefinition docTemplate in project.Templates)
             {
-                if (all || docTemplate.Visible)
+                if (all || included.ContainsKey(docTemplate))
                 {
                     int count = 1;
                     if (docTemplate.Templates != null)
                     {
                         foreach (DocTemplateDefinition doc2 in docTemplate.Templates)
                         {
-                            if (all || doc2.Visible)
+                            if (all || included.ContainsKey(doc2))
                             {
                                 count++;
 
@@ -60,7 +60,7 @@ namespace IfcDoc
                                 {
                                     foreach (DocTemplateDefinition doc3 in doc2.Templates)
                                     {
-                                        if (all || doc3.Visible)
+                                        if (all || included.ContainsKey(doc3))
                                         {
                                             count++;
                                         }
@@ -88,14 +88,14 @@ namespace IfcDoc
                     {
                         foreach (DocTemplateDefinition doc2 in docTemplate.Templates)
                         {
-                            if (all || doc2.Visible)
+                            if (all || included.ContainsKey(doc2))
                             {
                                 int count2 = 1;
                                 if (doc2.Templates != null)
                                 {
                                     foreach (DocTemplateDefinition doc3 in doc2.Templates)
                                     {
-                                        if (all || doc3.Visible)
+                                        if (all || included.ContainsKey(doc3))
                                         {
                                             count2++;
                                         }
@@ -120,7 +120,7 @@ namespace IfcDoc
                                 {
                                     foreach (DocTemplateDefinition doc3 in doc2.Templates)
                                     {
-                                        if (all || doc3.Visible)
+                                        if (all || included.ContainsKey(doc3))
                                         {
                                             img = "";
                                             if (doc3.Rules != null && doc3.Rules.Count > 0)
@@ -147,6 +147,8 @@ namespace IfcDoc
 
         public static void Export(DocProject project, DocModelView docView, string path, Dictionary<string, DocObject> mapEntity, Dictionary<string, string> mapSchema)
         {
+            Dictionary<DocObject, bool> included = docView.Filter(project);
+
             const string HEADERCELL = "<th style=\"-webkit-transform:rotate(90deg); writing-mode:tb-rl; -moz-transform:rotate(90deg); -o-transform: rotate(90deg); white-space:nowrap; display:blocking; ms-filter: \"progid:DXImageTransform.Microsoft.BasicImage(rotation=0.083)\"; >";
 
             // get list of entities in order
@@ -207,7 +209,7 @@ namespace IfcDoc
             {
                 format.InitHeaders(docView.Code, "IFC4");
                 Schema.IFC.IfcProject ifcProject = new IfcDoc.Schema.IFC.IfcProject();
-                Program.ExportIfc(ifcProject, project);
+                Program.ExportIfc(ifcProject, project, included);
                 format.Save();
             }
 
@@ -220,7 +222,7 @@ namespace IfcDoc
             }
 
 
-            using (FormatHTM format = new FormatHTM(path + @"\" + docView.Code + ".htm", mapEntity, new Dictionary<string, string>()))
+            using (FormatHTM format = new FormatHTM(path + @"\" + docView.Code + ".htm", mapEntity, new Dictionary<string, string>(), included))
             {
                 format.WriteHeader(docView.Name, 0);
 
@@ -539,7 +541,7 @@ namespace IfcDoc
                 format.WriteLine("<p>Each entity data definition is described within subsections as follows, with electronic representations provided in EXPRESS and XSD formats.</p>");
                 foreach (DocConceptRoot docRoot in sortConceptRoot)
                 {
-                    string xsd = FormatXSD.FormatEntity(docRoot.ApplicableEntity, mapEntity);
+                    string xsd = FormatXSD.FormatEntity(docRoot.ApplicableEntity, mapEntity, included);
 
                     format.WriteLine("<h4>" + docRoot.ApplicableEntity.Name + "</h4>");
                     format.WriteLine(docRoot.ApplicableEntity.Documentation);
@@ -721,7 +723,7 @@ namespace IfcDoc
                     "Such rule may be further refined for ducts to indicate that the cross-sections are further restricted to shapes such as hollow rectangles (IfcRectangleHollowProfileDef) "+
                     "or hollow circles (IfcCircleHollowProfileDef)."+
                     "Concepts are shown in a hierarchy as follows where inner concepts inherit from outer concepts.</p>");
-                WriteTemplateList(format, project.Templates);
+                WriteTemplateList(format, project.Templates, included);
 
                 format.WriteLine("<h3>7.2.5 Concept requirements applicability</h3>");
                 format.WriteLine("<p>Each entity is shown in subsections as follows, with rows corresponding to concepts, columns corresponding to exchanges, "+
@@ -941,7 +943,7 @@ namespace IfcDoc
                     {
                         foreach (DocPropertySet docPset in docSchema.PropertySets)
                         {
-                            if (docPset.Visible)
+                            if (included == null || included.ContainsKey(docPset))
                             {
                                 format.WriteLine("<h4>" + docPset.Name + "</h4>");
                                 format.WriteLine("<table class=\"gridtable\">");
@@ -982,14 +984,14 @@ namespace IfcDoc
                             foreach (DocEntity docEntity in docSchema.Entities)
                             {
                                 max++;
-                                if (docEntity.Visible)
+                                if (included == null || included.ContainsKey(docEntity))
                                 {
                                     min++;
                                     format.Write("<b>");
                                 }
                                 format.Write(docEntity.Name);
                                 format.Write("; ");
-                                if (docEntity.Visible)
+                                if (included == null || included.ContainsKey(docEntity))
                                 {
                                     format.Write("</b>");
                                 }
@@ -998,14 +1000,14 @@ namespace IfcDoc
                             foreach (DocType docType in docSchema.Types)
                             {
                                 max++;
-                                if (docType.Visible)
+                                if (included == null || included.ContainsKey(docType))
                                 {
                                     min++;
                                     format.Write("<b>");
                                 }
                                 format.Write(docType.Name);
                                 format.Write("; ");
-                                if (docType.Visible)
+                                if (included == null || included.ContainsKey(docType))
                                 {
                                     format.Write("</b>");
                                 }
@@ -1053,18 +1055,18 @@ namespace IfcDoc
             }
         }
 
-        private static void WriteTemplateList(FormatHTM format, List<DocTemplateDefinition> list)
+        private static void WriteTemplateList(FormatHTM format, List<DocTemplateDefinition> list, Dictionary<DocObject, bool> included)
         {
             format.WriteLine("<ul>");
             foreach (DocTemplateDefinition docTemplate in list)
             {
-                if (docTemplate.Visible)
+                if (included == null || included.ContainsKey(docTemplate))
                 {
                     format.WriteLine("<li>" + docTemplate.Name); ;
 
                     if (docTemplate.Templates != null && docTemplate.Templates.Count > 0)
                     {
-                        WriteTemplateList(format, docTemplate.Templates);
+                        WriteTemplateList(format, docTemplate.Templates, included);
                     }
 
                     format.WriteLine("</li>");

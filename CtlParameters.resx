@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -117,17 +117,52 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="textBox1.Text" xml:space="preserve">
-    <value>IFC Documentation Generator
-Version 6.2 (February 24, 2014)
-© Copyright 2011-2014 buildingSMART International Ltd.
-
-Model Support Group (MSG)
-Thomas Liebich - MSG Leader (tl@aec3.com)
-
-Comments, issues or any other feedback should be sent to:
-Tim Chipman (timc@constructivity.com)
-
-MVD-XML Version 1.1</value>
+  <metadata name="toolStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="toolStripButtonTemplateInsert.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABUSURBVDhP3cxBCgAhCEBRj+3xvJlNBJNNX4iGNi1eUNoX
+        Efd/nkNVt6SBXh/xXjIws8H5QLt0FIgw8P2UuTkQ0adoCkT1jQK0dy5AeA8Gq97APvcCZN1yd7JMcNIA
+        AAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="toolStripButtonTemplateRemove.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAzSURBVDhPY2Bg+P+fMgwkKioqyMLDzQAIh3iM1YADBw4Q
+        hYezAaRgDAPIwcPJAPLx//8ARLZjI8VMTLsAAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="toolStripButtonMoveUp.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAHXSURBVDhPlZLdS1phHMf9V0ZFsYtCRoNuYheNqLHKG4m6
+        s6KbKa2Yg5aMICzobfRizKXL06qtoGJDx4Iy6sZeFQ0MdlFqL2r0Ii45au678zzH0zicA5s/+PAcft/z
+        /TwX5yjI9M9HIWCcjeKtLQL9hzBejJ1DM3SG+t5T1HSfoFwfopS1B0GLwpAiswGYVzMw/bjDO3sa/csp
+        9CwkYZhj8ZpJ4KXlFi3jcYqyZU8qIPTMRND5MQLdBH+z2niKakMIT7K3CpRoXGLBnGMXuczj6uZ/Cw6O
+        WejGg/D9jGY3f0cimP7qykb8+IMs9JNh2NbTUKoZiaS0qkkssC5uZiNxeeAbUG8M4GHdlEgiEZi/rIFN
+        /YbviEWH+RxTTu4rcGWtFWgcTqDylRdFNRbs+8NIpjJSgWlmBVfxNC2Xt3nxqHUfg5ygeSxGKVZ/RsFz
+        C/KrTPQ9iWCU+Y7QRRIn0SRCHOSnsa5laLmhL4DCWoZmQi4r8AcS9xCB4RNfVr3xoOCZWZTLCrYP45Qd
+        DiIg5bouD55qV5FXOYIdP8l/UWQFTk8M6+4bON0xKihWvceDioF7yF5AVuBwXfFskfMadu7Zzp38npw8
+        ZCcrWNq8/G9kBWSZC3xTofgDGmx+aEZLgGMAAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="toolStripButtonMoveDown.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAHwSURBVDhPrZDtS1NRHMf35/TwInxRINWIXpXIegIxCAt1
+        oSWVBiuKIdG0YiEja+Zqlou5UpiWzh7ETRrGikKFQKkY5by1rfKhle7RT9u5976Q3RcJfeHD4Z7v+X0O
+        9+gKsfbGUWntidPcHcN0J0rDzW9Ut32l8oqE4dIcelNEUNo0ixhUUxh0vQTHaA778yw2XwbrQBpLXwqz
+        J8k51zKNzj8YbyUEJcZ3xYICFneMC/dinOqQb65olSgzR9il3KqypTq0VuAZfst6sq2s9j8LHjwJKZUc
+        090oTbfnaLgRxmidpsoyqTRytu6tWSvo8gaVSs4Z+yw9wQwd+Qe9NpCjvHFUaeQUCRyP/CTTq6TyJNM5
+        6to+0OXPcd6d44htBX3tY6XPCYoEdvcL5hMZFhJZsR5tmaLFu0pVe5aKqz/YUTMkOrUvErS7nhL5nhL/
+        frZT4oTtI+aHcPj6L/Y1h9l40EPpMS+763xE4iltwfSXZV69X8RgGuekY4XTziSHLBJ7TFNsPz7CBoOT
+        wWBEnNMUvJlJCAbHY2yu9HLgskT5xRn09QE27b9P78jnfP9boCkITC4xNrFIYGKJPn9USHbWj1FS4aJ7
+        KCz2VTQFw6F5mdeFdQHXM0lIOvs/iW8VXx5NQX/w5z+jKShsrgd5Uqf7C6AcgeBP0yOcAAAAAElFTkSu
+        QmCC
+</value>
   </data>
 </root>

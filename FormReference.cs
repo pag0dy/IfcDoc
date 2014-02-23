@@ -105,7 +105,7 @@ namespace IfcDoc
                         CvtValuePath valuepath = null;
                         if (formEntity.SelectedEntity is DocEntity)
                         {
-                            using (FormSelectAttribute formAttribute = new FormSelectAttribute((DocEntity)formEntity.SelectedEntity, this.m_map, null, false))
+                            using (FormSelectAttribute formAttribute = new FormSelectAttribute((DocEntity)formEntity.SelectedEntity, this.m_project, null, false))
                             {
                                 if (formAttribute.ShowDialog(this) == System.Windows.Forms.DialogResult.OK && formAttribute.SelectedAttribute != null)
                                 {

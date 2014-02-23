@@ -976,7 +976,7 @@ namespace IfcDoc
             return docSchema;
         }
 
-        internal static void ExportIfc(IfcProject ifcProject, DocProject docProject)
+        internal static void ExportIfc(IfcProject ifcProject, DocProject docProject, Dictionary<DocObject, bool> included)
         {
             ifcProject.Name = "IFC4 Property Set Templates";
 
@@ -1023,7 +1023,7 @@ namespace IfcDoc
                 {
                     foreach (DocPropertySet docPset in docSchema.PropertySets)
                     {
-                        if (docPset.Visible)
+                        if (included == null || included.ContainsKey(docPset))
                         {
 
                             IfcPropertySetTemplate ifcPset = new IfcPropertySetTemplate();
@@ -1074,7 +1074,7 @@ namespace IfcDoc
 
                     foreach (DocQuantitySet docQuantitySet in docSchema.QuantitySets)
                     {
-                        if (docQuantitySet.Visible)
+                        if (included == null || included.ContainsKey(docQuantitySet))
                         {
                             IfcPropertySetTemplate ifcPset = new IfcPropertySetTemplate();
                             rel.RelatedDefinitions.Add(ifcPset);
@@ -1648,7 +1648,7 @@ namespace IfcDoc
             return docRule;
         }
 
-        internal static void ImportMvd(mvdXML mvd, DocProject docProject)
+        internal static void ImportMvd(mvdXML mvd, DocProject docProject, string filepath)
         {
             if (mvd.Templates != null)
             {
@@ -1689,6 +1689,20 @@ namespace IfcDoc
                         docView.Exchanges.Add(docExchange);
 
                         docExchange.Applicability = (DocExchangeApplicabilityEnum)mvdExchange.Applicability;
+
+                        // attempt to find icons if exists -- remove extention
+                        try
+                        {
+                            string iconpath = filepath.Substring(0, filepath.Length - 7) + @"\mvd-" + docExchange.Name.ToLower().Replace(' ', '-') + ".png";
+                            if (System.IO.File.Exists(iconpath))
+                            {
+                                docExchange.Icon = System.IO.File.ReadAllBytes(iconpath);
+                            }
+                        }
+                        catch
+                        {
+
+                        }
                     }
 
                     foreach (ConceptRoot mvdRoot in mvdView.Roots)
@@ -2384,13 +2398,13 @@ namespace IfcDoc
             }
         }
 
-        public static void ExportSch(IfcDoc.Schema.SCH.schema schema, DocProject docProject)
+        public static void ExportSch(IfcDoc.Schema.SCH.schema schema, DocProject docProject, Dictionary<DocObject, bool> included)
         {
             Dictionary<DocExchangeDefinition, phase> mapPhase = new Dictionary<DocExchangeDefinition, phase>();
 
             foreach (DocModelView docModel in docProject.ModelViews)
             {
-                if (docModel.Visible)
+                if (included == null || included.ContainsKey(docModel))
                 {
                     foreach (DocExchangeDefinition docExchange in docModel.Exchanges)
                     {

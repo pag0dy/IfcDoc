@@ -1,13 +1,13 @@
 ﻿namespace IfcDoc
 {
-    partial class CtlConcept
+    partial class CtlInheritance
     {
-        /// <summary>
+        /// <summary> 
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
+        /// <summary> 
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
@@ -22,7 +22,7 @@
 
         #region Component Designer generated code
 
-        /// <summary>
+        /// <summary> 
         /// Required method for Designer support - do not modify 
         /// the contents of this method with the code editor.
         /// </summary>
@@ -30,11 +30,11 @@
         {
             this.SuspendLayout();
             // 
-            // CtlConcept
+            // CtlInheritance
             // 
-            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.CtlConcept_MouseDown);
-            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.CtlConcept_MouseMove);
-            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.CtlConcept_MouseUp);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.CtlInheritance_MouseDown);
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.CtlInheritance_MouseMove);
+            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.CtlInheritance_MouseUp);
             this.ResumeLayout(false);
 
         }

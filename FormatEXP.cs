@@ -20,6 +20,7 @@ namespace IfcDoc.Format.EXP
         string m_filename;
         DocProject m_project;
         DocModelView[] m_views;
+        Dictionary<DocObject, bool> m_included;
 
         public FormatEXP(string filename)
         {
@@ -50,6 +51,16 @@ namespace IfcDoc.Format.EXP
             set
             {
                 this.m_views = value;
+
+                this.m_included = null;
+                if (this.m_views != null)
+                {
+                    this.m_included = new Dictionary<DocObject, bool>();
+                    foreach (DocModelView docView in this.m_views)
+                    {
+                        this.m_project.RegisterObjectsInScope(docView, this.m_included);
+                    }
+                }
             }
         }
 
@@ -95,11 +106,11 @@ namespace IfcDoc.Format.EXP
             {
                 foreach (DocSchema docSchema in docSection.Schemas)
                 {
-                    if (docSchema.Visible)
+                    if (this.m_included == null || this.m_included.ContainsKey(docSchema))
                     {
                         foreach (DocType docType in docSchema.Types)
                         {
-                            if (docType.Visible)
+                            if (this.m_included == null || this.m_included.ContainsKey(docType))
                             {
                                 if (docType is DocDefined)
                                 {
@@ -120,7 +131,7 @@ namespace IfcDoc.Format.EXP
 
                         foreach (DocEntity docEnt in docSchema.Entities)
                         {
-                            if (docEnt.Visible)
+                            if (this.m_included == null || this.m_included.ContainsKey(docEnt))
                             {
                                 mapEntity.Add(docEnt.Name, docEnt);
                                 mapGeneral.Add(docEnt.Name, docEnt);
@@ -129,7 +140,7 @@ namespace IfcDoc.Format.EXP
 
                         foreach (DocFunction docFunc in docSchema.Functions)
                         {
-                            if (docFunc.Visible && !mapFunction.ContainsKey(docFunc.Name))
+                            if ((this.m_included == null || this.m_included.ContainsKey(docFunc)) && !mapFunction.ContainsKey(docFunc.Name))
                             {
                                 mapFunction.Add(docFunc.Name, docFunc);
                             }
@@ -137,7 +148,7 @@ namespace IfcDoc.Format.EXP
 
                         foreach (DocGlobalRule docRule in docSchema.GlobalRules)
                         {
-                            if (docRule.Visible)
+                            if (this.m_included == null || this.m_included.ContainsKey(docRule))
                             {
                                 mapRule.Add(docRule.Name, docRule);
                             }
@@ -159,7 +170,7 @@ namespace IfcDoc.Format.EXP
 
                 foreach (DocModelView docView in this.m_project.ModelViews)
                 {
-                    if (docView.Visible)
+                    if (this.m_included == null || this.m_included.ContainsKey(docView))
                     {
                         if(!String.IsNullOrEmpty(docView.Copyright))
                         {
@@ -208,7 +219,7 @@ DateTime.Today.ToLongDateString() + "\r\n" + //"December 27, 2012\r\n" +
                 {
                     foreach (DocModelView docView in this.m_project.ModelViews)
                     {
-                        if (docView.Visible && docView.Exchanges.Count > 0)
+                        if (this.m_included == null || this.m_included.ContainsKey(docView) && docView.Exchanges.Count > 0)
                         {
                             mvd = true;
                         }
@@ -325,20 +336,23 @@ DateTime.Today.ToLongDateString() + "\r\n" + //"December 27, 2012\r\n" +
                         DocSelectItem docConst = sortSelect.Values[i];
                         
                         DocObject docRefEnt = null;                        
-                        if (mapGeneral.TryGetValue(docConst.Name, out docRefEnt) && docRefEnt.Visible)                            
+                        if (mapGeneral.TryGetValue(docConst.Name, out docRefEnt))                            
                         {
-                            if (nSelect == 0)
+                            if (this.m_included == null || this.m_included.ContainsKey(docRefEnt))
                             {
-                                writer.Write("\t(");
-                            }
-                            else
-                            {
-                                writer.WriteLine();
-                                writer.Write("\t,");
-                            }
-                            nSelect++;
+                                if (nSelect == 0)
+                                {
+                                    writer.Write("\t(");
+                                }
+                                else
+                                {
+                                    writer.WriteLine();
+                                    writer.Write("\t,");
+                                }
+                                nSelect++;
 
-                            writer.Write(docConst.Name);
+                                writer.Write(docConst.Name);
+                            }
                         }
                     }
 
@@ -378,7 +392,7 @@ DateTime.Today.ToLongDateString() + "\r\n" + //"December 27, 2012\r\n" +
                         foreach (string ds in subtypes.Keys)
                         {
                             DocEntity refent = subtypes[ds];
-                            if (refent.Visible)
+                            if (this.m_included == null || this.m_included.ContainsKey(refent))
                             {
                                 countsub++;
 
@@ -435,7 +449,7 @@ DateTime.Today.ToLongDateString() + "\r\n" + //"December 27, 2012\r\n" +
 
                             WriteExpressAggregation(writer, attr);
 
-                            if (!mvd || attr.Visible)
+                            if (!mvd || this.m_included == null || this.m_included.ContainsKey(attr))
                             {
                                 writer.Write(attr.DefinedType);
                             }
@@ -448,9 +462,12 @@ DateTime.Today.ToLongDateString() + "\r\n" + //"December 27, 2012\r\n" +
                         else if (attr.Inverse != null && attr.Derived == null)
                         {
                             DocObject docref = null;
-                            if (mapGeneral.TryGetValue(attr.DefinedType, out docref) && docref.Visible)
+                            if (mapGeneral.TryGetValue(attr.DefinedType, out docref))
                             {
-                                hasinverse = true;
+                                if (this.m_included == null || this.m_included.ContainsKey(docref))
+                                {
+                                    hasinverse = true;
+                                }
                             }
                         }
                         else if (attr.Derived != null)
@@ -522,18 +539,21 @@ DateTime.Today.ToLongDateString() + "\r\n" + //"December 27, 2012\r\n" +
                             if (attr.Inverse != null && attr.Derived == null)
                             {
                                 DocObject docref = null;
-                                if (mapGeneral.TryGetValue(attr.DefinedType, out docref) && docref.Visible)
+                                if (mapGeneral.TryGetValue(attr.DefinedType, out docref))
                                 {
-                                    writer.Write("\t");
-                                    writer.Write(attr.Name);
-                                    writer.Write(" : ");
+                                    if (this.m_included == null || this.m_included.ContainsKey(docref))
+                                    {
+                                        writer.Write("\t");
+                                        writer.Write(attr.Name);
+                                        writer.Write(" : ");
 
-                                    WriteExpressAggregation(writer, attr);
+                                        WriteExpressAggregation(writer, attr);
 
-                                    writer.Write(attr.DefinedType);
-                                    writer.Write(" FOR ");
-                                    writer.Write(attr.Inverse);
-                                    writer.WriteLine(";");
+                                        writer.Write(attr.DefinedType);
+                                        writer.Write(" FOR ");
+                                        writer.Write(attr.Inverse);
+                                        writer.WriteLine(";");
+                                    }
                                 }
                             }
                         }

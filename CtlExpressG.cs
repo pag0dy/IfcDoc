@@ -888,6 +888,9 @@ namespace IfcDoc
         /// <param name="ptB">The target point, which is positioned at the midpoint of one of the four edges of the target rectangle.</param>
         private static void LayoutLine(DocRectangle rcA, DocRectangle rcB, DocPoint ptA, DocPoint ptM, DocPoint ptB)
         {
+            if (rcA == null || rcB == null)
+                return;
+
             if (rcB.X > rcA.X + rcA.Width)
             {
                 // to right
@@ -1118,13 +1121,16 @@ namespace IfcDoc
 
                 foreach(DocLine docLine in docType.Tree)
                 {
-                    DocPoint docPoint = docLine.DiagramLine[docLine.DiagramLine.Count - 1];
-                    PointF ptA = new PointF((float)(docPoint.X * Factor), (float)docPoint.Y * Factor);
-                    if(Math.Abs(ptFloat.X - ptA.X) < 4 && Math.Abs(ptFloat.Y - ptA.Y) <= 5)
+                    if (docLine.DiagramLine.Count > 0)
                     {
-                        line = docLine;
-                        handle = ResizeHandle.Move;
-                        return docType;
+                        DocPoint docPoint = docLine.DiagramLine[docLine.DiagramLine.Count - 1];
+                        PointF ptA = new PointF((float)(docPoint.X * Factor), (float)docPoint.Y * Factor);
+                        if (Math.Abs(ptFloat.X - ptA.X) < 4 && Math.Abs(ptFloat.Y - ptA.Y) <= 5)
+                        {
+                            line = docLine;
+                            handle = ResizeHandle.Move;
+                            return docType;
+                        }
                     }
                 }
             }

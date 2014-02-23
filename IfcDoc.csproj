@@ -95,6 +95,31 @@
     <Compile Include="CtlExpressG.Designer.cs">
       <DependentUpon>CtlExpressG.cs</DependentUpon>
     </Compile>
+    <Compile Include="CtlInheritance.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CtlInheritance.Designer.cs">
+      <DependentUpon>CtlInheritance.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CtlOperators.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CtlOperators.Designer.cs">
+      <DependentUpon>CtlOperators.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CtlParameters.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CtlParameters.Designer.cs">
+      <DependentUpon>CtlParameters.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CtlRules.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CtlRules.Designer.cs">
+      <DependentUpon>CtlRules.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DocumentationISO.cs" />
     <Compile Include="ThemedTreeView.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -273,8 +298,23 @@
     <EmbeddedResource Include="CtlCheckGrid.resx">
       <DependentUpon>CtlCheckGrid.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="CtlConcept.resx">
+      <DependentUpon>CtlConcept.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CtlExpressG.resx">
       <DependentUpon>CtlExpressG.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CtlInheritance.resx">
+      <DependentUpon>CtlInheritance.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CtlOperators.resx">
+      <DependentUpon>CtlOperators.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CtlParameters.resx">
+      <DependentUpon>CtlParameters.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CtlRules.resx">
+      <DependentUpon>CtlRules.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormCode.resx">
       <DependentUpon>FormCode.cs</DependentUpon>

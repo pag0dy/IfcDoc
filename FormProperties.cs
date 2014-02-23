@@ -159,10 +159,6 @@ namespace IfcDoc
                 this.tabControl.TabPages.Add(this.tabPageTemplate);
                 DocTemplateDefinition docTemplate = (DocTemplateDefinition)docObject;
                 this.textBoxTemplateEntity.Text = docTemplate.Type;
-                this.LoadTemplate();
-
-                //this.tabControl.TabPages.Add(this.tabPageDiagram);
-                //this.panelDiagram.BackgroundImage = FormatPNG.CreateTemplateDiagram(docTemplate, this.m_map, null, this.m_project);
 
                 this.tabControl.TabPages.Add(this.tabPageUsage);
                 foreach (DocModelView docView in this.m_project.ModelViews)
@@ -200,9 +196,6 @@ namespace IfcDoc
                         break;
                     }
                 }
-
-                //this.tabControl.TabPages.Add(this.tabPageDiagram);
-                //this.panelDiagram.BackgroundImage = FormatPNG.CreateEntityDiagram(docEntity, docView, this.m_map, null, this.m_project);
             }
             else if (docObject is DocTemplateUsage)
             {
@@ -212,17 +205,12 @@ namespace IfcDoc
                 DocTemplateUsage docUsage = (DocTemplateUsage)docObject;
                 this.textBoxConceptTemplate.Text = docUsage.Definition.Name;
                 this.checkBoxConceptOverride.Checked = docUsage.Override;
-                this.LoadUsage();
 
                 this.LoadModelView();
             }
             else if (docObject is DocSchema)
             {
                 DocSchema docSchema = (DocSchema)docObject;
-
-                // not yet ready
-                //this.tabControl.TabPages.Add(this.tabPageDiagram);
-                //this.panelDiagram.BackgroundImage = FormatPNG.CreateSchemaDiagram(docSchema, this.m_map);
             }
             else if (docObject is DocEntity)
             {
@@ -231,9 +219,6 @@ namespace IfcDoc
                 this.tabControl.TabPages.Add(this.tabPageEntity);
                 this.textBoxEntityBase.Text = docEntity.BaseDefinition;
                 this.checkBoxEntityAbstract.Checked = docEntity.IsAbstract();
-
-                //this.tabControl.TabPages.Add(this.tabPageDiagram);
-                //this.panelDiagram.BackgroundImage = FormatPNG.CreateEntityDiagram(docEntity, null, this.m_map, null, this.m_project);
             }
             else if (docObject is DocAttribute)
             {
@@ -363,35 +348,6 @@ namespace IfcDoc
             }
         }
 
-        private void LoadTemplate()
-        {
-            this.treeViewTemplateRules.Nodes.Clear();
-
-            DocTemplateDefinition docTemplate = (DocTemplateDefinition)this.m_target;
-
-            // add root rule according to applicable entity
-            TreeNode tnRoot = new TreeNode();
-            tnRoot.Tag = docTemplate;
-            tnRoot.Text = docTemplate.Type;
-            tnRoot.ImageIndex = 0;
-            tnRoot.SelectedImageIndex = 0;
-            tnRoot.ForeColor = Color.Gray; // top node is gray; cannot be edited
-
-            this.treeViewTemplateRules.Nodes.Add(tnRoot);
-            this.treeViewTemplateRules.SelectedNode = tnRoot;
-
-            // load explicit rules
-            if (docTemplate.Rules != null)
-            {
-                foreach (DocModelRule rule in docTemplate.Rules)
-                {
-                    this.LoadTreeRule(tnRoot, rule);
-                }
-            }
-
-            this.treeViewTemplateRules.ExpandAll();
-        }
-
         private void LoadModelView()
         {            
             this.listViewExchange.Items.Clear();
@@ -439,143 +395,6 @@ namespace IfcDoc
                 lvi.SubItems.Add(reqImport.ToString());
                 lvi.SubItems.Add(reqExport.ToString());
                 this.listViewExchange.Items.Add(lvi);
-            }
-        }
-
-        private void toolStripButtonInsertRuleAttribute_Click(object sender, EventArgs e)
-        {
-            DocModelRule rule = null;
-            if (this.treeViewTemplateRules.SelectedNode != null)
-            {
-                rule = this.treeViewTemplateRules.SelectedNode.Tag as DocModelRule;
-            }
-
-            DocTemplateDefinition docTemplate = (DocTemplateDefinition)this.m_target;
-
-            string typename = null;
-            if (rule is DocModelRuleEntity)
-            {
-                DocModelRuleEntity docRuleEntity = (DocModelRuleEntity)rule;
-                typename = docRuleEntity.Name;
-            }
-            else
-            {
-                // get applicable entity of target (or parent entity rule)
-                typename = docTemplate.Type;
-            }
-
-            DocObject docobj = null;
-            DocEntity docEntity = null;
-            if (this.m_map.TryGetValue(typename, out docobj))
-            {
-                docEntity = this.m_map[typename] as DocEntity;
-            }
-
-            if (docEntity == null)
-            {
-                // launch dialog for constraint
-                using (FormConstraint form = new FormConstraint())
-                {
-                    DialogResult res = form.ShowDialog(this);
-                    if (res == DialogResult.OK)
-                    {
-                        DocModelRuleConstraint docRuleConstraint = new DocModelRuleConstraint();
-                        rule.Rules.Add(docRuleConstraint);
-                        docRuleConstraint.Description = form.Expression;
-                        docRuleConstraint.Name = form.Expression; // for viewing
-
-                        this.treeViewTemplateRules.SelectedNode = this.LoadTreeRule(this.treeViewTemplateRules.SelectedNode, docRuleConstraint);
-
-                        // copy to child templates
-                        docTemplate.PropagateRule(this.treeViewTemplateRules.SelectedNode.FullPath);
-                    }
-                }
-            }
-            else
-            {
-                // launch dialog to pick attribute of entity
-                using (FormSelectAttribute form = new FormSelectAttribute(docEntity, this.m_map, null, true))
-                {
-                    DialogResult res = form.ShowDialog(this);
-                    if (res == DialogResult.OK && form.Selection != null)
-                    {
-                        // then add and update tree
-                        DocModelRuleAttribute docRuleAttr = new DocModelRuleAttribute();
-                        docRuleAttr.Name = form.Selection;
-                        if (rule != null)
-                        {
-                            rule.Rules.Add(docRuleAttr);
-                        }
-                        else
-                        {
-                            if (docTemplate.Rules == null)
-                            {
-                                docTemplate.Rules = new List<DocModelRule>();
-                            }
-
-                            docTemplate.Rules.Add(docRuleAttr);
-                        }
-                        this.treeViewTemplateRules.SelectedNode = this.LoadTreeRule(this.treeViewTemplateRules.SelectedNode, docRuleAttr);
-
-                        // copy to child templates
-                        docTemplate.PropagateRule(this.treeViewTemplateRules.SelectedNode.FullPath);
-                    }
-                }
-            }
-        }
-
-        private void toolStripButtonInsertRuleEntity_Click(object sender, EventArgs e)
-        {
-            DocModelRuleAttribute rule = this.treeViewTemplateRules.SelectedNode.Tag as DocModelRuleAttribute;
-
-            if(rule == null)
-                return;
-
-            DocTemplateDefinition docTemplate = (DocTemplateDefinition)this.m_target;
-
-            // determine type of attribute by resolving attribute on type
-            string typename = null;
-            if (this.treeViewTemplateRules.SelectedNode.Parent != null && this.treeViewTemplateRules.SelectedNode.Parent.Tag is DocModelRuleEntity)
-            {
-                DocModelRuleEntity ruleEntity = (DocModelRuleEntity)this.treeViewTemplateRules.SelectedNode.Parent.Tag;
-                typename = ruleEntity.Name;
-            }
-            else
-            {
-                // use base
-                typename = docTemplate.Type;
-            }
-            DocEntity docEntity = (DocEntity)this.m_map[typename];
-            
-            // resolve attribute on entity
-            DocAttribute docAttribute = FindAttribute(docEntity, rule.Name);
-            if(docAttribute == null)
-                return;
-
-            // now get attribute type
-            DocObject docobj = null;
-            if (!this.m_map.TryGetValue(docAttribute.DefinedType, out docobj))
-            {
-                MessageBox.Show("The selected attribute is a value type and cannot be subtyped.");
-            }
-            else
-            {
-                // launch dialog to pick subtype of entity            
-                using (FormSelectEntity form = new FormSelectEntity((DocDefinition)docobj, null, this.m_project))
-                {
-                    DialogResult res = form.ShowDialog(this);
-                    if (res == DialogResult.OK && form.SelectedEntity != null)
-                    {
-                        // then add and update tree
-                        DocModelRuleEntity docRuleAttr = new DocModelRuleEntity();
-                        docRuleAttr.Name = form.SelectedEntity.Name;
-                        rule.Rules.Add(docRuleAttr);
-                        this.treeViewTemplateRules.SelectedNode = this.LoadTreeRule(this.treeViewTemplateRules.SelectedNode, docRuleAttr);
-
-                        // copy to child templates
-                        docTemplate.PropagateRule(this.treeViewTemplateRules.SelectedNode.FullPath);
-                    }
-                }
             }
         }
 
@@ -627,81 +446,6 @@ namespace IfcDoc
             tnRule.ToolTipText = tooltip;
         }
 
-        /// <summary>
-        /// Loads rule into tree
-        /// </summary>
-        /// <param name="tnParent"></param>
-        /// <param name="docRule"></param>
-        /// <returns></returns>
-        private TreeNode LoadTreeRule(TreeNode tnParent, DocModelRule docRule)
-        {
-            TreeNode tnRule = LoadNode(tnParent, docRule, docRule.Name);
-
-            UpdateTreeRule(tnRule);
-
-            foreach (DocModelRule docSub in docRule.Rules)
-            {
-                LoadTreeRule(tnRule, docSub);
-            }
-
-            return tnRule;
-        }
-
-        private TreeNode LoadNode(TreeNode parent, object tag, string text)
-        {
-            // if existing, then return
-            foreach (TreeNode tnExist in parent.Nodes)
-            {
-                //if (tnExist.Text.Equals(text))
-                //    return tnExist;
-                if (tnExist.Tag == tag)
-                    return tnExist;
-            }
-
-            TreeNode tn = new TreeNode();
-            tn.Tag = tag;
-            tn.Text = text;
-
-            if (tag is DocModelRuleEntity)
-            {
-                tn.ImageIndex = 0;
-                tn.SelectedImageIndex = 0;
-            }
-            else if (tag is DocModelRuleAttribute)
-            {
-                tn.ImageIndex = 1;
-                tn.SelectedImageIndex = 1;
-            }
-            else if (tag is DocModelRuleConstraint)
-            {
-                tn.ImageIndex = 2;
-                tn.SelectedImageIndex = 2;
-            }
-
-            parent.Nodes.Add(tn);
-
-            return tn;
-        }
-
-        private void treeViewTemplateRules_AfterSelect(object sender, TreeViewEventArgs e)
-        {
-            TreeNode tnSelect = this.treeViewTemplateRules.SelectedNode;
-
-            this.treeViewTemplateRules.Focus();
-
-            bool locked = (tnSelect.ForeColor == Color.Gray);
-
-            // update buttons
-            DocModelRule rule = tnSelect.Tag as DocModelRule;
-            this.buttonRuleDelete.Enabled = (rule != null) && !locked;
-            this.buttonRuleAdd.Enabled = !(rule is DocModelRuleConstraint);
-            this.buttonRuleUpdate.Enabled = (rule != null) && !locked;
-
-            TreeNode tnParent = tnSelect.Parent;
-            this.buttonMoveUp.Enabled = (tnParent != null && tnParent.Nodes.IndexOf(tnSelect) > 0) && !locked;
-            this.buttonMoveDown.Enabled = (tnParent != null && tnParent.Nodes.IndexOf(tnSelect) < tnParent.Nodes.Count - 1) && !locked;
-        }
-
         private void buttonTemplateEntity_Click(object sender, EventArgs e)
         {
             // determine base class from parent template if any
@@ -740,8 +484,6 @@ namespace IfcDoc
                     this.textBoxTemplateEntity.Text = docTemplate.Type;
                 }
             }
-
-            this.LoadTemplate();
         }
 
         private void buttonConceptTemplate_Click(object sender, EventArgs e)
@@ -756,133 +498,8 @@ namespace IfcDoc
                     docUsage.Items.Clear();
 
                     this.textBoxConceptTemplate.Text = docUsage.Definition.Name;
-                    this.LoadUsage();
                 }
             }
-        }
-
-        private void LoadUsage()
-        {
-            this.dataGridViewConceptRules.Rows.Clear();
-            this.dataGridViewConceptRules.Columns.Clear();
-
-            DocTemplateUsage docUsage = (DocTemplateUsage)this.m_target;
-            string[] parmnames = docUsage.Definition.GetParameterNames();
-            foreach (string parmname in parmnames)
-            {
-                DataGridViewColumn column = new DataGridViewColumn();
-                column.HeaderText = parmname;
-                column.ValueType = typeof(string);//?
-                column.CellTemplate = new DataGridViewTextBoxCell();
-                column.Width = 200;
-
-                // override cell template for special cases
-                DocConceptRoot docConceptRoot = (DocConceptRoot)this.m_parent;
-                DocEntity docEntity = docConceptRoot.ApplicableEntity;
-                foreach (DocModelRuleAttribute docRule in docUsage.Definition.Rules)
-                {
-                    DocDefinition docDef = docEntity.ResolveParameterType(docRule, parmname, m_map);
-                    if (docDef is DocEnumeration)
-                    {
-                        DocEnumeration docEnum = (DocEnumeration)docDef;
-                        DataGridViewComboBoxCell cell = new DataGridViewComboBoxCell();
-                        cell.MaxDropDownItems = 32;
-                        cell.DropDownWidth = 200;
-                        // add blank item
-                        cell.Items.Add(String.Empty);
-                        foreach (DocConstant docConst in docEnum.Constants)
-                        {
-                            cell.Items.Add(docConst.Name);
-                        }
-                        column.CellTemplate = cell;
-                    }
-                    else if (docDef is DocEntity || docDef is DocSelect)
-                    {
-                        // button to launch dialog for picking entity
-                        DataGridViewButtonCell cell = new DataGridViewButtonCell();
-                        cell.Tag = docDef;
-                        column.CellTemplate = cell;
-                    }
-                }
-
-                this.dataGridViewConceptRules.Columns.Add(column);
-            }
-
-            // add description column
-            DataGridViewColumn coldesc = new DataGridViewColumn();
-            coldesc.HeaderText = "Description";
-            coldesc.ValueType = typeof(string);//?
-            coldesc.CellTemplate = new DataGridViewTextBoxCell();
-            coldesc.Width = 400;
-            this.dataGridViewConceptRules.Columns.Add(coldesc);
-
-            foreach (DocTemplateItem item in docUsage.Items)
-            {
-                string[] values = new string[this.dataGridViewConceptRules.Columns.Count];
-
-                for(int i = 0; i < parmnames.Length; i++)
-                {
-                    string parmname = parmnames[i];
-                    string val = item.GetParameterValue(parmname);
-                    if (val != null)
-                    {
-                        values[i] = val;
-                    }
-                }
-
-                values[values.Length - 1] = item.Documentation;
-
-                int row = this.dataGridViewConceptRules.Rows.Add(values);
-                this.dataGridViewConceptRules.Rows[row].Tag = item;
-            }
-
-            if (this.dataGridViewConceptRules.SelectedCells.Count > 0)
-            {
-                this.dataGridViewConceptRules.SelectedCells[0].Selected = false;
-            }
-        }
-
-        private void dataGridViewConceptRules_CellValidated(object sender, DataGridViewCellEventArgs e)
-        {
-            if (this.m_editcon)
-                return;
-
-            // format parameters
-
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < this.dataGridViewConceptRules.Columns.Count - 1; i++)
-            {                
-                object val = this.dataGridViewConceptRules[i, e.RowIndex].Value;
-                if (val != null)
-                {
-                    DataGridViewColumn col = this.dataGridViewConceptRules.Columns[i];
-                    sb.Append(col.HeaderText);
-                    sb.Append("=");
-                    sb.Append(val as string);
-                    sb.Append(";");
-                }
-            }
-
-            DocTemplateUsage docUsage = (DocTemplateUsage)this.m_target;
-            if (docUsage.Items.Count > e.RowIndex)
-            {
-                DocTemplateItem docItem = docUsage.Items[e.RowIndex];
-                docItem.RuleParameters = sb.ToString();
-                object val = this.dataGridViewConceptRules[this.dataGridViewConceptRules.Columns.Count - 1, e.RowIndex].Value;
-                docItem.Documentation = val as string;
-            }
-        }
-
-        private void dataGridViewConceptRules_UserAddedRow(object sender, DataGridViewRowEventArgs e)
-        {
-            DocTemplateUsage docUsage = (DocTemplateUsage)this.m_target;
-            docUsage.Items.Add(new DocTemplateItem());
-        }
-
-        private void dataGridViewConceptRules_UserDeletedRow(object sender, DataGridViewRowEventArgs e)
-        {
-            DocTemplateUsage docUsage = (DocTemplateUsage)this.m_target;
-            docUsage.Items.Remove((DocTemplateItem)e.Row.Tag);
         }
 
         private void listViewExchange_SelectedIndexChanged(object sender, EventArgs e)
@@ -1125,53 +742,6 @@ namespace IfcDoc
             }
         }
 
-        private void buttonRuleAdd_Click(object sender, EventArgs e)
-        {
-            if (this.treeViewTemplateRules.SelectedNode != null &&
-                this.treeViewTemplateRules.SelectedNode.Tag is DocModelRuleAttribute)
-            {
-                this.toolStripButtonInsertRuleEntity_Click(this, e);
-            }
-            else
-            {
-                this.toolStripButtonInsertRuleAttribute_Click(this, e);
-            }
-
-            // update diagram            
-            this.panelDiagram.BackgroundImage = FormatPNG.CreateTemplateDiagram((DocTemplateDefinition)this.m_target, this.m_map, null, this.m_project);
-        }
-
-        private void buttonRuleDelete_Click(object sender, EventArgs e)
-        {
-            DocTemplateDefinition docTemplate = (DocTemplateDefinition)this.m_target;
-
-            DocModelRule ruleTarget = this.treeViewTemplateRules.SelectedNode.Tag as DocModelRule;
-            DocModelRule ruleParent = null;
-
-            if (this.treeViewTemplateRules.SelectedNode.Parent != null)
-            {
-                ruleParent = this.treeViewTemplateRules.SelectedNode.Parent.Tag as DocModelRule;
-            }
-
-            if (ruleParent != null)
-            {
-                ruleParent.Rules.Remove(ruleTarget);
-            }
-            else
-            {
-                docTemplate.Rules.Remove(ruleTarget);
-            }
-
-            // copy to child templates (before clearing selection)
-            docTemplate.PropagateRule(this.treeViewTemplateRules.SelectedNode.FullPath);
-
-            ruleTarget.Delete();
-            this.treeViewTemplateRules.SelectedNode.Remove();
-
-            // update diagram            
-            this.panelDiagram.BackgroundImage = FormatPNG.CreateTemplateDiagram((DocTemplateDefinition)this.m_target, this.m_map, null, this.m_project);
-        }
-
         private void buttonLocaleAdd_Click(object sender, EventArgs e)
         {
             // launch form for picking locale...
@@ -1207,64 +777,6 @@ namespace IfcDoc
                 docLocal.Delete();
 
                 lvi.Remove();
-            }
-        }
-
-        private void dataGridViewConceptRules_DataError(object sender, DataGridViewDataErrorEventArgs e)
-        {
-            // eat it...
-        }
-
-        private void dataGridViewConceptRules_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex < 0 || e.ColumnIndex < 0)
-                return;
-            
-            // for button types, launch dialog
-            DataGridViewCell cell = this.dataGridViewConceptRules.Rows[e.RowIndex].Cells[e.ColumnIndex];
-            DocDefinition docEntity = cell.Tag as DocDefinition;
-            if(docEntity == null)
-                return;
-
-            DocDefinition docSelect = null;
-            if (cell.Value != null && this.m_map.ContainsKey(cell.Value.ToString()))
-            {
-                docSelect = this.m_map[cell.Value.ToString()] as DocDefinition;
-            }
-
-            if (docEntity.Name != null && docEntity.Name.Equals("IfcReference"))
-            {
-                DocDefinition docDef = this.m_path[2] as DocDefinition;
-
-                // special case for building reference paths
-                using (FormReference form = new FormReference(this.m_project, docDef, this.m_map, cell.Value as string))
-                {
-                    DialogResult res = form.ShowDialog(this);
-                    if (res == System.Windows.Forms.DialogResult.OK)
-                    {
-                        if (form.ValuePath != null && form.ValuePath.StartsWith("\\"))
-                        {
-                            cell.Value = form.ValuePath.Substring(1);
-                        }
-                        else if (form.ValuePath == "")
-                        {
-                            cell.Value = "\\";
-                        }
-                        this.dataGridViewConceptRules.NotifyCurrentCellDirty(true);
-                    }
-                }
-            }
-            else
-            {
-                using (FormSelectEntity form = new FormSelectEntity(docEntity, docSelect, this.m_project))
-                {
-                    DialogResult res = form.ShowDialog(this);
-                    if (res == DialogResult.OK && form.SelectedEntity != null)
-                    {
-                        cell.Value = form.SelectedEntity.Name;
-                        this.dataGridViewConceptRules.NotifyCurrentCellDirty(true);
-                    }
-                }
             }
         }
 
@@ -1491,45 +1003,6 @@ namespace IfcDoc
             this.m_target.Copyright = this.textBoxIdentityCopyright.Text;
         }
 
-        private void buttonRuleUpdate_Click(object sender, EventArgs e)
-        {
-            DocModelRule docRule = (DocModelRule)this.treeViewTemplateRules.SelectedNode.Tag;
-            if (docRule is DocModelRuleConstraint)
-            {
-                using (FormConstraint form = new FormConstraint())
-                {
-                    form.Expression = docRule.Description;
-                    DialogResult res = form.ShowDialog(this);
-                    if (res == DialogResult.OK)
-                    {
-                        docRule.Description = form.Expression;
-                        docRule.Name = form.Expression; // repeat for visibility
-                    }
-                }
-            }
-            else
-            {
-                using (FormRule form = new FormRule(docRule))
-                {
-                    form.ShowDialog(this);
-                }
-            }
-
-            // update text in treeview
-            this.UpdateTreeRule(this.treeViewTemplateRules.SelectedNode);
-
-            // propagate rule
-            DocTemplateDefinition docTemplate = (DocTemplateDefinition)this.m_target;
-            docTemplate.PropagateRule(this.treeViewTemplateRules.SelectedNode.FullPath);
-
-            /*
-            this.treeViewTemplateRules.SelectedNode.Text = docRule.Name + docRule.GetCardinalityExpression();            
-            if (!String.IsNullOrEmpty(docRule.Identification))
-            {
-                this.treeViewTemplateRules.SelectedNode.Text += " <" + docRule.Identification + ">";
-            }*/
-        }
-
         private void comboBoxLocaleCategory_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (!this.comboBoxLocaleCategory.Enabled)
@@ -1561,52 +1034,6 @@ namespace IfcDoc
                     docLocal.URL = this.textBoxLocaleURL.Text;
                 }
             }
-        }
-
-        private void MoveRule(int offset)
-        {
-            TreeNode tnSelect = this.treeViewTemplateRules.SelectedNode;
-            TreeNode tnParent = tnSelect.Parent;
-            DocModelRule ruleSelect = (DocModelRule)tnSelect.Tag;
-            if (tnParent.Tag is DocModelRule)
-            {
-                DocModelRule ruleParent = (DocModelRule)tnParent.Tag;
-                int index = ruleParent.Rules.IndexOf(ruleSelect);
-                ruleParent.Rules.RemoveAt(index);
-
-                index += offset;
-
-                ruleParent.Rules.Insert(index, ruleSelect);
-                tnSelect.Remove();
-                tnParent.Nodes.Insert(index, tnSelect);
-            }
-            else if (tnParent.Tag is DocTemplateDefinition)
-            {
-                DocTemplateDefinition ruleParent = (DocTemplateDefinition)tnParent.Tag;
-                int index = ruleParent.Rules.IndexOf(ruleSelect);
-                ruleParent.Rules.RemoveAt(index);
-
-                index += offset;
-
-                ruleParent.Rules.Insert(index, ruleSelect);
-                tnSelect.Remove();
-                tnParent.Nodes.Insert(index, tnSelect);
-            }
-
-            this.treeViewTemplateRules.SelectedNode = tnSelect;
-
-            // update diagram            
-            this.panelDiagram.BackgroundImage = FormatPNG.CreateTemplateDiagram((DocTemplateDefinition)this.m_target, this.m_map, null, this.m_project);
-        }
-
-        private void buttonMoveUp_Click(object sender, EventArgs e)
-        {
-            MoveRule(-1);
-        }
-
-        private void buttonMoveDown_Click(object sender, EventArgs e)
-        {
-            MoveRule(+1);
         }
 
         private void buttonAttributeType_Click(object sender, EventArgs e)
@@ -1837,60 +1264,6 @@ namespace IfcDoc
             }
         }
 
-        private void buttonConceptMoveUp_Click(object sender, EventArgs e)
-        {
-            this.m_editcon = true;
-            int index = this.dataGridViewConceptRules.SelectedRows[0].Index;
-            DocTemplateUsage docUsage = (DocTemplateUsage)this.m_target;
-            DocTemplateItem dti = docUsage.Items[index];
-            docUsage.Items.Insert(index, dti);
-            docUsage.Items.RemoveAt(index + 1);
-
-            LoadUsage();
-            this.dataGridViewConceptRules.Rows[index - 1].Selected = true;
-            this.m_editcon = false;
-        }
-
-        private void buttonConceptMoveDown_Click(object sender, EventArgs e)
-        {
-            this.m_editcon = true;
-            int index = this.dataGridViewConceptRules.SelectedRows[0].Index;
-            if (index < this.dataGridViewConceptRules.Rows.Count - 2)
-            {
-                DocTemplateUsage docUsage = (DocTemplateUsage)this.m_target;
-                DocTemplateItem dti = docUsage.Items[index];
-                docUsage.Items.Insert(index + 2, dti);
-                docUsage.Items.RemoveAt(index);
-
-                LoadUsage();
-                this.dataGridViewConceptRules.Rows[index + 1].Selected = true;
-            }
-            this.m_editcon = false;
-        }
-
-        private void buttonConceptDelete_Click(object sender, EventArgs e)
-        {
-            this.m_editcon = true;
-            int index = this.dataGridViewConceptRules.SelectedRows[0].Index;
-            DocTemplateUsage docUsage = (DocTemplateUsage)this.m_target;
-            docUsage.Items.RemoveAt(index);
-
-            LoadUsage();
-
-            if (this.dataGridViewConceptRules.Rows.Count > index)
-            {
-                this.dataGridViewConceptRules.Rows[index].Selected = true;
-            }
-            this.m_editcon = false;
-        }
-
-        private void dataGridViewConceptRules_SelectionChanged(object sender, EventArgs e)
-        {
-            this.buttonConceptDelete.Enabled = (this.dataGridViewConceptRules.SelectedRows.Count == 1 && this.dataGridViewConceptRules.SelectedRows[0].Index < this.dataGridViewConceptRules.Rows.Count - 1);
-            this.buttonConceptMoveDown.Enabled = (this.dataGridViewConceptRules.SelectedRows.Count == 1 && this.dataGridViewConceptRules.SelectedRows[0].Index < this.dataGridViewConceptRules.Rows.Count - 2); // exclude New row
-            this.buttonConceptMoveUp.Enabled = (this.dataGridViewConceptRules.SelectedRows.Count == 1 && this.dataGridViewConceptRules.SelectedRows[0].Index > 0 && this.dataGridViewConceptRules.SelectedRows[0].Index < this.dataGridViewConceptRules.Rows.Count - 1);
-        }
-
         private void checkBoxExchangeImport_CheckedChanged(object sender, EventArgs e)
         {
             DocExchangeDefinition docExchange = (DocExchangeDefinition)this.m_target;
@@ -2072,7 +1445,7 @@ namespace IfcDoc
             DocObject docEntity = null;
             if (this.m_map.TryGetValue(docAttr.DefinedType, out docEntity) && docEntity is DocEntity)
             {
-                using(FormSelectAttribute form = new FormSelectAttribute((DocEntity)docEntity, this.m_map, null, false))
+                using(FormSelectAttribute form = new FormSelectAttribute((DocEntity)docEntity, this.m_project, null, false))
                 {
                     if(form.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
                     {
@@ -2196,7 +1569,7 @@ namespace IfcDoc
             {
                 if (form.ShowDialog(this) == System.Windows.Forms.DialogResult.OK && form.SelectedEntity is DocEntity)
                 {
-                    using(FormSelectAttribute formAttr = new FormSelectAttribute((DocEntity)form.SelectedEntity, this.m_map, null, false))
+                    using(FormSelectAttribute formAttr = new FormSelectAttribute((DocEntity)form.SelectedEntity, this.m_project, null, false))
                     {
                         if(formAttr.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
                         {

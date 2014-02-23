@@ -23,11 +23,12 @@ namespace IfcDoc.Format.HTM
         Dictionary<string, DocObject> m_mapEntity;
         Dictionary<string, string> m_mapSchema;
         bool m_anchors; // if true, hyperlinks are anchors within same page; if false, hyperlinks go to documentation
+        Dictionary<DocObject, bool> m_included;
 
         const string BEGIN_KEYWORD = "<span class=\"keyword\">";
         const string END_KEYWORD = "</span>";
 
-        public FormatHTM(string path, Dictionary<string, DocObject> mapEntity, Dictionary<string, string> mapSchema)
+        public FormatHTM(string path, Dictionary<string, DocObject> mapEntity, Dictionary<string, string> mapSchema, Dictionary<DocObject, bool> included)
         {
             string dirpath = System.IO.Path.GetDirectoryName(path);
             if (!Directory.Exists(dirpath))
@@ -40,6 +41,7 @@ namespace IfcDoc.Format.HTM
 
             this.m_mapEntity = mapEntity;
             this.m_mapSchema = mapSchema;
+            this.m_included = included;
         }
 
         public bool UseAnchors
@@ -51,6 +53,14 @@ namespace IfcDoc.Format.HTM
             set
             {
                 this.m_anchors = value;
+            }
+        }
+
+        public Dictionary<DocObject, bool> Included
+        {
+            get
+            {
+                return this.m_included;
             }
         }
 
@@ -239,7 +249,7 @@ namespace IfcDoc.Format.HTM
                 this.m_mapEntity.TryGetValue(definition, out ent) && 
                 this.m_mapSchema.TryGetValue(definition, out schema))
             {
-                if (ent.Visible)
+                if (this.m_included == null || this.m_included.ContainsKey(ent))
                 {
                     if (this.m_anchors)
                     {
@@ -377,7 +387,7 @@ namespace IfcDoc.Format.HTM
 
                             this.WriteExpressAggregation(attr);
 
-                            if (attr.Visible)
+                            if (this.m_included == null || this.m_included.ContainsKey(attr))
                             {
                                 this.m_writer.Write(FormatDefinition(attr.DefinedType));
                             }
@@ -403,18 +413,21 @@ namespace IfcDoc.Format.HTM
                 foreach (DocAttribute attr in entity.Attributes)
                 {
                     DocObject docinvtype = null;
-                    if (attr.Inverse != null && attr.Derived == null && this.m_mapEntity.TryGetValue(attr.DefinedType, out docinvtype) && docinvtype.Visible)
-                    {                        
-                        this.m_writer.Write("<tr valign=\"top\"><td width=\"20%\">");
-                        this.m_writer.Write(attr.Name);
-                        this.m_writer.Write("</td><td width=\"1%\"> : </td><td>");
+                    if (attr.Inverse != null && attr.Derived == null && this.m_mapEntity.TryGetValue(attr.DefinedType, out docinvtype))
+                    {
+                        if (this.m_included == null || this.m_included.ContainsKey(docinvtype))
+                        {
+                            this.m_writer.Write("<tr valign=\"top\"><td width=\"20%\">");
+                            this.m_writer.Write(attr.Name);
+                            this.m_writer.Write("</td><td width=\"1%\"> : </td><td>");
 
-                        this.WriteExpressAggregation(attr);
+                            this.WriteExpressAggregation(attr);
 
-                        this.m_writer.Write(FormatDefinition(attr.DefinedType));
-                        this.m_writer.Write(" " + BEGIN_KEYWORD + "FOR" + END_KEYWORD + " ");
-                        this.m_writer.Write(attr.Inverse);
-                        this.m_writer.WriteLine(";</td></tr>");
+                            this.m_writer.Write(FormatDefinition(attr.DefinedType));
+                            this.m_writer.Write(" " + BEGIN_KEYWORD + "FOR" + END_KEYWORD + " ");
+                            this.m_writer.Write(attr.Inverse);
+                            this.m_writer.WriteLine(";</td></tr>");
+                        }
                     }
                 }
                 this.m_writer.WriteLine("</table>");
@@ -576,7 +589,7 @@ namespace IfcDoc.Format.HTM
                     foreach (DocAttribute docAttr in entity.Attributes)
                     {
                         DocObject docref = null;
-                        if (!this.m_mapEntity.TryGetValue(docAttr.DefinedType, out docref) || docref.Visible)
+                        if (!this.m_mapEntity.TryGetValue(docAttr.DefinedType, out docref) || (this.m_included == null || this.m_included.ContainsKey(docref)))
                         {
                             if (docAttr.Documentation != null)
                             {
@@ -688,7 +701,7 @@ namespace IfcDoc.Format.HTM
                     foreach (string ds in subtypes.Keys)
                     {
                         DocEntity refent = subtypes[ds];
-                        if (refent.Visible)
+                        if (this.m_included == null || this.m_included.ContainsKey(refent))
                         {
                             countsub++;
 
@@ -903,16 +916,19 @@ namespace IfcDoc.Format.HTM
                     foreach (DocSelectItem docconst in docenum.Selects)
                     {
                         DocObject docref = null;
-                        if (this.m_mapEntity.TryGetValue(docconst.Name, out docref) && docref.Visible)
+                        if (this.m_mapEntity.TryGetValue(docconst.Name, out docref))
                         {
-                            if (previtem)
+                            if (this.m_included == null || this.m_included.ContainsKey(docref))
                             {
-                                this.m_writer.Write(", <br/>");
+                                if (previtem)
+                                {
+                                    this.m_writer.Write(", <br/>");
+                                }
+
+                                this.m_writer.Write(this.FormatDefinition(docconst.Name));
+
+                                previtem = true;
                             }
-
-                            this.m_writer.Write(this.FormatDefinition(docconst.Name));
-
-                            previtem = true;
                         }
                     }
 
@@ -1054,7 +1070,7 @@ namespace IfcDoc.Format.HTM
             foreach (string s in this.m_mapEntity.Keys)
             {
                 DocObject obj = this.m_mapEntity[s];
-                if (obj is T && obj.Visible)
+                if (obj is T && (this.m_included == null || this.m_included.ContainsKey(obj)))
                 {
                     count++;
 
@@ -1147,7 +1163,7 @@ namespace IfcDoc.Format.HTM
             foreach (string s in this.m_mapEntity.Keys)
             {
                 DocObject obj = this.m_mapEntity[s];
-                if (obj is T && obj.Visible)
+                if (obj is T && (this.m_included == null || this.m_included.ContainsKey(obj)))
                 {
                     alphaEntity.Add(s, (T)obj);
                 }
@@ -1200,7 +1216,7 @@ namespace IfcDoc.Format.HTM
             foreach (string s in this.m_mapEntity.Keys)
             {
                 DocObject obj = this.m_mapEntity[s];
-                if (obj is DocEntity && obj.Visible)
+                if (obj is DocEntity && (this.m_included == null || this.m_included.ContainsKey(obj)))
                 {
                     alphaEntity.Add(s, (DocEntity)obj);
                 }
@@ -1383,7 +1399,7 @@ namespace IfcDoc.Format.HTM
                         string def = content.Substring(index + prelen + 3, end - index - prelen - 3);
 
                         DocObject docDef = null;
-                        if (this.m_mapEntity.TryGetValue(def, out docDef) && docDef.Visible)
+                        if (this.m_mapEntity.TryGetValue(def, out docDef) && (this.m_included == null || this.m_included.ContainsKey(docDef)))
                         {
                             // IFC definition exists; 
                             if (current is DocSchema || current is DocTemplateDefinition)
@@ -1614,44 +1630,94 @@ namespace IfcDoc.Format.HTM
 
         internal void WriteFigureContentsForTemplate(DocTemplateDefinition def, ref int iFigure)
         {
-            if (!def.Visible)
-                return;
-
-            if (def.Rules != null && def.Rules.Count > 0)
+            if (this.m_included == null || this.m_included.ContainsKey(def))
             {
-                iFigure++;
-                this.m_writer.WriteLine("<a class=\"listing-link\" href=\"schema/templates/" + def.Name.ToLower().Replace(' ', '-') + ".htm#" + def.Name.Replace(' ', '-').ToLower() + "\">Figure " + iFigure.ToString() + " &mdash; " + def.Name + "</a><br />");
-            }
-
-            if (def.Templates != null)
-            {
-                foreach (DocTemplateDefinition sub in def.Templates)
+                if (def.Rules != null && def.Rules.Count > 0)
                 {
-                    WriteFigureContentsForTemplate(sub, ref iFigure);
+                    iFigure++;
+                    this.m_writer.WriteLine("<a class=\"listing-link\" href=\"schema/templates/" + def.Name.ToLower().Replace(' ', '-') + ".htm#" + def.Name.Replace(' ', '-').ToLower() + "\">Figure " + iFigure.ToString() + " &mdash; " + def.Name + "</a><br />");
+                }
+
+                if (def.Templates != null)
+                {
+                    foreach (DocTemplateDefinition sub in def.Templates)
+                    {
+                        WriteFigureContentsForTemplate(sub, ref iFigure);
+                    }
                 }
             }
         }
 
         internal void WriteFigureContents(DocObject def)
         {
-            if (!def.Visible)
-                return;
-
-            string html = def.Documentation;
-            if (html != null)
+            if (this.m_included == null || this.m_included.ContainsKey(def))
             {
+
+                string html = def.Documentation;
+                if (html != null)
+                {
+
+                    int index = 0;
+                    for (int count = 0; ; count++)
+                    {
+                        index = html.IndexOf("<p class=\"figure\">", index);
+                        if (index == -1)
+                            break;
+
+                        // <p class="figure">Figure 278 &mdash; Circle geometry</p>
+
+                        // get the existing figure number, add it to list
+                        int head = index + 25;
+                        int tail = html.IndexOf(" &mdash;", index);
+                        if (tail > head)
+                        {
+                            string exist = html.Substring(head, tail - head);
+                            int result = 0;
+                            if (Int32.TryParse(exist, out result))
+                            {
+                                int nametail = html.IndexOf("<", tail);
+                                string figurename = html.Substring(tail + 9, nametail - tail - 9);
+
+                                string schema;
+                                this.m_mapSchema.TryGetValue(def.Name, out schema);
+                                if (schema != null)
+                                {
+                                    this.m_writer.WriteLine("<a class=\"listing-link\" href=\"schema/" + schema.ToLower() + "/lexical/" + def.Name.ToLower() + ".htm\">Figure " + exist.ToString() + " &mdash; " + figurename + "</a><br />");
+                                }
+                                else
+                                {
+                                    // schema page
+                                    this.m_writer.WriteLine("<a class=\"listing-link\" href=\"schema/" + def.Name.ToLower() + "/content.htm\">Figure " + exist.ToString() + " &mdash; " + figurename + "</a><br />");
+                                }
+                            }
+                        }
+
+                        index++;
+                    }
+                }
+            }
+        }
+
+        internal void WriteTableContents(DocObject def)
+        {
+            if (this.m_included == null || this.m_included.ContainsKey(def))
+            {
+
+                string html = def.Documentation;
+                if (html == null)
+                    return;
 
                 int index = 0;
                 for (int count = 0; ; count++)
                 {
-                    index = html.IndexOf("<p class=\"figure\">", index);
+                    index = html.IndexOf("<p class=\"table\">", index);
                     if (index == -1)
                         break;
 
-                    // <p class="figure">Figure 278 &mdash; Circle geometry</p>
+                    // <p class="figure">Table 278 &mdash; Circle geometry</p>
 
                     // get the existing figure number, add it to list
-                    int head = index + 25;
+                    int head = index + 23;
                     int tail = html.IndexOf(" &mdash;", index);
                     if (tail > head)
                     {
@@ -1666,66 +1732,18 @@ namespace IfcDoc.Format.HTM
                             this.m_mapSchema.TryGetValue(def.Name, out schema);
                             if (schema != null)
                             {
-                                this.m_writer.WriteLine("<a class=\"listing-link\" href=\"schema/" + schema.ToLower() + "/lexical/" + def.Name.ToLower() + ".htm\">Figure " + exist.ToString() + " &mdash; " + figurename + "</a><br />");
+                                this.m_writer.WriteLine("<a class=\"listing-link\" href=\"schema/" + schema.ToLower() + "/lexical/" + def.Name.ToLower() + ".htm\">Table " + exist.ToString() + " &mdash; " + figurename + "</a><br />");
                             }
                             else
                             {
                                 // schema page
-                                this.m_writer.WriteLine("<a class=\"listing-link\" href=\"schema/" + def.Name.ToLower() + "/content.htm\">Figure " + exist.ToString() + " &mdash; " + figurename + "</a><br />");
+                                this.m_writer.WriteLine("<a class=\"listing-link\" href=\"schema/" + def.Name.ToLower() + "/content.htm\">Table " + exist.ToString() + " &mdash; " + figurename + "</a><br />");
                             }
                         }
                     }
 
                     index++;
                 }
-            }
-        }
-
-        internal void WriteTableContents(DocObject def)
-        {
-            if (!def.Visible)
-                return;
-
-            string html = def.Documentation;
-            if (html == null)
-                return;
-
-            int index = 0;
-            for (int count = 0; ; count++)
-            {
-                index = html.IndexOf("<p class=\"table\">", index);
-                if (index == -1)
-                    break;
-
-                // <p class="figure">Table 278 &mdash; Circle geometry</p>
-
-                // get the existing figure number, add it to list
-                int head = index + 23;
-                int tail = html.IndexOf(" &mdash;", index);
-                if (tail > head)
-                {
-                    string exist = html.Substring(head, tail - head);
-                    int result = 0;
-                    if (Int32.TryParse(exist, out result))
-                    {
-                        int nametail = html.IndexOf("<", tail);
-                        string figurename = html.Substring(tail + 9, nametail - tail - 9);
-
-                        string schema;
-                        this.m_mapSchema.TryGetValue(def.Name, out schema);
-                        if (schema != null)
-                        {
-                            this.m_writer.WriteLine("<a class=\"listing-link\" href=\"schema/" + schema.ToLower() + "/lexical/" + def.Name.ToLower() + ".htm\">Table " + exist.ToString() + " &mdash; " + figurename + "</a><br />");
-                        }
-                        else
-                        {
-                            // schema page
-                            this.m_writer.WriteLine("<a class=\"listing-link\" href=\"schema/" + def.Name.ToLower() + "/content.htm\">Table " + exist.ToString() + " &mdash; " + figurename + "</a><br />");
-                        }
-                    }
-                }
-
-                index++;
             }
         }
 
@@ -1759,7 +1777,7 @@ namespace IfcDoc.Format.HTM
                 // entity or type                
                 string schema = null;
                 DocObject docobj = null;
-                if (this.m_mapSchema.TryGetValue(docChange.Name, out schema) && this.m_mapEntity.TryGetValue(docChange.Name, out docobj) && docobj.Visible)
+                if (this.m_mapSchema.TryGetValue(docChange.Name, out schema) && this.m_mapEntity.TryGetValue(docChange.Name, out docobj) && (this.m_included == null || this.m_included.ContainsKey(docobj)))
                 {
                     if (docChange.Name.StartsWith("Pset_"))
                     {
@@ -1846,7 +1864,7 @@ namespace IfcDoc.Format.HTM
             }
         }
 
-        public static void WriteTOCforTemplates(List<DocTemplateDefinition> list, int level, string prefix, FormatHTM htmTOC, FormatHTM htmSectionTOC)
+        public static void WriteTOCforTemplates(List<DocTemplateDefinition> list, int level, string prefix, FormatHTM htmTOC, FormatHTM htmSectionTOC, Dictionary<DocObject, bool> included)
         {
             if (list == null)
                 return;
@@ -1854,7 +1872,7 @@ namespace IfcDoc.Format.HTM
             int iTemplateDef = 0;
             foreach (DocTemplateDefinition docTemplateDef in list)
             {
-                if (docTemplateDef.Visible)
+                if (included == null || included.ContainsKey(docTemplateDef))
                 {
                     iTemplateDef++;
 
@@ -1868,7 +1886,7 @@ namespace IfcDoc.Format.HTM
                     htmSectionTOC.WriteLine("<tr class=\"std\"><td class=\"menu\">" + prefix + "." + iTemplateDef.ToString() + " <a name=\"" + prefix + "." + iTemplateDef.ToString() + "\" /><a class=\"listing-link\" target=\"info\" href=\"templates/" + rellink + "\" >" + docTemplateDef.Name + "</a></td></tr>");
 
                     // recurse                    
-                    WriteTOCforTemplates(docTemplateDef.Templates, level + 1, prefix + "." + iTemplateDef.ToString(), htmTOC, htmSectionTOC);
+                    WriteTOCforTemplates(docTemplateDef.Templates, level + 1, prefix + "." + iTemplateDef.ToString(), htmTOC, htmSectionTOC, included);
                 }
             }
         }
@@ -1896,11 +1914,11 @@ namespace IfcDoc.Format.HTM
             {
                 foreach (DocSchema docSchema in docSection.Schemas)
                 {
-                    if (docSchema.Visible)
+                    if (this.m_included == null || this.m_included.ContainsKey(docSchema))
                     {
                         foreach (DocType docType in docSchema.Types)
                         {
-                            if (docType.Visible)
+                            if (this.m_included == null || this.m_included.ContainsKey(docType))
                             {
                                 if (docType is DocDefined)
                                 {
@@ -1921,7 +1939,7 @@ namespace IfcDoc.Format.HTM
 
                         foreach (DocEntity docEnt in docSchema.Entities)
                         {
-                            if (docEnt.Visible)
+                            if (this.m_included == null || this.m_included.ContainsKey(docEnt))
                             {
                                 mapEntity.Add(docEnt.Name, docEnt);
                                 mapGeneral.Add(docEnt.Name, docEnt);
@@ -1930,7 +1948,7 @@ namespace IfcDoc.Format.HTM
 
                         foreach (DocFunction docFunc in docSchema.Functions)
                         {
-                            if (docFunc.Visible && !mapFunction.ContainsKey(docFunc.Name))
+                            if ((this.m_included == null || this.m_included.ContainsKey(docFunc)) && !mapFunction.ContainsKey(docFunc.Name))
                             {
                                 mapFunction.Add(docFunc.Name, docFunc);
                             }
@@ -1938,7 +1956,7 @@ namespace IfcDoc.Format.HTM
 
                         foreach (DocGlobalRule docRule in docSchema.GlobalRules)
                         {
-                            if (docRule.Visible)
+                            if (this.m_included == null || this.m_included.ContainsKey(docRule))
                             {
                                 mapRule.Add(docRule.Name, docRule);
                             }

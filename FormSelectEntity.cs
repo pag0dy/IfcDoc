@@ -118,6 +118,7 @@ namespace IfcDoc
                 this.treeView.SelectedNode = this.treeView.Nodes[0];
             }
 
+            this.treeView.ExpandAll();
             this.treeView.Focus();
         }
 

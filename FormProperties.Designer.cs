@@ -30,9 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormProperties));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabPageGeneral = new System.Windows.Forms.TabPage();
             this.label16 = new System.Windows.Forms.Label();
@@ -73,27 +70,15 @@
             this.textBoxIdentityUuid = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.tabPageTemplate = new System.Windows.Forms.TabPage();
-            this.buttonMoveDown = new System.Windows.Forms.Button();
-            this.buttonMoveUp = new System.Windows.Forms.Button();
-            this.buttonRuleUpdate = new System.Windows.Forms.Button();
-            this.treeViewTemplateRules = new System.Windows.Forms.TreeView();
             this.imageListRules = new System.Windows.Forms.ImageList(this.components);
-            this.buttonRuleDelete = new System.Windows.Forms.Button();
-            this.buttonRuleAdd = new System.Windows.Forms.Button();
             this.buttonTemplateEntity = new System.Windows.Forms.Button();
             this.textBoxTemplateEntity = new System.Windows.Forms.TextBox();
-            this.labelTemplateRules = new System.Windows.Forms.Label();
             this.labelTemplateEntity = new System.Windows.Forms.Label();
             this.tabPageConcept = new System.Windows.Forms.TabPage();
             this.checkBoxConceptOverride = new System.Windows.Forms.CheckBox();
-            this.buttonConceptDelete = new System.Windows.Forms.Button();
-            this.buttonConceptMoveDown = new System.Windows.Forms.Button();
-            this.buttonConceptMoveUp = new System.Windows.Forms.Button();
             this.buttonConceptTemplate = new System.Windows.Forms.Button();
             this.textBoxConceptTemplate = new System.Windows.Forms.TextBox();
-            this.labelConceptRules = new System.Windows.Forms.Label();
             this.labelConceptTemplate = new System.Windows.Forms.Label();
-            this.dataGridViewConceptRules = new System.Windows.Forms.DataGridView();
             this.tabPageRequirements = new System.Windows.Forms.TabPage();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.radioButtonExportNone = new System.Windows.Forms.RadioButton();
@@ -213,7 +198,6 @@
             this.tabPageIdentity.SuspendLayout();
             this.tabPageTemplate.SuspendLayout();
             this.tabPageConcept.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewConceptRules)).BeginInit();
             this.tabPageRequirements.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -657,15 +641,8 @@
             // 
             // tabPageTemplate
             // 
-            this.tabPageTemplate.Controls.Add(this.buttonMoveDown);
-            this.tabPageTemplate.Controls.Add(this.buttonMoveUp);
-            this.tabPageTemplate.Controls.Add(this.buttonRuleUpdate);
-            this.tabPageTemplate.Controls.Add(this.treeViewTemplateRules);
-            this.tabPageTemplate.Controls.Add(this.buttonRuleDelete);
-            this.tabPageTemplate.Controls.Add(this.buttonRuleAdd);
             this.tabPageTemplate.Controls.Add(this.buttonTemplateEntity);
             this.tabPageTemplate.Controls.Add(this.textBoxTemplateEntity);
-            this.tabPageTemplate.Controls.Add(this.labelTemplateRules);
             this.tabPageTemplate.Controls.Add(this.labelTemplateEntity);
             this.tabPageTemplate.Location = new System.Drawing.Point(4, 22);
             this.tabPageTemplate.Name = "tabPageTemplate";
@@ -675,57 +652,6 @@
             this.tabPageTemplate.Text = "Template";
             this.tabPageTemplate.UseVisualStyleBackColor = true;
             // 
-            // buttonMoveDown
-            // 
-            this.buttonMoveDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonMoveDown.Enabled = false;
-            this.buttonMoveDown.Location = new System.Drawing.Point(296, 356);
-            this.buttonMoveDown.Name = "buttonMoveDown";
-            this.buttonMoveDown.Size = new System.Drawing.Size(41, 23);
-            this.buttonMoveDown.TabIndex = 20;
-            this.buttonMoveDown.Text = ">";
-            this.buttonMoveDown.UseVisualStyleBackColor = true;
-            this.buttonMoveDown.Click += new System.EventHandler(this.buttonMoveDown_Click);
-            // 
-            // buttonMoveUp
-            // 
-            this.buttonMoveUp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonMoveUp.Enabled = false;
-            this.buttonMoveUp.Location = new System.Drawing.Point(249, 356);
-            this.buttonMoveUp.Name = "buttonMoveUp";
-            this.buttonMoveUp.Size = new System.Drawing.Size(41, 23);
-            this.buttonMoveUp.TabIndex = 19;
-            this.buttonMoveUp.Text = "<";
-            this.buttonMoveUp.UseVisualStyleBackColor = true;
-            this.buttonMoveUp.Click += new System.EventHandler(this.buttonMoveUp_Click);
-            // 
-            // buttonRuleUpdate
-            // 
-            this.buttonRuleUpdate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonRuleUpdate.Enabled = false;
-            this.buttonRuleUpdate.Location = new System.Drawing.Point(168, 356);
-            this.buttonRuleUpdate.Name = "buttonRuleUpdate";
-            this.buttonRuleUpdate.Size = new System.Drawing.Size(75, 23);
-            this.buttonRuleUpdate.TabIndex = 18;
-            this.buttonRuleUpdate.Text = "Update...";
-            this.buttonRuleUpdate.UseVisualStyleBackColor = true;
-            this.buttonRuleUpdate.Click += new System.EventHandler(this.buttonRuleUpdate_Click);
-            // 
-            // treeViewTemplateRules
-            // 
-            this.treeViewTemplateRules.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.treeViewTemplateRules.HideSelection = false;
-            this.treeViewTemplateRules.ImageIndex = 0;
-            this.treeViewTemplateRules.ImageList = this.imageListRules;
-            this.treeViewTemplateRules.Location = new System.Drawing.Point(7, 70);
-            this.treeViewTemplateRules.Name = "treeViewTemplateRules";
-            this.treeViewTemplateRules.SelectedImageIndex = 0;
-            this.treeViewTemplateRules.Size = new System.Drawing.Size(331, 280);
-            this.treeViewTemplateRules.TabIndex = 1;
-            this.treeViewTemplateRules.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewTemplateRules_AfterSelect);
-            // 
             // imageListRules
             // 
             this.imageListRules.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListRules.ImageStream")));
@@ -733,29 +659,6 @@
             this.imageListRules.Images.SetKeyName(0, "DocEntity.bmp");
             this.imageListRules.Images.SetKeyName(1, "DocAttribute.bmp");
             this.imageListRules.Images.SetKeyName(2, "DocQuantity.bmp");
-            // 
-            // buttonRuleDelete
-            // 
-            this.buttonRuleDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonRuleDelete.Enabled = false;
-            this.buttonRuleDelete.Location = new System.Drawing.Point(87, 356);
-            this.buttonRuleDelete.Name = "buttonRuleDelete";
-            this.buttonRuleDelete.Size = new System.Drawing.Size(75, 23);
-            this.buttonRuleDelete.TabIndex = 17;
-            this.buttonRuleDelete.Text = "Delete";
-            this.buttonRuleDelete.UseVisualStyleBackColor = true;
-            this.buttonRuleDelete.Click += new System.EventHandler(this.buttonRuleDelete_Click);
-            // 
-            // buttonRuleAdd
-            // 
-            this.buttonRuleAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonRuleAdd.Location = new System.Drawing.Point(6, 356);
-            this.buttonRuleAdd.Name = "buttonRuleAdd";
-            this.buttonRuleAdd.Size = new System.Drawing.Size(75, 23);
-            this.buttonRuleAdd.TabIndex = 16;
-            this.buttonRuleAdd.Text = "Add...";
-            this.buttonRuleAdd.UseVisualStyleBackColor = true;
-            this.buttonRuleAdd.Click += new System.EventHandler(this.buttonRuleAdd_Click);
             // 
             // buttonTemplateEntity
             // 
@@ -778,15 +681,6 @@
             this.textBoxTemplateEntity.Size = new System.Drawing.Size(250, 20);
             this.textBoxTemplateEntity.TabIndex = 1;
             // 
-            // labelTemplateRules
-            // 
-            this.labelTemplateRules.AutoSize = true;
-            this.labelTemplateRules.Location = new System.Drawing.Point(6, 54);
-            this.labelTemplateRules.Name = "labelTemplateRules";
-            this.labelTemplateRules.Size = new System.Drawing.Size(37, 13);
-            this.labelTemplateRules.TabIndex = 3;
-            this.labelTemplateRules.Text = "Rules:";
-            // 
             // labelTemplateEntity
             // 
             this.labelTemplateEntity.AutoSize = true;
@@ -799,14 +693,9 @@
             // tabPageConcept
             // 
             this.tabPageConcept.Controls.Add(this.checkBoxConceptOverride);
-            this.tabPageConcept.Controls.Add(this.buttonConceptDelete);
-            this.tabPageConcept.Controls.Add(this.buttonConceptMoveDown);
-            this.tabPageConcept.Controls.Add(this.buttonConceptMoveUp);
             this.tabPageConcept.Controls.Add(this.buttonConceptTemplate);
             this.tabPageConcept.Controls.Add(this.textBoxConceptTemplate);
-            this.tabPageConcept.Controls.Add(this.labelConceptRules);
             this.tabPageConcept.Controls.Add(this.labelConceptTemplate);
-            this.tabPageConcept.Controls.Add(this.dataGridViewConceptRules);
             this.tabPageConcept.Location = new System.Drawing.Point(4, 22);
             this.tabPageConcept.Name = "tabPageConcept";
             this.tabPageConcept.Padding = new System.Windows.Forms.Padding(3);
@@ -825,42 +714,6 @@
             this.checkBoxConceptOverride.Text = "Override any parent concepts of this template (do not inherit)";
             this.checkBoxConceptOverride.UseVisualStyleBackColor = true;
             this.checkBoxConceptOverride.CheckedChanged += new System.EventHandler(this.checkBoxConceptOverride_CheckedChanged);
-            // 
-            // buttonConceptDelete
-            // 
-            this.buttonConceptDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonConceptDelete.Enabled = false;
-            this.buttonConceptDelete.Location = new System.Drawing.Point(263, 356);
-            this.buttonConceptDelete.Name = "buttonConceptDelete";
-            this.buttonConceptDelete.Size = new System.Drawing.Size(75, 23);
-            this.buttonConceptDelete.TabIndex = 7;
-            this.buttonConceptDelete.Text = "Delete";
-            this.buttonConceptDelete.UseVisualStyleBackColor = true;
-            this.buttonConceptDelete.Click += new System.EventHandler(this.buttonConceptDelete_Click);
-            // 
-            // buttonConceptMoveDown
-            // 
-            this.buttonConceptMoveDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonConceptMoveDown.Enabled = false;
-            this.buttonConceptMoveDown.Location = new System.Drawing.Point(87, 356);
-            this.buttonConceptMoveDown.Name = "buttonConceptMoveDown";
-            this.buttonConceptMoveDown.Size = new System.Drawing.Size(75, 23);
-            this.buttonConceptMoveDown.TabIndex = 6;
-            this.buttonConceptMoveDown.Text = "Move &Down";
-            this.buttonConceptMoveDown.UseVisualStyleBackColor = true;
-            this.buttonConceptMoveDown.Click += new System.EventHandler(this.buttonConceptMoveDown_Click);
-            // 
-            // buttonConceptMoveUp
-            // 
-            this.buttonConceptMoveUp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonConceptMoveUp.Enabled = false;
-            this.buttonConceptMoveUp.Location = new System.Drawing.Point(6, 356);
-            this.buttonConceptMoveUp.Name = "buttonConceptMoveUp";
-            this.buttonConceptMoveUp.Size = new System.Drawing.Size(75, 23);
-            this.buttonConceptMoveUp.TabIndex = 5;
-            this.buttonConceptMoveUp.Text = "Move &Up";
-            this.buttonConceptMoveUp.UseVisualStyleBackColor = true;
-            this.buttonConceptMoveUp.Click += new System.EventHandler(this.buttonConceptMoveUp_Click);
             // 
             // buttonConceptTemplate
             // 
@@ -883,15 +736,6 @@
             this.textBoxConceptTemplate.Size = new System.Drawing.Size(250, 20);
             this.textBoxConceptTemplate.TabIndex = 1;
             // 
-            // labelConceptRules
-            // 
-            this.labelConceptRules.AutoSize = true;
-            this.labelConceptRules.Location = new System.Drawing.Point(6, 89);
-            this.labelConceptRules.Name = "labelConceptRules";
-            this.labelConceptRules.Size = new System.Drawing.Size(88, 13);
-            this.labelConceptRules.TabIndex = 3;
-            this.labelConceptRules.Text = "Rule Parameters:";
-            // 
             // labelConceptTemplate
             // 
             this.labelConceptTemplate.AutoSize = true;
@@ -900,49 +744,6 @@
             this.labelConceptTemplate.Size = new System.Drawing.Size(97, 13);
             this.labelConceptTemplate.TabIndex = 0;
             this.labelConceptTemplate.Text = "Concept Template:";
-            // 
-            // dataGridViewConceptRules
-            // 
-            this.dataGridViewConceptRules.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataGridViewConceptRules.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridViewConceptRules.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            this.dataGridViewConceptRules.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridViewConceptRules.DefaultCellStyle = dataGridViewCellStyle2;
-            this.dataGridViewConceptRules.Location = new System.Drawing.Point(6, 105);
-            this.dataGridViewConceptRules.MultiSelect = false;
-            this.dataGridViewConceptRules.Name = "dataGridViewConceptRules";
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridViewConceptRules.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
-            this.dataGridViewConceptRules.Size = new System.Drawing.Size(332, 245);
-            this.dataGridViewConceptRules.TabIndex = 4;
-            this.dataGridViewConceptRules.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewConceptRules_CellContentClick);
-            this.dataGridViewConceptRules.CellValidated += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewConceptRules_CellValidated);
-            this.dataGridViewConceptRules.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dataGridViewConceptRules_DataError);
-            this.dataGridViewConceptRules.SelectionChanged += new System.EventHandler(this.dataGridViewConceptRules_SelectionChanged);
-            this.dataGridViewConceptRules.UserAddedRow += new System.Windows.Forms.DataGridViewRowEventHandler(this.dataGridViewConceptRules_UserAddedRow);
-            this.dataGridViewConceptRules.UserDeletedRow += new System.Windows.Forms.DataGridViewRowEventHandler(this.dataGridViewConceptRules_UserDeletedRow);
             // 
             // tabPageRequirements
             // 
@@ -2472,7 +2273,6 @@
             this.tabPageTemplate.PerformLayout();
             this.tabPageConcept.ResumeLayout(false);
             this.tabPageConcept.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewConceptRules)).EndInit();
             this.tabPageRequirements.ResumeLayout(false);
             this.tabPageRequirements.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -2508,14 +2308,10 @@
         private System.Windows.Forms.TabPage tabPageConcept;
         private System.Windows.Forms.TabPage tabPageRequirements;
         private System.Windows.Forms.Button buttonClose;
-        private System.Windows.Forms.DataGridView dataGridViewConceptRules;
-        private System.Windows.Forms.Label labelConceptRules;
         private System.Windows.Forms.Label labelConceptTemplate;
         private System.Windows.Forms.Label labelRequirementsExchanges;
         private System.Windows.Forms.TabPage tabPageTemplate;
-        private System.Windows.Forms.Label labelTemplateRules;
         private System.Windows.Forms.Label labelTemplateEntity;
-        private System.Windows.Forms.TreeView treeViewTemplateRules;
         private System.Windows.Forms.TabPage tabPageGeneral;
         private System.Windows.Forms.TextBox textBoxGeneralDescription;
         private System.Windows.Forms.TextBox textBoxGeneralName;
@@ -2546,8 +2342,6 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button buttonLocaleDelete;
         private System.Windows.Forms.Button buttonLocaleAdd;
-        private System.Windows.Forms.Button buttonRuleDelete;
-        private System.Windows.Forms.Button buttonRuleAdd;
         private System.Windows.Forms.TabPage tabPagePropertySet;
         private System.Windows.Forms.Button buttonApplicabilityAddEntity;
         private System.Windows.Forms.Label label1;
@@ -2586,13 +2380,10 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox textBoxIdentityUuid;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Button buttonRuleUpdate;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.TextBox textBoxLocaleURL;
         private System.Windows.Forms.ComboBox comboBoxLocaleCategory;
-        private System.Windows.Forms.Button buttonMoveDown;
-        private System.Windows.Forms.Button buttonMoveUp;
         private System.Windows.Forms.Label labelAttributeAggregation;
         private System.Windows.Forms.TabPage tabPageExpression;
         private System.Windows.Forms.Label label18;
@@ -2613,9 +2404,6 @@
         private System.Windows.Forms.Button buttonPropertyEnumInsert;
         private System.Windows.Forms.ListView listViewPropertyEnums;
         private System.Windows.Forms.ColumnHeader columnHeaderPropertyEnum;
-        private System.Windows.Forms.Button buttonConceptMoveDown;
-        private System.Windows.Forms.Button buttonConceptMoveUp;
-        private System.Windows.Forms.Button buttonConceptDelete;
         private System.Windows.Forms.TabPage tabPageExchange;
         private System.Windows.Forms.Panel panelIcon;
         private System.Windows.Forms.Label label2;

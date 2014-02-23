@@ -17,10 +17,10 @@ namespace IfcDoc.Format.PNG
 {
     class FormatPNG
     {
-        const int CY = 12;  // height of each attribute
-        const int CX = 200; // width of each entity and gap
-        const int DX = 32;  // horizontal gap between each entity
-
+        public const int CY = 12;  // height of each attribute
+        public const int CX = 200; // width of each entity and gap
+        public const int DX = 32;  // horizontal gap between each entity
+        const int Border = 8;   // indent
         const double Factor = 0.375;// 0.375;
 
         /// <summary>
@@ -28,7 +28,7 @@ namespace IfcDoc.Format.PNG
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        private static void BuildAttributeList(DocEntity entity, List<DocAttribute> list, Dictionary<string, DocObject> map)
+        public static void BuildAttributeList(DocEntity entity, List<DocAttribute> list, Dictionary<string, DocObject> map)
         {
             DocObject docBase = null;
             if (entity.BaseDefinition != null && map.TryGetValue(entity.BaseDefinition, out docBase))
@@ -178,7 +178,7 @@ namespace IfcDoc.Format.PNG
                             // record rectangle
                             if (layout != null)
                             {
-                                layout.Add(new Rectangle(x + CX, targetY, CX - DX, CY), ruleEntity);
+                                layout.Add(new Rectangle(x + CX + FormatPNG.Border, targetY + FormatPNG.Border, CX - DX, CY), ruleEntity);
                             }
 
                             // increment lane offset for all lanes
@@ -289,30 +289,34 @@ namespace IfcDoc.Format.PNG
             // record rectangle
             if (layout != null)
             {
-                layout.Add(new Rectangle(x, y, CX - DX, CY + CY * listAttr.Count), docRule);
+                layout.Add(new Rectangle(x + FormatPNG.Border, y + FormatPNG.Border, CX - DX, CY + CY * listAttr.Count), docRule);
             }
 
             SortedList<int, List<DocModelRuleAttribute>> mapAttribute = new SortedList<int, List<DocModelRuleAttribute>>();
             Dictionary<DocModelRuleAttribute, DocTemplateDefinition> mapTemplate = new Dictionary<DocModelRuleAttribute,DocTemplateDefinition>();
-            if (docRule != null)
+            if (docRule != null && docRule.Rules != null)
             {
                 // map inner rules
 
                 // sort
-                foreach (DocModelRuleAttribute ruleAttribute in docRule.Rules)
+                foreach (DocModelRule rule in docRule.Rules)
                 {
-                    for (int i = 0; i < listAttr.Count; i++)
+                    if (rule is DocModelRuleAttribute)
                     {
-                        if (listAttr[i].Name.Equals(ruleAttribute.Name))
+                        DocModelRuleAttribute ruleAttribute = (DocModelRuleAttribute)rule;
+                        for (int i = 0; i < listAttr.Count; i++)
                         {
-                            // found it
-                            if (!mapAttribute.ContainsKey(i))
+                            if (listAttr[i].Name.Equals(ruleAttribute.Name))
                             {
-                                mapAttribute.Add(i, new List<DocModelRuleAttribute>());
-                            }
+                                // found it
+                                if (!mapAttribute.ContainsKey(i))
+                                {
+                                    mapAttribute.Add(i, new List<DocModelRuleAttribute>());
+                                }
 
-                            mapAttribute[i].Add(ruleAttribute);
-                            break;
+                                mapAttribute[i].Add(ruleAttribute);
+                                break;
+                            }
                         }
                     }
                 }
@@ -509,7 +513,7 @@ namespace IfcDoc.Format.PNG
             }
 
             // adjust size based on layout
-            int indent = 8;
+            int indent = FormatPNG.Border;
             Rectangle rcBounds = Rectangle.Empty;
             if (layout != null)
             {
@@ -573,7 +577,7 @@ namespace IfcDoc.Format.PNG
             }
 
             // adjust size based on layout
-            int indent = 8;
+            int indent = FormatPNG.Border;
             Rectangle rcBounds = Rectangle.Empty;
             if (layout != null)
             {
@@ -622,8 +626,8 @@ namespace IfcDoc.Format.PNG
 
         internal static Image CreateSchemaDiagram(DocSchema docSchema, Dictionary<string, DocObject> map)
         {
-            float pageX = 600.0f;//?
-            float pageY = 888.0f;//?
+            float pageX = (float)CtlExpressG.PageX;
+            float pageY = (float)CtlExpressG.PageY;
 
             int cDiagrams = docSchema.GetDiagramCount();
             int cPagesY = docSchema.DiagramPagesVert;
@@ -1009,6 +1013,130 @@ namespace IfcDoc.Format.PNG
             {
                 DrawTree(g, docInner, factor, ptNext);
             }
+        }
+
+        /// <summary>
+        /// Creates an inheritance diagram
+        /// </summary>
+        /// <param name="docProject">The project containing entities</param>
+        /// <param name="included">Entities within scope</param>
+        /// <param name="docRoot">The root entity to display</param>
+        /// <param name="maxWidth">Maximum width before wrapping, or 0 if unlimited</param>
+        /// <param name="maxHeight">Maximum height before wrapping, or 0 if unlimited</param>
+        /// <returns></returns>
+        public static Image CreateInheritanceDiagram(DocProject docProject, Dictionary<DocObject, bool> included, DocEntity docRoot, Font font, Dictionary<Rectangle, DocEntity> map)
+        {
+            Rectangle rc = DrawHierarchy(null, new Point(DX, DX), docRoot, docProject, included, font, null);
+            if (rc.IsEmpty)
+                return null;
+
+            Image image = new Bitmap(rc.Width + CY, rc.Height + CY);
+            using (Graphics g = Graphics.FromImage(image))
+            {
+                DrawHierarchy(g, new Point(CY, CY), docRoot, docProject, included, font, map);
+            }
+
+            return image;
+        }
+
+        /// <summary>
+        /// Draws entity and subtypes recursively to image
+        /// </summary>
+        /// <param name="g">Graphics where to draw; if null, then just return rectangle</param>
+        /// <param name="pt">Point where to draw</param>
+        /// <param name="docEntity">Entity to draw</param>
+        /// <returns>Bounding rectangle of what was drawn.</returns>
+        private static Rectangle DrawHierarchy(Graphics g, Point pt, DocEntity docEntity, DocProject docProject, Dictionary<DocObject, bool> included, Font font, Dictionary<Rectangle, DocEntity> map)
+        {
+            if (docEntity == null)
+                return Rectangle.Empty;
+
+            Rectangle rc = new Rectangle(pt.X, pt.Y, CX, CY);
+
+            Point ptSub = new Point(pt.X + CY, pt.Y + CY + CY);
+
+            SortedList<string, DocEntity> subtypes = new SortedList<string, DocEntity>(); // sort to match Visual Express
+            foreach(DocSection docSection in docProject.Sections)
+            {
+                foreach (DocSchema docSchema in docSection.Schemas)
+                {
+                    foreach(DocEntity docEnt in docSchema.Entities)
+                    {
+                        if (included == null || included.ContainsKey(docEnt))
+                        {
+                            if (docEnt.BaseDefinition != null && docEnt.BaseDefinition.Equals(docEntity.Name))
+                            {
+                                subtypes.Add(docEnt.Name, docEnt);
+                            }
+                        }
+                    }
+                }
+            }
+
+            foreach(string s in subtypes.Keys)
+            {
+                DocEntity docEnt = subtypes[s];//docProject.GetDefinition(docSub.DefinedType) as DocEntity;
+                if(docEnt != null)
+                {
+                    bool vert = (docEnt.Status != "H");//hack
+
+                    Rectangle rcSub = DrawHierarchy(g, ptSub, docEnt, docProject, included, font, map);
+
+                    if (g != null)
+                    {
+                        g.DrawLine(Pens.Black, rcSub.X - CY, pt.Y + CY, rcSub.X - CY, rcSub.Y + CY / 2);
+                        g.DrawLine(Pens.Black, rcSub.X - CY, rcSub.Y + CY / 2, rcSub.X, rcSub.Y + CY / 2);
+                    }
+
+                    if (vert)
+                    {
+                        ptSub.Y += rcSub.Height + CY;
+                    }
+                    else
+                    {
+                        ptSub.Y = pt.Y + CY + CY;
+                        ptSub.X += rcSub.Width + CY + CY + CY + CY + CY;
+                    }
+
+                    if (rc.Height < (rcSub.Y + rcSub.Height) - rc.Y)
+                    {
+                        rc.Height = (rcSub.Y + rcSub.Height) - rc.Y;
+                    }
+
+                    if (rc.Width < (rcSub.X + rcSub.Width) - rc.X + CY)
+                    {
+                        rc.Width = (rcSub.X + rcSub.Width) - rc.X + CY;
+                    }
+
+
+
+                }
+            }
+
+            if (g != null)
+            {
+                Brush brush = Brushes.Black;
+                if(docEntity.IsAbstract())
+                {
+                    brush = Brushes.Gray;
+                }
+
+                g.FillRectangle(brush, pt.X, pt.Y, rc.Width - CY, CY);
+                g.DrawString(docEntity.Name, font, Brushes.White, pt);
+                g.DrawRectangle(Pens.Black, pt.X, pt.Y, rc.Width - CY, CY);
+            }
+
+            if(map != null)
+            {
+                Rectangle rcKey = new Rectangle(pt.X, pt.Y, rc.Width - CY, CY);
+                if (!map.ContainsKey(rcKey))
+                {
+                    map.Add(rcKey, docEntity);
+                }
+            }
+
+
+            return rc;
         }
     }
 }

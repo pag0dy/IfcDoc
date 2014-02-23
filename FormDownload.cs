@@ -61,7 +61,7 @@ namespace IfcDoc
             try
             {
                 HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(this.textBoxUrl.Text);
-                request.Accept = "application/step";
+                request.Accept = "text/plain";// "application/step";
                 using (WebResponse response = request.GetResponse())
                 {                    
                     using (Stream streamWeb = response.GetResponseStream())

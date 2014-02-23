@@ -24,16 +24,16 @@ namespace IfcDoc
             InitializeComponent();
         }
 
-        public FormSelectAttribute(DocEntity entity, Dictionary<string, DocObject> map, string selection, bool freeform)
+        public FormSelectAttribute(DocEntity entity, DocProject project, string selection, bool freeform)
             : this()
         {
             this.textBoxAttributeName.Enabled = freeform;
             this.textBoxAttributeName.Text = selection;
 
-            this.LoadEntity(entity, map, selection);
+            this.LoadEntity(entity, project, selection);
         }
 
-        private void LoadEntity(DocEntity entity, Dictionary<string, DocObject> map, string selection)
+        private void LoadEntity(DocEntity entity, DocProject project, string selection)
         {
             if (entity == null)
                 return;
@@ -41,8 +41,8 @@ namespace IfcDoc
             // recurse to base
             if (entity.BaseDefinition != null)
             {
-                DocEntity docBase = (DocEntity)map[entity.BaseDefinition];
-                LoadEntity(docBase, map, selection);                
+                DocEntity docBase = project.GetDefinition(entity.BaseDefinition) as DocEntity;
+                LoadEntity(docBase, project, selection);                
             }
 
             // load attributes

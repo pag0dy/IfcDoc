@@ -64,8 +64,14 @@ namespace IfcDoc.Schema.MVD
         [DataMember(Order = 0)] public List<ConceptTemplate> Templates = new List<ConceptTemplate>();
         [DataMember(Order = 1)] public List<ModelView> Views = new List<ModelView>();
 
-        public const string NamespaceV10 = "http://buildingsmart-tech.org/mvdXML/mvdXML1-0";
-        public const string NamespaceV11 = "http://buildingsmart-tech.org/mvdXML/mvdXML1-1";
+        // namespaces in order of attempts to load
+        public static readonly string[] Namespaces = new string[]
+        {
+            DefaultNamespace,
+            "http://buildingsmart-tech.org/mvdXML/mvdXML1-0",
+            "http://buildingsmart-tech.org/mvdXML/mvdXML_V1-0"
+        };
+
         public const string DefaultNamespace = "http://buildingsmart-tech.org/mvdXML/mvdXML1-1";
     }
 

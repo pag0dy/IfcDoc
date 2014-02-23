@@ -13,10 +13,14 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 
+using IfcDoc.Schema.DOC;
+
 namespace IfcDoc
 {
     public partial class FormConstraint : Form
     {
+        DocType m_datatype;
+
         static string[] s_operators = new string[6]
             {
                 "=",
@@ -33,6 +37,175 @@ namespace IfcDoc
 
             this.comboBoxMetric.SelectedIndex = 0;
             this.comboBoxOperator.SelectedIndex = 0;
+        }
+
+        public DocType DataType
+        {
+            get
+            {
+                return this.m_datatype;
+            }
+            set 
+            {
+                this.m_datatype = value;
+
+                this.comboBoxValue.Items.Clear();
+                this.comboBoxValue.Visible = false;
+                if (this.m_datatype is DocEnumeration)
+                {
+                    DocEnumeration docEnum = (DocEnumeration)this.m_datatype;
+                    foreach (DocConstant docCon in docEnum.Constants)
+                    {
+                        this.comboBoxValue.Items.Add(docCon);
+                    }
+                    this.comboBoxValue.Visible = true;
+                }
+                else if(this.m_datatype is DocDefined)
+                {
+                    DocDefined docDef = (DocDefined)this.m_datatype;
+                    if(docDef.DefinedType.Equals("BOOLEAN"))
+                    {
+                        this.comboBoxValue.Items.Add("FALSE");
+                        this.comboBoxValue.Items.Add("TRUE");
+                        this.comboBoxValue.Items.Add("NULL");
+                        this.comboBoxValue.Visible = true;
+                    }
+                    else if(docDef.DefinedType.Equals("LOGICAL"))
+                    {
+                        this.comboBoxValue.Items.Add("FALSE");
+                        this.comboBoxValue.Items.Add("TRUE");
+                        this.comboBoxValue.Items.Add("UNKNOWN");
+                        this.comboBoxValue.Items.Add("NULL");
+                        this.comboBoxValue.Visible = true;
+                    }
+                }
+            }
+        }
+
+        public DocOpCode Metric
+        {
+            get 
+            {
+                switch(this.comboBoxMetric.SelectedIndex)
+                {
+                    case 0:
+                        return DocOpCode.nop;
+
+                    case 1:
+                        return DocOpCode.ldlen;
+
+                    case 2:
+                        return DocOpCode.isinst;
+
+                    case 3:
+                        return DocOpCode.call;
+                }
+
+                return DocOpCode.nop;
+            }
+            set
+            {
+                switch(value)
+                {
+                    case DocOpCode.nop:
+                        this.comboBoxMetric.SelectedIndex = 0;
+                        break;
+
+                    case DocOpCode.ldlen:
+                        this.comboBoxMetric.SelectedIndex = 1;
+                        break;
+
+                    case DocOpCode.isinst:
+                        this.comboBoxMetric.SelectedIndex = 2;
+                        break;
+
+                    case DocOpCode.call:
+                        this.comboBoxMetric.SelectedIndex = 3;
+                        break;
+                }
+            }
+        }
+
+        public DocOpCode Operation
+        {
+            get
+            {
+                switch(this.comboBoxOperator.SelectedIndex)
+                {
+                    case 0:
+                        return DocOpCode.ceq;
+
+                    case 1:
+                        return DocOpCode.cne;
+
+                    case 2:
+                        return DocOpCode.cgt;
+
+                    case 3:
+                        return DocOpCode.cge;
+
+                    case 4:
+                        return DocOpCode.clt;
+
+                    case 5:
+                        return DocOpCode.cle;
+                }
+
+                return DocOpCode.ceq;
+            }
+            set
+            {
+                switch(value)
+                {
+                    case DocOpCode.ceq:
+                        this.comboBoxOperator.SelectedIndex = 0;
+                        break;
+                    case DocOpCode.cne:
+                        this.comboBoxOperator.SelectedIndex = 1;
+                        break;
+                    case DocOpCode.cgt:
+                        this.comboBoxOperator.SelectedIndex = 2;
+                        break;
+                    case DocOpCode.cge:
+                        this.comboBoxOperator.SelectedIndex = 3;
+                        break;
+                    case DocOpCode.clt:
+                        this.comboBoxOperator.SelectedIndex = 4;
+                        break;
+                    case DocOpCode.cle:
+                        this.comboBoxOperator.SelectedIndex = 5;
+                        break;
+                }
+            }
+        }
+
+        public string Literal
+        {
+            get
+            {
+                if (this.comboBoxValue.SelectedItem != null)
+                {
+                    return this.comboBoxValue.Text;
+                }
+
+                return this.textBoxBenchmark.Text;
+            }
+            set
+            {
+                this.textBoxBenchmark.Text = value;
+
+                if(this.comboBoxValue.Visible)
+                {
+                    foreach(object o in this.comboBoxValue.Items)
+                    {
+                        if(o.ToString().Equals(value))
+                        {
+                            this.comboBoxValue.SelectedItem = o;
+                            break;
+                        }
+                    }
+                }
+            }
         }
 
         public string Expression
@@ -105,7 +278,22 @@ namespace IfcDoc
             if (this.comboBoxOperator.SelectedIndex == -1)
                 return;
 
-            this.textBoxExpression.Text = this.comboBoxMetric.Text + s_operators[this.comboBoxOperator.SelectedIndex] + this.textBoxBenchmark.Text;            
+            string value = this.textBoxBenchmark.Text;
+            if (this.comboBoxValue.Visible)
+            {
+                value = this.comboBoxValue.Text;
+            }
+            if(String.IsNullOrEmpty(value))
+            {
+                value = "NULL";
+            }
+
+            this.textBoxExpression.Text = this.comboBoxMetric.Text + s_operators[this.comboBoxOperator.SelectedIndex] + value;            
+        }
+
+        private void comboBoxValue_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdateExpression();
         }
     }
 }

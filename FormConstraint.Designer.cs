@@ -39,17 +39,20 @@
             this.buttonCancel = new System.Windows.Forms.Button();
             this.textBoxExpression = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
+            this.comboBoxValue = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // comboBoxMetric
             // 
-            this.comboBoxMetric.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboBoxMetric.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBoxMetric.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxMetric.FormattingEnabled = true;
             this.comboBoxMetric.Items.AddRange(new object[] {
             "Value",
-            "Length"});
+            "Size",
+            "Type",
+            "Unique"});
             this.comboBoxMetric.Location = new System.Drawing.Point(13, 25);
             this.comboBoxMetric.Name = "comboBoxMetric";
             this.comboBoxMetric.Size = new System.Drawing.Size(259, 21);
@@ -58,8 +61,8 @@
             // 
             // comboBoxOperator
             // 
-            this.comboBoxOperator.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboBoxOperator.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBoxOperator.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxOperator.FormattingEnabled = true;
             this.comboBoxOperator.Items.AddRange(new object[] {
@@ -77,8 +80,8 @@
             // 
             // textBoxBenchmark
             // 
-            this.textBoxBenchmark.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxBenchmark.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxBenchmark.Location = new System.Drawing.Point(13, 117);
             this.textBoxBenchmark.Name = "textBoxBenchmark";
             this.textBoxBenchmark.Size = new System.Drawing.Size(259, 20);
@@ -136,8 +139,8 @@
             // 
             // textBoxExpression
             // 
-            this.textBoxExpression.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxExpression.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxExpression.Location = new System.Drawing.Point(13, 164);
             this.textBoxExpression.Name = "textBoxExpression";
             this.textBoxExpression.ReadOnly = true;
@@ -153,6 +156,19 @@
             this.label4.TabIndex = 6;
             this.label4.Text = "Expression:";
             // 
+            // comboBoxValue
+            // 
+            this.comboBoxValue.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboBoxValue.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxValue.FormattingEnabled = true;
+            this.comboBoxValue.Location = new System.Drawing.Point(13, 116);
+            this.comboBoxValue.Name = "comboBoxValue";
+            this.comboBoxValue.Size = new System.Drawing.Size(259, 21);
+            this.comboBoxValue.TabIndex = 10;
+            this.comboBoxValue.Visible = false;
+            this.comboBoxValue.SelectedIndexChanged += new System.EventHandler(this.comboBoxValue_SelectedIndexChanged);
+            // 
             // FormConstraint
             // 
             this.AcceptButton = this.buttonOK;
@@ -160,6 +176,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
             this.ClientSize = new System.Drawing.Size(284, 238);
+            this.Controls.Add(this.comboBoxValue);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.textBoxExpression);
             this.Controls.Add(this.buttonCancel);
@@ -194,5 +211,6 @@
         private System.Windows.Forms.Button buttonCancel;
         private System.Windows.Forms.TextBox textBoxExpression;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.ComboBox comboBoxValue;
     }
 }

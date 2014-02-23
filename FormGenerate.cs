@@ -13,10 +13,14 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 
+using IfcDoc.Schema.DOC;
+
 namespace IfcDoc
 {
     public partial class FormGenerate : Form
     {
+        DocProject m_project;
+
         public FormGenerate()
         {
             InitializeComponent();
@@ -66,6 +70,70 @@ namespace IfcDoc
             if (res == DialogResult.OK)
             {
                 this.textBoxPath.Text = this.folderBrowserDialog.SelectedPath;
+            }
+        }
+
+        public DocProject Project
+        {
+            get
+            {
+                return this.m_project;
+            }
+            set
+            {
+                this.m_project = value;
+
+                this.checkedListBoxViews.Items.Clear();
+                foreach (DocModelView docView in this.m_project.ModelViews)
+                {
+                    this.checkedListBoxViews.Items.Add(docView);
+                }
+            }
+        }
+
+        public DocModelView[] Views
+        {
+            get
+            {
+                List<DocModelView> list = new List<DocModelView>();
+                for(int i =0; i < checkedListBoxViews.Items.Count; i++)
+                {
+                    bool check = this.checkedListBoxViews.GetItemChecked(i);
+                    if(check)
+                    {
+                        list.Add((DocModelView)this.checkedListBoxViews.Items[i]);
+                    }
+                }
+
+                if(list.Count > 0)
+                {
+                    return list.ToArray();
+                }
+
+                return null;
+            }
+            set
+            {
+                if(value != null)
+                {
+                    foreach(DocModelView view in value)
+                    {
+                        int index = this.checkedListBoxViews.Items.IndexOf(view);
+                        this.checkedListBoxViews.SetItemChecked(index, true);
+                    }
+                }
+            }
+        }
+
+        public string[] Locales
+        {
+            get
+            {
+                return null;//...
+            }
+            set
+            {
+                //...
             }
         }
 

@@ -20,6 +20,7 @@ namespace IfcDoc.Format.XSD
         string m_filename;
         DocProject m_project;
         DocModelView[] m_views;
+        Dictionary<DocObject, bool> m_included;
 
         public FormatXSD(string path)
         {
@@ -50,6 +51,15 @@ namespace IfcDoc.Format.XSD
             set
             {
                 this.m_views = value;
+                this.m_included = null;
+                if (this.m_views != null)
+                {
+                    this.m_included = new Dictionary<DocObject, bool>();
+                    foreach (DocModelView docView in this.m_views)
+                    {
+                        this.m_project.RegisterObjectsInScope(docView, this.m_included);
+                    }
+                }
             }
         }
 
@@ -113,11 +123,11 @@ namespace IfcDoc.Format.XSD
             {
                 foreach (DocSchema docSchema in docSection.Schemas)
                 {
-                    if (docSchema.Visible)
+                    if (this.m_included == null || this.m_included.ContainsKey(docSchema))
                     {
                         foreach (DocType docType in docSchema.Types)
                         {
-                            if (docType.Visible)
+                            if (this.m_included == null || this.m_included.ContainsKey(docType))
                             {
                                 if (docType is DocDefined)
                                 {
@@ -136,7 +146,7 @@ namespace IfcDoc.Format.XSD
 
                         foreach (DocEntity docEnt in docSchema.Entities)
                         {
-                            if (docEnt.Visible)
+                            if (this.m_included == null || this.m_included.ContainsKey(docEnt))
                             {
                                 mapEntity.Add(docEnt.Name, docEnt);
 
@@ -159,7 +169,7 @@ namespace IfcDoc.Format.XSD
 
                         foreach (DocFunction docFunc in docSchema.Functions)
                         {
-                            if (docFunc.Visible && !mapFunction.ContainsKey(docFunc.Name))
+                            if ((this.m_included == null || this.m_included.ContainsKey(docFunc)) && !mapFunction.ContainsKey(docFunc.Name))
                             {
                                 mapFunction.Add(docFunc.Name, docFunc);
                             }
@@ -167,7 +177,7 @@ namespace IfcDoc.Format.XSD
 
                         foreach (DocGlobalRule docRule in docSchema.GlobalRules)
                         {
-                            if (docRule.Visible)
+                            if (this.m_included == null || this.m_included.ContainsKey(docRule))
                             {
                                 mapRule.Add(docRule.Name, docRule);
                             }
@@ -190,14 +200,14 @@ namespace IfcDoc.Format.XSD
                 writer.WriteLine("\t<!-- element and complex type declarations (for ENTITY definitions) -->");
                 foreach (DocEntity docEntity in mapEntity.Values)
                 {
-                    writer.Write(FormatEntity(docEntity, map));                    
+                    writer.Write(FormatEntity(docEntity, map, this.m_included));                    
                 }
 
                 // Selects
                 writer.WriteLine("\t<!-- group declarations (for SELECT data type definitions) -->");
                 foreach (DocSelect docSelect in mapSelect.Values)
                 {
-                    writer.Write(FormatSelect(docSelect, map));
+                    writer.Write(FormatSelect(docSelect, map, this.m_included));
                 }
 
                 // Enumerations
@@ -242,9 +252,12 @@ namespace IfcDoc.Format.XSD
                                 queue.Enqueue(dsi);
                             }
                         }
-                        else if (mapDef.Visible && !sort.ContainsKey(docItem.Name))
+                        else if (!sort.ContainsKey(docItem.Name))
                         {
-                            sort.Add(docItem.Name, docItem.Name);
+                            if (this.m_included == null || this.m_included.ContainsKey(mapDef))
+                            {
+                                sort.Add(docItem.Name, docItem.Name);
+                            }
                         }
                     }
                 }
@@ -253,9 +266,12 @@ namespace IfcDoc.Format.XSD
                 foreach (string docItem in sort.Values)
                 {
                     DocObject mapDef = null;
-                    if (map.TryGetValue(docItem, out mapDef) && mapDef.Visible && mapDef is DocType)
+                    if (map.TryGetValue(docItem, out mapDef) && mapDef is DocType)
                     {
-                        writer.Write(FormatTypeWrapper((DocType)mapDef, map));
+                        if (this.m_included == null || this.m_included.ContainsKey(mapDef))
+                        {
+                            writer.Write(FormatTypeWrapper((DocType)mapDef, map));
+                        }
                     }
                 }
 
@@ -448,7 +464,7 @@ namespace IfcDoc.Format.XSD
             return sb.ToString();
         }
 
-        public static string FormatEntity(DocEntity docEntity, Dictionary<string, DocObject> map)
+        public static string FormatEntity(DocEntity docEntity, Dictionary<string, DocObject> map, Dictionary<DocObject, bool> included)
         {
             string basetype = docEntity.BaseDefinition;
             if (String.IsNullOrEmpty(basetype))
@@ -612,38 +628,41 @@ namespace IfcDoc.Format.XSD
             bool hassequence = false;
             foreach (DocAttribute docAttr in docEntity.Attributes)
             {
-                if (docAttr.Visible && docAttr.XsdFormat != DocXsdFormatEnum.Hidden && !docAttr.XsdTagless)// && docAttr.XsdFormat != DocXsdFormatEnum.Attribute && docAttr.XsdFormat != DocXsdFormatEnum.Content*/)
+                if (included == null || included.ContainsKey(docAttr))
                 {
-                    DocObject mapDef = null;
-                    map.TryGetValue(docAttr.DefinedType, out mapDef);
-
-                    if ((docAttr.Inverse == null || docAttr.XsdFormat == DocXsdFormatEnum.Element || docAttr.XsdFormat == DocXsdFormatEnum.Attribute) &&
-                        docAttr.Derived == null)
+                    if (docAttr.XsdFormat != DocXsdFormatEnum.Hidden && !docAttr.XsdTagless)
                     {
-                        if (mapDef is DocEntity || 
-                            mapDef is DocSelect || 
-                            docAttr.XsdFormat == DocXsdFormatEnum.Element || 
-                            docAttr.DefinedType.StartsWith("BINARY"))// || docAttr.DefinedType.Equals("REAL")))
+                        DocObject mapDef = null;
+                        map.TryGetValue(docAttr.DefinedType, out mapDef);
+
+                        if ((docAttr.Inverse == null || docAttr.XsdFormat == DocXsdFormatEnum.Element || docAttr.XsdFormat == DocXsdFormatEnum.Attribute) &&
+                            docAttr.Derived == null)
                         {
-                            if (!hascontent)
+                            if (mapDef is DocEntity ||
+                                mapDef is DocSelect ||
+                                docAttr.XsdFormat == DocXsdFormatEnum.Element ||
+                                docAttr.DefinedType.StartsWith("BINARY"))
                             {
-                                sb.Append(">");
-                                sb.AppendLine();
-                                hascontent = true;
+                                if (!hascontent)
+                                {
+                                    sb.Append(">");
+                                    sb.AppendLine();
+                                    hascontent = true;
+                                }
+
+                                if (!hassequence)
+                                {
+                                    sb.AppendLine("\t\t\t\t<xs:sequence>");
+                                    hassequence = true;
+                                }
+
+                                string formatAttr = FormatAttribute(docEntity, docAttr, map);
+                                sb.Append(formatAttr);
                             }
 
-                            if (!hassequence)
-                            {
-                                sb.AppendLine("\t\t\t\t<xs:sequence>");
-                                hassequence = true;
-                            }
 
-                            string formatAttr = FormatAttribute(docEntity, docAttr, map);
-                            sb.Append(formatAttr);
+
                         }
-
-
-
                     }
                 }
             }
@@ -655,110 +674,113 @@ namespace IfcDoc.Format.XSD
             // then attributes for value types
             foreach (DocAttribute docAttr in docEntity.Attributes)
             {
-                if (docAttr.Visible && docAttr.XsdFormat != DocXsdFormatEnum.Hidden)// && docAttr.XsdFormat != DocXsdFormatEnum.Element*/)
+                if (included == null || included.ContainsKey(docAttr))
                 {
-                    DocObject mapDef = null;
-                    if ((docAttr.Inverse == null || docAttr.XsdFormat == DocXsdFormatEnum.Attribute) &&
-                        docAttr.Derived == null && (docAttr.XsdFormat != DocXsdFormatEnum.Element || docAttr.XsdTagless))
+                    if (docAttr.XsdFormat != DocXsdFormatEnum.Hidden)// && docAttr.XsdFormat != DocXsdFormatEnum.Element*/)
                     {
-                        if ((map.TryGetValue(docAttr.DefinedType, out mapDef) == false && !docAttr.DefinedType.StartsWith("BINARY")) ||
-                            (mapDef is DocDefined || mapDef is DocEnumeration || docAttr.XsdTagless/* || docAttr.XsdFormat == DocXsdFormatEnum.Attribute*/))
+                        DocObject mapDef = null;
+                        if ((docAttr.Inverse == null || docAttr.XsdFormat == DocXsdFormatEnum.Attribute) &&
+                            docAttr.Derived == null && (docAttr.XsdFormat != DocXsdFormatEnum.Element || docAttr.XsdTagless))
                         {
-                            if (mapDef == null || mapDef.Visible)
+                            if ((map.TryGetValue(docAttr.DefinedType, out mapDef) == false && !docAttr.DefinedType.StartsWith("BINARY")) ||
+                                (mapDef is DocDefined || mapDef is DocEnumeration || docAttr.XsdTagless/* || docAttr.XsdFormat == DocXsdFormatEnum.Attribute*/))
                             {
-                                if (!hascontent)
+                                if (mapDef == null || (included == null || included.ContainsKey(mapDef)))
                                 {
-                                    sb.Append(">");
-                                    sb.AppendLine();
-                                    hascontent = true;
-                                }
-
-                                // encode value types as attributes
-                                sb.Append("\t\t\t\t<xs:attribute");
-                                
-                                sb.Append(" name=\"");
-                                sb.Append(docAttr.Name);
-                                sb.Append("\"");
-
-                                if (docAttr.AggregationType == 0)
-                                {
-                                    sb.Append(" type=\"");
-
-                                    if (mapDef is DocDefined && ((DocDefined)mapDef).Aggregation != null)
+                                    if (!hascontent)
                                     {
-                                        sb.Append("ifc:List-" + docAttr.DefinedType);
+                                        sb.Append(">");
+                                        sb.AppendLine();
+                                        hascontent = true;
+                                    }
+
+                                    // encode value types as attributes
+                                    sb.Append("\t\t\t\t<xs:attribute");
+
+                                    sb.Append(" name=\"");
+                                    sb.Append(docAttr.Name);
+                                    sb.Append("\"");
+
+                                    if (docAttr.AggregationType == 0)
+                                    {
+                                        sb.Append(" type=\"");
+
+                                        if (mapDef is DocDefined && ((DocDefined)mapDef).Aggregation != null)
+                                        {
+                                            sb.Append("ifc:List-" + docAttr.DefinedType);
+                                        }
+                                        else
+                                        {
+                                            sb.Append(ToXsdType(docAttr.DefinedType));
+                                        }
+                                        sb.Append("\"");
+
+                                        if (true) // all attributes optional in XSD? docAttr.IsOptional())
+                                        {
+                                            sb.Append(" use=\"optional\"");
+                                        }
+
+                                        sb.Append("/>");
                                     }
                                     else
                                     {
+                                        if (true) // all attributes optional in XSD? docAttr.IsOptional())
+                                        {
+                                            sb.Append(" use=\"optional\"");
+                                        }
+
+                                        sb.Append(">");
+                                        sb.AppendLine();
+
+                                        sb.AppendLine("\t\t\t\t\t<xs:simpleType>");
+                                        sb.AppendLine("\t\t\t\t\t\t<xs:restriction>");
+                                        sb.AppendLine("\t\t\t\t\t\t\t<xs:simpleType>");
+
+                                        sb.Append("\t\t\t\t\t\t\t\t<xs:list itemType=\"");
                                         sb.Append(ToXsdType(docAttr.DefinedType));
-                                    }
-                                    sb.Append("\"");
-
-                                    if (true) // all attributes optional in XSD? docAttr.IsOptional())
-                                    {
-                                        sb.Append(" use=\"optional\"");
-                                    }
-
-                                    sb.Append("/>");
-                                }
-                                else
-                                {
-                                    if (true) // all attributes optional in XSD? docAttr.IsOptional())
-                                    {
-                                        sb.Append(" use=\"optional\"");
-                                    }
-
-                                    sb.Append(">");
-                                    sb.AppendLine();
-
-                                    sb.AppendLine("\t\t\t\t\t<xs:simpleType>");
-                                    sb.AppendLine("\t\t\t\t\t\t<xs:restriction>");
-                                    sb.AppendLine("\t\t\t\t\t\t\t<xs:simpleType>");
-
-                                    sb.Append("\t\t\t\t\t\t\t\t<xs:list itemType=\"");
-                                    sb.Append(ToXsdType(docAttr.DefinedType));
-                                    sb.Append("\"/>");
-                                    sb.AppendLine();
-
-                                    sb.AppendLine("\t\t\t\t\t\t\t</xs:simpleType>");
-
-                                    if(docAttr.Name.Equals("OffsetValues"))
-                                    {
-                                        sb.ToString();
-                                    }
-
-                                    int iLower = docAttr.GetAggregationNestingLower();
-                                    int iUpper = docAttr.GetAggregationNestingUpper();
-
-                                    // minimum
-                                    if (docAttr.GetAggregation() == DocAggregationEnum.ARRAY)
-                                    {
-                                        iLower = iUpper;
-                                    }
-
-                                    if (iLower != -1 && iLower != 1)
-                                    {
-                                        sb.Append("\t\t\t\t\t\t\t<xs:minLength value=\"");
-                                        sb.Append(iLower);
                                         sb.Append("\"/>");
                                         sb.AppendLine();
+
+                                        sb.AppendLine("\t\t\t\t\t\t\t</xs:simpleType>");
+
+                                        if (docAttr.Name.Equals("OffsetValues"))
+                                        {
+                                            sb.ToString();
+                                        }
+
+                                        int iLower = docAttr.GetAggregationNestingLower();
+                                        int iUpper = docAttr.GetAggregationNestingUpper();
+
+                                        // minimum
+                                        if (docAttr.GetAggregation() == DocAggregationEnum.ARRAY)
+                                        {
+                                            iLower = iUpper;
+                                        }
+
+                                        if (iLower != -1 && iLower != 1)
+                                        {
+                                            sb.Append("\t\t\t\t\t\t\t<xs:minLength value=\"");
+                                            sb.Append(iLower);
+                                            sb.Append("\"/>");
+                                            sb.AppendLine();
+                                        }
+
+                                        if (iUpper != 0)
+                                        {
+                                            sb.Append("\t\t\t\t\t\t\t<xs:maxLength value=\"");
+                                            sb.Append(iUpper);
+                                            sb.Append("\"/>");
+                                            sb.AppendLine();
+                                        }
+
+                                        sb.AppendLine("\t\t\t\t\t\t</xs:restriction>");
+                                        sb.AppendLine("\t\t\t\t\t</xs:simpleType>");
+
+                                        sb.Append("\t\t\t\t</xs:attribute>");
                                     }
 
-                                    if (iUpper != 0)
-                                    {
-                                        sb.Append("\t\t\t\t\t\t\t<xs:maxLength value=\"");
-                                        sb.Append(iUpper);
-                                        sb.Append("\"/>");
-                                        sb.AppendLine();
-                                    }
-                                    
-                                    sb.AppendLine("\t\t\t\t\t\t</xs:restriction>");
-                                    sb.AppendLine("\t\t\t\t\t</xs:simpleType>");
-
-                                    sb.Append("\t\t\t\t</xs:attribute>");
+                                    sb.AppendLine();
                                 }
-
-                                sb.AppendLine();
                             }
                         }
                     }
@@ -785,7 +807,7 @@ namespace IfcDoc.Format.XSD
             return sb.ToString();
         }
 
-        public static string FormatSelect(DocSelect docSelect, Dictionary<string, DocObject> map)
+        public static string FormatSelect(DocSelect docSelect, Dictionary<string, DocObject> map, Dictionary<DocObject, bool> included)
         {
             StringBuilder sb = new StringBuilder();
             
@@ -821,7 +843,7 @@ namespace IfcDoc.Format.XSD
                             queue.Enqueue(dsi);
                         }
                     }
-                    else if(mapDef.Visible && !sort.ContainsKey(docItem.Name))
+                    else if((included == null || included.ContainsKey(mapDef)) && !sort.ContainsKey(docItem.Name))
                     {
                         //TODO: if abstract entity, then go through subtypes...
                         sort.Add(docItem.Name, docItem);
@@ -837,18 +859,21 @@ namespace IfcDoc.Format.XSD
             foreach (DocSelectItem docItem in sort.Values)
             {
                 DocObject mapDef = null;
-                if (map.TryGetValue(docItem.Name, out mapDef) && mapDef.Visible)// && !(mapDef is DocDefined))
-                {                    
-                    sb.Append("\t\t\t<xs:element ref=\"ifc:");
-                    sb.Append(docItem.Name);
-
-                    if (mapDef is DocDefined || mapDef is DocEnumeration)
+                if (map.TryGetValue(docItem.Name, out mapDef))
+                {
+                    if (included == null || included.ContainsKey(mapDef))
                     {
-                        sb.Append("-wrapper");
-                    }
+                        sb.Append("\t\t\t<xs:element ref=\"ifc:");
+                        sb.Append(docItem.Name);
 
-                    sb.Append("\"/>");
-                    sb.AppendLine();
+                        if (mapDef is DocDefined || mapDef is DocEnumeration)
+                        {
+                            sb.Append("-wrapper");
+                        }
+
+                        sb.Append("\"/>");
+                        sb.AppendLine();
+                    }
                 }
             }
 

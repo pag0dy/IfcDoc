@@ -45,7 +45,7 @@
             // 
             this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(297, 89);
+            this.buttonCancel.Location = new System.Drawing.Point(697, 89);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(75, 23);
             this.buttonCancel.TabIndex = 4;
@@ -55,7 +55,7 @@
             // buttonOK
             // 
             this.buttonOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonOK.Location = new System.Drawing.Point(216, 89);
+            this.buttonOK.Location = new System.Drawing.Point(616, 89);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(75, 23);
             this.buttonOK.TabIndex = 3;
@@ -74,21 +74,22 @@
             // 
             // textBoxUrl
             // 
-            this.textBoxUrl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxUrl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxUrl.Location = new System.Drawing.Point(12, 25);
             this.textBoxUrl.Name = "textBoxUrl";
-            this.textBoxUrl.Size = new System.Drawing.Size(360, 20);
+            this.textBoxUrl.Size = new System.Drawing.Size(760, 20);
             this.textBoxUrl.TabIndex = 1;
-            this.textBoxUrl.Text = "http://mvd.buildingsmart-tech.org/ifc4";
+            this.textBoxUrl.Text = "http://www.buildingsmart-tech.org/downloads/view-definitions/mvd-baselines/mvdxml" +
+    "-ifc4-baseline-section/ifc4-repository/at_download/file";
             // 
             // progressBar
             // 
-            this.progressBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.progressBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.progressBar.Location = new System.Drawing.Point(13, 52);
             this.progressBar.Name = "progressBar";
-            this.progressBar.Size = new System.Drawing.Size(359, 23);
+            this.progressBar.Size = new System.Drawing.Size(759, 23);
             this.progressBar.TabIndex = 2;
             // 
             // backgroundWorkerDownload
@@ -96,8 +97,8 @@
             this.backgroundWorkerDownload.WorkerReportsProgress = true;
             this.backgroundWorkerDownload.WorkerSupportsCancellation = true;
             this.backgroundWorkerDownload.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorkerDownload_DoWork);
-            this.backgroundWorkerDownload.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorkerDownload_RunWorkerCompleted);
             this.backgroundWorkerDownload.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorkerDownload_ProgressChanged);
+            this.backgroundWorkerDownload.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorkerDownload_RunWorkerCompleted);
             // 
             // errorProvider
             // 
@@ -118,7 +119,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
-            this.ClientSize = new System.Drawing.Size(384, 124);
+            this.ClientSize = new System.Drawing.Size(784, 124);
             this.Controls.Add(this.labelError);
             this.Controls.Add(this.progressBar);
             this.Controls.Add(this.textBoxUrl);
