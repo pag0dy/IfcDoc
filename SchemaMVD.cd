@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="IfcDoc.Schema.MVD.Identity">
+    <Position X="4.25" Y="0.5" Width="3.75" />
+    <TypeIdentifier>
+      <HashCode>IAAAAACFAAAAAAAQgAAgAAQAAAAABAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SchemaMvd.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IfcDoc.Schema.MVD.mvdXML">
+    <Position X="4.25" Y="3.75" Width="3.75" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAECAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SchemaMvd.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IfcDoc.Schema.MVD.ConceptTemplate">
+    <Position X="8.25" Y="3.75" Width="3.75" />
+    <TypeIdentifier>
+      <HashCode>AgAACAAAAAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SchemaMvd.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IfcDoc.Schema.MVD.Concept">
+    <Position X="8.25" Y="7.25" Width="3.75" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAUAAAAAAAAACAAAAAAIAEAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SchemaMvd.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IfcDoc.Schema.MVD.ConceptRequirement">
+    <Position X="8.25" Y="9.5" Width="3.75" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAAAAAAAAAAAAAAAAAIAAAAAAIAAAAAAAAA=</HashCode>
+      <FileName>SchemaMvd.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IfcDoc.Schema.MVD.ModelView">
+    <Position X="4.25" Y="5.5" Width="3.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAACAABAAAAAABAAAEAAAA=</HashCode>
+      <FileName>SchemaMvd.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IfcDoc.Schema.MVD.Definition">
+    <Position X="8.25" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABAAAAAAAAAAAACAAAAAAAAAA=</HashCode>
+      <FileName>SchemaMvd.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IfcDoc.Schema.MVD.Body" BaseTypeListCollapsed="true">
+    <Position X="10.25" Y="0.5" Width="1.75" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAAAAAAAAAAACAABAAEAABAAAgAAAAAA=</HashCode>
+      <FileName>SchemaMvd.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="IfcDoc.Schema.MVD.Link">
+    <Position X="12.25" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAEAAAAAAAAAAAAAAAABABAAAAAAACAA=</HashCode>
+      <FileName>SchemaMvd.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IfcDoc.Schema.MVD.ExchangeRequirement">
+    <Position X="4.25" Y="7.5" Width="3.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAA=</HashCode>
+      <FileName>SchemaMvd.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IfcDoc.Schema.MVD.ConceptRoot">
+    <Position X="8.25" Y="5.75" Width="3.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAIAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SchemaMvd.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IfcDoc.Schema.MVD.AbstractRule">
+    <Position X="12.25" Y="2.75" Width="3.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>SchemaMvd.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IfcDoc.Schema.MVD.AttributeRule">
+    <Position X="12.25" Y="6.5" Width="3.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAIAAAAAACAAAAAAAABIAAAAAAAAAAAA=</HashCode>
+      <FileName>SchemaMvd.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IfcDoc.Schema.MVD.EntityRule">
+    <Position X="12.25" Y="4.5" Width="3.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAAAAAAAAACAAAAAAAABIBAAAAAAAAAAA=</HashCode>
+      <FileName>SchemaMvd.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IfcDoc.Schema.MVD.Constraint">
+    <Position X="12.25" Y="10" Width="3.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAA=</HashCode>
+      <FileName>SchemaMvd.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IfcDoc.Schema.MVD.TemplateRule">
+    <Position X="12.25" Y="8.5" Width="3.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAA=</HashCode>
+      <FileName>SchemaMvd.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="IfcDoc.Schema.MVD.ApplicabilityEnum">
+    <Position X="6" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAIgAABAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SchemaMvd.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="IfcDoc.Schema.MVD.RequirementEnum">
+    <Position X="4.25" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAAAAQAAAAgAAAAAAAAAAAAAAAAAAg=</HashCode>
+      <FileName>SchemaMvd.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="IfcDoc.Schema.MVD.CategoryEnum">
+    <Position X="14.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAACAAAAAICAQAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SchemaMvd.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

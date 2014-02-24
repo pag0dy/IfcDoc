@@ -652,7 +652,7 @@ namespace IfcDoc
                         case ".ifcdoc":
                             using (FormatSPF format = new FormatSPF(this.m_file, SchemaDOC.Types, this.m_instances))
                             {
-                                format.InitHeaders(this.m_file, "IFCDOC_6_2");
+                                format.InitHeaders(this.m_file, "IFCDOC_6_3");
                                 format.Save();
                             }
                             break;

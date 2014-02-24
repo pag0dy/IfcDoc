@@ -74,7 +74,7 @@ namespace IfcDoc
                     using (FormatXML format = new FormatXML(filepath, typeof(mvdXML), mvdXML.DefaultNamespace))
                     {
                         mvdXML mvd = new mvdXML();
-                        Program.ExportMvd(mvd, docProject, null, views, null, null);
+                        Program.ExportMvd(mvd, docProject, included);
                         format.Instance = mvd;
                         format.Save();
                     }
@@ -3360,8 +3360,6 @@ namespace IfcDoc
                                             docProject.RegisterObjectsInScope(docView, viewinclude);
                                             using (Image imgDiagram = FormatPNG.CreateInheritanceDiagram(docProject, viewinclude, docEntityRoot, new Font(FontFamily.GenericSansSerif, 8.0f), mapRectangle))
                                             {
-                                                imgDiagram.Save(path + @"\annex\annex-d\" + MakeLinkName(docView) + @"\cover.png");
-
                                                 using (FormatHTM htmCover = new FormatHTM(path + @"\annex\annex-d\" + MakeLinkName(docView) + @"\cover.htm", mapEntity, mapSchema, included))
                                                 {
                                                     htmCover.WriteHeader(docView.Name, 1);
@@ -3381,6 +3379,16 @@ namespace IfcDoc
 
 
                                                     htmCover.WriteFooter(String.Empty);
+                                                }
+
+                                                // create image after (depends on directory being created first)
+                                                try
+                                                {
+                                                    imgDiagram.Save(path + @"\annex\annex-d\" + MakeLinkName(docView) + @"\cover.png");
+                                                }
+                                                catch
+                                                {
+
                                                 }
                                             }
 

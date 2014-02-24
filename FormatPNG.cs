@@ -361,7 +361,7 @@ namespace IfcDoc.Format.PNG
                     {
                         if (docView == null || docView == docEachView)//docView.Visible)
                         {
-                            foreach (DocConceptRoot docRoot in docView.ConceptRoots)
+                            foreach (DocConceptRoot docRoot in docEachView.ConceptRoots)
                             {
                                 if (docRoot.ApplicableEntity == docEntitySuper)
                                 {

@@ -216,7 +216,7 @@ namespace IfcDoc
             using (FormatXML format = new FormatXML(path + @"\" + docView.Code + ".mvdxml", typeof(mvdXML), mvdXML.DefaultNamespace))
             {
                 mvdXML mvd = new mvdXML();
-                Program.ExportMvd(mvd, project, null, new DocModelView[] { docView }, null, null);
+                Program.ExportMvd(mvd, project, included);
                 format.Instance = mvd;
                 format.Save();
             }

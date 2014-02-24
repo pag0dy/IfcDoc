@@ -13,9 +13,10 @@ namespace IfcDoc
     public partial class CtlParameters : UserControl
     {
         DocProject m_project;
-        DocConceptRoot m_parent;
-        DocTemplateUsage m_target;
+        DocConceptRoot m_conceptroot;
+        DocTemplateUsage m_conceptleaf;
         Dictionary<string, DocObject> m_map;
+        DocModelRule[] m_columns;
         bool m_editcon;
 
         public CtlParameters()
@@ -55,27 +56,33 @@ namespace IfcDoc
             }
         }
 
+        /// <summary>
+        /// The concept root, for which any IfcReference parameter is made relative to.
+        /// </summary>
         public DocConceptRoot ConceptRoot
         {
             get
             {
-                return this.m_parent;
+                return this.m_conceptroot;
             }
             set
             {
-                this.m_parent = value;
+                this.m_conceptroot = value;
             }
         }
 
+        /// <summary>
+        /// The concept defining rows of items with parameters
+        /// </summary>
         public DocTemplateUsage ConceptLeaf
         {
             get
             {
-                return this.m_target;
+                return this.m_conceptleaf;
             }
             set
             {
-                this.m_target = value;
+                this.m_conceptleaf = value;
                 LoadUsage();
             }
         }
@@ -86,25 +93,25 @@ namespace IfcDoc
             this.dataGridViewConceptRules.Rows.Clear();
             this.dataGridViewConceptRules.Columns.Clear();
 
-            if (this.m_parent == null || this.m_target == null || !this.m_parent.Concepts.Contains(this.m_target))
+            if (this.m_conceptroot == null || this.m_conceptleaf == null)// || !this.m_conceptroot.Concepts.Contains(this.m_conceptleaf))
                 return;
 
-            DocTemplateUsage docUsage = (DocTemplateUsage)this.m_target;
-            string[] parmnames = docUsage.Definition.GetParameterNames();
-            foreach (string parmname in parmnames)
+            DocTemplateUsage docUsage = (DocTemplateUsage)this.m_conceptleaf;
+            this.m_columns = docUsage.Definition.GetParameterRules();
+            foreach (DocModelRule rule in this.m_columns)
             {
                 DataGridViewColumn column = new DataGridViewColumn();
-                column.HeaderText = parmname;
+                column.HeaderText = rule.Identification;
                 column.ValueType = typeof(string);//?
                 column.CellTemplate = new DataGridViewTextBoxCell();
                 column.Width = 200;
 
                 // override cell template for special cases
-                DocConceptRoot docConceptRoot = (DocConceptRoot)this.m_parent;
-                DocEntity docEntity = docConceptRoot.ApplicableEntity;
+                DocConceptRoot docConceptRoot = (DocConceptRoot)this.m_conceptroot;
+                DocEntity docEntity = this.m_project.GetDefinition(docUsage.Definition.Type) as DocEntity;// docConceptRoot.ApplicableEntity;
                 foreach (DocModelRuleAttribute docRule in docUsage.Definition.Rules)
                 {
-                    DocDefinition docDef = docEntity.ResolveParameterType(docRule, parmname, m_map);
+                    DocDefinition docDef = docEntity.ResolveParameterType(docRule, rule.Identification, m_map);
                     if (docDef is DocEnumeration)
                     {
                         DocEnumeration docEnum = (DocEnumeration)docDef;
@@ -143,9 +150,9 @@ namespace IfcDoc
             {
                 string[] values = new string[this.dataGridViewConceptRules.Columns.Count];
 
-                for (int i = 0; i < parmnames.Length; i++)
+                for (int i = 0; i < this.m_columns.Length; i++)
                 {
-                    string parmname = parmnames[i];
+                    string parmname = this.m_columns[i].Identification;
                     string val = item.GetParameterValue(parmname);
                     if (val != null)
                     {
@@ -177,12 +184,12 @@ namespace IfcDoc
 
         private void dataGridViewConceptRules_UserAddedRow(object sender, DataGridViewRowEventArgs e)
         {
-            this.m_target.Items.Add(new DocTemplateItem());
+            this.m_conceptleaf.Items.Add(new DocTemplateItem());
         }
 
         private void dataGridViewConceptRules_UserDeletedRow(object sender, DataGridViewRowEventArgs e)
         {
-            this.m_target.Items.Remove((DocTemplateItem)e.Row.Tag);
+            this.m_conceptleaf.Items.Remove((DocTemplateItem)e.Row.Tag);
         }
 
         private void dataGridViewConceptRules_DataError(object sender, DataGridViewDataErrorEventArgs e)
@@ -211,7 +218,7 @@ namespace IfcDoc
                 }
             }
 
-            DocTemplateUsage docUsage = (DocTemplateUsage)this.m_target;
+            DocTemplateUsage docUsage = (DocTemplateUsage)this.m_conceptleaf;
             if (docUsage.Items.Count > e.RowIndex)
             {
                 DocTemplateItem docItem = docUsage.Items[e.RowIndex];
@@ -240,7 +247,7 @@ namespace IfcDoc
 
             if (docEntity.Name != null && docEntity.Name.Equals("IfcReference"))
             {
-                DocDefinition docDef = this.m_parent.ApplicableEntity as DocDefinition;
+                DocDefinition docDef = this.m_conceptroot.ApplicableEntity as DocDefinition;
 
                 // special case for building reference paths
                 using (FormReference form = new FormReference(this.m_project, docDef, this.m_map, cell.Value as string))
@@ -262,13 +269,49 @@ namespace IfcDoc
             }
             else
             {
-                using (FormSelectEntity form = new FormSelectEntity(docEntity, docSelect, this.m_project))
+                // new: if a referenced concept template applies, then edit that; otherwise, edit type
+                
+                // get the model view
+
+                DocTemplateDefinition docTemplateInner = null;
+                DocModelRule docRule = this.m_columns[e.ColumnIndex];
+                if(docRule is DocModelRuleAttribute)
                 {
-                    DialogResult res = form.ShowDialog(this);
-                    if (res == DialogResult.OK && form.SelectedEntity != null)
+                    DocModelRuleAttribute dma = (DocModelRuleAttribute)docRule;
+                    if(dma.Rules.Count == 1 && dma.Rules[0] is DocModelRuleEntity)
                     {
-                        cell.Value = form.SelectedEntity.Name;
-                        this.dataGridViewConceptRules.NotifyCurrentCellDirty(true);
+                        DocModelRuleEntity dme = (DocModelRuleEntity)dma.Rules[0];
+                        if(dme.References.Count == 1)
+                        {
+                            docTemplateInner = dme.References[0];
+                        }
+                    }
+                }
+
+                if (docTemplateInner != null)
+                {
+                    DocTemplateItem docConceptItem = (DocTemplateItem)this.dataGridViewConceptRules.Rows[e.RowIndex].Tag;
+                    DocTemplateUsage docConceptInner = docConceptItem.RegisterParameterConcept(docRule.Identification, docTemplateInner);
+
+                    using (FormParameters form = new FormParameters())
+                    {
+                        form.Project = this.m_project;
+                        form.ConceptRoot = this.m_conceptroot;
+                        form.ConceptLeaf = docConceptInner;
+                        form.ShowDialog(this);
+                    }
+                }
+                else
+                {
+                    // set type of item
+                    using (FormSelectEntity form = new FormSelectEntity(docEntity, docSelect, this.m_project))
+                    {
+                        DialogResult res = form.ShowDialog(this);
+                        if (res == DialogResult.OK && form.SelectedEntity != null)
+                        {
+                            cell.Value = form.SelectedEntity.Name;
+                            this.dataGridViewConceptRules.NotifyCurrentCellDirty(true);
+                        }
                     }
                 }
             }
@@ -283,7 +326,7 @@ namespace IfcDoc
         {
             this.m_editcon = true;
             int index = this.dataGridViewConceptRules.SelectedRows[0].Index;
-            DocTemplateUsage docUsage = (DocTemplateUsage)this.m_target;
+            DocTemplateUsage docUsage = (DocTemplateUsage)this.m_conceptleaf;
             docUsage.Items.RemoveAt(index);
 
             LoadUsage();
@@ -299,13 +342,13 @@ namespace IfcDoc
         {
             this.m_editcon = true;
             int index = this.dataGridViewConceptRules.SelectedRows[0].Index;
-            DocTemplateUsage docUsage = (DocTemplateUsage)this.m_target;
+            DocTemplateUsage docUsage = (DocTemplateUsage)this.m_conceptleaf;
             DocTemplateItem dti = docUsage.Items[index];
             docUsage.Items.Insert(index - 1, dti);
             docUsage.Items.RemoveAt(index + 1);
 
             LoadUsage();
-            this.dataGridViewConceptRules.Rows[index - 1].HeaderCell.Selected = true;
+            //this.dataGridViewConceptRules.Rows[index - 1].HeaderCell.Selected = true;
             //this.dataGridViewConceptRules.CurrentCell = this.dataGridViewConceptRules.Rows[index - 1].c;// Cells[0];// CurrentRow = 0;//.Rows[index - 1].Selected = true;
             this.m_editcon = false;
         }
@@ -316,7 +359,7 @@ namespace IfcDoc
             int index = this.dataGridViewConceptRules.SelectedRows[0].Index;
             if (index < this.dataGridViewConceptRules.Rows.Count - 2)
             {
-                DocTemplateUsage docUsage = (DocTemplateUsage)this.m_target;
+                DocTemplateUsage docUsage = (DocTemplateUsage)this.m_conceptleaf;
                 DocTemplateItem dti = docUsage.Items[index];
                 docUsage.Items.Insert(index + 2, dti);
                 docUsage.Items.RemoveAt(index);

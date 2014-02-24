@@ -158,12 +158,25 @@ namespace IfcDoc
         private TreeNode LoadTemplateGraph(TreeNode tnParent, DocModelRule docRule)
         {
             TreeNode tnRule = LoadTemplateRuleNode(tnParent, docRule, docRule.Name);
-
             UpdateTemplateGraph(tnRule);
+            tnRule.Nodes.Clear();
 
             foreach (DocModelRule docSub in docRule.Rules)
             {
                 LoadTemplateGraph(tnRule, docSub);
+            }
+
+            if (docRule is DocModelRuleEntity)
+            {
+                DocModelRuleEntity dme = (DocModelRuleEntity)docRule;
+                foreach (DocTemplateDefinition dtd in dme.References)
+                {
+                    TreeNode tnTemplate = LoadTemplateRuleNode(tnRule, dtd, dtd.Name);
+                    foreach(DocModelRule docTemplateRule in dtd.Rules)
+                    {
+                        LoadTemplateGraph(tnTemplate, docTemplateRule);
+                    }
+                }
             }
 
             return tnRule;
@@ -214,18 +227,20 @@ namespace IfcDoc
             if (tag is DocModelRuleEntity)
             {
                 tn.ImageIndex = 0;
-                tn.SelectedImageIndex = 0;
             }
             else if (tag is DocModelRuleAttribute)
             {
                 tn.ImageIndex = 1;
-                tn.SelectedImageIndex = 1;
             }
             else if (tag is DocModelRuleConstraint)
             {
                 tn.ImageIndex = 2;
-                tn.SelectedImageIndex = 2;
             }
+            else if (tag is DocTemplateDefinition)
+            {
+                tn.ImageIndex = 3;
+            }
+            tn.SelectedImageIndex = tn.ImageIndex;
 
             parent.Nodes.Add(tn);
 
@@ -384,6 +399,15 @@ namespace IfcDoc
 
         private void toolStripButtonTemplateRemove_Click(object sender, EventArgs e)
         {
+            if (this.treeViewTemplate.SelectedNode.Tag is DocTemplateDefinition)
+            {
+                DocTemplateDefinition dtd = (DocTemplateDefinition)this.treeViewTemplate.SelectedNode.Tag;
+                DocModelRuleEntity dme = (DocModelRuleEntity)this.treeViewTemplate.SelectedNode.Parent.Tag;
+                dme.References.Remove(dtd);
+                this.treeViewTemplate.SelectedNode.Remove();
+                return;
+            }
+
             DocModelRule ruleTarget = this.treeViewTemplate.SelectedNode.Tag as DocModelRule;
             DocModelRule ruleParent = null;
 
@@ -463,8 +487,9 @@ namespace IfcDoc
             }
 
             this.toolStripButtonTemplateInsert.Enabled = insert;
-            this.toolStripButtonTemplateRemove.Enabled = (this.Selection != null && !locked);
+            this.toolStripButtonTemplateRemove.Enabled = (this.Selection != null && !locked) || (this.treeViewTemplate.SelectedNode != null && this.treeViewTemplate.SelectedNode.Tag is DocTemplateDefinition);
             this.toolStripButtonTemplateUpdate.Enabled = ((this.Selection is DocModelRuleAttribute || (this.Selection is DocModelRuleEntity)) && !locked);
+            this.toolStripButtonRuleRef.Enabled = (this.Selection is DocModelRuleEntity);
 
             TreeNode tnSelect = this.treeViewTemplate.SelectedNode;
             TreeNode tnParent = this.treeViewTemplate.SelectedNode.Parent;
@@ -521,6 +546,28 @@ namespace IfcDoc
             }
 
             this.treeViewTemplate.SelectedNode = tnSelect;
+        }
+
+        private void toolStripButtonRuleRef_Click(object sender, EventArgs e)
+        {
+            TreeNode tnSelect = this.treeViewTemplate.SelectedNode;
+            DocModelRuleEntity docRule = (DocModelRuleEntity)tnSelect.Tag as DocModelRuleEntity;
+            if (docRule == null)
+                return;
+
+            DocEntity docEntity = this.m_project.GetDefinition(docRule.Name) as DocEntity;
+            if (docEntity == null)
+                return;
+            
+            using (FormSelectTemplate form = new FormSelectTemplate(null, this.Project, docEntity))
+            {
+                if (form.ShowDialog(this) == DialogResult.OK && form.SelectedTemplate != null)
+                {
+                    docRule.References.Add(form.SelectedTemplate);
+
+                    LoadTemplateGraph(tnSelect, docRule);
+                }
+            }
         }
 
     }

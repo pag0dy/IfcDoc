@@ -176,8 +176,6 @@ namespace IfcDoc.Schema.DOC
         [DataMember(Order = 8)] private string _Copyright; // V1.8 inserted
         [DataMember(Order = 9)] private List<DocLocalization> _Localization; // definitions
 
-        private bool _Hidden; // not serialized
-
         // v1.8: inserted fields Code, Version, Status, Author, Owner, Copyright to support MVD-XML
 
         protected DocObject()
@@ -252,21 +250,6 @@ namespace IfcDoc.Schema.DOC
             
             return docLocal;
         }
-
-#if false
-        // use Status parameter to store value (don't insert another field for file compatibility)
-        public bool Visible
-        {
-            get
-            {
-                return !this._Hidden;
-            }
-            set
-            {
-                this._Hidden = !value;
-            }
-        }
-#endif
 
         [
         Category("Identity"),
@@ -1149,6 +1132,11 @@ namespace IfcDoc.Schema.DOC
                                     included[docInner] = true;
                                 }
                             }
+
+                            foreach(DocTemplateDefinition docRef in docRuleEntity.References)
+                            {
+                                RegisterTemplate(included, docRef);
+                            }
                         }
                     }
                 }
@@ -1469,6 +1457,21 @@ namespace IfcDoc.Schema.DOC
                 array[i] = list[i].Identification;
             }
             return array;
+        }
+
+        public DocModelRule[] GetParameterRules()
+        {
+            List<DocModelRule> list = new List<DocModelRule>();
+
+            if (this.Rules != null)
+            {
+                foreach (DocModelRule rule in this.Rules)
+                {
+                    rule.BuildParameterList(list);
+                }
+            }
+
+            return list.ToArray();
         }
 
         internal bool Includes(DocTemplateDefinition docTemplateDefinition)
@@ -2125,6 +2128,8 @@ namespace IfcDoc.Schema.DOC
 
     public class DocModelRuleEntity : DocModelRule
     {
+        [DataMember(Order = 0)] private List<DocTemplateDefinition> _References; // IfcDoc 6.3: references to chained templates
+
         public override void BuildParameterList(IList<DocModelRule> list)
         {
             // new: allow specifying value parameter (only for base types though)
@@ -2136,6 +2141,19 @@ namespace IfcDoc.Schema.DOC
             }
 
             base.BuildParameterList(list);
+        }
+
+        public List<DocTemplateDefinition> References
+        {
+            get
+            {
+                if(this._References == null)
+                {
+                    this._References = new List<DocTemplateDefinition>();
+                }
+
+                return this._References;
+            }
         }
 
         /// <summary>
@@ -2608,7 +2626,8 @@ namespace IfcDoc.Schema.DOC
 
     public class DocTemplateItem : DocObject // now inherits from DocObject
     {
-        [DataMember(Order = 0), Obsolete] private string _PredefinedType; // e.g. 'TOGGLESWITCH'
+        [DataMember(Order = 0)] private List<DocTemplateUsage> _Concepts;// IfcDoc 6.3: for parameters consisting of lists of objects -- translates to nested concepts in mvdXML
+        //[DataMember(Order = 0), Obsolete] private string _PredefinedType; // e.g. 'TOGGLESWITCH'
         [DataMember(Order = 1), Obsolete] private string _Field1; // e.g. 'Power'
         [DataMember(Order = 2), Obsolete] private string _Field2; // e.g. 'The power from the circuit.'
         [DataMember(Order = 3), Obsolete] private string _Field3; // e.g. 'ELECTRICAL'
@@ -2617,6 +2636,19 @@ namespace IfcDoc.Schema.DOC
         // new in 2.5
         [DataMember(Order = 5)] private string _RuleInstanceID; // id of the entity rule to instantiate for each item
         [DataMember(Order = 6)] private string _RuleParameters; // parameters and constraints to substitute into the rule
+
+        public List<DocTemplateUsage> Concepts
+        {
+            get
+            {
+                if(this._Concepts == null)
+                {
+                    this._Concepts = new List<DocTemplateUsage>();
+                }
+
+                return this._Concepts;
+            }
+        }
 
         public string RuleInstanceID
         {
@@ -2640,6 +2672,23 @@ namespace IfcDoc.Schema.DOC
             {
                 this._RuleParameters = value;
             }
+        }
+
+        public DocTemplateUsage RegisterParameterConcept(string parameter, DocTemplateDefinition def)
+        {
+            foreach(DocTemplateUsage docEachUsage in this.Concepts)
+            {
+                if (docEachUsage.Name.Equals(parameter) && docEachUsage.Definition == def)
+                {
+                    return docEachUsage;
+                }
+            }
+
+            DocTemplateUsage docUsage = new DocTemplateUsage();
+            docUsage.Name = parameter;
+            docUsage.Definition = def;
+            this.Concepts.Add(docUsage);
+            return docUsage;
         }
 
         public string GetParameterValue(string key)

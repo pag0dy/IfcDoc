@@ -262,5 +262,6 @@ namespace IfcDoc.Schema.MVD
     public class TemplateRule : AbstractRule
     {
         [DataMember(Order = 0), XmlAttribute("Parameters")] public string Parameters;
+        [DataMember(Order = 1)] public List<Concept> References; // proposed for mvdxml 1.1 -- not yet approved
     }
 }

@@ -149,12 +149,13 @@ namespace IfcDoc.Schema
 
         public override void Delete()
         {
-            base.Delete();
-
             if (SEntity.EntityDeleted != null)
             {
                 SEntity.EntityDeleted(this, EventArgs.Empty);
             }
+
+            // call base AFTER event notification such that OID remains while removing from list
+            base.Delete();
         }
 
 

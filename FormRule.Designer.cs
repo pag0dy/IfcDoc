@@ -52,8 +52,8 @@
             // 
             // textBoxIdentifier
             // 
-            this.textBoxIdentifier.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxIdentifier.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxIdentifier.Location = new System.Drawing.Point(13, 71);
             this.textBoxIdentifier.Name = "textBoxIdentifier";
             this.textBoxIdentifier.Size = new System.Drawing.Size(359, 20);
@@ -71,8 +71,8 @@
             // 
             // comboBoxCardinality
             // 
-            this.comboBoxCardinality.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboBoxCardinality.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBoxCardinality.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxCardinality.FormattingEnabled = true;
             this.comboBoxCardinality.Items.AddRange(new object[] {
@@ -111,8 +111,8 @@
             // 
             // comboBoxUsage
             // 
-            this.comboBoxUsage.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboBoxUsage.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBoxUsage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxUsage.FormattingEnabled = true;
             this.comboBoxUsage.Items.AddRange(new object[] {
@@ -136,6 +136,9 @@
             // 
             // textBoxBehavior
             // 
+            this.textBoxBehavior.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxBehavior.Location = new System.Drawing.Point(13, 164);
             this.textBoxBehavior.Multiline = true;
             this.textBoxBehavior.Name = "textBoxBehavior";

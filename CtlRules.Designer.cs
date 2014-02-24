@@ -34,11 +34,12 @@
             this.toolStripButtonTemplateInsert = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonTemplateRemove = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonTemplateUpdate = new System.Windows.Forms.ToolStripButton();
-            this.treeViewTemplate = new System.Windows.Forms.TreeView();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonMoveUp = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonMoveDown = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.treeViewTemplate = new System.Windows.Forms.TreeView();
             this.imageListRules = new System.Windows.Forms.ImageList(this.components);
+            this.toolStripButtonRuleRef = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -49,6 +50,7 @@
             this.toolStripButtonTemplateInsert,
             this.toolStripButtonTemplateRemove,
             this.toolStripButtonTemplateUpdate,
+            this.toolStripButtonRuleRef,
             this.toolStripSeparator1,
             this.toolStripButtonMoveUp,
             this.toolStripButtonMoveDown});
@@ -94,19 +96,10 @@
             this.toolStripButtonTemplateUpdate.ToolTipText = "Edits the selected reference";
             this.toolStripButtonTemplateUpdate.Click += new System.EventHandler(this.toolStripButtonTemplateUpdate_Click);
             // 
-            // treeViewTemplate
+            // toolStripSeparator1
             // 
-            this.treeViewTemplate.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.treeViewTemplate.FullRowSelect = true;
-            this.treeViewTemplate.HideSelection = false;
-            this.treeViewTemplate.ImageIndex = 0;
-            this.treeViewTemplate.ImageList = this.imageListRules;
-            this.treeViewTemplate.Location = new System.Drawing.Point(0, 25);
-            this.treeViewTemplate.Name = "treeViewTemplate";
-            this.treeViewTemplate.SelectedImageIndex = 0;
-            this.treeViewTemplate.Size = new System.Drawing.Size(400, 375);
-            this.treeViewTemplate.TabIndex = 3;
-            this.treeViewTemplate.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewTemplate_AfterSelect);
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
             // 
             // toolStripButtonMoveUp
             // 
@@ -130,10 +123,19 @@
             this.toolStripButtonMoveDown.Text = "Move Down";
             this.toolStripButtonMoveDown.Click += new System.EventHandler(this.toolStripButtonMoveDown_Click);
             // 
-            // toolStripSeparator1
+            // treeViewTemplate
             // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            this.treeViewTemplate.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeViewTemplate.FullRowSelect = true;
+            this.treeViewTemplate.HideSelection = false;
+            this.treeViewTemplate.ImageIndex = 0;
+            this.treeViewTemplate.ImageList = this.imageListRules;
+            this.treeViewTemplate.Location = new System.Drawing.Point(0, 25);
+            this.treeViewTemplate.Name = "treeViewTemplate";
+            this.treeViewTemplate.SelectedImageIndex = 0;
+            this.treeViewTemplate.Size = new System.Drawing.Size(400, 375);
+            this.treeViewTemplate.TabIndex = 3;
+            this.treeViewTemplate.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewTemplate_AfterSelect);
             // 
             // imageListRules
             // 
@@ -142,8 +144,19 @@
             this.imageListRules.Images.SetKeyName(0, "DocEntity.bmp");
             this.imageListRules.Images.SetKeyName(1, "DocAttribute.bmp");
             this.imageListRules.Images.SetKeyName(2, "DocQuantity.bmp");
-            this.imageListRules.Images.SetKeyName(3, "IfcAppliedValue.png");
-            this.imageListRules.Images.SetKeyName(4, "IfcBooleanOperand.png");
+            this.imageListRules.Images.SetKeyName(3, "DocTemplateDefinition.bmp");
+            // 
+            // toolStripButtonRuleRef
+            // 
+            this.toolStripButtonRuleRef.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonRuleRef.Enabled = false;
+            this.toolStripButtonRuleRef.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonRuleRef.Image")));
+            this.toolStripButtonRuleRef.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonRuleRef.Name = "toolStripButtonRuleRef";
+            this.toolStripButtonRuleRef.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButtonRuleRef.Text = "Reference";
+            this.toolStripButtonRuleRef.ToolTipText = "Links another concept template for the selected reference.";
+            this.toolStripButtonRuleRef.Click += new System.EventHandler(this.toolStripButtonRuleRef_Click);
             // 
             // CtlRules
             // 
@@ -171,5 +184,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton toolStripButtonMoveDown;
         private System.Windows.Forms.ImageList imageListRules;
+        private System.Windows.Forms.ToolStripButton toolStripButtonRuleRef;
     }
 }
