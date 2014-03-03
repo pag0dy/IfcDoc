@@ -2134,11 +2134,13 @@ namespace IfcDoc.Schema.DOC
         {
             // new: allow specifying value parameter (only for base types though)
 
+#if false //-- entity rules are only for referencing by rules, not for parameters
             // add ourselves if marked as parameter
             if (!String.IsNullOrEmpty(this.Identification))
             {
                 list.Add(this);
             }
+#endif
 
             base.BuildParameterList(list);
         }
@@ -2674,9 +2676,9 @@ namespace IfcDoc.Schema.DOC
             }
         }
 
-        public DocTemplateUsage RegisterParameterConcept(string parameter, DocTemplateDefinition def)
+        public DocTemplateUsage GetParameterConcept(string parameter, DocTemplateDefinition def)
         {
-            foreach(DocTemplateUsage docEachUsage in this.Concepts)
+            foreach (DocTemplateUsage docEachUsage in this.Concepts)
             {
                 if (docEachUsage.Name.Equals(parameter) && docEachUsage.Definition == def)
                 {
@@ -2684,10 +2686,19 @@ namespace IfcDoc.Schema.DOC
                 }
             }
 
-            DocTemplateUsage docUsage = new DocTemplateUsage();
-            docUsage.Name = parameter;
-            docUsage.Definition = def;
-            this.Concepts.Add(docUsage);
+            return null;
+        }
+
+        public DocTemplateUsage RegisterParameterConcept(string parameter, DocTemplateDefinition def)
+        {
+            DocTemplateUsage docUsage = this.GetParameterConcept(parameter, def);
+            if (docUsage == null)
+            {
+                docUsage = new DocTemplateUsage();
+                docUsage.Name = parameter;
+                docUsage.Definition = def;
+                this.Concepts.Add(docUsage);
+            }
             return docUsage;
         }
 

@@ -34,12 +34,13 @@
             this.toolStripButtonTemplateInsert = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonTemplateRemove = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonTemplateUpdate = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonRuleRef = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonMoveUp = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonMoveDown = new System.Windows.Forms.ToolStripButton();
             this.treeViewTemplate = new System.Windows.Forms.TreeView();
             this.imageListRules = new System.Windows.Forms.ImageList(this.components);
-            this.toolStripButtonRuleRef = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonSetDefault = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -53,7 +54,8 @@
             this.toolStripButtonRuleRef,
             this.toolStripSeparator1,
             this.toolStripButtonMoveUp,
-            this.toolStripButtonMoveDown});
+            this.toolStripButtonMoveDown,
+            this.toolStripButtonSetDefault});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(400, 25);
@@ -95,6 +97,18 @@
             this.toolStripButtonTemplateUpdate.Text = "Update";
             this.toolStripButtonTemplateUpdate.ToolTipText = "Edits the selected reference";
             this.toolStripButtonTemplateUpdate.Click += new System.EventHandler(this.toolStripButtonTemplateUpdate_Click);
+            // 
+            // toolStripButtonRuleRef
+            // 
+            this.toolStripButtonRuleRef.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonRuleRef.Enabled = false;
+            this.toolStripButtonRuleRef.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonRuleRef.Image")));
+            this.toolStripButtonRuleRef.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonRuleRef.Name = "toolStripButtonRuleRef";
+            this.toolStripButtonRuleRef.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButtonRuleRef.Text = "Reference";
+            this.toolStripButtonRuleRef.ToolTipText = "Links another concept template for the selected reference.";
+            this.toolStripButtonRuleRef.Click += new System.EventHandler(this.toolStripButtonRuleRef_Click);
             // 
             // toolStripSeparator1
             // 
@@ -146,17 +160,18 @@
             this.imageListRules.Images.SetKeyName(2, "DocQuantity.bmp");
             this.imageListRules.Images.SetKeyName(3, "DocTemplateDefinition.bmp");
             // 
-            // toolStripButtonRuleRef
+            // toolStripButtonSetDefault
             // 
-            this.toolStripButtonRuleRef.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonRuleRef.Enabled = false;
-            this.toolStripButtonRuleRef.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonRuleRef.Image")));
-            this.toolStripButtonRuleRef.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonRuleRef.Name = "toolStripButtonRuleRef";
-            this.toolStripButtonRuleRef.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButtonRuleRef.Text = "Reference";
-            this.toolStripButtonRuleRef.ToolTipText = "Links another concept template for the selected reference.";
-            this.toolStripButtonRuleRef.Click += new System.EventHandler(this.toolStripButtonRuleRef_Click);
+            this.toolStripButtonSetDefault.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonSetDefault.Enabled = false;
+            this.toolStripButtonSetDefault.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonSetDefault.Image")));
+            this.toolStripButtonSetDefault.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonSetDefault.Name = "toolStripButtonSetDefault";
+            this.toolStripButtonSetDefault.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButtonSetDefault.Text = "toolStripButton1";
+            this.toolStripButtonSetDefault.ToolTipText = "Mark as default, indicating that value should be displayed in validation report s" +
+    "ummaries or application user interfaces.";
+            this.toolStripButtonSetDefault.Click += new System.EventHandler(this.toolStripButtonSetDefault_Click);
             // 
             // CtlRules
             // 
@@ -185,5 +200,6 @@
         private System.Windows.Forms.ToolStripButton toolStripButtonMoveDown;
         private System.Windows.Forms.ImageList imageListRules;
         private System.Windows.Forms.ToolStripButton toolStripButtonRuleRef;
+        private System.Windows.Forms.ToolStripButton toolStripButtonSetDefault;
     }
 }

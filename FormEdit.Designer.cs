@@ -220,21 +220,21 @@
             this.openFileDialogValidate = new System.Windows.Forms.OpenFileDialog();
             this.backgroundWorkerValidate = new System.ComponentModel.BackgroundWorker();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.treeView = new IfcDoc.ThemedTreeView();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panelDiagram = new System.Windows.Forms.Panel();
-            this.splitContainerConcept = new System.Windows.Forms.SplitContainer();
-            this.splitContainerRules = new System.Windows.Forms.SplitContainer();
-            this.textBoxHTML = new System.Windows.Forms.TextBox();
-            this.webBrowser = new System.Windows.Forms.WebBrowser();
-            this.imageListRules = new System.Windows.Forms.ImageList(this.components);
-            this.treeView = new IfcDoc.ThemedTreeView();
             this.ctlInheritance = new IfcDoc.CtlInheritance();
+            this.splitContainerConcept = new System.Windows.Forms.SplitContainer();
             this.ctlConcept = new IfcDoc.CtlConcept();
+            this.splitContainerRules = new System.Windows.Forms.SplitContainer();
             this.ctlRules = new IfcDoc.CtlRules();
             this.ctlOperators = new IfcDoc.CtlOperators();
             this.ctlParameters = new IfcDoc.CtlParameters();
             this.ctlCheckGrid = new IfcDoc.CtlCheckGrid();
             this.ctlExpressG = new IfcDoc.CtlExpressG();
+            this.textBoxHTML = new System.Windows.Forms.TextBox();
+            this.webBrowser = new System.Windows.Forms.WebBrowser();
+            this.imageListRules = new System.Windows.Forms.ImageList(this.components);
             this.contextMenuStrip.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.toolStripMain.SuspendLayout();
@@ -2006,6 +2006,24 @@
             this.splitContainer1.SplitterDistance = 286;
             this.splitContainer1.TabIndex = 1;
             // 
+            // treeView
+            // 
+            this.treeView.ContextMenuStrip = this.contextMenuStrip;
+            this.treeView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeView.HideSelection = false;
+            this.treeView.ImageIndex = 0;
+            this.treeView.ImageList = this.imageListIcon;
+            this.treeView.LabelEdit = true;
+            this.treeView.Location = new System.Drawing.Point(0, 0);
+            this.treeView.Name = "treeView";
+            this.treeView.SelectedImageIndex = 0;
+            this.treeView.Size = new System.Drawing.Size(286, 515);
+            this.treeView.TabIndex = 0;
+            this.treeView.BeforeLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.treeView_BeforeLabelEdit);
+            this.treeView.AfterLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.treeView_AfterLabelEdit);
+            this.treeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TreeView_AfterSelect);
+            this.treeView.MouseUp += new System.Windows.Forms.MouseEventHandler(this.treeView_MouseUp);
+            // 
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -2031,6 +2049,21 @@
             this.panelDiagram.TabIndex = 3;
             this.panelDiagram.Visible = false;
             // 
+            // ctlInheritance
+            // 
+            this.ctlInheritance.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ctlInheritance.Entity = null;
+            this.ctlInheritance.Location = new System.Drawing.Point(0, 0);
+            this.ctlInheritance.Mode = IfcDoc.ToolMode.Select;
+            this.ctlInheritance.ModelView = null;
+            this.ctlInheritance.Name = "ctlInheritance";
+            this.ctlInheritance.Project = null;
+            this.ctlInheritance.Size = new System.Drawing.Size(672, 513);
+            this.ctlInheritance.TabIndex = 3;
+            this.ctlInheritance.Text = "ctlInheritance1";
+            this.ctlInheritance.Visible = false;
+            this.ctlInheritance.SelectionChanged += new System.EventHandler(this.ctlInheritance_SelectionChanged);
+            // 
             // splitContainerConcept
             // 
             this.splitContainerConcept.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -2051,91 +2084,6 @@
             this.splitContainerConcept.SplitterDistance = 256;
             this.splitContainerConcept.TabIndex = 2;
             // 
-            // splitContainerRules
-            // 
-            this.splitContainerRules.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainerRules.Location = new System.Drawing.Point(0, 0);
-            this.splitContainerRules.Name = "splitContainerRules";
-            // 
-            // splitContainerRules.Panel1
-            // 
-            this.splitContainerRules.Panel1.Controls.Add(this.ctlRules);
-            // 
-            // splitContainerRules.Panel2
-            // 
-            this.splitContainerRules.Panel2.Controls.Add(this.ctlOperators);
-            this.splitContainerRules.Size = new System.Drawing.Size(670, 251);
-            this.splitContainerRules.SplitterDistance = 317;
-            this.splitContainerRules.TabIndex = 2;
-            // 
-            // textBoxHTML
-            // 
-            this.textBoxHTML.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBoxHTML.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBoxHTML.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxHTML.Location = new System.Drawing.Point(0, 0);
-            this.textBoxHTML.MaxLength = 65535;
-            this.textBoxHTML.Multiline = true;
-            this.textBoxHTML.Name = "textBoxHTML";
-            this.textBoxHTML.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBoxHTML.Size = new System.Drawing.Size(672, 513);
-            this.textBoxHTML.TabIndex = 2;
-            this.textBoxHTML.Visible = false;
-            this.textBoxHTML.Validated += new System.EventHandler(this.TextBoxHTML_Validated);
-            // 
-            // webBrowser
-            // 
-            this.webBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.webBrowser.Location = new System.Drawing.Point(0, 0);
-            this.webBrowser.MinimumSize = new System.Drawing.Size(20, 20);
-            this.webBrowser.Name = "webBrowser";
-            this.webBrowser.Size = new System.Drawing.Size(672, 513);
-            this.webBrowser.TabIndex = 1;
-            this.webBrowser.Navigating += new System.Windows.Forms.WebBrowserNavigatingEventHandler(this.WebBrowser_Navigating);
-            // 
-            // imageListRules
-            // 
-            this.imageListRules.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListRules.ImageStream")));
-            this.imageListRules.TransparentColor = System.Drawing.Color.Fuchsia;
-            this.imageListRules.Images.SetKeyName(0, "DocEntity.bmp");
-            this.imageListRules.Images.SetKeyName(1, "DocAttribute.bmp");
-            this.imageListRules.Images.SetKeyName(2, "DocQuantity.bmp");
-            this.imageListRules.Images.SetKeyName(3, "IfcAppliedValue.png");
-            this.imageListRules.Images.SetKeyName(4, "IfcBooleanOperand.png");
-            // 
-            // treeView
-            // 
-            this.treeView.ContextMenuStrip = this.contextMenuStrip;
-            this.treeView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.treeView.HideSelection = false;
-            this.treeView.ImageIndex = 0;
-            this.treeView.ImageList = this.imageListIcon;
-            this.treeView.LabelEdit = true;
-            this.treeView.Location = new System.Drawing.Point(0, 0);
-            this.treeView.Name = "treeView";
-            this.treeView.SelectedImageIndex = 0;
-            this.treeView.Size = new System.Drawing.Size(286, 515);
-            this.treeView.TabIndex = 0;
-            this.treeView.BeforeLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.treeView_BeforeLabelEdit);
-            this.treeView.AfterLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.treeView_AfterLabelEdit);
-            this.treeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TreeView_AfterSelect);
-            this.treeView.MouseUp += new System.Windows.Forms.MouseEventHandler(this.treeView_MouseUp);
-            // 
-            // ctlInheritance
-            // 
-            this.ctlInheritance.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ctlInheritance.Entity = null;
-            this.ctlInheritance.Location = new System.Drawing.Point(0, 0);
-            this.ctlInheritance.Mode = IfcDoc.ToolMode.Select;
-            this.ctlInheritance.ModelView = null;
-            this.ctlInheritance.Name = "ctlInheritance";
-            this.ctlInheritance.Project = null;
-            this.ctlInheritance.Size = new System.Drawing.Size(672, 513);
-            this.ctlInheritance.TabIndex = 3;
-            this.ctlInheritance.Text = "ctlInheritance1";
-            this.ctlInheritance.Visible = false;
-            this.ctlInheritance.SelectionChanged += new System.EventHandler(this.ctlInheritance_SelectionChanged);
-            // 
             // ctlConcept
             // 
             this.ctlConcept.AutoScroll = true;
@@ -2152,6 +2100,23 @@
             this.ctlConcept.Text = "ctlConcept1";
             this.ctlConcept.SelectionChanged += new System.EventHandler(this.ctlConcept_SelectionChanged);
             this.ctlConcept.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ctlConcept_MouseDoubleClick);
+            // 
+            // splitContainerRules
+            // 
+            this.splitContainerRules.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainerRules.Location = new System.Drawing.Point(0, 0);
+            this.splitContainerRules.Name = "splitContainerRules";
+            // 
+            // splitContainerRules.Panel1
+            // 
+            this.splitContainerRules.Panel1.Controls.Add(this.ctlRules);
+            // 
+            // splitContainerRules.Panel2
+            // 
+            this.splitContainerRules.Panel2.Controls.Add(this.ctlOperators);
+            this.splitContainerRules.Size = new System.Drawing.Size(670, 251);
+            this.splitContainerRules.SplitterDistance = 317;
+            this.splitContainerRules.TabIndex = 2;
             // 
             // ctlRules
             // 
@@ -2190,6 +2155,7 @@
             this.ctlParameters.Size = new System.Drawing.Size(670, 251);
             this.ctlParameters.TabIndex = 3;
             this.ctlParameters.Visible = false;
+            this.ctlParameters.SelectedColumnChanged += new System.EventHandler(this.ctlParameters_SelectedColumnChanged);
             // 
             // ctlCheckGrid
             // 
@@ -2221,6 +2187,41 @@
             this.ctlExpressG.SelectionChanged += new System.EventHandler(this.ctlExpressG_SelectionChanged);
             this.ctlExpressG.LinkOperation += new System.EventHandler(this.ctlExpressG_LinkOperation);
             this.ctlExpressG.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ctlExpressG_MouseDoubleClick);
+            // 
+            // textBoxHTML
+            // 
+            this.textBoxHTML.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBoxHTML.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textBoxHTML.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxHTML.Location = new System.Drawing.Point(0, 0);
+            this.textBoxHTML.MaxLength = 65535;
+            this.textBoxHTML.Multiline = true;
+            this.textBoxHTML.Name = "textBoxHTML";
+            this.textBoxHTML.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.textBoxHTML.Size = new System.Drawing.Size(672, 513);
+            this.textBoxHTML.TabIndex = 2;
+            this.textBoxHTML.Visible = false;
+            this.textBoxHTML.Validated += new System.EventHandler(this.TextBoxHTML_Validated);
+            // 
+            // webBrowser
+            // 
+            this.webBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.webBrowser.Location = new System.Drawing.Point(0, 0);
+            this.webBrowser.MinimumSize = new System.Drawing.Size(20, 20);
+            this.webBrowser.Name = "webBrowser";
+            this.webBrowser.Size = new System.Drawing.Size(672, 513);
+            this.webBrowser.TabIndex = 1;
+            this.webBrowser.Navigating += new System.Windows.Forms.WebBrowserNavigatingEventHandler(this.WebBrowser_Navigating);
+            // 
+            // imageListRules
+            // 
+            this.imageListRules.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListRules.ImageStream")));
+            this.imageListRules.TransparentColor = System.Drawing.Color.Fuchsia;
+            this.imageListRules.Images.SetKeyName(0, "DocEntity.bmp");
+            this.imageListRules.Images.SetKeyName(1, "DocAttribute.bmp");
+            this.imageListRules.Images.SetKeyName(2, "DocQuantity.bmp");
+            this.imageListRules.Images.SetKeyName(3, "IfcAppliedValue.png");
+            this.imageListRules.Images.SetKeyName(4, "IfcBooleanOperand.png");
             // 
             // FormEdit
             // 

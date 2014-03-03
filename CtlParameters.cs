@@ -15,6 +15,7 @@ namespace IfcDoc
         DocProject m_project;
         DocConceptRoot m_conceptroot;
         DocTemplateUsage m_conceptleaf;
+        DocModelRule m_selectedcolumn;
         Dictionary<string, DocObject> m_map;
         DocModelRule[] m_columns;
         bool m_editcon;
@@ -86,6 +87,16 @@ namespace IfcDoc
                 LoadUsage();
             }
         }
+
+        public DocModelRule SelectedColumn
+        {
+            get
+            {
+                return this.m_selectedcolumn;
+            }
+        }
+
+        public event EventHandler SelectedColumnChanged;
 
         private void LoadUsage()
         {
@@ -263,6 +274,7 @@ namespace IfcDoc
                         {
                             cell.Value = "\\";
                         }
+                        dataGridViewConceptRules_CellValidated(this, e);
                         this.dataGridViewConceptRules.NotifyCurrentCellDirty(true);
                     }
                 }
@@ -291,14 +303,17 @@ namespace IfcDoc
                 if (docTemplateInner != null)
                 {
                     DocTemplateItem docConceptItem = (DocTemplateItem)this.dataGridViewConceptRules.Rows[e.RowIndex].Tag;
-                    DocTemplateUsage docConceptInner = docConceptItem.RegisterParameterConcept(docRule.Identification, docTemplateInner);
-
-                    using (FormParameters form = new FormParameters())
+                    if (docConceptItem != null)
                     {
-                        form.Project = this.m_project;
-                        form.ConceptRoot = this.m_conceptroot;
-                        form.ConceptLeaf = docConceptInner;
-                        form.ShowDialog(this);
+                        DocTemplateUsage docConceptInner = docConceptItem.RegisterParameterConcept(docRule.Identification, docTemplateInner);
+
+                        using (FormParameters form = new FormParameters())
+                        {
+                            form.Project = this.m_project;
+                            form.ConceptRoot = this.m_conceptroot;
+                            form.ConceptLeaf = docConceptInner;
+                            form.ShowDialog(this);
+                        }
                     }
                 }
                 else
@@ -348,8 +363,6 @@ namespace IfcDoc
             docUsage.Items.RemoveAt(index + 1);
 
             LoadUsage();
-            //this.dataGridViewConceptRules.Rows[index - 1].HeaderCell.Selected = true;
-            //this.dataGridViewConceptRules.CurrentCell = this.dataGridViewConceptRules.Rows[index - 1].c;// Cells[0];// CurrentRow = 0;//.Rows[index - 1].Selected = true;
             this.m_editcon = false;
         }
 
@@ -368,6 +381,23 @@ namespace IfcDoc
                 this.dataGridViewConceptRules.Rows[index + 1].Selected = true;
             }
             this.m_editcon = false;
+        }
+
+        private void dataGridViewConceptRules_CellEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex >= 0 && e.ColumnIndex < this.m_columns.Length)
+            {
+                this.m_selectedcolumn = this.m_columns[e.ColumnIndex];
+            }
+            else
+            {
+                this.m_selectedcolumn = null;
+            }
+
+            if (this.SelectedColumnChanged != null)
+            {
+                this.SelectedColumnChanged(this, EventArgs.Empty);
+            }
         }
     }
 }

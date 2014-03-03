@@ -1,4 +1,4 @@
-<!-- created with IFCDOC 6.3 at buildingsmart-tech.org -->
+<!-- created with IFCDOC 6.4 at buildingsmart-tech.org -->
 	<!-- root element declaration (for SCHEMA definitions) -->
 	<xs:element name="uos" type="ifc:uos" abstract="true"/>
     <xs:simpleType name="Seq-anyURI">

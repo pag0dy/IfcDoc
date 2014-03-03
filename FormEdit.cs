@@ -652,7 +652,7 @@ namespace IfcDoc
                         case ".ifcdoc":
                             using (FormatSPF format = new FormatSPF(this.m_file, SchemaDOC.Types, this.m_instances))
                             {
-                                format.InitHeaders(this.m_file, "IFCDOC_6_3");
+                                format.InitHeaders(this.m_file, "IFCDOC_6_4");
                                 format.Save();
                             }
                             break;
@@ -1386,6 +1386,9 @@ namespace IfcDoc
                     // swap out instances temporarily
                     Dictionary<long, SEntity> old = this.m_instances;
                     long lid = this.m_lastid;
+
+                    this.m_instances = new Dictionary<long, SEntity>();
+                    this.m_lastid = 0;
 
                     try
                     {
@@ -5216,6 +5219,9 @@ namespace IfcDoc
 
         private void backgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
+            Dictionary<long, SEntity> old = this.m_instances;
+            long lid = this.m_lastid;
+
             try
             {
                 // build dictionary to map IFC type name to entity and schema                
@@ -5227,6 +5233,11 @@ namespace IfcDoc
                 this.BuildMaps(mapEntity, mapSchema);
 
                 string path = Properties.Settings.Default.OutputPath;
+
+                // swap out instances such that constructors go to different cache
+                this.m_instances = new Dictionary<long, SEntity>();
+                this.m_lastid = 0;
+
                 DocumentationISO.GenerateDocumentation(this.m_project, path, this.m_instances, mapEntity, mapSchema, this.m_filterviews, this.m_filterlocales, this.backgroundWorkerGenerate, this.m_formProgress);
 
                 // launch the content
@@ -5235,6 +5246,11 @@ namespace IfcDoc
             catch (Exception ex)
             {
                 this.m_exception = ex;
+            }
+            finally
+            {
+                this.m_instances = old;
+                this.m_lastid = lid;
             }
         }
 
@@ -7550,6 +7566,11 @@ namespace IfcDoc
                 }
             }
 
+        }
+
+        private void ctlParameters_SelectedColumnChanged(object sender, EventArgs e)
+        {
+            this.ctlConcept.Selection = this.ctlParameters.SelectedColumn;
         }
 
 

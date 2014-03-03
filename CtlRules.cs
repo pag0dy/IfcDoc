@@ -495,6 +495,8 @@ namespace IfcDoc
             TreeNode tnParent = this.treeViewTemplate.SelectedNode.Parent;
             this.toolStripButtonMoveUp.Enabled = (tnParent != null && tnParent.Nodes.IndexOf(tnSelect) > 0) && !locked;
             this.toolStripButtonMoveDown.Enabled = (tnParent != null && tnParent.Nodes.IndexOf(tnSelect) < tnParent.Nodes.Count - 1) && !locked;
+
+            this.toolStripButtonSetDefault.Enabled = (this.Selection is DocModelRuleAttribute || this.Selection is DocModelRuleEntity);
         }
 
         private void treeViewTemplate_AfterSelect(object sender, TreeViewEventArgs e)
@@ -567,6 +569,26 @@ namespace IfcDoc
 
                     LoadTemplateGraph(tnSelect, docRule);
                 }
+            }
+        }
+
+        private void toolStripButtonSetDefault_Click(object sender, EventArgs e)
+        {
+            TreeNode tnSelect = this.treeViewTemplate.SelectedNode;
+            if(tnSelect.Tag is DocModelRuleEntity)
+            {
+                DocModelRuleEntity rule = (DocModelRuleEntity)tnSelect.Tag;
+                rule.Identification = "Value";
+            }
+            else if(tnSelect.Tag is DocModelRuleAttribute)
+            {
+                DocModelRuleAttribute rule = (DocModelRuleAttribute)tnSelect.Tag;
+                rule.Identification = "Name";
+            }
+
+            if (this.ContentChanged != null)
+            {
+                this.ContentChanged(this, EventArgs.Empty);
             }
         }
 

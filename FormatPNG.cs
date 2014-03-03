@@ -173,6 +173,12 @@ namespace IfcDoc.Format.PNG
                                 }
 
                                 g.DrawString(docObj.Name, font, Brushes.White, x + CX, targetY);
+
+                                if (ruleEntity.Identification == "Value")
+                                {
+                                    // mark rule serving as default value
+                                    g.FillEllipse(Brushes.Green, new Rectangle(x + CX - DX - CY, y, CY, CY));
+                                }
                             }
 
                             // record rectangle
@@ -202,6 +208,12 @@ namespace IfcDoc.Format.PNG
                         g.DrawLine(Pens.Black, xM, y0, xM, y1);
                         g.DrawLine(Pens.Black, xM, y1, x1, y1);
                     }
+                }
+
+                if (ruleAttribute.Identification == "Name")
+                {
+                    // mark rule serving as default name
+                    g.FillEllipse(Brushes.Blue, new Rectangle(x + CX - DX - CY, y + CY * (iAttr+1), CY, CY));
                 }
             }
         }
@@ -247,12 +259,19 @@ namespace IfcDoc.Format.PNG
             int x = lane * CX;
             int y = lanes[lane];
 
-            g.FillRectangle(Brushes.Black, x, y, CX - DX, CY);
+            if (docEntity.IsAbstract())
+            {
+                g.FillRectangle(Brushes.Gray, x, y, CX - DX, CY);
+            }
+            else
+            {
+                g.FillRectangle(Brushes.Black, x, y, CX - DX, CY);
+            }
             g.DrawRectangle(Pens.Black, x, y, CX - DX, CY);
             using (Font font = new Font(FontFamily.GenericSansSerif, 8.0f, FontStyle.Bold))
             {
                 g.DrawString(docEntity.Name, font, Brushes.White, x, y);
-
+#if false
                 if (docEntity.IsAbstract())
                 {
                     using (StringFormat fmt = new StringFormat())
@@ -261,6 +280,13 @@ namespace IfcDoc.Format.PNG
                         g.DrawString("(ABS)", font, Brushes.White, new RectangleF(x, y, CX - DX, CY), fmt);
                     }
                 }
+#endif
+            }
+
+            if (docRule != null && docRule.Identification == "Value")
+            {
+                // mark rule serving as default value
+                g.FillEllipse(Brushes.Green, new Rectangle(x + CX - DX - CY, y, CY, CY));
             }
 
             g.DrawRectangle(Pens.Black, x, y + CY, CX - DX, CY * listAttr.Count);
@@ -283,6 +309,7 @@ namespace IfcDoc.Format.PNG
                         fmt.Alignment = StringAlignment.Far;
                         g.DrawString(display, font, brush, new RectangleF(x, y + CY * (iAttr + 1), CX-DX, CY), fmt);
                     }
+
                 }
             }
             

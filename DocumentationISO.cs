@@ -278,7 +278,7 @@ namespace IfcDoc
         /// </summary>
         /// <param name="def"></param>
         /// <returns></returns>
-        private static string FormatExchange(DocProject docProject, DocExchangeDefinition def, Dictionary<string, string> mapSchema)
+        private static string FormatExchange(DocProject docProject, DocModelView docView, DocExchangeDefinition def, Dictionary<string, DocObject> mapEntity, Dictionary<string, string> mapSchema)
         {
             // format content
             StringBuilder sb = new StringBuilder();
@@ -291,25 +291,16 @@ namespace IfcDoc
 
             SortedList<string, DocConceptRoot> sortlist = new SortedList<string, DocConceptRoot>();
 
-            DocModelView docModelView = null;
-            foreach (DocModelView docView in docProject.ModelViews)
+            foreach (DocConceptRoot docRoot in docView.ConceptRoots)
             {
-                if (docView.Exchanges.Contains(def))
+                foreach (DocTemplateUsage docUsage in docRoot.Concepts)
                 {
-                    docModelView = docView;
-                }
-
-                foreach (DocConceptRoot docRoot in docView.ConceptRoots)
-                {
-                    foreach (DocTemplateUsage docUsage in docRoot.Concepts)
+                    foreach (DocExchangeItem docReq in docUsage.Exchanges)
                     {
-                        foreach (DocExchangeItem docReq in docUsage.Exchanges)
+                        //if (docReq.Exchange == def && docReq.Requirement != DocExchangeRequirementEnum.NotRelevant && docReq.Requirement != DocExchangeRequirementEnum.Excluded && !sortlist.ContainsKey(docRoot.ApplicableEntity.Name))
+                        if (docReq.Exchange == def && docReq.Requirement != DocExchangeRequirementEnum.NotRelevant && !sortlist.ContainsKey(docRoot.ApplicableEntity.Name))
                         {
-                            //if (docReq.Exchange == def && docReq.Requirement != DocExchangeRequirementEnum.NotRelevant && docReq.Requirement != DocExchangeRequirementEnum.Excluded && !sortlist.ContainsKey(docRoot.ApplicableEntity.Name))
-                            if (docReq.Exchange == def && docReq.Requirement != DocExchangeRequirementEnum.NotRelevant && !sortlist.ContainsKey(docRoot.ApplicableEntity.Name))
-                            {
-                                sortlist.Add(docRoot.ApplicableEntity.Name, docRoot);
-                            }
+                            sortlist.Add(docRoot.ApplicableEntity.Name, docRoot);
                         }
                     }
                 }
@@ -349,31 +340,37 @@ namespace IfcDoc
                         }
                     }
 
-                    sb.Append("<tr><td>&nbsp;&nbsp;<a href=\"../../");
-                    sb.Append(schema.ToLower());
-                    sb.Append("/lexical/");
-                    sb.Append(ent.ToLower());
-                    sb.Append(".htm#");
-                    sb.Append(docConcept.Definition.Name.ToLower().Replace(' ', '-'));
-                    sb.Append("\">");
-                    sb.Append(docConcept.Definition.Name);
-                    sb.Append("</a></td><td>");
-
-                    bool first = true;
-                    if (docConcept.Definition.Rules != null)
+                    if (reqImport != DocExchangeRequirementEnum.NotRelevant || reqExport != DocExchangeRequirementEnum.NotRelevant)
                     {
-                        foreach (DocModelRule docRule in docConcept.Definition.Rules)
-                        {
-                            if (!first)
-                            {
-                                sb.Append("<br/>");
-                            }
-                            sb.Append(docRule.Name);
-                            first = false;
-                        }
-                    }
-                    sb.Append("</td><td>");
+                        sb.Append("<tr><td>&nbsp;&nbsp;<a href=\"../../");
+                        sb.Append(schema.ToLower());
+                        sb.Append("/lexical/");
+                        sb.Append(ent.ToLower());
+                        sb.Append(".htm#");
+                        sb.Append(docConcept.Definition.Name.ToLower().Replace(' ', '-'));
+                        sb.Append("\">");
+                        sb.Append(docConcept.Definition.Name);
+                        sb.Append("</a></td><td>");
 
+                        bool first = true;
+                        if (docConcept.Definition.Rules != null)
+                        {
+                            foreach (DocModelRule docRule in docConcept.Definition.Rules)
+                            {
+                                if (!first)
+                                {
+                                    sb.Append("<br/>");
+                                }
+                                sb.Append(docRule.Name);
+                                first = false;
+                            }
+                        }
+                        sb.Append("</td><td>");
+
+
+                        string table = FormatConceptTable(docProject, docView, docRoot.ApplicableEntity, docRoot, docConcept, mapEntity, mapSchema);
+                        sb.Append(table);
+#if false
                     first = true;
 
                     // build list of inherited items
@@ -387,12 +384,14 @@ namespace IfcDoc
                         sb.Append(docItem.RuleParameters);
                         first = false;
                     }
+#endif
+                        sb.Append("</td><td>");
+                        AppendRequirement(sb, reqImport, 3);
+                        sb.Append("</td><td>");
+                        AppendRequirement(sb, reqExport, 3);
+                        sb.AppendLine("</td></tr>");
 
-                    sb.Append("</td><td>");
-                    AppendRequirement(sb, reqImport, 3);
-                    sb.Append("</td><td>");
-                    AppendRequirement(sb, reqExport, 3);
-                    sb.AppendLine("</td></tr>");
+                    }
                 }
 
             }
@@ -820,7 +819,7 @@ namespace IfcDoc
         /// </summary>
         /// <param name="mvd"></param>
         /// <returns></returns>
-        private static string FormatView(DocProject docProject, DocModelView docView, Dictionary<string, string> mapSchema)
+        private static string FormatView(DocProject docProject, DocModelView docView, Dictionary<string, DocObject> mapEntity, Dictionary<string, string> mapSchema)
         {
             // format content
             StringBuilder sb = new StringBuilder();
@@ -899,9 +898,12 @@ namespace IfcDoc
 
                     sb.Append("</td><td>");
 
-                    first = true;
-
+                    // IfcDoc 6.4: use tables
+                    string table = FormatConceptTable(docProject, docView, docRoot.ApplicableEntity, docRoot, docConcept, mapEntity, mapSchema);
+                    sb.Append(table);
+#if false
                     // build list of inherited items
+                    first = true;
                     DocTemplateItem[] items = FindTemplateItems(docProject, docRoot.ApplicableEntity, docConcept.Definition, docView);
                     foreach (DocTemplateItem docItem in items)
                     {
@@ -912,6 +914,7 @@ namespace IfcDoc
                         sb.Append(docItem.RuleParameters);
                         first = false;
                     }
+#endif
 
                     sb.Append("</td>");
 
@@ -1114,6 +1117,208 @@ namespace IfcDoc
             return sb.ToString();
         }
 
+        private static string FormatConceptTable(
+            DocProject docProject,
+            DocModelView docModelView,
+            DocEntity entity,
+            DocConceptRoot root,
+            DocTemplateUsage usage,
+            Dictionary<string, DocObject> mapEntity,
+            Dictionary<string, string> mapSchema)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            DocTemplateItem[] listItems = FindTemplateItems(docProject, entity, usage.Definition, docModelView);
+
+            if(listItems.Length == 0)
+            {
+                // scenario for referenced inner templates
+                listItems = usage.Items.ToArray();
+            }
+
+            // new way with table
+            DocModelRule[] parameters = usage.Definition.GetParameterRules();
+            if (parameters != null && parameters.Length > 0)
+            {
+                // check if descriptions are provided
+                bool showdescriptions = false;
+                foreach (DocTemplateItem item in listItems)
+                {
+                    if (item.Documentation != null)
+                    {
+                        showdescriptions = true;
+                        break;
+                    }
+                }
+
+                sb.AppendLine("<table class=\"gridtable\">");
+
+                // header
+                sb.Append("<tr>");
+                foreach (DocModelRule parameter in parameters)
+                {
+                    sb.Append("<th><b>");
+                    sb.Append(parameter.Identification);
+                    sb.Append("</b></th>");
+                }
+                if (showdescriptions)
+                {
+                    sb.Append("<th><b>Description</b></th>");
+                }
+                sb.AppendLine("</tr>");
+
+                // items
+                foreach (DocTemplateItem item in listItems)
+                {
+                    sb.Append("<tr>");
+                    foreach (DocModelRule parameter in parameters)
+                    {
+                        string value = item.GetParameterValue(parameter.Identification);
+                        string schema = null;
+
+                        if(parameter.Name.Equals("Columns"))
+                        {
+                            parameter.ToString();
+                        }
+
+                        sb.Append("<td>");
+                        //if (value != null)
+                        {
+                            DocDefinition docDef = GetTemplateParameterType(entity, usage.Definition, parameter.Identification, mapEntity);
+                            if (docDef is DocEnumeration)
+                            {
+                                if(value != null)
+                                {
+                                    schema = mapSchema[docDef.Name];
+
+                                    sb.Append("<a href=\"../../");
+                                    sb.Append(schema.ToLower());
+                                    sb.Append("/lexical/");
+                                    sb.Append(docDef.Name.ToLower());
+                                    sb.Append(".htm\">");
+                                    sb.Append(value);
+                                    sb.Append("</a>");
+                                }
+                            }
+                            else if (docDef is DocEntity)
+                            {
+                                DocTemplateDefinition docTemplateInner = null;
+                                if (parameter is DocModelRuleAttribute)
+                                {
+                                    DocModelRuleAttribute dma = (DocModelRuleAttribute)parameter;
+                                    if (dma.Rules.Count == 1 && dma.Rules[0] is DocModelRuleEntity)
+                                    {
+                                        DocModelRuleEntity dme = (DocModelRuleEntity)dma.Rules[0];
+                                        if (dme.References.Count == 1)
+                                        {
+                                            docTemplateInner = dme.References[0];
+                                        }
+                                    }
+                                }
+
+                                if (docTemplateInner != null)
+                                {
+                                    DocTemplateUsage docConceptInner = item.GetParameterConcept(parameter.Identification, docTemplateInner);
+                                    if (docConceptInner != null)
+                                    {
+                                        string inner = FormatConceptTable(docProject, docModelView, (DocEntity)docDef, root, docConceptInner, mapEntity, mapSchema);
+                                        sb.Append(inner);
+                                    }
+                                }
+                                else if (value != null && mapSchema.TryGetValue(value, out schema))
+                                {
+                                    sb.Append("<a href=\"../../");
+                                    sb.Append(schema.ToLower());
+                                    sb.Append("/lexical/");
+                                    sb.Append(value.ToLower());
+                                    sb.Append(".htm\">");
+                                    sb.Append(value);
+                                    sb.Append("</a>");
+                                }
+                                else if(docDef.Name.Equals("IfcReference"))
+                                {
+                                    // ...hyperlinks
+                                    if(value != null)
+                                    {
+                                        string[] parts = value.Split('\\');
+                                        foreach(string part in parts)
+                                        {
+                                            string[] tokens = part.Split('.');
+                                            if (tokens.Length > 0)
+                                            {
+                                                sb.Append("\\");
+
+                                                DocDefinition docToken = docProject.GetDefinition(tokens[0]);
+                                                if (docToken != null)
+                                                {
+                                                    DocSchema docSchema = docProject.GetSchemaOfDefinition(docToken);
+                                                    string relative = @"../../";
+                                                    string hyperlink = relative + docSchema.Name.ToLower() + @"/lexical/" + docToken.Name.ToLower() + ".htm";
+                                                    string format = "<a href=\"" + hyperlink + "\">" + tokens[0] + "</a>";
+                                                    sb.Append(format);
+                                                }
+
+                                                if (tokens.Length > 1)
+                                                {
+                                                    sb.Append(".");
+                                                    sb.Append(tokens[1]);
+                                                }
+
+                                                sb.Append("<br>");
+                                            }
+                                        }
+                                    }
+                                    //sb.Append(value);                                    
+                                }
+                                else if(value != null)
+                                {
+                                    sb.Append(value);
+                                }
+                            }
+                            else if (docDef != null && value != null)
+                            {
+                                value = FormatField(docProject, value, value, docDef.Name, value);
+                                sb.Append(value);
+                            }
+                            else if (value != null)
+                            {
+                                sb.Append(value);
+                            }
+                            else
+                            {
+                                sb.Append("&nbsp;");
+                            }
+                        }
+                        /*
+                        else
+                        {
+                            sb.Append("&nbsp;");
+                        }*/
+                        sb.Append("</td>");
+                    }
+
+                    if (showdescriptions)
+                    {
+                        sb.Append("<td>");
+                        if (item.Documentation != null)
+                        {
+                            sb.Append(item.Documentation);
+                        }
+                        else
+                        {
+                            sb.Append("&nbsp;");
+                        }
+                        sb.Append("</td>");
+                    }
+
+                    sb.AppendLine("</tr>");
+                }
+
+                sb.AppendLine("</table>");
+            }
+            return sb.ToString();
+        }
+
         /// <summary>
         /// Formats a template given an entity and optional template
         /// </summary>
@@ -1127,7 +1332,8 @@ namespace IfcDoc
             DocEntity entity, 
             DocConceptRoot root, 
             DocTemplateUsage usage, 
-            Dictionary<string, DocObject> mapEntity, Dictionary<string, string> mapSchema, 
+            Dictionary<string, DocObject> mapEntity, 
+            Dictionary<string, string> mapSchema, 
             ref int iFigure, ref int iTable)
         {
             if (usage.Definition == null)
@@ -1188,128 +1394,21 @@ namespace IfcDoc
                 sb.Append(iTable);
                 sb.Append(".");
 
-                // new way with table
-                string[] parameters = usage.Definition.GetParameterNames();
-                if (parameters != null && parameters.Length > 0)
-                {
-                    // check if descriptions are provided
-                    bool showdescriptions = false;
-                    foreach (DocTemplateItem item in listItems)
-                    {
-                        if (item.Documentation != null)
-                        {
-                            showdescriptions = true;
-                            break;
-                        }
-                    }
+                sb.AppendLine("<table>");
+                sb.AppendLine("<tr><td>");
 
-                    // formalized table
-                    sb.AppendLine("<table>");
-                    sb.AppendLine("<tr><td>");
+                string table = FormatConceptTable(docProject, docModelView, entity, root, usage, mapEntity, mapSchema);
+                sb.Append(table);
 
-                    //sb.AppendLine("<table width=\"100%\" border=\"1\" style=\"border-width=1;border-spacing=0;\">");
-                    sb.AppendLine("<table class=\"gridtable\">");
-
-                    // header
-                    sb.Append("<tr>");
-                    foreach (string parameter in parameters)
-                    {
-                        sb.Append("<th><b>");
-                        sb.Append(parameter);
-                        sb.Append("</b></th>");
-                    }
-                    if (showdescriptions)
-                    {
-                        sb.Append("<th><b>Description</b></th>");
-                    }
-                    sb.AppendLine("</tr>");
-
-                    // items
-                    foreach (DocTemplateItem item in listItems)
-                    {
-                        sb.Append("<tr>");
-                        foreach (string parameter in parameters)
-                        {
-                            string value = item.GetParameterValue(parameter);
-                            string schema = null;
-
-                            sb.Append("<td>");
-                            if (value != null)
-                            {
-                                DocDefinition docDef = GetTemplateParameterType(entity, usage.Definition, parameter, mapEntity);
-                                if (docDef is DocEnumeration)
-                                {
-                                    schema = mapSchema[docDef.Name];
-
-                                    sb.Append("<a href=\"../../");
-                                    sb.Append(schema.ToLower());
-                                    sb.Append("/lexical/");
-                                    sb.Append(docDef.Name.ToLower());
-                                    sb.Append(".htm\">");
-                                    sb.Append(value);
-                                    sb.Append("</a>");
-                                }
-                                else if (docDef is DocEntity && mapSchema.TryGetValue(value, out schema))
-                                {
-                                    sb.Append("<a href=\"../../");
-                                    sb.Append(schema.ToLower());
-                                    sb.Append("/lexical/");
-                                    sb.Append(value.ToLower());
-                                    sb.Append(".htm\">");
-                                    sb.Append(value);
-                                    sb.Append("</a>");
-                                }
-                                else if (docDef != null)
-                                {
-                                    value = FormatField(docProject, value, value, docDef.Name, value);
-                                    sb.Append(value);
-                                }
-                                else if (value != null)
-                                {
-                                    sb.Append(value);
-                                }
-                                else
-                                {
-                                    sb.Append("&nbsp;");
-                                }
-                            }
-                            else
-                            {
-                                sb.Append("&nbsp;");
-                            }
-                            sb.Append("</td>");
-                        }
-
-                        if (showdescriptions)
-                        {
-                            sb.Append("<td>");
-                            if (item.Documentation != null)
-                            {
-                                sb.Append(item.Documentation);
-                            }
-                            else
-                            {
-                                sb.Append("&nbsp;");
-                            }
-                            sb.Append("</td>");
-                        }
-
-                        sb.AppendLine("</tr>");
-                    }
-
-                    sb.AppendLine("</table>");
-
-
-                    sb.AppendLine("</td></tr>");
-                    sb.Append("<tr><td><p class=\"table\">Table ");
-                    sb.Append(iTable);
-                    sb.Append(" &mdash; ");
-                    sb.Append(entity.Name);
-                    sb.Append(" ");
-                    sb.Append(usage.Definition.Name);
-                    sb.AppendLine("</td></tr></table>");
-                    sb.AppendLine();
-                }
+                sb.AppendLine("</td></tr>");
+                sb.Append("<tr><td><p class=\"table\">Table ");
+                sb.Append(iTable);
+                sb.Append(" &mdash; ");
+                sb.Append(entity.Name);
+                sb.Append(" ");
+                sb.Append(usage.Definition.Name);
+                sb.AppendLine("</td></tr></table>");
+                sb.AppendLine();
             }
             else
             {
@@ -1958,7 +2057,7 @@ namespace IfcDoc
                                 htmTemplate.WriteLine("<tr><td>" + docProjectModelView.Code + "</td><td>" + docProjectModelView.Version + "</td><td>" + docProjectModelView.Status + "</td><td>" + docProjectModelView.Author + "</td><td>" + docProjectModelView.Copyright + "</td></tr>");
                                 htmTemplate.WriteLine("</table>");
 
-                                string viewtable = FormatView(docProject, docProjectModelView, mapSchema);
+                                string viewtable = FormatView(docProject, docProjectModelView, mapEntity, mapSchema);
                                 htmTemplate.WriteDocumentationForISO(viewtable, docProjectModelView, false);
                             }
 
@@ -1983,7 +2082,7 @@ namespace IfcDoc
                                 htmExchange.WriteLine("<" + tag + "><a id=\"" + id + "\" name=\"" + id + "\">" + indexer + " " + docExchange.Name + "</a></" + tag + ">");
                                 htmExchange.WriteLine("<p class=\"std\">");
 
-                                string exchangedoc = FormatExchange(docProject, docExchange, mapSchema);
+                                string exchangedoc = FormatExchange(docProject, docProjectModelView, docExchange, mapEntity, mapSchema);
                                 htmExchange.WriteDocumentationForISO(exchangedoc, docExchange, false);
                                 htmExchange.WriteLine("</p>");
                             }
