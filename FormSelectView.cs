@@ -29,13 +29,16 @@ namespace IfcDoc
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="selection">Selected template.</param>
-        /// <param name="project">Projet containing templates.</param>
-        /// <param name="entity">The entity for which templates are filtered.</param>
-        public FormSelectView(DocProject project)
+        /// <param name="project">The project.</param>
+        public FormSelectView(DocProject project, string description)
             : this()
         {
             this.m_project = project;
+
+            if (description != null)
+            {
+                this.labelDescription.Text = description;
+            }
 
             foreach (DocModelView docView in this.m_project.ModelViews)
             {
@@ -48,27 +51,37 @@ namespace IfcDoc
             }
         }
 
-        public DocModelView Selection
+        public DocModelView[] Selection
         {
             get
             {
-                if (this.listView.SelectedItems.Count == 1)
+                DocModelView[] sel = null;
+                if (this.listView.SelectedItems.Count > 0)
                 {
-                    return this.listView.SelectedItems[0].Tag as DocModelView;
+                    sel = new DocModelView [this.listView.SelectedItems.Count];
+                    for(int i = 0; i < this.listView.SelectedItems.Count; i++)
+                    {
+                        sel[i] = this.listView.SelectedItems[i].Tag as DocModelView;
+                    }
                 }
 
-                return null;
+                return sel;
             }
             set
             {
                 this.listView.SelectedItems.Clear();
+                if(value == null)
+                    return;
 
-                foreach (ListViewItem lvi in this.listView.Items)
+                foreach (DocModelView view in value)
                 {
-                    if (lvi.Tag == value)
+                    foreach (ListViewItem lvi in this.listView.Items)
                     {
-                        lvi.Selected = true;
-                        return;
+                        if (lvi.Tag == view)
+                        {
+                            lvi.Selected = true;
+                            return;
+                        }
                     }
                 }
             }

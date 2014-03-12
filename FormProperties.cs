@@ -1096,17 +1096,17 @@ namespace IfcDoc
 
         private void buttonViewBase_Click(object sender, EventArgs e)
         {
-            using (FormSelectView form = new FormSelectView(this.m_project))
+            using (FormSelectView form = new FormSelectView(this.m_project, null))
             {
                 DialogResult res = form.ShowDialog();
                 if (res == DialogResult.OK)
                 {
                     DocModelView docView = (DocModelView)this.m_target;
 
-                    if (form.Selection != null)
+                    if (form.Selection != null && form.Selection.Length == 1)
                     {
-                        this.textBoxViewBase.Text = form.Selection.Name;
-                        docView.BaseView = form.Selection.Uuid.ToString();
+                        this.textBoxViewBase.Text = form.Selection[0].Name;
+                        docView.BaseView = form.Selection[0].Uuid.ToString();
                     }
                     else
                     {
@@ -1423,12 +1423,15 @@ namespace IfcDoc
             if (docExample == null)
                 return;
 
-            using (FormSelectView form = new FormSelectView(this.m_project))
+            using (FormSelectView form = new FormSelectView(this.m_project, null))
             {
-                form.Selection = docExample.ModelView;
+                form.Selection = new DocModelView[]{docExample.ModelView};
                 if (form.ShowDialog(this) == DialogResult.OK)
                 {
-                    docExample.ModelView = form.Selection;
+                    if (form.Selection != null && form.Selection.Length == 1)
+                    {
+                        docExample.ModelView = form.Selection[0];
+                    }
                 }
             }
         }

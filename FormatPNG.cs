@@ -59,8 +59,8 @@ namespace IfcDoc.Format.PNG
 
         private static void DrawAttribute(Graphics g, int lane, List<int> lanes, DocEntity docEntity, DocModelView docView, DocModelRuleAttribute ruleAttribute, Dictionary<string, DocObject> map, int offset, Dictionary<Rectangle, DocModelRule> layout, DocProject docProject)
         {
-            int x = lane * CX;
-            int y = lanes[lane];
+            int x = lane * CX + FormatPNG.Border;
+            int y = lanes[lane] + FormatPNG.Border;
 
             // find the index of the attribute
             List<DocAttribute> listAttr = new List<DocAttribute>();
@@ -82,135 +82,152 @@ namespace IfcDoc.Format.PNG
                 DocAttribute docAttr = listAttr[iAttr];
 
                 // map it
-                foreach (DocModelRuleEntity ruleEntity in ruleAttribute.Rules)
+                foreach (DocModelRule ruleEach in ruleAttribute.Rules)
                 {
-                    DocObject docObj = null;
-                    if (map.TryGetValue(ruleEntity.Name, out docObj))
+                    if (ruleEach is DocModelRuleEntity)
                     {
-                        int dest = 0;
-                        if (lanes.Count > lane + 1)
-                        {
-                            dest = lanes[lane + 1];
-                        }
+                        DocModelRuleEntity ruleEntity = (DocModelRuleEntity)ruleEach;
 
-                        if (docObj is DocEntity)
-                        {
-                            DocEntity docEntityTarget = (DocEntity)docObj;
 
-                            // resolve inverse attribute                        
-                            List<DocAttribute> listTarget = new List<DocAttribute>();
-                            BuildAttributeList(docEntityTarget, listTarget, map);
-                            for (int i = 0; i < listTarget.Count; i++)
+                        DocObject docObj = null;
+                        if (map.TryGetValue(ruleEntity.Name, out docObj))
+                        {
+                            int dest = FormatPNG.Border;
+                            if (lanes.Count > lane + 1)
                             {
-                                DocAttribute docAttrTarget = listTarget[i];
-                                if (docAttr.Inverse != null && docAttrTarget.Name.Equals(docAttr.Inverse))
+                                dest = lanes[lane + 1] + FormatPNG.Border;
+                            }
+
+                            if (docObj is DocEntity)
+                            {
+                                DocEntity docEntityTarget = (DocEntity)docObj;
+
+                                // resolve inverse attribute                        
+                                List<DocAttribute> listTarget = new List<DocAttribute>();
+                                BuildAttributeList(docEntityTarget, listTarget, map);
+                                for (int i = 0; i < listTarget.Count; i++)
                                 {
-                                    // found it
-                                    dest += CY * (i + 1);
-                                    break;
-                                }
-                                else if (docAttrTarget.Inverse != null && docAttr.Name.Equals(docAttrTarget.Inverse))
-                                {
-                                    //...also need to check for type compatibility
-
-                                    bool found = false;
-                                    DocEntity docTest = docEntity;
-                                    while (docTest != null)
+                                    DocAttribute docAttrTarget = listTarget[i];
+                                    if (docAttr.Inverse != null && docAttrTarget.Name.Equals(docAttr.Inverse))
                                     {
-                                        if (docTest.Name.Equals(docAttrTarget.DefinedType))
-                                        {
-                                            found = true;
-                                            break;
-                                        }
-
-                                        if (docTest.BaseDefinition == null)
-                                            break;
-
-                                        DocObject docBase = null;
-                                        if (map.TryGetValue(docTest.BaseDefinition, out docBase))
-                                        {
-                                            docTest = docBase as DocEntity;
-                                        }
-                                        else
-                                        {
-                                            break;
-                                        }
-                                    }
-
-                                    // found it
-                                    if (found)
-                                    {
+                                        // found it
                                         dest += CY * (i + 1);
                                         break;
                                     }
-                                }
-                            }
-
-                            // draw the entity, recurse
-                            DrawEntity(g, lane + 1, lanes, docEntityTarget, docView, null, ruleEntity, map, layout, docProject);
-                        }
-                        else
-                        {
-                            int targetY = lanes[lane + 1];
-
-                            g.FillRectangle(Brushes.Black, x + CX, targetY, CX - DX, CY);
-                            g.DrawRectangle(Pens.Black, x + CX, targetY, CX - DX, CY);
-                            using(Font font = new Font(FontFamily.GenericSansSerif, 8.0f))
-                            {
-                                string content = docObj.Name;
-                                foreach (DocModelRule ruleConstraint in ruleEntity.Rules)
-                                {
-                                    if (ruleConstraint.Description != null && ruleConstraint.Description.StartsWith("Value="))
+                                    else if (docAttrTarget.Inverse != null && docAttr.Name.Equals(docAttrTarget.Inverse))
                                     {
-                                        content = ruleConstraint.Description.Substring(6);                                        
+                                        //...also need to check for type compatibility
 
-                                        using (StringFormat fmt = new StringFormat())
+                                        bool found = false;
+                                        DocEntity docTest = docEntity;
+                                        while (docTest != null)
                                         {
-                                            fmt.Alignment = StringAlignment.Far;
-                                            g.DrawString(content, font, Brushes.White, new RectangleF(x + CX, targetY, CX - DX, CY), fmt);
+                                            if (docTest.Name.Equals(docAttrTarget.DefinedType))
+                                            {
+                                                found = true;
+                                                break;
+                                            }
+
+                                            if (docTest.BaseDefinition == null)
+                                                break;
+
+                                            DocObject docBase = null;
+                                            if (map.TryGetValue(docTest.BaseDefinition, out docBase))
+                                            {
+                                                docTest = docBase as DocEntity;
+                                            }
+                                            else
+                                            {
+                                                break;
+                                            }
+                                        }
+
+                                        // found it
+                                        if (found)
+                                        {
+                                            dest += CY * (i + 1);
+                                            break;
                                         }
                                     }
                                 }
 
-                                g.DrawString(docObj.Name, font, Brushes.White, x + CX, targetY);
+                                // draw the entity, recurse
+                                DrawEntity(g, lane + 1, lanes, docEntityTarget, docView, null, ruleEntity, map, layout, docProject);
+                            }
+                            else
+                            {
+                                int targetY = lanes[lane + 1] + FormatPNG.Border;
 
-                                if (ruleEntity.Identification == "Value")
+                                if (g != null)
                                 {
-                                    // mark rule serving as default value
-                                    g.FillEllipse(Brushes.Green, new Rectangle(x + CX - DX - CY, y, CY, CY));
+                                    g.FillRectangle(Brushes.Black, x + CX, targetY, CX - DX, CY);
+                                    g.DrawRectangle(Pens.Black, x + CX, targetY, CX - DX, CY);
+                                    using (Font font = new Font(FontFamily.GenericSansSerif, 8.0f))
+                                    {
+                                        string content = docObj.Name;
+                                        foreach (DocModelRule ruleConstraint in ruleEntity.Rules)
+                                        {
+                                            if (ruleConstraint.Description != null && ruleConstraint.Description.StartsWith("Value="))
+                                            {
+                                                content = ruleConstraint.Description.Substring(6);
+
+                                                using (StringFormat fmt = new StringFormat())
+                                                {
+                                                    fmt.Alignment = StringAlignment.Far;
+                                                    g.DrawString(content, font, Brushes.White, new RectangleF(x + CX, targetY, CX - DX, CY), fmt);
+                                                }
+                                            }
+                                        }
+
+                                        g.DrawString(docObj.Name, font, Brushes.White, x + CX, targetY);
+
+                                        if (ruleEntity.Identification == "Value")
+                                        {
+                                            // mark rule serving as default value
+                                            g.FillEllipse(Brushes.Green, new Rectangle(x + CX - DX - CY, y, CY, CY));
+                                        }
+                                    }
+                                }
+
+                                // record rectangle
+                                if (layout != null)
+                                {
+                                    layout.Add(new Rectangle(x + CX, targetY, CX - DX, CY), ruleEntity);
+                                }
+
+                                // increment lane offset for all lanes
+                                int minlane = targetY + CY * 2;
+                                int i = lane + 1;
+                                if (lanes[i] < minlane)
+                                {
+                                    lanes[i] = minlane;
                                 }
                             }
 
-                            // record rectangle
-                            if (layout != null)
+                            // draw arrow
+                            if (g != null)
                             {
-                                layout.Add(new Rectangle(x + CX + FormatPNG.Border, targetY + FormatPNG.Border, CX - DX, CY), ruleEntity);
-                            }
+                                int x0 = x + CX - DX;
+                                int y0 = y + CY * (iAttr + 1) + CY / 2;
+                                int x1 = x + CX;
+                                int y1 = dest + CY / 2;
+                                int xM = x0 + DX / 2 - offset * 2;
 
-                            // increment lane offset for all lanes
-                            int minlane = targetY + CY * 2;
-                            int i = lane + 1;
-                            if (lanes[i] < minlane)
-                            {
-                                lanes[i] = minlane;
+                                if(!String.IsNullOrEmpty(ruleAttribute.Identification))
+                                {
+                                    // mark the attribute as using parameter
+                                    g.DrawRectangle(Pens.Blue, x, y + CY * (iAttr + 1), CX - DX, CY);
+                                }
+
+                                g.DrawLine(Pens.Black, x0, y0, xM, y0);
+                                g.DrawLine(Pens.Black, xM, y0, xM, y1);
+                                g.DrawLine(Pens.Black, xM, y1, x1, y1);
                             }
                         }
-
-                        // draw arrow
-
-                        int x0 = x + CX - DX;
-                        int y0 = y + CY * (iAttr + 1) + CY / 2;
-                        int x1 = x + CX;
-                        int y1 = dest + CY / 2;
-                        int xM = x0 + DX / 2 - offset * 2;
-
-                        g.DrawLine(Pens.Black, x0, y0, xM, y0);
-                        g.DrawLine(Pens.Black, xM, y0, xM, y1);
-                        g.DrawLine(Pens.Black, xM, y1, x1, y1);
                     }
                 }
 
-                if (ruleAttribute.Identification == "Name")
+                if (g != null && ruleAttribute.Identification == "Name")
                 {
                     // mark rule serving as default name
                     g.FillEllipse(Brushes.Blue, new Rectangle(x + CX - DX - CY, y + CY * (iAttr+1), CY, CY));
@@ -256,67 +273,60 @@ namespace IfcDoc.Format.PNG
                 lanes.Add(miny);
             }
 
-            int x = lane * CX;
-            int y = lanes[lane];
+            int x = lane * CX + FormatPNG.Border;
+            int y = lanes[lane] + FormatPNG.Border;
 
-            if (docEntity.IsAbstract())
+            if (g != null)
             {
-                g.FillRectangle(Brushes.Gray, x, y, CX - DX, CY);
-            }
-            else
-            {
-                g.FillRectangle(Brushes.Black, x, y, CX - DX, CY);
-            }
-            g.DrawRectangle(Pens.Black, x, y, CX - DX, CY);
-            using (Font font = new Font(FontFamily.GenericSansSerif, 8.0f, FontStyle.Bold))
-            {
-                g.DrawString(docEntity.Name, font, Brushes.White, x, y);
-#if false
                 if (docEntity.IsAbstract())
                 {
-                    using (StringFormat fmt = new StringFormat())
-                    {
-                        fmt.Alignment = StringAlignment.Far;
-                        g.DrawString("(ABS)", font, Brushes.White, new RectangleF(x, y, CX - DX, CY), fmt);
-                    }
+                    g.FillRectangle(Brushes.Gray, x, y, CX - DX, CY);
                 }
-#endif
-            }
-
-            if (docRule != null && docRule.Identification == "Value")
-            {
-                // mark rule serving as default value
-                g.FillEllipse(Brushes.Green, new Rectangle(x + CX - DX - CY, y, CY, CY));
-            }
-
-            g.DrawRectangle(Pens.Black, x, y + CY, CX - DX, CY * listAttr.Count);
-            using (Font font = new Font(FontFamily.GenericSansSerif, 8.0f, FontStyle.Regular))
-            {
-                for (int iAttr = 0; iAttr < listAttr.Count; iAttr++)
+                else
                 {
-                    DocAttribute docAttr = listAttr[iAttr];
+                    g.FillRectangle(Brushes.Black, x, y, CX - DX, CY);
+                }
+                g.DrawRectangle(Pens.Black, x, y, CX - DX, CY);
+                using (Font font = new Font(FontFamily.GenericSansSerif, 8.0f, FontStyle.Bold))
+                {
+                    g.DrawString(docEntity.Name, font, Brushes.White, x, y);
+                }
 
-                    string display = docAttr.GetAggregationExpression();
-                    Brush brush = Brushes.Black;
-                    if (docAttr.Inverse != null)
+                if (docRule != null && docRule.Identification == "Value")
+                {
+                    // mark rule serving as default value
+                    g.FillEllipse(Brushes.Green, new Rectangle(x + CX - DX - CY, y, CY, CY));
+                }
+
+                g.DrawRectangle(Pens.Black, x, y + CY, CX - DX, CY * listAttr.Count);
+                using (Font font = new Font(FontFamily.GenericSansSerif, 8.0f, FontStyle.Regular))
+                {
+                    for (int iAttr = 0; iAttr < listAttr.Count; iAttr++)
                     {
-                        brush = Brushes.Gray;
-                    }
+                        DocAttribute docAttr = listAttr[iAttr];
 
-                    g.DrawString(docAttr.Name, font, brush, x, y + CY * (iAttr + 1));
-                    using (StringFormat fmt = new StringFormat())
-                    {
-                        fmt.Alignment = StringAlignment.Far;
-                        g.DrawString(display, font, brush, new RectangleF(x, y + CY * (iAttr + 1), CX-DX, CY), fmt);
-                    }
+                        string display = docAttr.GetAggregationExpression();
+                        Brush brush = Brushes.Black;
+                        if (docAttr.Inverse != null)
+                        {
+                            brush = Brushes.Gray;
+                        }
 
+                        g.DrawString(docAttr.Name, font, brush, x, y + CY * (iAttr + 1));
+                        using (StringFormat fmt = new StringFormat())
+                        {
+                            fmt.Alignment = StringAlignment.Far;
+                            g.DrawString(display, font, brush, new RectangleF(x, y + CY * (iAttr + 1), CX - DX, CY), fmt);
+                        }
+
+                    }
                 }
             }
             
             // record rectangle
             if (layout != null)
             {
-                layout.Add(new Rectangle(x + FormatPNG.Border, y + FormatPNG.Border, CX - DX, CY + CY * listAttr.Count), docRule);
+                layout.Add(new Rectangle(x, y, CX - DX, CY + CY * listAttr.Count), docRule);
             }
 
             SortedList<int, List<DocModelRuleAttribute>> mapAttribute = new SortedList<int, List<DocModelRuleAttribute>>();
@@ -491,13 +501,14 @@ namespace IfcDoc.Format.PNG
                             }
                         }
 
-                        if (eachTemplate != lastTemplate)
+                        if (g != null && eachTemplate != lastTemplate)
                         {
                             using (Font font = new Font(FontFamily.GenericSansSerif, 8.0f, FontStyle.Italic))
                             {
-                                g.DrawString(eachTemplate.Name, font, Brushes.Gray, CX, lanes[1] - CY * 2);
+                                g.DrawString(eachTemplate.Name, font, Brushes.Gray, CX + FormatPNG.Border, lanes[1] - CY * 2 + FormatPNG.Border);
                             }
-                            g.DrawLine(Pens.Gray, CX, lanes[1] - CY * 2, 1920, lanes[1] - CY * 2);
+                            int lineY = lanes[1] - CY * 2 + FormatPNG.Border;
+                            g.DrawLine(Pens.Gray, CX + FormatPNG.Border, lineY, 1920, lineY);
                         }
 
                         lastTemplate = eachTemplate;
@@ -524,51 +535,47 @@ namespace IfcDoc.Format.PNG
         /// <returns></returns>
         internal static Image CreateEntityDiagram(DocEntity docEntity, DocModelView docView, Dictionary<string, DocObject> map, Dictionary<Rectangle, DocModelRule> layout, DocProject docProject)
         {
-            Image image = new Bitmap(2048, 4096, System.Drawing.Imaging.PixelFormat.Format24bppRgb); //...TODO: adjust
+            layout.Clear();
+            List<int> lanes = new List<int>(); // keep track of position offsets in each lane
+            for (int i = 0; i < 16; i++)
+            {
+                lanes.Add(0);
+            }
+
+            // determine boundaries
+            DrawEntity(null, 0, lanes, docEntity, docView, null, null, map, layout, docProject);
+            Rectangle rcBounds = Rectangle.Empty;
+            foreach (Rectangle rc in layout.Keys)
+            {
+                if (rc.Right > rcBounds.Width)
+                {
+                    rcBounds.Width = rc.Right;
+                }
+
+                if (rc.Bottom > rcBounds.Bottom)
+                {
+                    rcBounds.Height = rc.Bottom;
+                }
+            }
+            rcBounds.Width += FormatPNG.Border;
+            rcBounds.Height += FormatPNG.Border;
+
+            Image image = new Bitmap(rcBounds.Width, rcBounds.Height, System.Drawing.Imaging.PixelFormat.Format24bppRgb); 
 
             using (Graphics g = Graphics.FromImage(image))
             {
                 g.FillRectangle(Brushes.White, new Rectangle(0, 0, image.Width, image.Height));
 
-                List<int> lanes = new List<int>(); // keep track of position offsets in each lane
+                layout.Clear();
+                lanes = new List<int>(); // keep track of position offsets in each lane
                 for (int i = 0; i < 16; i++)
                 {
                     lanes.Add(0);
                 }
 
                 DrawEntity(g, 0, lanes, docEntity, docView, null, null, map, layout, docProject);
-            }
 
-            // adjust size based on layout
-            int indent = FormatPNG.Border;
-            Rectangle rcBounds = Rectangle.Empty;
-            if (layout != null)
-            {
-                foreach (Rectangle rc in layout.Keys)
-                {
-                    if (rc.Right > rcBounds.Width)
-                    {
-                        rcBounds.Width = rc.Right;
-                    }
-
-                    if (rc.Bottom > rcBounds.Bottom)
-                    {
-                        rcBounds.Height = rc.Bottom;
-                    }
-                }
-
-                rcBounds.Width += indent * 2;
-                rcBounds.Height += indent * 2;
-                Image imageClip = new Bitmap(rcBounds.Width, rcBounds.Height, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
-                using (Graphics g = Graphics.FromImage(imageClip))
-                {
-                    g.FillRectangle(Brushes.White, rcBounds);
-                    g.DrawImage(image, indent, indent);
-                    g.DrawRectangle(Pens.Black, 0, 0, rcBounds.Width - 1, rcBounds.Height - 1);
-                }
-
-                image.Dispose();
-                image = imageClip;
+                g.DrawRectangle(Pens.Black, 0, 0, rcBounds.Width - 1, rcBounds.Height - 1);
             }
 
             return image;
@@ -587,52 +594,44 @@ namespace IfcDoc.Format.PNG
 
             DocEntity docEntity = (DocEntity)docTarget;
             
-            Image image = new Bitmap(1920, 1080, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
-            
+            // first, determine bounds of drawing
+            List<int> lanes = new List<int>(); // keep track of position offsets in each lane
+            for (int i = 0; i < 16; i++)
+            {
+                lanes.Add(0);
+            }
+            layout.Clear();
+            DrawEntity(null, 0, lanes, docEntity, null, docTemplate, null, map, layout, docProject);
 
+            Rectangle rcBounds = new Rectangle();
+            foreach(Rectangle rc in layout.Keys)
+            {
+                if(rc.Right > rcBounds.Right)
+                {
+                    rcBounds.Width = rc.Right;
+                }
+
+                if(rc.Bottom > rcBounds.Bottom)
+                {
+                    rcBounds.Height = rc.Bottom;
+                }
+            }
+            rcBounds.Width += FormatPNG.Border;
+            rcBounds.Height += FormatPNG.Border;
+
+            Image image = new Bitmap(rcBounds.Width, rcBounds.Height, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
             using (Graphics g = Graphics.FromImage(image))
             {
                 g.FillRectangle(Brushes.White, new Rectangle(0, 0, image.Width, image.Height));
 
-                List<int> lanes = new List<int>(); // keep track of position offsets in each lane
+                lanes = new List<int>(); // keep track of position offsets in each lane
                 for (int i = 0; i < 16; i++)
                 {
                     lanes.Add(0);
                 }
-
+                layout.Clear();
                 DrawEntity(g, 0, lanes, docEntity, null, docTemplate, null, map, layout, docProject);
-            }
-
-            // adjust size based on layout
-            int indent = FormatPNG.Border;
-            Rectangle rcBounds = Rectangle.Empty;
-            if (layout != null)
-            {
-                foreach (Rectangle rc in layout.Keys)
-                {
-                    if (rc.Right > rcBounds.Width)
-                    {
-                        rcBounds.Width = rc.Right;
-                    }
-
-                    if (rc.Bottom > rcBounds.Bottom)
-                    {
-                        rcBounds.Height = rc.Bottom;
-                    }
-                }
-
-                rcBounds.Width += indent * 2;
-                rcBounds.Height += indent * 2;
-                Image imageClip = new Bitmap(rcBounds.Width, rcBounds.Height, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
-                using (Graphics g = Graphics.FromImage(imageClip))
-                {
-                    g.FillRectangle(Brushes.White, rcBounds);
-                    g.DrawImage(image, indent, indent);
-                    g.DrawRectangle(Pens.Black, 0, 0, rcBounds.Width - 1, rcBounds.Height - 1);
-                }
-
-                image.Dispose();
-                image = imageClip;
+                g.DrawRectangle(Pens.Black, 0, 0, rcBounds.Width - 1, rcBounds.Height - 1);
             }
 
             return image;

@@ -77,15 +77,17 @@ namespace IfcDoc.Format.SPF
                         }
 
                         FieldInfo fSource = SEntity.GetFieldByName(typeElement, attrs[0].Name); // dictionary requires reference uniqueness
-
-                        List<FieldInfo> listField = null;
-                        if (!this.m_inversemap.TryGetValue(fSource, out listField))
+                        if (fSource != null)
                         {
-                            listField = new List<FieldInfo>();
-                            this.m_inversemap.Add(fSource, listField);
-                        }
+                            List<FieldInfo> listField = null;
+                            if (!this.m_inversemap.TryGetValue(fSource, out listField))
+                            {
+                                listField = new List<FieldInfo>();
+                                this.m_inversemap.Add(fSource, listField);
+                            }
 
-                        listField.Add(fTarget);
+                            listField.Add(fTarget);
+                        }
                     }
                 }
             }
@@ -344,6 +346,9 @@ namespace IfcDoc.Format.SPF
             {
                 throw new FormatException("Bad format: object identifier must be 32-bit signed integer");
             }
+
+            if (id == -1)
+                return; // buggy file that saved out a deleted element
 
             string strConstructor = line.Substring(iIdTail + 1);
 
@@ -1463,7 +1468,7 @@ namespace IfcDoc.Format.SPF
             FILE_NAME hName = new FILE_NAME();
             hName.Name = filename;
             hName.OriginatingSystem = "buildingSMART IFC Documentation Generator";
-            hName.PreprocessorVersion = "buildingSMART IFCDOC 6.4"; // was "buildingSMART IFCDOC" for 2.7 and earlier;
+            hName.PreprocessorVersion = "buildingSMART IFCDOC 6.6"; // was "buildingSMART IFCDOC" for 2.7 and earlier;
             hName.Author.Add(System.Environment.UserName);
             hName.Organization.Add(System.Environment.UserDomainName);
             hName.Timestamp = DateTime.UtcNow;

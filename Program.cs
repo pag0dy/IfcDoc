@@ -182,10 +182,24 @@ namespace IfcDoc
 
                         // clear out existing if merging
                         docEntity.BaseDefinition = null;
-                        docEntity.Attributes.Clear();
+                        
+                        foreach(DocSubtype docSub in docEntity.Subtypes)
+                        {
+                            docSub.Delete();
+                        }
                         docEntity.Subtypes.Clear();
-                        docEntity.WhereRules.Clear();
+                        
+                        foreach(DocUniqueRule docUniq in docEntity.UniqueRules)
+                        {
+                            docUniq.Delete();
+                        }
                         docEntity.UniqueRules.Clear();
+                        
+                        foreach(DocLine docLine in docEntity.Tree)
+                        {
+                            docLine.Delete();
+                        }
+                        docEntity.Tree.Clear();
 
                         if (updateDescriptions && ent.comment != null && ent.comment.text != null)
                         {
@@ -279,126 +293,152 @@ namespace IfcDoc
 
                         if (ent.attributes != null)
                         {
+                            List<DocAttribute> existingattr = new List<DocAttribute>();
+                            foreach (DocAttribute docAttr in docEntity.Attributes)
+                            {
+                                existingattr.Add(docAttr);
+                            }
+
                             // attributes are replaced, not merged (template don't apply here)                            
                             foreach (ATTRIBUTE_DEF attr in ent.attributes)
                             {
-                                DocAttribute docAttr = new DocAttribute();
-                                docEntity.Attributes.Add(docAttr);
-                                mapAtts.Add(attr, docAttr);
-
-                                if (attr.name != null) // visual express bug for IfcCalendarDate in IFC2x4 Alpha
+                                if (attr.name != null)
                                 {
-                                    docAttr.Name = attr.name.text;
-                                }
+                                    DocAttribute docAttr = docEntity.RegisterAttribute(attr.name.text);
+                                    mapAtts.Add(attr, docAttr);
 
-                                if (updateDescriptions && attr.comment != null && attr.comment.text != null)
-                                {
-                                    docAttr.Documentation = attr.comment.text.text;
-                                }
-
-                                if (attr.layout != null)
-                                {
-                                    if (attr.layout.pline != null)
+                                    if (existingattr.Contains(docAttr))
                                     {
-                                        // intermediate lines
-                                        if (attr.layout.pline.rpoint != null)
+                                        existingattr.Remove(docAttr);
+                                    }
+
+                                    if (updateDescriptions && attr.comment != null && attr.comment.text != null)
+                                    {
+                                        docAttr.Documentation = attr.comment.text.text;
+                                    }
+
+                                    if (docAttr.DiagramLabel != null)
+                                    {
+                                        docAttr.DiagramLabel.Delete();
+                                        docAttr.DiagramLabel = null;
+                                    }
+
+                                    foreach(DocPoint docPoint in docAttr.DiagramLine)
+                                    {
+                                        docPoint.Delete();
+                                    }
+                                    docAttr.DiagramLine.Clear();
+
+                                    if (attr.layout != null)
+                                    {
+                                        if (attr.layout.pline != null)
                                         {
-                                            docAttr.DiagramLabel = new DocRectangle();
-                                            ImportVexLine(attr.layout, attr.name.layout, docAttr.DiagramLine, docAttr.DiagramLabel);
+                                            // intermediate lines
+                                            if (attr.layout.pline.rpoint != null)
+                                            {
+                                                docAttr.DiagramLabel = new DocRectangle();
+                                                ImportVexLine(attr.layout, attr.name.layout, docAttr.DiagramLine, docAttr.DiagramLabel);
+                                            }
                                         }
                                     }
-                                }
 
-                                OBJECT def = attr.the_attribute;
-                                if (attr.the_attribute is PAGE_REF_TO)
-                                {
-                                    PAGE_REF_TO pr = (PAGE_REF_TO)attr.the_attribute;
-                                    def = pr.pageref;
-                                }
-
-                                if (def is DEFINED_TYPE)
-                                {
-                                    DEFINED_TYPE dt = (DEFINED_TYPE)def;
-                                    docAttr.DefinedType = dt.name.text;
-                                }
-                                else if (def is ENTITIES)
-                                {
-                                    ENTITIES en = (ENTITIES)def;
-                                    docAttr.DefinedType = en.name.text;
-                                }
-                                else if (def is ENUMERATIONS)
-                                {
-                                    ENUMERATIONS en = (ENUMERATIONS)def;
-                                    docAttr.DefinedType = en.name.text;
-                                }
-                                else if (def is SELECTS)
-                                {
-                                    SELECTS en = (SELECTS)def;
-                                    docAttr.DefinedType = en.name.text;
-                                }
-                                else if (def is PRIMITIVE_TYPE)
-                                {
-                                    PRIMITIVE_TYPE en = (PRIMITIVE_TYPE)def;
-
-                                    string length = "";
-                                    if (en.constraints > 0)
+                                    OBJECT def = attr.the_attribute;
+                                    if (attr.the_attribute is PAGE_REF_TO)
                                     {
-                                        length = " (" + en.constraints.ToString() + ")";
-                                    }
-                                    else if (en.constraints < 0)
-                                    {
-                                        int len = -en.constraints;
-                                        length = " (" + len.ToString() + ") FIXED";
+                                        PAGE_REF_TO pr = (PAGE_REF_TO)attr.the_attribute;
+                                        def = pr.pageref;
                                     }
 
-                                    docAttr.DefinedType = en.name.text + length;
-                                }
-                                else if (def is SCHEMA_REF)
-                                {
-                                    SCHEMA_REF en = (SCHEMA_REF)def;
-                                    docAttr.DefinedType = en.name.text;
-                                }
-                                else
-                                {
-                                    Debug.Assert(false);
-                                }
-
-                                docAttr.AttributeFlags = attr.attributeflag;
-
-                                AGGREGATES vexAggregates = attr.aggregates;
-                                DocAttribute docAggregate = docAttr;
-                                while (vexAggregates != null)
-                                {
-                                    // traverse nested aggregation (e.g. IfcStructuralLoadConfiguration)
-                                    docAggregate.AggregationType = vexAggregates.aggrtype + 1;
-                                    docAggregate.AggregationLower = vexAggregates.lower;
-                                    docAggregate.AggregationUpper = vexAggregates.upper;
-                                    docAggregate.AggregationFlag = vexAggregates.flag;
-
-                                    vexAggregates = vexAggregates.next;
-                                    if (vexAggregates != null)
+                                    if (def is DEFINED_TYPE)
                                     {
-                                        // inner array (e.g. IfcStructuralLoadConfiguration)
-                                        docAggregate.AggregationAttribute = new DocAttribute();
-                                        docAggregate = docAggregate.AggregationAttribute;
+                                        DEFINED_TYPE dt = (DEFINED_TYPE)def;
+                                        docAttr.DefinedType = dt.name.text;
+                                    }
+                                    else if (def is ENTITIES)
+                                    {
+                                        ENTITIES en = (ENTITIES)def;
+                                        docAttr.DefinedType = en.name.text;
+                                    }
+                                    else if (def is ENUMERATIONS)
+                                    {
+                                        ENUMERATIONS en = (ENUMERATIONS)def;
+                                        docAttr.DefinedType = en.name.text;
+                                    }
+                                    else if (def is SELECTS)
+                                    {
+                                        SELECTS en = (SELECTS)def;
+                                        docAttr.DefinedType = en.name.text;
+                                    }
+                                    else if (def is PRIMITIVE_TYPE)
+                                    {
+                                        PRIMITIVE_TYPE en = (PRIMITIVE_TYPE)def;
+
+                                        string length = "";
+                                        if (en.constraints > 0)
+                                        {
+                                            length = " (" + en.constraints.ToString() + ")";
+                                        }
+                                        else if (en.constraints < 0)
+                                        {
+                                            int len = -en.constraints;
+                                            length = " (" + len.ToString() + ") FIXED";
+                                        }
+
+                                        docAttr.DefinedType = en.name.text + length;
+                                    }
+                                    else if (def is SCHEMA_REF)
+                                    {
+                                        SCHEMA_REF en = (SCHEMA_REF)def;
+                                        docAttr.DefinedType = en.name.text;
+                                    }
+                                    else
+                                    {
+                                        Debug.Assert(false);
+                                    }
+
+                                    docAttr.AttributeFlags = attr.attributeflag;
+
+                                    AGGREGATES vexAggregates = attr.aggregates;
+                                    DocAttribute docAggregate = docAttr;
+                                    while (vexAggregates != null)
+                                    {
+                                        // traverse nested aggregation (e.g. IfcStructuralLoadConfiguration)
+                                        docAggregate.AggregationType = vexAggregates.aggrtype + 1;
+                                        docAggregate.AggregationLower = vexAggregates.lower;
+                                        docAggregate.AggregationUpper = vexAggregates.upper;
+                                        docAggregate.AggregationFlag = vexAggregates.flag;
+
+                                        vexAggregates = vexAggregates.next;
+                                        if (vexAggregates != null)
+                                        {
+                                            // inner array (e.g. IfcStructuralLoadConfiguration)
+                                            docAggregate.AggregationAttribute = new DocAttribute();
+                                            docAggregate = docAggregate.AggregationAttribute;
+                                        }
+                                    }
+
+                                    docAttr.Derived = attr.is_derived;
+
+                                    if (attr.user_redeclaration != null)
+                                    {
+                                        docAttr.Inverse = attr.user_redeclaration;
+                                    }
+                                    else if (attr.is_inverse is ATTRIBUTE_DEF)
+                                    {
+                                        ATTRIBUTE_DEF adef = (ATTRIBUTE_DEF)attr.is_inverse;
+                                        docAttr.Inverse = adef.name.text;
+                                    }
+                                    else if (attr.is_inverse != null)
+                                    {
+                                        Debug.Assert(false);
                                     }
                                 }
+                            }
 
-                                docAttr.Derived = attr.is_derived;
-
-                                if (attr.user_redeclaration != null)
-                                {
-                                    docAttr.Inverse = attr.user_redeclaration;
-                                }
-                                else if (attr.is_inverse is ATTRIBUTE_DEF)
-                                {
-                                    ATTRIBUTE_DEF adef = (ATTRIBUTE_DEF)attr.is_inverse;
-                                    docAttr.Inverse = adef.name.text;
-                                }
-                                else if (attr.is_inverse != null)
-                                {
-                                    Debug.Assert(false);
-                                }
+                            foreach(DocAttribute docAttr in existingattr)
+                            {
+                                docEntity.Attributes.Remove(docAttr);
+                                docAttr.Delete();
                             }
                         }
 
@@ -426,19 +466,32 @@ namespace IfcDoc
                         // where rules
                         if (ent.wheres != null)
                         {
-                            // rules are replaced, not merged (template don't apply here)
-                            //docEntity.WhereRules = new List<DocWhereRule>();
+                            List<DocWhereRule> existingattr = new List<DocWhereRule>();
+                            foreach (DocWhereRule docWhere in docEntity.WhereRules)
+                            {
+                                existingattr.Add(docWhere);
+                            }
+
                             foreach (WHERE_RULE where in ent.wheres)
                             {
-                                DocWhereRule docWhere = new DocWhereRule();
-                                docEntity.WhereRules.Add(docWhere);
-                                docWhere.Name = where.name;
+                                DocWhereRule docWhere = docEntity.RegisterWhereRule(where.name);
                                 docWhere.Expression = where.rule_context;
+
+                                if(existingattr.Contains(docWhere))
+                                {
+                                    existingattr.Remove(docWhere);
+                                }
 
                                 if (updateDescriptions && where.comment != null && where.comment.text != null)
                                 {
                                     docWhere.Documentation = where.comment.text.text;
                                 }
+                            }
+
+                            foreach(DocWhereRule exist in existingattr)
+                            {
+                                exist.Delete();
+                                docEntity.WhereRules.Remove(exist);
                             }
                         }
                     }
@@ -498,10 +551,6 @@ namespace IfcDoc
                             existing.Remove(docDefined);
                         }
 
-                        if(mapRefs.ContainsKey(obj))
-                        {
-                            obj.ToString();
-                        }
                         mapRefs.Add(obj, docDefined);
 
                         if (updateDescriptions && ent.comment != null && ent.comment.text != null)

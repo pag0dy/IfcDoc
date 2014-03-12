@@ -21,6 +21,8 @@ namespace IfcDoc.Format.EXP
         DocProject m_project;
         DocModelView[] m_views;
         Dictionary<DocObject, bool> m_included;
+        bool m_oneof = true; // always use ONEOF, even if only one subtype -- was False for IFC2x3 and IFC4 final; True for IFC4 TC1.
+        bool m_longform = true; // convert all type references within rules into "IFC4" for longform schema -- was False for IFC2x3 and IFC4 final; True for IFC4 TC1.
 
         public FormatEXP(string filename)
         {
@@ -71,21 +73,21 @@ namespace IfcDoc.Format.EXP
         /// <returns></returns>
         private string MakeLongFormExpression(string expression)
         {
-            if (this.m_views != null && this.m_views.Length == 1 && this.m_views[0].Code != null)
-            {
-                string replace = "'" + this.m_views[0].Code.ToUpper() + ".";
-                foreach (DocSection docSection in this.m_project.Sections)
-                {
-                    foreach (DocSchema docSchema in docSection.Schemas)
-                    {
-                        string find = "'" + docSchema.Name.ToUpper() + '.';
-                        if (expression.Contains(find))
-                        {
-                            expression = expression.Replace(find, replace);
-                        }
-                    }
+            if (!this.m_longform)
+                return expression;
 
+            string replace = "'IFC4.";
+            foreach (DocSection docSection in this.m_project.Sections)
+            {
+                foreach (DocSchema docSchema in docSection.Schemas)
+                {
+                    string find = "'" + docSchema.Name.ToUpper() + '.';
+                    if (expression.Contains(find))
+                    {
+                        expression = expression.Replace(find, replace);
+                    }
                 }
+
             }
 
             return expression.Trim();
@@ -168,22 +170,6 @@ namespace IfcDoc.Format.EXP
                 string schemaid = "IFC4";
                 string org = "buildingSMART International Limited";
 
-                foreach (DocModelView docView in this.m_project.ModelViews)
-                {
-                    if (this.m_included == null || this.m_included.ContainsKey(docView))
-                    {
-                        if(!String.IsNullOrEmpty(docView.Copyright))
-                        {
-                            org = docView.Copyright;
-                        }
-
-                        if(!String.IsNullOrEmpty(docView.Code))
-                        {
-                            schemaid = docView.Code;                            
-                        }
-                    }
-                }
-
                 writer.Write("" + 
 "(*\r\n" +
 "Copyright by:\r\n" +
@@ -213,20 +199,8 @@ DateTime.Today.ToLongDateString() + "\r\n" + //"December 27, 2012\r\n" +
                 writer.WriteLine("SCHEMA " + schemaid + ";");
                 writer.WriteLine();
 
-                // if MVD, export IfcStrippedOptional
-                bool mvd = false;
-                if (this.m_project.ModelViews != null)
-                {
-                    foreach (DocModelView docView in this.m_project.ModelViews)
-                    {
-                        if (this.m_included == null || this.m_included.ContainsKey(docView) && docView.Exchanges.Count > 0)
-                        {
-                            mvd = true;
-                        }
-                    }
-                }
-
-                if (mvd)
+                // stripped optional applicable if MVD is used
+                if (this.m_included != null)
                 {
                     writer.WriteLine("TYPE IfcStrippedOptional = BOOLEAN;");
                     writer.WriteLine("END_TYPE;");
@@ -261,8 +235,8 @@ DateTime.Today.ToLongDateString() + "\r\n" + //"December 27, 2012\r\n" +
 
                     writer.WriteLine(";");
 
-                    // where rules
-                    if (!mvd && docDef.WhereRules != null && docDef.WhereRules.Count > 0)
+                    // where rules -- excluded from any MVD
+                    if (this.m_included == null && docDef.WhereRules != null && docDef.WhereRules.Count > 0)
                     {
                         writer.WriteLine(" WHERE");
                         foreach (DocWhereRule where in docDef.WhereRules)
@@ -410,7 +384,7 @@ DateTime.Today.ToLongDateString() + "\r\n" + //"December 27, 2012\r\n" +
                             writer.WriteLine();
                         }
 
-                        if (countsub > 1)
+                        if (countsub > 1 || this.m_oneof)
                         {
                             writer.Write(" SUPERTYPE OF (ONEOF\r\n    (" + sb.ToString() + "))");
                         }
@@ -449,7 +423,7 @@ DateTime.Today.ToLongDateString() + "\r\n" + //"December 27, 2012\r\n" +
 
                             WriteExpressAggregation(writer, attr);
 
-                            if (!mvd || this.m_included == null || this.m_included.ContainsKey(attr))
+                            if (this.m_included == null || this.m_included.ContainsKey(attr))
                             {
                                 writer.Write(attr.DefinedType);
                             }
@@ -560,7 +534,7 @@ DateTime.Today.ToLongDateString() + "\r\n" + //"December 27, 2012\r\n" +
                     }
 
                     // unique rules
-                    if(!mvd && docEntity.UniqueRules != null && docEntity.UniqueRules.Count > 0)
+                    if(this.m_included == null && docEntity.UniqueRules != null && docEntity.UniqueRules.Count > 0)
                     {
                         writer.WriteLine(" UNIQUE");
                         foreach (DocUniqueRule where in docEntity.UniqueRules)
@@ -582,7 +556,7 @@ DateTime.Today.ToLongDateString() + "\r\n" + //"December 27, 2012\r\n" +
                     }
 
                     // where rules
-                    if (!mvd && docEntity.WhereRules != null && docEntity.WhereRules.Count > 0)
+                    if (this.m_included == null && docEntity.WhereRules != null && docEntity.WhereRules.Count > 0)
                     {
                         writer.WriteLine(" WHERE");
                         foreach (DocWhereRule where in docEntity.WhereRules)

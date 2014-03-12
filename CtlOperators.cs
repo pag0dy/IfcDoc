@@ -68,20 +68,23 @@ namespace IfcDoc
             if (docModelRule == null)
                 return;
 
+            if (!(this.Rule is DocModelRuleEntity))
+                return;
+
             TreeNode tnSelect = this.treeViewRules.SelectedNode;
 
-            DocOpReference opref = new DocOpReference();
-            opref.Operation = DocOpCode.nop;
-            opref.EntityRule = this.Rule as DocModelRuleEntity;
-
             DocOpLiteral oplit = new DocOpLiteral();
-            oplit.Operation = DocOpCode.ldstr;
+            oplit.Operation = DocOpCode.LoadString;
             oplit.Value = null;
 
             DocOpStatement op = new DocOpStatement();
-            op.Operation = DocOpCode.ceq;
-            op.Reference = opref;
+            op.Operation = DocOpCode.CompareEqual;
             op.Value = oplit;
+
+            DocOpReference opref = new DocOpReference();
+            opref.Operation = DocOpCode.NoOperation; // ldfld...
+            opref.EntityRule = this.Rule as DocModelRuleEntity;
+            op.Reference = opref;
 
             if (tnSelect != null)
             {
@@ -96,7 +99,7 @@ namespace IfcDoc
                 // convert existing node into new Logical operator
 
                 DocOpLogical opLog = new DocOpLogical();
-                opLog.Operation = DocOpCode.and;
+                opLog.Operation = DocOpCode.And;
                 opLog.ExpressionA = opSelect;
                 opLog.ExpressionB = op;
 
@@ -223,27 +226,27 @@ namespace IfcDoc
                             switch (oper)
                             {
                                 case "=":
-                                    statement.Operation = DocOpCode.ceq;
+                                    statement.Operation = DocOpCode.CompareEqual;
                                     break;
 
                                 case "!=":
-                                    statement.Operation = DocOpCode.cne;
+                                    statement.Operation = DocOpCode.CompareNotEqual;
                                     break;
 
                                 case "<=":
-                                    statement.Operation = DocOpCode.cle;
+                                    statement.Operation = DocOpCode.CompareLessThanOrEqual;
                                     break;
 
                                 case "<":
-                                    statement.Operation = DocOpCode.clt;
+                                    statement.Operation = DocOpCode.CompareLessThan;
                                     break;
 
                                 case ">=":
-                                    statement.Operation = DocOpCode.cge;
+                                    statement.Operation = DocOpCode.CompareGreaterThanOrEqual;
                                     break;
 
                                 case ">":
-                                    statement.Operation = DocOpCode.cgt;
+                                    statement.Operation = DocOpCode.CompareGreaterThan;
                                     break;
                             }
 
@@ -343,16 +346,16 @@ namespace IfcDoc
             this.toolStripButtonRuleCge.Enabled = (op is DocOpStatement);
             this.toolStripButtonRuleCgt.Enabled = (op is DocOpStatement);
 
-            this.toolStripButtonRuleAnd.Checked = (op != null && op.Operation == DocOpCode.and);
-            this.toolStripButtonRuleOr.Checked = (op != null && op.Operation == DocOpCode.or);
-            this.toolStripButtonRuleXor.Checked = (op != null && op.Operation == DocOpCode.xor);
+            this.toolStripButtonRuleAnd.Checked = (op != null && op.Operation == DocOpCode.And);
+            this.toolStripButtonRuleOr.Checked = (op != null && op.Operation == DocOpCode.Or);
+            this.toolStripButtonRuleXor.Checked = (op != null && op.Operation == DocOpCode.Xor);
 
-            this.toolStripButtonRuleCeq.Checked = (op != null && op.Operation == DocOpCode.ceq);
-            this.toolStripButtonRuleCne.Checked = (op != null && op.Operation == DocOpCode.cne);
-            this.toolStripButtonRuleCle.Checked = (op != null && op.Operation == DocOpCode.cle);
-            this.toolStripButtonRuleClt.Checked = (op != null && op.Operation == DocOpCode.clt);
-            this.toolStripButtonRuleCge.Checked = (op != null && op.Operation == DocOpCode.cge);
-            this.toolStripButtonRuleCgt.Checked = (op != null && op.Operation == DocOpCode.cgt);
+            this.toolStripButtonRuleCeq.Checked = (op != null && op.Operation == DocOpCode.CompareEqual);
+            this.toolStripButtonRuleCne.Checked = (op != null && op.Operation == DocOpCode.CompareNotEqual);
+            this.toolStripButtonRuleCle.Checked = (op != null && op.Operation == DocOpCode.CompareLessThanOrEqual);
+            this.toolStripButtonRuleClt.Checked = (op != null && op.Operation == DocOpCode.CompareLessThan);
+            this.toolStripButtonRuleCge.Checked = (op != null && op.Operation == DocOpCode.CompareGreaterThanOrEqual);
+            this.toolStripButtonRuleCgt.Checked = (op != null && op.Operation == DocOpCode.CompareGreaterThan);
         }
 
         private void treeViewRules_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -480,6 +483,8 @@ namespace IfcDoc
         private void toolStripButtonRuleUpdate_Click(object sender, EventArgs e)
         {
             DocOpStatement docop = GetSelectedOp() as DocOpStatement;
+            if (docop == null)
+                return;
 
             // enumeration|boolean|logical: pick from list
             // string|integer|real: freeform editor
@@ -517,52 +522,72 @@ namespace IfcDoc
 
         private void toolStripButtonRuleRef_Click(object sender, EventArgs e)
         {
+            DocOp op = this.GetSelectedOp();
+            if (op is DocOpStatement)
+            {
+                DocOpStatement statement = (DocOpStatement)op;
+                if (this.Rule is DocModelRuleAttribute)
+                {
+                    DocOpParameter param = new DocOpParameter();
+                    param.Operation = DocOpCode.LoadArgument;
+                    param.AttributeRule = (DocModelRuleAttribute)this.Rule;
+                    statement.Value = param;
+                }
+                else if (this.Rule is DocModelRuleEntity)
+                {
+                    DocOpReference opref = new DocOpReference();
+                    opref.Operation = DocOpCode.LoadField;
+                    opref.EntityRule = (DocModelRuleEntity)this.Rule;
+                    statement.Value = opref;
+                }
 
+                this.treeViewRules.SelectedNode.Text = op.ToString(this.Template);
+            }
         }
 
         private void toolStripButtonRuleAnd_Click(object sender, EventArgs e)
         {
-            SetSelectedRuleOperator(DocOpCode.and);
+            SetSelectedRuleOperator(DocOpCode.And);
         }
 
         private void toolStripButtonRuleOr_Click(object sender, EventArgs e)
         {
-            SetSelectedRuleOperator(DocOpCode.or);
+            SetSelectedRuleOperator(DocOpCode.Or);
         }
 
         private void toolStripButtonRuleXor_Click(object sender, EventArgs e)
         {
-            SetSelectedRuleOperator(DocOpCode.xor);
+            SetSelectedRuleOperator(DocOpCode.Xor);
         }
 
         private void toolStripButtonRuleCeq_Click(object sender, EventArgs e)
         {
-            SetSelectedRuleOperator(DocOpCode.ceq);
+            SetSelectedRuleOperator(DocOpCode.CompareEqual);
         }
 
         private void toolStripButtonRuleCne_Click(object sender, EventArgs e)
         {
-            SetSelectedRuleOperator(DocOpCode.cne);
+            SetSelectedRuleOperator(DocOpCode.CompareNotEqual);
         }
 
         private void toolStripButtonRuleCgt_Click(object sender, EventArgs e)
         {
-            SetSelectedRuleOperator(DocOpCode.cgt);
+            SetSelectedRuleOperator(DocOpCode.CompareGreaterThan);
         }
 
         private void toolStripButtonRuleCge_Click(object sender, EventArgs e)
         {
-            SetSelectedRuleOperator(DocOpCode.cge);
+            SetSelectedRuleOperator(DocOpCode.CompareGreaterThanOrEqual);
         }
 
         private void toolStripButtonRuleClt_Click(object sender, EventArgs e)
         {
-            SetSelectedRuleOperator(DocOpCode.clt);
+            SetSelectedRuleOperator(DocOpCode.CompareLessThan);
         }
 
         private void toolStripButtonRuleCle_Click(object sender, EventArgs e)
         {
-            SetSelectedRuleOperator(DocOpCode.cle);
+            SetSelectedRuleOperator(DocOpCode.CompareLessThanOrEqual);
         }
 
         private void SetSelectedRuleOperator(DocOpCode opcode)

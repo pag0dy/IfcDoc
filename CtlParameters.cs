@@ -108,45 +108,48 @@ namespace IfcDoc
                 return;
 
             DocTemplateUsage docUsage = (DocTemplateUsage)this.m_conceptleaf;
-            this.m_columns = docUsage.Definition.GetParameterRules();
-            foreach (DocModelRule rule in this.m_columns)
+            if (docUsage.Definition != null)
             {
-                DataGridViewColumn column = new DataGridViewColumn();
-                column.HeaderText = rule.Identification;
-                column.ValueType = typeof(string);//?
-                column.CellTemplate = new DataGridViewTextBoxCell();
-                column.Width = 200;
-
-                // override cell template for special cases
-                DocConceptRoot docConceptRoot = (DocConceptRoot)this.m_conceptroot;
-                DocEntity docEntity = this.m_project.GetDefinition(docUsage.Definition.Type) as DocEntity;// docConceptRoot.ApplicableEntity;
-                foreach (DocModelRuleAttribute docRule in docUsage.Definition.Rules)
+                this.m_columns = docUsage.Definition.GetParameterRules();
+                foreach (DocModelRule rule in this.m_columns)
                 {
-                    DocDefinition docDef = docEntity.ResolveParameterType(docRule, rule.Identification, m_map);
-                    if (docDef is DocEnumeration)
-                    {
-                        DocEnumeration docEnum = (DocEnumeration)docDef;
-                        DataGridViewComboBoxCell cell = new DataGridViewComboBoxCell();
-                        cell.MaxDropDownItems = 32;
-                        cell.DropDownWidth = 200;
-                        // add blank item
-                        cell.Items.Add(String.Empty);
-                        foreach (DocConstant docConst in docEnum.Constants)
-                        {
-                            cell.Items.Add(docConst.Name);
-                        }
-                        column.CellTemplate = cell;
-                    }
-                    else if (docDef is DocEntity || docDef is DocSelect)
-                    {
-                        // button to launch dialog for picking entity
-                        DataGridViewButtonCell cell = new DataGridViewButtonCell();
-                        cell.Tag = docDef;
-                        column.CellTemplate = cell;
-                    }
-                }
+                    DataGridViewColumn column = new DataGridViewColumn();
+                    column.HeaderText = rule.Identification;
+                    column.ValueType = typeof(string);//?
+                    column.CellTemplate = new DataGridViewTextBoxCell();
+                    column.Width = 200;
 
-                this.dataGridViewConceptRules.Columns.Add(column);
+                    // override cell template for special cases
+                    DocConceptRoot docConceptRoot = (DocConceptRoot)this.m_conceptroot;
+                    DocEntity docEntity = this.m_project.GetDefinition(docUsage.Definition.Type) as DocEntity;// docConceptRoot.ApplicableEntity;
+                    foreach (DocModelRuleAttribute docRule in docUsage.Definition.Rules)
+                    {
+                        DocDefinition docDef = docEntity.ResolveParameterType(docRule, rule.Identification, m_map);
+                        if (docDef is DocEnumeration)
+                        {
+                            DocEnumeration docEnum = (DocEnumeration)docDef;
+                            DataGridViewComboBoxCell cell = new DataGridViewComboBoxCell();
+                            cell.MaxDropDownItems = 32;
+                            cell.DropDownWidth = 200;
+                            // add blank item
+                            cell.Items.Add(String.Empty);
+                            foreach (DocConstant docConst in docEnum.Constants)
+                            {
+                                cell.Items.Add(docConst.Name);
+                            }
+                            column.CellTemplate = cell;
+                        }
+                        else if (docDef is DocEntity || docDef is DocSelect)
+                        {
+                            // button to launch dialog for picking entity
+                            DataGridViewButtonCell cell = new DataGridViewButtonCell();
+                            cell.Tag = docDef;
+                            column.CellTemplate = cell;
+                        }
+                    }
+
+                    this.dataGridViewConceptRules.Columns.Add(column);
+                }
             }
 
             // add description column
@@ -161,13 +164,16 @@ namespace IfcDoc
             {
                 string[] values = new string[this.dataGridViewConceptRules.Columns.Count];
 
-                for (int i = 0; i < this.m_columns.Length; i++)
+                if (this.m_columns != null)
                 {
-                    string parmname = this.m_columns[i].Identification;
-                    string val = item.GetParameterValue(parmname);
-                    if (val != null)
+                    for (int i = 0; i < this.m_columns.Length; i++)
                     {
-                        values[i] = val;
+                        string parmname = this.m_columns[i].Identification;
+                        string val = item.GetParameterValue(parmname);
+                        if (val != null)
+                        {
+                            values[i] = val;
+                        }
                     }
                 }
 
@@ -385,6 +391,9 @@ namespace IfcDoc
 
         private void dataGridViewConceptRules_CellEnter(object sender, DataGridViewCellEventArgs e)
         {
+            if (this.m_columns == null)
+                return;
+
             if (e.ColumnIndex >= 0 && e.ColumnIndex < this.m_columns.Length)
             {
                 this.m_selectedcolumn = this.m_columns[e.ColumnIndex];

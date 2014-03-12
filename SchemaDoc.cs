@@ -6,6 +6,7 @@
 // License:     http://www.buildingsmart-tech.org/legal
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reflection;
@@ -757,284 +758,6 @@ namespace IfcDoc.Schema.DOC
             return docSchema;
         }
 
-        /// <summary>
-        /// Creates or returns emitted type, or NULL if no such type.
-        /// </summary>
-        /// <param name="map"></param>
-        /// <param name="typename"></param>
-        /// <returns></returns>
-        private static Type EmitType(Dictionary<string, DocDefinition> mapdefs, Dictionary<string, Type> maptypes, ModuleBuilder mb, string strtype)
-        {
-            // this implementation maps direct and inverse attributes to fields for brevity; a production implementation would use properties as well
-
-            if (strtype == null)
-                return typeof(SEntity);
-
-            Type type = null;
-
-            // resolve standard types
-            switch (strtype)
-            {
-                case "INTEGER":
-                    type = typeof(long);
-                    break;
-
-                case "REAL":
-                case "NUMBER":
-                    type = typeof(double);
-                    break;
-
-                case "BOOLEAN":
-                case "LOGICAL":
-                    type = typeof(bool);
-                    break;
-
-                case "STRING":
-                    type = typeof(string);
-                    break;
-
-                case "BINARY":
-                case "BINARY (32)":
-                    type = typeof(byte[]);
-                    break;
-            }
-
-            if (type != null)
-                return type;
-
-            // check for existing mapped type
-            if (maptypes.TryGetValue(strtype, out type))
-            {
-                return type;
-            }
-
-            // look up
-            DocDefinition docType = null;
-            if (!mapdefs.TryGetValue(strtype, out docType))
-                return null;
-
-            // not yet exist: create it
-            TypeAttributes attr = TypeAttributes.Public;
-            if(docType is DocEntity)
-            {
-                attr |= TypeAttributes.Class;
-
-                DocEntity docEntity = (DocEntity)docType;
-                if(docEntity.IsAbstract())
-                {
-                    attr |= TypeAttributes.Abstract;
-                }
-
-                Type typebase = EmitType(mapdefs, maptypes, mb, docEntity.BaseDefinition);
-
-                // calling base class may result in this class getting defined (IFC2x3 schema with IfcBuildingElement), so check again
-                if (maptypes.TryGetValue(strtype, out type))
-                {
-                    return type;
-                }
-
-                TypeBuilder tb = mb.DefineType(docType.Name, attr, typebase);
-
-                // add typebuilder to map temporarily in case referenced by an attribute within same class or base class
-                maptypes.Add(strtype, tb);
-
-                // interfaces implemented by type (SELECTS)
-                foreach (DocDefinition docdef in mapdefs.Values)
-                {
-                    if (docdef is DocSelect)
-                    {
-                        DocSelect docsel = (DocSelect)docdef;
-                        foreach (DocSelectItem dsi in docsel.Selects)
-                        {
-                            if (strtype.Equals(dsi.Name))
-                            {
-                                // register
-                                Type typeinterface = EmitType(mapdefs, maptypes, mb, docdef.Name);
-                                tb.AddInterfaceImplementation(typeinterface);
-                            }
-                        }
-                    }
-                }
-
-                ConstructorInfo conMember = typeof(DataMemberAttribute).GetConstructor(new Type[] { typeof(int) });
-                ConstructorInfo conLookup = typeof(DataLookupAttribute).GetConstructor(new Type[] { typeof(string) });
-                int order = 0;
-                foreach (DocAttribute docAttribute in docEntity.Attributes)
-                {
-                    // exclude derived attributes
-                    if (String.IsNullOrEmpty(docAttribute.Derived))
-                    {
-                        Type typefield = EmitType(mapdefs, maptypes, mb, docAttribute.DefinedType);
-                        if (docAttribute.AggregationType != 0)
-                        {
-                            typefield = typeof(List<>).MakeGenericType(new Type[] { typefield });
-                        }
-
-                        //todo: optional field...
-
-                        FieldBuilder fb = tb.DefineField(docAttribute.Name, typefield, FieldAttributes.Public); // public for now                    
-
-                        if (String.IsNullOrEmpty(docAttribute.Inverse))
-                        {
-                            // direct attributes are fields marked for serialization
-                            CustomAttributeBuilder cb = new CustomAttributeBuilder(conMember, new object[] { order });
-                            fb.SetCustomAttribute(cb);
-                            order++;
-                        }
-                        else
-                        {
-                            // inverse attributes are fields marked for lookup
-                            CustomAttributeBuilder cb = new CustomAttributeBuilder(conLookup, new object[] { docAttribute.Inverse });
-                            fb.SetCustomAttribute(cb);
-                        }
-                    }
-                }                
-
-                // remove from typebuilder
-                maptypes.Remove(strtype);
-
-                type = tb; // avoid circular conditions -- generate type afterwords
-            }
-            else if(docType is DocSelect)
-            {
-                attr |= TypeAttributes.Interface | TypeAttributes.Abstract;
-                TypeBuilder tb = mb.DefineType(docType.Name, attr);
-
-                // interfaces implemented by type (SELECTS)
-                foreach (DocDefinition docdef in mapdefs.Values)
-                {
-                    if (docdef is DocSelect)
-                    {
-                        DocSelect docsel = (DocSelect)docdef;
-                        foreach (DocSelectItem dsi in docsel.Selects)
-                        {
-                            if (strtype.Equals(dsi.Name))
-                            {
-                                // register
-                                Type typeinterface = EmitType(mapdefs, maptypes, mb, docdef.Name);
-                                tb.AddInterfaceImplementation(typeinterface);
-                            }
-                        }
-                    }
-                }
-
-                type = tb.CreateType();
-            }
-            else if (docType is DocEnumeration)
-            {
-                DocEnumeration docEnum = (DocEnumeration)docType;
-                EnumBuilder eb = mb.DefineEnum(docType.Name, TypeAttributes.Public, typeof(int));
-
-                for (int i = 0; i < docEnum.Constants.Count; i++)
-                {
-                    DocConstant docConst = docEnum.Constants[i];
-                    eb.DefineLiteral(docConst.Name, (int)i);
-                }                
-
-                type = eb.CreateType();
-            }
-            else if (docType is DocDefined)
-            {
-                DocDefined docDef = (DocDefined)docType;
-                TypeBuilder tb = mb.DefineType(docType.Name, attr, typeof(ValueType));
-
-                // interfaces implemented by type (SELECTS)
-                foreach (DocDefinition docdef in mapdefs.Values)
-                {
-                    if (docdef is DocSelect)
-                    {
-                        DocSelect docsel = (DocSelect)docdef;
-                        foreach (DocSelectItem dsi in docsel.Selects)
-                        {
-                            if (strtype.Equals(dsi.Name))
-                            {
-                                // register
-                                Type typeinterface = EmitType(mapdefs, maptypes, mb, docdef.Name);
-                                tb.AddInterfaceImplementation(typeinterface);
-                            }
-                        }
-                    }
-                }
-
-                Type typeliteral = EmitType(mapdefs, maptypes, mb, docDef.DefinedType);
-
-                if (docDef.Aggregation != null && docDef.Aggregation.AggregationType != 0)
-                {
-                    typeliteral = typeof(List<>).MakeGenericType(new Type[] { typeliteral });
-                }
-                else
-                {
-                    FieldInfo fieldval = typeliteral.GetField("Value");
-                    while (fieldval != null)
-                    {
-                        typeliteral = fieldval.FieldType;
-                        fieldval = typeliteral.GetField("Value");
-                    }
-                }
-
-                tb.DefineField("Value", typeliteral, FieldAttributes.Public);
-                type = tb.CreateType();
-            }
-
-            maptypes.Add(strtype, type);
-            return type;
-        }
-
-        /// <summary>
-        /// Generates a .NET assembly out of the loaded schema, observing visibility of the current model view definition.
-        /// </summary>
-        /// <returns></returns>
-        public Type[] EmitTypes()
-        {
-            AssemblyBuilder ab = AppDomain.CurrentDomain.DefineDynamicAssembly(new AssemblyName("IFC4"), AssemblyBuilderAccess.RunAndSave);
-            ModuleBuilder mb = ab.DefineDynamicModule("IFC4");
-
-            Dictionary<string, Type> mapTypes = new Dictionary<string, Type>();
-            Dictionary<string, DocDefinition> mapDefs = new Dictionary<string, DocDefinition>();
-            foreach (DocSection docSection in this.Sections)
-            {
-                foreach (DocSchema docSchema in docSection.Schemas)
-                {
-                    foreach (DocEntity docEntity in docSchema.Entities)
-                    {
-                        mapDefs.Add(docEntity.Name, docEntity);
-                    }
-
-                    foreach (DocType docType in docSchema.Types)
-                    {
-                        mapDefs.Add(docType.Name, docType);
-                    }
-                }
-            }
-
-            foreach (string key in mapDefs.Keys)
-            {
-                EmitType(mapDefs, mapTypes, mb, key);
-            }
-
-            // seal types once all are built
-            List<TypeBuilder> listBase = new List<TypeBuilder>();
-            foreach (string key in mapDefs.Keys)
-            {
-                Type tOpen = mapTypes[key];
-                while(tOpen is TypeBuilder)
-                {
-                    listBase.Add((TypeBuilder)tOpen);
-                    tOpen = tOpen.BaseType;
-                }
-
-                // seal in base class order
-                for(int i = listBase.Count -1; i >= 0; i--)
-                {                    
-                    Type tClosed = listBase[i].CreateType();
-                    mapTypes[tClosed.Name] = tClosed;                    
-                }
-                listBase.Clear();
-            }
-
-            return ab.GetTypes();
-        }
-
         private void RegisterEntity(Dictionary<DocObject, bool> included, DocEntity entity)
         {
             if (included.ContainsKey(entity))
@@ -1192,11 +915,14 @@ namespace IfcDoc.Schema.DOC
                 included[docView] = true;
             }
 
-            foreach (DocExample docExample in this.Examples)
+            if (this.Examples != null)
             {
-                if (docExample.ModelView == docView)
+                foreach (DocExample docExample in this.Examples)
                 {
-                    included[docExample] = true;
+                    if (docExample.ModelView == docView)
+                    {
+                        included[docExample] = true;
+                    }
                 }
             }
 
@@ -1955,6 +1681,20 @@ namespace IfcDoc.Schema.DOC
 
             return false;
         }
+
+        internal virtual void EmitInstructions(
+            Compiler context,
+            ILGenerator generator,
+            DocTemplateDefinition dtd)
+        {
+            if (this.Rules != null)
+            {
+                foreach (DocModelRule rule in this.Rules)
+                {
+                    rule.EmitInstructions(context, generator, dtd);
+                }
+            }
+        }
     }
 
     public class DocModelRuleAttribute : DocModelRule
@@ -2202,11 +1942,16 @@ namespace IfcDoc.Schema.DOC
 
         public override bool? Validate(object target, DocTemplateItem docItem, Dictionary<string, Type> typemap)
         {
+            // constraint validation is now done in compiled code -- indicate pass to keep going
+            return true;
+
+#if false
             // description holds expression -- for now, only equality is supported; future: support comparison expressions
             if (target != null && target.ToString().Equals(this.Description))
                 return true;            
 
             return false;
+#endif
         }
 
         public override void Delete()
@@ -2217,6 +1962,17 @@ namespace IfcDoc.Schema.DOC
             }
 
             base.Delete();
+        }
+
+        internal override void EmitInstructions(
+            Compiler context,
+            ILGenerator generator, 
+            DocTemplateDefinition dtd)
+        {
+            if (this.Expression != null)
+            {
+                this.Expression.Emit(context, generator, dtd);
+            }
         }
     }    
 
@@ -2235,9 +1991,118 @@ namespace IfcDoc.Schema.DOC
         /// Generates CIL code for operation
         /// </summary>
         /// <param name="writer"></param>
-        public virtual void Emit(System.IO.BinaryWriter writer)
+        internal virtual LocalBuilder Emit(
+            Compiler context,
+            ILGenerator generator, 
+            DocTemplateDefinition dtd)
         {
-            writer.Write((Byte)this.Operation);
+            switch(this.Operation)
+            {
+                case DocOpCode.And:
+                    generator.Emit(OpCodes.And);
+                    break;
+
+                case DocOpCode.Or:
+                    generator.Emit(OpCodes.Or);
+                    break;
+
+                case DocOpCode.Xor:
+                    generator.Emit(OpCodes.Xor);
+                    break;
+
+                case DocOpCode.IsIncluded:
+                    {
+                        MethodInfo methodCompare = typeof(String).GetMethod("Compare", new Type[] { typeof(String), typeof(String) });
+
+                        // Left argument:  String
+                        // Right argument: Array of String: MUST have at least one element
+
+                        LocalBuilder localValue = generator.DeclareLocal(typeof(string));
+                        LocalBuilder localArray = generator.DeclareLocal(typeof(string[]));
+                        LocalBuilder localIndex = generator.DeclareLocal(typeof(int));
+                        LocalBuilder localCheck = generator.DeclareLocal(typeof(bool)); // false until included
+
+                        // save values
+                        generator.Emit(OpCodes.Stloc, (short)localArray.LocalIndex);
+                        generator.Emit(OpCodes.Stloc, (short)localValue.LocalIndex);
+
+                        // LOOP STARTS HERE
+
+                        // load the array element and compare
+                        generator.Emit(OpCodes.Ldloc, (short)localValue.LocalIndex); // 3
+                        generator.Emit(OpCodes.Ldloc, (short)localArray.LocalIndex); // 3
+                        generator.Emit(OpCodes.Ldloc, (short)localIndex.LocalIndex); // 3
+                        generator.Emit(OpCodes.Ldelem_Ref); // 1
+                        generator.Emit(OpCodes.Call, methodCompare); // 5
+
+                        // store True if equal (0)
+                        generator.Emit(OpCodes.Brtrue_S, (byte)5); // 2
+                        generator.Emit(OpCodes.Ldc_I4_1); // 1
+                        generator.Emit(OpCodes.Stloc, (short)localCheck.LocalIndex); // 3
+                        
+                        // increase the position
+                        generator.Emit(OpCodes.Ldloc, (short)localIndex.LocalIndex); // 3
+                        generator.Emit(OpCodes.Ldc_I4_1); // 1
+                        generator.Emit(OpCodes.Add); // 1
+                        generator.Emit(OpCodes.Stloc, (short)localIndex.LocalIndex); // 3
+
+                        // go to start of loop 
+                        generator.Emit(OpCodes.Ldloc, (short)localIndex.LocalIndex); // 3
+                        generator.Emit(OpCodes.Ldloc, (short)localArray.LocalIndex); // 3
+                        generator.Emit(OpCodes.Ldlen); // 1
+                        generator.Emit(OpCodes.Blt_S, (sbyte)-46);
+
+                        // return the flag
+                        generator.Emit(OpCodes.Ldloc, (short)localCheck.LocalIndex);
+
+                        //generator.Emit(OpCodes.Ldc_I4_0);
+                        //generator.Emit(OpCodes.Bge_S, (sbyte)-49);
+                    }
+                    break;
+
+                case DocOpCode.CompareEqual:
+                    // strings may not necessarily be interned, so can't use comparison opcode -- must call function String.Compare
+                    {
+                        MethodInfo methodCompare = typeof(String).GetMethod("Compare", new Type[] { typeof(String), typeof(String) });
+                        generator.Emit(OpCodes.Call, methodCompare);
+                        generator.Emit(OpCodes.Not); // 0 means they are equal, so flip result
+                    }
+                    //generator.Emit(OpCodes.Ceq);
+                    break;
+
+                case DocOpCode.CompareNotEqual:
+                    {
+                        MethodInfo methodCompare = typeof(String).GetMethod("Compare", new Type[] { typeof(String), typeof(String) });
+                        generator.Emit(OpCodes.Call, methodCompare); // 0 means they are equal, so non-zero means not equal
+                    }
+                    //generator.Emit(OpCodes.Ceq);
+                    //generator.Emit(OpCodes.Not);
+                    break;
+
+                case DocOpCode.CompareGreaterThan:
+                    generator.Emit(OpCodes.Cgt);
+                    break;
+
+                case DocOpCode.CompareLessThan:
+                    generator.Emit(OpCodes.Clt);
+                    break;
+
+                case DocOpCode.CompareGreaterThanOrEqual:
+                    generator.Emit(OpCodes.Bge_S, (byte)3);
+                    generator.Emit(OpCodes.Ldc_I4_0);
+                    generator.Emit(OpCodes.Br_S, (byte)1);
+                    generator.Emit(OpCodes.Ldc_I4_1);
+                    break;
+
+                case DocOpCode.CompareLessThanOrEqual:
+                    generator.Emit(OpCodes.Ble_S, (byte)3);
+                    generator.Emit(OpCodes.Ldc_I4_0);
+                    generator.Emit(OpCodes.Br_S, (byte)1);
+                    generator.Emit(OpCodes.Ldc_I4_1);
+                    break;
+            }
+
+            return null;
         }
 
         public override string ToString()
@@ -2260,9 +2125,55 @@ namespace IfcDoc.Schema.DOC
     /// </summary>
     public class DocOpStatement : DocOpExpression // ceq|cle|clt|cge|cgt|cne
     {
-        [DataMember(Order = 0)] public DocOpReference Reference;  // statement
-        [DataMember(Order = 1)] public DocOpValue Value; // statement or constant
-        [DataMember(Order = 2)] public DocOpCode Metric; // qualifier for additional operation on reference
+        [DataMember(Order = 0)] private DocOpReference _Reference;  // statement
+        [DataMember(Order = 1)] private DocOpValue _Value; // statement or constant
+        [DataMember(Order = 2)] private DocOpCode _Metric; // qualifier for additional operation on reference
+
+        public DocOpReference Reference
+        {
+            get
+            {
+                return this._Reference;
+            }
+            set
+            {
+                if(this._Reference != null)
+                {
+                    this._Reference.Delete();
+                }
+
+                this._Reference = value;
+            }
+        }
+
+        public DocOpValue Value
+        {
+            get
+            {
+                return this._Value;
+            }
+            set 
+            { 
+                if (this._Value != null)
+                {
+                    this._Value.Delete();
+                }
+
+                this._Value = value;
+            }
+        }
+
+        public DocOpCode Metric
+        {
+            get
+            {
+                return this._Metric;
+            }
+            set
+            {
+                this._Metric = value;
+            }
+        }
 
         public override string ToString()
         {
@@ -2274,27 +2185,27 @@ namespace IfcDoc.Schema.DOC
             string opname = "=";
             switch(this.Operation)
             {
-                case DocOpCode.ceq:
+                case DocOpCode.CompareEqual:
                     opname = "=";
                     break;
 
-                case DocOpCode.cne:
+                case DocOpCode.CompareNotEqual:
                     opname = "<>";
                     break;
 
-                case DocOpCode.cle:
+                case DocOpCode.CompareLessThanOrEqual:
                     opname = "<=";
                     break;
 
-                case DocOpCode.clt:
+                case DocOpCode.CompareLessThan:
                     opname = "<";
                     break;
 
-                case DocOpCode.cge:
+                case DocOpCode.CompareGreaterThanOrEqual:
                     opname = ">=";
                     break;
 
-                case DocOpCode.cgt:
+                case DocOpCode.CompareGreaterThan:
                     opname = ">";
                     break;
             }
@@ -2305,17 +2216,17 @@ namespace IfcDoc.Schema.DOC
                 string metrictail = "";
                 switch (this.Metric)
                 {
-                    case DocOpCode.ldlen:
+                    case DocOpCode.LoadLength:
                         metrichead = "SIZEOF(";
                         metrictail = ")";
                         break;
 
-                    case DocOpCode.isinst:
+                    case DocOpCode.IsInstance:
                         metrichead = "TYPEOF(";
                         metrictail = ")";
                         break;
 
-                    case DocOpCode.call:
+                    case DocOpCode.IsUnique:
                         metrichead = "UNIQUE(";
                         metrictail = ")";
                         break;
@@ -2340,12 +2251,136 @@ namespace IfcDoc.Schema.DOC
 
             base.Delete();
         }
+
+        internal override LocalBuilder Emit(Compiler context, ILGenerator generator, DocTemplateDefinition dtd)
+        {
+            // apply additional operation on reference according to metric
+            switch(this.Metric)
+            {
+                case DocOpCode.NoOperation:
+                    {
+                        // push the referenced value onto the stack
+                        LocalBuilder local = this.Reference.Emit(context, generator, dtd);
+
+                        // push the value to be compared onto the stack
+                        this.Value.Emit(context, generator, dtd);
+
+                        // execute the operation, popping two values and pushing the result
+                        base.Emit(context, generator, dtd);
+                    }
+                    break;
+
+                case DocOpCode.LoadLength:
+                    {
+                        // push the referenced value onto the stack
+                        LocalBuilder local = this.Reference.Emit(context, generator, dtd);
+
+                        generator.Emit(OpCodes.Ldlen);
+
+                        // push the value to be compared onto the stack
+                        this.Value.Emit(context, generator, dtd);
+
+                        // execute the operation, popping two values and pushing the result
+                        base.Emit(context, generator, dtd);
+                    }
+                    break;
+
+                case DocOpCode.IsInstance:
+                    if (this.Value is DocOpLiteral)
+                    {
+                        // push the referenced value onto the stack
+                        LocalBuilder local = this.Reference.Emit(context, generator, dtd);
+
+                        Type typeInstance = context.RegisterType(((DocOpLiteral)this.Value).Value);
+                        generator.Emit(OpCodes.Isinst, typeInstance);
+                    }
+                    break;
+
+                case DocOpCode.IsUnique: // unique
+                    {
+                        // create a type with static field to track uniqueness for the particular rule
+                        TypeBuilder tb = context.Module.DefineType("_Unique" + this.OID); // give it a unique name based on OID corresponding to rule
+                        FieldBuilder fb = tb.DefineField("Hash", typeof(Hashtable), FieldAttributes.Static | FieldAttributes.Public);
+                        ConstructorBuilder cb = tb.DefineTypeInitializer();
+                        ILGenerator il = cb.GetILGenerator();
+                        ConstructorInfo constructorHashtable = typeof(Hashtable).GetConstructor(new Type[]{});
+                        il.Emit(OpCodes.Newobj, constructorHashtable);
+                        il.Emit(OpCodes.Stsfld, fb);
+                        il.Emit(OpCodes.Ret);
+
+                        Type t = tb.CreateType();
+                        FieldInfo f = t.GetFields()[0];
+
+                        // track value in local varaible
+                        LocalBuilder local = generator.DeclareLocal(typeof(string));
+
+                        // store the referenced value
+                        this.Reference.Emit(context, generator, dtd);
+                        generator.Emit(OpCodes.Stloc, (short)local.LocalIndex);
+
+                        // if null, then not a duplicate, jump to end
+                        generator.Emit(OpCodes.Ldloc, (short)local.LocalIndex);
+                        generator.Emit(OpCodes.Ldnull);
+                        generator.Emit(OpCodes.Beq_S, (byte)34);
+
+                        // check if hash table for rule already contains value
+                        MethodInfo methodContainsKey = typeof(Hashtable).GetMethod("ContainsKey");
+                        generator.Emit(OpCodes.Ldsfld, f);
+                        generator.Emit(OpCodes.Ldloc, (short)local.LocalIndex);
+                        generator.Emit(OpCodes.Call, methodContainsKey);
+
+                        // if true, then not unique
+                        generator.Emit(OpCodes.Brtrue_S, (byte)18); // skip over to last instruction 
+
+                        // add to hash table
+                        MethodInfo methodAdd = typeof(Hashtable).GetMethod("Add");
+                        generator.Emit(OpCodes.Ldsfld, f); // 5
+                        generator.Emit(OpCodes.Ldloc, (short)local.LocalIndex); // 3
+                        generator.Emit(OpCodes.Dup); // 1
+                        generator.Emit(OpCodes.Call, methodAdd); // 5
+
+                        // not a duplicate (yet) -- first duplicate instance will push True
+                        generator.Emit(OpCodes.Ldc_I4_1); // 1
+                        generator.Emit(OpCodes.Br_S, (byte)1); // 2 - skip over
+
+                        // is a duplicate, so not unique: return false
+                        generator.Emit(OpCodes.Ldc_I4_0);
+                    }
+                    break;
+            }
+
+            return null;
+        }
     }
 
     public class DocOpLogical : DocOpExpression // and|or|xor
     {
-        [DataMember(Order = 0)] public DocOpExpression ExpressionA;
-        [DataMember(Order = 1)] public DocOpExpression ExpressionB;
+        [DataMember(Order = 0)] private DocOpExpression _ExpressionA;
+        [DataMember(Order = 1)] private DocOpExpression _ExpressionB;
+
+        public DocOpExpression ExpressionA
+        {
+            get
+            {
+                return this._ExpressionA;
+            }
+            set
+            {
+                this._ExpressionA = value;
+            }
+        }
+
+        public DocOpExpression ExpressionB
+        {
+            get
+            {
+                return this._ExpressionB;
+            }
+            set
+            {
+                this._ExpressionB = value;
+            }
+        }
 
         public override void Delete()
         {
@@ -2371,19 +2406,159 @@ namespace IfcDoc.Schema.DOC
     }
 
     /// <summary>
+    /// A parameter passed to the template
+    /// </summary>
+    public class DocOpParameter : DocOpValue // ldarg
+    {
+        [DataMember(Order = 0)] public DocModelRuleAttribute AttributeRule;
+
+        public override string ToString()
+        {
+            return "#" + this.AttributeRule.Identification;
+        }
+
+        internal override LocalBuilder Emit(Compiler context, ILGenerator generator, DocTemplateDefinition dtd)
+        {
+            // determine the index of the parameter
+            DocModelRule[] rules = dtd.GetParameterRules();
+            for(int i = 0; i < rules.Length; i++)
+            {
+                if(rules[i] == this.AttributeRule)
+                {
+                    // found it
+                    switch(i)
+                    {
+                        case 0:
+                            generator.Emit(OpCodes.Ldarg_1);
+                            break;
+
+                        case 1:
+                            generator.Emit(OpCodes.Ldarg_2);
+                            break;
+
+                        case 2:
+                            generator.Emit(OpCodes.Ldarg_3);
+                            break;
+
+                        default:
+                            if (i < 254)
+                            {
+                                generator.Emit(OpCodes.Ldarg_S, (byte)(i+1));
+                            }
+                            else
+                            {
+                                generator.Emit(OpCodes.Ldarg, i+1);
+                            }
+                            break;
+                    }
+                    return null;
+                }
+            }
+
+            generator.Emit(OpCodes.Ldnull); // should never get here
+            return null;
+        }
+    }
+
+    /// <summary>
     /// A variable -- currently limited to a field on an object (no local variables or arguments currently)
     /// </summary>
     public class DocOpReference : DocOpValue // ldfld|ldlen
     {
         [DataMember(Order = 0)] public DocModelRuleEntity EntityRule;
 
-        public override void Emit(System.IO.BinaryWriter writer)
+        internal override LocalBuilder Emit(
+            Compiler compiler,
+            ILGenerator generator, 
+            DocTemplateDefinition template)
         {
             // ldarg.0 (this)
             // ldfld + token (calculated from attribute reference) -- recursively until final attribute
             // {leelem} -- for specific indices 
 
-            base.Emit(writer); // nop|ldlen
+            Type type = compiler.RegisterType(template.Type);
+            generator.Emit(OpCodes.Ldarg_0); // this
+
+            DocModelRule[] rulepath = template.BuildRulePath(this.EntityRule);
+            foreach(DocModelRule rule in rulepath)
+            {
+                if(rule is DocModelRuleAttribute)
+                {
+                    FieldInfo field = compiler.RegisterField(type, rule.Name);
+
+                    generator.Emit(OpCodes.Ldfld, field); // field
+
+                    LocalBuilder localRule = generator.DeclareLocal(field.FieldType);
+                    generator.Emit(OpCodes.Stloc_S, (byte)localRule.LocalIndex);
+
+                    if (!field.FieldType.IsValueType)
+                    {
+                        // check for null
+                        generator.Emit(OpCodes.Ldloc_S, (byte)localRule.LocalIndex);
+                        generator.Emit(OpCodes.Ldnull);
+                        generator.Emit(OpCodes.Ceq);
+                        generator.Emit(OpCodes.Brfalse_S, (byte)2); // if true keep going, skip next 2 instructions
+                        generator.Emit(OpCodes.Ldc_I4_0); // false
+                        generator.Emit(OpCodes.Ret);
+                    }
+
+                    // then load the field again
+                    generator.Emit(OpCodes.Ldloc_S, (byte)localRule.LocalIndex);
+
+                    // if field is collection, then get last element
+                    if (typeof(IList).IsAssignableFrom(field.FieldType))
+                    {
+                        // iterate
+                        LocalBuilder localList = generator.DeclareLocal(field.FieldType);
+                        LocalBuilder localIter = generator.DeclareLocal(typeof(int));
+                        LocalBuilder localElem = generator.DeclareLocal(field.FieldType.GetGenericArguments()[0]);
+                        generator.Emit(OpCodes.Stloc_S, (byte)localList.LocalIndex);
+
+                        // get the length of the list -- go in reverse order to avoid having to check or store length each iteration
+                        MethodInfo methodListLength = typeof(ICollection).GetProperty("Count").GetGetMethod();
+                        generator.Emit(OpCodes.Ldloc_S, localList.LocalIndex);
+                        generator.Emit(OpCodes.Callvirt, methodListLength);
+                        generator.Emit(OpCodes.Stloc_S, (byte)localIter.LocalIndex);
+
+                        // if 0 length, then return
+                        generator.Emit(OpCodes.Ldloc_S, localIter.LocalIndex);
+                        generator.Emit(OpCodes.Brtrue_S, (byte)1);
+                        generator.Emit(OpCodes.Ret);
+
+                        // loop each element
+                        Label labelLoop = generator.DefineLabel();
+                        generator.Emit(OpCodes.Ldloc_S, localList);
+                        generator.Emit(OpCodes.Ldloc_S, localIter);
+                        generator.Emit(OpCodes.Ldc_I4_1);
+                        generator.Emit(OpCodes.Sub); // decrease the index
+
+                        // get the element
+                        MethodInfo methodListGet = ((PropertyInfo)typeof(IList).GetDefaultMembers()[0]).GetGetMethod();
+                        generator.Emit(OpCodes.Callvirt, methodListGet);
+                        generator.Emit(OpCodes.Stloc_S, localElem);
+
+                    }
+                }
+                else if(rule is DocModelRuleEntity)
+                {
+                    type = compiler.RegisterType(rule.Name);
+
+                    if (type.IsValueType)
+                    {
+                        FieldInfo fieldValue = compiler.RegisterField(type, "Value");
+                        generator.Emit(OpCodes.Ldfld, fieldValue);
+                    }
+                    else
+                    {
+                        // check if instance of expected type
+                        generator.Emit(OpCodes.Isinst, type); // object -> object (if instance) or null if not
+                        generator.Emit(OpCodes.Brtrue_S, (byte)1);
+                        generator.Emit(OpCodes.Ret); // return null (false)
+                    }
+                }
+            }
+
+            return null;
         }
 
         public override string ToString(DocTemplateDefinition template)
@@ -2427,10 +2602,42 @@ namespace IfcDoc.Schema.DOC
     {
         [DataMember(Order = 0)] public string Value;
 
-        public override void Emit(System.IO.BinaryWriter writer)
+        internal override LocalBuilder Emit(
+            Compiler compiler,
+            ILGenerator generator, 
+            DocTemplateDefinition dtd)
         {
-            base.Emit(writer);
             // + constant or string metadata token
+
+            // for now, we only support strings; future: support integer, real, boolean, enumeration
+            if (this.Value != null)
+            {
+                // special case for delimited strings -- use array
+                if (this.Value.Contains(","))
+                {
+                    string[] elems = this.Value.Split(',');
+
+                    generator.Emit(OpCodes.Ldc_I4, (int)elems.Length);
+                    generator.Emit(OpCodes.Newarr, typeof(string));
+                    for (int i = 0; i < elems.Length; i++)
+                    {
+                        generator.Emit(OpCodes.Dup); // push the array 
+                        generator.Emit(OpCodes.Ldc_I4, i); // push the position
+                        generator.Emit(OpCodes.Ldstr, elems[i]); // push the element
+                        generator.Emit(OpCodes.Stelem_Ref); // store in array
+                    }
+                }
+                else
+                {
+                    generator.Emit(OpCodes.Ldstr, this.Value);
+                }
+            }
+            else
+            {
+                generator.Emit(OpCodes.Ldnull);
+            }
+
+            return null;
         }
 
         public override string ToString()
@@ -2447,27 +2654,28 @@ namespace IfcDoc.Schema.DOC
     /// </summary>
     public enum DocOpCode
     {
-        nop = 0, // no operation (use value on stack)
+        NoOperation = 0, // no operation (use value on stack)
 
-        ceq = 0xFE01,    // compare equal
-        cgt = 0xFE02,
-        cge = 0xFE03,
-        clt = 0xFE04,
-        cle = 0xFE05,
-        cne = 0x66FE01,
+        CompareEqual = 0xFE01,    // compare equal
+        CompareGreaterThan = 0xFE02,
+        CompareGreaterThanOrEqual = 0xFE03,
+        CompareLessThan = 0xFE04,
+        CompareLessThanOrEqual = 0xFE05,
+        CompareNotEqual = 0x66FE01,
 
-        and = 0x5F,    // conditional and
-        or = 0x60,
-        xor = 0x61,
+        And = 0x5F,    // conditional and
+        Or = 0x60,
+        Xor = 0x61,
 
-        ldnull = 0x14, // null
-        ldstr = 0x72,  // string
-        ldc_i8 = 0x21, // integer (also for boolean or enum)
-        ldc_r8 = 0x23, // float
+        LoadString = 0x72,  // string
+        LoadLength = 0x8e, // load array length
+        IsInstance = 0x75, // check type
 
-        ldlen = 0x8e, // load array length
-        isinst = 0x75, // check type
-        call = 0x28, // check custom function, such as checking for uniqueness
+        LoadArgument = 0x0E, // load argument (parameter)
+        LoadField = 0x7B, // load field
+
+        IsIncluded = 0xFF0001, // custom op for checking containment in array
+        IsUnique = 0xFF0002, // custom op for uniqueness
     }
 
     /// <summary>
@@ -3622,6 +3830,38 @@ namespace IfcDoc.Schema.DOC
             }
 
             base.Delete();
+        }
+
+        public DocAttribute RegisterAttribute(string name)
+        {
+            foreach(DocAttribute docExist in this.Attributes)
+            {
+                if (docExist.Name.Equals(name))
+                {
+                    return docExist;
+                }
+            }
+
+            DocAttribute docAttr = new DocAttribute();
+            docAttr.Name = name;
+            this.Attributes.Add(docAttr);
+            return docAttr;
+        }
+
+        public DocWhereRule RegisterWhereRule(string name)
+        {
+            foreach (DocWhereRule docExist in this.WhereRules)
+            {
+                if (docExist.Name.Equals(name))
+                {
+                    return docExist;
+                }
+            }
+
+            DocWhereRule docAttr = new DocWhereRule();
+            docAttr.Name = name;
+            this.WhereRules.Add(docAttr);
+            return docAttr;
         }
     }
 

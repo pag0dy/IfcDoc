@@ -235,6 +235,8 @@
             this.textBoxHTML = new System.Windows.Forms.TextBox();
             this.webBrowser = new System.Windows.Forms.WebBrowser();
             this.imageListRules = new System.Windows.Forms.ImageList(this.components);
+            this.toolStripMenuItemToolsModule = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveFileDialogModule = new System.Windows.Forms.SaveFileDialog();
             this.contextMenuStrip.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.toolStripMain.SuspendLayout();
@@ -1560,7 +1562,8 @@
             this.toolStripMenuItem8,
             this.toolStripMenuItemToolsISO,
             this.ToolStripMenuItemGenerateBallotSubmission,
-            this.toolStripMenuItemToolsSourceCode});
+            this.toolStripMenuItemToolsSourceCode,
+            this.toolStripMenuItemToolsModule});
             this.toolStripMenuItemTools.Name = "toolStripMenuItemTools";
             this.toolStripMenuItemTools.Size = new System.Drawing.Size(48, 20);
             this.toolStripMenuItemTools.Text = "&Tools";
@@ -2223,6 +2226,19 @@
             this.imageListRules.Images.SetKeyName(3, "IfcAppliedValue.png");
             this.imageListRules.Images.SetKeyName(4, "IfcBooleanOperand.png");
             // 
+            // toolStripMenuItemToolsModule
+            // 
+            this.toolStripMenuItemToolsModule.Name = "toolStripMenuItemToolsModule";
+            this.toolStripMenuItemToolsModule.ShortcutKeys = System.Windows.Forms.Keys.F8;
+            this.toolStripMenuItemToolsModule.Size = new System.Drawing.Size(235, 22);
+            this.toolStripMenuItemToolsModule.Text = "Generate &Module...";
+            this.toolStripMenuItemToolsModule.Click += new System.EventHandler(this.toolStripMenuItemToolsModule_Click);
+            // 
+            // saveFileDialogModule
+            // 
+            this.saveFileDialogModule.Filter = ".NET Assembly (*.dll)|*.dll";
+            this.saveFileDialogModule.Title = "Create .NET Assembly";
+            // 
             // FormEdit
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -2463,5 +2479,7 @@
         private CtlRules ctlRules;
         private CtlOperators ctlOperators;
         private CtlInheritance ctlInheritance;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemToolsModule;
+        private System.Windows.Forms.SaveFileDialog saveFileDialogModule;
     }
 }

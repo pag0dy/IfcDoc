@@ -21,7 +21,7 @@ namespace IfcDoc
     {
         DocType m_datatype;
 
-        static string[] s_operators = new string[6]
+        static string[] s_operators = new string[7]
             {
                 "=",
                 "!=",
@@ -29,6 +29,7 @@ namespace IfcDoc
                 ">=",
                 "<",
                 "<=",
+                "⊂",
             };
 
         public FormConstraint()
@@ -89,37 +90,37 @@ namespace IfcDoc
                 switch(this.comboBoxMetric.SelectedIndex)
                 {
                     case 0:
-                        return DocOpCode.nop;
+                        return DocOpCode.NoOperation;
 
                     case 1:
-                        return DocOpCode.ldlen;
+                        return DocOpCode.LoadLength;
 
                     case 2:
-                        return DocOpCode.isinst;
+                        return DocOpCode.IsInstance;
 
                     case 3:
-                        return DocOpCode.call;
+                        return DocOpCode.IsUnique;
                 }
 
-                return DocOpCode.nop;
+                return DocOpCode.NoOperation;
             }
             set
             {
                 switch(value)
                 {
-                    case DocOpCode.nop:
+                    case DocOpCode.NoOperation:
                         this.comboBoxMetric.SelectedIndex = 0;
                         break;
 
-                    case DocOpCode.ldlen:
+                    case DocOpCode.LoadLength:
                         this.comboBoxMetric.SelectedIndex = 1;
                         break;
 
-                    case DocOpCode.isinst:
+                    case DocOpCode.IsInstance:
                         this.comboBoxMetric.SelectedIndex = 2;
                         break;
 
-                    case DocOpCode.call:
+                    case DocOpCode.IsUnique:
                         this.comboBoxMetric.SelectedIndex = 3;
                         break;
                 }
@@ -133,47 +134,53 @@ namespace IfcDoc
                 switch(this.comboBoxOperator.SelectedIndex)
                 {
                     case 0:
-                        return DocOpCode.ceq;
+                        return DocOpCode.CompareEqual;
 
                     case 1:
-                        return DocOpCode.cne;
+                        return DocOpCode.CompareNotEqual;
 
                     case 2:
-                        return DocOpCode.cgt;
+                        return DocOpCode.CompareGreaterThan;
 
                     case 3:
-                        return DocOpCode.cge;
+                        return DocOpCode.CompareGreaterThanOrEqual;
 
                     case 4:
-                        return DocOpCode.clt;
+                        return DocOpCode.CompareLessThan;
 
                     case 5:
-                        return DocOpCode.cle;
+                        return DocOpCode.CompareLessThanOrEqual;
+
+                    case 6:
+                        return DocOpCode.IsIncluded;
                 }
 
-                return DocOpCode.ceq;
+                return DocOpCode.CompareEqual;
             }
             set
             {
                 switch(value)
                 {
-                    case DocOpCode.ceq:
+                    case DocOpCode.CompareEqual:
                         this.comboBoxOperator.SelectedIndex = 0;
                         break;
-                    case DocOpCode.cne:
+                    case DocOpCode.CompareNotEqual:
                         this.comboBoxOperator.SelectedIndex = 1;
                         break;
-                    case DocOpCode.cgt:
+                    case DocOpCode.CompareGreaterThan:
                         this.comboBoxOperator.SelectedIndex = 2;
                         break;
-                    case DocOpCode.cge:
+                    case DocOpCode.CompareGreaterThanOrEqual:
                         this.comboBoxOperator.SelectedIndex = 3;
                         break;
-                    case DocOpCode.clt:
+                    case DocOpCode.CompareLessThan:
                         this.comboBoxOperator.SelectedIndex = 4;
                         break;
-                    case DocOpCode.cle:
+                    case DocOpCode.CompareLessThanOrEqual:
                         this.comboBoxOperator.SelectedIndex = 5;
+                        break;
+                    case DocOpCode.IsIncluded:
+                        this.comboBoxOperator.SelectedIndex = 6;
                         break;
                 }
             }
@@ -217,7 +224,7 @@ namespace IfcDoc
             set
             {
                 this.textBoxExpression.Text = value;
-
+#if false
                 // parse it out
                 if (value != null)
                 {
@@ -255,6 +262,7 @@ namespace IfcDoc
                         this.textBoxBenchmark.Text = bench;
                     }                    
                 }
+#endif
             }
         }
 
@@ -287,8 +295,38 @@ namespace IfcDoc
             {
                 value = "NULL";
             }
+            else if(this.comboBoxMetric.SelectedIndex == 0)
+            {
+                value = "'" + value + "'";
+            }
 
-            this.textBoxExpression.Text = this.comboBoxMetric.Text + s_operators[this.comboBoxOperator.SelectedIndex] + value;            
+            switch(this.comboBoxMetric.SelectedIndex)
+            {
+                case 0: // value
+                    this.comboBoxOperator.Enabled = true;
+                    this.textBoxBenchmark.Enabled = true;
+                    this.textBoxExpression.Text = this.comboBoxMetric.Text + s_operators[this.comboBoxOperator.SelectedIndex] + value;            
+                    break;
+
+                case 1: // count
+                    this.comboBoxOperator.Enabled = true;
+                    this.textBoxBenchmark.Enabled = true;
+                    this.textBoxExpression.Text = this.comboBoxMetric.Text + s_operators[this.comboBoxOperator.SelectedIndex] + value;            
+                    break;
+
+                case 2: // type
+                    this.comboBoxOperator.Enabled = true;
+                    this.textBoxBenchmark.Enabled = true;
+                    this.textBoxExpression.Text = this.comboBoxMetric.Text + s_operators[this.comboBoxOperator.SelectedIndex] + value;            
+                    break;
+
+                case 3: // unique
+                    this.comboBoxOperator.Enabled = false;
+                    this.textBoxBenchmark.Enabled = false;
+                    this.textBoxBenchmark.Text = String.Empty;
+                    this.textBoxExpression.Text = "";
+                    break;
+            }
         }
 
         private void comboBoxValue_SelectedIndexChanged(object sender, EventArgs e)

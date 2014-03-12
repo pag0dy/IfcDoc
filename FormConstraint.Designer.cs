@@ -71,7 +71,8 @@
             "Greater Than",
             "Greater Than Or Equal",
             "Less Than",
-            "Less Than Or Equal"});
+            "Less Than Or Equal",
+            "Included In"});
             this.comboBoxOperator.Location = new System.Drawing.Point(13, 71);
             this.comboBoxOperator.Name = "comboBoxOperator";
             this.comboBoxOperator.Size = new System.Drawing.Size(259, 21);
@@ -111,9 +112,9 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(10, 100);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(37, 13);
+            this.label3.Size = new System.Drawing.Size(240, 13);
             this.label3.TabIndex = 4;
-            this.label3.Text = "Value:";
+            this.label3.Text = "Value: for multiple values, use comma to separate";
             // 
             // buttonOK
             // 
