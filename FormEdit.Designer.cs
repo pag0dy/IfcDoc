@@ -176,6 +176,7 @@
             this.toolStripMenuItemToolsISO = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItemGenerateBallotSubmission = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemToolsSourceCode = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemToolsModule = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemHelpAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialogLoad = new System.Windows.Forms.OpenFileDialog();
@@ -235,7 +236,6 @@
             this.textBoxHTML = new System.Windows.Forms.TextBox();
             this.webBrowser = new System.Windows.Forms.WebBrowser();
             this.imageListRules = new System.Windows.Forms.ImageList(this.components);
-            this.toolStripMenuItemToolsModule = new System.Windows.Forms.ToolStripMenuItem();
             this.saveFileDialogModule = new System.Windows.Forms.SaveFileDialog();
             this.contextMenuStrip.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -1607,6 +1607,14 @@
             this.toolStripMenuItemToolsSourceCode.Text = "Generate &Source Code...";
             this.toolStripMenuItemToolsSourceCode.Click += new System.EventHandler(this.toolStripMenuItemToolsSourceCode_Click);
             // 
+            // toolStripMenuItemToolsModule
+            // 
+            this.toolStripMenuItemToolsModule.Name = "toolStripMenuItemToolsModule";
+            this.toolStripMenuItemToolsModule.ShortcutKeys = System.Windows.Forms.Keys.F8;
+            this.toolStripMenuItemToolsModule.Size = new System.Drawing.Size(235, 22);
+            this.toolStripMenuItemToolsModule.Text = "Generate &Module...";
+            this.toolStripMenuItemToolsModule.Click += new System.EventHandler(this.toolStripMenuItemToolsModule_Click);
+            // 
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -2166,10 +2174,13 @@
             this.ctlCheckGrid.CheckGridSource = null;
             this.ctlCheckGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ctlCheckGrid.Location = new System.Drawing.Point(0, 0);
+            this.ctlCheckGrid.Mode = IfcDoc.ToolMode.Select;
             this.ctlCheckGrid.Name = "ctlCheckGrid";
+            this.ctlCheckGrid.Selection = null;
             this.ctlCheckGrid.Size = new System.Drawing.Size(672, 513);
             this.ctlCheckGrid.TabIndex = 0;
             this.ctlCheckGrid.Text = "ctlCheckGrid1";
+            this.ctlCheckGrid.SelectionChanged += new System.EventHandler(this.ctlCheckGrid_SelectionChanged);
             // 
             // ctlExpressG
             // 
@@ -2225,14 +2236,6 @@
             this.imageListRules.Images.SetKeyName(2, "DocQuantity.bmp");
             this.imageListRules.Images.SetKeyName(3, "IfcAppliedValue.png");
             this.imageListRules.Images.SetKeyName(4, "IfcBooleanOperand.png");
-            // 
-            // toolStripMenuItemToolsModule
-            // 
-            this.toolStripMenuItemToolsModule.Name = "toolStripMenuItemToolsModule";
-            this.toolStripMenuItemToolsModule.ShortcutKeys = System.Windows.Forms.Keys.F8;
-            this.toolStripMenuItemToolsModule.Size = new System.Drawing.Size(235, 22);
-            this.toolStripMenuItemToolsModule.Text = "Generate &Module...";
-            this.toolStripMenuItemToolsModule.Click += new System.EventHandler(this.toolStripMenuItemToolsModule_Click);
             // 
             // saveFileDialogModule
             // 

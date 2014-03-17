@@ -195,6 +195,9 @@ namespace IfcDoc
                     return this.comboBoxValue.Text;
                 }
 
+                if (String.IsNullOrEmpty(this.textBoxBenchmark.Text))
+                    return null;
+
                 return this.textBoxBenchmark.Text;
             }
             set
@@ -291,7 +294,7 @@ namespace IfcDoc
             {
                 value = this.comboBoxValue.Text;
             }
-            if(String.IsNullOrEmpty(value))
+            if (String.IsNullOrEmpty(value))
             {
                 value = "NULL";
             }
@@ -333,5 +336,6 @@ namespace IfcDoc
         {
             UpdateExpression();
         }
+
     }
 }

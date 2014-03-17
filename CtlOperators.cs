@@ -601,6 +601,11 @@ namespace IfcDoc
             this.treeViewRules_AfterSelect(this.treeViewRules, new TreeViewEventArgs(this.treeViewRules.SelectedNode));
         }
 
+        private void toolStripButtonRuleIncludes_Click(object sender, EventArgs e)
+        {
+            SetSelectedRuleOperator(DocOpCode.IsIncluded);
+        }
+
 
     }
 }

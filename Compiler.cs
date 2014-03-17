@@ -514,10 +514,13 @@ namespace IfcDoc
             ILGenerator generator = method.GetILGenerator();
             foreach (DocModelRule docRule in dtd.Rules)
             {
-                //TODO: encapsulate each constraint into separate rule, check each constraint in separate method
                 docRule.EmitInstructions(this, generator, dtd);
             }
+
+            // if made it to the end, then successful, so return true
+            generator.Emit(OpCodes.Ldc_I4_1);
             generator.Emit(OpCodes.Ret);
+
             return method;
         }
     }

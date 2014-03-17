@@ -348,7 +348,7 @@ namespace IfcDoc
             this.m_selection = Pick(pt, out this.m_iSelection, out this.m_attribute, out this.m_rcSelection);
             this.Invalidate();
 
-            if(this.SelectionChanged != null)
+            if (this.SelectionChanged != null)
             {
                 this.SelectionChanged(this, EventArgs.Empty);
             }

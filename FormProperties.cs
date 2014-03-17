@@ -203,9 +203,12 @@ namespace IfcDoc
                 this.tabControl.TabPages.Add(this.tabPageRequirements);
 
                 DocTemplateUsage docUsage = (DocTemplateUsage)docObject;
-                this.textBoxConceptTemplate.Text = docUsage.Definition.Name;
-                this.checkBoxConceptOverride.Checked = docUsage.Override;
+                if (docUsage.Definition != null)
+                {
+                    this.textBoxConceptTemplate.Text = docUsage.Definition.Name;
+                }
 
+                this.checkBoxConceptOverride.Checked = docUsage.Override;
                 this.LoadModelView();
             }
             else if (docObject is DocSchema)

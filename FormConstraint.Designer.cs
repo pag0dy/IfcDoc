@@ -40,6 +40,7 @@
             this.textBoxExpression = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.comboBoxValue = new System.Windows.Forms.ComboBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // comboBoxMetric
@@ -55,7 +56,7 @@
             "Unique"});
             this.comboBoxMetric.Location = new System.Drawing.Point(13, 25);
             this.comboBoxMetric.Name = "comboBoxMetric";
-            this.comboBoxMetric.Size = new System.Drawing.Size(259, 21);
+            this.comboBoxMetric.Size = new System.Drawing.Size(359, 21);
             this.comboBoxMetric.TabIndex = 1;
             this.comboBoxMetric.SelectedIndexChanged += new System.EventHandler(this.comboBoxMetric_SelectedIndexChanged);
             // 
@@ -73,9 +74,9 @@
             "Less Than",
             "Less Than Or Equal",
             "Included In"});
-            this.comboBoxOperator.Location = new System.Drawing.Point(13, 71);
+            this.comboBoxOperator.Location = new System.Drawing.Point(13, 75);
             this.comboBoxOperator.Name = "comboBoxOperator";
-            this.comboBoxOperator.Size = new System.Drawing.Size(259, 21);
+            this.comboBoxOperator.Size = new System.Drawing.Size(359, 21);
             this.comboBoxOperator.TabIndex = 3;
             this.comboBoxOperator.SelectedIndexChanged += new System.EventHandler(this.comboBoxOperator_SelectedIndexChanged);
             // 
@@ -83,9 +84,9 @@
             // 
             this.textBoxBenchmark.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxBenchmark.Location = new System.Drawing.Point(13, 117);
+            this.textBoxBenchmark.Location = new System.Drawing.Point(13, 126);
             this.textBoxBenchmark.Name = "textBoxBenchmark";
-            this.textBoxBenchmark.Size = new System.Drawing.Size(259, 20);
+            this.textBoxBenchmark.Size = new System.Drawing.Size(359, 20);
             this.textBoxBenchmark.TabIndex = 5;
             this.textBoxBenchmark.TextChanged += new System.EventHandler(this.textBoxBenchmark_TextChanged);
             // 
@@ -101,7 +102,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(10, 54);
+            this.label2.Location = new System.Drawing.Point(10, 58);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(51, 13);
             this.label2.TabIndex = 2;
@@ -110,17 +111,17 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(10, 100);
+            this.label3.Location = new System.Drawing.Point(10, 108);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(240, 13);
+            this.label3.Size = new System.Drawing.Size(37, 13);
             this.label3.TabIndex = 4;
-            this.label3.Text = "Value: for multiple values, use comma to separate";
+            this.label3.Text = "Value:";
             // 
             // buttonOK
             // 
             this.buttonOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.buttonOK.Location = new System.Drawing.Point(113, 203);
+            this.buttonOK.Location = new System.Drawing.Point(213, 226);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(75, 23);
             this.buttonOK.TabIndex = 8;
@@ -131,7 +132,7 @@
             // 
             this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(197, 203);
+            this.buttonCancel.Location = new System.Drawing.Point(297, 226);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(75, 23);
             this.buttonCancel.TabIndex = 9;
@@ -142,16 +143,16 @@
             // 
             this.textBoxExpression.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxExpression.Location = new System.Drawing.Point(13, 164);
+            this.textBoxExpression.Location = new System.Drawing.Point(13, 189);
             this.textBoxExpression.Name = "textBoxExpression";
             this.textBoxExpression.ReadOnly = true;
-            this.textBoxExpression.Size = new System.Drawing.Size(259, 20);
+            this.textBoxExpression.Size = new System.Drawing.Size(359, 20);
             this.textBoxExpression.TabIndex = 7;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(10, 147);
+            this.label4.Location = new System.Drawing.Point(10, 172);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(61, 13);
             this.label4.TabIndex = 6;
@@ -163,12 +164,21 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBoxValue.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxValue.FormattingEnabled = true;
-            this.comboBoxValue.Location = new System.Drawing.Point(13, 116);
+            this.comboBoxValue.Location = new System.Drawing.Point(13, 125);
             this.comboBoxValue.Name = "comboBoxValue";
-            this.comboBoxValue.Size = new System.Drawing.Size(259, 21);
+            this.comboBoxValue.Size = new System.Drawing.Size(359, 21);
             this.comboBoxValue.TabIndex = 10;
             this.comboBoxValue.Visible = false;
             this.comboBoxValue.SelectedIndexChanged += new System.EventHandler(this.comboBoxValue_SelectedIndexChanged);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(10, 149);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(218, 13);
+            this.label5.TabIndex = 14;
+            this.label5.Text = "For multiple values, use commas to separate.";
             // 
             // FormConstraint
             // 
@@ -176,7 +186,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
-            this.ClientSize = new System.Drawing.Size(284, 238);
+            this.ClientSize = new System.Drawing.Size(384, 261);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.comboBoxValue);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.textBoxExpression);
@@ -213,5 +224,6 @@
         private System.Windows.Forms.TextBox textBoxExpression;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox comboBoxValue;
+        private System.Windows.Forms.Label label5;
     }
 }

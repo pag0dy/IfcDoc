@@ -48,6 +48,7 @@
             this.toolStripButtonRuleXor = new System.Windows.Forms.ToolStripButton();
             this.treeViewRules = new System.Windows.Forms.TreeView();
             this.imageListRules = new System.Windows.Forms.ImageList(this.components);
+            this.toolStripButtonRuleIncludes = new System.Windows.Forms.ToolStripButton();
             this.toolStripConceptRule.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -62,10 +63,11 @@
             this.toolStripSeparatorRuleComparison,
             this.toolStripButtonRuleCeq,
             this.toolStripButtonRuleCne,
-            this.toolStripButtonRuleCgt,
-            this.toolStripButtonRuleCge,
             this.toolStripButtonRuleClt,
+            this.toolStripButtonRuleCgt,
             this.toolStripButtonRuleCle,
+            this.toolStripButtonRuleCge,
+            this.toolStripButtonRuleIncludes,
             this.toolStripSeparatorRuleLogical,
             this.toolStripButtonRuleAnd,
             this.toolStripButtonRuleOr,
@@ -269,6 +271,18 @@
             this.imageListRules.Images.SetKeyName(3, "IfcAppliedValue.png");
             this.imageListRules.Images.SetKeyName(4, "IfcBooleanOperand.png");
             // 
+            // toolStripButtonRuleIncludes
+            // 
+            this.toolStripButtonRuleIncludes.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButtonRuleIncludes.Enabled = false;
+            this.toolStripButtonRuleIncludes.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonRuleIncludes.Image")));
+            this.toolStripButtonRuleIncludes.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonRuleIncludes.Name = "toolStripButtonRuleIncludes";
+            this.toolStripButtonRuleIncludes.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButtonRuleIncludes.Text = "{";
+            this.toolStripButtonRuleIncludes.ToolTipText = "Sets the comparison operator to Includes for the selected statement.";
+            this.toolStripButtonRuleIncludes.Click += new System.EventHandler(this.toolStripButtonRuleIncludes_Click);
+            // 
             // CtlOperators
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -304,5 +318,6 @@
         private System.Windows.Forms.ToolStripButton toolStripButtonRuleXor;
         private System.Windows.Forms.TreeView treeViewRules;
         private System.Windows.Forms.ImageList imageListRules;
+        private System.Windows.Forms.ToolStripButton toolStripButtonRuleIncludes;
     }
 }

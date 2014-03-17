@@ -1972,6 +1972,11 @@ namespace IfcDoc.Schema.DOC
             if (this.Expression != null)
             {
                 this.Expression.Emit(context, generator, dtd);
+
+                // if successful, keep going; if not, then return false
+                generator.Emit(OpCodes.Brtrue_S, (byte)2);
+                generator.Emit(OpCodes.Ldc_I4_0);
+                generator.Emit(OpCodes.Ret);
             }
         }
     }    
@@ -1996,112 +2001,6 @@ namespace IfcDoc.Schema.DOC
             ILGenerator generator, 
             DocTemplateDefinition dtd)
         {
-            switch(this.Operation)
-            {
-                case DocOpCode.And:
-                    generator.Emit(OpCodes.And);
-                    break;
-
-                case DocOpCode.Or:
-                    generator.Emit(OpCodes.Or);
-                    break;
-
-                case DocOpCode.Xor:
-                    generator.Emit(OpCodes.Xor);
-                    break;
-
-                case DocOpCode.IsIncluded:
-                    {
-                        MethodInfo methodCompare = typeof(String).GetMethod("Compare", new Type[] { typeof(String), typeof(String) });
-
-                        // Left argument:  String
-                        // Right argument: Array of String: MUST have at least one element
-
-                        LocalBuilder localValue = generator.DeclareLocal(typeof(string));
-                        LocalBuilder localArray = generator.DeclareLocal(typeof(string[]));
-                        LocalBuilder localIndex = generator.DeclareLocal(typeof(int));
-                        LocalBuilder localCheck = generator.DeclareLocal(typeof(bool)); // false until included
-
-                        // save values
-                        generator.Emit(OpCodes.Stloc, (short)localArray.LocalIndex);
-                        generator.Emit(OpCodes.Stloc, (short)localValue.LocalIndex);
-
-                        // LOOP STARTS HERE
-
-                        // load the array element and compare
-                        generator.Emit(OpCodes.Ldloc, (short)localValue.LocalIndex); // 3
-                        generator.Emit(OpCodes.Ldloc, (short)localArray.LocalIndex); // 3
-                        generator.Emit(OpCodes.Ldloc, (short)localIndex.LocalIndex); // 3
-                        generator.Emit(OpCodes.Ldelem_Ref); // 1
-                        generator.Emit(OpCodes.Call, methodCompare); // 5
-
-                        // store True if equal (0)
-                        generator.Emit(OpCodes.Brtrue_S, (byte)5); // 2
-                        generator.Emit(OpCodes.Ldc_I4_1); // 1
-                        generator.Emit(OpCodes.Stloc, (short)localCheck.LocalIndex); // 3
-                        
-                        // increase the position
-                        generator.Emit(OpCodes.Ldloc, (short)localIndex.LocalIndex); // 3
-                        generator.Emit(OpCodes.Ldc_I4_1); // 1
-                        generator.Emit(OpCodes.Add); // 1
-                        generator.Emit(OpCodes.Stloc, (short)localIndex.LocalIndex); // 3
-
-                        // go to start of loop 
-                        generator.Emit(OpCodes.Ldloc, (short)localIndex.LocalIndex); // 3
-                        generator.Emit(OpCodes.Ldloc, (short)localArray.LocalIndex); // 3
-                        generator.Emit(OpCodes.Ldlen); // 1
-                        generator.Emit(OpCodes.Blt_S, (sbyte)-46);
-
-                        // return the flag
-                        generator.Emit(OpCodes.Ldloc, (short)localCheck.LocalIndex);
-
-                        //generator.Emit(OpCodes.Ldc_I4_0);
-                        //generator.Emit(OpCodes.Bge_S, (sbyte)-49);
-                    }
-                    break;
-
-                case DocOpCode.CompareEqual:
-                    // strings may not necessarily be interned, so can't use comparison opcode -- must call function String.Compare
-                    {
-                        MethodInfo methodCompare = typeof(String).GetMethod("Compare", new Type[] { typeof(String), typeof(String) });
-                        generator.Emit(OpCodes.Call, methodCompare);
-                        generator.Emit(OpCodes.Not); // 0 means they are equal, so flip result
-                    }
-                    //generator.Emit(OpCodes.Ceq);
-                    break;
-
-                case DocOpCode.CompareNotEqual:
-                    {
-                        MethodInfo methodCompare = typeof(String).GetMethod("Compare", new Type[] { typeof(String), typeof(String) });
-                        generator.Emit(OpCodes.Call, methodCompare); // 0 means they are equal, so non-zero means not equal
-                    }
-                    //generator.Emit(OpCodes.Ceq);
-                    //generator.Emit(OpCodes.Not);
-                    break;
-
-                case DocOpCode.CompareGreaterThan:
-                    generator.Emit(OpCodes.Cgt);
-                    break;
-
-                case DocOpCode.CompareLessThan:
-                    generator.Emit(OpCodes.Clt);
-                    break;
-
-                case DocOpCode.CompareGreaterThanOrEqual:
-                    generator.Emit(OpCodes.Bge_S, (byte)3);
-                    generator.Emit(OpCodes.Ldc_I4_0);
-                    generator.Emit(OpCodes.Br_S, (byte)1);
-                    generator.Emit(OpCodes.Ldc_I4_1);
-                    break;
-
-                case DocOpCode.CompareLessThanOrEqual:
-                    generator.Emit(OpCodes.Ble_S, (byte)3);
-                    generator.Emit(OpCodes.Ldc_I4_0);
-                    generator.Emit(OpCodes.Br_S, (byte)1);
-                    generator.Emit(OpCodes.Ldc_I4_1);
-                    break;
-            }
-
             return null;
         }
 
@@ -2208,6 +2107,10 @@ namespace IfcDoc.Schema.DOC
                 case DocOpCode.CompareGreaterThan:
                     opname = ">";
                     break;
+
+                case DocOpCode.IsIncluded:
+                    opname = "{";
+                    break;
             }
 
             if (this.Reference != null && this.Value != null)
@@ -2266,7 +2169,7 @@ namespace IfcDoc.Schema.DOC
                         this.Value.Emit(context, generator, dtd);
 
                         // execute the operation, popping two values and pushing the result
-                        base.Emit(context, generator, dtd);
+                        //base.Emit(context, generator, dtd);
                     }
                     break;
 
@@ -2281,7 +2184,7 @@ namespace IfcDoc.Schema.DOC
                         this.Value.Emit(context, generator, dtd);
 
                         // execute the operation, popping two values and pushing the result
-                        base.Emit(context, generator, dtd);
+                        //base.Emit(context, generator, dtd);
                     }
                     break;
 
@@ -2294,7 +2197,7 @@ namespace IfcDoc.Schema.DOC
                         Type typeInstance = context.RegisterType(((DocOpLiteral)this.Value).Value);
                         generator.Emit(OpCodes.Isinst, typeInstance);
                     }
-                    break;
+                    return null;
 
                 case DocOpCode.IsUnique: // unique
                     {
@@ -2345,7 +2248,103 @@ namespace IfcDoc.Schema.DOC
 
                         // is a duplicate, so not unique: return false
                         generator.Emit(OpCodes.Ldc_I4_0);
+
+                        return null;
                     }
+            }
+
+            switch (this.Operation)
+            {
+                case DocOpCode.IsIncluded:
+                    {
+                        MethodInfo methodCompare = typeof(String).GetMethod("Compare", new Type[] { typeof(String), typeof(String) });
+
+                        // Left argument:  String
+                        // Right argument: Array of String: MUST have at least one element
+
+                        LocalBuilder localValue = generator.DeclareLocal(typeof(string));
+                        LocalBuilder localArray = generator.DeclareLocal(typeof(string[]));
+                        LocalBuilder localIndex = generator.DeclareLocal(typeof(int));
+                        LocalBuilder localCheck = generator.DeclareLocal(typeof(bool)); // false until included
+
+                        // save values
+                        generator.Emit(OpCodes.Stloc, (short)localArray.LocalIndex);
+                        generator.Emit(OpCodes.Stloc, (short)localValue.LocalIndex);
+
+                        // LOOP STARTS HERE
+
+                        // load the array element and compare
+                        generator.Emit(OpCodes.Ldloc, (short)localValue.LocalIndex); // 3
+                        generator.Emit(OpCodes.Ldloc, (short)localArray.LocalIndex); // 3
+                        generator.Emit(OpCodes.Ldloc, (short)localIndex.LocalIndex); // 3
+                        generator.Emit(OpCodes.Ldelem_Ref); // 1
+                        generator.Emit(OpCodes.Call, methodCompare); // 5
+
+                        // store True if equal (0)
+                        generator.Emit(OpCodes.Brtrue_S, (byte)5); // 2
+                        generator.Emit(OpCodes.Ldc_I4_1); // 1
+                        generator.Emit(OpCodes.Stloc, (short)localCheck.LocalIndex); // 3
+
+                        // increase the position
+                        generator.Emit(OpCodes.Ldloc, (short)localIndex.LocalIndex); // 3
+                        generator.Emit(OpCodes.Ldc_I4_1); // 1
+                        generator.Emit(OpCodes.Add); // 1
+                        generator.Emit(OpCodes.Stloc, (short)localIndex.LocalIndex); // 3
+
+                        // go to start of loop 
+                        generator.Emit(OpCodes.Ldloc, (short)localIndex.LocalIndex); // 3
+                        generator.Emit(OpCodes.Ldloc, (short)localArray.LocalIndex); // 3
+                        generator.Emit(OpCodes.Ldlen); // 1
+                        generator.Emit(OpCodes.Blt_S, (sbyte)-46);
+
+                        // return the flag
+                        generator.Emit(OpCodes.Ldloc, (short)localCheck.LocalIndex);
+
+                        //generator.Emit(OpCodes.Ldc_I4_0);
+                        //generator.Emit(OpCodes.Bge_S, (sbyte)-49);
+                    }
+                    break;
+
+                case DocOpCode.NoOperation: // backcompat
+                case DocOpCode.CompareEqual:
+                    // strings may not necessarily be interned, so can't use comparison opcode -- must call function String.Compare
+                    {
+                        MethodInfo methodCompare = typeof(String).GetMethod("Compare", new Type[] { typeof(String), typeof(String) });
+                        generator.Emit(OpCodes.Call, methodCompare);
+                        generator.Emit(OpCodes.Not); // 0 means they are equal, so flip result
+                    }
+                    //generator.Emit(OpCodes.Ceq);
+                    break;
+
+                case DocOpCode.CompareNotEqual:
+                    {
+                        MethodInfo methodCompare = typeof(String).GetMethod("Compare", new Type[] { typeof(String), typeof(String) });
+                        generator.Emit(OpCodes.Call, methodCompare); // 0 means they are equal, so non-zero means not equal
+                    }
+                    //generator.Emit(OpCodes.Ceq);
+                    //generator.Emit(OpCodes.Not);
+                    break;
+
+                case DocOpCode.CompareGreaterThan:
+                    generator.Emit(OpCodes.Cgt);
+                    break;
+
+                case DocOpCode.CompareLessThan:
+                    generator.Emit(OpCodes.Clt);
+                    break;
+
+                case DocOpCode.CompareGreaterThanOrEqual:
+                    generator.Emit(OpCodes.Bge_S, (byte)3);
+                    generator.Emit(OpCodes.Ldc_I4_0);
+                    generator.Emit(OpCodes.Br_S, (byte)1);
+                    generator.Emit(OpCodes.Ldc_I4_1);
+                    break;
+
+                case DocOpCode.CompareLessThanOrEqual:
+                    generator.Emit(OpCodes.Ble_S, (byte)3);
+                    generator.Emit(OpCodes.Ldc_I4_0);
+                    generator.Emit(OpCodes.Br_S, (byte)1);
+                    generator.Emit(OpCodes.Ldc_I4_1);
                     break;
             }
 
@@ -2396,6 +2395,35 @@ namespace IfcDoc.Schema.DOC
 
             base.Delete();
         }
+
+        /// <summary>
+        /// Generates CIL code for operation
+        /// </summary>
+        /// <param name="writer"></param>
+        internal virtual LocalBuilder Emit(
+            Compiler context,
+            ILGenerator generator,
+            DocTemplateDefinition dtd)
+        {
+            switch (this.Operation)
+            {
+                case DocOpCode.And:
+                    generator.Emit(OpCodes.And);
+                    break;
+
+                case DocOpCode.Or:
+                    generator.Emit(OpCodes.Or);
+                    break;
+
+                case DocOpCode.Xor:
+                    generator.Emit(OpCodes.Xor);
+                    break;
+
+            }
+
+            return null;
+        }
+
     }
 
     /// <summary>
@@ -2697,7 +2725,14 @@ namespace IfcDoc.Schema.DOC
 
         public override string ToString()
         {
-            return this.Definition.ToString();
+            if (this.Definition != null)
+            {
+                return this.Definition.ToString();
+            }
+            else
+            {
+                return base.ToString();
+            }
         }
 
         public DocTemplateDefinition Definition

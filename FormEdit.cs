@@ -652,7 +652,7 @@ namespace IfcDoc
                         case ".ifcdoc":
                             using (FormatSPF format = new FormatSPF(this.m_file, SchemaDOC.Types, this.m_instances))
                             {
-                                format.InitHeaders(this.m_file, "IFCDOC_6_6");
+                                format.InitHeaders(this.m_file, "IFCDOC_6_7");
                                 format.Save();
                             }
                             break;
@@ -6923,12 +6923,14 @@ namespace IfcDoc
             {
                 case 0:
                     this.ctlExpressG.Mode = ToolMode.Select;
+                    this.ctlCheckGrid.Mode = ToolMode.Select;
                     this.ctlInheritance.Mode = ToolMode.Select;
                     this.splitContainerConcept.Panel2Collapsed = true;
                     break;
 
                 case 1:
                     this.ctlExpressG.Mode = ToolMode.Move;
+                    this.ctlCheckGrid.Mode = ToolMode.Move;
                     this.ctlInheritance.Mode = ToolMode.Move;
                     this.splitContainerConcept.Panel2Collapsed = false;
                     this.splitContainerRules.Panel1Collapsed = false;
@@ -6937,6 +6939,7 @@ namespace IfcDoc
 
                 case 2:
                     this.ctlExpressG.Mode = ToolMode.Link;
+                    this.ctlCheckGrid.Mode = ToolMode.Link;
                     this.ctlInheritance.Mode = ToolMode.Link;
                     this.splitContainerConcept.Panel2Collapsed = false;
                     this.splitContainerRules.Panel1Collapsed = true;
@@ -7637,6 +7640,37 @@ namespace IfcDoc
 
                         System.IO.File.Move(compiler.Module.FullyQualifiedName, this.saveFileDialogModule.FileName);
                     }
+                }
+            }
+        }
+
+        private void ctlCheckGrid_SelectionChanged(object sender, EventArgs e)
+        {
+            if (this.ctlCheckGrid.Selection is DocObject)
+            {
+                DocObject docObj = (DocObject)this.ctlCheckGrid.Selection;
+                TreeNode tn = null;
+
+                if (docObj is DocConceptRoot)
+                {
+                    // redirect to applicable entity
+                    DocConceptRoot cr = (DocConceptRoot)docObj;
+                    if (cr.ApplicableEntity != null && this.m_mapTree.TryGetValue(cr.ApplicableEntity.Name.ToLowerInvariant(), out tn))
+                    {
+                        this.UpdateTreeSelection(tn, docObj);
+                    }
+                }
+                else if (docObj is DocTemplateUsage)
+                {
+                    // need a more efficient mapping...
+                    this.UpdateTreeSelection(this.treeView.Nodes[4], docObj);
+                    this.UpdateTreeSelection(this.treeView.Nodes[5], docObj);
+                    this.UpdateTreeSelection(this.treeView.Nodes[6], docObj);
+                    this.UpdateTreeSelection(this.treeView.Nodes[7], docObj);
+                }
+                else if (docObj.Name != null && this.m_mapTree.TryGetValue(docObj.Name.ToLowerInvariant(), out tn))
+                {
+                    this.treeView.SelectedNode = tn;
                 }
             }
         }

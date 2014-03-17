@@ -13,6 +13,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 
+using IfcDoc;
 using IfcDoc.Schema.DOC;
 
 namespace IfcDoc
@@ -20,12 +21,14 @@ namespace IfcDoc
     public partial class CtlCheckGrid : ScrollableControl
     {
         ICheckGrid m_datasource;
+        ToolMode m_toolmode;
+        object m_selection;
 
         const int CX = 12;
         const int CY = 12;
 
-        const int SX = 100;
-        const int SY = 100;
+        const int SX = 200;
+        const int SY = 200;
 
         public CtlCheckGrid()
         {
@@ -53,6 +56,36 @@ namespace IfcDoc
             }
         }
 
+        public ToolMode Mode
+        {
+            get
+            {
+                return this.m_toolmode;
+            }
+            set
+            {
+                this.m_toolmode = value;
+            }
+        }
+
+        public object Selection
+        {
+            get
+            {
+                return this.m_selection;
+            }
+            set
+            {
+                this.m_selection = value;
+                if (this.SelectionChanged != null)
+                {
+                    this.SelectionChanged(this, EventArgs.Empty);
+                }
+            }
+        }
+
+        public event EventHandler SelectionChanged;
+
         protected override void OnPaint(PaintEventArgs pe)
         {
             base.OnPaint(pe);
@@ -67,7 +100,7 @@ namespace IfcDoc
             for(int iCol = 0; iCol < this.m_datasource.GetColumnCount(); iCol++)
             {
                 object col = this.m_datasource.GetColumn(iCol);
-                g.DrawRectangle(Pens.Black, SX + iCol * CX, 0, CY, 2000);
+                g.DrawRectangle(Pens.Black, SX + iCol * CX, 0, CY, this.AutoScrollMinSize.Height);
                 g.DrawString(col.ToString(), this.Font, Brushes.Black, SX + iCol * CX - 2, 0, new System.Drawing.StringFormat(StringFormatFlags.DirectionVertical));
             }
 
@@ -76,7 +109,7 @@ namespace IfcDoc
                 object row = this.m_datasource.GetRow(iRow);
                 
                 // draw row header
-                g.DrawRectangle(Pens.Black, 0, SY + iRow * CY, 2000, CY);
+                g.DrawRectangle(Pens.Black, 0, SY + iRow * CY, this.AutoScrollMinSize.Width, CY);
                 g.DrawString(row.ToString(), this.Font, Brushes.Black, 0, SY + iRow * CY);
 
                 for (int iCol = 0; iCol < this.m_datasource.GetColumnCount(); iCol++)
@@ -85,16 +118,50 @@ namespace IfcDoc
 
                     // draw cell
                     CellValue val = this.m_datasource.GetCell(iRow, iCol);
-                    if (val == CellValue.Optional || val == CellValue.Required)
+                    if (val != CellValue.Unavailable)
                     {
-                        g.DrawLine(Pens.Black, SX + iCol * CX, SY + (iRow + 1) * CY, SX + (iCol + 1) * CX, SY + iRow * CY);
+                        g.FillRectangle(Brushes.White, new Rectangle(SX + iCol * CX + 1, SY + iRow * CY + 1, CX-1, CY-1));
+                        if (val == CellValue.Optional || val == CellValue.Required)
+                        {
+                            g.DrawLine(Pens.Black, SX + iCol * CX, SY + (iRow + 1) * CY, SX + (iCol + 1) * CX, SY + iRow * CY);
+                        }
+                        if (val == CellValue.Required)
+                        {
+                            g.DrawLine(Pens.Black, SX + iCol * CX, SY + iRow * CY, SX + (iCol + 1) * CX, SY + (iRow + 1) * CY);
+                        }
                     }
-                    if (val == CellValue.Required)
+                    else
                     {
-                        g.DrawLine(Pens.Black, SX + iCol * CX, SY + iRow * CY, SX + (iCol + 1) * CX, SY + (iRow + 1) * CY);
+                        g.FillRectangle(Brushes.DarkGray, new Rectangle(SX + iCol * CX + 1, SY + iRow * CY + 1, CX - 1, CY - 1));
                     }
                 }
             }
+        }
+
+        private object Pick(int x, int y)
+        {
+            if (this.m_datasource == null)
+                return null;
+
+            int iCol = (x - SX) / CX;
+            int iRow = (y - SY) / CY;
+
+            if (x < SX && iRow >= 0 && iRow < this.m_datasource.GetRowCount())
+            {
+                // clicking on row
+                return this.m_datasource.GetRow(iRow);
+            }
+            else if (y < SY && iCol >= 0 && iCol < this.m_datasource.GetColumnCount())
+            {
+                // clicking on column
+                return this.m_datasource.GetColumn(iCol);
+            }
+            else if(iCol >= 0 && iRow >= 0 && iCol < this.m_datasource.GetColumnCount() && iRow < this.m_datasource.GetRowCount())
+            {
+                return this.m_datasource.GetObject(iRow, iCol);
+            }
+
+            return null;
         }
 
         private void CtlCheckGrid_MouseClick(object sender, MouseEventArgs e)
@@ -102,9 +169,14 @@ namespace IfcDoc
             if (this.m_datasource == null)
                 return;
 
+            if(this.Mode == IfcDoc.ToolMode.Select)
+            {
+                this.Selection = this.Pick(e.X, e.Y);
+                return;
+            }
+
             int iCol = (e.X - SX) / CX;
             int iRow = (e.Y - SY) / CY;
-
             if (iCol < 0 || iRow < 0)
                 return;
 
@@ -135,6 +207,54 @@ namespace IfcDoc
 
             this.Invalidate(false);
         }
+
+        private void CtlCheckGrid_MouseMove(object sender, MouseEventArgs e)
+        {
+            if(this.m_datasource == null)
+                return;
+
+            switch (this.Mode)
+            {
+                case ToolMode.Select:
+                    {
+                        object link = this.Pick(e.X, e.Y);
+                        if(link != null)
+                        {
+                            this.Cursor = Cursors.Hand;
+                        }
+                        else
+                        {
+                            this.Cursor = Cursors.Default;
+                        }
+                    }
+                    break;
+
+                case IfcDoc.ToolMode.Move:
+                case IfcDoc.ToolMode.Link:
+                    {
+                        int iCol = (e.X - SX) / CX;
+                        int iRow = (e.Y - SY) / CY;
+                        if(iCol >= 0 && iCol < this.m_datasource.GetColumnCount() &&
+                            iRow >= 0 && iRow < this.m_datasource.GetRowCount())
+                        {
+                            CellValue cell = this.m_datasource.GetCell(iRow, iCol);
+                            if(cell != CellValue.Unavailable)
+                            {
+                                this.Cursor = Cursors.UpArrow;
+                            }
+                            else
+                            {
+                                this.Cursor = Cursors.No;
+                            }
+                        }
+                        else
+                        {
+                            this.Cursor = Cursors.Default;
+                        }
+                    }
+                    break;
+            }
+        }
     }
 
 
@@ -153,6 +273,14 @@ namespace IfcDoc
         /// <param name="row"></param>
         /// <returns></returns>
         object GetRow(int row);
+
+        /// <summary>
+        /// Returns object at cell.
+        /// </summary>
+        /// <param name="row"></param>
+        /// <param name="col"></param>
+        /// <returns></returns>
+        object GetObject(int row, int col);
 
         /// <summary>
         /// Returns value for cell.
@@ -239,6 +367,30 @@ namespace IfcDoc
             if (row >= 0 && row < this.m_view.ConceptRoots.Count)
             {
                 return this.m_view.ConceptRoots[row];
+            }
+
+            return null;
+        }
+
+        public object GetObject(int row, int col)
+        {
+            DocConceptRoot docRoot = this.m_view.ConceptRoots[row];
+            DocExchangeDefinition docExchange = this.m_view.Exchanges[col];
+
+            foreach (DocTemplateUsage docUsage in docRoot.Concepts)
+            {
+                if (docUsage.Definition == this.m_template)
+                {
+                    foreach (DocExchangeItem docEx in docUsage.Exchanges)
+                    {
+                        if (docEx.Exchange == docExchange && docEx.Applicability == DocExchangeApplicabilityEnum.Export)
+                        {
+                            return docEx;
+                        }
+                    }
+
+                    return null;
+                }
             }
 
             return null;
@@ -408,6 +560,34 @@ namespace IfcDoc
             return null;
         }
 
+        public object GetObject(int row, int col)
+        {
+            if (row < 0 || row >= this.m_listTemplate.Count)
+                return null;
+
+            if (col < 0 || col >= this.m_view.Exchanges.Count)
+                return null;
+
+            DocTemplateDefinition docTemplate = this.m_listTemplate[row];
+            DocExchangeDefinition docExchange = this.m_view.Exchanges[col];
+
+            foreach (DocTemplateUsage docUsage in this.m_root.Concepts)
+            {
+                if (docUsage.Definition == docTemplate)
+                {
+                    foreach (DocExchangeItem docItem in docUsage.Exchanges)
+                    {
+                        if (docItem.Exchange == docExchange && docItem.Applicability == DocExchangeApplicabilityEnum.Export)
+                        {
+                            return docItem;
+                        }
+                    }
+                }
+            }
+
+            return CellValue.None;
+        }
+
         public CellValue GetCell(int row, int col)
         {
             if (row < 0 || row >= this.m_listTemplate.Count)
@@ -554,6 +734,31 @@ namespace IfcDoc
             return null;
         }
 
+        public object GetObject(int row, int col)
+        {
+            if (col >= this.m_listTemplate.Count || row >= this.m_view.ConceptRoots.Count)
+                return null;
+
+            DocTemplateDefinition docTemplate = this.m_listTemplate[col];
+            DocConceptRoot docRoot = this.m_view.ConceptRoots[row];
+
+            foreach (DocTemplateUsage docUsage in docRoot.Concepts)
+            {
+                if (docUsage.Definition == docTemplate)
+                {
+                    foreach (DocExchangeItem docExchangeItem in docUsage.Exchanges)
+                    {
+                        if (docExchangeItem.Exchange == this.m_exchange && docExchangeItem.Applicability == DocExchangeApplicabilityEnum.Export)
+                        {
+                            return docUsage;
+                        }
+                    }
+                }
+            }
+
+            return null;
+        }
+
         public CellValue GetCell(int row, int col)
         {
             if (col >= this.m_listTemplate.Count || row >= this.m_view.ConceptRoots.Count)
@@ -563,7 +768,24 @@ namespace IfcDoc
             DocConceptRoot docRoot = this.m_view.ConceptRoots[row];
 
             // return Unavailable if template is incompatible with root
-            //...docRoot.ApplicableEntity.
+            bool applicable = false;
+            DocDefinition docDef = this.m_project.GetDefinition(docTemplate.Type);
+            DocEntity docEnt = docRoot.ApplicableEntity;
+            while(docEnt != null)
+            {
+                if (docEnt == docDef)
+                {
+                    applicable = true;
+                    break;
+                }
+
+                docEnt = this.m_project.GetDefinition(docEnt.BaseDefinition) as DocEntity;
+            }
+
+            if(!applicable)
+            {
+                return CellValue.Unavailable;
+            }
 
             foreach (DocTemplateUsage docUsage in docRoot.Concepts)
             {

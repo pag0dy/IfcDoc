@@ -33,6 +33,7 @@
             // CtlCheckGrid
             // 
             this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.CtlCheckGrid_MouseClick);
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.CtlCheckGrid_MouseMove);
             this.ResumeLayout(false);
 
         }
