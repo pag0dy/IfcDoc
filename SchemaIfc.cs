@@ -167,12 +167,12 @@ namespace IfcDoc.Schema.IFC
 
     public enum IfcSimplePropertyTemplateTypeEnum
     {
-        P_SINGLEVALUE = 1,
-        P_ENUMERATEDVALUE = 2,
-        P_BOUNDEDVALUE = 3,
-        P_LISTVALUE = 4,
-        P_TABLEVALUE = 5,
-        P_REFERENCEVALUE = 6,
+        P_SINGLEVALUE = 0,
+        P_ENUMERATEDVALUE = 1,
+        P_BOUNDEDVALUE = 2,
+        P_LISTVALUE = 3,
+        P_TABLEVALUE = 4,
+        P_REFERENCEVALUE = 5,
 
         Q_LENGTH = 11,
         Q_AREA = 12,

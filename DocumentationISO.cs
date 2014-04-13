@@ -3019,10 +3019,25 @@ namespace IfcDoc
                                             // show filtered schemas for model views only if exchanges defined
                                             if (Properties.Settings.Default.ConceptTables)
                                             {
-                                                DoExport(docProject, path + @"\annex\annex-a\" + MakeLinkName(docModelView) + @"\" + docModelView.Code + ".exp", new DocModelView[] { docModelView }, locales, instances, true);
-                                                DoExport(docProject, path + @"\annex\annex-a\" + MakeLinkName(docModelView) + @"\" + docModelView.Code + ".xsd", new DocModelView[] { docModelView }, locales, instances, true);
-                                                DoExport(docProject, path + @"\annex\annex-a\" + MakeLinkName(docModelView) + @"\" + docModelView.Code + ".ifc", new DocModelView[] { docModelView }, locales, instances, true);
-                                                DoExport(docProject, path + @"\annex\annex-a\" + MakeLinkName(docModelView) + @"\" + docModelView.Code + ".ifcxml", new DocModelView[] { docModelView }, locales, instances, true);
+                                                // build list of inherited views
+                                                List<DocModelView> inheritviews = new List<DocModelView>();
+                                                inheritviews.Add(docModelView);
+                                                DocModelView docSuperView = docModelView;
+                                                while (docSuperView != null && !String.IsNullOrEmpty(docSuperView.BaseView))
+                                                {
+                                                    Guid guid = new Guid(docSuperView.BaseView);
+                                                    docSuperView = docProject.GetView(guid);
+                                                    if (docSuperView != null)
+                                                    {
+                                                        inheritviews.Add(docSuperView);
+                                                    }
+                                                }
+                                                DocModelView[] modelviews = inheritviews.ToArray();
+
+                                                DoExport(docProject, path + @"\annex\annex-a\" + MakeLinkName(docModelView) + @"\" + docModelView.Code + ".exp", modelviews, locales, instances, true);
+                                                DoExport(docProject, path + @"\annex\annex-a\" + MakeLinkName(docModelView) + @"\" + docModelView.Code + ".xsd", modelviews, locales, instances, true);
+                                                DoExport(docProject, path + @"\annex\annex-a\" + MakeLinkName(docModelView) + @"\" + docModelView.Code + ".ifc", modelviews, locales, instances, true);
+                                                DoExport(docProject, path + @"\annex\annex-a\" + MakeLinkName(docModelView) + @"\" + docModelView.Code + ".ifcxml", modelviews, locales, instances, true);
 
                                                 using (FormatHTM htmExpress = new FormatHTM(path + @"\annex\annex-a\" + MakeLinkName(docModelView) + @"\" + docModelView.Code + ".exp.htm", mapEntity, mapSchema, included))
                                                 {

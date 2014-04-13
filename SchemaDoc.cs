@@ -1836,7 +1836,11 @@ namespace IfcDoc.Schema.DOC
                     }
                 }
 
-                if (this.CardinalityMin == 0 && this.CardinalityMax == 0)
+                if (this.CardinalityMin == 0 && this.CardinalityMax == 0) // uninitialized; same as schema
+                {
+                    return (fail == 0);
+                }
+                else if(this.CardinalityMin == -1 && this.CardinalityMax == -1)  // restricted (should not be present) (0:0)
                 {
                     return (pass == 0);
                 }
@@ -2157,6 +2161,8 @@ namespace IfcDoc.Schema.DOC
 
         internal override LocalBuilder Emit(Compiler context, ILGenerator generator, DocTemplateDefinition dtd)
         {
+            Type typeCompare = context.RegisterType(this.Reference.EntityRule.Name);
+
             // apply additional operation on reference according to metric
             switch(this.Metric)
             {
@@ -2166,10 +2172,17 @@ namespace IfcDoc.Schema.DOC
                         LocalBuilder local = this.Reference.Emit(context, generator, dtd);
 
                         // push the value to be compared onto the stack
-                        this.Value.Emit(context, generator, dtd);
-
-                        // execute the operation, popping two values and pushing the result
-                        //base.Emit(context, generator, dtd);
+                        if (typeCompare.IsEnum && this.Value is DocOpLiteral)
+                        {
+                            FieldInfo fieldEnum = typeCompare.GetField(((DocOpLiteral)this.Value).Value, BindingFlags.Static | BindingFlags.Public);
+                            int fieldVal = (int)fieldEnum.GetValue(null);
+                            generator.Emit(OpCodes.Ldc_I4, fieldVal);
+                        }
+                        else
+                        {
+                            // string
+                            this.Value.Emit(context, generator, dtd);
+                        }
                     }
                     break;
 
@@ -2257,6 +2270,16 @@ namespace IfcDoc.Schema.DOC
             {
                 case DocOpCode.IsIncluded:
                     {
+                        MethodInfo methodSplit = typeof(String).GetMethod("Split", new Type[] { typeof(Char[])});
+
+                        generator.Emit(OpCodes.Ldc_I4_1);
+                        generator.Emit(OpCodes.Newarr, typeof(Char));
+                        generator.Emit(OpCodes.Dup);
+                        generator.Emit(OpCodes.Ldc_I4_0);
+                        generator.Emit(OpCodes.Ldc_I4_S, (byte)',');
+                        generator.Emit(OpCodes.Stelem_I1);
+                        generator.Emit(OpCodes.Call, methodSplit);
+
                         MethodInfo methodCompare = typeof(String).GetMethod("Compare", new Type[] { typeof(String), typeof(String) });
 
                         // Left argument:  String
@@ -2307,13 +2330,19 @@ namespace IfcDoc.Schema.DOC
 
                 case DocOpCode.NoOperation: // backcompat
                 case DocOpCode.CompareEqual:
-                    // strings may not necessarily be interned, so can't use comparison opcode -- must call function String.Compare
                     {
-                        MethodInfo methodCompare = typeof(String).GetMethod("Compare", new Type[] { typeof(String), typeof(String) });
-                        generator.Emit(OpCodes.Call, methodCompare);
-                        generator.Emit(OpCodes.Not); // 0 means they are equal, so flip result
+                        if (typeCompare.IsEnum)
+                        {
+                            generator.Emit(OpCodes.Ceq);
+                        }
+                        else
+                        {
+                            // strings may not necessarily be interned, so can't use comparison opcode -- must call function String.Compare
+                            MethodInfo methodCompare = typeof(String).GetMethod("Compare", new Type[] { typeof(String), typeof(String) });
+                            generator.Emit(OpCodes.Call, methodCompare);
+                            generator.Emit(OpCodes.Not); // 0 means they are equal, so flip result
+                        }
                     }
-                    //generator.Emit(OpCodes.Ceq);
                     break;
 
                 case DocOpCode.CompareNotEqual:
@@ -2400,11 +2429,14 @@ namespace IfcDoc.Schema.DOC
         /// Generates CIL code for operation
         /// </summary>
         /// <param name="writer"></param>
-        internal virtual LocalBuilder Emit(
+        internal override LocalBuilder Emit(
             Compiler context,
             ILGenerator generator,
             DocTemplateDefinition dtd)
         {
+            this.ExpressionA.Emit(context, generator, dtd);
+            this.ExpressionB.Emit(context, generator, dtd);
+
             switch (this.Operation)
             {
                 case DocOpCode.And:
@@ -2534,7 +2566,8 @@ namespace IfcDoc.Schema.DOC
                     generator.Emit(OpCodes.Ldloc_S, (byte)localRule.LocalIndex);
 
                     // if field is collection, then get last element
-                    if (typeof(IList).IsAssignableFrom(field.FieldType))
+                    if (/*typeof(IList).IsAssignableFrom(field.FieldType) || */
+                        field.FieldType.IsGenericType && field.FieldType.GetGenericTypeDefinition() == typeof(List<>))
                     {
                         // iterate
                         LocalBuilder localList = generator.DeclareLocal(field.FieldType);
@@ -2544,44 +2577,58 @@ namespace IfcDoc.Schema.DOC
 
                         // get the length of the list -- go in reverse order to avoid having to check or store length each iteration
                         MethodInfo methodListLength = typeof(ICollection).GetProperty("Count").GetGetMethod();
-                        generator.Emit(OpCodes.Ldloc_S, localList.LocalIndex);
+                        generator.Emit(OpCodes.Ldloc_S, (byte)localList.LocalIndex);
                         generator.Emit(OpCodes.Callvirt, methodListLength);
                         generator.Emit(OpCodes.Stloc_S, (byte)localIter.LocalIndex);
 
                         // if 0 length, then return
-                        generator.Emit(OpCodes.Ldloc_S, localIter.LocalIndex);
-                        generator.Emit(OpCodes.Brtrue_S, (byte)1);
+                        generator.Emit(OpCodes.Ldloc_S, (byte)localIter.LocalIndex);
+                        generator.Emit(OpCodes.Brtrue_S, (byte)2);
+                        generator.Emit(OpCodes.Ldc_I4_0);
                         generator.Emit(OpCodes.Ret);
 
                         // loop each element
                         Label labelLoop = generator.DefineLabel();
-                        generator.Emit(OpCodes.Ldloc_S, localList);
-                        generator.Emit(OpCodes.Ldloc_S, localIter);
+                        generator.Emit(OpCodes.Ldloc_S, (byte)localList.LocalIndex);
+                        generator.Emit(OpCodes.Ldloc_S, (byte)localIter.LocalIndex);
                         generator.Emit(OpCodes.Ldc_I4_1);
                         generator.Emit(OpCodes.Sub); // decrease the index
 
                         // get the element
                         MethodInfo methodListGet = ((PropertyInfo)typeof(IList).GetDefaultMembers()[0]).GetGetMethod();
                         generator.Emit(OpCodes.Callvirt, methodListGet);
-                        generator.Emit(OpCodes.Stloc_S, localElem);
+                        generator.Emit(OpCodes.Stloc_S, (byte)localElem.LocalIndex);
 
+                        // then load the element again
+                        generator.Emit(OpCodes.Ldloc_S, (byte)localElem.LocalIndex);
                     }
                 }
                 else if(rule is DocModelRuleEntity)
                 {
                     type = compiler.RegisterType(rule.Name);
 
-                    if (type.IsValueType)
+                    if (type.IsEnum)
+                    {
+                        // do nothing
+                    }
+                    else if (type.IsValueType)
                     {
                         FieldInfo fieldValue = compiler.RegisterField(type, "Value");
                         generator.Emit(OpCodes.Ldfld, fieldValue);
                     }
                     else
                     {
+                        // duplicate it to retain object on stack after instance check
+                        generator.Emit(OpCodes.Dup);
+
                         // check if instance of expected type
                         generator.Emit(OpCodes.Isinst, type); // object -> object (if instance) or null if not
-                        generator.Emit(OpCodes.Brtrue_S, (byte)1);
+                        generator.Emit(OpCodes.Brtrue_S, (byte)3);
+                        generator.Emit(OpCodes.Pop); // pop extra object off stack since we're returning
+                        generator.Emit(OpCodes.Ldc_I4_0);
                         generator.Emit(OpCodes.Ret); // return null (false)
+
+                        // otherwise, stack contains object at this point
                     }
                 }
             }
@@ -2640,6 +2687,7 @@ namespace IfcDoc.Schema.DOC
             // for now, we only support strings; future: support integer, real, boolean, enumeration
             if (this.Value != null)
             {
+#if false
                 // special case for delimited strings -- use array
                 if (this.Value.Contains(","))
                 {
@@ -2656,6 +2704,7 @@ namespace IfcDoc.Schema.DOC
                     }
                 }
                 else
+#endif
                 {
                     generator.Emit(OpCodes.Ldstr, this.Value);
                 }
@@ -4526,14 +4575,14 @@ namespace IfcDoc.Schema.DOC
 
     public enum DocPropertyTemplateTypeEnum
     {
-        P_SINGLEVALUE = 1,
-        P_ENUMERATEDVALUE = 2,
-        P_BOUNDEDVALUE = 3,
-        P_LISTVALUE = 4,
-        P_TABLEVALUE = 5,
-        P_REFERENCEVALUE = 6, 
+        P_SINGLEVALUE = 0,
+        P_ENUMERATEDVALUE = 1,
+        P_BOUNDEDVALUE = 2,
+        P_LISTVALUE = 3,
+        P_TABLEVALUE = 4,
+        P_REFERENCEVALUE = 5, 
 
-        COMPLEX = 7,
+        COMPLEX = 6,
     }
 
     // new in IFCDOC 5.8

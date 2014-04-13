@@ -70,7 +70,6 @@
             this.textBoxIdentityUuid = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.tabPageTemplate = new System.Windows.Forms.TabPage();
-            this.imageListRules = new System.Windows.Forms.ImageList(this.components);
             this.buttonTemplateEntity = new System.Windows.Forms.Button();
             this.textBoxTemplateEntity = new System.Windows.Forms.TextBox();
             this.labelTemplateEntity = new System.Windows.Forms.Label();
@@ -191,6 +190,7 @@
             this.columnHeaderUsageView = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderUsageEntity = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.label21 = new System.Windows.Forms.Label();
+            this.imageListRules = new System.Windows.Forms.ImageList(this.components);
             this.buttonClose = new System.Windows.Forms.Button();
             this.openFileDialogIcon = new System.Windows.Forms.OpenFileDialog();
             this.tabControl.SuspendLayout();
@@ -651,14 +651,6 @@
             this.tabPageTemplate.TabIndex = 3;
             this.tabPageTemplate.Text = "Template";
             this.tabPageTemplate.UseVisualStyleBackColor = true;
-            // 
-            // imageListRules
-            // 
-            this.imageListRules.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListRules.ImageStream")));
-            this.imageListRules.TransparentColor = System.Drawing.Color.Fuchsia;
-            this.imageListRules.Images.SetKeyName(0, "DocEntity.bmp");
-            this.imageListRules.Images.SetKeyName(1, "DocAttribute.bmp");
-            this.imageListRules.Images.SetKeyName(2, "DocQuantity.bmp");
             // 
             // buttonTemplateEntity
             // 
@@ -1620,6 +1612,8 @@
             // 
             // textBoxExpression
             // 
+            this.textBoxExpression.AcceptsReturn = true;
+            this.textBoxExpression.AcceptsTab = true;
             this.textBoxExpression.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -2231,6 +2225,14 @@
             this.label21.Size = new System.Drawing.Size(219, 13);
             this.label21.TabIndex = 4;
             this.label21.Text = "This template is used at the following entities:";
+            // 
+            // imageListRules
+            // 
+            this.imageListRules.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListRules.ImageStream")));
+            this.imageListRules.TransparentColor = System.Drawing.Color.Fuchsia;
+            this.imageListRules.Images.SetKeyName(0, "DocEntity.bmp");
+            this.imageListRules.Images.SetKeyName(1, "DocAttribute.bmp");
+            this.imageListRules.Images.SetKeyName(2, "DocQuantity.bmp");
             // 
             // buttonClose
             // 

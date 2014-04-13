@@ -1749,6 +1749,7 @@ namespace IfcDoc
 
                     ImportMvdObject(mvdView, docView);
 
+                    docView.BaseView = mvdView.BaseView;
                     docView.Exchanges.Clear();
                     Dictionary<Guid, ExchangeRequirement> mapExchange = new Dictionary<Guid, ExchangeRequirement>();
                     foreach (ExchangeRequirement mvdExchange in mvdView.ExchangeRequirements)
@@ -2146,6 +2147,7 @@ namespace IfcDoc
                     mvd.Views.Add(mvdModelView);
                     ExportMvdObject(mvdModelView, docModelView);
                     mvdModelView.ApplicableSchema = "IFC4";
+                    mvdModelView.BaseView = docModelView.BaseView;
 
                     foreach (DocExchangeDefinition docExchangeDef in docModelView.Exchanges)
                     {

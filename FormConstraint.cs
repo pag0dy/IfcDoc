@@ -204,7 +204,7 @@ namespace IfcDoc
             {
                 this.textBoxBenchmark.Text = value;
 
-                if(this.comboBoxValue.Visible)
+                if (this.comboBoxValue.Items.Count > 0)
                 {
                     foreach(object o in this.comboBoxValue.Items)
                     {

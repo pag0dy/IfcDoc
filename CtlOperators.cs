@@ -345,6 +345,7 @@ namespace IfcDoc
             this.toolStripButtonRuleClt.Enabled = (op is DocOpStatement);
             this.toolStripButtonRuleCge.Enabled = (op is DocOpStatement);
             this.toolStripButtonRuleCgt.Enabled = (op is DocOpStatement);
+            this.toolStripButtonRuleIncludes.Enabled = (op is DocOpStatement);
 
             this.toolStripButtonRuleAnd.Checked = (op != null && op.Operation == DocOpCode.And);
             this.toolStripButtonRuleOr.Checked = (op != null && op.Operation == DocOpCode.Or);
@@ -356,6 +357,8 @@ namespace IfcDoc
             this.toolStripButtonRuleClt.Checked = (op != null && op.Operation == DocOpCode.CompareLessThan);
             this.toolStripButtonRuleCge.Checked = (op != null && op.Operation == DocOpCode.CompareGreaterThanOrEqual);
             this.toolStripButtonRuleCgt.Checked = (op != null && op.Operation == DocOpCode.CompareGreaterThan);
+
+            this.toolStripButtonRuleIncludes.Checked = (op != null && op.Operation == DocOpCode.IsIncluded);
         }
 
         private void treeViewRules_MouseDoubleClick(object sender, MouseEventArgs e)

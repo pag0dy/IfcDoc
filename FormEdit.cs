@@ -652,7 +652,7 @@ namespace IfcDoc
                         case ".ifcdoc":
                             using (FormatSPF format = new FormatSPF(this.m_file, SchemaDOC.Types, this.m_instances))
                             {
-                                format.InitHeaders(this.m_file, "IFCDOC_6_7");
+                                format.InitHeaders(this.m_file, "IFCDOC_6_8");
                                 format.Save();
                             }
                             break;
@@ -3016,6 +3016,22 @@ namespace IfcDoc
                     this.toolStripMenuItemContextInsertLeaf.Visible = true;
                     this.toolStripMenuItemContextInsert.Visible = true;
                 }
+                else if(obj is DocPropertyConstant)
+                {
+                    this.toolStripMenuItemEditDelete.Enabled = true;
+                    DocPropertyConstant constant = (DocPropertyConstant)obj;
+                    DocPropertyEnumeration ent = (DocPropertyEnumeration)e.Node.Parent.Tag;
+                    if (ent.Constants.IndexOf(constant) > 0)
+                    {
+                        this.toolStripMenuItemEditMoveUp.Enabled = true;
+                    }
+
+                    if (ent.Constants.IndexOf(constant) < ent.Constants.Count - 1)
+                    {
+                        this.toolStripMenuItemEditMoveDown.Enabled = true;
+                    }
+
+                }
                 else if (obj is DocPropertySet)
                 {
                     this.toolStripMenuItemEditDelete.Enabled = true;
@@ -4973,13 +4989,33 @@ namespace IfcDoc
                     tnParent.Nodes.Insert(treeindex, tn);
                 }
             }
-            else if(tn.Tag is DocConstant)
+            else if (tn.Tag is DocPropertyConstant)
+            {
+                DocPropertyConstant docConst = (DocPropertyConstant)tn.Tag;
+                DocPropertyEnumeration docEnum = (DocPropertyEnumeration)tnParent.Tag;
+                int index = docEnum.Constants.IndexOf(docConst);
+                
+                index += direction;
+                treeindex += direction;
+
+                docEnum.Constants.Remove(docConst);
+                docEnum.Constants.Insert(index, docConst);
+
+                tnParent.Nodes.Remove(tn);
+                tnParent.Nodes.Insert(treeindex, tn);
+            }
+            else if (tn.Tag is DocConstant)
             {
                 DocConstant docConst = (DocConstant)tn.Tag;
                 DocEnumeration docEnum = (DocEnumeration)tnParent.Tag;
                 int index = docEnum.Constants.IndexOf(docConst);
+                
                 index += direction;
                 treeindex += direction;
+
+                docEnum.Constants.Remove(docConst);
+                docEnum.Constants.Insert(index, docConst);
+
                 tnParent.Nodes.Remove(tn);
                 tnParent.Nodes.Insert(treeindex, tn);
             }
@@ -5172,16 +5208,22 @@ namespace IfcDoc
             DocPropertySet docPset = (DocPropertySet)this.treeView.SelectedNode.Tag;
             DocProperty docProp = new DocProperty();
             docPset.Properties.Add(docProp);
+            docProp.PropertyType = DocPropertyTemplateTypeEnum.P_SINGLEVALUE;
             this.treeView.SelectedNode = this.LoadNode(this.treeView.SelectedNode, docProp, docProp.Name, false);
             this.toolStripMenuItemEditRename_Click(sender, e);
         }
 
         private void toolStripMenuItemInsertQuantityset_Click(object sender, EventArgs e)
         {
-            DocSchema docSchema = (DocSchema)this.treeView.SelectedNode.Tag;
+            TreeNode tn = this.treeView.SelectedNode;
+            if (tn.Parent.Tag is DocSchema)
+            {
+                tn = tn.Parent;
+            }
+            DocSchema docSchema = (DocSchema)tn.Tag;
             DocQuantitySet docPset = new DocQuantitySet();
             docSchema.QuantitySets.Add(docPset);
-            this.treeView.SelectedNode = this.LoadNode(this.treeView.SelectedNode.Nodes[5], docPset, docPset.Name, true);
+            this.treeView.SelectedNode = this.LoadNode(tn.Nodes[5], docPset, docPset.Name, true);
             this.toolStripMenuItemEditRename_Click(sender, e);
         }
 
@@ -5190,6 +5232,7 @@ namespace IfcDoc
             DocQuantitySet docPset = (DocQuantitySet)this.treeView.SelectedNode.Tag;
             DocQuantity docProp = new DocQuantity();
             docPset.Quantities.Add(docProp);
+            docProp.QuantityType = DocQuantityTemplateTypeEnum.Q_COUNT;
             this.treeView.SelectedNode = this.LoadNode(this.treeView.SelectedNode, docProp, docProp.Name, false);
             this.toolStripMenuItemEditRename_Click(sender, e);
         }
@@ -5433,7 +5476,7 @@ namespace IfcDoc
                 DocTemplateDefinition docTarget = (DocTemplateDefinition)tn.Parent.Nodes[tn.Index - 1].Tag;
 
                 // sub-template
-                if (docSource.Rules != null && docSource.Rules.Count != 0)
+                if (docSource.Rules != null && docSource.Rules.Count != 0 && docTarget.Rules != null && docTarget.Rules.Count > 0)
                 {
                     DialogResult res = MessageBox.Show(this, "Moving this template will reset any rules to match those of the new parent template. Are you sure you want to proceed?", "Move Template", MessageBoxButtons.OKCancel);
                     if (res != System.Windows.Forms.DialogResult.OK)
@@ -5722,26 +5765,11 @@ namespace IfcDoc
             int grandtotalpass = 0;
             StringBuilder sb = new StringBuilder();
 
+#if false
             sb.AppendLine("<table border=\"1\" >");
             sb.Append("<tr><th>Item</th><th>Requirement</th><th>Structure</th><th>Constraints</th>");
-
-#if false
-            foreach (DocModelView docView in this.m_filterviews)
-            {
-                for(int i = 0; i < docView.Exchanges.Count; i++)
-                {
-                    DocExchangeDefinition docExchange = docView.Exchanges[i];
-                    sb.Append("<th title=\"");
-                    sb.Append(docExchange.Name);
-                    sb.Append("\" >");
-                    sb.Append(i+1);
-                    sb.Append("</th>");
-                }
-            }
-#endif
-
             sb.AppendLine("</tr>");
-
+#endif
             // Example:
             // | IfcWall   | #2, #3 | PASS (30/30) |
             // | +Identity | #2     | FAIL (23/30) |
@@ -5783,14 +5811,13 @@ namespace IfcDoc
                                     }
                                 }
 
+#if false
                                 sb.Append("<tr valign=\"top\"><td><b>");
                                 sb.Append(docRoot.ApplicableEntity.Name);
                                 sb.Append("</b></td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>");
-#if false
-                                sb.Append(list.Count);
-                                sb.Append("</td><td>&nbsp;</td><td>&nbsp;</td><td colspan=\"" + docView.Exchanges.Count + "\">&nbsp;</td>");
-#endif
                                 sb.AppendLine("</tr>");
+#endif
+                                sb.AppendLine("<h3>" + docRoot.ApplicableEntity.Name + " (" + list.Count + ")</h3>");
 
                                 foreach (DocTemplateUsage docUsage in docRoot.Concepts)
                                 {
@@ -5822,10 +5849,12 @@ namespace IfcDoc
                                             }
                                         }
 
+                                        StringBuilder sbDetail = new StringBuilder();
+
+
+#if false
                                         sb.Append("<tr valign=\"top\"><td>&nbsp;&nbsp;");
-
                                         sb.Append(docUsage.Definition.Name);
-
                                         sb.Append("</td><td>");
                                         switch (req)
                                         {
@@ -5845,11 +5874,9 @@ namespace IfcDoc
                                                 sb.Append("-");
                                                 break;
                                         }
-
-                                        bool eachresult = true; // assume passing unless something fails
-
-
                                         sb.AppendLine("</td><td>&nbsp;</td><td>&nbsp;</td></tr>");
+#endif
+                                        bool eachresult = true; // assume passing unless something fails
 
 
                                         // new-style validation -- compiled code (fast)
@@ -5864,34 +5891,38 @@ namespace IfcDoc
                                         object[] args = new object[0]; 
                                         foreach (SEntity ent in list)
                                         {
-                                            sb.Append("<tr valign=\"top\"><td>&nbsp;&nbsp;&nbsp;&nbsp;#");
-                                            sb.Append(ent.OID );
-                                            sb.Append("</td><td>&nbsp;</td><td>");
+                                            sbDetail.Append("<tr valign=\"top\"><td>#");
+                                            sbDetail.Append(ent.OID);
+                                            sbDetail.Append("</td><td>");
 
                                             // check with parameters plugged in
+                                            DocModelRule ruleFail = null;
                                             bool? result = true;
                                             foreach (DocModelRule rule in docUsage.Definition.Rules)
                                             {
                                                 result = rule.Validate(ent, null, typemap);
                                                 if (result != null && !result.Value)
+                                                {
+                                                    ruleFail = rule;
                                                     break;
+                                                }
                                             }
 
                                             if (result == null)
                                             {
-                                                sb.Append("*");
+                                                sbDetail.Append("*");
                                                 // no applicable rules, so passing
                                                 pass++;
                                             }
                                             else if (result != null && result.Value)
                                             {
-                                                sb.Append("+");
+                                                sbDetail.Append("+");
                                                 // all rules passed
                                                 pass++;
                                             }
-                                            else
+                                            else if(ruleFail != null)
                                             {
-                                                sb.Append("FAIL");
+                                                sbDetail.Append(ruleFail.Name);
                                                 fail++;
 
                                                 // report first failure                                                        
@@ -5901,20 +5932,43 @@ namespace IfcDoc
                                                 }
                                             }
 
-                                            sb.Append("</td><td>");
+                                            sbDetail.Append("</td><td>");
 
                                             try
                                             {
                                                 bool[] ruleresult = (bool[])method.Invoke(ent, args);
-                                                if (ruleresult != null && ruleresult.Length == 1 && ruleresult[0])
+                                                if (ruleresult != null)// && ruleresult.Length == 1 && ruleresult[0])
                                                 {
-                                                    sb.Append("+");
+                                                    bool allpass = true;
+                                                    foreach(bool compresult in ruleresult)
+                                                    {
+                                                        if (!compresult)
+                                                        {
+                                                            allpass = false;
+                                                            break;
+                                                        }
+                                                    }
 
-                                                    passRule++;
+                                                    if (allpass)
+                                                    {
+                                                        sbDetail.Append("+");
+                                                        passRule++;
+                                                    }
+                                                    else
+                                                    {
+                                                        //docUsage.Definition.getc
+                                                        sbDetail.Append("FAIL");
+
+                                                        failRule++;
+                                                        if (fail == 1)
+                                                        {
+                                                            idenRule = ent.OID;
+                                                        }
+                                                    }
                                                 }
                                                 else
                                                 {
-                                                    sb.Append("FAIL");
+                                                    sbDetail.Append("FAIL");
 
                                                     failRule++;
                                                     if (fail == 1)
@@ -5935,248 +5989,18 @@ namespace IfcDoc
                                             }
                                         }
 
-#if false
-                                        foreach (DocExchangeDefinition docExchangeDefinition in docView.Exchanges)
+                                        sb.AppendLine("<details><summary>" + docUsage.Definition.Name);
+                                        if(fail > 0 || failRule > 0)
                                         {
-                                            DocExchangeRequirementEnum reqExchange = DocExchangeRequirementEnum.NotRelevant;
-                                            DocExchangeItem docExchangeItem = docUsage.GetExchange(docExchangeDefinition, DocExchangeApplicabilityEnum.Export);
-                                            if (docExchangeItem != null)
-                                            {
-                                                reqExchange = docExchangeItem.Requirement;
-                                            }
-
-                                            sb.Append("<td>");
-                                            AppendResult(sb, pass, list.Count, reqExchange);
-                                            sb.Append("</td>");
-
-                                            int iExchangePass = 0;
-                                            int iExchangeEach = 0;
-                                            if (!mapEach.TryGetValue(docExchangeDefinition, out iExchangeEach))
-                                            {
-                                                mapEach.Add(docExchangeDefinition, 1);//list.Count);
-                                            }
-                                            else
-                                            {
-                                                mapEach[docExchangeDefinition] += 1;// list.Count;
-                                            }
-
-                                            if (pass == list.Count || reqExchange == DocExchangeRequirementEnum.Optional || reqExchange == DocExchangeRequirementEnum.NotRelevant)
-                                            {
-                                                if (!mapPass.TryGetValue(docExchangeDefinition, out iExchangePass))
-                                                {
-                                                    mapPass.Add(docExchangeDefinition, 1);//pass);
-                                                }
-                                                else
-                                                {
-                                                    mapPass[docExchangeDefinition] += 1;//pass;
-                                                }
-                                            }
-
-                                            sb.AppendLine("</td></tr>");
+                                            sb.AppendLine("*");
                                         }
-#endif
+                                        sb.AppendLine("</summary>");
+                                        sb.AppendLine("<table border=\"1\" >");
+                                        sb.Append("<tr><th>Instance</th><th>Structure</th><th>Constraints</th>");
+                                        sb.AppendLine("</tr>");
+                                        sb.AppendLine(sbDetail.ToString());
+                                        sb.AppendLine("</table></details>");
 
-#if false // old-style validation -- interpreted
-                                        // if no template parameters defined, then evaluate generically
-                                        if (docUsage.Items.Count == 0)
-                                        {
-                                            sb.Append("</td><td>");
-
-                                            int fail = 0;
-                                            int pass = 0;
-                                            foreach (SEntity ent in list)
-                                            {
-                                                if (this.backgroundWorkerValidate.CancellationPending)
-                                                    return;
-
-                                                // check with parameters plugged in
-                                                bool? result = true;
-                                                foreach (DocModelRule rule in docUsage.Definition.Rules)
-                                                {
-                                                    result = rule.Validate(ent, null, typemap);
-                                                    if (result != null && !result.Value)
-                                                        break;
-                                                }
-
-                                                if (result == null)
-                                                {
-                                                    // no applicable rules, so passing
-                                                    pass++;
-                                                }
-                                                else if (result != null && result.Value)
-                                                {
-                                                    // all rules passed
-                                                    pass++;
-                                                }
-                                                else
-                                                {
-                                                    fail++;
-
-                                                    // report first failure                                                        
-                                                    if (fail == 1)
-                                                    {
-                                                        sb.Append("#");
-                                                        sb.Append(ent.OID);
-                                                        //sb.Append(", ");
-                                                    }
-                                                }
-                                            }
-
-                                            sb.Append("&nbsp;</td><td>");
-                                            sb.Append(pass);
-                                            sb.Append("</td><td>");
-                                            eachresult = AppendResult(sb, pass, list.Count, req);
-                                            sb.Append("</td>");
-
-                                            foreach (DocExchangeDefinition docExchangeDefinition in docView.Exchanges)
-                                            {
-                                                DocExchangeRequirementEnum reqExchange = DocExchangeRequirementEnum.NotRelevant;
-                                                DocExchangeItem docExchangeItem = docUsage.GetExchange(docExchangeDefinition, DocExchangeApplicabilityEnum.Export);
-                                                if (docExchangeItem != null)
-                                                {
-                                                    reqExchange = docExchangeItem.Requirement;
-                                                }
-
-                                                sb.Append("<td>");
-                                                AppendResult(sb, pass, list.Count, reqExchange);
-                                                sb.Append("</td>");
-
-                                                int iExchangePass = 0;
-                                                int iExchangeEach = 0;
-                                                if (!mapEach.TryGetValue(docExchangeDefinition, out iExchangeEach))
-                                                {
-                                                    mapEach.Add(docExchangeDefinition, 1);//list.Count);
-                                                }
-                                                else
-                                                {
-                                                    mapEach[docExchangeDefinition] += 1;// list.Count;
-                                                }
-
-                                                if (pass == list.Count || reqExchange == DocExchangeRequirementEnum.Optional || reqExchange == DocExchangeRequirementEnum.NotRelevant)
-                                                {
-                                                    if (!mapPass.TryGetValue(docExchangeDefinition, out iExchangePass))
-                                                    {
-                                                        mapPass.Add(docExchangeDefinition, 1);//pass);
-                                                    }
-                                                    else
-                                                    {
-                                                        mapPass[docExchangeDefinition] += 1;//pass;
-                                                    }
-                                                }
-                                            }
-
-                                            sb.Append("</tr>");
-                                        }
-                                        else
-                                        {
-                                            sb.Append("</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>");
-
-                                            for (int i = 0; i < docView.Exchanges.Count; i++)
-                                            {
-                                                sb.Append("<td>&nbsp;</td>");
-                                            }
-
-                                            sb.Append("</tr>");
-                                        }
-
-                                        foreach (DocTemplateItem docItem in docUsage.Items)
-                                        {
-                                            if (this.backgroundWorkerValidate.CancellationPending)
-                                                return;
-
-                                            sb.Append("<tr valign=\"top\"><td>&nbsp;&nbsp;&nbsp;&nbsp;");
-                                            sb.Append(docItem.RuleParameters);
-                                            sb.Append("</td><td>&nbsp;</td><td>");
-
-                                            int pass = 0;
-                                            int fail = 0;
-                                            foreach (SEntity ent in list)
-                                            {
-                                                if (this.backgroundWorkerValidate.CancellationPending)
-                                                    return;
-
-                                                // check with parameters plugged in
-                                                bool? result = true;
-                                                foreach (DocModelRule rule in docUsage.Definition.Rules)
-                                                {
-                                                    result = rule.Validate(ent, docItem, typemap);
-                                                    if (result != null && !result.Value)
-                                                        break;
-                                                }
-
-                                                if (result == null)
-                                                {
-                                                    // inapplicable; passes
-                                                    pass++;
-                                                }
-                                                else if (result != null && result.Value)
-                                                {
-                                                    // applicable and valid; passes
-                                                    pass++;
-                                                }
-                                                else
-                                                {
-                                                    fail++;
-
-                                                    // report first failure
-                                                    if (fail == 1)
-                                                    {
-                                                        sb.Append("#");
-                                                        sb.Append(ent.OID);
-                                                        //sb.Append(", ");
-                                                    }
-                                                }
-                                            }
-                                            sb.Append("&nbsp;</td><td>");
-                                            sb.Append(pass);
-                                            sb.Append("</td><td>");
-                                            bool thisresult = AppendResult(sb, pass, list.Count, req);
-                                            if (!thisresult)
-                                            {
-                                                eachresult = false;
-                                            }
-                                            sb.Append("</td>");
-
-                                            foreach (DocExchangeDefinition docExchangeDefinition in docView.Exchanges)
-                                            {
-                                                DocExchangeRequirementEnum reqExchange = DocExchangeRequirementEnum.NotRelevant;
-                                                DocExchangeItem docExchangeItem = docUsage.GetExchange(docExchangeDefinition, DocExchangeApplicabilityEnum.Export);
-                                                if (docExchangeItem != null)
-                                                {
-                                                    reqExchange = docExchangeItem.Requirement;
-                                                }
-
-                                                sb.Append("<td>");
-                                                AppendResult(sb, pass, list.Count, reqExchange);
-                                                sb.Append("</td>");
-
-                                                int iExchangePass = 0;
-                                                int iExchangeEach = 0;
-                                                if (!mapEach.TryGetValue(docExchangeDefinition, out iExchangeEach))
-                                                {
-                                                    mapEach.Add(docExchangeDefinition, list.Count);
-                                                }
-                                                else
-                                                {
-                                                    mapEach[docExchangeDefinition] += 1;//list.Count;
-                                                }
-
-                                                if (pass == list.Count || reqExchange == DocExchangeRequirementEnum.NotRelevant || reqExchange == DocExchangeRequirementEnum.Optional)
-                                                {
-                                                    if (!mapPass.TryGetValue(docExchangeDefinition, out iExchangePass))
-                                                    {
-                                                        mapPass.Add(docExchangeDefinition, 1);//pass);
-                                                    }
-                                                    else
-                                                    {
-                                                        mapPass[docExchangeDefinition] += 1;//pass;
-                                                    }
-                                                }
-                                            }
-
-                                            sb.AppendLine("</tr>");
-                                        }
-#endif
                                         grandtotallist++;
                                         if (eachresult)
                                         {
@@ -6184,6 +6008,8 @@ namespace IfcDoc
                                         }
                                     }
                                 }
+
+                                //sb.AppendLine("</details>");
                             }
                         }
                     }
@@ -7547,9 +7373,12 @@ namespace IfcDoc
             // if link mode, insert a rule
             if (this.ctlExpressG.Mode == ToolMode.Select)
             {
-                using(FormRule form = new FormRule(this.ctlConcept.Selection))
+                if (this.ctlConcept.Selection != null)
                 {
-                    form.ShowDialog(this);
+                    using (FormRule form = new FormRule(this.ctlConcept.Selection))
+                    {
+                        form.ShowDialog(this);
+                    }
                 }
             }
             else if(this.ctlExpressG.Mode == ToolMode.Move)

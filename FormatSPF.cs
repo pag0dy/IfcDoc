@@ -1433,7 +1433,7 @@ namespace IfcDoc.Format.SPF
                                     foreach (FieldInfo fieldInverse in listField)
                                     {
                                         if (fieldInverse.DeclaringType.IsInstanceOfType(itemSource) &&
-                                            typeof(IList).IsAssignableFrom(fieldInverse.DeclaringType))
+                                            typeof(IList).IsAssignableFrom(fieldInverse.FieldType))
                                         {
                                             IList listTarget = (IList)fieldInverse.GetValue(itemSource);
                                             if (listTarget == null)
@@ -1468,7 +1468,7 @@ namespace IfcDoc.Format.SPF
             FILE_NAME hName = new FILE_NAME();
             hName.Name = filename;
             hName.OriginatingSystem = "buildingSMART IFC Documentation Generator";
-            hName.PreprocessorVersion = "buildingSMART IFCDOC 6.7"; // was "buildingSMART IFCDOC" for 2.7 and earlier;
+            hName.PreprocessorVersion = "buildingSMART IFCDOC 6.8"; // was "buildingSMART IFCDOC" for 2.7 and earlier;
             hName.Author.Add(System.Environment.UserName);
             hName.Organization.Add(System.Environment.UserDomainName);
             hName.Timestamp = DateTime.UtcNow;
