@@ -267,6 +267,11 @@ namespace IfcDoc
                     }
                 }
 
+                if (strtype.Equals("IfcRelAggregates"))
+                {
+                    this.ToString();
+                }
+
                 // find associated ConceptRoot for model view, define validation function
                 if (this.m_views != null)
                 {
@@ -316,74 +321,83 @@ namespace IfcDoc
                                     {
                                         MethodInfo methodTemplate = this.RegisterTemplate(concept.Definition);
 
-                                        string methodname = viewname + "_" + concept.Definition.Name.Replace(' ', '_').Replace(':', '_').Replace('-', '_');
-                                        MethodBuilder method = tb.DefineMethod(methodname, MethodAttributes.Public, CallingConventions.HasThis, typeof(bool[]), null);
-                                        ILGenerator generator = method.GetILGenerator();
-
-                                        if (concept.Items != null && concept.Items.Count > 0)
+                                        // verify that definition is compatible with entity (user error)
+                                        if (methodTemplate.DeclaringType.IsAssignableFrom(tb))
                                         {
-                                            // allocate array of booleans, store as local variable
-                                            generator.DeclareLocal(typeof(bool[]));
-                                            generator.Emit(OpCodes.Ldc_I4, concept.Items.Count);
-                                            generator.Emit(OpCodes.Newarr, typeof(bool));
-                                            generator.Emit(OpCodes.Stloc_0);
 
-                                            DocModelRule[] parameters = concept.Definition.GetParameterRules();
+                                            string methodname = viewname + "_" + concept.Definition.Name.Replace(' ', '_').Replace(':', '_').Replace('-', '_');
+                                            MethodBuilder method = tb.DefineMethod(methodname, MethodAttributes.Public, CallingConventions.HasThis, typeof(bool[]), null);
+                                            ILGenerator generator = method.GetILGenerator();
 
-                                            // call for each item with specific parameters
-                                            for (int row = 0; row < concept.Items.Count; row++)
+                                            if (concept.Items != null && concept.Items.Count > 0)
                                             {
-                                                DocTemplateItem docItem = concept.Items[row];
+                                                // allocate array of booleans, store as local variable
+                                                generator.DeclareLocal(typeof(bool[]));
+                                                generator.Emit(OpCodes.Ldc_I4, concept.Items.Count);
+                                                generator.Emit(OpCodes.Newarr, typeof(bool));
+                                                generator.Emit(OpCodes.Stloc_0);
 
-                                                generator.Emit(OpCodes.Ldloc_0);   // push the array object onto the stack, for storage later
-                                                generator.Emit(OpCodes.Ldc_I4, row); // push the array index onto the stack for storage later
-                                                
-                                                generator.Emit(OpCodes.Ldarg_0);   // push the *this* pointer for the IFC object instance
+                                                DocModelRule[] parameters = concept.Definition.GetParameterRules();
 
-                                                // push parameters onto stack
-                                                for (int col = 0; col < parameters.Length; col++)
+                                                // call for each item with specific parameters
+                                                for (int row = 0; row < concept.Items.Count; row++)
                                                 {
-                                                    DocModelRule docParam = parameters[col];
-                                                    string paramvalue = docItem.GetParameterValue(docParam.Identification);
-                                                    if (paramvalue != null)
+                                                    DocTemplateItem docItem = concept.Items[row];
+
+                                                    generator.Emit(OpCodes.Ldloc_0);   // push the array object onto the stack, for storage later
+                                                    generator.Emit(OpCodes.Ldc_I4, row); // push the array index onto the stack for storage later
+
+                                                    generator.Emit(OpCodes.Ldarg_0);   // push the *this* pointer for the IFC object instance
+
+                                                    // push parameters onto stack
+                                                    for (int col = 0; col < parameters.Length; col++)
                                                     {
-                                                        //TODO: support other types such as integer, real, enum
-                                                        generator.Emit(OpCodes.Ldstr, paramvalue);
+                                                        DocModelRule docParam = parameters[col];
+                                                        string paramvalue = docItem.GetParameterValue(docParam.Identification);
+                                                        if (paramvalue != null)
+                                                        {
+                                                            //TODO: support other types such as integer, real, enum
+                                                            generator.Emit(OpCodes.Ldstr, paramvalue);
+                                                        }
+                                                        else
+                                                        {
+                                                            generator.Emit(OpCodes.Ldnull);
+                                                        }
                                                     }
-                                                    else
-                                                    {
-                                                        generator.Emit(OpCodes.Ldnull);
-                                                    }
+
+                                                    generator.Emit(OpCodes.Call, methodTemplate); // call the validation function for the concept template
+                                                    generator.Emit(OpCodes.Stelem_I); // store the result (bool) into an array slot 
+                                                    // VERIFY: is bool size dependent on platform (32/64?)
                                                 }
 
-                                                generator.Emit(OpCodes.Call, methodTemplate); // call the validation function for the concept template
-                                                generator.Emit(OpCodes.Stelem_I); // store the result (bool) into an array slot 
-                                                // VERIFY: is bool size dependent on platform (32/64?)
+                                                // return the array of boolean results
+                                                generator.Emit(OpCodes.Ldloc_0);
+                                                generator.Emit(OpCodes.Ret);
                                             }
+                                            else
+                                            {
+                                                // allocate array of booleans, store as local variable
+                                                generator.DeclareLocal(typeof(bool[]));
+                                                generator.Emit(OpCodes.Ldc_I4, 1);
+                                                generator.Emit(OpCodes.Newarr, typeof(bool));
+                                                generator.Emit(OpCodes.Stloc_0);
 
-                                            // return the array of boolean results
-                                            generator.Emit(OpCodes.Ldloc_0);
-                                            generator.Emit(OpCodes.Ret);
+                                                generator.Emit(OpCodes.Ldloc_0);   // push the array object onto the stack, for storage later
+                                                generator.Emit(OpCodes.Ldc_I4, 0); // push the array index onto the stack for storage later
+
+                                                // call once
+                                                generator.Emit(OpCodes.Ldarg_0);   // push the *this* pointer for the IFC object instance
+                                                generator.Emit(OpCodes.Call, methodTemplate); // call the validation function for the concept template
+                                                generator.Emit(OpCodes.Stelem_I1); // store the result (bool) into an array slot 
+
+                                                // return the array of boolean results
+                                                generator.Emit(OpCodes.Ldloc_0);
+                                                generator.Emit(OpCodes.Ret);
+                                            }
                                         }
                                         else
                                         {
-                                            // allocate array of booleans, store as local variable
-                                            generator.DeclareLocal(typeof(bool[]));
-                                            generator.Emit(OpCodes.Ldc_I4, 1);
-                                            generator.Emit(OpCodes.Newarr, typeof(bool));
-                                            generator.Emit(OpCodes.Stloc_0);
-
-                                            generator.Emit(OpCodes.Ldloc_0);   // push the array object onto the stack, for storage later
-                                            generator.Emit(OpCodes.Ldc_I4, 0); // push the array index onto the stack for storage later
-
-                                            // call once
-                                            generator.Emit(OpCodes.Ldarg_0);   // push the *this* pointer for the IFC object instance
-                                            generator.Emit(OpCodes.Call, methodTemplate); // call the validation function for the concept template
-                                            generator.Emit(OpCodes.Stelem_I4); // store the result (bool) into an array slot 
-
-                                            // return the array of boolean results
-                                            generator.Emit(OpCodes.Ldloc_0);
-                                            generator.Emit(OpCodes.Ret);
+                                            System.Diagnostics.Debug.WriteLine("Incompatible template: " + strtype + " - " + concept.Definition.Name);
                                         }
                                     }
                                 }
@@ -438,6 +452,8 @@ namespace IfcDoc
             else if (docType is DocDefined)
             {
                 DocDefined docDef = (DocDefined)docType;
+
+                attr |= TypeAttributes.Sealed;
                 TypeBuilder tb = this.m_module.DefineType(docType.Name, attr, typeof(ValueType));
 
                 // interfaces implemented by type (SELECTS)

@@ -119,7 +119,10 @@ namespace IfcDoc
                     foreach(DocModelView view in value)
                     {
                         int index = this.checkedListBoxViews.Items.IndexOf(view);
-                        this.checkedListBoxViews.SetItemChecked(index, true);
+                        if (index >= 0)
+                        {
+                            this.checkedListBoxViews.SetItemChecked(index, true);
+                        }
                     }
                 }
             }

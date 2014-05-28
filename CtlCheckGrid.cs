@@ -169,14 +169,18 @@ namespace IfcDoc
             if (this.m_datasource == null)
                 return;
 
+            Point pt = e.Location;
+            pt.X -= this.AutoScrollPosition.X;
+            pt.Y -= this.AutoScrollPosition.Y;
+
             if(this.Mode == IfcDoc.ToolMode.Select)
             {
-                this.Selection = this.Pick(e.X, e.Y);
+                this.Selection = this.Pick(pt.X, pt.Y);
                 return;
             }
 
-            int iCol = (e.X - SX) / CX;
-            int iRow = (e.Y - SY) / CY;
+            int iCol = (pt.X - SX) / CX;
+            int iRow = (pt.Y - SY) / CY;
             if (iCol < 0 || iRow < 0)
                 return;
 
@@ -213,11 +217,15 @@ namespace IfcDoc
             if(this.m_datasource == null)
                 return;
 
+            Point pt = e.Location;
+            pt.X -= this.AutoScrollPosition.X;
+            pt.Y -= this.AutoScrollPosition.Y;
+
             switch (this.Mode)
             {
                 case ToolMode.Select:
                     {
-                        object link = this.Pick(e.X, e.Y);
+                        object link = this.Pick(pt.X, pt.Y);
                         if(link != null)
                         {
                             this.Cursor = Cursors.Hand;
@@ -232,8 +240,8 @@ namespace IfcDoc
                 case IfcDoc.ToolMode.Move:
                 case IfcDoc.ToolMode.Link:
                     {
-                        int iCol = (e.X - SX) / CX;
-                        int iRow = (e.Y - SY) / CY;
+                        int iCol = (pt.X - SX) / CX;
+                        int iRow = (pt.Y - SY) / CY;
                         if(iCol >= 0 && iCol < this.m_datasource.GetColumnCount() &&
                             iRow >= 0 && iRow < this.m_datasource.GetRowCount())
                         {

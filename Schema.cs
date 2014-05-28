@@ -527,7 +527,7 @@ namespace IfcDoc.Schema
             return new Guid(Data1, Data2, Data3, Data4_0, Data4_1, Data4_2, Data4_3, Data4_4, Data4_5, Data4_6, Data4_7);
         }
 
-        private static string Format(Guid pGuid)
+        public static string Format(Guid pGuid)
         {
             uint[] num = new uint[6];
             int i, n;

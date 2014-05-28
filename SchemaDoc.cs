@@ -760,38 +760,47 @@ namespace IfcDoc.Schema.DOC
 
         private void RegisterEntity(Dictionary<DocObject, bool> included, DocEntity entity)
         {
-            if (included.ContainsKey(entity))
-                return;
-
-            included[entity] = true;
-
-            if(entity.BaseDefinition != null)
+            try
             {
-                DocDefinition docBase = this.GetDefinition(entity.BaseDefinition);
-                if(docBase is DocEntity)
-                {
-                    RegisterEntity(included, (DocEntity)docBase);
-                }
-            }
 
-            // traverse attributes
-            foreach (DocAttribute docAttribute in entity.Attributes)
-            {
-                DocDefinition docAttrType = this.GetDefinition(docAttribute.DefinedType);
-                if (docAttrType != null && !docAttribute.IsOptional() && docAttribute.Inverse == null) // new (4.0): only pull in mandatory attributes
+                if (included.ContainsKey(entity))
+                    return;
+
+                included[entity] = true;
+
+                if (entity.BaseDefinition != null)
                 {
-                    included[docAttribute] = true;
-                    if (docAttrType is DocEntity)
+                    DocDefinition docBase = this.GetDefinition(entity.BaseDefinition);
+                    if (docBase is DocEntity)
                     {
-                        RegisterEntity(included, ((DocEntity)docAttrType));
-                    }
-                    else
-                    {
-                        included[docAttrType] = true;
+                        RegisterEntity(included, (DocEntity)docBase);
                     }
                 }
-            }
 
+                // traverse attributes
+                foreach (DocAttribute docAttribute in entity.Attributes)
+                {
+                    DocDefinition docAttrType = this.GetDefinition(docAttribute.DefinedType);
+                    if (!docAttribute.IsOptional() && docAttribute.Inverse == null) // new (4.0): only pull in mandatory attributes
+                    {
+                        included[docAttribute] = true;
+
+                        if (docAttrType is DocEntity)
+                        {
+                            DocEntity docRefEntity = (DocEntity)docAttrType;
+                            RegisterEntity(included, docRefEntity);
+                        }
+                        else if(docAttrType is DocType) // otherwise native EXPRESS type
+                        {
+                            included[docAttrType] = true;
+                        }
+                    }
+                }
+            }
+            catch(Exception xx)
+            {
+                xx.ToString();
+            }
         }
 
         private DocAttribute GetEntityAttribute(DocEntity entity, string attr)
@@ -816,7 +825,7 @@ namespace IfcDoc.Schema.DOC
             return null;
         }
 
-        private void RegisterRule(Dictionary<DocObject, bool> included, DocEntity docEntity, DocModelRuleAttribute docRuleAttr)
+        private void RegisterRule(Dictionary<DocObject, bool> included, DocEntity docEntity, DocModelRuleAttribute docRuleAttr, Dictionary<DocModelRuleAttribute, DocEntity> mapVirtualAttributes)
         {
             // cardinality of 0:0 indicates excluded
             if (docRuleAttr.CardinalityMin == -1 && docRuleAttr.CardinalityMax == -1)
@@ -826,10 +835,25 @@ namespace IfcDoc.Schema.DOC
             else
             {
                 DocAttribute docAttr = GetEntityAttribute(docEntity, docRuleAttr.Name);
-                if(docAttr != null)
+                if (docAttr != null)
                 {
                     included[docAttr] = true;
-                    if(docRuleAttr.Rules != null)
+
+                    // include inverse attribute if any
+                    if (!String.IsNullOrEmpty(docAttr.Inverse))
+                    {
+                        DocEntity docEntInverse = GetDefinition(docAttr.DefinedType) as DocEntity;
+                        if (docEntInverse != null)
+                        {
+                            DocAttribute docAttrInverse = GetEntityAttribute(docEntInverse, docAttr.Inverse);
+                            if (docAttrInverse != null)
+                            {
+                                included[docAttrInverse] = true;
+                            }
+                        }
+                    }
+
+                    if (docRuleAttr.Rules != null)
                     {
                         foreach (DocModelRuleEntity docRuleEntity in docRuleAttr.Rules)
                         {
@@ -845,7 +869,7 @@ namespace IfcDoc.Schema.DOC
                                         {
                                             if (docRuleInner is DocModelRuleAttribute)
                                             {
-                                                RegisterRule(included, (DocEntity)docInner, (DocModelRuleAttribute)docRuleInner);
+                                                RegisterRule(included, (DocEntity)docInner, (DocModelRuleAttribute)docRuleInner, mapVirtualAttributes);
                                             }
                                         }
                                     }
@@ -856,17 +880,22 @@ namespace IfcDoc.Schema.DOC
                                 }
                             }
 
-                            foreach(DocTemplateDefinition docRef in docRuleEntity.References)
+                            foreach (DocTemplateDefinition docRef in docRuleEntity.References)
                             {
-                                RegisterTemplate(included, docRef);
+                                RegisterTemplate(included, docRef, mapVirtualAttributes);
                             }
                         }
                     }
                 }
+                else
+                {
+                    // may be defined on subtype, e.g. PredefinedType
+                    mapVirtualAttributes.Add(docRuleAttr, docEntity);
+                }
             }
         }
 
-        private void RegisterTemplate(Dictionary<DocObject, bool> included, DocTemplateDefinition template)
+        private void RegisterTemplate(Dictionary<DocObject, bool> included, DocTemplateDefinition template, Dictionary<DocModelRuleAttribute, DocEntity> mapVirtualAttributes)
         {
             if(included.ContainsKey(template))
                 return;
@@ -880,7 +909,7 @@ namespace IfcDoc.Schema.DOC
 
                 foreach (DocModelRuleAttribute docRuleAttr in template.Rules)
                 {
-                    RegisterRule(included, docEnt, docRuleAttr);
+                    RegisterRule(included, docEnt, docRuleAttr, mapVirtualAttributes);
                 }
             }
         }
@@ -915,6 +944,51 @@ namespace IfcDoc.Schema.DOC
                 included[docView] = true;
             }
 
+            // special case -- if view references self, then include everything (no filtering)
+            if(docView.BaseView != null && docView.BaseView.ToString() == docView.Uuid.ToString())
+            {
+                foreach (DocSection docSection in this.Sections)
+                {
+                    foreach(DocSchema docSchema in docSection.Schemas)
+                    {
+                        included[docSchema] = true;
+                        foreach(DocType docType in docSchema.Types)
+                        {
+                            included[docType] = true;
+                        }
+                        foreach(DocEntity docEntity in docSchema.Entities)
+                        {
+                            included[docEntity] = true;
+                            foreach(DocAttribute docAttr in docEntity.Attributes)
+                            {
+                                included[docAttr] = true;
+                            }
+                        }
+                        foreach(DocFunction docFunc in docSchema.Functions)
+                        {
+                            included[docFunc] = true;
+                        }
+                        foreach(DocGlobalRule docRule in docSchema.GlobalRules)
+                        {
+                            included[docRule] = true;
+                        }
+                        foreach(DocPropertySet docProp in docSchema.PropertySets)
+                        {
+                            included[docProp] = true;
+                        }
+                        foreach(DocPropertyEnumeration docEnum in docSchema.PropertyEnums)
+                        {
+                            included[docEnum] = true;
+                        }
+                        foreach(DocQuantitySet docQuan in docSchema.QuantitySets)
+                        {
+                            included[docQuan] = true;
+                        }
+                    }
+                }
+
+            }
+
             if (this.Examples != null)
             {
                 foreach (DocExample docExample in this.Examples)
@@ -926,6 +1000,9 @@ namespace IfcDoc.Schema.DOC
                 }
             }
 
+            // track referenced attributes that apply to subtypes, e.g. PredefinedType
+            Dictionary<DocModelRuleAttribute, DocEntity> mapVirtualAttributes = new Dictionary<DocModelRuleAttribute, DocEntity>();
+
             foreach (DocConceptRoot docRoot in docView.ConceptRoots)
             {
                 RegisterEntity(included, docRoot.ApplicableEntity);
@@ -934,7 +1011,7 @@ namespace IfcDoc.Schema.DOC
                 {
                     if (docUsage.Definition != null)
                     {
-                        RegisterTemplate(included, docUsage.Definition);
+                        RegisterTemplate(included, docUsage.Definition, mapVirtualAttributes);
 
                         // include types referenced at concepts
                         string[] parameters = docUsage.Definition.GetParameterNames();
@@ -954,6 +1031,23 @@ namespace IfcDoc.Schema.DOC
                                     {
                                         included[docRef] = true;
                                     }
+                                    else
+                                    {
+                                        DocSchema docSchemaRef = null;
+                                        DocPropertySet docPset = FindPropertySet(val, out docSchemaRef);
+                                        if(docPset != null)
+                                        {
+                                            included[docPset] = true;
+                                        }
+                                        else
+                                        {
+                                            DocQuantitySet docQset = FindQuantitySet(val, out docSchemaRef);
+                                            if(docQset != null)
+                                            {
+                                                included[docQset] = true;
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -965,6 +1059,59 @@ namespace IfcDoc.Schema.DOC
             foreach (DocTemplateDefinition docTemplate in this.Templates)
             {
                 RegisterBaseTemplates(included, docTemplate);
+            }
+
+            // now include any attributes on subtypes referenced by name (e.g. PredefinedType)
+            foreach (DocModelRuleAttribute docVirtualRule in mapVirtualAttributes.Keys)
+            {
+                DocEntity docVirtualEntity = mapVirtualAttributes[docVirtualRule];
+
+                foreach (DocSection docSection in this.Sections)
+                {
+                    foreach (DocSchema docSchema in docSection.Schemas)
+                    {
+                        foreach (DocEntity docEntity in docSchema.Entities)
+                        {
+                            if (included.ContainsKey(docEntity))
+                            {
+                                foreach(DocAttribute docAttr in docEntity.Attributes)
+                                {
+                                    if(docAttr.Name.Equals(docVirtualRule.Name))
+                                    {
+                                        // check if it inherits from entity (innermost check as it's expensive)
+                                        bool inherits = false;
+                                        DocEntity docSuper = docEntity;
+                                        while (docSuper != null && !String.IsNullOrEmpty(docSuper.BaseDefinition))
+                                        {
+                                            docSuper = this.GetDefinition(docSuper.BaseDefinition) as DocEntity;
+                                            if (docSuper == docVirtualEntity)
+                                            {
+                                                inherits = true;
+                                                break;
+                                            }
+                                        }
+
+                                        if (inherits)
+                                        {
+                                            included[docAttr] = true;
+
+                                            DocDefinition docAttrType = this.GetDefinition(docAttr.DefinedType);
+                                            if (docAttrType != null)
+                                            {
+                                                included[docAttrType] = true;
+                                                if (docAttrType is DocEntity)
+                                                {
+                                                    RegisterEntity(included, (DocEntity)docAttrType);
+                                                }
+                                            }
+                                        }
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
 
             // now include any schemas that have entities or types included
@@ -1045,16 +1192,39 @@ namespace IfcDoc.Schema.DOC
                                     }
                                 }
 
-                                DocDefinition docPropTime = this.GetDefinition(docProp.SecondaryDataType) as DocDefinition;
-                                if (docPropTime != null)
+                                if (docProp.PropertyType == DocPropertyTemplateTypeEnum.P_ENUMERATEDVALUE)
                                 {
-                                    if (docPropTime is DocEntity)
+                                    // get property enumeration
+                                    string propenunmane = docProp.SecondaryDataType.Split(':')[0];
+
+                                    foreach (DocSection docPropSection in this.Sections)
                                     {
-                                        RegisterEntity(included, (DocEntity)docPropTime);
+                                        foreach (DocSchema docPropSchema in docPropSection.Schemas)
+                                        {
+                                            foreach (DocPropertyEnumeration docEnum in docPropSchema.PropertyEnums)
+                                            {
+                                                if (docEnum.Name.Equals(propenunmane))
+                                                {
+                                                    included[docEnum] = true;
+                                                    break;
+                                                }
+                                            }
+                                        }
                                     }
-                                    else
+                                }
+                                else if (!String.IsNullOrEmpty(docProp.SecondaryDataType))
+                                {
+                                    DocDefinition docPropTime = this.GetDefinition(docProp.SecondaryDataType) as DocDefinition;
+                                    if (docPropTime != null)
                                     {
-                                        included[docPropTime] = true;
+                                        if (docPropTime is DocEntity)
+                                        {
+                                            RegisterEntity(included, (DocEntity)docPropTime);
+                                        }
+                                        else
+                                        {
+                                            included[docPropTime] = true;
+                                        }
                                     }
                                 }
                             }
@@ -1104,6 +1274,26 @@ namespace IfcDoc.Schema.DOC
                                     RegisterEntity(included, docPropType);
                                 }
                             }
+                        }
+                    }
+                }
+            }
+
+            // for now, also include all functions and rules -- FUTURE: traverse expression to determine what is referenced
+            foreach(DocSection docSection in this.Sections)
+            {
+                foreach(DocSchema docSchema in docSection.Schemas)
+                {
+                    if (included.ContainsKey(docSchema))
+                    {
+                        foreach (DocFunction docFunction in docSchema.Functions)
+                        {
+                            included[docFunction] = true;
+                        }
+
+                        foreach (DocGlobalRule docRule in docSchema.GlobalRules)
+                        {
+                            included[docRule] = true;
                         }
                     }
                 }
@@ -2174,9 +2364,27 @@ namespace IfcDoc.Schema.DOC
                         // push the value to be compared onto the stack
                         if (typeCompare.IsEnum && this.Value is DocOpLiteral)
                         {
-                            FieldInfo fieldEnum = typeCompare.GetField(((DocOpLiteral)this.Value).Value, BindingFlags.Static | BindingFlags.Public);
-                            int fieldVal = (int)fieldEnum.GetValue(null);
-                            generator.Emit(OpCodes.Ldc_I4, fieldVal);
+                            generator.Emit(OpCodes.Ldtoken, typeCompare);
+
+                            MethodInfo methodTypeFromHandle = typeof(Type).GetMethod("GetTypeFromHandle");
+                            generator.Emit(OpCodes.Call, methodTypeFromHandle);
+
+                            string litval = ((DocOpLiteral)this.Value).Value;
+                            FieldInfo fieldEnum = typeCompare.GetField(litval, BindingFlags.Static | BindingFlags.Public);
+                            if (fieldEnum != null)
+                            {
+                                int fieldVal = (int)fieldEnum.GetValue(null);
+                                generator.Emit(OpCodes.Ldc_I4, fieldVal);
+                            }
+                            else
+                            {
+                                System.Diagnostics.Debug.WriteLine("Invalid enumeration: " + litval);
+                                generator.Emit(OpCodes.Ldc_I4_0);
+                            }
+
+                            // convert it to object
+                            MethodInfo methodToObject = typeof(Enum).GetMethod("ToObject", BindingFlags.Static | BindingFlags.Public, null, new Type[] { typeof(Type), typeof(Int32) }, null);
+                            generator.Emit(OpCodes.Call, methodToObject);
                         }
                         else
                         {
@@ -2195,9 +2403,6 @@ namespace IfcDoc.Schema.DOC
 
                         // push the value to be compared onto the stack
                         this.Value.Emit(context, generator, dtd);
-
-                        // execute the operation, popping two values and pushing the result
-                        //base.Emit(context, generator, dtd);
                     }
                     break;
 
@@ -2243,7 +2448,7 @@ namespace IfcDoc.Schema.DOC
                         MethodInfo methodContainsKey = typeof(Hashtable).GetMethod("ContainsKey");
                         generator.Emit(OpCodes.Ldsfld, f);
                         generator.Emit(OpCodes.Ldloc, (short)local.LocalIndex);
-                        generator.Emit(OpCodes.Call, methodContainsKey);
+                        generator.Emit(OpCodes.Callvirt, methodContainsKey);
 
                         // if true, then not unique
                         generator.Emit(OpCodes.Brtrue_S, (byte)18); // skip over to last instruction 
@@ -2253,7 +2458,7 @@ namespace IfcDoc.Schema.DOC
                         generator.Emit(OpCodes.Ldsfld, f); // 5
                         generator.Emit(OpCodes.Ldloc, (short)local.LocalIndex); // 3
                         generator.Emit(OpCodes.Dup); // 1
-                        generator.Emit(OpCodes.Call, methodAdd); // 5
+                        generator.Emit(OpCodes.Callvirt, methodAdd); // 5
 
                         // not a duplicate (yet) -- first duplicate instance will push True
                         generator.Emit(OpCodes.Ldc_I4_1); // 1
@@ -2272,20 +2477,22 @@ namespace IfcDoc.Schema.DOC
                     {
                         MethodInfo methodSplit = typeof(String).GetMethod("Split", new Type[] { typeof(Char[])});
 
-                        generator.Emit(OpCodes.Ldc_I4_1);
-                        generator.Emit(OpCodes.Newarr, typeof(Char));
-                        generator.Emit(OpCodes.Dup);
-                        generator.Emit(OpCodes.Ldc_I4_0);
-                        generator.Emit(OpCodes.Ldc_I4_S, (byte)',');
-                        generator.Emit(OpCodes.Stelem_I1);
-                        generator.Emit(OpCodes.Call, methodSplit);
+                        // Stack: V|S
 
-                        MethodInfo methodCompare = typeof(String).GetMethod("Compare", new Type[] { typeof(String), typeof(String) });
+                        generator.Emit(OpCodes.Ldc_I4_1);             // V|S|I 
+                        generator.Emit(OpCodes.Newarr, typeof(Char)); // V|S|A
+                        generator.Emit(OpCodes.Dup);                  // V|S|A|A
+                        generator.Emit(OpCodes.Ldc_I4_0);             // V|S|A|A|I
+                        generator.Emit(OpCodes.Ldc_I4_S, (Byte)',');  // V|S|A|A|I|B
+                        generator.Emit(OpCodes.Stelem_I2);            // V|S|A
+                        generator.Emit(OpCodes.Call, methodSplit);    // V|A
+
+                        MethodInfo methodCompare = typeof(Object).GetMethod("Equals", new Type[] { typeof(Object), typeof(Object) });
 
                         // Left argument:  String
                         // Right argument: Array of String: MUST have at least one element
 
-                        LocalBuilder localValue = generator.DeclareLocal(typeof(string));
+                        LocalBuilder localValue = generator.DeclareLocal(typeof(object));
                         LocalBuilder localArray = generator.DeclareLocal(typeof(string[]));
                         LocalBuilder localIndex = generator.DeclareLocal(typeof(int));
                         LocalBuilder localCheck = generator.DeclareLocal(typeof(bool)); // false until included
@@ -2322,36 +2529,24 @@ namespace IfcDoc.Schema.DOC
 
                         // return the flag
                         generator.Emit(OpCodes.Ldloc, (short)localCheck.LocalIndex);
-
-                        //generator.Emit(OpCodes.Ldc_I4_0);
-                        //generator.Emit(OpCodes.Bge_S, (sbyte)-49);
                     }
                     break;
 
                 case DocOpCode.NoOperation: // backcompat
                 case DocOpCode.CompareEqual:
                     {
-                        if (typeCompare.IsEnum)
-                        {
-                            generator.Emit(OpCodes.Ceq);
-                        }
-                        else
-                        {
-                            // strings may not necessarily be interned, so can't use comparison opcode -- must call function String.Compare
-                            MethodInfo methodCompare = typeof(String).GetMethod("Compare", new Type[] { typeof(String), typeof(String) });
-                            generator.Emit(OpCodes.Call, methodCompare);
-                            generator.Emit(OpCodes.Not); // 0 means they are equal, so flip result
-                        }
+                        // strings may not necessarily be interned, so can't use comparison opcode -- must call Object.Compare (which checks for null conditions, calls virtual Compare specific to string)
+                        MethodInfo methodCompare = typeof(Object).GetMethod("Equals", new Type[] { typeof(Object), typeof(Object) });
+                        generator.Emit(OpCodes.Call, methodCompare);
                     }
                     break;
 
                 case DocOpCode.CompareNotEqual:
                     {
-                        MethodInfo methodCompare = typeof(String).GetMethod("Compare", new Type[] { typeof(String), typeof(String) });
+                        MethodInfo methodCompare = typeof(Object).GetMethod("Equals", new Type[] { typeof(Object), typeof(Object) });
                         generator.Emit(OpCodes.Call, methodCompare); // 0 means they are equal, so non-zero means not equal
+                        generator.Emit(OpCodes.Not); // 0 means they are equal, so flip result
                     }
-                    //generator.Emit(OpCodes.Ceq);
-                    //generator.Emit(OpCodes.Not);
                     break;
 
                 case DocOpCode.CompareGreaterThan:
@@ -2539,6 +2734,8 @@ namespace IfcDoc.Schema.DOC
             Type type = compiler.RegisterType(template.Type);
             generator.Emit(OpCodes.Ldarg_0); // this
 
+            Label labelBail = generator.DefineLabel();
+
             DocModelRule[] rulepath = template.BuildRulePath(this.EntityRule);
             foreach(DocModelRule rule in rulepath)
             {
@@ -2546,61 +2743,56 @@ namespace IfcDoc.Schema.DOC
                 {
                     FieldInfo field = compiler.RegisterField(type, rule.Name);
 
+                    generator.Emit(OpCodes.Castclass, type);
                     generator.Emit(OpCodes.Ldfld, field); // field
-
-                    LocalBuilder localRule = generator.DeclareLocal(field.FieldType);
-                    generator.Emit(OpCodes.Stloc_S, (byte)localRule.LocalIndex);
 
                     if (!field.FieldType.IsValueType)
                     {
-                        // check for null
-                        generator.Emit(OpCodes.Ldloc_S, (byte)localRule.LocalIndex);
-                        generator.Emit(OpCodes.Ldnull);
-                        generator.Emit(OpCodes.Ceq);
-                        generator.Emit(OpCodes.Brfalse_S, (byte)2); // if true keep going, skip next 2 instructions
-                        generator.Emit(OpCodes.Ldc_I4_0); // false
-                        generator.Emit(OpCodes.Ret);
+                        generator.Emit(OpCodes.Dup);
+                        generator.Emit(OpCodes.Brfalse, labelBail);
                     }
 
-                    // then load the field again
-                    generator.Emit(OpCodes.Ldloc_S, (byte)localRule.LocalIndex);
-
                     // if field is collection, then get last element
-                    if (/*typeof(IList).IsAssignableFrom(field.FieldType) || */
-                        field.FieldType.IsGenericType && field.FieldType.GetGenericTypeDefinition() == typeof(List<>))
+                    if (field.FieldType.IsGenericType && field.FieldType.GetGenericTypeDefinition() == typeof(List<>))
                     {
                         // iterate
                         LocalBuilder localList = generator.DeclareLocal(field.FieldType);
-                        LocalBuilder localIter = generator.DeclareLocal(typeof(int));
                         LocalBuilder localElem = generator.DeclareLocal(field.FieldType.GetGenericArguments()[0]);
-                        generator.Emit(OpCodes.Stloc_S, (byte)localList.LocalIndex);
+                        generator.Emit(OpCodes.Stloc, (short)localList.LocalIndex);
 
                         // get the length of the list -- go in reverse order to avoid having to check or store length each iteration
                         MethodInfo methodListLength = typeof(ICollection).GetProperty("Count").GetGetMethod();
-                        generator.Emit(OpCodes.Ldloc_S, (byte)localList.LocalIndex);
+                        generator.Emit(OpCodes.Ldloc, (short)localList.LocalIndex);
                         generator.Emit(OpCodes.Callvirt, methodListLength);
-                        generator.Emit(OpCodes.Stloc_S, (byte)localIter.LocalIndex);
 
                         // if 0 length, then return
-                        generator.Emit(OpCodes.Ldloc_S, (byte)localIter.LocalIndex);
-                        generator.Emit(OpCodes.Brtrue_S, (byte)2);
-                        generator.Emit(OpCodes.Ldc_I4_0);
-                        generator.Emit(OpCodes.Ret);
+                        Label labelAfter = generator.DefineLabel();
+                        generator.Emit(OpCodes.Brtrue, labelAfter); // if length != 0 then keep going
+                        generator.Emit(OpCodes.Ldnull); // push null onto stack
+                        generator.Emit(OpCodes.Br, labelBail); // skip any more indirections
+                        generator.MarkLabel(labelAfter);
 
-                        // loop each element
-                        Label labelLoop = generator.DefineLabel();
-                        generator.Emit(OpCodes.Ldloc_S, (byte)localList.LocalIndex);
-                        generator.Emit(OpCodes.Ldloc_S, (byte)localIter.LocalIndex);
-                        generator.Emit(OpCodes.Ldc_I4_1);
-                        generator.Emit(OpCodes.Sub); // decrease the index
+                        // get the first element of the collection -- FUTURE: allow index to be specified
+                        generator.Emit(OpCodes.Ldloc, (short)localList.LocalIndex);
+                        generator.Emit(OpCodes.Ldc_I4_0); // first element
 
                         // get the element
                         MethodInfo methodListGet = ((PropertyInfo)typeof(IList).GetDefaultMembers()[0]).GetGetMethod();
                         generator.Emit(OpCodes.Callvirt, methodListGet);
-                        generator.Emit(OpCodes.Stloc_S, (byte)localElem.LocalIndex);
+                        if (localElem.LocalType.IsValueType)
+                        {
+                            // e.g. IfcCartesianPoint.Coordinates[1] : IfcLengthMeasure
+                            generator.Emit(OpCodes.Unbox, localElem.LocalType);
+                            generator.Emit(OpCodes.Ldobj, localElem.LocalType);//Ldind_R8); // assume 64-bit floating point (float) .. TBD: check for integer
+                        }
+                        else
+                        {
+                            generator.Emit(OpCodes.Castclass, localElem.LocalType);
+                        }
+                        generator.Emit(OpCodes.Stloc, (short)localElem.LocalIndex);
 
                         // then load the element again
-                        generator.Emit(OpCodes.Ldloc_S, (byte)localElem.LocalIndex);
+                        generator.Emit(OpCodes.Ldloc, (short)localElem.LocalIndex);
                     }
                 }
                 else if(rule is DocModelRuleEntity)
@@ -2609,29 +2801,30 @@ namespace IfcDoc.Schema.DOC
 
                     if (type.IsEnum)
                     {
-                        // do nothing
+                        // box it
+                        generator.Emit(OpCodes.Box, type); // needed for Object.Compare
                     }
                     else if (type.IsValueType)
                     {
                         FieldInfo fieldValue = compiler.RegisterField(type, "Value");
                         generator.Emit(OpCodes.Ldfld, fieldValue);
+                        generator.Emit(OpCodes.Box, fieldValue.FieldType); // needed for Object.Compare
                     }
                     else
                     {
-                        // duplicate it to retain object on stack after instance check
-                        generator.Emit(OpCodes.Dup);
-
                         // check if instance of expected type
                         generator.Emit(OpCodes.Isinst, type); // object -> object (if instance) or null if not
-                        generator.Emit(OpCodes.Brtrue_S, (byte)3);
-                        generator.Emit(OpCodes.Pop); // pop extra object off stack since we're returning
-                        generator.Emit(OpCodes.Ldc_I4_0);
-                        generator.Emit(OpCodes.Ret); // return null (false)
+
+                        // duplicate it to retain object on stack after instance check (otherwise null)
+                        generator.Emit(OpCodes.Dup);
+                        generator.Emit(OpCodes.Brfalse, labelBail);
 
                         // otherwise, stack contains object at this point
                     }
                 }
             }
+
+            generator.MarkLabel(labelBail); // stack should have exactly one element here -- either the resolved value or NULL if any attribute/entity didn't resolve along the way
 
             return null;
         }
@@ -2687,27 +2880,7 @@ namespace IfcDoc.Schema.DOC
             // for now, we only support strings; future: support integer, real, boolean, enumeration
             if (this.Value != null)
             {
-#if false
-                // special case for delimited strings -- use array
-                if (this.Value.Contains(","))
-                {
-                    string[] elems = this.Value.Split(',');
-
-                    generator.Emit(OpCodes.Ldc_I4, (int)elems.Length);
-                    generator.Emit(OpCodes.Newarr, typeof(string));
-                    for (int i = 0; i < elems.Length; i++)
-                    {
-                        generator.Emit(OpCodes.Dup); // push the array 
-                        generator.Emit(OpCodes.Ldc_I4, i); // push the position
-                        generator.Emit(OpCodes.Ldstr, elems[i]); // push the element
-                        generator.Emit(OpCodes.Stelem_Ref); // store in array
-                    }
-                }
-                else
-#endif
-                {
-                    generator.Emit(OpCodes.Ldstr, this.Value);
-                }
+                generator.Emit(OpCodes.Ldstr, this.Value);
             }
             else
             {
@@ -4191,7 +4364,7 @@ namespace IfcDoc.Schema.DOC
 
         public int GetAggregationNestingLower()
         {
-            if (this.AggregationLower == null)
+            if (String.IsNullOrEmpty(this.AggregationLower))
                 return 0; //??? or -1???
 
             int iLower = Int32.Parse(this.AggregationLower);
@@ -4208,7 +4381,7 @@ namespace IfcDoc.Schema.DOC
 
         public int GetAggregationNestingUpper()
         {
-            if (this.AggregationUpper == null)
+            if (String.IsNullOrEmpty(this.AggregationUpper))
                 return 0;
 
             int iUpper = Int32.Parse(this.AggregationUpper);

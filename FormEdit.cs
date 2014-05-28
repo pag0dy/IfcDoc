@@ -50,6 +50,8 @@ namespace IfcDoc
 
         // clipboard
         DocObject m_clipboard;
+        TreeNode m_clipboardNode;
+        bool m_clipboardCut;
 
         FormProgress m_formProgress;
         Exception m_exception;
@@ -652,7 +654,7 @@ namespace IfcDoc
                         case ".ifcdoc":
                             using (FormatSPF format = new FormatSPF(this.m_file, SchemaDOC.Types, this.m_instances))
                             {
-                                format.InitHeaders(this.m_file, "IFCDOC_6_8");
+                                format.InitHeaders(this.m_file, "IFCDOC_7_0");
                                 format.Save();
                             }
                             break;
@@ -2814,6 +2816,7 @@ namespace IfcDoc
                     if (this.m_project.Templates.IndexOf(obj) > 0)
                     {
                         this.toolStripMenuItemEditMoveUp.Enabled = true;
+                        this.toolStripMenuItemEditMoveIn.Enabled = true;
                     }
 
                     if (this.m_project.Templates.IndexOf(obj) < this.m_project.Templates.Count - 1)
@@ -2935,6 +2938,8 @@ namespace IfcDoc
                 {
                     this.toolStripMenuItemEditDelete.Enabled = true;
 
+                    this.toolStripMenuItemEditPaste.Enabled = (this.m_clipboard is DocPropertySet);
+
                     this.toolStripMenuItemInsertPropertyset.Enabled = true;
                     this.toolStripMenuItemInsertQuantityset.Enabled = true;
 
@@ -2981,6 +2986,8 @@ namespace IfcDoc
                     this.toolStripMenuItemEditDelete.Enabled = true;
                     this.toolStripMenuItemEditPaste.Enabled = false;
 
+                    //this.ToolStripMenuItemEditCut.Enabled = true;
+
                     this.toolStripMenuItemInsertAttribute.Enabled = true;
                     this.toolStripMenuItemInsertUnique.Enabled = true;
                     this.toolStripMenuItemInsertWhere.Enabled = true;
@@ -3002,6 +3009,8 @@ namespace IfcDoc
                 else if (obj is DocSchema)
                 {
                     this.toolStripMenuItemEditDelete.Enabled = true;
+
+                    //this.toolStripMenuItemEditPaste.Enabled = (this.m_clipboard is DocEntity);
                 }
                 else if (obj is DocFunction)
                 {
@@ -3040,6 +3049,9 @@ namespace IfcDoc
                     this.toolStripMenuItemContextInsertProperty.Visible = true;
                     this.toolStripMenuItemContextInsert.Visible = true;
 
+                    this.ToolStripMenuItemEditCut.Enabled = true;
+                    this.toolStripMenuItemEditPaste.Enabled = (this.m_clipboard is DocProperty);
+
                     DocSchema ent = (DocSchema)e.Node.Parent.Parent.Tag;
                     if (ent.PropertySets.IndexOf((DocPropertySet)obj) > 0)
                     {
@@ -3054,6 +3066,8 @@ namespace IfcDoc
                 else if (obj is DocProperty)
                 {
                     this.toolStripMenuItemEditDelete.Enabled = true;
+                    this.toolStripMenuItemEditCopy.Enabled = true;
+                    this.ToolStripMenuItemEditCut.Enabled = true;
 
                     DocPropertySet ent = (DocPropertySet)e.Node.Parent.Tag;
                     if (ent.Properties.IndexOf((DocProperty)obj) > 0)
@@ -5073,23 +5087,38 @@ namespace IfcDoc
             this.treeView.SelectedNode = tn;
         }
 
-        private void ToolStripMenuItemEditCut_Click(object sender, EventArgs e)
+        private void ClipboardCopy(bool cut)
         {
             if (this.treeView.Focused)
             {
+                // restore state
+                if (this.m_clipboardNode != null)
+                {
+                    this.m_clipboardNode.ForeColor = Color.Black;
+                }
+
+                this.m_clipboardNode = this.treeView.SelectedNode;
                 this.m_clipboard = this.treeView.SelectedNode.Tag as DocObject;
-                this.toolStripMenuItemEditDelete_Click(sender, e);
+                this.m_clipboardCut = cut;
+
+                if (this.m_clipboardCut)
+                {
+                    this.m_clipboardNode.ForeColor = Color.Gray;
+                }
+
+                // update view state (may be impacted by what is on the clipboard)
+                this.TreeView_AfterSelect(this, new TreeViewEventArgs(this.treeView.SelectedNode, TreeViewAction.Unknown));
             }
+        }
+
+        private void ToolStripMenuItemEditCut_Click(object sender, EventArgs e)
+        {
+            this.ClipboardCopy(true);
         }
 
         private void toolStripMenuItemEditCopy_Click(object sender, EventArgs e)
         {
-            if (this.treeView.Focused)
-            {
-                this.m_clipboard = this.treeView.SelectedNode.Tag as DocObject;
-
-                this.TreeView_AfterSelect(sender, new TreeViewEventArgs(this.treeView.SelectedNode, TreeViewAction.Unknown));
-            }
+            this.ClipboardCopy(false);
         }
 
         private void toolStripMenuItemEditPaste_Click(object sender, EventArgs e)
@@ -5097,7 +5126,74 @@ namespace IfcDoc
             if (this.treeView.Focused)
             {
                 DocObject docSelect = this.treeView.SelectedNode.Tag as DocObject;
-                if (docSelect is DocConceptRoot && this.m_clipboard is DocTemplateUsage)
+                if (docSelect is DocSchema && this.m_clipboard is DocPropertySet)
+                {
+                    DocSchema schemaNew = (DocSchema)docSelect;
+                    DocPropertySet psetOld = (DocPropertySet)this.m_clipboard;
+                    if (this.m_clipboardCut)
+                    {
+                        if (this.m_clipboardNode.Parent.Parent.Tag is DocSchema)
+                        {
+                            DocSchema schemaOld = (DocSchema)this.m_clipboardNode.Parent.Parent.Tag;
+                            schemaOld.PropertySets.Remove(psetOld);
+                            schemaNew.PropertySets.Add(psetOld);
+
+                            this.m_clipboardNode.Remove();
+                            this.m_clipboardNode = null;
+                            this.m_clipboard = null;
+                            this.m_clipboardCut = false;
+
+                            this.treeView.SelectedNode = this.LoadNode(this.treeView.SelectedNode.Nodes[4], psetOld, psetOld.Name, false);
+                        }
+                    }
+                    else
+                    {
+                        // TODO...
+                    }
+                }
+                else if (docSelect is DocPropertySet && this.m_clipboard is DocProperty)
+                {
+                    DocPropertySet psetNew = (DocPropertySet)docSelect;
+                    DocProperty propOld = (DocProperty)this.m_clipboard;
+                    if (this.m_clipboardCut)
+                    {
+                        if (this.m_clipboardNode.Parent.Tag is DocPropertySet)
+                        {
+                            DocPropertySet psetOld = (DocPropertySet)this.m_clipboardNode.Parent.Tag;
+                            psetOld.Properties.Remove(propOld);
+                            psetNew.Properties.Add(propOld);
+
+                            this.m_clipboardNode.Remove();
+                            this.m_clipboardNode = null;
+                            this.m_clipboard = null;
+                            this.m_clipboardCut = false;
+
+                            this.treeView.SelectedNode = this.LoadNode(this.treeView.SelectedNode, propOld, propOld.Name, false);
+                        }
+                    }
+                    else
+                    {
+                        DocProperty propNew = new DocProperty();
+                        propNew.Name = propOld.Name;
+                        propNew.Documentation = propOld.Documentation;
+                        propNew.PropertyType = propOld.PropertyType;
+                        propNew.PrimaryDataType = propOld.PrimaryDataType;
+                        propNew.SecondaryDataType = propOld.SecondaryDataType;
+                        foreach(DocLocalization localOld in propOld.Localization)
+                        {
+                            DocLocalization localNew = new DocLocalization();
+                            localNew.Name = localOld.Name;
+                            localNew.Documentation = localOld.Documentation;
+                            localNew.Category = localOld.Category;
+                            localNew.Locale = localOld.Locale;
+                            localNew.URL = localOld.URL;
+                            propNew.Localization.Add(localNew);
+                        }
+
+                        this.treeView.SelectedNode = this.LoadNode(this.treeView.SelectedNode, propNew, propNew.Name, false);
+                    }
+                }
+                else if (docSelect is DocConceptRoot && this.m_clipboard is DocTemplateUsage)
                 {
                     DocConceptRoot docRoot = (DocConceptRoot)docSelect;
 
@@ -5478,6 +5574,7 @@ namespace IfcDoc
                 // sub-template
                 if (docSource.Rules != null && docSource.Rules.Count != 0 && docTarget.Rules != null && docTarget.Rules.Count > 0)
                 {
+#if false
                     DialogResult res = MessageBox.Show(this, "Moving this template will reset any rules to match those of the new parent template. Are you sure you want to proceed?", "Move Template", MessageBoxButtons.OKCancel);
                     if (res != System.Windows.Forms.DialogResult.OK)
                         return;
@@ -5498,6 +5595,7 @@ namespace IfcDoc
                             docSource.Rules.Add((DocModelRule)docRule.Clone());
                         }
                     }
+#endif
                 }
 
 
@@ -5670,7 +5768,7 @@ namespace IfcDoc
 
                     if (this.m_exception != null)
                     {
-                        MessageBox.Show(this, this.m_exception.Message + "\r\n\r\n" + this.m_exception.StackTrace, "Error");
+                        MessageBox.Show(this, this.m_exception.Message, "Error");
                         this.m_exception = null;
                     }
 
@@ -5882,130 +5980,144 @@ namespace IfcDoc
                                         // new-style validation -- compiled code (fast)
                                         string methodname = docView.Code + "_" + docUsage.Definition.Name.Replace(' ', '_').Replace(':', '_').Replace('-', '_');
                                         System.Reflection.MethodInfo method = typeEntity.GetMethod(methodname);
+
                                         int fail = 0;
-                                        int pass = 0; // pass graph check
-                                        long iden = 0;
-                                        int passRule = 0; // pass rule check
-                                        int failRule = 0; // fail rule check
-                                        long idenRule = 0;
-                                        object[] args = new object[0]; 
-                                        foreach (SEntity ent in list)
-                                        {
-                                            sbDetail.Append("<tr valign=\"top\"><td>#");
-                                            sbDetail.Append(ent.OID);
-                                            sbDetail.Append("</td><td>");
-
-                                            // check with parameters plugged in
-                                            DocModelRule ruleFail = null;
-                                            bool? result = true;
-                                            foreach (DocModelRule rule in docUsage.Definition.Rules)
+                                            int pass = 0; // pass graph check
+                                            long iden = 0;
+                                            int passRule = 0; // pass rule check
+                                            int failRule = 0; // fail rule check
+                                            long idenRule = 0;
+                                            object[] args = new object[0];
+                                            foreach (SEntity ent in list)
                                             {
-                                                result = rule.Validate(ent, null, typemap);
-                                                if (result != null && !result.Value)
+                                                sbDetail.Append("<tr valign=\"top\"><td>#");
+                                                sbDetail.Append(ent.OID);
+                                                sbDetail.Append("</td><td>");
+
+                                                // check with parameters plugged in
+                                                DocModelRule ruleFail = null;
+                                                bool? result = true;
+                                                foreach (DocModelRule rule in docUsage.Definition.Rules)
                                                 {
-                                                    ruleFail = rule;
-                                                    break;
-                                                }
-                                            }
-
-                                            if (result == null)
-                                            {
-                                                sbDetail.Append("*");
-                                                // no applicable rules, so passing
-                                                pass++;
-                                            }
-                                            else if (result != null && result.Value)
-                                            {
-                                                sbDetail.Append("+");
-                                                // all rules passed
-                                                pass++;
-                                            }
-                                            else if(ruleFail != null)
-                                            {
-                                                sbDetail.Append(ruleFail.Name);
-                                                fail++;
-
-                                                // report first failure                                                        
-                                                if (fail == 1)
-                                                {
-                                                    iden = ent.OID;
-                                                }
-                                            }
-
-                                            sbDetail.Append("</td><td>");
-
-                                            try
-                                            {
-                                                bool[] ruleresult = (bool[])method.Invoke(ent, args);
-                                                if (ruleresult != null)// && ruleresult.Length == 1 && ruleresult[0])
-                                                {
-                                                    bool allpass = true;
-                                                    foreach(bool compresult in ruleresult)
+                                                    result = rule.Validate(ent, null, typemap);
+                                                    if (result != null && !result.Value)
                                                     {
-                                                        if (!compresult)
+                                                        if (ruleFail != null)
                                                         {
-                                                            allpass = false;
-                                                            break;
+                                                            sbDetail.Append("<br/>");
+                                                        }
+                                                        ruleFail = rule;
+                                                        sbDetail.Append(rule.Name);
+                                                    }
+                                                }
+
+                                                if (result == null)
+                                                {
+                                                    sbDetail.Append("*");
+                                                    // no applicable rules, so passing
+                                                    pass++;
+                                                }
+                                                else if (result != null && result.Value)
+                                                {
+                                                    sbDetail.Append("+");
+                                                    // all rules passed
+                                                    pass++;
+                                                }
+                                                else if (ruleFail != null)
+                                                {
+                                                    //sbDetail.Append(ruleFail.Name);
+                                                    fail++;
+
+                                                    // report first failure                                                        
+                                                    if (fail == 1)
+                                                    {
+                                                        iden = ent.OID;
+                                                    }
+                                                }
+
+                                                sbDetail.Append("</td><td>");
+
+                                                if (method != null)
+                                                {
+
+                                                    try
+                                                    {
+                                                        bool[] ruleresult = (bool[])method.Invoke(ent, args);
+                                                        if (ruleresult != null)// && ruleresult.Length == 1 && ruleresult[0])
+                                                        {
+                                                            bool allpass = true;
+                                                            foreach (bool compresult in ruleresult)
+                                                            {
+                                                                if (!compresult)
+                                                                {
+                                                                    allpass = false;
+                                                                    break;
+                                                                }
+                                                            }
+
+                                                            if (allpass)
+                                                            {
+                                                                sbDetail.Append("+");
+                                                                passRule++;
+                                                            }
+                                                            else
+                                                            {
+                                                                //docUsage.Definition.getc
+                                                                sbDetail.Append("FAIL");
+
+                                                                failRule++;
+                                                                if (fail == 1)
+                                                                {
+                                                                    idenRule = ent.OID;
+                                                                }
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            sbDetail.Append("FAIL");
+
+                                                            failRule++;
+                                                            if (fail == 1)
+                                                            {
+                                                                idenRule = ent.OID;
+                                                            }
                                                         }
                                                     }
-
-                                                    if (allpass)
+                                                    catch (System.Reflection.TargetInvocationException et)
                                                     {
-                                                        sbDetail.Append("+");
-                                                        passRule++;
-                                                    }
-                                                    else
-                                                    {
-                                                        //docUsage.Definition.getc
-                                                        sbDetail.Append("FAIL");
-
+                                                        sbDetail.Append(et.InnerException.GetType().Name);
                                                         failRule++;
-                                                        if (fail == 1)
-                                                        {
-                                                            idenRule = ent.OID;
-                                                        }
+                                                    }
+                                                    catch (Exception ex)
+                                                    {
+                                                        sbDetail.Append(ex.GetType().Name);
+                                                        failRule++;
                                                     }
                                                 }
                                                 else
                                                 {
-                                                    sbDetail.Append("FAIL");
-
-                                                    failRule++;
-                                                    if (fail == 1)
-                                                    {
-                                                        idenRule = ent.OID;
-                                                    }
+                                                    sbDetail.Append("FAIL - Incompatible Template");
                                                 }
                                             }
-                                            catch(System.Reflection.TargetInvocationException et)
-                                            {
-                                                sb.Append(et.InnerException.GetType().Name);
-                                                failRule++;
-                                            }
-                                            catch (Exception ex)
-                                            {
-                                                sb.Append(ex.GetType().Name);
-                                                failRule++;
-                                            }
-                                        }
 
-                                        sb.AppendLine("<details><summary>" + docUsage.Definition.Name);
-                                        if(fail > 0 || failRule > 0)
-                                        {
-                                            sb.AppendLine("*");
-                                        }
-                                        sb.AppendLine("</summary>");
-                                        sb.AppendLine("<table border=\"1\" >");
-                                        sb.Append("<tr><th>Instance</th><th>Structure</th><th>Constraints</th>");
-                                        sb.AppendLine("</tr>");
-                                        sb.AppendLine(sbDetail.ToString());
-                                        sb.AppendLine("</table></details>");
+                                            sb.AppendLine("<details><summary>" + docUsage.Definition.Name);
+                                            if (fail > 0 || failRule > 0)
+                                            {
+                                                sb.AppendLine("*");
+                                            }
+                                            sb.AppendLine("</summary>");
+                                            sb.AppendLine("<table border=\"1\" >");
+                                            sb.Append("<tr><th>Instance</th><th>Structure</th><th>Constraints</th>");
+                                            sb.AppendLine("</tr>");
+                                            sb.AppendLine(sbDetail.ToString());
+                                            sb.AppendLine("</table></details>");
 
-                                        grandtotallist++;
-                                        if (eachresult)
-                                        {
-                                            grandtotalpass++;
-                                        }
+                                            grandtotallist++;
+                                            if (eachresult)
+                                            {
+                                                grandtotalpass++;
+                                            }
+                                        
                                     }
                                 }
 
@@ -6353,7 +6465,7 @@ namespace IfcDoc
             DocSchema docSchema = (DocSchema)tnParent.Tag;
             DocGlobalRule docType = new DocGlobalRule();
             docSchema.GlobalRules.Add(docType);
-            this.treeView.SelectedNode = this.LoadNode(tnParent, docType, null, true);
+            this.treeView.SelectedNode = this.LoadNode(tnParent.Nodes[2], docType, null, true);
             toolStripMenuItemEditRename_Click(this, e);
         }
 
@@ -6363,7 +6475,7 @@ namespace IfcDoc
             DocSchema docSchema = (DocSchema)tnParent.Tag;
             DocFunction docType = new DocFunction();
             docSchema.Functions.Add(docType);
-            this.treeView.SelectedNode = this.LoadNode(tnParent, docType, null, true);
+            this.treeView.SelectedNode = this.LoadNode(tnParent.Nodes[3], docType, null, true);
             toolStripMenuItemEditRename_Click(this, e);
         }
 
@@ -6574,6 +6686,12 @@ namespace IfcDoc
                     return;
                 }
 
+                bool unique = true;
+                if(target is DocProperty || target is DocQuantity || target is DocWhereRule || target is DocUniqueRule)
+                {
+                    unique = false;
+                }
+
                 // check for unique value
                 TreeNode tnExist = null;
                 if(e.Label == String.Empty)
@@ -6582,7 +6700,7 @@ namespace IfcDoc
 
                     e.Node.BeginEdit();
                 }
-                else if (this.m_mapTree.TryGetValue(e.Label.ToLowerInvariant(), out tnExist) && tnExist != e.Node)
+                else if (unique && this.m_mapTree.TryGetValue(e.Label.ToLowerInvariant(), out tnExist) && tnExist != e.Node)
                 {
                     // conflict -- prompt for a different value
                     MessageBox.Show("The specified name is already in use.");
@@ -6593,7 +6711,7 @@ namespace IfcDoc
                 else
                 {
                     // rename and replace link
-                    if (docObj.Name != null)
+                    if (unique && docObj.Name != null)
                     {
                         string oldkey = docObj.Name.ToLowerInvariant();
                         if (this.m_mapTree.ContainsKey(oldkey))
@@ -6603,7 +6721,11 @@ namespace IfcDoc
                     }
                     docObj.Name = e.Label;
                     e.Node.Text = e.Label;
-                    this.m_mapTree.Add(docObj.Name.ToLowerInvariant(), e.Node);
+
+                    if (unique)
+                    {
+                        this.m_mapTree.Add(docObj.Name.ToLowerInvariant(), e.Node);
+                    }
 
                     //... update any named references from other schemas....
 

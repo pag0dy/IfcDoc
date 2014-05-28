@@ -57,15 +57,15 @@ namespace IfcDoc.Schema.IFC
         }
 
         [XmlAttribute("GlobalId")]
-        public Guid GlobalId
+        public string GlobalId
         {
             get
             {
-                return SGuid.Parse(this._GlobalId);
+                return this._GlobalId;// SGuid.Parse(this._GlobalId);
             }
             set
             {
-                this._GlobalId = new SGuid(value).ToString();
+                this._GlobalId = value;// new SGuid(value).ToString();
             }
         }
 

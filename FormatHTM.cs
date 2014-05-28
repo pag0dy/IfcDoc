@@ -494,6 +494,77 @@ namespace IfcDoc.Format.HTM
             }
         }
 
+        private void WriteAttributeAggregation(DocAttribute attr)
+        {
+            if (attr.AggregationType == 0)
+                return;
+
+            DocAttribute docAggregation = attr;
+            while (docAggregation != null)
+            {
+                switch (docAggregation.AggregationType)
+                {
+                    case 1: // list
+                        this.m_writer.Write("[");
+                        break;
+
+                    case 2: // array
+                        this.m_writer.Write("[[");
+                        break;
+
+                    case 3: // set
+                        this.m_writer.Write("{");
+                        break;
+
+                    case 4: // bag
+                        this.m_writer.Write("{{");
+                        break;
+                }
+
+                if (docAggregation.AggregationUpper != null && docAggregation.AggregationUpper != "0")
+                {
+                    this.m_writer.Write(docAggregation.AggregationLower + ":" + docAggregation.AggregationUpper);
+                }
+                else if (docAggregation.AggregationLower != null)
+                {
+                    this.m_writer.Write(docAggregation.AggregationLower + ":?");
+                }
+                else
+                {
+                    this.m_writer.Write("0:?");
+                }
+
+                switch (docAggregation.AggregationType)
+                {
+                    case 1: // list
+                        this.m_writer.Write("]");
+                        break;
+
+                    case 2: // array
+                        this.m_writer.Write("]]");
+                        break;
+
+                    case 3: // set
+                        this.m_writer.Write("}");
+                        break;
+
+                    case 4: // bag
+                        this.m_writer.Write("}}");
+                        break;
+                }
+
+                if ((docAggregation.AggregationFlag & 2) != 0)
+                {
+                    // unique
+                    this.m_writer.Write("~");
+                }
+
+                // drill in
+                docAggregation = docAggregation.AggregationAttribute;
+            }
+        }
+
+
         private void WriteExpressAggregation(DocAttribute attr)
         {
             if (attr.AggregationType == 0)
@@ -545,9 +616,89 @@ namespace IfcDoc.Format.HTM
             }
         }
 
+        public void WriteEntityAttributes(DocEntity entity, bool suppresshistory)
+        {
+            if (entity.Attributes != null && entity.Attributes.Count > 0)
+            {
+                // attributes
+                this.WriteSummaryHeader("Attribute Definitions", true);
+                this.m_writer.WriteLine("<table width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" class=\"express\">");
+                foreach (DocAttribute docAttr in entity.Attributes)
+                {
+                    DocObject docref = null;
+                    if (!this.m_mapEntity.TryGetValue(docAttr.DefinedType, out docref) || (this.m_included == null || this.m_included.ContainsKey(docref)))
+                    {
+                        this.m_writer.Write("<tr valign=\"top\"><td width=\"21%\"><span class=\"attr-name\">");
+                        this.m_writer.Write(docAttr.Name);
+                        this.m_writer.Write("</span></td><td width=\"1%\"> : </td><td>");
+                        if (docAttr.Documentation != null)
+                        {
+                            this.WriteDocumentationForISO(docAttr.Documentation, entity, suppresshistory);
+                        }
+                        this.m_writer.WriteLine("</td></tr>");
+                    }
+                }
+                this.m_writer.WriteLine("</table>");
+                this.WriteSummaryFooter();
+            }
+
+            if (entity.WhereRules != null && entity.WhereRules.Count > 0)
+            {
+                // avoid attributes without descriptions
+                int cDescs = 0;
+                foreach (DocWhereRule docAttr in entity.WhereRules)
+                {
+                    if (docAttr.Documentation != null)
+                    {
+                        cDescs++;
+                    }
+                }
+
+                if (cDescs > 0)
+                {
+                    // formal propositions
+                    this.WriteSummaryHeader("Formal Propositions", true);
+
+                    this.m_writer.WriteLine("<table width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" class=\"express\">");
+                    foreach (DocWhereRule docAttr in entity.WhereRules)
+                    {
+                        this.m_writer.Write("<tr valign=\"top\"><td width=\"21%\"><span class=\"attr-name\">");
+                        this.m_writer.Write(docAttr.Name);
+                        this.m_writer.Write("</span></td><td width=\"1%\"> : </td><td>");
+                        if (docAttr.Documentation != null)
+                        {
+                            this.WriteDocumentationForISO(docAttr.Documentation, entity, suppresshistory);
+                        }
+                        this.m_writer.WriteLine("</td></tr>");
+                    }
+                    this.m_writer.WriteLine("</table>\r\n");
+
+                    this.WriteSummaryFooter();
+                }
+            }
+
+
+        }
+
+        public void WriteSummaryHeader(string caption, bool expanded)
+        {
+            this.m_writer.Write("<hr />");
+            this.m_writer.Write("<details");
+            this.m_writer.Write(expanded ? " open=\"open\"" : "");
+            this.m_writer.Write("><summary>");
+            this.m_writer.Write(caption);
+            this.m_writer.Write("</summary>");
+            this.m_writer.WriteLine("<br/>");
+        }
+
+        public void WriteSummaryFooter()
+        {
+            this.m_writer.WriteLine("</details>");
+        }
+
         public void WriteExpressEntityAndDocumentation(DocEntity entity, bool suppresshistory, bool isoformat)
         {
-            this.m_writer.WriteLine("<p class=\"spec-head\">EXPRESS Specification:</p>");
+            this.WriteSummaryHeader("EXPRESS Specification", false);
             this.m_writer.WriteLine("<span class=\"express\">");
 
             // new: comment tag
@@ -569,39 +720,43 @@ namespace IfcDoc.Format.HTM
             // link to EXPRESS-G
             WriteExpressDiagram(entity);
 
-            if (entity.Attributes != null && entity.Attributes.Count > 0)
+#if false
+            if (isoformat)
             {
-                // avoid attributes without descriptions
-                int cDescs = 0;
-                foreach (DocAttribute docAttr in entity.Attributes)
+                if (entity.Attributes != null && entity.Attributes.Count > 0)
                 {
-                    if (docAttr.Documentation != null)
-                    {
-                        cDescs++;
-                    }
-                }
-
-                if (cDescs > 0)
-                {
-                    // attributes
-                    this.m_writer.WriteLine("<p class=\"spec-head\">Attribute Definitions:</p>");
-                    this.m_writer.WriteLine("<table width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" class=\"express\">");
+                    // avoid attributes without descriptions
+                    int cDescs = 0;
                     foreach (DocAttribute docAttr in entity.Attributes)
                     {
-                        DocObject docref = null;
-                        if (!this.m_mapEntity.TryGetValue(docAttr.DefinedType, out docref) || (this.m_included == null || this.m_included.ContainsKey(docref)))
+                        if (docAttr.Documentation != null)
                         {
-                            if (docAttr.Documentation != null)
-                            {
-                                this.m_writer.Write("<tr valign=\"top\"><td width=\"21%\"><span class=\"attr-name\">");
-                                this.m_writer.Write(docAttr.Name);
-                                this.m_writer.Write("</span></td><td width=\"1%\"> : </td><td>");
-                                this.WriteDocumentationForISO(docAttr.Documentation, entity, suppresshistory);
-                                this.m_writer.WriteLine("</td></tr>");
-                            }
+                            cDescs++;
                         }
                     }
-                    this.m_writer.WriteLine("</table>");
+
+                    if (cDescs > 0)
+                    {
+                        // attributes
+                        this.m_writer.WriteLine("<p class=\"spec-head\">Attribute Definitions:</p>");
+                        this.m_writer.WriteLine("<table width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" class=\"express\">");
+                        foreach (DocAttribute docAttr in entity.Attributes)
+                        {
+                            DocObject docref = null;
+                            if (!this.m_mapEntity.TryGetValue(docAttr.DefinedType, out docref) || (this.m_included == null || this.m_included.ContainsKey(docref)))
+                            {
+                                if (docAttr.Documentation != null)
+                                {
+                                    this.m_writer.Write("<tr valign=\"top\"><td width=\"21%\"><span class=\"attr-name\">");
+                                    this.m_writer.Write(docAttr.Name);
+                                    this.m_writer.Write("</span></td><td width=\"1%\"> : </td><td>");
+                                    this.WriteDocumentationForISO(docAttr.Documentation, entity, suppresshistory);
+                                    this.m_writer.WriteLine("</td></tr>");
+                                }
+                            }
+                        }
+                        this.m_writer.WriteLine("</table>");
+                    }
                 }
             }
 
@@ -637,20 +792,25 @@ namespace IfcDoc.Format.HTM
                     this.m_writer.WriteLine("</table>\r\n");
                 }
             }
+#endif
+            if (isoformat)
+            {
+                // inheritance
+                this.m_writer.WriteLine();
+                this.m_writer.WriteLine("<p class=\"spec-head\">Inheritance Graph:</p>");
 
-            // inheritance
-            this.m_writer.WriteLine();
-            this.m_writer.WriteLine("<p class=\"spec-head\">Inheritance Graph:</p>");
+                this.m_writer.WriteLine("<span class=\"express\">");
 
-            this.m_writer.WriteLine("<span class=\"express\">");
+                this.WriteExpressLine(0, BEGIN_KEYWORD + "ENTITY" + END_KEYWORD + " " + entity.Name);
 
-            this.WriteExpressLine(0, BEGIN_KEYWORD + "ENTITY" + END_KEYWORD + " " + entity.Name);
+                WriteExpressInheritance(entity, entity);
 
-            WriteExpressInheritance(entity, entity);
+                this.WriteExpressLine(0, BEGIN_KEYWORD + "END_ENTITY;" + END_KEYWORD);
 
-            this.WriteExpressLine(0, BEGIN_KEYWORD + "END_ENTITY;" + END_KEYWORD);
+                this.m_writer.WriteLine("</span>");
+            }
 
-            this.m_writer.WriteLine("</span>");
+            this.WriteSummaryFooter();
         }
 
         public void WriteExpressEntity(DocEntity entity)
@@ -824,7 +984,7 @@ namespace IfcDoc.Format.HTM
 
         public void WriteExpressTypeAndDocumentation(DocType type, bool suppresshistory, bool isoformat)
         {
-            this.m_writer.WriteLine("<p class=\"spec-head\">EXPRESS Specification:</p>");
+            this.WriteSummaryHeader("EXPRESS Specification", false);
             this.m_writer.WriteLine("<span class=\"express\">");
 
             this.WriteExpressHeader(2);
@@ -848,6 +1008,9 @@ namespace IfcDoc.Format.HTM
             // link to EXPRESS-G
             WriteExpressDiagram(type);
 
+            this.m_writer.WriteLine("</span>");
+            this.WriteSummaryFooter();
+
             // where rules (for defined types)
 
             if (type is DocDefined && ((DocDefined)type).WhereRules != null && ((DocDefined)type).WhereRules.Count > 0)
@@ -855,7 +1018,7 @@ namespace IfcDoc.Format.HTM
                 DocDefined entity = (DocDefined)type;
 
                 // formal propositions
-                this.m_writer.WriteLine("<p class=\"spec-head\">Formal Propositions:</p>");
+                this.WriteSummaryHeader("Formal Propositions", true);
 
                 this.m_writer.WriteLine("<table width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" class=\"express\">");
                 foreach (DocWhereRule docAttr in entity.WhereRules)
@@ -870,9 +1033,10 @@ namespace IfcDoc.Format.HTM
                     }
                 }
                 this.m_writer.WriteLine("</table>");
+
+                this.WriteSummaryFooter();
             }
 
-            this.m_writer.WriteLine("</span>");
         }
 
         public void WriteExpressType(DocType type)
@@ -1344,7 +1508,8 @@ namespace IfcDoc.Format.HTM
                                 block.Contains("IFC2X") ||
                                 block.Contains("IFC2x") ||
                                 block.Contains("IFC 2X") ||
-                                block.Contains("IFC 2x"))
+                                block.Contains("IFC 2x") ||
+                                block.Contains("IFC4"))
                             {
                                 // exclude the block
                                 content = content.Substring(0, index) + content.Substring(end + 13, content.Length - end - 13);
@@ -1402,13 +1567,27 @@ namespace IfcDoc.Format.HTM
                         if (this.m_mapEntity.TryGetValue(def, out docDef) && (this.m_included == null || this.m_included.ContainsKey(docDef)))
                         {
                             // IFC definition exists; 
-                            if (current is DocSchema || current is DocTemplateDefinition)
+                            if (current is DocSchema || current is DocTemplateDefinition || current is DocSection)
                             {
                                 string schema = null;
                                 if (def.StartsWith(prefix) && this.m_mapSchema.TryGetValue(def, out schema))
                                 {
                                     // only 1 level up
-                                    string hyperlink = @"../" + schema.ToLower() + @"/lexical/" + def.ToLower() + ".htm";
+                                    string hyperlink = schema.ToLower() + @"/lexical/" + def.ToLower() + ".htm";
+                                    if (!(current is DocSection))
+                                    {
+                                        hyperlink = "../" + hyperlink;
+                                    }
+                                    string format = "<a href=\"" + hyperlink + "\">" + def + "</a>";
+                                    content = content.Substring(0, index) + format + content.Substring(end + 4);
+                                }
+                                else if (docDef is DocTemplateDefinition)
+                                {
+                                    string hyperlink = def.ToLower().Replace(' ', '-') + ".htm";
+                                    if (current is DocSection)
+                                    {
+                                        hyperlink = "templates/" + hyperlink;
+                                    }
                                     string format = "<a href=\"" + hyperlink + "\">" + def + "</a>";
                                     content = content.Substring(0, index) + format + content.Substring(end + 4);
                                 }
@@ -1695,6 +1874,37 @@ namespace IfcDoc.Format.HTM
                         index++;
                     }
                 }
+            }
+        }
+
+        internal void WriteContentRefs(List<IfcDoc.DocumentationISO.ContentRef> listFigures, string prefix)
+        {
+            for (int iFigure = 0; iFigure < listFigures.Count; iFigure++)
+            {
+                DocObject target = listFigures[iFigure].Page;
+                string figurename = listFigures[iFigure].Caption;
+
+                this.m_writer.Write("<a class=\"listing-link\" href=\"schema/");
+
+                if (target is DocTemplateDefinition)
+                {
+                    this.m_writer.WriteLine("templates/" + target.Name.ToLower().Replace(' ', '-') + ".htm#" + target.Name.Replace(' ', '-').ToLower() + "\">");
+                }
+                else if (target is DocEntity || target is DocType)
+                {
+                    string schema = this.m_mapSchema[target.Name];
+                    this.m_writer.WriteLine(schema.ToLower() + "/lexical/" + target.Name.ToLower() + ".htm\">");
+                }
+                else if (target is DocSchema)
+                {
+                    this.m_writer.WriteLine(target.Name.ToLower() + "/content.htm\">");
+                }
+                else
+                {
+                    this.ToString();
+                }
+
+                this.m_writer.WriteLine(prefix + " " + (iFigure + 1).ToString() + " &mdash; " + figurename + "</a><br />");
             }
         }
 
@@ -2079,7 +2289,7 @@ namespace IfcDoc.Format.HTM
                     string enumname = parts[0];
                     DocObject docObj = null;
                     string schema = null;
-                    if (m_mapEntity.TryGetValue(enumname, out docObj) && m_mapSchema.TryGetValue(enumname, out schema))
+                    if (m_mapEntity.TryGetValue(enumname, out docObj) && m_mapSchema.TryGetValue(enumname, out schema) && docObj is DocPropertyEnumeration)
                     {
                         this.Write(" <a href=\"../../" + schema.ToLower() + "/pset/" + enumname.ToLower() + ".htm\">" + enumname + "</a>");
                     }
@@ -2146,7 +2356,7 @@ namespace IfcDoc.Format.HTM
             "<frameset rows=\"110px,*\">" +
             "    <frame src=\"../content.htm\" name=\"menu\" frameborder=\"0\">" +
             "	<frameset cols=\"15%,*\">" +
-            "		<frame src=\"../../blank.htm\" name=\"index\" frameborder=\"0\">" +
+            "		<frame src=\"../blank.htm\" name=\"index\" frameborder=\"0\">" +
             "		<frame src=\"" + linkurl + "\" name=\"info\" frameborder=\"0\">" +
             "	</frameset>" +
             "	<noframes>" +
@@ -2195,7 +2405,7 @@ namespace IfcDoc.Format.HTM
             {
                 // write table linking formatted listings
                 this.Write(
-                    "<h4 class=\"annex\"><a id=\"" + key1 + "\" name=\"" + key1 + "\">" + key1 + " Schema definitions</a></h4>" +
+                    "<h4 class=\"annex\"><a>" + key1 + " Schema definitions</a></h4>" +
                     "<p class=\"std\">This schema is defined within EXPRESS and XSD files.</p>" +
                     "<p class=\"std\">&nbsp;</p>" +
                     "<table class=\"std centric\" summary=\"listings\" width=\"80%\">" +
@@ -2220,7 +2430,7 @@ namespace IfcDoc.Format.HTM
                     "</table>");
 
                 this.Write(
-                    "<h4 class=\"annex\"><a id=\"" + key2 + "\" name=\"" + key2 + "\">" + key2 + " Property and quantity templates</a></h4>" +
+                    "<h4 class=\"annex\"><a>" + key2 + " Property and quantity templates</a></h4>" +
                     "<p>Property sets and quantity sets are defined within IFC-SPF and IFC-XML files.</p>" +
                     "<p>&nbsp;</p>" +
                     "<table class=\"std centric\" summary=\"listings\" width=\"80%\">" +
@@ -2249,7 +2459,7 @@ namespace IfcDoc.Format.HTM
             if (iCodeView > 0)
             {
                 this.Write(
-    "<h4 class=\"annex\"><a id=\"" + key3 + "\" name=\"" + key3 + "\">" + key3 + " Model view definition</a></h4>" +
+    "<h4 class=\"annex\"><a>" + key3 + " Model view definition</a></h4>" +
     "<p>Model view definitions are defined within MVD-XML files.</p>" +
     "<p>&nbsp;</p>" +
     "<table class=\"std centric\" summary=\"listings\" width=\"80%\">" +
@@ -2311,6 +2521,220 @@ namespace IfcDoc.Format.HTM
             }
 
             this.WriteFooter(Properties.Settings.Default.Footer);
+        }
+
+        internal void WriteEntityInheritance(DocEntity entity)
+        {
+            this.WriteSummaryHeader("Inheritance", false);
+
+            this.WriteLine("<table class=\"gridtable\">");
+            this.WriteLine("<th>Attribute</th><th>Type</th><th>Req</th><th>Description</th>");
+
+            this.WriteEntityInheritance(entity, entity);
+
+            this.WriteLine("</table>");
+
+            this.WriteSummaryFooter();
+        }
+
+        private void WriteEntityInheritance(DocEntity entity, DocEntity treeleaf)
+        {
+            if (entity.BaseDefinition != null)
+            {
+                if (this.m_mapEntity.ContainsKey(entity.BaseDefinition))
+                {
+                    DocEntity baseEntity = (DocEntity)this.m_mapEntity[entity.BaseDefinition];
+                    WriteEntityInheritance(baseEntity, treeleaf);
+                }
+            }
+
+            bool suppresshistory = true;
+            this.Write("<tr><td colspan=\"4\">");
+            if(entity.IsAbstract())
+            {
+                this.Write("<i>");
+            }
+            this.Write(FormatDefinition(entity.Name));
+            if (entity.IsAbstract())
+            {
+                this.Write("</i>");
+            }
+            this.WriteLine("</td></tr>");
+
+            bool bInverse = false;
+            bool bDerived = false;
+            bool bExplicit = false;
+
+            // count attributes first to avoid generating tables unnecessarily (W3C validation)
+            if (entity.Attributes != null && entity.Attributes.Count > 0)
+            {
+                foreach (DocAttribute attr in entity.Attributes)
+                {
+                    if (attr.Derived != null)
+                    {
+                        // inverse may also be indicated to hold class
+                        bDerived = true;
+                    }
+                    else if (attr.Inverse != null)
+                    {                        
+                        bInverse = true;
+                    }
+                    else
+                    {
+                        bExplicit = true;
+                    }
+                }
+            }            
+
+            // explicit attributes, plus detect any inverse or derived
+            if (bExplicit)
+            {
+                foreach (DocAttribute attr in entity.Attributes)
+                {
+                    bool bInclude = true;
+
+                    // suppress any attribute that is overridden on leaf class
+                    if (treeleaf != null && treeleaf != entity)
+                    {
+                        foreach (DocAttribute derivedattr in treeleaf.Attributes)
+                        {
+                            if (derivedattr.Name.Equals(attr.Name))
+                            {
+                                bInclude = false;
+                            }
+                        }
+                    }
+
+                    if (bInclude)
+                    {
+                        if (attr.Inverse == null && attr.Derived == null)
+                        {
+                            this.m_writer.Write("<tr><td>");
+                            this.m_writer.Write(attr.Name);
+                            this.m_writer.Write("</td><td>");
+
+                            if (this.m_included == null || this.m_included.ContainsKey(attr))
+                            {
+                                this.m_writer.Write(FormatDefinition(attr.DefinedType));
+
+                                this.WriteAttributeAggregation(attr);
+                            }
+                            else
+                            {
+                                this.m_writer.Write("<span class=\"self-ref\">-</span>");
+                            }
+
+                            this.m_writer.Write("</td><td>");
+
+                            if (this.m_included == null || this.m_included.ContainsKey(attr))
+                            {
+                                if ((attr.AttributeFlags & 1) != 0)
+                                {
+                                    this.m_writer.Write("O");
+                                }
+                                else
+                                {
+                                    this.m_writer.Write("R");
+                                }
+                            }
+
+                            this.m_writer.WriteLine("</td><td>");
+                            if (this.m_included == null || this.m_included.ContainsKey(attr))
+                            {
+                                this.WriteDocumentationForISO(attr.Documentation, entity, suppresshistory);
+                            }
+                            this.m_writer.WriteLine("</td></tr>");
+
+                        }
+                    }
+                }
+            }
+
+            // inverse attributes
+            if (bInverse)
+            {
+                foreach (DocAttribute attr in entity.Attributes)
+                {
+                    DocObject docinvtype = null;
+                    if (attr.Inverse != null && attr.Derived == null && this.m_mapEntity.TryGetValue(attr.DefinedType, out docinvtype))
+                    {
+                        if (this.m_included == null || this.m_included.ContainsKey(docinvtype))
+                        {
+                            this.m_writer.Write("<tr><td><i>");
+                            this.m_writer.Write(attr.Name);
+                            this.m_writer.Write("</i>");
+                            this.m_writer.Write("</td><td>");
+
+                            this.m_writer.Write(FormatDefinition(attr.DefinedType));
+                            this.WriteAttributeAggregation(attr);
+                            this.m_writer.Write("<br/>@" + attr.Inverse);
+
+                            this.m_writer.Write("</td><td>");
+                            //
+                            this.m_writer.Write("</td><td>");
+                            this.WriteDocumentationForISO(attr.Documentation, entity, suppresshistory);
+                            this.m_writer.WriteLine("</td></tr>");
+                        }
+                    }
+                }
+            }
+
+            // derived attributes
+            if (bDerived)
+            {
+                foreach (DocAttribute attr in entity.Attributes)
+                {
+                    if (attr.Derived != null)
+                    {
+                        // determine the superclass having the attribute                        
+                        DocEntity found = null;
+                        if (treeleaf == null)
+                        {
+                            DocEntity super = entity;
+                            while (super != null && found == null && super.BaseDefinition != null)
+                            {
+                                super = this.m_mapEntity[super.BaseDefinition] as DocEntity;
+                                if (super != null)
+                                {
+                                    foreach (DocAttribute docattr in super.Attributes)
+                                    {
+                                        if (docattr.Name.Equals(attr.Name))
+                                        {
+                                            // found class
+                                            found = super;
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        if (found != null)
+                        {
+                            // overridden attribute
+                            this.m_writer.Write("<tr><td>" + "\\" + found.Name + "." + attr.Name);
+                        }
+                        else
+                        {
+                            // non-overridden
+                            this.m_writer.Write("<tr><td>" + attr.Name);
+                        }
+                        this.m_writer.Write("<br/>:=" + attr.Derived);
+
+                        this.m_writer.Write("</td><td>");
+                        this.m_writer.Write(FormatDefinition(attr.DefinedType));
+                        this.WriteAttributeAggregation(attr);
+                        this.m_writer.Write("</td><td>");
+                        //this.m_writer.Write(" := ");
+                        this.m_writer.Write("</td><td>");
+                        this.WriteDocumentationForISO(attr.Documentation, entity, suppresshistory);
+                        this.m_writer.WriteLine("</td></tr>");
+
+                    }
+                }
+            }
+
+
         }
     }    
 

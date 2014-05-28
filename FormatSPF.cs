@@ -363,11 +363,19 @@ namespace IfcDoc.Format.SPF
                             instance.OID = id;
 
                             // set the object in position
-                            this.m_instances.Add(id, instance);
+                            if (this.m_instances.ContainsKey(id))
+                            {
+                                throw new FormatException("Bad format: duplicate object identifier: #" + id.ToString());
+                            }
+                            else
+                            {
+                                this.m_instances.Add(id, instance);
+                            }
                         }
                         else
                         {
-                            throw new FormatException("Unrecognized type: " + strConstructor);                        }
+                            throw new FormatException("Unrecognized type: " + strConstructor);          
+                        }
                     }
                     break;
 
@@ -1468,7 +1476,7 @@ namespace IfcDoc.Format.SPF
             FILE_NAME hName = new FILE_NAME();
             hName.Name = filename;
             hName.OriginatingSystem = "buildingSMART IFC Documentation Generator";
-            hName.PreprocessorVersion = "buildingSMART IFCDOC 6.8"; // was "buildingSMART IFCDOC" for 2.7 and earlier;
+            hName.PreprocessorVersion = "buildingSMART IFCDOC 7.0"; // was "buildingSMART IFCDOC" for 2.7 and earlier;
             hName.Author.Add(System.Environment.UserName);
             hName.Organization.Add(System.Environment.UserDomainName);
             hName.Timestamp = DateTime.UtcNow;

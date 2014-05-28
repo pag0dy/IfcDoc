@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="IfcDoc.Schema.DOC.DocOp">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAABAAAAAAAAAAAAEAAAAAAAA=</HashCode>
+      <FileName>SchemaDoc.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IfcDoc.Schema.DOC.DocOpExpression" Collapsed="true">
+    <Position X="0.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SchemaDoc.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IfcDoc.Schema.DOC.DocOpValue" Collapsed="true">
+    <Position X="4.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SchemaDoc.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IfcDoc.Schema.DOC.DocOpStatement">
+    <Position X="0.5" Y="3.75" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAARAEAAAAABAAAAEAAAACAAAgAAAAAAA=</HashCode>
+      <FileName>SchemaDoc.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IfcDoc.Schema.DOC.DocOpLogical">
+    <Position X="2.25" Y="3.75" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAAAAAAAAAAAgBAAAAEAAACAAAAAAAAAAAA=</HashCode>
+      <FileName>SchemaDoc.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IfcDoc.Schema.DOC.DocOpParameter">
+    <Position X="4.5" Y="3.75" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAABAAAAAAAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>SchemaDoc.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IfcDoc.Schema.DOC.DocOpReference">
+    <Position X="6.25" Y="3.75" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAABAAAQAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SchemaDoc.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IfcDoc.Schema.DOC.DocOpLiteral">
+    <Position X="8" Y="3.75" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAABAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>SchemaDoc.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

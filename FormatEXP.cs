@@ -167,13 +167,18 @@ namespace IfcDoc.Format.EXP
 
             using (System.IO.StreamWriter writer = new System.IO.StreamWriter(this.m_filename))
             {
+                if (writer.BaseStream.CanSeek)
+                {
+                    writer.BaseStream.SetLength(0);
+                }
+
                 string schemaid = "IFC4";
                 string org = "buildingSMART International Limited";
 
                 writer.Write("" + 
 "(*\r\n" +
 "Copyright by:\r\n" +
-org + ", " + DateTime.UtcNow.Year + "\r\n" + 
+org + ", 1996-" + DateTime.UtcNow.Year + "\r\n" + 
 "\r\n" +
 "Any technical documentation made available by " + org + "\r\n" +
 "is the copyrighted work of " + org + " and is owned by the \r\n" +

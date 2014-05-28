@@ -1077,7 +1077,7 @@ namespace IfcDoc
 
                             IfcPropertySetTemplate ifcPset = new IfcPropertySetTemplate();
                             rel.RelatedDefinitions.Add(ifcPset);
-                            ifcPset.GlobalId = docPset.Uuid;
+                            ifcPset.GlobalId = SGuid.Format(docPset.Uuid);
                             ifcPset.Name = docPset.Name;
                             ifcPset.Description = docPset.Documentation;
 
@@ -1177,7 +1177,7 @@ namespace IfcDoc
             if (docProp.PropertyType == DocPropertyTemplateTypeEnum.COMPLEX)
             {
                 IfcComplexPropertyTemplate ifcProp = new IfcComplexPropertyTemplate();
-                ifcProp.GlobalId = docProp.Uuid;
+                ifcProp.GlobalId = SGuid.Format(docProp.Uuid);
                 ifcProp.Name = docProp.Name;
                 ifcProp.Description = docProp.Documentation;
                 ifcProp.TemplateType = IfcComplexPropertyTemplateTypeEnum.P_COMPLEX;
@@ -1194,7 +1194,7 @@ namespace IfcDoc
             else
             {
                 IfcSimplePropertyTemplate ifcProp = new IfcSimplePropertyTemplate();
-                ifcProp.GlobalId = docProp.Uuid;
+                ifcProp.GlobalId = SGuid.Format(docProp.Uuid);
                 ifcProp.Name = docProp.Name;
                 ifcProp.Description = docProp.Documentation;
                 ifcProp.TemplateType = (IfcSimplePropertyTemplateTypeEnum)Enum.Parse(typeof(IfcSimplePropertyTemplateTypeEnum), docProp.PropertyType.ToString());
@@ -1232,7 +1232,7 @@ namespace IfcDoc
                     if(mapEnums.TryGetValue(propdatatype, out docEnumeration))
                     {
                         ifcProp.Enumerators = new IfcPropertyEnumeration();
-                        ifcProp.GlobalId = docEnumeration.Uuid;
+                        ifcProp.GlobalId = SGuid.Format(docEnumeration.Uuid);
                         ifcProp.Enumerators.Name = docEnumeration.Name;
                         ifcProp.Enumerators.EnumerationValues = new List<IfcLabel>();
                         ifcProp.SecondaryMeasureType = null;

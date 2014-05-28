@@ -1434,6 +1434,11 @@ namespace IfcDoc
                     if (form.Selection != null && form.Selection.Length == 1)
                     {
                         docExample.ModelView = form.Selection[0];
+                        this.textBoxApplicabilityView.Text = docExample.ModelView.Name;
+                    }
+                    else
+                    {
+                        this.textBoxApplicabilityView.Text = String.Empty;
                     }
                 }
             }
