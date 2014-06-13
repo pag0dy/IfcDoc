@@ -32,6 +32,9 @@ namespace IfcDoc.Format.SPF
         ParseScope m_parsescope;        
         IList m_headertags;
 
+        StringBuilder m_markup; // if set, then generate markup upon reading
+        string m_marktitle; // current title for marking up object references
+
         /// <summary>
         /// Encapsulates a STEP Physical File (ISO-10303-21)
         /// </summary>
@@ -41,10 +44,17 @@ namespace IfcDoc.Format.SPF
         public FormatSPF(
             string file, 
             Dictionary<string, Type> typemap,
-            Dictionary<long, SEntity> instances)
+            Dictionary<long, SEntity> instances) : this(new System.IO.FileStream(file, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite), typemap, instances)
         {
             m_url = file;
-            m_stream = new System.IO.FileStream(file, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite);
+        }
+
+        public FormatSPF(
+            Stream stream, 
+            Dictionary<string, Type> typemap,
+            Dictionary<long, SEntity> instances)
+        {
+            m_stream = stream;
 
             m_headertags = new List<object>();
             m_typemap = typemap;
@@ -160,6 +170,11 @@ namespace IfcDoc.Format.SPF
                             // invalid format
                             throw new NotSupportedException("Format is not " + this.FormatIdentifier);
                         }
+                        if (this.m_markup != null && this.m_parsescope == ParseScope.DataFields)
+                        {
+                            this.m_markup.Append(commandline);
+                            this.m_markup.Append(";<br>");
+                        }
                         break;
 
                     case ParseSection.IsoStep:
@@ -175,6 +190,12 @@ namespace IfcDoc.Format.SPF
                         {
                             parse = ParseSection.Unknown;
                         }
+
+                        if (this.m_markup != null && this.m_parsescope == ParseScope.DataFields)
+                        {
+                            this.m_markup.Append(commandline);
+                            this.m_markup.Append(";<br>");
+                        }
                         break;
 
                     case ParseSection.Header:
@@ -187,14 +208,25 @@ namespace IfcDoc.Format.SPF
                             }
 
                             parse = ParseSection.IsoStep;
+
+                            if (this.m_markup != null && this.m_parsescope == ParseScope.DataFields)
+                            {
+                                this.m_markup.Append(commandline);
+                                this.m_markup.Append(";<br>");
+                            }
                         }
-                        else if(this.m_parsescope == ParseScope.Header)
+                        else //if(this.m_parsescope == ParseScope.Header)
                         {
                             // process header
                             object headertag = ParseConstructor(commandline);
-                            if (headertag != null)
+                            if (headertag != null && this.m_parsescope == ParseScope.Header)
                             {
                                 m_headertags.Add(headertag);
+                            }
+
+                            if (this.m_markup != null && this.m_parsescope == ParseScope.DataFields)
+                            {
+                                this.m_markup.Append(";");
                             }
                         }
                         break;
@@ -203,6 +235,12 @@ namespace IfcDoc.Format.SPF
                         if (commandline.Equals("ENDSEC"))
                         {
                             parse = ParseSection.IsoStep;
+
+                            if (this.m_markup != null && this.m_parsescope == ParseScope.DataFields)
+                            {
+                                this.m_markup.Append(commandline);
+                                this.m_markup.Append(";<br>");
+                            }
                         }
                         else
                         {
@@ -253,6 +291,11 @@ namespace IfcDoc.Format.SPF
                 if (parse == ParseCommand.Comment)
                 {
                     bAppend = false;
+
+                    if(m_markup != null && m_parsescope == ParseScope.DataFields)
+                    {
+                        m_markup.Append(ch);
+                    }
                 }
 
 
@@ -283,9 +326,19 @@ namespace IfcDoc.Format.SPF
                         {
                             bAppend = false;
                             parse = ParseCommand.Comment;
+
+                            if (m_markup != null && m_parsescope == ParseScope.DataFields)
+                            {
+                                m_markup.Append("<span style=\"color:green\">/*");
+                            }
                         }
                         else if (parse == ParseCommand.Comment)
                         {
+                            if (m_markup != null && m_parsescope == ParseScope.DataFields)
+                            {
+                                m_markup.Append("/</span>");
+                            }
+
                             parse = ParseCommand.CommentLeave;
                         }
                         break;
@@ -297,6 +350,11 @@ namespace IfcDoc.Format.SPF
                         if (parse == ParseCommand.Open)
                         {
                             bAppend = false;
+
+                            if (ch == '\n' && m_markup != null && m_parsescope == ParseScope.DataFields)
+                            {
+                                m_markup.Append("<br>");
+                            }
                         }
                         break;
 
@@ -381,8 +439,22 @@ namespace IfcDoc.Format.SPF
 
                 case ParseScope.DataFields:
                     {
+                        if(m_markup != null)
+                        {
+                            m_markup.Append("<a id=\""); // name no longer supported in HTML5; must use id
+                            m_markup.Append(id);
+                            m_markup.Append("\">#");
+                            m_markup.Append(id);
+                            m_markup.Append("</a>=");
+                        }
+
                         object instance = this.m_instances[id];
                         LoadFields(instance, strConstructor);
+
+                        if (m_markup != null)
+                        {
+                            m_markup.Append(";\r\n");
+                        }
                     }
                     break;
             }
@@ -393,6 +465,8 @@ namespace IfcDoc.Format.SPF
             // empty file: just return
             if (this.m_stream.Length == 0)
                 return;
+
+            this.m_instances.Clear();
 
             // read header and validate
             m_parsescope = ParseScope.Header;
@@ -407,6 +481,107 @@ namespace IfcDoc.Format.SPF
             ReadFile();
         }
 
+        /// <summary>
+        /// Reads file and generates HTML markup
+        /// </summary>
+        /// <returns></returns>
+        public string LoadMarkup()
+        {
+            this.m_markup = new StringBuilder();
+            Load();
+            string result = this.m_markup.ToString();
+            this.m_markup = null;
+            return result;
+        }
+
+#if false
+        private void MarkNext(StreamReader reader, StringBuilder sb)
+        {
+            // reads the next expression
+            // skips whitespace, goes until ";" (ignores comments and string literals)
+
+            ParseCommand parse = ParseCommand.Open;
+            while (parse != ParseCommand.End)
+            {
+                int iChar = reader.Read();
+                if (iChar == -1)
+                {
+                    // end of file
+                    return;
+                }
+
+                char ch = (char)iChar;
+
+                // case of "/**** " -> back in comment mode
+                if (parse == ParseCommand.CommentLeave && ch != '/')
+                {
+                    parse = ParseCommand.Comment;
+                }
+
+
+                switch (ch)
+                {
+                    case ';': // done
+                        if (parse == ParseCommand.Open)
+                        {
+                            return;
+                        }
+                        break;
+
+                    case '/': // about to enter a command or about to leave a comment
+                        if (parse == ParseCommand.Open)
+                        {
+                            sb.Append("<span style=\"color:green\">");
+                            sb.Append(ch);
+
+                            parse = ParseCommand.CommentEnter;
+                        }
+                        else if (parse == ParseCommand.CommentLeave)
+                        {
+                            sb.Append(ch);
+                            sb.Append("</span>");
+
+                            parse = ParseCommand.Open;
+                        }
+                        break;
+
+                    case '*':
+                        if (parse == ParseCommand.CommentEnter)
+                        {
+                            parse = ParseCommand.Comment;
+                        }
+                        else if (parse == ParseCommand.Comment)
+                        {
+                            parse = ParseCommand.CommentLeave;
+                        }
+                        sb.Append(ch);
+                        break;
+
+                    case '\r':
+                        break;
+
+                    case '\n':
+                        sb.Append("<br>\r\n");
+                        break;
+
+                    case '\'':
+                        if (parse == ParseCommand.Open)
+                        {
+                            parse = ParseCommand.String;
+                        }
+                        else if (parse == ParseCommand.String)
+                        {
+                            parse = ParseCommand.Open;
+                        }
+                        sb.Append(ch);
+                        break;
+                }
+            }
+
+            return; // end of file!
+
+        }
+#endif
         private enum ParseSection
         {
             Unknown = 0, // waiting for ISO-STEP directive
@@ -1014,6 +1189,17 @@ namespace IfcDoc.Format.SPF
         {
             System.Collections.IList list = (System.Collections.IList)Activator.CreateInstance(t);
 
+
+            if (m_markup != null && this.m_parsescope == ParseScope.DataFields)
+            {
+                m_markup.Append("(");
+
+                /*
+                m_markup.Append("<a title=\"[");
+                m_markup.Append(list.Count);
+                m_markup.Append("]\">(</a>");*/
+            }
+
             // set owner and member
 
             bool bQuote = false;
@@ -1066,6 +1252,30 @@ namespace IfcDoc.Format.SPF
                     Type elemtype = t.GetGenericArguments()[0];
                     object value = ParseValue(elemtype, strval);
 
+                    if (m_markup != null && this.m_parsescope == ParseScope.DataFields)
+                    {
+                        if (list.Count > 0)
+                        {
+                            m_markup.Append(",");
+                        }
+
+                        if (value is SEntity)
+                        {
+                            SEntity ent = (SEntity)value;
+                            m_markup.Append("<a href=\"#");
+                            m_markup.Append(ent.OID);
+                            m_markup.Append("\" title=\"");
+                            m_markup.Append(this.m_marktitle);
+                            m_markup.Append("\">");
+                            m_markup.Append(strval);
+                            m_markup.Append("</a>");
+                        }
+                        else
+                        {
+                            m_markup.Append(strval);
+                        }
+                    }
+
                     // assign the value
                     if (value != null)
                     {
@@ -1083,6 +1293,15 @@ namespace IfcDoc.Format.SPF
                 }
 
                 x++;
+            }
+
+            if (m_markup != null && this.m_parsescope == ParseScope.DataFields)
+            {
+                m_markup.Append(")");
+                /*
+                m_markup.Append("<a title=\"[");
+                m_markup.Append(list.Count);
+                m_markup.Append("]\">)</a>");*/
             }
 
             return list;
@@ -1233,8 +1452,7 @@ namespace IfcDoc.Format.SPF
             strType = strType.Trim();
 
             Type t = null;
-
-            if (this.m_parsescope == ParseScope.Header)
+            if(!this.m_typemap.TryGetValue(strType, out t))
             {
                 switch (strType)
                 {
@@ -1250,10 +1468,6 @@ namespace IfcDoc.Format.SPF
                         t = typeof(FILE_NAME);
                         break;
                 }
-            }
-            else
-            {
-                t = this.m_typemap[strType];
             }
 
             if (t == null)
@@ -1282,17 +1496,32 @@ namespace IfcDoc.Format.SPF
 
         private void LoadFields(object instance, string line)
         {
-            if (instance is Schema.VEX.AGGREGATES)
-            {
-                this.ToString();
-            }
-
             try
             {
                 Type t = instance.GetType();
                 IList<FieldInfo> fields = SEntity.GetFieldsOrdered(t);
 
                 int iParam = line.IndexOf('(');
+
+                if (m_markup != null && this.m_parsescope == ParseScope.DataFields)
+                {
+                    if (this.m_typemap.ContainsValue(t))
+                    {
+                        m_markup.Append("<a class=\"listing-link\" href=\"../../schema/");
+                        m_markup.Append(t.Namespace.ToLower());
+                        m_markup.Append("/lexical/");
+                        m_markup.Append(t.Name.ToLower());
+                        m_markup.Append(".htm\">");
+                        m_markup.Append(t.Name.ToUpper());
+                        m_markup.Append("</a>");
+                    }
+                    else
+                    {
+                        m_markup.Append(t.Name);
+                    }
+
+                    m_markup.Append("(");
+                }
 
                 int n = 0;
                 int x = iParam + 1;
@@ -1357,9 +1586,23 @@ namespace IfcDoc.Format.SPF
                         n++;
 
                         bValue = false;
+
+
+                        if (this.m_markup != null)
+                        {
+                            if(n < fields.Count && this.m_parsescope == ParseScope.DataFields)
+                            {
+                                this.m_markup.Append(",");
+                            }
+                        }
                     }
 
                     x++;
+                }
+
+                if (m_markup != null && this.m_parsescope == ParseScope.DataFields)
+                {
+                    m_markup.Append(")");//;");
                 }
             }
             catch (System.Exception xxx)
@@ -1383,9 +1626,41 @@ namespace IfcDoc.Format.SPF
 
         private void ParseField(FieldInfo field, object instance, string strval)
         {
+            if (m_markup != null && this.m_parsescope == ParseScope.DataFields)
+            {
+                StringBuilder sbTitle = new StringBuilder();
+                sbTitle.Append(field.Name);
+                sbTitle.Append(" : ");
+
+                int nest = 0;
+                Type tField = field.FieldType;
+                while (typeof(IList).IsAssignableFrom(tField))
+                {
+                    tField = tField.GetGenericArguments()[0];
+                    nest++;
+                }
+
+                sbTitle.Append(tField.Name);
+                for (int i = 0; i < nest; i++)
+                {
+                    sbTitle.Append("[]");
+                }
+                this.m_marktitle = sbTitle.ToString();
+
+                m_markup.Append("<a title=\"");
+                m_markup.Append(m_marktitle);
+                m_markup.Append("\">");
+            }
+
             // "*" means accept existing/derived value
             if (strval.Length == 0 || strval[0] == '*')
             {
+                if (m_markup != null && this.m_parsescope == ParseScope.DataFields)
+                {
+                    m_markup.Append(strval);
+                    m_markup.Append("</a>");
+                }
+
                 return;
             }
 
@@ -1395,6 +1670,30 @@ namespace IfcDoc.Format.SPF
             try
             {
                 value = ParseValue(field.FieldType, strval);
+
+                if (m_markup != null && this.m_parsescope == ParseScope.DataFields && !(value is IList))
+                {
+                    if (value is SEntity)
+                    {
+                        SEntity ent = (SEntity)value;
+                        m_markup.Append("<a href=\"#");
+                        m_markup.Append(ent.OID);
+                        m_markup.Append("\" title=\"");
+                        m_markup.Append(m_marktitle);
+                        m_markup.Append("\">");
+                        m_markup.Append(strval);
+                        m_markup.Append("</a>");
+                    }
+                    else if(field.FieldType.IsInterface && value != null && value.GetType().IsValueType)
+                    {
+                        // do nothing -- already captured in constructor
+                    }
+                    else
+                    {
+                        m_markup.Append(strval);
+                    }
+                }
+
                 if (value != null)
                 {
                     field.SetValue(instance, value);
@@ -1466,6 +1765,11 @@ namespace IfcDoc.Format.SPF
             {
                 // eat it -- compatible file format change in v3.5 regarding DocDefinition.DiagramRectangle (entity) replacing TemplateStatus (integer)
             }
+
+            if (m_markup != null && this.m_parsescope == ParseScope.DataFields)
+            {
+                m_markup.Append("</a>");
+            }
         }
 
         public void InitHeaders(string filename, string schema)
@@ -1476,7 +1780,7 @@ namespace IfcDoc.Format.SPF
             FILE_NAME hName = new FILE_NAME();
             hName.Name = filename;
             hName.OriginatingSystem = "buildingSMART IFC Documentation Generator";
-            hName.PreprocessorVersion = "buildingSMART IFCDOC 7.0"; // was "buildingSMART IFCDOC" for 2.7 and earlier;
+            hName.PreprocessorVersion = "buildingSMART IFCDOC 7.2"; // was "buildingSMART IFCDOC" for 2.7 and earlier;
             hName.Author.Add(System.Environment.UserName);
             hName.Organization.Add(System.Environment.UserDomainName);
             hName.Timestamp = DateTime.UtcNow;

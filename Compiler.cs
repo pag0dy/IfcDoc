@@ -22,8 +22,9 @@ namespace IfcDoc
         private DocModelView[] m_views;
         private AssemblyBuilder m_assembly;
         private ModuleBuilder m_module;
-        private Dictionary<string, DocDefinition> m_definitions;
+        private Dictionary<string, DocObject> m_definitions;
         private Dictionary<string, Type> m_types;
+        private Dictionary<string, string> m_namespaces;
         private Dictionary<Type, Dictionary<string, FieldInfo>> m_fields;
         private Dictionary<DocTemplateDefinition, MethodInfo> m_templates;
 
@@ -34,10 +35,11 @@ namespace IfcDoc
 
             this.m_assembly = AppDomain.CurrentDomain.DefineDynamicAssembly(new AssemblyName("IFC4"), AssemblyBuilderAccess.RunAndSave);
             this.m_module = this.m_assembly.DefineDynamicModule("IFC4.dll", "IFC4.dll");
-            this.m_definitions = new Dictionary<string, DocDefinition>();
+            this.m_definitions = new Dictionary<string, DocObject>();
             this.m_types = new Dictionary<string, Type>();
             this.m_fields = new Dictionary<Type, Dictionary<string, FieldInfo>>();
             this.m_templates = new Dictionary<DocTemplateDefinition, MethodInfo>();
+            this.m_namespaces = new Dictionary<string, string>();
 
             Dictionary<DocObject, bool> included = null;
             if (this.m_views != null)
@@ -58,6 +60,7 @@ namespace IfcDoc
                         //if (included == null || included.ContainsKey(docEntity))
                         {
                             this.m_definitions.Add(docEntity.Name, docEntity);
+                            this.m_namespaces.Add(docEntity.Name, docSchema.Name);
                         }
                     }
 
@@ -66,15 +69,192 @@ namespace IfcDoc
                         //if (included == null || included.ContainsKey(docType))
                         {
                             this.m_definitions.Add(docType.Name, docType);
+                            this.m_namespaces.Add(docType.Name, docSchema.Name);
                         }
                     }
                 }
             }
 
+            // first register types and fields
             foreach (string key in this.m_definitions.Keys)
             {
                 RegisterType(key);
             }
+
+            // now register template functions (may depend on fields existing)
+
+            // find associated ConceptRoot for model view, define validation function
+            if (this.m_views != null)
+            {
+                foreach (DocModelView view in this.m_views)
+                {
+                    string viewname = view.Code;
+                    foreach (DocConceptRoot root in view.ConceptRoots)
+                    {
+                        Type tOpen= null;
+                        
+                        if (this.m_types.TryGetValue(root.ApplicableEntity.Name, out tOpen) && tOpen is TypeBuilder)
+                        {
+                            TypeBuilder tb = (TypeBuilder)tOpen;
+                            foreach (DocTemplateUsage concept in root.Concepts)
+                            {
+                                // bool ConceptTemplateA([Parameter1, ...]);
+                                // {
+                                //    // for loading reference value:
+                                //    .ldfld [AttributeRule]
+                                //    .ldelem [Index] // for collection, get element by index
+                                //    .castclass [EntityRule] for entity, cast to expected type; 
+                                //    // for object graphs, repeat the above instructions to load value
+                                //    
+                                //    for loading constant:
+                                //    .ldstr 'value'
+                                //
+                                //    for comparison functions:
+                                //    .cge
+                                //
+                                //    for logical aggregations, repeat each item, pushing 2 elements on stack, then run comparison
+                                //    .or
+                                //
+                                //    return the boolean value on the stack
+                                //    .ret;
+                                // }
+
+                                // bool[] ConceptA()
+                                // {
+                                //    bool[] result = new bool[2];
+                                // 
+                                //    if parameters are specified, call for each template rule; otherwise call just once
+                                //    result[0] = ConceptTemplateA([Parameter1, ...]); // TemplateRule#1
+                                //    result[1] = ConceptTemplateA([Parameter1, ...]); // TemplateRule#2
+                                // 
+                                //    return result;
+                                // }
+
+                                // compile a method for the template definition, where parameters are passed to the template
+                                if (concept.Definition != null)
+                                {
+                                    MethodInfo methodTemplate = this.RegisterTemplate(concept.Definition);
+
+                                    // verify that definition is compatible with entity (user error)
+                                    if (methodTemplate != null && methodTemplate.DeclaringType.IsAssignableFrom(tb))
+                                    {
+                                        string methodname = viewname + "_" + concept.Definition.Name.Replace(' ', '_').Replace(':', '_').Replace('-', '_');
+                                        MethodBuilder method = tb.DefineMethod(methodname, MethodAttributes.Public, CallingConventions.HasThis, typeof(bool[]), null);
+                                        ILGenerator generator = method.GetILGenerator();
+
+                                        if (concept.Items != null && concept.Items.Count > 0)
+                                        {
+                                            // allocate array of booleans, store as local variable
+                                            generator.DeclareLocal(typeof(bool[]));
+                                            generator.Emit(OpCodes.Ldc_I4, concept.Items.Count);
+                                            generator.Emit(OpCodes.Newarr, typeof(bool));
+                                            generator.Emit(OpCodes.Stloc_0);
+
+                                            DocModelRule[] parameters = concept.Definition.GetParameterRules();
+
+                                            // call for each item with specific parameters
+                                            for (int row = 0; row < concept.Items.Count; row++)
+                                            {
+                                                DocTemplateItem docItem = concept.Items[row];
+
+                                                generator.Emit(OpCodes.Ldloc_0);   // push the array object onto the stack, for storage later
+                                                generator.Emit(OpCodes.Ldc_I4, row); // push the array index onto the stack for storage later
+
+                                                generator.Emit(OpCodes.Ldarg_0);   // push the *this* pointer for the IFC object instance
+
+                                                // push parameters onto stack
+                                                for (int col = 0; col < parameters.Length; col++)
+                                                {
+                                                    DocModelRule docParam = parameters[col];
+                                                    string paramvalue = docItem.GetParameterValue(docParam.Identification);
+                                                    if (paramvalue != null)
+                                                    {
+                                                        DocDefinition docParamType = concept.Definition.GetParameterType(docParam.Identification, this.m_definitions);
+                                                        if (docParamType is DocDefined)
+                                                        {
+                                                            DocDefined docDefined = (DocDefined)docParamType;
+                                                            switch (docDefined.DefinedType)
+                                                            {
+                                                                case "INTEGER":
+                                                                    {
+                                                                        Int64 ival = 0;
+                                                                        Int64.TryParse(paramvalue, out ival);
+                                                                        generator.Emit(OpCodes.Ldc_I8, ival);
+                                                                        generator.Emit(OpCodes.Box);
+                                                                    }
+                                                                    break;
+
+                                                                case "REAL":
+                                                                    {
+                                                                        Double dval = 0.0;
+                                                                        Double.TryParse(paramvalue, out dval);
+                                                                        generator.Emit(OpCodes.Ldc_R8, dval);
+                                                                        generator.Emit(OpCodes.Box);
+                                                                    }
+                                                                    break;
+
+                                                                case "STRING":
+                                                                    generator.Emit(OpCodes.Ldstr, paramvalue);
+                                                                    break;
+
+                                                                default:
+                                                                    generator.Emit(OpCodes.Ldstr, paramvalue);
+                                                                    break;
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            // assume string
+                                                            generator.Emit(OpCodes.Ldstr, paramvalue);
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        generator.Emit(OpCodes.Ldnull);
+                                                    }
+                                                }
+
+                                                generator.Emit(OpCodes.Call, methodTemplate); // call the validation function for the concept template
+                                                generator.Emit(OpCodes.Stelem_I1); // store the result (bool) into an array slot 
+                                            }
+
+                                            // return the array of boolean results
+                                            generator.Emit(OpCodes.Ldloc_0);
+                                            generator.Emit(OpCodes.Ret);
+                                        }
+                                        else
+                                        {
+                                            // allocate array of booleans, store as local variable
+                                            generator.DeclareLocal(typeof(bool[]));
+                                            generator.Emit(OpCodes.Ldc_I4, 1);
+                                            generator.Emit(OpCodes.Newarr, typeof(bool));
+                                            generator.Emit(OpCodes.Stloc_0);
+
+                                            generator.Emit(OpCodes.Ldloc_0);   // push the array object onto the stack, for storage later
+                                            generator.Emit(OpCodes.Ldc_I4, 0); // push the array index onto the stack for storage later
+
+                                            // call once
+                                            generator.Emit(OpCodes.Ldarg_0);   // push the *this* pointer for the IFC object instance
+                                            generator.Emit(OpCodes.Call, methodTemplate); // call the validation function for the concept template
+                                            generator.Emit(OpCodes.Stelem_I1); // store the result (bool) into an array slot 
+
+                                            // return the array of boolean results
+                                            generator.Emit(OpCodes.Ldloc_0);
+                                            generator.Emit(OpCodes.Ret);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        System.Diagnostics.Debug.WriteLine("Incompatible template: " + tb.Name + " - " + concept.Definition.Name);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+
 
             // seal types once all are built
             List<TypeBuilder> listBase = new List<TypeBuilder>();
@@ -115,7 +295,7 @@ namespace IfcDoc
 
         public FieldInfo RegisterField(Type type, string field)
         {
-            while (type != null)
+            while (type != null && type != typeof(SEntity))
             {
                 Dictionary<string, FieldInfo> map = this.m_fields[type];
                 FieldInfo fieldinfo = null;
@@ -182,7 +362,7 @@ namespace IfcDoc
             }
 
             // look up
-            DocDefinition docType = null;
+            DocObject docType = null;
             if (!this.m_definitions.TryGetValue(strtype, out docType))
                 return null;
 
@@ -206,7 +386,8 @@ namespace IfcDoc
                     return type;
                 }
 
-                TypeBuilder tb = this.m_module.DefineType(docType.Name, attr, typebase);
+                string schema = this.m_namespaces[docType.Name];
+                TypeBuilder tb = this.m_module.DefineType(schema + "." + docType.Name, attr, typebase);
 
                 // add typebuilder to map temporarily in case referenced by an attribute within same class or base class
                 this.m_types.Add(strtype, tb);
@@ -243,6 +424,12 @@ namespace IfcDoc
                         Type typefield = RegisterType(docAttribute.DefinedType);
                         if (docAttribute.AggregationType != 0)
                         {
+                            if (docAttribute.AggregationAttribute != null)
+                            {
+                                // nested collection, e.g. IfcCartesianPointList3D
+                                typefield = typeof(List<>).MakeGenericType(new Type[] { typefield });
+                            }
+
                             typefield = typeof(List<>).MakeGenericType(new Type[] { typefield });
                         }
 
@@ -267,144 +454,6 @@ namespace IfcDoc
                     }
                 }
 
-                if (strtype.Equals("IfcRelAggregates"))
-                {
-                    this.ToString();
-                }
-
-                // find associated ConceptRoot for model view, define validation function
-                if (this.m_views != null)
-                {
-                    foreach (DocModelView view in this.m_views)
-                    {
-                        string viewname = view.Code;
-                        foreach (DocConceptRoot root in view.ConceptRoots)
-                        {
-                            if (root.ApplicableEntity == docEntity)
-                            {
-                                foreach (DocTemplateUsage concept in root.Concepts)
-                                {
-                                    // bool ConceptTemplateA([Parameter1, ...]);
-                                    // {
-                                    //    // for loading reference value:
-                                    //    .ldfld [AttributeRule]
-                                    //    .ldelem [Index] // for collection, get element by index
-                                    //    .castclass [EntityRule] for entity, cast to expected type; 
-                                    //    // for object graphs, repeat the above instructions to load value
-                                    //    
-                                    //    for loading constant:
-                                    //    .ldstr 'value'
-                                    //
-                                    //    for comparison functions:
-                                    //    .cge
-                                    //
-                                    //    for logical aggregations, repeat each item, pushing 2 elements on stack, then run comparison
-                                    //    .or
-                                    //
-                                    //    return the boolean value on the stack
-                                    //    .ret;
-                                    // }
-
-                                    // bool[] ConceptA()
-                                    // {
-                                    //    bool[] result = new bool[2];
-                                    // 
-                                    //    if parameters are specified, call for each template rule; otherwise call just once
-                                    //    result[0] = ConceptTemplateA([Parameter1, ...]); // TemplateRule#1
-                                    //    result[1] = ConceptTemplateA([Parameter1, ...]); // TemplateRule#2
-                                    // 
-                                    //    return result;
-                                    // }
-
-                                    // compile a method for the template definition, where parameters are passed to the template
-                                    if (concept.Definition != null)
-                                    {
-                                        MethodInfo methodTemplate = this.RegisterTemplate(concept.Definition);
-
-                                        // verify that definition is compatible with entity (user error)
-                                        if (methodTemplate.DeclaringType.IsAssignableFrom(tb))
-                                        {
-
-                                            string methodname = viewname + "_" + concept.Definition.Name.Replace(' ', '_').Replace(':', '_').Replace('-', '_');
-                                            MethodBuilder method = tb.DefineMethod(methodname, MethodAttributes.Public, CallingConventions.HasThis, typeof(bool[]), null);
-                                            ILGenerator generator = method.GetILGenerator();
-
-                                            if (concept.Items != null && concept.Items.Count > 0)
-                                            {
-                                                // allocate array of booleans, store as local variable
-                                                generator.DeclareLocal(typeof(bool[]));
-                                                generator.Emit(OpCodes.Ldc_I4, concept.Items.Count);
-                                                generator.Emit(OpCodes.Newarr, typeof(bool));
-                                                generator.Emit(OpCodes.Stloc_0);
-
-                                                DocModelRule[] parameters = concept.Definition.GetParameterRules();
-
-                                                // call for each item with specific parameters
-                                                for (int row = 0; row < concept.Items.Count; row++)
-                                                {
-                                                    DocTemplateItem docItem = concept.Items[row];
-
-                                                    generator.Emit(OpCodes.Ldloc_0);   // push the array object onto the stack, for storage later
-                                                    generator.Emit(OpCodes.Ldc_I4, row); // push the array index onto the stack for storage later
-
-                                                    generator.Emit(OpCodes.Ldarg_0);   // push the *this* pointer for the IFC object instance
-
-                                                    // push parameters onto stack
-                                                    for (int col = 0; col < parameters.Length; col++)
-                                                    {
-                                                        DocModelRule docParam = parameters[col];
-                                                        string paramvalue = docItem.GetParameterValue(docParam.Identification);
-                                                        if (paramvalue != null)
-                                                        {
-                                                            //TODO: support other types such as integer, real, enum
-                                                            generator.Emit(OpCodes.Ldstr, paramvalue);
-                                                        }
-                                                        else
-                                                        {
-                                                            generator.Emit(OpCodes.Ldnull);
-                                                        }
-                                                    }
-
-                                                    generator.Emit(OpCodes.Call, methodTemplate); // call the validation function for the concept template
-                                                    generator.Emit(OpCodes.Stelem_I); // store the result (bool) into an array slot 
-                                                    // VERIFY: is bool size dependent on platform (32/64?)
-                                                }
-
-                                                // return the array of boolean results
-                                                generator.Emit(OpCodes.Ldloc_0);
-                                                generator.Emit(OpCodes.Ret);
-                                            }
-                                            else
-                                            {
-                                                // allocate array of booleans, store as local variable
-                                                generator.DeclareLocal(typeof(bool[]));
-                                                generator.Emit(OpCodes.Ldc_I4, 1);
-                                                generator.Emit(OpCodes.Newarr, typeof(bool));
-                                                generator.Emit(OpCodes.Stloc_0);
-
-                                                generator.Emit(OpCodes.Ldloc_0);   // push the array object onto the stack, for storage later
-                                                generator.Emit(OpCodes.Ldc_I4, 0); // push the array index onto the stack for storage later
-
-                                                // call once
-                                                generator.Emit(OpCodes.Ldarg_0);   // push the *this* pointer for the IFC object instance
-                                                generator.Emit(OpCodes.Call, methodTemplate); // call the validation function for the concept template
-                                                generator.Emit(OpCodes.Stelem_I1); // store the result (bool) into an array slot 
-
-                                                // return the array of boolean results
-                                                generator.Emit(OpCodes.Ldloc_0);
-                                                generator.Emit(OpCodes.Ret);
-                                            }
-                                        }
-                                        else
-                                        {
-                                            System.Diagnostics.Debug.WriteLine("Incompatible template: " + strtype + " - " + concept.Definition.Name);
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
 
                 // remove from typebuilder
                 this.m_types.Remove(strtype);
@@ -414,7 +463,8 @@ namespace IfcDoc
             else if (docType is DocSelect)
             {
                 attr |= TypeAttributes.Interface | TypeAttributes.Abstract;
-                TypeBuilder tb = this.m_module.DefineType(docType.Name, attr);
+                string schema = this.m_namespaces[docType.Name];
+                TypeBuilder tb = this.m_module.DefineType(schema + "." + docType.Name, attr);
 
                 // interfaces implemented by type (SELECTS)
                 foreach (DocDefinition docdef in this.m_definitions.Values)
@@ -454,7 +504,9 @@ namespace IfcDoc
                 DocDefined docDef = (DocDefined)docType;
 
                 attr |= TypeAttributes.Sealed;
-                TypeBuilder tb = this.m_module.DefineType(docType.Name, attr, typeof(ValueType));
+
+                string schema = this.m_namespaces[docType.Name];
+                TypeBuilder tb = this.m_module.DefineType(schema + "." + docType.Name, attr, typeof(ValueType));
 
                 // interfaces implemented by type (SELECTS)
                 foreach (DocDefinition docdef in this.m_definitions.Values)
@@ -521,10 +573,18 @@ namespace IfcDoc
                 {
                     DocModelRule param = parameters[iParam];
                     paramtypes[iParam] = RegisterType(param.Name);
+
+                    if(paramtypes[iParam] == null)
+                    {
+                        paramtypes[iParam] = typeof(object); // fallback
+                    }
                 }
             }
 
             TypeBuilder tb = (System.Reflection.Emit.TypeBuilder)this.RegisterType(dtd.Type);
+            if (tb == null)
+                return null;
+            
             string methodname = dtd.Name.Replace(' ', '_').Replace(':', '_').Replace('-', '_');
             MethodBuilder method = tb.DefineMethod(methodname, MethodAttributes.Public, CallingConventions.HasThis, typeof(bool), paramtypes);
             ILGenerator generator = method.GetILGenerator();

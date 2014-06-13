@@ -296,9 +296,22 @@ namespace IfcDoc
             else if (docObject is DocExample)
             {
                 this.tabControl.TabPages.Add(this.tabPagePropertySet);
+                this.tabControl.TabPages.Add(this.tabPageExample);
                 this.LoadApplicability();
                 this.comboBoxPsetType.Enabled = false;
                 this.buttonApplicabilityAddTemplate.Visible = true;
+
+                DocExample docExample = (DocExample)docObject;
+                if (docExample.File != null)
+                {
+                    this.textBoxExample.Text = Encoding.ASCII.GetString(docExample.File);
+                    this.buttonExampleClear.Enabled = true;
+                }
+                else
+                {
+                    this.textBoxExample.Text = String.Empty;
+                    this.buttonExampleClear.Enabled = false;
+                }
             }
         }
 
@@ -1654,6 +1667,35 @@ namespace IfcDoc
             DocXsdFormat docFormat = (DocXsdFormat)this.listViewViewXsd.SelectedItems[0].Tag;
             this.comboBoxViewXsd.SelectedIndex = (int)docFormat.XsdFormat;
             this.checkBoxViewXsdTagless.Checked = docFormat.XsdTagless;
+        }
+
+        private void buttonExampleLoad_Click(object sender, EventArgs e)
+        {
+            if (this.openFileDialogExample.ShowDialog() == DialogResult.OK)
+            {
+                DocExample docExample = (DocExample)this.m_target;
+                using(System.IO.FileStream fs = new System.IO.FileStream(this.openFileDialogExample.FileName, System.IO.FileMode.Open))
+                {
+                    if (fs.Length < Int32.MaxValue)
+                    {
+                        docExample.File = new byte[fs.Length];
+                        fs.Read(docExample.File, 0, (int)fs.Length);
+                        this.textBoxExample.Text = Encoding.ASCII.GetString(docExample.File);
+                    }
+                    else
+                    {
+                        MessageBox.Show("File is too large. Example files must be 2 GB or less, and recommended to be far less than that for documentation usability.");
+                    }
+                }
+
+            }
+        }
+
+        private void buttonExampleClear_Click(object sender, EventArgs e)
+        {
+            DocExample docExample = (DocExample)this.m_target;
+            docExample.File = null;
+            this.textBoxExample.Text = String.Empty;
         }
 
 

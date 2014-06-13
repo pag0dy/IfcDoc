@@ -905,11 +905,14 @@ namespace IfcDoc.Schema.DOC
             if (template.Rules != null)
             {
                 DocEntity docEnt = this.GetDefinition(template.Type) as DocEntity;
-                RegisterEntity(included, docEnt);
-
-                foreach (DocModelRuleAttribute docRuleAttr in template.Rules)
+                if (docEnt != null)
                 {
-                    RegisterRule(included, docEnt, docRuleAttr, mapVirtualAttributes);
+                    RegisterEntity(included, docEnt);
+
+                    foreach (DocModelRuleAttribute docRuleAttr in template.Rules)
+                    {
+                        RegisterRule(included, docEnt, docRuleAttr, mapVirtualAttributes);
+                    }
                 }
             }
         }
@@ -1390,6 +1393,35 @@ namespace IfcDoc.Schema.DOC
             return list.ToArray();
         }
 
+        /// <summary>
+        /// Resolves a template parameter type
+        /// </summary>
+        /// <param name="docTemplate"></param>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
+        public DocDefinition GetParameterType(string parameter, Dictionary<string, DocObject> map)
+        {
+            DocObject docEnt = null;
+            if (!map.TryGetValue(this.Type, out docEnt) || !(docEnt is DocEntity))
+                return null;
+
+            DocEntity docEntity = (DocEntity)docEnt;
+
+            foreach (DocModelRule rule in this.Rules)
+            {
+                if (rule is DocModelRuleAttribute)
+                {
+                    DocDefinition docAttr = docEntity.ResolveParameterType((DocModelRuleAttribute)rule, parameter, map);
+                    if (docAttr != null)
+                    {
+                        return docAttr;
+                    }
+                }
+            }
+
+            return null;
+        }
+        
         internal bool Includes(DocTemplateDefinition docTemplateDefinition)
         {
             if (this == docTemplateDefinition)
@@ -2165,7 +2197,7 @@ namespace IfcDoc.Schema.DOC
         {
             if (this.Expression != null)
             {
-                this.Expression.Emit(context, generator, dtd);
+                this.Expression.Emit(context, generator, dtd, null);
 
                 // if successful, keep going; if not, then return false
                 generator.Emit(OpCodes.Brtrue_S, (byte)2);
@@ -2193,7 +2225,8 @@ namespace IfcDoc.Schema.DOC
         internal virtual LocalBuilder Emit(
             Compiler context,
             ILGenerator generator, 
-            DocTemplateDefinition dtd)
+            DocTemplateDefinition dtd,
+            Type valuetype)
         {
             return null;
         }
@@ -2349,7 +2382,7 @@ namespace IfcDoc.Schema.DOC
             base.Delete();
         }
 
-        internal override LocalBuilder Emit(Compiler context, ILGenerator generator, DocTemplateDefinition dtd)
+        internal override LocalBuilder Emit(Compiler context, ILGenerator generator, DocTemplateDefinition dtd, Type valuetype)
         {
             Type typeCompare = context.RegisterType(this.Reference.EntityRule.Name);
 
@@ -2359,7 +2392,7 @@ namespace IfcDoc.Schema.DOC
                 case DocOpCode.NoOperation:
                     {
                         // push the referenced value onto the stack
-                        LocalBuilder local = this.Reference.Emit(context, generator, dtd);
+                        LocalBuilder local = this.Reference.Emit(context, generator, dtd, null);
 
                         // push the value to be compared onto the stack
                         if (typeCompare.IsEnum && this.Value is DocOpLiteral)
@@ -2389,7 +2422,7 @@ namespace IfcDoc.Schema.DOC
                         else
                         {
                             // string
-                            this.Value.Emit(context, generator, dtd);
+                            this.Value.Emit(context, generator, dtd, typeCompare);
                         }
                     }
                     break;
@@ -2397,12 +2430,12 @@ namespace IfcDoc.Schema.DOC
                 case DocOpCode.LoadLength:
                     {
                         // push the referenced value onto the stack
-                        LocalBuilder local = this.Reference.Emit(context, generator, dtd);
+                        LocalBuilder local = this.Reference.Emit(context, generator, dtd, null);
 
                         generator.Emit(OpCodes.Ldlen);
 
                         // push the value to be compared onto the stack
-                        this.Value.Emit(context, generator, dtd);
+                        this.Value.Emit(context, generator, dtd, null);
                     }
                     break;
 
@@ -2410,7 +2443,7 @@ namespace IfcDoc.Schema.DOC
                     if (this.Value is DocOpLiteral)
                     {
                         // push the referenced value onto the stack
-                        LocalBuilder local = this.Reference.Emit(context, generator, dtd);
+                        LocalBuilder local = this.Reference.Emit(context, generator, dtd, null);
 
                         Type typeInstance = context.RegisterType(((DocOpLiteral)this.Value).Value);
                         generator.Emit(OpCodes.Isinst, typeInstance);
@@ -2436,7 +2469,7 @@ namespace IfcDoc.Schema.DOC
                         LocalBuilder local = generator.DeclareLocal(typeof(string));
 
                         // store the referenced value
-                        this.Reference.Emit(context, generator, dtd);
+                        this.Reference.Emit(context, generator, dtd, null);
                         generator.Emit(OpCodes.Stloc, (short)local.LocalIndex);
 
                         // if null, then not a duplicate, jump to end
@@ -2550,14 +2583,32 @@ namespace IfcDoc.Schema.DOC
                     break;
 
                 case DocOpCode.CompareGreaterThan:
-                    generator.Emit(OpCodes.Cgt);
+                    {
+                        MethodInfo methodCompare = typeof(IComparable).GetMethod("CompareTo", new Type[] { typeof(Object) });
+                        generator.Emit(OpCodes.Castclass, typeof(IComparable));
+                        generator.Emit(OpCodes.Callvirt, methodCompare);
+                        generator.Emit(OpCodes.Ldc_I4_0);
+                        generator.Emit(OpCodes.Cgt);
+                    }
                     break;
 
                 case DocOpCode.CompareLessThan:
-                    generator.Emit(OpCodes.Clt);
+                    {
+                        MethodInfo methodCompare = typeof(IComparable).GetMethod("CompareTo", new Type[] { typeof(Object) });
+                        generator.Emit(OpCodes.Castclass, typeof(IComparable));
+                        generator.Emit(OpCodes.Callvirt, methodCompare);
+                        generator.Emit(OpCodes.Ldc_I4_0);
+                        generator.Emit(OpCodes.Clt);
+                    }
                     break;
 
                 case DocOpCode.CompareGreaterThanOrEqual:
+                    {
+                        MethodInfo methodCompare = typeof(IComparable).GetMethod("CompareTo", new Type[] { typeof(Object) });
+                        generator.Emit(OpCodes.Castclass, typeof(IComparable));
+                        generator.Emit(OpCodes.Callvirt, methodCompare);
+                        generator.Emit(OpCodes.Ldc_I4_0);
+                    }
                     generator.Emit(OpCodes.Bge_S, (byte)3);
                     generator.Emit(OpCodes.Ldc_I4_0);
                     generator.Emit(OpCodes.Br_S, (byte)1);
@@ -2565,6 +2616,12 @@ namespace IfcDoc.Schema.DOC
                     break;
 
                 case DocOpCode.CompareLessThanOrEqual:
+                    {
+                        MethodInfo methodCompare = typeof(IComparable).GetMethod("CompareTo", new Type[] { typeof(Object) });
+                        generator.Emit(OpCodes.Castclass, typeof(IComparable));
+                        generator.Emit(OpCodes.Callvirt, methodCompare);
+                        generator.Emit(OpCodes.Ldc_I4_0);
+                    }
                     generator.Emit(OpCodes.Ble_S, (byte)3);
                     generator.Emit(OpCodes.Ldc_I4_0);
                     generator.Emit(OpCodes.Br_S, (byte)1);
@@ -2627,10 +2684,11 @@ namespace IfcDoc.Schema.DOC
         internal override LocalBuilder Emit(
             Compiler context,
             ILGenerator generator,
-            DocTemplateDefinition dtd)
+            DocTemplateDefinition dtd,
+            Type valuetype)
         {
-            this.ExpressionA.Emit(context, generator, dtd);
-            this.ExpressionB.Emit(context, generator, dtd);
+            this.ExpressionA.Emit(context, generator, dtd, null);
+            this.ExpressionB.Emit(context, generator, dtd, null);
 
             switch (this.Operation)
             {
@@ -2672,7 +2730,7 @@ namespace IfcDoc.Schema.DOC
             return "#" + this.AttributeRule.Identification;
         }
 
-        internal override LocalBuilder Emit(Compiler context, ILGenerator generator, DocTemplateDefinition dtd)
+        internal override LocalBuilder Emit(Compiler context, ILGenerator generator, DocTemplateDefinition dtd, Type valuetype)
         {
             // determine the index of the parameter
             DocModelRule[] rules = dtd.GetParameterRules();
@@ -2725,7 +2783,8 @@ namespace IfcDoc.Schema.DOC
         internal override LocalBuilder Emit(
             Compiler compiler,
             ILGenerator generator, 
-            DocTemplateDefinition template)
+            DocTemplateDefinition template,
+            Type valuetype)
         {
             // ldarg.0 (this)
             // ldfld + token (calculated from attribute reference) -- recursively until final attribute
@@ -2739,10 +2798,15 @@ namespace IfcDoc.Schema.DOC
             DocModelRule[] rulepath = template.BuildRulePath(this.EntityRule);
             foreach(DocModelRule rule in rulepath)
             {
-                if(rule is DocModelRuleAttribute)
+                if (rule is DocModelRuleAttribute)
                 {
                     FieldInfo field = compiler.RegisterField(type, rule.Name);
-
+                    if (field == null)
+                    {
+                        // bail
+                        this.ToString();
+                        return null;
+                    }
                     generator.Emit(OpCodes.Castclass, type);
                     generator.Emit(OpCodes.Ldfld, field); // field
 
@@ -2794,8 +2858,9 @@ namespace IfcDoc.Schema.DOC
                         // then load the element again
                         generator.Emit(OpCodes.Ldloc, (short)localElem.LocalIndex);
                     }
+
                 }
-                else if(rule is DocModelRuleEntity)
+                else if (rule is DocModelRuleEntity)
                 {
                     type = compiler.RegisterType(rule.Name);
 
@@ -2873,12 +2938,33 @@ namespace IfcDoc.Schema.DOC
         internal override LocalBuilder Emit(
             Compiler compiler,
             ILGenerator generator, 
-            DocTemplateDefinition dtd)
+            DocTemplateDefinition dtd,
+            Type valuetype)
         {
             // + constant or string metadata token
 
-            // for now, we only support strings; future: support integer, real, boolean, enumeration
-            if (this.Value != null)
+            if (valuetype != null && valuetype.IsValueType && valuetype.GetFields()[0].FieldType == typeof(double))
+            {
+                Double literal = 0.0;
+                Double.TryParse(this.Value, out literal);
+                generator.Emit(OpCodes.Ldc_R8, literal);
+                generator.Emit(OpCodes.Box, typeof(Double)); // needed for Object.Compare
+            }
+            else if (valuetype != null && valuetype.IsValueType && valuetype.GetFields()[0].FieldType == typeof(long))
+            {
+                Int64 literal = 0L;
+                Int64.TryParse(this.Value, out literal);
+                generator.Emit(OpCodes.Ldc_I8, literal);
+                generator.Emit(OpCodes.Box, typeof(Int64)); // needed for Object.Compare
+            }
+            else if (valuetype != null && valuetype.IsValueType && valuetype.GetFields()[0].FieldType == typeof(bool))
+            {
+                Boolean literal = false;
+                Boolean.TryParse(this.Value, out literal);
+                generator.Emit(OpCodes.Ldc_I4, literal? 1 : 0);
+                generator.Emit(OpCodes.Box, typeof(Boolean)); // needed for Object.Compare
+            }
+            else if (this.Value != null)
             {
                 generator.Emit(OpCodes.Ldstr, this.Value);
             }
@@ -4023,8 +4109,6 @@ namespace IfcDoc.Schema.DOC
                 DocObject docdef = null;
                 if (map.TryGetValue(docAttribute.DefinedType, out docdef) && docdef is DocDefinition)
                     return (DocDefinition)docdef;
-
-                this.ToString();//debug
             }
 
             // keep drilling
@@ -5106,6 +5190,7 @@ namespace IfcDoc.Schema.DOC
         [DataMember(Order = 0)] private List<DocExample> _Examples; // added in 4.3
         [DataMember(Order = 1)] private List<DocTemplateDefinition> _ApplicableTemplates; // added in 4.9
         [DataMember(Order = 2)] private DocModelView _ModelView;// added in 5.3
+        [DataMember(Order = 3)] private byte[] _File; // added in 7.2 - encoded data of file in IFC format
 
         public DocExample()
         {
@@ -5147,6 +5232,18 @@ namespace IfcDoc.Schema.DOC
             set
             {
                 this._ModelView = value;
+            }
+        }
+
+        public byte[] File
+        {
+            get
+            {
+                return this._File;
+            }
+            set
+            {
+                this._File = value;
             }
         }
     }

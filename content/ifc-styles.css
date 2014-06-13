@@ -118,8 +118,8 @@ h1, h2, h3, h4, h5 {
 
 h1 {
 	font-size: 24px;
-	margin-top: 14px;
-	margin-bottom: 14px;
+	margin-top: 12px;
+	margin-bottom: 12px;
 }
 
 h1.num {
@@ -149,8 +149,8 @@ h1.annex {
 
 h2 {
 	font-size: 20px;
-	margin-top: 20px;
-	margin-bottom: 0px;
+	margin-top: 30px;
+	margin-bottom: 10px;
 }
 
 h2.num {
@@ -165,8 +165,8 @@ h2.num:before {
 
 h3 {
 	font-size: 18px;
-	margin-top: 18px;
-	margin-bottom: 0px;
+	margin-top: 27px;
+	margin-bottom: 9px;
 }
 
 h3.num {
@@ -181,8 +181,8 @@ h3.num:before {
 
 h4 {
 	font-size: 16px;
-	margin-top: 16px;
-	margin-bottom: 0px;
+	margin-top: 24px;
+	margin-bottom: 8px;
 }
 
 h4.num {
@@ -197,8 +197,8 @@ h4.num:before {
 
 h5 {
 	font-size: 16px;
-	margin-top: 16px;
-	margin-bottom: 0px;
+	margin-top: 24px;
+	margin-bottom: 8px;
 }
 
 h5.num {
@@ -366,6 +366,15 @@ tt.std tt.spf {
 	white-space: pre;
 }
 
+summary {
+	font-size: 14px;
+	font-weight: bolder;
+	line-height: 125%;
+	margin-top: 12px;
+	margin-bottom: 0px;
+	padding-top: 2px;
+	padding-bottom: 0px;
+}
 
 /* ---------------------------------------------------------------- */
 /* styles for texts                                                 */
@@ -824,6 +833,60 @@ table.exchange th {
 table.exchange td {
 	border-width: 1px;
 	font-size: x-small;
+	border-style: solid;
+	border-color: #666666;
+	background-color: #ffffff;
+}
+
+table.attributes {
+	font-family: verdana,arial,sans-serif;
+	color: #333333;
+	border-width: 1px;
+	border-color: #666666;
+	border-collapse: collapse;
+}
+
+table.attributes th {
+	border-width: 1px;
+	font-size: x-small;
+	text-align: left;
+	padding: 4px;
+	border-style: solid;
+	border-color: #666666;
+	background-color: #dedede;
+}
+
+table.attributes td {
+	border-width: 1px;
+	font-size: x-small;
+	padding: 4px;
+	border-style: solid;
+	border-color: #666666;
+	background-color: #ffffff;
+}
+
+table.propositions {
+	font-family: verdana,arial,sans-serif;
+	color: #333333;
+	border-width: 1px;
+	border-color: #666666;
+	border-collapse: collapse;
+}
+
+table.propositions th {
+	border-width: 1px;
+	font-size: x-small;
+	text-align: left;
+	padding: 4px;
+	border-style: solid;
+	border-color: #666666;
+	background-color: #dedede;
+}
+
+table.propositions td {
+	border-width: 1px;
+	font-size: x-small;
+	padding: 4px;
 	border-style: solid;
 	border-color: #666666;
 	background-color: #ffffff;

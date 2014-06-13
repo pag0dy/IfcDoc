@@ -83,12 +83,17 @@ namespace IfcDoc.Format.HTM
 
         #endregion        
 
+        public void WriteHeader(string title, int level)
+        {
+            WriteHeader(title, level, 0, 0, 0, 0);
+        }
+
         /// <summary>
         /// Writes opening HTML
         /// </summary>
         /// <param name="title">Caption</param>
         /// <param name="level">Number of levels deep (for referencing style sheet)</param>
-        public void WriteHeader(string title, int level)
+        public void WriteHeader(string title, int level, int section, int schema, int category, int definition)
         {
             string style = "";
 
@@ -96,14 +101,20 @@ namespace IfcDoc.Format.HTM
             {
                 style += "../";
             }
-            style += "ifc-styles.css";
 
-            this.m_writer.WriteLine("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\r\n");
+            this.m_writer.WriteLine("<!DOCTYPE HTML>\r\n");
             this.m_writer.WriteLine("<html>");
             this.m_writer.WriteLine("  <head>");
             this.m_writer.WriteLine("    <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\r\n");
-            this.m_writer.WriteLine("    <link rel=\"stylesheet\" type=\"text/css\" href=\"" + style + "\">\r\n");
+            this.m_writer.WriteLine("    <link rel=\"stylesheet\" type=\"text/css\" href=\"" + style + "ifc-styles.css\">\r\n");
+            this.m_writer.WriteLine("    <link rel=\"stylesheet\" type=\"text/css\" href=\"" + style + "details-shim.css\">");
+	        this.m_writer.WriteLine("    <script type=\"text/javascript\" src=\"" + style + "details-shim.js\"></script>");
             this.m_writer.WriteLine("    <title>" + title + "</title>\r\n");
+
+            this.m_writer.WriteLine("    <style type=\"text/css\">");
+            this.m_writer.WriteLine("      body { counter-reset: index1 " + section + " index2 " + schema + " index3 " + category + " index4 " + (definition - 1) + " index5 0; }");
+            this.m_writer.WriteLine("    </style>");
+
             this.m_writer.WriteLine("  </head>\r\n");
             this.m_writer.WriteLine("  <body>\r\n");
 
@@ -113,6 +124,7 @@ namespace IfcDoc.Format.HTM
             }
         }
 
+
         /// <summary>
         /// Old function for compatibility
         /// </summary>
@@ -121,16 +133,11 @@ namespace IfcDoc.Format.HTM
         /// <param name="schema"></param>
         /// <param name="definition"></param>
         /// <param name="header"></param>
-        public void WriteHeader(string title, int section, int schema, int definition, string header)
+        public void WriteHeader(string title, int section, int schema, int category, int definition, string header)
         {
             int level = 0;
 
-            if (section == 0)
-            {
-                // toc page
-                // same
-            }
-            else if (schema == 0)
+            if (schema == 0)
             {
                 // section page
                 level = 1;
@@ -172,7 +179,7 @@ namespace IfcDoc.Format.HTM
                 level = 2;
             }
 
-            WriteHeader(title, level);
+            WriteHeader(title, level, section, schema, category, definition);
         }
 
         /// <summary>
@@ -295,6 +302,7 @@ namespace IfcDoc.Format.HTM
 
         private void WriteExpressHeader(int indent)
         {
+#if false
             this.m_writer.WriteLine("<table width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" class=\"express\">");
             this.m_writer.WriteLine(" <tr valign=\"top\">");
             if (indent > 0)
@@ -302,20 +310,32 @@ namespace IfcDoc.Format.HTM
                 this.m_writer.WriteLine("  <td width=\"" + indent.ToString() + "%\">");
             }
             this.m_writer.WriteLine("  <td>");
+#endif
         }
 
         private void WriteExpressFooter()
         {
+#if false
             this.m_writer.WriteLine("  </td>");
             this.m_writer.WriteLine(" </tr>");
             this.m_writer.WriteLine("</table>");
+#endif
         }
 
         public void WriteExpressLine(int indent, string content)
         {
+            for (int i = 0; i < indent; i++ )
+            {
+                this.m_writer.Write("&nbsp;");
+            }
+
+            this.m_writer.Write(content);
+            this.m_writer.WriteLine("<br/>");
+            /*
             WriteExpressHeader(indent);
             WriteLine(content);
             WriteExpressFooter();
+            */
         }
 
         /// <summary>
@@ -355,7 +375,6 @@ namespace IfcDoc.Format.HTM
             if (bExplicit)
             {
                 this.WriteExpressHeader(2);
-                this.m_writer.WriteLine("<table width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" class=\"express\">");
                 foreach (DocAttribute attr in entity.Attributes)
                 {
                     bool bInclude = true;
@@ -376,9 +395,9 @@ namespace IfcDoc.Format.HTM
                     {
                         if (attr.Inverse == null && attr.Derived == null)
                         {
-                            this.m_writer.Write("<tr valign=\"top\"><td width=\"20%\">");
+                            this.m_writer.Write("&nbsp;&nbsp;");
                             this.m_writer.Write(attr.Name);
-                            this.m_writer.Write("</td><td width=\"1%\"> : </td><td>");
+                            this.m_writer.Write(" : ");
 
                             if ((attr.AttributeFlags & 1) != 0)
                             {
@@ -395,12 +414,11 @@ namespace IfcDoc.Format.HTM
                             {
                                 this.m_writer.Write("<span class=\"self-ref\">IfcStrippedOptional</span>");
                             }
-                            this.m_writer.WriteLine(";</td></tr>");
+                            this.m_writer.WriteLine(";<br/>");
 
                         }
                     }
                 }
-                this.m_writer.WriteLine("</table>");
                 this.WriteExpressFooter();
             }
 
@@ -409,7 +427,6 @@ namespace IfcDoc.Format.HTM
             {
                 this.WriteExpressLine(1, BEGIN_KEYWORD + "INVERSE" + END_KEYWORD);
                 this.WriteExpressHeader(2);
-                this.m_writer.WriteLine("<table width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" class=\"express\">");
                 foreach (DocAttribute attr in entity.Attributes)
                 {
                     DocObject docinvtype = null;
@@ -417,20 +434,19 @@ namespace IfcDoc.Format.HTM
                     {
                         if (this.m_included == null || this.m_included.ContainsKey(docinvtype))
                         {
-                            this.m_writer.Write("<tr valign=\"top\"><td width=\"20%\">");
+                            this.m_writer.Write("&nbsp;&nbsp;");
                             this.m_writer.Write(attr.Name);
-                            this.m_writer.Write("</td><td width=\"1%\"> : </td><td>");
+                            this.m_writer.Write(" : ");
 
                             this.WriteExpressAggregation(attr);
 
                             this.m_writer.Write(FormatDefinition(attr.DefinedType));
                             this.m_writer.Write(" " + BEGIN_KEYWORD + "FOR" + END_KEYWORD + " ");
                             this.m_writer.Write(attr.Inverse);
-                            this.m_writer.WriteLine(";</td></tr>");
+                            this.m_writer.WriteLine(";<br/>");
                         }
                     }
                 }
-                this.m_writer.WriteLine("</table>");
                 this.WriteExpressFooter();
             }
 
@@ -439,7 +455,6 @@ namespace IfcDoc.Format.HTM
             {
                 this.WriteExpressLine(1, BEGIN_KEYWORD + "DERIVE" + END_KEYWORD);
                 this.WriteExpressHeader(2);
-                this.m_writer.WriteLine("<table width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" class=\"express\">");
 
                 foreach (DocAttribute attr in entity.Attributes)
                 {
@@ -471,12 +486,12 @@ namespace IfcDoc.Format.HTM
                         if (found != null)
                         {
                             // overridden attribute
-                            this.m_writer.Write("<tr valign=\"top\"><td width=\"20%\">" + BEGIN_KEYWORD + "SELF" + END_KEYWORD + "\\" + found.Name + "." + attr.Name + "</td><td width=\"1%\"> : </td><td>");
+                            this.m_writer.Write("&nbsp;&nbsp;" + BEGIN_KEYWORD + "SELF" + END_KEYWORD + "\\" + found.Name + "." + attr.Name + " : ");
                         }
                         else
                         {
                             // non-overridden
-                            this.m_writer.Write("<tr valign=\"top\"><td width=\"20%\">" + attr.Name + "</td><td width=\"1%\"> : </td><td>");
+                            this.m_writer.Write("&nbsp;&nbsp;" + attr.Name + " : ");
                         }
 
                         this.WriteExpressAggregation(attr);
@@ -485,11 +500,10 @@ namespace IfcDoc.Format.HTM
 
                         this.m_writer.Write(" := ");
                         this.m_writer.Write(attr.Derived);
-                        this.m_writer.WriteLine(";</td></tr>");
+                        this.m_writer.WriteLine(";<br/>");
 
                     }
                 }
-                this.m_writer.WriteLine("</table>");
                 this.WriteExpressFooter();
             }
         }
@@ -502,22 +516,28 @@ namespace IfcDoc.Format.HTM
             DocAttribute docAggregation = attr;
             while (docAggregation != null)
             {
+                if ((docAggregation.AggregationFlag & 2) != 0)
+                {
+                    // unique
+                    this.m_writer.Write("~");
+                }
+
                 switch (docAggregation.AggregationType)
                 {
                     case 1: // list
-                        this.m_writer.Write("[");
+                        this.m_writer.Write("L[");
                         break;
 
                     case 2: // array
-                        this.m_writer.Write("[[");
+                        this.m_writer.Write("A[");
                         break;
 
                     case 3: // set
-                        this.m_writer.Write("{");
+                        this.m_writer.Write("S[");
                         break;
 
                     case 4: // bag
-                        this.m_writer.Write("{{");
+                        this.m_writer.Write("B[");
                         break;
                 }
 
@@ -541,22 +561,16 @@ namespace IfcDoc.Format.HTM
                         break;
 
                     case 2: // array
-                        this.m_writer.Write("]]");
+                        this.m_writer.Write("]");
                         break;
 
                     case 3: // set
-                        this.m_writer.Write("}");
+                        this.m_writer.Write("]");
                         break;
 
                     case 4: // bag
-                        this.m_writer.Write("}}");
+                        this.m_writer.Write("]");
                         break;
-                }
-
-                if ((docAggregation.AggregationFlag & 2) != 0)
-                {
-                    // unique
-                    this.m_writer.Write("~");
                 }
 
                 // drill in
@@ -616,79 +630,15 @@ namespace IfcDoc.Format.HTM
             }
         }
 
-        public void WriteEntityAttributes(DocEntity entity, bool suppresshistory)
-        {
-            if (entity.Attributes != null && entity.Attributes.Count > 0)
-            {
-                // attributes
-                this.WriteSummaryHeader("Attribute Definitions", true);
-                this.m_writer.WriteLine("<table width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" class=\"express\">");
-                foreach (DocAttribute docAttr in entity.Attributes)
-                {
-                    DocObject docref = null;
-                    if (!this.m_mapEntity.TryGetValue(docAttr.DefinedType, out docref) || (this.m_included == null || this.m_included.ContainsKey(docref)))
-                    {
-                        this.m_writer.Write("<tr valign=\"top\"><td width=\"21%\"><span class=\"attr-name\">");
-                        this.m_writer.Write(docAttr.Name);
-                        this.m_writer.Write("</span></td><td width=\"1%\"> : </td><td>");
-                        if (docAttr.Documentation != null)
-                        {
-                            this.WriteDocumentationForISO(docAttr.Documentation, entity, suppresshistory);
-                        }
-                        this.m_writer.WriteLine("</td></tr>");
-                    }
-                }
-                this.m_writer.WriteLine("</table>");
-                this.WriteSummaryFooter();
-            }
-
-            if (entity.WhereRules != null && entity.WhereRules.Count > 0)
-            {
-                // avoid attributes without descriptions
-                int cDescs = 0;
-                foreach (DocWhereRule docAttr in entity.WhereRules)
-                {
-                    if (docAttr.Documentation != null)
-                    {
-                        cDescs++;
-                    }
-                }
-
-                if (cDescs > 0)
-                {
-                    // formal propositions
-                    this.WriteSummaryHeader("Formal Propositions", true);
-
-                    this.m_writer.WriteLine("<table width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" class=\"express\">");
-                    foreach (DocWhereRule docAttr in entity.WhereRules)
-                    {
-                        this.m_writer.Write("<tr valign=\"top\"><td width=\"21%\"><span class=\"attr-name\">");
-                        this.m_writer.Write(docAttr.Name);
-                        this.m_writer.Write("</span></td><td width=\"1%\"> : </td><td>");
-                        if (docAttr.Documentation != null)
-                        {
-                            this.WriteDocumentationForISO(docAttr.Documentation, entity, suppresshistory);
-                        }
-                        this.m_writer.WriteLine("</td></tr>");
-                    }
-                    this.m_writer.WriteLine("</table>\r\n");
-
-                    this.WriteSummaryFooter();
-                }
-            }
-
-
-        }
-
         public void WriteSummaryHeader(string caption, bool expanded)
         {
-            this.m_writer.Write("<hr />");
+            //this.m_writer.Write("<hr />");
             this.m_writer.Write("<details");
             this.m_writer.Write(expanded ? " open=\"open\"" : "");
             this.m_writer.Write("><summary>");
             this.m_writer.Write(caption);
             this.m_writer.Write("</summary>");
-            this.m_writer.WriteLine("<br/>");
+            //this.m_writer.WriteLine("<br/>");
         }
 
         public void WriteSummaryFooter()
@@ -699,7 +649,7 @@ namespace IfcDoc.Format.HTM
         public void WriteExpressEntityAndDocumentation(DocEntity entity, bool suppresshistory, bool isoformat)
         {
             this.WriteSummaryHeader("EXPRESS Specification", false);
-            this.m_writer.WriteLine("<span class=\"express\">");
+            this.m_writer.WriteLine("<div class=\"express\"><code class=\"express\">");
 
             // new: comment tag
             if (isoformat)
@@ -715,84 +665,12 @@ namespace IfcDoc.Format.HTM
                 this.WriteExpressLine(0, "(*");
             }
 
-            this.m_writer.WriteLine("</span>");
-
             // link to EXPRESS-G
             WriteExpressDiagram(entity);
 
-#if false
-            if (isoformat)
-            {
-                if (entity.Attributes != null && entity.Attributes.Count > 0)
-                {
-                    // avoid attributes without descriptions
-                    int cDescs = 0;
-                    foreach (DocAttribute docAttr in entity.Attributes)
-                    {
-                        if (docAttr.Documentation != null)
-                        {
-                            cDescs++;
-                        }
-                    }
+            this.m_writer.WriteLine("</code></div>");
 
-                    if (cDescs > 0)
-                    {
-                        // attributes
-                        this.m_writer.WriteLine("<p class=\"spec-head\">Attribute Definitions:</p>");
-                        this.m_writer.WriteLine("<table width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" class=\"express\">");
-                        foreach (DocAttribute docAttr in entity.Attributes)
-                        {
-                            DocObject docref = null;
-                            if (!this.m_mapEntity.TryGetValue(docAttr.DefinedType, out docref) || (this.m_included == null || this.m_included.ContainsKey(docref)))
-                            {
-                                if (docAttr.Documentation != null)
-                                {
-                                    this.m_writer.Write("<tr valign=\"top\"><td width=\"21%\"><span class=\"attr-name\">");
-                                    this.m_writer.Write(docAttr.Name);
-                                    this.m_writer.Write("</span></td><td width=\"1%\"> : </td><td>");
-                                    this.WriteDocumentationForISO(docAttr.Documentation, entity, suppresshistory);
-                                    this.m_writer.WriteLine("</td></tr>");
-                                }
-                            }
-                        }
-                        this.m_writer.WriteLine("</table>");
-                    }
-                }
-            }
 
-            if (entity.WhereRules != null && entity.WhereRules.Count > 0)
-            {
-                // avoid attributes without descriptions
-                int cDescs = 0;
-                foreach (DocWhereRule docAttr in entity.WhereRules)
-                {
-                    if (docAttr.Documentation != null)
-                    {
-                        cDescs++;
-                    }
-                }
-
-                if (cDescs > 0)
-                {
-                    // formal propositions
-                    this.m_writer.WriteLine("<p class=\"spec-head\">Formal Propositions:</p>");
-
-                    this.m_writer.WriteLine("<table width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" class=\"express\">");
-                    foreach (DocWhereRule docAttr in entity.WhereRules)
-                    {
-                        this.m_writer.Write("<tr valign=\"top\"><td width=\"21%\"><span class=\"attr-name\">");
-                        this.m_writer.Write(docAttr.Name);
-                        this.m_writer.Write("</span></td><td width=\"1%\"> : </td><td>");
-                        if (docAttr.Documentation != null)
-                        {
-                            this.WriteDocumentationForISO(docAttr.Documentation, entity, suppresshistory);
-                        }
-                        this.m_writer.WriteLine("</td></tr>");
-                    }
-                    this.m_writer.WriteLine("</table>\r\n");
-                }
-            }
-#endif
             if (isoformat)
             {
                 // inheritance
@@ -901,13 +779,12 @@ namespace IfcDoc.Format.HTM
                 this.WriteExpressLine(1, BEGIN_KEYWORD + "UNIQUE" + END_KEYWORD);
 
                 this.WriteExpressHeader(2);
-                this.m_writer.WriteLine("<table width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" class=\"express\">");
                 foreach (DocUniqueRule docWhere in entity.UniqueRules)
                 {
-                    this.m_writer.Write("  <tr valign=\"top\"><td width=\"20%\">");
+                    this.m_writer.Write("&nbsp;&nbsp;");
                     this.m_writer.Write(docWhere.Name);
 
-                    this.m_writer.Write("</td><td width=\"1%\"> : </td><td>");
+                    this.m_writer.Write(" : ");
                     foreach (DocUniqueRuleItem item in docWhere.Items)
                     {
                         if (item != docWhere.Items[0])
@@ -916,9 +793,8 @@ namespace IfcDoc.Format.HTM
                         }
                         this.m_writer.Write(item.Name);
                     }
-                    this.m_writer.Write(";</td></tr>");
+                    this.m_writer.Write(";<br/>");
                 }
-                this.m_writer.WriteLine("</table>");
 
                 this.WriteExpressFooter();
             }
@@ -928,17 +804,15 @@ namespace IfcDoc.Format.HTM
                 this.WriteExpressLine(1, BEGIN_KEYWORD + "WHERE" + END_KEYWORD);
 
                 this.WriteExpressHeader(2);
-                this.m_writer.WriteLine("<table width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" class=\"express\">");
                 foreach (DocWhereRule docWhere in entity.WhereRules)
                 {
                     string escaped = System.Security.SecurityElement.Escape(docWhere.Expression);
                     escaped = escaped.Replace("&apos;", "'");
 
-                    this.m_writer.Write("  <tr valign=\"top\"><td width=\"20%\">");
+                    this.m_writer.Write("&nbsp;&nbsp;");
                     this.m_writer.Write(docWhere.Name);
-                    this.m_writer.Write("</td><td width=\"1%\"> : </td><td>" + escaped + ";</td></tr>");                    
+                    this.m_writer.Write(" : " + escaped + ";<br/>");                    
                 }
-                this.m_writer.WriteLine("</table>");
 
                 this.WriteExpressFooter();
             }
@@ -985,7 +859,7 @@ namespace IfcDoc.Format.HTM
         public void WriteExpressTypeAndDocumentation(DocType type, bool suppresshistory, bool isoformat)
         {
             this.WriteSummaryHeader("EXPRESS Specification", false);
-            this.m_writer.WriteLine("<span class=\"express\">");
+            this.m_writer.WriteLine("<div class=\"express\"><code class=\"express\">");
 
             this.WriteExpressHeader(2);
 
@@ -1008,34 +882,8 @@ namespace IfcDoc.Format.HTM
             // link to EXPRESS-G
             WriteExpressDiagram(type);
 
-            this.m_writer.WriteLine("</span>");
+            this.m_writer.WriteLine("</code></div>");
             this.WriteSummaryFooter();
-
-            // where rules (for defined types)
-
-            if (type is DocDefined && ((DocDefined)type).WhereRules != null && ((DocDefined)type).WhereRules.Count > 0)
-            {
-                DocDefined entity = (DocDefined)type;
-
-                // formal propositions
-                this.WriteSummaryHeader("Formal Propositions", true);
-
-                this.m_writer.WriteLine("<table width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" class=\"express\">");
-                foreach (DocWhereRule docAttr in entity.WhereRules)
-                {
-                    if (docAttr.Documentation != null)
-                    {
-                        this.m_writer.Write("<tr valign=\"top\"><td width=\"21%\"><span class=\"attr-name\">");
-                        this.m_writer.Write(docAttr.Name);
-                        this.m_writer.Write("</span></td><td width=\"1%\"> : </td><td>");
-                        this.WriteDocumentationForISO(docAttr.Documentation, entity, suppresshistory);
-                        this.m_writer.WriteLine("</td></tr>");
-                    }
-                }
-                this.m_writer.WriteLine("</table>");
-
-                this.WriteSummaryFooter();
-            }
 
         }
 
@@ -1052,11 +900,12 @@ namespace IfcDoc.Format.HTM
                 {
                     foreach (DocConstant docconst in docenum.Constants)
                     {
+                        this.m_writer.Write("&nbsp;");
                         this.m_writer.Write(docconst.Name);
 
                         if (docconst == docenum.Constants[docenum.Constants.Count - 1])
                         {
-                            this.m_writer.Write(");");
+                            this.m_writer.Write(");<br/>");
                         }
                         else
                         {
@@ -1089,6 +938,7 @@ namespace IfcDoc.Format.HTM
                                     this.m_writer.Write(", <br/>");
                                 }
 
+                                this.m_writer.Write("&nbsp;");
                                 this.m_writer.Write(this.FormatDefinition(docconst.Name));
 
                                 previtem = true;
@@ -1098,7 +948,7 @@ namespace IfcDoc.Format.HTM
 
                     if (previtem)
                     {
-                        this.m_writer.Write(");");
+                        this.m_writer.Write(");<br/>");
                     }
                 }
 
@@ -1127,7 +977,7 @@ namespace IfcDoc.Format.HTM
                     this.WriteExpressAggregation(docenum.Aggregation);
                 }
 
-                this.m_writer.Write(FormatDefinition(docenum.DefinedType) + length + ";");
+                this.m_writer.Write(FormatDefinition(docenum.DefinedType) + length + ";<br/>");
                 WriteExpressFooter();
 
                 this.WriteExpressHeader(2);
@@ -1136,17 +986,15 @@ namespace IfcDoc.Format.HTM
                     this.WriteExpressLine(1, BEGIN_KEYWORD + "WHERE" + END_KEYWORD);
 
                     this.WriteExpressHeader(2);
-                    this.m_writer.WriteLine("<table width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" class=\"express\">");
                     foreach (DocWhereRule docWhere in docenum.WhereRules)
                     {
                         string escaped = System.Security.SecurityElement.Escape(docWhere.Expression);
                         escaped = escaped.Replace("&apos;", "'");
 
-                        this.m_writer.Write("  <tr valign=\"top\"><td width=\"20%\">");
+                        this.m_writer.Write("&nbsp;&nbsp;");
                         this.m_writer.Write(docWhere.Name);
-                        this.m_writer.Write("</td><td width=\"1%\"> : </td><td>" + escaped + "<td/></tr>");
+                        this.m_writer.Write(" : " + escaped + "<br/>");
                     }
-                    this.m_writer.WriteLine("</table>");
 
                     this.WriteExpressFooter();
                 }
@@ -1333,7 +1181,7 @@ namespace IfcDoc.Format.HTM
                 }
             }
 
-            this.WriteHeader("Alphabetical Listing", -2, -1, -1, Properties.Settings.Default.Header);
+            this.WriteHeader("Alphabetical Listing", -2, -1, -1, -1, Properties.Settings.Default.Header);
             this.WriteLine("<h2 class=\"annex\">" + caption + " (" + alphaEntity.Count.ToString() + ")</h2>");
             this.WriteLine("<ul class=\"std\">");
 
@@ -2317,7 +2165,7 @@ namespace IfcDoc.Format.HTM
                         localdesc = docprop.Documentation;
                     }
 
-                    this.WriteLine("<tr valign=\"top\"><td><image src=\"../../../img/locale-" + localid + ".png\" /></td><td><b>" + localname + "</b>: " + localdesc + "</td></tr>");
+                    this.WriteLine("<tr valign=\"top\"><td><img src=\"../../../img/locale-" + localid + ".png\" /></td><td><b>" + localname + "</b>: " + localdesc + "</td></tr>");
                 }
 
                 this.WriteLine("</table>");
@@ -2391,7 +2239,7 @@ namespace IfcDoc.Format.HTM
 
             if (iCodeView > 0)
             {
-                this.WriteHeader(name, iAnnex, iCodeView, 0, Properties.Settings.Default.Header);
+                this.WriteHeader(name, iAnnex, iCodeView, 0, 0, Properties.Settings.Default.Header);
                 this.WriteScript(iAnnex, iCodeView, 0, 0);
                 this.WriteLine("<h3 class=\"std\">A." + iCodeView.ToString() + " " + name + "</h3>");
             }
@@ -2525,16 +2373,40 @@ namespace IfcDoc.Format.HTM
 
         internal void WriteEntityInheritance(DocEntity entity)
         {
-            this.WriteSummaryHeader("Inheritance", false);
+            this.WriteSummaryHeader("Attribute inheritance", false);
 
-            this.WriteLine("<table class=\"gridtable\">");
-            this.WriteLine("<th>Attribute</th><th>Type</th><th>Req</th><th>Description</th>");
+            this.WriteLine("<table class=\"attributes\">");
+            this.WriteLine("<tr><th>Attribute</th><th>Type</th><th>Cardinality</th><th>Description</th></tr>");
 
             this.WriteEntityInheritance(entity, entity);
 
             this.WriteLine("</table>");
 
             this.WriteSummaryFooter();
+        }
+
+        public void WriteLocalizedNames(DocDefinition entity)
+        {
+            // localization
+            this.WriteLine("<details>");
+            this.WriteLine("<summary>Natural language names</summary>");
+            this.WriteLine("<table>");
+            entity.Localization.Sort();
+            foreach (DocLocalization doclocal in entity.Localization)
+            {
+                string localname = doclocal.Name;
+                string localdesc = doclocal.Documentation;
+                string localid = doclocal.Locale.Substring(0, 2).ToLower();
+
+                if (!String.IsNullOrEmpty(localdesc))
+                {
+                    localdesc = ": " + localdesc;
+                }
+
+                this.WriteLine("<tr><td><img alt=\"" + localid + "\" src=\"../../../img/locale-" + localid + ".png\" /></td><td><b>" + localname + "</b>" + localdesc + "</td></tr>");
+            }
+            this.WriteLine("</table>");
+            this.WriteLine("</details>");
         }
 
         private void WriteEntityInheritance(DocEntity entity, DocEntity treeleaf)
@@ -2548,7 +2420,6 @@ namespace IfcDoc.Format.HTM
                 }
             }
 
-            bool suppresshistory = true;
             this.Write("<tr><td colspan=\"4\">");
             if(entity.IsAbstract())
             {
@@ -2561,9 +2432,16 @@ namespace IfcDoc.Format.HTM
             }
             this.WriteLine("</td></tr>");
 
+            WriteEntityAttributes(entity, treeleaf);
+        }
+
+        public void WriteEntityAttributes(DocEntity entity, DocEntity treeleaf)
+        {
             bool bInverse = false;
             bool bDerived = false;
             bool bExplicit = false;
+
+            bool suppresshistory = true;
 
             // count attributes first to avoid generating tables unnecessarily (W3C validation)
             if (entity.Attributes != null && entity.Attributes.Count > 0)
@@ -2616,8 +2494,6 @@ namespace IfcDoc.Format.HTM
                             if (this.m_included == null || this.m_included.ContainsKey(attr))
                             {
                                 this.m_writer.Write(FormatDefinition(attr.DefinedType));
-
-                                this.WriteAttributeAggregation(attr);
                             }
                             else
                             {
@@ -2628,13 +2504,17 @@ namespace IfcDoc.Format.HTM
 
                             if (this.m_included == null || this.m_included.ContainsKey(attr))
                             {
-                                if ((attr.AttributeFlags & 1) != 0)
+                                if(attr.GetAggregation() != DocAggregationEnum.NONE)
                                 {
-                                    this.m_writer.Write("O");
+                                    this.WriteAttributeAggregation(attr);
+                                }
+                                else if ((attr.AttributeFlags & 1) != 0)
+                                {
+                                    this.m_writer.Write("[0:1]");
                                 }
                                 else
                                 {
-                                    this.m_writer.Write("R");
+                                    this.m_writer.Write("[1:1]");
                                 }
                             }
 
@@ -2642,6 +2522,10 @@ namespace IfcDoc.Format.HTM
                             if (this.m_included == null || this.m_included.ContainsKey(attr))
                             {
                                 this.WriteDocumentationForISO(attr.Documentation, entity, suppresshistory);
+                            }
+                            else
+                            {
+                                this.m_writer.Write("<i>This attribute is out of scope for this model view definition and shall not be set.</i>");
                             }
                             this.m_writer.WriteLine("</td></tr>");
 
@@ -2666,11 +2550,24 @@ namespace IfcDoc.Format.HTM
                             this.m_writer.Write("</td><td>");
 
                             this.m_writer.Write(FormatDefinition(attr.DefinedType));
-                            this.WriteAttributeAggregation(attr);
                             this.m_writer.Write("<br/>@" + attr.Inverse);
 
                             this.m_writer.Write("</td><td>");
-                            //
+
+                            if (attr.GetAggregation() != DocAggregationEnum.NONE)
+                            {
+                                this.WriteAttributeAggregation(attr);
+                            }
+                            else if ((attr.AttributeFlags & 1) != 0)
+                            {
+                                this.m_writer.Write("[0:1]");
+                            }
+                            else
+                            {
+                                this.m_writer.Write("[1:1]");
+                            }
+
+
                             this.m_writer.Write("</td><td>");
                             this.WriteDocumentationForISO(attr.Documentation, entity, suppresshistory);
                             this.m_writer.WriteLine("</td></tr>");
@@ -2723,9 +2620,22 @@ namespace IfcDoc.Format.HTM
 
                         this.m_writer.Write("</td><td>");
                         this.m_writer.Write(FormatDefinition(attr.DefinedType));
-                        this.WriteAttributeAggregation(attr);
                         this.m_writer.Write("</td><td>");
                         //this.m_writer.Write(" := ");
+
+                        if (attr.GetAggregation() != DocAggregationEnum.NONE)
+                        {
+                            this.WriteAttributeAggregation(attr);
+                        }
+                        else if ((attr.AttributeFlags & 1) != 0)
+                        {
+                            this.m_writer.Write("[0:1]");
+                        }
+                        else
+                        {
+                            this.m_writer.Write("[1:1]");
+                        }
+
                         this.m_writer.Write("</td><td>");
                         this.WriteDocumentationForISO(attr.Documentation, entity, suppresshistory);
                         this.m_writer.WriteLine("</td></tr>");

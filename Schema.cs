@@ -111,6 +111,16 @@ namespace IfcDoc.Schema
 
         private static void BuildFieldList(Type type, IList<FieldInfo> list)
         {
+            if (type.IsValueType)
+            {
+                FieldInfo fieldinfo = type.GetField("Value");
+                if (fieldinfo != null)
+                {
+                    list.Add(fieldinfo);
+                }
+                return;
+            }
+
             if (type.BaseType != typeof(object) && type.BaseType != typeof(SEntity))
             {
                 BuildFieldList(type.BaseType, list);

@@ -56,6 +56,9 @@ namespace IfcDoc
             set
             {
                 this.m_modelrule = value;
+
+                // update
+                treeViewRules_AfterSelect(this, new TreeViewEventArgs(null));
             }
         }
 

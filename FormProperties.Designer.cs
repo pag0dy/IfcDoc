@@ -193,6 +193,11 @@
             this.imageListRules = new System.Windows.Forms.ImageList(this.components);
             this.buttonClose = new System.Windows.Forms.Button();
             this.openFileDialogIcon = new System.Windows.Forms.OpenFileDialog();
+            this.tabPageExample = new System.Windows.Forms.TabPage();
+            this.buttonExampleLoad = new System.Windows.Forms.Button();
+            this.buttonExampleClear = new System.Windows.Forms.Button();
+            this.textBoxExample = new System.Windows.Forms.TextBox();
+            this.openFileDialogExample = new System.Windows.Forms.OpenFileDialog();
             this.tabControl.SuspendLayout();
             this.tabPageGeneral.SuspendLayout();
             this.tabPageIdentity.SuspendLayout();
@@ -211,6 +216,7 @@
             this.tabPageView.SuspendLayout();
             this.tabPageExchange.SuspendLayout();
             this.tabPageUsage.SuspendLayout();
+            this.tabPageExample.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl
@@ -233,6 +239,7 @@
             this.tabControl.Controls.Add(this.tabPageView);
             this.tabControl.Controls.Add(this.tabPageExchange);
             this.tabControl.Controls.Add(this.tabPageUsage);
+            this.tabControl.Controls.Add(this.tabPageExample);
             this.tabControl.Location = new System.Drawing.Point(4, 6);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
@@ -2250,6 +2257,59 @@
             this.openFileDialogIcon.Filter = "Images (*.png)|*.png";
             this.openFileDialogIcon.Title = "Set Icon";
             // 
+            // tabPageExample
+            // 
+            this.tabPageExample.Controls.Add(this.textBoxExample);
+            this.tabPageExample.Controls.Add(this.buttonExampleClear);
+            this.tabPageExample.Controls.Add(this.buttonExampleLoad);
+            this.tabPageExample.Location = new System.Drawing.Point(4, 22);
+            this.tabPageExample.Name = "tabPageExample";
+            this.tabPageExample.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageExample.Size = new System.Drawing.Size(344, 385);
+            this.tabPageExample.TabIndex = 16;
+            this.tabPageExample.Text = "Example";
+            this.tabPageExample.UseVisualStyleBackColor = true;
+            // 
+            // buttonExampleLoad
+            // 
+            this.buttonExampleLoad.Location = new System.Drawing.Point(7, 7);
+            this.buttonExampleLoad.Name = "buttonExampleLoad";
+            this.buttonExampleLoad.Size = new System.Drawing.Size(75, 23);
+            this.buttonExampleLoad.TabIndex = 0;
+            this.buttonExampleLoad.Text = "Load File...";
+            this.buttonExampleLoad.UseVisualStyleBackColor = true;
+            this.buttonExampleLoad.Click += new System.EventHandler(this.buttonExampleLoad_Click);
+            // 
+            // buttonExampleClear
+            // 
+            this.buttonExampleClear.Location = new System.Drawing.Point(88, 7);
+            this.buttonExampleClear.Name = "buttonExampleClear";
+            this.buttonExampleClear.Size = new System.Drawing.Size(75, 23);
+            this.buttonExampleClear.TabIndex = 1;
+            this.buttonExampleClear.Text = "Clear";
+            this.buttonExampleClear.UseVisualStyleBackColor = true;
+            this.buttonExampleClear.Click += new System.EventHandler(this.buttonExampleClear_Click);
+            // 
+            // textBoxExample
+            // 
+            this.textBoxExample.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxExample.Location = new System.Drawing.Point(7, 37);
+            this.textBoxExample.Multiline = true;
+            this.textBoxExample.Name = "textBoxExample";
+            this.textBoxExample.ReadOnly = true;
+            this.textBoxExample.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.textBoxExample.Size = new System.Drawing.Size(331, 342);
+            this.textBoxExample.TabIndex = 2;
+            this.textBoxExample.WordWrap = false;
+            // 
+            // openFileDialogExample
+            // 
+            this.openFileDialogExample.DefaultExt = "ifc";
+            this.openFileDialogExample.Filter = "Industry Foundation Classes (*.ifc)|*.ifc";
+            this.openFileDialogExample.Title = "Load IFC Example";
+            // 
             // FormProperties
             // 
             this.AcceptButton = this.buttonClose;
@@ -2300,6 +2360,8 @@
             this.tabPageExchange.PerformLayout();
             this.tabPageUsage.ResumeLayout(false);
             this.tabPageUsage.PerformLayout();
+            this.tabPageExample.ResumeLayout(false);
+            this.tabPageExample.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -2469,5 +2531,10 @@
         private System.Windows.Forms.ColumnHeader columnHeader4;
         private System.Windows.Forms.ColumnHeader columnHeader5;
         private System.Windows.Forms.ColumnHeader columnHeader6;
+        private System.Windows.Forms.TabPage tabPageExample;
+        private System.Windows.Forms.TextBox textBoxExample;
+        private System.Windows.Forms.Button buttonExampleClear;
+        private System.Windows.Forms.Button buttonExampleLoad;
+        private System.Windows.Forms.OpenFileDialog openFileDialogExample;
     }
 }

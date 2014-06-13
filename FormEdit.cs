@@ -640,7 +640,6 @@ namespace IfcDoc
             docLocal.Name = sb.ToString();
         }
 
-
         private void toolStripMenuItemFileSave_Click(object sender, EventArgs e)
         {
             if (this.m_file != null)
@@ -654,7 +653,7 @@ namespace IfcDoc
                         case ".ifcdoc":
                             using (FormatSPF format = new FormatSPF(this.m_file, SchemaDOC.Types, this.m_instances))
                             {
-                                format.InitHeaders(this.m_file, "IFCDOC_7_0");
+                                format.InitHeaders(this.m_file, "IFCDOC_7_2");
                                 format.Save();
                             }
                             break;
@@ -3003,6 +3002,14 @@ namespace IfcDoc
                     this.toolStripMenuItemDiagramFormatPageRef.Enabled = true;
                 }
                 else if (obj is DocAttribute)
+                {
+                    this.toolStripMenuItemEditDelete.Enabled = true;
+                }
+                else if (obj is DocWhereRule)
+                {
+                    this.toolStripMenuItemEditDelete.Enabled = true;
+                }
+                else if (obj is DocUniqueRule)
                 {
                     this.toolStripMenuItemEditDelete.Enabled = true;
                 }
