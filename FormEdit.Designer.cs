@@ -237,17 +237,21 @@
             this.webBrowser = new System.Windows.Forms.WebBrowser();
             this.imageListRules = new System.Windows.Forms.ImageList(this.components);
             this.saveFileDialogModule = new System.Windows.Forms.SaveFileDialog();
+            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.contextMenuStrip.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.toolStripMain.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panelDiagram.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainerConcept)).BeginInit();
             this.splitContainerConcept.Panel1.SuspendLayout();
             this.splitContainerConcept.Panel2.SuspendLayout();
             this.splitContainerConcept.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainerRules)).BeginInit();
             this.splitContainerRules.Panel1.SuspendLayout();
             this.splitContainerRules.Panel2.SuspendLayout();
             this.splitContainerRules.SuspendLayout();
@@ -863,12 +867,13 @@
             // 
             this.documentationToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItemInsertNormative,
-            this.toolStripMenuItemInsertBibliography,
             this.toolStripMenuItem10,
             this.ToolStripMenuItemInsertTerm,
             this.ToolStripMenuItemInsertAbbreviatedTerm,
             this.toolStripMenuItem11,
-            this.toolStripMenuItemInsertExample});
+            this.toolStripMenuItemInsertExample,
+            this.toolStripSeparator7,
+            this.toolStripMenuItemInsertBibliography});
             this.documentationToolStripMenuItem.Name = "documentationToolStripMenuItem";
             this.documentationToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
             this.documentationToolStripMenuItem.Text = "Documentation";
@@ -887,7 +892,6 @@
             this.toolStripMenuItemInsertBibliography.Name = "toolStripMenuItemInsertBibliography";
             this.toolStripMenuItemInsertBibliography.Size = new System.Drawing.Size(196, 22);
             this.toolStripMenuItemInsertBibliography.Text = "&Bibliography Reference";
-            this.toolStripMenuItemInsertBibliography.Visible = false;
             this.toolStripMenuItemInsertBibliography.Click += new System.EventHandler(this.toolStripMenuItemInsertBibliography_Click);
             // 
             // toolStripMenuItem10
@@ -2242,6 +2246,11 @@
             this.saveFileDialogModule.Filter = ".NET Assembly (*.dll)|*.dll";
             this.saveFileDialogModule.Title = "Create .NET Assembly";
             // 
+            // toolStripSeparator7
+            // 
+            this.toolStripSeparator7.Name = "toolStripSeparator7";
+            this.toolStripSeparator7.Size = new System.Drawing.Size(193, 6);
+            // 
             // FormEdit
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -2260,15 +2269,18 @@
             this.toolStripMain.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.panelDiagram.ResumeLayout(false);
             this.splitContainerConcept.Panel1.ResumeLayout(false);
             this.splitContainerConcept.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainerConcept)).EndInit();
             this.splitContainerConcept.ResumeLayout(false);
             this.splitContainerRules.Panel1.ResumeLayout(false);
             this.splitContainerRules.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainerRules)).EndInit();
             this.splitContainerRules.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -2484,5 +2496,6 @@
         private CtlInheritance ctlInheritance;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemToolsModule;
         private System.Windows.Forms.SaveFileDialog saveFileDialogModule;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
     }
 }

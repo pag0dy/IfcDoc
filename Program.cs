@@ -2027,6 +2027,9 @@ namespace IfcDoc
 
         private static void ExportMvdConcept(Concept mvdConceptLeaf, DocTemplateUsage docTemplateUsage)
         {
+            if (docTemplateUsage.Definition == null)
+                return;
+
             ExportMvdObject(mvdConceptLeaf, docTemplateUsage);
 
             mvdConceptLeaf.Template = new TemplateRef();

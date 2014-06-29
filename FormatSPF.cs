@@ -35,6 +35,9 @@ namespace IfcDoc.Format.SPF
         StringBuilder m_markup; // if set, then generate markup upon reading
         string m_marktitle; // current title for marking up object references
 
+        long m_currentinstance;
+        List<string> m_errors; // log errors
+
         /// <summary>
         /// Encapsulates a STEP Physical File (ISO-10303-21)
         /// </summary>
@@ -408,6 +411,8 @@ namespace IfcDoc.Format.SPF
             if (id == -1)
                 return; // buggy file that saved out a deleted element
 
+            this.m_currentinstance = id;
+
             string strConstructor = line.Substring(iIdTail + 1);
 
             switch(m_parsescope)
@@ -423,7 +428,8 @@ namespace IfcDoc.Format.SPF
                             // set the object in position
                             if (this.m_instances.ContainsKey(id))
                             {
-                                throw new FormatException("Bad format: duplicate object identifier: #" + id.ToString());
+                                this.m_errors.Add("#" + id + " - Duplicate instance identifier");
+                                //throw new FormatException("Bad format: duplicate object identifier: #" + id.ToString());
                             }
                             else
                             {
@@ -432,7 +438,8 @@ namespace IfcDoc.Format.SPF
                         }
                         else
                         {
-                            throw new FormatException("Unrecognized type: " + strConstructor);          
+                            this.m_errors.Add("#" + id + " - Unknown type: " + strConstructor);
+                            //throw new FormatException("Unrecognized type: " + strConstructor);          
                         }
                     }
                     break;
@@ -460,8 +467,21 @@ namespace IfcDoc.Format.SPF
             }
         }
 
+        public string[] Errors
+        {
+            get
+            {
+                if (this.m_errors == null)
+                    return null;
+
+                return this.m_errors.ToArray();
+            }
+        }
+
         public virtual void Load()
         {
+            this.m_errors = new List<string>();
+
             // empty file: just return
             if (this.m_stream.Length == 0)
                 return;
@@ -1283,7 +1303,8 @@ namespace IfcDoc.Format.SPF
                     }
                     else
                     {
-                        //... LOG ERROR...
+                        this.m_errors.Add("#" + this.m_currentinstance + " - Collection contains invalid element");
+                        //throw new FormatException("Invalid file - missing element in collection: " + line.ToString());
                     }
 
                     // reset to next
@@ -1445,7 +1466,7 @@ namespace IfcDoc.Format.SPF
             int iParam = line.IndexOf('(');
             if (iParam == -1)
             {
-                throw new InvalidDataException("Invalid Data: " + line);
+                throw new FormatException("Invalid Data: " + line);
             }
 
             string strType = line.Substring(0, iParam);
@@ -1574,7 +1595,7 @@ namespace IfcDoc.Format.SPF
 
                         if (field == null)
                         {
-                            throw new InvalidDataException();
+                            throw new FormatException();
                         }
 
                         string strval = line.Substring(x0, x - x0);
@@ -1667,7 +1688,7 @@ namespace IfcDoc.Format.SPF
             // assign the value
             object value = null;
 
-            try
+            //try
             {
                 value = ParseValue(field.FieldType, strval);
 
@@ -1760,11 +1781,21 @@ namespace IfcDoc.Format.SPF
                     }
 
                 }
+                else
+                {
+
+                    if (field.FieldType.IsValueType && !field.FieldType.IsGenericType)
+                    {
+                        this.m_errors.Add("#" + this.m_currentinstance + " missing required attribute '" + field.DeclaringType.Name + "." + field.Name + "'");
+                        //throw new FormatException("Invalid file - missing required attribute '" + field.DeclaringType.Name + "." + field.Name + "': " + instance.ToString());
+                    }
+                }
             }
+                /*
             catch
             {
                 // eat it -- compatible file format change in v3.5 regarding DocDefinition.DiagramRectangle (entity) replacing TemplateStatus (integer)
-            }
+            }*/
 
             if (m_markup != null && this.m_parsescope == ParseScope.DataFields)
             {
@@ -1780,7 +1811,7 @@ namespace IfcDoc.Format.SPF
             FILE_NAME hName = new FILE_NAME();
             hName.Name = filename;
             hName.OriginatingSystem = "buildingSMART IFC Documentation Generator";
-            hName.PreprocessorVersion = "buildingSMART IFCDOC 7.2"; // was "buildingSMART IFCDOC" for 2.7 and earlier;
+            hName.PreprocessorVersion = "buildingSMART IFCDOC 7.7"; // was "buildingSMART IFCDOC" for 2.7 and earlier;
             hName.Author.Add(System.Environment.UserName);
             hName.Organization.Add(System.Environment.UserDomainName);
             hName.Timestamp = DateTime.UtcNow;

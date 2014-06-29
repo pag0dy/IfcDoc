@@ -402,9 +402,12 @@ namespace IfcDoc
             if (this.treeViewTemplate.SelectedNode.Tag is DocTemplateDefinition)
             {
                 DocTemplateDefinition dtd = (DocTemplateDefinition)this.treeViewTemplate.SelectedNode.Tag;
-                DocModelRuleEntity dme = (DocModelRuleEntity)this.treeViewTemplate.SelectedNode.Parent.Tag;
-                dme.References.Remove(dtd);
-                this.treeViewTemplate.SelectedNode.Remove();
+                if (treeViewTemplate.SelectedNode.Parent != null)
+                {
+                    DocModelRuleEntity dme = (DocModelRuleEntity)this.treeViewTemplate.SelectedNode.Parent.Tag;
+                    dme.References.Remove(dtd);
+                    this.treeViewTemplate.SelectedNode.Remove();
+                }
                 return;
             }
 
@@ -487,7 +490,7 @@ namespace IfcDoc
             }
 
             this.toolStripButtonTemplateInsert.Enabled = insert;
-            this.toolStripButtonTemplateRemove.Enabled = (this.Selection != null && !locked) || (this.treeViewTemplate.SelectedNode != null && this.treeViewTemplate.SelectedNode.Tag is DocTemplateDefinition);
+            this.toolStripButtonTemplateRemove.Enabled = (this.Selection != null && !locked) || (this.treeViewTemplate.SelectedNode != null && this.treeViewTemplate.SelectedNode.Tag is DocTemplateDefinition && this.treeViewTemplate.SelectedNode.Tag != this.m_template);
             this.toolStripButtonTemplateUpdate.Enabled = ((this.Selection is DocModelRuleAttribute || (this.Selection is DocModelRuleEntity)) && !locked);
             this.toolStripButtonRuleRef.Enabled = (this.Selection is DocModelRuleEntity);
 

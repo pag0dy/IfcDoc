@@ -828,15 +828,12 @@ namespace IfcDoc.Format.HTM
             if (this.m_mapSchema.TryGetValue(docDef.Name, out schema))
             {
 
-                if (Properties.Settings.Default.ExpressG)
-                {
-                    // Per ISO doc requirement, use icon to link to diagram
-                    this.m_writer.WriteLine(
-                        "<p class=\"std\">" +
-                        "<a href=\"../../../annex/annex-d/" + schema.ToLower() + "/diagram_" + diagramnumber.ToString("D4") +
-                        ".htm\" ><img src=\"../../../img/diagram.png\" style=\"border: 0px\" title=\"Link to EXPRESS-G diagram\" alt=\"Link to EXPRESS-G diagram\">&nbsp;EXPRESS-G diagram</a>" +
-                        "</p>");
-                }
+                // Per ISO doc requirement, use icon to link to diagram
+                this.m_writer.WriteLine(
+                    "<p class=\"std\">" +
+                    "<a href=\"../../../annex/annex-d/" + schema.ToLower() + "/diagram_" + diagramnumber.ToString("D4") +
+                    ".htm\" ><img src=\"../../../img/diagram.png\" style=\"border: 0px\" title=\"Link to EXPRESS-G diagram\" alt=\"Link to EXPRESS-G diagram\">&nbsp;EXPRESS-G diagram</a>" +
+                    "</p>");
             }
         }
 
@@ -1216,14 +1213,8 @@ namespace IfcDoc.Format.HTM
         /// 
         /// </summary>
         /// <param name="baseclass">Name of base class or null for all entities</param>
-        public void WriteInheritanceListing(string baseclass)
+        public void WriteInheritanceListing(string baseclass, bool predefined, string caption)
         {
-            string caption = "Entities";
-            if (baseclass != null)
-            {
-                caption = baseclass;
-            }
-
             SortedList<string, DocEntity> alphaEntity = new SortedList<string, DocEntity>();
             foreach (string s in this.m_mapEntity.Keys)
             {
@@ -1234,28 +1225,54 @@ namespace IfcDoc.Format.HTM
                 }
             }
 
-            this.WriteHeader("Inheritance Listing", 2);
+            this.WriteHeader("Inheritance Listing", 3);
             this.WriteLine("<h2 class=\"annex\">" + caption + "</h2>");
             this.WriteLine("<ul class=\"std\">");
 
-            WriteInheritanceLevel(baseclass, alphaEntity.Values);
+            WriteInheritanceLevel(baseclass, alphaEntity.Values, predefined);
 
             this.WriteLine("</ul>");
             this.WriteFooter(Properties.Settings.Default.Footer);
         }
 
-        private void WriteInheritanceLevel(string baseclass, IList<DocEntity> list)
+        private void WriteInheritanceLevel(string baseclass, IList<DocEntity> list, bool predefined)
         {
             foreach (DocEntity entity in list)
             {
                 if (entity.BaseDefinition == baseclass)
                 {
                     string schema = this.m_mapSchema[entity.Name];
-                    string hyperlink = @"../../schema/" + schema.ToLower() + @"/lexical/" + entity.Name.ToLower() + ".htm";
-                    this.WriteLine("<li><a class=\"listing-link\" href=\"" + hyperlink + "\">" + entity.Name + "</a><ul>");
+                    string hyperlink = @"../../../schema/" + schema.ToLower() + @"/lexical/" + entity.Name.ToLower() + ".htm";
+
+                    this.Write("<li><a class=\"listing-link\" href=\"" + hyperlink + "\">" + entity.Name + "</a>");
+                    
+                    if(predefined && !baseclass.EndsWith("Type") && this.m_mapEntity.ContainsKey(baseclass + "Type"))
+                    {
+                        this.Write(" - <a class=\"listing-link\" href=\"../../../schema/" + schema.ToLower() + @"/lexical/" + entity.Name.ToLower() + "type.htm\">" + entity.Name + "Type</a>");
+                    }
+
+                    this.WriteLine("<ul>");
+
+                    if (predefined)
+                    {
+                        foreach (DocAttribute attr in entity.Attributes)
+                        {
+                            if (attr.Name == "PredefinedType")
+                            {
+                                DocEnumeration docEnum = (DocEnumeration)this.m_mapEntity[attr.DefinedType];
+                                this.WriteLine("<table class=\"inheritanceenum\">");
+                                foreach (DocConstant docConst in docEnum.Constants)
+                                {
+                                    this.WriteLine("<tr><td>" + docConst.Name + "</td></tr>");
+                                }
+                                this.WriteLine("</table>");
+                                break;
+                            }
+                        }
+                    }
 
                     // recurse
-                    WriteInheritanceLevel(entity.Name, list);
+                    WriteInheritanceLevel(entity.Name, list, predefined);
 
                     this.WriteLine("</ul></li>\r\n");
                 }
@@ -1574,7 +1591,7 @@ namespace IfcDoc.Format.HTM
                 {
                     this.WriteLine(
                         "\r\n" +
-                        "<script language=\"JavaScript1.1\" type=\"text/javascript\">\r\n" +
+                        "<script type=\"text/javascript\">\r\n" +
                         "<!--\r\n" +
                         "    parent.index.location.replace(\"toc-" + chAnnex.ToString().ToLower() + ".htm\");\r\n" +
                         "//-->\r\n" +
@@ -1585,7 +1602,7 @@ namespace IfcDoc.Format.HTM
                     // 2 levels up
                     this.WriteLine(
                         "\r\n" +
-                        "<script language=\"JavaScript1.1\" type=\"text/javascript\">\r\n" +
+                        "<script type=\"text/javascript\">\r\n" +
                         "<!--\r\n" +
                         "    parent.index.location.replace(\"../../toc-" + chAnnex.ToString().ToLower() + ".htm\");\r\n" +
                         "//-->\r\n" +
@@ -1596,7 +1613,7 @@ namespace IfcDoc.Format.HTM
                     // 1 level up
                     this.WriteLine(
                         "\r\n" +
-                        "<script language=\"JavaScript1.1\" type=\"text/javascript\">\r\n" +
+                        "<script type=\"text/javascript\">\r\n" +
                         "<!--\r\n" +
                         "    parent.index.location.replace(\"../toc-" + chAnnex.ToString().ToLower() + ".htm\");\r\n" +
                         "//-->\r\n" +
@@ -1608,7 +1625,7 @@ namespace IfcDoc.Format.HTM
                 // top-level section
                 this.WriteLine(
                     "\r\n" +
-                    "<script language=\"JavaScript1.1\" type=\"text/javascript\">\r\n" +
+                    "<script type=\"text/javascript\">\r\n" +
                     "<!--\r\n" +
                     "    parent.index.location.replace(\"../../toc-1.htm#\");\r\n" +
                     "//-->\r\n" +
@@ -1619,7 +1636,7 @@ namespace IfcDoc.Format.HTM
                 // top-level section
                 this.WriteLine(
                     "\r\n" +
-                    "<script language=\"JavaScript1.1\" type=\"text/javascript\">\r\n" +
+                    "<script type=\"text/javascript\">\r\n" +
                     "<!--\r\n" +
                     "    parent.index.location.replace(\"toc-" + iSection.ToString() + ".htm#\");\r\n" +
                     "//-->\r\n" +
@@ -1636,7 +1653,7 @@ namespace IfcDoc.Format.HTM
 
                 this.WriteLine(
                     "\r\n" +
-                    "<script language=\"JavaScript1.1\" type=\"text/javascript\">\r\n" +
+                    "<script type=\"text/javascript\">\r\n" +
                     "<!--\r\n" +
                     "    parent.index.location.replace(\"" + linkprefix + "../toc-" + iSection.ToString() + ".htm#" + iSection.ToString() + "." + iSchema.ToString() + "." + iType.ToString() + "." + iItem.ToString() + "\");\r\n" +
                     "//-->\r\n" +
@@ -1647,7 +1664,7 @@ namespace IfcDoc.Format.HTM
                 string linkprefix = "";
                 this.WriteLine(
                     "\r\n" +
-                    "<script language=\"JavaScript1.1\" type=\"text/javascript\">\r\n" +
+                    "<script type=\"text/javascript\">\r\n" +
                     "<!--\r\n" +
                     "    parent.index.location.replace(\"" + linkprefix + "../toc-" + iSection.ToString() + ".htm#" + iSection.ToString() + "." + iSchema.ToString() + "\");\r\n" +
                     "//-->\r\n" +
@@ -1934,7 +1951,7 @@ namespace IfcDoc.Format.HTM
                 {
                     iTemplateDef++;
 
-                    string rellink = docTemplateDef.Name.Replace(' ', '-').ToLower() + ".htm";
+                    string rellink = DocumentationISO.MakeLinkName(docTemplateDef) + ".htm";
                     htmTOC.WriteTOC(level, "<a href=\"schema/templates/" + rellink + "\">" + prefix + "." + iTemplateDef.ToString() + " " + docTemplateDef.Name + "</a>");
 
                     if (level == 1)
@@ -2646,6 +2663,25 @@ namespace IfcDoc.Format.HTM
 
 
         }
+
+        internal void WriteTerm(DocTerm docRef)
+        {
+            this.WriteLine("<dt class=\"term\"><strong name=\"" + DocumentationISO.MakeLinkName(docRef) + "\" id=\"" + DocumentationISO.MakeLinkName(docRef) + "\">" + docRef.Name + "</strong></dt>");
+            this.WriteLine("<dd class=\"term\">" + docRef.Documentation);
+
+            if (docRef.Terms.Count > 0)
+            {
+                this.WriteLine("<dl>");
+                foreach (DocTerm sub in docRef.Terms)
+                {
+                    WriteTerm(sub);
+                }
+                this.WriteLine("</dl>");
+            }
+
+            this.WriteLine("</dd>");
+        }
+
     }    
 
 }

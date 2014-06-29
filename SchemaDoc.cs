@@ -1859,7 +1859,7 @@ namespace IfcDoc.Schema.DOC
             return " [" + min + ":" + max + "]";
         }
 
-        public abstract bool? Validate(object target, DocTemplateItem docItem, Dictionary<string, Type> typemap);
+        public abstract bool? Validate(object target, DocTemplateItem docItem, Dictionary<string, Type> typemap, List<DocModelRule> trace);
 
         /// <summary>
         /// Makes deep copy of rule and all child rules
@@ -1939,7 +1939,7 @@ namespace IfcDoc.Schema.DOC
         /// <param name="docItem"></param>
         /// <param name="typemap"></param>
         /// <returns>True if passing, False if failing, Null if inapplicable.</returns>
-        private bool? ValidateItem(object value, DocTemplateItem docItem, Dictionary<string, Type> typemap)
+        private bool? ValidateItem(object value, DocTemplateItem docItem, Dictionary<string, Type> typemap, List<DocModelRule> trace)
         {
             // (3) if parameter is defined, check for match
             if (!String.IsNullOrEmpty(this.Identification))
@@ -2002,15 +2002,25 @@ namespace IfcDoc.Schema.DOC
 
             // (4) recurse through constraints or entity rules
             if (this.Rules != null && this.Rules.Count > 0)
-            {                
+            {
+                int tracelen = trace.Count;
+
                 foreach (DocModelRule rule in this.Rules)
                 {
+                    while (trace.Count > tracelen)
+                    {
+                        trace.RemoveAt(tracelen);
+                    }
+
                     // attribute rule is true if at least one entity filter matches or one constraint filter matches
-                    bool? result = rule.Validate(value, docItem, typemap);
+                    bool? result = rule.Validate(value, docItem, typemap, trace);
                     if (result != null && result.Value)
+                    {
                         return result;
+                    }
                 }
 
+                // keep last failure path intact
                 return false;
             }
 
@@ -2024,8 +2034,10 @@ namespace IfcDoc.Schema.DOC
         /// <param name="docItem">Optional template parameters to use for validation.</param>
         /// <param name="typemap">Map of types to resolve.</param>
         /// <returns></returns>
-        public override bool? Validate(object target, DocTemplateItem docItem, Dictionary<string, Type> typemap)
+        public override bool? Validate(object target, DocTemplateItem docItem, Dictionary<string, Type> typemap, List<DocModelRule> trace)
         {
+            trace.Add(this);
+
             if (target == null)
                 return false; // todo: verify
 
@@ -2042,9 +2054,18 @@ namespace IfcDoc.Schema.DOC
                 System.Collections.IList list = (System.Collections.IList)value;
                 int pass = 0;
                 int fail = 0;
+
+                int tracelen = trace.Count;
+
                 foreach (object o in list)
                 {
-                    bool? result = ValidateItem(o, docItem, typemap);                    
+                    // reset
+                    while(trace.Count > tracelen)
+                    {
+                        trace.RemoveAt(tracelen);
+                    }
+
+                    bool? result = ValidateItem(o, docItem, typemap, trace);                    
                     if (result != null)
                     {
                         if (result.Value)
@@ -2053,40 +2074,59 @@ namespace IfcDoc.Schema.DOC
                         }
                         else
                         {
+
                             fail++;
                         }
                     }
                 }
 
+                bool? checkcard = null;
                 if (this.CardinalityMin == 0 && this.CardinalityMax == 0) // uninitialized; same as schema
                 {
-                    return (fail == 0);
+                    checkcard = (fail == 0);
                 }
                 else if(this.CardinalityMin == -1 && this.CardinalityMax == -1)  // restricted (should not be present) (0:0)
                 {
-                    return (pass == 0);
+                    checkcard = (pass == 0);
                 }
                 else if (this.CardinalityMin == 0 && this.CardinalityMax == 1)
                 {
-                    return (pass == 0 || pass == 1);
+                    checkcard = (pass == 0 || pass == 1);
                 }
                 else if (this.CardinalityMin == 1 && this.CardinalityMax == 1)
                 {
-                    return (pass == 1);
+                    checkcard = (pass == 1);
                 }
                 else if (this.CardinalityMin == 1)
                 {
-                    return (fail == 0);
+                    checkcard = (fail == 0);
                 }
                 else
                 {
-                    return true;
+                    checkcard = true;
                 }
+
+                if (checkcard == null || checkcard.Value)
+                {
+                    while (trace.Count > tracelen)
+                    {
+                        trace.RemoveAt(tracelen);
+                    }
+
+                    trace.Remove(this);
+                }
+                return checkcard;
             }
             else
             {
                 // validate single
-                return ValidateItem(value, docItem, typemap);
+                bool? checkitem = ValidateItem(value, docItem, typemap, trace);
+                if(checkitem == null || checkitem.Value)
+                {
+                    trace.Remove(this);
+                }
+
+                return checkitem;
             }
 
         }
@@ -2131,8 +2171,10 @@ namespace IfcDoc.Schema.DOC
         /// <param name="docItem">Template item to validate.</param>
         /// <param name="typemap">Map of type names to type definitions.</param>
         /// <returns>True if passing, False if failing, or null if inapplicable.</returns>
-        public override bool? Validate(object target, DocTemplateItem docItem, Dictionary<string, Type> typemap)
+        public override bool? Validate(object target, DocTemplateItem docItem, Dictionary<string, Type> typemap, List<DocModelRule> trace)
         {
+            trace.Add(this);
+
             // checking for matching cast
             Type t = null;
             if (!typemap.TryGetValue(this.Name.ToUpper(), out t))
@@ -2145,11 +2187,14 @@ namespace IfcDoc.Schema.DOC
             {
                 foreach (DocModelRule rule in this.Rules)
                 {                    
-                    bool? result = rule.Validate((SEntity)target, docItem, typemap);
+                    bool? result = rule.Validate((SEntity)target, docItem, typemap, trace);
 
                     // entity rule is inapplicable if any attribute rules are inapplicable
                     if (result == null)
+                    {
+                        trace.Remove(this);
                         return null;
+                    }
 
                     // entity rule fails if any attribute rules fail
                     if (!result.Value)
@@ -2157,6 +2202,7 @@ namespace IfcDoc.Schema.DOC
                 }
             }
 
+            trace.Remove(this);
             return true;
         }
 
@@ -2166,7 +2212,7 @@ namespace IfcDoc.Schema.DOC
     {
         [DataMember(Order = 0)] public DocOpExpression Expression; // new in IfcDoc 6.1
 
-        public override bool? Validate(object target, DocTemplateItem docItem, Dictionary<string, Type> typemap)
+        public override bool? Validate(object target, DocTemplateItem docItem, Dictionary<string, Type> typemap, List<DocModelRule> trace)
         {
             // constraint validation is now done in compiled code -- indicate pass to keep going
             return true;
@@ -2344,6 +2390,7 @@ namespace IfcDoc.Schema.DOC
             {
                 string metrichead = "";
                 string metrictail = "";
+                string suffix = " " + opname + " " + this.Value.ToString(dtd);
                 switch (this.Metric)
                 {
                     case DocOpCode.LoadLength:
@@ -2359,9 +2406,10 @@ namespace IfcDoc.Schema.DOC
                     case DocOpCode.IsUnique:
                         metrichead = "UNIQUE(";
                         metrictail = ")";
+                        suffix = "";
                         break;
                 }
-                return metrichead + this.Reference.ToString(dtd) + metrictail + " " + opname + " " + this.Value.ToString(dtd);
+                return metrichead + this.Reference.ToString(dtd) + metrictail + suffix;
             }
 
             return null;
@@ -2384,6 +2432,13 @@ namespace IfcDoc.Schema.DOC
 
         internal override LocalBuilder Emit(Compiler context, ILGenerator generator, DocTemplateDefinition dtd, Type valuetype)
         {
+            if(this.Reference.EntityRule == null)
+            {
+                System.Diagnostics.Debug.WriteLine("Invalid statement reference: " + dtd.Name);
+                generator.Emit(OpCodes.Ldc_I4_0); // return false;
+                return null;
+            }
+            
             Type typeCompare = context.RegisterType(this.Reference.EntityRule.Name);
 
             // apply additional operation on reference according to metric
@@ -2394,6 +2449,15 @@ namespace IfcDoc.Schema.DOC
                         // push the referenced value onto the stack
                         LocalBuilder local = this.Reference.Emit(context, generator, dtd, null);
 
+                        // cast to IComparable if required
+                        if (this.Operation == DocOpCode.CompareGreaterThan ||
+                            this.Operation == DocOpCode.CompareGreaterThanOrEqual ||
+                            this.Operation == DocOpCode.CompareLessThan ||
+                            this.Operation == DocOpCode.CompareLessThanOrEqual)
+                        {
+                            generator.Emit(OpCodes.Castclass, typeof(IComparable));
+                        }
+
                         // push the value to be compared onto the stack
                         if (typeCompare.IsEnum && this.Value is DocOpLiteral)
                         {
@@ -2402,8 +2466,13 @@ namespace IfcDoc.Schema.DOC
                             MethodInfo methodTypeFromHandle = typeof(Type).GetMethod("GetTypeFromHandle");
                             generator.Emit(OpCodes.Call, methodTypeFromHandle);
 
+                            FieldInfo fieldEnum = null;
                             string litval = ((DocOpLiteral)this.Value).Value;
-                            FieldInfo fieldEnum = typeCompare.GetField(litval, BindingFlags.Static | BindingFlags.Public);
+                            if (litval != null)
+                            {
+                                fieldEnum = typeCompare.GetField(litval, BindingFlags.Static | BindingFlags.Public);
+                            }
+
                             if (fieldEnum != null)
                             {
                                 int fieldVal = (int)fieldEnum.GetValue(null);
@@ -2411,7 +2480,7 @@ namespace IfcDoc.Schema.DOC
                             }
                             else
                             {
-                                System.Diagnostics.Debug.WriteLine("Invalid enumeration: " + litval);
+                                System.Diagnostics.Debug.WriteLine("Invalid enumeration: " + litval + " - " + dtd.Name);
                                 generator.Emit(OpCodes.Ldc_I4_0);
                             }
 
@@ -2569,14 +2638,14 @@ namespace IfcDoc.Schema.DOC
                 case DocOpCode.CompareEqual:
                     {
                         // strings may not necessarily be interned, so can't use comparison opcode -- must call Object.Compare (which checks for null conditions, calls virtual Compare specific to string)
-                        MethodInfo methodCompare = typeof(Object).GetMethod("Equals", new Type[] { typeof(Object), typeof(Object) });
+                        MethodInfo methodCompare = typeof(Object).GetMethod("Equals", BindingFlags.Static | BindingFlags.Public, null, new Type[] { typeof(Object), typeof(Object) }, null);
                         generator.Emit(OpCodes.Call, methodCompare);
                     }
                     break;
 
                 case DocOpCode.CompareNotEqual:
                     {
-                        MethodInfo methodCompare = typeof(Object).GetMethod("Equals", new Type[] { typeof(Object), typeof(Object) });
+                        MethodInfo methodCompare = typeof(Object).GetMethod("Equals", BindingFlags.Static | BindingFlags.Public, null, new Type[] { typeof(Object), typeof(Object) }, null);
                         generator.Emit(OpCodes.Call, methodCompare); // 0 means they are equal, so non-zero means not equal
                         generator.Emit(OpCodes.Not); // 0 means they are equal, so flip result
                     }
@@ -2808,57 +2877,74 @@ namespace IfcDoc.Schema.DOC
                         return null;
                     }
                     generator.Emit(OpCodes.Castclass, type);
-                    generator.Emit(OpCodes.Ldfld, field); // field
 
-                    if (!field.FieldType.IsValueType)
+                    if (field.FieldType.IsValueType && field.FieldType.IsGenericType && field.FieldType.GetGenericTypeDefinition() == typeof(Nullable<>))
                     {
-                        generator.Emit(OpCodes.Dup);
+                        MethodInfo methodHasValue = field.FieldType.GetMethod("get_HasValue");
+                        MethodInfo methodGetValue = field.FieldType.GetMethod("get_Value");
+
+                        generator.Emit(OpCodes.Dup); // 2
+
+                        generator.Emit(OpCodes.Ldflda, field); // field address
+                        generator.Emit(OpCodes.Call, methodHasValue);
                         generator.Emit(OpCodes.Brfalse, labelBail);
-                    }
 
-                    // if field is collection, then get last element
-                    if (field.FieldType.IsGenericType && field.FieldType.GetGenericTypeDefinition() == typeof(List<>))
+                        generator.Emit(OpCodes.Ldflda, field); // field address
+                        generator.Emit(OpCodes.Call, methodGetValue);
+                    }
+                    else
                     {
-                        // iterate
-                        LocalBuilder localList = generator.DeclareLocal(field.FieldType);
-                        LocalBuilder localElem = generator.DeclareLocal(field.FieldType.GetGenericArguments()[0]);
-                        generator.Emit(OpCodes.Stloc, (short)localList.LocalIndex);
-
-                        // get the length of the list -- go in reverse order to avoid having to check or store length each iteration
-                        MethodInfo methodListLength = typeof(ICollection).GetProperty("Count").GetGetMethod();
-                        generator.Emit(OpCodes.Ldloc, (short)localList.LocalIndex);
-                        generator.Emit(OpCodes.Callvirt, methodListLength);
-
-                        // if 0 length, then return
-                        Label labelAfter = generator.DefineLabel();
-                        generator.Emit(OpCodes.Brtrue, labelAfter); // if length != 0 then keep going
-                        generator.Emit(OpCodes.Ldnull); // push null onto stack
-                        generator.Emit(OpCodes.Br, labelBail); // skip any more indirections
-                        generator.MarkLabel(labelAfter);
-
-                        // get the first element of the collection -- FUTURE: allow index to be specified
-                        generator.Emit(OpCodes.Ldloc, (short)localList.LocalIndex);
-                        generator.Emit(OpCodes.Ldc_I4_0); // first element
-
-                        // get the element
-                        MethodInfo methodListGet = ((PropertyInfo)typeof(IList).GetDefaultMembers()[0]).GetGetMethod();
-                        generator.Emit(OpCodes.Callvirt, methodListGet);
-                        if (localElem.LocalType.IsValueType)
+                        generator.Emit(OpCodes.Ldfld, field); // field
+                        if (!field.FieldType.IsValueType)
                         {
-                            // e.g. IfcCartesianPoint.Coordinates[1] : IfcLengthMeasure
-                            generator.Emit(OpCodes.Unbox, localElem.LocalType);
-                            generator.Emit(OpCodes.Ldobj, localElem.LocalType);//Ldind_R8); // assume 64-bit floating point (float) .. TBD: check for integer
+                            generator.Emit(OpCodes.Dup);
+                            generator.Emit(OpCodes.Brfalse, labelBail);
                         }
-                        else
-                        {
-                            generator.Emit(OpCodes.Castclass, localElem.LocalType);
-                        }
-                        generator.Emit(OpCodes.Stloc, (short)localElem.LocalIndex);
 
-                        // then load the element again
-                        generator.Emit(OpCodes.Ldloc, (short)localElem.LocalIndex);
+
+                        // if field is collection, then get last element
+                        if (field.FieldType.IsGenericType && field.FieldType.GetGenericTypeDefinition() == typeof(List<>))
+                        {
+                            // iterate
+                            LocalBuilder localList = generator.DeclareLocal(field.FieldType);
+                            LocalBuilder localElem = generator.DeclareLocal(field.FieldType.GetGenericArguments()[0]);
+                            generator.Emit(OpCodes.Stloc, (short)localList.LocalIndex);
+
+                            // get the length of the list -- go in reverse order to avoid having to check or store length each iteration
+                            MethodInfo methodListLength = typeof(ICollection).GetProperty("Count").GetGetMethod();
+                            generator.Emit(OpCodes.Ldloc, (short)localList.LocalIndex);
+                            generator.Emit(OpCodes.Callvirt, methodListLength);
+
+                            // if 0 length, then return
+                            Label labelAfter = generator.DefineLabel();
+                            generator.Emit(OpCodes.Brtrue, labelAfter); // if length != 0 then keep going
+                            generator.Emit(OpCodes.Ldnull); // push null onto stack
+                            generator.Emit(OpCodes.Br, labelBail); // skip any more indirections
+                            generator.MarkLabel(labelAfter);
+
+                            // get the first element of the collection -- FUTURE: allow index to be specified
+                            generator.Emit(OpCodes.Ldloc, (short)localList.LocalIndex);
+                            generator.Emit(OpCodes.Ldc_I4_0); // first element
+
+                            // get the element
+                            MethodInfo methodListGet = ((PropertyInfo)typeof(IList).GetDefaultMembers()[0]).GetGetMethod();
+                            generator.Emit(OpCodes.Callvirt, methodListGet);
+                            if (localElem.LocalType.IsValueType)
+                            {
+                                // e.g. IfcCartesianPoint.Coordinates[1] : IfcLengthMeasure
+                                generator.Emit(OpCodes.Unbox, localElem.LocalType);
+                                generator.Emit(OpCodes.Ldobj, localElem.LocalType);//Ldind_R8); // assume 64-bit floating point (float) .. TBD: check for integer
+                            }
+                            else
+                            {
+                                generator.Emit(OpCodes.Castclass, localElem.LocalType);
+                            }
+                            generator.Emit(OpCodes.Stloc, (short)localElem.LocalIndex);
+
+                            // then load the element again
+                            generator.Emit(OpCodes.Ldloc, (short)localElem.LocalIndex);
+                        }
                     }
-
                 }
                 else if (rule is DocModelRuleEntity)
                 {
@@ -2871,6 +2957,10 @@ namespace IfcDoc.Schema.DOC
                     }
                     else if (type.IsValueType)
                     {
+                        // duplicate it to retain object on stack after instance check (otherwise null)
+                        //generator.Emit(OpCodes.Dup);
+                        //generator.Emit(OpCodes.Brfalse, labelBail);
+
                         FieldInfo fieldValue = compiler.RegisterField(type, "Value");
                         generator.Emit(OpCodes.Ldfld, fieldValue);
                         generator.Emit(OpCodes.Box, fieldValue.FieldType); // needed for Object.Compare
@@ -3325,6 +3415,20 @@ namespace IfcDoc.Schema.DOC
 
     public class DocTerm : DocObject
     {
+        [DataMember(Order = 0)] private List<DocTerm> _Terms; // added in V7.3  // sub-terms
+
+        public List<DocTerm> Terms
+        {
+            get
+            {
+                if(this._Terms == null)
+                {
+                    this._Terms = new List<DocTerm>();
+                }
+
+                return this._Terms;
+            }
+        }
     }
     
     public class DocAbbreviation : DocObject

@@ -232,6 +232,34 @@ namespace IfcDoc.Format.PNG
                     // mark rule serving as default name
                     g.FillEllipse(Brushes.Blue, new Rectangle(x + CX - DX - CY, y + CY * (iAttr+1), CY, CY));
                 }
+
+                string card = ruleAttribute.GetCardinalityExpression();
+                if (g != null && card != null)
+                {
+                    card = card.Trim();
+                    switch (docAttr.GetAggregation())
+                    {
+                        case DocAggregationEnum.SET:
+                            card = "S" + card;
+                            break;
+
+                        case DocAggregationEnum.LIST:
+                            card = "L" + card;
+                            break;
+                    }
+
+                    int px = x + CX - DX;
+                    int py = y + CY * (iAttr + 1);
+                    g.FillRectangle(Brushes.White, px - CX / 5, py, CX / 5, CY);
+                    using (Font font = new Font(FontFamily.GenericSansSerif, 8.0f, FontStyle.Regular))
+                    {
+                        using (StringFormat fmt = new StringFormat())
+                        {
+                            fmt.Alignment = StringAlignment.Far;
+                            g.DrawString(card, font, Brushes.Blue, px, py, fmt);
+                        }
+                    }
+                }
             }
         }
 

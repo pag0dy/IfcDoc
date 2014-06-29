@@ -52,51 +52,6 @@ div.copyright {
 	width: 99%;
 }
 
-div.scope {
-	background-color: #ffffff;
-	counter-reset: index1 0;
-}
-
-div.ref {
-	background-color: #ffffff;
-	counter-reset: index1 1;
-}
-
-div.terms {
-	background-color: #ffffff;
-	counter-reset: index1 2;
-}
-
-div.reqs {
-	background-color: #ffffff;
-	counter-reset: index1 3;
-}
-
-div.core {
-	background-color: #ffffff;
-	counter-reset: index1 4;
-}
-
-div.shared {
-	background-color: #ffffff;
-	counter-reset: index1 5;
-}
-
-div.domain {
-	background-color: #ffffff;
-	counter-reset: index1 6;
-}
-
-div.resource {
-	background-color: #ffffff;
-	counter-reset: index1 7;
-}
-
-div.annex {
-	background-color: #ffffff;
-	counter-reset: index1 item fig;
-}
-
 div.menu {
 	margin-top: 14px;
 	margin-left: 0px;
@@ -104,6 +59,13 @@ div.menu {
 
 div.not-numbered {
 	background-color: #ffffff;
+}
+
+div.xsd, div.express {
+	margin: 10px;
+	padding: 5px;
+	border: 1px solid gray;
+	border-radius: 8px;
 }
 
 
@@ -215,7 +177,7 @@ h5.num:before {
 /* styles for paragraphs                                            */
 
 p {
-	font-size: 14px;
+	font-size: 13px;
 	line-height: 125%;
 	margin-top: 6px;
 	margin-bottom: 0px;
@@ -254,16 +216,14 @@ p.small {
 }
 
 p.std {
-	font-size: small;
 	margin-top: 6px;
 	margin-bottom: 0px;
 }
 
 p.spec-head {
-	font-size: small;
 	margin-top: 18px;
 	margin-bottom: 6px;
-	color: blue;
+	color: #000099;
 	text-decoration: underline;
 }
 
@@ -290,7 +250,7 @@ p.use-head {
 	margin-top: 18px;
 	margin-bottom: 6px;
 	font-weight: bold;
-	color: blue;
+	color: #000099;
 }
 
 p.figure {
@@ -308,7 +268,7 @@ p.table {
 }
 
 blockquote {
-	font-size: 12px;
+	font-size: 11px;
 	line-height: 120%;
 	margin-top: 6px;
 	margin-bottom: 6px;
@@ -318,17 +278,28 @@ blockquote {
 	padding-left: 20px;
 }
 
+td blockquote {
+	font-size: 10px;
+	line-height: 120%;
+	margin-top: 3px;
+	margin-bottom: 3px;
+	margin-left: 0px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	padding-left: 20px;
+}
+
 blockquote.std {
-	font-size: small;
+	font-size: 11px;
 }
 
 blockquote.note {
-	margin-top: 12px;
+	margin-top: 6px;
 	margin-bottom: 12px;
 }
 
 blockquote.example {
-	margin-top: 12px;
+	margin-top: 6px;
 	margin-bottom: 12px;
 }
 
@@ -377,8 +348,25 @@ summary {
 }
 
 /* ---------------------------------------------------------------- */
-/* styles for texts                                                 */
+/* styles for code fragments     									*/
 
+code.express {
+	font-family: consolas, monospace;
+	font-size: small;
+}
+
+code.xsd {
+	font-family: consolas, monospace;
+	font-size: small;
+}
+
+/* ---------------------------------------------------------------- */
+/* styles for texts     											*/
+
+span.note {
+	font-size: smaller;
+	padding-top: 4px;
+}
 
 span.express {
 	font-family: consolas, monospace;
@@ -479,7 +467,7 @@ ol {
 
 ol.std {
 	margin-top: 6px;
-	margin-bottom: 0px;
+	margin-bottom: 6px;
 	margin-left: 2px;
 	padding-top: 0px;
 	padding-bottom: 0px;
@@ -525,7 +513,7 @@ ul {
 	margin-top: 6px;
 	padding-top: 0px;
 	margin-bottom: 0px;
-	padding-bottom: 0px;
+	padding-bottom: 6px;
 	list-style-type: square;
 }
 
@@ -543,7 +531,7 @@ ul.inner {
 }
 
 li {
-	font-size: 13px;
+	font-size: 12px;
 	margin-top: 4px;
 	padding-top: 1px;
 	margin-bottom: 2px;
@@ -571,11 +559,11 @@ li.bold {
 }
 
 li.small {
-	font-size: 12px;
+	font-size: 11px;
 }
 
 li.note {
-	font-size: 70%;
+	font-size: 10px;
 	margin-bottom: 2px;
 	padding-bottom: 0px;
 	margin-top: 2px;
@@ -589,30 +577,41 @@ li.note:before {
 }
 */
 
+
+/* ---------------------------------------------------------------- */
+/* definition lists (references, bilbiography                       */
+
+
 dl {
 }
 
-dl.std {
-}
-
 dt {
-	font-size: small;
+	font-size: 13px;
 }
 
-dt.std {
+dt.normativereference {
 	margin-bottom: 0px;
 	padding-bottom: 0px;
 }
 
+dt.term {
+	margin-bottom: 0px;
+	padding-bottom: 0px;
+	margin-top: 12px;
+	padding-top: 0px;
+}
+
 dd {
-	font-size: small;
+	font-size: 13px;
 }
 
-dd.std {
-	margin-bottom: 0.5em;
-	padding-bottom: 0em;
+dd.term {
+	margin-bottom: 0px;
+	padding-bottom: 0px;
+	margin-left: 0px;
+	padding-left: 0px;
+	
 }
-
 
 /* ---------------------------------------------------------------- */
 /* table styles                                                     */
@@ -682,18 +681,18 @@ tr.std {
 }
 
 tr.inherit {
-	font-size: small;
+	font-size: 11px;
 	vertical-align: top;
 }
 
 tr.inherit-shadow {
-	font-size: small;
+	font-size: 11px;
 	vertical-align: top;
 	background-color: #eeeeff;
 }
 
 td {
-	font-size: small;
+	font-size: 11px;
 	text-align: left;
 	vertical-align: top;
 }
@@ -734,7 +733,7 @@ td.menu {
 }
 
 td.example {
-	font-size: x-small;
+	font-size: 11px;
 }
 
 td.head {
@@ -767,7 +766,7 @@ td.right {
 }
 
 td.inherit {
-	font-size: x-small;
+	font-size: 11px;
 	padding-left: 2px;
 	padding-right: 0px;
 	padding-top: 2px;
@@ -776,7 +775,7 @@ td.inherit {
 }
 
 th {
-	font-size: small;
+	font-size: 11px;
 	font-weight: bold;
 	vertical-align: top;
 }
@@ -787,7 +786,7 @@ table.even {
 }
 
 table.gridtable {
-	font-family: verdana,arial,sans-serif;
+	margin-top: 6px;
 	color: #333333;
 	border-width: 1px;
 	border-color: #666666;
@@ -796,7 +795,7 @@ table.gridtable {
 
 table.gridtable th {
 	border-width: 1px;
-	font-size: x-small;
+	font-size: 11px;
 	text-align: left;
 	padding: 4px;
 	border-style: solid;
@@ -806,7 +805,7 @@ table.gridtable th {
 
 table.gridtable td {
 	border-width: 1px;
-	font-size: x-small;
+	font-size: 11px;
 	padding: 4px;
 	border-style: solid;
 	border-color: #666666;
@@ -814,7 +813,7 @@ table.gridtable td {
 }
 
 table.exchange {
-	font-family: verdana,arial,sans-serif;
+	margin-top: 6px;
 	color: #333333;
 	border-width: 1px;
 	border-color: #666666;
@@ -823,7 +822,7 @@ table.exchange {
 
 table.exchange th {
 	border-width: 1px;
-	font-size: x-small;
+	font-size: 11px;
 	text-align: left;
 	border-style: solid;
 	border-color: #666666;
@@ -832,14 +831,17 @@ table.exchange th {
 
 table.exchange td {
 	border-width: 1px;
-	font-size: x-small;
+	font-size: 11px;
 	border-style: solid;
 	border-color: #666666;
 	background-color: #ffffff;
 }
 
 table.attributes {
-	font-family: verdana,arial,sans-serif;
+	width: 99%;
+	margin-left: 10px;
+	margin-top: 5px;	
+	margin-bottom: 10px;	
 	color: #333333;
 	border-width: 1px;
 	border-color: #666666;
@@ -866,7 +868,10 @@ table.attributes td {
 }
 
 table.propositions {
-	font-family: verdana,arial,sans-serif;
+	width: 99%;
+	margin-left: 10px;
+	margin-top: 5px;	
+	margin-bottom: 10px;	
 	color: #333333;
 	border-width: 1px;
 	border-color: #666666;

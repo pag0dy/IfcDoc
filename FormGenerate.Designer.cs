@@ -40,28 +40,25 @@
             this.groupBoxLocation = new System.Windows.Forms.GroupBox();
             this.groupBoxDetails = new System.Windows.Forms.GroupBox();
             this.checkBoxSuppressXSD = new System.Windows.Forms.CheckBox();
-            this.checkBoxExpressG = new System.Windows.Forms.CheckBox();
             this.checkBoxExpressEnclosed = new System.Windows.Forms.CheckBox();
             this.buttonOK = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
-            this.checkBoxDiagramConcept = new System.Windows.Forms.CheckBox();
-            this.checkBoxDiagramTemplate = new System.Windows.Forms.CheckBox();
             this.checkBoxRequirement = new System.Windows.Forms.CheckBox();
             this.groupBoxModelView = new System.Windows.Forms.GroupBox();
             this.checkBoxConceptTables = new System.Windows.Forms.CheckBox();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.groupBoxViews = new System.Windows.Forms.GroupBox();
             this.checkedListBoxViews = new System.Windows.Forms.CheckedListBox();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.groupBoxLocation.SuspendLayout();
             this.groupBoxDetails.SuspendLayout();
             this.groupBoxModelView.SuspendLayout();
             this.tabControl.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            this.tabPage2.SuspendLayout();
             this.groupBoxViews.SuspendLayout();
+            this.tabPage2.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -162,7 +159,6 @@
             // groupBoxDetails
             // 
             this.groupBoxDetails.Controls.Add(this.checkBoxSuppressXSD);
-            this.groupBoxDetails.Controls.Add(this.checkBoxExpressG);
             this.groupBoxDetails.Controls.Add(this.checkBoxExpressEnclosed);
             this.groupBoxDetails.Controls.Add(this.textBoxHeader);
             this.groupBoxDetails.Controls.Add(this.textBoxFooter);
@@ -187,16 +183,6 @@
             this.checkBoxSuppressXSD.Text = "Suppress XSD definitions";
             this.checkBoxSuppressXSD.UseVisualStyleBackColor = true;
             // 
-            // checkBoxExpressG
-            // 
-            this.checkBoxExpressG.AutoSize = true;
-            this.checkBoxExpressG.Location = new System.Drawing.Point(9, 169);
-            this.checkBoxExpressG.Name = "checkBoxExpressG";
-            this.checkBoxExpressG.Size = new System.Drawing.Size(134, 17);
-            this.checkBoxExpressG.TabIndex = 8;
-            this.checkBoxExpressG.Text = "EXPRESS-G Diagrams";
-            this.checkBoxExpressG.UseVisualStyleBackColor = true;
-            // 
             // checkBoxExpressEnclosed
             // 
             this.checkBoxExpressEnclosed.AutoSize = true;
@@ -211,7 +197,7 @@
             // 
             this.buttonOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.buttonOK.Location = new System.Drawing.Point(456, 407);
+            this.buttonOK.Location = new System.Drawing.Point(456, 327);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(75, 23);
             this.buttonOK.TabIndex = 0;
@@ -222,37 +208,17 @@
             // 
             this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(537, 407);
+            this.buttonCancel.Location = new System.Drawing.Point(537, 327);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(75, 23);
             this.buttonCancel.TabIndex = 1;
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
             // 
-            // checkBoxDiagramConcept
-            // 
-            this.checkBoxDiagramConcept.AutoSize = true;
-            this.checkBoxDiagramConcept.Location = new System.Drawing.Point(8, 48);
-            this.checkBoxDiagramConcept.Name = "checkBoxDiagramConcept";
-            this.checkBoxDiagramConcept.Size = new System.Drawing.Size(132, 17);
-            this.checkBoxDiagramConcept.TabIndex = 1;
-            this.checkBoxDiagramConcept.Text = "Concept root diagrams";
-            this.checkBoxDiagramConcept.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxDiagramTemplate
-            // 
-            this.checkBoxDiagramTemplate.AutoSize = true;
-            this.checkBoxDiagramTemplate.Location = new System.Drawing.Point(8, 23);
-            this.checkBoxDiagramTemplate.Name = "checkBoxDiagramTemplate";
-            this.checkBoxDiagramTemplate.Size = new System.Drawing.Size(154, 17);
-            this.checkBoxDiagramTemplate.TabIndex = 0;
-            this.checkBoxDiagramTemplate.Text = "Concept template diagrams";
-            this.checkBoxDiagramTemplate.UseVisualStyleBackColor = true;
-            // 
             // checkBoxRequirement
             // 
             this.checkBoxRequirement.AutoSize = true;
-            this.checkBoxRequirement.Location = new System.Drawing.Point(8, 73);
+            this.checkBoxRequirement.Location = new System.Drawing.Point(8, 19);
             this.checkBoxRequirement.Name = "checkBoxRequirement";
             this.checkBoxRequirement.Size = new System.Drawing.Size(163, 17);
             this.checkBoxRequirement.TabIndex = 2;
@@ -263,11 +229,9 @@
             // 
             this.groupBoxModelView.Controls.Add(this.checkBoxConceptTables);
             this.groupBoxModelView.Controls.Add(this.checkBoxRequirement);
-            this.groupBoxModelView.Controls.Add(this.checkBoxDiagramConcept);
-            this.groupBoxModelView.Controls.Add(this.checkBoxDiagramTemplate);
             this.groupBoxModelView.Location = new System.Drawing.Point(7, 207);
             this.groupBoxModelView.Name = "groupBoxModelView";
-            this.groupBoxModelView.Size = new System.Drawing.Size(579, 126);
+            this.groupBoxModelView.Size = new System.Drawing.Size(579, 68);
             this.groupBoxModelView.TabIndex = 2;
             this.groupBoxModelView.TabStop = false;
             this.groupBoxModelView.Text = "MVD Documentation Conformance";
@@ -275,7 +239,7 @@
             // checkBoxConceptTables
             // 
             this.checkBoxConceptTables.AutoSize = true;
-            this.checkBoxConceptTables.Location = new System.Drawing.Point(8, 96);
+            this.checkBoxConceptTables.Location = new System.Drawing.Point(8, 42);
             this.checkBoxConceptTables.Name = "checkBoxConceptTables";
             this.checkBoxConceptTables.Size = new System.Drawing.Size(129, 17);
             this.checkBoxConceptTables.TabIndex = 3;
@@ -292,7 +256,7 @@
             this.tabControl.Location = new System.Drawing.Point(12, 12);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(600, 389);
+            this.tabControl.Size = new System.Drawing.Size(600, 309);
             this.tabControl.TabIndex = 3;
             // 
             // tabPage1
@@ -306,18 +270,6 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Content";
             this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // tabPage2
-            // 
-            this.tabPage2.Controls.Add(this.groupBoxDetails);
-            this.tabPage2.Controls.Add(this.groupBoxModelView);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(592, 363);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Format";
-            this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // groupBoxViews
             // 
@@ -343,12 +295,24 @@
             this.checkedListBoxViews.Size = new System.Drawing.Size(565, 229);
             this.checkedListBoxViews.TabIndex = 0;
             // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.groupBoxDetails);
+            this.tabPage2.Controls.Add(this.groupBoxModelView);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(592, 283);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Format";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
             // FormGenerate
             // 
             this.AcceptButton = this.buttonOK;
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.CancelButton = this.buttonCancel;
-            this.ClientSize = new System.Drawing.Size(624, 441);
+            this.ClientSize = new System.Drawing.Size(624, 361);
             this.Controls.Add(this.tabControl);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonOK);
@@ -366,8 +330,8 @@
             this.groupBoxModelView.PerformLayout();
             this.tabControl.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
-            this.tabPage2.ResumeLayout(false);
             this.groupBoxViews.ResumeLayout(false);
+            this.tabPage2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -389,10 +353,7 @@
         private System.Windows.Forms.Button buttonCancel;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
         private System.Windows.Forms.CheckBox checkBoxExpressEnclosed;
-        private System.Windows.Forms.CheckBox checkBoxDiagramConcept;
-        private System.Windows.Forms.CheckBox checkBoxDiagramTemplate;
         private System.Windows.Forms.CheckBox checkBoxRequirement;
-        private System.Windows.Forms.CheckBox checkBoxExpressG;
         private System.Windows.Forms.GroupBox groupBoxModelView;
         private System.Windows.Forms.CheckBox checkBoxSuppressXSD;
         private System.Windows.Forms.CheckBox checkBoxConceptTables;

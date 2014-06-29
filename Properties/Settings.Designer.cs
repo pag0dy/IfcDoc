@@ -94,31 +94,7 @@ namespace IfcDoc.Properties {
                 this["ExpressComments"] = value;
             }
         }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool DiagramTemplate {
-            get {
-                return ((bool)(this["DiagramTemplate"]));
-            }
-            set {
-                this["DiagramTemplate"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool DiagramConcept {
-            get {
-                return ((bool)(this["DiagramConcept"]));
-            }
-            set {
-                this["DiagramConcept"] = value;
-            }
-        }
-        
+         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
@@ -166,18 +142,7 @@ namespace IfcDoc.Properties {
                 this["NoXsd"] = value;
             }
         }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool ExpressG {
-            get {
-                return ((bool)(this["ExpressG"]));
-            }
-            set {
-                this["ExpressG"] = value;
-            }
-        }
+
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]

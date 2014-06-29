@@ -28,7 +28,7 @@ namespace IfcDoc
         private Dictionary<Type, Dictionary<string, FieldInfo>> m_fields;
         private Dictionary<DocTemplateDefinition, MethodInfo> m_templates;
 
-        public Compiler(DocProject project, DocModelView[] views)
+        public Compiler(DocProject project, DocModelView[] views, DocExchangeDefinition exchange)
         {
             this.m_project = project;
             this.m_views = views;
@@ -98,6 +98,20 @@ namespace IfcDoc
                             TypeBuilder tb = (TypeBuilder)tOpen;
                             foreach (DocTemplateUsage concept in root.Concepts)
                             {
+                                bool includeconcept = true;
+                                if (exchange != null)
+                                {
+                                    includeconcept = false;
+                                    foreach(DocExchangeItem ei in concept.Exchanges)
+                                    {
+                                        if(ei.Exchange == exchange && ei.Applicability == DocExchangeApplicabilityEnum.Export && 
+                                            (ei.Requirement == DocExchangeRequirementEnum.Mandatory || ei.Requirement == DocExchangeRequirementEnum.Optional))
+                                        {
+                                            includeconcept = true;
+                                        }
+                                    }
+                                }
+
                                 // bool ConceptTemplateA([Parameter1, ...]);
                                 // {
                                 //    // for loading reference value:
@@ -131,26 +145,27 @@ namespace IfcDoc
                                 // }
 
                                 // compile a method for the template definition, where parameters are passed to the template
-                                if (concept.Definition != null)
+                                if (includeconcept && concept.Definition != null)
                                 {
                                     MethodInfo methodTemplate = this.RegisterTemplate(concept.Definition);
 
                                     // verify that definition is compatible with entity (user error)
                                     if (methodTemplate != null && methodTemplate.DeclaringType.IsAssignableFrom(tb))
                                     {
-                                        string methodname = viewname + "_" + concept.Definition.Name.Replace(' ', '_').Replace(':', '_').Replace('-', '_');
+                                        string methodname = DocumentationISO.MakeLinkName(view) + "_" + DocumentationISO.MakeLinkName(concept.Definition);
+
                                         MethodBuilder method = tb.DefineMethod(methodname, MethodAttributes.Public, CallingConventions.HasThis, typeof(bool[]), null);
                                         ILGenerator generator = method.GetILGenerator();
 
-                                        if (concept.Items != null && concept.Items.Count > 0)
+                                        DocModelRule[] parameters = concept.Definition.GetParameterRules();
+
+                                        if (parameters != null && parameters.Length > 0)
                                         {
                                             // allocate array of booleans, store as local variable
                                             generator.DeclareLocal(typeof(bool[]));
                                             generator.Emit(OpCodes.Ldc_I4, concept.Items.Count);
                                             generator.Emit(OpCodes.Newarr, typeof(bool));
                                             generator.Emit(OpCodes.Stloc_0);
-
-                                            DocModelRule[] parameters = concept.Definition.GetParameterRules();
 
                                             // call for each item with specific parameters
                                             for (int row = 0; row < concept.Items.Count; row++)
@@ -366,6 +381,8 @@ namespace IfcDoc
             if (!this.m_definitions.TryGetValue(strtype, out docType))
                 return null;
 
+            string schema = this.m_namespaces[docType.Name];
+
             // not yet exist: create it
             TypeAttributes attr = TypeAttributes.Public;
             if (docType is DocEntity)
@@ -386,7 +403,6 @@ namespace IfcDoc
                     return type;
                 }
 
-                string schema = this.m_namespaces[docType.Name];
                 TypeBuilder tb = this.m_module.DefineType(schema + "." + docType.Name, attr, typebase);
 
                 // add typebuilder to map temporarily in case referenced by an attribute within same class or base class
@@ -432,8 +448,10 @@ namespace IfcDoc
 
                             typefield = typeof(List<>).MakeGenericType(new Type[] { typefield });
                         }
-
-                        //todo: optional field...
+                        else if (typefield.IsValueType && docAttribute.IsOptional())
+                        {
+                            typefield = typeof(Nullable<>).MakeGenericType(new Type[] { typefield });
+                        }
 
                         FieldBuilder fb = tb.DefineField(docAttribute.Name, typefield, FieldAttributes.Public); // public for now                    
                         mapField.Add(docAttribute.Name, fb);
@@ -463,7 +481,6 @@ namespace IfcDoc
             else if (docType is DocSelect)
             {
                 attr |= TypeAttributes.Interface | TypeAttributes.Abstract;
-                string schema = this.m_namespaces[docType.Name];
                 TypeBuilder tb = this.m_module.DefineType(schema + "." + docType.Name, attr);
 
                 // interfaces implemented by type (SELECTS)
@@ -489,7 +506,7 @@ namespace IfcDoc
             else if (docType is DocEnumeration)
             {
                 DocEnumeration docEnum = (DocEnumeration)docType;
-                EnumBuilder eb = this.m_module.DefineEnum(docType.Name, TypeAttributes.Public, typeof(int));
+                EnumBuilder eb = this.m_module.DefineEnum(schema + "." + docType.Name, TypeAttributes.Public, typeof(int));
 
                 for (int i = 0; i < docEnum.Constants.Count; i++)
                 {
@@ -502,10 +519,8 @@ namespace IfcDoc
             else if (docType is DocDefined)
             {
                 DocDefined docDef = (DocDefined)docType;
-
                 attr |= TypeAttributes.Sealed;
 
-                string schema = this.m_namespaces[docType.Name];
                 TypeBuilder tb = this.m_module.DefineType(schema + "." + docType.Name, attr, typeof(ValueType));
 
                 // interfaces implemented by type (SELECTS)
@@ -571,12 +586,25 @@ namespace IfcDoc
                 paramtypes = new Type[parameters.Length];
                 for(int iParam = 0; iParam < parameters.Length; iParam++)
                 {
+#if false
                     DocModelRule param = parameters[iParam];
-                    paramtypes[iParam] = RegisterType(param.Name);
+                    if (param is DocModelRuleAttribute)
+                    {
+                        DocDefinition paramtype = dtd.GetParameterType(param.Name, this.m_definitions);
+                        if (paramtype != null)
+                        {
+                            paramtypes[iParam] = RegisterType(paramtype.Name);
+                        }
+                    }
+                    else if(param is DocModelRuleEntity)
+                    {
+                        paramtypes[iParam] = RegisterType(param.Name);
+                    }
+#endif
 
                     if(paramtypes[iParam] == null)
                     {
-                        paramtypes[iParam] = typeof(object); // fallback
+                        paramtypes[iParam] = typeof(string); // fallback
                     }
                 }
             }

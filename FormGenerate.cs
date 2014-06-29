@@ -34,10 +34,7 @@ namespace IfcDoc
             this.checkBoxSuppressXML.Checked = Properties.Settings.Default.NoXml;
             this.checkBoxExpressEnclosed.Checked = Properties.Settings.Default.ExpressComments;
             this.checkBoxSuppressXSD.Checked = Properties.Settings.Default.NoXsd;
-            this.checkBoxDiagramTemplate.Checked = Properties.Settings.Default.DiagramTemplate;
-            this.checkBoxDiagramConcept.Checked = Properties.Settings.Default.DiagramConcept;
             this.checkBoxRequirement.Checked = Properties.Settings.Default.Requirement;
-            this.checkBoxExpressG.Checked = Properties.Settings.Default.ExpressG;
             this.checkBoxConceptTables.Checked = Properties.Settings.Default.ConceptTables;
         }
 
@@ -54,10 +51,7 @@ namespace IfcDoc
                 Properties.Settings.Default.NoXml = this.checkBoxSuppressXML.Checked;
                 Properties.Settings.Default.ExpressComments = this.checkBoxExpressEnclosed.Checked;
                 Properties.Settings.Default.NoXsd = this.checkBoxSuppressXSD.Checked;
-                Properties.Settings.Default.DiagramTemplate = this.checkBoxDiagramTemplate.Checked;
-                Properties.Settings.Default.DiagramConcept = this.checkBoxDiagramConcept.Checked;
                 Properties.Settings.Default.Requirement = this.checkBoxRequirement.Checked;
-                Properties.Settings.Default.ExpressG = this.checkBoxExpressG.Checked;
                 Properties.Settings.Default.ConceptTables = this.checkBoxConceptTables.Checked;
                 Properties.Settings.Default.Save();
             }

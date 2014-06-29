@@ -46,6 +46,7 @@ namespace IfcDoc
 
         // documentation generation
         DocModelView[] m_filterviews;
+        DocExchangeDefinition m_filterexchange; // exchange to use for validation, or null for entire view.
         string[] m_filterlocales;
 
         // clipboard
@@ -361,7 +362,33 @@ namespace IfcDoc
                     {
                         docobj.Uuid = Guid.NewGuid();
                     }
+
+#if false
+                    // ensure any image references are in lowercase
+                    if(docobj.Documentation != null && docobj.Documentation.Length > 0)
+                    {
+                        int i = 0;
+                        while (i != -1)
+                        {
+                            i = docobj.Documentation.IndexOf("../figures/", i + 1);
+                            if(i != -1)
+                            {
+                                int start = i + 11;
+                                int end = docobj.Documentation.IndexOf('"', start);
+                                if(end > start)
+                                {
+                                    string strold = docobj.Documentation.Substring(start, end - start);
+                                    string strnew = strold.ToLower();
+
+                                    docobj.Documentation = docobj.Documentation.Substring(0, start) + strnew + docobj.Documentation.Substring(end);
+                                    System.Diagnostics.Debug.WriteLine(strnew);
+                                }
+                            }
+                        }
+                    }
+#endif
                 }
+
 
                 if (o.OID > this.m_lastid)
                 {
@@ -587,6 +614,9 @@ namespace IfcDoc
             }
 #endif
 
+
+
+
             // now clear out the lists going forward.
             LoadTree();
         }
@@ -653,7 +683,7 @@ namespace IfcDoc
                         case ".ifcdoc":
                             using (FormatSPF format = new FormatSPF(this.m_file, SchemaDOC.Types, this.m_instances))
                             {
-                                format.InitHeaders(this.m_file, "IFCDOC_7_2");
+                                format.InitHeaders(this.m_file, "IFCDOC_7_7");
                                 format.Save();
                             }
                             break;
@@ -1443,19 +1473,6 @@ namespace IfcDoc
             this.m_modified = true;
         }
 
-        /// <summary>
-        /// Generates HTTP-compatible name for object
-        /// </summary>
-        /// <param name="docobj"></param>
-        /// <returns></returns>
-        private static string MakeLinkName(DocObject docobj)
-        {
-            if(docobj.Name == null)
-                return docobj.Uuid.ToString();
-
-            return docobj.Name.Replace(' ','-').ToLower();
-        }
-
         private string FormatTemplateRule(DocTemplateDefinition template, string key)
         {
             foreach (DocModelRule rule in template.Rules)
@@ -1514,7 +1531,15 @@ namespace IfcDoc
             if (this.treeView.SelectedNode.Tag is DocTerm)
             {
                 DocTerm docTerm = (DocTerm)this.treeView.SelectedNode.Tag;
-                this.m_project.Terms.Remove(docTerm);
+                DocTerm parent = this.treeView.SelectedNode.Parent.Tag as DocTerm;
+                if (parent != null)
+                {
+                    parent.Terms.Remove(docTerm);
+                }
+                else
+                {
+                    this.m_project.Terms.Remove(docTerm);
+                }
                 this.treeView.SelectedNode.Remove();
                 docTerm.Delete();
             }
@@ -1524,6 +1549,22 @@ namespace IfcDoc
                 this.m_project.Abbreviations.Remove(docTerm);
                 this.treeView.SelectedNode.Remove();
                 docTerm.Delete();
+            }
+            else if (this.treeView.SelectedNode.Tag is DocReference)
+            {
+                DocReference docRef = (DocReference)this.treeView.SelectedNode.Tag;
+                if(this.m_project.NormativeReferences != null && this.m_project.NormativeReferences.Contains(docRef))
+                {
+                    this.m_project.NormativeReferences.Remove(docRef);
+                    this.treeView.SelectedNode.Remove();
+                    docRef.Delete();
+                }
+                else if(this.m_project.InformativeReferences != null && this.m_project.InformativeReferences.Contains(docRef))
+                {
+                    this.m_project.InformativeReferences.Remove(docRef);
+                    this.treeView.SelectedNode.Remove();
+                    docRef.Delete();
+                }
             }
             else if (this.treeView.SelectedNode.Tag is DocTemplateItem)
             {
@@ -2256,6 +2297,11 @@ namespace IfcDoc
         #endregion
         #region TREE
 
+        private TreeNode LoadNode(TreeNode parent, object tag, string text, bool unique)
+        {
+            return LoadNode(parent, tag, text, unique, -1);
+        }
+        
         /// <summary>
         /// Loads object into tree
         /// </summary>
@@ -2263,8 +2309,9 @@ namespace IfcDoc
         /// <param name="tag">Object corresponding to tree node</param>
         /// <param name="text">Text to display, or NULL to auto-generate and set if tag is a DocObject</param>
         /// <param name="unique">Indicates item must have unique name and to auto-generate if null.</param>
+        /// <param name="position">Position where to insert, or -1 for end.</param>
         /// <returns>The newly created tree node.</returns>
-        private TreeNode LoadNode(TreeNode parent, object tag, string text, bool unique)
+        private TreeNode LoadNode(TreeNode parent, object tag, string text, bool unique, int position)
         {
             TreeNode tn = new TreeNode();
             tn.Tag = tag;
@@ -2314,27 +2361,18 @@ namespace IfcDoc
                         break;
                     }
                 }
-
-#if false // no longer shown
-                if (tag is DocObject)
-                {
-                    DocObject obj = (DocObject)tag;
-                    if (!obj.Visible)
-                    {
-                        tn.ForeColor = Color.Gray;
-                    }
-                }
-#endif
             }
 
             if (parent != null)
             {
-                if (parent.ForeColor == Color.Gray)
+                if (position != -1)
                 {
-                    tn.ForeColor = parent.ForeColor; // inherit visibility
+                    parent.Nodes.Insert(position, tn);
                 }
-
-                parent.Nodes.Add(tn);
+                else
+                {
+                    parent.Nodes.Add(tn);
+                }
             }
             else
             {
@@ -2542,16 +2580,16 @@ namespace IfcDoc
 
                 if (this.m_project.Sections.IndexOf(section) == 2)
                 {
-                    //TreeNode tnTerms = LoadNode(tn, typeof(DocTerm), "Terms");
+                    //TreeNode tnTerms = LoadNode(tn, typeof(DocTerm), "Terms", false);
                     if (this.m_project.Terms != null)
                     {
                         foreach (DocTerm docTerm in this.m_project.Terms)
                         {
-                            LoadNode(tn, docTerm, docTerm.Name, true);
+                            LoadTreeTerm(tn, docTerm);
                         }
                     }
 
-                    //TreeNode tnAbbrev = LoadNode(tn, typeof(DocAbbreviation), "Abbreviations");
+                    //TreeNode tnAbbrev = LoadNode(tn, typeof(DocAbbreviation), "Abbreviations", false);
                     if (this.m_project.Abbreviations != null)
                     {
                         foreach (DocAbbreviation docTerm in this.m_project.Abbreviations)
@@ -2573,25 +2611,6 @@ namespace IfcDoc
                         }
                     }
                 }
-
-#if false
-                foreach (DocAnnotation annot in section.Annotations)
-                {
-                    TreeNode tnView = LoadNode(tn, annot, annot.Name);
-                    foreach (DocAnnotation aroot in annot.Annotations)
-                    {
-                        TreeNode tnRoot = LoadNode(tnView, aroot, aroot.Name);
-                        foreach (DocAnnotation anode in aroot.Annotations)
-                        {
-                            TreeNode tnNode = LoadNode(tnRoot, anode, anode.Name);
-                            foreach (DocAnnotation aleaf in anode.Annotations)
-                            {
-                                LoadNode(tnNode, aleaf, aleaf.Name);
-                            }
-                        }
-                    }
-                }
-#endif
 
                 foreach (DocSchema schema in section.Schemas)
                 {
@@ -2633,6 +2652,16 @@ namespace IfcDoc
                     }
                 }
 
+            }
+
+            // bibliography
+            TreeNode tnBibliography = LoadNode(null, typeof(DocReference), "Bibliography", false);
+            if(this.m_project.InformativeReferences != null)
+            {
+                foreach(DocReference docRef in this.m_project.InformativeReferences)
+                {
+                    LoadNode(tnBibliography, docRef, docRef.Name, true);
+                }
             }
 
             // force update of main pain
@@ -2678,6 +2707,16 @@ namespace IfcDoc
                 {
                     LoadTreeTemplate(tnTemplate, docSub);
                 }
+            }
+        }
+
+        private void LoadTreeTerm(TreeNode tnParent, DocTerm docTemplate)
+        {
+            TreeNode tnTemplate = LoadNode(tnParent, docTemplate, docTemplate.Name, true);
+
+            foreach (DocTerm docSub in docTemplate.Terms)
+            {
+                LoadTreeTerm(tnTemplate, docSub);
             }
         }
 
@@ -2774,10 +2813,47 @@ namespace IfcDoc
 
             if (e.Node.Tag is DocTerm)
             {
+                DocTerm term = (DocTerm)e.Node.Tag;
+                this.toolStripMenuItemEditDelete.Enabled = true;
+                this.toolStripMenuItemEditRename.Enabled = true;
+
+                if (e.Node.Parent.Tag is DocTerm)
+                {
+                    DocTerm ent = (DocTerm)e.Node.Parent.Tag;
+                    if (ent.Terms.IndexOf(term) > 0)
+                    {
+                        this.toolStripMenuItemEditMoveUp.Enabled = true;
+                        this.toolStripMenuItemEditMoveIn.Enabled = true;
+                    }
+
+                    if (ent.Terms.IndexOf(term) < ent.Terms.Count - 1)
+                    {
+                        this.toolStripMenuItemEditMoveDown.Enabled = true;
+                    }
+
+                    this.toolStripMenuItemEditMoveOut.Enabled = true;
+                }
+                else
+                {
+                    if (this.m_project.Terms.IndexOf(term) > 0)
+                    {
+                        this.toolStripMenuItemEditMoveUp.Enabled = true;
+                        this.toolStripMenuItemEditMoveIn.Enabled = true;
+                    }
+
+                    if (this.m_project.Terms.IndexOf(term) < this.m_project.Terms.Count - 1)
+                    {
+                        this.toolStripMenuItemEditMoveDown.Enabled = true;
+                    }
+                }
+
+            }
+            if (e.Node.Tag is DocAbbreviation)
+            {
                 this.toolStripMenuItemEditDelete.Enabled = true;
                 this.toolStripMenuItemEditRename.Enabled = true;
             }
-            if (e.Node.Tag is DocAbbreviation)
+            else if(e.Node.Tag is DocReference)
             {
                 this.toolStripMenuItemEditDelete.Enabled = true;
                 this.toolStripMenuItemEditRename.Enabled = true;
@@ -2912,6 +2988,7 @@ namespace IfcDoc
                 this.SetContent(obj, obj.Documentation);
                 this.toolStripMenuItemEditProperties.Enabled = true;
                 this.toolStripMenuItemEditDelete.Enabled = true;
+                this.toolStripMenuItemEditRename.Enabled = true;
             }
             else if (e.Node.Tag == typeof(DocPropertySet))
             {
@@ -3516,7 +3593,7 @@ namespace IfcDoc
                 this.splitContainerConcept.Visible = false;
                 this.ctlParameters.Visible = false;
             }
-            else if (obj == null && this.treeView.SelectedNode != null && this.treeView.SelectedNode.Parent.Tag is DocSchema)
+            else if (obj == null && this.treeView.SelectedNode != null && this.treeView.SelectedNode.Parent != null && this.treeView.SelectedNode.Parent.Tag is DocSchema)
             {
                 // check if parent node is schema (intermediate node for organization)
                 Dictionary<string, DocObject> mapEntity = new Dictionary<string, DocObject>();
@@ -3742,85 +3819,6 @@ namespace IfcDoc
 
         }
 
-        /// <summary>
-        /// Builds list of inherited direct attributes in order (excludes INVERSE attributes)
-        /// </summary>
-        /// <param name="list">list to populate</param>
-        /// <param name="map">map to lookup for base types</param>
-        /// <param name="docEntity">entity to traverse</param>
-        private void BuildAttributeListDirect(List<DocAttribute> list, Dictionary<string, DocObject> map, DocEntity docEntity)
-        {
-            // recurse to base type first
-            if (docEntity.BaseDefinition != null)
-            {
-                DocEntity docSuper = map[docEntity.BaseDefinition] as DocEntity;
-                BuildAttributeListDirect(list, map, docSuper);
-            }
-
-            // then add direct attributes
-            foreach (DocAttribute docAttribute in docEntity.Attributes)
-            {
-                if (docAttribute.Inverse == null && docAttribute.Derived == null)
-                {
-                    list.Add(docAttribute);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Indicates whether select includes another select, entity, or value type
-        /// </summary>
-        /// <param name="docSelect"></param>
-        /// <param name="docDefinition"></param>        
-        /// <returns></returns>
-        private static bool SelectIncludes(DocSelect docSelect, string defname, Dictionary<string, DocObject> map)
-        {
-            foreach (DocSelectItem docSelectItem in docSelect.Selects)
-            {
-                if (docSelectItem.Name == defname)
-                    return true;
-
-                DocObject docObj = null;
-                if (map.TryGetValue(docSelectItem.Name, out docObj))
-                {
-                    if (docObj is DocSelect)
-                    {
-                        bool result = SelectIncludes((DocSelect)docObj, defname, map);
-                        if (result)
-                            return true;
-                    }
-                    else if (docObj is DocEntity)
-                    {
-                        bool result = EntityIncludes((DocEntity)docObj, defname, map);
-                        if (result)
-                            return true;
-                    }
-                }
-            }
-
-            return false;
-        }
-
-        private static bool EntityIncludes(DocEntity docEntity, string defname, Dictionary<string, DocObject> map)
-        {
-            // traverse subtypes
-            DocObject docTest = null;
-            if (!map.TryGetValue(defname, out docTest))
-                return false;
-
-            if (!(docTest is DocEntity))
-                return false;
-
-            DocEntity docTestEntity = (DocEntity)docTest;
-            if (docTestEntity.BaseDefinition == null)
-                return false;
-
-            if (docTestEntity.BaseDefinition == docEntity.Name)
-                return true;
-
-            // recurse upwards
-            return EntityIncludes(docEntity, docTestEntity.BaseDefinition, map);
-        }
 
         private void generateChangeLogToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -3828,15 +3826,24 @@ namespace IfcDoc
             if (res != DialogResult.OK)
                 return;
 
-            this.m_loading = true;
-
             Dictionary<long, SEntity> instances = new Dictionary<long, SEntity>();
-            using (FormatSPF format = new FormatSPF(this.openFileDialogChanges.FileName, SchemaDOC.Types, instances))
+            this.m_loading = true;
+            try
             {
-                format.Load();
+                using (FormatSPF format = new FormatSPF(this.openFileDialogChanges.FileName, SchemaDOC.Types, instances))
+                {
+                    format.Load();
+                }
             }
-
-            this.m_loading = false;
+            catch(Exception x)
+            {
+                MessageBox.Show(x.Message);
+                return;
+            }
+            finally
+            {
+                this.m_loading = false;
+            }
 
             // now import changes
             DocProject docProjectBase = null;
@@ -3845,1029 +3852,12 @@ namespace IfcDoc
                 if (o is DocProject)
                 {
                     docProjectBase = (DocProject)o;
+                    break;
                 }
             }
 
-            // build maps            
-            Dictionary<string, DocObject> mapNew = new Dictionary<string, DocObject>();
-            foreach (DocSection docSection in this.m_project.Sections)
-            {
-                foreach (DocSchema docSchema in docSection.Schemas)
-                {
-                    foreach (DocEntity docEntity in docSchema.Entities)
-                    {
-                        mapNew.Add(docEntity.Name, docEntity);
-                    }
-                    foreach (DocType docType in docSchema.Types)
-                    {
-                        mapNew.Add(docType.Name, docType);
-                    }
-                }
-            }
-            Dictionary<string, DocObject> mapOld = new Dictionary<string, DocObject>();
-            foreach (DocSection docSection in docProjectBase.Sections)
-            {
-                foreach (DocSchema docSchema in docSection.Schemas)
-                {
-                    foreach (DocEntity docEntity in docSchema.Entities)
-                    {
-                        mapOld.Add(docEntity.Name, docEntity);
-                    }
-                    foreach (DocType docType in docSchema.Types)
-                    {
-                        mapOld.Add(docType.Name, docType);
-                    }
-                }
-            }
-
-            DocChangeSet docChangeSet = new DocChangeSet();
-            if (this.m_project.ChangeSets == null)
-            {
-                // compat
-                this.m_project.ChangeSets = new List<DocChangeSet>();
-            }
-            this.m_project.ChangeSets.Add(docChangeSet);
-            docChangeSet.Name = System.IO.Path.GetFileNameWithoutExtension(this.openFileDialogChanges.FileName);
-            docChangeSet.VersionBaseline = System.IO.Path.GetFileNameWithoutExtension(this.openFileDialogChanges.FileName);
-
-            // iterate through each schema (new and old)
-            for (int iSection = 4; iSection < 8; iSection++)
-            {
-                DocSection docSection = this.m_project.Sections[iSection];
-                DocSection docSectionBase = docProjectBase.Sections[iSection];
-
-                DocChangeAction docChangeSection = new DocChangeAction();
-                docChangeSet.ChangesEntities.Add(docChangeSection);
-                docChangeSection.Name = docSection.Name;
-
-                DocChangeAction docChangeSectionProperties = new DocChangeAction();
-                docChangeSet.ChangesProperties.Add(docChangeSectionProperties);
-                docChangeSectionProperties.Name = docSection.Name;
-
-                DocChangeAction docChangeSectionQuantities = new DocChangeAction();
-                docChangeSet.ChangesQuantities.Add(docChangeSectionQuantities);
-                docChangeSectionQuantities.Name = docSection.Name;
-
-                foreach (DocSchema docSchema in docSection.Schemas)
-                {
-                    // find equivalent schema
-                    DocSchema docSchemaBase = null;
-                    foreach (DocSchema docSchemaEach in docSectionBase.Schemas)
-                    {
-                        if (docSchemaEach.Name.Equals(docSchema.Name))
-                        {
-                            docSchemaBase = docSchemaEach;
-                            break;
-                        }
-                    }
-
-                    DocChangeAction docChangeSchema = new DocChangeAction();
-                    docChangeSection.Changes.Add(docChangeSchema);
-                    docChangeSchema.Name = docSchema.Name;
-
-                    DocChangeAction docChangeSchemaProperties = new DocChangeAction();
-                    docChangeSectionProperties.Changes.Add(docChangeSchemaProperties);
-                    docChangeSchemaProperties.Name = docSchema.Name;
-
-                    DocChangeAction docChangeSchemaQuantities = new DocChangeAction();
-                    docChangeSectionQuantities.Changes.Add(docChangeSchemaQuantities);
-                    docChangeSchemaQuantities.Name = docSchema.Name;
-
-                    if (docSchemaBase == null)
-                    {
-                        // new schema
-                        docChangeSchema.Action = DocChangeActionEnum.ADDED;
-                    }
-                    else
-                    {
-                        // existing schema
-
-
-                        // compare types
-                        foreach (DocType docType in docSchema.Types)
-                        {
-                            DocChangeAction docChangeType = new DocChangeAction();
-                            docChangeSchema.Changes.Add(docChangeType);
-                            docChangeType.Name = docType.Name;
-
-                            // find equivalent type
-                            DocType docTypeBase = null;
-                            foreach (DocType docTypeEach in docSchemaBase.Types)
-                            {
-                                if (docTypeEach.Name.Equals(docType.Name))
-                                {
-                                    docTypeBase = docTypeEach;
-                                    break;
-                                }
-                            }
-
-                            if (docTypeBase == null)
-                            {
-                                // new type
-                                docChangeType.Action = DocChangeActionEnum.ADDED;
-
-                                // check if it was moved from another schema                                
-                                foreach (DocSection docOtherSection in docProjectBase.Sections)
-                                {
-                                    foreach (DocSchema docOtherSchema in docOtherSection.Schemas)
-                                    {
-                                        foreach (DocType docOtherType in docOtherSchema.Types)
-                                        {
-                                            if (docOtherType.Name.Equals(docType.Name))
-                                            {
-                                                docChangeType.Action = DocChangeActionEnum.MOVED;
-                                                docChangeType.Aspects.Add(new DocChangeAspect(DocChangeAspectEnum.SCHEMA, docOtherSchema.Name.ToUpper(), docSchema.Name.ToUpper()));
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                // existing type
-
-                                // if enumeration, check enums
-                                if (docType is DocEnumeration)
-                                {
-                                    DocEnumeration docEnumeration = (DocEnumeration)docType;
-                                    DocEnumeration docEnumerationBase = (DocEnumeration)docTypeBase;
-
-                                    // find constants added
-                                    foreach (DocConstant docConstant in docEnumeration.Constants)
-                                    {
-                                        // find equivalent constant
-                                        DocConstant docConstantBase = null;
-                                        foreach (DocConstant docConstantEach in docEnumerationBase.Constants)
-                                        {
-                                            if (docConstantEach.Name.Equals(docConstant.Name))
-                                            {
-                                                docConstantBase = docConstantEach;
-                                                break;
-                                            }
-                                        }
-
-                                        // for constants, only generate additions or deletions for brevity
-                                        if (docConstantBase == null)
-                                        {
-                                            // new entity
-                                            DocChangeAction docChangeConstant = new DocChangeAction();
-                                            docChangeType.Changes.Add(docChangeConstant);
-                                            docChangeConstant.Name = docConstant.Name;
-                                            docChangeConstant.Action = DocChangeActionEnum.ADDED;
-                                        }
-                                    }
-
-                                    // find constants removed
-                                    foreach (DocConstant docConstantBase in docEnumerationBase.Constants)
-                                    {
-                                        // find equivalent constant
-                                        DocConstant docConstant = null;
-                                        foreach (DocConstant docConstantEach in docEnumeration.Constants)
-                                        {
-                                            if (docConstantEach.Name.Equals(docConstantBase.Name))
-                                            {
-                                                docConstant = docConstantEach;
-                                                break;
-                                            }
-                                        }
-
-                                        // for constants, only generate additions or deletions for brevity
-                                        if (docConstant == null)
-                                        {
-                                            // deleted
-                                            DocChangeAction docChangeConstant = new DocChangeAction();
-                                            docChangeType.Changes.Add(docChangeConstant);
-                                            docChangeConstant.Name = docConstantBase.Name;
-                                            docChangeConstant.Action = DocChangeActionEnum.DELETED;
-                                            docChangeConstant.ImpactSPF = true;
-                                            docChangeConstant.ImpactXML = true;
-                                        }
-                                    }
-
-                                }
-                                else if (docType is DocSelect)
-                                {
-                                    DocSelect docEnumeration = (DocSelect)docType;
-                                    DocSelect docEnumerationBase = (DocSelect)docTypeBase;
-
-                                    // find select items added
-                                    foreach (DocSelectItem docConstant in docEnumeration.Selects)
-                                    {
-                                        // find equivalent constant
-                                        DocSelectItem docConstantBase = null;
-                                        foreach (DocSelectItem docConstantEach in docEnumerationBase.Selects)
-                                        {
-                                            if (docConstantEach.Name.Equals(docConstant.Name))
-                                            {
-                                                docConstantBase = docConstantEach;
-                                                break;
-                                            }
-                                        }
-
-                                        // for constants, only generate additions or deletions for brevity
-                                        if (docConstantBase == null)
-                                        {
-                                            // new entity
-                                            DocChangeAction docChangeConstant = new DocChangeAction();
-                                            docChangeType.Changes.Add(docChangeConstant);
-                                            docChangeConstant.Name = docConstant.Name;
-                                            docChangeConstant.Action = DocChangeActionEnum.ADDED;
-                                        }
-                                    }
-
-                                    // find select items removed
-                                    foreach (DocSelectItem docConstantBase in docEnumerationBase.Selects)
-                                    {
-                                        // find equivalent constant
-                                        DocSelectItem docConstant = null;
-                                        foreach (DocSelectItem docConstantEach in docEnumeration.Selects)
-                                        {
-                                            if (docConstantEach.Name.Equals(docConstantBase.Name))
-                                            {
-                                                docConstant = docConstantEach;
-                                                break;
-                                            }
-                                        }
-
-                                        // for selects, only generate additions or deletions for brevity
-                                        if (docConstant == null)
-                                        {
-                                            // deleted select
-                                            DocChangeAction docChangeConstant = new DocChangeAction();
-                                            docChangeType.Changes.Add(docChangeConstant);
-                                            docChangeConstant.Name = docConstantBase.Name;
-                                            docChangeConstant.Action = DocChangeActionEnum.DELETED;
-
-                                            // if a supertype of the deleted select has been added, then it's compatible (e.g. IfcMetricValueSelect: +IfcValue, -IfcText)                                            
-                                            if (!SelectIncludes(docEnumeration, docConstantBase.Name, mapNew))
-                                            {
-                                                docChangeConstant.ImpactSPF = true;
-                                                docChangeConstant.ImpactXML = true;
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-
-
-                        // compare entities
-                        foreach (DocEntity docEntity in docSchema.Entities)
-                        {
-                            DocChangeAction docChangeEntity = new DocChangeAction();
-                            docChangeSchema.Changes.Add(docChangeEntity);
-                            docChangeEntity.Name = docEntity.Name;
-
-                            // find equivalent entity
-                            DocEntity docEntityBase = null;
-                            foreach (DocEntity docEntityEach in docSchemaBase.Entities)
-                            {
-                                if (docEntityEach.Name.Equals(docEntity.Name))
-                                {
-                                    docEntityBase = docEntityEach;
-                                    break;
-                                }
-                            }
-
-                            if (docEntityBase == null)
-                            {
-                                // new entity
-                                docChangeEntity.Action = DocChangeActionEnum.ADDED;
-
-                                // check if it was moved from another schema                                
-                                foreach (DocSection docOtherSection in docProjectBase.Sections)
-                                {
-                                    foreach (DocSchema docOtherSchema in docOtherSection.Schemas)
-                                    {
-                                        foreach (DocEntity docOtherEntity in docOtherSchema.Entities)
-                                        {
-                                            if (docOtherEntity.Name.Equals(docEntity.Name))
-                                            {
-                                                docEntityBase = docOtherEntity; // still compare attributes if moved (e.g. IfcRelSequence)
-
-                                                docChangeEntity.Action = DocChangeActionEnum.MOVED;
-                                                docChangeEntity.Aspects.Add(new DocChangeAspect(DocChangeAspectEnum.SCHEMA, docOtherSchema.Name.ToUpper(), docSchema.Name.ToUpper()));
-                                            }
-                                        }
-                                    }
-                                }
-
-                            }
-
-                            if (docEntityBase != null)
-                            {
-                                // existing entity
-
-                                // compare abstract vs. non-abstract
-                                if (docEntity.IsAbstract() != docEntityBase.IsAbstract())
-                                {
-                                    docChangeEntity.Action = DocChangeActionEnum.MODIFIED;
-
-                                    if (docEntityBase.IsAbstract())
-                                    {
-                                        docChangeEntity.Aspects.Add(new DocChangeAspect(DocChangeAspectEnum.INSTANTIATION, "ABSTRACT", null));
-                                    }
-                                    else
-                                    {
-                                        docChangeEntity.Aspects.Add(new DocChangeAspect(DocChangeAspectEnum.INSTANTIATION, null, "ABSTRACT"));
-                                    }
-                                }
-
-                                // compare attributes by index
-
-                                // only report non-abstract entities; e.g. attributes may be demoted without file impact
-                                if (!docEntity.IsAbstract())
-                                {
-
-                                    List<DocAttribute> listAttributeNew = new List<DocAttribute>();
-                                    List<DocAttribute> listAttributeOld = new List<DocAttribute>();
-                                    BuildAttributeListDirect(listAttributeNew, mapNew, docEntity);
-                                    BuildAttributeListDirect(listAttributeOld, mapOld, docEntityBase);
-
-                                    for (int iAttribute = 0; iAttribute < listAttributeNew.Count; iAttribute++)
-                                    {
-                                        DocAttribute docAttribute = listAttributeNew[iAttribute];
-
-                                        // we only care about direct attributes
-                                        DocChangeAction docChangeAttribute = new DocChangeAction();
-                                        docChangeEntity.Changes.Add(docChangeAttribute);
-                                        docChangeAttribute.Name = docAttribute.Name;
-
-                                        if (iAttribute >= listAttributeOld.Count)
-                                        {
-                                            // new attribute added
-                                            docChangeAttribute.Action = DocChangeActionEnum.ADDED;
-                                        }
-                                        else
-                                        {
-                                            DocAttribute docAttributeBase = listAttributeOld[iAttribute];
-
-                                            // compare for changes
-                                            if (!docAttribute.Name.Equals(docAttributeBase.Name))
-                                            {
-                                                docChangeAttribute.Action = DocChangeActionEnum.MODIFIED;
-                                                docChangeAttribute.Aspects.Add(new DocChangeAspect(DocChangeAspectEnum.NAME, docAttributeBase.Name, docAttribute.Name));
-
-                                                docChangeAttribute.ImpactXML = true; // no impact to SPF though
-                                            }
-
-                                            if (!docAttribute.DefinedType.Equals(docAttributeBase.DefinedType))
-                                            {
-                                                DocChangeAspect docAspect = new DocChangeAspect(DocChangeAspectEnum.TYPE, docAttributeBase.DefinedType, docAttribute.DefinedType);
-                                                docChangeAttribute.Aspects.Add(docAspect);
-                                                docChangeAttribute.Action = DocChangeActionEnum.MODIFIED;
-
-                                                // check for compatibility
-                                                // assume incompatible unless we can prove types are compatible
-                                                bool impact = true;
-
-                                                // ok if new type is a supertype of the old type
-                                                DocObject docNew = null;
-                                                if (mapNew.TryGetValue(docAspect.NewValue, out docNew))
-                                                {
-                                                    DocObject docOld = null;
-                                                    if (mapOld.TryGetValue(docAspect.OldValue, out docOld))
-                                                    {
-                                                        if (docNew is DocEntity)
-                                                        {
-                                                            DocEntity docNewEnt = (DocEntity)docNew;
-
-                                                            if (docOld is DocEntity)
-                                                            {
-                                                                DocEntity docOldEnt = (DocEntity)docOld;
-
-                                                                while (docNewEnt != null)
-                                                                {
-                                                                    if (docNewEnt.Name.Equals(docOldEnt.Name))
-                                                                    {
-                                                                        impact = false; // subtype
-                                                                    }
-
-                                                                    if (docNewEnt.BaseDefinition != null)
-                                                                    {
-                                                                        docNewEnt = mapNew[docNewEnt.BaseDefinition] as DocEntity;
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        docNewEnt = null;
-                                                                    }
-                                                                }
-                                                            }
-                                                        }
-                                                        else if (docNew is DocSelect)
-                                                        {
-                                                            DocSelect docNewSelect = (DocSelect)docNew;
-                                                            foreach (DocSelectItem docNewSelectItem in docNewSelect.Selects)
-                                                            {
-                                                                if (docNewSelectItem.Name.Equals(docOld.Name))
-                                                                {
-                                                                    impact = false; // included in select
-                                                                }
-                                                            }
-                                                        }
-                                                        else if (docNew is DocEnumeration)
-                                                        {
-                                                            // ok if new enumeration contains all of old enumerations (e.g. IfcInternalOrExternalEnum -> IfcSpaceTypeEnum)                                                            
-                                                            DocEnumeration docNewEnum = (DocEnumeration)docNew;
-                                                            if (docOld is DocEnumeration)
-                                                            {
-                                                                impact = false;
-
-                                                                DocEnumeration docOldEnum = (DocEnumeration)docOld;
-                                                                foreach (DocConstant docOldConstant in docOldEnum.Constants)
-                                                                {
-                                                                    bool match = false;
-                                                                    foreach (DocConstant docNewConstant in docNewEnum.Constants)
-                                                                    {
-                                                                        if (docOldConstant.Name.Equals(docNewConstant.Name))
-                                                                        {
-                                                                            match = true;
-                                                                            break;
-                                                                        }
-                                                                    }
-
-                                                                    if (!match)
-                                                                    {
-                                                                        impact = true;
-                                                                        break;
-                                                                    }
-                                                                }
-                                                            }
-                                                        }
-                                                        else if (docNew is DocDefined)
-                                                        {
-                                                            DocDefined docNewDefined = (DocDefined)docNew;
-
-                                                            // compare underlying types
-                                                            if (docOld is DocDefined)
-                                                            {
-                                                                DocDefined docOldDefined = (DocDefined)docOld;
-
-                                                                if (docNewDefined.DefinedType.Equals(docOldDefined.DefinedType))
-                                                                {
-                                                                    // e.g. IfcLabel -> IfcIdentifier
-                                                                    impact = false;
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                }
-
-                                                docChangeAttribute.ImpactSPF = impact;
-                                                docChangeAttribute.ImpactXML = impact;
-                                            }
-
-                                            if (docAttribute.AttributeFlags != docAttributeBase.AttributeFlags)
-                                            {
-                                                docChangeAttribute.Action = DocChangeActionEnum.MODIFIED;
-
-                                                if ((docAttributeBase.AttributeFlags & 1) != 0)
-                                                {
-                                                    docChangeAttribute.Aspects.Add(new DocChangeAspect(DocChangeAspectEnum.INSTANTIATION, "OPTIONAL", null));
-                                                }
-                                                else
-                                                {
-                                                    docChangeAttribute.Aspects.Add(new DocChangeAspect(DocChangeAspectEnum.INSTANTIATION, null, "OPTIONAL"));
-                                                }
-                                            }
-
-                                            if (docAttribute.AggregationType != docAttributeBase.AggregationType)
-                                            {
-                                                docChangeAttribute.Action = DocChangeActionEnum.MODIFIED;
-                                                docChangeAttribute.Aspects.Add(new DocChangeAspect(DocChangeAspectEnum.AGGREGATION, docAttributeBase.GetAggregation().ToString(), docAttribute.GetAggregation().ToString()));
-                                            }
-                                        }
-                                    }
-
-                                    // report deleted attributes
-                                    for (int iAttribute = listAttributeNew.Count; iAttribute < listAttributeOld.Count; iAttribute++)
-                                    {
-                                        DocAttribute docAttributeBase = listAttributeOld[iAttribute];
-
-                                        DocChangeAction docChangeAttribute = new DocChangeAction();
-                                        docChangeEntity.Changes.Add(docChangeAttribute);
-                                        docChangeAttribute.Name = docAttributeBase.Name;
-                                        docChangeAttribute.Action = DocChangeActionEnum.DELETED;
-                                        docChangeAttribute.ImpactSPF = true;
-
-                                        // deleted attributes don't affect XML
-                                    }
-                                }
-                            }
-                        }
-
-                        // now find deleted entities
-                        foreach (DocEntity docEntityBase in docSchemaBase.Entities)
-                        {
-                            // find equivalent
-                            DocEntity docEntity = null;
-                            foreach (DocEntity docEntityEach in docSchema.Entities)
-                            {
-                                if (docEntityEach.Name.Equals(docEntityBase.Name))
-                                {
-                                    docEntity = docEntityEach;
-                                    break;
-                                }
-                            }
-
-                            if (docEntity == null)
-                            {
-                                // entity may have moved to other schema; check other schemas
-                                DocSchema docThatSchema = null;
-                                foreach (DocSection docOtherSection in this.m_project.Sections)
-                                {
-                                    foreach (DocSchema docOtherSchema in docOtherSection.Schemas)
-                                    {
-                                        foreach (DocEntity docOtherEntity in docOtherSchema.Entities)
-                                        {
-                                            if (docOtherEntity.Name.Equals(docEntityBase.Name))
-                                            {
-                                                docEntity = docOtherEntity;
-                                                docThatSchema = docOtherSchema;
-                                            }
-                                        }
-                                    }
-                                }
-
-                                DocChangeAction docChangeEntity = new DocChangeAction();
-                                docChangeSchema.Changes.Add(docChangeEntity);
-                                docChangeEntity.Name = docEntityBase.Name;
-
-                                if (docEntity != null)
-                                {
-                                    // moved from another schema
-                                    docChangeEntity.Action = DocChangeActionEnum.MOVED;
-                                    docChangeEntity.Aspects.Add(new DocChangeAspect(DocChangeAspectEnum.SCHEMA, docSchema.Name.ToUpper(), docThatSchema.Name.ToUpper()));
-                                }
-                                else
-                                {
-                                    // otherwise, deleted
-                                    docChangeEntity.Action = DocChangeActionEnum.DELETED;
-
-                                    // if non-abstract, it impacts file
-                                    if (!docEntityBase.IsAbstract())
-                                    {
-                                        docChangeEntity.ImpactSPF = true;
-                                        docChangeEntity.ImpactXML = true;
-                                    }
-                                }
-                            }
-                        }
-
-                        // property sets
-                        foreach (DocPropertySet docPset in docSchema.PropertySets)
-                        {
-                            DocChangeAction docChangePset = new DocChangeAction();
-                            docChangeSchemaProperties.Changes.Add(docChangePset);
-                            docChangePset.Name = docPset.Name;
-
-                            // find equivalent pset
-                            DocPropertySet docPsetBase = null;
-                            foreach (DocPropertySet docEntityEach in docSchemaBase.PropertySets)
-                            {
-                                if (docEntityEach.Name.Equals(docPset.Name))
-                                {
-                                    docPsetBase = docEntityEach;
-                                    break;
-                                }
-                            }
-
-                            if (docPsetBase == null)
-                            {
-                                // new entity
-                                docChangePset.Action = DocChangeActionEnum.ADDED;
-
-                                // check if it was moved from another schema                                
-                                foreach (DocSection docOtherSection in docProjectBase.Sections)
-                                {
-                                    foreach (DocSchema docOtherSchema in docOtherSection.Schemas)
-                                    {
-                                        foreach (DocPropertySet docOtherPset in docOtherSchema.PropertySets)
-                                        {
-                                            if (docOtherPset.Name.Equals(docPset.Name))
-                                            {
-                                                docPsetBase = docOtherPset; // still compare attributes if moved (e.g. IfcRelSequence)
-
-                                                docChangePset.Action = DocChangeActionEnum.MOVED;
-                                                docChangePset.Aspects.Add(new DocChangeAspect(DocChangeAspectEnum.SCHEMA, docOtherSchema.Name.ToUpper(), docSchema.Name.ToUpper()));
-                                            }
-                                        }
-                                    }
-                                }
-
-                            }
-
-                            if (docPsetBase != null)
-                            {
-                                // existing entity
-
-                                // compare abstract vs. non-abstract
-                                if (docPset.ApplicableType != docPsetBase.ApplicableType)
-                                {
-                                    docChangePset.Action = DocChangeActionEnum.MODIFIED;
-                                    docChangePset.Aspects.Add(new DocChangeAspect(DocChangeAspectEnum.INSTANTIATION, docPsetBase.ApplicableType, docPset.ApplicableType));
-                                }
-
-                                // compare attributes by index
-
-                                // only report non-abstract entities; e.g. attributes may be demoted without file impact
-                                
-
-                                foreach (DocProperty docAttribute in docPset.Properties)
-                                {
-                                    // we only care about direct attributes
-                                    DocChangeAction docChangeAttribute = new DocChangeAction();
-                                    docChangePset.Changes.Add(docChangeAttribute);
-                                    docChangeAttribute.Name = docAttribute.Name;
-
-                                    DocProperty docAttributeBase = null;
-                                    foreach (DocProperty docEachProperty in docPsetBase.Properties)
-                                    {
-                                        if (docEachProperty.Name.Equals(docAttribute.Name))
-                                        {
-                                            docAttributeBase = docEachProperty;
-                                            break;
-                                        }
-                                    }
-
-                                    if (docAttributeBase == null)
-                                    {
-                                        // new attribute added
-                                        docChangeAttribute.Action = DocChangeActionEnum.ADDED;
-                                    }
-                                    else
-                                    {
-                                        // compare for changes
-                                        if (!docAttribute.PropertyType.Equals(docAttributeBase.PropertyType))
-                                        {
-                                            DocChangeAspect docAspect = new DocChangeAspect(DocChangeAspectEnum.INSTANTIATION, docAttributeBase.PropertyType.ToString(), docAttribute.PropertyType.ToString());
-                                            docChangeAttribute.Aspects.Add(docAspect);
-                                            docChangeAttribute.Action = DocChangeActionEnum.MODIFIED;
-                                        }
-
-                                        if (!docAttribute.PrimaryDataType.Trim().Equals(docAttributeBase.PrimaryDataType.Trim()))
-                                        {
-                                            DocChangeAspect docAspect = new DocChangeAspect(DocChangeAspectEnum.TYPE, docAttributeBase.PrimaryDataType, docAttribute.PrimaryDataType);
-                                            docChangeAttribute.Aspects.Add(docAspect);
-                                            docChangeAttribute.Action = DocChangeActionEnum.MODIFIED;
-                                        }
-                                    }
-                                }
-
-                                // report deleted properties
-                                foreach(DocProperty docAttributeBase in docPsetBase.Properties)
-                                {
-                                    DocProperty docAttribute = null;
-                                    foreach (DocProperty docEachProperty in docPset.Properties)
-                                    {
-                                        if (docEachProperty.Name.Equals(docAttributeBase.Name))
-                                        {
-                                            docAttribute = docEachProperty;
-                                            break;
-                                        }
-                                    }
-
-                                    if(docAttribute == null)
-                                    {
-                                        DocChangeAction docChangeAttribute = new DocChangeAction();
-                                        docChangePset.Changes.Add(docChangeAttribute);
-                                        docChangeAttribute.Name = docAttributeBase.Name;
-                                        docChangeAttribute.Action = DocChangeActionEnum.DELETED;
-                                    }
-                                }
-                            }
-                            
-                        }                            
-                        
-                        // now find deleted psets
-                        foreach (DocPropertySet docEntityBase in docSchemaBase.PropertySets)
-                        {
-                            // find equivalent
-                            DocPropertySet docEntity = null;
-                            foreach (DocPropertySet docEntityEach in docSchema.PropertySets)
-                            {
-                                if (docEntityEach.Name.Equals(docEntityBase.Name))
-                                {
-                                    docEntity = docEntityEach;
-                                    break;
-                                }
-                            }
-
-                            if (docEntity == null)
-                            {
-                                // entity may have moved to other schema; check other schemas
-                                DocSchema docThatSchema = null;
-                                foreach (DocSection docOtherSection in this.m_project.Sections)
-                                {
-                                    foreach (DocSchema docOtherSchema in docOtherSection.Schemas)
-                                    {
-                                        foreach (DocPropertySet docOtherEntity in docOtherSchema.PropertySets)
-                                        {
-                                            if (docOtherEntity.Name.Equals(docEntityBase.Name))
-                                            {
-                                                docEntity = docOtherEntity;
-                                                docThatSchema = docOtherSchema;
-                                            }
-                                        }
-                                    }
-                                }
-
-                                DocChangeAction docChangeEntity = new DocChangeAction();
-                                docChangeSchemaProperties.Changes.Add(docChangeEntity);
-                                docChangeEntity.Name = docEntityBase.Name;
-
-                                if (docEntity != null)
-                                {
-                                    // moved from another schema
-                                    docChangeEntity.Action = DocChangeActionEnum.MOVED;
-                                    docChangeEntity.Aspects.Add(new DocChangeAspect(DocChangeAspectEnum.SCHEMA, docSchema.Name.ToUpper(), docThatSchema.Name.ToUpper()));
-                                }
-                                else
-                                {
-                                    // otherwise, deleted
-                                    docChangeEntity.Action = DocChangeActionEnum.DELETED;
-                                }
-                            }
-                        }
-                        // end property sets
-
-
-                        // quantity sets
-                        foreach (DocQuantitySet docQset in docSchema.QuantitySets)
-                        {
-                            DocChangeAction docChangeQset = new DocChangeAction();
-                            docChangeSchemaQuantities.Changes.Add(docChangeQset);
-                            docChangeQset.Name = docQset.Name;
-
-                            // find equivalent pset
-                            DocQuantitySet docQsetBase = null;
-                            foreach (DocQuantitySet docEntityEach in docSchemaBase.QuantitySets)
-                            {
-                                if (docEntityEach.Name.Equals(docQset.Name))
-                                {
-                                    docQsetBase = docEntityEach;
-                                    break;
-                                }
-                            }
-
-                            if (docQsetBase == null)
-                            {
-                                // new entity
-                                docChangeQset.Action = DocChangeActionEnum.ADDED;
-
-                                // check if it was moved from another schema                                
-                                foreach (DocSection docOtherSection in docProjectBase.Sections)
-                                {
-                                    foreach (DocSchema docOtherSchema in docOtherSection.Schemas)
-                                    {
-                                        foreach (DocQuantitySet docOtherQset in docOtherSchema.QuantitySets)
-                                        {
-                                            if (docOtherQset.Name.Equals(docQset.Name))
-                                            {
-                                                docQsetBase = docOtherQset; // still compare attributes if moved (e.g. IfcRelSequence)
-
-                                                docChangeQset.Action = DocChangeActionEnum.MOVED;
-                                                docChangeQset.Aspects.Add(new DocChangeAspect(DocChangeAspectEnum.SCHEMA, docOtherSchema.Name.ToUpper(), docSchema.Name.ToUpper()));
-                                            }
-                                        }
-                                    }
-                                }
-
-                            }
-
-                            if (docQsetBase != null)
-                            {
-                                // existing entity
-
-                                // compare abstract vs. non-abstract
-                                if (docQset.ApplicableType != docQsetBase.ApplicableType)
-                                {
-                                    docChangeQset.Action = DocChangeActionEnum.MODIFIED;
-                                    docChangeQset.Aspects.Add(new DocChangeAspect(DocChangeAspectEnum.INSTANTIATION, docQsetBase.ApplicableType, docQset.ApplicableType));
-                                }
-
-                                // compare attributes by index
-
-                                // only report non-abstract entities; e.g. attributes may be demoted without file impact
-
-
-                                foreach (DocQuantity docAttribute in docQset.Quantities)
-                                {
-                                    // we only care about direct attributes
-                                    DocChangeAction docChangeAttribute = new DocChangeAction();
-                                    docChangeQset.Changes.Add(docChangeAttribute);
-                                    docChangeAttribute.Name = docAttribute.Name;
-
-                                    DocQuantity docAttributeBase = null;
-                                    foreach (DocQuantity docEachProperty in docQsetBase.Quantities)
-                                    {
-                                        if (docEachProperty.Name.Equals(docAttribute.Name))
-                                        {
-                                            docAttributeBase = docEachProperty;
-                                            break;
-                                        }
-                                    }
-
-                                    if (docAttributeBase == null)
-                                    {
-                                        // new attribute added
-                                        docChangeAttribute.Action = DocChangeActionEnum.ADDED;
-                                    }
-                                    else
-                                    {
-                                        // compare for changes
-                                        if (!docAttribute.QuantityType.Equals(docAttributeBase.QuantityType))
-                                        {
-                                            DocChangeAspect docAspect = new DocChangeAspect(DocChangeAspectEnum.INSTANTIATION, docAttributeBase.QuantityType.ToString(), docAttribute.QuantityType.ToString());
-                                            docChangeAttribute.Aspects.Add(docAspect);
-                                            docChangeAttribute.Action = DocChangeActionEnum.MODIFIED;
-                                        }
-                                    }
-                                }
-
-                                // report deleted quantities
-                                foreach (DocQuantity docAttributeBase in docQsetBase.Quantities)
-                                {
-                                    DocQuantity docAttribute = null;
-                                    foreach (DocQuantity docEachQuantity in docQset.Quantities)
-                                    {
-                                        if (docEachQuantity.Name.Equals(docAttributeBase.Name))
-                                        {
-                                            docAttribute = docEachQuantity;
-                                            break;
-                                        }
-                                    }
-
-                                    if (docAttribute == null)
-                                    {
-                                        DocChangeAction docChangeAttribute = new DocChangeAction();
-                                        docChangeQset.Changes.Add(docChangeAttribute);
-                                        docChangeAttribute.Name = docAttributeBase.Name;
-                                        docChangeAttribute.Action = DocChangeActionEnum.DELETED;
-                                    }
-                                }
-                            }
-
-                        }
-
-                        // now find deleted qsets
-                        foreach (DocQuantitySet docEntityBase in docSchemaBase.QuantitySets)
-                        {
-                            // find equivalent
-                            DocQuantitySet docEntity = null;
-                            foreach (DocQuantitySet docEntityEach in docSchema.QuantitySets)
-                            {
-                                if (docEntityEach.Name.Equals(docEntityBase.Name))
-                                {
-                                    docEntity = docEntityEach;
-                                    break;
-                                }
-                            }
-
-                            if (docEntity == null)
-                            {
-                                // entity may have moved to other schema; check other schemas
-                                DocSchema docThatSchema = null;
-                                foreach (DocSection docOtherSection in this.m_project.Sections)
-                                {
-                                    foreach (DocSchema docOtherSchema in docOtherSection.Schemas)
-                                    {
-                                        foreach (DocQuantitySet docOtherEntity in docOtherSchema.QuantitySets)
-                                        {
-                                            if (docOtherEntity.Name.Equals(docEntityBase.Name))
-                                            {
-                                                docEntity = docOtherEntity;
-                                                docThatSchema = docOtherSchema;
-                                            }
-                                        }
-                                    }
-                                }
-
-                                DocChangeAction docChangeEntity = new DocChangeAction();
-                                docChangeSchemaQuantities.Changes.Add(docChangeEntity);
-                                docChangeEntity.Name = docEntityBase.Name;
-
-                                if (docEntity != null)
-                                {
-                                    // moved from another schema
-                                    docChangeEntity.Action = DocChangeActionEnum.MOVED;
-                                    docChangeEntity.Aspects.Add(new DocChangeAspect(DocChangeAspectEnum.SCHEMA, docSchema.Name.ToUpper(), docThatSchema.Name.ToUpper()));
-                                }
-                                else
-                                {
-                                    // otherwise, deleted
-                                    docChangeEntity.Action = DocChangeActionEnum.DELETED;
-                                }
-                            }
-                        }
-                        // end quantity sets
-
-                    }
-                }
-
-                foreach (DocSchema docSchemaBase in docSectionBase.Schemas)
-                {
-                    // find equivalent schema
-                    DocSchema docSchema = null;
-                    foreach (DocSchema docSchemaEach in docSection.Schemas)
-                    {
-                        if (docSchemaEach.Name.Equals(docSchemaBase.Name))
-                        {
-                            docSchema = docSchemaEach;
-                            break;
-                        }
-                    }
-
-                    if (docSchema == null)
-                    {
-                        DocChangeAction docChangeSchema = new DocChangeAction();
-                        docChangeSchema.Name = docSchemaBase.Name;
-                        docChangeSchema.Action = DocChangeActionEnum.DELETED;
-                        docChangeSection.Changes.Add(docChangeSchema);
-
-                        // list all deleted types
-                        foreach (DocType docTypeBase in docSchemaBase.Types)
-                        {
-                            DocChangeAction docChangeType = new DocChangeAction();
-                            docChangeSchema.Changes.Add(docChangeType);
-                            docChangeType.Name = docTypeBase.Name;
-
-                            // each entity either moved or deleted
-
-                            // entity may have moved to other schema; check other schemas
-                            DocSchema docThatSchema = null;
-                            foreach (DocSection docOtherSection in this.m_project.Sections)
-                            {
-                                foreach (DocSchema docOtherSchema in docOtherSection.Schemas)
-                                {
-                                    foreach (DocType docOtherType in docOtherSchema.Types)
-                                    {
-                                        if (docOtherType.Name.Equals(docTypeBase.Name))
-                                        {
-                                            docThatSchema = docOtherSchema;
-                                        }
-                                    }
-                                }
-                            }
-
-                            if (docThatSchema != null)
-                            {
-                                docChangeType.Action = DocChangeActionEnum.MOVED;
-                                docChangeType.Aspects.Add(new DocChangeAspect(DocChangeAspectEnum.SCHEMA, docSchemaBase.Name, docThatSchema.Name));
-                            }
-                            else
-                            {
-                                docChangeType.Action = DocChangeActionEnum.DELETED;
-
-                                // deleting a type does not impact file
-                            }
-                        }
-
-
-                        // list all deleted entities
-                        foreach (DocEntity docEntityBase in docSchemaBase.Entities)
-                        {
-                            DocChangeAction docChangeEntity = new DocChangeAction();
-                            docChangeSchema.Changes.Add(docChangeEntity);
-                            docChangeEntity.Name = docEntityBase.Name;
-
-                            // each entity either moved or deleted
-
-                            // entity may have moved to other schema; check other schemas
-                            DocSchema docThatSchema = null;
-                            foreach (DocSection docOtherSection in this.m_project.Sections)
-                            {
-                                foreach (DocSchema docOtherSchema in docOtherSection.Schemas)
-                                {
-                                    foreach (DocEntity docOtherEntity in docOtherSchema.Entities)
-                                    {
-                                        if (docOtherEntity.Name.Equals(docEntityBase.Name))
-                                        {
-                                            docThatSchema = docOtherSchema;
-                                        }
-                                    }
-                                }
-                            }
-
-                            if (docThatSchema != null)
-                            {
-                                docChangeEntity.Action = DocChangeActionEnum.MOVED;
-                                docChangeEntity.Aspects.Add(new DocChangeAspect(DocChangeAspectEnum.SCHEMA, docSchemaBase.Name, docThatSchema.Name));
-                            }
-                            else
-                            {
-                                docChangeEntity.Action = DocChangeActionEnum.DELETED;
-                                docChangeEntity.ImpactSPF = true;
-                                docChangeEntity.ImpactXML = true;
-                            }
-                        }
-                    }
-                }
-
-            }
-
+            ChangeLogGenerator.Generate(docProjectBase, this.m_project);
             this.LoadTree();
-
         }
 
         private void MoveSelection(int direction)
@@ -4876,7 +3866,39 @@ namespace IfcDoc
             TreeNode tnParent = tn.Parent;
             int treeindex = tnParent.Nodes.IndexOf(tn);
 
-            if (tn.Tag is DocTemplateUsage)
+            if (tn.Tag is DocTerm)
+            {
+                DocTerm docUsage = (DocTerm)tn.Tag;
+                if (tn.Parent.Tag is DocTerm)
+                {
+                    DocTerm docEntity = (DocTerm)tnParent.Tag;
+                    int index = docEntity.Terms.IndexOf(docUsage);
+
+                    index += direction;
+                    treeindex += direction;
+
+                    docEntity.Terms.Remove(docUsage);
+                    docEntity.Terms.Insert(index, docUsage);
+
+                    tnParent.Nodes.Remove(tn);
+                    tnParent.Nodes.Insert(treeindex, tn);
+                }
+                else
+                {
+                    // top-level
+                    int index = this.m_project.Terms.IndexOf(docUsage);
+
+                    index += direction;
+                    treeindex += direction;
+
+                    this.m_project.Terms.Remove(docUsage);
+                    this.m_project.Terms.Insert(index, docUsage);
+
+                    tnParent.Nodes.Remove(tn);
+                    tnParent.Nodes.Insert(treeindex, tn);
+                }
+            }
+            else if (tn.Tag is DocTemplateUsage)
             {
                 DocTemplateUsage docUsage = (DocTemplateUsage)tn.Tag;
                 DocConceptRoot docRoot = (DocConceptRoot)tnParent.Tag;
@@ -5563,6 +4585,37 @@ namespace IfcDoc
                     tnTarget.Nodes.Insert(index, tn);
                 }
             }
+            else if (tn.Tag is DocTerm)
+            {
+                DocTerm docSource = (DocTerm)tn.Tag;
+                DocTerm docTarget = (DocTerm)tn.Parent.Tag;
+
+                docTarget.Terms.Remove(docSource);
+
+                if (tn.Parent.Parent.Tag is DocTerm)
+                {
+                    // move to sub-level
+                    DocTerm docParent = (DocTerm)tn.Parent.Parent.Tag;
+                    int index = docParent.Terms.IndexOf(docTarget) + 1;
+                    docParent.Terms.Insert(index, docSource);
+
+                    TreeNode tnParent = tn.Parent;
+                    tn.Remove();
+                    tnParent.Parent.Nodes.Insert(index, tn);
+                }
+                else
+                {
+                    // move to top-level
+                    int index = this.m_project.Terms.IndexOf(docTarget) + 1;
+                    this.m_project.Terms.Insert(index, docSource);
+
+                    TreeNode tnParent = tn.Parent;
+                    TreeNode tnTarget = tn.Parent.Parent;
+
+                    tn.Parent.Nodes.Remove(tn);
+                    tnTarget.Nodes.Insert(index, tn);
+                }
+            }
 
             this.treeView.SelectedNode = tn;
             this.m_modified = true;
@@ -5637,6 +4690,25 @@ namespace IfcDoc
                     // move from top-level
                     this.m_project.Examples.Remove(docSource);
                     docTarget.Examples.Add(docSource);
+                }
+            }
+            else if (tn.Tag is DocTerm)
+            {
+                DocTerm docSource = (DocTerm)tn.Tag;
+                DocTerm docTarget = (DocTerm)tn.Parent.Nodes[tn.Index - 1].Tag;
+
+                if (tn.Parent.Tag is DocTerm)
+                {
+                    // move from mid-level
+                    DocTerm docParent = (DocTerm)tn.Parent.Tag;
+                    docParent.Terms.Remove(docSource);
+                    docTarget.Terms.Add(docSource);
+                }
+                else
+                {
+                    // move from top-level
+                    this.m_project.Terms.Remove(docSource);
+                    docTarget.Terms.Add(docSource);
                 }
             }
 
@@ -5758,18 +4830,25 @@ namespace IfcDoc
                 if(form.ShowDialog(this) == System.Windows.Forms.DialogResult.OK && form.Selection != null)
                 {
                     this.m_filterviews = form.Selection;
-
-                    using (this.m_formProgress = new FormProgress())
+                    using (FormSelectExchange formExchange = new FormSelectExchange(this.m_filterviews[0]))
                     {
-                        this.m_formProgress.Text = "Validating File";
-                        this.m_formProgress.Description = "Validating file...";
-
-                        this.backgroundWorkerValidate.RunWorkerAsync();
-
-                        res = this.m_formProgress.ShowDialog();
-                        if (res != DialogResult.OK)
+                        if (formExchange.ShowDialog(this) == System.Windows.Forms.DialogResult.OK && formExchange.Selection != null)
                         {
-                            this.backgroundWorkerValidate.CancelAsync();
+                            this.m_filterexchange = formExchange.Selection;
+
+                            using (this.m_formProgress = new FormProgress())
+                            {
+                                this.m_formProgress.Text = "Validating File";
+                                this.m_formProgress.Description = "Validating file...";
+
+                                this.backgroundWorkerValidate.RunWorkerAsync();
+
+                                res = this.m_formProgress.ShowDialog();
+                                if (res != DialogResult.OK)
+                                {
+                                    this.backgroundWorkerValidate.CancelAsync();
+                                }
+                            }
                         }
                     }
 
@@ -5857,7 +4936,7 @@ namespace IfcDoc
             this.backgroundWorkerValidate.ReportProgress(++progress, "Compiling schema...");
             Dictionary<string, Type> typemap = new Dictionary<string, Type>();
 
-            Compiler compiler = new Compiler(this.m_project, this.m_filterviews);
+            Compiler compiler = new Compiler(this.m_project, this.m_filterviews, this.m_filterexchange);
             System.Reflection.Emit.AssemblyBuilder assembly = compiler.Assembly;
 
             Type[] types = assembly.GetTypes();
@@ -5870,19 +4949,11 @@ namespace IfcDoc
             int grandtotalpass = 0;
             StringBuilder sb = new StringBuilder();
 
-#if false
-            sb.AppendLine("<table border=\"1\" >");
-            sb.Append("<tr><th>Item</th><th>Requirement</th><th>Structure</th><th>Constraints</th>");
-            sb.AppendLine("</tr>");
-#endif
             // Example:
             // | IfcWall   | #2, #3 | PASS (30/30) |
             // | +Identity | #2     | FAIL (23/30) |
 
-            Dictionary<DocExchangeDefinition, int> mapPass = new Dictionary<DocExchangeDefinition, int>(); // number of concepts passing
-            Dictionary<DocExchangeDefinition, int> mapEach = new Dictionary<DocExchangeDefinition, int>(); // number of concepts checked
 
-            Dictionary<DocExchangeDefinition, int> mapSkip = new Dictionary<DocExchangeDefinition, int>(); // number of concepts inapplicable with older schema (IFC2x3)
 
             try
             {
@@ -5893,6 +4964,18 @@ namespace IfcDoc
                 {
                     format.Load();
 
+                    string[] errors = format.Errors;
+                    if (errors != null && errors.Length > 0)
+                    {
+                        sb.AppendLine("This file contains format errors which may impact data validation results:");
+                        sb.AppendLine("<ul>");
+                        for (int i = 0; i < errors.Length; i++)
+                        {
+                            sb.AppendLine("<li>" + errors[i] + "</li>");
+                        }
+                        sb.AppendLine("</ul>");
+                    }
+                    
                     // now iterate through each concept root
                     foreach (DocModelView docView in this.m_filterviews)
                     {
@@ -5928,33 +5011,57 @@ namespace IfcDoc
                                 {
                                     if (docUsage.Definition != null && docUsage.Definition.Rules != null)
                                     {
-                                        // check net requirement if mandatory for any exchange
-                                        DocExchangeRequirementEnum req = DocExchangeRequirementEnum.NotRelevant;
-                                        foreach (DocExchangeItem docExchangeItem in docUsage.Exchanges)
+                                        if(docUsage.Definition.Name.Contains("-089"))
                                         {
-                                            switch (docExchangeItem.Requirement)
+                                            this.ToString();
+                                        }
+
+                                        DocExchangeRequirementEnum req = DocExchangeRequirementEnum.NotRelevant;
+                                        bool includeconcept = true;
+                                        if (this.m_filterexchange != null)
+                                        {
+                                            includeconcept = false;
+                                            foreach (DocExchangeItem ei in docUsage.Exchanges)
                                             {
-                                                case DocExchangeRequirementEnum.Mandatory:
-                                                    req = DocExchangeRequirementEnum.Mandatory;
-                                                    break;
+                                                if (ei.Exchange == this.m_filterexchange && ei.Applicability == DocExchangeApplicabilityEnum.Export &&
+                                                    (ei.Requirement == DocExchangeRequirementEnum.Mandatory || ei.Requirement == DocExchangeRequirementEnum.Optional))
+                                                {
+                                                    includeconcept = true;
+                                                    req = ei.Requirement;
+                                                }
+                                            }
+                                        }
+                                        else
+                                        {
+                                            // check net requirement if mandatory for any exchange
+                                            foreach (DocExchangeItem docExchangeItem in docUsage.Exchanges)
+                                            {
+                                                switch (docExchangeItem.Requirement)
+                                                {
+                                                    case DocExchangeRequirementEnum.Mandatory:
+                                                        req = DocExchangeRequirementEnum.Mandatory;
+                                                        break;
 
-                                                case DocExchangeRequirementEnum.Optional:
-                                                    if (req == DocExchangeRequirementEnum.NotRelevant)
-                                                    {
-                                                        req = DocExchangeRequirementEnum.Optional;
-                                                    }
-                                                    break;
+                                                    case DocExchangeRequirementEnum.Optional:
+                                                        if (req == DocExchangeRequirementEnum.NotRelevant)
+                                                        {
+                                                            req = DocExchangeRequirementEnum.Optional;
+                                                        }
+                                                        break;
 
-                                                case DocExchangeRequirementEnum.Excluded:
-                                                    if (req == DocExchangeRequirementEnum.NotRelevant)
-                                                    {
-                                                        req = DocExchangeRequirementEnum.Excluded;
-                                                    }
-                                                    break;
+                                                    case DocExchangeRequirementEnum.Excluded:
+                                                        if (req == DocExchangeRequirementEnum.NotRelevant)
+                                                        {
+                                                            req = DocExchangeRequirementEnum.Excluded;
+                                                        }
+                                                        break;
+                                                }
                                             }
                                         }
 
-                                        StringBuilder sbDetail = new StringBuilder();
+                                        if (includeconcept)
+                                        {
+                                            StringBuilder sbDetail = new StringBuilder();
 
 
 #if false
@@ -5981,20 +5088,22 @@ namespace IfcDoc
                                         }
                                         sb.AppendLine("</td><td>&nbsp;</td><td>&nbsp;</td></tr>");
 #endif
-                                        bool eachresult = true; // assume passing unless something fails
+                                            bool eachresult = true; // assume passing unless something fails
 
 
-                                        // new-style validation -- compiled code (fast)
-                                        string methodname = docView.Code + "_" + docUsage.Definition.Name.Replace(' ', '_').Replace(':', '_').Replace('-', '_');
-                                        System.Reflection.MethodInfo method = typeEntity.GetMethod(methodname);
+                                            // new-style validation -- compiled code (fast)
+                                            string methodname = DocumentationISO.MakeLinkName(docView) + "_" + DocumentationISO.MakeLinkName(docUsage.Definition);
+                                            System.Reflection.MethodInfo method = typeEntity.GetMethod(methodname);
 
-                                        int fail = 0;
+                                            int fail = 0;
                                             int pass = 0; // pass graph check
                                             long iden = 0;
                                             int passRule = 0; // pass rule check
                                             int failRule = 0; // fail rule check
                                             long idenRule = 0;
                                             object[] args = new object[0];
+                                            List<DocModelRule> trace = new List<DocModelRule>();
+
                                             foreach (SEntity ent in list)
                                             {
                                                 sbDetail.Append("<tr valign=\"top\"><td>#");
@@ -6006,7 +5115,9 @@ namespace IfcDoc
                                                 bool? result = true;
                                                 foreach (DocModelRule rule in docUsage.Definition.Rules)
                                                 {
-                                                    result = rule.Validate(ent, null, typemap);
+                                                    trace.Clear();
+
+                                                    result = rule.Validate(ent, null, typemap, trace);
                                                     if (result != null && !result.Value)
                                                     {
                                                         if (ruleFail != null)
@@ -6014,7 +5125,21 @@ namespace IfcDoc
                                                             sbDetail.Append("<br/>");
                                                         }
                                                         ruleFail = rule;
-                                                        sbDetail.Append(rule.Name);
+
+                                                        foreach(DocModelRule mm in trace)
+                                                        {
+                                                            if(mm is DocModelRuleEntity)
+                                                            {
+                                                                sbDetail.Append("\\");
+                                                            }
+                                                            else if(mm is DocModelRuleAttribute)
+                                                            {
+                                                                sbDetail.Append(".");
+                                                            }
+                                                            sbDetail.Append(mm.Name);
+                                                        }
+
+                                                        //sbDetail.Append(trace);//rule.Name);
                                                     }
                                                 }
 
@@ -6026,7 +5151,7 @@ namespace IfcDoc
                                                 }
                                                 else if (result != null && result.Value)
                                                 {
-                                                    sbDetail.Append("+");
+                                                    //sbDetail.Append("+");
                                                     // all rules passed
                                                     pass++;
                                                 }
@@ -6042,11 +5167,15 @@ namespace IfcDoc
                                                     }
                                                 }
 
+                                                if (ruleFail == null)
+                                                {
+                                                    sbDetail.Append("+");
+                                                }
+
                                                 sbDetail.Append("</td><td>");
 
                                                 if (method != null)
                                                 {
-
                                                     try
                                                     {
                                                         bool[] ruleresult = (bool[])method.Invoke(ent, args);
@@ -6084,7 +5213,7 @@ namespace IfcDoc
                                                             sbDetail.Append("FAIL");
 
                                                             failRule++;
-                                                            if (fail == 1)
+                                                            if (failRule == 1)
                                                             {
                                                                 idenRule = ent.OID;
                                                             }
@@ -6107,11 +5236,18 @@ namespace IfcDoc
                                                 }
                                             }
 
+                                            grandtotallist++;
+
                                             sb.AppendLine("<details><summary>" + docUsage.Definition.Name);
                                             if (fail > 0 || failRule > 0)
                                             {
-                                                sb.AppendLine("*");
+                                                sb.AppendLine(" - [FAIL]");
                                             }
+                                            else
+                                            {
+                                                grandtotalpass++;
+                                            }
+
                                             sb.AppendLine("</summary>");
                                             sb.AppendLine("<table border=\"1\" >");
                                             sb.Append("<tr><th>Instance</th><th>Structure</th><th>Constraints</th>");
@@ -6119,12 +5255,7 @@ namespace IfcDoc
                                             sb.AppendLine(sbDetail.ToString());
                                             sb.AppendLine("</table></details>");
 
-                                            grandtotallist++;
-                                            if (eachresult)
-                                            {
-                                                grandtotalpass++;
-                                            }
-                                        
+                                        }
                                     }
                                 }
 
@@ -6132,39 +5263,6 @@ namespace IfcDoc
                             }
                         }
                     }
-
-#if false
-                    // TOTALS
-                    sb.Append("<tr><td>SUMMARY</td><td></td><td></td><td></td><td>");
-                    sb.Append("</td>");
-
-                    foreach (DocModelView docView in this.m_filterviews)
-                    {
-                        foreach (DocExchangeDefinition docExchange in docView.Exchanges)
-                        {
-                            sb.Append("<td>");
-
-                            int exchangeeach = 0;
-                            int exchangepass = 0;
-                            if (mapEach.TryGetValue(docExchange, out exchangeeach) && mapPass.TryGetValue(docExchange, out exchangepass))
-                            {
-                                int percent = 100;
-                                if (exchangeeach != 0)
-                                {
-                                    percent = 100 * exchangepass / exchangeeach;
-                                }
-
-                                sb.Append(percent);
-                                sb.Append("%");
-                            }
-
-                            sb.Append("</td>");
-                        }
-                    }
-
-
-                    sb.Append("</td></tr>");
-#endif
                 }
             }
             catch (Exception x)
@@ -6192,6 +5290,23 @@ namespace IfcDoc
                 {
                     writer.WriteLine("<html>");
                     writer.WriteLine("<body>");
+
+                    string exchange = null;
+                    if(this.m_filterexchange != null)
+                    {
+                        exchange = this.m_filterexchange.Name;
+                    }
+
+                    writer.WriteLine("<h1>Validation Results</h1>");
+                    writer.WriteLine("<table border='1'>");
+                    writer.WriteLine("<tr><td>Instance File</td><td>" + this.openFileDialogValidate.FileName + "</td></tr>");
+                    writer.WriteLine("<tr><td>Project File</td><td>" + this.m_file + "</td></tr>");
+                    writer.WriteLine("<tr><td>Model View</td><td>" + this.m_filterviews[0].Name + "</td></tr>");
+                    writer.WriteLine("<tr><td>Exchange</td><td>" + exchange + "</td></tr>");
+                    writer.WriteLine("<tr><td>Tests Executed</td><td>" + grandtotallist + "</td></tr>");
+                    writer.WriteLine("<tr><td>Tests Passed</td><td>" + grandtotalpass + "</td></tr>");
+                    writer.WriteLine("<tr><td>Tests Percentage</td><td>" + grandtotalpercent + "%</td></tr>");
+                    writer.WriteLine("</table>");
 
                     writer.WriteLine(sb.ToString());
 
@@ -6307,14 +5422,29 @@ namespace IfcDoc
         private void toolStripMenuItemInsertTerm_Click(object sender, EventArgs e)
         {
             DocTerm docNorm = new DocTerm();
-            if (this.m_project.Terms == null)
-            {
-                this.m_project.Terms = new List<DocTerm>();
-            }
-            this.m_project.Terms.Add(docNorm);
 
             TreeNode tnParent = this.treeView.Nodes[2];
-            this.treeView.SelectedNode = this.LoadNode(tnParent, docNorm, docNorm.ToString(), true);
+            TreeNode tnSelect = this.treeView.SelectedNode;
+            if (tnSelect.Tag is DocTerm)
+            {
+                tnParent = tnSelect;
+
+                // nested term
+                DocTerm parent = (DocTerm)tnSelect.Tag;
+                parent.Terms.Add(docNorm);
+
+                this.treeView.SelectedNode = this.LoadNode(tnParent, docNorm, docNorm.ToString(), true);
+            }
+            else
+            {
+                if (this.m_project.Terms == null)
+                {
+                    this.m_project.Terms = new List<DocTerm>();
+                }
+                this.m_project.Terms.Add(docNorm);
+            
+                this.treeView.SelectedNode = this.LoadNode(tnParent, docNorm, docNorm.ToString(), true, this.m_project.Terms.Count - 1);
+            }
 
             toolStripMenuItemEditRename_Click(this, e);
         }
@@ -7506,7 +6636,11 @@ namespace IfcDoc
                 {
                     using (FormRule form = new FormRule(this.ctlConcept.Selection))
                     {
-                        form.ShowDialog(this);
+                        DialogResult res = form.ShowDialog(this);
+                        if (res == System.Windows.Forms.DialogResult.OK)
+                        {
+                            this.ctlConcept.Redraw();
+                        }
                     }
                 }
             }
@@ -7587,7 +6721,7 @@ namespace IfcDoc
                 {
                     if(form.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
                     {
-                        Compiler compiler = new Compiler(this.m_project, form.Selection);
+                        Compiler compiler = new Compiler(this.m_project, form.Selection, null);
                         System.Reflection.Emit.AssemblyBuilder ab = compiler.Assembly;
                         ab.Save("IFC4.dll");
 
