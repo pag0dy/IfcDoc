@@ -172,9 +172,12 @@ namespace IfcDoc
                 foreach (DocTemplateDefinition dtd in dme.References)
                 {
                     TreeNode tnTemplate = LoadTemplateRuleNode(tnRule, dtd, dtd.Name);
-                    foreach(DocModelRule docTemplateRule in dtd.Rules)
+                    if (dtd.Rules != null)
                     {
-                        LoadTemplateGraph(tnTemplate, docTemplateRule);
+                        foreach (DocModelRule docTemplateRule in dtd.Rules)
+                        {
+                            LoadTemplateGraph(tnTemplate, docTemplateRule);
+                        }
                     }
                 }
             }
@@ -257,65 +260,78 @@ namespace IfcDoc
             if (this.m_template == null)
                 return;
 
-            if (this.m_attribute != null)
+            if (this.m_attribute != null && !String.IsNullOrEmpty(this.m_attribute.DefinedType))
             {
                 DocTemplateDefinition docTemplate = this.m_template;
                 DocAttribute docAttribute = this.m_attribute;
 
-                // now get attribute type
-                DocObject docobj = this.m_project.GetDefinition(docAttribute.DefinedType);
-                if (docobj == null)
+                string entityname = null;
+                switch (this.m_attribute.DefinedType)
                 {
-                    MessageBox.Show("The selected attribute is a value type and cannot be subtyped.");
-                }
-                else
-                {
-                    // launch dialog to pick subtype of entity            
-                    using (FormSelectEntity form = new FormSelectEntity((DocDefinition)docobj, null, this.m_project))
-                    {
-                        DialogResult res = form.ShowDialog(this);
-                        if (res == DialogResult.OK && form.SelectedEntity != null)
+                    case "BOOLEAN":
+                    case "LOGICAL":
+                    case "BINARY":
+                    case "STRING":
+                    case "REAL":
+                    case "INTEGER":
+                    case "NUMBER":
+                        entityname = this.m_attribute.DefinedType;
+                        break;
+
+                    default:
                         {
-                            // get or add attribute rule
-                            TreeNode tn = this.treeViewTemplate.SelectedNode;
-                            DocModelRuleAttribute docRuleAtt = null;
-                            if (this.treeViewTemplate.SelectedNode.Tag is DocModelRuleAttribute)
+                            DocObject docobj = this.m_project.GetDefinition(docAttribute.DefinedType);
+                            using (FormSelectEntity form = new FormSelectEntity((DocDefinition)docobj, null, this.m_project, SelectDefinitionOptions.Entity | SelectDefinitionOptions.Type))
                             {
-                                docRuleAtt = (DocModelRuleAttribute)this.treeViewTemplate.SelectedNode.Tag;
-                            }
-                            else
-                            {
-                                docRuleAtt = new DocModelRuleAttribute();
-                                docRuleAtt.Name = docAttribute.Name;
-
-                                if (this.treeViewTemplate.SelectedNode.Tag is DocModelRuleEntity)
+                                DialogResult res = form.ShowDialog(this);
+                                if (res == DialogResult.OK && form.SelectedEntity != null)
                                 {
-                                    DocModelRuleEntity docRuleEnt = (DocModelRuleEntity)this.treeViewTemplate.SelectedNode.Tag;
-                                    docRuleEnt.Rules.Add(docRuleAtt);
+                                    entityname = form.SelectedEntity.Name;
                                 }
-                                else if (this.treeViewTemplate.SelectedNode.Tag is DocTemplateDefinition)
-                                {
-                                    docTemplate.Rules.Add(docRuleAtt);
-                                }
-
-                                tn = this.LoadTemplateGraph(tn, docRuleAtt);
                             }
-
-                            // get and add entity rule
-                            DocModelRuleEntity docRuleEntity = new DocModelRuleEntity();
-                            docRuleEntity.Name = form.SelectedEntity.Name;
-                            docRuleAtt.Rules.Add(docRuleEntity);
-                            this.treeViewTemplate.SelectedNode = this.LoadTemplateGraph(tn, docRuleEntity);
-
-                            // copy to child templates
-                            docTemplate.PropagateRule(this.treeViewTemplate.SelectedNode.FullPath);
-
-
-                            this.m_selection = docRuleEntity;
-                            this.ContentChanged(this, EventArgs.Empty);
-                            this.SelectionChanged(this, EventArgs.Empty);
+                            break;
                         }
+                }
+
+                if (entityname != null)
+                {
+                    // get or add attribute rule
+                    TreeNode tn = this.treeViewTemplate.SelectedNode;
+                    DocModelRuleAttribute docRuleAtt = null;
+                    if (this.treeViewTemplate.SelectedNode.Tag is DocModelRuleAttribute)
+                    {
+                        docRuleAtt = (DocModelRuleAttribute)this.treeViewTemplate.SelectedNode.Tag;
                     }
+                    else
+                    {
+                        docRuleAtt = new DocModelRuleAttribute();
+                        docRuleAtt.Name = docAttribute.Name;
+
+                        if (this.treeViewTemplate.SelectedNode.Tag is DocModelRuleEntity)
+                        {
+                            DocModelRuleEntity docRuleEnt = (DocModelRuleEntity)this.treeViewTemplate.SelectedNode.Tag;
+                            docRuleEnt.Rules.Add(docRuleAtt);
+                        }
+                        else if (this.treeViewTemplate.SelectedNode.Tag is DocTemplateDefinition)
+                        {
+                            docTemplate.Rules.Add(docRuleAtt);
+                        }
+
+                        tn = this.LoadTemplateGraph(tn, docRuleAtt);
+                    }
+
+                    // get and add entity rule
+                    DocModelRuleEntity docRuleEntity = new DocModelRuleEntity();
+                    docRuleEntity.Name = entityname;
+                    docRuleAtt.Rules.Add(docRuleEntity);
+                    this.treeViewTemplate.SelectedNode = this.LoadTemplateGraph(tn, docRuleEntity);
+
+                    // copy to child templates
+                    docTemplate.PropagateRule(this.treeViewTemplate.SelectedNode.FullPath);
+
+                    this.m_selection = docRuleEntity;
+                    this.ContentChanged(this, EventArgs.Empty);
+                    this.SelectionChanged(this, EventArgs.Empty);
                 }
             }
             else
@@ -326,6 +342,9 @@ namespace IfcDoc
                 {
                     rule = this.treeViewTemplate.SelectedNode.Tag as DocModelRule;
                 }
+
+                if (rule == null)
+                    return;
 
                 DocTemplateDefinition docTemplate = (DocTemplateDefinition)this.m_template;
 
@@ -379,11 +398,6 @@ namespace IfcDoc
                             }
                             else
                             {
-                                if (docTemplate.Rules == null)
-                                {
-                                    docTemplate.Rules = new List<DocModelRule>();
-                                }
-
                                 docTemplate.Rules.Add(docRuleAttr);
                             }
                             this.treeViewTemplate.SelectedNode = this.LoadTemplateGraph(this.treeViewTemplate.SelectedNode, docRuleAttr);

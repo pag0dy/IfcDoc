@@ -509,32 +509,35 @@ namespace IfcDoc
             // create the figure file
             string filename = MakeLinkName(def) + ".png";
             Dictionary<Rectangle, DocModelRule> layout = new Dictionary<Rectangle, DocModelRule>();
-            try
+            if (!Properties.Settings.Default.SkipDiagrams)
             {
-                if (def is DocTemplateDefinition)
+                try
                 {
-                    System.IO.Directory.CreateDirectory(Properties.Settings.Default.OutputPath + "\\schema\\templates\\diagrams");
-                    using (Image image = IfcDoc.Format.PNG.FormatPNG.CreateTemplateDiagram((DocTemplateDefinition)def, mapEntity, layout, docProject))
+                    if (def is DocTemplateDefinition)
                     {
-                        if (image != null)
+                        System.IO.Directory.CreateDirectory(Properties.Settings.Default.OutputPath + "\\schema\\templates\\diagrams");
+                        using (Image image = IfcDoc.Format.PNG.FormatPNG.CreateTemplateDiagram((DocTemplateDefinition)def, mapEntity, layout, docProject))
                         {
-                            string filepath = Properties.Settings.Default.OutputPath + "\\schema\\templates\\diagrams\\" + filename;
+                            if (image != null)
+                            {
+                                string filepath = Properties.Settings.Default.OutputPath + "\\schema\\templates\\diagrams\\" + filename;
+                                image.Save(filepath, System.Drawing.Imaging.ImageFormat.Png);
+                            }
+                        }
+                    }
+                    else if (def is DocEntity) // no longer used directly; now for each model view in annex D
+                    {
+                        System.IO.Directory.CreateDirectory(Properties.Settings.Default.OutputPath + "\\diagrams\\" + MakeLinkName(docView));
+                        using (Image image = IfcDoc.Format.PNG.FormatPNG.CreateEntityDiagram((DocEntity)def, docView, mapEntity, layout, docProject))
+                        {
+                            string filepath = Properties.Settings.Default.OutputPath + "\\diagrams\\" + MakeLinkName(docView) + "\\" + filename;
                             image.Save(filepath, System.Drawing.Imaging.ImageFormat.Png);
                         }
                     }
                 }
-                else if (def is DocEntity) // no longer used directly; now for each model view in annex D
+                catch
                 {
-                    System.IO.Directory.CreateDirectory(Properties.Settings.Default.OutputPath + "\\diagrams\\" + MakeLinkName(docView));
-                    using (Image image = IfcDoc.Format.PNG.FormatPNG.CreateEntityDiagram((DocEntity)def, docView, mapEntity, layout, docProject))
-                    {
-                        string filepath = Properties.Settings.Default.OutputPath + "\\diagrams\\" + MakeLinkName(docView) + "\\" + filename;
-                        image.Save(filepath, System.Drawing.Imaging.ImageFormat.Png);
-                    }
                 }
-            }
-            catch
-            {
             }
 
             // 2. figure
@@ -981,8 +984,22 @@ namespace IfcDoc
 
         private static void BuildExampleList(List<DocExample> listExample, DocExample docExample, DocObject docObject, Dictionary<DocObject, bool> included)
         {
-            if (docExample.ModelView != null && included != null && !included.ContainsKey(docExample.ModelView))
-                return;
+            // check for view reference
+            if (included != null)
+            {
+                bool viewref = false;
+                foreach (DocModelView docView in docExample.Views)
+                {
+                    if (included.ContainsKey(docView))
+                    {
+                        viewref = true;
+                        break;
+                    }
+                }
+
+                if (!viewref)
+                    return;
+            }
 
             if (docExample.ApplicableType != null)
             {
@@ -1209,26 +1226,28 @@ namespace IfcDoc
                                 if (parameter is DocModelRuleAttribute)
                                 {
                                     DocModelRuleAttribute dma = (DocModelRuleAttribute)parameter;
-                                    if (dma.Rules.Count == 1 && dma.Rules[0] is DocModelRuleEntity)
+                                    foreach(DocModelRule docInnerRule in dma.Rules)
                                     {
-                                        DocModelRuleEntity dme = (DocModelRuleEntity)dma.Rules[0];
-                                        if (dme.References.Count == 1)
+                                        if (docInnerRule is DocModelRuleEntity)
                                         {
-                                            docTemplateInner = dme.References[0];
+                                            DocModelRuleEntity dme = (DocModelRuleEntity)docInnerRule;
+                                            if (dme.References.Count == 1)
+                                            {
+                                                docTemplateInner = dme.References[0];
+
+                                                DocTemplateUsage docConceptInner = item.GetParameterConcept(parameter.Identification, docTemplateInner);
+                                                if (docConceptInner != null)
+                                                {
+                                                    string inner = FormatConceptTable(docProject, docModelView, (DocEntity)docDef, root, docConceptInner, mapEntity, mapSchema);
+                                                    sb.Append(inner);
+                                                }
+
+                                            }
                                         }
                                     }
                                 }
 
-                                if (docTemplateInner != null)
-                                {
-                                    DocTemplateUsage docConceptInner = item.GetParameterConcept(parameter.Identification, docTemplateInner);
-                                    if (docConceptInner != null)
-                                    {
-                                        string inner = FormatConceptTable(docProject, docModelView, (DocEntity)docDef, root, docConceptInner, mapEntity, mapSchema);
-                                        sb.Append(inner);
-                                    }
-                                }
-                                else if (value != null && mapSchema.TryGetValue(value, out schema))
+                                if (docTemplateInner == null && value != null && mapSchema.TryGetValue(value, out schema))
                                 {
                                     sb.Append("<a href=\"../../");
                                     sb.Append(schema.ToLower());
@@ -1513,7 +1532,108 @@ namespace IfcDoc
             return content;
         }
 
+        private static void GenerateExample(
+            DocExample docExample,
+            string path,
+            List<int> indexpath,
+            Dictionary<DocObject, bool> included,
+            Dictionary<string, DocObject> mapEntity,
+            Dictionary<string, string> mapSchema,
+            Dictionary<string, Type> typemap,
+            FormatHTM htmTOC,
+            FormatHTM htmSectionTOC
+            )
+        {
+            if (included == null || included.ContainsKey(docExample))
+            {
+                indexpath[indexpath.Count - 1]++;
 
+                StringBuilder indexpathname = new StringBuilder();
+                indexpathname.Append("E");
+                foreach(int x in indexpath)
+                {
+                    indexpathname.Append(".");
+                    indexpathname.Append(x);
+                }
+                string indexpathstring = indexpathname.ToString();
+
+                string pathExample = path + @"\annex\annex-e\" + MakeLinkName(docExample) + ".htm";
+                using (FormatHTM htmExample = new FormatHTM(pathExample, mapEntity, mapSchema, included))
+                {
+                    htmExample.WriteHeader(docExample.Name, 2);
+                    htmExample.WriteScript(-5, 1, 0, 0);
+                    htmExample.WriteLine("<h3 class=\"std\">" + indexpathstring + " " + docExample.Name + "</h3>");
+
+                    // table of files
+                    if (docExample.File != null)
+                    {
+                        htmExample.Write("<table class=\"gridtable\">");
+                        htmExample.Write("<tr><th>Format</th><th>ASCII</th><th>HTML</th></tr>");
+                        htmExample.Write("<tr><td>IFC-SPF</td><td><a href=\"" + MakeLinkName(docExample) + ".ifc\">File</a></td><td><a href=\"" + MakeLinkName(docExample) + ".ifc.htm\">Markup</a></td></tr>");
+                        htmExample.Write("</table>");
+                    }
+
+                    htmExample.WriteDocumentationForISO(docExample.Documentation, docExample, false);
+                    htmExample.WriteLine("<p><a href=\"../../link/" + MakeLinkName(docExample) + ".htm\" target=\"_top\" ><img src=\"../../img/permlink.png\" style=\"border: 0px\" title=\"Link to this page\" alt=\"Link to this page\"/>&nbsp; Link to this page</a></p>");
+                    htmExample.WriteFooter(Properties.Settings.Default.Footer);
+                }
+
+                if (docExample.File != null && !Properties.Settings.Default.SkipDiagrams)
+                {
+                    string pathIFC = path + @"\annex\annex-e\" + MakeLinkName(docExample) + ".ifc";
+                    using (System.IO.FileStream filestream = new System.IO.FileStream(pathIFC, System.IO.FileMode.Create, System.IO.FileAccess.Write, System.IO.FileShare.Read))
+                    {
+                        filestream.Write(docExample.File, 0, docExample.File.Length);
+                    }
+
+                    using (FormatSPF spfExample = new FormatSPF(new System.IO.MemoryStream(docExample.File, false), typemap, null))
+                    {
+                        string pathListing = path + @"\annex\annex-e\" + MakeLinkName(docExample) + ".ifc.htm";
+                        using (FormatHTM htmListing = new FormatHTM(pathListing, mapEntity, mapSchema, included))
+                        {
+                            htmListing.WriteHeader(docExample.Name, 2);
+
+                            htmListing.WriteLine("<tt class=\"spf\">");
+                            string htm = null;
+                            try
+                            {
+                                htm = spfExample.LoadMarkup();
+                            }
+                            catch (Exception x)
+                            {
+                                x.ToString();
+                            }
+                            htmListing.Write(htm);
+                            htmListing.Write("</tt>");
+                            htmListing.WriteFooter(String.Empty);
+                        }
+                    }
+                }
+
+                using (FormatHTM htmLink = new FormatHTM(path + "/link/" + MakeLinkName(docExample) + ".htm", mapEntity, mapSchema, included))
+                {
+                    string linkurl = "../annex/annex-e/" + MakeLinkName(docExample) + ".htm";
+                    htmLink.WriteLinkPage(linkurl);
+                }
+
+                string urlExample = "annex-e/" + MakeLinkName(docExample) + ".htm";
+                htmTOC.WriteTOC(2, "<a class=\"listing-link\" href=\"annex/" + urlExample + "\" >" + indexpathstring + " " + docExample.Name + "</a>");
+
+                string htmllink = "<a class=\"listing-link\" href=\"" + urlExample + "\" target=\"info\">" + docExample.Name + "</a>";
+                htmSectionTOC.WriteLine("<tr class=\"std\"><td class=\"menu\">" + indexpathstring + " " + htmllink + "</td></tr>");
+
+                if (docExample.Examples.Count > 0)
+                {
+                    indexpath.Add(0);
+                    foreach(DocExample docSub in docExample.Examples)
+                    {
+                        GenerateExample(docSub, path, indexpath, included, mapEntity, mapSchema, typemap, htmTOC, htmSectionTOC);
+                    }
+                    indexpath.RemoveAt(indexpath.Count - 1);
+                }
+            }
+
+        }
 
         /// <summary>
         /// Generates documentation for template and all sub-templates recursively.
@@ -3424,41 +3544,43 @@ namespace IfcDoc
                                             htmTOC.WriteTOC(1, "<a class=\"listing-link\" href=\"annex/annex-c/" + MakeLinkName(docView) + "/index.htm\" >C." + iView + " " + docView.Name + "</a>");
                                             htmSectionTOC.WriteLine("<tr class=\"std\"><td class=\"menu\">C." + iView + " <a href=\"annex-c/" + MakeLinkName(docView) + "/index.htm\" target=\"info\" >" + docView.Name + "</a></td></tr>");
 
-
                                             // diagram for view
-                                            Dictionary<DocObject, bool> viewinclude = new Dictionary<DocObject, bool>();
-                                            Dictionary<Rectangle, DocEntity> mapRectangle = new Dictionary<Rectangle, DocEntity>();
-                                            docProject.RegisterObjectsInScope(docView, viewinclude);
-                                            using (Image imgDiagram = FormatPNG.CreateInheritanceDiagram(docProject, viewinclude, docEntityRoot, new Font(FontFamily.GenericSansSerif, 8.0f), mapRectangle))
+                                            if (!Properties.Settings.Default.SkipDiagrams)
                                             {
-                                                using (FormatHTM htmCover = new FormatHTM(path + @"\annex\annex-c\" + MakeLinkName(docView) + @"\index.htm", mapEntity, mapSchema, included))
+                                                Dictionary<DocObject, bool> viewinclude = new Dictionary<DocObject, bool>();
+                                                Dictionary<Rectangle, DocEntity> mapRectangle = new Dictionary<Rectangle, DocEntity>();
+                                                docProject.RegisterObjectsInScope(docView, viewinclude);
+                                                using (Image imgDiagram = FormatPNG.CreateInheritanceDiagram(docProject, viewinclude, docEntityRoot, new Font(FontFamily.GenericSansSerif, 8.0f), mapRectangle))
                                                 {
-                                                    htmCover.WriteHeader(docView.Name, 3);
-                                                    htmCover.WriteLine("<h2 class=\"std\">C." + iView + " " + docView.Name + " Inheritance</h2>");
-                                                    htmCover.WriteLine("<img src=\"cover.png\" usemap=\"#f\"/>");
-                                                    htmCover.WriteLine("<map name=\"f\">");
-
-                                                    foreach (Rectangle rc in mapRectangle.Keys)
+                                                    using (FormatHTM htmCover = new FormatHTM(path + @"\annex\annex-c\" + MakeLinkName(docView) + @"\index.htm", mapEntity, mapSchema, included))
                                                     {
-                                                        DocEntity docEntref = mapRectangle[rc];
-                                                        DocSchema docEntsch = docProject.GetSchemaOfDefinition(docEntref);
+                                                        htmCover.WriteHeader(docView.Name, 3);
+                                                        htmCover.WriteLine("<h2 class=\"std\">C." + iView + " " + docView.Name + " Inheritance</h2>");
+                                                        htmCover.WriteLine("<img src=\"cover.png\" usemap=\"#f\"/>");
+                                                        htmCover.WriteLine("<map name=\"f\">");
 
-                                                        string hyperlink = "../../../schema/" + docEntsch.Name.ToLower() + "/lexical/" + docEntref.Name.ToLower() + ".htm";
-                                                        htmCover.WriteLine("<area shape=\"rect\" coords=\"" + rc.Left + "," + rc.Top + "," + rc.Right + "," + rc.Bottom + "\" href=\"" + hyperlink + "\" alt=\"" + docEntref.Name + "\" />");
+                                                        foreach (Rectangle rc in mapRectangle.Keys)
+                                                        {
+                                                            DocEntity docEntref = mapRectangle[rc];
+                                                            DocSchema docEntsch = docProject.GetSchemaOfDefinition(docEntref);
+
+                                                            string hyperlink = "../../../schema/" + docEntsch.Name.ToLower() + "/lexical/" + docEntref.Name.ToLower() + ".htm";
+                                                            htmCover.WriteLine("<area shape=\"rect\" coords=\"" + rc.Left + "," + rc.Top + "," + rc.Right + "," + rc.Bottom + "\" href=\"" + hyperlink + "\" alt=\"" + docEntref.Name + "\" />");
+                                                        }
+                                                        htmCover.WriteLine("</map>");
+
+                                                        htmCover.WriteFooter(String.Empty);
                                                     }
-                                                    htmCover.WriteLine("</map>");
 
-                                                    htmCover.WriteFooter(String.Empty);
-                                                }
+                                                    // create image after (depends on directory being created first)
+                                                    try
+                                                    {
+                                                        imgDiagram.Save(path + @"\annex\annex-c\" + MakeLinkName(docView) + @"\cover.png");
+                                                    }
+                                                    catch
+                                                    {
 
-                                                // create image after (depends on directory being created first)
-                                                try
-                                                {
-                                                    imgDiagram.Save(path + @"\annex\annex-c\" + MakeLinkName(docView) + @"\cover.png");
-                                                }
-                                                catch
-                                                {
-
+                                                    }
                                                 }
                                             }
 
@@ -3527,241 +3649,242 @@ namespace IfcDoc
                                             int iLastDiagram = docSchema.GetDiagramCount();
 
                                             // generate diagrams
-                                            Image imageSchema = FormatPNG.CreateSchemaDiagram(docSchema, mapEntity);
-
-                                            using (FormatHTM htmSchemaDiagram = new FormatHTM(path + "/annex/annex-d/" + MakeLinkName(docSchema) + "/index.htm", mapEntity, mapSchema, included))
+                                            if (!Properties.Settings.Default.SkipDiagrams)
                                             {
-                                                int iSub = 1;
+                                                Image imageSchema = FormatPNG.CreateSchemaDiagram(docSchema, mapEntity);
 
-                                                htmSchemaDiagram.WriteHeader(docSection.Name, 3);
-                                                htmSchemaDiagram.WriteScript(iAnnex, iSub, iSection, 0);
-                                                htmSchemaDiagram.WriteLine("<h4 class=\"std\">D.1." + iDiagramSection + "." + iSchema + " " + docSchema.Name + "</h4>");
-
-                                                htmSchemaDiagram.WriteLine("<p>");
-
-                                                // write thumbnail links for each diagram
-                                                for (int iDiagram = 1; iDiagram <= iLastDiagram; iDiagram++)
+                                                using (FormatHTM htmSchemaDiagram = new FormatHTM(path + "/annex/annex-d/" + MakeLinkName(docSchema) + "/index.htm", mapEntity, mapSchema, included))
                                                 {
-                                                    string formatnumber = iDiagram.ToString("D4"); // 0001
-                                                    htmSchemaDiagram.WriteLine("<a href=\"diagram_" + formatnumber + ".htm\">" +
-                                                        "<img src=\"diagram_" + formatnumber + ".png\" width=\"300\" height=\"444\" /></a>"); // width=\"150\" height=\"222\"> 
+                                                    int iSub = 1;
 
-                                                    // generate EXPRESS-G diagram
-                                                    if (docSchema.DiagramPagesHorz != 0)
+                                                    htmSchemaDiagram.WriteHeader(docSection.Name, 3);
+                                                    htmSchemaDiagram.WriteScript(iAnnex, iSub, iSection, 0);
+                                                    htmSchemaDiagram.WriteLine("<h4 class=\"std\">D.1." + iDiagramSection + "." + iSchema + " " + docSchema.Name + "</h4>");
+
+                                                    htmSchemaDiagram.WriteLine("<p>");
+
+                                                    // write thumbnail links for each diagram
+                                                    for (int iDiagram = 1; iDiagram <= iLastDiagram; iDiagram++)
                                                     {
-                                                        int pageY = (iDiagram - 1) / docSchema.DiagramPagesHorz;
-                                                        int pageX = (iDiagram - 1) % docSchema.DiagramPagesHorz;
-                                                        int pagePixelCX = CtlExpressG.PageX;
-                                                        int pagePixelCY = CtlExpressG.PageY;
-                                                        using (Image imagePage = new Bitmap(pagePixelCX, pagePixelCY))
+                                                        string formatnumber = iDiagram.ToString("D4"); // 0001
+                                                        htmSchemaDiagram.WriteLine("<a href=\"diagram_" + formatnumber + ".htm\">" +
+                                                            "<img src=\"diagram_" + formatnumber + ".png\" width=\"300\" height=\"444\" /></a>"); // width=\"150\" height=\"222\"> 
+
+                                                        // generate EXPRESS-G diagram
+                                                        if (docSchema.DiagramPagesHorz != 0)
                                                         {
-                                                            using (Graphics g = Graphics.FromImage(imagePage))
+                                                            int pageY = (iDiagram - 1) / docSchema.DiagramPagesHorz;
+                                                            int pageX = (iDiagram - 1) % docSchema.DiagramPagesHorz;
+                                                            int pagePixelCX = CtlExpressG.PageX;
+                                                            int pagePixelCY = CtlExpressG.PageY;
+                                                            using (Image imagePage = new Bitmap(pagePixelCX, pagePixelCY))
                                                             {
-                                                                g.DrawImage(imageSchema, new Rectangle(0, 0, pagePixelCX, pagePixelCY), new Rectangle(pagePixelCX * pageX, pagePixelCY * pageY, pagePixelCX, pagePixelCY), GraphicsUnit.Pixel);
+                                                                using (Graphics g = Graphics.FromImage(imagePage))
+                                                                {
+                                                                    g.DrawImage(imageSchema, new Rectangle(0, 0, pagePixelCX, pagePixelCY), new Rectangle(pagePixelCX * pageX, pagePixelCY * pageY, pagePixelCX, pagePixelCY), GraphicsUnit.Pixel);
+                                                                }
+                                                                imagePage.Save(path + "/annex/annex-d/" + MakeLinkName(docSchema) + "/diagram_" + formatnumber + ".png");
                                                             }
-                                                            imagePage.Save(path + "/annex/annex-d/" + MakeLinkName(docSchema) + "/diagram_" + formatnumber + ".png");
                                                         }
                                                     }
+
+                                                    htmSchemaDiagram.WriteLine("</p>");
+                                                    htmSchemaDiagram.WriteFooter(Properties.Settings.Default.Footer);
                                                 }
 
-                                                htmSchemaDiagram.WriteLine("</p>");
-                                                htmSchemaDiagram.WriteFooter(Properties.Settings.Default.Footer);
-                                            }
 
+                                                double scale = 0.375; // hard-coded for now -- read from SCHEMATA.scale
+                                                double pageCX = 1600; // hard-coded for now -- read from SCHEMATA.settings.page.width
+                                                double pageCY = 2370; // hard-coded for now -- read from SCHEMATA.settings.page.height
 
-                                            double scale = 0.375; // hard-coded for now -- read from SCHEMATA.scale
-                                            double pageCX = 1600; // hard-coded for now -- read from SCHEMATA.settings.page.width
-                                            double pageCY = 2370; // hard-coded for now -- read from SCHEMATA.settings.page.height
-
-                                            for (int iDiagram = 1; iDiagram <= iLastDiagram; iDiagram++)
-                                            {
-                                                string formatnumber = iDiagram.ToString("D4");
-                                                using (FormatHTM htmSchema = new FormatHTM(path + "/annex/annex-d/" + MakeLinkName(docSchema) + "/diagram_" + formatnumber + ".htm", mapEntity, mapSchema, included))
+                                                for (int iDiagram = 1; iDiagram <= iLastDiagram; iDiagram++)
                                                 {
-                                                    htmSchema.WriteHeader(docSchema.Name, 3);
-                                                    htmSchema.WriteScript(iAnnex, 1, iDiagramSection, iDiagram);
+                                                    string formatnumber = iDiagram.ToString("D4");
+                                                    using (FormatHTM htmSchema = new FormatHTM(path + "/annex/annex-d/" + MakeLinkName(docSchema) + "/diagram_" + formatnumber + ".htm", mapEntity, mapSchema, included))
+                                                    {
+                                                        htmSchema.WriteHeader(docSchema.Name, 3);
+                                                        htmSchema.WriteScript(iAnnex, 1, iDiagramSection, iDiagram);
 
-                                                    htmSchema.WriteLine("<h4 class=\"std\">");
-                                                    if (iDiagram > 1)
-                                                    {
-                                                        htmSchema.Write("<a href=\"diagram_" + (iDiagram - 1).ToString("D4") + ".htm\"><img src=\"../../../img/navleft.png\" style=\"border: 0px\" /></a>");
-                                                    }
-                                                    else
-                                                    {
-                                                        // disabled
-                                                        htmSchema.Write("<img src=\"../../../img/navleft.png\" style=\"border: 0px\" />");
-                                                    }
-                                                    if (iDiagram < iLastDiagram)
-                                                    {
-                                                        htmSchema.Write("<a href=\"diagram_" + (iDiagram + 1).ToString("D4") + ".htm\"><img src=\"../../../img/navright.png\" style=\"border: 0px\" /></a>");
-                                                    }
-                                                    else
-                                                    {
-                                                        // disabled
-                                                        htmSchema.Write("<img src=\"../../../img/navright.png\" style=\"border: 0px\" />");
-                                                    }
-                                                    htmSchema.Write(" " + docSchema.Name + " (" + iDiagram + "/" + iLastDiagram + ")");
-                                                    htmSchema.WriteLine("</h4>");
+                                                        htmSchema.WriteLine("<h4 class=\"std\">");
+                                                        if (iDiagram > 1)
+                                                        {
+                                                            htmSchema.Write("<a href=\"diagram_" + (iDiagram - 1).ToString("D4") + ".htm\"><img src=\"../../../img/navleft.png\" style=\"border: 0px\" /></a>");
+                                                        }
+                                                        else
+                                                        {
+                                                            // disabled
+                                                            htmSchema.Write("<img src=\"../../../img/navleft.png\" style=\"border: 0px\" />");
+                                                        }
+                                                        if (iDiagram < iLastDiagram)
+                                                        {
+                                                            htmSchema.Write("<a href=\"diagram_" + (iDiagram + 1).ToString("D4") + ".htm\"><img src=\"../../../img/navright.png\" style=\"border: 0px\" /></a>");
+                                                        }
+                                                        else
+                                                        {
+                                                            // disabled
+                                                            htmSchema.Write("<img src=\"../../../img/navright.png\" style=\"border: 0px\" />");
+                                                        }
+                                                        htmSchema.Write(" " + docSchema.Name + " (" + iDiagram + "/" + iLastDiagram + ")");
+                                                        htmSchema.WriteLine("</h4>");
 
-                                                    htmSchema.WriteLine("<img src=\"diagram_" + formatnumber + ".png\" usemap=\"#diagram\" >");
-                                                    htmSchema.WriteLine("  <map name=\"diagram\" >");
-                                                    foreach (DocType docType in docSchema.Types)
-                                                    {
-                                                        if ((included == null || included.ContainsKey(docType)) && docType.DiagramNumber == iDiagram && docType.DiagramRectangle != null)
+                                                        htmSchema.WriteLine("<img src=\"diagram_" + formatnumber + ".png\" usemap=\"#diagram\" >");
+                                                        htmSchema.WriteLine("  <map name=\"diagram\" >");
+                                                        foreach (DocType docType in docSchema.Types)
                                                         {
-                                                            double x0 = docType.DiagramRectangle.X % pageCX * scale;
-                                                            double y0 = docType.DiagramRectangle.Y % pageCY * scale;
-                                                            double x1 = docType.DiagramRectangle.X % pageCX * scale + docType.DiagramRectangle.Width % pageCX * scale;
-                                                            double y1 = docType.DiagramRectangle.Y % pageCY * scale + docType.DiagramRectangle.Height % pageCY * scale;
-                                                            string link = "../../../schema/" + mapSchema[docType.Name].ToLower() + "/lexical/" + docType.Name.ToLower() + ".htm";
-                                                            htmSchema.WriteLine("    <area shape=\"rect\" coords=\"" + x0 + ", " + y0 + ", " + x1 + ", " + y1 + "\" alt=\"Navigate\" href=\"" + link + "\" />");
-                                                        }
-                                                    }
-                                                    foreach (DocEntity docType in docSchema.Entities)
-                                                    {
-                                                        if ((included == null || included.ContainsKey(docType)) && docType.DiagramNumber == iDiagram && docType.DiagramRectangle != null)
-                                                        {
-                                                            double x0 = docType.DiagramRectangle.X % pageCX * scale;
-                                                            double y0 = docType.DiagramRectangle.Y % pageCY * scale;
-                                                            double x1 = docType.DiagramRectangle.X % pageCX * scale + docType.DiagramRectangle.Width % pageCX * scale;
-                                                            double y1 = docType.DiagramRectangle.Y % pageCY * scale + docType.DiagramRectangle.Height % pageCY * scale;
-                                                            string link = "../../../schema/" + mapSchema[docType.Name].ToLower() + "/lexical/" + docType.Name.ToLower() + ".htm";
-                                                            htmSchema.WriteLine("    <area shape=\"rect\" coords=\"" + x0 + ", " + y0 + ", " + x1 + ", " + y1 + "\" alt=\"Navigate\" href=\"" + link + "\" />");
-                                                        }
-                                                    }
-                                                    if (docSchema.PageTargets != null)
-                                                    {
-                                                        foreach (DocPageTarget docPageTarget in docSchema.PageTargets)
-                                                        {
-                                                            foreach (DocPageSource docPageSource in docPageTarget.Sources)
+                                                            if ((included == null || included.ContainsKey(docType)) && docType.DiagramNumber == iDiagram && docType.DiagramRectangle != null)
                                                             {
-                                                                if (docPageSource.DiagramNumber == iDiagram && docPageSource.DiagramRectangle != null)
+                                                                double x0 = docType.DiagramRectangle.X % pageCX * scale;
+                                                                double y0 = docType.DiagramRectangle.Y % pageCY * scale;
+                                                                double x1 = docType.DiagramRectangle.X % pageCX * scale + docType.DiagramRectangle.Width % pageCX * scale;
+                                                                double y1 = docType.DiagramRectangle.Y % pageCY * scale + docType.DiagramRectangle.Height % pageCY * scale;
+                                                                string link = "../../../schema/" + mapSchema[docType.Name].ToLower() + "/lexical/" + docType.Name.ToLower() + ".htm";
+                                                                htmSchema.WriteLine("    <area shape=\"rect\" coords=\"" + x0 + ", " + y0 + ", " + x1 + ", " + y1 + "\" alt=\"Navigate\" href=\"" + link + "\" />");
+                                                            }
+                                                        }
+                                                        foreach (DocEntity docType in docSchema.Entities)
+                                                        {
+                                                            if ((included == null || included.ContainsKey(docType)) && docType.DiagramNumber == iDiagram && docType.DiagramRectangle != null)
+                                                            {
+                                                                double x0 = docType.DiagramRectangle.X % pageCX * scale;
+                                                                double y0 = docType.DiagramRectangle.Y % pageCY * scale;
+                                                                double x1 = docType.DiagramRectangle.X % pageCX * scale + docType.DiagramRectangle.Width % pageCX * scale;
+                                                                double y1 = docType.DiagramRectangle.Y % pageCY * scale + docType.DiagramRectangle.Height % pageCY * scale;
+                                                                string link = "../../../schema/" + mapSchema[docType.Name].ToLower() + "/lexical/" + docType.Name.ToLower() + ".htm";
+                                                                htmSchema.WriteLine("    <area shape=\"rect\" coords=\"" + x0 + ", " + y0 + ", " + x1 + ", " + y1 + "\" alt=\"Navigate\" href=\"" + link + "\" />");
+                                                            }
+                                                        }
+                                                        if (docSchema.PageTargets != null)
+                                                        {
+                                                            foreach (DocPageTarget docPageTarget in docSchema.PageTargets)
+                                                            {
+                                                                foreach (DocPageSource docPageSource in docPageTarget.Sources)
                                                                 {
-                                                                    double x0 = docPageSource.DiagramRectangle.X % pageCX * scale;
-                                                                    double y0 = docPageSource.DiagramRectangle.Y % pageCY * scale;
-                                                                    double x1 = docPageSource.DiagramRectangle.X % pageCX * scale + docPageSource.DiagramRectangle.Width % pageCX * scale;
-                                                                    double y1 = docPageSource.DiagramRectangle.Y % pageCY * scale + docPageSource.DiagramRectangle.Height % pageCY * scale;
-                                                                    string link = "diagram_" + docPageTarget.DiagramNumber.ToString("D4") + ".htm";
-                                                                    htmSchema.WriteLine("    <area shape=\"rect\" coords=\"" + x0 + ", " + y0 + ", " + x1 + ", " + y1 + "\" alt=\"Navigate\" href=\"" + link + "\" />");
+                                                                    if (docPageSource.DiagramNumber == iDiagram && docPageSource.DiagramRectangle != null)
+                                                                    {
+                                                                        double x0 = docPageSource.DiagramRectangle.X % pageCX * scale;
+                                                                        double y0 = docPageSource.DiagramRectangle.Y % pageCY * scale;
+                                                                        double x1 = docPageSource.DiagramRectangle.X % pageCX * scale + docPageSource.DiagramRectangle.Width % pageCX * scale;
+                                                                        double y1 = docPageSource.DiagramRectangle.Y % pageCY * scale + docPageSource.DiagramRectangle.Height % pageCY * scale;
+                                                                        string link = "diagram_" + docPageTarget.DiagramNumber.ToString("D4") + ".htm";
+                                                                        htmSchema.WriteLine("    <area shape=\"rect\" coords=\"" + x0 + ", " + y0 + ", " + x1 + ", " + y1 + "\" alt=\"Navigate\" href=\"" + link + "\" />");
+                                                                    }
                                                                 }
                                                             }
                                                         }
-                                                    }
-                                                    if (docSchema.SchemaRefs != null)
-                                                    {
-                                                        foreach (DocSchemaRef docSchemaRef in docSchema.SchemaRefs)
+                                                        if (docSchema.SchemaRefs != null)
                                                         {
-                                                            foreach (DocDefinitionRef docDefinitionRef in docSchemaRef.Definitions)
+                                                            foreach (DocSchemaRef docSchemaRef in docSchema.SchemaRefs)
                                                             {
-                                                                if (docDefinitionRef.DiagramNumber == iDiagram && docDefinitionRef.DiagramRectangle != null)
+                                                                foreach (DocDefinitionRef docDefinitionRef in docSchemaRef.Definitions)
                                                                 {
-                                                                    double x0 = docDefinitionRef.DiagramRectangle.X % pageCX * scale;
-                                                                    double y0 = docDefinitionRef.DiagramRectangle.Y % pageCY * scale;
-                                                                    double x1 = docDefinitionRef.DiagramRectangle.X % pageCX * scale + docDefinitionRef.DiagramRectangle.Width % pageCX * scale;
-                                                                    double y1 = docDefinitionRef.DiagramRectangle.Y % pageCY * scale + docDefinitionRef.DiagramRectangle.Height % pageCY * scale;
-
-                                                                    if (mapSchema.ContainsKey(docDefinitionRef.Name))
+                                                                    if (docDefinitionRef.DiagramNumber == iDiagram && docDefinitionRef.DiagramRectangle != null)
                                                                     {
-                                                                        DocDefinition docDef = mapEntity[docDefinitionRef.Name] as DocDefinition;
-                                                                        if (included == null || included.ContainsKey(docDef))
+                                                                        double x0 = docDefinitionRef.DiagramRectangle.X % pageCX * scale;
+                                                                        double y0 = docDefinitionRef.DiagramRectangle.Y % pageCY * scale;
+                                                                        double x1 = docDefinitionRef.DiagramRectangle.X % pageCX * scale + docDefinitionRef.DiagramRectangle.Width % pageCX * scale;
+                                                                        double y1 = docDefinitionRef.DiagramRectangle.Y % pageCY * scale + docDefinitionRef.DiagramRectangle.Height % pageCY * scale;
+
+                                                                        if (mapSchema.ContainsKey(docDefinitionRef.Name))
                                                                         {
-                                                                            string link = "../../../schema/" + mapSchema[docDefinitionRef.Name].ToLower() + "/lexical/" + docDefinitionRef.Name.ToLower() + ".htm";
-                                                                            htmSchema.WriteLine("    <area shape=\"rect\" coords=\"" + x0 + ", " + y0 + ", " + x1 + ", " + y1 + "\" alt=\"Navigate\" href=\"" + link + "\" />");
+                                                                            DocDefinition docDef = mapEntity[docDefinitionRef.Name] as DocDefinition;
+                                                                            if (included == null || included.ContainsKey(docDef))
+                                                                            {
+                                                                                string link = "../../../schema/" + mapSchema[docDefinitionRef.Name].ToLower() + "/lexical/" + docDefinitionRef.Name.ToLower() + ".htm";
+                                                                                htmSchema.WriteLine("    <area shape=\"rect\" coords=\"" + x0 + ", " + y0 + ", " + x1 + ", " + y1 + "\" alt=\"Navigate\" href=\"" + link + "\" />");
+                                                                            }
                                                                         }
                                                                     }
                                                                 }
                                                             }
                                                         }
+                                                        htmSchema.WriteLine("  </map>");
+                                                        htmSchema.WriteLine("</img>");
+                                                        htmSchema.WriteFooter(Properties.Settings.Default.Footer);
                                                     }
-                                                    htmSchema.WriteLine("  </map>");
-                                                    htmSchema.WriteLine("</img>");
-                                                    htmSchema.WriteFooter(Properties.Settings.Default.Footer);
                                                 }
                                             }
                                         }
                                     }
-
-
-                                    // Instance diagrams
-                                    htmTOC.WriteTOC(1, "D.2 Instance diagrams");
-                                    htmSectionTOC.WriteLine("<tr><td>&nbsp;</td></tr>");
-                                    htmSectionTOC.WriteLine("<tr class=\"std\"><td class=\"menu\">D.2 Instance diagrams</td></tr>");
-
-                                    // D.1 -- schema diagrams - express-G
-                                    // D.1.1 -- core layer
-                                    // D.1.2 -- shared layer
-                                    // D.1.3 -- domain layer
-                                    // D.1.4 -- resource layer
-                                    // D.1.4.1~ schema
-
-                                    // D.2 -- instance diagrams
-                                    // D.2.1~  model view
-                                    // D.2.1.1~  entity
-
-                                    if (docProject.ModelViews != null)
-                                    {
-                                        iView = 0;
-                                        foreach (DocModelView docView in docProject.ModelViews)
-                                        {
-                                            if (included == null || included.ContainsKey(docView))
-                                            {
-                                                iView++;
-
-                                                htmTOC.WriteTOC(2, "D.2." + iView.ToString() + " " + docView.Name);
-                                                htmSectionTOC.WriteLine("<tr class=\"std\"><td class=\"menu\">D.2." + iView.ToString() + "<a href=\"annex-d/" + MakeLinkName(docView) + "/cover.htm\" target=\"info\"> " + docView.Name + "</a></td></tr>");
-
-
-                                                Dictionary<DocObject, bool> viewinclude = new Dictionary<DocObject, bool>();
-                                                Dictionary<Rectangle, DocEntity> mapRectangle = new Dictionary<Rectangle, DocEntity>();
-                                                docProject.RegisterObjectsInScope(docView, viewinclude);
-                                                using (FormatHTM htmCover = new FormatHTM(path + @"\annex\annex-d\" + MakeLinkName(docView) + @"\cover.htm", mapEntity, mapSchema, included))
-                                                {
-                                                    htmCover.WriteHeader(docView.Name, 3);
-                                                    htmCover.WriteLine("<h3 class=\"std\">D.2." + iView + " " + docView.Name + " Diagrams</h3>");
-                                                    htmCover.WriteFooter(String.Empty);
-                                                }
-
-                                                // sort by entity name
-                                                SortedList<string, DocConceptRoot> listEntity = new SortedList<string, DocConceptRoot>();
-                                                foreach (DocConceptRoot docRoot in docView.ConceptRoots)
-                                                {
-                                                    if (docRoot.ApplicableEntity != null)
-                                                    {
-                                                        if (!listEntity.ContainsKey(docRoot.ApplicableEntity.Name)) // only one concept root per entity per view currently supported
-                                                        {
-                                                            listEntity.Add(docRoot.ApplicableEntity.Name, docRoot);
-                                                        }
-                                                    }
-                                                }
-
-                                                // now generate
-                                                int iRoot = 0;
-                                                foreach (DocConceptRoot docRoot in listEntity.Values)
-                                                {
-                                                    iRoot++;
-
-                                                    htmTOC.WriteTOC(3, "<a class=\"listing-link\" href=\"annex/annex-d/" + MakeLinkName(docView) + "/" + MakeLinkName(docRoot.ApplicableEntity) + ".htm\" >D.2." + iView.ToString() + "." + iRoot.ToString() + " " + docRoot.ApplicableEntity.Name + "</a>");
-                                                    htmSectionTOC.WriteLine("<tr class=\"std\"><td class=\"menu\">D.2." + iView.ToString() + "." + iRoot.ToString() + " <a href=\"annex-d/" + MakeLinkName(docView) + "/" + MakeLinkName(docRoot.ApplicableEntity) + ".htm\" target=\"info\">" + docRoot.ApplicableEntity.Name + "</a></td></tr>");
-
-                                                    string pathRoot = path + @"\annex\annex-d\" + MakeLinkName(docView) + @"\" + MakeLinkName(docRoot.ApplicableEntity) + ".htm";
-                                                    using (FormatHTM htmRoot = new FormatHTM(pathRoot, mapEntity, mapSchema, included))
-                                                    {
-                                                        htmRoot.WriteHeader(docRoot.ApplicableEntity.Name, iAnnex, 2, 0, iView, Properties.Settings.Default.Header);
-                                                        htmRoot.WriteScript(iAnnex, 2, iView, iRoot);
-                                                        htmRoot.WriteLine("<h3 class=\"std\">D.2." + iView.ToString() + "." + iRoot.ToString() + " " + docRoot.ApplicableEntity.Name + "</h3>");
-
-                                                        string diagram = FormatDiagram(docProject, docRoot.ApplicableEntity, docView, listFigures, mapEntity, mapSchema);
-                                                        htmRoot.WriteLine(diagram);
-
-                                                        htmRoot.WriteFooter(Properties.Settings.Default.Footer);
-                                                    }
-
-                                                }
-                                            }
-                                        }
-                                    }
-
                                 }
+
+                                // Instance diagrams
+                                htmTOC.WriteTOC(1, "D.2 Instance diagrams");
+                                htmSectionTOC.WriteLine("<tr><td>&nbsp;</td></tr>");
+                                htmSectionTOC.WriteLine("<tr class=\"std\"><td class=\"menu\">D.2 Instance diagrams</td></tr>");
+
+                                // D.1 -- schema diagrams - express-G
+                                // D.1.1 -- core layer
+                                // D.1.2 -- shared layer
+                                // D.1.3 -- domain layer
+                                // D.1.4 -- resource layer
+                                // D.1.4.1~ schema
+
+                                // D.2 -- instance diagrams
+                                // D.2.1~  model view
+                                // D.2.1.1~  entity
+
+                                if (docProject.ModelViews != null)
+                                {
+                                    iView = 0;
+                                    foreach (DocModelView docView in docProject.ModelViews)
+                                    {
+                                        if (included == null || included.ContainsKey(docView))
+                                        {
+                                            iView++;
+
+                                            htmTOC.WriteTOC(2, "D.2." + iView.ToString() + " " + docView.Name);
+                                            htmSectionTOC.WriteLine("<tr class=\"std\"><td class=\"menu\">D.2." + iView.ToString() + "<a href=\"annex-d/" + MakeLinkName(docView) + "/cover.htm\" target=\"info\"> " + docView.Name + "</a></td></tr>");
+
+
+                                            Dictionary<DocObject, bool> viewinclude = new Dictionary<DocObject, bool>();
+                                            Dictionary<Rectangle, DocEntity> mapRectangle = new Dictionary<Rectangle, DocEntity>();
+                                            docProject.RegisterObjectsInScope(docView, viewinclude);
+                                            using (FormatHTM htmCover = new FormatHTM(path + @"\annex\annex-d\" + MakeLinkName(docView) + @"\cover.htm", mapEntity, mapSchema, included))
+                                            {
+                                                htmCover.WriteHeader(docView.Name, 3);
+                                                htmCover.WriteLine("<h3 class=\"std\">D.2." + iView + " " + docView.Name + " Diagrams</h3>");
+                                                htmCover.WriteFooter(String.Empty);
+                                            }
+
+                                            // sort by entity name
+                                            SortedList<string, DocConceptRoot> listEntity = new SortedList<string, DocConceptRoot>();
+                                            foreach (DocConceptRoot docRoot in docView.ConceptRoots)
+                                            {
+                                                if (docRoot.ApplicableEntity != null)
+                                                {
+                                                    if (!listEntity.ContainsKey(docRoot.ApplicableEntity.Name)) // only one concept root per entity per view currently supported
+                                                    {
+                                                        listEntity.Add(docRoot.ApplicableEntity.Name, docRoot);
+                                                    }
+                                                }
+                                            }
+
+                                            // now generate
+                                            int iRoot = 0;
+                                            foreach (DocConceptRoot docRoot in listEntity.Values)
+                                            {
+                                                iRoot++;
+
+                                                htmTOC.WriteTOC(3, "<a class=\"listing-link\" href=\"annex/annex-d/" + MakeLinkName(docView) + "/" + MakeLinkName(docRoot.ApplicableEntity) + ".htm\" >D.2." + iView.ToString() + "." + iRoot.ToString() + " " + docRoot.ApplicableEntity.Name + "</a>");
+                                                htmSectionTOC.WriteLine("<tr class=\"std\"><td class=\"menu\">D.2." + iView.ToString() + "." + iRoot.ToString() + " <a href=\"annex-d/" + MakeLinkName(docView) + "/" + MakeLinkName(docRoot.ApplicableEntity) + ".htm\" target=\"info\">" + docRoot.ApplicableEntity.Name + "</a></td></tr>");
+
+                                                string pathRoot = path + @"\annex\annex-d\" + MakeLinkName(docView) + @"\" + MakeLinkName(docRoot.ApplicableEntity) + ".htm";
+                                                using (FormatHTM htmRoot = new FormatHTM(pathRoot, mapEntity, mapSchema, included))
+                                                {
+                                                    htmRoot.WriteHeader(docRoot.ApplicableEntity.Name, iAnnex, 2, 0, iView, Properties.Settings.Default.Header);
+                                                    htmRoot.WriteScript(iAnnex, 2, iView, iRoot);
+                                                    htmRoot.WriteLine("<h3 class=\"std\">D.2." + iView.ToString() + "." + iRoot.ToString() + " " + docRoot.ApplicableEntity.Name + "</h3>");
+
+                                                    string diagram = FormatDiagram(docProject, docRoot.ApplicableEntity, docView, listFigures, mapEntity, mapSchema);
+                                                    htmRoot.WriteLine(diagram);
+
+                                                    htmRoot.WriteFooter(Properties.Settings.Default.Footer);
+                                                }
+
+                                            }
+                                        }
+                                    }
+                                }                                
                                 break;
 
                             case 'E':
@@ -3776,114 +3899,11 @@ namespace IfcDoc
                                         typemap.Add(t.Name.ToUpper(), t);
                                     }
 
-
-                                    int iExampleNumber = 0;
-                                    for (int iExample = 1; iExample <= docProject.Examples.Count; iExample++)
+                                    List<int> indexpath = new List<int>();
+                                    indexpath.Add(0);
+                                    foreach(DocExample docExample in docProject.Examples)
                                     {
-                                        DocExample docExample = docProject.Examples[iExample - 1];
-
-                                        if (included == null || included.ContainsKey(docExample))
-                                        {
-                                            iExampleNumber++;
-
-                                            string pathExample = path + @"\annex\annex-e\" + MakeLinkName(docExample) + ".htm";
-                                            using (FormatHTM htmExample = new FormatHTM(pathExample, mapEntity, mapSchema, included))
-                                            {
-                                                htmExample.WriteHeader(docExample.Name, 2);
-                                                htmExample.WriteScript(iAnnex, iExampleNumber, 0, 0);
-                                                htmExample.WriteLine("<h3 class=\"std\">E." + iExampleNumber.ToString() + " " + docExample.Name + "</h3>");
-
-                                                // table of files
-                                                htmExample.Write("<table class=\"gridtable\">");
-                                                htmExample.Write("<tr><th>Format</th><th>ASCII</th><th>HTML</th></tr>");
-                                                htmExample.Write("<tr><td>IFC-SPF</td><td><a href=\"" + MakeLinkName(docExample) + ".ifc\">File</a></td><td><a href=\"" + MakeLinkName(docExample) + ".ifc.htm\">Markup</a></td></tr>");
-                                                htmExample.Write("</table>");
-
-                                                htmExample.WriteDocumentationForISO(docExample.Documentation, docExample, false);
-                                                htmExample.WriteLine("<p><a href=\"../../link/" + MakeLinkName(docExample) + ".htm\" target=\"_top\" ><img src=\"../../img/permlink.png\" style=\"border: 0px\" title=\"Link to this page\" alt=\"Link to this page\"/>&nbsp; Link to this page</a></p>");
-                                                htmExample.WriteFooter(Properties.Settings.Default.Footer);
-                                            }
-
-                                            if (docExample.File != null)
-                                            {
-                                                string pathIFC = path + @"\annex\annex-e\" + MakeLinkName(docExample) + ".ifc";
-                                                using (System.IO.FileStream filestream = new System.IO.FileStream(pathIFC, System.IO.FileMode.Create, System.IO.FileAccess.Write, System.IO.FileShare.Read))
-                                                {
-                                                    filestream.Write(docExample.File, 0, docExample.File.Length);
-                                                }
-
-                                                using (FormatSPF spfExample = new FormatSPF(new System.IO.MemoryStream(docExample.File, false), typemap, null))
-                                                {
-                                                    string pathListing = path + @"\annex\annex-e\" + MakeLinkName(docExample) + ".ifc.htm";
-                                                    using (FormatHTM htmListing = new FormatHTM(pathListing, mapEntity, mapSchema, included))
-                                                    {
-                                                        htmListing.WriteHeader(docExample.Name, 2);
-
-                                                        htmListing.WriteLine("<tt class=\"spf\">");
-                                                        string htm = null;
-                                                        try
-                                                        {
-                                                            htm = spfExample.LoadMarkup();
-                                                        }
-                                                        catch(Exception x)
-                                                        {
-                                                            x.ToString();
-                                                        }
-                                                        htmListing.Write(htm);
-                                                        htmListing.Write("</tt>");
-                                                        htmListing.WriteFooter(String.Empty);
-                                                    }
-                                                }
-                                            }
-
-                                            using (FormatHTM htmLink = new FormatHTM(path + "/link/" + MakeLinkName(docExample) + ".htm", mapEntity, mapSchema, included))
-                                            {
-                                                string linkurl = "../annex/annex-e/" + MakeLinkName(docExample) + ".htm";
-                                                htmLink.WriteLinkPage(linkurl);
-                                            }
-
-                                            string urlExample = "annex-e/" + MakeLinkName(docExample) + ".htm";
-                                            htmTOC.WriteTOC(2, "<a class=\"listing-link\" href=\"annex/" + urlExample + "\" >" + chAnnex.ToString() + "." + iExampleNumber + " " + docExample.Name + "</a>");
-
-                                            string htmllink = chAnnex.ToString() + "." + iExampleNumber + " <a class=\"listing-link\" href=\"" + urlExample + "\" target=\"info\">" + docExample.Name + "</a>";
-                                            htmSectionTOC.WriteLine("<tr class=\"std\"><td class=\"menu\">" + htmllink + "</td></tr>");
-
-                                            if (docExample.Examples != null)
-                                            {
-                                                int iSubNumber = 0;
-                                                for (int iSub = 1; iSub <= docExample.Examples.Count; iSub++)
-                                                {
-                                                    DocExample docSub = docExample.Examples[iSub - 1];
-
-                                                    if (included == null || included.ContainsKey(docSub))
-                                                    {
-                                                        iSubNumber++;
-                                                        string pathSub = path + @"\annex\annex-e\" + MakeLinkName(docSub) + ".htm";
-                                                        using (FormatHTM htmSub = new FormatHTM(pathSub, mapEntity, mapSchema, included))
-                                                        {
-                                                            htmSub.WriteHeader(docSub.Name, 2);
-                                                            htmSub.WriteScript(iAnnex, iExampleNumber, iSubNumber, 0);
-                                                            htmSub.WriteLine("<h4 class=\"std\">E." + iExampleNumber + "." + iSubNumber + " " + docSub.Name + "</h4>");
-                                                            htmSub.WriteDocumentationForISO(docSub.Documentation, docSub, false);
-                                                            htmSub.WriteLine("<p><a href=\"../../link/" + MakeLinkName(docSub) + ".htm\" target=\"_top\" ><img src=\"../../img/permlink.png\" style=\"border: 0px\" title=\"Link to this page\" alt=\"Link to this page\"/>&nbsp; Link to this page</a></p>");
-                                                            htmSub.WriteFooter(Properties.Settings.Default.Footer);
-                                                        }
-
-                                                        using (FormatHTM htmLink = new FormatHTM(path + "/link/" + MakeLinkName(docSub) + ".htm", mapEntity, mapSchema, included))
-                                                        {
-                                                            string linkurl = "../annex/annex-e/" + MakeLinkName(docSub) + ".htm";
-                                                            htmLink.WriteLinkPage(linkurl);
-                                                        }
-
-                                                        string urlSub = "annex-e/" + MakeLinkName(docSub) + ".htm";
-                                                        htmTOC.WriteTOC(3, "<a class=\"listing-link\" href=\"annex/" + urlSub + "\" >" + chAnnex.ToString() + "." + iExampleNumber + "." + iSubNumber + " " + docSub.Name + "</a>");
-
-                                                        string sublink = chAnnex.ToString() + "." + iExampleNumber + "." + iSubNumber + " <a class=\"listing-link\" href=\"" + urlSub + "\" target=\"info\">" + docSub.Name + "</a>";
-                                                        htmSectionTOC.WriteLine("<tr class=\"std\"><td class=\"menu\">" + sublink + "</td></tr>");
-                                                    }
-                                                }
-                                            }
-                                        }
+                                        GenerateExample(docExample, path, indexpath, included, mapEntity, mapSchema, typemap, htmTOC, htmSectionTOC);
                                     }
                                 }
                                 break;

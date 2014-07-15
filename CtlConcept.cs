@@ -291,9 +291,11 @@ namespace IfcDoc
                     DocEntity docEntity = null;
                     if (ruleEntity != null)
                     {
-                        docEntity = this.m_map[ruleEntity.Name] as DocEntity;
-                        if (docEntity != null)
+                        DocObject docObjRef = null;
+                        this.m_map.TryGetValue(ruleEntity.Name, out docObjRef);
+                        if (docObjRef is DocEntity)
                         {
+                            docEntity = (DocEntity)docObjRef;
                             List<DocAttribute> listAttr = new List<DocAttribute>();
                             FormatPNG.BuildAttributeList(docEntity, listAttr, this.m_map);
 

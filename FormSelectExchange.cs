@@ -43,5 +43,11 @@ namespace IfcDoc
                 return null;
             }
         }
+
+        private void listView_ItemActivate(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.OK;
+            this.Close();
+        }
     }
 }

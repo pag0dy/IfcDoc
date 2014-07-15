@@ -472,11 +472,29 @@ namespace IfcDoc
 
             foreach (DocEntity docEntity in this.m_schema.Entities)
             {
+                // if there multile attributes refer to the same definition, then space evenly
+                int count = 0;
+                foreach (DocAttribute docAttr in docEntity.Attributes)
+                {
+                    if (docAttr.Definition == selection)
+                    {
+                        count++;
+                    }
+                }
+
+                int each = 0;
                 foreach (DocAttribute docAttr in docEntity.Attributes)
                 {
                     if (docAttr.Definition == selection)
                     {
                         LayoutLine(docEntity, docAttr.Definition, docAttr.DiagramLine);
+                        if(count > 1 && docAttr.DiagramLine.Count == 3)
+                        {
+                            each++;
+                            docAttr.DiagramLine[0].Y = selection.DiagramRectangle.Y + (selection.DiagramRectangle.Height * (double)each / (double)(count+1));
+                            docAttr.DiagramLine[1].Y = selection.DiagramRectangle.Y + (selection.DiagramRectangle.Height * (double)each / (double)(count+1));
+                            docAttr.DiagramLine[2].Y = selection.DiagramRectangle.Y + (selection.DiagramRectangle.Height * (double)each / (double)(count+1));
+                        }
                         docAttr.DiagramLabel.X = docAttr.DiagramLine[0].X;
                         docAttr.DiagramLabel.Y = docAttr.DiagramLine[2].Y - 20.0;
                     }

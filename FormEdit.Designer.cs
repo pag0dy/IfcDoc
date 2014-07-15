@@ -91,12 +91,13 @@
             this.toolStripMenuItemInsert = new System.Windows.Forms.ToolStripMenuItem();
             this.documentationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemInsertNormative = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemInsertBibliography = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem10 = new System.Windows.Forms.ToolStripSeparator();
             this.ToolStripMenuItemInsertTerm = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItemInsertAbbreviatedTerm = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem11 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemInsertExample = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripMenuItemInsertBibliography = new System.Windows.Forms.ToolStripMenuItem();
             this.schemaDefinitionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemInsertSchema = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem9 = new System.Windows.Forms.ToolStripSeparator();
@@ -237,7 +238,8 @@
             this.webBrowser = new System.Windows.Forms.WebBrowser();
             this.imageListRules = new System.Windows.Forms.ImageList(this.components);
             this.saveFileDialogModule = new System.Windows.Forms.SaveFileDialog();
-            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripMenuItemEditBuildConcepts = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.contextMenuStrip.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.toolStripMain.SuspendLayout();
@@ -692,6 +694,8 @@
             this.toolStripMenuItemEditMoveOut,
             this.toolStripMenuItemEditMoveIn,
             this.toolStripMenuItem7,
+            this.toolStripMenuItemEditBuildConcepts,
+            this.toolStripMenuItem1,
             this.toolStripMenuItemEditProperties});
             this.toolStripMenuItemEdit.Name = "toolStripMenuItemEdit";
             this.toolStripMenuItemEdit.Size = new System.Drawing.Size(39, 20);
@@ -832,7 +836,7 @@
             this.toolStripMenuItemViewWeb.CheckState = System.Windows.Forms.CheckState.Checked;
             this.toolStripMenuItemViewWeb.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMenuItemViewWeb.Image")));
             this.toolStripMenuItemViewWeb.Name = "toolStripMenuItemViewWeb";
-            this.toolStripMenuItemViewWeb.Size = new System.Drawing.Size(147, 22);
+            this.toolStripMenuItemViewWeb.Size = new System.Drawing.Size(152, 22);
             this.toolStripMenuItemViewWeb.Text = "&Web View";
             this.toolStripMenuItemViewWeb.Click += new System.EventHandler(this.toolStripMenuItemViewWeb_Click);
             // 
@@ -840,7 +844,7 @@
             // 
             this.toolStripMenuItemViewText.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMenuItemViewText.Image")));
             this.toolStripMenuItemViewText.Name = "toolStripMenuItemViewText";
-            this.toolStripMenuItemViewText.Size = new System.Drawing.Size(147, 22);
+            this.toolStripMenuItemViewText.Size = new System.Drawing.Size(152, 22);
             this.toolStripMenuItemViewText.Text = "&Text View";
             this.toolStripMenuItemViewText.Click += new System.EventHandler(this.toolStripMenuItemViewText_Click);
             // 
@@ -848,7 +852,7 @@
             // 
             this.toolStripMenuItemViewDiagram.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMenuItemViewDiagram.Image")));
             this.toolStripMenuItemViewDiagram.Name = "toolStripMenuItemViewDiagram";
-            this.toolStripMenuItemViewDiagram.Size = new System.Drawing.Size(147, 22);
+            this.toolStripMenuItemViewDiagram.Size = new System.Drawing.Size(152, 22);
             this.toolStripMenuItemViewDiagram.Text = "&Diagram View";
             this.toolStripMenuItemViewDiagram.Click += new System.EventHandler(this.toolStripMenuItemViewDiagram_Click);
             // 
@@ -886,14 +890,6 @@
             this.toolStripMenuItemInsertNormative.Text = "&Normative Reference";
             this.toolStripMenuItemInsertNormative.Click += new System.EventHandler(this.toolStripMenuItemInsertNormative_Click);
             // 
-            // toolStripMenuItemInsertBibliography
-            // 
-            this.toolStripMenuItemInsertBibliography.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMenuItemInsertBibliography.Image")));
-            this.toolStripMenuItemInsertBibliography.Name = "toolStripMenuItemInsertBibliography";
-            this.toolStripMenuItemInsertBibliography.Size = new System.Drawing.Size(196, 22);
-            this.toolStripMenuItemInsertBibliography.Text = "&Bibliography Reference";
-            this.toolStripMenuItemInsertBibliography.Click += new System.EventHandler(this.toolStripMenuItemInsertBibliography_Click);
-            // 
             // toolStripMenuItem10
             // 
             this.toolStripMenuItem10.Name = "toolStripMenuItem10";
@@ -929,6 +925,19 @@
             this.toolStripMenuItemInsertExample.Size = new System.Drawing.Size(196, 22);
             this.toolStripMenuItemInsertExample.Text = "&Example";
             this.toolStripMenuItemInsertExample.Click += new System.EventHandler(this.toolStripMenuItemInsertExample_Click);
+            // 
+            // toolStripSeparator7
+            // 
+            this.toolStripSeparator7.Name = "toolStripSeparator7";
+            this.toolStripSeparator7.Size = new System.Drawing.Size(193, 6);
+            // 
+            // toolStripMenuItemInsertBibliography
+            // 
+            this.toolStripMenuItemInsertBibliography.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMenuItemInsertBibliography.Image")));
+            this.toolStripMenuItemInsertBibliography.Name = "toolStripMenuItemInsertBibliography";
+            this.toolStripMenuItemInsertBibliography.Size = new System.Drawing.Size(196, 22);
+            this.toolStripMenuItemInsertBibliography.Text = "&Bibliography Reference";
+            this.toolStripMenuItemInsertBibliography.Click += new System.EventHandler(this.toolStripMenuItemInsertBibliography_Click);
             // 
             // schemaDefinitionToolStripMenuItem
             // 
@@ -1630,7 +1639,7 @@
             // toolStripMenuItemHelpAbout
             // 
             this.toolStripMenuItemHelpAbout.Name = "toolStripMenuItemHelpAbout";
-            this.toolStripMenuItemHelpAbout.Size = new System.Drawing.Size(116, 22);
+            this.toolStripMenuItemHelpAbout.Size = new System.Drawing.Size(152, 22);
             this.toolStripMenuItemHelpAbout.Text = "&About...";
             this.toolStripMenuItemHelpAbout.Click += new System.EventHandler(this.toolStripMenuItemHelpAbout_Click);
             // 
@@ -2246,10 +2255,18 @@
             this.saveFileDialogModule.Filter = ".NET Assembly (*.dll)|*.dll";
             this.saveFileDialogModule.Title = "Create .NET Assembly";
             // 
-            // toolStripSeparator7
+            // toolStripMenuItemEditBuildConcepts
             // 
-            this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(193, 6);
+            this.toolStripMenuItemEditBuildConcepts.Enabled = false;
+            this.toolStripMenuItemEditBuildConcepts.Name = "toolStripMenuItemEditBuildConcepts";
+            this.toolStripMenuItemEditBuildConcepts.Size = new System.Drawing.Size(199, 22);
+            this.toolStripMenuItemEditBuildConcepts.Text = "&Build Concepts...";
+            this.toolStripMenuItemEditBuildConcepts.Click += new System.EventHandler(this.toolStripMenuItemEditBuildConcepts_Click);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(196, 6);
             // 
             // FormEdit
             // 
@@ -2497,5 +2514,7 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemToolsModule;
         private System.Windows.Forms.SaveFileDialog saveFileDialogModule;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemEditBuildConcepts;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
     }
 }

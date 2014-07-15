@@ -312,6 +312,11 @@ namespace IfcDoc
                     this.textBoxExample.Text = String.Empty;
                     this.buttonExampleClear.Enabled = false;
                 }
+
+                foreach (DocModelView docView in this.m_project.ModelViews)
+                {
+                    this.checkedListBoxExampleViews.Items.Add(docView, (docExample.Views.Contains(docView)));
+                }
             }
         }
 
@@ -355,11 +360,6 @@ namespace IfcDoc
 
                         this.listViewPsetApplicability.Items.Add(lvi);
                     }
-                }
-
-                if (dex.ModelView != null)
-                {
-                    this.textBoxApplicabilityView.Text = dex.ModelView.Name;
                 }
             }
         }
@@ -491,7 +491,7 @@ namespace IfcDoc
                 entity = (DocEntity)target;
             }
 
-            using (FormSelectEntity form = new FormSelectEntity(docEntity, entity, this.m_project))
+            using (FormSelectEntity form = new FormSelectEntity(docEntity, entity, this.m_project, SelectDefinitionOptions.Entity))
             {
                 DialogResult res = form.ShowDialog(this);
                 if (res == DialogResult.OK && form.SelectedEntity != null)
@@ -810,7 +810,7 @@ namespace IfcDoc
                     entity = (DocEntity)target;
                 }
 
-                using (FormSelectEntity form = new FormSelectEntity(null, entity, this.m_project, true))
+                using (FormSelectEntity form = new FormSelectEntity(null, entity, this.m_project, SelectDefinitionOptions.Entity | SelectDefinitionOptions.Predefined))
                 {
                     DialogResult res = form.ShowDialog(this);
                     if (res == DialogResult.OK && form.SelectedEntity != null)
@@ -947,7 +947,7 @@ namespace IfcDoc
                 entity = (DocDefinition)target;
             }
 
-            using (FormSelectEntity form = new FormSelectEntity(docEntity, entity, this.m_project))
+            using (FormSelectEntity form = new FormSelectEntity(docEntity, entity, this.m_project, SelectDefinitionOptions.Entity | SelectDefinitionOptions.Type))
             {
                 DialogResult res = form.ShowDialog(this);
                 if (res == DialogResult.OK && form.SelectedEntity != null)
@@ -973,7 +973,7 @@ namespace IfcDoc
                 this.m_map.TryGetValue(docEntity.BaseDefinition, out docBase);
             }
 
-            using (FormSelectEntity form = new FormSelectEntity(null, (DocEntity)docBase, this.m_project))
+            using (FormSelectEntity form = new FormSelectEntity(null, (DocEntity)docBase, this.m_project, SelectDefinitionOptions.Entity))
             {
                 DialogResult res = form.ShowDialog(this);
                 if (res == DialogResult.OK && form.SelectedEntity != null)
@@ -1054,11 +1054,66 @@ namespace IfcDoc
 
         private void buttonAttributeType_Click(object sender, EventArgs e)
         {
-            using (FormSelectEntity form = new FormSelectEntity(null, null, this.m_project))
+            using (FormSelectEntity form = new FormSelectEntity(null, null, this.m_project, SelectDefinitionOptions.Entity | SelectDefinitionOptions.Type))
             {
                 if (form.ShowDialog(this) == DialogResult.OK && form.SelectedEntity != null)
                 {
                     DocAttribute docAttr = (DocAttribute)this.m_target;
+
+                    // find existing type or reference type in schema
+                    DocSchema docSchema = (DocSchema)this.m_path[1];
+                    DocDefinition docDef = docSchema.GetDefinition(form.SelectedEntity.Name);
+                    if (docDef == null)
+                    {
+                        // generate link to schema
+                        foreach(DocSection docSection in this.m_project.Sections)
+                        {
+                            foreach (DocSchema docOtherSchema in docSection.Schemas)
+                            {
+                                docDef = docOtherSchema.GetDefinition(form.SelectedEntity.Name);
+                                if (docDef is DocType || docDef is DocEntity)
+                                {
+                                    DocSchemaRef docSchemaReference = null;
+                                    foreach(DocSchemaRef docSchemaRef in docSchema.SchemaRefs)
+                                    {
+                                        if (String.Equals(docSchemaRef.Name, docOtherSchema.Name, StringComparison.OrdinalIgnoreCase))
+                                        {
+                                            docSchemaReference = docSchemaRef;
+                                            break;
+                                        }
+                                    }
+
+                                    if (docSchemaReference == null)
+                                    {
+                                        docSchemaReference = new DocSchemaRef();
+                                        docSchemaReference.Name = docOtherSchema.Name;
+                                        docSchema.SchemaRefs.Add(docSchemaReference);
+                                    }
+
+                                    docDef = new DocDefinitionRef();
+                                    docDef.Name = form.SelectedEntity.Name;
+                                    docSchemaReference.Definitions.Add((DocDefinitionRef)docDef);
+
+                                    break;
+                                }
+                            }
+
+                            if (docDef != null)
+                                break;
+                        }
+                    }
+
+                    if (docAttr.Definition.DiagramRectangle != null)
+                    {
+                        docDef.DiagramRectangle = new DocRectangle();
+                        docDef.DiagramNumber = docAttr.Definition.DiagramNumber;
+                        docDef.DiagramRectangle.X = docAttr.Definition.DiagramRectangle.X;
+                        docDef.DiagramRectangle.Y = docAttr.Definition.DiagramRectangle.Y;
+                        docDef.DiagramRectangle.Width = docAttr.Definition.DiagramRectangle.Width;
+                        docDef.DiagramRectangle.Height = docAttr.Definition.DiagramRectangle.Height;
+                    }
+
+                    docAttr.Definition = docDef;
                     docAttr.DefinedType = form.SelectedEntity.Name;
                     this.textBoxAttributeType.Text = docAttr.DefinedType;
                 }
@@ -1135,7 +1190,13 @@ namespace IfcDoc
 
         private void buttonPsetApplicabilityDelete_Click(object sender, EventArgs e)
         {
-            List<DocTemplateDefinition> listTemplate = new List<DocTemplateDefinition>(); 
+            List<DocTemplateDefinition> listTemplate = null;
+            if (this.m_target is DocExample)
+            {
+                DocExample docEx = (DocExample)this.m_target;
+                listTemplate = (List<DocTemplateDefinition>)docEx.ApplicableTemplates;
+                listTemplate.Clear();
+            }
 
             // build new string
             StringBuilder sb = new StringBuilder();
@@ -1154,7 +1215,10 @@ namespace IfcDoc
                     }
                     else if (lvi.Tag is DocTemplateDefinition)
                     {
-                        listTemplate.Add((DocTemplateDefinition)lvi.Tag); 
+                        if (listTemplate != null)
+                        {
+                            listTemplate.Add((DocTemplateDefinition)lvi.Tag);
+                        }
                     }
                 }
             }
@@ -1167,12 +1231,6 @@ namespace IfcDoc
             else
             {
                 dvs.ApplicableType = null;
-            }
-
-            if (dvs is DocExample)
-            {
-                DocExample dex = (DocExample)dvs;
-                dex.ApplicableTemplates = listTemplate;
             }
 
             this.LoadApplicability();
@@ -1191,7 +1249,7 @@ namespace IfcDoc
                 DocObject docBase = null;
                 if (this.m_map.TryGetValue("IfcValue", out docBase))
                 {
-                    using (FormSelectEntity form = new FormSelectEntity(docBase as DocDefinition, null, this.m_project))
+                    using (FormSelectEntity form = new FormSelectEntity(docBase as DocDefinition, null, this.m_project, SelectDefinitionOptions.Type))
                     {
                         if (form.ShowDialog(this) == DialogResult.OK && form.SelectedEntity != null)
                         {
@@ -1345,11 +1403,6 @@ namespace IfcDoc
                 if (form.ShowDialog(this) == System.Windows.Forms.DialogResult.OK && form.SelectedTemplate != null)
                 {
                     DocExample docExample = (DocExample)this.m_target;
-                    if (docExample.ApplicableTemplates == null)
-                    {
-                        docExample.ApplicableTemplates = new List<DocTemplateDefinition>();
-                    }
-
                     docExample.ApplicableTemplates.Add(form.SelectedTemplate);
 
                     this.LoadApplicability();
@@ -1431,30 +1484,6 @@ namespace IfcDoc
         {
             DocExchangeDefinition docExchange = (DocExchangeDefinition)this.m_target;
             docExchange.ReceiverClass = this.comboBoxExchangeClassReceiver.Text;
-        }
-
-        private void buttonApplicabilityView_Click(object sender, EventArgs e)
-        {
-            DocExample docExample = this.m_target as DocExample;
-            if (docExample == null)
-                return;
-
-            using (FormSelectView form = new FormSelectView(this.m_project, null))
-            {
-                form.Selection = new DocModelView[]{docExample.ModelView};
-                if (form.ShowDialog(this) == DialogResult.OK)
-                {
-                    if (form.Selection != null && form.Selection.Length == 1)
-                    {
-                        docExample.ModelView = form.Selection[0];
-                        this.textBoxApplicabilityView.Text = docExample.ModelView.Name;
-                    }
-                    else
-                    {
-                        this.textBoxApplicabilityView.Text = String.Empty;
-                    }
-                }
-            }
         }
 
         private void checkBoxConceptOverride_CheckedChanged(object sender, EventArgs e)
@@ -1589,7 +1618,7 @@ namespace IfcDoc
  
         private void buttonViewXsdAttribute_Click(object sender, EventArgs e)
         {
-            using (FormSelectEntity form = new FormSelectEntity(null, null, this.m_project, true))
+            using (FormSelectEntity form = new FormSelectEntity(null, null, this.m_project, SelectDefinitionOptions.Entity))
             {
                 if (form.ShowDialog(this) == System.Windows.Forms.DialogResult.OK && form.SelectedEntity is DocEntity)
                 {
@@ -1696,6 +1725,34 @@ namespace IfcDoc
             DocExample docExample = (DocExample)this.m_target;
             docExample.File = null;
             this.textBoxExample.Text = String.Empty;
+        }
+
+        private void buttonTemplateClear_Click(object sender, EventArgs e)
+        {
+            DocTemplateDefinition docTemplate = (DocTemplateDefinition)this.m_target;
+            docTemplate.Type = null;
+            this.textBoxTemplateEntity.Text = String.Empty;
+        }
+
+        private void checkedListBoxExampleViews_ItemCheck(object sender, ItemCheckEventArgs e)
+        {
+            DocExample docExample = (DocExample)this.m_target;
+            DocModelView docView = (DocModelView)this.checkedListBoxExampleViews.Items[e.Index];
+            if (e.NewValue == CheckState.Checked)
+            {
+                if (!docExample.Views.Contains(docView))
+                {
+                    docExample.Views.Add(docView);
+                }
+            }
+            else if(e.NewValue == CheckState.Unchecked)
+            {
+                while (docExample.Views.Contains(docView))
+                {
+                    docExample.Views.Remove(docView);
+                }
+            }
+
         }
 
 

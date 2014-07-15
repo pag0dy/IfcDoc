@@ -78,7 +78,7 @@ namespace IfcDoc
 
             DocOpLiteral oplit = new DocOpLiteral();
             oplit.Operation = DocOpCode.LoadString;
-            oplit.Value = null;
+            oplit.Literal = null;
 
             DocOpStatement op = new DocOpStatement();
             op.Operation = DocOpCode.CompareEqual;
@@ -253,7 +253,7 @@ namespace IfcDoc
                                     break;
                             }
 
-                            literal.Value = bench;
+                            literal.Literal = bench;
                         }
                     }
 
@@ -505,7 +505,7 @@ namespace IfcDoc
 
                     if (docop.Value is DocOpLiteral)
                     {
-                        form.Literal = ((DocOpLiteral)docop.Value).Value;
+                        form.Literal = ((DocOpLiteral)docop.Value).Literal;
                     }
                     if (form.ShowDialog(this) == DialogResult.OK)
                     {
@@ -518,7 +518,7 @@ namespace IfcDoc
                             docop.Value = new DocOpLiteral();
                         }
 
-                        ((DocOpLiteral)docop.Value).Value = form.Literal;
+                        ((DocOpLiteral)docop.Value).Literal = form.Literal;
 
                         this.treeViewRules.SelectedNode.Text = docop.ToString(this.Template);
                     }

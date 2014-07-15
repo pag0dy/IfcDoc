@@ -1893,16 +1893,12 @@ namespace IfcDoc
             ImportMvdObject(mvdTemplate, docDef);
             docDef.Type = mvdTemplate.ApplicableEntity;
 
-            docDef.Rules = null;
+            docDef.Rules.Clear();
             if (mvdTemplate.Rules != null)
             {
                 foreach (AttributeRule mvdRule in mvdTemplate.Rules)
                 {
                     DocModelRule docRule = ImportMvdRule(mvdRule, fixups);
-                    if (docDef.Rules == null)
-                    {
-                        docDef.Rules = new List<DocModelRule>();
-                    }
                     docDef.Rules.Add(docRule);
                 }
             }

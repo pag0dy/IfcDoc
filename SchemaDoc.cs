@@ -917,7 +917,7 @@ namespace IfcDoc.Schema.DOC
             }
         }
 
-        private bool RegisterBaseTemplates(Dictionary<DocObject, bool> included, DocTemplateDefinition basetemplate)
+        private static bool RegisterBaseTemplates(Dictionary<DocObject, bool> included, DocTemplateDefinition basetemplate)
         {
             //if (included.ContainsKey(basetemplate))
             //    return true;
@@ -938,6 +938,19 @@ namespace IfcDoc.Schema.DOC
                 return true;
 
             return false;
+        }
+
+        private static void RegisterExample(DocModelView docView, Dictionary<DocObject, bool> included, DocExample docExample)
+        {
+            if (docExample.Views.Contains(docView))
+            {
+                included[docExample] = true;
+            }
+
+            foreach(DocExample docSub in docExample.Examples)
+            {
+                RegisterExample(docView, included, docSub);
+            }
         }
 
         public void RegisterObjectsInScope(DocModelView docView, Dictionary<DocObject, bool> included)
@@ -996,10 +1009,7 @@ namespace IfcDoc.Schema.DOC
             {
                 foreach (DocExample docExample in this.Examples)
                 {
-                    if (docExample.ModelView == docView)
-                    {
-                        included[docExample] = true;
-                    }
+                    RegisterExample(docView, included, docExample);
                 }
             }
 
@@ -1318,20 +1328,54 @@ namespace IfcDoc.Schema.DOC
         [DataMember(Order = 6), Obsolete] private string _FieldType2; // type of custom field #2, e.g. "IfcText"
         [DataMember(Order = 7), Obsolete] private string _FieldType3; // type of custom field #3, e.g. "IfcDistributionSystemTypeEnum"
         [DataMember(Order = 8), Obsolete] private string _FieldType4; // type of custom field #4, e.g. "IfcFlowDirectionEnum"        
-        [DataMember(Order = 9)] public List<DocModelRule> Rules; //NEW IN 2.5
-        [DataMember(Order = 10)] public List<DocTemplateDefinition> Templates; // NEW IN 2.7 sub-templates
+        [DataMember(Order = 9)] private List<DocModelRule> _Rules; //NEW IN 2.5
+        [DataMember(Order = 10)] private List<DocTemplateDefinition> _Templates; // NEW IN 2.7 sub-templates
 
         // Note: for file compatibility, above fields must remain
 
         public DocTemplateDefinition()
         {
-            this.Rules = new List<DocModelRule>();
-            this.Templates = new List<DocTemplateDefinition>();
+            this._Rules = new List<DocModelRule>();
+            this._Templates = new List<DocTemplateDefinition>();
         }
 
-        [Description("IFC Identity Type for which this template applies to its descendents, e.g. 'IfcElement', unless overridden by another template having the same Name.")]
-        [Category("General")]
-        public string Type { get { return this._Type; } set { this._Type = value; } }
+        public string Type 
+        { 
+            get 
+            { 
+                return this._Type; 
+            } 
+            set 
+            { 
+                this._Type = value; 
+            } 
+        }
+
+        public List<DocModelRule> Rules
+        {
+            get
+            {
+                if(this._Rules == null)
+                {
+                    this._Rules = new List<DocModelRule>();
+                }
+
+                return this._Rules;
+            }
+        }
+
+        public List<DocTemplateDefinition> Templates
+        {
+            get
+            {
+                if(this._Templates == null)
+                {
+                    this._Templates = new List<DocTemplateDefinition>();
+                }
+
+                return this._Templates;
+            }
+        }
 
         public DocTemplateDefinition GetTemplate(Guid guid)
         {
@@ -1540,11 +1584,6 @@ namespace IfcDoc.Schema.DOC
                         }
                         else
                         {
-                            if (docTemplate.Rules == null)
-                            {
-                                docTemplate.Rules = new List<DocModelRule>();
-                            }
-
                             docTemplate.Rules.Add(childpath[i]);
                         }
                     }
@@ -2119,6 +2158,15 @@ namespace IfcDoc.Schema.DOC
             }
             else
             {
+                if (this.CardinalityMin == 1 && value == null)
+                {
+                    return false;
+                }
+                else if (this.CardinalityMin == -1 && this.CardinalityMax == -1 && value != null)
+                {
+                    return false;
+                }
+
                 // validate single
                 bool? checkitem = ValidateItem(value, docItem, typemap, trace);
                 if(checkitem == null || checkitem.Value)
@@ -2467,7 +2515,7 @@ namespace IfcDoc.Schema.DOC
                             generator.Emit(OpCodes.Call, methodTypeFromHandle);
 
                             FieldInfo fieldEnum = null;
-                            string litval = ((DocOpLiteral)this.Value).Value;
+                            string litval = ((DocOpLiteral)this.Value).Literal;
                             if (litval != null)
                             {
                                 fieldEnum = typeCompare.GetField(litval, BindingFlags.Static | BindingFlags.Public);
@@ -2514,7 +2562,7 @@ namespace IfcDoc.Schema.DOC
                         // push the referenced value onto the stack
                         LocalBuilder local = this.Reference.Emit(context, generator, dtd, null);
 
-                        Type typeInstance = context.RegisterType(((DocOpLiteral)this.Value).Value);
+                        Type typeInstance = context.RegisterType(((DocOpLiteral)this.Value).Literal);
                         generator.Emit(OpCodes.Isinst, typeInstance);
                     }
                     return null;
@@ -2612,8 +2660,8 @@ namespace IfcDoc.Schema.DOC
                         generator.Emit(OpCodes.Ldelem_Ref); // 1
                         generator.Emit(OpCodes.Call, methodCompare); // 5
 
-                        // store True if equal (0)
-                        generator.Emit(OpCodes.Brtrue_S, (byte)5); // 2
+                        // store True if equal (True)
+                        generator.Emit(OpCodes.Brfalse_S, (byte)5); // 2
                         generator.Emit(OpCodes.Ldc_I4_1); // 1
                         generator.Emit(OpCodes.Stloc, (short)localCheck.LocalIndex); // 3
 
@@ -3023,7 +3071,7 @@ namespace IfcDoc.Schema.DOC
 
     public class DocOpLiteral : DocOpValue // ldstr|ldc.i8|ldc.r8
     {
-        [DataMember(Order = 0)] public string Value;
+        [DataMember(Order = 0)] public string Literal;
 
         internal override LocalBuilder Emit(
             Compiler compiler,
@@ -3036,27 +3084,27 @@ namespace IfcDoc.Schema.DOC
             if (valuetype != null && valuetype.IsValueType && valuetype.GetFields()[0].FieldType == typeof(double))
             {
                 Double literal = 0.0;
-                Double.TryParse(this.Value, out literal);
+                Double.TryParse(this.Literal, out literal);
                 generator.Emit(OpCodes.Ldc_R8, literal);
                 generator.Emit(OpCodes.Box, typeof(Double)); // needed for Object.Compare
             }
             else if (valuetype != null && valuetype.IsValueType && valuetype.GetFields()[0].FieldType == typeof(long))
             {
                 Int64 literal = 0L;
-                Int64.TryParse(this.Value, out literal);
+                Int64.TryParse(this.Literal, out literal);
                 generator.Emit(OpCodes.Ldc_I8, literal);
                 generator.Emit(OpCodes.Box, typeof(Int64)); // needed for Object.Compare
             }
             else if (valuetype != null && valuetype.IsValueType && valuetype.GetFields()[0].FieldType == typeof(bool))
             {
                 Boolean literal = false;
-                Boolean.TryParse(this.Value, out literal);
+                Boolean.TryParse(this.Literal, out literal);
                 generator.Emit(OpCodes.Ldc_I4, literal? 1 : 0);
                 generator.Emit(OpCodes.Box, typeof(Boolean)); // needed for Object.Compare
             }
-            else if (this.Value != null)
+            else if (this.Literal != null)
             {
-                generator.Emit(OpCodes.Ldstr, this.Value);
+                generator.Emit(OpCodes.Ldstr, this.Literal);
             }
             else
             {
@@ -3068,10 +3116,10 @@ namespace IfcDoc.Schema.DOC
 
         public override string ToString()
         {
-            if(String.IsNullOrEmpty(this.Value))
+            if(String.IsNullOrEmpty(this.Literal))
                 return "NULL";
             
-            return this.Value;
+            return this.Literal;
         }
     }
 
@@ -3363,6 +3411,16 @@ namespace IfcDoc.Schema.DOC
             }
 
             return null; // no such parameters
+        }
+
+        public override void Delete()
+        {
+            foreach (DocTemplateUsage docSub in this.Concepts)
+            {
+                docSub.Delete();
+            }
+
+            base.Delete();
         }
     }
   
@@ -3953,6 +4011,37 @@ namespace IfcDoc.Schema.DOC
             }
 
             base.Delete();
+        }
+
+        /// <summary>
+        /// Returns Entity, Type, or Reference to entity/type, or null if no such definition.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public DocDefinition GetDefinition(string name)
+        {
+            foreach(DocType docType in this.Types)
+            {
+                if (docType.Name == name)
+                    return docType;
+            }
+
+            foreach(DocEntity docEnt in this.Entities)
+            {
+                if (docEnt.Name == name)
+                    return docEnt;
+            }
+
+            foreach(DocSchemaRef docSchemaRef in this.SchemaRefs)
+            {
+                foreach(DocDefinitionRef docDefRef in docSchemaRef.Definitions)
+                {
+                    if (docDefRef.Name == name)
+                        return docDefRef;
+                }
+            }
+
+            return null;
         }
     }
 
@@ -5293,24 +5382,24 @@ namespace IfcDoc.Schema.DOC
     {
         [DataMember(Order = 0)] private List<DocExample> _Examples; // added in 4.3
         [DataMember(Order = 1)] private List<DocTemplateDefinition> _ApplicableTemplates; // added in 4.9
-        [DataMember(Order = 2)] private DocModelView _ModelView;// added in 5.3
+        [DataMember(Order = 2)] private DocModelView _ModelView;// added in 5.3; deprecated in 7.8 (replaced with collection that follows)
         [DataMember(Order = 3)] private byte[] _File; // added in 7.2 - encoded data of file in IFC format
+        [DataMember(Order = 4)] private List<DocModelView> _Views; // added in 7.8
 
         public DocExample()
         {
-            this._Examples = new List<DocExample>();
         }
 
         public List<DocExample> Examples
         {
             get
             {
+                if(this._Examples == null)
+                {
+                    this._Examples = new List<DocExample>();
+                }
+
                 return this._Examples;
-            }
-            set
-            {
-                // setter is present because files produced from older IfcDoc versions have it null.
-                this._Examples = value;
             }
         }
 
@@ -5318,24 +5407,32 @@ namespace IfcDoc.Schema.DOC
         {
             get
             {
+                if(this._ApplicableTemplates == null)
+                {
+                    this._ApplicableTemplates = new List<DocTemplateDefinition>();
+                }
+
                 return this._ApplicableTemplates;
-            }
-            set
-            {
-                // setter is present because files produced from older IfcDoc versions have it null.
-                this._ApplicableTemplates = value;
             }
         }
 
-        public DocModelView ModelView
+        public List<DocModelView> Views
         {
             get
             {
-                return this._ModelView;
-            }
-            set
-            {
-                this._ModelView = value;
+                if (this._Views == null)
+                {
+                    this._Views = new List<DocModelView>();
+
+                    // migrate old format if needed
+                    if(this._ModelView != null)
+                    {
+                        this._Views.Add(this._ModelView);
+                        this._ModelView = null;
+                    }
+                }
+
+                return this._Views;
             }
         }
 

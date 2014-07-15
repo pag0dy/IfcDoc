@@ -21,6 +21,9 @@ namespace IfcDoc
     {
         DocTemplateDefinition m_selection;
         DocProject m_project;
+        DocEntity m_entity;
+
+        Dictionary<string, DocObject> m_map;
 
         public FormSelectTemplate()
         {
@@ -38,39 +41,45 @@ namespace IfcDoc
         {
             this.m_selection = selection;
             this.m_project = project;
+            this.m_entity = entity;
 
             // build map
-            Dictionary<string, DocObject> map = new Dictionary<string, DocObject>();
+            this.m_map = new Dictionary<string, DocObject>();
             foreach (DocSection docSection in this.m_project.Sections)
             {
                 foreach (DocSchema docSchema in docSection.Schemas)
                 {
                     foreach (DocEntity docEntity in docSchema.Entities)
                     {
-                        map.Add(docEntity.Name, docEntity);
+                        m_map.Add(docEntity.Name, docEntity);
                     }
 
                     foreach (DocType docType in docSchema.Types)
                     {
-                        map.Add(docType.Name, docType);
+                        m_map.Add(docType.Name, docType);
                     }
                 }
-            }                
+            }
 
-            foreach (DocTemplateDefinition docTemplate in project.Templates)
+            LoadTemplates(project.Templates);
+        }
+
+        private void LoadTemplates(List<DocTemplateDefinition> list)
+        {
+            foreach (DocTemplateDefinition docTemplate in list)
             {
                 bool include = false;
 
                 // check for inheritance                
                 DocObject docApplicableEntity = null;
-                if (entity == null)
+                if (this.m_entity == null)
                 {
                     include = true;
                 }
-                else if (docTemplate.Type != null && map.TryGetValue(docTemplate.Type, out docApplicableEntity) && docApplicableEntity is DocEntity)
+                else if (docTemplate.Type != null && m_map.TryGetValue(docTemplate.Type, out docApplicableEntity) && docApplicableEntity is DocEntity)
                 {
                     // check for inheritance
-                    DocEntity docBase = entity;
+                    DocEntity docBase = this.m_entity;
                     while (docBase != null)
                     {
                         if (docBase == docApplicableEntity)
@@ -83,7 +92,7 @@ namespace IfcDoc
                             break;
 
                         DocObject docEach = null;
-                        if (map.TryGetValue(docBase.BaseDefinition, out docEach))
+                        if (this.m_map.TryGetValue(docBase.BaseDefinition, out docEach))
                         {
                             docBase = (DocEntity)docEach;
                         }
@@ -92,6 +101,11 @@ namespace IfcDoc
                             docBase = null;
                         }
                     }
+                }
+                else if (docTemplate.Type == null)
+                {
+                    // recurse
+                    LoadTemplates(docTemplate.Templates);
                 }
 
                 if (include)

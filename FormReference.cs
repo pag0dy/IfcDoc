@@ -98,7 +98,7 @@ namespace IfcDoc
             // keep building
             while (docBase != null)
             {
-                using (FormSelectEntity formEntity = new FormSelectEntity(docBase, docDefinition, this.m_project, false))
+                using (FormSelectEntity formEntity = new FormSelectEntity(docBase, docDefinition, this.m_project, SelectDefinitionOptions.Entity | SelectDefinitionOptions.Type))
                 {
                     if (formEntity.ShowDialog(this) == System.Windows.Forms.DialogResult.OK && formEntity.SelectedEntity != null)
                     {

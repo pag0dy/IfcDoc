@@ -52,6 +52,8 @@
             this.groupBoxViews = new System.Windows.Forms.GroupBox();
             this.checkedListBoxViews = new System.Windows.Forms.CheckedListBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.checkBoxExcludeWhereRules = new System.Windows.Forms.CheckBox();
+            this.checkBoxSkip = new System.Windows.Forms.CheckBox();
             this.groupBoxLocation.SuspendLayout();
             this.groupBoxDetails.SuspendLayout();
             this.groupBoxModelView.SuspendLayout();
@@ -146,12 +148,13 @@
             // 
             // groupBoxLocation
             // 
+            this.groupBoxLocation.Controls.Add(this.checkBoxSkip);
             this.groupBoxLocation.Controls.Add(this.buttonPath);
             this.groupBoxLocation.Controls.Add(this.label1);
             this.groupBoxLocation.Controls.Add(this.textBoxPath);
             this.groupBoxLocation.Location = new System.Drawing.Point(6, 6);
             this.groupBoxLocation.Name = "groupBoxLocation";
-            this.groupBoxLocation.Size = new System.Drawing.Size(580, 68);
+            this.groupBoxLocation.Size = new System.Drawing.Size(580, 94);
             this.groupBoxLocation.TabIndex = 0;
             this.groupBoxLocation.TabStop = false;
             this.groupBoxLocation.Text = "Location";
@@ -168,7 +171,7 @@
             this.groupBoxDetails.Controls.Add(this.checkBoxSuppressHistory);
             this.groupBoxDetails.Location = new System.Drawing.Point(6, 6);
             this.groupBoxDetails.Name = "groupBoxDetails";
-            this.groupBoxDetails.Size = new System.Drawing.Size(580, 195);
+            this.groupBoxDetails.Size = new System.Drawing.Size(580, 167);
             this.groupBoxDetails.TabIndex = 1;
             this.groupBoxDetails.TabStop = false;
             this.groupBoxDetails.Text = "ISO Documentation Conformance";
@@ -227,11 +230,12 @@
             // 
             // groupBoxModelView
             // 
+            this.groupBoxModelView.Controls.Add(this.checkBoxExcludeWhereRules);
             this.groupBoxModelView.Controls.Add(this.checkBoxConceptTables);
             this.groupBoxModelView.Controls.Add(this.checkBoxRequirement);
-            this.groupBoxModelView.Location = new System.Drawing.Point(7, 207);
+            this.groupBoxModelView.Location = new System.Drawing.Point(7, 179);
             this.groupBoxModelView.Name = "groupBoxModelView";
-            this.groupBoxModelView.Size = new System.Drawing.Size(579, 68);
+            this.groupBoxModelView.Size = new System.Drawing.Size(579, 96);
             this.groupBoxModelView.TabIndex = 2;
             this.groupBoxModelView.TabStop = false;
             this.groupBoxModelView.Text = "MVD Documentation Conformance";
@@ -266,7 +270,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(592, 363);
+            this.tabPage1.Size = new System.Drawing.Size(592, 283);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Content";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -277,9 +281,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBoxViews.Controls.Add(this.checkedListBoxViews);
-            this.groupBoxViews.Location = new System.Drawing.Point(6, 80);
+            this.groupBoxViews.Location = new System.Drawing.Point(6, 106);
             this.groupBoxViews.Name = "groupBoxViews";
-            this.groupBoxViews.Size = new System.Drawing.Size(580, 261);
+            this.groupBoxViews.Size = new System.Drawing.Size(580, 171);
             this.groupBoxViews.TabIndex = 1;
             this.groupBoxViews.TabStop = false;
             this.groupBoxViews.Text = "Model Views";
@@ -292,7 +296,7 @@
             this.checkedListBoxViews.FormattingEnabled = true;
             this.checkedListBoxViews.Location = new System.Drawing.Point(9, 20);
             this.checkedListBoxViews.Name = "checkedListBoxViews";
-            this.checkedListBoxViews.Size = new System.Drawing.Size(565, 229);
+            this.checkedListBoxViews.Size = new System.Drawing.Size(565, 139);
             this.checkedListBoxViews.TabIndex = 0;
             // 
             // tabPage2
@@ -306,6 +310,26 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Format";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxExcludeWhereRules
+            // 
+            this.checkBoxExcludeWhereRules.AutoSize = true;
+            this.checkBoxExcludeWhereRules.Location = new System.Drawing.Point(8, 65);
+            this.checkBoxExcludeWhereRules.Name = "checkBoxExcludeWhereRules";
+            this.checkBoxExcludeWhereRules.Size = new System.Drawing.Size(135, 17);
+            this.checkBoxExcludeWhereRules.TabIndex = 4;
+            this.checkBoxExcludeWhereRules.Text = "Suppress Where Rules";
+            this.checkBoxExcludeWhereRules.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxSkip
+            // 
+            this.checkBoxSkip.AutoSize = true;
+            this.checkBoxSkip.Location = new System.Drawing.Point(9, 65);
+            this.checkBoxSkip.Name = "checkBoxSkip";
+            this.checkBoxSkip.Size = new System.Drawing.Size(352, 17);
+            this.checkBoxSkip.TabIndex = 3;
+            this.checkBoxSkip.Text = "Skip regeneration of diagrams and examples (for quick update of text)";
+            this.checkBoxSkip.UseVisualStyleBackColor = true;
             // 
             // FormGenerate
             // 
@@ -362,5 +386,7 @@
         private System.Windows.Forms.GroupBox groupBoxViews;
         private System.Windows.Forms.CheckedListBox checkedListBoxViews;
         private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.CheckBox checkBoxSkip;
+        private System.Windows.Forms.CheckBox checkBoxExcludeWhereRules;
     }
 }

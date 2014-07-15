@@ -479,6 +479,11 @@ namespace IfcDoc
                                                     }
                                                 }
 
+                                                if (docNew is DocDefined && ((DocDefined)docNew).DefinedType == docAspect.OldValue)
+                                                {
+                                                    impact = false;
+                                                }
+
                                                 docChangeAttribute.ImpactSPF = impact;
                                                 docChangeAttribute.ImpactXML = impact;
                                             }

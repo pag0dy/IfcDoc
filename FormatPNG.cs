@@ -90,7 +90,7 @@ namespace IfcDoc.Format.PNG
 
 
                         DocObject docObj = null;
-                        if (map.TryGetValue(ruleEntity.Name, out docObj))
+                        map.TryGetValue(ruleEntity.Name, out docObj);
                         {
                             int dest = FormatPNG.Border;
                             if (lanes.Count > lane + 1)
@@ -164,7 +164,7 @@ namespace IfcDoc.Format.PNG
                                     g.DrawRectangle(Pens.Black, x + CX, targetY, CX - DX, CY);
                                     using (Font font = new Font(FontFamily.GenericSansSerif, 8.0f))
                                     {
-                                        string content = docObj.Name;
+                                        string content = ruleEntity.Name;//docObj.Name;
                                         foreach (DocModelRule ruleConstraint in ruleEntity.Rules)
                                         {
                                             if (ruleConstraint.Description != null && ruleConstraint.Description.StartsWith("Value="))
@@ -179,7 +179,7 @@ namespace IfcDoc.Format.PNG
                                             }
                                         }
 
-                                        g.DrawString(docObj.Name, font, Brushes.White, x + CX, targetY);
+                                        g.DrawString(ruleEntity.Name, font, Brushes.White, x + CX, targetY);
 
                                         if (ruleEntity.Identification == "Value")
                                         {
@@ -925,7 +925,7 @@ namespace IfcDoc.Format.PNG
                                     {
                                         if (docDefRef.DiagramRectangle != null)
                                         {
-                                            string caption = docSchemaRef.Name.ToUpper() + "." + docDefRef.Name;
+                                            //string caption = docSchemaRef.Name.ToUpper() + "." + docDefRef.Name;
 
                                             Rectangle rc = new Rectangle(
                                                 (int)(docDefRef.DiagramRectangle.X * Factor),
@@ -940,7 +940,14 @@ namespace IfcDoc.Format.PNG
                                             g.FillRectangle(Brushes.Silver, rc);
                                             g.DrawRectangle(penDash, rc);
                                             DrawRoundedRectangle(g, rcInner, 8, Pens.Black, Brushes.Silver);
-                                            g.DrawString(caption, font, Brushes.Black, rc, sf);
+
+                                            //rc.Y -= 6;
+                                            rc.Height = 12;
+                                            g.DrawString(docSchemaRef.Name.ToUpper(), font, Brushes.Black, rc, sf);
+
+                                            //rc.Y += 12;
+                                            rc.Y = rcInner.Y;
+                                            g.DrawString(docDefRef.Name, font, Brushes.Black, rc, sf);
 
                                             foreach (DocLine docSub in docDefRef.Tree)
                                             {

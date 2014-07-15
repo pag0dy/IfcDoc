@@ -70,6 +70,7 @@
             this.textBoxIdentityUuid = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.tabPageTemplate = new System.Windows.Forms.TabPage();
+            this.buttonTemplateClear = new System.Windows.Forms.Button();
             this.buttonTemplateEntity = new System.Windows.Forms.Button();
             this.textBoxTemplateEntity = new System.Windows.Forms.TextBox();
             this.labelTemplateEntity = new System.Windows.Forms.Label();
@@ -95,9 +96,6 @@
             this.columnHeaderExchangeExport = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.labelRequirementsExchanges = new System.Windows.Forms.Label();
             this.tabPagePropertySet = new System.Windows.Forms.TabPage();
-            this.buttonApplicabilityView = new System.Windows.Forms.Button();
-            this.textBoxApplicabilityView = new System.Windows.Forms.TextBox();
-            this.label25 = new System.Windows.Forms.Label();
             this.buttonApplicabilityAddTemplate = new System.Windows.Forms.Button();
             this.buttonPsetApplicabilityDelete = new System.Windows.Forms.Button();
             this.listViewPsetApplicability = new System.Windows.Forms.ListView();
@@ -190,13 +188,16 @@
             this.columnHeaderUsageView = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderUsageEntity = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.label21 = new System.Windows.Forms.Label();
+            this.tabPageExample = new System.Windows.Forms.TabPage();
+            this.checkedListBoxExampleViews = new System.Windows.Forms.CheckedListBox();
+            this.label30 = new System.Windows.Forms.Label();
+            this.label25 = new System.Windows.Forms.Label();
+            this.textBoxExample = new System.Windows.Forms.TextBox();
+            this.buttonExampleClear = new System.Windows.Forms.Button();
+            this.buttonExampleLoad = new System.Windows.Forms.Button();
             this.imageListRules = new System.Windows.Forms.ImageList(this.components);
             this.buttonClose = new System.Windows.Forms.Button();
             this.openFileDialogIcon = new System.Windows.Forms.OpenFileDialog();
-            this.tabPageExample = new System.Windows.Forms.TabPage();
-            this.buttonExampleLoad = new System.Windows.Forms.Button();
-            this.buttonExampleClear = new System.Windows.Forms.Button();
-            this.textBoxExample = new System.Windows.Forms.TextBox();
             this.openFileDialogExample = new System.Windows.Forms.OpenFileDialog();
             this.tabControl.SuspendLayout();
             this.tabPageGeneral.SuspendLayout();
@@ -648,6 +649,7 @@
             // 
             // tabPageTemplate
             // 
+            this.tabPageTemplate.Controls.Add(this.buttonTemplateClear);
             this.tabPageTemplate.Controls.Add(this.buttonTemplateEntity);
             this.tabPageTemplate.Controls.Add(this.textBoxTemplateEntity);
             this.tabPageTemplate.Controls.Add(this.labelTemplateEntity);
@@ -659,10 +661,21 @@
             this.tabPageTemplate.Text = "Template";
             this.tabPageTemplate.UseVisualStyleBackColor = true;
             // 
+            // buttonTemplateClear
+            // 
+            this.buttonTemplateClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonTemplateClear.Location = new System.Drawing.Point(182, 25);
+            this.buttonTemplateClear.Name = "buttonTemplateClear";
+            this.buttonTemplateClear.Size = new System.Drawing.Size(75, 23);
+            this.buttonTemplateClear.TabIndex = 3;
+            this.buttonTemplateClear.Text = "Clear";
+            this.buttonTemplateClear.UseVisualStyleBackColor = true;
+            this.buttonTemplateClear.Click += new System.EventHandler(this.buttonTemplateClear_Click);
+            // 
             // buttonTemplateEntity
             // 
             this.buttonTemplateEntity.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonTemplateEntity.Location = new System.Drawing.Point(263, 24);
+            this.buttonTemplateEntity.Location = new System.Drawing.Point(263, 25);
             this.buttonTemplateEntity.Name = "buttonTemplateEntity";
             this.buttonTemplateEntity.Size = new System.Drawing.Size(75, 23);
             this.buttonTemplateEntity.TabIndex = 2;
@@ -677,7 +690,7 @@
             this.textBoxTemplateEntity.Location = new System.Drawing.Point(7, 26);
             this.textBoxTemplateEntity.Name = "textBoxTemplateEntity";
             this.textBoxTemplateEntity.ReadOnly = true;
-            this.textBoxTemplateEntity.Size = new System.Drawing.Size(250, 20);
+            this.textBoxTemplateEntity.Size = new System.Drawing.Size(169, 20);
             this.textBoxTemplateEntity.TabIndex = 1;
             // 
             // labelTemplateEntity
@@ -926,9 +939,6 @@
             // 
             // tabPagePropertySet
             // 
-            this.tabPagePropertySet.Controls.Add(this.buttonApplicabilityView);
-            this.tabPagePropertySet.Controls.Add(this.textBoxApplicabilityView);
-            this.tabPagePropertySet.Controls.Add(this.label25);
             this.tabPagePropertySet.Controls.Add(this.buttonApplicabilityAddTemplate);
             this.tabPagePropertySet.Controls.Add(this.buttonPsetApplicabilityDelete);
             this.tabPagePropertySet.Controls.Add(this.listViewPsetApplicability);
@@ -943,36 +953,6 @@
             this.tabPagePropertySet.TabIndex = 5;
             this.tabPagePropertySet.Text = "Applicability";
             this.tabPagePropertySet.UseVisualStyleBackColor = true;
-            // 
-            // buttonApplicabilityView
-            // 
-            this.buttonApplicabilityView.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonApplicabilityView.Location = new System.Drawing.Point(263, 74);
-            this.buttonApplicabilityView.Name = "buttonApplicabilityView";
-            this.buttonApplicabilityView.Size = new System.Drawing.Size(75, 23);
-            this.buttonApplicabilityView.TabIndex = 14;
-            this.buttonApplicabilityView.Text = "Select...";
-            this.buttonApplicabilityView.UseVisualStyleBackColor = true;
-            this.buttonApplicabilityView.Click += new System.EventHandler(this.buttonApplicabilityView_Click);
-            // 
-            // textBoxApplicabilityView
-            // 
-            this.textBoxApplicabilityView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxApplicabilityView.Location = new System.Drawing.Point(7, 76);
-            this.textBoxApplicabilityView.Name = "textBoxApplicabilityView";
-            this.textBoxApplicabilityView.ReadOnly = true;
-            this.textBoxApplicabilityView.Size = new System.Drawing.Size(250, 20);
-            this.textBoxApplicabilityView.TabIndex = 13;
-            // 
-            // label25
-            // 
-            this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(6, 58);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(33, 13);
-            this.label25.TabIndex = 7;
-            this.label25.Text = "View:";
             // 
             // buttonApplicabilityAddTemplate
             // 
@@ -994,7 +974,7 @@
             this.buttonPsetApplicabilityDelete.Name = "buttonPsetApplicabilityDelete";
             this.buttonPsetApplicabilityDelete.Size = new System.Drawing.Size(75, 23);
             this.buttonPsetApplicabilityDelete.TabIndex = 5;
-            this.buttonPsetApplicabilityDelete.Text = "Delete";
+            this.buttonPsetApplicabilityDelete.Text = "Remove";
             this.buttonPsetApplicabilityDelete.UseVisualStyleBackColor = true;
             this.buttonPsetApplicabilityDelete.Click += new System.EventHandler(this.buttonPsetApplicabilityDelete_Click);
             // 
@@ -1007,9 +987,9 @@
             this.columnHeaderPsetEntity,
             this.columnHeaderPsetPredefined});
             this.listViewPsetApplicability.FullRowSelect = true;
-            this.listViewPsetApplicability.Location = new System.Drawing.Point(7, 127);
+            this.listViewPsetApplicability.Location = new System.Drawing.Point(7, 77);
             this.listViewPsetApplicability.Name = "listViewPsetApplicability";
-            this.listViewPsetApplicability.Size = new System.Drawing.Size(331, 223);
+            this.listViewPsetApplicability.Size = new System.Drawing.Size(331, 273);
             this.listViewPsetApplicability.TabIndex = 3;
             this.listViewPsetApplicability.UseCompatibleStateImageBehavior = false;
             this.listViewPsetApplicability.View = System.Windows.Forms.View.Details;
@@ -1070,11 +1050,11 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 110);
+            this.label1.Location = new System.Drawing.Point(6, 61);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(87, 13);
+            this.label1.Size = new System.Drawing.Size(113, 13);
             this.label1.TabIndex = 2;
-            this.label1.Text = "Applicable Items:";
+            this.label1.Text = "Applicabile Definitions:";
             // 
             // tabPageProperty
             // 
@@ -1550,7 +1530,6 @@
             this.buttonAttributeType.TabIndex = 2;
             this.buttonAttributeType.Text = "Type...";
             this.buttonAttributeType.UseVisualStyleBackColor = true;
-            this.buttonAttributeType.Visible = false;
             this.buttonAttributeType.Click += new System.EventHandler(this.buttonAttributeType_Click);
             // 
             // textBoxAttributeType
@@ -2233,6 +2212,88 @@
             this.label21.TabIndex = 4;
             this.label21.Text = "This template is used at the following entities:";
             // 
+            // tabPageExample
+            // 
+            this.tabPageExample.Controls.Add(this.checkedListBoxExampleViews);
+            this.tabPageExample.Controls.Add(this.label30);
+            this.tabPageExample.Controls.Add(this.label25);
+            this.tabPageExample.Controls.Add(this.textBoxExample);
+            this.tabPageExample.Controls.Add(this.buttonExampleClear);
+            this.tabPageExample.Controls.Add(this.buttonExampleLoad);
+            this.tabPageExample.Location = new System.Drawing.Point(4, 22);
+            this.tabPageExample.Name = "tabPageExample";
+            this.tabPageExample.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageExample.Size = new System.Drawing.Size(344, 385);
+            this.tabPageExample.TabIndex = 16;
+            this.tabPageExample.Text = "Example";
+            this.tabPageExample.UseVisualStyleBackColor = true;
+            // 
+            // checkedListBoxExampleViews
+            // 
+            this.checkedListBoxExampleViews.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkedListBoxExampleViews.FormattingEnabled = true;
+            this.checkedListBoxExampleViews.Location = new System.Drawing.Point(9, 251);
+            this.checkedListBoxExampleViews.Name = "checkedListBoxExampleViews";
+            this.checkedListBoxExampleViews.Size = new System.Drawing.Size(329, 124);
+            this.checkedListBoxExampleViews.TabIndex = 17;
+            this.checkedListBoxExampleViews.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBoxExampleViews_ItemCheck);
+            // 
+            // label30
+            // 
+            this.label30.AutoSize = true;
+            this.label30.Location = new System.Drawing.Point(6, 11);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(66, 13);
+            this.label30.TabIndex = 16;
+            this.label30.Text = "File Content:";
+            // 
+            // label25
+            // 
+            this.label25.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(6, 234);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(90, 13);
+            this.label25.TabIndex = 15;
+            this.label25.Text = "Applicable Views:";
+            // 
+            // textBoxExample
+            // 
+            this.textBoxExample.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxExample.Location = new System.Drawing.Point(9, 27);
+            this.textBoxExample.Multiline = true;
+            this.textBoxExample.Name = "textBoxExample";
+            this.textBoxExample.ReadOnly = true;
+            this.textBoxExample.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.textBoxExample.Size = new System.Drawing.Size(331, 162);
+            this.textBoxExample.TabIndex = 2;
+            this.textBoxExample.WordWrap = false;
+            // 
+            // buttonExampleClear
+            // 
+            this.buttonExampleClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.buttonExampleClear.Location = new System.Drawing.Point(90, 195);
+            this.buttonExampleClear.Name = "buttonExampleClear";
+            this.buttonExampleClear.Size = new System.Drawing.Size(75, 23);
+            this.buttonExampleClear.TabIndex = 1;
+            this.buttonExampleClear.Text = "Clear";
+            this.buttonExampleClear.UseVisualStyleBackColor = true;
+            this.buttonExampleClear.Click += new System.EventHandler(this.buttonExampleClear_Click);
+            // 
+            // buttonExampleLoad
+            // 
+            this.buttonExampleLoad.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.buttonExampleLoad.Location = new System.Drawing.Point(9, 195);
+            this.buttonExampleLoad.Name = "buttonExampleLoad";
+            this.buttonExampleLoad.Size = new System.Drawing.Size(75, 23);
+            this.buttonExampleLoad.TabIndex = 0;
+            this.buttonExampleLoad.Text = "Load File...";
+            this.buttonExampleLoad.UseVisualStyleBackColor = true;
+            this.buttonExampleLoad.Click += new System.EventHandler(this.buttonExampleLoad_Click);
+            // 
             // imageListRules
             // 
             this.imageListRules.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListRules.ImageStream")));
@@ -2256,53 +2317,6 @@
             // 
             this.openFileDialogIcon.Filter = "Images (*.png)|*.png";
             this.openFileDialogIcon.Title = "Set Icon";
-            // 
-            // tabPageExample
-            // 
-            this.tabPageExample.Controls.Add(this.textBoxExample);
-            this.tabPageExample.Controls.Add(this.buttonExampleClear);
-            this.tabPageExample.Controls.Add(this.buttonExampleLoad);
-            this.tabPageExample.Location = new System.Drawing.Point(4, 22);
-            this.tabPageExample.Name = "tabPageExample";
-            this.tabPageExample.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageExample.Size = new System.Drawing.Size(344, 385);
-            this.tabPageExample.TabIndex = 16;
-            this.tabPageExample.Text = "Example";
-            this.tabPageExample.UseVisualStyleBackColor = true;
-            // 
-            // buttonExampleLoad
-            // 
-            this.buttonExampleLoad.Location = new System.Drawing.Point(7, 7);
-            this.buttonExampleLoad.Name = "buttonExampleLoad";
-            this.buttonExampleLoad.Size = new System.Drawing.Size(75, 23);
-            this.buttonExampleLoad.TabIndex = 0;
-            this.buttonExampleLoad.Text = "Load File...";
-            this.buttonExampleLoad.UseVisualStyleBackColor = true;
-            this.buttonExampleLoad.Click += new System.EventHandler(this.buttonExampleLoad_Click);
-            // 
-            // buttonExampleClear
-            // 
-            this.buttonExampleClear.Location = new System.Drawing.Point(88, 7);
-            this.buttonExampleClear.Name = "buttonExampleClear";
-            this.buttonExampleClear.Size = new System.Drawing.Size(75, 23);
-            this.buttonExampleClear.TabIndex = 1;
-            this.buttonExampleClear.Text = "Clear";
-            this.buttonExampleClear.UseVisualStyleBackColor = true;
-            this.buttonExampleClear.Click += new System.EventHandler(this.buttonExampleClear_Click);
-            // 
-            // textBoxExample
-            // 
-            this.textBoxExample.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxExample.Location = new System.Drawing.Point(7, 37);
-            this.textBoxExample.Multiline = true;
-            this.textBoxExample.Name = "textBoxExample";
-            this.textBoxExample.ReadOnly = true;
-            this.textBoxExample.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBoxExample.Size = new System.Drawing.Size(331, 342);
-            this.textBoxExample.TabIndex = 2;
-            this.textBoxExample.WordWrap = false;
             // 
             // openFileDialogExample
             // 
@@ -2502,9 +2516,6 @@
         private System.Windows.Forms.ComboBox comboBoxExchangeClassSender;
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.ComboBox comboBoxExchangeClassProcess;
-        private System.Windows.Forms.Button buttonApplicabilityView;
-        private System.Windows.Forms.TextBox textBoxApplicabilityView;
-        private System.Windows.Forms.Label label25;
         private System.Windows.Forms.CheckBox checkBoxConceptOverride;
         private System.Windows.Forms.Button buttonAttributeInverse;
         private System.Windows.Forms.TextBox textBoxAttributeInverse;
@@ -2536,5 +2547,9 @@
         private System.Windows.Forms.Button buttonExampleClear;
         private System.Windows.Forms.Button buttonExampleLoad;
         private System.Windows.Forms.OpenFileDialog openFileDialogExample;
+        private System.Windows.Forms.Button buttonTemplateClear;
+        private System.Windows.Forms.CheckedListBox checkedListBoxExampleViews;
+        private System.Windows.Forms.Label label30;
+        private System.Windows.Forms.Label label25;
     }
 }

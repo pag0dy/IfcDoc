@@ -85,6 +85,7 @@
             this.listView.TabIndex = 13;
             this.listView.UseCompatibleStateImageBehavior = false;
             this.listView.View = System.Windows.Forms.View.Details;
+            this.listView.ItemActivate += new System.EventHandler(this.listView_ItemActivate);
             // 
             // columnHeaderName
             // 

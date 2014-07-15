@@ -26,6 +26,7 @@ namespace IfcDoc
             InitializeComponent();
 
             this.textBoxPath.Text = Properties.Settings.Default.OutputPath;
+            this.checkBoxSkip.Checked = Properties.Settings.Default.SkipDiagrams;
             this.textBoxHeader.Text = Properties.Settings.Default.Header;
             this.textBoxFooter.Text = Properties.Settings.Default.Footer;
             this.checkBoxHeader.Checked = !String.IsNullOrEmpty(this.textBoxHeader.Text);
@@ -36,6 +37,7 @@ namespace IfcDoc
             this.checkBoxSuppressXSD.Checked = Properties.Settings.Default.NoXsd;
             this.checkBoxRequirement.Checked = Properties.Settings.Default.Requirement;
             this.checkBoxConceptTables.Checked = Properties.Settings.Default.ConceptTables;
+            this.checkBoxExcludeWhereRules.Checked = Properties.Settings.Default.NoWhereRules;
         }
 
         protected override void OnClosed(EventArgs e)
@@ -45,6 +47,7 @@ namespace IfcDoc
             if (this.DialogResult == DialogResult.OK)
             {
                 Properties.Settings.Default.OutputPath = this.textBoxPath.Text;
+                Properties.Settings.Default.SkipDiagrams = this.checkBoxSkip.Checked;
                 Properties.Settings.Default.Header = this.textBoxHeader.Text;
                 Properties.Settings.Default.Footer = this.textBoxFooter.Text;
                 Properties.Settings.Default.NoHistory = this.checkBoxSuppressHistory.Checked;
@@ -53,6 +56,7 @@ namespace IfcDoc
                 Properties.Settings.Default.NoXsd = this.checkBoxSuppressXSD.Checked;
                 Properties.Settings.Default.Requirement = this.checkBoxRequirement.Checked;
                 Properties.Settings.Default.ConceptTables = this.checkBoxConceptTables.Checked;
+                Properties.Settings.Default.NoWhereRules = this.checkBoxExcludeWhereRules.Checked;
                 Properties.Settings.Default.Save();
             }
         }

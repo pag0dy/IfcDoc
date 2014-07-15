@@ -1246,7 +1246,7 @@ namespace IfcDoc.Format.HTM
 
                     this.Write("<li><a class=\"listing-link\" href=\"" + hyperlink + "\">" + entity.Name + "</a>");
                     
-                    if(predefined && !baseclass.EndsWith("Type") && this.m_mapEntity.ContainsKey(baseclass + "Type"))
+                    if(predefined && !baseclass.EndsWith("Type") && this.m_mapEntity.ContainsKey(entity.Name + "Type"))
                     {
                         this.Write(" - <a class=\"listing-link\" href=\"../../../schema/" + schema.ToLower() + @"/lexical/" + entity.Name.ToLower() + "type.htm\">" + entity.Name + "Type</a>");
                     }

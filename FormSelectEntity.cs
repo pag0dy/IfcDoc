@@ -22,19 +22,11 @@ namespace IfcDoc
         DocDefinition m_basetype;
         DocDefinition m_selection;
         DocProject m_project;
-        bool m_predefined;
+        SelectDefinitionOptions m_options;
 
         public FormSelectEntity()
         {
             InitializeComponent();
-        }
-
-        public FormSelectEntity(
-            DocDefinition basetype,
-            DocDefinition selection,
-            DocProject project) :
-            this(basetype, selection, project, false)
-        {
         }
 
         /// <summary>
@@ -48,13 +40,13 @@ namespace IfcDoc
             DocDefinition basetype, 
             DocDefinition selection, 
             DocProject project,
-            bool predefined)
+            SelectDefinitionOptions options)
             : this()
         {
             this.m_basetype = basetype;
             this.m_selection = selection;
             this.m_project = project;
-            this.m_predefined = predefined;
+            this.m_options = options;
 
             // load subtypes, sort alphabetically
             if (this.m_basetype is DocEntity)
@@ -89,7 +81,7 @@ namespace IfcDoc
                             }
                         }
 
-                        if(!predefined)
+                        if ((options & SelectDefinitionOptions.Type) != 0)
                         {
                             // temp: all types too; todo: specify parameter
                             foreach (DocType docType in docSchema.Types)
@@ -282,7 +274,7 @@ namespace IfcDoc
 
         private void LoadPredefined()
         {
-            if (!m_predefined)
+            if ((this.m_options & SelectDefinitionOptions.Predefined) == 0)
                 return;
 
             this.labelPredefined.Enabled = false;
@@ -369,5 +361,13 @@ namespace IfcDoc
         {
             this.LoadPredefined();
         }
+    }
+
+    [Flags]
+    public enum SelectDefinitionOptions
+    {
+        Entity = 1,
+        Type = 2,
+        Predefined = 4,
     }
 }

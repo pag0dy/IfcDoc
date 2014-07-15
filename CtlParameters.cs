@@ -296,12 +296,17 @@ namespace IfcDoc
                 if(docRule is DocModelRuleAttribute)
                 {
                     DocModelRuleAttribute dma = (DocModelRuleAttribute)docRule;
-                    if(dma.Rules.Count == 1 && dma.Rules[0] is DocModelRuleEntity)
+                    if (dma.Rules.Count > 0 && dma.Rules[0] is DocModelRuleEntity)
                     {
                         DocModelRuleEntity dme = (DocModelRuleEntity)dma.Rules[0];
                         if(dme.References.Count == 1)
                         {
                             docTemplateInner = dme.References[0];
+
+                            if(dma.Rules.Count > 1)
+                            {
+                                // prompt user to select which template...
+                            }
                         }
                     }
                 }
@@ -325,7 +330,7 @@ namespace IfcDoc
                 else
                 {
                     // set type of item
-                    using (FormSelectEntity form = new FormSelectEntity(docEntity, docSelect, this.m_project))
+                    using (FormSelectEntity form = new FormSelectEntity(docEntity, docSelect, this.m_project, SelectDefinitionOptions.Entity | SelectDefinitionOptions.Type))
                     {
                         DialogResult res = form.ShowDialog(this);
                         if (res == DialogResult.OK && form.SelectedEntity != null)
