@@ -498,30 +498,39 @@ namespace IfcDoc
             using (FormConstraint form = new FormConstraint())
             {
                 form.DataType = this.m_project.GetDefinition(docop.Reference.EntityRule.Name) as DocType;
-                if (form.DataType != null)
+                if (form.DataType == null)
                 {
-                    form.Metric = docop.Metric;
-                    form.Operation = docop.Operation;
-
-                    if (docop.Value is DocOpLiteral)
+                    try
                     {
-                        form.Literal = ((DocOpLiteral)docop.Value).Literal;
+                        form.ExpressType = (DocExpressType)Enum.Parse(typeof(DocExpressType), docop.Reference.EntityRule.Name);
                     }
-                    if (form.ShowDialog(this) == DialogResult.OK)
+                    catch
                     {
-                        docop.Operation = form.Operation;
-                        docop.Metric = form.Metric;
 
-                        if (!(docop.Value is DocOpLiteral))
-                        {
-                            docop.Value.Delete();
-                            docop.Value = new DocOpLiteral();
-                        }
-
-                        ((DocOpLiteral)docop.Value).Literal = form.Literal;
-
-                        this.treeViewRules.SelectedNode.Text = docop.ToString(this.Template);
                     }
+                }
+
+                form.Metric = docop.Metric;
+                form.Operation = docop.Operation;
+
+                if (docop.Value is DocOpLiteral)
+                {
+                    form.Literal = ((DocOpLiteral)docop.Value).Literal;
+                }
+                if (form.ShowDialog(this) == DialogResult.OK)
+                {
+                    docop.Operation = form.Operation;
+                    docop.Metric = form.Metric;
+
+                    if (!(docop.Value is DocOpLiteral))
+                    {
+                        docop.Value.Delete();
+                        docop.Value = new DocOpLiteral();
+                    }
+
+                    ((DocOpLiteral)docop.Value).Literal = form.Literal;
+
+                    this.treeViewRules.SelectedNode.Text = docop.ToString(this.Template);
                 }
             }
         }

@@ -176,7 +176,7 @@ namespace IfcDoc.Format.SPF
                         if (this.m_markup != null && this.m_parsescope == ParseScope.DataFields)
                         {
                             this.m_markup.Append(commandline);
-                            this.m_markup.Append(";<br>");
+                            this.m_markup.Append(";\r\n");//<br>");
                         }
                         break;
 
@@ -197,7 +197,7 @@ namespace IfcDoc.Format.SPF
                         if (this.m_markup != null && this.m_parsescope == ParseScope.DataFields)
                         {
                             this.m_markup.Append(commandline);
-                            this.m_markup.Append(";<br>");
+                            this.m_markup.Append(";\r\n");//<br>");
                         }
                         break;
 
@@ -215,10 +215,10 @@ namespace IfcDoc.Format.SPF
                             if (this.m_markup != null && this.m_parsescope == ParseScope.DataFields)
                             {
                                 this.m_markup.Append(commandline);
-                                this.m_markup.Append(";<br>");
+                                this.m_markup.Append(";\r\n");//<br>");
                             }
                         }
-                        else //if(this.m_parsescope == ParseScope.Header)
+                        else
                         {
                             // process header
                             object headertag = ParseConstructor(commandline);
@@ -229,7 +229,7 @@ namespace IfcDoc.Format.SPF
 
                             if (this.m_markup != null && this.m_parsescope == ParseScope.DataFields)
                             {
-                                this.m_markup.Append(";");
+                                this.m_markup.Append(";\r\n");//");
                             }
                         }
                         break;
@@ -242,7 +242,7 @@ namespace IfcDoc.Format.SPF
                             if (this.m_markup != null && this.m_parsescope == ParseScope.DataFields)
                             {
                                 this.m_markup.Append(commandline);
-                                this.m_markup.Append(";<br>");
+                                this.m_markup.Append(";\r\n");//<br>");
                             }
                         }
                         else
@@ -339,7 +339,7 @@ namespace IfcDoc.Format.SPF
                         {
                             if (m_markup != null && m_parsescope == ParseScope.DataFields)
                             {
-                                m_markup.Append("/</span>");
+                                m_markup.Append("/</span>\r\n");
                             }
 
                             parse = ParseCommand.CommentLeave;
@@ -356,7 +356,7 @@ namespace IfcDoc.Format.SPF
 
                             if (ch == '\n' && m_markup != null && m_parsescope == ParseScope.DataFields)
                             {
-                                m_markup.Append("<br>");
+                                //m_markup.Append("\r\n");//<br>");
                             }
                         }
                         break;
@@ -455,12 +455,18 @@ namespace IfcDoc.Format.SPF
                             m_markup.Append("</a>=");
                         }
 
-                        object instance = this.m_instances[id];
-                        LoadFields(instance, strConstructor);
-
-                        if (m_markup != null)
+                        SEntity instance = null;
+                        if (this.m_instances.TryGetValue(id, out instance))
                         {
-                            m_markup.Append(";\r\n");
+                            LoadFields(instance, strConstructor);
+                            if (m_markup != null)
+                            {
+                                m_markup.Append(";\r\n");
+                            }
+                        }
+                        else if(m_markup != null)
+                        {
+                            m_markup.Append("<span style=\"background-color:red\">" + strConstructor + ";</span>\r\n");
                         }
                     }
                     break;
@@ -1222,6 +1228,7 @@ namespace IfcDoc.Format.SPF
 
             // set owner and member
 
+            int nExpectedCount = 0;
             bool bQuote = false;
             bool bValue = false;
             int nNest = 0;
@@ -1266,6 +1273,11 @@ namespace IfcDoc.Format.SPF
 
                 if (bValue)
                 {
+                    if (m_markup != null && nExpectedCount > 0)
+                    {
+                        m_markup.Append(",");
+                    }
+
                     // parse it out
                     string strval = line.Substring(x0, x - x0);
 
@@ -1274,11 +1286,6 @@ namespace IfcDoc.Format.SPF
 
                     if (m_markup != null && this.m_parsescope == ParseScope.DataFields)
                     {
-                        if (list.Count > 0)
-                        {
-                            m_markup.Append(",");
-                        }
-
                         if (value is SEntity)
                         {
                             SEntity ent = (SEntity)value;
@@ -1290,13 +1297,14 @@ namespace IfcDoc.Format.SPF
                             m_markup.Append(strval);
                             m_markup.Append("</a>");
                         }
-                        else
+                        else if(value == null || value.GetType() == elemtype) // capture raw values (e.g. IfcCartesianPoint.Points, and avoid wrapped value types)
                         {
                             m_markup.Append(strval);
                         }
                     }
 
                     // assign the value
+                    nExpectedCount++;
                     if (value != null)
                     {
                         list.Add(value);
@@ -1661,7 +1669,18 @@ namespace IfcDoc.Format.SPF
                     nest++;
                 }
 
+                bool nullable = false;
+                if (tField.IsGenericType && tField.GetGenericTypeDefinition() == typeof(Nullable<>))
+                {
+                    tField = tField.GetGenericArguments()[0];
+                    nullable = true;
+                }
+
                 sbTitle.Append(tField.Name);
+                if(nullable)
+                {
+                    sbTitle.Append("?");
+                }
                 for (int i = 0; i < nest; i++)
                 {
                     sbTitle.Append("[]");
@@ -1811,7 +1830,7 @@ namespace IfcDoc.Format.SPF
             FILE_NAME hName = new FILE_NAME();
             hName.Name = filename;
             hName.OriginatingSystem = "buildingSMART IFC Documentation Generator";
-            hName.PreprocessorVersion = "buildingSMART IFCDOC 7.8"; // was "buildingSMART IFCDOC" for 2.7 and earlier;
+            hName.PreprocessorVersion = "buildingSMART IFCDOC 8.0"; // was "buildingSMART IFCDOC" for 2.7 and earlier;
             hName.Author.Add(System.Environment.UserName);
             hName.Organization.Add(System.Environment.UserDomainName);
             hName.Timestamp = DateTime.UtcNow;

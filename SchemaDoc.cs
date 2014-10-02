@@ -758,6 +758,64 @@ namespace IfcDoc.Schema.DOC
             return docSchema;
         }
 
+        private void RegisterSelects(Dictionary<DocObject, bool> included, DocDefinition entity)
+        {
+            foreach (DocSection docSection in this.Sections)
+            {
+                foreach (DocSchema docSchema in docSection.Schemas)
+                {
+                    foreach (DocType docType in docSchema.Types)
+                    {
+                        if (docType is DocSelect)
+                        {
+                            DocSelect docSelect = (DocSelect)docType;
+                            foreach (DocSelectItem docItem in docSelect.Selects)
+                            {
+                                if (docItem.Name == entity.Name)
+                                {
+                                    if (!included.ContainsKey(docType))
+                                    {
+                                        included[docType] = true;
+                                        
+                                        // recurse
+                                        RegisterSelects(included, docType);
+                                    }
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private void RegisterDefined(Dictionary<DocObject, bool> included, DocDefined entity)
+        {
+            try
+            {
+                if (included.ContainsKey(entity))
+                    return;
+
+                included[entity] = true;
+
+                if (entity.DefinedType != null)
+                {
+                    DocDefinition docBase = this.GetDefinition(entity.DefinedType);
+                    if (docBase is DocDefined)
+                    {
+                        RegisterDefined(included, (DocDefined)docBase);
+                    }
+                }
+
+                // register any selects that reference the defined type
+                RegisterSelects(included, entity);
+            }
+            catch (Exception xx)
+            {
+                xx.ToString();
+            }
+        }
+
         private void RegisterEntity(Dictionary<DocObject, bool> included, DocEntity entity)
         {
             try
@@ -777,6 +835,9 @@ namespace IfcDoc.Schema.DOC
                     }
                 }
 
+                // register any selects that reference the entity
+                RegisterSelects(included, entity);
+
                 // traverse attributes
                 foreach (DocAttribute docAttribute in entity.Attributes)
                 {
@@ -793,6 +854,16 @@ namespace IfcDoc.Schema.DOC
                         else if(docAttrType is DocType) // otherwise native EXPRESS type
                         {
                             included[docAttrType] = true;
+
+                            if (docAttrType is DocDefined)
+                            {
+                                DocDefined docDefined = (DocDefined)docAttrType;
+                                DocDefinition docDefRef = this.GetDefinition(docDefined.DefinedType);
+                                if (docDefRef != null)
+                                {
+                                    included[docDefRef] = true;
+                                }
+                            }
                         }
                     }
                 }
@@ -873,6 +944,10 @@ namespace IfcDoc.Schema.DOC
                                             }
                                         }
                                     }
+                                }
+                                else if(docInner is DocDefined)
+                                {
+                                    RegisterDefined(included, (DocDefined)docInner);
                                 }
                                 else
                                 {
@@ -961,45 +1036,58 @@ namespace IfcDoc.Schema.DOC
             }
 
             // special case -- if view references self, then include everything (no filtering)
-            if(docView.BaseView != null && docView.BaseView.ToString() == docView.Uuid.ToString())
+            if (!String.IsNullOrEmpty(docView.BaseView))
             {
-                foreach (DocSection docSection in this.Sections)
+                Guid guidBase;
+                if (docView.BaseView.ToString() == docView.Uuid.ToString())
                 {
-                    foreach(DocSchema docSchema in docSection.Schemas)
+                    foreach (DocSection docSection in this.Sections)
                     {
-                        included[docSchema] = true;
-                        foreach(DocType docType in docSchema.Types)
+                        foreach (DocSchema docSchema in docSection.Schemas)
                         {
-                            included[docType] = true;
-                        }
-                        foreach(DocEntity docEntity in docSchema.Entities)
-                        {
-                            included[docEntity] = true;
-                            foreach(DocAttribute docAttr in docEntity.Attributes)
+                            included[docSchema] = true;
+                            foreach (DocType docType in docSchema.Types)
                             {
-                                included[docAttr] = true;
+                                included[docType] = true;
+                            }
+                            foreach (DocEntity docEntity in docSchema.Entities)
+                            {
+                                included[docEntity] = true;
+                                foreach (DocAttribute docAttr in docEntity.Attributes)
+                                {
+                                    included[docAttr] = true;
+                                }
+                            }
+                            foreach (DocFunction docFunc in docSchema.Functions)
+                            {
+                                included[docFunc] = true;
+                            }
+                            foreach (DocGlobalRule docRule in docSchema.GlobalRules)
+                            {
+                                included[docRule] = true;
+                            }
+                            foreach (DocPropertySet docProp in docSchema.PropertySets)
+                            {
+                                included[docProp] = true;
+                            }
+                            foreach (DocPropertyEnumeration docEnum in docSchema.PropertyEnums)
+                            {
+                                included[docEnum] = true;
+                            }
+                            foreach (DocQuantitySet docQuan in docSchema.QuantitySets)
+                            {
+                                included[docQuan] = true;
                             }
                         }
-                        foreach(DocFunction docFunc in docSchema.Functions)
-                        {
-                            included[docFunc] = true;
-                        }
-                        foreach(DocGlobalRule docRule in docSchema.GlobalRules)
-                        {
-                            included[docRule] = true;
-                        }
-                        foreach(DocPropertySet docProp in docSchema.PropertySets)
-                        {
-                            included[docProp] = true;
-                        }
-                        foreach(DocPropertyEnumeration docEnum in docSchema.PropertyEnums)
-                        {
-                            included[docEnum] = true;
-                        }
-                        foreach(DocQuantitySet docQuan in docSchema.QuantitySets)
-                        {
-                            included[docQuan] = true;
-                        }
+                    }
+                }
+                else if(Guid.TryParse(docView.BaseView, out guidBase))
+                {
+                    // register base view
+                    DocModelView docViewBase = this.GetView(guidBase);
+                    if(docViewBase != null)
+                    {
+                        RegisterObjectsInScope(docViewBase, included);
                     }
                 }
 
@@ -1022,49 +1110,7 @@ namespace IfcDoc.Schema.DOC
 
                 foreach (DocTemplateUsage docUsage in docRoot.Concepts)
                 {
-                    if (docUsage.Definition != null)
-                    {
-                        RegisterTemplate(included, docUsage.Definition, mapVirtualAttributes);
-
-                        // include types referenced at concepts
-                        string[] parameters = docUsage.Definition.GetParameterNames();
-                        foreach (DocTemplateItem docItem in docUsage.Items)
-                        {
-                            foreach (string param in parameters)
-                            {
-                                string val = docItem.GetParameterValue(param);
-                                if (val != null && (val.StartsWith("Ifc") || val.StartsWith("Pset_") || val.StartsWith("Qto_"))) // perf shortcut
-                                {
-                                    DocDefinition docRef = this.GetDefinition(val);
-                                    if (docRef is DocEntity)
-                                    {
-                                        RegisterEntity(included, (DocEntity)docRef);
-                                    }
-                                    else if (docRef != null)
-                                    {
-                                        included[docRef] = true;
-                                    }
-                                    else
-                                    {
-                                        DocSchema docSchemaRef = null;
-                                        DocPropertySet docPset = FindPropertySet(val, out docSchemaRef);
-                                        if(docPset != null)
-                                        {
-                                            included[docPset] = true;
-                                        }
-                                        else
-                                        {
-                                            DocQuantitySet docQset = FindQuantitySet(val, out docSchemaRef);
-                                            if(docQset != null)
-                                            {
-                                                included[docQset] = true;
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    RegisterConcept(docUsage, included, mapVirtualAttributes);
                 }
             }
 
@@ -1115,6 +1161,10 @@ namespace IfcDoc.Schema.DOC
                                                 if (docAttrType is DocEntity)
                                                 {
                                                     RegisterEntity(included, (DocEntity)docAttrType);
+                                                }
+                                                else if(docAttrType is DocDefined)
+                                                {
+                                                    RegisterDefined(included, (DocDefined)docAttrType);
                                                 }
                                             }
                                         }
@@ -1311,6 +1361,65 @@ namespace IfcDoc.Schema.DOC
                     }
                 }
             }
+        }
+
+        private void RegisterConcept(DocTemplateUsage docUsage, Dictionary<DocObject, bool> included, Dictionary<DocModelRuleAttribute, DocEntity> mapVirtualAttributes)
+        {
+            if (docUsage.Definition != null)
+            {
+                RegisterTemplate(included, docUsage.Definition, mapVirtualAttributes);
+
+                // include types referenced at concepts
+                string[] parameters = docUsage.Definition.GetParameterNames();
+                foreach (DocTemplateItem docItem in docUsage.Items)
+                {
+                    foreach (string param in parameters)
+                    {
+                        string val = docItem.GetParameterValue(param);
+                        if (val != null && (val.StartsWith("Ifc") || val.StartsWith("Pset_") || val.StartsWith("Qto_"))) // perf shortcut
+                        {
+                            DocDefinition docRef = this.GetDefinition(val);
+                            if (docRef is DocEntity)
+                            {
+                                RegisterEntity(included, (DocEntity)docRef);
+                            }
+                            else if(docRef is DocDefined)
+                            {
+                                RegisterDefined(included, (DocDefined)docRef);
+                            }
+                            else if (docRef != null)
+                            {
+                                included[docRef] = true;
+                            }
+                            else
+                            {
+                                DocSchema docSchemaRef = null;
+                                DocPropertySet docPset = FindPropertySet(val, out docSchemaRef);
+                                if (docPset != null)
+                                {
+                                    included[docPset] = true;
+                                }
+                                else
+                                {
+                                    DocQuantitySet docQset = FindQuantitySet(val, out docSchemaRef);
+                                    if (docQset != null)
+                                    {
+                                        included[docQset] = true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    // recurse
+                    foreach(DocTemplateUsage docSub in docItem.Concepts)
+                    {
+                        RegisterConcept(docSub, included, mapVirtualAttributes);
+                    }
+
+                }
+            }
+
         }
     }
 
@@ -1989,13 +2098,13 @@ namespace IfcDoc.Schema.DOC
                 string match = docItem.GetParameterValue(this.Identification);
                 if (value == null && String.IsNullOrEmpty(match))
                 {
-                    return true;
+                    //return true;
                 }
                 else if (value is SEntity)
                 {
                     if (match != null && value.GetType().Name.Equals(match))
                     {
-                        return true;
+                        //return true;
                     }
                     else
                     {
@@ -2005,31 +2114,31 @@ namespace IfcDoc.Schema.DOC
                 else if (value != null)
                 {
                     // pull out internal value type
+                    object innervalue = value.ToString();
+
                     FieldInfo fieldinfo = value.GetType().GetField("Value");
                     if (fieldinfo != null)
                     {
-                        object innervalue = fieldinfo.GetValue(value);
-                        if (innervalue == null)
-                        {
-                            return false;
-                        }
-                        else if (match != null && innervalue.ToString().Equals(match.ToString(), StringComparison.Ordinal))
-                        {
-                            return true;
-                        }
-                        else if (this.IsCondition())
-                        {
-                            // condition didn't match, so chain of rules does not apply -- return null.
-                            return null;
-                        }
-                        else
-                        {
-                            // constraint evaluated to false and conditioned applied.
-                            return false;
-                        }
+                        innervalue = fieldinfo.GetValue(value);
+                    }
+
+                    if (innervalue == null)
+                    {
+                        return false;
+                    }
+
+                    if (match != null && innervalue.ToString().Equals(match.ToString(), StringComparison.Ordinal))
+                    {
+                        return true;
+                    }
+                    else if (this.IsCondition())
+                    {
+                        // condition didn't match, so chain of rules does not apply -- return null.
+                        return null;
                     }
                     else
                     {
+                        // constraint evaluated to false and conditioned applied.
                         return false;
                     }
                 }
@@ -2056,6 +2165,10 @@ namespace IfcDoc.Schema.DOC
                     if (result != null && result.Value)
                     {
                         return result;
+                    }
+                    else if(result == null)
+                    {
+                        return null;
                     }
                 }
 
@@ -2134,7 +2247,15 @@ namespace IfcDoc.Schema.DOC
                 }
                 else if (this.CardinalityMin == 1 && this.CardinalityMax == 1)
                 {
-                    checkcard = (pass == 1);
+                    if (pass == 1)
+                    {
+                        checkcard = true;
+                    }
+                    else if(fail > 0)
+                    {
+                        checkcard = false;
+                    }
+                    // otherwise null
                 }
                 else if (this.CardinalityMin == 1)
                 {
@@ -2160,11 +2281,19 @@ namespace IfcDoc.Schema.DOC
             {
                 if (this.CardinalityMin == 1 && value == null)
                 {
+                    // must be one
                     return false;
                 }
                 else if (this.CardinalityMin == -1 && this.CardinalityMax == -1 && value != null)
                 {
+                    // must be zero
                     return false;
+                }
+                else if (this.CardinalityMin == 0 && this.CardinalityMax == 1 && value == null)
+                {
+                    // may be null
+                    trace.Remove(this);
+                    return true;
                 }
 
                 // validate single
@@ -2569,53 +2698,74 @@ namespace IfcDoc.Schema.DOC
 
                 case DocOpCode.IsUnique: // unique
                     {
-                        // create a type with static field to track uniqueness for the particular rule
-                        TypeBuilder tb = context.Module.DefineType("_Unique" + this.OID); // give it a unique name based on OID corresponding to rule
-                        FieldBuilder fb = tb.DefineField("Hash", typeof(Hashtable), FieldAttributes.Static | FieldAttributes.Public);
-                        ConstructorBuilder cb = tb.DefineTypeInitializer();
-                        ILGenerator il = cb.GetILGenerator();
-                        ConstructorInfo constructorHashtable = typeof(Hashtable).GetConstructor(new Type[]{});
-                        il.Emit(OpCodes.Newobj, constructorHashtable);
-                        il.Emit(OpCodes.Stsfld, fb);
-                        il.Emit(OpCodes.Ret);
+                        string uniquecheck = "_Unique" + this.OID;
+                        Type t = context.Module.GetType(uniquecheck);
+                        if (t == null)
+                        {
+                            // create a type with static field to track uniqueness for the particular rule
+                            TypeBuilder tb = context.Module.DefineType("_Unique" + this.OID); // give it a unique name based on OID corresponding to rule
+                            FieldBuilder fb = tb.DefineField("Hash", typeof(Hashtable), FieldAttributes.Static | FieldAttributes.Public);
+                            ConstructorBuilder cb = tb.DefineTypeInitializer();
+                            ILGenerator il = cb.GetILGenerator();
+                            ConstructorInfo constructorHashtable = typeof(Hashtable).GetConstructor(new Type[] { });
+                            il.Emit(OpCodes.Newobj, constructorHashtable);
+                            il.Emit(OpCodes.Stsfld, fb);
+                            il.Emit(OpCodes.Ret);
 
-                        Type t = tb.CreateType();
+                            t = tb.CreateType();
+                        }
                         FieldInfo f = t.GetFields()[0];
 
                         // track value in local varaible
                         LocalBuilder local = generator.DeclareLocal(typeof(string));
+                        LocalBuilder localObject = generator.DeclareLocal(typeof(object));
+
+                        Label labelPass = generator.DefineLabel();
+                        Label labelFail = generator.DefineLabel();
+                        Label labelNext = generator.DefineLabel();
 
                         // store the referenced value
                         this.Reference.Emit(context, generator, dtd, null);
                         generator.Emit(OpCodes.Stloc, (short)local.LocalIndex);
 
-                        // if null, then not a duplicate, jump to end
+                        // if null, then not considered unique -- fail, jump to end
                         generator.Emit(OpCodes.Ldloc, (short)local.LocalIndex);
                         generator.Emit(OpCodes.Ldnull);
-                        generator.Emit(OpCodes.Beq_S, (byte)34);
+                        generator.Emit(OpCodes.Beq_S, labelFail);
 
                         // check if hash table for rule already contains value
-                        MethodInfo methodContainsKey = typeof(Hashtable).GetMethod("ContainsKey");
+                        MethodInfo methodGetItem = typeof(Hashtable).GetMethod("get_Item");
                         generator.Emit(OpCodes.Ldsfld, f);
                         generator.Emit(OpCodes.Ldloc, (short)local.LocalIndex);
-                        generator.Emit(OpCodes.Callvirt, methodContainsKey);
+                        generator.Emit(OpCodes.Callvirt, methodGetItem);
+                        generator.Emit(OpCodes.Stloc, (short)localObject.LocalIndex);
 
-                        // if true, then not unique
-                        generator.Emit(OpCodes.Brtrue_S, (byte)18); // skip over to last instruction 
+                        // if it equals ourselves, then it matches so pass
+                        generator.Emit(OpCodes.Ldloc, (short)localObject.LocalIndex);
+                        generator.Emit(OpCodes.Ldarg_0);
+                        generator.Emit(OpCodes.Beq, labelPass);
 
-                        // add to hash table
+                        // if non-null (and doesn't match), then it fails
+                        generator.Emit(OpCodes.Ldloc, (short)localObject.LocalIndex);
+                        generator.Emit(OpCodes.Brtrue_S, labelFail); // skip over to last instruction 
+
+                        // otherwise if null, then add to hash table
                         MethodInfo methodAdd = typeof(Hashtable).GetMethod("Add");
                         generator.Emit(OpCodes.Ldsfld, f); // 5
                         generator.Emit(OpCodes.Ldloc, (short)local.LocalIndex); // 3
-                        generator.Emit(OpCodes.Dup); // 1
+                        generator.Emit(OpCodes.Ldarg_0); // 1 // this pointer
                         generator.Emit(OpCodes.Callvirt, methodAdd); // 5
 
                         // not a duplicate (yet) -- first duplicate instance will push True
+                        generator.MarkLabel(labelPass);
                         generator.Emit(OpCodes.Ldc_I4_1); // 1
-                        generator.Emit(OpCodes.Br_S, (byte)1); // 2 - skip over
+                        generator.Emit(OpCodes.Br_S, labelNext); // 2 - skip over
 
                         // is a duplicate, so not unique: return false
+                        generator.MarkLabel(labelFail);
                         generator.Emit(OpCodes.Ldc_I4_0);
+
+                        generator.MarkLabel(labelNext);
 
                         return null;
                     }
@@ -2629,11 +2779,29 @@ namespace IfcDoc.Schema.DOC
 
                         // Stack: V|S
 
+#if false
                         generator.Emit(OpCodes.Ldc_I4_1);             // V|S|I 
                         generator.Emit(OpCodes.Newarr, typeof(Char)); // V|S|A
                         generator.Emit(OpCodes.Dup);                  // V|S|A|A
                         generator.Emit(OpCodes.Ldc_I4_0);             // V|S|A|A|I
                         generator.Emit(OpCodes.Ldc_I4_S, (Byte)',');  // V|S|A|A|I|B
+                        generator.Emit(OpCodes.Stelem_I2);            // V|S|A
+                        generator.Emit(OpCodes.Call, methodSplit);    // V|A
+#endif
+                        // replacement to accept comma and return characters
+                        generator.Emit(OpCodes.Ldc_I4_3);             // V|S|I 
+                        generator.Emit(OpCodes.Newarr, typeof(Char)); // V|S|A
+                        generator.Emit(OpCodes.Dup);                  // V|S|A|A
+                        generator.Emit(OpCodes.Ldc_I4_0);             // V|S|A|A|I
+                        generator.Emit(OpCodes.Ldc_I4_S, (Byte)',');  // V|S|A|A|I|B
+                        generator.Emit(OpCodes.Stelem_I2);            // V|S|A
+                        generator.Emit(OpCodes.Dup);                  // V|S|A|A
+                        generator.Emit(OpCodes.Ldc_I4_1);             // V|S|A|A|I
+                        generator.Emit(OpCodes.Ldc_I4_S, (Byte)'\r');  // V|S|A|A|I|B
+                        generator.Emit(OpCodes.Stelem_I2);            // V|S|A
+                        generator.Emit(OpCodes.Dup);                  // V|S|A|A
+                        generator.Emit(OpCodes.Ldc_I4_2);             // V|S|A|A|I
+                        generator.Emit(OpCodes.Ldc_I4_S, (Byte)'\n');  // V|S|A|A|I|B
                         generator.Emit(OpCodes.Stelem_I2);            // V|S|A
                         generator.Emit(OpCodes.Call, methodSplit);    // V|A
 
@@ -2998,7 +3166,7 @@ namespace IfcDoc.Schema.DOC
                 {
                     type = compiler.RegisterType(rule.Name);
 
-                    if (type.IsEnum)
+                    if (type.IsEnum || type.IsPrimitive)
                     {
                         // box it
                         generator.Emit(OpCodes.Box, type); // needed for Object.Compare
@@ -4043,6 +4211,54 @@ namespace IfcDoc.Schema.DOC
 
             return null;
         }
+
+        /// <summary>
+        /// Sorts type list according to definition type and alphabetical name
+        /// </summary>
+        public void SortTypes()
+        {
+            SortedList<string, DocDefined> sortDefined = new SortedList<string, DocDefined>();
+            SortedList<string, DocEnumeration> sortEnum = new SortedList<string, DocEnumeration>();
+            SortedList<string, DocSelect> sortSelect = new SortedList<string, DocSelect>();
+
+            foreach(DocType docType in this.Types)
+            {
+                if(docType is DocDefined)
+                {
+                    sortDefined.Add(docType.Name, (DocDefined)docType);
+                }
+                else if(docType is DocEnumeration)
+                {
+                    sortEnum.Add(docType.Name, (DocEnumeration)docType);                    
+                }
+                else if(docType is DocSelect)
+                {
+                    sortSelect.Add(docType.Name, (DocSelect)docType);
+                }
+            }
+
+            this.Types.Clear();
+            this.Types.AddRange(sortDefined.Values);
+            this.Types.AddRange(sortEnum.Values);
+            this.Types.AddRange(sortSelect.Values);
+        }
+
+        /// <summary>
+        /// Sorts entity list according to alphabetical name
+        /// </summary>
+        public void SortEntities()
+        {
+            SortedList<string, DocEntity> sortEntity = new SortedList<string, DocEntity>();
+
+            foreach (DocEntity docType in this.Entities)
+            {
+                sortEntity.Add(docType.Name, docType);
+            }
+
+            this.Entities.Clear();
+            this.Entities.AddRange(sortEntity.Values);
+        }
+
     }
 
     /// <summary>
@@ -4162,6 +4378,7 @@ namespace IfcDoc.Schema.DOC
             this._Attributes = new List<DocAttribute>();
             this._UniqueRules = new List<DocUniqueRule>();
             this._WhereRules = new List<DocWhereRule>();
+            this.EntityFlags = 0x20; // non-abstract
         }
 
         public string BaseDefinition
@@ -4658,10 +4875,11 @@ namespace IfcDoc.Schema.DOC
 
         public int GetAggregationNestingUpper()
         {
-            if (String.IsNullOrEmpty(this.AggregationUpper))
+            int iUpper = 0;
+
+            if (String.IsNullOrEmpty(this.AggregationUpper) || !Int32.TryParse(this.AggregationUpper, out iUpper))
                 return 0;
 
-            int iUpper = Int32.Parse(this.AggregationUpper);
             DocAttribute docAggregate = this.AggregationAttribute;
             while (docAggregate != null)
             {
@@ -4719,12 +4937,105 @@ namespace IfcDoc.Schema.DOC
     /// </summary>
     public class DocDefined : DocType
     {
-        [DataMember(Order = 0)] public string DefinedType;
-        [DataMember(Order = 1)] public DocDefinition Definition; // never used until V5.8
-        [DataMember(Order = 2)] public List<DocWhereRule> WhereRules;
-        [DataMember(Order = 3)] public int Length; // e.g. length of string        
-        [DataMember(Order = 4)] public DocAttribute Aggregation; // added V1.8, 2011-02-22
-        [DataMember(Order = 5)] public List<DocPoint> DiagramLine; // added V5.8
+        [DataMember(Order = 0)] private string _DefinedType;
+        [DataMember(Order = 1)] private DocDefinition _Definition; // never used until V5.8
+        [DataMember(Order = 2)] private List<DocWhereRule> _WhereRules;
+        [DataMember(Order = 3)] private int _Length; // e.g. length of string        
+        [DataMember(Order = 4)] private DocAttribute _Aggregation; // added V1.8, 2011-02-22
+        [DataMember(Order = 5)] private List<DocPoint> _DiagramLine; // added V5.8
+
+        public override void Delete()
+        {
+            foreach(DocWhereRule docWhere in this.WhereRules)
+            {
+                docWhere.Delete();
+            }
+
+            foreach(DocPoint docPoint in this.DiagramLine)
+            {
+                docPoint.Delete();
+            }
+
+            if (this.Aggregation != null)
+            {
+                this.Aggregation.Delete();
+            }
+
+            base.Delete();
+        }
+
+        public string DefinedType
+        {
+            get
+            {
+                return this._DefinedType;
+            }
+            set
+            {
+                this._DefinedType = value;
+            }
+        }
+
+        public DocDefinition Definition
+        {
+            get
+            {
+                return this._Definition;
+            }
+            set
+            {
+                this._Definition = value;
+            }
+        }
+
+        public List<DocWhereRule> WhereRules
+        {
+            get
+            {
+                if (this._WhereRules == null)
+                {
+                    this._WhereRules = new List<DocWhereRule>();
+                }
+                return this._WhereRules;
+            }
+        }
+
+        public int Length
+        {
+            get
+            {
+                return this._Length;
+            }
+            set
+            {
+                this._Length = value;
+            }
+        }
+
+        public DocAttribute Aggregation
+        {
+            get
+            {
+                return this._Aggregation;
+            }
+            set
+            {
+                this._Aggregation = value;
+            }
+        }
+
+        public List<DocPoint> DiagramLine
+        {
+            get
+            {
+                if(this._DiagramLine == null)
+                {
+                    this._DiagramLine = new List<DocPoint>();
+                }
+
+                return this._DiagramLine;
+            }
+        }
     }
 
     /// <summary>
@@ -5216,6 +5527,21 @@ namespace IfcDoc.Schema.DOC
             this._Changes = new List<DocChangeAction>();
         }
 
+        public override void Delete()
+        {
+            foreach(DocChangeAspect aspect in this.Aspects)
+            {
+                aspect.Delete();
+            }
+
+            foreach(DocChangeAction action in this.Changes)
+            {
+                action.Delete();
+            }
+
+            base.Delete();
+        }
+
         public DocChangeActionEnum Action
         {
             get
@@ -5455,5 +5781,17 @@ namespace IfcDoc.Schema.DOC
     public interface IDocTreeHost
     {
         List<DocLine> Tree { get; } 
+    }
+
+    public enum DocExpressType
+    {
+        OBJECT = 0,
+        BOOLEAN = 1,
+        LOGICAL = 2,
+        INTEGER = 3,
+        REAL = 4,
+        NUMBER = 5,
+        STRING = 6,
+        BINARY = 7,
     }
 }

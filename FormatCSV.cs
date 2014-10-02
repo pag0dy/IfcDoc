@@ -158,46 +158,96 @@ namespace IfcDoc
             }
         }
 
+        private void WriteItem(System.IO.StreamWriter writer, DocObject docEntity, int level)
+        {
+            for (int i = 0; i < level; i++)
+            {
+                writer.Write(".");
+            }
+            
+            writer.Write(docEntity.Name);
+
+            if (this.m_locales != null)
+            {
+                foreach (string locale in this.m_locales)
+                {
+                    string localname = "";
+                    string localdesc = "";
+
+                    foreach (DocLocalization docLocal in docEntity.Localization)
+                    {
+                        if (docLocal.Locale.StartsWith(locale))
+                        {
+                            localname = docLocal.Name;
+                            localdesc = docLocal.Documentation;
+                            break;
+                        }
+                    }
+
+                    writer.Write("\t");
+                    writer.Write(localname);
+                    writer.Write("\t");
+                    writer.Write(localdesc);
+                }
+            }
+
+            writer.WriteLine();
+        }
+
         private void WriteList(System.IO.StreamWriter writer, SortedList<string, DocObject> sortlist)
         {
             foreach (string key in sortlist.Keys)
             {
                 DocObject docEntity = sortlist[key];
 
-                writer.Write(docEntity.Name);
+                WriteItem(writer, docEntity, 0);
 
-                if (this.m_locales != null)
+                if (docEntity is DocEntity)
                 {
-                    foreach (string locale in this.m_locales)
+                    DocEntity docEnt = (DocEntity)docEntity;
+                    foreach(DocAttribute docAttr in docEnt.Attributes)
                     {
-                        string localname = "";
-                        string localdesc = "";
-
-                        foreach (DocLocalization docLocal in docEntity.Localization)
-                        {
-                            if (docLocal.Locale.Equals(locale))
-                            {
-                                localname = docLocal.Name;
-                                localdesc = docLocal.Documentation;
-                                break;
-                            }
-                        }
-
-                        writer.Write("\t");
-                        writer.Write(localname);
-                        writer.Write("\t");
-                        writer.Write(localdesc);
+                        WriteItem(writer, docAttr, 1);
                     }
                 }
-
-                writer.WriteLine();
-
+                else if (docEntity is DocEnumeration)
+                {
+                    DocEnumeration docEnum = (DocEnumeration)docEntity;
+                    foreach(DocConstant docConst in docEnum.Constants)
+                    {
+                        WriteItem(writer, docConst, 1);
+                    }
+                }
+                else if(docEntity is DocPropertySet)
+                {
+                    DocPropertySet docPset = (DocPropertySet)docEntity;
+                    foreach(DocProperty docProp in docPset.Properties)
+                    {
+                        WriteItem(writer, docProp, 1);
+                    }
+                }
+                else if(docEntity is DocPropertyEnumeration)
+                {
+                    DocPropertyEnumeration docPE = (DocPropertyEnumeration)docEntity;
+                    foreach(DocPropertyConstant docPC in docPE.Constants)
+                    {
+                        WriteItem(writer, docPC, 1);
+                    }
+                }
+                else if(docEntity is DocQuantitySet)
+                {
+                    DocQuantitySet docQset = (DocQuantitySet)docEntity;
+                    foreach(DocQuantity docQuan in docQset.Quantities)
+                    {
+                        WriteItem(writer, docQuan, 1);
+                    }
+                }
             }
         }
 
         public void Save()
         {
-            using (System.IO.StreamWriter writer = new System.IO.StreamWriter(this.m_filename))
+            using (System.IO.StreamWriter writer = new System.IO.StreamWriter(this.m_filename, false, Encoding.Unicode))
             {
                 // header
                 writer.Write("Name");
@@ -220,7 +270,10 @@ namespace IfcDoc
                 // split into two lists alphabetically for easier translation
                 SortedList<string, DocObject> sortlistEntity = new SortedList<string, DocObject>();
                 SortedList<string, DocObject> sortlistType = new SortedList<string, DocObject>();
-
+                SortedList<string, DocObject> sortlistPset = new SortedList<string, DocObject>();
+                SortedList<string, DocObject> sortlistQset = new SortedList<string, DocObject>();
+                SortedList<string, DocObject> sortlistEnum = new SortedList<string, DocObject>();
+                
                 // rows
                 foreach (DocSection docSection in this.m_project.Sections)
                 {
@@ -235,11 +288,30 @@ namespace IfcDoc
                         {
                             sortlistType.Add(docEntity.Name, docEntity);
                         }
+
+                        foreach (DocPropertyEnumeration docPE in docSchema.PropertyEnums)
+                        {
+                            sortlistEnum.Add(docPE.Name, docPE);
+                        }
+
+                        foreach (DocPropertySet docPset in docSchema.PropertySets)
+                        {
+                            sortlistPset.Add(docPset.Name, docPset);
+                        }
+
+                        foreach (DocQuantitySet docQset in docSchema.QuantitySets)
+                        {
+                            sortlistQset.Add(docQset.Name, docQset);
+                        }
+
                     }
                 }
 
                 WriteList(writer, sortlistEntity);
                 WriteList(writer, sortlistType);
+                WriteList(writer, sortlistPset);
+                WriteList(writer, sortlistEnum);
+                WriteList(writer, sortlistQset);
             }
         }
 

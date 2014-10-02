@@ -73,6 +73,9 @@ namespace IfcDoc.Format.EXP
         /// <returns></returns>
         private string MakeLongFormExpression(string expression)
         {
+            if (expression == null)
+                return null;
+
             if (!this.m_longform)
                 return expression;
 

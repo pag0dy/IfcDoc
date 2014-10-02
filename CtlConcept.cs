@@ -128,20 +128,23 @@ namespace IfcDoc
                         this.m_rcSelection = rc;
                         this.m_iSelection = -1;
 
-                        DocEntity docEntity = this.m_map[mr.Name] as DocEntity;
-                        if (docEntity != null)
+                        if (this.m_map.ContainsKey(mr.Name))
                         {
-                            List<DocAttribute> listAttr = new List<DocAttribute>();
-                            FormatPNG.BuildAttributeList(docEntity, listAttr, this.m_map);
-
-                            for (int i = 0; i < listAttr.Count; i++)
+                            DocEntity docEntity = this.m_map[mr.Name] as DocEntity;
+                            if (docEntity != null)
                             {
-                                DocAttribute docAttr = listAttr[i];
-                                if (docAttr.Name.Equals(value.Name))
+                                List<DocAttribute> listAttr = new List<DocAttribute>();
+                                FormatPNG.BuildAttributeList(docEntity, listAttr, this.m_map);
+
+                                for (int i = 0; i < listAttr.Count; i++)
                                 {
-                                    this.m_attribute = docAttr;
-                                    this.m_iSelection = i;
-                                    break;
+                                    DocAttribute docAttr = listAttr[i];
+                                    if (docAttr.Name.Equals(value.Name))
+                                    {
+                                        this.m_attribute = docAttr;
+                                        this.m_iSelection = i;
+                                        break;
+                                    }
                                 }
                             }
                         }
@@ -217,7 +220,7 @@ namespace IfcDoc
                     }
                 }
 
-                this.m_image = FormatPNG.CreateEntityDiagram(this.m_conceptroot.ApplicableEntity, docView, this.m_map, this.m_hitmap, this.m_project);
+                this.m_image = FormatPNG.CreateConceptDiagram(this.m_conceptroot.ApplicableEntity, docView, this.m_map, this.m_hitmap, this.m_project);
                 if (this.m_image != null)
                 {
                     this.AutoScrollMinSize = new Size(this.m_image.Width, this.m_image.Height);

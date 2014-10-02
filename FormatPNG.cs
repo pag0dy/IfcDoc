@@ -216,7 +216,15 @@ namespace IfcDoc.Format.PNG
                                 if(!String.IsNullOrEmpty(ruleAttribute.Identification))
                                 {
                                     // mark the attribute as using parameter
-                                    g.DrawRectangle(Pens.Blue, x, y + CY * (iAttr + 1), CX - DX, CY);
+                                    //g.DrawRectangle(Pens.Blue, x, y + CY * (iAttr + 1), CX - DX, CY);
+                                    using (Font font = new Font(FontFamily.GenericSansSerif, 8.0f, FontStyle.Regular))
+                                    {
+                                        using (StringFormat fmt = new StringFormat())
+                                        {
+                                            fmt.Alignment = StringAlignment.Near;
+                                            g.DrawString(docAttr.Name, font, Brushes.Blue, x, y + CY * (iAttr + 1), fmt);
+                                        }
+                                    }
                                 }
 
                                 g.DrawLine(Pens.Black, x0, y0, xM, y0);
@@ -413,6 +421,30 @@ namespace IfcDoc.Format.PNG
             {
                 // map each use definition at top-level              
 
+                // build list of inherited views
+                List<DocModelView> listViews = new List<DocModelView>();
+                DocModelView docBaseView = docView;
+                while (docBaseView != null)
+                {
+                    listViews.Add(docBaseView);
+
+                    if (!String.IsNullOrEmpty(docBaseView.BaseView))
+                    {
+                        Guid guidBase = Guid.Parse(docBaseView.BaseView);
+                        if (guidBase != docBaseView.Uuid)
+                        {
+                            docBaseView = docProject.GetView(guidBase);
+                        }
+                        else
+                        {
+                            docBaseView = null;
+                        }
+                    }
+                    else
+                    {
+                        docBaseView = null;
+                    }
+                }
 
                 // build from inherited entities too
 
@@ -424,7 +456,7 @@ namespace IfcDoc.Format.PNG
 
                     foreach (DocModelView docEachView in docProject.ModelViews)
                     {
-                        if (docView == null || docView == docEachView)//docView.Visible)
+                        if (docView == null || /*docView == docEachView*/ listViews.Contains(docEachView))//docView.Visible)
                         {
                             foreach (DocConceptRoot docRoot in docEachView.ConceptRoots)
                             {
@@ -557,11 +589,15 @@ namespace IfcDoc.Format.PNG
         }
 
         /// <summary>
-        /// Creates an entity diagram from use definitions.
+        /// Creates a concept diagram for a particular entity, including all concepts at specified view and base view(s).
         /// </summary>
         /// <param name="docEntity"></param>
+        /// <param name="docView"></param>
+        /// <param name="map"></param>
+        /// <param name="layout"></param>
+        /// <param name="docProject"></param>
         /// <returns></returns>
-        internal static Image CreateEntityDiagram(DocEntity docEntity, DocModelView docView, Dictionary<string, DocObject> map, Dictionary<Rectangle, DocModelRule> layout, DocProject docProject)
+        internal static Image CreateConceptDiagram(DocEntity docEntity, DocModelView docView, Dictionary<string, DocObject> map, Dictionary<Rectangle, DocModelRule> layout, DocProject docProject)
         {
             layout.Clear();
             List<int> lanes = new List<int>(); // keep track of position offsets in each lane
@@ -748,7 +784,7 @@ namespace IfcDoc.Format.PNG
                                     else if(docType is DocDefined)
                                     {
                                         DocDefined docItem = (DocDefined)docType;
-                                        if (docItem.DiagramLine != null)
+                                        if (docItem.DiagramLine.Count > 0)
                                         {
                                             DrawLine(g, Pens.Black, docItem.DiagramLine);
                                         }
@@ -1077,27 +1113,71 @@ namespace IfcDoc.Format.PNG
         }
 
         /// <summary>
-        /// Creates an inheritance diagram
+        /// Creates an inheritance diagram filtered according to model views in scope.
         /// </summary>
-        /// <param name="docProject">The project containing entities</param>
-        /// <param name="included">Entities within scope</param>
-        /// <param name="docRoot">The root entity to display</param>
-        /// <param name="maxWidth">Maximum width before wrapping, or 0 if unlimited</param>
-        /// <param name="maxHeight">Maximum height before wrapping, or 0 if unlimited</param>
+        /// <param name="docProject">The project.</param>
+        /// <param name="included">Map of included entities according to filtered model view(s).</param>
+        /// <param name="docRoot">Root of hierarchy to draw.</param>
+        /// <param name="docEntity">Target entity to highlight, if any.</param>
+        /// <param name="font"></param>
+        /// <param name="map"></param>
         /// <returns></returns>
-        public static Image CreateInheritanceDiagram(DocProject docProject, Dictionary<DocObject, bool> included, DocEntity docRoot, Font font, Dictionary<Rectangle, DocEntity> map)
+        public static Image CreateInheritanceDiagram(DocProject docProject, Dictionary<DocObject, bool> included, DocEntity docRoot, DocEntity docEntity, Font font, Dictionary<Rectangle, DocEntity> map)
         {
-            Rectangle rc = DrawHierarchy(null, new Point(DX, DX), docRoot, docProject, included, font, null);
+            Rectangle rc = DrawHierarchy(null, new Point(DX, DX), docRoot, docEntity, docProject, included, font, null);
             if (rc.IsEmpty)
                 return null;
 
             Image image = new Bitmap(rc.Width + CY, rc.Height + CY);
             using (Graphics g = Graphics.FromImage(image))
             {
-                DrawHierarchy(g, new Point(CY, CY), docRoot, docProject, included, font, map);
+                DrawHierarchy(g, new Point(CY/2, CY/2), docRoot, docEntity, docProject, included, font, map);
             }
 
             return image;
+        }
+
+        /// <summary>
+        /// Create an inheritance diagram for a particular entity, its entire hierarchy of supertypes, and one level of subtypes, within scope.
+        /// </summary>
+        /// <param name="docEntity"></param>
+        /// <param name="font"></param>
+        /// <param name="map"></param>
+        /// <returns></returns>
+        public static Image CreateInheritanceDiagramForEntity(DocProject docProject, Dictionary<DocObject, bool> included, DocEntity docEntity, Font font, Dictionary<Rectangle, DocEntity> map)
+        {
+            // determine items within scope
+            Dictionary<DocObject, bool> hierarchy = new Dictionary<DocObject,bool>();
+            DocEntity docBase = docEntity;
+            DocEntity docRoot = docBase;
+            while (docBase != null)
+            {
+                docRoot = docBase;
+                if (included == null || included.ContainsKey(docBase))
+                {
+                    hierarchy.Add(docBase, true);
+                }
+                docBase = docProject.GetDefinition(docBase.BaseDefinition) as DocEntity;
+            }
+
+            foreach (DocSection docSection in docProject.Sections)
+            {
+                foreach (DocSchema docSchema in docSection.Schemas)
+                {
+                    foreach (DocEntity docEnt in docSchema.Entities)
+                    {
+                        if (docEnt.BaseDefinition == docEntity.Name)
+                        {
+                            if (included == null || included.ContainsKey(docEnt))
+                            {
+                                hierarchy.Add(docEnt, true);
+                            }
+                        }
+                    }
+                }
+            }
+        
+            return CreateInheritanceDiagram(docProject, hierarchy, docRoot, docEntity, font, map);
         }
 
         /// <summary>
@@ -1107,7 +1187,7 @@ namespace IfcDoc.Format.PNG
         /// <param name="pt">Point where to draw</param>
         /// <param name="docEntity">Entity to draw</param>
         /// <returns>Bounding rectangle of what was drawn.</returns>
-        private static Rectangle DrawHierarchy(Graphics g, Point pt, DocEntity docEntity, DocProject docProject, Dictionary<DocObject, bool> included, Font font, Dictionary<Rectangle, DocEntity> map)
+        private static Rectangle DrawHierarchy(Graphics g, Point pt, DocEntity docEntity, DocEntity docTarget, DocProject docProject, Dictionary<DocObject, bool> included, Font font, Dictionary<Rectangle, DocEntity> map)
         {
             if (docEntity == null)
                 return Rectangle.Empty;
@@ -1141,7 +1221,7 @@ namespace IfcDoc.Format.PNG
                 {
                     bool vert = (docEnt.Status != "H");//hack
 
-                    Rectangle rcSub = DrawHierarchy(g, ptSub, docEnt, docProject, included, font, map);
+                    Rectangle rcSub = DrawHierarchy(g, ptSub, docEnt, docTarget, docProject, included, font, map);
 
                     if (g != null)
                     {
@@ -1182,12 +1262,17 @@ namespace IfcDoc.Format.PNG
                     brush = Brushes.Gray;
                 }
 
+                if(docEntity == docTarget)
+                {
+                    brush = Brushes.Blue;
+                }
+
                 g.FillRectangle(brush, pt.X, pt.Y, rc.Width - CY, CY);
                 g.DrawString(docEntity.Name, font, Brushes.White, pt);
                 g.DrawRectangle(Pens.Black, pt.X, pt.Y, rc.Width - CY, CY);
             }
 
-            if(map != null)
+            if(map != null && docEntity != docTarget)
             {
                 Rectangle rcKey = new Rectangle(pt.X, pt.Y, rc.Width - CY, CY);
                 if (!map.ContainsKey(rcKey))

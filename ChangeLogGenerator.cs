@@ -484,6 +484,21 @@ namespace IfcDoc
                                                     impact = false;
                                                 }
 
+                                                //todo: add generic check that traverses multiple levels of defined types; in the interest of hitting deadline, hard-coded hack for now
+                                                if (docNew.Name == "IfcPositiveInteger" && docAspect.OldValue == "INTEGER")
+                                                {
+                                                    impact = false;
+                                                }
+                                                if (docNew.Name == "IfcBinary" && docAspect.OldValue == "BINARY (32)")
+                                                {
+                                                    impact = false;
+                                                }
+
+                                                if(impact)
+                                                {
+                                                    impact.ToString();
+                                                }
+
                                                 docChangeAttribute.ImpactSPF = impact;
                                                 docChangeAttribute.ImpactXML = impact;
                                             }
@@ -540,6 +555,7 @@ namespace IfcDoc
                                         DocChangeAction docChangeAttribute = new DocChangeAction();
                                         docChangeEntity.Changes.Add(docChangeAttribute);
                                         docChangeAttribute.Name = docAttribute.Name;
+                                        docChangeAttribute.Status = "INVERSE";
 
                                         DocAttribute docAttributeBase = null;
                                         foreach(DocAttribute docAttrOld in listAttributeOld)
@@ -596,7 +612,7 @@ namespace IfcDoc
                                             docChangeEntity.Changes.Add(docChangeAttribute);
                                             docChangeAttribute.Name = docAttributeBase.Name;
                                             docChangeAttribute.Action = DocChangeActionEnum.DELETED;
-                                            docChangeAttribute.ImpactSPF = true;
+                                            docChangeAttribute.Status = "INVERSE";
                                         }
                                     }
 

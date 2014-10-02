@@ -807,7 +807,10 @@ namespace IfcDoc.Format.HTM
                 foreach (DocWhereRule docWhere in entity.WhereRules)
                 {
                     string escaped = System.Security.SecurityElement.Escape(docWhere.Expression);
-                    escaped = escaped.Replace("&apos;", "'");
+                    if (escaped != null)
+                    {
+                        escaped = escaped.Replace("&apos;", "'");
+                    }
 
                     this.m_writer.Write("&nbsp;&nbsp;");
                     this.m_writer.Write(docWhere.Name);
@@ -1209,6 +1212,101 @@ namespace IfcDoc.Format.HTM
             this.WriteFooter(pagefooter);
         }
 
+        public void WriteInheritanceMapping(DocProject docProject, DocModelView[] views)
+        {
+            SortedList<string, DocEntity> alphaEntity = new SortedList<string, DocEntity>();
+            foreach (string s in this.m_mapEntity.Keys)
+            {
+                DocObject obj = this.m_mapEntity[s];
+                if (obj is DocEntity)
+                {
+                    alphaEntity.Add(s, (DocEntity)obj);
+                }
+            }
+
+
+            this.WriteHeader("Inheritance Listing", 3);
+            this.WriteLine("<h2 class=\"annex\">" + "Mappings" + "</h2>");
+            this.WriteLine("<table class=\"gridtable\">");
+
+            this.WriteLine("<tr>");
+            this.WriteLine("<th>Entity</th>");
+            Dictionary<DocObject, bool>[] maps = new Dictionary<DocObject, bool>[views.Length];
+            for (int iView = 0; iView < views.Length; iView++)
+            {
+                maps[iView] = new Dictionary<DocObject, bool>();
+                DocModelView docView = views[iView];
+                docProject.RegisterObjectsInScope(docView, maps[iView]);
+
+                this.WriteLine("<th>" + docView.Code + "</th>");
+            }
+            this.WriteLine("</tr>");
+
+            WriteInheritanceMappingLevel(null, alphaEntity.Values, maps, 0);
+
+            this.WriteLine("</table>");
+            this.WriteFooter(Properties.Settings.Default.Footer);
+        }
+
+        private void WriteInheritanceMappingLevel(string baseclass, IList<DocEntity> list, Dictionary<DocObject, bool>[] maps, int indent)
+        {
+            bool include;
+            foreach (DocEntity entity in list)
+            {
+                if (entity.BaseDefinition == baseclass)
+                {
+                    string schema = this.m_mapSchema[entity.Name];
+                    string hyperlink = @"../../../schema/" + schema.ToLower() + @"/lexical/" + entity.Name.ToLower() + ".htm";
+
+                    this.Write("<tr><td>");
+
+                    for (int i = 0; i < indent; i++ )
+                    {
+                        this.Write("&nbsp;&nbsp;");
+                    }
+
+                    bool includeitem = false;
+                    for (int iView = 0; iView < maps.Length; iView++)
+                    {
+                        if(maps[iView].TryGetValue(entity, out include) && include)
+                        {
+                            includeitem = true;
+                            break;
+                        }
+                    }
+
+                    if (includeitem)
+                    {
+                        this.Write("<a class=\"listing-link\" href=\"" + hyperlink + "\">");
+                    }
+                    this.Write(entity.Name);
+                    if(includeitem)
+                    {
+                        this.Write("</a>");
+                    }
+                    this.Write("</td>");
+
+                    for (int iView = 0; iView < maps.Length; iView++ )
+                    {
+                        this.Write("<td>");
+                        if(maps[iView].TryGetValue(entity, out include) && include)
+                        {
+                            this.Write("X");
+                        }
+                        this.Write("</td>");
+                    }
+
+                    this.WriteLine("</tr>");
+
+                    // recurse
+                    WriteInheritanceMappingLevel(entity.Name, list, maps, indent + 1);
+
+                    this.WriteLine("</ul></li>\r\n");
+                }
+            }
+        }
+
+
         /// <summary>
         /// 
         /// </summary>
@@ -1248,7 +1346,11 @@ namespace IfcDoc.Format.HTM
                     
                     if(predefined && !baseclass.EndsWith("Type") && this.m_mapEntity.ContainsKey(entity.Name + "Type"))
                     {
-                        this.Write(" - <a class=\"listing-link\" href=\"../../../schema/" + schema.ToLower() + @"/lexical/" + entity.Name.ToLower() + "type.htm\">" + entity.Name + "Type</a>");
+                        DocEntity entType = this.m_mapEntity[entity.Name + "Type"] as DocEntity;
+                        if (entType != null && list.Contains(entType))
+                        {
+                            this.Write(" - <a class=\"listing-link\" href=\"../../../schema/" + schema.ToLower() + @"/lexical/" + entity.Name.ToLower() + "type.htm\">" + entity.Name + "Type</a>");
+                        }
                     }
 
                     this.WriteLine("<ul>");
@@ -1460,6 +1562,16 @@ namespace IfcDoc.Format.HTM
                                 {
                                     // leave as italics
                                     index++;
+                                }
+                            }
+                            else if(current is DocChangeSet)
+                            {
+                                string schema = null;
+                                if (def.StartsWith(prefix) && this.m_mapSchema.TryGetValue(def, out schema))
+                                {
+                                    string hyperlink = @"../../../schema/" + schema.ToLower() + @"/lexical/" + def.ToLower() + ".htm";
+                                    string format = "<a href=\"" + hyperlink + "\">" + def + "</a>";
+                                    content = content.Substring(0, index) + format + content.Substring(end + 4);
                                 }
                             }
                             else if (current is DocExample)
@@ -1827,9 +1939,12 @@ namespace IfcDoc.Format.HTM
             // don't output if no change, and no sub-items have changed
             if (!docChange.HasChanges())
                 return;
+
+            bool inverse = (docChange.Status == "INVERSE");
             
             StringBuilder sb = new StringBuilder();
             sb.Append("<tr>");
+
 
             if (level == 0)
             {
@@ -1888,7 +2003,18 @@ namespace IfcDoc.Format.HTM
                 {
                     sb.Append("&nbsp;&nbsp;");
                 }
+
+                if (inverse)
+                {
+                    sb.Append("<i>");
+                }
+
                 sb.Append(docChange.Name);
+                if (inverse)
+                {
+                    sb.Append("</i>");
+                }
+
                 sb.Append("</td>");
             }
 
@@ -1896,7 +2022,7 @@ namespace IfcDoc.Format.HTM
             {
                 // IFC-SPF
                 sb.Append("<td>");
-                if (docChange.ImpactSPF)
+                if (docChange.ImpactSPF && !inverse)
                 {
                     sb.Append("X");
                 }
@@ -2266,7 +2392,7 @@ namespace IfcDoc.Format.HTM
             string key2 = "";// "A." + iCodeView + ".2";
             string key3 = "";// "A." + iCodeView + ".3";
 
-            if (iCodeView == 0 || Properties.Settings.Default.ConceptTables)
+            if (iCodeView > 0)//== 0 || Properties.Settings.Default.ConceptTables)
             {
                 // write table linking formatted listings
                 this.Write(
@@ -2388,20 +2514,6 @@ namespace IfcDoc.Format.HTM
             this.WriteFooter(Properties.Settings.Default.Footer);
         }
 
-        internal void WriteEntityInheritance(DocEntity entity)
-        {
-            this.WriteSummaryHeader("Attribute inheritance", false);
-
-            this.WriteLine("<table class=\"attributes\">");
-            this.WriteLine("<tr><th>Attribute</th><th>Type</th><th>Cardinality</th><th>Description</th></tr>");
-
-            this.WriteEntityInheritance(entity, entity);
-
-            this.WriteLine("</table>");
-
-            this.WriteSummaryFooter();
-        }
-
         public void WriteLocalizedNames(DocDefinition entity)
         {
             // localization
@@ -2426,18 +2538,18 @@ namespace IfcDoc.Format.HTM
             this.WriteLine("</details>");
         }
 
-        private void WriteEntityInheritance(DocEntity entity, DocEntity treeleaf)
+        public void WriteEntityInheritance(DocEntity entity, DocEntity treeleaf, ref int sequence)
         {
             if (entity.BaseDefinition != null)
             {
                 if (this.m_mapEntity.ContainsKey(entity.BaseDefinition))
                 {
                     DocEntity baseEntity = (DocEntity)this.m_mapEntity[entity.BaseDefinition];
-                    WriteEntityInheritance(baseEntity, treeleaf);
+                    WriteEntityInheritance(baseEntity, treeleaf, ref sequence);
                 }
             }
 
-            this.Write("<tr><td colspan=\"4\">");
+            this.Write("<tr><td colspan=\"5\">");
             if(entity.IsAbstract())
             {
                 this.Write("<i>");
@@ -2449,10 +2561,16 @@ namespace IfcDoc.Format.HTM
             }
             this.WriteLine("</td></tr>");
 
-            WriteEntityAttributes(entity, treeleaf);
+            WriteEntityAttributes(entity, treeleaf, ref sequence);
         }
 
-        public void WriteEntityAttributes(DocEntity entity, DocEntity treeleaf)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <param name="treeleaf"></param>
+        /// <param name="sequence">Last sequence number used (0 initially)</param>
+        public void WriteEntityAttributes(DocEntity entity, DocEntity treeleaf, ref int sequence)
         {
             bool bInverse = false;
             bool bDerived = false;
@@ -2496,6 +2614,7 @@ namespace IfcDoc.Format.HTM
                             if (derivedattr.Name.Equals(attr.Name))
                             {
                                 bInclude = false;
+                                sequence++;
                             }
                         }
                     }
@@ -2504,7 +2623,11 @@ namespace IfcDoc.Format.HTM
                     {
                         if (attr.Inverse == null && attr.Derived == null)
                         {
+                            sequence++;
+
                             this.m_writer.Write("<tr><td>");
+                            this.m_writer.Write(sequence.ToString());
+                            this.m_writer.Write("</td><td>");
                             this.m_writer.Write(attr.Name);
                             this.m_writer.Write("</td><td>");
 
@@ -2561,7 +2684,7 @@ namespace IfcDoc.Format.HTM
                     {
                         if (this.m_included == null || this.m_included.ContainsKey(docinvtype))
                         {
-                            this.m_writer.Write("<tr><td><i>");
+                            this.m_writer.Write("<tr><td></td><td><i>");
                             this.m_writer.Write(attr.Name);
                             this.m_writer.Write("</i>");
                             this.m_writer.Write("</td><td>");
@@ -2626,12 +2749,12 @@ namespace IfcDoc.Format.HTM
                         if (found != null)
                         {
                             // overridden attribute
-                            this.m_writer.Write("<tr><td>" + "\\" + found.Name + "." + attr.Name);
+                            this.m_writer.Write("<tr><td></td><td>" + "\\" + found.Name + "." + attr.Name);
                         }
                         else
                         {
                             // non-overridden
-                            this.m_writer.Write("<tr><td>" + attr.Name);
+                            this.m_writer.Write("<tr><td></td><td>" + attr.Name);
                         }
                         this.m_writer.Write("<br/>:=" + attr.Derived);
 

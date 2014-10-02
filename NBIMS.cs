@@ -618,7 +618,7 @@ namespace IfcDoc
                         int cy = 0;
                         try
                         {
-                            using (System.Drawing.Image image = IfcDoc.Format.PNG.FormatPNG.CreateEntityDiagram(docRoot.ApplicableEntity, docView, mapEntity, new Dictionary<System.Drawing.Rectangle,DocModelRule>(), project))
+                            using (System.Drawing.Image image = IfcDoc.Format.PNG.FormatPNG.CreateConceptDiagram(docRoot.ApplicableEntity, docView, mapEntity, new Dictionary<System.Drawing.Rectangle,DocModelRule>(), project))
                             {
                                 cx = image.Width;
                                 cy = image.Height;

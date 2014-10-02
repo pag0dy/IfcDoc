@@ -20,6 +20,7 @@ namespace IfcDoc
     public partial class FormConstraint : Form
     {
         DocType m_datatype;
+        DocExpressType m_nativetype;
 
         static string[] s_operators = new string[7]
             {
@@ -40,6 +41,47 @@ namespace IfcDoc
             this.comboBoxOperator.SelectedIndex = 0;
         }
 
+        public DocExpressType ExpressType
+        {
+            get
+            {
+                return this.m_nativetype;
+            }
+            set
+            {
+                this.m_nativetype = value;
+
+                switch (this.m_nativetype)
+                {
+                    case DocExpressType.BOOLEAN:
+
+                        this.comboBoxValue.Items.Add("FALSE");
+                        this.comboBoxValue.Items.Add("TRUE");
+                        this.comboBoxValue.Items.Add("NULL");
+                        this.comboBoxValue.Enabled = true;
+                        break;
+
+                    case DocExpressType.LOGICAL:
+                        this.comboBoxValue.Items.Add("FALSE");
+                        this.comboBoxValue.Items.Add("TRUE");
+                        this.comboBoxValue.Items.Add("UNKNOWN");
+                        this.comboBoxValue.Items.Add("NULL");
+                        this.comboBoxValue.Enabled = true;
+                        break;
+
+                    case DocExpressType.REAL:
+                    case DocExpressType.INTEGER:
+                    case DocExpressType.NUMBER:
+                    case DocExpressType.STRING:
+                    case DocExpressType.BINARY:
+                        this.comboBoxValue.Enabled = false;
+                        this.textBoxBenchmark.Enabled = true;
+                        break;
+                }
+
+            }
+        }
+
         public DocType DataType
         {
             get
@@ -50,8 +92,9 @@ namespace IfcDoc
             {
                 this.m_datatype = value;
 
+                this.textBoxBenchmark.Enabled = true;
                 this.comboBoxValue.Items.Clear();
-                this.comboBoxValue.Visible = false;
+                this.comboBoxValue.Enabled = false;
                 if (this.m_datatype is DocEnumeration)
                 {
                     DocEnumeration docEnum = (DocEnumeration)this.m_datatype;
@@ -59,25 +102,19 @@ namespace IfcDoc
                     {
                         this.comboBoxValue.Items.Add(docCon);
                     }
-                    this.comboBoxValue.Visible = true;
+                    this.comboBoxValue.Enabled = true;
+                    this.textBoxBenchmark.Enabled = false;
                 }
                 else if(this.m_datatype is DocDefined)
                 {
                     DocDefined docDef = (DocDefined)this.m_datatype;
-                    if(docDef.DefinedType.Equals("BOOLEAN"))
+                    try
                     {
-                        this.comboBoxValue.Items.Add("FALSE");
-                        this.comboBoxValue.Items.Add("TRUE");
-                        this.comboBoxValue.Items.Add("NULL");
-                        this.comboBoxValue.Visible = true;
+                        this.ExpressType = (DocExpressType)Enum.Parse(typeof(DocExpressType), docDef.DefinedType);
                     }
-                    else if(docDef.DefinedType.Equals("LOGICAL"))
+                    catch
                     {
-                        this.comboBoxValue.Items.Add("FALSE");
-                        this.comboBoxValue.Items.Add("TRUE");
-                        this.comboBoxValue.Items.Add("UNKNOWN");
-                        this.comboBoxValue.Items.Add("NULL");
-                        this.comboBoxValue.Visible = true;
+
                     }
                 }
             }

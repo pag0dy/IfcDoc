@@ -332,9 +332,10 @@ blockquote.change-ifc2x4 {
 	color: #ff0000;
 }
 
-tt.std tt.spf {
-	font-size: medium;
-	white-space: pre;
+tt.std, tt.spf {
+	font-family: monospace;
+	font-size: 11px;
+	white-space: pre-wrap;
 }
 
 summary {

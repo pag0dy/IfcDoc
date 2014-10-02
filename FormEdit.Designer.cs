@@ -59,7 +59,6 @@
             this.toolStripMenuItemFileSaveAs = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparatorFile2 = new System.Windows.Forms.ToolStripSeparator();
             this.mergeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.generateChangeLogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemFileImport = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemFileUpdate = new System.Windows.Forms.ToolStripMenuItem();
@@ -83,6 +82,8 @@
             this.toolStripMenuItemEditMoveOut = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemEditMoveIn = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem7 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripMenuItemEditBuildConcepts = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemEditProperties = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemViewWeb = new System.Windows.Forms.ToolStripMenuItem();
@@ -238,8 +239,8 @@
             this.webBrowser = new System.Windows.Forms.WebBrowser();
             this.imageListRules = new System.Windows.Forms.ImageList(this.components);
             this.saveFileDialogModule = new System.Windows.Forms.SaveFileDialog();
-            this.toolStripMenuItemEditBuildConcepts = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
+            this.generateChangeLogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem19 = new System.Windows.Forms.ToolStripSeparator();
             this.contextMenuStrip.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.toolStripMain.SuspendLayout();
@@ -530,7 +531,6 @@
             this.toolStripMenuItemFileSaveAs,
             this.toolStripSeparatorFile2,
             this.mergeToolStripMenuItem,
-            this.generateChangeLogToolStripMenuItem,
             this.toolStripMenuItem3,
             this.toolStripMenuItemFileImport,
             this.toolStripMenuItemFileUpdate,
@@ -599,14 +599,6 @@
             this.mergeToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
             this.mergeToolStripMenuItem.Text = "&Merge...";
             this.mergeToolStripMenuItem.Click += new System.EventHandler(this.mergeToolStripMenuItem_Click);
-            // 
-            // generateChangeLogToolStripMenuItem
-            // 
-            this.generateChangeLogToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("generateChangeLogToolStripMenuItem.Image")));
-            this.generateChangeLogToolStripMenuItem.Name = "generateChangeLogToolStripMenuItem";
-            this.generateChangeLogToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
-            this.generateChangeLogToolStripMenuItem.Text = "&Compare...";
-            this.generateChangeLogToolStripMenuItem.Click += new System.EventHandler(this.generateChangeLogToolStripMenuItem_Click);
             // 
             // toolStripMenuItem3
             // 
@@ -809,6 +801,19 @@
             this.toolStripMenuItem7.Name = "toolStripMenuItem7";
             this.toolStripMenuItem7.Size = new System.Drawing.Size(196, 6);
             // 
+            // toolStripMenuItemEditBuildConcepts
+            // 
+            this.toolStripMenuItemEditBuildConcepts.Enabled = false;
+            this.toolStripMenuItemEditBuildConcepts.Name = "toolStripMenuItemEditBuildConcepts";
+            this.toolStripMenuItemEditBuildConcepts.Size = new System.Drawing.Size(199, 22);
+            this.toolStripMenuItemEditBuildConcepts.Text = "&Build Concepts...";
+            this.toolStripMenuItemEditBuildConcepts.Click += new System.EventHandler(this.toolStripMenuItemEditBuildConcepts_Click);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(196, 6);
+            // 
             // toolStripMenuItemEditProperties
             // 
             this.toolStripMenuItemEditProperties.Enabled = false;
@@ -836,7 +841,7 @@
             this.toolStripMenuItemViewWeb.CheckState = System.Windows.Forms.CheckState.Checked;
             this.toolStripMenuItemViewWeb.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMenuItemViewWeb.Image")));
             this.toolStripMenuItemViewWeb.Name = "toolStripMenuItemViewWeb";
-            this.toolStripMenuItemViewWeb.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItemViewWeb.Size = new System.Drawing.Size(147, 22);
             this.toolStripMenuItemViewWeb.Text = "&Web View";
             this.toolStripMenuItemViewWeb.Click += new System.EventHandler(this.toolStripMenuItemViewWeb_Click);
             // 
@@ -844,7 +849,7 @@
             // 
             this.toolStripMenuItemViewText.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMenuItemViewText.Image")));
             this.toolStripMenuItemViewText.Name = "toolStripMenuItemViewText";
-            this.toolStripMenuItemViewText.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItemViewText.Size = new System.Drawing.Size(147, 22);
             this.toolStripMenuItemViewText.Text = "&Text View";
             this.toolStripMenuItemViewText.Click += new System.EventHandler(this.toolStripMenuItemViewText_Click);
             // 
@@ -852,7 +857,7 @@
             // 
             this.toolStripMenuItemViewDiagram.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMenuItemViewDiagram.Image")));
             this.toolStripMenuItemViewDiagram.Name = "toolStripMenuItemViewDiagram";
-            this.toolStripMenuItemViewDiagram.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItemViewDiagram.Size = new System.Drawing.Size(147, 22);
             this.toolStripMenuItemViewDiagram.Text = "&Diagram View";
             this.toolStripMenuItemViewDiagram.Click += new System.EventHandler(this.toolStripMenuItemViewDiagram_Click);
             // 
@@ -875,6 +880,8 @@
             this.ToolStripMenuItemInsertTerm,
             this.ToolStripMenuItemInsertAbbreviatedTerm,
             this.toolStripMenuItem11,
+            this.generateChangeLogToolStripMenuItem,
+            this.toolStripMenuItem19,
             this.toolStripMenuItemInsertExample,
             this.toolStripSeparator7,
             this.toolStripMenuItemInsertBibliography});
@@ -1639,7 +1646,7 @@
             // toolStripMenuItemHelpAbout
             // 
             this.toolStripMenuItemHelpAbout.Name = "toolStripMenuItemHelpAbout";
-            this.toolStripMenuItemHelpAbout.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItemHelpAbout.Size = new System.Drawing.Size(116, 22);
             this.toolStripMenuItemHelpAbout.Text = "&About...";
             this.toolStripMenuItemHelpAbout.Click += new System.EventHandler(this.toolStripMenuItemHelpAbout_Click);
             // 
@@ -2221,7 +2228,7 @@
             this.textBoxHTML.Dock = System.Windows.Forms.DockStyle.Fill;
             this.textBoxHTML.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBoxHTML.Location = new System.Drawing.Point(0, 0);
-            this.textBoxHTML.MaxLength = 65535;
+            this.textBoxHTML.MaxLength = 1048575;
             this.textBoxHTML.Multiline = true;
             this.textBoxHTML.Name = "textBoxHTML";
             this.textBoxHTML.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -2255,18 +2262,18 @@
             this.saveFileDialogModule.Filter = ".NET Assembly (*.dll)|*.dll";
             this.saveFileDialogModule.Title = "Create .NET Assembly";
             // 
-            // toolStripMenuItemEditBuildConcepts
+            // generateChangeLogToolStripMenuItem
             // 
-            this.toolStripMenuItemEditBuildConcepts.Enabled = false;
-            this.toolStripMenuItemEditBuildConcepts.Name = "toolStripMenuItemEditBuildConcepts";
-            this.toolStripMenuItemEditBuildConcepts.Size = new System.Drawing.Size(199, 22);
-            this.toolStripMenuItemEditBuildConcepts.Text = "&Build Concepts...";
-            this.toolStripMenuItemEditBuildConcepts.Click += new System.EventHandler(this.toolStripMenuItemEditBuildConcepts_Click);
+            this.generateChangeLogToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("generateChangeLogToolStripMenuItem.Image")));
+            this.generateChangeLogToolStripMenuItem.Name = "generateChangeLogToolStripMenuItem";
+            this.generateChangeLogToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
+            this.generateChangeLogToolStripMenuItem.Text = "&Change Log...";
+            this.generateChangeLogToolStripMenuItem.Click += new System.EventHandler(this.generateChangeLogToolStripMenuItem_Click);
             // 
-            // toolStripMenuItem1
+            // toolStripMenuItem19
             // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(196, 6);
+            this.toolStripMenuItem19.Name = "toolStripMenuItem19";
+            this.toolStripMenuItem19.Size = new System.Drawing.Size(193, 6);
             // 
             // FormEdit
             // 
@@ -2362,7 +2369,6 @@
         private System.Windows.Forms.ToolStripMenuItem propertiesToolStripMenuItem;
         private System.Windows.Forms.OpenFileDialog openFileDialogChanges;
         private System.Windows.Forms.SaveFileDialog saveFileDialogChanges;
-        private System.Windows.Forms.ToolStripMenuItem generateChangeLogToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem3;
         private System.Windows.Forms.ToolStripButton toolStripButtonMoveUp;
         private System.Windows.Forms.ToolStripButton toolStripButtonMoveDown;
@@ -2516,5 +2522,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemEditBuildConcepts;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem generateChangeLogToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem19;
     }
 }

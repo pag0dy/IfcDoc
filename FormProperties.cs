@@ -223,6 +223,25 @@ namespace IfcDoc
                 this.textBoxEntityBase.Text = docEntity.BaseDefinition;
                 this.checkBoxEntityAbstract.Checked = docEntity.IsAbstract();
             }
+            else if(docObject is DocDefined)
+            {
+                DocDefined docDefined = (DocDefined)docObject;
+
+                this.textBoxAttributeType.Text = docDefined.DefinedType;
+
+                this.tabControl.TabPages.Add(this.tabPageAttribute);
+
+                this.labelAttributeInverse.Visible = false;
+                this.textBoxAttributeInverse.Visible = false;
+                this.buttonAttributeInverse.Visible = false;
+
+                this.checkBoxAttributeOptional.Visible = false;
+                this.checkBoxXsdTagless.Visible = false;
+                this.labelAttributeXsdFormat.Visible = false;
+                this.comboBoxAttributeXsdFormat.Visible = false;
+
+                this.LoadAttributeCardinality();
+            }
             else if (docObject is DocAttribute)
             {
                 DocAttribute docAttribute = (DocAttribute)docObject;
@@ -964,26 +983,6 @@ namespace IfcDoc
             //docTemplate.PrimaryDataType = this.textBoxPropertyData.Text;
         }
 
-        private void buttonEntityBase_Click(object sender, EventArgs e)
-        {
-            DocEntity docEntity = (DocEntity)this.m_target;
-            DocObject docBase = null;
-            if (docEntity.BaseDefinition != null)
-            {
-                this.m_map.TryGetValue(docEntity.BaseDefinition, out docBase);
-            }
-
-            using (FormSelectEntity form = new FormSelectEntity(null, (DocEntity)docBase, this.m_project, SelectDefinitionOptions.Entity))
-            {
-                DialogResult res = form.ShowDialog(this);
-                if (res == DialogResult.OK && form.SelectedEntity != null)
-                {
-                    docEntity.BaseDefinition = form.SelectedEntity.Name;
-                    this.textBoxEntityBase.Text = docEntity.BaseDefinition;
-                }
-            }            
-        }
-
         private void textBoxIdentityCode_TextChanged(object sender, EventArgs e)
         {
             this.m_target.Code = this.textBoxIdentityCode.Text;
@@ -1058,8 +1057,6 @@ namespace IfcDoc
             {
                 if (form.ShowDialog(this) == DialogResult.OK && form.SelectedEntity != null)
                 {
-                    DocAttribute docAttr = (DocAttribute)this.m_target;
-
                     // find existing type or reference type in schema
                     DocSchema docSchema = (DocSchema)this.m_path[1];
                     DocDefinition docDef = docSchema.GetDefinition(form.SelectedEntity.Name);
@@ -1103,19 +1100,41 @@ namespace IfcDoc
                         }
                     }
 
-                    if (docAttr.Definition.DiagramRectangle != null)
+                    if (this.m_target is DocAttribute)
                     {
-                        docDef.DiagramRectangle = new DocRectangle();
-                        docDef.DiagramNumber = docAttr.Definition.DiagramNumber;
-                        docDef.DiagramRectangle.X = docAttr.Definition.DiagramRectangle.X;
-                        docDef.DiagramRectangle.Y = docAttr.Definition.DiagramRectangle.Y;
-                        docDef.DiagramRectangle.Width = docAttr.Definition.DiagramRectangle.Width;
-                        docDef.DiagramRectangle.Height = docAttr.Definition.DiagramRectangle.Height;
-                    }
+                        DocAttribute docAttr = (DocAttribute)this.m_target;
 
-                    docAttr.Definition = docDef;
-                    docAttr.DefinedType = form.SelectedEntity.Name;
-                    this.textBoxAttributeType.Text = docAttr.DefinedType;
+                        if (docAttr.Definition.DiagramRectangle != null)
+                        {
+                            docDef.DiagramRectangle = new DocRectangle();
+                            docDef.DiagramNumber = docAttr.Definition.DiagramNumber;
+                            docDef.DiagramRectangle.X = docAttr.Definition.DiagramRectangle.X;
+                            docDef.DiagramRectangle.Y = docAttr.Definition.DiagramRectangle.Y;
+                            docDef.DiagramRectangle.Width = docAttr.Definition.DiagramRectangle.Width;
+                            docDef.DiagramRectangle.Height = docAttr.Definition.DiagramRectangle.Height;
+                        }
+
+                        docAttr.Definition = docDef;
+                        docAttr.DefinedType = form.SelectedEntity.Name;
+                        this.textBoxAttributeType.Text = docAttr.DefinedType;
+                    }
+                    else if(this.m_target is DocDefined)
+                    {
+                        DocDefined docDefined = (DocDefined)this.m_target;
+                        if (docDefined.Definition.DiagramRectangle != null)
+                        {
+                            docDef.DiagramRectangle = new DocRectangle();
+                            docDef.DiagramNumber = docDefined.Definition.DiagramNumber;
+                            docDef.DiagramRectangle.X = docDefined.Definition.DiagramRectangle.X;
+                            docDef.DiagramRectangle.Y = docDefined.Definition.DiagramRectangle.Y;
+                            docDef.DiagramRectangle.Width = docDefined.Definition.DiagramRectangle.Width;
+                            docDef.DiagramRectangle.Height = docDefined.Definition.DiagramRectangle.Height;
+                        }
+
+                        docDefined.Definition = docDef;
+                        docDefined.DefinedType = form.SelectedEntity.Name;
+                        this.textBoxAttributeType.Text = docDefined.DefinedType;
+                    }
                 }
             }
         }
@@ -1532,7 +1551,16 @@ namespace IfcDoc
 
         private DocAttribute GetAttributeAggregation()
         {
-            DocAttribute docAttr = (DocAttribute)this.m_target;
+            DocAttribute docAttr = null;
+            if (this.m_target is DocAttribute)
+            {
+                docAttr = (DocAttribute)this.m_target;
+            }
+            else if(this.m_target is DocDefined)
+            {
+                docAttr = ((DocDefined)this.m_target).Aggregation;
+            }
+
             if (this.listViewAttributeCardinality.SelectedItems.Count == 1)
             {
                 docAttr = (DocAttribute)this.listViewAttributeCardinality.SelectedItems[0].Tag;
@@ -1542,8 +1570,17 @@ namespace IfcDoc
 
         private void LoadAttributeCardinality()
         {
+            DocAttribute docAttr = null;
+            if(this.m_target is DocAttribute)
+            {
+                docAttr = (DocAttribute)this.m_target;
+            }
+            else if(this.m_target is DocDefined)
+            {
+                docAttr = ((DocDefined)this.m_target).Aggregation;
+            }
+
             this.m_loadagg = true;
-            DocAttribute docAttr = (DocAttribute)this.m_target;
             this.listViewAttributeCardinality.Items.Clear();
             while(docAttr != null)
             {
@@ -1561,13 +1598,35 @@ namespace IfcDoc
 
         private void buttonAttributeAggregationInsert_Click(object sender, EventArgs e)
         {
-            DocAttribute docAttr = (DocAttribute)this.m_target;
-            while(docAttr.AggregationAttribute != null)
+            DocAttribute docAttr = null;
+            if (this.m_target is DocAttribute)
             {
-                docAttr = docAttr.AggregationAttribute;
+                docAttr = (DocAttribute)this.m_target;
+                while (docAttr != null && docAttr.AggregationAttribute != null)
+                {
+                    docAttr = docAttr.AggregationAttribute;
+                }
+
+                docAttr.AggregationAttribute = new DocAttribute();
+            }
+            else if (this.m_target is DocDefined)
+            {
+                docAttr = ((DocDefined)this.m_target).Aggregation;
+                while (docAttr != null && docAttr.AggregationAttribute != null)
+                {
+                    docAttr = docAttr.AggregationAttribute;
+                }
+
+                if (docAttr != null)
+                {
+                    docAttr.AggregationAttribute = new DocAttribute();
+                }
+                else
+                {
+                    ((DocDefined)this.m_target).Aggregation = new DocAttribute();
+                }
             }
 
-            docAttr.AggregationAttribute = new DocAttribute();
             this.LoadAttributeCardinality();
         }
 
@@ -1591,8 +1650,11 @@ namespace IfcDoc
                 return;
 
             DocAttribute docAttr = this.GetAttributeAggregation();
-            docAttr.AggregationType = this.comboBoxAttributeAggregation.SelectedIndex;
-            this.LoadAttributeCardinality();
+            if (docAttr != null)
+            {
+                docAttr.AggregationType = this.comboBoxAttributeAggregation.SelectedIndex;
+                this.LoadAttributeCardinality();
+            }
         }
 
         private void textBoxAttributeAggregationMin_TextChanged(object sender, EventArgs e)
@@ -1652,12 +1714,17 @@ namespace IfcDoc
 
         private void buttonViewXsdDelete_Click(object sender, EventArgs e)
         {
-            DocXsdFormat docFormat = (DocXsdFormat)this.listViewViewXsd.SelectedItems[0].Tag;
-            DocModelView docView = (DocModelView)this.m_target;
-            docView.XsdFormats.Remove(docFormat);
-            docFormat.Delete();
+            this.listViewViewXsd.BeginUpdate();
+            for(int i = this.listViewViewXsd.SelectedItems.Count-1; i >= 0; i--)
+            {
+                DocXsdFormat docFormat = (DocXsdFormat)this.listViewViewXsd.SelectedItems[i].Tag;
+                DocModelView docView = (DocModelView)this.m_target;
+                docView.XsdFormats.Remove(docFormat);
+                docFormat.Delete();
 
-            this.listViewViewXsd.Items.RemoveAt(this.listViewViewXsd.SelectedIndices[0]);
+                this.listViewViewXsd.Items.RemoveAt(this.listViewViewXsd.SelectedIndices[i]);
+            }
+            this.listViewViewXsd.EndUpdate();
         }
 
         private void comboBoxViewXsd_SelectedIndexChanged(object sender, EventArgs e)
@@ -1679,7 +1746,7 @@ namespace IfcDoc
 
         private void listViewViewXsd_SelectedIndexChanged(object sender, EventArgs e)
         {
-            this.buttonViewXsdDelete.Enabled = (this.listViewViewXsd.SelectedItems.Count == 1);
+            this.buttonViewXsdDelete.Enabled = (this.listViewViewXsd.SelectedItems.Count >= 1);
 
             if (this.listViewViewXsd.SelectedItems.Count != 1)
             {
@@ -1753,6 +1820,63 @@ namespace IfcDoc
                 }
             }
 
+        }
+
+        private void buttonEntityBase_Click(object sender, EventArgs e)
+        {
+            DocEntity docEntity = (DocEntity)this.m_target;
+            DocObject docBase = null;
+            if (docEntity.BaseDefinition != null)
+            {
+                this.m_map.TryGetValue(docEntity.BaseDefinition, out docBase);
+            }
+
+            using (FormSelectEntity form = new FormSelectEntity(null, (DocEntity)docBase, this.m_project, SelectDefinitionOptions.Entity))
+            {
+                DialogResult res = form.ShowDialog(this);
+                if (res == DialogResult.OK && form.SelectedEntity != null)
+                {
+                    docEntity.BaseDefinition = form.SelectedEntity.Name;
+                    this.textBoxEntityBase.Text = docEntity.BaseDefinition;
+                }
+            }
+        }
+
+        private void buttonEntityBaseClear_Click(object sender, EventArgs e)
+        {
+            DocEntity docEntity = (DocEntity)this.m_target;
+
+            if (docEntity.BaseDefinition != null)
+            {
+                DocObject docBase = null;
+                this.m_map.TryGetValue(docEntity.BaseDefinition, out docBase);
+                if (docBase is DocEntity)
+                {
+                    DocEntity docEntBase = (DocEntity)docBase;
+
+                    foreach (DocSubtype docSub in docEntBase.Subtypes)
+                    {
+                        if (docSub.DefinedType == docEntity.Name)
+                        {
+                            docSub.Delete();
+                            docEntBase.Subtypes.Remove(docSub);
+                            break;
+                        }
+                    }
+
+                    foreach (DocLine docLine in docEntBase.Tree)
+                    {
+                        if (docLine.Definition == docEntity)
+                        {
+                            docLine.Delete();
+                            docEntBase.Tree.Remove(docLine);
+                            break;
+                        }
+                    }
+                }
+
+                docEntity.BaseDefinition = null;
+            }
         }
 
 

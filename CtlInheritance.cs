@@ -109,7 +109,7 @@ namespace IfcDoc
             }
 
             this.m_hitmap = new Dictionary<Rectangle, DocEntity>();
-            this.m_image = FormatPNG.CreateInheritanceDiagram(this.m_project, included, this.m_entity, this.Font, this.m_hitmap);
+            this.m_image = FormatPNG.CreateInheritanceDiagram(this.m_project, included, this.m_entity, null, this.Font, this.m_hitmap);
             if (this.m_image != null)
             {
                 this.AutoScrollMinSize = new Size(this.m_image.Width, this.m_image.Height);

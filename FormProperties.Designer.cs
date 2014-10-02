@@ -139,9 +139,9 @@
             this.columnHeaderCardinalityMaximum = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.buttonAttributeInverse = new System.Windows.Forms.Button();
             this.textBoxAttributeInverse = new System.Windows.Forms.TextBox();
-            this.label26 = new System.Windows.Forms.Label();
+            this.labelAttributeInverse = new System.Windows.Forms.Label();
             this.checkBoxXsdTagless = new System.Windows.Forms.CheckBox();
-            this.label5 = new System.Windows.Forms.Label();
+            this.labelAttributeXsdFormat = new System.Windows.Forms.Label();
             this.comboBoxAttributeXsdFormat = new System.Windows.Forms.ComboBox();
             this.labelAttributeAggregation = new System.Windows.Forms.Label();
             this.checkBoxAttributeOptional = new System.Windows.Forms.CheckBox();
@@ -199,6 +199,7 @@
             this.buttonClose = new System.Windows.Forms.Button();
             this.openFileDialogIcon = new System.Windows.Forms.OpenFileDialog();
             this.openFileDialogExample = new System.Windows.Forms.OpenFileDialog();
+            this.buttonEntityBaseClear = new System.Windows.Forms.Button();
             this.tabControl.SuspendLayout();
             this.tabPageGeneral.SuspendLayout();
             this.tabPageIdentity.SuspendLayout();
@@ -1231,6 +1232,7 @@
             // 
             // tabPageEntity
             // 
+            this.tabPageEntity.Controls.Add(this.buttonEntityBaseClear);
             this.tabPageEntity.Controls.Add(this.checkBoxEntityAbstract);
             this.tabPageEntity.Controls.Add(this.buttonEntityBase);
             this.tabPageEntity.Controls.Add(this.textBoxEntityBase);
@@ -1263,7 +1265,6 @@
             this.buttonEntityBase.TabIndex = 5;
             this.buttonEntityBase.Text = "Select...";
             this.buttonEntityBase.UseVisualStyleBackColor = true;
-            this.buttonEntityBase.Visible = false;
             this.buttonEntityBase.Click += new System.EventHandler(this.buttonEntityBase_Click);
             // 
             // textBoxEntityBase
@@ -1273,7 +1274,7 @@
             this.textBoxEntityBase.Location = new System.Drawing.Point(7, 26);
             this.textBoxEntityBase.Name = "textBoxEntityBase";
             this.textBoxEntityBase.ReadOnly = true;
-            this.textBoxEntityBase.Size = new System.Drawing.Size(331, 20);
+            this.textBoxEntityBase.Size = new System.Drawing.Size(250, 20);
             this.textBoxEntityBase.TabIndex = 4;
             // 
             // label6
@@ -1298,9 +1299,9 @@
             this.tabPageAttribute.Controls.Add(this.listViewAttributeCardinality);
             this.tabPageAttribute.Controls.Add(this.buttonAttributeInverse);
             this.tabPageAttribute.Controls.Add(this.textBoxAttributeInverse);
-            this.tabPageAttribute.Controls.Add(this.label26);
+            this.tabPageAttribute.Controls.Add(this.labelAttributeInverse);
             this.tabPageAttribute.Controls.Add(this.checkBoxXsdTagless);
-            this.tabPageAttribute.Controls.Add(this.label5);
+            this.tabPageAttribute.Controls.Add(this.labelAttributeXsdFormat);
             this.tabPageAttribute.Controls.Add(this.comboBoxAttributeXsdFormat);
             this.tabPageAttribute.Controls.Add(this.labelAttributeAggregation);
             this.tabPageAttribute.Controls.Add(this.checkBoxAttributeOptional);
@@ -1453,14 +1454,14 @@
             this.textBoxAttributeInverse.Size = new System.Drawing.Size(250, 20);
             this.textBoxAttributeInverse.TabIndex = 4;
             // 
-            // label26
+            // labelAttributeInverse
             // 
-            this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(6, 57);
-            this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(101, 13);
-            this.label26.TabIndex = 3;
-            this.label26.Text = "Inverse for attribute:";
+            this.labelAttributeInverse.AutoSize = true;
+            this.labelAttributeInverse.Location = new System.Drawing.Point(6, 57);
+            this.labelAttributeInverse.Name = "labelAttributeInverse";
+            this.labelAttributeInverse.Size = new System.Drawing.Size(101, 13);
+            this.labelAttributeInverse.TabIndex = 3;
+            this.labelAttributeInverse.Text = "Inverse for attribute:";
             // 
             // checkBoxXsdTagless
             // 
@@ -1474,15 +1475,15 @@
             this.checkBoxXsdTagless.UseVisualStyleBackColor = true;
             this.checkBoxXsdTagless.CheckedChanged += new System.EventHandler(this.checkBoxXsdTagless_CheckedChanged);
             // 
-            // label5
+            // labelAttributeXsdFormat
             // 
-            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(6, 341);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(67, 13);
-            this.label5.TabIndex = 16;
-            this.label5.Text = "XSD Format:";
+            this.labelAttributeXsdFormat.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.labelAttributeXsdFormat.AutoSize = true;
+            this.labelAttributeXsdFormat.Location = new System.Drawing.Point(6, 341);
+            this.labelAttributeXsdFormat.Name = "labelAttributeXsdFormat";
+            this.labelAttributeXsdFormat.Size = new System.Drawing.Size(67, 13);
+            this.labelAttributeXsdFormat.TabIndex = 16;
+            this.labelAttributeXsdFormat.Text = "XSD Format:";
             // 
             // comboBoxAttributeXsdFormat
             // 
@@ -2324,6 +2325,17 @@
             this.openFileDialogExample.Filter = "Industry Foundation Classes (*.ifc)|*.ifc";
             this.openFileDialogExample.Title = "Load IFC Example";
             // 
+            // buttonEntityBaseClear
+            // 
+            this.buttonEntityBaseClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonEntityBaseClear.Location = new System.Drawing.Point(263, 53);
+            this.buttonEntityBaseClear.Name = "buttonEntityBaseClear";
+            this.buttonEntityBaseClear.Size = new System.Drawing.Size(75, 23);
+            this.buttonEntityBaseClear.TabIndex = 7;
+            this.buttonEntityBaseClear.Text = "Clear";
+            this.buttonEntityBaseClear.UseVisualStyleBackColor = true;
+            this.buttonEntityBaseClear.Click += new System.EventHandler(this.buttonEntityBaseClear_Click);
+            // 
             // FormProperties
             // 
             this.AcceptButton = this.buttonClose;
@@ -2493,7 +2505,7 @@
         private System.Windows.Forms.OpenFileDialog openFileDialogIcon;
         private System.Windows.Forms.Button buttonApplicabilityAddTemplate;
         private System.Windows.Forms.ImageList imageListRules;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label labelAttributeXsdFormat;
         private System.Windows.Forms.ComboBox comboBoxAttributeXsdFormat;
         private System.Windows.Forms.CheckBox checkBoxXsdTagless;
         private System.Windows.Forms.Button button2;
@@ -2519,7 +2531,7 @@
         private System.Windows.Forms.CheckBox checkBoxConceptOverride;
         private System.Windows.Forms.Button buttonAttributeInverse;
         private System.Windows.Forms.TextBox textBoxAttributeInverse;
-        private System.Windows.Forms.Label label26;
+        private System.Windows.Forms.Label labelAttributeInverse;
         private System.Windows.Forms.ListView listViewAttributeCardinality;
         private System.Windows.Forms.ColumnHeader columnHeaderCardinalityAggregation;
         private System.Windows.Forms.ColumnHeader columnHeaderCardinalityMinimum;
@@ -2551,5 +2563,6 @@
         private System.Windows.Forms.CheckedListBox checkedListBoxExampleViews;
         private System.Windows.Forms.Label label30;
         private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.Button buttonEntityBaseClear;
     }
 }

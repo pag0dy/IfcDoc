@@ -565,7 +565,11 @@ namespace IfcDoc
 
                         if(ent.defined.object_line_layout != null)
                         {
-                            docDefined.DiagramLine = new List<DocPoint>();
+                            foreach(DocPoint docPoint in docDefined.DiagramLine)
+                            {
+                                docPoint.Delete();
+                            }
+                            docDefined.DiagramLine.Clear();
                             ImportVexLine(ent.defined.object_line_layout, null, docDefined.DiagramLine, null);
                         }
 
@@ -617,7 +621,11 @@ namespace IfcDoc
                         if (ent.whererules != null)
                         {
                             // rules are replaced, not merged (template don't apply here)
-                            docDefined.WhereRules = new List<DocWhereRule>();
+                            foreach(DocWhereRule docWhere in docDefined.WhereRules)
+                            {
+                                docWhere.Delete();
+                            }
+                            docDefined.WhereRules.Clear();
                             foreach (WHERE_RULE where in ent.whererules)
                             {
                                 DocWhereRule docWhere = new DocWhereRule();

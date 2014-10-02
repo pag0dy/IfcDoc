@@ -396,7 +396,7 @@ namespace IfcDoc.Format.XSD
                     }
 
                     string maxoccurs = "unbounded";
-                    if (docAttr.AggregationUpper != null && docAttr.AggregationUpper != "0")
+                    if (!String.IsNullOrEmpty(docAttr.AggregationUpper) && docAttr.AggregationUpper != "0" && docAttr.AggregationUpper != "?")
                     {
                         maxoccurs = docAttr.GetAggregationNestingUpper().ToString();
                     }
@@ -939,10 +939,8 @@ namespace IfcDoc.Format.XSD
                     defined = "xs:double";
                     break;
 
+                case "IfcBinary":
                 case "BINARY":
-                    defined = "ifc:hexBinary"; // extra bits, so requires special definition
-                    break;
-
                 case "BINARY (32)":
                     defined = "xs:hexBinary"; // byte-aligned, so regular hex encoding
                     break;

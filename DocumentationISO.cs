@@ -528,7 +528,7 @@ namespace IfcDoc
                     else if (def is DocEntity) // no longer used directly; now for each model view in annex D
                     {
                         System.IO.Directory.CreateDirectory(Properties.Settings.Default.OutputPath + "\\diagrams\\" + MakeLinkName(docView));
-                        using (Image image = IfcDoc.Format.PNG.FormatPNG.CreateEntityDiagram((DocEntity)def, docView, mapEntity, layout, docProject))
+                        using (Image image = IfcDoc.Format.PNG.FormatPNG.CreateConceptDiagram((DocEntity)def, docView, mapEntity, layout, docProject))
                         {
                             string filepath = Properties.Settings.Default.OutputPath + "\\diagrams\\" + MakeLinkName(docView) + "\\" + filename;
                             image.Save(filepath, System.Drawing.Imaging.ImageFormat.Png);
@@ -848,11 +848,25 @@ namespace IfcDoc
 
             SortedList<string, DocConceptRoot> sortlist = new SortedList<string, DocConceptRoot>();
 
-            foreach (DocConceptRoot docRoot in docView.ConceptRoots)
+            // base view
+            DocModelView docBase = docView;
+            while (docBase != null)
             {
-                if (!sortlist.ContainsKey(docRoot.ApplicableEntity.Name))
+                foreach (DocConceptRoot docRoot in docBase.ConceptRoots)
                 {
-                    sortlist.Add(docRoot.ApplicableEntity.Name, docRoot);
+                    if (!sortlist.ContainsKey(docRoot.ApplicableEntity.Name))
+                    {
+                        sortlist.Add(docRoot.ApplicableEntity.Name, docRoot);
+                    }
+                }
+
+                if (!String.IsNullOrEmpty(docBase.BaseView))
+                {
+                    docBase = docProject.GetView(Guid.Parse(docBase.BaseView));
+                }
+                else
+                {
+                    docBase = null;
                 }
             }
 
@@ -1158,7 +1172,7 @@ namespace IfcDoc
 
             // new way with table
             DocModelRule[] parameters = usage.Definition.GetParameterRules();
-            if (parameters != null && parameters.Length > 0)
+            if (parameters != null && parameters.Length > 0 && listItems.Length > 0)
             {
                 // check if descriptions are provided
                 bool showdescriptions = false;
@@ -1760,18 +1774,19 @@ namespace IfcDoc
             {
                 if (included == null || included.ContainsKey(docView))
                 {
+                    sb.AppendLine("<section>");
+                    sb.AppendLine("<h5 class=\"num\">Definitions applying to " + docView.Name + "</h5>");
+
+                    // link to instance diagram
+                    string linkdiagram = MakeLinkName(docView) + "/" + MakeLinkName(entity) + ".htm";
+                    sb.Append("<p><a href=\"../../../annex/annex-d/" + linkdiagram + "\"><img style=\"border: 0px\" src=\"../../../img/diagram.png\" />&nbsp;Instance diagram</a></p>");
+
+                    sb.AppendLine("<hr />");
+
                     foreach (DocConceptRoot docRoot in docView.ConceptRoots)
                     {
                         if (docRoot.ApplicableEntity == entity)
                         {
-                            sb.AppendLine("<section>");
-                            sb.AppendLine("<h5 class=\"num\">Definitions applying to " + docView.Name + "</h5>");
-
-                            // link to instance diagram
-                            string linkdiagram = MakeLinkName(docView) + "/" + MakeLinkName(entity) + ".htm";
-                            sb.Append("<p><a href=\"../../../annex/annex-d/" + linkdiagram + "\"><img style=\"border: 0px\" src=\"../../../img/diagram.png\" />&nbsp;Instance diagram</a></p>");
-
-                            sb.AppendLine("<hr />");
 
                             sb.Append(docRoot.Documentation);
 
@@ -1798,11 +1813,11 @@ namespace IfcDoc
                                 }
                                 sb.AppendLine("</details>");
                             }
-                            sb.AppendLine("</section>");
+
+
 
                         }
                     }
-
 
                     // inherited use definitions
                     List<string> listLines = new List<string>();
@@ -1874,6 +1889,7 @@ namespace IfcDoc
                     }
 
 
+                    sb.AppendLine("</section>");
                 }
             }
 
@@ -2005,6 +2021,8 @@ namespace IfcDoc
             }
 
             CopyFiles(pathContent, path);
+
+            System.IO.Directory.CreateDirectory(Properties.Settings.Default.OutputPath + "\\diagrams");
 
             Dictionary<string, DocPropertyEnumeration> mapPropEnum = new Dictionary<string, DocPropertyEnumeration>();
             foreach (DocSection docSection in docProject.Sections)
@@ -2404,6 +2422,13 @@ namespace IfcDoc
                             }
                             else if (iSection == 3)
                             {
+                                htmTOC.WriteTOC(0, "<a class=\"listing-link\" href=\"schema/chapter-3.htm#terms\">3.1 Terms and definitions</a>");
+                                htmSectionTOC.WriteLine("<tr class=\"std\"><td class=\"menu\">3.1 <a class=\"listing-link\" href=\"chapter-3.htm#terms\" target=\"info\" >Terms and definitions</a></td></tr>\r\n");
+
+                                htmTOC.WriteTOC(0, "<a class=\"listing-link\" href=\"schema/chapter-3.htm#abbreviated\">3.2 Abbreviated terms</a>");
+                                htmSectionTOC.WriteLine("<tr class=\"std\"><td class=\"menu\">3.2 <a class=\"listing-link\" href=\"chapter-3.htm#abbreviated\" target=\"info\" >Abbreviated terms</a></td></tr>\r\n");
+
+                                htmSection.WriteLine("<a id=\"terms\"/>");
                                 htmSection.WriteLine("<h2>3.1 Terms and definitions</h2>");
                                 htmSection.WriteLine("<dl>");
                                 if (docProject.Terms != null)
@@ -2414,6 +2439,7 @@ namespace IfcDoc
                                     }
                                 }
                                 htmSection.WriteLine("</dl>");
+                                htmSection.WriteLine("<a id=\"abbreviated\"/>");
                                 htmSection.WriteLine("<h2>3.2 Abbreviated terms</h2>");
                                 htmSection.WriteLine("<table class=\"abbreviatedterms\">");
                                 if (docProject.Abbreviations != null)
@@ -2657,9 +2683,26 @@ namespace IfcDoc
                                                             htmDef.WriteSummaryHeader("Attribute definitions", true);
 
                                                             htmDef.WriteLine("<table class=\"attributes\">");
-                                                            htmDef.WriteLine("<tr><th>Attribute</th><th>Type</th><th>Cardinality</th><th>Description</th></tr>");
+                                                            htmDef.WriteLine("<tr><th>#</th><th>Attribute</th><th>Type</th><th>Cardinality</th><th>Description</th></tr>");
 
-                                                            htmDef.WriteEntityAttributes(entity, entity);
+                                                            int sequence = 0;
+
+                                                            // count direct attributes of base classes
+                                                            DocEntity docEntBase = entity;
+                                                            DocObject docBase = null;
+                                                            while(!String.IsNullOrEmpty(docEntBase.BaseDefinition) && mapEntity.TryGetValue(docEntBase.BaseDefinition, out docBase))
+                                                            {
+                                                                docEntBase = (DocEntity)docBase;
+                                                                foreach(DocAttribute docAttrBase in docEntBase.Attributes)
+                                                                {
+                                                                    if (docAttrBase.Inverse == null && docAttrBase.Derived == null)
+                                                                    {
+                                                                        sequence++;
+                                                                    }
+                                                                }
+                                                            }
+
+                                                            htmDef.WriteEntityAttributes(entity, entity, ref sequence);
 
                                                             htmDef.WriteLine("</table>");
 
@@ -2706,7 +2749,45 @@ namespace IfcDoc
 
                                                         htmDef.WriteLine("<section>");
                                                         htmDef.WriteLine("<h5 class=\"num\">Inherited definitions from supertypes</h5>");
-                                                        htmDef.WriteEntityInheritance(entity);
+
+                                                        Dictionary<Rectangle, DocEntity> map = new Dictionary<Rectangle, DocEntity>();
+                                                        using (Font font = new Font(FontFamily.GenericSansSerif, 8.0f))
+                                                        {
+                                                            using (Image img = FormatPNG.CreateInheritanceDiagramForEntity(docProject, included, entity, font, map))
+                                                            {
+                                                                img.Save(path + "\\diagrams\\" + entity.Name.ToLower() + ".png", System.Drawing.Imaging.ImageFormat.Png);
+                                                            }
+                                                        }
+
+                                                        htmDef.WriteSummaryHeader("Entity inheritance", true);
+                                                        htmDef.WriteLine("<img src=\"../../../diagrams/" + entity.Name.ToLower() + ".png\" usemap=\"#f\"/>");
+
+                                                        htmDef.WriteLine("<map name=\"f\">");
+                                                        foreach (Rectangle rc in map.Keys)
+                                                        {
+                                                            DocEntity docEntref = map[rc];
+                                                            DocSchema docEntsch = docProject.GetSchemaOfDefinition(docEntref);
+
+                                                            string hyperlink = "../../../schema/" + docEntsch.Name.ToLower() + "/lexical/" + docEntref.Name.ToLower() + ".htm";
+                                                            htmDef.WriteLine("<area shape=\"rect\" coords=\"" + rc.Left + "," + rc.Top + "," + rc.Right + "," + rc.Bottom + "\" href=\"" + hyperlink + "\" alt=\"" + docEntref.Name + "\" />");
+                                                        }
+                                                        htmDef.WriteLine("</map>");
+                                                        
+                                                        htmDef.WriteSummaryFooter();
+
+                                                        htmDef.WriteSummaryHeader("Attribute inheritance", false);
+
+                                                        htmDef.WriteLine("<table class=\"attributes\">");
+                                                        htmDef.WriteLine("<tr><th>#</th><th>Attribute</th><th>Type</th><th>Cardinality</th><th>Description</th></tr>");
+
+                                                        int sequenceX = 0;
+                                                        htmDef.WriteEntityInheritance(entity, entity, ref sequenceX);
+
+                                                        htmDef.WriteLine("</table>");
+
+                                                        htmDef.WriteSummaryFooter();
+
+                                                        //htmDef.WriteEntityInheritance(entity);
 
                                                         string conceptdocumentation = FormatEntityConcepts(docProject, entity, mapEntity, mapSchema, included, listFigures, listTables);
                                                         htmDef.WriteDocumentationForISO(conceptdocumentation, entity, Properties.Settings.Default.NoHistory);
@@ -3241,6 +3322,7 @@ namespace IfcDoc
                             // create page for model view
                             htmSection.WriteComputerListing("IFC4", "ifc4", 0);
 
+                            /*
                             DoExport(docProject, path + @"\annex\annex-a\default\ifc4.exp", null, null, instances, true);
                             DoExport(docProject, path + @"\annex\annex-a\default\ifcXML4.xsd", null, null, instances, true);
                             DoExport(docProject, path + @"\annex\annex-a\default\ifc4.ifc", null, null, instances, true);
@@ -3269,6 +3351,11 @@ namespace IfcDoc
                                 htmXSD.Write("</span>");
                                 htmXSD.WriteFooter("");
                             }
+                             */
+                        }
+                        else if(chAnnex == 'C')
+                        {
+                            htmSection.WriteInheritanceMapping(docProject, views);
                         }
 
                         htmSection.WriteFooter(Properties.Settings.Default.Footer);
@@ -3288,7 +3375,7 @@ namespace IfcDoc
                             "<table class=\"menu\" summary=\"Table of Contents\">\r\n");
 
                         // top level
-                        htmSectionTOC.WriteLine("<tr class=\"std\"><td class=\"menu\">" + chAnnex + ". <a class=\"listing-link\" href=\"annex-" + chAnnex + ".htm\" target=\"info\" >" + docannex.Name + "</a></td></tr>\r\n");
+                        htmSectionTOC.WriteLine("<tr class=\"std\"><td class=\"menu\">" + chAnnex + ". <a class=\"listing-link\" href=\"annex-" + chAnnex.ToString().ToLower() + ".htm\" target=\"info\" >" + docannex.Name + "</a></td></tr>\r\n");
 
                         switch (chAnnex)
                         {
@@ -3313,8 +3400,6 @@ namespace IfcDoc
                                             {
                                                 htmRoot.WriteComputerListing(docModelView.Name, docModelView.Code, iCodeView);
                                             }
-
-                                            DoExport(docProject, path + @"\annex\annex-a\" + MakeLinkName(docModelView) + @"\" + docModelView.Code + ".mvdxml", new DocModelView[] { docModelView }, locales, instances, true);
 
                                             // show filtered schemas for model views only if exchanges defined
                                             if (Properties.Settings.Default.ConceptTables)
@@ -3366,6 +3451,9 @@ namespace IfcDoc
                                                     htmXSD.WriteFooter("");
                                                 }
                                             }
+
+                                            DoExport(docProject, path + @"\annex\annex-a\" + MakeLinkName(docModelView) + @"\" + docModelView.Code + ".mvdxml", new DocModelView[] { docModelView }, locales, instances, true);
+
                                         }
                                     }
                                 }
@@ -3550,7 +3638,7 @@ namespace IfcDoc
                                                 Dictionary<DocObject, bool> viewinclude = new Dictionary<DocObject, bool>();
                                                 Dictionary<Rectangle, DocEntity> mapRectangle = new Dictionary<Rectangle, DocEntity>();
                                                 docProject.RegisterObjectsInScope(docView, viewinclude);
-                                                using (Image imgDiagram = FormatPNG.CreateInheritanceDiagram(docProject, viewinclude, docEntityRoot, new Font(FontFamily.GenericSansSerif, 8.0f), mapRectangle))
+                                                using (Image imgDiagram = FormatPNG.CreateInheritanceDiagram(docProject, viewinclude, docEntityRoot, null, new Font(FontFamily.GenericSansSerif, 8.0f), mapRectangle))
                                                 {
                                                     using (FormatHTM htmCover = new FormatHTM(path + @"\annex\annex-c\" + MakeLinkName(docView) + @"\index.htm", mapEntity, mapSchema, included))
                                                     {

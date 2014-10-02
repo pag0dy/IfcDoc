@@ -121,7 +121,7 @@ namespace IfcDoc.Schema
                 return;
             }
 
-            if (type.BaseType != typeof(object) && type.BaseType != typeof(SEntity))
+            if (type.BaseType != null && type.BaseType != typeof(object) && type.BaseType != typeof(SEntity))
             {
                 BuildFieldList(type.BaseType, list);
             }
@@ -168,6 +168,47 @@ namespace IfcDoc.Schema
             base.Delete();
         }
 
+        /// <summary>
+        /// Marks object as in-use (setting Exists to True) such that any unmarked objects may then be garbage collected.
+        /// </summary>
+        public void Mark()
+        {
+            if (this.Existing)
+                return;
+
+            this.Existing = true;
+
+            Type t = this.GetType();
+            IList<FieldInfo> listFields = SEntity.GetFieldsOrdered(t);
+            foreach (FieldInfo field in listFields)
+            {
+                if (typeof(SEntity).IsAssignableFrom(field.FieldType))
+                {
+                    SEntity obj = field.GetValue(this) as SEntity;
+                    if(obj != null)
+                    {
+                        obj.Mark();
+                    }
+                }
+                else if(field.FieldType.IsGenericType && field.FieldType.GetGenericTypeDefinition() == typeof(List<>) &&
+                    typeof(SEntity).IsAssignableFrom(field.FieldType.GetGenericArguments()[0]))
+
+                {
+                    System.Collections.IList list = (System.Collections.IList)field.GetValue(this) as System.Collections.IList;
+                    if(list != null)
+                    {
+                        foreach(object obj in list)
+                        {
+                            if(obj is SEntity)
+                            {
+                                SEntity ent = (SEntity)obj;
+                                ent.Mark();
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
         /// <summary>
         /// Gets user-friendly caption describing the type of object.

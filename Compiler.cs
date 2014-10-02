@@ -57,7 +57,7 @@ namespace IfcDoc
                 {
                     foreach (DocEntity docEntity in docSchema.Entities)
                     {
-                        //if (included == null || included.ContainsKey(docEntity))
+                        if (included == null || included.ContainsKey(docEntity))
                         {
                             this.m_definitions.Add(docEntity.Name, docEntity);
                             this.m_namespaces.Add(docEntity.Name, docSchema.Name);
@@ -66,7 +66,7 @@ namespace IfcDoc
 
                     foreach (DocType docType in docSchema.Types)
                     {
-                        //if (included == null || included.ContainsKey(docType))
+                        if (included == null || included.ContainsKey(docType))
                         {
                             this.m_definitions.Add(docType.Name, docType);
                             this.m_namespaces.Add(docType.Name, docSchema.Name);
@@ -333,6 +333,11 @@ namespace IfcDoc
         /// <returns></returns>
         public Type RegisterType(string strtype)
         {
+            if(strtype == "IfcLabel")
+            {
+                this.ToString();
+            }
+
             // this implementation maps direct and inverse attributes to fields for brevity; a production implementation would use properties as well
 
             if (strtype == null)
@@ -438,6 +443,9 @@ namespace IfcDoc
                     if (String.IsNullOrEmpty(docAttribute.Derived))
                     {
                         Type typefield = RegisterType(docAttribute.DefinedType);
+                        if (typefield == null)
+                            typefield = typeof(object); // excluded from scope
+
                         if (docAttribute.AggregationType != 0)
                         {
                             if (docAttribute.AggregationAttribute != null)
@@ -520,6 +528,9 @@ namespace IfcDoc
             {
                 DocDefined docDef = (DocDefined)docType;
                 attr |= TypeAttributes.Sealed;
+
+                if (docDef.DefinedType == docDef.Name)
+                    return null;
 
                 TypeBuilder tb = this.m_module.DefineType(schema + "." + docType.Name, attr, typeof(ValueType));
 
