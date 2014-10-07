@@ -13,6 +13,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 
+using IfcDoc.Schema;
 using IfcDoc.Format.PNG;
 using IfcDoc.Schema.DOC;
 
@@ -33,6 +34,7 @@ namespace IfcDoc
         Rectangle m_rcHighlight;
         Dictionary<string, DocObject> m_map;
         Dictionary<Rectangle, DocModelRule> m_hitmap;
+        SEntity m_instance; // optional instance to highlight
 
         public event EventHandler SelectionChanged;
 
@@ -189,6 +191,19 @@ namespace IfcDoc
             }
         }
 
+        public SEntity CurrentInstance
+        {
+            get
+            {
+                return this.m_instance;
+            }
+            set
+            {
+                this.m_instance = value;
+                this.Redraw();
+            }
+        }
+
         public void Redraw()
         {
             if(this.m_image != null)
@@ -202,7 +217,7 @@ namespace IfcDoc
             this.m_hitmap.Clear();
             if (this.m_template != null && this.m_project != null && this.m_map != null)
             {
-                this.m_image = FormatPNG.CreateTemplateDiagram(this.m_template, this.m_map, this.m_hitmap, this.m_project);
+                this.m_image = FormatPNG.CreateTemplateDiagram(this.m_template, this.m_map, this.m_hitmap, this.m_project, this.m_instance);
                 if (this.m_image != null)
                 {
                     this.AutoScrollMinSize = new Size(this.m_image.Width, this.m_image.Height);
@@ -220,7 +235,7 @@ namespace IfcDoc
                     }
                 }
 
-                this.m_image = FormatPNG.CreateConceptDiagram(this.m_conceptroot.ApplicableEntity, docView, this.m_map, this.m_hitmap, this.m_project);
+                this.m_image = FormatPNG.CreateConceptDiagram(this.m_conceptroot.ApplicableEntity, docView, this.m_map, this.m_hitmap, this.m_project, this.m_instance);
                 if (this.m_image != null)
                 {
                     this.AutoScrollMinSize = new Size(this.m_image.Width, this.m_image.Height);

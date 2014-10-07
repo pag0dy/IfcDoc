@@ -6,6 +6,7 @@ using System.Data;
 using System.Text;
 using System.Windows.Forms;
 
+using IfcDoc.Schema;
 using IfcDoc.Schema.DOC;
 
 namespace IfcDoc
@@ -19,6 +20,7 @@ namespace IfcDoc
         Dictionary<string, DocObject> m_map;
         DocModelRule[] m_columns;
         bool m_editcon;
+        SEntity m_instance;
 
         public CtlParameters()
         {
@@ -93,6 +95,18 @@ namespace IfcDoc
             get
             {
                 return this.m_selectedcolumn;
+            }
+        }
+
+        public SEntity CurrentInstance
+        {
+            get
+            {
+                return this.m_instance;
+            }
+            set
+            {
+                this.m_instance = value;
             }
         }
 

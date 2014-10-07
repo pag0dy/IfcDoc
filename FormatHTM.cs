@@ -1245,7 +1245,10 @@ namespace IfcDoc.Format.HTM
             WriteInheritanceMappingLevel(null, alphaEntity.Values, maps, 0);
 
             this.WriteLine("</table>");
-            this.WriteFooter(Properties.Settings.Default.Footer);
+
+            //!!!TODO!!!//
+
+                this.WriteFooter(Properties.Settings.Default.Footer);
         }
 
         private void WriteInheritanceMappingLevel(string baseclass, IList<DocEntity> list, Dictionary<DocObject, bool>[] maps, int indent)
@@ -1256,7 +1259,7 @@ namespace IfcDoc.Format.HTM
                 if (entity.BaseDefinition == baseclass)
                 {
                     string schema = this.m_mapSchema[entity.Name];
-                    string hyperlink = @"../../../schema/" + schema.ToLower() + @"/lexical/" + entity.Name.ToLower() + ".htm";
+                    string hyperlink = @"../schema/" + schema.ToLower() + @"/lexical/" + entity.Name.ToLower() + ".htm";
 
                     this.Write("<tr><td>");
 

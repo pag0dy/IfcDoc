@@ -6,6 +6,7 @@ using System.Data;
 using System.Text;
 using System.Windows.Forms;
 
+using IfcDoc.Schema;
 using IfcDoc.Schema.DOC;
 
 namespace IfcDoc
@@ -17,6 +18,7 @@ namespace IfcDoc
         DocTemplateDefinition m_template;
         DocAttribute m_attribute;
         DocModelRule m_selection;
+        SEntity m_instance;
 
         public event EventHandler SelectionChanged;
         public event EventHandler ContentChanged;
@@ -103,6 +105,33 @@ namespace IfcDoc
                 }
 
                 UpdateCommands();
+            }
+        }
+
+        public SEntity CurrentInstance
+        {
+            get
+            {
+                return this.m_instance;
+            }
+            set
+            {
+                this.m_instance = value;
+
+                foreach (TreeNode tn in this.treeViewTemplate.Nodes)
+                {
+                    UpdateTreeNodeValidation(tn);
+                }
+            }
+        }
+
+        private void UpdateTreeNodeValidation(TreeNode tn)
+        {
+            //...
+
+            foreach (TreeNode ts in tn.Nodes)
+            {
+                UpdateTreeNodeValidation(ts);
             }
         }
 
@@ -521,7 +550,11 @@ namespace IfcDoc
             this.m_attribute = null;
             this.m_selection = e.Node.Tag as DocModelRule;
             UpdateCommands();
-            this.SelectionChanged(this, EventArgs.Empty);
+
+            if (this.SelectionChanged != null)
+            {
+                this.SelectionChanged(this, EventArgs.Empty);
+            }
         }
 
         private void toolStripButtonMoveUp_Click(object sender, EventArgs e)

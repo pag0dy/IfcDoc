@@ -516,7 +516,7 @@ namespace IfcDoc
                     if (def is DocTemplateDefinition)
                     {
                         System.IO.Directory.CreateDirectory(Properties.Settings.Default.OutputPath + "\\schema\\templates\\diagrams");
-                        using (Image image = IfcDoc.Format.PNG.FormatPNG.CreateTemplateDiagram((DocTemplateDefinition)def, mapEntity, layout, docProject))
+                        using (Image image = IfcDoc.Format.PNG.FormatPNG.CreateTemplateDiagram((DocTemplateDefinition)def, mapEntity, layout, docProject, null))
                         {
                             if (image != null)
                             {
@@ -528,7 +528,7 @@ namespace IfcDoc
                     else if (def is DocEntity) // no longer used directly; now for each model view in annex D
                     {
                         System.IO.Directory.CreateDirectory(Properties.Settings.Default.OutputPath + "\\diagrams\\" + MakeLinkName(docView));
-                        using (Image image = IfcDoc.Format.PNG.FormatPNG.CreateConceptDiagram((DocEntity)def, docView, mapEntity, layout, docProject))
+                        using (Image image = IfcDoc.Format.PNG.FormatPNG.CreateConceptDiagram((DocEntity)def, docView, mapEntity, layout, docProject, null))
                         {
                             string filepath = Properties.Settings.Default.OutputPath + "\\diagrams\\" + MakeLinkName(docView) + "\\" + filename;
                             image.Save(filepath, System.Drawing.Imaging.ImageFormat.Png);
@@ -902,35 +902,38 @@ namespace IfcDoc
 
                 foreach (DocTemplateUsage docConcept in docRoot.Concepts)
                 {
-                    sb.Append("<tr><td>&nbsp;&nbsp;<a href=\"../../");
-                    sb.Append(schema.ToLower());
-                    sb.Append("/lexical/");
-                    sb.Append(ent.ToLower());
-                    sb.Append(".htm#");
-                    sb.Append(docConcept.Definition.Name.ToLower().Replace(' ', '-'));
-                    sb.Append("\">");
-                    sb.Append(docConcept.Definition.Name);
-                    sb.Append("</a></td><td>");
-
-                    bool first = true;
-                    if (docConcept.Definition.Rules != null)
+                    if (docConcept.Definition != null)
                     {
-                        foreach (DocModelRule docRule in docConcept.Definition.Rules)
+
+                        sb.Append("<tr><td>&nbsp;&nbsp;<a href=\"../../");
+                        sb.Append(schema.ToLower());
+                        sb.Append("/lexical/");
+                        sb.Append(ent.ToLower());
+                        sb.Append(".htm#");
+                        sb.Append(docConcept.Definition.Name.ToLower().Replace(' ', '-'));
+                        sb.Append("\">");
+                        sb.Append(docConcept.Definition.Name);
+                        sb.Append("</a></td><td>");
+
+                        bool first = true;
+                        if (docConcept.Definition.Rules != null)
                         {
-                            if (!first)
+                            foreach (DocModelRule docRule in docConcept.Definition.Rules)
                             {
-                                sb.Append("<br/>");
+                                if (!first)
+                                {
+                                    sb.Append("<br/>");
+                                }
+                                sb.Append(docRule.Name);
+                                first = false;
                             }
-                            sb.Append(docRule.Name);
-                            first = false;
                         }
-                    }
 
-                    sb.Append("</td><td>");
+                        sb.Append("</td><td>");
 
-                    // IfcDoc 6.4: use tables
-                    string table = FormatConceptTable(docProject, docView, docRoot.ApplicableEntity, docRoot, docConcept, mapEntity, mapSchema);
-                    sb.Append(table);
+                        // IfcDoc 6.4: use tables
+                        string table = FormatConceptTable(docProject, docView, docRoot.ApplicableEntity, docRoot, docConcept, mapEntity, mapSchema);
+                        sb.Append(table);
 #if false
                     // build list of inherited items
                     first = true;
@@ -946,27 +949,28 @@ namespace IfcDoc
                     }
 #endif
 
-                    sb.Append("</td>");
+                        sb.Append("</td>");
 
-                    foreach (DocExchangeDefinition docExchange in docView.Exchanges)
-                    {
-                        DocExchangeRequirementEnum reqExport = DocExchangeRequirementEnum.NotRelevant;
-                        foreach (DocExchangeItem docItem in docConcept.Exchanges)
+                        foreach (DocExchangeDefinition docExchange in docView.Exchanges)
                         {
-                            if (docItem.Exchange == docExchange && docItem.Applicability == DocExchangeApplicabilityEnum.Export)
+                            DocExchangeRequirementEnum reqExport = DocExchangeRequirementEnum.NotRelevant;
+                            foreach (DocExchangeItem docItem in docConcept.Exchanges)
                             {
-                                reqExport = docItem.Requirement;
+                                if (docItem.Exchange == docExchange && docItem.Applicability == DocExchangeApplicabilityEnum.Export)
+                                {
+                                    reqExport = docItem.Requirement;
+                                }
                             }
+
+                            sb.Append("<td>");
+                            AppendRequirement(sb, reqExport, 3);
+                            sb.Append("</td>");
                         }
 
-                        sb.Append("<td>");
-                        AppendRequirement(sb, reqExport, 3);
-                        sb.Append("</td>");
+                        sb.AppendLine("</tr>");
                     }
 
-                    sb.AppendLine("</tr>");
                 }
-
             }
             sb.AppendLine("</table>");
 #endif
@@ -1511,11 +1515,11 @@ namespace IfcDoc
                     return content.Replace(fieldname, format);
                 }
             }
-            else if (fieldvalue != null && fieldvalue.StartsWith("Pset_"))
+            else if (fieldvalue != null && fieldvalue.Contains("_"))//fieldvalue.StartsWith("Pset_"))
             {
                 // hyperlink to property set definition
                 DocSchema docSchema = null;
-                DocPropertySet docDef = docProject.FindPropertySet(fieldvalue, out docSchema);
+                DocObject docDef = docProject.FindPropertySet(fieldvalue, out docSchema);
                 if (docDef != null)
                 {
                     string relative = @"../../";
@@ -1523,18 +1527,22 @@ namespace IfcDoc
                     string format = "<a href=\"" + hyperlink + "\">" + fieldvalue + "</a>";
                     return content.Replace(fieldname, format);
                 }
-            }
-            else if (fieldvalue != null && fieldvalue.StartsWith("Qto_"))
-            {
-                // hyperlink to quantity set definition
-                DocSchema docSchema = null;
-                DocQuantitySet docDef = docProject.FindQuantitySet(fieldvalue, out docSchema);
-                if (docDef != null)
+                else
                 {
-                    string relative = @"../../";
-                    string hyperlink = relative + docSchema.Name.ToLowerInvariant() + @"/qset/" + docDef.Name.ToLower() + ".htm"; // case-sentive on linux -- need to make schema all lowercase
-                    string format = "<a href=\"" + hyperlink + "\">" + fieldvalue + "</a>";
-                    return content.Replace(fieldname, format);
+                    docDef = docProject.FindQuantitySet(fieldvalue, out docSchema);
+                    if (docDef != null)
+                    {
+                        string relative = @"../../";
+                        string hyperlink = relative + docSchema.Name.ToLowerInvariant() + @"/qset/" + docDef.Name.ToLower() + ".htm"; // case-sentive on linux -- need to make schema all lowercase
+                        string format = "<a href=\"" + hyperlink + "\">" + fieldvalue + "</a>";
+                        return content.Replace(fieldname, format);
+                    }
+                }
+
+                if(docDef == null)
+                {
+                    // simple replace -- hyperlink may markup value later
+                    return content.Replace(fieldname, fieldvalue);
                 }
             }
             else
@@ -1584,7 +1592,19 @@ namespace IfcDoc
                         htmExample.Write("<table class=\"gridtable\">");
                         htmExample.Write("<tr><th>Format</th><th>ASCII</th><th>HTML</th></tr>");
                         htmExample.Write("<tr><td>IFC-SPF</td><td><a href=\"" + MakeLinkName(docExample) + ".ifc\">File</a></td><td><a href=\"" + MakeLinkName(docExample) + ".ifc.htm\">Markup</a></td></tr>");
-                        htmExample.Write("</table>");
+                        htmExample.Write("</table><p>");
+
+                        string[] ApplicableTypesArray = docExample.ApplicableType.Split(',');
+
+                        htmExample.Write("<table class=\"gridtable\">");
+                        htmExample.Write("<tr><th>Entity</th></tr>");
+
+                        for(int i = 0; i < ApplicableTypesArray.Length; i++)
+                        {
+                            string hyperlink = "../../schema/" + mapSchema[ApplicableTypesArray.GetValue(i).ToString()].ToString().ToLower() + "/lexical/" + ApplicableTypesArray.GetValue(i).ToString().ToLower() + ".htm";
+                            htmExample.Write("<tr><td><a href=" + hyperlink + ">" + ApplicableTypesArray.GetValue(i) + "</td></tr>");
+                        }
+                        htmExample.Write("</table><p>");
                     }
 
                     htmExample.WriteDocumentationForISO(docExample.Documentation, docExample, false);
@@ -1832,9 +1852,9 @@ namespace IfcDoc
                             {
                                 int superusage = 0;
                                 StringBuilder sbSuper = new StringBuilder();
-                                sbSuper.Append("<li><i>");
+                                sbSuper.Append("<tr><td colspan=2>");
                                 sbSuper.Append(docSuper.Name);
-                                sbSuper.Append("</i>: ");
+                                sbSuper.Append("</td></tr><tr><td> </td><td>");
 
                                 foreach (DocTemplateUsage docSuperUsage in docSuperRoot.Concepts)
                                 {
@@ -1845,7 +1865,7 @@ namespace IfcDoc
                                         superusage++;
                                         if (superusage > 1)
                                         {
-                                            sbSuper.Append(", ");
+                                            sbSuper.Append("</td><tr><td></td><td>");
                                         }
 
                                         sbSuper.Append("<a href=\"../../templates/");
@@ -1855,7 +1875,7 @@ namespace IfcDoc
                                         sbSuper.Append("</a>");
                                     }
                                 }
-                                sbSuper.Append("</li>");
+                                sbSuper.Append("</td></tr>");
 
                                 if (docSuper != entity && superusage > 0)
                                 {
@@ -1876,13 +1896,14 @@ namespace IfcDoc
 
                         sb.AppendLine("<details>");
                         sb.AppendLine("<summary>Concepts applied at supertypes</summary>");
-                        sb.AppendLine("<ul>");
+                        sb.AppendLine("<p><table class=\"attributes\">");
+                        sb.AppendLine("<tr><th><b>#</b></th><th><b>Concept</b></td></tr>");
                         for (int iLine = listLines.Count - 1; iLine >= 0; iLine--)
                         {
                             // reverse order
                             sb.AppendLine(listLines[iLine]);
                         }
-                        sb.AppendLine("</ul>");
+                        sb.AppendLine("</table>");
                         sb.AppendLine("</details>");
                         sb.AppendLine("</section>");
 
@@ -3098,17 +3119,20 @@ namespace IfcDoc
                                                         entity.Localization.Sort(); // ensure sorted
                                                         foreach (DocLocalization doclocal in entity.Localization)
                                                         {
-                                                            string localname = doclocal.Name;
-                                                            string localdesc = doclocal.Documentation;
-
-                                                            string localid = doclocal.Locale.Substring(0, 2).ToLower();
-
-                                                            if (localid.Equals("en", StringComparison.InvariantCultureIgnoreCase) && localdesc == null)
+                                                            if (doclocal.Locale != null && doclocal.Locale.Length > 2)
                                                             {
-                                                                localdesc = entity.Documentation;
-                                                            }
+                                                                string localname = doclocal.Name;
+                                                                string localdesc = doclocal.Documentation;
 
-                                                            htmDef.WriteLine("<tr><td><img src=\"../../../img/locale-" + localid + ".png\" /></td><td><b> " + localname + ":</b> " + localdesc + "</td></tr>");
+                                                                string localid = doclocal.Locale.Substring(0, 2).ToLower();
+
+                                                                if (localid.Equals("en", StringComparison.InvariantCultureIgnoreCase) && localdesc == null)
+                                                                {
+                                                                    localdesc = entity.Documentation;
+                                                                }
+
+                                                                htmDef.WriteLine("<tr><td><img src=\"../../../img/locale-" + localid + ".png\" /></td><td><b> " + localname + ":</b> " + localdesc + "</td></tr>");
+                                                            }
                                                         }
 
                                                         htmDef.WriteLine("</table>");

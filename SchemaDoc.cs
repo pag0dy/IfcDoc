@@ -173,7 +173,7 @@ namespace IfcDoc.Schema.DOC
         [DataMember(Order = 4)] private string _Version; // V1.8 inserted
         [DataMember(Order = 5)] private string _Status; // V1.8 inserted // e.g. 'draft'
         [DataMember(Order = 6)] private string _Author; // V1.8 inserted 
-        [DataMember(Order = 7)] private string _Owner; // V1.8 inserted // e.g. 'buildingSMART international'
+        [DataMember(Order = 7)] private string _Owner; // V1.8 inserted // e.g. 'vg vghbuildingSMART international'
         [DataMember(Order = 8)] private string _Copyright; // V1.8 inserted
         [DataMember(Order = 9)] private List<DocLocalization> _Localization; // definitions
 
@@ -510,6 +510,27 @@ namespace IfcDoc.Schema.DOC
             return null;
         }
 
+        public DocPropertyEnumeration FindPropertyEnumeration(string def, out DocSchema schema)
+        {
+            foreach (DocSection docSection in this.Sections)
+            {
+                foreach (DocSchema docSchema in docSection.Schemas)
+                {
+                    foreach (DocPropertyEnumeration docType in docSchema.PropertyEnums)
+                    {
+                        if (docType.Name != null && docType.Name.Equals(def))
+                        {
+                            schema = docSchema;
+                            return docType;
+                        }
+                    }
+                }
+            }
+
+            schema = null;
+            return null;
+        }
+
         public DocQuantitySet FindQuantitySet(string def, out DocSchema schema)
         {
             foreach (DocSection docSection in this.Sections)
@@ -760,6 +781,9 @@ namespace IfcDoc.Schema.DOC
 
         private void RegisterSelects(Dictionary<DocObject, bool> included, DocDefinition entity)
         {
+            return; // no longer support
+
+#if false
             foreach (DocSection docSection in this.Sections)
             {
                 foreach (DocSchema docSchema in docSection.Schemas)
@@ -787,6 +811,7 @@ namespace IfcDoc.Schema.DOC
                     }
                 }
             }
+#endif
         }
 
         private void RegisterDefined(Dictionary<DocObject, bool> included, DocDefined entity)
@@ -1258,18 +1283,21 @@ namespace IfcDoc.Schema.DOC
                                 if (docProp.PropertyType == DocPropertyTemplateTypeEnum.P_ENUMERATEDVALUE)
                                 {
                                     // get property enumeration
-                                    string propenunmane = docProp.SecondaryDataType.Split(':')[0];
-
-                                    foreach (DocSection docPropSection in this.Sections)
+                                    if (docProp.SecondaryDataType != null)
                                     {
-                                        foreach (DocSchema docPropSchema in docPropSection.Schemas)
+                                        string propenunmane = docProp.SecondaryDataType.Split(':')[0];
+
+                                        foreach (DocSection docPropSection in this.Sections)
                                         {
-                                            foreach (DocPropertyEnumeration docEnum in docPropSchema.PropertyEnums)
+                                            foreach (DocSchema docPropSchema in docPropSection.Schemas)
                                             {
-                                                if (docEnum.Name.Equals(propenunmane))
+                                                foreach (DocPropertyEnumeration docEnum in docPropSchema.PropertyEnums)
                                                 {
-                                                    included[docEnum] = true;
-                                                    break;
+                                                    if (docEnum.Name.Equals(propenunmane))
+                                                    {
+                                                        included[docEnum] = true;
+                                                        break;
+                                                    }
                                                 }
                                             }
                                         }
@@ -1376,7 +1404,7 @@ namespace IfcDoc.Schema.DOC
                     foreach (string param in parameters)
                     {
                         string val = docItem.GetParameterValue(param);
-                        if (val != null && (val.StartsWith("Ifc") || val.StartsWith("Pset_") || val.StartsWith("Qto_"))) // perf shortcut
+                        if (val != null && (val.StartsWith("Ifc") || val.Contains("_")))//val.StartsWith("Pset_") || val.StartsWith("Qto_"))) // perf shortcut
                         {
                             DocDefinition docRef = this.GetDefinition(val);
                             if (docRef is DocEntity)
@@ -1397,7 +1425,24 @@ namespace IfcDoc.Schema.DOC
                                 DocPropertySet docPset = FindPropertySet(val, out docSchemaRef);
                                 if (docPset != null)
                                 {
-                                    included[docPset] = true;
+                                    if (!included.ContainsKey(docPset))
+                                    {
+                                        included[docPset] = true;
+
+                                        // include any referenced enumerations
+                                        foreach (DocProperty docProp in docPset.Properties)
+                                        {
+                                            if(docProp.PropertyType == DocPropertyTemplateTypeEnum.P_ENUMERATEDVALUE && docProp.PrimaryDataType != null)
+                                            {
+                                                DocSchema docS = null;
+                                                DocPropertyEnumeration docEnum = FindPropertyEnumeration(docProp.PrimaryDataType, out docS);
+                                                if(docEnum != null)
+                                                {
+                                                    included[docEnum] = true;
+                                                }
+                                            }
+                                        }
+                                    }
                                 }
                                 else
                                 {
@@ -1439,6 +1484,9 @@ namespace IfcDoc.Schema.DOC
         [DataMember(Order = 8), Obsolete] private string _FieldType4; // type of custom field #4, e.g. "IfcFlowDirectionEnum"        
         [DataMember(Order = 9)] private List<DocModelRule> _Rules; //NEW IN 2.5
         [DataMember(Order = 10)] private List<DocTemplateDefinition> _Templates; // NEW IN 2.7 sub-templates
+        [DataMember(Order = 11)] private bool _disabled;
+
+        private bool? _validation; // unserialized; null: no applicable instances; false: one or more failures; true: all pass
 
         // Note: for file compatibility, above fields must remain
 
@@ -1446,6 +1494,21 @@ namespace IfcDoc.Schema.DOC
         {
             this._Rules = new List<DocModelRule>();
             this._Templates = new List<DocTemplateDefinition>();
+        }
+
+        /// <summary>
+        /// Indicates whether latest test passes (true), has one or more failures (false), or no applicable instances (null). Not serialized.
+        /// </summary>
+        public bool? Validation
+        {
+            get
+            {
+                return this._validation;
+            }
+            set
+            {
+                this._validation = value;
+            }
         }
 
         public string Type 
@@ -1458,6 +1521,18 @@ namespace IfcDoc.Schema.DOC
             { 
                 this._Type = value; 
             } 
+        }
+
+        public bool IsDisabled
+        {
+            get
+            {
+                return this._disabled;
+            }
+            set
+            {
+                this._disabled = value;
+            }
         }
 
         public List<DocModelRule> Rules
@@ -2454,6 +2529,16 @@ namespace IfcDoc.Schema.DOC
             return null;
         }
 
+        /// <summary>
+        /// Evaluates the operation and returns the result for debugging purposes.
+        /// </summary>
+        /// <param name="o"></param>
+        /// <returns></returns>
+        internal virtual bool? Eval(object o)
+        {
+            return null;
+        }
+
         public override string ToString()
         {
             return this.Operation.ToString().ToUpper();
@@ -3331,10 +3416,53 @@ namespace IfcDoc.Schema.DOC
         //[DataMember(Order = 3)] private DocModelView _ModelView; // new in 2.7, removed on 3.5; determine from ModelView.ConceptRoot.Concepts hierarchy
         [DataMember(Order = 3)] private bool _Override; // new in 5.0; if true, then any concepts from supertypes are not inherited
 
+        private bool? _validation; // unserialized; null: no applicable instances; false: one or more failures; true: all pass
+        private Dictionary<object, bool> _validateStructure; // 
+        private Dictionary<object, bool> _validateConstraints; // 
+
         public DocTemplateUsage()
         {
             this._Items = new List<DocTemplateItem>();
             this._Exchanges = new List<DocExchangeItem>();
+        }
+
+        /// <summary>
+        /// Indicates whether latest test passes (true), has one or more failures (false), or no applicable instances (null). Not serialized.
+        /// </summary>
+        public bool? Validation
+        {
+            get
+            {
+                return this._validation;
+            }
+            set
+            {
+                this._validation = value;
+            }
+        }
+
+        public Dictionary<object, bool> ValidationStructure
+        {
+            get
+            {
+                if(this._validateStructure == null)
+                {
+                    this._validateStructure = new Dictionary<object, bool>();
+                }
+                return this._validateStructure;
+            }
+        }
+
+        public Dictionary<object, bool> ValidationConstraints
+        {
+            get
+            {
+                if (this._validateConstraints == null)
+                {
+                    this._validateConstraints = new Dictionary<object, bool>();
+                }
+                return this._validateConstraints;
+            }
         }
 
         public override string ToString()
@@ -3598,7 +3726,7 @@ namespace IfcDoc.Schema.DOC
     public class DocSection : DocObject
     {
         [DataMember(Order = 0)] public List<DocAnnotation> Annotations; // v1.8 inserted  TBD - use MVD-XML concept instead
-        [DataMember(Order = 1)] public List<DocSchema> Schemas;        
+        [DataMember(Order = 1)] public List<DocSchema> Schemas;
 
         public DocSection(string name)
         {

@@ -120,6 +120,12 @@
     <Compile Include="CtlParameters.Designer.cs">
       <DependentUpon>CtlParameters.cs</DependentUpon>
     </Compile>
+    <Compile Include="CtlProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CtlProperties.Designer.cs">
+      <DependentUpon>CtlProperties.cs</DependentUpon>
+    </Compile>
     <Compile Include="CtlRules.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -326,6 +332,9 @@
     <EmbeddedResource Include="CtlParameters.resx">
       <DependentUpon>CtlParameters.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="CtlProperties.resx">
+      <DependentUpon>CtlProperties.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CtlRules.resx">
       <DependentUpon>CtlRules.cs</DependentUpon>
     </EmbeddedResource>
@@ -419,7 +428,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="Operations.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

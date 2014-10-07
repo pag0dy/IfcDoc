@@ -11,6 +11,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Text;
 
+using IfcDoc.Schema;
 using IfcDoc.Schema.DOC;
 
 namespace IfcDoc.Format.PNG
@@ -57,7 +58,18 @@ namespace IfcDoc.Format.PNG
             }
         }
 
-        private static void DrawAttribute(Graphics g, int lane, List<int> lanes, DocEntity docEntity, DocModelView docView, DocModelRuleAttribute ruleAttribute, Dictionary<string, DocObject> map, int offset, Dictionary<Rectangle, DocModelRule> layout, DocProject docProject)
+        private static void DrawAttribute(
+            Graphics g, 
+            int lane, 
+            List<int> lanes, 
+            DocEntity docEntity, 
+            DocModelView docView, 
+            DocModelRuleAttribute ruleAttribute, 
+            Dictionary<string, DocObject> map, 
+            int offset, 
+            Dictionary<Rectangle, DocModelRule> layout, 
+            DocProject docProject,
+            SEntity instance)
         {
             int x = lane * CX + FormatPNG.Border;
             int y = lanes[lane] + FormatPNG.Border;
@@ -80,6 +92,16 @@ namespace IfcDoc.Format.PNG
             if (iAttr >= 0)
             {
                 DocAttribute docAttr = listAttr[iAttr];
+
+                object valueinstance = null;
+                if (instance != null)
+                {
+                    System.Reflection.FieldInfo field = instance.GetType().GetField(docAttr.Name);
+                    if(field != null)
+                    {
+                        valueinstance = field.GetValue(instance);
+                    }
+                }
 
                 // map it
                 foreach (DocModelRule ruleEach in ruleAttribute.Rules)
@@ -152,7 +174,7 @@ namespace IfcDoc.Format.PNG
                                 }
 
                                 // draw the entity, recurse
-                                DrawEntity(g, lane + 1, lanes, docEntityTarget, docView, null, ruleEntity, map, layout, docProject);
+                                DrawEntity(g, lane + 1, lanes, docEntityTarget, docView, null, ruleEntity, map, layout, docProject, valueinstance);
                             }
                             else
                             {
@@ -160,7 +182,33 @@ namespace IfcDoc.Format.PNG
 
                                 if (g != null)
                                 {
-                                    g.FillRectangle(Brushes.Black, x + CX, targetY, CX - DX, CY);
+                                    Brush brush = Brushes.Black;
+
+                                    if (instance != null)
+                                    {
+                                        if (valueinstance == null)
+                                        {
+                                            brush = Brushes.Red;
+                                        }
+                                        else if(valueinstance is System.Collections.IList)
+                                        {
+                                            brush = Brushes.Blue;
+                                        }
+                                        else
+                                        {
+                                            string typename = valueinstance.GetType().Name;
+                                            if (typename == ruleEntity.Name)
+                                            {
+                                                brush = Brushes.Lime;
+                                            }
+                                            else
+                                            {
+                                                brush = Brushes.Red;
+                                            }
+                                        }
+                                    }
+
+                                    g.FillRectangle(brush, x + CX, targetY, CX - DX, CY);
                                     g.DrawRectangle(Pens.Black, x + CX, targetY, CX - DX, CY);
                                     using (Font font = new Font(FontFamily.GenericSansSerif, 8.0f))
                                     {
@@ -283,6 +331,8 @@ namespace IfcDoc.Format.PNG
         /// <param name="docRule">Optional rule for recursing.</param>
         /// <param name="map">Map of definitions.</param>
         /// <param name="layout">Optional layout to receive rectangles for building image map</param>
+        /// <param name="docProject">Required project.</param>
+        /// <param name="instance">Optional instance where included or missing attributes are highlighted.</param>
         private static void DrawEntity(
             Graphics g, 
             int lane, 
@@ -293,7 +343,8 @@ namespace IfcDoc.Format.PNG
             DocModelRuleEntity docRule, 
             Dictionary<string, DocObject> map, 
             Dictionary<Rectangle, DocModelRule> layout,
-            DocProject docProject)
+            DocProject docProject,
+            object instance)
         {
             List<DocAttribute> listAttr = new List<DocAttribute>();
             BuildAttributeList(docEntity, listAttr, map);
@@ -314,14 +365,63 @@ namespace IfcDoc.Format.PNG
 
             if (g != null)
             {
-                if (docEntity.IsAbstract())
+                Brush brush = Brushes.Black;
+
+                if (instance != null)
                 {
-                    g.FillRectangle(Brushes.Gray, x, y, CX - DX, CY);
+                    brush = Brushes.Red;
+
+                    if (instance is System.Collections.IList)
+                    {
+                        string typename = instance.GetType().Name;   
+                     
+                        // keep going until matching instance
+                        System.Collections.IList list = (System.Collections.IList)instance;
+                        foreach (object member in list)
+                        {
+                            string membertypename = member.GetType().Name;
+                            DocEntity docType = docProject.GetDefinition(membertypename) as DocEntity;
+                            while (docType != null)
+                            {
+                                if (docType == docEntity)
+                                {
+                                    brush = Brushes.Lime;
+                                    instance = member;
+                                    break;
+                                }
+
+                                docType = docProject.GetDefinition(docType.BaseDefinition) as DocEntity;
+                            }
+
+                            if (brush != Brushes.Red)
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        string typename = instance.GetType().Name;
+                        DocEntity docType = docProject.GetDefinition(typename) as DocEntity;
+                        while (docType != null)
+                        {
+                            if (docType == docEntity)
+                            {
+                                brush = Brushes.Lime;
+                                break;
+                            }
+
+                            docType = docProject.GetDefinition(docType.BaseDefinition) as DocEntity;
+                        }
+                    }
+                }
+                else if (docEntity.IsAbstract())
+                {
+                    brush = Brushes.Gray;
                 }
                 else
                 {
-                    g.FillRectangle(Brushes.Black, x, y, CX - DX, CY);
+                    brush = Brushes.Black;
                 }
+                g.FillRectangle(brush, x, y, CX - DX, CY);
                 g.DrawRectangle(Pens.Black, x, y, CX - DX, CY);
                 using (Font font = new Font(FontFamily.GenericSansSerif, 8.0f, FontStyle.Bold))
                 {
@@ -342,7 +442,7 @@ namespace IfcDoc.Format.PNG
                         DocAttribute docAttr = listAttr[iAttr];
 
                         string display = docAttr.GetAggregationExpression();
-                        Brush brush = Brushes.Black;
+                        brush = Brushes.Black;
                         if (docAttr.Inverse != null)
                         {
                             brush = Brushes.Gray;
@@ -574,7 +674,7 @@ namespace IfcDoc.Format.PNG
                         lastTemplate = eachTemplate;
                     }
 
-                    DrawAttribute(g, lane, lanes, docEntity, docView, ruleAttributeSort, map, offset, layout, docProject);
+                    DrawAttribute(g, lane, lanes, docEntity, docView, ruleAttributeSort, map, offset, layout, docProject, instance as SEntity);
                 }
                 offset++;
             }
@@ -596,8 +696,9 @@ namespace IfcDoc.Format.PNG
         /// <param name="map"></param>
         /// <param name="layout"></param>
         /// <param name="docProject"></param>
+        /// <param name="instance"></param>
         /// <returns></returns>
-        internal static Image CreateConceptDiagram(DocEntity docEntity, DocModelView docView, Dictionary<string, DocObject> map, Dictionary<Rectangle, DocModelRule> layout, DocProject docProject)
+        internal static Image CreateConceptDiagram(DocEntity docEntity, DocModelView docView, Dictionary<string, DocObject> map, Dictionary<Rectangle, DocModelRule> layout, DocProject docProject, SEntity instance)
         {
             layout.Clear();
             List<int> lanes = new List<int>(); // keep track of position offsets in each lane
@@ -607,7 +708,7 @@ namespace IfcDoc.Format.PNG
             }
 
             // determine boundaries
-            DrawEntity(null, 0, lanes, docEntity, docView, null, null, map, layout, docProject);
+            DrawEntity(null, 0, lanes, docEntity, docView, null, null, map, layout, docProject, instance);
             Rectangle rcBounds = Rectangle.Empty;
             foreach (Rectangle rc in layout.Keys)
             {
@@ -637,7 +738,7 @@ namespace IfcDoc.Format.PNG
                     lanes.Add(0);
                 }
 
-                DrawEntity(g, 0, lanes, docEntity, docView, null, null, map, layout, docProject);
+                DrawEntity(g, 0, lanes, docEntity, docView, null, null, map, layout, docProject, instance);
 
                 g.DrawRectangle(Pens.Black, 0, 0, rcBounds.Width - 1, rcBounds.Height - 1);
             }
@@ -650,7 +751,7 @@ namespace IfcDoc.Format.PNG
         /// </summary>
         /// <param name="docTemplate"></param>
         /// <returns></returns>
-        internal static Image CreateTemplateDiagram(DocTemplateDefinition docTemplate, Dictionary<string, DocObject> map, Dictionary<Rectangle, DocModelRule> layout, DocProject docProject)
+        internal static Image CreateTemplateDiagram(DocTemplateDefinition docTemplate, Dictionary<string, DocObject> map, Dictionary<Rectangle, DocModelRule> layout, DocProject docProject, SEntity instance)
         {
             DocObject docTarget = null;
             if (docTemplate.Type == null || !map.TryGetValue(docTemplate.Type, out docTarget) || !(docTarget is DocEntity))
@@ -665,7 +766,7 @@ namespace IfcDoc.Format.PNG
                 lanes.Add(0);
             }
             layout.Clear();
-            DrawEntity(null, 0, lanes, docEntity, null, docTemplate, null, map, layout, docProject);
+            DrawEntity(null, 0, lanes, docEntity, null, docTemplate, null, map, layout, docProject, instance);
 
             Rectangle rcBounds = new Rectangle();
             foreach(Rectangle rc in layout.Keys)
@@ -694,7 +795,7 @@ namespace IfcDoc.Format.PNG
                     lanes.Add(0);
                 }
                 layout.Clear();
-                DrawEntity(g, 0, lanes, docEntity, null, docTemplate, null, map, layout, docProject);
+                DrawEntity(g, 0, lanes, docEntity, null, docTemplate, null, map, layout, docProject, instance);
                 g.DrawRectangle(Pens.Black, 0, 0, rcBounds.Width - 1, rcBounds.Height - 1);
             }
 

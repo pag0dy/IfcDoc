@@ -6,6 +6,7 @@ using System.Data;
 using System.Text;
 using System.Windows.Forms;
 
+using IfcDoc.Schema;
 using IfcDoc.Schema.DOC;
 
 namespace IfcDoc
@@ -15,6 +16,7 @@ namespace IfcDoc
         private DocProject m_project;
         private DocTemplateDefinition m_template;
         private DocModelRule m_modelrule; // relative rule for which to add constraints
+        private SEntity m_instance;
 
         public CtlOperators()
         {
@@ -59,6 +61,18 @@ namespace IfcDoc
 
                 // update
                 treeViewRules_AfterSelect(this, new TreeViewEventArgs(null));
+            }
+        }
+
+        public SEntity CurrentInstance
+        {
+            get
+            {
+                return this.m_instance;
+            }
+            set
+            {
+                this.m_instance = value;
             }
         }
 
