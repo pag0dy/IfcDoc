@@ -29,23 +29,19 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CtlProperties));
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabPageGeneral = new System.Windows.Forms.TabPage();
             this.label16 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.textBoxLocaleURL = new System.Windows.Forms.TextBox();
             this.comboBoxLocaleCategory = new System.Windows.Forms.ComboBox();
-            this.buttonLocaleDelete = new System.Windows.Forms.Button();
-            this.buttonLocaleAdd = new System.Windows.Forms.Button();
-            this.label3 = new System.Windows.Forms.Label();
             this.listViewLocale = new System.Windows.Forms.ListView();
             this.columnHeaderLocale = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderDesc = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.textBoxGeneralDescription = new System.Windows.Forms.TextBox();
             this.textBoxGeneralName = new System.Windows.Forms.TextBox();
-            this.labelGeneralDescription = new System.Windows.Forms.Label();
-            this.labelGeneralName = new System.Windows.Forms.Label();
             this.tabPageIdentity = new System.Windows.Forms.TabPage();
             this.button3 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
@@ -74,10 +70,6 @@
             this.textBoxTemplateEntity = new System.Windows.Forms.TextBox();
             this.labelTemplateEntity = new System.Windows.Forms.Label();
             this.tabPageConcept = new System.Windows.Forms.TabPage();
-            this.checkBoxConceptOverride = new System.Windows.Forms.CheckBox();
-            this.buttonConceptTemplate = new System.Windows.Forms.Button();
-            this.textBoxConceptTemplate = new System.Windows.Forms.TextBox();
-            this.labelConceptTemplate = new System.Windows.Forms.Label();
             this.tabPageRequirements = new System.Windows.Forms.TabPage();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.radioButtonExportNone = new System.Windows.Forms.RadioButton();
@@ -149,7 +141,6 @@
             this.textBoxAttributeType = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.tabPageExpression = new System.Windows.Forms.TabPage();
-            this.label18 = new System.Windows.Forms.Label();
             this.textBoxExpression = new System.Windows.Forms.TextBox();
             this.tabPageView = new System.Windows.Forms.TabPage();
             this.listViewViewXsd = new System.Windows.Forms.ListView();
@@ -197,9 +188,23 @@
             this.imageListRules = new System.Windows.Forms.ImageList(this.components);
             this.openFileDialogIcon = new System.Windows.Forms.OpenFileDialog();
             this.openFileDialogExample = new System.Windows.Forms.OpenFileDialog();
+            this.toolStripDocumentation = new System.Windows.Forms.ToolStrip();
+            this.toolStripButtonTranslationInsert = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonTranslationRemove = new System.Windows.Forms.ToolStripButton();
+            this.splitContainerTranslation = new System.Windows.Forms.SplitContainer();
+            this.tabPageConceptRoot = new System.Windows.Forms.TabPage();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.toolStripMenuItemModeInherit = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemModeOverride = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemModeSuppress = new System.Windows.Forms.ToolStripMenuItem();
+            this.listViewConceptRoot = new System.Windows.Forms.ListView();
+            this.columnHeaderRootTemplate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeaderRootEntity = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeaderRootStatus = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ctlRules = new IfcDoc.CtlRules();
             this.ctlParameters = new IfcDoc.CtlParameters();
             this.ctlOperators = new IfcDoc.CtlOperators();
+            this.imageListInheritance = new System.Windows.Forms.ImageList(this.components);
             this.tabControl.SuspendLayout();
             this.tabPageGeneral.SuspendLayout();
             this.tabPageIdentity.SuspendLayout();
@@ -219,6 +224,13 @@
             this.tabPageUsage.SuspendLayout();
             this.tabPageExample.SuspendLayout();
             this.tabPageOperations.SuspendLayout();
+            this.toolStripDocumentation.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainerTranslation)).BeginInit();
+            this.splitContainerTranslation.Panel1.SuspendLayout();
+            this.splitContainerTranslation.Panel2.SuspendLayout();
+            this.splitContainerTranslation.SuspendLayout();
+            this.tabPageConceptRoot.SuspendLayout();
+            this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl
@@ -239,6 +251,7 @@
             this.tabControl.Controls.Add(this.tabPageUsage);
             this.tabControl.Controls.Add(this.tabPageExample);
             this.tabControl.Controls.Add(this.tabPageOperations);
+            this.tabControl.Controls.Add(this.tabPageConceptRoot);
             this.tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl.Location = new System.Drawing.Point(0, 0);
             this.tabControl.Name = "tabControl";
@@ -248,18 +261,12 @@
             // 
             // tabPageGeneral
             // 
+            this.tabPageGeneral.Controls.Add(this.splitContainerTranslation);
+            this.tabPageGeneral.Controls.Add(this.toolStripDocumentation);
             this.tabPageGeneral.Controls.Add(this.label16);
             this.tabPageGeneral.Controls.Add(this.label15);
             this.tabPageGeneral.Controls.Add(this.textBoxLocaleURL);
             this.tabPageGeneral.Controls.Add(this.comboBoxLocaleCategory);
-            this.tabPageGeneral.Controls.Add(this.buttonLocaleDelete);
-            this.tabPageGeneral.Controls.Add(this.buttonLocaleAdd);
-            this.tabPageGeneral.Controls.Add(this.label3);
-            this.tabPageGeneral.Controls.Add(this.listViewLocale);
-            this.tabPageGeneral.Controls.Add(this.textBoxGeneralDescription);
-            this.tabPageGeneral.Controls.Add(this.textBoxGeneralName);
-            this.tabPageGeneral.Controls.Add(this.labelGeneralDescription);
-            this.tabPageGeneral.Controls.Add(this.labelGeneralName);
             this.tabPageGeneral.Location = new System.Drawing.Point(4, 22);
             this.tabPageGeneral.Name = "tabPageGeneral";
             this.tabPageGeneral.Padding = new System.Windows.Forms.Padding(3);
@@ -267,34 +274,38 @@
             this.tabPageGeneral.TabIndex = 4;
             this.tabPageGeneral.Text = "Documentation";
             this.tabPageGeneral.UseVisualStyleBackColor = true;
+            this.tabPageGeneral.Click += new System.EventHandler(this.tabPageGeneral_Click);
             // 
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(230, 183);
+            this.label16.Location = new System.Drawing.Point(135, 328);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(32, 13);
             this.label16.TabIndex = 8;
             this.label16.Text = "URL:";
+            this.label16.Visible = false;
             // 
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(117, 183);
+            this.label15.Location = new System.Drawing.Point(22, 328);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(52, 13);
             this.label15.TabIndex = 6;
             this.label15.Text = "Category:";
+            this.label15.Visible = false;
             // 
             // textBoxLocaleURL
             // 
             this.textBoxLocaleURL.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxLocaleURL.Enabled = false;
-            this.textBoxLocaleURL.Location = new System.Drawing.Point(233, 200);
+            this.textBoxLocaleURL.Location = new System.Drawing.Point(138, 345);
             this.textBoxLocaleURL.Name = "textBoxLocaleURL";
             this.textBoxLocaleURL.Size = new System.Drawing.Size(90, 20);
             this.textBoxLocaleURL.TabIndex = 9;
+            this.textBoxLocaleURL.Visible = false;
             this.textBoxLocaleURL.TextChanged += new System.EventHandler(this.textBoxLocaleURL_TextChanged);
             // 
             // comboBoxLocaleCategory
@@ -308,55 +319,25 @@
             "Diagram",
             "Instantiation",
             "Example"});
-            this.comboBoxLocaleCategory.Location = new System.Drawing.Point(120, 200);
+            this.comboBoxLocaleCategory.Location = new System.Drawing.Point(25, 345);
             this.comboBoxLocaleCategory.Name = "comboBoxLocaleCategory";
             this.comboBoxLocaleCategory.Size = new System.Drawing.Size(106, 21);
             this.comboBoxLocaleCategory.TabIndex = 7;
+            this.comboBoxLocaleCategory.Visible = false;
             this.comboBoxLocaleCategory.SelectedIndexChanged += new System.EventHandler(this.comboBoxLocaleCategory_SelectedIndexChanged);
-            // 
-            // buttonLocaleDelete
-            // 
-            this.buttonLocaleDelete.Enabled = false;
-            this.buttonLocaleDelete.Location = new System.Drawing.Point(88, 149);
-            this.buttonLocaleDelete.Name = "buttonLocaleDelete";
-            this.buttonLocaleDelete.Size = new System.Drawing.Size(75, 23);
-            this.buttonLocaleDelete.TabIndex = 3;
-            this.buttonLocaleDelete.Text = "Delete";
-            this.buttonLocaleDelete.UseVisualStyleBackColor = true;
-            this.buttonLocaleDelete.Click += new System.EventHandler(this.buttonLocaleDelete_Click);
-            // 
-            // buttonLocaleAdd
-            // 
-            this.buttonLocaleAdd.Location = new System.Drawing.Point(7, 149);
-            this.buttonLocaleAdd.Name = "buttonLocaleAdd";
-            this.buttonLocaleAdd.Size = new System.Drawing.Size(75, 23);
-            this.buttonLocaleAdd.TabIndex = 2;
-            this.buttonLocaleAdd.Text = "Add...";
-            this.buttonLocaleAdd.UseVisualStyleBackColor = true;
-            this.buttonLocaleAdd.Click += new System.EventHandler(this.buttonLocaleAdd_Click);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 9);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(67, 13);
-            this.label3.TabIndex = 0;
-            this.label3.Text = "Translations:";
             // 
             // listViewLocale
             // 
-            this.listViewLocale.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.listViewLocale.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeaderLocale,
             this.columnHeaderName,
             this.columnHeaderDesc});
+            this.listViewLocale.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listViewLocale.FullRowSelect = true;
             this.listViewLocale.HideSelection = false;
-            this.listViewLocale.Location = new System.Drawing.Point(7, 26);
+            this.listViewLocale.Location = new System.Drawing.Point(0, 0);
             this.listViewLocale.Name = "listViewLocale";
-            this.listViewLocale.Size = new System.Drawing.Size(317, 117);
+            this.listViewLocale.Size = new System.Drawing.Size(346, 91);
             this.listViewLocale.TabIndex = 1;
             this.listViewLocale.UseCompatibleStateImageBehavior = false;
             this.listViewLocale.View = System.Windows.Forms.View.Details;
@@ -375,46 +356,27 @@
             // columnHeaderDesc
             // 
             this.columnHeaderDesc.Text = "Description";
-            this.columnHeaderDesc.Width = 170;
+            this.columnHeaderDesc.Width = 196;
             // 
             // textBoxGeneralDescription
             // 
-            this.textBoxGeneralDescription.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxGeneralDescription.Location = new System.Drawing.Point(7, 245);
+            this.textBoxGeneralDescription.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textBoxGeneralDescription.Location = new System.Drawing.Point(0, 20);
             this.textBoxGeneralDescription.Multiline = true;
             this.textBoxGeneralDescription.Name = "textBoxGeneralDescription";
             this.textBoxGeneralDescription.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBoxGeneralDescription.Size = new System.Drawing.Size(316, 130);
+            this.textBoxGeneralDescription.Size = new System.Drawing.Size(346, 248);
             this.textBoxGeneralDescription.TabIndex = 11;
             this.textBoxGeneralDescription.TextChanged += new System.EventHandler(this.textBoxGeneralDescription_TextChanged);
             // 
             // textBoxGeneralName
             // 
-            this.textBoxGeneralName.Location = new System.Drawing.Point(7, 200);
+            this.textBoxGeneralName.Dock = System.Windows.Forms.DockStyle.Top;
+            this.textBoxGeneralName.Location = new System.Drawing.Point(0, 0);
             this.textBoxGeneralName.Name = "textBoxGeneralName";
-            this.textBoxGeneralName.Size = new System.Drawing.Size(106, 20);
+            this.textBoxGeneralName.Size = new System.Drawing.Size(346, 20);
             this.textBoxGeneralName.TabIndex = 5;
             this.textBoxGeneralName.TextChanged += new System.EventHandler(this.textBoxGeneralName_TextChanged);
-            // 
-            // labelGeneralDescription
-            // 
-            this.labelGeneralDescription.AutoSize = true;
-            this.labelGeneralDescription.Location = new System.Drawing.Point(6, 228);
-            this.labelGeneralDescription.Name = "labelGeneralDescription";
-            this.labelGeneralDescription.Size = new System.Drawing.Size(63, 13);
-            this.labelGeneralDescription.TabIndex = 10;
-            this.labelGeneralDescription.Text = "Description:";
-            // 
-            // labelGeneralName
-            // 
-            this.labelGeneralName.AutoSize = true;
-            this.labelGeneralName.Location = new System.Drawing.Point(6, 183);
-            this.labelGeneralName.Name = "labelGeneralName";
-            this.labelGeneralName.Size = new System.Drawing.Size(38, 13);
-            this.labelGeneralName.TabIndex = 4;
-            this.labelGeneralName.Text = "Name:";
             // 
             // tabPageIdentity
             // 
@@ -455,6 +417,7 @@
             this.button3.TabIndex = 24;
             this.button3.Text = "Remove";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Visible = false;
             // 
             // button2
             // 
@@ -466,6 +429,7 @@
             this.button2.TabIndex = 23;
             this.button2.Text = "Edit";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Visible = false;
             // 
             // button1
             // 
@@ -477,6 +441,7 @@
             this.button1.TabIndex = 22;
             this.button1.Text = "Add...";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Visible = false;
             // 
             // label20
             // 
@@ -486,6 +451,7 @@
             this.label20.Size = new System.Drawing.Size(65, 13);
             this.label20.TabIndex = 21;
             this.label20.Text = "Permissions:";
+            this.label20.Visible = false;
             // 
             // listViewAccess
             // 
@@ -501,6 +467,7 @@
             this.listViewAccess.TabIndex = 20;
             this.listViewAccess.UseCompatibleStateImageBehavior = false;
             this.listViewAccess.View = System.Windows.Forms.View.Details;
+            this.listViewAccess.Visible = false;
             // 
             // columnHeader1
             // 
@@ -705,10 +672,6 @@
             // tabPageConcept
             // 
             this.tabPageConcept.Controls.Add(this.ctlParameters);
-            this.tabPageConcept.Controls.Add(this.checkBoxConceptOverride);
-            this.tabPageConcept.Controls.Add(this.buttonConceptTemplate);
-            this.tabPageConcept.Controls.Add(this.textBoxConceptTemplate);
-            this.tabPageConcept.Controls.Add(this.labelConceptTemplate);
             this.tabPageConcept.Location = new System.Drawing.Point(4, 22);
             this.tabPageConcept.Name = "tabPageConcept";
             this.tabPageConcept.Padding = new System.Windows.Forms.Padding(3);
@@ -716,47 +679,6 @@
             this.tabPageConcept.TabIndex = 0;
             this.tabPageConcept.Text = "Concept";
             this.tabPageConcept.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxConceptOverride
-            // 
-            this.checkBoxConceptOverride.AutoSize = true;
-            this.checkBoxConceptOverride.Location = new System.Drawing.Point(7, 53);
-            this.checkBoxConceptOverride.Name = "checkBoxConceptOverride";
-            this.checkBoxConceptOverride.Size = new System.Drawing.Size(310, 17);
-            this.checkBoxConceptOverride.TabIndex = 8;
-            this.checkBoxConceptOverride.Text = "Override any parent concepts of this template (do not inherit)";
-            this.checkBoxConceptOverride.UseVisualStyleBackColor = true;
-            this.checkBoxConceptOverride.CheckedChanged += new System.EventHandler(this.checkBoxConceptOverride_CheckedChanged);
-            // 
-            // buttonConceptTemplate
-            // 
-            this.buttonConceptTemplate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonConceptTemplate.Location = new System.Drawing.Point(263, 24);
-            this.buttonConceptTemplate.Name = "buttonConceptTemplate";
-            this.buttonConceptTemplate.Size = new System.Drawing.Size(75, 23);
-            this.buttonConceptTemplate.TabIndex = 2;
-            this.buttonConceptTemplate.Text = "Select...";
-            this.buttonConceptTemplate.UseVisualStyleBackColor = true;
-            this.buttonConceptTemplate.Click += new System.EventHandler(this.buttonConceptTemplate_Click);
-            // 
-            // textBoxConceptTemplate
-            // 
-            this.textBoxConceptTemplate.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxConceptTemplate.Location = new System.Drawing.Point(7, 26);
-            this.textBoxConceptTemplate.Name = "textBoxConceptTemplate";
-            this.textBoxConceptTemplate.ReadOnly = true;
-            this.textBoxConceptTemplate.Size = new System.Drawing.Size(250, 20);
-            this.textBoxConceptTemplate.TabIndex = 1;
-            // 
-            // labelConceptTemplate
-            // 
-            this.labelConceptTemplate.AutoSize = true;
-            this.labelConceptTemplate.Location = new System.Drawing.Point(6, 9);
-            this.labelConceptTemplate.Name = "labelConceptTemplate";
-            this.labelConceptTemplate.Size = new System.Drawing.Size(97, 13);
-            this.labelConceptTemplate.TabIndex = 0;
-            this.labelConceptTemplate.Text = "Concept Template:";
             // 
             // tabPageRequirements
             // 
@@ -1559,7 +1481,6 @@
             // 
             // tabPageExpression
             // 
-            this.tabPageExpression.Controls.Add(this.label18);
             this.tabPageExpression.Controls.Add(this.textBoxExpression);
             this.tabPageExpression.Location = new System.Drawing.Point(4, 22);
             this.tabPageExpression.Name = "tabPageExpression";
@@ -1569,27 +1490,16 @@
             this.tabPageExpression.Text = "Expression";
             this.tabPageExpression.UseVisualStyleBackColor = true;
             // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(6, 9);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(61, 13);
-            this.label18.TabIndex = 13;
-            this.label18.Text = "Expression:";
-            // 
             // textBoxExpression
             // 
             this.textBoxExpression.AcceptsReturn = true;
             this.textBoxExpression.AcceptsTab = true;
-            this.textBoxExpression.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxExpression.Location = new System.Drawing.Point(7, 27);
+            this.textBoxExpression.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textBoxExpression.Location = new System.Drawing.Point(3, 3);
             this.textBoxExpression.Multiline = true;
             this.textBoxExpression.Name = "textBoxExpression";
             this.textBoxExpression.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBoxExpression.Size = new System.Drawing.Size(330, 352);
+            this.textBoxExpression.Size = new System.Drawing.Size(346, 388);
             this.textBoxExpression.TabIndex = 12;
             this.textBoxExpression.TextChanged += new System.EventHandler(this.textBoxExpression_TextChanged);
             // 
@@ -2304,6 +2214,146 @@
             this.openFileDialogExample.Filter = "Industry Foundation Classes (*.ifc)|*.ifc";
             this.openFileDialogExample.Title = "Load IFC Example";
             // 
+            // toolStripDocumentation
+            // 
+            this.toolStripDocumentation.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStripDocumentation.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripButtonTranslationInsert,
+            this.toolStripButtonTranslationRemove});
+            this.toolStripDocumentation.Location = new System.Drawing.Point(3, 3);
+            this.toolStripDocumentation.Name = "toolStripDocumentation";
+            this.toolStripDocumentation.Size = new System.Drawing.Size(346, 25);
+            this.toolStripDocumentation.TabIndex = 12;
+            this.toolStripDocumentation.Text = "toolStrip1";
+            // 
+            // toolStripButtonTranslationInsert
+            // 
+            this.toolStripButtonTranslationInsert.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonTranslationInsert.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonTranslationInsert.Image")));
+            this.toolStripButtonTranslationInsert.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonTranslationInsert.Name = "toolStripButtonTranslationInsert";
+            this.toolStripButtonTranslationInsert.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButtonTranslationInsert.Text = "Add Translation";
+            this.toolStripButtonTranslationInsert.Click += new System.EventHandler(this.toolStripButtonTranslationInsert_Click);
+            // 
+            // toolStripButtonTranslationRemove
+            // 
+            this.toolStripButtonTranslationRemove.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonTranslationRemove.Enabled = false;
+            this.toolStripButtonTranslationRemove.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonTranslationRemove.Image")));
+            this.toolStripButtonTranslationRemove.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonTranslationRemove.Name = "toolStripButtonTranslationRemove";
+            this.toolStripButtonTranslationRemove.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButtonTranslationRemove.Text = "Remove Translation";
+            this.toolStripButtonTranslationRemove.Click += new System.EventHandler(this.toolStripButtonTranslationRemove_Click);
+            // 
+            // splitContainerTranslation
+            // 
+            this.splitContainerTranslation.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainerTranslation.Location = new System.Drawing.Point(3, 28);
+            this.splitContainerTranslation.Name = "splitContainerTranslation";
+            this.splitContainerTranslation.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainerTranslation.Panel1
+            // 
+            this.splitContainerTranslation.Panel1.Controls.Add(this.listViewLocale);
+            // 
+            // splitContainerTranslation.Panel2
+            // 
+            this.splitContainerTranslation.Panel2.Controls.Add(this.textBoxGeneralDescription);
+            this.splitContainerTranslation.Panel2.Controls.Add(this.textBoxGeneralName);
+            this.splitContainerTranslation.Size = new System.Drawing.Size(346, 363);
+            this.splitContainerTranslation.SplitterDistance = 91;
+            this.splitContainerTranslation.TabIndex = 13;
+            // 
+            // tabPageConceptRoot
+            // 
+            this.tabPageConceptRoot.Controls.Add(this.listViewConceptRoot);
+            this.tabPageConceptRoot.Controls.Add(this.toolStrip1);
+            this.tabPageConceptRoot.Location = new System.Drawing.Point(4, 22);
+            this.tabPageConceptRoot.Name = "tabPageConceptRoot";
+            this.tabPageConceptRoot.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageConceptRoot.Size = new System.Drawing.Size(352, 394);
+            this.tabPageConceptRoot.TabIndex = 18;
+            this.tabPageConceptRoot.Text = "Inheritance";
+            this.tabPageConceptRoot.UseVisualStyleBackColor = true;
+            // 
+            // toolStrip1
+            // 
+            this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItemModeInherit,
+            this.toolStripMenuItemModeOverride,
+            this.toolStripMenuItemModeSuppress});
+            this.toolStrip1.Location = new System.Drawing.Point(3, 3);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(346, 25);
+            this.toolStrip1.TabIndex = 3;
+            this.toolStrip1.Text = "toolStrip1";
+            // 
+            // toolStripMenuItemModeInherit
+            // 
+            this.toolStripMenuItemModeInherit.Checked = true;
+            this.toolStripMenuItemModeInherit.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.toolStripMenuItemModeInherit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripMenuItemModeInherit.Enabled = false;
+            this.toolStripMenuItemModeInherit.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMenuItemModeInherit.Image")));
+            this.toolStripMenuItemModeInherit.Name = "toolStripMenuItemModeInherit";
+            this.toolStripMenuItemModeInherit.Size = new System.Drawing.Size(28, 25);
+            this.toolStripMenuItemModeInherit.Text = "Inherit";
+            this.toolStripMenuItemModeInherit.Click += new System.EventHandler(this.toolStripMenuItemModeInherit_Click);
+            // 
+            // toolStripMenuItemModeOverride
+            // 
+            this.toolStripMenuItemModeOverride.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripMenuItemModeOverride.Enabled = false;
+            this.toolStripMenuItemModeOverride.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMenuItemModeOverride.Image")));
+            this.toolStripMenuItemModeOverride.Name = "toolStripMenuItemModeOverride";
+            this.toolStripMenuItemModeOverride.Size = new System.Drawing.Size(28, 25);
+            this.toolStripMenuItemModeOverride.Text = "Override";
+            this.toolStripMenuItemModeOverride.Click += new System.EventHandler(this.toolStripMenuItemModeOverride_Click);
+            // 
+            // toolStripMenuItemModeSuppress
+            // 
+            this.toolStripMenuItemModeSuppress.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripMenuItemModeSuppress.Enabled = false;
+            this.toolStripMenuItemModeSuppress.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMenuItemModeSuppress.Image")));
+            this.toolStripMenuItemModeSuppress.Name = "toolStripMenuItemModeSuppress";
+            this.toolStripMenuItemModeSuppress.Size = new System.Drawing.Size(28, 25);
+            this.toolStripMenuItemModeSuppress.Text = "Suppress";
+            this.toolStripMenuItemModeSuppress.Click += new System.EventHandler(this.toolStripMenuItemModeSuppress_Click);
+            // 
+            // listViewConceptRoot
+            // 
+            this.listViewConceptRoot.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeaderRootTemplate,
+            this.columnHeaderRootEntity,
+            this.columnHeaderRootStatus});
+            this.listViewConceptRoot.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listViewConceptRoot.Location = new System.Drawing.Point(3, 28);
+            this.listViewConceptRoot.Name = "listViewConceptRoot";
+            this.listViewConceptRoot.Size = new System.Drawing.Size(346, 363);
+            this.listViewConceptRoot.SmallImageList = this.imageListInheritance;
+            this.listViewConceptRoot.TabIndex = 4;
+            this.listViewConceptRoot.UseCompatibleStateImageBehavior = false;
+            this.listViewConceptRoot.View = System.Windows.Forms.View.Details;
+            this.listViewConceptRoot.SelectedIndexChanged += new System.EventHandler(this.listViewConceptRoot_SelectedIndexChanged);
+            // 
+            // columnHeaderRootTemplate
+            // 
+            this.columnHeaderRootTemplate.Text = "Template";
+            this.columnHeaderRootTemplate.Width = 120;
+            // 
+            // columnHeaderRootEntity
+            // 
+            this.columnHeaderRootEntity.Text = "Entity";
+            this.columnHeaderRootEntity.Width = 120;
+            // 
+            // columnHeaderRootStatus
+            // 
+            this.columnHeaderRootStatus.Text = "Model View";
+            this.columnHeaderRootStatus.Width = 80;
+            // 
             // ctlRules
             // 
             this.ctlRules.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -2311,6 +2361,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ctlRules.Attribute = null;
             this.ctlRules.BaseTemplate = null;
+            this.ctlRules.CurrentInstance = null;
             this.ctlRules.Location = new System.Drawing.Point(6, 52);
             this.ctlRules.Name = "ctlRules";
             this.ctlRules.Project = null;
@@ -2323,19 +2374,19 @@
             // 
             // ctlParameters
             // 
-            this.ctlParameters.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.ctlParameters.ConceptLeaf = null;
             this.ctlParameters.ConceptRoot = null;
-            this.ctlParameters.Location = new System.Drawing.Point(7, 77);
+            this.ctlParameters.CurrentInstance = null;
+            this.ctlParameters.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ctlParameters.Location = new System.Drawing.Point(3, 3);
             this.ctlParameters.Name = "ctlParameters";
             this.ctlParameters.Project = null;
-            this.ctlParameters.Size = new System.Drawing.Size(331, 302);
+            this.ctlParameters.Size = new System.Drawing.Size(346, 388);
             this.ctlParameters.TabIndex = 9;
             // 
             // ctlOperators
             // 
+            this.ctlOperators.CurrentInstance = null;
             this.ctlOperators.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ctlOperators.Location = new System.Drawing.Point(3, 3);
             this.ctlOperators.Name = "ctlOperators";
@@ -2344,6 +2395,15 @@
             this.ctlOperators.Size = new System.Drawing.Size(346, 388);
             this.ctlOperators.TabIndex = 0;
             this.ctlOperators.Template = null;
+            // 
+            // imageListInheritance
+            // 
+            this.imageListInheritance.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListInheritance.ImageStream")));
+            this.imageListInheritance.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageListInheritance.Images.SetKeyName(0, "Approved.png");
+            this.imageListInheritance.Images.SetKeyName(1, "Processed.png");
+            this.imageListInheritance.Images.SetKeyName(2, "NotApproved.png");
+            this.imageListInheritance.Images.SetKeyName(3, "Requested.png");
             // 
             // CtlProperties
             // 
@@ -2360,7 +2420,6 @@
             this.tabPageTemplate.ResumeLayout(false);
             this.tabPageTemplate.PerformLayout();
             this.tabPageConcept.ResumeLayout(false);
-            this.tabPageConcept.PerformLayout();
             this.tabPageRequirements.ResumeLayout(false);
             this.tabPageRequirements.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -2388,6 +2447,17 @@
             this.tabPageExample.ResumeLayout(false);
             this.tabPageExample.PerformLayout();
             this.tabPageOperations.ResumeLayout(false);
+            this.toolStripDocumentation.ResumeLayout(false);
+            this.toolStripDocumentation.PerformLayout();
+            this.splitContainerTranslation.Panel1.ResumeLayout(false);
+            this.splitContainerTranslation.Panel2.ResumeLayout(false);
+            this.splitContainerTranslation.Panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainerTranslation)).EndInit();
+            this.splitContainerTranslation.ResumeLayout(false);
+            this.tabPageConceptRoot.ResumeLayout(false);
+            this.tabPageConceptRoot.PerformLayout();
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -2397,19 +2467,14 @@
         private System.Windows.Forms.TabControl tabControl;
         private System.Windows.Forms.TabPage tabPageConcept;
         private System.Windows.Forms.TabPage tabPageRequirements;
-        private System.Windows.Forms.Label labelConceptTemplate;
         private System.Windows.Forms.Label labelRequirementsExchanges;
         private System.Windows.Forms.TabPage tabPageTemplate;
         private System.Windows.Forms.Label labelTemplateEntity;
         private System.Windows.Forms.TabPage tabPageGeneral;
         private System.Windows.Forms.TextBox textBoxGeneralDescription;
         private System.Windows.Forms.TextBox textBoxGeneralName;
-        private System.Windows.Forms.Label labelGeneralDescription;
-        private System.Windows.Forms.Label labelGeneralName;
         private System.Windows.Forms.Button buttonTemplateEntity;
         private System.Windows.Forms.TextBox textBoxTemplateEntity;
-        private System.Windows.Forms.Button buttonConceptTemplate;
-        private System.Windows.Forms.TextBox textBoxConceptTemplate;
         private System.Windows.Forms.ListView listViewExchange;
         private System.Windows.Forms.ColumnHeader columnHeaderExchangeName;
         private System.Windows.Forms.ColumnHeader columnHeaderExchangeImport;
@@ -2423,14 +2488,11 @@
         private System.Windows.Forms.RadioButton radioButtonImportExcluded;
         private System.Windows.Forms.RadioButton radioButtonImportNone;
         private System.Windows.Forms.ListView listViewLocale;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ColumnHeader columnHeaderLocale;
         private System.Windows.Forms.ColumnHeader columnHeaderName;
         private System.Windows.Forms.ColumnHeader columnHeaderDesc;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Button buttonLocaleDelete;
-        private System.Windows.Forms.Button buttonLocaleAdd;
         private System.Windows.Forms.TabPage tabPagePropertySet;
         private System.Windows.Forms.Button buttonApplicabilityAddEntity;
         private System.Windows.Forms.Label label1;
@@ -2473,7 +2535,6 @@
         private System.Windows.Forms.ComboBox comboBoxLocaleCategory;
         private System.Windows.Forms.Label labelAttributeAggregation;
         private System.Windows.Forms.TabPage tabPageExpression;
-        private System.Windows.Forms.Label label18;
         private System.Windows.Forms.TextBox textBoxExpression;
         private System.Windows.Forms.Label labelPropertyEnumeration;
         private System.Windows.Forms.TabPage tabPageQuantity;
@@ -2525,7 +2586,6 @@
         private System.Windows.Forms.ComboBox comboBoxExchangeClassSender;
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.ComboBox comboBoxExchangeClassProcess;
-        private System.Windows.Forms.CheckBox checkBoxConceptOverride;
         private System.Windows.Forms.Button buttonAttributeInverse;
         private System.Windows.Forms.TextBox textBoxAttributeInverse;
         private System.Windows.Forms.Label labelAttributeInverse;
@@ -2565,5 +2625,19 @@
         private CtlParameters ctlParameters;
         private System.Windows.Forms.TabPage tabPageOperations;
         private CtlOperators ctlOperators;
+        private System.Windows.Forms.ToolStrip toolStripDocumentation;
+        private System.Windows.Forms.ToolStripButton toolStripButtonTranslationInsert;
+        private System.Windows.Forms.ToolStripButton toolStripButtonTranslationRemove;
+        private System.Windows.Forms.SplitContainer splitContainerTranslation;
+        private System.Windows.Forms.TabPage tabPageConceptRoot;
+        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemModeInherit;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemModeOverride;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemModeSuppress;
+        private System.Windows.Forms.ListView listViewConceptRoot;
+        private System.Windows.Forms.ColumnHeader columnHeaderRootTemplate;
+        private System.Windows.Forms.ColumnHeader columnHeaderRootEntity;
+        private System.Windows.Forms.ColumnHeader columnHeaderRootStatus;
+        private System.Windows.Forms.ImageList imageListInheritance;
     }
 }

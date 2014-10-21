@@ -67,6 +67,18 @@ namespace IfcDoc
                     {
                         map.Add(docType.Name, docType);
                     }
+                    foreach (DocPropertySet docPropertySet in docSchema.PropertySets)
+                    {
+                        map.Add(docPropertySet.Name, docPropertySet);
+                    }
+                    foreach (DocQuantitySet docQuantitySet in docSchema.QuantitySets)
+                    {
+                        map.Add(docQuantitySet.Name, docQuantitySet);
+                    }
+                    foreach(DocPropertyEnumeration docPropertyEnumeration in docSchema.PropertyEnums)
+                    {
+                        map.Add(docPropertyEnumeration.Name, docPropertyEnumeration);
+                    }
                 }
             }
 
@@ -105,10 +117,70 @@ namespace IfcDoc
                     if (rowcells.Length > 1)
                     {
                         DocObject docObj = null;
-                        string identifier = rowcells[0];
+                        string[] fullID = rowcells[0].Split('.');
+                        string identifier = fullID[0];
 
                         if (map.TryGetValue(identifier, out docObj))
                         {
+                            if(fullID.Length == 2)
+                            {
+                                string subType = fullID[1];
+
+                                if(docObj is DocEntity)
+                                {
+                                    DocEntity entity = (DocEntity)docObj;
+
+                                    foreach (DocAttribute attr in entity.Attributes)
+                                    {
+                                        if(attr.Name == subType)
+                                        {
+                                            docObj = attr;
+                                            break;
+                                        }
+                                    }
+                                }
+                                if(docObj is DocEnumeration)
+                                {
+                                    DocEnumeration type = (DocEnumeration)docObj;
+
+                                    foreach(DocConstant constnt in type.Constants)
+                                    {
+                                        docObj = type;
+                                        break;
+                                    }
+                                }
+                                if(docObj is DocPropertyEnumeration)
+                                {
+                                    DocPropertyEnumeration propEnum = (DocPropertyEnumeration)docObj;
+
+                                    foreach(DocPropertyConstant propConst in propEnum.Constants)
+                                    {
+                                        docObj = propEnum;
+                                        break;
+                                    }
+                                }
+                                if(docObj is DocPropertySet)
+                                {
+                                    DocPropertySet propSet = (DocPropertySet)docObj;
+
+                                    foreach(DocProperty docProp in propSet.Properties)
+                                    {
+                                        docObj = propSet;
+                                        break;
+                                    }
+                                }
+                                if(docObj is DocQuantitySet)
+                                {
+                                    DocQuantitySet quantSet = (DocQuantitySet)docObj;
+
+                                    foreach(DocQuantity docQuant in quantSet.Quantities)
+                                    {
+                                        docObj = quantSet;
+                                        break;
+                                    }
+                                }
+                            }
+
                             for(int i = 1; i < rowcells.Length && i < headercols.Length; i++)
                             {
                                 if (locales[i] != null)
@@ -158,11 +230,11 @@ namespace IfcDoc
             }
         }
 
-        private void WriteItem(System.IO.StreamWriter writer, DocObject docEntity, int level)
+        private void WriteItem(System.IO.StreamWriter writer, DocObject docEntity, int level, string topLevelName)
         {
             for (int i = 0; i < level; i++)
             {
-                writer.Write(".");
+                writer.Write(topLevelName + ".");
             }
             
             writer.Write(docEntity.Name);
@@ -200,14 +272,14 @@ namespace IfcDoc
             {
                 DocObject docEntity = sortlist[key];
 
-                WriteItem(writer, docEntity, 0);
+                WriteItem(writer, docEntity, 0, docEntity.Name);
 
                 if (docEntity is DocEntity)
                 {
                     DocEntity docEnt = (DocEntity)docEntity;
                     foreach(DocAttribute docAttr in docEnt.Attributes)
                     {
-                        WriteItem(writer, docAttr, 1);
+                        WriteItem(writer, docAttr, 1, docEntity.Name);
                     }
                 }
                 else if (docEntity is DocEnumeration)
@@ -215,7 +287,7 @@ namespace IfcDoc
                     DocEnumeration docEnum = (DocEnumeration)docEntity;
                     foreach(DocConstant docConst in docEnum.Constants)
                     {
-                        WriteItem(writer, docConst, 1);
+                        WriteItem(writer, docConst, 1, docEntity.Name);
                     }
                 }
                 else if(docEntity is DocPropertySet)
@@ -223,7 +295,7 @@ namespace IfcDoc
                     DocPropertySet docPset = (DocPropertySet)docEntity;
                     foreach(DocProperty docProp in docPset.Properties)
                     {
-                        WriteItem(writer, docProp, 1);
+                        WriteItem(writer, docProp, 1, docEntity.Name);
                     }
                 }
                 else if(docEntity is DocPropertyEnumeration)
@@ -231,7 +303,7 @@ namespace IfcDoc
                     DocPropertyEnumeration docPE = (DocPropertyEnumeration)docEntity;
                     foreach(DocPropertyConstant docPC in docPE.Constants)
                     {
-                        WriteItem(writer, docPC, 1);
+                        WriteItem(writer, docPC, 1, docEntity.Name);
                     }
                 }
                 else if(docEntity is DocQuantitySet)
@@ -239,7 +311,7 @@ namespace IfcDoc
                     DocQuantitySet docQset = (DocQuantitySet)docEntity;
                     foreach(DocQuantity docQuan in docQset.Quantities)
                     {
-                        WriteItem(writer, docQuan, 1);
+                        WriteItem(writer, docQuan, 1, docEntity.Name);
                     }
                 }
             }
@@ -279,27 +351,27 @@ namespace IfcDoc
                 {
                     foreach (DocSchema docSchema in docSection.Schemas)
                     {
-                        foreach (DocEntity docEntity in docSchema.Entities)
+                        foreach (DocEntity docEntity in docSchema.Entities) // have attributes
                         {
                             sortlistEntity.Add(docEntity.Name, docEntity);
                         }
 
-                        foreach (DocType docEntity in docSchema.Types)
+                        foreach (DocType docEntity in docSchema.Types) //docEnumeration docConstant
                         {
                             sortlistType.Add(docEntity.Name, docEntity);
                         }
 
-                        foreach (DocPropertyEnumeration docPE in docSchema.PropertyEnums)
+                        foreach (DocPropertyEnumeration docPE in docSchema.PropertyEnums) //docPropertyConstant
                         {
                             sortlistEnum.Add(docPE.Name, docPE);
                         }
 
-                        foreach (DocPropertySet docPset in docSchema.PropertySets)
+                        foreach (DocPropertySet docPset in docSchema.PropertySets) //Property
                         {
                             sortlistPset.Add(docPset.Name, docPset);
                         }
 
-                        foreach (DocQuantitySet docQset in docSchema.QuantitySets)
+                        foreach (DocQuantitySet docQset in docSchema.QuantitySets) //Quantities
                         {
                             sortlistQset.Add(docQset.Name, docQset);
                         }

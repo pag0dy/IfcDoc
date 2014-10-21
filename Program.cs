@@ -1284,7 +1284,11 @@ namespace IfcDoc
 
         public static QtoSetDef ExportQto(DocQuantitySet docPset)
         {
-            string[] apptypes = docPset.ApplicableType.Split(',');
+            string[] apptypes = new string[0];
+            if (docPset.ApplicableType != null)
+            {
+                apptypes = docPset.ApplicableType.Split(',');
+            }
 
             // convert to psd schema
             QtoSetDef psd = new QtoSetDef();

@@ -112,6 +112,28 @@ namespace IfcDoc
 
         public event EventHandler SelectedColumnChanged;
 
+        private void LoadInheritance()
+        {
+            this.toolStripMenuItemModeSuppress.Checked = false;
+            this.toolStripMenuItemModeOverride.Checked = false;
+            this.toolStripMenuItemModeInherit.Checked = false;
+            if (this.m_conceptleaf.Suppress)
+            {
+                this.toolStripSplitButtonInheritance.Image = this.toolStripMenuItemModeSuppress.Image;
+                this.toolStripMenuItemModeSuppress.Checked = true;
+            }
+            else if (this.m_conceptleaf.Override)
+            {
+                this.toolStripSplitButtonInheritance.Image = this.toolStripMenuItemModeOverride.Image;
+                this.toolStripMenuItemModeOverride.Checked = true;
+            }
+            else
+            {
+                this.toolStripSplitButtonInheritance.Image = this.toolStripMenuItemModeInherit.Image;
+                this.toolStripMenuItemModeInherit.Checked = true;
+            }
+        }
+
         private void LoadUsage()
         {
             m_editcon = true;
@@ -120,6 +142,8 @@ namespace IfcDoc
 
             if (this.m_conceptroot == null || this.m_conceptleaf == null)// || !this.m_conceptroot.Concepts.Contains(this.m_conceptleaf))
                 return;
+
+            LoadInheritance();
 
             DocTemplateUsage docUsage = (DocTemplateUsage)this.m_conceptleaf;
             if (docUsage.Definition != null)
@@ -425,6 +449,41 @@ namespace IfcDoc
             if (this.SelectedColumnChanged != null)
             {
                 this.SelectedColumnChanged(this, EventArgs.Empty);
+            }
+        }
+
+        private void toolStripMenuItemModeInherit_Click(object sender, EventArgs e)
+        {
+            this.m_conceptleaf.Override = false;
+            this.m_conceptleaf.Suppress = false;
+            this.LoadInheritance();
+        }
+
+        private void toolStripMenuItemModeOverride_Click(object sender, EventArgs e)
+        {
+            this.m_conceptleaf.Override = true;
+            this.m_conceptleaf.Suppress = false;
+            this.LoadInheritance();
+        }
+
+        private void toolStripMenuItemModeSuppress_Click(object sender, EventArgs e)
+        {
+            this.m_conceptleaf.Override = true;
+            this.m_conceptleaf.Suppress = true;
+            this.LoadInheritance();
+        }
+
+        private void toolStripButtonConceptTemplate_Click(object sender, EventArgs e)
+        {
+            using (FormSelectTemplate form = new FormSelectTemplate(this.m_conceptleaf.Definition, this.m_project, this.m_conceptroot.ApplicableEntity))
+            {
+                if (form.ShowDialog(this) == DialogResult.OK && form.SelectedTemplate != null)
+                {
+                    this.m_conceptleaf.Definition = form.SelectedTemplate;
+                    this.m_conceptleaf.Items.Clear();
+
+                    //this.textBoxConceptTemplate.Text = this.m_conceptleaf.Definition.Name;
+                }
             }
         }
     }

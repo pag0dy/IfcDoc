@@ -1246,9 +1246,55 @@ namespace IfcDoc.Format.HTM
 
             this.WriteLine("</table>");
 
-            //!!!TODO!!!//
+            this.WriteFooter(Properties.Settings.Default.Footer);
+        }
 
-                this.WriteFooter(Properties.Settings.Default.Footer);
+        public void WriteTemplateTable(DocProject docProject, DocTemplateDefinition docTemplateDefinition, int level, Dictionary<DocObject, bool>[] dictionaryViews)
+        {
+            bool isTemplateUsed = false;
+
+            string templateUrl = "../schema/templates/" + DocumentationISO.MakeLinkName(docTemplateDefinition) + ".htm";
+            string templateAnchor = "<a href=\"" + templateUrl + "\">" + docTemplateDefinition.Name + "</a>";
+
+            StringBuilder sB = new StringBuilder();
+
+            for (int j = 0; j < dictionaryViews.Length; j++)
+            {
+                Dictionary<DocObject, bool> dictionary = dictionaryViews[j];
+                if (dictionary != null)
+                {
+                    sB.Append("<td>");
+                    if (dictionary.ContainsKey(docTemplateDefinition))
+                    {
+                        sB.Append("X");
+                        isTemplateUsed = true;
+                    }
+                    sB.Append("</td>");
+                }
+            }
+
+            this.WriteLine("<tr><td>");
+            for (int i = 0; i < level; i++)
+            {
+                this.WriteLine("&nbsp;");
+            }
+
+            if (isTemplateUsed)
+            {
+                this.WriteLine(templateAnchor);
+            }
+            else
+            {
+                this.WriteLine(docTemplateDefinition.Name);
+            }
+            this.WriteLine("</td>");
+            this.WriteLine(sB.ToString());
+
+            this.WriteLine("</tr>");
+            foreach (DocTemplateDefinition childTemplateDefinition in docTemplateDefinition.Templates)
+            {
+                WriteTemplateTable(docProject, childTemplateDefinition, level + 1, dictionaryViews);
+            }
         }
 
         private void WriteInheritanceMappingLevel(string baseclass, IList<DocEntity> list, Dictionary<DocObject, bool>[] maps, int indent)

@@ -707,7 +707,7 @@ namespace IfcDoc
                         case ".ifcdoc":
                             using (FormatSPF format = new FormatSPF(this.m_file, SchemaDOC.Types, this.m_instances))
                             {
-                                format.InitHeaders(this.m_file, "IFCDOC_8_1");
+                                format.InitHeaders(this.m_file, "IFCDOC_8_2");
                                 format.Save();
                             }
                             break;
@@ -2487,7 +2487,10 @@ namespace IfcDoc
                                 TreeNode tnConceptRoot = LoadNode(tnType, docConceptRoot, docModelView.Name, false);
                                 foreach (DocTemplateUsage docConcept in docConceptRoot.Concepts)
                                 {
-                                    LoadNode(tnConceptRoot, docConcept, docConcept.Definition != null ? docConcept.Definition.Name : docConcept.Name, false);
+                                    if (!docConcept.Suppress)
+                                    {
+                                        LoadNode(tnConceptRoot, docConcept, docConcept.Definition != null ? docConcept.Definition.Name : docConcept.Name, false);
+                                    }
                                 }
                             }
                         }
@@ -2813,6 +2816,7 @@ namespace IfcDoc
             this.toolStripMenuItemEditPaste.Enabled = false;
 
             this.toolStripMenuItemEditBuildConcepts.Enabled = false;
+            this.buildFromSubschemaToolStripMenuItem.Enabled = false;
 
             this.toolStripMenuItemContextInsertModelView.Visible = false;
             this.toolStripMenuItemContextInsertExchange.Visible = false;
@@ -2997,6 +3001,7 @@ namespace IfcDoc
                 this.toolStripMenuItemEditPaste.Enabled = (this.m_clipboard is DocExchangeDefinition);
 
                 this.toolStripMenuItemEditBuildConcepts.Enabled = true;
+                this.buildFromSubschemaToolStripMenuItem.Enabled = true;
 
                 this.toolStripMenuItemContextInsertExchange.Visible = true;
                 this.toolStripMenuItemContextInsert.Visible = true;
@@ -5060,10 +5065,13 @@ namespace IfcDoc
             if (typeFilter == null)
                 return;
 
+            List<SEntity> population = new List<SEntity>();
             foreach(SEntity entity in this.m_formatTest.Instances.Values)
             {
                 if (typeFilter == null || typeFilter.IsInstanceOfType(entity))
                 {
+                    population.Add(entity);
+
                     ListViewItem lvi = new ListViewItem();
                     lvi.Tag = entity;
                     lvi.Text = entity.OID.ToString();
@@ -5114,6 +5122,10 @@ namespace IfcDoc
                             lvi.BackColor = Color.Yellow;
                         }
                     }
+                    else
+                    {
+                        lvi.BackColor = Color.Blue;
+                    }
 
                     System.Reflection.FieldInfo field = entity.GetType().GetField("Name");
                     if (field != null)
@@ -5134,6 +5146,8 @@ namespace IfcDoc
                     this.listViewValidate.Items.Add(lvi);
                 }
             }
+
+            this.ctlProperties.CurrentPopulation = population.ToArray();
         }
 
         /// <summary>
@@ -5308,9 +5322,9 @@ namespace IfcDoc
 
                                     foreach (DocTemplateUsage docUsage in docRoot.Concepts)
                                     {
-                                        if (docUsage.Definition != null && docUsage.Definition.Rules != null && !(docUsage.Definition.IsDisabled))
+                                        if (docUsage.Definition != null && docUsage.Definition.Rules != null && !(docUsage.Definition.IsDisabled) && !(docUsage.Suppress))
                                         {
-                                            if(docUsage.Definition.Name.Contains("-053"))
+                                            if(docUsage.Definition.Name.Contains("-069"))
                                             {
                                                 this.ToString();
                                             }
@@ -5475,7 +5489,15 @@ namespace IfcDoc
                                                                         }
                                                                         else
                                                                         {
-                                                                            sbDetail.Append("FAIL");
+                                                                            //sbDetail.Append("FAIL");
+
+                                                                            // run detailed report
+                                                                            foreach (DocModelRule rule in docUsage.Definition.Rules)
+                                                                            {
+                                                                                TraceRule(docUsage.Definition, rule, sbDetail, ent, list);
+                                                                            }
+
+
                                                                             failRule++;
 
                                                                             docUsage.ValidationConstraints[ent] = false;
@@ -5600,7 +5622,14 @@ namespace IfcDoc
                                                                     }
                                                                     else
                                                                     {
-                                                                        sbDetail.Append("FAIL");
+                                                                        //sbDetail.Append("FAIL");
+
+                                                                        // run detailed report
+                                                                        foreach (DocModelRule rule in docUsage.Definition.Rules)
+                                                                        {
+                                                                            TraceRule(docUsage.Definition, rule, sbDetail, ent, list);
+                                                                        }
+
                                                                         docUsage.ValidationConstraints[ent] = false;
                                                                         failRule++;
                                                                     }
@@ -5740,6 +5769,61 @@ namespace IfcDoc
 
             // launch
             System.Diagnostics.Process.Start(path);
+        }
+
+        private void TraceOperation(DocTemplateDefinition template, DocOp op, StringBuilder sb, SEntity ent, List<SEntity> population, int level)
+        {
+            System.Collections.Hashtable hashtable = new System.Collections.Hashtable();
+            object result = op.Eval(ent, hashtable, template, null);
+            if (hashtable.Count > 0)
+            {
+                // must evalulate all for uniqueness
+                foreach (object other in population)
+                {
+                    if (other == ent) // first instance will pass; following duplicate instances will fail
+                        break;
+
+                    // returning false means there's a duplicate (not unique).
+                    object otherresult = op.Eval(other, hashtable, template, null);
+                    if (otherresult is bool && !(bool)otherresult)
+                    {
+                        result = false;
+                        break;
+                    }
+                }
+            }
+
+            if (result is bool && !((bool)result))
+            {
+                for (int i = 0; i < level; i++ )
+                {
+                    sb.Append("&nbsp;&nbsp;");
+                }
+                
+                sb.AppendLine(op.ToString(template) + "<br/>");
+            }
+
+            // recurse
+            if (op is DocOpLogical)
+            {
+                DocOpLogical oplog = (DocOpLogical)op;
+                TraceOperation(template, oplog.ExpressionA, sb, ent, population, level + 1);
+                TraceOperation(template, oplog.ExpressionB, sb, ent, population, level + 1);
+            }
+        }
+
+        private void TraceRule(DocTemplateDefinition template, DocModelRule rule, StringBuilder sb, SEntity ent, List<SEntity> population)
+        {
+            if (rule is DocModelRuleConstraint)
+            {
+                DocModelRuleConstraint ruleCon = (DocModelRuleConstraint)rule;
+                TraceOperation(template, ruleCon.Expression, sb, ent, population, 0);
+            }
+
+            foreach(DocModelRule sub in rule.Rules)
+            {
+                TraceRule(template, sub, sb, ent, population);
+            }
         }
 
         private void backgroundWorkerValidate_ProgressChanged(object sender, ProgressChangedEventArgs e)
@@ -7497,6 +7581,55 @@ namespace IfcDoc
 
             this.ctlConcept.CurrentInstance = entity;
             this.ctlProperties.CurrentInstance = entity;
+        }
+
+        private void buildFromSubschemaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DialogResult res = this.openFileDialogExpress.ShowDialog();
+            if (res != System.Windows.Forms.DialogResult.OK)
+                return;
+
+            DocModelView docView = (DocModelView)this.treeView.SelectedNode.Tag;
+
+            // for now, we don't actually import EXPRESS, we just do dumb lookup of strings to see if they are included in model view
+            using (System.IO.StreamReader reader = new System.IO.StreamReader(this.openFileDialogExpress.FileName))
+            {
+                string express = reader.ReadToEnd();
+
+                foreach (DocSection docSection in this.m_project.Sections)
+                {
+                    foreach (DocSchema docSchema in docSection.Schemas)
+                    {
+                        foreach (DocEntity docEntity in docSchema.Entities)
+                        {
+                            string search1 = "ENTITY " + docEntity.Name + ";";
+                            string search2 = "ENTITY " + docEntity.Name + "\r\n";
+                            if (express.Contains(search1) || express.Contains(search2))
+                            {
+                                // check for existing
+                                DocConceptRoot root = null;
+                                foreach (DocConceptRoot exist in docView.ConceptRoots)
+                                {
+                                    if (exist.ApplicableEntity == docEntity)
+                                    {
+                                        root = exist;
+                                        break;
+                                    }
+                                }
+
+                                if (root == null)
+                                {
+                                    root = new DocConceptRoot();
+                                    root.ApplicableEntity = docEntity;
+                                    docView.ConceptRoots.Add(root);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            this.LoadTree();
         }
     }
 }

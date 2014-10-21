@@ -637,6 +637,31 @@ namespace IfcDoc.Schema.DOC
             return null;
         }
 
+        public DocModelView[] GetViewInheritance(DocModelView docModelView)
+        {
+            // build list of inherited views
+            List<DocModelView> inheritviews = new List<DocModelView>();
+            inheritviews.Add(docModelView);
+            DocModelView docSuperView = docModelView;
+            while (docSuperView != null && !String.IsNullOrEmpty(docSuperView.BaseView))
+            {
+                Guid guid = new Guid(docSuperView.BaseView);
+                docSuperView = this.GetView(guid);
+                if (docSuperView != null && !inheritviews.Contains(docSuperView))
+                {
+                    inheritviews.Add(docSuperView);
+                }
+                else
+                {
+                    break;
+                }
+            }
+            DocModelView[] modelviews = inheritviews.ToArray();
+
+            return modelviews;
+        }
+
+
         /// <summary>
         /// Creates or returns existing schema of specified name, within particular section
         /// </summary>
@@ -779,11 +804,15 @@ namespace IfcDoc.Schema.DOC
             return docSchema;
         }
 
-        private void RegisterSelects(Dictionary<DocObject, bool> included, DocDefinition entity)
+        /// <summary>
+        /// Registers any select objects that are already in scope
+        /// </summary>
+        /// <param name="included"></param>
+        /// <param name="entity"></param>
+        private bool RegisterSelects(Dictionary<DocObject, bool> included, DocDefinition entity)
         {
-            return; // no longer support
+            bool outerchain = false;
 
-#if false
             foreach (DocSection docSection in this.Sections)
             {
                 foreach (DocSchema docSchema in docSection.Schemas)
@@ -798,12 +827,17 @@ namespace IfcDoc.Schema.DOC
                                 if (docItem.Name == entity.Name)
                                 {
                                     if (!included.ContainsKey(docType))
-                                    {
-                                        included[docType] = true;
-                                        
+                                    {                                        
                                         // recurse
-                                        RegisterSelects(included, docType);
+                                        bool innerchain = RegisterSelects(included, docType);
+
+                                        if (innerchain)
+                                        {
+                                            included[docSelect] = true;
+                                        }
                                     }
+
+                                    outerchain = true;
                                     break;
                                 }
                             }
@@ -811,7 +845,8 @@ namespace IfcDoc.Schema.DOC
                     }
                 }
             }
-#endif
+
+            return outerchain;
         }
 
         private void RegisterDefined(Dictionary<DocObject, bool> included, DocDefined entity)
@@ -2167,6 +2202,11 @@ namespace IfcDoc.Schema.DOC
             // (3) if parameter is defined, check for match
             if (!String.IsNullOrEmpty(this.Identification))
             {
+                if(this.Identification == "ConnectName")
+                {
+                    this.ToString();
+                }
+
                 if (docItem == null)
                     return true; // parameter must be specified in order to check this rule
 
@@ -2186,23 +2226,23 @@ namespace IfcDoc.Schema.DOC
                         return false;
                     }
                 }
-                else if (value != null)
+                else// if (value != null)
                 {
                     // pull out internal value type
-                    object innervalue = value.ToString();
+                    object innervalue = null;
 
-                    FieldInfo fieldinfo = value.GetType().GetField("Value");
-                    if (fieldinfo != null)
+                    if (value != null)
                     {
-                        innervalue = fieldinfo.GetValue(value);
+                        innervalue = value.ToString();
+
+                        FieldInfo fieldinfo = value.GetType().GetField("Value");
+                        if (fieldinfo != null)
+                        {
+                            innervalue = fieldinfo.GetValue(value);
+                        }
                     }
 
-                    if (innervalue == null)
-                    {
-                        return false;
-                    }
-
-                    if (match != null && innervalue.ToString().Equals(match.ToString(), StringComparison.Ordinal))
+                    if (match != null && innervalue != null && innervalue.ToString().Equals(match.ToString(), StringComparison.Ordinal))
                     {
                         return true;
                     }
@@ -2217,10 +2257,11 @@ namespace IfcDoc.Schema.DOC
                         return false;
                     }
                 }
+                /*
                 else
                 {
                     return false;
-                }
+                }*/
             }
 
             // (4) recurse through constraints or entity rules
@@ -2437,6 +2478,7 @@ namespace IfcDoc.Schema.DOC
 
             if (target is SEntity)
             {
+                bool canpass = true; // if false, then can only be null (if not applicable due to parameter filtered out), or false (failure)
                 foreach (DocModelRule rule in this.Rules)
                 {                    
                     bool? result = rule.Validate((SEntity)target, docItem, typemap, trace);
@@ -2450,8 +2492,13 @@ namespace IfcDoc.Schema.DOC
 
                     // entity rule fails if any attribute rules fail
                     if (!result.Value)
-                        return false;
+                    {
+                        canpass = false;
+                    }
+                        //return false;
                 }
+
+                return canpass;
             }
 
             trace.Remove(this);
@@ -2534,7 +2581,7 @@ namespace IfcDoc.Schema.DOC
         /// </summary>
         /// <param name="o"></param>
         /// <returns></returns>
-        internal virtual bool? Eval(object o)
+        internal virtual object Eval(object o, Hashtable population, DocTemplateDefinition template, Type valuetype)
         {
             return null;
         }
@@ -2692,9 +2739,116 @@ namespace IfcDoc.Schema.DOC
             base.Delete();
         }
 
+        internal override object Eval(object o, Hashtable population, DocTemplateDefinition template, Type valuetype)
+        {
+            if (this.Reference.EntityRule == null)
+                return null;
+
+            // find the type
+            Type[] types = o.GetType().Assembly.GetTypes();
+            foreach(Type t in types)
+            {
+                if(t.Name == this.Reference.EntityRule.Name)
+                {
+                    valuetype = t;
+                    break;
+                }
+            }
+
+            // apply additional operation on reference according to metric
+            object lvalue = this.Reference.Eval(o, population, template, null);
+            if (lvalue == null)
+                return null;
+
+            object rvalue = this.Value.Eval(o, population, template, valuetype);
+            switch (this.Metric)
+            {
+                case DocOpCode.NoOperation:
+                    break;
+
+                case DocOpCode.LoadLength:
+                    if (rvalue is string)
+                    {
+                        rvalue = ((string)rvalue).Length;
+                    }
+                    else
+                    {
+                        rvalue = 0;
+                    }
+                    break;
+
+                case DocOpCode.IsInstance:
+                    //...
+                    break;
+
+                case DocOpCode.IsUnique:
+                    if (lvalue == null)
+                    {
+                        return null;
+                    }
+                    else if (population.ContainsKey(lvalue))
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        population.Add(lvalue, lvalue);
+                        return true;
+                    }
+                    break;
+            }
+            
+            bool result = false;
+            switch (this.Operation)
+            {
+                case DocOpCode.IsIncluded:
+                    if (rvalue is string)
+                    {
+                        string srv = (string)rvalue;
+                        string[] options = srv.Split(',');
+                        foreach(string option in options)
+                        {
+                            if (option == lvalue)
+                            {
+                                result = true;
+                                break;
+                            }
+                        }
+                    }
+                    break;
+
+                case DocOpCode.NoOperation: // backcompat
+                case DocOpCode.CompareEqual:
+                    result = Object.Equals(lvalue, rvalue);
+                    break;
+
+                case DocOpCode.CompareNotEqual:
+                    result = !Object.Equals(lvalue, rvalue);
+                    break;
+
+                case DocOpCode.CompareGreaterThan:
+                    result = ((IComparable)lvalue).CompareTo(rvalue) > 0;
+                    break;
+
+                case DocOpCode.CompareLessThan:
+                    result = ((IComparable)lvalue).CompareTo(rvalue) < 0;
+                    break;
+
+                case DocOpCode.CompareGreaterThanOrEqual:
+                    result = ((IComparable)lvalue).CompareTo(rvalue) >= 0;
+                    break;
+
+                case DocOpCode.CompareLessThanOrEqual:
+                    result = ((IComparable)lvalue).CompareTo(rvalue) <= 0;
+                    break;
+            }
+
+            return result;
+        }
+
         internal override LocalBuilder Emit(Compiler context, ILGenerator generator, DocTemplateDefinition dtd, Type valuetype)
         {
-            if(this.Reference.EntityRule == null)
+            if (this.Reference.EntityRule == null)
             {
                 System.Diagnostics.Debug.WriteLine("Invalid statement reference: " + dtd.Name);
                 generator.Emit(OpCodes.Ldc_I4_0); // return false;
@@ -3047,6 +3201,38 @@ namespace IfcDoc.Schema.DOC
             base.Delete();
         }
 
+        internal override object Eval(object o, Hashtable population, DocTemplateDefinition template, Type valuetype)
+        {
+            object valueA = this.ExpressionA.Eval(o, population, template, null);
+            object valueB = this.ExpressionB.Eval(o, population, template, null);
+            if (valueA is bool && valueB is bool)
+            {
+                bool resultA = (bool)valueA;
+                bool resultB = (bool)valueB;
+                bool result = false;
+
+                switch (this.Operation)
+                {
+                    case DocOpCode.And:
+                        result = (resultA && resultB);
+                        break;
+
+                    case DocOpCode.Or:
+                        result = (resultA || resultB);
+                        break;
+
+                    case DocOpCode.Xor:
+                        result = (resultA ^ resultB);
+                        break;
+                }
+                return result;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         /// <summary>
         /// Generates CIL code for operation
         /// </summary>
@@ -3149,6 +3335,82 @@ namespace IfcDoc.Schema.DOC
     public class DocOpReference : DocOpValue // ldfld|ldlen
     {
         [DataMember(Order = 0)] public DocModelRuleEntity EntityRule;
+
+        internal override object Eval(object o, Hashtable population, DocTemplateDefinition template, Type valuetype)
+        {
+            DocModelRule[] rulepath = template.BuildRulePath(this.EntityRule);
+
+            object value = o;
+            if (value == null)
+                return null;
+
+            foreach (DocModelRule rule in rulepath)
+            {
+                Type type = value.GetType();
+                if (rule is DocModelRuleAttribute)
+                {
+                    FieldInfo field = type.GetField(rule.Name);
+                    if (field == null)
+                    {
+                        // bail
+                        return null;
+                    }
+
+                    value = field.GetValue(value);
+                    if (value == null)
+                        return null;
+
+                    // if field is collection, then get first element
+                    if (field.FieldType.IsGenericType && field.FieldType.GetGenericTypeDefinition() == typeof(List<>))
+                    {
+                        IList list = (IList)value;
+                        if (list.Count == 0)
+                            return null;
+
+                        value = list[0];
+                    }
+                    else if (field.FieldType.IsValueType && field.FieldType.IsGenericType && field.FieldType.GetGenericTypeDefinition() == typeof(Nullable<>))
+                    {
+                        // drill in to underlying value
+                        MethodInfo methodGetValue = field.FieldType.GetMethod("get_Value");
+                        value = methodGetValue.Invoke(value, null);
+                    }
+                }
+                else if (rule is DocModelRuleEntity)
+                {
+                    bool isinstance = false;
+                    Type typeCompare = type;
+                    while (typeCompare != null)
+                    {
+                        if (typeCompare.Name == rule.Name)
+                        {
+                            isinstance = true;
+                            break;
+                        }
+
+                        typeCompare = typeCompare.BaseType;
+                    }
+
+                    if (!isinstance)
+                        return null;// false;
+
+                    if (type.IsEnum)
+                    {
+                        FieldInfo fieldValue = type.GetField(value.ToString(), BindingFlags.Static | BindingFlags.Public);
+                        value = fieldValue.GetRawConstantValue();
+                    }
+                    else if (!type.IsPrimitive && type.IsValueType) // EXPRESS ENUM or TYPE
+                    {
+                        // structure - all compiled structures for EXPRESS TYPE's have single field called Value holding the underlying type
+                        //FieldInfo fieldValue = type.GetField("Value");
+                        FieldInfo fieldValue = type.GetFields()[0];
+                        value = fieldValue.GetValue(value);
+                    }
+                }
+            }
+
+            return value;
+        }
 
         internal override LocalBuilder Emit(
             Compiler compiler,
@@ -3326,6 +3588,45 @@ namespace IfcDoc.Schema.DOC
     {
         [DataMember(Order = 0)] public string Literal;
 
+        internal override object Eval(object o, Hashtable population, DocTemplateDefinition template, Type valuetype)
+        {
+            if (valuetype != null && valuetype.IsEnum)
+            {
+                FieldInfo field = valuetype.GetField(this.Literal, BindingFlags.Public | BindingFlags.Static);
+                if (field != null)
+                {
+                    return field.GetRawConstantValue();
+                    //return field.GetValue(null); // underlying integer value
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            else if (valuetype != null && valuetype.IsValueType && valuetype.GetFields()[0].FieldType == typeof(double))
+            {
+                Double literal = 0.0;
+                Double.TryParse(this.Literal, out literal);
+                return literal;
+            }
+            else if (valuetype != null && valuetype.IsValueType && valuetype.GetFields()[0].FieldType == typeof(long))
+            {
+                Int64 literal = 0L;
+                Int64.TryParse(this.Literal, out literal);
+                return literal;
+            }
+            else if (valuetype != null && valuetype.IsValueType && valuetype.GetFields()[0].FieldType == typeof(bool))
+            {
+                Boolean literal = false;
+                Boolean.TryParse(this.Literal, out literal);
+                return literal;
+            }
+            else 
+            {
+                return this.Literal;
+            }
+        }
+
         internal override LocalBuilder Emit(
             Compiler compiler,
             ILGenerator generator, 
@@ -3414,7 +3715,8 @@ namespace IfcDoc.Schema.DOC
         [DataMember(Order = 1)] private List<DocTemplateItem> _Items; // items to be listed within use definition (rules)
         [DataMember(Order = 2)] private List<DocExchangeItem> _Exchanges; // new in 2.5
         //[DataMember(Order = 3)] private DocModelView _ModelView; // new in 2.7, removed on 3.5; determine from ModelView.ConceptRoot.Concepts hierarchy
-        [DataMember(Order = 3)] private bool _Override; // new in 5.0; if true, then any concepts from supertypes are not inherited
+        [DataMember(Order = 3)] private bool _Override; // new in 5.0; if true, then any concepts of same template from supertypes are not inherited
+        [DataMember(Order = 4)] private bool _Suppress; // new in 8.2; if true, then concept is disallowed
 
         private bool? _validation; // unserialized; null: no applicable instances; false: one or more failures; true: all pass
         private Dictionary<object, bool> _validateStructure; // 
@@ -3519,6 +3821,18 @@ namespace IfcDoc.Schema.DOC
             set
             {
                 this._Override = value;
+            }
+        }
+
+        public bool Suppress
+        {
+            get
+            {
+                return this._Suppress;
+            }
+            set
+            {
+                this._Suppress = value;
             }
         }
 

@@ -54,6 +54,8 @@ namespace IfcDoc
 
             DocObject docObject = this.m_target;
 
+            this.toolStripButtonTranslationRemove.Enabled = false;
+
             // build map
             foreach (DocSection docSection in this.m_project.Sections)
             {
@@ -198,11 +200,11 @@ namespace IfcDoc
             }
             else if (docObject is DocConceptRoot)
             {
+                this.tabControl.TabPages.Add(this.tabPageConceptRoot);
+
                 DocConceptRoot docRoot = (DocConceptRoot)docObject;
                 DocEntity docEntity = (DocEntity)this.m_parent;
                 DocModelView docView = null;
-
-                // get view of root
                 foreach (DocModelView docViewEach in this.m_project.ModelViews)
                 {
                     if (docViewEach.ConceptRoots.Contains(docRoot))
@@ -211,6 +213,69 @@ namespace IfcDoc
                         break;
                     }
                 }
+
+                DocModelView[] listViews = docProject.GetViewInheritance(docView); ;
+
+
+                // find all inherited concepts
+                List<DocTemplateDefinition> listTemplate = new List<DocTemplateDefinition>();
+                Dictionary<DocTemplateDefinition, DocEntity> mapTemplate = new Dictionary<DocTemplateDefinition, DocEntity>();
+                Dictionary<DocTemplateDefinition, DocModelView> mapView = new Dictionary<DocTemplateDefinition, DocModelView>();
+                while (docEntity != null)
+                {
+                    foreach (DocModelView docSuperView in listViews)
+                    {
+                        foreach (DocConceptRoot docRootEach in docSuperView.ConceptRoots)
+                        {
+                            if (docRootEach.ApplicableEntity == docEntity)
+                            {
+                                foreach (DocTemplateUsage docConcept in docRootEach.Concepts)
+                                {
+                                    if (docConcept.Definition != null)
+                                    {
+                                        if (listTemplate.Contains(docConcept.Definition))
+                                        {
+                                            listTemplate.Remove(docConcept.Definition);
+                                        }
+                                        listTemplate.Insert(0, docConcept.Definition);
+                                        mapTemplate[docConcept.Definition] = docEntity;
+                                        mapView[docConcept.Definition] = docSuperView;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    // recurse upwards
+                    docEntity = this.m_project.GetDefinition(docEntity.BaseDefinition) as DocEntity;
+                }
+
+                this.listViewConceptRoot.Items.Clear();
+                foreach (DocTemplateDefinition dtd in listTemplate)
+                {
+                    ListViewItem lvi = new ListViewItem();
+                    lvi.Tag = dtd;
+                    lvi.Text = dtd.Name;
+
+                    DocEntity docTemplateEntity = mapTemplate[dtd];
+                    lvi.SubItems.Add(docTemplateEntity.Name);
+
+                    DocModelView docTemplateView = mapView[dtd];
+                    lvi.SubItems.Add(docTemplateView.Name);
+
+                    // find local override if any
+                    lvi.ImageIndex = 3;
+                    foreach (DocTemplateUsage docConcept in docRoot.Concepts)
+                    {
+                        if(docConcept.Definition == dtd)
+                        {
+                            UpdateConceptInheritance(lvi, docConcept);
+                            break;
+                        }
+                    }
+
+                    this.listViewConceptRoot.Items.Add(lvi);
+                }
             }
             else if (docObject is DocTemplateUsage)
             {
@@ -218,12 +283,6 @@ namespace IfcDoc
                 this.tabControl.TabPages.Add(this.tabPageRequirements);
 
                 DocTemplateUsage docUsage = (DocTemplateUsage)docObject;
-                if (docUsage.Definition != null)
-                {
-                    this.textBoxConceptTemplate.Text = docUsage.Definition.Name;
-                }
-
-                this.checkBoxConceptOverride.Checked = docUsage.Override;
 
                 this.ctlParameters.Project = this.m_project;
                 this.ctlParameters.ConceptRoot = this.m_parent as DocConceptRoot;
@@ -364,6 +423,18 @@ namespace IfcDoc
                 this.tabControl.SelectedTab = tabpageExist;
             }
 
+        }
+
+        public SEntity[] CurrentPopulation
+        {
+            get
+            {
+                return this.ctlOperators.CurrentPopulation;
+            }
+            set
+            {
+                this.ctlOperators.CurrentPopulation = value;
+            }
         }
 
         public SEntity CurrentInstance
@@ -559,22 +630,6 @@ namespace IfcDoc
                 {   
                     docTemplate.Type = form.SelectedEntity.Name;
                     this.textBoxTemplateEntity.Text = docTemplate.Type;
-                }
-            }
-        }
-
-        private void buttonConceptTemplate_Click(object sender, EventArgs e)
-        {
-            DocTemplateUsage docUsage = (DocTemplateUsage)this.m_target;
-            DocConceptRoot docConceptRoot = (DocConceptRoot)this.m_parent;
-            using (FormSelectTemplate form = new FormSelectTemplate(docUsage.Definition, this.m_project, docConceptRoot.ApplicableEntity))
-            {
-                if (form.ShowDialog(this) == DialogResult.OK && form.SelectedTemplate != null)
-                {                    
-                    docUsage.Definition = form.SelectedTemplate;
-                    docUsage.Items.Clear();
-
-                    this.textBoxConceptTemplate.Text = docUsage.Definition.Name;
                 }
             }
         }
@@ -779,7 +834,7 @@ namespace IfcDoc
                 this.textBoxLocaleURL.Text = "";
             }
 
-            this.buttonLocaleDelete.Enabled = (this.listViewLocale.SelectedItems.Count > 0);
+            this.toolStripButtonTranslationRemove.Enabled = (this.listViewLocale.SelectedItems.Count > 0);
         }
 
         private void textBoxGeneralName_TextChanged(object sender, EventArgs e)
@@ -816,44 +871,6 @@ namespace IfcDoc
             else
             {
                 this.m_target.Documentation = this.textBoxGeneralDescription.Text;
-            }
-        }
-
-        private void buttonLocaleAdd_Click(object sender, EventArgs e)
-        {
-            // launch form for picking locale...
-            using (FormSelectLocale form = new FormSelectLocale())
-            {
-                DialogResult res = form.ShowDialog(this);
-                if (res == DialogResult.OK && form.SelectedLocale != null)
-                {
-                    DocLocalization docLocal = new DocLocalization();
-                    docLocal.Locale = form.SelectedLocale.Name;
-                    this.m_target.Localization.Add(docLocal);
-
-                    ListViewItem lvi = new ListViewItem();
-                    lvi.Tag = docLocal;
-                    lvi.Text = docLocal.Locale;
-                    lvi.SubItems.Add("");
-                    lvi.SubItems.Add("");
-                    this.listViewLocale.Items.Add(lvi);
-
-                    this.listViewLocale.SelectedItems.Clear();
-                    lvi.Selected = true;
-                }
-            }
-        }
-
-        private void buttonLocaleDelete_Click(object sender, EventArgs e)
-        {
-            for(int i = this.listViewLocale.SelectedItems.Count-1; i >=0; i--)
-            {
-                ListViewItem lvi = this.listViewLocale.SelectedItems[i];
-                DocLocalization docLocal = (DocLocalization)lvi.Tag;
-                this.m_target.Localization.Remove(docLocal);
-                docLocal.Delete();
-
-                lvi.Remove();
             }
         }
 
@@ -1547,12 +1564,6 @@ namespace IfcDoc
             docExchange.ReceiverClass = this.comboBoxExchangeClassReceiver.Text;
         }
 
-        private void checkBoxConceptOverride_CheckedChanged(object sender, EventArgs e)
-        {
-            DocTemplateUsage docUsage = (DocTemplateUsage)this.m_target;
-            docUsage.Override = this.checkBoxConceptOverride.Checked;
-        }
-
         private void buttonAttributeInverse_Click(object sender, EventArgs e)
         {
             DocAttribute docAttr = (DocAttribute)this.m_target;
@@ -1980,6 +1991,123 @@ namespace IfcDoc
 
         public event EventHandler RuleSelectionChanged;
         public event EventHandler RuleContentChanged;
+
+        private void toolStripButtonTranslationInsert_Click(object sender, EventArgs e)
+        {
+            using (FormSelectLocale form = new FormSelectLocale())
+            {
+                DialogResult res = form.ShowDialog(this);
+                if (res == DialogResult.OK && form.SelectedLocale != null)
+                {
+                    DocLocalization docLocal = new DocLocalization();
+                    docLocal.Locale = form.SelectedLocale.Name;
+                    this.m_target.Localization.Add(docLocal);
+
+                    ListViewItem lvi = new ListViewItem();
+                    lvi.Tag = docLocal;
+                    lvi.Text = docLocal.Locale;
+                    lvi.SubItems.Add("");
+                    lvi.SubItems.Add("");
+                    this.listViewLocale.Items.Add(lvi);
+
+                    this.listViewLocale.SelectedItems.Clear();
+                    lvi.Selected = true;
+                }
+            }
+        }
+
+        private void toolStripButtonTranslationRemove_Click(object sender, EventArgs e)
+        {
+            for (int i = this.listViewLocale.SelectedItems.Count - 1; i >= 0; i--)
+            {
+                ListViewItem lvi = this.listViewLocale.SelectedItems[i];
+                DocLocalization docLocal = (DocLocalization)lvi.Tag;
+                this.m_target.Localization.Remove(docLocal);
+                docLocal.Delete();
+
+                lvi.Remove();
+            }
+        }
+
+        private void tabPageGeneral_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void UpdateConceptInheritance(ListViewItem lvi, DocTemplateUsage docConcept)
+        {
+            if(docConcept == null)
+            {
+                lvi.ImageIndex = 3;
+            }
+            else if (docConcept.Suppress)
+            {
+                lvi.ImageIndex = 2;
+            }
+            else if (docConcept.Override)
+            {
+                lvi.ImageIndex = 1;
+            }
+            else
+            {
+                lvi.ImageIndex = 0;
+            }
+        }
+
+        private void SetConceptInheritance(bool isOverride, bool isSuppress)
+        {
+            DocConceptRoot docRoot = (DocConceptRoot)this.m_target;
+            foreach(ListViewItem lvi in this.listViewConceptRoot.SelectedItems)
+            {
+                DocTemplateDefinition dtd = (DocTemplateDefinition)lvi.Tag;
+                DocTemplateUsage docConcept = null;
+                foreach (DocTemplateUsage docConceptEach in docRoot.Concepts)
+                {
+                    if(docConceptEach.Definition == dtd)
+                    {
+                        docConcept = docConceptEach;
+                        break;
+                    }
+                }
+
+                if (docConcept == null)
+                {
+                    docConcept = new DocTemplateUsage();
+                    docConcept.Definition = dtd;
+                    docRoot.Concepts.Add(docConcept);
+
+                    //... update main tree view...
+                }
+
+                docConcept.Override = isOverride;
+                docConcept.Suppress = isSuppress;
+
+                UpdateConceptInheritance(lvi, docConcept);
+            }
+
+        }
+
+        private void toolStripMenuItemModeInherit_Click(object sender, EventArgs e)
+        {
+            SetConceptInheritance(false, false);
+        }
+
+        private void toolStripMenuItemModeOverride_Click(object sender, EventArgs e)
+        {
+            SetConceptInheritance(true, false);
+        }
+
+        private void toolStripMenuItemModeSuppress_Click(object sender, EventArgs e)
+        {
+            SetConceptInheritance(false, true);
+        }
+
+        private void listViewConceptRoot_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.toolStripMenuItemModeInherit.Enabled = true;
+            this.toolStripMenuItemModeOverride.Enabled = true;
+            this.toolStripMenuItemModeSuppress.Enabled = true;
+        }
 
         
     }

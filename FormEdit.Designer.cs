@@ -82,7 +82,6 @@
             this.toolStripMenuItemEditMoveOut = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemEditMoveIn = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem7 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripMenuItemEditBuildConcepts = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemViewWeb = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemViewText = new System.Windows.Forms.ToolStripMenuItem();
@@ -237,12 +236,16 @@
             this.columnHeaderInstanceID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderInstanceType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderInstanceName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.imageListValidate = new System.Windows.Forms.ImageList(this.components);
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabelValidateFile = new System.Windows.Forms.ToolStripLabel();
             this.toolStripButtonValidateClose = new System.Windows.Forms.ToolStripButton();
             this.imageListRules = new System.Windows.Forms.ImageList(this.components);
             this.saveFileDialogModule = new System.Windows.Forms.SaveFileDialog();
-            this.imageListValidate = new System.Windows.Forms.ImageList(this.components);
+            this.modelViewDefinitionToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.buildFromSubschemaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemEditBuildConcepts = new System.Windows.Forms.ToolStripMenuItem();
+            this.openFileDialogExpress = new System.Windows.Forms.OpenFileDialog();
             this.contextMenuStrip.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.toolStripMain.SuspendLayout();
@@ -689,7 +692,7 @@
             this.toolStripMenuItemEditMoveOut,
             this.toolStripMenuItemEditMoveIn,
             this.toolStripMenuItem7,
-            this.toolStripMenuItemEditBuildConcepts});
+            this.modelViewDefinitionToolStripMenuItem1});
             this.toolStripMenuItemEdit.Name = "toolStripMenuItemEdit";
             this.toolStripMenuItemEdit.Size = new System.Drawing.Size(39, 20);
             this.toolStripMenuItemEdit.Text = "&Edit";
@@ -802,14 +805,6 @@
             this.toolStripMenuItem7.Name = "toolStripMenuItem7";
             this.toolStripMenuItem7.Size = new System.Drawing.Size(196, 6);
             // 
-            // toolStripMenuItemEditBuildConcepts
-            // 
-            this.toolStripMenuItemEditBuildConcepts.Enabled = false;
-            this.toolStripMenuItemEditBuildConcepts.Name = "toolStripMenuItemEditBuildConcepts";
-            this.toolStripMenuItemEditBuildConcepts.Size = new System.Drawing.Size(199, 22);
-            this.toolStripMenuItemEditBuildConcepts.Text = "&Build Concepts...";
-            this.toolStripMenuItemEditBuildConcepts.Click += new System.EventHandler(this.toolStripMenuItemEditBuildConcepts_Click);
-            // 
             // viewToolStripMenuItem
             // 
             this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -824,7 +819,7 @@
             // 
             this.toolStripMenuItemViewWeb.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMenuItemViewWeb.Image")));
             this.toolStripMenuItemViewWeb.Name = "toolStripMenuItemViewWeb";
-            this.toolStripMenuItemViewWeb.Size = new System.Drawing.Size(147, 22);
+            this.toolStripMenuItemViewWeb.Size = new System.Drawing.Size(152, 22);
             this.toolStripMenuItemViewWeb.Text = "&Web View";
             this.toolStripMenuItemViewWeb.Click += new System.EventHandler(this.toolStripMenuItemViewWeb_Click);
             // 
@@ -832,7 +827,7 @@
             // 
             this.toolStripMenuItemViewText.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMenuItemViewText.Image")));
             this.toolStripMenuItemViewText.Name = "toolStripMenuItemViewText";
-            this.toolStripMenuItemViewText.Size = new System.Drawing.Size(147, 22);
+            this.toolStripMenuItemViewText.Size = new System.Drawing.Size(152, 22);
             this.toolStripMenuItemViewText.Text = "&Text View";
             this.toolStripMenuItemViewText.Click += new System.EventHandler(this.toolStripMenuItemViewText_Click);
             // 
@@ -842,7 +837,7 @@
             this.toolStripMenuItemViewDiagram.CheckState = System.Windows.Forms.CheckState.Checked;
             this.toolStripMenuItemViewDiagram.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMenuItemViewDiagram.Image")));
             this.toolStripMenuItemViewDiagram.Name = "toolStripMenuItemViewDiagram";
-            this.toolStripMenuItemViewDiagram.Size = new System.Drawing.Size(147, 22);
+            this.toolStripMenuItemViewDiagram.Size = new System.Drawing.Size(152, 22);
             this.toolStripMenuItemViewDiagram.Text = "&Diagram View";
             this.toolStripMenuItemViewDiagram.Click += new System.EventHandler(this.toolStripMenuItemViewDiagram_Click);
             // 
@@ -2095,6 +2090,7 @@
             // 
             this.ctlConcept.AutoScroll = true;
             this.ctlConcept.ConceptRoot = null;
+            this.ctlConcept.CurrentInstance = null;
             this.ctlConcept.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ctlConcept.Location = new System.Drawing.Point(0, 0);
             this.ctlConcept.Map = null;
@@ -2159,6 +2155,7 @@
             // 
             // ctlProperties
             // 
+            this.ctlProperties.CurrentInstance = null;
             this.ctlProperties.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ctlProperties.Location = new System.Drawing.Point(0, 0);
             this.ctlProperties.Name = "ctlProperties";
@@ -2226,6 +2223,15 @@
             // 
             this.columnHeaderInstanceName.Text = "Name";
             // 
+            // imageListValidate
+            // 
+            this.imageListValidate.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListValidate.ImageStream")));
+            this.imageListValidate.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageListValidate.Images.SetKeyName(0, "Requested.png");
+            this.imageListValidate.Images.SetKeyName(1, "Approved.png");
+            this.imageListValidate.Images.SetKeyName(2, "Processed.png");
+            this.imageListValidate.Images.SetKeyName(3, "NotApproved.png");
+            // 
             // toolStrip1
             // 
             this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
@@ -2270,14 +2276,35 @@
             this.saveFileDialogModule.Filter = ".NET Assembly (*.dll)|*.dll";
             this.saveFileDialogModule.Title = "Create .NET Assembly";
             // 
-            // imageListValidate
+            // modelViewDefinitionToolStripMenuItem1
             // 
-            this.imageListValidate.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListValidate.ImageStream")));
-            this.imageListValidate.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageListValidate.Images.SetKeyName(0, "Requested.png");
-            this.imageListValidate.Images.SetKeyName(1, "Approved.png");
-            this.imageListValidate.Images.SetKeyName(2, "Processed.png");
-            this.imageListValidate.Images.SetKeyName(3, "NotApproved.png");
+            this.modelViewDefinitionToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.buildFromSubschemaToolStripMenuItem,
+            this.toolStripMenuItemEditBuildConcepts});
+            this.modelViewDefinitionToolStripMenuItem1.Name = "modelViewDefinitionToolStripMenuItem1";
+            this.modelViewDefinitionToolStripMenuItem1.Size = new System.Drawing.Size(199, 22);
+            this.modelViewDefinitionToolStripMenuItem1.Text = "&Model View Definition";
+            // 
+            // buildFromSubschemaToolStripMenuItem
+            // 
+            this.buildFromSubschemaToolStripMenuItem.Enabled = false;
+            this.buildFromSubschemaToolStripMenuItem.Name = "buildFromSubschemaToolStripMenuItem";
+            this.buildFromSubschemaToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
+            this.buildFromSubschemaToolStripMenuItem.Text = "&Configure &Schema...";
+            this.buildFromSubschemaToolStripMenuItem.Click += new System.EventHandler(this.buildFromSubschemaToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItemEditBuildConcepts
+            // 
+            this.toolStripMenuItemEditBuildConcepts.Enabled = false;
+            this.toolStripMenuItemEditBuildConcepts.Name = "toolStripMenuItemEditBuildConcepts";
+            this.toolStripMenuItemEditBuildConcepts.Size = new System.Drawing.Size(181, 22);
+            this.toolStripMenuItemEditBuildConcepts.Text = "&Build Concepts...";
+            this.toolStripMenuItemEditBuildConcepts.Click += new System.EventHandler(this.toolStripMenuItemEditBuildConcepts_Click);
+            // 
+            // openFileDialogExpress
+            // 
+            this.openFileDialogExpress.Filter = "EXPRESS Schema (*.exp)|*.exp";
+            this.openFileDialogExpress.Title = "Configure model view from EXPRESS schema";
             // 
             // FormEdit
             // 
@@ -2519,7 +2546,6 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemToolsModule;
         private System.Windows.Forms.SaveFileDialog saveFileDialogModule;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemEditBuildConcepts;
         private System.Windows.Forms.ToolStripMenuItem generateChangeLogToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem19;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemEnableDisable;
@@ -2533,5 +2559,9 @@
         private System.Windows.Forms.ToolStripLabel toolStripLabelValidateFile;
         private System.Windows.Forms.ToolStripButton toolStripButtonValidateClose;
         private System.Windows.Forms.ImageList imageListValidate;
+        private System.Windows.Forms.ToolStripMenuItem modelViewDefinitionToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem buildFromSubschemaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemEditBuildConcepts;
+        private System.Windows.Forms.OpenFileDialog openFileDialogExpress;
     }
 }

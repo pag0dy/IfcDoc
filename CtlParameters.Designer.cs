@@ -39,6 +39,11 @@
             this.toolStripButtonMoveUp = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonMoveDown = new System.Windows.Forms.ToolStripButton();
             this.dataGridViewConceptRules = new System.Windows.Forms.DataGridView();
+            this.toolStripSplitButtonInheritance = new System.Windows.Forms.ToolStripSplitButton();
+            this.toolStripMenuItemModeInherit = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemModeOverride = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemModeSuppress = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripButtonConceptTemplate = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewConceptRules)).BeginInit();
             this.SuspendLayout();
@@ -51,7 +56,9 @@
             this.toolStripButtonTemplateRemove,
             this.toolStripSeparator1,
             this.toolStripButtonMoveUp,
-            this.toolStripButtonMoveDown});
+            this.toolStripButtonMoveDown,
+            this.toolStripSplitButtonInheritance,
+            this.toolStripButtonConceptTemplate});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(400, 25);
@@ -150,6 +157,58 @@
             this.dataGridViewConceptRules.UserAddedRow += new System.Windows.Forms.DataGridViewRowEventHandler(this.dataGridViewConceptRules_UserAddedRow);
             this.dataGridViewConceptRules.UserDeletedRow += new System.Windows.Forms.DataGridViewRowEventHandler(this.dataGridViewConceptRules_UserDeletedRow);
             // 
+            // toolStripSplitButtonInheritance
+            // 
+            this.toolStripSplitButtonInheritance.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripSplitButtonInheritance.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripSplitButtonInheritance.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItemModeInherit,
+            this.toolStripMenuItemModeOverride,
+            this.toolStripMenuItemModeSuppress});
+            this.toolStripSplitButtonInheritance.Image = ((System.Drawing.Image)(resources.GetObject("toolStripSplitButtonInheritance.Image")));
+            this.toolStripSplitButtonInheritance.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripSplitButtonInheritance.Name = "toolStripSplitButtonInheritance";
+            this.toolStripSplitButtonInheritance.Size = new System.Drawing.Size(32, 22);
+            this.toolStripSplitButtonInheritance.Text = "toolStripSplitButton1";
+            this.toolStripSplitButtonInheritance.ToolTipText = "Concept inheritance";
+            // 
+            // toolStripMenuItemModeInherit
+            // 
+            this.toolStripMenuItemModeInherit.Checked = true;
+            this.toolStripMenuItemModeInherit.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.toolStripMenuItemModeInherit.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMenuItemModeInherit.Image")));
+            this.toolStripMenuItemModeInherit.Name = "toolStripMenuItemModeInherit";
+            this.toolStripMenuItemModeInherit.Size = new System.Drawing.Size(167, 22);
+            this.toolStripMenuItemModeInherit.Text = "Inherit concept";
+            this.toolStripMenuItemModeInherit.Click += new System.EventHandler(this.toolStripMenuItemModeInherit_Click);
+            // 
+            // toolStripMenuItemModeOverride
+            // 
+            this.toolStripMenuItemModeOverride.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMenuItemModeOverride.Image")));
+            this.toolStripMenuItemModeOverride.Name = "toolStripMenuItemModeOverride";
+            this.toolStripMenuItemModeOverride.Size = new System.Drawing.Size(167, 22);
+            this.toolStripMenuItemModeOverride.Text = "Override concept";
+            this.toolStripMenuItemModeOverride.Click += new System.EventHandler(this.toolStripMenuItemModeOverride_Click);
+            // 
+            // toolStripMenuItemModeSuppress
+            // 
+            this.toolStripMenuItemModeSuppress.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMenuItemModeSuppress.Image")));
+            this.toolStripMenuItemModeSuppress.Name = "toolStripMenuItemModeSuppress";
+            this.toolStripMenuItemModeSuppress.Size = new System.Drawing.Size(167, 22);
+            this.toolStripMenuItemModeSuppress.Text = "Suppress concept";
+            this.toolStripMenuItemModeSuppress.Click += new System.EventHandler(this.toolStripMenuItemModeSuppress_Click);
+            // 
+            // toolStripButtonConceptTemplate
+            // 
+            this.toolStripButtonConceptTemplate.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripButtonConceptTemplate.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonConceptTemplate.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonConceptTemplate.Image")));
+            this.toolStripButtonConceptTemplate.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonConceptTemplate.Name = "toolStripButtonConceptTemplate";
+            this.toolStripButtonConceptTemplate.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButtonConceptTemplate.Text = "Change Template";
+            this.toolStripButtonConceptTemplate.Click += new System.EventHandler(this.toolStripButtonConceptTemplate_Click);
+            // 
             // CtlParameters
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -175,5 +234,10 @@
         private System.Windows.Forms.ToolStripButton toolStripButtonMoveUp;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton toolStripButtonMoveDown;
+        private System.Windows.Forms.ToolStripSplitButton toolStripSplitButtonInheritance;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemModeInherit;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemModeOverride;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemModeSuppress;
+        private System.Windows.Forms.ToolStripButton toolStripButtonConceptTemplate;
     }
 }

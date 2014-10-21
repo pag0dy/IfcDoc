@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -17,6 +18,7 @@ namespace IfcDoc
         private DocTemplateDefinition m_template;
         private DocModelRule m_modelrule; // relative rule for which to add constraints
         private SEntity m_instance;
+        private SEntity[] m_population; // all instances for which rule is applicable, to check uniqueness
 
         public CtlOperators()
         {
@@ -64,6 +66,18 @@ namespace IfcDoc
             }
         }
 
+        public SEntity[] CurrentPopulation
+        {
+            get
+            {
+                return this.m_population;
+            }
+            set
+            {
+                this.m_population = value;
+            }
+        }
+
         public SEntity CurrentInstance
         {
             get
@@ -73,6 +87,11 @@ namespace IfcDoc
             set
             {
                 this.m_instance = value;
+
+                foreach (TreeNode tn in this.treeViewRules.Nodes)
+                {
+                    ValidateNode(tn);
+                }
             }
         }
 
@@ -185,6 +204,9 @@ namespace IfcDoc
                 }
             }
             this.treeViewRules.EndUpdate();
+
+            // select nothing such that color is displayed for validation
+            this.treeViewRules.SelectedNode = null;
         }
 
         private void LoadRules(List<DocModelRule> list, DocModelRule parentrule)
@@ -635,6 +657,69 @@ namespace IfcDoc
             SetSelectedRuleOperator(DocOpCode.IsIncluded);
         }
 
+        private void ValidateNode(TreeNode tn)
+        {
+            if (this.m_instance != null)
+            {
+                DocOp docOp = null;
+                if (tn.Tag is DocModelRuleConstraint)
+                {
+                    DocModelRuleConstraint con = (DocModelRuleConstraint)tn.Tag;
+                    docOp = con.Expression;
+                }
+                else if (tn.Tag is DocOp)
+                {
+                    docOp = (DocOp)tn.Tag;
+                }
 
+                if (docOp != null)
+                {
+                    Hashtable hashtable = new Hashtable();
+                    object oresult = docOp.Eval(this.m_instance, hashtable, this.m_template, null);
+
+                    // if hashtable contains a value, that means that entire population must be tested to determine uniqueness
+                    if (hashtable.Count > 0 && this.m_population != null)
+                    {
+                        // must evalulate all for uniqueness
+                        foreach (object other in this.m_population)
+                        {
+                            if (other == this.m_instance) // first instance will pass; following duplicate instances will fail
+                                break;
+                            
+                            // returning false means there's a duplicate (not unique).
+                            object otherresult = docOp.Eval(other, hashtable, this.m_template, null);
+                            if (otherresult is bool && !(bool)otherresult)
+                            {
+                                oresult = false;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (oresult == null)
+                    {
+                        tn.BackColor = Color.Yellow;
+                    }
+                    else if(oresult is bool && (bool)oresult)
+                    {
+                        tn.BackColor = Color.Lime;
+                    }
+                    else if (oresult is bool && !(bool)oresult)
+                    {
+                        tn.BackColor = Color.Red;
+                    }
+                }
+            }
+            else
+            {
+                tn.BackColor = Color.Empty;
+            }
+
+            // recurse
+            foreach(TreeNode sub in tn.Nodes)
+            {
+                ValidateNode(sub);
+            }
+        }
     }
 }

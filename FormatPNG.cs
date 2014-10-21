@@ -549,6 +549,7 @@ namespace IfcDoc.Format.PNG
                 // build from inherited entities too
 
                 List<DocTemplateDefinition> listTemplates = new List<DocTemplateDefinition>(); // keep track of templates so we don't repeat at supertypes
+                List<DocTemplateDefinition> listSuppress = new List<DocTemplateDefinition>(); // list of templates that are suppressed
 
                 DocEntity docEntitySuper = docEntity;
                 while(docEntitySuper != null)
@@ -556,7 +557,7 @@ namespace IfcDoc.Format.PNG
 
                     foreach (DocModelView docEachView in docProject.ModelViews)
                     {
-                        if (docView == null || /*docView == docEachView*/ listViews.Contains(docEachView))//docView.Visible)
+                        if (docView == null || listViews.Contains(docEachView))
                         {
                             foreach (DocConceptRoot docRoot in docEachView.ConceptRoots)
                             {
@@ -564,28 +565,36 @@ namespace IfcDoc.Format.PNG
                                 {
                                     foreach (DocTemplateUsage docUsage in docRoot.Concepts)
                                     {
-                                        if (docUsage.Definition != null && docUsage.Definition.Rules != null && !listTemplates.Contains(docUsage.Definition))
+                                        if (docUsage.Definition != null && docUsage.Definition.Rules != null && !listTemplates.Contains(docUsage.Definition) && !listSuppress.Contains(docUsage.Definition))
                                         {
-                                            listTemplates.Add(docUsage.Definition);
-
-                                            foreach (DocModelRuleAttribute ruleAttribute in docUsage.Definition.Rules)
+                                            if (docUsage.Suppress)
                                             {
-                                                for (int i = 0; i < listAttr.Count; i++)
-                                                {
-                                                    if (listAttr[i].Name.Equals(ruleAttribute.Name))
-                                                    {
-                                                        // found it                                
-                                                        if (!mapAttribute.ContainsKey(i))
-                                                        {
-                                                            mapAttribute.Add(i, new List<DocModelRuleAttribute>());
-                                                        }
+                                                listSuppress.Add(docUsage.Definition);
+                                            }
+                                            else
+                                            {
 
-                                                        mapAttribute[i].Add(ruleAttribute);
-                                                        if (!mapTemplate.ContainsKey(ruleAttribute))
+                                                listTemplates.Add(docUsage.Definition);
+
+                                                foreach (DocModelRuleAttribute ruleAttribute in docUsage.Definition.Rules)
+                                                {
+                                                    for (int i = 0; i < listAttr.Count; i++)
+                                                    {
+                                                        if (listAttr[i].Name.Equals(ruleAttribute.Name))
                                                         {
-                                                            mapTemplate.Add(ruleAttribute, docUsage.Definition);
+                                                            // found it                                
+                                                            if (!mapAttribute.ContainsKey(i))
+                                                            {
+                                                                mapAttribute.Add(i, new List<DocModelRuleAttribute>());
+                                                            }
+
+                                                            mapAttribute[i].Add(ruleAttribute);
+                                                            if (!mapTemplate.ContainsKey(ruleAttribute))
+                                                            {
+                                                                mapTemplate.Add(ruleAttribute, docUsage.Definition);
+                                                            }
+                                                            break;
                                                         }
-                                                        break;
                                                     }
                                                 }
                                             }
