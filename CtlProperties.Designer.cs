@@ -30,18 +30,22 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CtlProperties));
-            this.tabControl = new System.Windows.Forms.TabControl();
-            this.tabPageGeneral = new System.Windows.Forms.TabPage();
-            this.label16 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
-            this.textBoxLocaleURL = new System.Windows.Forms.TextBox();
-            this.comboBoxLocaleCategory = new System.Windows.Forms.ComboBox();
+            this.splitContainerTranslation = new System.Windows.Forms.SplitContainer();
             this.listViewLocale = new System.Windows.Forms.ListView();
             this.columnHeaderLocale = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderDesc = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.textBoxGeneralDescription = new System.Windows.Forms.TextBox();
             this.textBoxGeneralName = new System.Windows.Forms.TextBox();
+            this.tabControl = new System.Windows.Forms.TabControl();
+            this.tabPageGeneral = new System.Windows.Forms.TabPage();
+            this.toolStripDocumentation = new System.Windows.Forms.ToolStrip();
+            this.toolStripButtonTranslationInsert = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonTranslationRemove = new System.Windows.Forms.ToolStripButton();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.textBoxLocaleURL = new System.Windows.Forms.TextBox();
+            this.comboBoxLocaleCategory = new System.Windows.Forms.ComboBox();
             this.tabPageIdentity = new System.Windows.Forms.TabPage();
             this.button3 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
@@ -185,28 +189,29 @@
             this.buttonExampleClear = new System.Windows.Forms.Button();
             this.buttonExampleLoad = new System.Windows.Forms.Button();
             this.tabPageOperations = new System.Windows.Forms.TabPage();
-            this.imageListRules = new System.Windows.Forms.ImageList(this.components);
-            this.openFileDialogIcon = new System.Windows.Forms.OpenFileDialog();
-            this.openFileDialogExample = new System.Windows.Forms.OpenFileDialog();
-            this.toolStripDocumentation = new System.Windows.Forms.ToolStrip();
-            this.toolStripButtonTranslationInsert = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonTranslationRemove = new System.Windows.Forms.ToolStripButton();
-            this.splitContainerTranslation = new System.Windows.Forms.SplitContainer();
             this.tabPageConceptRoot = new System.Windows.Forms.TabPage();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.toolStripMenuItemModeInherit = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemModeOverride = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemModeSuppress = new System.Windows.Forms.ToolStripMenuItem();
             this.listViewConceptRoot = new System.Windows.Forms.ListView();
             this.columnHeaderRootTemplate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderRootEntity = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderRootStatus = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.imageListInheritance = new System.Windows.Forms.ImageList(this.components);
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.toolStripMenuItemModeInherit = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemModeOverride = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemModeSuppress = new System.Windows.Forms.ToolStripMenuItem();
+            this.imageListRules = new System.Windows.Forms.ImageList(this.components);
+            this.openFileDialogIcon = new System.Windows.Forms.OpenFileDialog();
+            this.openFileDialogExample = new System.Windows.Forms.OpenFileDialog();
             this.ctlRules = new IfcDoc.CtlRules();
             this.ctlParameters = new IfcDoc.CtlParameters();
             this.ctlOperators = new IfcDoc.CtlOperators();
-            this.imageListInheritance = new System.Windows.Forms.ImageList(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainerTranslation)).BeginInit();
+            this.splitContainerTranslation.Panel1.SuspendLayout();
+            this.splitContainerTranslation.Panel2.SuspendLayout();
+            this.splitContainerTranslation.SuspendLayout();
             this.tabControl.SuspendLayout();
             this.tabPageGeneral.SuspendLayout();
+            this.toolStripDocumentation.SuspendLayout();
             this.tabPageIdentity.SuspendLayout();
             this.tabPageTemplate.SuspendLayout();
             this.tabPageConcept.SuspendLayout();
@@ -224,17 +229,67 @@
             this.tabPageUsage.SuspendLayout();
             this.tabPageExample.SuspendLayout();
             this.tabPageOperations.SuspendLayout();
-            this.toolStripDocumentation.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainerTranslation)).BeginInit();
-            this.splitContainerTranslation.Panel1.SuspendLayout();
-            this.splitContainerTranslation.Panel2.SuspendLayout();
-            this.splitContainerTranslation.SuspendLayout();
             this.tabPageConceptRoot.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
+            // splitContainerTranslation
+            // 
+            resources.ApplyResources(this.splitContainerTranslation, "splitContainerTranslation");
+            this.splitContainerTranslation.Name = "splitContainerTranslation";
+            // 
+            // splitContainerTranslation.Panel1
+            // 
+            resources.ApplyResources(this.splitContainerTranslation.Panel1, "splitContainerTranslation.Panel1");
+            this.splitContainerTranslation.Panel1.Controls.Add(this.listViewLocale);
+            // 
+            // splitContainerTranslation.Panel2
+            // 
+            resources.ApplyResources(this.splitContainerTranslation.Panel2, "splitContainerTranslation.Panel2");
+            this.splitContainerTranslation.Panel2.Controls.Add(this.textBoxGeneralDescription);
+            this.splitContainerTranslation.Panel2.Controls.Add(this.textBoxGeneralName);
+            // 
+            // listViewLocale
+            // 
+            resources.ApplyResources(this.listViewLocale, "listViewLocale");
+            this.listViewLocale.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeaderLocale,
+            this.columnHeaderName,
+            this.columnHeaderDesc});
+            this.listViewLocale.FullRowSelect = true;
+            this.listViewLocale.HideSelection = false;
+            this.listViewLocale.Name = "listViewLocale";
+            this.listViewLocale.UseCompatibleStateImageBehavior = false;
+            this.listViewLocale.View = System.Windows.Forms.View.Details;
+            this.listViewLocale.SelectedIndexChanged += new System.EventHandler(this.listViewLocale_SelectedIndexChanged);
+            // 
+            // columnHeaderLocale
+            // 
+            resources.ApplyResources(this.columnHeaderLocale, "columnHeaderLocale");
+            // 
+            // columnHeaderName
+            // 
+            resources.ApplyResources(this.columnHeaderName, "columnHeaderName");
+            // 
+            // columnHeaderDesc
+            // 
+            resources.ApplyResources(this.columnHeaderDesc, "columnHeaderDesc");
+            // 
+            // textBoxGeneralDescription
+            // 
+            resources.ApplyResources(this.textBoxGeneralDescription, "textBoxGeneralDescription");
+            this.textBoxGeneralDescription.Name = "textBoxGeneralDescription";
+            this.textBoxGeneralDescription.TextChanged += new System.EventHandler(this.textBoxGeneralDescription_TextChanged);
+            // 
+            // textBoxGeneralName
+            // 
+            resources.ApplyResources(this.textBoxGeneralName, "textBoxGeneralName");
+            this.textBoxGeneralName.Name = "textBoxGeneralName";
+            this.textBoxGeneralName.TextChanged += new System.EventHandler(this.textBoxGeneralName_TextChanged);
+            // 
             // tabControl
             // 
+            resources.ApplyResources(this.tabControl, "tabControl");
             this.tabControl.Controls.Add(this.tabPageGeneral);
             this.tabControl.Controls.Add(this.tabPageIdentity);
             this.tabControl.Controls.Add(this.tabPageTemplate);
@@ -252,134 +307,78 @@
             this.tabControl.Controls.Add(this.tabPageExample);
             this.tabControl.Controls.Add(this.tabPageOperations);
             this.tabControl.Controls.Add(this.tabPageConceptRoot);
-            this.tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl.Location = new System.Drawing.Point(0, 0);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(360, 420);
-            this.tabControl.TabIndex = 0;
             // 
             // tabPageGeneral
             // 
+            resources.ApplyResources(this.tabPageGeneral, "tabPageGeneral");
             this.tabPageGeneral.Controls.Add(this.splitContainerTranslation);
             this.tabPageGeneral.Controls.Add(this.toolStripDocumentation);
             this.tabPageGeneral.Controls.Add(this.label16);
             this.tabPageGeneral.Controls.Add(this.label15);
             this.tabPageGeneral.Controls.Add(this.textBoxLocaleURL);
             this.tabPageGeneral.Controls.Add(this.comboBoxLocaleCategory);
-            this.tabPageGeneral.Location = new System.Drawing.Point(4, 22);
             this.tabPageGeneral.Name = "tabPageGeneral";
-            this.tabPageGeneral.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageGeneral.Size = new System.Drawing.Size(352, 394);
-            this.tabPageGeneral.TabIndex = 4;
-            this.tabPageGeneral.Text = "Documentation";
             this.tabPageGeneral.UseVisualStyleBackColor = true;
             this.tabPageGeneral.Click += new System.EventHandler(this.tabPageGeneral_Click);
             // 
+            // toolStripDocumentation
+            // 
+            resources.ApplyResources(this.toolStripDocumentation, "toolStripDocumentation");
+            this.toolStripDocumentation.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStripDocumentation.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripButtonTranslationInsert,
+            this.toolStripButtonTranslationRemove});
+            this.toolStripDocumentation.Name = "toolStripDocumentation";
+            // 
+            // toolStripButtonTranslationInsert
+            // 
+            resources.ApplyResources(this.toolStripButtonTranslationInsert, "toolStripButtonTranslationInsert");
+            this.toolStripButtonTranslationInsert.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonTranslationInsert.Name = "toolStripButtonTranslationInsert";
+            this.toolStripButtonTranslationInsert.Click += new System.EventHandler(this.toolStripButtonTranslationInsert_Click);
+            // 
+            // toolStripButtonTranslationRemove
+            // 
+            resources.ApplyResources(this.toolStripButtonTranslationRemove, "toolStripButtonTranslationRemove");
+            this.toolStripButtonTranslationRemove.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonTranslationRemove.Name = "toolStripButtonTranslationRemove";
+            this.toolStripButtonTranslationRemove.Click += new System.EventHandler(this.toolStripButtonTranslationRemove_Click);
+            // 
             // label16
             // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(135, 328);
+            resources.ApplyResources(this.label16, "label16");
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(32, 13);
-            this.label16.TabIndex = 8;
-            this.label16.Text = "URL:";
-            this.label16.Visible = false;
             // 
             // label15
             // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(22, 328);
+            resources.ApplyResources(this.label15, "label15");
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(52, 13);
-            this.label15.TabIndex = 6;
-            this.label15.Text = "Category:";
-            this.label15.Visible = false;
             // 
             // textBoxLocaleURL
             // 
-            this.textBoxLocaleURL.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxLocaleURL.Enabled = false;
-            this.textBoxLocaleURL.Location = new System.Drawing.Point(138, 345);
+            resources.ApplyResources(this.textBoxLocaleURL, "textBoxLocaleURL");
             this.textBoxLocaleURL.Name = "textBoxLocaleURL";
-            this.textBoxLocaleURL.Size = new System.Drawing.Size(90, 20);
-            this.textBoxLocaleURL.TabIndex = 9;
-            this.textBoxLocaleURL.Visible = false;
             this.textBoxLocaleURL.TextChanged += new System.EventHandler(this.textBoxLocaleURL_TextChanged);
             // 
             // comboBoxLocaleCategory
             // 
+            resources.ApplyResources(this.comboBoxLocaleCategory, "comboBoxLocaleCategory");
             this.comboBoxLocaleCategory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxLocaleCategory.Enabled = false;
             this.comboBoxLocaleCategory.FormattingEnabled = true;
             this.comboBoxLocaleCategory.Items.AddRange(new object[] {
-            "Definition",
-            "Agreement",
-            "Diagram",
-            "Instantiation",
-            "Example"});
-            this.comboBoxLocaleCategory.Location = new System.Drawing.Point(25, 345);
+            resources.GetString("comboBoxLocaleCategory.Items"),
+            resources.GetString("comboBoxLocaleCategory.Items1"),
+            resources.GetString("comboBoxLocaleCategory.Items2"),
+            resources.GetString("comboBoxLocaleCategory.Items3"),
+            resources.GetString("comboBoxLocaleCategory.Items4")});
             this.comboBoxLocaleCategory.Name = "comboBoxLocaleCategory";
-            this.comboBoxLocaleCategory.Size = new System.Drawing.Size(106, 21);
-            this.comboBoxLocaleCategory.TabIndex = 7;
-            this.comboBoxLocaleCategory.Visible = false;
             this.comboBoxLocaleCategory.SelectedIndexChanged += new System.EventHandler(this.comboBoxLocaleCategory_SelectedIndexChanged);
-            // 
-            // listViewLocale
-            // 
-            this.listViewLocale.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeaderLocale,
-            this.columnHeaderName,
-            this.columnHeaderDesc});
-            this.listViewLocale.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listViewLocale.FullRowSelect = true;
-            this.listViewLocale.HideSelection = false;
-            this.listViewLocale.Location = new System.Drawing.Point(0, 0);
-            this.listViewLocale.Name = "listViewLocale";
-            this.listViewLocale.Size = new System.Drawing.Size(346, 91);
-            this.listViewLocale.TabIndex = 1;
-            this.listViewLocale.UseCompatibleStateImageBehavior = false;
-            this.listViewLocale.View = System.Windows.Forms.View.Details;
-            this.listViewLocale.SelectedIndexChanged += new System.EventHandler(this.listViewLocale_SelectedIndexChanged);
-            // 
-            // columnHeaderLocale
-            // 
-            this.columnHeaderLocale.Text = "Locale";
-            this.columnHeaderLocale.Width = 50;
-            // 
-            // columnHeaderName
-            // 
-            this.columnHeaderName.Text = "Name";
-            this.columnHeaderName.Width = 80;
-            // 
-            // columnHeaderDesc
-            // 
-            this.columnHeaderDesc.Text = "Description";
-            this.columnHeaderDesc.Width = 196;
-            // 
-            // textBoxGeneralDescription
-            // 
-            this.textBoxGeneralDescription.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBoxGeneralDescription.Location = new System.Drawing.Point(0, 20);
-            this.textBoxGeneralDescription.Multiline = true;
-            this.textBoxGeneralDescription.Name = "textBoxGeneralDescription";
-            this.textBoxGeneralDescription.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBoxGeneralDescription.Size = new System.Drawing.Size(346, 248);
-            this.textBoxGeneralDescription.TabIndex = 11;
-            this.textBoxGeneralDescription.TextChanged += new System.EventHandler(this.textBoxGeneralDescription_TextChanged);
-            // 
-            // textBoxGeneralName
-            // 
-            this.textBoxGeneralName.Dock = System.Windows.Forms.DockStyle.Top;
-            this.textBoxGeneralName.Location = new System.Drawing.Point(0, 0);
-            this.textBoxGeneralName.Name = "textBoxGeneralName";
-            this.textBoxGeneralName.Size = new System.Drawing.Size(346, 20);
-            this.textBoxGeneralName.TabIndex = 5;
-            this.textBoxGeneralName.TextChanged += new System.EventHandler(this.textBoxGeneralName_TextChanged);
             // 
             // tabPageIdentity
             // 
+            resources.ApplyResources(this.tabPageIdentity, "tabPageIdentity");
             this.tabPageIdentity.Controls.Add(this.button3);
             this.tabPageIdentity.Controls.Add(this.button2);
             this.tabPageIdentity.Controls.Add(this.button1);
@@ -399,469 +398,298 @@
             this.tabPageIdentity.Controls.Add(this.label9);
             this.tabPageIdentity.Controls.Add(this.textBoxIdentityUuid);
             this.tabPageIdentity.Controls.Add(this.label7);
-            this.tabPageIdentity.Location = new System.Drawing.Point(4, 22);
             this.tabPageIdentity.Name = "tabPageIdentity";
-            this.tabPageIdentity.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageIdentity.Size = new System.Drawing.Size(352, 394);
-            this.tabPageIdentity.TabIndex = 10;
-            this.tabPageIdentity.Text = "Identity";
             this.tabPageIdentity.UseVisualStyleBackColor = true;
             // 
             // button3
             // 
-            this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button3.Enabled = false;
-            this.button3.Location = new System.Drawing.Point(169, 356);
+            resources.ApplyResources(this.button3, "button3");
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 24;
-            this.button3.Text = "Remove";
             this.button3.UseVisualStyleBackColor = true;
-            this.button3.Visible = false;
             // 
             // button2
             // 
-            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button2.Enabled = false;
-            this.button2.Location = new System.Drawing.Point(88, 356);
+            resources.ApplyResources(this.button2, "button2");
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 23;
-            this.button2.Text = "Edit";
             this.button2.UseVisualStyleBackColor = true;
-            this.button2.Visible = false;
             // 
             // button1
             // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button1.Enabled = false;
-            this.button1.Location = new System.Drawing.Point(7, 356);
+            resources.ApplyResources(this.button1, "button1");
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 22;
-            this.button1.Text = "Add...";
             this.button1.UseVisualStyleBackColor = true;
-            this.button1.Visible = false;
             // 
             // label20
             // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(6, 147);
+            resources.ApplyResources(this.label20, "label20");
             this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(65, 13);
-            this.label20.TabIndex = 21;
-            this.label20.Text = "Permissions:";
-            this.label20.Visible = false;
             // 
             // listViewAccess
             // 
-            this.listViewAccess.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            resources.ApplyResources(this.listViewAccess, "listViewAccess");
             this.listViewAccess.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1,
             this.columnHeader2});
-            this.listViewAccess.Location = new System.Drawing.Point(7, 164);
             this.listViewAccess.Name = "listViewAccess";
-            this.listViewAccess.Size = new System.Drawing.Size(330, 186);
-            this.listViewAccess.TabIndex = 20;
             this.listViewAccess.UseCompatibleStateImageBehavior = false;
             this.listViewAccess.View = System.Windows.Forms.View.Details;
-            this.listViewAccess.Visible = false;
             // 
             // columnHeader1
             // 
-            this.columnHeader1.Text = "Account";
-            this.columnHeader1.Width = 200;
+            resources.ApplyResources(this.columnHeader1, "columnHeader1");
             // 
             // columnHeader2
             // 
-            this.columnHeader2.Text = "Access";
-            this.columnHeader2.Width = 100;
+            resources.ApplyResources(this.columnHeader2, "columnHeader2");
             // 
             // textBoxIdentityCopyright
             // 
-            this.textBoxIdentityCopyright.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxIdentityCopyright.Location = new System.Drawing.Point(231, 114);
+            resources.ApplyResources(this.textBoxIdentityCopyright, "textBoxIdentityCopyright");
             this.textBoxIdentityCopyright.Name = "textBoxIdentityCopyright";
-            this.textBoxIdentityCopyright.Size = new System.Drawing.Size(106, 20);
-            this.textBoxIdentityCopyright.TabIndex = 19;
             this.textBoxIdentityCopyright.TextChanged += new System.EventHandler(this.textBoxIdentityCopyright_TextChanged);
             // 
             // label14
             // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(230, 98);
+            resources.ApplyResources(this.label14, "label14");
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(54, 13);
-            this.label14.TabIndex = 18;
-            this.label14.Text = "Copyright:";
             // 
             // textBoxIdentityOwner
             // 
-            this.textBoxIdentityOwner.Location = new System.Drawing.Point(119, 114);
+            resources.ApplyResources(this.textBoxIdentityOwner, "textBoxIdentityOwner");
             this.textBoxIdentityOwner.Name = "textBoxIdentityOwner";
-            this.textBoxIdentityOwner.Size = new System.Drawing.Size(106, 20);
-            this.textBoxIdentityOwner.TabIndex = 17;
             this.textBoxIdentityOwner.TextChanged += new System.EventHandler(this.textBoxIdentityOwner_TextChanged);
             // 
             // label13
             // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(118, 98);
+            resources.ApplyResources(this.label13, "label13");
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(41, 13);
-            this.label13.TabIndex = 16;
-            this.label13.Text = "Owner:";
             // 
             // textBoxIdentityAuthor
             // 
-            this.textBoxIdentityAuthor.Location = new System.Drawing.Point(7, 114);
+            resources.ApplyResources(this.textBoxIdentityAuthor, "textBoxIdentityAuthor");
             this.textBoxIdentityAuthor.Name = "textBoxIdentityAuthor";
-            this.textBoxIdentityAuthor.Size = new System.Drawing.Size(106, 20);
-            this.textBoxIdentityAuthor.TabIndex = 15;
             this.textBoxIdentityAuthor.TextChanged += new System.EventHandler(this.textBoxIdentityAuthor_TextChanged);
             // 
             // label12
             // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(6, 98);
+            resources.ApplyResources(this.label12, "label12");
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(41, 13);
-            this.label12.TabIndex = 14;
-            this.label12.Text = "Author:";
             // 
             // comboBoxIdentityStatus
             // 
-            this.comboBoxIdentityStatus.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            resources.ApplyResources(this.comboBoxIdentityStatus, "comboBoxIdentityStatus");
             this.comboBoxIdentityStatus.FormattingEnabled = true;
             this.comboBoxIdentityStatus.Items.AddRange(new object[] {
-            "Sample",
-            "Draft",
-            "Proposal",
-            "Candidate",
-            "Official",
-            "Deprecated"});
-            this.comboBoxIdentityStatus.Location = new System.Drawing.Point(231, 70);
+            resources.GetString("comboBoxIdentityStatus.Items"),
+            resources.GetString("comboBoxIdentityStatus.Items1"),
+            resources.GetString("comboBoxIdentityStatus.Items2"),
+            resources.GetString("comboBoxIdentityStatus.Items3"),
+            resources.GetString("comboBoxIdentityStatus.Items4"),
+            resources.GetString("comboBoxIdentityStatus.Items5")});
             this.comboBoxIdentityStatus.Name = "comboBoxIdentityStatus";
-            this.comboBoxIdentityStatus.Size = new System.Drawing.Size(106, 21);
-            this.comboBoxIdentityStatus.TabIndex = 13;
             this.comboBoxIdentityStatus.SelectedIndexChanged += new System.EventHandler(this.comboBoxIdentityStatus_SelectedIndexChanged);
             this.comboBoxIdentityStatus.TextChanged += new System.EventHandler(this.comboBoxIdentityStatus_TextChanged);
             // 
             // label11
             // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(230, 54);
+            resources.ApplyResources(this.label11, "label11");
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(40, 13);
-            this.label11.TabIndex = 12;
-            this.label11.Text = "Status:";
             // 
             // textBoxIdentityVersion
             // 
-            this.textBoxIdentityVersion.Location = new System.Drawing.Point(119, 71);
+            resources.ApplyResources(this.textBoxIdentityVersion, "textBoxIdentityVersion");
             this.textBoxIdentityVersion.Name = "textBoxIdentityVersion";
-            this.textBoxIdentityVersion.Size = new System.Drawing.Size(106, 20);
-            this.textBoxIdentityVersion.TabIndex = 11;
             this.textBoxIdentityVersion.TextChanged += new System.EventHandler(this.textBoxIdentityVersion_TextChanged);
             // 
             // label10
             // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(118, 55);
+            resources.ApplyResources(this.label10, "label10");
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(45, 13);
-            this.label10.TabIndex = 10;
-            this.label10.Text = "Version:";
             // 
             // textBoxIdentityCode
             // 
-            this.textBoxIdentityCode.Location = new System.Drawing.Point(7, 71);
+            resources.ApplyResources(this.textBoxIdentityCode, "textBoxIdentityCode");
             this.textBoxIdentityCode.Name = "textBoxIdentityCode";
-            this.textBoxIdentityCode.Size = new System.Drawing.Size(106, 20);
-            this.textBoxIdentityCode.TabIndex = 9;
             this.textBoxIdentityCode.TextChanged += new System.EventHandler(this.textBoxIdentityCode_TextChanged);
             // 
             // label9
             // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(6, 55);
+            resources.ApplyResources(this.label9, "label9");
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(35, 13);
-            this.label9.TabIndex = 8;
-            this.label9.Text = "Code:";
             // 
             // textBoxIdentityUuid
             // 
-            this.textBoxIdentityUuid.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxIdentityUuid.Location = new System.Drawing.Point(7, 26);
+            resources.ApplyResources(this.textBoxIdentityUuid, "textBoxIdentityUuid");
             this.textBoxIdentityUuid.Name = "textBoxIdentityUuid";
             this.textBoxIdentityUuid.ReadOnly = true;
-            this.textBoxIdentityUuid.Size = new System.Drawing.Size(331, 20);
-            this.textBoxIdentityUuid.TabIndex = 7;
             // 
             // label7
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(6, 10);
+            resources.ApplyResources(this.label7, "label7");
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(37, 13);
-            this.label7.TabIndex = 6;
-            this.label7.Text = "UUID:";
             // 
             // tabPageTemplate
             // 
+            resources.ApplyResources(this.tabPageTemplate, "tabPageTemplate");
             this.tabPageTemplate.Controls.Add(this.ctlRules);
             this.tabPageTemplate.Controls.Add(this.buttonTemplateClear);
             this.tabPageTemplate.Controls.Add(this.buttonTemplateEntity);
             this.tabPageTemplate.Controls.Add(this.textBoxTemplateEntity);
             this.tabPageTemplate.Controls.Add(this.labelTemplateEntity);
-            this.tabPageTemplate.Location = new System.Drawing.Point(4, 22);
             this.tabPageTemplate.Name = "tabPageTemplate";
-            this.tabPageTemplate.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageTemplate.Size = new System.Drawing.Size(352, 394);
-            this.tabPageTemplate.TabIndex = 3;
-            this.tabPageTemplate.Text = "Template";
             this.tabPageTemplate.UseVisualStyleBackColor = true;
             // 
             // buttonTemplateClear
             // 
-            this.buttonTemplateClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonTemplateClear.Location = new System.Drawing.Point(182, 25);
+            resources.ApplyResources(this.buttonTemplateClear, "buttonTemplateClear");
             this.buttonTemplateClear.Name = "buttonTemplateClear";
-            this.buttonTemplateClear.Size = new System.Drawing.Size(75, 23);
-            this.buttonTemplateClear.TabIndex = 3;
-            this.buttonTemplateClear.Text = "Clear";
             this.buttonTemplateClear.UseVisualStyleBackColor = true;
             this.buttonTemplateClear.Click += new System.EventHandler(this.buttonTemplateClear_Click);
             // 
             // buttonTemplateEntity
             // 
-            this.buttonTemplateEntity.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonTemplateEntity.Location = new System.Drawing.Point(263, 25);
+            resources.ApplyResources(this.buttonTemplateEntity, "buttonTemplateEntity");
             this.buttonTemplateEntity.Name = "buttonTemplateEntity";
-            this.buttonTemplateEntity.Size = new System.Drawing.Size(75, 23);
-            this.buttonTemplateEntity.TabIndex = 2;
-            this.buttonTemplateEntity.Text = "Select...";
             this.buttonTemplateEntity.UseVisualStyleBackColor = true;
             this.buttonTemplateEntity.Click += new System.EventHandler(this.buttonTemplateEntity_Click);
             // 
             // textBoxTemplateEntity
             // 
-            this.textBoxTemplateEntity.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxTemplateEntity.Location = new System.Drawing.Point(7, 26);
+            resources.ApplyResources(this.textBoxTemplateEntity, "textBoxTemplateEntity");
             this.textBoxTemplateEntity.Name = "textBoxTemplateEntity";
             this.textBoxTemplateEntity.ReadOnly = true;
-            this.textBoxTemplateEntity.Size = new System.Drawing.Size(169, 20);
-            this.textBoxTemplateEntity.TabIndex = 1;
             // 
             // labelTemplateEntity
             // 
-            this.labelTemplateEntity.AutoSize = true;
-            this.labelTemplateEntity.Location = new System.Drawing.Point(6, 9);
+            resources.ApplyResources(this.labelTemplateEntity, "labelTemplateEntity");
             this.labelTemplateEntity.Name = "labelTemplateEntity";
-            this.labelTemplateEntity.Size = new System.Drawing.Size(88, 13);
-            this.labelTemplateEntity.TabIndex = 0;
-            this.labelTemplateEntity.Text = "Applicable Entity:";
             // 
             // tabPageConcept
             // 
+            resources.ApplyResources(this.tabPageConcept, "tabPageConcept");
             this.tabPageConcept.Controls.Add(this.ctlParameters);
-            this.tabPageConcept.Location = new System.Drawing.Point(4, 22);
             this.tabPageConcept.Name = "tabPageConcept";
-            this.tabPageConcept.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageConcept.Size = new System.Drawing.Size(352, 394);
-            this.tabPageConcept.TabIndex = 0;
-            this.tabPageConcept.Text = "Concept";
             this.tabPageConcept.UseVisualStyleBackColor = true;
             // 
             // tabPageRequirements
             // 
+            resources.ApplyResources(this.tabPageRequirements, "tabPageRequirements");
             this.tabPageRequirements.Controls.Add(this.groupBox2);
             this.tabPageRequirements.Controls.Add(this.groupBox1);
             this.tabPageRequirements.Controls.Add(this.listViewExchange);
             this.tabPageRequirements.Controls.Add(this.labelRequirementsExchanges);
-            this.tabPageRequirements.Location = new System.Drawing.Point(4, 22);
             this.tabPageRequirements.Name = "tabPageRequirements";
-            this.tabPageRequirements.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageRequirements.Size = new System.Drawing.Size(352, 394);
-            this.tabPageRequirements.TabIndex = 1;
-            this.tabPageRequirements.Text = "Requirements";
             this.tabPageRequirements.UseVisualStyleBackColor = true;
             // 
             // groupBox2
             // 
-            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            resources.ApplyResources(this.groupBox2, "groupBox2");
             this.groupBox2.Controls.Add(this.radioButtonExportNone);
             this.groupBox2.Controls.Add(this.radioButtonExportExcluded);
             this.groupBox2.Controls.Add(this.radioButtonExportMandatory);
             this.groupBox2.Controls.Add(this.radioButtonExportOptional);
-            this.groupBox2.Location = new System.Drawing.Point(178, 312);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(160, 67);
-            this.groupBox2.TabIndex = 15;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Export";
             // 
             // radioButtonExportNone
             // 
-            this.radioButtonExportNone.AutoSize = true;
-            this.radioButtonExportNone.Enabled = false;
-            this.radioButtonExportNone.Location = new System.Drawing.Point(6, 18);
+            resources.ApplyResources(this.radioButtonExportNone, "radioButtonExportNone");
             this.radioButtonExportNone.Name = "radioButtonExportNone";
-            this.radioButtonExportNone.Size = new System.Drawing.Size(51, 17);
-            this.radioButtonExportNone.TabIndex = 10;
-            this.radioButtonExportNone.Text = "None";
             this.radioButtonExportNone.UseVisualStyleBackColor = true;
             this.radioButtonExportNone.CheckedChanged += new System.EventHandler(this.radioButtonExportNone_CheckedChanged);
             // 
             // radioButtonExportExcluded
             // 
-            this.radioButtonExportExcluded.AutoSize = true;
-            this.radioButtonExportExcluded.Enabled = false;
-            this.radioButtonExportExcluded.Location = new System.Drawing.Point(6, 41);
+            resources.ApplyResources(this.radioButtonExportExcluded, "radioButtonExportExcluded");
             this.radioButtonExportExcluded.Name = "radioButtonExportExcluded";
-            this.radioButtonExportExcluded.Size = new System.Drawing.Size(69, 17);
-            this.radioButtonExportExcluded.TabIndex = 11;
-            this.radioButtonExportExcluded.Text = "Excluded";
             this.radioButtonExportExcluded.UseVisualStyleBackColor = true;
             this.radioButtonExportExcluded.CheckedChanged += new System.EventHandler(this.radioButtonExportExcluded_CheckedChanged);
             // 
             // radioButtonExportMandatory
             // 
-            this.radioButtonExportMandatory.AutoSize = true;
-            this.radioButtonExportMandatory.Enabled = false;
-            this.radioButtonExportMandatory.Location = new System.Drawing.Point(79, 41);
+            resources.ApplyResources(this.radioButtonExportMandatory, "radioButtonExportMandatory");
             this.radioButtonExportMandatory.Name = "radioButtonExportMandatory";
-            this.radioButtonExportMandatory.Size = new System.Drawing.Size(75, 17);
-            this.radioButtonExportMandatory.TabIndex = 13;
-            this.radioButtonExportMandatory.Text = "Mandatory";
             this.radioButtonExportMandatory.UseVisualStyleBackColor = true;
             this.radioButtonExportMandatory.CheckedChanged += new System.EventHandler(this.radioButtonExportMandatory_CheckedChanged);
             // 
             // radioButtonExportOptional
             // 
-            this.radioButtonExportOptional.AutoSize = true;
-            this.radioButtonExportOptional.Enabled = false;
-            this.radioButtonExportOptional.Location = new System.Drawing.Point(79, 18);
+            resources.ApplyResources(this.radioButtonExportOptional, "radioButtonExportOptional");
             this.radioButtonExportOptional.Name = "radioButtonExportOptional";
-            this.radioButtonExportOptional.Size = new System.Drawing.Size(64, 17);
-            this.radioButtonExportOptional.TabIndex = 12;
-            this.radioButtonExportOptional.Text = "Optional";
             this.radioButtonExportOptional.UseVisualStyleBackColor = true;
             this.radioButtonExportOptional.CheckedChanged += new System.EventHandler(this.radioButtonExportOptional_CheckedChanged);
             // 
             // groupBox1
             // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            resources.ApplyResources(this.groupBox1, "groupBox1");
             this.groupBox1.Controls.Add(this.radioButtonImportNone);
             this.groupBox1.Controls.Add(this.radioButtonImportExcluded);
             this.groupBox1.Controls.Add(this.radioButtonImportOptional);
             this.groupBox1.Controls.Add(this.radioButtonImportMandatory);
-            this.groupBox1.Location = new System.Drawing.Point(6, 312);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(160, 67);
-            this.groupBox1.TabIndex = 14;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Import";
             // 
             // radioButtonImportNone
             // 
-            this.radioButtonImportNone.AutoSize = true;
-            this.radioButtonImportNone.Enabled = false;
-            this.radioButtonImportNone.Location = new System.Drawing.Point(6, 18);
+            resources.ApplyResources(this.radioButtonImportNone, "radioButtonImportNone");
             this.radioButtonImportNone.Name = "radioButtonImportNone";
-            this.radioButtonImportNone.Size = new System.Drawing.Size(51, 17);
-            this.radioButtonImportNone.TabIndex = 5;
-            this.radioButtonImportNone.Text = "None";
             this.radioButtonImportNone.UseVisualStyleBackColor = true;
             this.radioButtonImportNone.CheckedChanged += new System.EventHandler(this.radioButtonImportNone_CheckedChanged);
             // 
             // radioButtonImportExcluded
             // 
-            this.radioButtonImportExcluded.AutoSize = true;
-            this.radioButtonImportExcluded.Enabled = false;
-            this.radioButtonImportExcluded.Location = new System.Drawing.Point(6, 41);
+            resources.ApplyResources(this.radioButtonImportExcluded, "radioButtonImportExcluded");
             this.radioButtonImportExcluded.Name = "radioButtonImportExcluded";
-            this.radioButtonImportExcluded.Size = new System.Drawing.Size(69, 17);
-            this.radioButtonImportExcluded.TabIndex = 6;
-            this.radioButtonImportExcluded.Text = "Excluded";
             this.radioButtonImportExcluded.UseVisualStyleBackColor = true;
             this.radioButtonImportExcluded.CheckedChanged += new System.EventHandler(this.radioButtonImportExcluded_CheckedChanged);
             // 
             // radioButtonImportOptional
             // 
-            this.radioButtonImportOptional.AutoSize = true;
-            this.radioButtonImportOptional.Enabled = false;
-            this.radioButtonImportOptional.Location = new System.Drawing.Point(79, 18);
+            resources.ApplyResources(this.radioButtonImportOptional, "radioButtonImportOptional");
             this.radioButtonImportOptional.Name = "radioButtonImportOptional";
-            this.radioButtonImportOptional.Size = new System.Drawing.Size(64, 17);
-            this.radioButtonImportOptional.TabIndex = 7;
-            this.radioButtonImportOptional.Text = "Optional";
             this.radioButtonImportOptional.UseVisualStyleBackColor = true;
             this.radioButtonImportOptional.CheckedChanged += new System.EventHandler(this.radioButtonImportOptional_CheckedChanged);
             // 
             // radioButtonImportMandatory
             // 
-            this.radioButtonImportMandatory.AutoSize = true;
-            this.radioButtonImportMandatory.Enabled = false;
-            this.radioButtonImportMandatory.Location = new System.Drawing.Point(79, 41);
+            resources.ApplyResources(this.radioButtonImportMandatory, "radioButtonImportMandatory");
             this.radioButtonImportMandatory.Name = "radioButtonImportMandatory";
-            this.radioButtonImportMandatory.Size = new System.Drawing.Size(75, 17);
-            this.radioButtonImportMandatory.TabIndex = 8;
-            this.radioButtonImportMandatory.Text = "Mandatory";
             this.radioButtonImportMandatory.UseVisualStyleBackColor = true;
             this.radioButtonImportMandatory.CheckedChanged += new System.EventHandler(this.radioButtonImportMandatory_CheckedChanged);
             // 
             // listViewExchange
             // 
-            this.listViewExchange.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            resources.ApplyResources(this.listViewExchange, "listViewExchange");
             this.listViewExchange.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeaderExchangeName,
             this.columnHeaderExchangeImport,
             this.columnHeaderExchangeExport});
             this.listViewExchange.HideSelection = false;
-            this.listViewExchange.Location = new System.Drawing.Point(7, 27);
             this.listViewExchange.Name = "listViewExchange";
-            this.listViewExchange.Size = new System.Drawing.Size(331, 279);
-            this.listViewExchange.TabIndex = 3;
             this.listViewExchange.UseCompatibleStateImageBehavior = false;
             this.listViewExchange.View = System.Windows.Forms.View.Details;
             this.listViewExchange.SelectedIndexChanged += new System.EventHandler(this.listViewExchange_SelectedIndexChanged);
             // 
             // columnHeaderExchangeName
             // 
-            this.columnHeaderExchangeName.Text = "Exchange";
-            this.columnHeaderExchangeName.Width = 160;
+            resources.ApplyResources(this.columnHeaderExchangeName, "columnHeaderExchangeName");
             // 
             // columnHeaderExchangeImport
             // 
-            this.columnHeaderExchangeImport.Text = "Import";
-            this.columnHeaderExchangeImport.Width = 70;
+            resources.ApplyResources(this.columnHeaderExchangeImport, "columnHeaderExchangeImport");
             // 
             // columnHeaderExchangeExport
             // 
-            this.columnHeaderExchangeExport.Text = "Export";
-            this.columnHeaderExchangeExport.Width = 70;
+            resources.ApplyResources(this.columnHeaderExchangeExport, "columnHeaderExchangeExport");
             // 
             // labelRequirementsExchanges
             // 
-            this.labelRequirementsExchanges.AutoSize = true;
-            this.labelRequirementsExchanges.Location = new System.Drawing.Point(6, 9);
+            resources.ApplyResources(this.labelRequirementsExchanges, "labelRequirementsExchanges");
             this.labelRequirementsExchanges.Name = "labelRequirementsExchanges";
-            this.labelRequirementsExchanges.Size = new System.Drawing.Size(126, 13);
-            this.labelRequirementsExchanges.TabIndex = 2;
-            this.labelRequirementsExchanges.Text = "Exchange Requirements:";
             // 
             // tabPagePropertySet
             // 
+            resources.ApplyResources(this.tabPagePropertySet, "tabPagePropertySet");
             this.tabPagePropertySet.Controls.Add(this.buttonApplicabilityAddTemplate);
             this.tabPagePropertySet.Controls.Add(this.buttonPsetApplicabilityDelete);
             this.tabPagePropertySet.Controls.Add(this.listViewPsetApplicability);
@@ -869,118 +697,81 @@
             this.tabPagePropertySet.Controls.Add(this.comboBoxPsetType);
             this.tabPagePropertySet.Controls.Add(this.buttonApplicabilityAddEntity);
             this.tabPagePropertySet.Controls.Add(this.label1);
-            this.tabPagePropertySet.Location = new System.Drawing.Point(4, 22);
             this.tabPagePropertySet.Name = "tabPagePropertySet";
-            this.tabPagePropertySet.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPagePropertySet.Size = new System.Drawing.Size(352, 394);
-            this.tabPagePropertySet.TabIndex = 5;
-            this.tabPagePropertySet.Text = "Applicability";
             this.tabPagePropertySet.UseVisualStyleBackColor = true;
             // 
             // buttonApplicabilityAddTemplate
             // 
-            this.buttonApplicabilityAddTemplate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonApplicabilityAddTemplate.Location = new System.Drawing.Point(112, 356);
+            resources.ApplyResources(this.buttonApplicabilityAddTemplate, "buttonApplicabilityAddTemplate");
             this.buttonApplicabilityAddTemplate.Name = "buttonApplicabilityAddTemplate";
-            this.buttonApplicabilityAddTemplate.Size = new System.Drawing.Size(100, 23);
-            this.buttonApplicabilityAddTemplate.TabIndex = 6;
-            this.buttonApplicabilityAddTemplate.Text = "Add Template...";
             this.buttonApplicabilityAddTemplate.UseVisualStyleBackColor = true;
-            this.buttonApplicabilityAddTemplate.Visible = false;
             this.buttonApplicabilityAddTemplate.Click += new System.EventHandler(this.buttonApplicabilityAddTemplate_Click);
             // 
             // buttonPsetApplicabilityDelete
             // 
-            this.buttonPsetApplicabilityDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonPsetApplicabilityDelete.Enabled = false;
-            this.buttonPsetApplicabilityDelete.Location = new System.Drawing.Point(263, 356);
+            resources.ApplyResources(this.buttonPsetApplicabilityDelete, "buttonPsetApplicabilityDelete");
             this.buttonPsetApplicabilityDelete.Name = "buttonPsetApplicabilityDelete";
-            this.buttonPsetApplicabilityDelete.Size = new System.Drawing.Size(75, 23);
-            this.buttonPsetApplicabilityDelete.TabIndex = 5;
-            this.buttonPsetApplicabilityDelete.Text = "Remove";
             this.buttonPsetApplicabilityDelete.UseVisualStyleBackColor = true;
             this.buttonPsetApplicabilityDelete.Click += new System.EventHandler(this.buttonPsetApplicabilityDelete_Click);
             // 
             // listViewPsetApplicability
             // 
-            this.listViewPsetApplicability.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            resources.ApplyResources(this.listViewPsetApplicability, "listViewPsetApplicability");
             this.listViewPsetApplicability.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeaderPsetEntity,
             this.columnHeaderPsetPredefined});
             this.listViewPsetApplicability.FullRowSelect = true;
-            this.listViewPsetApplicability.Location = new System.Drawing.Point(7, 77);
             this.listViewPsetApplicability.Name = "listViewPsetApplicability";
-            this.listViewPsetApplicability.Size = new System.Drawing.Size(331, 273);
-            this.listViewPsetApplicability.TabIndex = 3;
             this.listViewPsetApplicability.UseCompatibleStateImageBehavior = false;
             this.listViewPsetApplicability.View = System.Windows.Forms.View.Details;
             this.listViewPsetApplicability.SelectedIndexChanged += new System.EventHandler(this.listViewPsetApplicability_SelectedIndexChanged);
             // 
             // columnHeaderPsetEntity
             // 
-            this.columnHeaderPsetEntity.Text = "Entity";
-            this.columnHeaderPsetEntity.Width = 150;
+            resources.ApplyResources(this.columnHeaderPsetEntity, "columnHeaderPsetEntity");
             // 
             // columnHeaderPsetPredefined
             // 
-            this.columnHeaderPsetPredefined.Text = "Predefined Type";
-            this.columnHeaderPsetPredefined.Width = 150;
+            resources.ApplyResources(this.columnHeaderPsetPredefined, "columnHeaderPsetPredefined");
             // 
             // labelPsetType
             // 
-            this.labelPsetType.AutoSize = true;
-            this.labelPsetType.Location = new System.Drawing.Point(6, 9);
+            resources.ApplyResources(this.labelPsetType, "labelPsetType");
             this.labelPsetType.Name = "labelPsetType";
-            this.labelPsetType.Size = new System.Drawing.Size(52, 13);
-            this.labelPsetType.TabIndex = 0;
-            this.labelPsetType.Text = "Category:";
             // 
             // comboBoxPsetType
             // 
-            this.comboBoxPsetType.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            resources.ApplyResources(this.comboBoxPsetType, "comboBoxPsetType");
             this.comboBoxPsetType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxPsetType.FormattingEnabled = true;
             this.comboBoxPsetType.Items.AddRange(new object[] {
-            "PSET_TYPEDRIVENONLY",
-            "PSET_TYPEDRIVENOVERRIDE",
-            "PSET_OCCURRENCEDRIVEN",
-            "PSET_PERFORMANCEDRIVEN",
-            "QTO_TYPEDRIVENONLY",
-            "QTO_TYPEDRIVENOVERRIDE",
-            "QTO_OCCURRENCEDRIVEN",
-            "NOTDEFINED"});
-            this.comboBoxPsetType.Location = new System.Drawing.Point(7, 27);
+            resources.GetString("comboBoxPsetType.Items"),
+            resources.GetString("comboBoxPsetType.Items1"),
+            resources.GetString("comboBoxPsetType.Items2"),
+            resources.GetString("comboBoxPsetType.Items3"),
+            resources.GetString("comboBoxPsetType.Items4"),
+            resources.GetString("comboBoxPsetType.Items5"),
+            resources.GetString("comboBoxPsetType.Items6"),
+            resources.GetString("comboBoxPsetType.Items7")});
             this.comboBoxPsetType.Name = "comboBoxPsetType";
-            this.comboBoxPsetType.Size = new System.Drawing.Size(331, 21);
-            this.comboBoxPsetType.TabIndex = 1;
             this.comboBoxPsetType.SelectedIndexChanged += new System.EventHandler(this.comboBoxPsetType_SelectedIndexChanged);
             this.comboBoxPsetType.TextUpdate += new System.EventHandler(this.comboBoxPsetType_TextUpdate);
             // 
             // buttonApplicabilityAddEntity
             // 
-            this.buttonApplicabilityAddEntity.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonApplicabilityAddEntity.Location = new System.Drawing.Point(6, 356);
+            resources.ApplyResources(this.buttonApplicabilityAddEntity, "buttonApplicabilityAddEntity");
             this.buttonApplicabilityAddEntity.Name = "buttonApplicabilityAddEntity";
-            this.buttonApplicabilityAddEntity.Size = new System.Drawing.Size(100, 23);
-            this.buttonApplicabilityAddEntity.TabIndex = 4;
-            this.buttonApplicabilityAddEntity.Text = "Add Entity...";
             this.buttonApplicabilityAddEntity.UseVisualStyleBackColor = true;
             this.buttonApplicabilityAddEntity.Click += new System.EventHandler(this.buttonPsetEntity_Click);
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 61);
+            resources.ApplyResources(this.label1, "label1");
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(113, 13);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "Applicabile Definitions:";
             // 
             // tabPageProperty
             // 
+            resources.ApplyResources(this.tabPageProperty, "tabPageProperty");
             this.tabPageProperty.Controls.Add(this.buttonPropertyEnumRemove);
             this.tabPageProperty.Controls.Add(this.buttonPropertyEnumInsert);
             this.tabPageProperty.Controls.Add(this.listViewPropertyEnums);
@@ -990,49 +781,30 @@
             this.tabPageProperty.Controls.Add(this.labelPropertyType);
             this.tabPageProperty.Controls.Add(this.label4);
             this.tabPageProperty.Controls.Add(this.comboBoxPropertyType);
-            this.tabPageProperty.Location = new System.Drawing.Point(4, 22);
             this.tabPageProperty.Name = "tabPageProperty";
-            this.tabPageProperty.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageProperty.Size = new System.Drawing.Size(352, 394);
-            this.tabPageProperty.TabIndex = 6;
-            this.tabPageProperty.Text = "Property";
             this.tabPageProperty.UseVisualStyleBackColor = true;
             // 
             // buttonPropertyEnumRemove
             // 
-            this.buttonPropertyEnumRemove.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonPropertyEnumRemove.Enabled = false;
-            this.buttonPropertyEnumRemove.Location = new System.Drawing.Point(87, 356);
+            resources.ApplyResources(this.buttonPropertyEnumRemove, "buttonPropertyEnumRemove");
             this.buttonPropertyEnumRemove.Name = "buttonPropertyEnumRemove";
-            this.buttonPropertyEnumRemove.Size = new System.Drawing.Size(75, 23);
-            this.buttonPropertyEnumRemove.TabIndex = 17;
-            this.buttonPropertyEnumRemove.Text = "Delete";
             this.buttonPropertyEnumRemove.UseVisualStyleBackColor = true;
             this.buttonPropertyEnumRemove.Click += new System.EventHandler(this.buttonPropertyEnumRemove_Click);
             // 
             // buttonPropertyEnumInsert
             // 
-            this.buttonPropertyEnumInsert.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonPropertyEnumInsert.Location = new System.Drawing.Point(6, 356);
+            resources.ApplyResources(this.buttonPropertyEnumInsert, "buttonPropertyEnumInsert");
             this.buttonPropertyEnumInsert.Name = "buttonPropertyEnumInsert";
-            this.buttonPropertyEnumInsert.Size = new System.Drawing.Size(75, 23);
-            this.buttonPropertyEnumInsert.TabIndex = 16;
-            this.buttonPropertyEnumInsert.Text = "Add...";
             this.buttonPropertyEnumInsert.UseVisualStyleBackColor = true;
             this.buttonPropertyEnumInsert.Click += new System.EventHandler(this.buttonPropertyEnumInsert_Click);
             // 
             // listViewPropertyEnums
             // 
-            this.listViewPropertyEnums.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            resources.ApplyResources(this.listViewPropertyEnums, "listViewPropertyEnums");
             this.listViewPropertyEnums.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeaderPropertyEnum});
             this.listViewPropertyEnums.LabelEdit = true;
-            this.listViewPropertyEnums.Location = new System.Drawing.Point(7, 127);
             this.listViewPropertyEnums.Name = "listViewPropertyEnums";
-            this.listViewPropertyEnums.Size = new System.Drawing.Size(331, 223);
-            this.listViewPropertyEnums.TabIndex = 15;
             this.listViewPropertyEnums.UseCompatibleStateImageBehavior = false;
             this.listViewPropertyEnums.View = System.Windows.Forms.View.Details;
             this.listViewPropertyEnums.AfterLabelEdit += new System.Windows.Forms.LabelEditEventHandler(this.listViewPropertyEnums_AfterLabelEdit);
@@ -1040,187 +812,127 @@
             // 
             // columnHeaderPropertyEnum
             // 
-            this.columnHeaderPropertyEnum.Text = "Item";
-            this.columnHeaderPropertyEnum.Width = 300;
+            resources.ApplyResources(this.columnHeaderPropertyEnum, "columnHeaderPropertyEnum");
             // 
             // labelPropertyEnumeration
             // 
-            this.labelPropertyEnumeration.AutoSize = true;
-            this.labelPropertyEnumeration.Location = new System.Drawing.Point(6, 110);
+            resources.ApplyResources(this.labelPropertyEnumeration, "labelPropertyEnumeration");
             this.labelPropertyEnumeration.Name = "labelPropertyEnumeration";
-            this.labelPropertyEnumeration.Size = new System.Drawing.Size(35, 13);
-            this.labelPropertyEnumeration.TabIndex = 14;
-            this.labelPropertyEnumeration.Text = "Items:";
             // 
             // buttonPropertyData
             // 
-            this.buttonPropertyData.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonPropertyData.Location = new System.Drawing.Point(263, 74);
+            resources.ApplyResources(this.buttonPropertyData, "buttonPropertyData");
             this.buttonPropertyData.Name = "buttonPropertyData";
-            this.buttonPropertyData.Size = new System.Drawing.Size(75, 23);
-            this.buttonPropertyData.TabIndex = 12;
-            this.buttonPropertyData.Text = "Select...";
             this.buttonPropertyData.UseVisualStyleBackColor = true;
             this.buttonPropertyData.Click += new System.EventHandler(this.buttonPropertyData_Click);
             // 
             // textBoxPropertyData
             // 
-            this.textBoxPropertyData.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxPropertyData.Location = new System.Drawing.Point(7, 76);
+            resources.ApplyResources(this.textBoxPropertyData, "textBoxPropertyData");
             this.textBoxPropertyData.Name = "textBoxPropertyData";
             this.textBoxPropertyData.ReadOnly = true;
-            this.textBoxPropertyData.Size = new System.Drawing.Size(250, 20);
-            this.textBoxPropertyData.TabIndex = 11;
             this.textBoxPropertyData.TextChanged += new System.EventHandler(this.textBoxPropertyData_TextChanged);
             // 
             // labelPropertyType
             // 
-            this.labelPropertyType.AutoSize = true;
-            this.labelPropertyType.Location = new System.Drawing.Point(6, 58);
+            resources.ApplyResources(this.labelPropertyType, "labelPropertyType");
             this.labelPropertyType.Name = "labelPropertyType";
-            this.labelPropertyType.Size = new System.Drawing.Size(60, 13);
-            this.labelPropertyType.TabIndex = 10;
-            this.labelPropertyType.Text = "Data Type:";
             // 
             // label4
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(6, 9);
+            resources.ApplyResources(this.label4, "label4");
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(76, 13);
-            this.label4.TabIndex = 9;
-            this.label4.Text = "Property Type:";
             // 
             // comboBoxPropertyType
             // 
-            this.comboBoxPropertyType.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            resources.ApplyResources(this.comboBoxPropertyType, "comboBoxPropertyType");
             this.comboBoxPropertyType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxPropertyType.FormattingEnabled = true;
             this.comboBoxPropertyType.Items.AddRange(new object[] {
-            "P_SINGLEVALUE",
-            "P_ENUMERATEDVALUE",
-            "P_BOUNDEDVALUE",
-            "P_LISTVALUE",
-            "P_TABLEVALUE",
-            "P_REFERENCEVALUE",
-            "COMPLEX"});
-            this.comboBoxPropertyType.Location = new System.Drawing.Point(7, 27);
+            resources.GetString("comboBoxPropertyType.Items"),
+            resources.GetString("comboBoxPropertyType.Items1"),
+            resources.GetString("comboBoxPropertyType.Items2"),
+            resources.GetString("comboBoxPropertyType.Items3"),
+            resources.GetString("comboBoxPropertyType.Items4"),
+            resources.GetString("comboBoxPropertyType.Items5"),
+            resources.GetString("comboBoxPropertyType.Items6")});
             this.comboBoxPropertyType.Name = "comboBoxPropertyType";
-            this.comboBoxPropertyType.Size = new System.Drawing.Size(331, 21);
-            this.comboBoxPropertyType.TabIndex = 8;
             this.comboBoxPropertyType.SelectedIndexChanged += new System.EventHandler(this.comboBoxPropertyType_SelectedIndexChanged);
             // 
             // tabPageQuantity
             // 
+            resources.ApplyResources(this.tabPageQuantity, "tabPageQuantity");
             this.tabPageQuantity.Controls.Add(this.labelQuantityType);
             this.tabPageQuantity.Controls.Add(this.comboBoxQuantityType);
-            this.tabPageQuantity.Location = new System.Drawing.Point(4, 22);
             this.tabPageQuantity.Name = "tabPageQuantity";
-            this.tabPageQuantity.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageQuantity.Size = new System.Drawing.Size(352, 394);
-            this.tabPageQuantity.TabIndex = 12;
-            this.tabPageQuantity.Text = "Quantity";
             this.tabPageQuantity.UseVisualStyleBackColor = true;
             // 
             // labelQuantityType
             // 
-            this.labelQuantityType.AutoSize = true;
-            this.labelQuantityType.Location = new System.Drawing.Point(6, 9);
+            resources.ApplyResources(this.labelQuantityType, "labelQuantityType");
             this.labelQuantityType.Name = "labelQuantityType";
-            this.labelQuantityType.Size = new System.Drawing.Size(76, 13);
-            this.labelQuantityType.TabIndex = 14;
-            this.labelQuantityType.Text = "Quantity Type:";
             // 
             // comboBoxQuantityType
             // 
-            this.comboBoxQuantityType.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            resources.ApplyResources(this.comboBoxQuantityType, "comboBoxQuantityType");
             this.comboBoxQuantityType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxQuantityType.FormattingEnabled = true;
             this.comboBoxQuantityType.Items.AddRange(new object[] {
-            "Q_LENGTH",
-            "Q_AREA",
-            "Q_VOLUME",
-            "Q_WEIGHT",
-            "Q_COUNT",
-            "Q_TIME"});
-            this.comboBoxQuantityType.Location = new System.Drawing.Point(7, 27);
+            resources.GetString("comboBoxQuantityType.Items"),
+            resources.GetString("comboBoxQuantityType.Items1"),
+            resources.GetString("comboBoxQuantityType.Items2"),
+            resources.GetString("comboBoxQuantityType.Items3"),
+            resources.GetString("comboBoxQuantityType.Items4"),
+            resources.GetString("comboBoxQuantityType.Items5")});
             this.comboBoxQuantityType.Name = "comboBoxQuantityType";
-            this.comboBoxQuantityType.Size = new System.Drawing.Size(331, 21);
-            this.comboBoxQuantityType.TabIndex = 13;
             this.comboBoxQuantityType.SelectedIndexChanged += new System.EventHandler(this.comboBoxQuantityType_SelectedIndexChanged);
             // 
             // tabPageEntity
             // 
+            resources.ApplyResources(this.tabPageEntity, "tabPageEntity");
             this.tabPageEntity.Controls.Add(this.buttonEntityBaseClear);
             this.tabPageEntity.Controls.Add(this.checkBoxEntityAbstract);
             this.tabPageEntity.Controls.Add(this.buttonEntityBase);
             this.tabPageEntity.Controls.Add(this.textBoxEntityBase);
             this.tabPageEntity.Controls.Add(this.label6);
-            this.tabPageEntity.Location = new System.Drawing.Point(4, 22);
             this.tabPageEntity.Name = "tabPageEntity";
-            this.tabPageEntity.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageEntity.Size = new System.Drawing.Size(352, 394);
-            this.tabPageEntity.TabIndex = 7;
-            this.tabPageEntity.Text = "Entity";
             this.tabPageEntity.UseVisualStyleBackColor = true;
             // 
             // buttonEntityBaseClear
             // 
-            this.buttonEntityBaseClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonEntityBaseClear.Location = new System.Drawing.Point(263, 53);
+            resources.ApplyResources(this.buttonEntityBaseClear, "buttonEntityBaseClear");
             this.buttonEntityBaseClear.Name = "buttonEntityBaseClear";
-            this.buttonEntityBaseClear.Size = new System.Drawing.Size(75, 23);
-            this.buttonEntityBaseClear.TabIndex = 7;
-            this.buttonEntityBaseClear.Text = "Clear";
             this.buttonEntityBaseClear.UseVisualStyleBackColor = true;
             this.buttonEntityBaseClear.Click += new System.EventHandler(this.buttonEntityBaseClear_Click);
             // 
             // checkBoxEntityAbstract
             // 
-            this.checkBoxEntityAbstract.AutoSize = true;
-            this.checkBoxEntityAbstract.Location = new System.Drawing.Point(7, 53);
+            resources.ApplyResources(this.checkBoxEntityAbstract, "checkBoxEntityAbstract");
             this.checkBoxEntityAbstract.Name = "checkBoxEntityAbstract";
-            this.checkBoxEntityAbstract.Size = new System.Drawing.Size(65, 17);
-            this.checkBoxEntityAbstract.TabIndex = 6;
-            this.checkBoxEntityAbstract.Text = "Abstract";
             this.checkBoxEntityAbstract.UseVisualStyleBackColor = true;
             this.checkBoxEntityAbstract.CheckedChanged += new System.EventHandler(this.checkBoxEntityAbstract_CheckedChanged);
             // 
             // buttonEntityBase
             // 
-            this.buttonEntityBase.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonEntityBase.Location = new System.Drawing.Point(263, 24);
+            resources.ApplyResources(this.buttonEntityBase, "buttonEntityBase");
             this.buttonEntityBase.Name = "buttonEntityBase";
-            this.buttonEntityBase.Size = new System.Drawing.Size(75, 23);
-            this.buttonEntityBase.TabIndex = 5;
-            this.buttonEntityBase.Text = "Select...";
             this.buttonEntityBase.UseVisualStyleBackColor = true;
             this.buttonEntityBase.Click += new System.EventHandler(this.buttonEntityBase_Click);
             // 
             // textBoxEntityBase
             // 
-            this.textBoxEntityBase.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxEntityBase.Location = new System.Drawing.Point(7, 26);
+            resources.ApplyResources(this.textBoxEntityBase, "textBoxEntityBase");
             this.textBoxEntityBase.Name = "textBoxEntityBase";
             this.textBoxEntityBase.ReadOnly = true;
-            this.textBoxEntityBase.Size = new System.Drawing.Size(250, 20);
-            this.textBoxEntityBase.TabIndex = 4;
             // 
             // label6
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(6, 9);
+            resources.ApplyResources(this.label6, "label6");
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(62, 13);
-            this.label6.TabIndex = 3;
-            this.label6.Text = "Superclass:";
             // 
             // tabPageAttribute
             // 
+            resources.ApplyResources(this.tabPageAttribute, "tabPageAttribute");
             this.tabPageAttribute.Controls.Add(this.label17);
             this.tabPageAttribute.Controls.Add(this.label28);
             this.tabPageAttribute.Controls.Add(this.label27);
@@ -1241,270 +953,183 @@
             this.tabPageAttribute.Controls.Add(this.buttonAttributeType);
             this.tabPageAttribute.Controls.Add(this.textBoxAttributeType);
             this.tabPageAttribute.Controls.Add(this.label8);
-            this.tabPageAttribute.Location = new System.Drawing.Point(4, 22);
             this.tabPageAttribute.Name = "tabPageAttribute";
-            this.tabPageAttribute.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageAttribute.Size = new System.Drawing.Size(352, 394);
-            this.tabPageAttribute.TabIndex = 8;
-            this.tabPageAttribute.Text = "Attribute";
             this.tabPageAttribute.UseVisualStyleBackColor = true;
+            this.tabPageAttribute.Click += new System.EventHandler(this.tabPageAttribute_Click);
             // 
             // label17
             // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(260, 135);
+            resources.ApplyResources(this.label17, "label17");
             this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(64, 13);
-            this.label17.TabIndex = 19;
-            this.label17.Text = "Dimensions:";
             // 
             // label28
             // 
-            this.label28.AutoSize = true;
-            this.label28.Location = new System.Drawing.Point(190, 135);
+            resources.ApplyResources(this.label28, "label28");
             this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(54, 13);
-            this.label28.TabIndex = 11;
-            this.label28.Text = "Maximum:";
             // 
             // label27
             // 
-            this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(120, 135);
+            resources.ApplyResources(this.label27, "label27");
             this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(51, 13);
-            this.label27.TabIndex = 9;
-            this.label27.Text = "Minimum:";
             // 
             // textBoxAttributeAggregationMax
             // 
-            this.textBoxAttributeAggregationMax.Location = new System.Drawing.Point(193, 153);
+            resources.ApplyResources(this.textBoxAttributeAggregationMax, "textBoxAttributeAggregationMax");
             this.textBoxAttributeAggregationMax.Name = "textBoxAttributeAggregationMax";
-            this.textBoxAttributeAggregationMax.Size = new System.Drawing.Size(64, 20);
-            this.textBoxAttributeAggregationMax.TabIndex = 12;
             this.textBoxAttributeAggregationMax.TextChanged += new System.EventHandler(this.textBoxAttributeAggregationMax_TextChanged);
             // 
             // textBoxAttributeAggregationMin
             // 
-            this.textBoxAttributeAggregationMin.Location = new System.Drawing.Point(123, 153);
+            resources.ApplyResources(this.textBoxAttributeAggregationMin, "textBoxAttributeAggregationMin");
             this.textBoxAttributeAggregationMin.Name = "textBoxAttributeAggregationMin";
-            this.textBoxAttributeAggregationMin.Size = new System.Drawing.Size(64, 20);
-            this.textBoxAttributeAggregationMin.TabIndex = 10;
             this.textBoxAttributeAggregationMin.TextChanged += new System.EventHandler(this.textBoxAttributeAggregationMin_TextChanged);
             // 
             // comboBoxAttributeAggregation
             // 
+            resources.ApplyResources(this.comboBoxAttributeAggregation, "comboBoxAttributeAggregation");
             this.comboBoxAttributeAggregation.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxAttributeAggregation.FormattingEnabled = true;
             this.comboBoxAttributeAggregation.Items.AddRange(new object[] {
-            "NONE",
-            "LIST",
-            "ARRAY",
-            "SET",
-            "BAG"});
-            this.comboBoxAttributeAggregation.Location = new System.Drawing.Point(6, 153);
+            resources.GetString("comboBoxAttributeAggregation.Items"),
+            resources.GetString("comboBoxAttributeAggregation.Items1"),
+            resources.GetString("comboBoxAttributeAggregation.Items2"),
+            resources.GetString("comboBoxAttributeAggregation.Items3"),
+            resources.GetString("comboBoxAttributeAggregation.Items4")});
             this.comboBoxAttributeAggregation.Name = "comboBoxAttributeAggregation";
-            this.comboBoxAttributeAggregation.Size = new System.Drawing.Size(111, 21);
-            this.comboBoxAttributeAggregation.TabIndex = 8;
             this.comboBoxAttributeAggregation.SelectedIndexChanged += new System.EventHandler(this.comboBoxAttributeAggregation_SelectedIndexChanged);
             // 
             // buttonAttributeAggregationRemove
             // 
-            this.buttonAttributeAggregationRemove.Location = new System.Drawing.Point(303, 152);
+            resources.ApplyResources(this.buttonAttributeAggregationRemove, "buttonAttributeAggregationRemove");
             this.buttonAttributeAggregationRemove.Name = "buttonAttributeAggregationRemove";
-            this.buttonAttributeAggregationRemove.Size = new System.Drawing.Size(35, 23);
-            this.buttonAttributeAggregationRemove.TabIndex = 15;
-            this.buttonAttributeAggregationRemove.Text = "-";
             this.buttonAttributeAggregationRemove.UseVisualStyleBackColor = true;
             this.buttonAttributeAggregationRemove.Click += new System.EventHandler(this.buttonAttributeAggregationRemove_Click);
             // 
             // buttonAttributeAggregationInsert
             // 
-            this.buttonAttributeAggregationInsert.Location = new System.Drawing.Point(263, 152);
+            resources.ApplyResources(this.buttonAttributeAggregationInsert, "buttonAttributeAggregationInsert");
             this.buttonAttributeAggregationInsert.Name = "buttonAttributeAggregationInsert";
-            this.buttonAttributeAggregationInsert.Size = new System.Drawing.Size(35, 23);
-            this.buttonAttributeAggregationInsert.TabIndex = 13;
-            this.buttonAttributeAggregationInsert.Text = "+";
             this.buttonAttributeAggregationInsert.UseVisualStyleBackColor = true;
             this.buttonAttributeAggregationInsert.Click += new System.EventHandler(this.buttonAttributeAggregationInsert_Click);
             // 
             // listViewAttributeCardinality
             // 
-            this.listViewAttributeCardinality.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            resources.ApplyResources(this.listViewAttributeCardinality, "listViewAttributeCardinality");
             this.listViewAttributeCardinality.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeaderCardinalityAggregation,
             this.columnHeaderCardinalityMinimum,
             this.columnHeaderCardinalityMaximum});
             this.listViewAttributeCardinality.FullRowSelect = true;
             this.listViewAttributeCardinality.HideSelection = false;
-            this.listViewAttributeCardinality.Location = new System.Drawing.Point(7, 180);
             this.listViewAttributeCardinality.Name = "listViewAttributeCardinality";
-            this.listViewAttributeCardinality.Size = new System.Drawing.Size(250, 148);
-            this.listViewAttributeCardinality.TabIndex = 14;
             this.listViewAttributeCardinality.UseCompatibleStateImageBehavior = false;
             this.listViewAttributeCardinality.View = System.Windows.Forms.View.Details;
             this.listViewAttributeCardinality.SelectedIndexChanged += new System.EventHandler(this.listViewAttributeCardinality_SelectedIndexChanged);
             // 
             // columnHeaderCardinalityAggregation
             // 
-            this.columnHeaderCardinalityAggregation.Text = "Aggregation";
-            this.columnHeaderCardinalityAggregation.Width = 100;
+            resources.ApplyResources(this.columnHeaderCardinalityAggregation, "columnHeaderCardinalityAggregation");
             // 
             // columnHeaderCardinalityMinimum
             // 
-            this.columnHeaderCardinalityMinimum.Text = "Minimum";
+            resources.ApplyResources(this.columnHeaderCardinalityMinimum, "columnHeaderCardinalityMinimum");
             // 
             // columnHeaderCardinalityMaximum
             // 
-            this.columnHeaderCardinalityMaximum.Text = "Maximum";
+            resources.ApplyResources(this.columnHeaderCardinalityMaximum, "columnHeaderCardinalityMaximum");
             // 
             // buttonAttributeInverse
             // 
-            this.buttonAttributeInverse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonAttributeInverse.Location = new System.Drawing.Point(263, 72);
+            resources.ApplyResources(this.buttonAttributeInverse, "buttonAttributeInverse");
             this.buttonAttributeInverse.Name = "buttonAttributeInverse";
-            this.buttonAttributeInverse.Size = new System.Drawing.Size(75, 23);
-            this.buttonAttributeInverse.TabIndex = 5;
-            this.buttonAttributeInverse.Text = "Inverse...";
             this.buttonAttributeInverse.UseVisualStyleBackColor = true;
             this.buttonAttributeInverse.Click += new System.EventHandler(this.buttonAttributeInverse_Click);
             // 
             // textBoxAttributeInverse
             // 
-            this.textBoxAttributeInverse.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxAttributeInverse.Location = new System.Drawing.Point(7, 74);
+            resources.ApplyResources(this.textBoxAttributeInverse, "textBoxAttributeInverse");
             this.textBoxAttributeInverse.Name = "textBoxAttributeInverse";
             this.textBoxAttributeInverse.ReadOnly = true;
-            this.textBoxAttributeInverse.Size = new System.Drawing.Size(250, 20);
-            this.textBoxAttributeInverse.TabIndex = 4;
             // 
             // labelAttributeInverse
             // 
-            this.labelAttributeInverse.AutoSize = true;
-            this.labelAttributeInverse.Location = new System.Drawing.Point(6, 57);
+            resources.ApplyResources(this.labelAttributeInverse, "labelAttributeInverse");
             this.labelAttributeInverse.Name = "labelAttributeInverse";
-            this.labelAttributeInverse.Size = new System.Drawing.Size(101, 13);
-            this.labelAttributeInverse.TabIndex = 3;
-            this.labelAttributeInverse.Text = "Inverse for attribute:";
             // 
             // checkBoxXsdTagless
             // 
-            this.checkBoxXsdTagless.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.checkBoxXsdTagless.AutoSize = true;
-            this.checkBoxXsdTagless.Location = new System.Drawing.Point(265, 358);
+            resources.ApplyResources(this.checkBoxXsdTagless, "checkBoxXsdTagless");
             this.checkBoxXsdTagless.Name = "checkBoxXsdTagless";
-            this.checkBoxXsdTagless.Size = new System.Drawing.Size(63, 17);
-            this.checkBoxXsdTagless.TabIndex = 18;
-            this.checkBoxXsdTagless.Text = "Tagless";
             this.checkBoxXsdTagless.UseVisualStyleBackColor = true;
             this.checkBoxXsdTagless.CheckedChanged += new System.EventHandler(this.checkBoxXsdTagless_CheckedChanged);
             // 
             // labelAttributeXsdFormat
             // 
-            this.labelAttributeXsdFormat.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.labelAttributeXsdFormat.AutoSize = true;
-            this.labelAttributeXsdFormat.Location = new System.Drawing.Point(6, 341);
+            resources.ApplyResources(this.labelAttributeXsdFormat, "labelAttributeXsdFormat");
             this.labelAttributeXsdFormat.Name = "labelAttributeXsdFormat";
-            this.labelAttributeXsdFormat.Size = new System.Drawing.Size(67, 13);
-            this.labelAttributeXsdFormat.TabIndex = 16;
-            this.labelAttributeXsdFormat.Text = "XSD Format:";
             // 
             // comboBoxAttributeXsdFormat
             // 
-            this.comboBoxAttributeXsdFormat.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            resources.ApplyResources(this.comboBoxAttributeXsdFormat, "comboBoxAttributeXsdFormat");
             this.comboBoxAttributeXsdFormat.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxAttributeXsdFormat.FormattingEnabled = true;
             this.comboBoxAttributeXsdFormat.Items.AddRange(new object[] {
-            "Default",
-            "Hidden",
-            "Attribute",
-            "Element",
-            "Content"});
-            this.comboBoxAttributeXsdFormat.Location = new System.Drawing.Point(7, 358);
+            resources.GetString("comboBoxAttributeXsdFormat.Items"),
+            resources.GetString("comboBoxAttributeXsdFormat.Items1"),
+            resources.GetString("comboBoxAttributeXsdFormat.Items2"),
+            resources.GetString("comboBoxAttributeXsdFormat.Items3"),
+            resources.GetString("comboBoxAttributeXsdFormat.Items4")});
             this.comboBoxAttributeXsdFormat.Name = "comboBoxAttributeXsdFormat";
-            this.comboBoxAttributeXsdFormat.Size = new System.Drawing.Size(250, 21);
-            this.comboBoxAttributeXsdFormat.TabIndex = 17;
             this.comboBoxAttributeXsdFormat.SelectedIndexChanged += new System.EventHandler(this.comboBoxAttributeXsdFormat_SelectedIndexChanged);
             // 
             // labelAttributeAggregation
             // 
-            this.labelAttributeAggregation.AutoSize = true;
-            this.labelAttributeAggregation.Location = new System.Drawing.Point(6, 135);
+            resources.ApplyResources(this.labelAttributeAggregation, "labelAttributeAggregation");
             this.labelAttributeAggregation.Name = "labelAttributeAggregation";
-            this.labelAttributeAggregation.Size = new System.Drawing.Size(67, 13);
-            this.labelAttributeAggregation.TabIndex = 7;
-            this.labelAttributeAggregation.Text = "Aggregation:";
             // 
             // checkBoxAttributeOptional
             // 
-            this.checkBoxAttributeOptional.AutoSize = true;
-            this.checkBoxAttributeOptional.Location = new System.Drawing.Point(7, 107);
+            resources.ApplyResources(this.checkBoxAttributeOptional, "checkBoxAttributeOptional");
             this.checkBoxAttributeOptional.Name = "checkBoxAttributeOptional";
-            this.checkBoxAttributeOptional.Size = new System.Drawing.Size(65, 17);
-            this.checkBoxAttributeOptional.TabIndex = 6;
-            this.checkBoxAttributeOptional.Text = "Optional";
             this.checkBoxAttributeOptional.UseVisualStyleBackColor = true;
             this.checkBoxAttributeOptional.CheckedChanged += new System.EventHandler(this.checkBoxAttributeOptional_CheckedChanged);
             // 
             // buttonAttributeType
             // 
-            this.buttonAttributeType.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonAttributeType.Location = new System.Drawing.Point(263, 24);
+            resources.ApplyResources(this.buttonAttributeType, "buttonAttributeType");
             this.buttonAttributeType.Name = "buttonAttributeType";
-            this.buttonAttributeType.Size = new System.Drawing.Size(75, 23);
-            this.buttonAttributeType.TabIndex = 2;
-            this.buttonAttributeType.Text = "Type...";
             this.buttonAttributeType.UseVisualStyleBackColor = true;
             this.buttonAttributeType.Click += new System.EventHandler(this.buttonAttributeType_Click);
             // 
             // textBoxAttributeType
             // 
-            this.textBoxAttributeType.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxAttributeType.Location = new System.Drawing.Point(7, 26);
+            resources.ApplyResources(this.textBoxAttributeType, "textBoxAttributeType");
             this.textBoxAttributeType.Name = "textBoxAttributeType";
             this.textBoxAttributeType.ReadOnly = true;
-            this.textBoxAttributeType.Size = new System.Drawing.Size(250, 20);
-            this.textBoxAttributeType.TabIndex = 1;
             // 
             // label8
             // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(6, 9);
+            resources.ApplyResources(this.label8, "label8");
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(34, 13);
-            this.label8.TabIndex = 0;
-            this.label8.Text = "Type:";
             // 
             // tabPageExpression
             // 
+            resources.ApplyResources(this.tabPageExpression, "tabPageExpression");
             this.tabPageExpression.Controls.Add(this.textBoxExpression);
-            this.tabPageExpression.Location = new System.Drawing.Point(4, 22);
             this.tabPageExpression.Name = "tabPageExpression";
-            this.tabPageExpression.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageExpression.Size = new System.Drawing.Size(352, 394);
-            this.tabPageExpression.TabIndex = 11;
-            this.tabPageExpression.Text = "Expression";
             this.tabPageExpression.UseVisualStyleBackColor = true;
             // 
             // textBoxExpression
             // 
             this.textBoxExpression.AcceptsReturn = true;
             this.textBoxExpression.AcceptsTab = true;
-            this.textBoxExpression.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBoxExpression.Location = new System.Drawing.Point(3, 3);
-            this.textBoxExpression.Multiline = true;
+            resources.ApplyResources(this.textBoxExpression, "textBoxExpression");
             this.textBoxExpression.Name = "textBoxExpression";
-            this.textBoxExpression.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBoxExpression.Size = new System.Drawing.Size(346, 388);
-            this.textBoxExpression.TabIndex = 12;
             this.textBoxExpression.TextChanged += new System.EventHandler(this.textBoxExpression_TextChanged);
             // 
             // tabPageView
             // 
+            resources.ApplyResources(this.tabPageView, "tabPageView");
             this.tabPageView.Controls.Add(this.listViewViewXsd);
             this.tabPageView.Controls.Add(this.comboBoxViewXsd);
             this.tabPageView.Controls.Add(this.checkBoxViewXsdTagless);
@@ -1514,142 +1139,100 @@
             this.tabPageView.Controls.Add(this.buttonViewBase);
             this.tabPageView.Controls.Add(this.textBoxViewBase);
             this.tabPageView.Controls.Add(this.label19);
-            this.tabPageView.Location = new System.Drawing.Point(4, 22);
             this.tabPageView.Name = "tabPageView";
-            this.tabPageView.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageView.Size = new System.Drawing.Size(352, 394);
-            this.tabPageView.TabIndex = 13;
-            this.tabPageView.Text = "View";
             this.tabPageView.UseVisualStyleBackColor = true;
             // 
             // listViewViewXsd
             // 
-            this.listViewViewXsd.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            resources.ApplyResources(this.listViewViewXsd, "listViewViewXsd");
             this.listViewViewXsd.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader3,
             this.columnHeader4,
             this.columnHeader5,
             this.columnHeader6});
             this.listViewViewXsd.FullRowSelect = true;
-            this.listViewViewXsd.Location = new System.Drawing.Point(7, 74);
             this.listViewViewXsd.Name = "listViewViewXsd";
-            this.listViewViewXsd.Size = new System.Drawing.Size(331, 276);
-            this.listViewViewXsd.TabIndex = 24;
             this.listViewViewXsd.UseCompatibleStateImageBehavior = false;
             this.listViewViewXsd.View = System.Windows.Forms.View.Details;
             this.listViewViewXsd.SelectedIndexChanged += new System.EventHandler(this.listViewViewXsd_SelectedIndexChanged);
             // 
             // columnHeader3
             // 
-            this.columnHeader3.Text = "Entity";
+            resources.ApplyResources(this.columnHeader3, "columnHeader3");
             // 
             // columnHeader4
             // 
-            this.columnHeader4.Text = "Attribute";
+            resources.ApplyResources(this.columnHeader4, "columnHeader4");
             // 
             // columnHeader5
             // 
-            this.columnHeader5.Text = "Format";
+            resources.ApplyResources(this.columnHeader5, "columnHeader5");
             // 
             // columnHeader6
             // 
-            this.columnHeader6.Text = "Tagless";
+            resources.ApplyResources(this.columnHeader6, "columnHeader6");
             // 
             // comboBoxViewXsd
             // 
-            this.comboBoxViewXsd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            resources.ApplyResources(this.comboBoxViewXsd, "comboBoxViewXsd");
             this.comboBoxViewXsd.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxViewXsd.FormattingEnabled = true;
             this.comboBoxViewXsd.Items.AddRange(new object[] {
-            "Default",
-            "Hidden",
-            "Attribute",
-            "Element",
-            "Content"});
-            this.comboBoxViewXsd.Location = new System.Drawing.Point(181, 357);
+            resources.GetString("comboBoxViewXsd.Items"),
+            resources.GetString("comboBoxViewXsd.Items1"),
+            resources.GetString("comboBoxViewXsd.Items2"),
+            resources.GetString("comboBoxViewXsd.Items3"),
+            resources.GetString("comboBoxViewXsd.Items4")});
             this.comboBoxViewXsd.Name = "comboBoxViewXsd";
-            this.comboBoxViewXsd.Size = new System.Drawing.Size(88, 21);
-            this.comboBoxViewXsd.TabIndex = 23;
             this.comboBoxViewXsd.SelectedIndexChanged += new System.EventHandler(this.comboBoxViewXsd_SelectedIndexChanged);
             // 
             // checkBoxViewXsdTagless
             // 
-            this.checkBoxViewXsdTagless.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.checkBoxViewXsdTagless.AutoSize = true;
-            this.checkBoxViewXsdTagless.Location = new System.Drawing.Point(278, 360);
+            resources.ApplyResources(this.checkBoxViewXsdTagless, "checkBoxViewXsdTagless");
             this.checkBoxViewXsdTagless.Name = "checkBoxViewXsdTagless";
-            this.checkBoxViewXsdTagless.Size = new System.Drawing.Size(63, 17);
-            this.checkBoxViewXsdTagless.TabIndex = 22;
-            this.checkBoxViewXsdTagless.Text = "Tagless";
             this.checkBoxViewXsdTagless.UseVisualStyleBackColor = true;
             this.checkBoxViewXsdTagless.CheckedChanged += new System.EventHandler(this.checkBoxViewXsdTagless_CheckedChanged);
             // 
             // buttonViewXsdDelete
             // 
-            this.buttonViewXsdDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonViewXsdDelete.Enabled = false;
-            this.buttonViewXsdDelete.Location = new System.Drawing.Point(88, 356);
+            resources.ApplyResources(this.buttonViewXsdDelete, "buttonViewXsdDelete");
             this.buttonViewXsdDelete.Name = "buttonViewXsdDelete";
-            this.buttonViewXsdDelete.Size = new System.Drawing.Size(75, 23);
-            this.buttonViewXsdDelete.TabIndex = 17;
-            this.buttonViewXsdDelete.Text = "Remove";
             this.buttonViewXsdDelete.UseVisualStyleBackColor = true;
             this.buttonViewXsdDelete.Click += new System.EventHandler(this.buttonViewXsdDelete_Click);
             // 
             // buttonViewXsdAttribute
             // 
-            this.buttonViewXsdAttribute.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonViewXsdAttribute.Location = new System.Drawing.Point(7, 356);
+            resources.ApplyResources(this.buttonViewXsdAttribute, "buttonViewXsdAttribute");
             this.buttonViewXsdAttribute.Name = "buttonViewXsdAttribute";
-            this.buttonViewXsdAttribute.Size = new System.Drawing.Size(75, 23);
-            this.buttonViewXsdAttribute.TabIndex = 16;
-            this.buttonViewXsdAttribute.Text = "Add...";
             this.buttonViewXsdAttribute.UseVisualStyleBackColor = true;
             this.buttonViewXsdAttribute.Click += new System.EventHandler(this.buttonViewXsdAttribute_Click);
             // 
             // label29
             // 
-            this.label29.AutoSize = true;
-            this.label29.Location = new System.Drawing.Point(6, 57);
+            resources.ApplyResources(this.label29, "label29");
             this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(119, 13);
-            this.label29.TabIndex = 14;
-            this.label29.Text = "XSD Tag Configuration:";
             // 
             // buttonViewBase
             // 
-            this.buttonViewBase.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonViewBase.Location = new System.Drawing.Point(263, 24);
+            resources.ApplyResources(this.buttonViewBase, "buttonViewBase");
             this.buttonViewBase.Name = "buttonViewBase";
-            this.buttonViewBase.Size = new System.Drawing.Size(75, 23);
-            this.buttonViewBase.TabIndex = 12;
-            this.buttonViewBase.Text = "Select...";
             this.buttonViewBase.UseVisualStyleBackColor = true;
             this.buttonViewBase.Click += new System.EventHandler(this.buttonViewBase_Click);
             // 
             // textBoxViewBase
             // 
-            this.textBoxViewBase.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxViewBase.Location = new System.Drawing.Point(7, 26);
+            resources.ApplyResources(this.textBoxViewBase, "textBoxViewBase");
             this.textBoxViewBase.Name = "textBoxViewBase";
             this.textBoxViewBase.ReadOnly = true;
-            this.textBoxViewBase.Size = new System.Drawing.Size(250, 20);
-            this.textBoxViewBase.TabIndex = 11;
             // 
             // label19
             // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(6, 9);
+            resources.ApplyResources(this.label19, "label19");
             this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(60, 13);
-            this.label19.TabIndex = 10;
-            this.label19.Text = "Base View:";
             // 
             // tabPageExchange
             // 
+            resources.ApplyResources(this.tabPageExchange, "tabPageExchange");
             this.tabPageExchange.Controls.Add(this.label24);
             this.tabPageExchange.Controls.Add(this.comboBoxExchangeClassReceiver);
             this.tabPageExchange.Controls.Add(this.label23);
@@ -1663,738 +1246,454 @@
             this.tabPageExchange.Controls.Add(this.buttonExchangeIconChange);
             this.tabPageExchange.Controls.Add(this.panelIcon);
             this.tabPageExchange.Controls.Add(this.label2);
-            this.tabPageExchange.Location = new System.Drawing.Point(4, 22);
             this.tabPageExchange.Name = "tabPageExchange";
-            this.tabPageExchange.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageExchange.Size = new System.Drawing.Size(352, 394);
-            this.tabPageExchange.TabIndex = 14;
-            this.tabPageExchange.Text = "Exchange";
             this.tabPageExchange.UseVisualStyleBackColor = true;
             // 
             // label24
             // 
-            this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(6, 250);
+            resources.ApplyResources(this.label24, "label24");
             this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(142, 13);
-            this.label24.TabIndex = 12;
-            this.label24.Text = "Receiver Role Classification:";
             // 
             // comboBoxExchangeClassReceiver
             // 
-            this.comboBoxExchangeClassReceiver.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            resources.ApplyResources(this.comboBoxExchangeClassReceiver, "comboBoxExchangeClassReceiver");
             this.comboBoxExchangeClassReceiver.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxExchangeClassReceiver.FormattingEnabled = true;
             this.comboBoxExchangeClassReceiver.Items.AddRange(new object[] {
-            "34-10 00 00\tEntrepreneurial Roles",
-            "34-10 11 00\tOwner",
-            "34-10 11 11\tDeveloper",
-            "34-10 11 14\tCorporate Entity",
-            "34-10 11 17\tPublic Entity",
-            "34-10 21 00\tPartner",
-            "34-11 00 00\tManagement Roles",
-            "34-11 10 00\tStrategic Management Roles",
-            "34-11 10 11\tPresident",
-            "34-11 10 11 11\tVice President",
-            "34-11 10 14\tChairperson",
-            "34-11 10 17\tBoard Member",
-            "34-11 20 00\tOperational Management Roles",
-            "34-11 20 11\tExecutive",
-            "34-11 20 14\tOfficer",
-            "34-11 20 17\tDirector",
-            "34-11 20 21\tManager",
-            "34-11 20 24\tSupervisor",
-            "34-11 20 27\tCoordinator",
-            "34-11 20 31\tScheduler",
-            "34-11 20 34\tProject Lead",
-            "34-20 00 00\tDevelopment Roles",
-            "34-20 11 00\tDesign Roles",
-            "34-20 11 11\tArchitect",
-            "34-20 11 21\tEngineer",
-            "34-20 11 31\tDesigner",
-            "34-20 11 41\tSpecifier",
-            "34-20 21 00\tPlanning Roles",
-            "34-20 21 11\tPlanner",
-            "34-20 21 14\tCost Estimator",
-            "34-20 21 17\tScheduler",
-            "34-20 31 00\tSurveyor",
-            "34-20 41 00\tContract Administrator",
-            "34-20 51 00\tObservational Roles",
-            "34-20 51 11\tReviewer",
-            "34-20 51 14\tReview Board",
-            "34-20 51 17\tInspector",
-            "34-20 51 21\tObserver",
-            "34-35 00 00\tExecution Roles",
-            "34-35 10 00\tProcurement Roles",
-            "34-35 10 11\tManufacturer",
-            "34-35 10 14\tFabricator",
-            "34-35 10 17\tDistributor",
-            "34-35 10 21\tSupplier",
-            "34-35 10 21 11\tProduct Representative",
-            "34-35 10 24\tBuyer",
-            "34-35 15 00\tConstruction Roles",
-            "34-35 15 11\tContractor",
-            "34-35 15 14\tSub Contractor",
-            "34-35 15 17\tProject Engineer",
-            "34-35 15 21\tTradesperson",
-            "34-35 15 21 11\tCraftsperson",
-            "34-35 15 21 14\tJourneyman",
-            "34-35 15 21 17\tApprentice",
-            "34-35 15 24\tLaborer",
-            "34-35 15 24 11\tSkilled Laborer",
-            "34-35 15 24 14\tUnskilled Laborer",
-            "34-35 15 27\tInstaller",
-            "34-35 15 31\tOperator",
-            "34-41 00 00\tUtilization Roles",
-            "34-41 14 00\tFacility Use Roles",
-            "34-41 14 11\tFacility Manager",
-            "34-41 14 14\tFacility Maintenance",
-            "34-41 14 17\tFacility Engineer",
-            "34-41 31 00\tFacility Service Roles",
-            "34-41 31 11\tCustodian",
-            "34-55 00 00\tSupport Roles",
-            "34-55 11 00\tAdministrative Service Roles",
-            "34-55 11 11\tAdministrative Assistant",
-            "34-55 11 14\tReceptionist",
-            "34-55 11 17\tRecords Manager",
-            "34-55 11 21\tIntern",
-            "34-55 11 24\tAssistant",
-            "34-55 11 27\tTrainer",
-            "34-55 14 00\tProfessional Service Roles",
-            "34-55 14 11\tConsultant",
-            "34-55 14 14\tLibrarian",
-            "34-55 14 17\tDraftsperson",
-            "34-55 14 19\tMarketing Roles",
-            "34-55 14 19 11\tSalesperson",
-            "34-55 14 22\tFinancial Roles",
-            "34-55 14 22 11\tAccountant",
-            "34-55 14 22 14\tBanker",
-            "34-55 14 22 17\tRecord Keeper",
-            "34-55 14 22 21\tBookkeeper",
-            "34-55 14 24\tLawyer",
-            "34-55 14 27\tAgent",
-            "34-55 14 31\tSpecialist",
-            "34-61 00 00\tGroup Roles",
-            "34-61 11 00\tTeams",
-            "34-61 11 11\tTask Team",
-            "34-61 11 21\tTask Force",
-            "34-61 21 00\tBoards",
-            "34-61 21 11\tBoard of Directors",
-            "34-61 31 00\tCommittees",
-            "34-61 31 21\tAd Hoc Committee",
-            "34-61 41 00\tBusiness Organizations",
-            "34-61 41 11\tCorporation",
-            "34-61 41 21\tPartnership",
-            "34-61 41 31\tSole Proprietorship",
-            "34-61 41 41\tJoint Venture",
-            "34-61 41 51\tSingle Purpose Entity",
-            "34-61 51 00\tNonprofit Organizations",
-            "34-61 51 11\tAssociation",
-            "34-61 51 21\tFoundation",
-            "34-61 51 31\tUnion"});
-            this.comboBoxExchangeClassReceiver.Location = new System.Drawing.Point(9, 267);
+            resources.GetString("comboBoxExchangeClassReceiver.Items"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items1"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items2"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items3"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items4"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items5"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items6"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items7"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items8"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items9"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items10"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items11"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items12"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items13"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items14"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items15"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items16"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items17"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items18"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items19"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items20"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items21"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items22"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items23"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items24"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items25"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items26"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items27"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items28"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items29"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items30"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items31"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items32"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items33"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items34"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items35"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items36"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items37"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items38"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items39"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items40"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items41"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items42"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items43"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items44"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items45"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items46"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items47"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items48"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items49"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items50"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items51"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items52"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items53"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items54"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items55"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items56"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items57"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items58"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items59"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items60"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items61"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items62"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items63"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items64"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items65"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items66"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items67"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items68"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items69"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items70"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items71"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items72"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items73"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items74"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items75"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items76"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items77"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items78"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items79"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items80"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items81"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items82"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items83"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items84"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items85"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items86"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items87"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items88"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items89"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items90"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items91"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items92"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items93"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items94"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items95"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items96"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items97"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items98"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items99"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items100"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items101"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items102"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items103"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items104"),
+            resources.GetString("comboBoxExchangeClassReceiver.Items105")});
             this.comboBoxExchangeClassReceiver.Name = "comboBoxExchangeClassReceiver";
-            this.comboBoxExchangeClassReceiver.Size = new System.Drawing.Size(329, 21);
-            this.comboBoxExchangeClassReceiver.TabIndex = 11;
             this.comboBoxExchangeClassReceiver.Validated += new System.EventHandler(this.comboBoxExchangeClassReceiver_Validated);
             // 
             // label23
             // 
-            this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(6, 205);
+            resources.ApplyResources(this.label23, "label23");
             this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(133, 13);
-            this.label23.TabIndex = 10;
-            this.label23.Text = "Sender Role Classification:";
             // 
             // comboBoxExchangeClassSender
             // 
-            this.comboBoxExchangeClassSender.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            resources.ApplyResources(this.comboBoxExchangeClassSender, "comboBoxExchangeClassSender");
             this.comboBoxExchangeClassSender.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxExchangeClassSender.FormattingEnabled = true;
             this.comboBoxExchangeClassSender.Items.AddRange(new object[] {
-            "34-10 00 00\tEntrepreneurial Roles",
-            "34-10 11 00\tOwner",
-            "34-10 11 11\tDeveloper",
-            "34-10 11 14\tCorporate Entity",
-            "34-10 11 17\tPublic Entity",
-            "34-10 21 00\tPartner",
-            "34-11 00 00\tManagement Roles",
-            "34-11 10 00\tStrategic Management Roles",
-            "34-11 10 11\tPresident",
-            "34-11 10 11 11\tVice President",
-            "34-11 10 14\tChairperson",
-            "34-11 10 17\tBoard Member",
-            "34-11 20 00\tOperational Management Roles",
-            "34-11 20 11\tExecutive",
-            "34-11 20 14\tOfficer",
-            "34-11 20 17\tDirector",
-            "34-11 20 21\tManager",
-            "34-11 20 24\tSupervisor",
-            "34-11 20 27\tCoordinator",
-            "34-11 20 31\tScheduler",
-            "34-11 20 34\tProject Lead",
-            "34-20 00 00\tDevelopment Roles",
-            "34-20 11 00\tDesign Roles",
-            "34-20 11 11\tArchitect",
-            "34-20 11 21\tEngineer",
-            "34-20 11 31\tDesigner",
-            "34-20 11 41\tSpecifier",
-            "34-20 21 00\tPlanning Roles",
-            "34-20 21 11\tPlanner",
-            "34-20 21 14\tCost Estimator",
-            "34-20 21 17\tScheduler",
-            "34-20 31 00\tSurveyor",
-            "34-20 41 00\tContract Administrator",
-            "34-20 51 00\tObservational Roles",
-            "34-20 51 11\tReviewer",
-            "34-20 51 14\tReview Board",
-            "34-20 51 17\tInspector",
-            "34-20 51 21\tObserver",
-            "34-35 00 00\tExecution Roles",
-            "34-35 10 00\tProcurement Roles",
-            "34-35 10 11\tManufacturer",
-            "34-35 10 14\tFabricator",
-            "34-35 10 17\tDistributor",
-            "34-35 10 21\tSupplier",
-            "34-35 10 21 11\tProduct Representative",
-            "34-35 10 24\tBuyer",
-            "34-35 15 00\tConstruction Roles",
-            "34-35 15 11\tContractor",
-            "34-35 15 14\tSub Contractor",
-            "34-35 15 17\tProject Engineer",
-            "34-35 15 21\tTradesperson",
-            "34-35 15 21 11\tCraftsperson",
-            "34-35 15 21 14\tJourneyman",
-            "34-35 15 21 17\tApprentice",
-            "34-35 15 24\tLaborer",
-            "34-35 15 24 11\tSkilled Laborer",
-            "34-35 15 24 14\tUnskilled Laborer",
-            "34-35 15 27\tInstaller",
-            "34-35 15 31\tOperator",
-            "34-41 00 00\tUtilization Roles",
-            "34-41 14 00\tFacility Use Roles",
-            "34-41 14 11\tFacility Manager",
-            "34-41 14 14\tFacility Maintenance",
-            "34-41 14 17\tFacility Engineer",
-            "34-41 31 00\tFacility Service Roles",
-            "34-41 31 11\tCustodian",
-            "34-55 00 00\tSupport Roles",
-            "34-55 11 00\tAdministrative Service Roles",
-            "34-55 11 11\tAdministrative Assistant",
-            "34-55 11 14\tReceptionist",
-            "34-55 11 17\tRecords Manager",
-            "34-55 11 21\tIntern",
-            "34-55 11 24\tAssistant",
-            "34-55 11 27\tTrainer",
-            "34-55 14 00\tProfessional Service Roles",
-            "34-55 14 11\tConsultant",
-            "34-55 14 14\tLibrarian",
-            "34-55 14 17\tDraftsperson",
-            "34-55 14 19\tMarketing Roles",
-            "34-55 14 19 11\tSalesperson",
-            "34-55 14 22\tFinancial Roles",
-            "34-55 14 22 11\tAccountant",
-            "34-55 14 22 14\tBanker",
-            "34-55 14 22 17\tRecord Keeper",
-            "34-55 14 22 21\tBookkeeper",
-            "34-55 14 24\tLawyer",
-            "34-55 14 27\tAgent",
-            "34-55 14 31\tSpecialist",
-            "34-61 00 00\tGroup Roles",
-            "34-61 11 00\tTeams",
-            "34-61 11 11\tTask Team",
-            "34-61 11 21\tTask Force",
-            "34-61 21 00\tBoards",
-            "34-61 21 11\tBoard of Directors",
-            "34-61 31 00\tCommittees",
-            "34-61 31 21\tAd Hoc Committee",
-            "34-61 41 00\tBusiness Organizations",
-            "34-61 41 11\tCorporation",
-            "34-61 41 21\tPartnership",
-            "34-61 41 31\tSole Proprietorship",
-            "34-61 41 41\tJoint Venture",
-            "34-61 41 51\tSingle Purpose Entity",
-            "34-61 51 00\tNonprofit Organizations",
-            "34-61 51 11\tAssociation",
-            "34-61 51 21\tFoundation",
-            "34-61 51 31\tUnion"});
-            this.comboBoxExchangeClassSender.Location = new System.Drawing.Point(9, 222);
+            resources.GetString("comboBoxExchangeClassSender.Items"),
+            resources.GetString("comboBoxExchangeClassSender.Items1"),
+            resources.GetString("comboBoxExchangeClassSender.Items2"),
+            resources.GetString("comboBoxExchangeClassSender.Items3"),
+            resources.GetString("comboBoxExchangeClassSender.Items4"),
+            resources.GetString("comboBoxExchangeClassSender.Items5"),
+            resources.GetString("comboBoxExchangeClassSender.Items6"),
+            resources.GetString("comboBoxExchangeClassSender.Items7"),
+            resources.GetString("comboBoxExchangeClassSender.Items8"),
+            resources.GetString("comboBoxExchangeClassSender.Items9"),
+            resources.GetString("comboBoxExchangeClassSender.Items10"),
+            resources.GetString("comboBoxExchangeClassSender.Items11"),
+            resources.GetString("comboBoxExchangeClassSender.Items12"),
+            resources.GetString("comboBoxExchangeClassSender.Items13"),
+            resources.GetString("comboBoxExchangeClassSender.Items14"),
+            resources.GetString("comboBoxExchangeClassSender.Items15"),
+            resources.GetString("comboBoxExchangeClassSender.Items16"),
+            resources.GetString("comboBoxExchangeClassSender.Items17"),
+            resources.GetString("comboBoxExchangeClassSender.Items18"),
+            resources.GetString("comboBoxExchangeClassSender.Items19"),
+            resources.GetString("comboBoxExchangeClassSender.Items20"),
+            resources.GetString("comboBoxExchangeClassSender.Items21"),
+            resources.GetString("comboBoxExchangeClassSender.Items22"),
+            resources.GetString("comboBoxExchangeClassSender.Items23"),
+            resources.GetString("comboBoxExchangeClassSender.Items24"),
+            resources.GetString("comboBoxExchangeClassSender.Items25"),
+            resources.GetString("comboBoxExchangeClassSender.Items26"),
+            resources.GetString("comboBoxExchangeClassSender.Items27"),
+            resources.GetString("comboBoxExchangeClassSender.Items28"),
+            resources.GetString("comboBoxExchangeClassSender.Items29"),
+            resources.GetString("comboBoxExchangeClassSender.Items30"),
+            resources.GetString("comboBoxExchangeClassSender.Items31"),
+            resources.GetString("comboBoxExchangeClassSender.Items32"),
+            resources.GetString("comboBoxExchangeClassSender.Items33"),
+            resources.GetString("comboBoxExchangeClassSender.Items34"),
+            resources.GetString("comboBoxExchangeClassSender.Items35"),
+            resources.GetString("comboBoxExchangeClassSender.Items36"),
+            resources.GetString("comboBoxExchangeClassSender.Items37"),
+            resources.GetString("comboBoxExchangeClassSender.Items38"),
+            resources.GetString("comboBoxExchangeClassSender.Items39"),
+            resources.GetString("comboBoxExchangeClassSender.Items40"),
+            resources.GetString("comboBoxExchangeClassSender.Items41"),
+            resources.GetString("comboBoxExchangeClassSender.Items42"),
+            resources.GetString("comboBoxExchangeClassSender.Items43"),
+            resources.GetString("comboBoxExchangeClassSender.Items44"),
+            resources.GetString("comboBoxExchangeClassSender.Items45"),
+            resources.GetString("comboBoxExchangeClassSender.Items46"),
+            resources.GetString("comboBoxExchangeClassSender.Items47"),
+            resources.GetString("comboBoxExchangeClassSender.Items48"),
+            resources.GetString("comboBoxExchangeClassSender.Items49"),
+            resources.GetString("comboBoxExchangeClassSender.Items50"),
+            resources.GetString("comboBoxExchangeClassSender.Items51"),
+            resources.GetString("comboBoxExchangeClassSender.Items52"),
+            resources.GetString("comboBoxExchangeClassSender.Items53"),
+            resources.GetString("comboBoxExchangeClassSender.Items54"),
+            resources.GetString("comboBoxExchangeClassSender.Items55"),
+            resources.GetString("comboBoxExchangeClassSender.Items56"),
+            resources.GetString("comboBoxExchangeClassSender.Items57"),
+            resources.GetString("comboBoxExchangeClassSender.Items58"),
+            resources.GetString("comboBoxExchangeClassSender.Items59"),
+            resources.GetString("comboBoxExchangeClassSender.Items60"),
+            resources.GetString("comboBoxExchangeClassSender.Items61"),
+            resources.GetString("comboBoxExchangeClassSender.Items62"),
+            resources.GetString("comboBoxExchangeClassSender.Items63"),
+            resources.GetString("comboBoxExchangeClassSender.Items64"),
+            resources.GetString("comboBoxExchangeClassSender.Items65"),
+            resources.GetString("comboBoxExchangeClassSender.Items66"),
+            resources.GetString("comboBoxExchangeClassSender.Items67"),
+            resources.GetString("comboBoxExchangeClassSender.Items68"),
+            resources.GetString("comboBoxExchangeClassSender.Items69"),
+            resources.GetString("comboBoxExchangeClassSender.Items70"),
+            resources.GetString("comboBoxExchangeClassSender.Items71"),
+            resources.GetString("comboBoxExchangeClassSender.Items72"),
+            resources.GetString("comboBoxExchangeClassSender.Items73"),
+            resources.GetString("comboBoxExchangeClassSender.Items74"),
+            resources.GetString("comboBoxExchangeClassSender.Items75"),
+            resources.GetString("comboBoxExchangeClassSender.Items76"),
+            resources.GetString("comboBoxExchangeClassSender.Items77"),
+            resources.GetString("comboBoxExchangeClassSender.Items78"),
+            resources.GetString("comboBoxExchangeClassSender.Items79"),
+            resources.GetString("comboBoxExchangeClassSender.Items80"),
+            resources.GetString("comboBoxExchangeClassSender.Items81"),
+            resources.GetString("comboBoxExchangeClassSender.Items82"),
+            resources.GetString("comboBoxExchangeClassSender.Items83"),
+            resources.GetString("comboBoxExchangeClassSender.Items84"),
+            resources.GetString("comboBoxExchangeClassSender.Items85"),
+            resources.GetString("comboBoxExchangeClassSender.Items86"),
+            resources.GetString("comboBoxExchangeClassSender.Items87"),
+            resources.GetString("comboBoxExchangeClassSender.Items88"),
+            resources.GetString("comboBoxExchangeClassSender.Items89"),
+            resources.GetString("comboBoxExchangeClassSender.Items90"),
+            resources.GetString("comboBoxExchangeClassSender.Items91"),
+            resources.GetString("comboBoxExchangeClassSender.Items92"),
+            resources.GetString("comboBoxExchangeClassSender.Items93"),
+            resources.GetString("comboBoxExchangeClassSender.Items94"),
+            resources.GetString("comboBoxExchangeClassSender.Items95"),
+            resources.GetString("comboBoxExchangeClassSender.Items96"),
+            resources.GetString("comboBoxExchangeClassSender.Items97"),
+            resources.GetString("comboBoxExchangeClassSender.Items98"),
+            resources.GetString("comboBoxExchangeClassSender.Items99"),
+            resources.GetString("comboBoxExchangeClassSender.Items100"),
+            resources.GetString("comboBoxExchangeClassSender.Items101"),
+            resources.GetString("comboBoxExchangeClassSender.Items102"),
+            resources.GetString("comboBoxExchangeClassSender.Items103"),
+            resources.GetString("comboBoxExchangeClassSender.Items104"),
+            resources.GetString("comboBoxExchangeClassSender.Items105")});
             this.comboBoxExchangeClassSender.Name = "comboBoxExchangeClassSender";
-            this.comboBoxExchangeClassSender.Size = new System.Drawing.Size(329, 21);
-            this.comboBoxExchangeClassSender.TabIndex = 9;
             this.comboBoxExchangeClassSender.Validated += new System.EventHandler(this.comboBoxExchangeClassSender_Validated);
             // 
             // label22
             // 
-            this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(6, 159);
+            resources.ApplyResources(this.label22, "label22");
             this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(112, 13);
-            this.label22.TabIndex = 8;
-            this.label22.Text = "Process Classification:";
             // 
             // comboBoxExchangeClassProcess
             // 
-            this.comboBoxExchangeClassProcess.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            resources.ApplyResources(this.comboBoxExchangeClassProcess, "comboBoxExchangeClassProcess");
             this.comboBoxExchangeClassProcess.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxExchangeClassProcess.FormattingEnabled = true;
             this.comboBoxExchangeClassProcess.Items.AddRange(new object[] {
-            "31-10 00 00\tInception Phase",
-            "31-20 00 00\tConceptualization Phase",
-            "31-30 00 00\tCriteria Definition Phase",
-            "31-40 00 00\tDesign Phase",
-            "31-50 00 00\tCoordination Phase",
-            "31-60 00 00\tImplementation Phase",
-            "31-70 00 00\tHandover Phase",
-            "31-80 00 00\tOperations Phase",
-            "31-90 00 00\tClosure Phase"});
-            this.comboBoxExchangeClassProcess.Location = new System.Drawing.Point(9, 176);
+            resources.GetString("comboBoxExchangeClassProcess.Items"),
+            resources.GetString("comboBoxExchangeClassProcess.Items1"),
+            resources.GetString("comboBoxExchangeClassProcess.Items2"),
+            resources.GetString("comboBoxExchangeClassProcess.Items3"),
+            resources.GetString("comboBoxExchangeClassProcess.Items4"),
+            resources.GetString("comboBoxExchangeClassProcess.Items5"),
+            resources.GetString("comboBoxExchangeClassProcess.Items6"),
+            resources.GetString("comboBoxExchangeClassProcess.Items7"),
+            resources.GetString("comboBoxExchangeClassProcess.Items8")});
             this.comboBoxExchangeClassProcess.Name = "comboBoxExchangeClassProcess";
-            this.comboBoxExchangeClassProcess.Size = new System.Drawing.Size(329, 21);
-            this.comboBoxExchangeClassProcess.TabIndex = 7;
             this.comboBoxExchangeClassProcess.Validated += new System.EventHandler(this.comboBoxExchangeClassProcess_Validated);
             // 
             // checkBoxExchangeExport
             // 
-            this.checkBoxExchangeExport.AutoSize = true;
-            this.checkBoxExchangeExport.Location = new System.Drawing.Point(70, 26);
+            resources.ApplyResources(this.checkBoxExchangeExport, "checkBoxExchangeExport");
             this.checkBoxExchangeExport.Name = "checkBoxExchangeExport";
-            this.checkBoxExchangeExport.Size = new System.Drawing.Size(56, 17);
-            this.checkBoxExchangeExport.TabIndex = 2;
-            this.checkBoxExchangeExport.Text = "Export";
             this.checkBoxExchangeExport.UseVisualStyleBackColor = true;
             this.checkBoxExchangeExport.CheckedChanged += new System.EventHandler(this.checkBoxExchangeExport_CheckedChanged);
             // 
             // checkBoxExchangeImport
             // 
-            this.checkBoxExchangeImport.AutoSize = true;
-            this.checkBoxExchangeImport.Location = new System.Drawing.Point(9, 26);
+            resources.ApplyResources(this.checkBoxExchangeImport, "checkBoxExchangeImport");
             this.checkBoxExchangeImport.Name = "checkBoxExchangeImport";
-            this.checkBoxExchangeImport.Size = new System.Drawing.Size(55, 17);
-            this.checkBoxExchangeImport.TabIndex = 1;
-            this.checkBoxExchangeImport.Text = "Import";
             this.checkBoxExchangeImport.UseVisualStyleBackColor = true;
             this.checkBoxExchangeImport.CheckedChanged += new System.EventHandler(this.checkBoxExchangeImport_CheckedChanged);
             // 
             // labelExchangeApplicability
             // 
-            this.labelExchangeApplicability.AutoSize = true;
-            this.labelExchangeApplicability.Location = new System.Drawing.Point(6, 9);
+            resources.ApplyResources(this.labelExchangeApplicability, "labelExchangeApplicability");
             this.labelExchangeApplicability.Name = "labelExchangeApplicability";
-            this.labelExchangeApplicability.Size = new System.Drawing.Size(65, 13);
-            this.labelExchangeApplicability.TabIndex = 0;
-            this.labelExchangeApplicability.Text = "Applicability:";
             // 
             // buttonExchangeIconClear
             // 
-            this.buttonExchangeIconClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonExchangeIconClear.Location = new System.Drawing.Point(79, 108);
+            resources.ApplyResources(this.buttonExchangeIconClear, "buttonExchangeIconClear");
             this.buttonExchangeIconClear.Name = "buttonExchangeIconClear";
-            this.buttonExchangeIconClear.Size = new System.Drawing.Size(75, 23);
-            this.buttonExchangeIconClear.TabIndex = 6;
-            this.buttonExchangeIconClear.Text = "Clear";
             this.buttonExchangeIconClear.UseVisualStyleBackColor = true;
             this.buttonExchangeIconClear.Click += new System.EventHandler(this.buttonExchangeIconClear_Click);
             // 
             // buttonExchangeIconChange
             // 
-            this.buttonExchangeIconChange.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonExchangeIconChange.Location = new System.Drawing.Point(79, 79);
+            resources.ApplyResources(this.buttonExchangeIconChange, "buttonExchangeIconChange");
             this.buttonExchangeIconChange.Name = "buttonExchangeIconChange";
-            this.buttonExchangeIconChange.Size = new System.Drawing.Size(75, 23);
-            this.buttonExchangeIconChange.TabIndex = 5;
-            this.buttonExchangeIconChange.Text = "Set Icon...";
             this.buttonExchangeIconChange.UseVisualStyleBackColor = true;
             this.buttonExchangeIconChange.Click += new System.EventHandler(this.buttonExchangeIconChange_Click);
             // 
             // panelIcon
             // 
-            this.panelIcon.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            resources.ApplyResources(this.panelIcon, "panelIcon");
             this.panelIcon.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panelIcon.Location = new System.Drawing.Point(9, 79);
             this.panelIcon.Name = "panelIcon";
-            this.panelIcon.Size = new System.Drawing.Size(64, 64);
-            this.panelIcon.TabIndex = 4;
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 62);
+            resources.ApplyResources(this.label2, "label2");
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(202, 13);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "Icon (16x16 used for hyperlinks in tables):";
             // 
             // tabPageUsage
             // 
+            resources.ApplyResources(this.tabPageUsage, "tabPageUsage");
             this.tabPageUsage.Controls.Add(this.buttonUsageMigrate);
             this.tabPageUsage.Controls.Add(this.buttonUsageEdit);
             this.tabPageUsage.Controls.Add(this.listViewUsage);
             this.tabPageUsage.Controls.Add(this.label21);
-            this.tabPageUsage.Location = new System.Drawing.Point(4, 22);
             this.tabPageUsage.Name = "tabPageUsage";
-            this.tabPageUsage.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageUsage.Size = new System.Drawing.Size(352, 394);
-            this.tabPageUsage.TabIndex = 15;
-            this.tabPageUsage.Text = "Usage";
             this.tabPageUsage.UseVisualStyleBackColor = true;
             // 
             // buttonUsageMigrate
             // 
-            this.buttonUsageMigrate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonUsageMigrate.Enabled = false;
-            this.buttonUsageMigrate.Location = new System.Drawing.Point(173, 356);
+            resources.ApplyResources(this.buttonUsageMigrate, "buttonUsageMigrate");
             this.buttonUsageMigrate.Name = "buttonUsageMigrate";
-            this.buttonUsageMigrate.Size = new System.Drawing.Size(165, 23);
-            this.buttonUsageMigrate.TabIndex = 7;
-            this.buttonUsageMigrate.Text = "Migrate to another template...";
             this.buttonUsageMigrate.UseVisualStyleBackColor = true;
             this.buttonUsageMigrate.Click += new System.EventHandler(this.buttonUsageMigrate_Click);
             // 
             // buttonUsageEdit
             // 
-            this.buttonUsageEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonUsageEdit.Enabled = false;
-            this.buttonUsageEdit.Location = new System.Drawing.Point(7, 356);
+            resources.ApplyResources(this.buttonUsageEdit, "buttonUsageEdit");
             this.buttonUsageEdit.Name = "buttonUsageEdit";
-            this.buttonUsageEdit.Size = new System.Drawing.Size(75, 23);
-            this.buttonUsageEdit.TabIndex = 6;
-            this.buttonUsageEdit.Text = "Properties...";
             this.buttonUsageEdit.UseVisualStyleBackColor = true;
             this.buttonUsageEdit.Click += new System.EventHandler(this.buttonUsageEdit_Click);
             // 
             // listViewUsage
             // 
-            this.listViewUsage.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            resources.ApplyResources(this.listViewUsage, "listViewUsage");
             this.listViewUsage.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeaderUsageView,
             this.columnHeaderUsageEntity});
             this.listViewUsage.FullRowSelect = true;
             this.listViewUsage.HideSelection = false;
-            this.listViewUsage.Location = new System.Drawing.Point(7, 27);
             this.listViewUsage.Name = "listViewUsage";
-            this.listViewUsage.Size = new System.Drawing.Size(331, 323);
-            this.listViewUsage.TabIndex = 5;
             this.listViewUsage.UseCompatibleStateImageBehavior = false;
             this.listViewUsage.View = System.Windows.Forms.View.Details;
             this.listViewUsage.SelectedIndexChanged += new System.EventHandler(this.listViewUsage_SelectedIndexChanged);
             // 
             // columnHeaderUsageView
             // 
-            this.columnHeaderUsageView.Text = "Model View";
-            this.columnHeaderUsageView.Width = 160;
+            resources.ApplyResources(this.columnHeaderUsageView, "columnHeaderUsageView");
             // 
             // columnHeaderUsageEntity
             // 
-            this.columnHeaderUsageEntity.Text = "Entity";
-            this.columnHeaderUsageEntity.Width = 160;
+            resources.ApplyResources(this.columnHeaderUsageEntity, "columnHeaderUsageEntity");
             // 
             // label21
             // 
-            this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(6, 9);
+            resources.ApplyResources(this.label21, "label21");
             this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(219, 13);
-            this.label21.TabIndex = 4;
-            this.label21.Text = "This template is used at the following entities:";
             // 
             // tabPageExample
             // 
+            resources.ApplyResources(this.tabPageExample, "tabPageExample");
             this.tabPageExample.Controls.Add(this.checkedListBoxExampleViews);
             this.tabPageExample.Controls.Add(this.label30);
             this.tabPageExample.Controls.Add(this.label25);
             this.tabPageExample.Controls.Add(this.textBoxExample);
             this.tabPageExample.Controls.Add(this.buttonExampleClear);
             this.tabPageExample.Controls.Add(this.buttonExampleLoad);
-            this.tabPageExample.Location = new System.Drawing.Point(4, 22);
             this.tabPageExample.Name = "tabPageExample";
-            this.tabPageExample.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageExample.Size = new System.Drawing.Size(352, 394);
-            this.tabPageExample.TabIndex = 16;
-            this.tabPageExample.Text = "Example";
             this.tabPageExample.UseVisualStyleBackColor = true;
             // 
             // checkedListBoxExampleViews
             // 
-            this.checkedListBoxExampleViews.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            resources.ApplyResources(this.checkedListBoxExampleViews, "checkedListBoxExampleViews");
             this.checkedListBoxExampleViews.FormattingEnabled = true;
-            this.checkedListBoxExampleViews.Location = new System.Drawing.Point(9, 251);
             this.checkedListBoxExampleViews.Name = "checkedListBoxExampleViews";
-            this.checkedListBoxExampleViews.Size = new System.Drawing.Size(329, 124);
-            this.checkedListBoxExampleViews.TabIndex = 17;
             this.checkedListBoxExampleViews.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBoxExampleViews_ItemCheck);
             // 
             // label30
             // 
-            this.label30.AutoSize = true;
-            this.label30.Location = new System.Drawing.Point(6, 11);
+            resources.ApplyResources(this.label30, "label30");
             this.label30.Name = "label30";
-            this.label30.Size = new System.Drawing.Size(66, 13);
-            this.label30.TabIndex = 16;
-            this.label30.Text = "File Content:";
             // 
             // label25
             // 
-            this.label25.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(6, 234);
+            resources.ApplyResources(this.label25, "label25");
             this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(90, 13);
-            this.label25.TabIndex = 15;
-            this.label25.Text = "Applicable Views:";
             // 
             // textBoxExample
             // 
-            this.textBoxExample.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxExample.Location = new System.Drawing.Point(9, 27);
-            this.textBoxExample.Multiline = true;
+            resources.ApplyResources(this.textBoxExample, "textBoxExample");
             this.textBoxExample.Name = "textBoxExample";
             this.textBoxExample.ReadOnly = true;
-            this.textBoxExample.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBoxExample.Size = new System.Drawing.Size(331, 162);
-            this.textBoxExample.TabIndex = 2;
-            this.textBoxExample.WordWrap = false;
             // 
             // buttonExampleClear
             // 
-            this.buttonExampleClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonExampleClear.Location = new System.Drawing.Point(90, 195);
+            resources.ApplyResources(this.buttonExampleClear, "buttonExampleClear");
             this.buttonExampleClear.Name = "buttonExampleClear";
-            this.buttonExampleClear.Size = new System.Drawing.Size(75, 23);
-            this.buttonExampleClear.TabIndex = 1;
-            this.buttonExampleClear.Text = "Clear";
             this.buttonExampleClear.UseVisualStyleBackColor = true;
             this.buttonExampleClear.Click += new System.EventHandler(this.buttonExampleClear_Click);
             // 
             // buttonExampleLoad
             // 
-            this.buttonExampleLoad.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonExampleLoad.Location = new System.Drawing.Point(9, 195);
+            resources.ApplyResources(this.buttonExampleLoad, "buttonExampleLoad");
             this.buttonExampleLoad.Name = "buttonExampleLoad";
-            this.buttonExampleLoad.Size = new System.Drawing.Size(75, 23);
-            this.buttonExampleLoad.TabIndex = 0;
-            this.buttonExampleLoad.Text = "Load File...";
             this.buttonExampleLoad.UseVisualStyleBackColor = true;
             this.buttonExampleLoad.Click += new System.EventHandler(this.buttonExampleLoad_Click);
             // 
             // tabPageOperations
             // 
+            resources.ApplyResources(this.tabPageOperations, "tabPageOperations");
             this.tabPageOperations.Controls.Add(this.ctlOperators);
-            this.tabPageOperations.Location = new System.Drawing.Point(4, 22);
             this.tabPageOperations.Name = "tabPageOperations";
-            this.tabPageOperations.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageOperations.Size = new System.Drawing.Size(352, 394);
-            this.tabPageOperations.TabIndex = 17;
-            this.tabPageOperations.Text = "Operations";
             this.tabPageOperations.UseVisualStyleBackColor = true;
-            // 
-            // imageListRules
-            // 
-            this.imageListRules.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
-            this.imageListRules.ImageSize = new System.Drawing.Size(16, 16);
-            this.imageListRules.TransparentColor = System.Drawing.Color.Fuchsia;
-            // 
-            // openFileDialogIcon
-            // 
-            this.openFileDialogIcon.Filter = "Images (*.png)|*.png";
-            this.openFileDialogIcon.Title = "Set Icon";
-            // 
-            // openFileDialogExample
-            // 
-            this.openFileDialogExample.DefaultExt = "ifc";
-            this.openFileDialogExample.Filter = "Industry Foundation Classes (*.ifc)|*.ifc";
-            this.openFileDialogExample.Title = "Load IFC Example";
-            // 
-            // toolStripDocumentation
-            // 
-            this.toolStripDocumentation.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.toolStripDocumentation.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButtonTranslationInsert,
-            this.toolStripButtonTranslationRemove});
-            this.toolStripDocumentation.Location = new System.Drawing.Point(3, 3);
-            this.toolStripDocumentation.Name = "toolStripDocumentation";
-            this.toolStripDocumentation.Size = new System.Drawing.Size(346, 25);
-            this.toolStripDocumentation.TabIndex = 12;
-            this.toolStripDocumentation.Text = "toolStrip1";
-            // 
-            // toolStripButtonTranslationInsert
-            // 
-            this.toolStripButtonTranslationInsert.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonTranslationInsert.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonTranslationInsert.Image")));
-            this.toolStripButtonTranslationInsert.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonTranslationInsert.Name = "toolStripButtonTranslationInsert";
-            this.toolStripButtonTranslationInsert.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButtonTranslationInsert.Text = "Add Translation";
-            this.toolStripButtonTranslationInsert.Click += new System.EventHandler(this.toolStripButtonTranslationInsert_Click);
-            // 
-            // toolStripButtonTranslationRemove
-            // 
-            this.toolStripButtonTranslationRemove.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonTranslationRemove.Enabled = false;
-            this.toolStripButtonTranslationRemove.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonTranslationRemove.Image")));
-            this.toolStripButtonTranslationRemove.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonTranslationRemove.Name = "toolStripButtonTranslationRemove";
-            this.toolStripButtonTranslationRemove.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButtonTranslationRemove.Text = "Remove Translation";
-            this.toolStripButtonTranslationRemove.Click += new System.EventHandler(this.toolStripButtonTranslationRemove_Click);
-            // 
-            // splitContainerTranslation
-            // 
-            this.splitContainerTranslation.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainerTranslation.Location = new System.Drawing.Point(3, 28);
-            this.splitContainerTranslation.Name = "splitContainerTranslation";
-            this.splitContainerTranslation.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // splitContainerTranslation.Panel1
-            // 
-            this.splitContainerTranslation.Panel1.Controls.Add(this.listViewLocale);
-            // 
-            // splitContainerTranslation.Panel2
-            // 
-            this.splitContainerTranslation.Panel2.Controls.Add(this.textBoxGeneralDescription);
-            this.splitContainerTranslation.Panel2.Controls.Add(this.textBoxGeneralName);
-            this.splitContainerTranslation.Size = new System.Drawing.Size(346, 363);
-            this.splitContainerTranslation.SplitterDistance = 91;
-            this.splitContainerTranslation.TabIndex = 13;
             // 
             // tabPageConceptRoot
             // 
+            resources.ApplyResources(this.tabPageConceptRoot, "tabPageConceptRoot");
             this.tabPageConceptRoot.Controls.Add(this.listViewConceptRoot);
             this.tabPageConceptRoot.Controls.Add(this.toolStrip1);
-            this.tabPageConceptRoot.Location = new System.Drawing.Point(4, 22);
             this.tabPageConceptRoot.Name = "tabPageConceptRoot";
-            this.tabPageConceptRoot.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageConceptRoot.Size = new System.Drawing.Size(352, 394);
-            this.tabPageConceptRoot.TabIndex = 18;
-            this.tabPageConceptRoot.Text = "Inheritance";
             this.tabPageConceptRoot.UseVisualStyleBackColor = true;
-            // 
-            // toolStrip1
-            // 
-            this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItemModeInherit,
-            this.toolStripMenuItemModeOverride,
-            this.toolStripMenuItemModeSuppress});
-            this.toolStrip1.Location = new System.Drawing.Point(3, 3);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(346, 25);
-            this.toolStrip1.TabIndex = 3;
-            this.toolStrip1.Text = "toolStrip1";
-            // 
-            // toolStripMenuItemModeInherit
-            // 
-            this.toolStripMenuItemModeInherit.Checked = true;
-            this.toolStripMenuItemModeInherit.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.toolStripMenuItemModeInherit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripMenuItemModeInherit.Enabled = false;
-            this.toolStripMenuItemModeInherit.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMenuItemModeInherit.Image")));
-            this.toolStripMenuItemModeInherit.Name = "toolStripMenuItemModeInherit";
-            this.toolStripMenuItemModeInherit.Size = new System.Drawing.Size(28, 25);
-            this.toolStripMenuItemModeInherit.Text = "Inherit";
-            this.toolStripMenuItemModeInherit.Click += new System.EventHandler(this.toolStripMenuItemModeInherit_Click);
-            // 
-            // toolStripMenuItemModeOverride
-            // 
-            this.toolStripMenuItemModeOverride.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripMenuItemModeOverride.Enabled = false;
-            this.toolStripMenuItemModeOverride.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMenuItemModeOverride.Image")));
-            this.toolStripMenuItemModeOverride.Name = "toolStripMenuItemModeOverride";
-            this.toolStripMenuItemModeOverride.Size = new System.Drawing.Size(28, 25);
-            this.toolStripMenuItemModeOverride.Text = "Override";
-            this.toolStripMenuItemModeOverride.Click += new System.EventHandler(this.toolStripMenuItemModeOverride_Click);
-            // 
-            // toolStripMenuItemModeSuppress
-            // 
-            this.toolStripMenuItemModeSuppress.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripMenuItemModeSuppress.Enabled = false;
-            this.toolStripMenuItemModeSuppress.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMenuItemModeSuppress.Image")));
-            this.toolStripMenuItemModeSuppress.Name = "toolStripMenuItemModeSuppress";
-            this.toolStripMenuItemModeSuppress.Size = new System.Drawing.Size(28, 25);
-            this.toolStripMenuItemModeSuppress.Text = "Suppress";
-            this.toolStripMenuItemModeSuppress.Click += new System.EventHandler(this.toolStripMenuItemModeSuppress_Click);
             // 
             // listViewConceptRoot
             // 
+            resources.ApplyResources(this.listViewConceptRoot, "listViewConceptRoot");
             this.listViewConceptRoot.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeaderRootTemplate,
             this.columnHeaderRootEntity,
             this.columnHeaderRootStatus});
-            this.listViewConceptRoot.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listViewConceptRoot.Location = new System.Drawing.Point(3, 28);
             this.listViewConceptRoot.Name = "listViewConceptRoot";
-            this.listViewConceptRoot.Size = new System.Drawing.Size(346, 363);
             this.listViewConceptRoot.SmallImageList = this.imageListInheritance;
-            this.listViewConceptRoot.TabIndex = 4;
             this.listViewConceptRoot.UseCompatibleStateImageBehavior = false;
             this.listViewConceptRoot.View = System.Windows.Forms.View.Details;
             this.listViewConceptRoot.SelectedIndexChanged += new System.EventHandler(this.listViewConceptRoot_SelectedIndexChanged);
             // 
             // columnHeaderRootTemplate
             // 
-            this.columnHeaderRootTemplate.Text = "Template";
-            this.columnHeaderRootTemplate.Width = 120;
+            resources.ApplyResources(this.columnHeaderRootTemplate, "columnHeaderRootTemplate");
             // 
             // columnHeaderRootEntity
             // 
-            this.columnHeaderRootEntity.Text = "Entity";
-            this.columnHeaderRootEntity.Width = 120;
+            resources.ApplyResources(this.columnHeaderRootEntity, "columnHeaderRootEntity");
             // 
             // columnHeaderRootStatus
             // 
-            this.columnHeaderRootStatus.Text = "Model View";
-            this.columnHeaderRootStatus.Width = 80;
-            // 
-            // ctlRules
-            // 
-            this.ctlRules.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.ctlRules.Attribute = null;
-            this.ctlRules.BaseTemplate = null;
-            this.ctlRules.CurrentInstance = null;
-            this.ctlRules.Location = new System.Drawing.Point(6, 52);
-            this.ctlRules.Name = "ctlRules";
-            this.ctlRules.Project = null;
-            this.ctlRules.Selection = null;
-            this.ctlRules.Size = new System.Drawing.Size(332, 327);
-            this.ctlRules.TabIndex = 4;
-            this.ctlRules.Template = null;
-            this.ctlRules.SelectionChanged += new System.EventHandler(this.ctlRules_SelectionChanged);
-            this.ctlRules.ContentChanged += new System.EventHandler(this.ctlRules_ContentChanged);
-            // 
-            // ctlParameters
-            // 
-            this.ctlParameters.ConceptLeaf = null;
-            this.ctlParameters.ConceptRoot = null;
-            this.ctlParameters.CurrentInstance = null;
-            this.ctlParameters.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ctlParameters.Location = new System.Drawing.Point(3, 3);
-            this.ctlParameters.Name = "ctlParameters";
-            this.ctlParameters.Project = null;
-            this.ctlParameters.Size = new System.Drawing.Size(346, 388);
-            this.ctlParameters.TabIndex = 9;
-            // 
-            // ctlOperators
-            // 
-            this.ctlOperators.CurrentInstance = null;
-            this.ctlOperators.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ctlOperators.Location = new System.Drawing.Point(3, 3);
-            this.ctlOperators.Name = "ctlOperators";
-            this.ctlOperators.Project = null;
-            this.ctlOperators.Rule = null;
-            this.ctlOperators.Size = new System.Drawing.Size(346, 388);
-            this.ctlOperators.TabIndex = 0;
-            this.ctlOperators.Template = null;
+            resources.ApplyResources(this.columnHeaderRootStatus, "columnHeaderRootStatus");
             // 
             // imageListInheritance
             // 
@@ -2405,16 +1704,102 @@
             this.imageListInheritance.Images.SetKeyName(2, "NotApproved.png");
             this.imageListInheritance.Images.SetKeyName(3, "Requested.png");
             // 
+            // toolStrip1
+            // 
+            resources.ApplyResources(this.toolStrip1, "toolStrip1");
+            this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItemModeInherit,
+            this.toolStripMenuItemModeOverride,
+            this.toolStripMenuItemModeSuppress});
+            this.toolStrip1.Name = "toolStrip1";
+            // 
+            // toolStripMenuItemModeInherit
+            // 
+            resources.ApplyResources(this.toolStripMenuItemModeInherit, "toolStripMenuItemModeInherit");
+            this.toolStripMenuItemModeInherit.Checked = true;
+            this.toolStripMenuItemModeInherit.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.toolStripMenuItemModeInherit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripMenuItemModeInherit.Name = "toolStripMenuItemModeInherit";
+            this.toolStripMenuItemModeInherit.Click += new System.EventHandler(this.toolStripMenuItemModeInherit_Click);
+            // 
+            // toolStripMenuItemModeOverride
+            // 
+            resources.ApplyResources(this.toolStripMenuItemModeOverride, "toolStripMenuItemModeOverride");
+            this.toolStripMenuItemModeOverride.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripMenuItemModeOverride.Name = "toolStripMenuItemModeOverride";
+            this.toolStripMenuItemModeOverride.Click += new System.EventHandler(this.toolStripMenuItemModeOverride_Click);
+            // 
+            // toolStripMenuItemModeSuppress
+            // 
+            resources.ApplyResources(this.toolStripMenuItemModeSuppress, "toolStripMenuItemModeSuppress");
+            this.toolStripMenuItemModeSuppress.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripMenuItemModeSuppress.Name = "toolStripMenuItemModeSuppress";
+            this.toolStripMenuItemModeSuppress.Click += new System.EventHandler(this.toolStripMenuItemModeSuppress_Click);
+            // 
+            // imageListRules
+            // 
+            this.imageListRules.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+            resources.ApplyResources(this.imageListRules, "imageListRules");
+            this.imageListRules.TransparentColor = System.Drawing.Color.Fuchsia;
+            // 
+            // openFileDialogIcon
+            // 
+            resources.ApplyResources(this.openFileDialogIcon, "openFileDialogIcon");
+            // 
+            // openFileDialogExample
+            // 
+            this.openFileDialogExample.DefaultExt = "ifc";
+            resources.ApplyResources(this.openFileDialogExample, "openFileDialogExample");
+            // 
+            // ctlRules
+            // 
+            resources.ApplyResources(this.ctlRules, "ctlRules");
+            this.ctlRules.Attribute = null;
+            this.ctlRules.BaseTemplate = null;
+            this.ctlRules.CurrentInstance = null;
+            this.ctlRules.Name = "ctlRules";
+            this.ctlRules.Project = null;
+            this.ctlRules.Selection = null;
+            this.ctlRules.Template = null;
+            this.ctlRules.SelectionChanged += new System.EventHandler(this.ctlRules_SelectionChanged);
+            this.ctlRules.ContentChanged += new System.EventHandler(this.ctlRules_ContentChanged);
+            // 
+            // ctlParameters
+            // 
+            resources.ApplyResources(this.ctlParameters, "ctlParameters");
+            this.ctlParameters.ConceptLeaf = null;
+            this.ctlParameters.ConceptRoot = null;
+            this.ctlParameters.CurrentInstance = null;
+            this.ctlParameters.Name = "ctlParameters";
+            this.ctlParameters.Project = null;
+            // 
+            // ctlOperators
+            // 
+            resources.ApplyResources(this.ctlOperators, "ctlOperators");
+            this.ctlOperators.CurrentInstance = null;
+            this.ctlOperators.CurrentPopulation = null;
+            this.ctlOperators.Name = "ctlOperators";
+            this.ctlOperators.Project = null;
+            this.ctlOperators.Rule = null;
+            this.ctlOperators.Template = null;
+            // 
             // CtlProperties
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.tabControl);
             this.Name = "CtlProperties";
-            this.Size = new System.Drawing.Size(360, 420);
+            this.splitContainerTranslation.Panel1.ResumeLayout(false);
+            this.splitContainerTranslation.Panel2.ResumeLayout(false);
+            this.splitContainerTranslation.Panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainerTranslation)).EndInit();
+            this.splitContainerTranslation.ResumeLayout(false);
             this.tabControl.ResumeLayout(false);
             this.tabPageGeneral.ResumeLayout(false);
             this.tabPageGeneral.PerformLayout();
+            this.toolStripDocumentation.ResumeLayout(false);
+            this.toolStripDocumentation.PerformLayout();
             this.tabPageIdentity.ResumeLayout(false);
             this.tabPageIdentity.PerformLayout();
             this.tabPageTemplate.ResumeLayout(false);
@@ -2447,13 +1832,6 @@
             this.tabPageExample.ResumeLayout(false);
             this.tabPageExample.PerformLayout();
             this.tabPageOperations.ResumeLayout(false);
-            this.toolStripDocumentation.ResumeLayout(false);
-            this.toolStripDocumentation.PerformLayout();
-            this.splitContainerTranslation.Panel1.ResumeLayout(false);
-            this.splitContainerTranslation.Panel2.ResumeLayout(false);
-            this.splitContainerTranslation.Panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainerTranslation)).EndInit();
-            this.splitContainerTranslation.ResumeLayout(false);
             this.tabPageConceptRoot.ResumeLayout(false);
             this.tabPageConceptRoot.PerformLayout();
             this.toolStrip1.ResumeLayout(false);

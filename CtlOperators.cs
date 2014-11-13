@@ -675,7 +675,7 @@ namespace IfcDoc
                 if (docOp != null)
                 {
                     Hashtable hashtable = new Hashtable();
-                    object oresult = docOp.Eval(this.m_instance, hashtable, this.m_template, null);
+                    object oresult = docOp.Eval(this.m_instance, hashtable, this.m_template, null, null);
 
                     // if hashtable contains a value, that means that entire population must be tested to determine uniqueness
                     if (hashtable.Count > 0 && this.m_population != null)
@@ -687,7 +687,7 @@ namespace IfcDoc
                                 break;
                             
                             // returning false means there's a duplicate (not unique).
-                            object otherresult = docOp.Eval(other, hashtable, this.m_template, null);
+                            object otherresult = docOp.Eval(other, hashtable, this.m_template, null, null);
                             if (otherresult is bool && !(bool)otherresult)
                             {
                                 oresult = false;

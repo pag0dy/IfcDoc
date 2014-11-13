@@ -1,0 +1,1552 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="columnHeaderLocale.Text" xml:space="preserve">
+    <value>附近</value>
+  </data>
+  <data name="columnHeaderName.Text" xml:space="preserve">
+    <value>名前</value>
+  </data>
+  <data name="columnHeaderDesc.Text" xml:space="preserve">
+    <value>説明</value>
+  </data>
+  <data name="tabPageGeneral.Text" xml:space="preserve">
+    <value>文書化</value>
+  </data>
+  <data name="tabPageIdentity.Text" xml:space="preserve">
+    <value>一致</value>
+  </data>
+  <data name="tabPageTemplate.Text" xml:space="preserve">
+    <value>テンプレート</value>
+  </data>
+  <data name="tabPageConcept.Text" xml:space="preserve">
+    <value>概念</value>
+  </data>
+  <data name="tabPageRequirements.Text" xml:space="preserve">
+    <value>必要条件</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="buttonApplicabilityAddTemplate.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="buttonApplicabilityAddTemplate.Location" type="System.Drawing.Point, System.Drawing">
+    <value>114, 356</value>
+  </data>
+  <data name="buttonApplicabilityAddTemplate.Size" type="System.Drawing.Size, System.Drawing">
+    <value>102, 23</value>
+  </data>
+  <data name="buttonApplicabilityAddTemplate.Text" xml:space="preserve">
+    <value>テンプレートを追加</value>
+  </data>
+  <data name="buttonPsetApplicabilityDelete.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="buttonPsetApplicabilityDelete.Text" xml:space="preserve">
+    <value>削る</value>
+  </data>
+  <data name="columnHeaderPsetEntity.Text" xml:space="preserve">
+    <value>実体</value>
+  </data>
+  <data name="columnHeaderPsetPredefined.Text" xml:space="preserve">
+    <value>定義済み型</value>
+  </data>
+  <data name="labelPsetType.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="buttonApplicabilityAddEntity.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="buttonApplicabilityAddEntity.Size" type="System.Drawing.Size, System.Drawing">
+    <value>102, 23</value>
+  </data>
+  <data name="buttonApplicabilityAddEntity.Text" xml:space="preserve">
+    <value>実体を追加</value>
+  </data>
+  <data name="label1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="tabPagePropertySet.Text" xml:space="preserve">
+    <value>適用性</value>
+  </data>
+  <data name="tabPageProperty.Text" xml:space="preserve">
+    <value>プロパティ</value>
+  </data>
+  <data name="tabPageQuantity.Text" xml:space="preserve">
+    <value>数量</value>
+  </data>
+  <data name="tabPageEntity.Text" xml:space="preserve">
+    <value>実体</value>
+  </data>
+  <data name="tabPageAttribute.Text" xml:space="preserve">
+    <value>属性</value>
+  </data>
+  <data name="tabPageExpression.Text" xml:space="preserve">
+    <value>表現</value>
+  </data>
+  <data name="tabPageView.Text" xml:space="preserve">
+    <value>ビュー</value>
+  </data>
+  <data name="tabPageExchange.Text" xml:space="preserve">
+    <value>交換</value>
+  </data>
+  <data name="tabPageUsage.Text" xml:space="preserve">
+    <value>使用</value>
+  </data>
+  <data name="tabPageExample.Text" xml:space="preserve">
+    <value>実例</value>
+  </data>
+  <data name="tabPageOperations.Text" xml:space="preserve">
+    <value>操作</value>
+  </data>
+  <data name="tabPageConceptRoot.Text" xml:space="preserve">
+    <value>インヘリタンス</value>
+  </data>
+  <data name="toolStripButtonTranslationInsert.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABUSURBVDhP3cxBCgAhCEBRj+3xvJlNBJNNX4iGNi1eUNoX
+        Efd/nkNVt6SBXh/xXjIws8H5QLt0FIgw8P2UuTkQ0adoCkT1jQK0dy5AeA8Gq97APvcCZN1yd7JMcNIA
+        AAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="toolStripButtonTranslationRemove.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAzSURBVDhPY2Bg+P+fMgwkKioqyMLDzQAIh3iM1YADBw4Q
+        hYezAaRgDAPIwcPJAPLx//8ARLZjI8VMTLsAAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="label16.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label15.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="button3.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="button2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="button1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label20.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label14.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label13.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label12.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label11.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label10.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label9.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label7.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="buttonTemplateClear.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="buttonTemplateEntity.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="labelTemplateEntity.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="radioButtonExportNone.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="radioButtonExportExcluded.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="radioButtonExportMandatory.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="radioButtonExportOptional.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="radioButtonImportNone.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="radioButtonImportExcluded.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="radioButtonImportOptional.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="radioButtonImportMandatory.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="labelRequirementsExchanges.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="buttonPropertyEnumRemove.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="buttonPropertyEnumRemove.Text" xml:space="preserve">
+    <value>削る</value>
+  </data>
+  <data name="buttonPropertyEnumInsert.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="buttonPropertyEnumInsert.Text" xml:space="preserve">
+    <value>加える</value>
+  </data>
+  <data name="columnHeaderPropertyEnum.Text" xml:space="preserve">
+    <value>アイテム</value>
+  </data>
+  <data name="labelPropertyEnumeration.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="labelPropertyEnumeration.Size" type="System.Drawing.Size, System.Drawing">
+    <value>44, 13</value>
+  </data>
+  <data name="labelPropertyEnumeration.Text" xml:space="preserve">
+    <value>アイテム</value>
+  </data>
+  <data name="buttonPropertyData.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="buttonPropertyData.Text" xml:space="preserve">
+    <value>セレクト</value>
+  </data>
+  <data name="labelPropertyType.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="labelPropertyType.Size" type="System.Drawing.Size, System.Drawing">
+    <value>47, 13</value>
+  </data>
+  <data name="labelPropertyType.Text" xml:space="preserve">
+    <value>データ型</value>
+  </data>
+  <data name="label4.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>63, 13</value>
+  </data>
+  <data name="label4.Text" xml:space="preserve">
+    <value>プロパティ型</value>
+  </data>
+  <data name="comboBoxPropertyType.Items" xml:space="preserve">
+    <value>P_単一値</value>
+  </data>
+  <data name="comboBoxPropertyType.Items1" xml:space="preserve">
+    <value>P_列挙値</value>
+  </data>
+  <data name="comboBoxPropertyType.Items2" xml:space="preserve">
+    <value>P_有界値</value>
+  </data>
+  <data name="comboBoxPropertyType.Items3" xml:space="preserve">
+    <value>P_リスト値</value>
+  </data>
+  <data name="comboBoxPropertyType.Items4" xml:space="preserve">
+    <value>P_テーブル値</value>
+  </data>
+  <data name="comboBoxPropertyType.Items5" xml:space="preserve">
+    <value>P_基準値</value>
+  </data>
+  <data name="comboBoxPropertyType.Items6" xml:space="preserve">
+    <value>コンプレックス</value>
+  </data>
+  <data name="labelQuantityType.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="labelQuantityType.Size" type="System.Drawing.Size, System.Drawing">
+    <value>43, 13</value>
+  </data>
+  <data name="labelQuantityType.Text" xml:space="preserve">
+    <value>数量型</value>
+  </data>
+  <data name="comboBoxQuantityType.Items" xml:space="preserve">
+    <value>Q_長さ</value>
+  </data>
+  <data name="comboBoxQuantityType.Items1" xml:space="preserve">
+    <value>Q_領域</value>
+  </data>
+  <data name="comboBoxQuantityType.Items2" xml:space="preserve">
+    <value>Q_体積</value>
+  </data>
+  <data name="comboBoxQuantityType.Items3" xml:space="preserve">
+    <value>Q_重さ</value>
+  </data>
+  <data name="comboBoxQuantityType.Items4" xml:space="preserve">
+    <value>Q_数</value>
+  </data>
+  <data name="comboBoxQuantityType.Items5" xml:space="preserve">
+    <value>Q_時間</value>
+  </data>
+  <data name="buttonEntityBaseClear.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="buttonEntityBaseClear.Text" xml:space="preserve">
+    <value>クリア</value>
+  </data>
+  <data name="checkBoxEntityAbstract.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="checkBoxEntityAbstract.Size" type="System.Drawing.Size, System.Drawing">
+    <value>50, 17</value>
+  </data>
+  <data name="checkBoxEntityAbstract.Text" xml:space="preserve">
+    <value>抽象</value>
+  </data>
+  <data name="buttonEntityBase.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="buttonEntityBase.Text" xml:space="preserve">
+    <value>セレクト</value>
+  </data>
+  <data name="label6.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>71, 13</value>
+  </data>
+  <data name="label6.Text" xml:space="preserve">
+    <value>スーパークラス</value>
+  </data>
+  <data name="label17.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label17.Size" type="System.Drawing.Size, System.Drawing">
+    <value>36, 13</value>
+  </data>
+  <data name="label17.Text" xml:space="preserve">
+    <value>大きさ</value>
+  </data>
+  <data name="label28.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label28.Size" type="System.Drawing.Size, System.Drawing">
+    <value>31, 13</value>
+  </data>
+  <data name="label28.Text" xml:space="preserve">
+    <value>最大</value>
+  </data>
+  <data name="label27.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label27.Size" type="System.Drawing.Size, System.Drawing">
+    <value>31, 13</value>
+  </data>
+  <data name="label27.Text" xml:space="preserve">
+    <value>最小</value>
+  </data>
+  <data name="buttonAttributeAggregationRemove.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="buttonAttributeAggregationInsert.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="columnHeaderCardinalityAggregation.Text" xml:space="preserve">
+    <value>アグリゲーション</value>
+  </data>
+  <data name="columnHeaderCardinalityMinimum.Text" xml:space="preserve">
+    <value>最小</value>
+  </data>
+  <data name="columnHeaderCardinalityMaximum.Text" xml:space="preserve">
+    <value>最大</value>
+  </data>
+  <data name="buttonAttributeInverse.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="buttonAttributeInverse.Text" xml:space="preserve">
+    <value>インバース</value>
+  </data>
+  <data name="labelAttributeInverse.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="labelAttributeInverse.Size" type="System.Drawing.Size, System.Drawing">
+    <value>88, 13</value>
+  </data>
+  <data name="labelAttributeInverse.Text" xml:space="preserve">
+    <value>属性のインバース</value>
+  </data>
+  <data name="checkBoxXsdTagless.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="checkBoxXsdTagless.Size" type="System.Drawing.Size, System.Drawing">
+    <value>62, 17</value>
+  </data>
+  <data name="checkBoxXsdTagless.Text" xml:space="preserve">
+    <value>タグなし</value>
+  </data>
+  <data name="labelAttributeXsdFormat.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="labelAttributeXsdFormat.Size" type="System.Drawing.Size, System.Drawing">
+    <value>53, 13</value>
+  </data>
+  <data name="labelAttributeXsdFormat.Text" xml:space="preserve">
+    <value>XSD形式</value>
+  </data>
+  <data name="comboBoxAttributeXsdFormat.Items" xml:space="preserve">
+    <value>省略時</value>
+  </data>
+  <data name="comboBoxAttributeXsdFormat.Items1" xml:space="preserve">
+    <value>隠し</value>
+  </data>
+  <data name="comboBoxAttributeXsdFormat.Items2" xml:space="preserve">
+    <value>属性</value>
+  </data>
+  <data name="comboBoxAttributeXsdFormat.Items3" xml:space="preserve">
+    <value>要素</value>
+  </data>
+  <data name="comboBoxAttributeXsdFormat.Items4" xml:space="preserve">
+    <value>コンテント</value>
+  </data>
+  <data name="labelAttributeAggregation.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="labelAttributeAggregation.Size" type="System.Drawing.Size, System.Drawing">
+    <value>77, 13</value>
+  </data>
+  <data name="labelAttributeAggregation.Text" xml:space="preserve">
+    <value>アグリゲーション</value>
+  </data>
+  <data name="checkBoxAttributeOptional.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="checkBoxAttributeOptional.Size" type="System.Drawing.Size, System.Drawing">
+    <value>80, 17</value>
+  </data>
+  <data name="checkBoxAttributeOptional.Text" xml:space="preserve">
+    <value>オプショナル</value>
+  </data>
+  <data name="buttonAttributeType.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="buttonAttributeType.Text" xml:space="preserve">
+    <value>型</value>
+  </data>
+  <data name="textBoxAttributeType.Location" type="System.Drawing.Point, System.Drawing">
+    <value>7, 24</value>
+  </data>
+  <data name="label8.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label8.Size" type="System.Drawing.Size, System.Drawing">
+    <value>19, 13</value>
+  </data>
+  <data name="label8.Text" xml:space="preserve">
+    <value>型</value>
+  </data>
+  <data name="columnHeader3.Text" xml:space="preserve">
+    <value>実体</value>
+  </data>
+  <data name="columnHeader4.Text" xml:space="preserve">
+    <value>属性</value>
+  </data>
+  <data name="columnHeader5.Text" xml:space="preserve">
+    <value>形式</value>
+  </data>
+  <data name="columnHeader6.Text" xml:space="preserve">
+    <value>タグなし</value>
+  </data>
+  <data name="comboBoxViewXsd.Items" xml:space="preserve">
+    <value>省略時</value>
+  </data>
+  <data name="comboBoxViewXsd.Items1" xml:space="preserve">
+    <value>隠し</value>
+  </data>
+  <data name="comboBoxViewXsd.Items2" xml:space="preserve">
+    <value>属性</value>
+  </data>
+  <data name="comboBoxViewXsd.Items3" xml:space="preserve">
+    <value>要素</value>
+  </data>
+  <data name="comboBoxViewXsd.Items4" xml:space="preserve">
+    <value>コンテント</value>
+  </data>
+  <data name="checkBoxViewXsdTagless.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="checkBoxViewXsdTagless.Location" type="System.Drawing.Point, System.Drawing">
+    <value>279, 360</value>
+  </data>
+  <data name="checkBoxViewXsdTagless.Size" type="System.Drawing.Size, System.Drawing">
+    <value>62, 17</value>
+  </data>
+  <data name="checkBoxViewXsdTagless.Text" xml:space="preserve">
+    <value>タグなし</value>
+  </data>
+  <data name="buttonViewXsdDelete.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="buttonViewXsdDelete.Text" xml:space="preserve">
+    <value>削る</value>
+  </data>
+  <data name="buttonViewXsdAttribute.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="buttonViewXsdAttribute.Text" xml:space="preserve">
+    <value>ロード</value>
+  </data>
+  <data name="label29.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label29.Size" type="System.Drawing.Size, System.Drawing">
+    <value>70, 13</value>
+  </data>
+  <data name="label29.Text" xml:space="preserve">
+    <value>XSDタグ設定</value>
+  </data>
+  <data name="buttonViewBase.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="buttonViewBase.Text" xml:space="preserve">
+    <value>セレクト</value>
+  </data>
+  <data name="label19.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label19.Size" type="System.Drawing.Size, System.Drawing">
+    <value>43, 13</value>
+  </data>
+  <data name="label19.Text" xml:space="preserve">
+    <value>底面図</value>
+  </data>
+  <data name="label24.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label24.Size" type="System.Drawing.Size, System.Drawing">
+    <value>101, 13</value>
+  </data>
+  <data name="label24.Text" xml:space="preserve">
+    <value>受信側役割の分類</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items" xml:space="preserve">
+    <value>34-10 00 00	起業家の役割</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items1" xml:space="preserve">
+    <value>34-10 11 00	所有者</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items2" xml:space="preserve">
+    <value>34-10 11 11	開発者</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items3" xml:space="preserve">
+    <value>34-10 11 14	企業の実体</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items4" xml:space="preserve">
+    <value>34-10 11 17	公共の実体</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items5" xml:space="preserve">
+    <value>34-10 21 00	相手</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items6" xml:space="preserve">
+    <value>34-11 00 00	管理職の役割</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items7" xml:space="preserve">
+    <value>34-11 10 00	戦略的な管理職の役割</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items8" xml:space="preserve">
+    <value>34-11 10 11	総裁</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items9" xml:space="preserve">
+    <value>34-11 10 11 11	副総裁</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items10" xml:space="preserve">
+    <value>34-11 10 14	議長職権</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items11" xml:space="preserve">
+    <value>34-11 10 17	取締役</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items12" xml:space="preserve">
+    <value>34-11 20 00	資金運用の役割</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items13" xml:space="preserve">
+    <value>34-11 20 11	エグゼクティブ</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items14" xml:space="preserve">
+    <value>34-11 20 14	役員</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items15" xml:space="preserve">
+    <value>34-11 20 17	ディレクター</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items16" xml:space="preserve">
+    <value>34-11 20 21	館主</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items17" xml:space="preserve">
+    <value>34-11 20 24	スーババイザ</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items18" xml:space="preserve">
+    <value>34-11 20 27	コーディネーター</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items19" xml:space="preserve">
+    <value>34-11 20 31	スケジューラー</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items20" xml:space="preserve">
+    <value>34-11 20 34	プロジェクトリーダー</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items21" xml:space="preserve">
+    <value>34-20 00 00	開発の役割</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items22" xml:space="preserve">
+    <value>34-20 11 00	デザインの役割</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items23" xml:space="preserve">
+    <value>34-20 11 11	建築家</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items24" xml:space="preserve">
+    <value>34-20 11 21	エンジニア</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items25" xml:space="preserve">
+    <value>34-20 11 31	デザイナー</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items26" xml:space="preserve">
+    <value>34-20 11 41	指示子</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items27" xml:space="preserve">
+    <value>34-20 21 00	計画の役割</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items28" xml:space="preserve">
+    <value>34-20 21 11	プランナー</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items29" xml:space="preserve">
+    <value>34-20 21 14	コスト概算</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items30" xml:space="preserve">
+    <value>34-20 21 17	スケジューラー</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items31" xml:space="preserve">
+    <value>34-20 31 00	測量技師</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items32" xml:space="preserve">
+    <value>34-20 41 00	契約者</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items33" xml:space="preserve">
+    <value>34-20 51 00	観測の役割</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items34" xml:space="preserve">
+    <value>34-20 51 11	レビューワー</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items35" xml:space="preserve">
+    <value>34-20 51 14	審査委員会</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items36" xml:space="preserve">
+    <value>34-20 51 17	検査官</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items37" xml:space="preserve">
+    <value>34-20 51 21	オブザーバ</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items38" xml:space="preserve">
+    <value>34-35 00 00	実行の役割</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items39" xml:space="preserve">
+    <value>34-35 10 00	調達の役割</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items40" xml:space="preserve">
+    <value>34-35 10 11	製造者</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items41" xml:space="preserve">
+    <value>34-35 10 14	創案者</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items42" xml:space="preserve">
+    <value>34-35 10 17	ディストリビューター</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items43" xml:space="preserve">
+    <value>34-35 10 21	サプライヤー</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items44" xml:space="preserve">
+    <value>34-35 10 21 11	製品の代表</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items45" xml:space="preserve">
+    <value>34-35 10 24	買い手</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items46" xml:space="preserve">
+    <value>34-35 15 00	建設の役割</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items47" xml:space="preserve">
+    <value>34-35 15 11	請負人</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items48" xml:space="preserve">
+    <value>34-35 15 14	孫請け</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items49" xml:space="preserve">
+    <value>34-35 15 17	プロジェクトエンジニア</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items50" xml:space="preserve">
+    <value>34-35 15 21	商人</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items51" xml:space="preserve">
+    <value>34-35 15 21 11	職人</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items52" xml:space="preserve">
+    <value>34-35 15 21 14	日傭取</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items53" xml:space="preserve">
+    <value>34-35 15 21 17	内弟子</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items54" xml:space="preserve">
+    <value>34-35 15 24	役夫</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items55" xml:space="preserve">
+    <value>34-35 15 24 11	熟練役夫</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items56" xml:space="preserve">
+    <value>34-35 15 24 14	未熟練役夫</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items57" xml:space="preserve">
+    <value>34-35 15 27	インストーラ</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items58" xml:space="preserve">
+    <value>34-35 15 31	オペレータ</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items59" xml:space="preserve">
+    <value>34-41 00 00	利用の役割</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items60" xml:space="preserve">
+    <value>34-41 14 00	施設使用の役割</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items61" xml:space="preserve">
+    <value>34-41 14 11	施設館主</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items62" xml:space="preserve">
+    <value>34-41 14 14	施設保全</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items63" xml:space="preserve">
+    <value>34-41 14 17	施設エンジニア</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items64" xml:space="preserve">
+    <value>34-41 31 00	施設サービスの役割</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items65" xml:space="preserve">
+    <value>34-41 31 11	保管人</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items66" xml:space="preserve">
+    <value>34-55 00 00	サポートの役割</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items67" xml:space="preserve">
+    <value>34-55 11 00	行政サービスの役割</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items68" xml:space="preserve">
+    <value>34-55 11 11	行政アシスタント</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items69" xml:space="preserve">
+    <value>34-55 11 14	受付</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items70" xml:space="preserve">
+    <value>34-55 11 17	記録館主</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items71" xml:space="preserve">
+    <value>34-55 11 21	拘禁</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items72" xml:space="preserve">
+    <value>34-55 11 24	アシスタント</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items73" xml:space="preserve">
+    <value>34-55 11 27	トレーナー</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items74" xml:space="preserve">
+    <value>34-55 14 00	プロフェッショナルサービスの役割</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items75" xml:space="preserve">
+    <value>34-55 14 11	顧問</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items76" xml:space="preserve">
+    <value>34-55 14 14	司書</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items77" xml:space="preserve">
+    <value>34-55 14 17	ドラフター</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items78" xml:space="preserve">
+    <value>34-55 14 19	マーケティングの役割</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items79" xml:space="preserve">
+    <value>34-55 14 19 11	販売員</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items80" xml:space="preserve">
+    <value>34-55 14 22	金融の役割</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items81" xml:space="preserve">
+    <value>34-55 14 22 11	会計士</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items82" xml:space="preserve">
+    <value>34-55 14 22 14	銀行家</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items83" xml:space="preserve">
+    <value>34-55 14 22 17	記録係</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items84" xml:space="preserve">
+    <value>34-55 14 22 21	帳付け</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items85" xml:space="preserve">
+    <value>34-55 14 24	弁護士</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items86" xml:space="preserve">
+    <value>34-55 14 27	エージェント</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items87" xml:space="preserve">
+    <value>34-55 14 31	スペシャリスト</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items88" xml:space="preserve">
+    <value>34-61 00 00	グループの役割</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items89" xml:space="preserve">
+    <value>34-61 11 00	チーム</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items90" xml:space="preserve">
+    <value>34-61 11 11	タスクチーム</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items91" xml:space="preserve">
+    <value>34-61 11 21	任務部隊</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items92" xml:space="preserve">
+    <value>34-61 21 00	代理店</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items93" xml:space="preserve">
+    <value>34-61 21 11	幹部会</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items94" xml:space="preserve">
+    <value>34-61 31 00	委員会</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items95" xml:space="preserve">
+    <value>34-61 31 21	特別委員会</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items96" xml:space="preserve">
+    <value>34-61 41 00	実業団体</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items97" xml:space="preserve">
+    <value>34-61 41 11	社団法人</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items98" xml:space="preserve">
+    <value>34-61 41 21	協同組合</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items99" xml:space="preserve">
+    <value>34-61 41 31	個人企業</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items100" xml:space="preserve">
+    <value>34-61 41 41	合弁事業</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items101" xml:space="preserve">
+    <value>34-61 41 51	単一目的のエンティティ</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items102" xml:space="preserve">
+    <value>34-61 51 00	非営利組織</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items103" xml:space="preserve">
+    <value>34-61 51 11	協会</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items104" xml:space="preserve">
+    <value>34-61 51 21	財団</value>
+  </data>
+  <data name="comboBoxExchangeClassReceiver.Items105" xml:space="preserve">
+    <value>34-61 51 31	組合</value>
+  </data>
+  <data name="label23.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label23.Size" type="System.Drawing.Size, System.Drawing">
+    <value>101, 13</value>
+  </data>
+  <data name="label23.Text" xml:space="preserve">
+    <value>送信側役割の分類</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items" xml:space="preserve">
+    <value>34-10 00 00	起業家の役割</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items1" xml:space="preserve">
+    <value>34-10 11 00	所有者</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items2" xml:space="preserve">
+    <value>34-10 11 11	開発者</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items3" xml:space="preserve">
+    <value>34-10 11 14	企業の実体</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items4" xml:space="preserve">
+    <value>34-10 11 17	公共の実体</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items5" xml:space="preserve">
+    <value>34-10 21 00	相手</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items6" xml:space="preserve">
+    <value>34-11 00 00	管理職の役割</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items7" xml:space="preserve">
+    <value>34-11 10 00	戦略的な管理職の役割</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items8" xml:space="preserve">
+    <value>34-11 10 11	総裁</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items9" xml:space="preserve">
+    <value>34-11 10 11 11	副総裁</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items10" xml:space="preserve">
+    <value>34-11 10 14	議長職権</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items11" xml:space="preserve">
+    <value>34-11 10 17	取締役</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items12" xml:space="preserve">
+    <value>34-11 20 00	資金運用の役割</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items13" xml:space="preserve">
+    <value>34-11 20 11	エグゼクティブ</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items14" xml:space="preserve">
+    <value>34-11 20 14	役員</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items15" xml:space="preserve">
+    <value>34-11 20 17	ディレクター</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items16" xml:space="preserve">
+    <value>34-11 20 21	館主</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items17" xml:space="preserve">
+    <value>34-11 20 24	スーババイザ</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items18" xml:space="preserve">
+    <value>34-11 20 27	コーディネーター</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items19" xml:space="preserve">
+    <value>34-11 20 31	スケジューラー</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items20" xml:space="preserve">
+    <value>34-11 20 34	プロジェクトリーダー</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items21" xml:space="preserve">
+    <value>34-20 00 00	開発の役割</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items22" xml:space="preserve">
+    <value>34-20 11 00	デザインの役割</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items23" xml:space="preserve">
+    <value>34-20 11 11	建築家</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items24" xml:space="preserve">
+    <value>34-20 11 21	エンジニア</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items25" xml:space="preserve">
+    <value>34-20 11 31	デザイナー</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items26" xml:space="preserve">
+    <value>34-20 11 41	指示子</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items27" xml:space="preserve">
+    <value>34-20 21 00	計画の役割</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items28" xml:space="preserve">
+    <value>34-20 21 11	プランナー</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items29" xml:space="preserve">
+    <value>34-20 21 14	コスト概算</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items30" xml:space="preserve">
+    <value>34-20 21 17	スケジューラー</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items31" xml:space="preserve">
+    <value>34-20 31 00	測量技師</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items32" xml:space="preserve">
+    <value>34-20 41 00	契約者</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items33" xml:space="preserve">
+    <value>34-20 51 00	観測の役割</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items34" xml:space="preserve">
+    <value>34-20 51 11	レビューワー</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items35" xml:space="preserve">
+    <value>34-20 51 14	審査委員会</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items36" xml:space="preserve">
+    <value>34-20 51 17	検査官</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items37" xml:space="preserve">
+    <value>34-20 51 21	オブザーバ</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items38" xml:space="preserve">
+    <value>34-35 00 00	実行の役割</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items39" xml:space="preserve">
+    <value>34-35 10 00	調達の役割</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items40" xml:space="preserve">
+    <value>34-35 10 11	製造者</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items41" xml:space="preserve">
+    <value>34-35 10 14	創案者</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items42" xml:space="preserve">
+    <value>34-35 10 17	ディストリビューター</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items43" xml:space="preserve">
+    <value>34-35 10 21	サプライヤー</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items44" xml:space="preserve">
+    <value>34-35 10 21 11	製品の代表</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items45" xml:space="preserve">
+    <value>34-35 10 24	買い手</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items46" xml:space="preserve">
+    <value>34-35 15 00	建設の役割</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items47" xml:space="preserve">
+    <value>34-35 15 11	請負人</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items48" xml:space="preserve">
+    <value>34-35 15 14	孫請け</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items49" xml:space="preserve">
+    <value>34-35 15 17	プロジェクトエンジニア</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items50" xml:space="preserve">
+    <value>34-35 15 21	商人</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items51" xml:space="preserve">
+    <value>34-35 15 21 11	職人</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items52" xml:space="preserve">
+    <value>34-35 15 21 14	日傭取</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items53" xml:space="preserve">
+    <value>34-35 15 21 17	内弟子</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items54" xml:space="preserve">
+    <value>34-35 15 24	役夫</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items55" xml:space="preserve">
+    <value>34-35 15 24 11	熟練役夫</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items56" xml:space="preserve">
+    <value>34-35 15 24 14	未熟練役夫</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items57" xml:space="preserve">
+    <value>34-35 15 27	インストーラ</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items58" xml:space="preserve">
+    <value>34-35 15 31	オペレータ</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items59" xml:space="preserve">
+    <value>34-41 00 00	利用の役割</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items60" xml:space="preserve">
+    <value>34-41 14 00	施設使用の役割</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items61" xml:space="preserve">
+    <value>34-41 14 11	施設館主</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items62" xml:space="preserve">
+    <value>34-41 14 14	施設保全</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items63" xml:space="preserve">
+    <value>34-41 14 17	施設エンジニア</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items64" xml:space="preserve">
+    <value>34-41 31 00	施設サービスの役割</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items65" xml:space="preserve">
+    <value>34-41 31 11	保管人</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items66" xml:space="preserve">
+    <value>34-55 00 00	サポートの役割</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items67" xml:space="preserve">
+    <value>34-55 11 00	行政サービスの役割</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items68" xml:space="preserve">
+    <value>34-55 11 11	行政アシスタント</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items69" xml:space="preserve">
+    <value>34-55 11 14	受付</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items70" xml:space="preserve">
+    <value>34-55 11 17	記録館主</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items71" xml:space="preserve">
+    <value>34-55 11 21	拘禁</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items72" xml:space="preserve">
+    <value>34-55 11 24	アシスタント</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items73" xml:space="preserve">
+    <value>34-55 11 27	トレーナー</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items74" xml:space="preserve">
+    <value>34-55 14 00	プロフェッショナルサービスの役割</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items75" xml:space="preserve">
+    <value>34-55 14 11	顧問</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items76" xml:space="preserve">
+    <value>34-55 14 14	司書</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items77" xml:space="preserve">
+    <value>34-55 14 17	ドラフター</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items78" xml:space="preserve">
+    <value>34-55 14 19	マーケティングの役割</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items79" xml:space="preserve">
+    <value>34-55 14 19 11	販売員</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items80" xml:space="preserve">
+    <value>34-55 14 22	金融の役割</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items81" xml:space="preserve">
+    <value>34-55 14 22 11	会計士</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items82" xml:space="preserve">
+    <value>34-55 14 22 14	銀行家</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items83" xml:space="preserve">
+    <value>34-55 14 22 17	記録係</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items84" xml:space="preserve">
+    <value>34-55 14 22 21	帳付け</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items85" xml:space="preserve">
+    <value>34-55 14 24	弁護士</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items86" xml:space="preserve">
+    <value>34-55 14 27	エージェント</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items87" xml:space="preserve">
+    <value>34-55 14 31	スペシャリスト</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items88" xml:space="preserve">
+    <value>34-61 00 00	グループの役割</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items89" xml:space="preserve">
+    <value>34-61 11 00	チーム</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items90" xml:space="preserve">
+    <value>34-61 11 11	タスクチーム</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items91" xml:space="preserve">
+    <value>34-61 11 21	任務部隊</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items92" xml:space="preserve">
+    <value>34-61 21 00	代理店</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items93" xml:space="preserve">
+    <value>34-61 21 11	幹部会</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items94" xml:space="preserve">
+    <value>34-61 31 00	委員会</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items95" xml:space="preserve">
+    <value>34-61 31 21	特別委員会</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items96" xml:space="preserve">
+    <value>34-61 41 00	実業団体</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items97" xml:space="preserve">
+    <value>34-61 41 11	社団法人</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items98" xml:space="preserve">
+    <value>34-61 41 21	協同組合</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items99" xml:space="preserve">
+    <value>34-61 41 31	個人企業</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items100" xml:space="preserve">
+    <value>34-61 41 41	合弁事業</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items101" xml:space="preserve">
+    <value>34-61 41 51	単一目的のエンティティ</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items102" xml:space="preserve">
+    <value>34-61 51 00	非営利組織</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items103" xml:space="preserve">
+    <value>34-61 51 11	協会</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items104" xml:space="preserve">
+    <value>34-61 51 21	財団</value>
+  </data>
+  <data name="comboBoxExchangeClassSender.Items105" xml:space="preserve">
+    <value>34-61 51 31	組合</value>
+  </data>
+  <data name="label22.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label22.Size" type="System.Drawing.Size, System.Drawing">
+    <value>78, 13</value>
+  </data>
+  <data name="label22.Text" xml:space="preserve">
+    <value>プロセスの分類</value>
+  </data>
+  <data name="comboBoxExchangeClassProcess.Items" xml:space="preserve">
+    <value>31-10 00 00	発端相</value>
+  </data>
+  <data name="comboBoxExchangeClassProcess.Items1" xml:space="preserve">
+    <value>31-20 00 00	概念化相</value>
+  </data>
+  <data name="comboBoxExchangeClassProcess.Items2" xml:space="preserve">
+    <value>31-30 00 00	基準定義相</value>
+  </data>
+  <data name="comboBoxExchangeClassProcess.Items3" xml:space="preserve">
+    <value>31-40 00 00	設計段階相</value>
+  </data>
+  <data name="comboBoxExchangeClassProcess.Items4" xml:space="preserve">
+    <value>31-50 00 00	コーディネーション相</value>
+  </data>
+  <data name="comboBoxExchangeClassProcess.Items5" xml:space="preserve">
+    <value>31-60 00 00	実装相</value>
+  </data>
+  <data name="comboBoxExchangeClassProcess.Items6" xml:space="preserve">
+    <value>31-70 00 00	ハンドオーバ相</value>
+  </data>
+  <data name="comboBoxExchangeClassProcess.Items7" xml:space="preserve">
+    <value>31-80 00 00	運用相</value>
+  </data>
+  <data name="comboBoxExchangeClassProcess.Items8" xml:space="preserve">
+    <value>31-90 00 00	閉鎖相</value>
+  </data>
+  <data name="checkBoxExchangeExport.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="checkBoxExchangeExport.Location" type="System.Drawing.Point, System.Drawing">
+    <value>83, 26</value>
+  </data>
+  <data name="checkBoxExchangeExport.Size" type="System.Drawing.Size, System.Drawing">
+    <value>80, 17</value>
+  </data>
+  <data name="checkBoxExchangeExport.Text" xml:space="preserve">
+    <value>エクスポート</value>
+  </data>
+  <data name="checkBoxExchangeImport.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="checkBoxExchangeImport.Size" type="System.Drawing.Size, System.Drawing">
+    <value>72, 17</value>
+  </data>
+  <data name="checkBoxExchangeImport.Text" xml:space="preserve">
+    <value>インポート</value>
+  </data>
+  <data name="labelExchangeApplicability.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="labelExchangeApplicability.Size" type="System.Drawing.Size, System.Drawing">
+    <value>43, 13</value>
+  </data>
+  <data name="labelExchangeApplicability.Text" xml:space="preserve">
+    <value>適用性</value>
+  </data>
+  <data name="buttonExchangeIconClear.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="buttonExchangeIconClear.Text" xml:space="preserve">
+    <value>クリア</value>
+  </data>
+  <data name="buttonExchangeIconChange.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="buttonExchangeIconChange.Text" xml:space="preserve">
+    <value>セットアイコン</value>
+  </data>
+  <data name="label2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>274, 13</value>
+  </data>
+  <data name="label2.Text" xml:space="preserve">
+    <value>アイコン （16×16 テーブル内のハイパーリンクに使用される）</value>
+  </data>
+  <data name="buttonUsageMigrate.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="buttonUsageMigrate.Text" xml:space="preserve">
+    <value>別のテンプレートに移行</value>
+  </data>
+  <data name="buttonUsageEdit.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="buttonUsageEdit.Text" xml:space="preserve">
+    <value>プロパティ</value>
+  </data>
+  <data name="columnHeaderUsageView.Text" xml:space="preserve">
+    <value>モデルビュー</value>
+  </data>
+  <data name="columnHeaderUsageEntity.Text" xml:space="preserve">
+    <value>実体</value>
+  </data>
+  <data name="label21.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label21.Size" type="System.Drawing.Size, System.Drawing">
+    <value>242, 13</value>
+  </data>
+  <data name="label21.Text" xml:space="preserve">
+    <value>このテンプレートは次のエンティティで使用されている</value>
+  </data>
+  <data name="label30.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label30.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 13</value>
+  </data>
+  <data name="label30.Text" xml:space="preserve">
+    <value>ファイルの内容</value>
+  </data>
+  <data name="label25.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label25.Size" type="System.Drawing.Size, System.Drawing">
+    <value>76, 13</value>
+  </data>
+  <data name="label25.Text" xml:space="preserve">
+    <value>該当するビュー</value>
+  </data>
+  <data name="buttonExampleClear.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="buttonExampleClear.Text" xml:space="preserve">
+    <value>クリア</value>
+  </data>
+  <data name="buttonExampleLoad.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="buttonExampleLoad.Text" xml:space="preserve">
+    <value>ロード·ファイル</value>
+  </data>
+  <data name="columnHeaderRootTemplate.Text" xml:space="preserve">
+    <value>テンプレート</value>
+  </data>
+  <data name="columnHeaderRootEntity.Text" xml:space="preserve">
+    <value>実体</value>
+  </data>
+  <data name="columnHeaderRootStatus.Text" xml:space="preserve">
+    <value>モデルビュー</value>
+  </data>
+  <data name="imageListInheritance.ImageStream" mimetype="application/x-microsoft.net.object.binary.base64">
+    <value>
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
+        LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
+        ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAABy
+        CwAAAk1TRnQBSQFMAgEBBAEAASgBAAEoAQABEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
+        AwABQAMAASADAAEBAQABCAYAAQgYAAGAAgABgAMAAoABAAGAAwABgAEAAYABAAKAAgADwAEAAcAB3AHA
+        AQAB8AHKAaYBAAEzBQABMwEAATMBAAEzAQACMwIAAxYBAAMcAQADIgEAAykBAANVAQADTQEAA0IBAAM5
+        AQABgAF8Af8BAAJQAf8BAAGTAQAB1gEAAf8B7AHMAQABxgHWAe8BAAHWAucBAAGQAakBrQIAAf8BMwMA
+        AWYDAAGZAwABzAIAATMDAAIzAgABMwFmAgABMwGZAgABMwHMAgABMwH/AgABZgMAAWYBMwIAAmYCAAFm
+        AZkCAAFmAcwCAAFmAf8CAAGZAwABmQEzAgABmQFmAgACmQIAAZkBzAIAAZkB/wIAAcwDAAHMATMCAAHM
+        AWYCAAHMAZkCAALMAgABzAH/AgAB/wFmAgAB/wGZAgAB/wHMAQABMwH/AgAB/wEAATMBAAEzAQABZgEA
+        ATMBAAGZAQABMwEAAcwBAAEzAQAB/wEAAf8BMwIAAzMBAAIzAWYBAAIzAZkBAAIzAcwBAAIzAf8BAAEz
+        AWYCAAEzAWYBMwEAATMCZgEAATMBZgGZAQABMwFmAcwBAAEzAWYB/wEAATMBmQIAATMBmQEzAQABMwGZ
+        AWYBAAEzApkBAAEzAZkBzAEAATMBmQH/AQABMwHMAgABMwHMATMBAAEzAcwBZgEAATMBzAGZAQABMwLM
+        AQABMwHMAf8BAAEzAf8BMwEAATMB/wFmAQABMwH/AZkBAAEzAf8BzAEAATMC/wEAAWYDAAFmAQABMwEA
+        AWYBAAFmAQABZgEAAZkBAAFmAQABzAEAAWYBAAH/AQABZgEzAgABZgIzAQABZgEzAWYBAAFmATMBmQEA
+        AWYBMwHMAQABZgEzAf8BAAJmAgACZgEzAQADZgEAAmYBmQEAAmYBzAEAAWYBmQIAAWYBmQEzAQABZgGZ
+        AWYBAAFmApkBAAFmAZkBzAEAAWYBmQH/AQABZgHMAgABZgHMATMBAAFmAcwBmQEAAWYCzAEAAWYBzAH/
+        AQABZgH/AgABZgH/ATMBAAFmAf8BmQEAAWYB/wHMAQABzAEAAf8BAAH/AQABzAEAApkCAAGZATMBmQEA
+        AZkBAAGZAQABmQEAAcwBAAGZAwABmQIzAQABmQEAAWYBAAGZATMBzAEAAZkBAAH/AQABmQFmAgABmQFm
+        ATMBAAGZATMBZgEAAZkBZgGZAQABmQFmAcwBAAGZATMB/wEAApkBMwEAApkBZgEAA5kBAAKZAcwBAAKZ
+        Af8BAAGZAcwCAAGZAcwBMwEAAWYBzAFmAQABmQHMAZkBAAGZAswBAAGZAcwB/wEAAZkB/wIAAZkB/wEz
+        AQABmQHMAWYBAAGZAf8BmQEAAZkB/wHMAQABmQL/AQABzAMAAZkBAAEzAQABzAEAAWYBAAHMAQABmQEA
+        AcwBAAHMAQABmQEzAgABzAIzAQABzAEzAWYBAAHMATMBmQEAAcwBMwHMAQABzAEzAf8BAAHMAWYCAAHM
+        AWYBMwEAAZkCZgEAAcwBZgGZAQABzAFmAcwBAAGZAWYB/wEAAcwBmQIAAcwBmQEzAQABzAGZAWYBAAHM
+        ApkBAAHMAZkBzAEAAcwBmQH/AQACzAIAAswBMwEAAswBZgEAAswBmQEAA8wBAALMAf8BAAHMAf8CAAHM
+        Af8BMwEAAZkB/wFmAQABzAH/AZkBAAHMAf8BzAEAAcwC/wEAAcwBAAEzAQAB/wEAAWYBAAH/AQABmQEA
+        AcwBMwIAAf8CMwEAAf8BMwFmAQAB/wEzAZkBAAH/ATMBzAEAAf8BMwH/AQAB/wFmAgAB/wFmATMBAAHM
+        AmYBAAH/AWYBmQEAAf8BZgHMAQABzAFmAf8BAAH/AZkCAAH/AZkBMwEAAf8BmQFmAQAB/wKZAQAB/wGZ
+        AcwBAAH/AZkB/wEAAf8BzAIAAf8BzAEzAQAB/wHMAWYBAAH/AcwBmQEAAf8CzAEAAf8BzAH/AQAC/wEz
+        AQABzAH/AWYBAAL/AZkBAAL/AcwBAAJmAf8BAAFmAf8BZgEAAWYC/wEAAf8CZgEAAf8BZgH/AQAC/wFm
+        AQABIQEAAaUBAANfAQADdwEAA4YBAAOWAQADywEAA7IBAAPXAQAD3QEAA+MBAAPqAQAD8QEAA/gBAAHw
+        AfsB/wEAAaQCoAEAA4ADAAH/AgAB/wMAAv8BAAH/AwAB/wEAAf8BAAL/AgAD//8A/wD/AP8ACAAC/wL0
+        AvMC9AL/BgAC/wL0AvMC9AL/BgAC/wL0AvMC9AL/BgAC/wL0AvMC9AL/BQAB/wH0AfIBBwHvAvcB7wEH
+        AfIB9AH/BAAB/wH0AfIBBwHvAvcB7wEHAfIB9AH/BAAB/wH0AfIBBwHvAvcB7wEHAfIB9AH/BAAB/wH0
+        AfIBBwHvAvcB7wEHAfIB9AH/AwAB/wH0Ae8BcQFOAk8BTgFxAesBkgHwAfQB/wIAAf8B9AEHAXQEWAFS
+        AewBkgHwAfQB/wIAAf8B9AEHAW4ERgFFAesBkgHwAfQB/wIAAf8B9AEHAZAEsgGLAesBkgHwAfQB/wEA
+        Af8B9AGdAU4BdwWXAU8BcQHtAfAB9AL/AfQBmQFYBlkBWAFRAe0B8AH0Av8B9AGTAUYBTARNAUwBRgFL
+        Ae0B8AH0Av8B9AG0CLIBiwHtAfAB9AL/AZ0BcAiXAXcBcQGSAfIC/wGZCVkBWAFRAZIB8gL/AZMBRghN
+        AUYBSwGSAfIC/wG7CrIBiwGSAfIB/wHxAXAKlwFPAesBBwH0ARsLWQFYAewBBwH0AfIBRgpNAUYBbgEH
+        AfQB8gyyAesBBwH0AZ0BdwuXAXEB7wH0AZkMWQFSAe8B9AGTAUwKTQFMAUsB7wH0AboMsgGLAe8B9AF3
+        DJcBTgH3AfMBWAxZAVgB9wHzAUwCTQh1Ak0BRgH3AfMOsgH3AfMBdwyXAXcB9wHzAVgCWQN6B1kBWAH3
+        AfMBTAFNAZoI/wGUAU0BRgH3AfMOsgH3AfMBdwV4B5cBdwHvAfQBWAh6BFkBWAHvAfQBTAFNAZoI/wGU
+        AU0BTAHvAfQBsgazB7IB7wH0AZcHeAWXAXcBBwH0AVIJegNZAVgBBwH0AU0CdQSUBHUCTQFMAQcB9AGy
+        AbkDugK5AbMGsgEHAfQBmAF4BJgDeASXAXEB8gH/AZkBegaaA3oCWQF0AfIB/wGUAeMGdQVNAW8B8gH/
+        AboBuQW6AbkBswSyAbMB8gH/AfQBlwGYAggDmAJ4ApcBdwEHAfQB/wH0AVgHmgJ6AVkBWAEHAfQB/wH0
+        AU0ElAN1A00BTAEHAfQB/wH0AbIB3AEJAtwCugG5AbMDsgG7AfQB/wEAAQgBlwMIApgCeAKXAZgB9AH/
+        AgABGgFZAaADwwOaAXoBWQEcAfQB/wIAAZoBTQOaAZQCdQHjAk0BkwH0Af8CAAG7AbMDCQHcAroBswKy
+        AboB9AH/AwABCAGXAZgCCAKYApcBmAH0Af8EAAGZAVIBmgPDAZoBegFYAZkB9AH/BAABmgFNAZQCmgJ1
+        Ak0BkwH0Af8EAAEJAbMB2wIJAroBswGyAboB9AH/BQAB9AGYAZcBeAKXAZgBGwL/BgAB9AGZBFIBmQHy
+        Av8GAAH0AZQETQGTAfIC/wYAAfQBugGyArMBsgG6AfIC/wMAAUIBTQE+BwABPgMAASgDAAFAAwABIAMA
+        AQEBAAEBBgABARYAA/+BAAHgAQcB4AEHAeABBwHgAQcBwAEDAcABAwHAAQMBwAEDAYABAQGAAQEBgAEB
+        AYABAVAAAYABAQGAAQEBgAEBAYABAQHAAQMBwAEDAcABAwHAAQMB4AEHAeABBwHgAQcB4AEHCw==
+</value>
+  </data>
+  <data name="toolStripMenuItemModeInherit.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29m
+        dHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAJnSURBVDhPjZPdS9NhFMd/4MXuFkF1ocSuSgIDqZuw
+        l9ELJBHu91trS3tTE52zrVpZ6lYbpWm5JSpICUZqdWE5sWazTd27rhcjDQoLL6w7/4lv5zxTnLOLDnzZ
+        4fk9n3O+59nzSJlhHtcdqQ3K/sthPdzTZjgSl8B51ejJSZ3ngIm2qEk5YnN2WEJyV2OiAsMLfUj9CSHw
+        6wVefutEzxc37iTNqJkyobj3qI+2akgqAa2GZUIZcCarEFvyI/k7gNDiEHw/evFs7iE6PzvQMmMlNxUw
+        hgzY69UGCcknpYuwbXu0DK+/P8HYz0G8Xein/DEG5r2ie/uHGzRODW7Fz+NaxAhtQI+thp1thLKTHKly
+        XPY3p+zon2vH8/lHAuz72oqeWRc8H+txb6ZOdL8eLcWViAGlE3ps82gXCT5OUktKUI8H1KWLrHbP3qZf
+        Jzo+NdCanWALnIlK1MfOiu628ClY6VBzR2UQbBMuDr1TcHe6Vsx5P2VDC4m7upLVaEqUE1y2DmZtfyMK
+        8BgF0m6/gob4BbHZQd2ayG5j/CJuxs6R7TO4Gjm9DmblpR10kAolDVWrCxthj5oEwOKcQZ7ZmgWz1D7d
+        WoHNgycmi9/rRZdMZUOr0gcVSK79ywSnR1C5i0ybRmRUT/0byFbeCHXflxsnOH2IFGrJe9i35T+K7OLD
+        s+5ZIqablP4bKfhua6Tmg0H1sA7HAsoGkG2Lzmn4KalcMBnvgq9lviTvaJNa6ZIMlQiApXpVQjMXLa/Y
+        5s4Mr13ljOAFrsrWeD4+JD5pFue8xt82PqaMYEs8F28qIBWuiHNey3rOkvQXNySxQRpwZxwAAAAASUVO
+        RK5CYII=
+</value>
+  </data>
+  <data name="toolStripMenuItemModeOverride.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29m
+        dHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAJ7SURBVDhPfZNLSFRhGIYHXLSzXa0qYpqLzugZS4gs
+        IoQuIlRkYC0Kg6SUaGFE0R1KxhAZU4OCsIwu5qKBPNqgTEUppaZdTKcyrRk1a6CyRS2y87+93zmak0Uf
+        PJzh/7/n/S9zji2xrp/QsvXydL27zoveax701XvMZ3OFJ3y6yJ7PlmSSZDbPrKBfuzwQzIQaOQOMP4T6
+        0g4Vb4QaPgcVKUS00YeLh1032bqAzDKlqdLLtarxtlVQH4NQn+6SMGUd6v1VqNhZqDcnGbIHX+8vxvkD
+        jhYqLmKFhALp2dHGDDZWU7gCNXaD1EON1lnykB/q1UGo/kIYzzdgpNmLgty5ZVRlJ0m2RxfSdNW3jY1l
+        UO8qoaI1hGFvK6AGT0G9phwphtG7FcbT1Zjo8qGh1DFIeS1Jtg0FPUzfxVX2Qw0cIcfJMYqHoF6WmHPG
+        C8rPcmD0LIXR5eZ9pIPyXnMXMd3D9C0w+nZYQZEishtG/06K2zm3mSuvseTHKQxwYKTJDJBjeG3DTV42
+        ZHOFXJ5xI4U8PjeR9RxbB+PJShjdSyi7TdkK0CQgQHzcQRonSU8mm5eR5STLWrE7g3OplJy/5Z+dTgzr
+        CQFdl7zhHx2uyQZ5TjEtJfK9PQX1pfY4ZesItUft+R9CaWbyv4REJtgz2qwhJ2v2A8rWJbKSW2vcLZ/v
+        /D9kosOJsZCGypL5UTrVxPobWfJuL2zwL2odu63hW1vKH0Eijt9LRUz3oWrfPJFrSQGxXqTJktfSXZw3
+        p0wPOAblkkSI3rJo8NvjuSvMbcvKIk+/ygklA5IqW5PzySXJTQvyW8Zk7u+PKaFkS3IuafIS3yTyW8Zm
+        fM422y8vDQBLU04iKgAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="toolStripMenuItemModeSuppress.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29m
+        dHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAKASURBVDhPhVNJTFNRFP0JC3d1YdSNBmyqxdDJoQli
+        grSQyKCCSsvgVKNSrQgJWifiQiAC0WocUTEKRCGIEkcWKCZqNHEhLkxcSDCOVGvn4QNujvf+tgQrxpOc
+        5P337znv3Pv+Fybja7HaOGLSPHCXaOGrzoPXlg1eD61VDdzKkpdQiYyYJBUnwmnSnPFaDRCvN+HXix6M
+        3j2NyLXDCJ20wleTB/dmPV7lp/ZT6TziNNZM4LtZ0+G15WB8oAPjTzsx1ncBYlcDwhdrEGreikBtEXxV
+        Rrg2LME9o+IRSVKJUROO7bEsQ+RGHUZ7HRBvH4dI6/Blu3R6sK4Ufns+vLsy4bHo4TRrsVs5q4mkycQk
+        gXv2HzEjfGkfIlcOIELC8PlqhBwVCNaXw39wDZ2eDc/2dHg2LsYPMrhvmD9M4pVEmeCijcDRUoprh3jz
+        BMRuStDZiEg7pWitRejcXgQdlQg0WuHdky8N9eM6LUhcJaVwmrTw71+Fscdd+B/EnhbJ4EORhg24DZXw
+        rZiuzJaJ0b62WNm/ETd4XygZnCLqhM8Ux71FD5+9EMHmnVFS3MCxCgTqd1B72yboraTrJIO3BZMM3hSo
+        BkbMOrjLFsFdHmMZPZcSqTiRX9Zr0bJU7iJxtIX2DHnJEEX6ScOcSpDI17kaGGZPf07i6BAJsjsrFvS+
+        W60B38hUojgHc9U4tHDuJ9KcJUavkcDfdnJbuqJ/kNyHacKJQp76M6MaduUcFl8lWlgT00rgz1K5KWVm
+        U6teMfwkS42XOWpJ9HB5GhrSUlwZM2Qcm09msTKm+QO8wa4cjfvjIfGkmbzmPX7HNX+J4+BI3BcXqYi6
+        GHnNewm/syD8BvfA1J6LMQqMAAAAAElFTkSuQmCC
+</value>
+  </data>
+</root>

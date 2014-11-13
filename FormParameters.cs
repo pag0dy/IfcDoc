@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 
+using IfcDoc.Schema;
 using IfcDoc.Schema.DOC;
 
 namespace IfcDoc
@@ -50,6 +51,18 @@ namespace IfcDoc
             set
             {
                 this.ctlParameters.ConceptLeaf = value;
+            }
+        }
+
+        public SEntity CurrentInstance
+        {
+            get
+            {
+                return this.ctlParameters.CurrentInstance;
+            }
+            set
+            {
+                this.ctlParameters.CurrentInstance = value;
             }
         }
     }

@@ -769,7 +769,7 @@ namespace IfcDoc
                                             docChangeAttribute.Action = DocChangeActionEnum.MODIFIED;
                                         }
 
-                                        if (!docAttribute.PrimaryDataType.Trim().Equals(docAttributeBase.PrimaryDataType.Trim()))
+                                        if (docAttribute.PrimaryDataType != null && !docAttribute.PrimaryDataType.Trim().Equals(docAttributeBase.PrimaryDataType.Trim()))
                                         {
                                             DocChangeAspect docAspect = new DocChangeAspect(DocChangeAspectEnum.TYPE, docAttributeBase.PrimaryDataType, docAttribute.PrimaryDataType);
                                             docChangeAttribute.Aspects.Add(docAspect);

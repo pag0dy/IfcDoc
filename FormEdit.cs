@@ -707,7 +707,7 @@ namespace IfcDoc
                         case ".ifcdoc":
                             using (FormatSPF format = new FormatSPF(this.m_file, SchemaDOC.Types, this.m_instances))
                             {
-                                format.InitHeaders(this.m_file, "IFCDOC_8_2");
+                                format.InitHeaders(this.m_file, "IFCDOC_8_6");
                                 format.Save();
                             }
                             break;
@@ -1147,42 +1147,7 @@ namespace IfcDoc
                             break;
 
                         case ".mvdxml":
-                            {
-                                for(int iNS = 0; iNS < mvdXML.Namespaces.Length; iNS++)
-                                {
-                                    string xmlns = mvdXML.Namespaces[iNS];
-                                    using (FormatXML format = new FormatXML(filename, typeof(mvdXML), xmlns))
-                                    {
-                                        try
-                                        {
-                                            this.m_loading = true; // prevent constructors from registering instances (xml serializer instantiates)
-                                            format.Load();
-                                            this.m_loading = false;
-                                            mvdXML mvd = (mvdXML)format.Instance;
-                                            Program.ImportMvd(mvd, this.m_project, filename);
-                                            break;
-                                        }
-                                        catch (InvalidOperationException)
-                                        {
-                                            // keep going until successful
-
-                                            if(iNS == mvdXML.Namespaces.Length-1)
-                                            {
-                                                MessageBox.Show(this, "The file is not of a supported format (mvdXML 1.0 or mvdXML 1.1).", "Import MVDXML");
-                                            }
-                                        }
-                                        catch (Exception xx)
-                                        {
-                                            MessageBox.Show(this, xx.Message, "Import MVDXML");
-                                            xmlns = null;
-                                        }
-                                        finally
-                                        {
-                                            this.m_loading = false;
-                                        }
-                                    }
-                                }
-                            }
+                            this.ImportMVD(filename);
                             break;
 
                         case ".txt":
@@ -1231,6 +1196,44 @@ namespace IfcDoc
             if (sbErrors.Length > 0)
             {
                 MessageBox.Show(this, "Import succeeded, however one or more definitions have missing or incorrect information:\r\n" + sbErrors.ToString(), "Import Errors");
+            }
+        }
+
+        private void ImportMVD(string filename)
+        {
+            for (int iNS = 0; iNS < mvdXML.Namespaces.Length; iNS++)
+            {
+                string xmlns = mvdXML.Namespaces[iNS];
+                using (FormatXML format = new FormatXML(filename, typeof(mvdXML), xmlns))
+                {
+                    try
+                    {
+                        this.m_loading = true; // prevent constructors from registering instances (xml serializer instantiates)
+                        format.Load();
+                        this.m_loading = false;
+                        mvdXML mvd = (mvdXML)format.Instance;
+                        Program.ImportMvd(mvd, this.m_project, filename);
+                        break;
+                    }
+                    catch (InvalidOperationException)
+                    {
+                        // keep going until successful
+
+                        if (iNS == mvdXML.Namespaces.Length - 1)
+                        {
+                            MessageBox.Show(this, "The file is not of a supported format (mvdXML 1.0 or mvdXML 1.1).", "Import MVDXML");
+                        }
+                    }
+                    catch (Exception xx)
+                    {
+                        MessageBox.Show(this, xx.Message, "Import MVDXML");
+                        xmlns = null;
+                    }
+                    finally
+                    {
+                        this.m_loading = false;
+                    }
+                }
             }
         }
 
@@ -1478,25 +1481,6 @@ namespace IfcDoc
         #endregion
         #region EDIT
 
-        private void InsertUsage_Click(object sender, EventArgs e)
-        {
-            DocConceptRoot entity = this.treeView.SelectedNode.Tag as DocConceptRoot;
-            if (entity == null)
-                return;
-
-            ToolStripMenuItem ts = (ToolStripMenuItem)sender;
-            DocTemplateDefinition def = (DocTemplateDefinition)ts.Tag;
-
-            DocTemplateUsage usage = new DocTemplateUsage();
-            usage.Definition = def;
-            entity.Concepts.Add(usage);
-
-            TreeNode tn = LoadNode(this.treeView.SelectedNode, usage, def.Name, false);
-            this.treeView.SelectedNode = tn;
-
-            this.m_modified = true;
-        }
-
         private string FormatTemplateRule(DocTemplateDefinition template, string key)
         {
             foreach (DocModelRule rule in template.Rules)
@@ -1733,6 +1717,22 @@ namespace IfcDoc
                 DocProperty docTarget = (DocProperty)this.treeView.SelectedNode.Tag;
                 DocPropertySet docPset = (DocPropertySet)this.treeView.SelectedNode.Parent.Tag;
                 docPset.Properties.Remove(docTarget);
+                this.treeView.SelectedNode.Remove();
+                docTarget.Delete();
+            }
+            else if(this.treeView.SelectedNode.Tag is DocPropertyEnumeration)
+            {
+                DocPropertyEnumeration docTarget = (DocPropertyEnumeration)this.treeView.SelectedNode.Tag;
+                DocSchema docSchema = (DocSchema)this.treeView.SelectedNode.Parent.Parent.Tag;
+                docSchema.PropertyEnums.Remove(docTarget);
+                this.treeView.SelectedNode.Remove();
+                docTarget.Delete();
+            }
+            else if (this.treeView.SelectedNode.Tag is DocPropertyConstant)
+            {
+                DocPropertyConstant docTarget = (DocPropertyConstant)this.treeView.SelectedNode.Tag;
+                DocPropertyEnumeration docPset = (DocPropertyEnumeration)this.treeView.SelectedNode.Parent.Tag;
+                docPset.Constants.Remove(docTarget);
                 this.treeView.SelectedNode.Remove();
                 docTarget.Delete();
             }
@@ -2416,6 +2416,15 @@ namespace IfcDoc
             return tn;
         }
 
+        private void LoadNodeConcept(TreeNode tnOuter, DocTemplateUsage docConcept)
+        {
+            TreeNode tn = LoadNode(tnOuter, docConcept, docConcept.Definition != null ? docConcept.Definition.Name : docConcept.Name, false);
+            foreach (DocTemplateUsage docInner in docConcept.Concepts)
+            {
+                LoadNodeConcept(tn, docInner);
+            }
+        }
+
         private void LoadNodeSchema(TreeNode tnSchema, DocSchema schema)
         {
             TreeNode tnTypeHeader = LoadNode(tnSchema, typeof(DocType), "Types", false);
@@ -2487,10 +2496,7 @@ namespace IfcDoc
                                 TreeNode tnConceptRoot = LoadNode(tnType, docConceptRoot, docModelView.Name, false);
                                 foreach (DocTemplateUsage docConcept in docConceptRoot.Concepts)
                                 {
-                                    if (!docConcept.Suppress)
-                                    {
-                                        LoadNode(tnConceptRoot, docConcept, docConcept.Definition != null ? docConcept.Definition.Name : docConcept.Name, false);
-                                    }
+                                    LoadNodeConcept(tnConceptRoot, docConcept);
                                 }
                             }
                         }
@@ -2808,6 +2814,8 @@ namespace IfcDoc
             this.toolStripMenuItemInsertProperty.Enabled = false;
             this.toolStripMenuItemInsertQuantityset.Enabled = false;
             this.toolStripMenuItemInsertQuantity.Enabled = false;
+            this.toolStripMenuItemInsertPropertyEnumeration.Enabled = false;
+            this.toolStripMenuItemInsertPropertyConstant.Enabled = false;
 
             this.toolStripMenuItemInsertBibliography.Enabled = true;
 
@@ -2963,24 +2971,41 @@ namespace IfcDoc
             {
                 DocTemplateUsage obj = (DocTemplateUsage)e.Node.Tag;
 
-                //int iFigure = 1;
-                //int iTable = 1;
-                DocConceptRoot root = (DocConceptRoot)e.Node.Parent.Tag;
-                DocEntity ent = (DocEntity)e.Node.Parent.Parent.Tag;
-                this.SetContent(obj, obj.Documentation);//DocumentationISO.FormatTemplate(this.m_project, ent, root, obj, ref iFigure, ref iTable));
+                this.SetContent(obj, obj.Documentation);
 
                 this.toolStripMenuItemEditCopy.Enabled = true;
                 this.toolStripMenuItemEditDelete.Enabled = true;
+                this.toolStripMenuItemInsertConceptLeaf.Enabled = true; // subleafs now supported
 
-                DocConceptRoot docRoot = (DocConceptRoot)e.Node.Parent.Tag;
-                if (docRoot.Concepts.IndexOf(obj) > 0)
+                if (e.Node.Parent.Tag is DocConceptRoot)
                 {
-                    this.toolStripMenuItemEditMoveUp.Enabled = true;
+                    DocConceptRoot docRoot = (DocConceptRoot)e.Node.Parent.Tag;
+                    if (docRoot.Concepts.IndexOf(obj) > 0)
+                    {
+                        this.toolStripMenuItemEditMoveIn.Enabled = true;
+                        this.toolStripMenuItemEditMoveUp.Enabled = true;
+                    }
+
+                    if (docRoot.Concepts.IndexOf(obj) < docRoot.Concepts.Count - 1)
+                    {
+                        this.toolStripMenuItemEditMoveDown.Enabled = true;
+                    }
                 }
-
-                if (docRoot.Concepts.IndexOf(obj) < docRoot.Concepts.Count - 1)
+                else if(e.Node.Parent.Tag is DocTemplateUsage)
                 {
-                    this.toolStripMenuItemEditMoveDown.Enabled = true;
+                    this.toolStripMenuItemEditMoveOut.Enabled = true;
+
+                    DocTemplateUsage docRoot = (DocTemplateUsage)e.Node.Parent.Tag;
+                    if (docRoot.Concepts.IndexOf(obj) > 0)
+                    {
+                        this.toolStripMenuItemEditMoveIn.Enabled = true;
+                        this.toolStripMenuItemEditMoveUp.Enabled = true;
+                    }
+
+                    if (docRoot.Concepts.IndexOf(obj) < docRoot.Concepts.Count - 1)
+                    {
+                        this.toolStripMenuItemEditMoveDown.Enabled = true;
+                    }
                 }
             }
             else if (e.Node.Tag is DocTemplateItem)
@@ -3049,6 +3074,7 @@ namespace IfcDoc
             else if (e.Node.Tag == typeof(DocPropertySet))
             {
                 this.toolStripMenuItemInsertPropertyset.Enabled = true;
+                this.toolStripMenuItemInsertPropertyEnumeration.Enabled = true;
                 this.toolStripMenuItemContextInsertPset.Visible = true;
                 this.toolStripMenuItemContextInsert.Visible = true;
             }
@@ -3073,6 +3099,7 @@ namespace IfcDoc
 
                     this.toolStripMenuItemInsertPropertyset.Enabled = true;
                     this.toolStripMenuItemInsertQuantityset.Enabled = true;
+                    this.toolStripMenuItemInsertPropertyEnumeration.Enabled = true;
 
                     this.toolStripMenuItemContextInsertPset.Visible = true;
                     this.toolStripMenuItemContextInsertQset.Visible = true;
@@ -3234,6 +3261,11 @@ namespace IfcDoc
                     {
                         this.toolStripMenuItemEditMoveDown.Enabled = true;
                     }
+                }
+                else if (obj is DocPropertyEnumeration)
+                {
+                    this.toolStripMenuItemEditDelete.Enabled = true;
+                    this.toolStripMenuItemInsertPropertyConstant.Enabled = true;
                 }
                 else if (obj is DocQuantitySet)
                 {
@@ -3571,7 +3603,14 @@ namespace IfcDoc
             else if (obj is DocTemplateUsage)
             {
                 DocTemplateUsage docUsage = (DocTemplateUsage)obj;
-                DocConceptRoot docRoot = (DocConceptRoot)this.treeView.SelectedNode.Parent.Tag;
+
+                TreeNode tnParent = this.treeView.SelectedNode.Parent;
+                while(tnParent.Tag is DocTemplateUsage)
+                {
+                    tnParent = tnParent.Parent;
+                }
+
+                DocConceptRoot docRoot = (DocConceptRoot)tnParent.Tag;
                 DocModelView docView = null;
                 foreach (DocModelView eachView in this.m_project.ModelViews)
                 {
@@ -4000,14 +4039,29 @@ namespace IfcDoc
             else if (tn.Tag is DocTemplateUsage)
             {
                 DocTemplateUsage docUsage = (DocTemplateUsage)tn.Tag;
-                DocConceptRoot docRoot = (DocConceptRoot)tnParent.Tag;
-                int index = docRoot.Concepts.IndexOf(docUsage);
 
-                index += direction;
-                treeindex += direction;
+                if (tnParent.Tag is DocConceptRoot)
+                {
+                    DocConceptRoot docRoot = (DocConceptRoot)tnParent.Tag;
+                    int index = docRoot.Concepts.IndexOf(docUsage);
 
-                docRoot.Concepts.Remove(docUsage);
-                docRoot.Concepts.Insert(index, docUsage);
+                    index += direction;
+                    treeindex += direction;
+
+                    docRoot.Concepts.Remove(docUsage);
+                    docRoot.Concepts.Insert(index, docUsage);
+                }
+                else if (tnParent.Tag is DocTemplateUsage)
+                {
+                    DocTemplateUsage docRoot = (DocTemplateUsage)tnParent.Tag;
+                    int index = docRoot.Concepts.IndexOf(docUsage);
+
+                    index += direction;
+                    treeindex += direction;
+
+                    docRoot.Concepts.Remove(docUsage);
+                    docRoot.Concepts.Insert(index, docUsage);
+                }
 
                 tnParent.Nodes.Remove(tn);
                 tnParent.Nodes.Insert(treeindex, tn);
@@ -4683,6 +4737,38 @@ namespace IfcDoc
                     tnTarget.Nodes.Insert(index, tn);
                 }
             }
+            else if (tn.Tag is DocTemplateUsage)
+            {
+                DocTemplateUsage docSource = (DocTemplateUsage)tn.Tag;
+                DocTemplateUsage docTarget = (DocTemplateUsage)tn.Parent.Tag;
+
+                docTarget.Concepts.Remove(docSource);
+
+                if (tn.Parent.Parent.Tag is DocTemplateUsage)
+                {
+                    // move to sub-level
+                    DocTemplateUsage docParent = (DocTemplateUsage)tn.Parent.Parent.Tag;
+                    int index = docParent.Concepts.IndexOf(docTarget) + 1;
+                    docParent.Concepts.Insert(index, docSource);
+
+                    TreeNode tnParent = tn.Parent;
+                    tn.Remove();
+                    tnParent.Parent.Nodes.Insert(index, tn);
+                }
+                else
+                {
+                    // move to top-level
+                    DocConceptRoot docParent = (DocConceptRoot)tn.Parent.Parent.Tag;
+                    int index = docParent.Concepts.IndexOf(docTarget) + 1;
+                    docParent.Concepts.Insert(index, docSource);
+
+                    TreeNode tnParent = tn.Parent;
+                    TreeNode tnTarget = tn.Parent.Parent;
+
+                    tn.Parent.Nodes.Remove(tn);
+                    tnTarget.Nodes.Insert(index, tn);
+                }
+            }
             else if (tn.Tag is DocExample)
             {
                 DocExample docSource = (DocExample)tn.Tag;
@@ -4800,6 +4886,26 @@ namespace IfcDoc
                     // move from top-level
                     this.m_project.Templates.Remove(docSource);
                     docTarget.Templates.Add(docSource);
+                }
+            }
+            else if (tn.Tag is DocTemplateUsage) 
+            {
+                DocTemplateUsage docSource = (DocTemplateUsage)tn.Tag;
+                DocTemplateUsage docTarget = (DocTemplateUsage)tn.Parent.Nodes[tn.Index - 1].Tag;
+
+                if (tn.Parent.Tag is DocTemplateUsage)
+                {
+                    // move from mid-level
+                    DocTemplateUsage docParent = (DocTemplateUsage)tn.Parent.Tag;
+                    docParent.Concepts.Remove(docSource);
+                    docTarget.Concepts.Add(docSource);
+                }
+                else
+                {
+                    // move from top-level
+                    DocConceptRoot docParent = (DocConceptRoot)tn.Parent.Tag;
+                    docParent.Concepts.Remove(docSource);
+                    docTarget.Concepts.Add(docSource);
                 }
             }
             else if (tn.Tag is DocExample)
@@ -5034,7 +5140,13 @@ namespace IfcDoc
                 {
                     docUsage = (DocTemplateUsage)tnSelect.Tag;
                     docTemplate = (DocTemplateDefinition)docUsage.Definition;
-                    docEntity = (DocEntity)tnSelect.Parent.Parent.Tag;
+
+                    TreeNode tnTest = tnSelect.Parent;
+                    while(tnTest.Tag is DocTemplateUsage)
+                    {
+                        tnTest = tnTest.Parent;
+                    }
+                    docEntity = (DocEntity)tnTest.Parent.Tag;
                 }
                 else if (tnSelect.Tag is DocConceptRoot)
                 {
@@ -5119,12 +5231,12 @@ namespace IfcDoc
                         }
                         else if(!valStruct)
                         {
-                            lvi.BackColor = Color.Yellow;
+                            lvi.BackColor = Color.Red;// Yellow;
                         }
                     }
                     else
                     {
-                        lvi.BackColor = Color.Blue;
+                        lvi.BackColor = Color.Empty;
                     }
 
                     System.Reflection.FieldInfo field = entity.GetType().GetField("Name");
@@ -5234,9 +5346,7 @@ namespace IfcDoc
                 {
                     foreach(DocTemplateUsage docUsage in docRoot.Concepts)
                     {
-                        docUsage.Validation = null;
-                        docUsage.ValidationStructure.Clear();
-                        docUsage.ValidationConstraints.Clear();
+                        docUsage.ResetValidation();
                     }
                 }
 
@@ -5322,395 +5432,9 @@ namespace IfcDoc
 
                                     foreach (DocTemplateUsage docUsage in docRoot.Concepts)
                                     {
-                                        if (docUsage.Definition != null && docUsage.Definition.Rules != null && !(docUsage.Definition.IsDisabled) && !(docUsage.Suppress))
-                                        {
-                                            if(docUsage.Definition.Name.Contains("-069"))
-                                            {
-                                                this.ToString();
-                                            }
-
-                                            DocExchangeRequirementEnum req = DocExchangeRequirementEnum.NotRelevant;
-                                            bool includeconcept = true;
-                                            if (this.m_filterexchange != null)
-                                            {
-                                                includeconcept = false;
-                                                foreach (DocExchangeItem ei in docUsage.Exchanges)
-                                                {
-                                                    if (ei.Exchange == this.m_filterexchange && ei.Applicability == DocExchangeApplicabilityEnum.Export &&
-                                                        (ei.Requirement == DocExchangeRequirementEnum.Mandatory || ei.Requirement == DocExchangeRequirementEnum.Optional))
-                                                    {
-                                                        includeconcept = true;
-                                                        req = ei.Requirement;
-                                                    }
-                                                }
-                                            }
-                                            else
-                                            {
-                                                // check net requirement if mandatory for any exchange
-                                                foreach (DocExchangeItem docExchangeItem in docUsage.Exchanges)
-                                                {
-                                                    switch (docExchangeItem.Requirement)
-                                                    {
-                                                        case DocExchangeRequirementEnum.Mandatory:
-                                                            req = DocExchangeRequirementEnum.Mandatory;
-                                                            break;
-
-                                                        case DocExchangeRequirementEnum.Optional:
-                                                            if (req == DocExchangeRequirementEnum.NotRelevant)
-                                                            {
-                                                                req = DocExchangeRequirementEnum.Optional;
-                                                            }
-                                                            break;
-
-                                                        case DocExchangeRequirementEnum.Excluded:
-                                                            if (req == DocExchangeRequirementEnum.NotRelevant)
-                                                            {
-                                                                req = DocExchangeRequirementEnum.Excluded;
-                                                            }
-                                                            break;
-                                                    }
-                                                }
-                                            }
-
-                                            if (includeconcept)
-                                            {
-                                                StringBuilder sbDetail = new StringBuilder();
-
-                                                // new-style validation -- compiled code (fast)
-                                                string methodname = DocumentationISO.MakeLinkName(docView) + "_" + DocumentationISO.MakeLinkName(docUsage.Definition);
-                                                System.Reflection.MethodInfo method = typeEntity.GetMethod(methodname);
-
-                                                int fail = 0;
-                                                int pass = 0; // pass graph check
-                                                int passRule = 0; // pass rule check
-                                                int failRule = 0; // fail rule check
-                                                List<DocModelRule> trace = new List<DocModelRule>();
-
-                                                DocModelRule[] parameterrules = docUsage.Definition.GetParameterRules();
-
-                                                foreach (SEntity ent in list)
-                                                {
-                                                    object[] args = new object[0];
-                                                    if (parameterrules != null && parameterrules.Length > 0)
-                                                    {
-                                                        args = new object[parameterrules.Length];
-
-                                                        foreach (DocTemplateItem docItem in docUsage.Items)
-                                                        {
-                                                            trace.Clear();
-
-                                                            if (docItem == docUsage.Items[0])
-                                                            {
-                                                                sbDetail.Append("<tr valign=\"top\"><td rowspan=\"" + docUsage.Items.Count + "\">#");
-                                                                sbDetail.Append(ent.OID);
-                                                                sbDetail.Append("</td>");
-                                                            }
-                                                            else
-                                                            {
-                                                                sbDetail.Append("<tr valign=\"top\">");
-                                                            }
-
-                                                            for (int iParam = 0; iParam < parameterrules.Length; iParam++)
-                                                            {
-                                                                DocModelRule prule = parameterrules[iParam];
-                                                                string pval = docItem.GetParameterValue(prule.Identification);
-                                                                sbDetail.Append("<td>");
-                                                                sbDetail.Append(pval);
-                                                                sbDetail.Append("</td>");
-                                                            }
-
-                                                            sbDetail.Append("<td>");
-                                                            bool? result = true;
-                                                            foreach (DocModelRule rule in docUsage.Definition.Rules)
-                                                            {
-                                                                trace.Clear();
-                                                                bool? itemresult = rule.Validate(ent, docItem, typemap, trace);
-                                                                if (itemresult != null && !itemresult.Value)
-                                                                {
-                                                                    result = false;
-                                                                }
-                                                                else if (itemresult == null)
-                                                                {
-                                                                    result = null;
-                                                                }
-                                                            }
-                                                            if (result != null && !result.Value)
-                                                            {
-                                                                foreach (DocModelRule mm in trace)
-                                                                {
-                                                                    if (mm is DocModelRuleEntity)
-                                                                    {
-                                                                        sbDetail.Append("\\");
-                                                                    }
-                                                                    else if (mm is DocModelRuleAttribute)
-                                                                    {
-                                                                        sbDetail.Append(".");
-                                                                    }
-                                                                    sbDetail.Append(mm.Name);
-                                                                }
-
-                                                                docUsage.ValidationStructure[ent] = false;
-                                                            }
-                                                            else if (result != null && result.Value)
-                                                            {
-                                                                sbDetail.Append("+");
-                                                                docUsage.ValidationStructure[ent] = true;
-                                                            }
-                                                            else if (result == null)
-                                                            {
-                                                                sbDetail.Append("*"); // NOT APPLICABLE
-                                                            }
-
-                                                            sbDetail.Append("</td><td>");
-
-                                                            if (method != null)
-                                                            {
-                                                                try
-                                                                {
-                                                                    bool[] ruleresult = (bool[])method.Invoke(ent, null);//, args);
-                                                                    if (ruleresult != null)
-                                                                    {
-                                                                        bool allpass = true;
-                                                                        foreach (bool compresult in ruleresult)
-                                                                        {
-                                                                            if (!compresult)
-                                                                            {
-                                                                                allpass = false;
-                                                                                break;
-                                                                            }
-                                                                        }
-
-                                                                        if (allpass)
-                                                                        {
-                                                                            sbDetail.Append("+");
-                                                                            passRule++;
-
-                                                                            docUsage.ValidationConstraints[ent] = true;
-                                                                        }
-                                                                        else
-                                                                        {
-                                                                            //sbDetail.Append("FAIL");
-
-                                                                            // run detailed report
-                                                                            foreach (DocModelRule rule in docUsage.Definition.Rules)
-                                                                            {
-                                                                                TraceRule(docUsage.Definition, rule, sbDetail, ent, list);
-                                                                            }
-
-
-                                                                            failRule++;
-
-                                                                            docUsage.ValidationConstraints[ent] = false;
-                                                                        }
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        sbDetail.Append("FAIL");
-                                                                        failRule++;
-                                                                    }
-                                                                }
-                                                                catch (System.Reflection.TargetInvocationException et)
-                                                                {
-                                                                    sbDetail.Append(et.InnerException.GetType().Name);
-                                                                    failRule++;
-                                                                }
-                                                                catch (Exception ex)
-                                                                {
-                                                                    sbDetail.Append(ex.GetType().Name);
-                                                                    failRule++;
-                                                                }
-                                                            }
-                                                            else
-                                                            {
-                                                                sbDetail.Append("FAIL - Incompatible Template");
-                                                            }
-
-                                                            sbDetail.AppendLine("</td></tr>");
-                                                        }
-                                                    }
-                                                    else
-                                                    {
-                                                        sbDetail.Append("<tr valign=\"top\"><td>#");
-                                                        sbDetail.Append(ent.OID);
-                                                        sbDetail.Append("</td><td>");
-
-                                                        DocModelRule ruleFail = null;
-                                                        bool? result = true;
-                                                        foreach (DocModelRule rule in docUsage.Definition.Rules)
-                                                        {
-                                                            trace.Clear();
-                                                            bool? itemresult = rule.Validate(ent, null, typemap, trace);
-                                                            if (itemresult != null && !itemresult.Value)
-                                                            {
-                                                                result = false;
-                                                            }
-                                                            else if (itemresult == null)
-                                                            {
-                                                                result = null;
-                                                            }
-
-                                                            if (itemresult != null && !itemresult.Value)
-                                                            {
-                                                                if (ruleFail != null)
-                                                                {
-                                                                    sbDetail.Append("<br/>");
-                                                                }
-                                                                ruleFail = rule;
-
-                                                                foreach (DocModelRule mm in trace)
-                                                                {
-                                                                    if (mm is DocModelRuleEntity)
-                                                                    {
-                                                                        sbDetail.Append("\\");
-                                                                    }
-                                                                    else if (mm is DocModelRuleAttribute)
-                                                                    {
-                                                                        sbDetail.Append(".");
-                                                                    }
-                                                                    sbDetail.Append(mm.Name);
-                                                                }
-                                                            }
-                                                        }
-
-                                                        if (result == null)
-                                                        {
-                                                            sbDetail.Append("*");
-                                                            // no applicable rules, so passing
-                                                            pass++;
-                                                        }
-                                                        else if (result != null && result.Value)
-                                                        {
-                                                            // all rules passed
-                                                            docUsage.ValidationStructure[ent] = true;
-                                                            pass++;
-                                                        }
-                                                        else if (ruleFail != null)
-                                                        {
-                                                            docUsage.ValidationStructure[ent] = false;
-                                                            fail++;
-                                                        }
-
-                                                        if (ruleFail == null)
-                                                        {
-                                                            sbDetail.Append("+");
-                                                        }
-
-                                                        sbDetail.Append("</td><td>");
-
-                                                        if (method != null)
-                                                        {
-                                                            try
-                                                            {
-                                                                bool[] ruleresult = (bool[])method.Invoke(ent, args);
-                                                                if (ruleresult != null)
-                                                                {
-                                                                    bool allpass = true;
-                                                                    foreach (bool compresult in ruleresult)
-                                                                    {
-                                                                        if (!compresult)
-                                                                        {
-                                                                            allpass = false;
-                                                                            break;
-                                                                        }
-                                                                    }
-
-                                                                    if (allpass)
-                                                                    {
-                                                                        sbDetail.Append("+");
-                                                                        docUsage.ValidationConstraints[ent] = true;
-                                                                        passRule++;
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        //sbDetail.Append("FAIL");
-
-                                                                        // run detailed report
-                                                                        foreach (DocModelRule rule in docUsage.Definition.Rules)
-                                                                        {
-                                                                            TraceRule(docUsage.Definition, rule, sbDetail, ent, list);
-                                                                        }
-
-                                                                        docUsage.ValidationConstraints[ent] = false;
-                                                                        failRule++;
-                                                                    }
-                                                                }
-                                                                else
-                                                                {
-                                                                    sbDetail.Append("FAIL");
-                                                                    failRule++;
-                                                                }
-                                                            }
-                                                            catch (System.Reflection.TargetInvocationException et)
-                                                            {
-                                                                sbDetail.Append(et.InnerException.GetType().Name);
-                                                                failRule++;
-                                                            }
-                                                            catch (Exception ex)
-                                                            {
-                                                                sbDetail.Append(ex.GetType().Name);
-                                                                failRule++;
-                                                            }
-                                                        }
-                                                        else
-                                                        {
-                                                            sbDetail.Append("FAIL - Incompatible Template");
-                                                        }
-                                                        sbDetail.AppendLine("</td></tr>");
-                                                    }
-
-                                                }
-
-                                                grandtotallist++;
-
-                                                sb.AppendLine("<details><summary>" + docUsage.Definition.Name);
-                                                if (fail > 0 || failRule > 0)
-                                                {
-                                                    docUsage.Validation = false;
-                                                    docUsage.Definition.Validation = false;
-
-                                                    sb.AppendLine(" - [FAIL]");
-                                                }
-                                                else
-                                                {
-                                                    docUsage.Validation = true;
-                                                    if (docUsage.Definition.Validation == null)
-                                                    {
-                                                        docUsage.Definition.Validation = true;
-                                                    }
-
-                                                    grandtotalpass++;
-                                                }
-
-                                                sb.AppendLine("</summary>");
-                                                sb.AppendLine("<table border=\"1\" >");
-                                                sb.Append("<tr><th>Instance</th>");
-
-                                                foreach (DocModelRule docRule in parameterrules)
-                                                {
-                                                    sb.Append("<th>");
-                                                    sb.Append(docRule.Identification);
-
-                                                    if (docRule.IsCondition())
-                                                    {
-                                                        sb.Append("?");
-                                                    }
-
-                                                    sb.Append("</th>");
-                                                }
-
-                                                sb.Append("<th>Structure</th>");
-                                                sb.Append("<th>Constraints</th>");
-                                                sb.AppendLine("</tr>");
-
-                                                sb.AppendLine(sbDetail.ToString());
-
-                                                sb.AppendLine("</table></details>");
-
-                                            }
-                                        }
+                                        ValidateConcept(docUsage, docView, DocExchangeRequirementEnum.NotRelevant, typeEntity, list, sb, typemap, ref grandtotalpass, ref grandtotallist);
                                     }
                                 }
-                                //sb.AppendLine("</details>");
                             }
                         }
                     }
@@ -5771,20 +5495,554 @@ namespace IfcDoc
             System.Diagnostics.Process.Start(path);
         }
 
-        private void TraceOperation(DocTemplateDefinition template, DocOp op, StringBuilder sb, SEntity ent, List<SEntity> population, int level)
+        /// <summary>
+        /// Recursively validates a concept and all referenced concepts
+        /// </summary>
+        /// <param name="docUsage">The concept to validate</param>
+        /// <param name="docView">The model view containing the concept</param>
+        /// <param name="reqInherit">For a referenced concept, indicates requirements defined by the referencing (outer) concept.</param>
+        /// <param name="typeEntity">The compiled type corresponding to entity.</param>
+        /// <param name="list">List of entities to test for concept.</param>
+        /// <param name="sb">String builder to append for reporting results.</param>
+        /// <param name="typemap">Map of identifiers to compiled types</param>
+        /// <param name="grandtotalpass">The total tests passing (less than or equal to total tests executed).</param>
+        /// <param name="grandtotallist">The total tests executed.</param>
+        private void ValidateConcept(DocTemplateUsage docUsage, DocModelView docView, DocExchangeRequirementEnum reqInherit, Type typeEntity, List<SEntity> list, StringBuilder sb, Dictionary<string, Type> typemap, ref int grandtotalpass, ref int grandtotallist)
+        {
+            if (docUsage.Definition.IsDisabled || docUsage.Suppress)
+                return;
+
+
+            DocExchangeRequirementEnum req = DocExchangeRequirementEnum.NotRelevant;
+            bool includeconcept = true;
+            if (this.m_filterexchange != null)
+            {
+                includeconcept = false;
+                foreach (DocExchangeItem ei in docUsage.Exchanges)
+                {
+                    if (ei.Exchange == this.m_filterexchange && ei.Applicability == DocExchangeApplicabilityEnum.Export &&
+                        (ei.Requirement == DocExchangeRequirementEnum.Mandatory || ei.Requirement == DocExchangeRequirementEnum.Optional))
+                    {
+                        includeconcept = true;
+                        req = ei.Requirement;
+                    }
+                }
+            }
+            else
+            {
+                // check net requirement if mandatory for any exchange
+                foreach (DocExchangeItem docExchangeItem in docUsage.Exchanges)
+                {
+                    switch (docExchangeItem.Requirement)
+                    {
+                        case DocExchangeRequirementEnum.Mandatory:
+                            req = DocExchangeRequirementEnum.Mandatory;
+                            break;
+
+                        case DocExchangeRequirementEnum.Optional:
+                            if (req == DocExchangeRequirementEnum.NotRelevant)
+                            {
+                                req = DocExchangeRequirementEnum.Optional;
+                            }
+                            break;
+
+                        case DocExchangeRequirementEnum.Excluded:
+                            if (req == DocExchangeRequirementEnum.NotRelevant)
+                            {
+                                req = DocExchangeRequirementEnum.Excluded;
+                            }
+                            break;
+                    }
+                }
+            }
+
+            if (req == DocExchangeRequirementEnum.NotRelevant)
+            {
+                req = reqInherit;
+                if (reqInherit != DocExchangeRequirementEnum.NotRelevant)
+                {
+                    includeconcept = true;
+                }
+            }
+
+            //if (docUsage.Definition.Name.Contains("Property Sets for") && typeEntity.Name == "IfcBeam")//-069
+            if (docUsage.Definition.Name.Contains("PCI-103"))//-069
+            {
+                this.ToString();
+            }
+
+            if (!includeconcept)
+                return;
+
+            StringBuilder sbDetail = new StringBuilder();
+
+            if (docUsage.Definition != null && docUsage.Definition.Rules != null)
+            {
+                // new-style validation -- compiled code (fast)
+                string methodname = DocumentationISO.MakeLinkName(docView) + "_" + DocumentationISO.MakeLinkName(docUsage.Definition);
+                System.Reflection.MethodInfo method = typeEntity.GetMethod(methodname);
+
+                int fail = 0;
+                int pass = 0; // pass graph check
+                int passRule = 0; // pass rule check
+                int failRule = 0; // fail rule check
+                List<DocModelRule> trace = new List<DocModelRule>();
+
+                DocModelRule[] parameterrules = docUsage.Definition.GetParameterRules();
+
+                foreach (SEntity ent in list)
+                {
+                    object[] args = new object[0];
+                    if (parameterrules != null && parameterrules.Length > 0)
+                    {
+                        args = new object[parameterrules.Length];
+
+                        foreach (DocTemplateItem docItem in docUsage.Items)
+                        {
+                            trace.Clear();
+
+                            if (docItem == docUsage.Items[0])
+                            {
+                                sbDetail.Append("<tr valign=\"top\"><td rowspan=\"" + docUsage.Items.Count + "\">#");
+                                sbDetail.Append(ent.OID);
+                                sbDetail.Append("</td>");
+                            }
+                            else
+                            {
+                                sbDetail.Append("<tr valign=\"top\">");
+                            }
+
+                            for (int iParam = 0; iParam < parameterrules.Length; iParam++)
+                            {
+                                DocModelRule prule = parameterrules[iParam];
+
+                                sbDetail.Append("<td>");
+                                DocTemplateUsage docUsageInner = docItem.GetParameterConcept(prule.Identification, null);//verify...
+                                if (docUsageInner != null)
+                                {
+                                    // report inner rules...
+                                    foreach (DocTemplateItem docItemInner in docUsageInner.Items)
+                                    {
+                                        sbDetail.Append(docItemInner.RuleParameters);
+                                        sbDetail.Append("<br/>");
+                                    }
+                                }
+                                else
+                                {
+                                    string pval = docItem.GetParameterValue(prule.Identification);
+                                    sbDetail.Append(pval);
+                                }
+                                sbDetail.Append("</td>");
+                            }
+
+                            sbDetail.Append("<td>");
+                            bool? result = true;
+                            foreach (DocModelRule rule in docUsage.Definition.Rules)
+                            {
+                                trace.Clear();
+                                bool? itemresult = rule.Validate(ent, docItem, typemap, trace, ent);
+                                if (itemresult != null && !itemresult.Value && result != null)
+                                {
+                                    result = false;
+                                }
+                                else if (itemresult == null)
+                                {
+                                    result = null; //verify: was commented out -- put back in to indicate that entire rule is inapplicable.
+                                }
+                            }
+
+                            if (result != null && !result.Value)
+                            {
+                                foreach (DocModelRule mm in trace)
+                                {
+                                    if (mm is DocModelRuleEntity)
+                                    {
+                                        sbDetail.Append("\\");
+                                    }
+                                    else if (mm is DocModelRuleAttribute)
+                                    {
+                                        sbDetail.Append(".");
+                                    }
+                                    sbDetail.Append(mm.Name);
+                                }
+
+                                docItem.ValidationStructure[ent] = false;
+                                docUsage.ValidationStructure[ent] = false;
+                                docUsage.Validation = false;
+                                docUsage.Definition.Validation = false;
+                                fail++;
+                            }
+                            else if (result != null && result.Value)
+                            {
+                                // check for any nested failures
+                                foreach (DocTemplateUsage docInnerConcept in docItem.Concepts)
+                                {
+                                    foreach (DocTemplateItem docInnerItem in docInnerConcept.Items)
+                                    {
+                                        if (docInnerItem.ValidationStructure.Count == 0)
+                                        {
+                                            sbDetail.Append("~");
+                                            sbDetail.Append(docInnerItem.RuleParameters);
+                                            sbDetail.Append("<br/>");
+
+                                            result = false;
+                                            docItem.ValidationStructure[ent] = false;
+                                            docUsage.ValidationStructure[ent] = false;
+                                            docUsage.Validation = false;
+                                            docUsage.Definition.Validation = false;
+                                            fail++;
+                                            break;
+                                        }
+                                    }
+                                }
+
+                                if (result != null && result.Value)
+                                {
+                                    sbDetail.Append("+");
+                                    pass++;
+
+                                    docItem.ValidationStructure[ent] = true;
+                                    if (!docUsage.ValidationStructure.ContainsKey(ent)) // if no failures so far, then concept passes for now
+                                    {
+                                        docUsage.ValidationStructure[ent] = true;
+                                    }
+                                }
+                            }
+                            else if (result == null)
+                            {
+                                sbDetail.Append("*"); // NOT APPLICABLE
+
+                                docItem.ValidationStructure[ent] = true;
+                                if (!docUsage.ValidationStructure.ContainsKey(ent))
+                                {
+                                    docUsage.ValidationStructure[ent] = true;
+                                }
+                            }
+
+                            sbDetail.Append("</td><td>");
+
+                            if (result == null)
+                            {
+                                // don't evaluate constraint if it doesn't apply
+                            }
+                            else if (method != null)
+                            {
+                                try
+                                {
+                                    bool[] ruleresult = (bool[])method.Invoke(ent, null);//, args);
+                                    if (ruleresult != null)
+                                    {
+                                        bool allpass = true;
+                                        foreach (bool compresult in ruleresult)
+                                        {
+                                            if (!compresult)
+                                            {
+                                                allpass = false;
+                                                break;
+                                            }
+                                        }
+
+                                        if (allpass)
+                                        {
+                                            sbDetail.Append("+");
+                                            passRule++;
+
+                                            docUsage.ValidationConstraints[ent] = true;
+
+                                            if (docUsage.Validation == null)
+                                            {
+                                                docUsage.Validation = true;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            // run detailed report
+                                            foreach (DocModelRule rule in docUsage.Definition.Rules)
+                                            {
+                                                TraceRule(docUsage.Definition, rule, sbDetail, ent, list);
+                                            }
+
+
+                                            failRule++;
+
+                                            docUsage.ValidationConstraints[ent] = false;
+                                            docUsage.Validation = false;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        sbDetail.Append("FAIL");
+                                        failRule++;
+                                    }
+                                }
+                                catch (System.Reflection.TargetInvocationException et)
+                                {
+                                    sbDetail.Append(et.InnerException.GetType().Name);
+                                    failRule++;
+                                }
+                                catch (Exception ex)
+                                {
+                                    sbDetail.Append(ex.GetType().Name);
+                                    failRule++;
+                                }
+                            }
+                            else
+                            {
+                                sbDetail.Append("FAIL - Incompatible Template");
+                            }
+
+                            sbDetail.AppendLine("</td></tr>");
+                        }
+                    }
+                    else
+                    {
+                        // check for if there are no parameters
+
+                        sbDetail.Append("<tr valign=\"top\"><td>#");
+                        sbDetail.Append(ent.OID);
+                        sbDetail.Append("</td><td>");
+
+                        DocModelRule ruleFail = null;
+                        bool? result = true;
+                        foreach (DocModelRule rule in docUsage.Definition.Rules)
+                        {
+                            trace.Clear();
+                            bool? itemresult = rule.Validate(ent, null, typemap, trace, ent);
+                            if (itemresult != null && !itemresult.Value)
+                            {
+                                result = false;
+                            }
+                            else if (itemresult == null)
+                            {
+                                result = null;
+                            }
+
+                            if (itemresult != null && !itemresult.Value)
+                            {
+                                if (ruleFail != null)
+                                {
+                                    sbDetail.Append("<br/>");
+                                }
+                                ruleFail = rule;
+
+                                foreach (DocModelRule mm in trace)
+                                {
+                                    if (mm is DocModelRuleEntity)
+                                    {
+                                        sbDetail.Append("\\");
+                                    }
+                                    else if (mm is DocModelRuleAttribute)
+                                    {
+                                        sbDetail.Append(".");
+                                    }
+                                    sbDetail.Append(mm.Name);
+                                }
+                            }
+                        }
+
+                        if (result == null)
+                        {
+                            sbDetail.Append("*");
+                            // no applicable rules, so passing
+                            pass++;
+                        }
+                        else if (result != null && result.Value)
+                        {
+                            // all rules passed
+                            docUsage.ValidationStructure[ent] = true;
+                            if (docUsage.Validation == null)
+                            {
+                                docUsage.Validation = true;
+                            }
+                            pass++;
+                        }
+                        else if (ruleFail != null)
+                        {
+                            docUsage.ValidationStructure[ent] = false;
+                            docUsage.Validation = false;
+                            fail++;
+                        }
+
+                        if (ruleFail == null)
+                        {
+                            sbDetail.Append("+");
+                        }
+
+                        sbDetail.Append("</td><td>");
+
+                        if (method != null)
+                        {
+                            try
+                            {
+                                bool[] ruleresult = (bool[])method.Invoke(ent, args);
+                                if (ruleresult != null)
+                                {
+                                    bool allpass = true;
+                                    foreach (bool compresult in ruleresult)
+                                    {
+                                        if (!compresult)
+                                        {
+                                            allpass = false;
+                                            break;
+                                        }
+                                    }
+
+                                    if (allpass)
+                                    {
+                                        sbDetail.Append("+");
+                                        docUsage.ValidationConstraints[ent] = true;
+                                        passRule++;
+                                    }
+                                    else
+                                    {
+                                        // run second-stage validation and trace
+                                        bool debugpass = true;
+                                        StringBuilder sbCheck = new StringBuilder();
+                                        foreach (DocModelRule rule in docUsage.Definition.Rules)
+                                        {
+                                            bool eachpass = TraceRule(docUsage.Definition, rule, sbCheck, ent, list);
+                                            if (!eachpass)
+                                            {
+                                                debugpass = false;
+                                            }
+                                        }
+                                        if (!debugpass)
+                                        {
+                                            sbDetail.Append(sbCheck.ToString());
+                                            docUsage.ValidationConstraints[ent] = false;
+                                            docUsage.Validation = false;
+                                            failRule++;
+                                        }
+                                        else
+                                        {
+                                            sbDetail.Append("+");
+                                            docUsage.ValidationConstraints[ent] = true;
+                                            if (docUsage.Validation == null)
+                                            {
+                                                docUsage.Validation = true;
+                                            }
+                                            passRule++;
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    sbDetail.Append("FAIL");
+                                    failRule++;
+                                }
+                            }
+                            catch (System.Reflection.TargetInvocationException et)
+                            {
+                                sbDetail.Append(et.InnerException.GetType().Name);
+                                failRule++;
+                            }
+                            catch (Exception ex)
+                            {
+                                sbDetail.Append(ex.GetType().Name);
+                                failRule++;
+                            }
+                        }
+                        else
+                        {
+                            sbDetail.Append("FAIL - Incompatible Template");
+                        }
+                        sbDetail.AppendLine("</td></tr>");
+                    }
+
+                }
+
+                grandtotallist++;
+               
+                // nested concepts -- only one must pass
+                StringBuilder sbNested = new StringBuilder();
+                if (docUsage.Concepts.Count > 0)
+                {
+                    sbNested.AppendLine("<p>Validation of concept groups (only one must pass):</p>");
+
+                    int subtotalpass = 0;
+                    int subtotallist = 0;
+                    foreach (DocTemplateUsage docSub in docUsage.Concepts)
+                    {
+                        ValidateConcept(docSub, docView, reqInherit, typeEntity, list, sbNested, typemap, ref subtotalpass, ref subtotallist);
+                    }
+
+                    if (subtotalpass > 0)
+                    {
+                        grandtotalpass++;
+                        sbNested.AppendLine("<p>RESULT: PASS (" + subtotalpass + "/" + subtotallist + ")</p>");
+                    }
+                    else
+                    {
+                        fail++;
+                        sbNested.AppendLine("<p>RESULT: FAIL (" + subtotalpass + "/" + subtotallist + ")</p>");
+                    }
+                }
+
+
+                sb.AppendLine("<details><summary>" + docUsage.Definition.Name);
+                if (fail > 0 || failRule > 0)
+                {
+                    docUsage.Validation = false;
+                    docUsage.Definition.Validation = false;
+
+                    sb.AppendLine(" - [FAIL]");
+                }
+                else
+                {
+                    docUsage.Validation = true;
+                    if (docUsage.Definition.Validation == null)
+                    {
+                        docUsage.Definition.Validation = true;
+                    }
+
+                    grandtotalpass++;
+                }
+
+                sb.AppendLine("</summary>");
+                sb.AppendLine("<table border=\"1\" >");
+                sb.Append("<tr><th>Instance</th>");
+
+                foreach (DocModelRule docRule in parameterrules)
+                {
+                    sb.Append("<th>");
+                    sb.Append(docRule.Identification);
+
+                    if (docRule.IsCondition())
+                    {
+                        sb.Append("?");
+                    }
+
+                    sb.Append("</th>");
+                }
+
+                sb.Append("<th>Structure</th>");
+                sb.Append("<th>Constraints</th>");
+                sb.AppendLine("</tr>");
+
+                sb.AppendLine(sbDetail.ToString());
+
+                sb.AppendLine("</table>");
+
+                sb.AppendLine(sbNested.ToString());
+
+                sb.AppendLine("</details>");
+            }
+        }
+
+        private object TraceOperation(DocTemplateDefinition template, DocOp op, StringBuilder sb, SEntity ent, List<SEntity> population, int level)
         {
             System.Collections.Hashtable hashtable = new System.Collections.Hashtable();
-            object result = op.Eval(ent, hashtable, template, null);
+            object result = op.Eval(ent, hashtable, template, null, null);
             if (hashtable.Count > 0)
             {
-                // must evalulate all for uniqueness
+                // must evaluate all for uniqueness
                 foreach (object other in population)
                 {
                     if (other == ent) // first instance will pass; following duplicate instances will fail
                         break;
 
                     // returning false means there's a duplicate (not unique).
-                    object otherresult = op.Eval(other, hashtable, template, null);
+                    object otherresult = op.Eval(other, hashtable, template, null, null);
                     if (otherresult is bool && !(bool)otherresult)
                     {
                         result = false;
@@ -5810,20 +6068,29 @@ namespace IfcDoc
                 TraceOperation(template, oplog.ExpressionA, sb, ent, population, level + 1);
                 TraceOperation(template, oplog.ExpressionB, sb, ent, population, level + 1);
             }
+
+            return result;
         }
 
-        private void TraceRule(DocTemplateDefinition template, DocModelRule rule, StringBuilder sb, SEntity ent, List<SEntity> population)
+        private bool TraceRule(DocTemplateDefinition template, DocModelRule rule, StringBuilder sb, SEntity ent, List<SEntity> population)
         {
+            bool pass = true;
             if (rule is DocModelRuleConstraint)
             {
                 DocModelRuleConstraint ruleCon = (DocModelRuleConstraint)rule;
-                TraceOperation(template, ruleCon.Expression, sb, ent, population, 0);
+                object result = TraceOperation(template, ruleCon.Expression, sb, ent, population, 0);
+                if(result is bool && !((bool)result))
+                    pass = false;
             }
 
             foreach(DocModelRule sub in rule.Rules)
             {
-                TraceRule(template, sub, sb, ent, population);
+                bool eachpass = TraceRule(template, sub, sb, ent, population);
+                if (!eachpass)
+                    pass = false;
             }
+
+            return pass;
         }
 
         private void backgroundWorkerValidate_ProgressChanged(object sender, ProgressChangedEventArgs e)
@@ -6059,13 +6326,14 @@ namespace IfcDoc
             // prompt user to select type (or primitive)
             using(FormSelectEntity form = new FormSelectEntity(null, null, this.m_project, SelectDefinitionOptions.Entity | SelectDefinitionOptions.Type))
             {
-                if(form.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
+                if(form.ShowDialog(this) == System.Windows.Forms.DialogResult.OK && form.SelectedEntity != null)
                 {
                     TreeNode tnParent = this.treeView.SelectedNode;
                     DocSchema docSchema = (DocSchema)tnParent.Parent.Parent.Tag;
                     DocEntity docEntity = (DocEntity)tnParent.Tag;
                     DocAttribute docAttr = new DocAttribute();
                     docAttr.Name = String.Empty;
+                    docAttr.DefinedType = form.SelectedEntity.Name;
                     docEntity.Attributes.Add(docAttr);
 
                     // is the selected type within the same schema?
@@ -6073,21 +6341,103 @@ namespace IfcDoc
                         (form.SelectedEntity is DocEntity && docSchema.Entities.Contains((DocEntity)form.SelectedEntity)))
                     {
                         docAttr.Definition = form.SelectedEntity;
-                        docAttr.DefinedType = form.SelectedEntity.Name;
-                        docAttr.DiagramLine.Add(new DocPoint(docEntity.DiagramRectangle.X + docEntity.DiagramRectangle.Width, docEntity.DiagramRectangle.Y + (docEntity.Attributes.IndexOf(docAttr)+1) * 100.0));
-                        docAttr.DiagramLine.Add(new DocPoint(form.SelectedEntity.DiagramRectangle.X, form.SelectedEntity.DiagramRectangle.Y + form.SelectedEntity.DiagramRectangle.Height / 2));
 
-                        docAttr.DiagramLabel = new DocRectangle();
-                        docAttr.DiagramLabel.X = docAttr.DiagramLine[0].X;
-                        docAttr.DiagramLabel.Y = docAttr.DiagramLine[0].Y;
-                        docAttr.DiagramLabel.Width = 400.0;
-                        docAttr.DiagramLabel.Height = 100.0;
+                        docAttr.DiagramLine.Add(new DocPoint(docEntity.DiagramRectangle.X + docEntity.DiagramRectangle.Width, docEntity.DiagramRectangle.Y + docEntity.Attributes.IndexOf(docAttr) * 100.0));
+                        docAttr.DiagramLine.Add(new DocPoint(form.SelectedEntity.DiagramRectangle.X, form.SelectedEntity.DiagramRectangle.Y + form.SelectedEntity.DiagramRectangle.Height / 2));
                     }
                     else
                     {
-                        // must import reference or primitive
-                        //...
+                        // find existing reference
+                        DocDefinitionRef docDefTarget = null;
+                        foreach(DocSchemaRef docSchemaRef in docSchema.SchemaRefs)
+                        {
+                            foreach(DocDefinitionRef docDefinitionRef in docSchemaRef.Definitions)
+                            {
+                                if (docDefinitionRef.Name.Equals(form.SelectedEntity.Name))
+                                {
+                                    // found it
+                                    docDefTarget = docDefinitionRef;
+                                    break;
+                                }
+                            }
+
+                            if (docDefTarget != null)
+                                break;
+                        }
+
+                        if (docDefTarget == null)
+                        {
+                            // import it
+
+                            // find the applicable schema...
+                            DocSchema docTargetSchema = this.m_project.GetSchemaOfDefinition(form.SelectedEntity);
+                            DocSchemaRef docTargetSchemaRef = null;
+                            foreach(DocSchemaRef docSchemaRef in docSchema.SchemaRefs)
+                            {
+                                if(docSchemaRef.Name.Equals(docTargetSchema.Name))
+                                {
+                                    docTargetSchemaRef = docSchemaRef;
+                                    break;
+                                }
+                            }
+
+                            if (docTargetSchemaRef == null)
+                            {
+                                docTargetSchemaRef = new DocSchemaRef();
+                                docTargetSchemaRef.Name = docTargetSchema.Name;
+                                docSchema.SchemaRefs.Add(docTargetSchemaRef);
+                            }
+
+                            docDefTarget = new DocDefinitionRef();
+                            docDefTarget.Name = form.SelectedEntity.Name;
+                            docDefTarget.DiagramRectangle = new DocRectangle();
+                            docDefTarget.DiagramRectangle.X = docEntity.DiagramRectangle.X + docEntity.DiagramRectangle.Width + 100;
+                            docDefTarget.DiagramRectangle.Y = docEntity.DiagramRectangle.Y + (docEntity.Attributes.Count - 1) * 100;
+                            docDefTarget.DiagramRectangle.Width = 400.0;
+                            docDefTarget.DiagramRectangle.Height = 50.0;
+                            docTargetSchemaRef.Definitions.Add(docDefTarget);
+
+                            docAttr.Definition = docDefTarget;
+                        }
+                        else
+                        {
+                            docAttr.Definition = docDefTarget;
+
+                            // check if there's a page reference target -- use that if it exists
+                            foreach(DocPageTarget docPageTarget in docSchema.PageTargets)
+                            {
+                                if (docPageTarget.Definition == docDefTarget)
+                                {
+                                    DocPageSource docPageSource = new DocPageSource();
+                                    docPageTarget.Sources.Add(docPageSource);
+                                    //docPageSource.Target = docPageTarget;
+                                    docPageSource.DiagramRectangle = new DocRectangle();
+                                    docPageSource.DiagramRectangle.X = docEntity.DiagramRectangle.X + docEntity.DiagramRectangle.Width + 100;
+                                    docPageSource.DiagramRectangle.Y = docEntity.DiagramRectangle.Y + (docEntity.Attributes.Count - 1) * 100;
+                                    docPageSource.DiagramRectangle.Width = 400.0;
+                                    docPageSource.DiagramRectangle.Height = 50.0;
+
+                                    docAttr.Definition = docPageSource;
+
+                                    docAttr.DiagramLine.Add(new DocPoint(docEntity.DiagramRectangle.X + docEntity.DiagramRectangle.Width, docPageSource.DiagramRectangle.Y + docPageSource.DiagramRectangle.Height / 2));
+                                    docAttr.DiagramLine.Add(new DocPoint(docPageSource.DiagramRectangle.X, docPageSource.DiagramRectangle.Y + docPageSource.DiagramRectangle.Height / 2));
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (docAttr.DiagramLine.Count == 0)
+                        {
+                            docAttr.DiagramLine.Add(new DocPoint(docEntity.DiagramRectangle.X + docEntity.DiagramRectangle.Width, docDefTarget.DiagramRectangle.Y + docDefTarget.DiagramRectangle.Height / 2));
+                            docAttr.DiagramLine.Add(new DocPoint(docDefTarget.DiagramRectangle.X, docDefTarget.DiagramRectangle.Y + docDefTarget.DiagramRectangle.Height / 2));
+                        }
                     }
+
+                    docAttr.DiagramLabel = new DocRectangle();
+                    docAttr.DiagramLabel.X = docAttr.DiagramLine[0].X;
+                    docAttr.DiagramLabel.Y = docAttr.DiagramLine[0].Y;
+                    docAttr.DiagramLabel.Width = 400.0;
+                    docAttr.DiagramLabel.Height = 50.0;
 
                     this.treeView.SelectedNode = this.LoadNode(tnParent, docAttr, docAttr.ToString(), false);
                     toolStripMenuItemEditRename_Click(this, e);
@@ -6750,7 +7100,7 @@ namespace IfcDoc
                 DocPageSource docPageSource = new DocPageSource();
                 docPageTarget.Sources.Add(docPageSource);
 
-                docPageSource.Target = docPageTarget;
+                //docPageSource.Target = docPageTarget;
                 docPageSource.DiagramRectangle = new DocRectangle();
                 docPageSource.DiagramRectangle.X = docPoint.X + 400.0;
                 docPageSource.DiagramRectangle.Y = docPoint.Y;
@@ -6989,7 +7339,7 @@ namespace IfcDoc
                         }
                     }
 
-                    if(targetschemaref == null)
+                    if (targetschemaref == null)
                     {
                         targetschemaref = new DocSchemaRef();
                         targetschemaref.Name = targetschema.Name.ToUpper();
@@ -7411,14 +7761,22 @@ namespace IfcDoc
 
         private void toolStripMenuItemEditBuildConcepts_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show(this, "This will create or update concepts within the selected model view to include all applicable property sets for entities within scope. Click OK to proceed.", "Generate Concepts", MessageBoxButtons.OKCancel) != DialogResult.OK)
+            if (MessageBox.Show(this, "This will create or update concepts within the selected model view to include all applicable property sets for entities within scope. " + 
+                "This will also add the required templates for the project if they do not already exist. Click OK to proceed.", "Generate Concepts", MessageBoxButtons.OKCancel) != DialogResult.OK)
                 return;
 
             DocTemplateDefinition docTemplatePset = this.m_project.GetTemplate(new Guid("f74255a6-0c0e-4f31-84ad-24981db62461"));
             if(docTemplatePset == null)
             {
-                MessageBox.Show("This functionality requires the standard concept template for Property Sets, which is missing. This template is included in the baseline IFC4 model view definitions at buildingsmart-tech.org.");
-                return;
+                // import it
+                string filepath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + @"\defaults.mvdxml";
+                this.ImportMVD(filepath);
+                docTemplatePset = this.m_project.GetTemplate(new Guid("f74255a6-0c0e-4f31-84ad-24981db62461"));
+                if(docTemplatePset == null)
+                {
+                    MessageBox.Show(this, "The required file information is missing. You may need to re-download the application from www.buildingsmart-tech.org.");
+                    return;
+                }
             }
 
             DocModelView docView = (DocModelView)this.treeView.SelectedNode.Tag;
@@ -7630,6 +7988,11 @@ namespace IfcDoc
             }
 
             this.LoadTree();
+        }
+
+        private void ctlProperties_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

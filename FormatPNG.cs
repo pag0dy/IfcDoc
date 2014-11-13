@@ -813,6 +813,9 @@ namespace IfcDoc.Format.PNG
 
         private static void DrawRoundedRectangle(Graphics g, Rectangle rc, int radius, Pen pen, Brush brush)
         {
+            if (radius < 1)
+                radius = 1;
+
             GraphicsPath path = new GraphicsPath();
             path.AddArc(rc.X, rc.Y, radius, radius, 180.0f, 90.0f);
             path.AddArc(rc.X + rc.Width - radius, rc.Y, radius, radius, 270.0f, 90.0f);
@@ -1018,7 +1021,10 @@ namespace IfcDoc.Format.PNG
                                     foreach (DocPageTarget docTarget in docSchema.PageTargets)
                                     {
                                         pagecounters[docTarget.DiagramNumber]++;
-                                        string caption = docTarget.Name;
+
+                                        int page = docSchema.GetDefinitionPageNumber(docTarget);
+                                        int item = docSchema.GetPageTargetItemNumber(docTarget);
+                                        string caption = page + "," + item;
 
                                         if (docTarget.DiagramRectangle != null)
                                         {
@@ -1027,7 +1033,7 @@ namespace IfcDoc.Format.PNG
                                                 (int)(docTarget.DiagramRectangle.Y * Factor),
                                                 (int)(docTarget.DiagramRectangle.Width * Factor),
                                                 (int)(docTarget.DiagramRectangle.Height * Factor));
-                                            DrawRoundedRectangle(g, rc, 32, penRound, Brushes.Silver);
+                                            DrawRoundedRectangle(g, rc, (int)(docTarget.DiagramRectangle.Height * Factor), penRound, Brushes.Silver);
                                             g.DrawString(caption, font, Brushes.Black, rc, sf);
                                         }
 
@@ -1055,8 +1061,12 @@ namespace IfcDoc.Format.PNG
                                                     (int)(docSource.DiagramRectangle.Y * Factor),
                                                     (int)(docSource.DiagramRectangle.Width * Factor),
                                                     (int)(docSource.DiagramRectangle.Height * Factor));
-                                                DrawRoundedRectangle(g, rc, 32, penRound, Brushes.Silver);
-                                                g.DrawString(docSource.Name, font, Brushes.Black, rc, sf);
+                                                DrawRoundedRectangle(g, rc, (int)(docSource.DiagramRectangle.Height * Factor), penRound, Brushes.Silver);
+
+                                                string name = docSource.Name;
+                                                name = page + "," + item + " " + docTarget.Definition.Name;
+
+                                                g.DrawString(name, font, Brushes.Black, rc, sf);
                                             }
                                         }
                                     }

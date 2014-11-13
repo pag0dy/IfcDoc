@@ -1,0 +1,669 @@
+﻿<?xml version="1.0"?>
+<mvdXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" uuid="00000000-0000-0000-0000-000000000000" name="" xmlns="http://buildingsmart-tech.org/mvdXML/mvdXML1-1">
+  <Templates>
+    <ConceptTemplate uuid="33e0be15-e301-4858-9f4b-18b2eb5488ba" name="Object Definition" code="" applicableSchema="IFC4" applicableEntity="IfcObjectDefinition">
+      <Definitions>
+        <Definition>
+          <Body><![CDATA[<p>The concept templates of <em>Object Definition</em> provides the means to define an object occurrence by its object type and attached property and quantity sets.</p>]]></Body>
+        </Definition>
+      </Definitions>
+      <SubTemplates>
+        <ConceptTemplate uuid="36984334-3ac8-4e59-85a6-f68d65e379c7" name="Property Sets" applicableSchema="IFC4" applicableEntity="IfcRoot">
+          <Definitions>
+            <Definition>
+              <Body><![CDATA[<p>The concept template <em>Property Sets</em> describes how sets of properties (usually defined by a name, value, unit triple) are associated to objects or object types.</p>]]></Body>
+            </Definition>
+          </Definitions>
+          <SubTemplates>
+            <ConceptTemplate uuid="f74255a6-0c0e-4f31-84ad-24981db62461" name="Property Sets for Objects" code="" applicableSchema="IFC4" applicableEntity="IfcObject">
+              <Definitions>
+                <Definition>
+                  <Body><![CDATA[<p>The concept template <em>Property Sets for Objects</em> describes how an object occurrence can be related to a single or multiple property sets. A property set
+ contains a single or multiple properties. The data types of
+ an individual property are single value, enumerated value,
+ bounded value, table value, reference value, list value,
+ and combination of property occurrences.
+</p>
+  
+
+<p>Property sets can also be related to an object type, see concept <em>Property Sets for Types</em>. They then define the common properties for all occurrences of the same type. If the same property (by name) is provided by the same property set (by name), then the properties directly assigned to the object occurrence override the properties assigned to the object type.</p>
+]]></Body>
+                </Definition>
+              </Definitions>
+              <Rules>
+                <AttributeRule RuleID="PredefinedType" AttributeName="PredefinedType" Cardinality="_asSchema" />
+                <AttributeRule AttributeName="IsDefinedBy" Cardinality="_asSchema">
+                  <EntityRules>
+                    <EntityRule EntityName="IfcRelDefinesByProperties" Cardinality="_asSchema">
+                      <AttributeRules>
+                        <AttributeRule AttributeName="RelatingPropertyDefinition" Cardinality="_asSchema">
+                          <EntityRules>
+                            <EntityRule EntityName="IfcPropertySet" Cardinality="_asSchema">
+                              <AttributeRules>
+                                <AttributeRule RuleID="Name" AttributeName="Name" Cardinality="_asSchema" />
+                                <AttributeRule RuleID="Properties" AttributeName="HasProperties" Cardinality="_asSchema">
+                                  <EntityRules>
+                                    <EntityRule EntityName="IfcPropertySingleValue" Cardinality="_asSchema">
+                                      <References>
+                                        <Template ref="6655f6d0-29a8-47b8-8f3d-c9fce9c9a620" />
+                                      </References>
+                                    </EntityRule>
+                                    <EntityRule EntityName="IfcPropertyBoundedValue" Cardinality="_asSchema">
+                                      <References>
+                                        <Template ref="3d67a2d2-761d-44d9-a09e-b7fbb1fa5632" />
+                                      </References>
+                                    </EntityRule>
+                                    <EntityRule EntityName="IfcPropertyEnumeratedValue" Cardinality="_asSchema">
+                                      <References>
+                                        <Template ref="c148a099-c351-43a8-9266-5f3de0b45a95" />
+                                      </References>
+                                    </EntityRule>
+                                  </EntityRules>
+                                </AttributeRule>
+                              </AttributeRules>
+                            </EntityRule>
+                          </EntityRules>
+                        </AttributeRule>
+                      </AttributeRules>
+                    </EntityRule>
+                  </EntityRules>
+                </AttributeRule>
+              </Rules>
+            </ConceptTemplate>
+            <ConceptTemplate uuid="4be3312a-3199-492e-b204-cac2229a9ade" name="Property Sets for Types" applicableSchema="IFC4" applicableEntity="IfcTypeObject">
+              <Definitions>
+                <Definition>
+                  <Body><![CDATA[<p>The concept template <em>Property Sets for Objects</em> describes how an object type can be related to a single or multiple property sets. A property set
+ contains a single or multiple properties. The data types of
+ an individual property are single value, enumerated value,
+ bounded value, table value, reference value, list value,
+ and combination of property occurrences.
+</p>
+
+<p>The property values assigned to an object type apply equally to all occurrences of this object type, see concept <em>Object Typing</em>, unless it is overriden by a property with same name within a property set with the same name at an individual object occurrence.</p>]]></Body>
+                </Definition>
+              </Definitions>
+              <Rules>
+                <AttributeRule AttributeName="HasPropertySets" Cardinality="_asSchema">
+                  <EntityRules>
+                    <EntityRule EntityName="IfcPropertySet" Cardinality="_asSchema">
+                      <AttributeRules>
+                        <AttributeRule RuleID="Name" AttributeName="Name" Cardinality="_asSchema" />
+                        <AttributeRule AttributeName="HasProperties" Cardinality="_asSchema">
+                          <EntityRules>
+                            <EntityRule EntityName="IfcComplexProperty" Cardinality="_asSchema">
+                              <AttributeRules>
+                                <AttributeRule AttributeName="Name" Cardinality="_asSchema">
+                                  <EntityRules>
+                                    <EntityRule EntityName="IfcIdentifier" Cardinality="_asSchema" />
+                                  </EntityRules>
+                                </AttributeRule>
+                                <AttributeRule AttributeName="Description" Cardinality="_asSchema">
+                                  <EntityRules>
+                                    <EntityRule EntityName="IfcText" Cardinality="_asSchema" />
+                                  </EntityRules>
+                                </AttributeRule>
+                                <AttributeRule AttributeName="UsageName" Cardinality="_asSchema">
+                                  <EntityRules>
+                                    <EntityRule EntityName="IfcIdentifier" Cardinality="_asSchema" />
+                                  </EntityRules>
+                                </AttributeRule>
+                                <AttributeRule AttributeName="HasProperties" Cardinality="_asSchema">
+                                  <EntityRules>
+                                    <EntityRule EntityName="IfcSimpleProperty" Cardinality="_asSchema" />
+                                  </EntityRules>
+                                </AttributeRule>
+                              </AttributeRules>
+                            </EntityRule>
+                            <EntityRule EntityName="IfcPropertySingleValue" Cardinality="_asSchema">
+                              <AttributeRules>
+                                <AttributeRule AttributeName="Name" Cardinality="_asSchema">
+                                  <EntityRules>
+                                    <EntityRule EntityName="IfcIdentifier" Cardinality="_asSchema" />
+                                  </EntityRules>
+                                </AttributeRule>
+                                <AttributeRule AttributeName="Description" Cardinality="_asSchema">
+                                  <EntityRules>
+                                    <EntityRule EntityName="IfcText" Cardinality="_asSchema" />
+                                  </EntityRules>
+                                </AttributeRule>
+                                <AttributeRule AttributeName="NominalValue" Cardinality="_asSchema">
+                                  <EntityRules>
+                                    <EntityRule EntityName="IfcValue" Cardinality="_asSchema" />
+                                  </EntityRules>
+                                </AttributeRule>
+                                <AttributeRule AttributeName="Unit" Cardinality="_asSchema">
+                                  <EntityRules>
+                                    <EntityRule EntityName="IfcUnit" Cardinality="_asSchema" />
+                                  </EntityRules>
+                                </AttributeRule>
+                              </AttributeRules>
+                            </EntityRule>
+                            <EntityRule EntityName="IfcPropertyEnumeratedValue" Cardinality="_asSchema">
+                              <AttributeRules>
+                                <AttributeRule AttributeName="Name" Cardinality="_asSchema">
+                                  <EntityRules>
+                                    <EntityRule EntityName="IfcIdentifier" Cardinality="_asSchema" />
+                                  </EntityRules>
+                                </AttributeRule>
+                                <AttributeRule AttributeName="Description" Cardinality="_asSchema">
+                                  <EntityRules>
+                                    <EntityRule EntityName="IfcText" Cardinality="_asSchema" />
+                                  </EntityRules>
+                                </AttributeRule>
+                                <AttributeRule AttributeName="EnumerationValues" Cardinality="_asSchema">
+                                  <EntityRules>
+                                    <EntityRule EntityName="IfcValue" Cardinality="_asSchema" />
+                                  </EntityRules>
+                                </AttributeRule>
+                                <AttributeRule AttributeName="EnumerationReference" Cardinality="_asSchema">
+                                  <EntityRules>
+                                    <EntityRule EntityName="IfcPropertyEnumeration" Cardinality="_asSchema">
+                                      <AttributeRules>
+                                        <AttributeRule AttributeName="Name" Cardinality="_asSchema">
+                                          <EntityRules>
+                                            <EntityRule EntityName="IfcLabel" Cardinality="_asSchema" />
+                                          </EntityRules>
+                                        </AttributeRule>
+                                        <AttributeRule AttributeName="EnumerationValues" Cardinality="_asSchema">
+                                          <EntityRules>
+                                            <EntityRule EntityName="IfcValue" Cardinality="_asSchema" />
+                                          </EntityRules>
+                                        </AttributeRule>
+                                        <AttributeRule AttributeName="Unit" Cardinality="_asSchema">
+                                          <EntityRules>
+                                            <EntityRule EntityName="IfcUnit" Cardinality="_asSchema" />
+                                          </EntityRules>
+                                        </AttributeRule>
+                                      </AttributeRules>
+                                    </EntityRule>
+                                  </EntityRules>
+                                </AttributeRule>
+                              </AttributeRules>
+                            </EntityRule>
+                            <EntityRule EntityName="IfcPropertyBoundedValue" Cardinality="_asSchema">
+                              <AttributeRules>
+                                <AttributeRule AttributeName="Name" Cardinality="_asSchema">
+                                  <EntityRules>
+                                    <EntityRule EntityName="IfcIdentifier" Cardinality="_asSchema" />
+                                  </EntityRules>
+                                </AttributeRule>
+                                <AttributeRule AttributeName="Description" Cardinality="_asSchema">
+                                  <EntityRules>
+                                    <EntityRule EntityName="IfcText" Cardinality="_asSchema" />
+                                  </EntityRules>
+                                </AttributeRule>
+                                <AttributeRule AttributeName="UpperBoundValue" Cardinality="_asSchema">
+                                  <EntityRules>
+                                    <EntityRule EntityName="IfcValue" Cardinality="_asSchema" />
+                                  </EntityRules>
+                                </AttributeRule>
+                                <AttributeRule AttributeName="LowerBoundValue" Cardinality="_asSchema">
+                                  <EntityRules>
+                                    <EntityRule EntityName="IfcValue" Cardinality="_asSchema" />
+                                  </EntityRules>
+                                </AttributeRule>
+                                <AttributeRule AttributeName="SetPointValue" Cardinality="_asSchema">
+                                  <EntityRules>
+                                    <EntityRule EntityName="IfcValue" Cardinality="_asSchema" />
+                                  </EntityRules>
+                                </AttributeRule>
+                                <AttributeRule AttributeName="Unit" Cardinality="_asSchema">
+                                  <EntityRules>
+                                    <EntityRule EntityName="IfcUnit" Cardinality="_asSchema" />
+                                  </EntityRules>
+                                </AttributeRule>
+                              </AttributeRules>
+                            </EntityRule>
+                            <EntityRule EntityName="IfcPropertyListValue" Cardinality="_asSchema">
+                              <AttributeRules>
+                                <AttributeRule AttributeName="Name" Cardinality="_asSchema">
+                                  <EntityRules>
+                                    <EntityRule EntityName="IfcIdentifier" Cardinality="_asSchema" />
+                                  </EntityRules>
+                                </AttributeRule>
+                                <AttributeRule AttributeName="Description" Cardinality="_asSchema">
+                                  <EntityRules>
+                                    <EntityRule EntityName="IfcText" Cardinality="_asSchema" />
+                                  </EntityRules>
+                                </AttributeRule>
+                                <AttributeRule AttributeName="ListValues" Cardinality="_asSchema">
+                                  <EntityRules>
+                                    <EntityRule EntityName="IfcValue" Cardinality="_asSchema" />
+                                  </EntityRules>
+                                </AttributeRule>
+                                <AttributeRule AttributeName="Unit" Cardinality="_asSchema">
+                                  <EntityRules>
+                                    <EntityRule EntityName="IfcUnit" Cardinality="_asSchema" />
+                                  </EntityRules>
+                                </AttributeRule>
+                              </AttributeRules>
+                            </EntityRule>
+                            <EntityRule EntityName="IfcPropertyTableValue" Cardinality="_asSchema">
+                              <AttributeRules>
+                                <AttributeRule AttributeName="Name" Cardinality="_asSchema">
+                                  <EntityRules>
+                                    <EntityRule EntityName="IfcIdentifier" Cardinality="_asSchema" />
+                                  </EntityRules>
+                                </AttributeRule>
+                                <AttributeRule AttributeName="Description" Cardinality="_asSchema">
+                                  <EntityRules>
+                                    <EntityRule EntityName="IfcText" Cardinality="_asSchema" />
+                                  </EntityRules>
+                                </AttributeRule>
+                                <AttributeRule AttributeName="Expression" Cardinality="_asSchema">
+                                  <EntityRules>
+                                    <EntityRule EntityName="IfcText" Cardinality="_asSchema" />
+                                  </EntityRules>
+                                </AttributeRule>
+                                <AttributeRule AttributeName="DefiningValues" Cardinality="_asSchema">
+                                  <EntityRules>
+                                    <EntityRule EntityName="IfcValue" Cardinality="_asSchema" />
+                                  </EntityRules>
+                                </AttributeRule>
+                                <AttributeRule AttributeName="DefinedValues" Cardinality="_asSchema">
+                                  <EntityRules>
+                                    <EntityRule EntityName="IfcValue" Cardinality="_asSchema" />
+                                  </EntityRules>
+                                </AttributeRule>
+                                <AttributeRule AttributeName="DefiningUnit" Cardinality="_asSchema">
+                                  <EntityRules>
+                                    <EntityRule EntityName="IfcUnit" Cardinality="_asSchema" />
+                                  </EntityRules>
+                                </AttributeRule>
+                                <AttributeRule AttributeName="DefinedUnit" Cardinality="_asSchema">
+                                  <EntityRules>
+                                    <EntityRule EntityName="IfcUnit" Cardinality="_asSchema" />
+                                  </EntityRules>
+                                </AttributeRule>
+                                <AttributeRule AttributeName="CurveInterpolation" Cardinality="_asSchema">
+                                  <EntityRules>
+                                    <EntityRule EntityName="IfcCurveInterpolationEnum" Cardinality="_asSchema" />
+                                  </EntityRules>
+                                </AttributeRule>
+                              </AttributeRules>
+                            </EntityRule>
+                          </EntityRules>
+                        </AttributeRule>
+                      </AttributeRules>
+                    </EntityRule>
+                  </EntityRules>
+                </AttributeRule>
+              </Rules>
+            </ConceptTemplate>
+            <ConceptTemplate uuid="c32cc55b-afc7-439e-b821-e646e1b1dd1a" name="Property Sets for Performance" applicableSchema="IFC4" applicableEntity="IfcPerformanceHistory">
+              <Definitions>
+                <Definition>
+                  <Body><![CDATA[<p>For performance history, properties are in the form of time series, for tracking data at points in time.</p>]]></Body>
+                </Definition>
+              </Definitions>
+              <Rules>
+                <AttributeRule AttributeName="IsDefinedBy" Cardinality="_asSchema">
+                  <EntityRules>
+                    <EntityRule EntityName="IfcRelDefinesByProperties" Cardinality="_asSchema">
+                      <AttributeRules>
+                        <AttributeRule AttributeName="RelatingPropertyDefinition" Cardinality="_asSchema">
+                          <EntityRules>
+                            <EntityRule EntityName="IfcPropertySet" Cardinality="_asSchema">
+                              <AttributeRules>
+                                <AttributeRule AttributeName="HasProperties" Cardinality="_asSchema">
+                                  <EntityRules>
+                                    <EntityRule EntityName="IfcPropertyReferenceValue" Cardinality="_asSchema">
+                                      <AttributeRules>
+                                        <AttributeRule AttributeName="PropertyReference" Cardinality="_asSchema">
+                                          <EntityRules>
+                                            <EntityRule EntityName="IfcIrregularTimeSeries" Cardinality="_asSchema">
+                                              <AttributeRules>
+                                                <AttributeRule AttributeName="Values" Cardinality="_asSchema">
+                                                  <EntityRules>
+                                                    <EntityRule EntityName="IfcIrregularTimeSeriesValue" Cardinality="_asSchema">
+                                                      <AttributeRules>
+                                                        <AttributeRule AttributeName="TimeStamp" Cardinality="_asSchema">
+                                                          <EntityRules>
+                                                            <EntityRule EntityName="IfcDateTime" Cardinality="_asSchema" />
+                                                          </EntityRules>
+                                                        </AttributeRule>
+                                                        <AttributeRule AttributeName="ListValues" Cardinality="_asSchema">
+                                                          <EntityRules>
+                                                            <EntityRule EntityName="IfcValue" Cardinality="_asSchema" />
+                                                          </EntityRules>
+                                                        </AttributeRule>
+                                                      </AttributeRules>
+                                                    </EntityRule>
+                                                  </EntityRules>
+                                                </AttributeRule>
+                                              </AttributeRules>
+                                            </EntityRule>
+                                          </EntityRules>
+                                        </AttributeRule>
+                                      </AttributeRules>
+                                    </EntityRule>
+                                  </EntityRules>
+                                </AttributeRule>
+                              </AttributeRules>
+                            </EntityRule>
+                          </EntityRules>
+                        </AttributeRule>
+                      </AttributeRules>
+                    </EntityRule>
+                  </EntityRules>
+                </AttributeRule>
+              </Rules>
+            </ConceptTemplate>
+          </SubTemplates>
+        </ConceptTemplate>
+        <ConceptTemplate uuid="6652398e-6579-4460-8cb4-26295acfacc7" name="Quantity Sets" code="" applicableSchema="IFC4" applicableEntity="IfcObject">
+          <Definitions>
+            <Definition>
+              <Body><![CDATA[
+<p>
+Any specialization of object can be related to multiple quantity set occurrences. A quantity set
+ contains multiple quantity occurrences. The data type of
+ quantity occurrence values are count, length, area, volume, weight, time, or a combination of quantities. Each quantity is defined by its name, value, and optionally a description and a formula.</p>
+
+
+<p>The quantity set is expressed by instances of <em>IfcElementQuantity</em>, where the <em>Name</em> attribute determines the common designator of the quantity set. This specification contains a number of predefined quantity sets, a template definition is provided for each of them. The name of the template has to be used as the value of the <em>Name</em> attribute. The <em>MethodOfMeasurement</em> attribute specifies the method, by which the values of the individual quantities are calculated. For the quantity set templates included in this specification, the value of <em>MethodOfMeasurement</em> shall be "BaseQuantities".</p>]]></Body>
+            </Definition>
+          </Definitions>
+          <Rules>
+            <AttributeRule AttributeName="IsDefinedBy" Cardinality="_asSchema">
+              <EntityRules>
+                <EntityRule EntityName="IfcRelDefinesByProperties" Cardinality="_asSchema">
+                  <AttributeRules>
+                    <AttributeRule AttributeName="RelatingPropertyDefinition" Cardinality="_asSchema">
+                      <EntityRules>
+                        <EntityRule EntityName="IfcElementQuantity" Cardinality="_asSchema">
+                          <AttributeRules>
+                            <AttributeRule RuleID="Name" AttributeName="Name" Cardinality="_asSchema">
+                              <EntityRules>
+                                <EntityRule EntityName="IfcLabel" Cardinality="_asSchema" />
+                              </EntityRules>
+                            </AttributeRule>
+                            <AttributeRule AttributeName="Description" Cardinality="_asSchema">
+                              <EntityRules>
+                                <EntityRule EntityName="IfcText" Cardinality="_asSchema" />
+                              </EntityRules>
+                            </AttributeRule>
+                            <AttributeRule AttributeName="MethodOfMeasurement" Cardinality="_asSchema">
+                              <EntityRules>
+                                <EntityRule EntityName="IfcLabel" Cardinality="_asSchema" />
+                              </EntityRules>
+                            </AttributeRule>
+                            <AttributeRule AttributeName="Quantities" Cardinality="_asSchema">
+                              <EntityRules>
+                                <EntityRule EntityName="IfcPhysicalComplexQuantity" Cardinality="_asSchema">
+                                  <AttributeRules>
+                                    <AttributeRule AttributeName="Name" Cardinality="_asSchema">
+                                      <EntityRules>
+                                        <EntityRule EntityName="IfcLabel" Cardinality="_asSchema" />
+                                      </EntityRules>
+                                    </AttributeRule>
+                                    <AttributeRule AttributeName="Description" Cardinality="_asSchema">
+                                      <EntityRules>
+                                        <EntityRule EntityName="IfcText" Cardinality="_asSchema" />
+                                      </EntityRules>
+                                    </AttributeRule>
+                                    <AttributeRule AttributeName="HasQuantities" Cardinality="_asSchema">
+                                      <EntityRules>
+                                        <EntityRule EntityName="IfcPhysicalQuantity" Cardinality="_asSchema" />
+                                      </EntityRules>
+                                    </AttributeRule>
+                                    <AttributeRule AttributeName="Discrimination" Cardinality="_asSchema" />
+                                    <AttributeRule AttributeName="Quality" Cardinality="_asSchema" />
+                                    <AttributeRule AttributeName="Usage" Cardinality="_asSchema" />
+                                  </AttributeRules>
+                                </EntityRule>
+                                <EntityRule EntityName="IfcQuantityArea" Cardinality="_asSchema">
+                                  <AttributeRules>
+                                    <AttributeRule AttributeName="Unit" Cardinality="_asSchema">
+                                      <EntityRules>
+                                        <EntityRule EntityName="IfcNamedUnit" Cardinality="_asSchema" />
+                                      </EntityRules>
+                                    </AttributeRule>
+                                    <AttributeRule AttributeName="AreaValue" Cardinality="_asSchema">
+                                      <EntityRules>
+                                        <EntityRule EntityName="IfcAreaMeasure" Cardinality="_asSchema" />
+                                      </EntityRules>
+                                    </AttributeRule>
+                                    <AttributeRule AttributeName="Name" Cardinality="_asSchema">
+                                      <EntityRules>
+                                        <EntityRule EntityName="IfcLabel" Cardinality="_asSchema" />
+                                      </EntityRules>
+                                    </AttributeRule>
+                                    <AttributeRule AttributeName="Formula" Cardinality="_asSchema">
+                                      <EntityRules>
+                                        <EntityRule EntityName="IfcLabel" Cardinality="_asSchema" />
+                                      </EntityRules>
+                                    </AttributeRule>
+                                  </AttributeRules>
+                                </EntityRule>
+                                <EntityRule EntityName="IfcQuantityCount" Cardinality="_asSchema">
+                                  <AttributeRules>
+                                    <AttributeRule AttributeName="Unit" Cardinality="_asSchema">
+                                      <EntityRules>
+                                        <EntityRule EntityName="IfcNamedUnit" Cardinality="_asSchema" />
+                                      </EntityRules>
+                                    </AttributeRule>
+                                    <AttributeRule AttributeName="CountValue" Cardinality="_asSchema">
+                                      <EntityRules>
+                                        <EntityRule EntityName="IfcCountMeasure" Cardinality="_asSchema" />
+                                      </EntityRules>
+                                    </AttributeRule>
+                                    <AttributeRule AttributeName="Name" Cardinality="_asSchema">
+                                      <EntityRules>
+                                        <EntityRule EntityName="IfcLabel" Cardinality="_asSchema" />
+                                      </EntityRules>
+                                    </AttributeRule>
+                                    <AttributeRule AttributeName="Formula" Cardinality="_asSchema">
+                                      <EntityRules>
+                                        <EntityRule EntityName="IfcLabel" Cardinality="_asSchema" />
+                                      </EntityRules>
+                                    </AttributeRule>
+                                  </AttributeRules>
+                                </EntityRule>
+                                <EntityRule EntityName="IfcQuantityLength" Cardinality="_asSchema">
+                                  <AttributeRules>
+                                    <AttributeRule AttributeName="Unit" Cardinality="_asSchema">
+                                      <EntityRules>
+                                        <EntityRule EntityName="IfcNamedUnit" Cardinality="_asSchema" />
+                                      </EntityRules>
+                                    </AttributeRule>
+                                    <AttributeRule AttributeName="LengthValue" Cardinality="_asSchema">
+                                      <EntityRules>
+                                        <EntityRule EntityName="IfcLengthMeasure" Cardinality="_asSchema" />
+                                      </EntityRules>
+                                    </AttributeRule>
+                                    <AttributeRule AttributeName="Name" Cardinality="_asSchema">
+                                      <EntityRules>
+                                        <EntityRule EntityName="IfcLabel" Cardinality="_asSchema" />
+                                      </EntityRules>
+                                    </AttributeRule>
+                                    <AttributeRule AttributeName="Formula" Cardinality="_asSchema">
+                                      <EntityRules>
+                                        <EntityRule EntityName="IfcLabel" Cardinality="_asSchema" />
+                                      </EntityRules>
+                                    </AttributeRule>
+                                  </AttributeRules>
+                                </EntityRule>
+                                <EntityRule EntityName="IfcQuantityTime" Cardinality="_asSchema">
+                                  <AttributeRules>
+                                    <AttributeRule AttributeName="Unit" Cardinality="_asSchema">
+                                      <EntityRules>
+                                        <EntityRule EntityName="IfcNamedUnit" Cardinality="_asSchema" />
+                                      </EntityRules>
+                                    </AttributeRule>
+                                    <AttributeRule AttributeName="TimeValue" Cardinality="_asSchema">
+                                      <EntityRules>
+                                        <EntityRule EntityName="IfcTimeMeasure" Cardinality="_asSchema" />
+                                      </EntityRules>
+                                    </AttributeRule>
+                                    <AttributeRule AttributeName="Name" Cardinality="_asSchema">
+                                      <EntityRules>
+                                        <EntityRule EntityName="IfcLabel" Cardinality="_asSchema" />
+                                      </EntityRules>
+                                    </AttributeRule>
+                                    <AttributeRule AttributeName="Formula" Cardinality="_asSchema">
+                                      <EntityRules>
+                                        <EntityRule EntityName="IfcLabel" Cardinality="_asSchema" />
+                                      </EntityRules>
+                                    </AttributeRule>
+                                  </AttributeRules>
+                                </EntityRule>
+                                <EntityRule EntityName="IfcQuantityVolume" Cardinality="_asSchema">
+                                  <AttributeRules>
+                                    <AttributeRule AttributeName="Unit" Cardinality="_asSchema">
+                                      <EntityRules>
+                                        <EntityRule EntityName="IfcNamedUnit" Cardinality="_asSchema" />
+                                      </EntityRules>
+                                    </AttributeRule>
+                                    <AttributeRule AttributeName="VolumeValue" Cardinality="_asSchema">
+                                      <EntityRules>
+                                        <EntityRule EntityName="IfcVolumeMeasure" Cardinality="_asSchema" />
+                                      </EntityRules>
+                                    </AttributeRule>
+                                    <AttributeRule AttributeName="Name" Cardinality="_asSchema">
+                                      <EntityRules>
+                                        <EntityRule EntityName="IfcLabel" Cardinality="_asSchema" />
+                                      </EntityRules>
+                                    </AttributeRule>
+                                    <AttributeRule AttributeName="Formula" Cardinality="_asSchema">
+                                      <EntityRules>
+                                        <EntityRule EntityName="IfcLabel" Cardinality="_asSchema" />
+                                      </EntityRules>
+                                    </AttributeRule>
+                                  </AttributeRules>
+                                </EntityRule>
+                                <EntityRule EntityName="IfcQuantityWeight" Cardinality="_asSchema">
+                                  <AttributeRules>
+                                    <AttributeRule AttributeName="Unit" Cardinality="_asSchema">
+                                      <EntityRules>
+                                        <EntityRule EntityName="IfcNamedUnit" Cardinality="_asSchema" />
+                                      </EntityRules>
+                                    </AttributeRule>
+                                    <AttributeRule AttributeName="WeightValue" Cardinality="_asSchema">
+                                      <EntityRules>
+                                        <EntityRule EntityName="IfcMassMeasure" Cardinality="_asSchema" />
+                                      </EntityRules>
+                                    </AttributeRule>
+                                    <AttributeRule AttributeName="Name" Cardinality="_asSchema">
+                                      <EntityRules>
+                                        <EntityRule EntityName="IfcLabel" Cardinality="_asSchema" />
+                                      </EntityRules>
+                                    </AttributeRule>
+                                    <AttributeRule AttributeName="Formula" Cardinality="_asSchema">
+                                      <EntityRules>
+                                        <EntityRule EntityName="IfcLabel" Cardinality="_asSchema" />
+                                      </EntityRules>
+                                    </AttributeRule>
+                                  </AttributeRules>
+                                </EntityRule>
+                              </EntityRules>
+                            </AttributeRule>
+                          </AttributeRules>
+                        </EntityRule>
+                      </EntityRules>
+                    </AttributeRule>
+                  </AttributeRules>
+                </EntityRule>
+              </EntityRules>
+            </AttributeRule>
+          </Rules>
+        </ConceptTemplate>
+      </SubTemplates>
+    </ConceptTemplate>
+    <ConceptTemplate uuid="a322fdd7-cd28-4ea7-8797-f6cf124ab3d6" name="Partial Templates" applicableSchema="IFC4">
+      <Definitions>
+        <Definition>
+          <Body><![CDATA[<p>Partial concept templates are described herein to indicate usage of common data types, which are then incorporated into other templates.</p>]]></Body>
+        </Definition>
+      </Definitions>
+      <SubTemplates>
+        <ConceptTemplate uuid="88b4aaa9-0925-447c-b009-fe357b7c754e" name="Values" applicableSchema="IFC4" applicableEntity="IfcPropertySingleValue">
+          <Definitions>
+            <Definition>
+              <Body><![CDATA[<p>Properties may contain user-defined data, where data types are open-ended.</p>]]></Body>
+            </Definition>
+          </Definitions>
+          <Rules>
+            <AttributeRule RuleID="Value" AttributeName="NominalValue" Cardinality="_asSchema">
+              <EntityRules>
+                <EntityRule EntityName="IfcValue" Cardinality="_asSchema" />
+              </EntityRules>
+            </AttributeRule>
+          </Rules>
+          <SubTemplates>
+            <ConceptTemplate uuid="6655f6d0-29a8-47b8-8f3d-c9fce9c9a620" name="Single Value" applicableSchema="IFC4" applicableEntity="IfcPropertySingleValue">
+              <Definitions>
+                <Definition>
+                  <Body><![CDATA[]]></Body>
+                </Definition>
+              </Definitions>
+              <Rules>
+                <AttributeRule RuleID="Name" AttributeName="Name" Cardinality="_asSchema">
+                  <EntityRules>
+                    <EntityRule EntityName="IfcIdentifier" Cardinality="_asSchema" />
+                  </EntityRules>
+                </AttributeRule>
+                <AttributeRule RuleID="Value" AttributeName="NominalValue" Cardinality="_asSchema">
+                  <EntityRules>
+                    <EntityRule EntityName="IfcValue" Cardinality="_asSchema" />
+                  </EntityRules>
+                </AttributeRule>
+              </Rules>
+            </ConceptTemplate>
+            <ConceptTemplate uuid="3d67a2d2-761d-44d9-a09e-b7fbb1fa5632" name="Bounded Value" applicableSchema="IFC4" applicableEntity="IfcPropertyBoundedValue">
+              <Rules>
+                <AttributeRule RuleID="Name" AttributeName="Name" Cardinality="_asSchema">
+                  <EntityRules>
+                    <EntityRule EntityName="IfcIdentifier" Cardinality="_asSchema" />
+                  </EntityRules>
+                </AttributeRule>
+                <AttributeRule RuleID="Value" AttributeName="SetPointValue" Cardinality="_asSchema">
+                  <EntityRules>
+                    <EntityRule EntityName="IfcValue" Cardinality="_asSchema" />
+                  </EntityRules>
+                </AttributeRule>
+                <AttributeRule RuleID="Value" AttributeName="NominalValue" Cardinality="_asSchema">
+                  <EntityRules>
+                    <EntityRule EntityName="IfcValue" Cardinality="_asSchema" />
+                    <EntityRule EntityName="IfcValue" Cardinality="_asSchema" />
+                  </EntityRules>
+                </AttributeRule>
+              </Rules>
+            </ConceptTemplate>
+            <ConceptTemplate uuid="c148a099-c351-43a8-9266-5f3de0b45a95" name="Enumerated Value" applicableSchema="IFC4" applicableEntity="IfcPropertyEnumeratedValue">
+              <Rules>
+                <AttributeRule RuleID="Name" AttributeName="Name" Cardinality="_asSchema">
+                  <EntityRules>
+                    <EntityRule EntityName="IfcIdentifier" Cardinality="_asSchema" />
+                  </EntityRules>
+                </AttributeRule>
+                <AttributeRule AttributeName="EnumerationReference" Cardinality="_asSchema">
+                  <EntityRules>
+                    <EntityRule EntityName="IfcPropertyEnumeration" Cardinality="_asSchema">
+                      <AttributeRules>
+                        <AttributeRule RuleID="Value" AttributeName="Name" Cardinality="_asSchema">
+                          <EntityRules>
+                            <EntityRule EntityName="IfcLabel" Cardinality="_asSchema" />
+                          </EntityRules>
+                        </AttributeRule>
+                      </AttributeRules>
+                    </EntityRule>
+                  </EntityRules>
+                </AttributeRule>
+                <AttributeRule RuleID="Value" AttributeName="NominalValue" Cardinality="_asSchema">
+                  <EntityRules>
+                    <EntityRule EntityName="IfcValue" Cardinality="_asSchema" />
+                    <EntityRule EntityName="IfcValue" Cardinality="_asSchema" />
+                  </EntityRules>
+                </AttributeRule>
+              </Rules>
+            </ConceptTemplate>
+          </SubTemplates>
+        </ConceptTemplate>
+      </SubTemplates>
+    </ConceptTemplate>
+  </Templates>
+  <Views>
+  </Views>
+</mvdXML>

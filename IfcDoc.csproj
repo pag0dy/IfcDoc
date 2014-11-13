@@ -332,6 +332,9 @@
     <EmbeddedResource Include="CtlParameters.resx">
       <DependentUpon>CtlParameters.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="CtlProperties.ja.resx">
+      <DependentUpon>CtlProperties.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CtlProperties.resx">
       <DependentUpon>CtlProperties.cs</DependentUpon>
     </EmbeddedResource>
@@ -348,6 +351,9 @@
     <EmbeddedResource Include="FormDownload.resx">
       <DependentUpon>FormDownload.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormEdit.ja.resx">
+      <DependentUpon>FormEdit.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormMerge.resx">
       <DependentUpon>FormMerge.cs</DependentUpon>

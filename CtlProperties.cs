@@ -285,7 +285,7 @@ namespace IfcDoc
                 DocTemplateUsage docUsage = (DocTemplateUsage)docObject;
 
                 this.ctlParameters.Project = this.m_project;
-                this.ctlParameters.ConceptRoot = this.m_parent as DocConceptRoot;
+                this.ctlParameters.ConceptRoot = this.m_path[3] as DocConceptRoot;
                 this.ctlParameters.ConceptLeaf = docUsage;
 
                 this.LoadModelView();
@@ -502,7 +502,7 @@ namespace IfcDoc
 
             // find the view
             DocModelView docView = null;
-            DocConceptRoot docRoot = (DocConceptRoot)this.m_parent;
+            DocConceptRoot docRoot = (DocConceptRoot)this.m_path[3];
             foreach (DocModelView eachView in this.m_project.ModelViews)
             {
                 if (eachView.ConceptRoots.Contains(docRoot))
@@ -2107,6 +2107,11 @@ namespace IfcDoc
             this.toolStripMenuItemModeInherit.Enabled = true;
             this.toolStripMenuItemModeOverride.Enabled = true;
             this.toolStripMenuItemModeSuppress.Enabled = true;
+        }
+
+        private void tabPageAttribute_Click(object sender, EventArgs e)
+        {
+
         }
 
         

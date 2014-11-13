@@ -1603,20 +1603,26 @@ namespace IfcDoc
                         htmExample.Write("<tr><th>View</th></tr>");
                         foreach (DocModelView docView in docExample.Views)
                         {
-                            string hyperlink = "../../schema/views/" + MakeLinkName(docView) + "/index.htm";
-                            htmExample.Write("<tr><td><a href=\"" + hyperlink + ">" + docView.Name + "</td></tr>");
+                            if (included.ContainsKey(docView))
+                            {
+                                string hyperlink = "../../schema/views/" + MakeLinkName(docView) + "/index.htm";
+                                htmExample.Write("<tr><td><a href=\"" + hyperlink + "\">" + docView.Name + "</td></tr>");
+                            }
                         }
                         htmExample.Write("</table>");
 
-                        string[] ApplicableTypesArray = docExample.ApplicableType.Split(',');
-                        htmExample.Write("<table class=\"gridtable\">");
-                        htmExample.Write("<tr><th>Entity</th></tr>");
-                        for(int i = 0; i < ApplicableTypesArray.Length; i++)
+                        if (docExample.ApplicableType != null)
                         {
-                            string hyperlink = "../../schema/" + mapSchema[ApplicableTypesArray.GetValue(i).ToString()].ToString().ToLower() + "/lexical/" + ApplicableTypesArray.GetValue(i).ToString().ToLower() + ".htm";
-                            htmExample.Write("<tr><td><a href=" + hyperlink + ">" + ApplicableTypesArray.GetValue(i) + "</td></tr>");
+                            string[] ApplicableTypesArray = docExample.ApplicableType.Split(',');
+                            htmExample.Write("<table class=\"gridtable\">");
+                            htmExample.Write("<tr><th>Entity</th></tr>");
+                            for (int i = 0; i < ApplicableTypesArray.Length; i++)
+                            {
+                                string hyperlink = "../../schema/" + mapSchema[ApplicableTypesArray.GetValue(i).ToString()].ToString().ToLower() + "/lexical/" + ApplicableTypesArray.GetValue(i).ToString().ToLower() + ".htm";
+                                htmExample.Write("<tr><td><a href=" + hyperlink + ">" + ApplicableTypesArray.GetValue(i) + "</td></tr>");
+                            }
+                            htmExample.Write("</table>");
                         }
-                        htmExample.Write("</table>");
                     }
 
                     htmExample.WriteDocumentationForISO(docExample.Documentation, docExample, false);

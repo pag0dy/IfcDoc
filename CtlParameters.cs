@@ -107,6 +107,38 @@ namespace IfcDoc
             set
             {
                 this.m_instance = value;
+
+                DocTemplateUsage docUsage = (DocTemplateUsage)this.m_conceptleaf;
+                foreach (DataGridViewRow row in this.dataGridViewConceptRules.Rows)
+                {
+                    if (row.Tag != null)
+                    {
+                        DocTemplateItem item = (DocTemplateItem)row.Tag;
+                        bool result;
+                        if (this.m_instance != null)
+                        {
+                            if (item.ValidationStructure.TryGetValue(this.m_instance, out result))
+                            {
+                                if (result)
+                                {
+                                    row.DefaultCellStyle.BackColor = System.Drawing.Color.Lime;
+                                }
+                                else
+                                {
+                                    row.DefaultCellStyle.BackColor = System.Drawing.Color.Red;
+                                }
+                            }
+                            else
+                            {
+                                row.DefaultCellStyle.BackColor = System.Drawing.Color.Red;// Yellow;
+                            }
+                        }
+                        else
+                        {
+                            row.DefaultCellStyle.BackColor = System.Drawing.Color.Empty;
+                        }
+                    }
+                }
             }
         }
 
@@ -162,27 +194,45 @@ namespace IfcDoc
                     DocEntity docEntity = this.m_project.GetDefinition(docUsage.Definition.Type) as DocEntity;// docConceptRoot.ApplicableEntity;
                     foreach (DocModelRuleAttribute docRule in docUsage.Definition.Rules)
                     {
-                        DocDefinition docDef = docEntity.ResolveParameterType(docRule, rule.Identification, m_map);
-                        if (docDef is DocEnumeration)
+                        DocAttribute docAttribute = docEntity.ResolveParameterAttribute(docRule, rule.Identification, m_map);
+                        if (docAttribute != null)
                         {
-                            DocEnumeration docEnum = (DocEnumeration)docDef;
-                            DataGridViewComboBoxCell cell = new DataGridViewComboBoxCell();
-                            cell.MaxDropDownItems = 32;
-                            cell.DropDownWidth = 200;
-                            // add blank item
-                            cell.Items.Add(String.Empty);
-                            foreach (DocConstant docConst in docEnum.Constants)
+                            DocObject docDef = null;
+                            if (this.m_map.TryGetValue(docAttribute.DefinedType, out docDef) && docDef is DocDefinition)
                             {
-                                cell.Items.Add(docConst.Name);
+                                if (docDef is DocEnumeration)
+                                {
+                                    DocEnumeration docEnum = (DocEnumeration)docDef;
+                                    DataGridViewComboBoxCell cell = new DataGridViewComboBoxCell();
+                                    cell.MaxDropDownItems = 32;
+                                    cell.DropDownWidth = 200;
+                                    // add blank item
+                                    cell.Items.Add(String.Empty);
+                                    foreach (DocConstant docConst in docEnum.Constants)
+                                    {
+                                        cell.Items.Add(docConst.Name);
+                                    }
+                                    column.CellTemplate = cell;
+                                }
+                                else if (docDef is DocEntity || docDef is DocSelect)
+                                {
+                                    // button to launch dialog for picking entity
+                                    DataGridViewButtonCell cell = new DataGridViewButtonCell();
+                                    cell.Tag = docDef;
+                                    column.CellTemplate = cell;
+                                }
                             }
-                            column.CellTemplate = cell;
-                        }
-                        else if (docDef is DocEntity || docDef is DocSelect)
-                        {
-                            // button to launch dialog for picking entity
-                            DataGridViewButtonCell cell = new DataGridViewButtonCell();
-                            cell.Tag = docDef;
-                            column.CellTemplate = cell;
+                            else if (docAttribute.DefinedType != null && (docAttribute.DefinedType.Equals("LOGICAL") || docAttribute.DefinedType.Equals("BOOLEAN")))
+                            {
+                                DataGridViewComboBoxCell cell = new DataGridViewComboBoxCell();
+                                cell.MaxDropDownItems = 4;
+                                cell.DropDownWidth = 200;
+                                // add blank item
+                                cell.Items.Add(String.Empty);
+                                cell.Items.Add(Boolean.FalseString);
+                                cell.Items.Add(Boolean.TrueString);
+                                column.CellTemplate = cell;
+                            }
                         }
                     }
 
@@ -239,7 +289,9 @@ namespace IfcDoc
 
         private void dataGridViewConceptRules_UserAddedRow(object sender, DataGridViewRowEventArgs e)
         {
-            this.m_conceptleaf.Items.Add(new DocTemplateItem());
+            DocTemplateItem dti = new DocTemplateItem();
+            this.m_conceptleaf.Items.Add(dti);
+            e.Row.Tag = dti;
         }
 
         private void dataGridViewConceptRules_UserDeletedRow(object sender, DataGridViewRowEventArgs e)
@@ -361,6 +413,7 @@ namespace IfcDoc
                             form.Project = this.m_project;
                             form.ConceptRoot = this.m_conceptroot;
                             form.ConceptLeaf = docConceptInner;
+                            form.CurrentInstance = this.m_instance;
                             form.ShowDialog(this);
                         }
                     }
