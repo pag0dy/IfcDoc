@@ -22,12 +22,18 @@ namespace IfcDoc.Format.XML
         Type m_type;
         object m_instance;
         string m_namespace;
+        XmlSerializerNamespaces m_prefixes;
 
-        public FormatXML(string file, Type type) : this(file, type, null)
+        public FormatXML(string file, Type type) : this(file, type, null, null)
         {
         }
 
         public FormatXML(string file, Type type, string defaultnamespace)
+            : this(file, type, defaultnamespace, null)
+        {
+        }
+
+        public FormatXML(string file, Type type, string defaultnamespace, XmlSerializerNamespaces prefixes)
         {
             string dirpath = System.IO.Path.GetDirectoryName(file);
             if (!Directory.Exists(dirpath))
@@ -40,6 +46,7 @@ namespace IfcDoc.Format.XML
             this.m_type = type;
             this.m_instance = null;
             this.m_namespace = defaultnamespace;
+            this.m_prefixes = prefixes;
         }
 
         public void Dispose()
@@ -74,8 +81,17 @@ namespace IfcDoc.Format.XML
         {
             this.m_stream.SetLength(0);
             this.m_stream.Position = 0;
-            XmlSerializer ser = new XmlSerializer(this.m_type, this.m_namespace);
-            ser.Serialize(this.m_stream, this.m_instance);
+
+            if (this.m_prefixes != null)
+            {
+                XmlSerializer ser = new XmlSerializer(this.m_type);
+                ser.Serialize(this.m_stream, this.m_instance, this.m_prefixes);
+            }
+            else
+            {
+                XmlSerializer ser = new XmlSerializer(this.m_type, this.m_namespace);
+                ser.Serialize(this.m_stream, this.m_instance);
+            }
         }
     }
 }

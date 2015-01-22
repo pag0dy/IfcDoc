@@ -32,5 +32,10 @@ namespace IfcDoc
             this.ctlProperties.Init(path, docProject);
         }
 
+        private void ctlProperties_Load(object sender, EventArgs e)
+        {
+
+        }
+
     }    
 }

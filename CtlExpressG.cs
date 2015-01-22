@@ -143,6 +143,7 @@ namespace IfcDoc
                         }
                     }
 
+#if false
                     if (docDef != null)
                     {
                         if (docDef.DiagramNumber != 0 && this.m_schema.DiagramPagesHorz != 0)
@@ -153,6 +154,7 @@ namespace IfcDoc
                             this.AutoScrollPosition = new Point(pageX * PageX, pageY * PageY);
                         }
                     }
+#endif
                 }
 
                 this.Invalidate();
@@ -400,8 +402,11 @@ namespace IfcDoc
                 foreach (DocAttribute docAttr in docEntity.Attributes)
                 {
                     LayoutLine(docEntity, docAttr.Definition, docAttr.DiagramLine);
-                    docAttr.DiagramLabel.X = docAttr.DiagramLine[0].X;
-                    docAttr.DiagramLabel.Y = docAttr.DiagramLine[2].Y - 20.0;
+                    if (docAttr.DiagramLabel != null)
+                    {
+                        docAttr.DiagramLabel.X = docAttr.DiagramLine[0].X;
+                        docAttr.DiagramLabel.Y = docAttr.DiagramLine[2].Y - 20.0;
+                    }
                 }
 
                 foreach (DocLine docLine in docEntity.Tree)
@@ -1236,6 +1241,77 @@ namespace IfcDoc
                 dy = pt.Y - closest.Y; 
             }
             return Math.Sqrt(dx * dx + dy * dy);
+        }
+
+        private void CtlExpressG_DragEnter(object sender, DragEventArgs e)
+        {
+            DocEntity docEnt = e.Data.GetData(typeof(DocEntity)) as DocEntity;
+            if (docEnt != null)
+            {
+                e.Effect = DragDropEffects.Move;
+            }
+        }
+
+        private void CtlExpressG_DragOver(object sender, DragEventArgs e)
+        {
+            Point clientPoint = this.PointToClient(new Point(e.X, e.Y));
+            double X = (clientPoint.X - this.AutoScrollPosition.X) / Factor;
+            double Y = (clientPoint.Y - this.AutoScrollPosition.Y) / Factor;
+
+            DocDefinition docDef = e.Data.GetData(typeof(DocEntity)) as DocEntity;
+            if (docDef == null)
+            {
+                docDef = e.Data.GetData(typeof(DocType)) as DocType;
+            }
+
+            if (docDef != null)
+            {
+                e.Effect = DragDropEffects.Move;
+
+                if(docDef.DiagramRectangle == null)
+                {
+                    docDef.DiagramRectangle = new DocRectangle();
+                }
+
+                docDef.DiagramRectangle.X = X;
+                docDef.DiagramRectangle.Y = Y;
+
+                if (docDef.DiagramRectangle.Width <= 0.0 || docDef.DiagramRectangle.Height <= 0.0)
+                {
+                    docDef.DiagramRectangle.Width = 400.0;
+                    docDef.DiagramRectangle.Height = 100.0;// +50.0 * docEnt.Attributes.Count;
+                }
+
+                this.Redraw();
+            }
+        }
+
+        private void CtlExpressG_DragDrop(object sender, DragEventArgs e)
+        {
+            DocEntity docEnt = e.Data.GetData(typeof(DocEntity)) as DocEntity;
+            if (docEnt != null)
+            {
+                e.Effect = DragDropEffects.Move;
+
+                if (!String.IsNullOrEmpty(docEnt.BaseDefinition))
+                {
+                    DocObject docBase = null;
+                    if (this.m_map.TryGetValue(docEnt.BaseDefinition, out docBase))
+                    {
+                        if (docBase is DocEntity)
+                        {
+                            DocEntity docEntBase = (DocEntity)docBase;
+                            //...docEntBase.
+                        }
+                    }
+                }
+
+                foreach (DocAttribute docAttr in docEnt.Attributes)
+                {
+                    //111docAttr.
+                }
+            }
+
         }
     }
 

@@ -77,7 +77,10 @@ namespace IfcDoc
                         {
                             if (docEntity.BaseDefinition == null)
                             {
-                                sort.Add(docEntity.Name, docEntity);
+                                if(!sort.ContainsKey(docEntity.Name))
+                                { 
+                                    sort.Add(docEntity.Name, docEntity);
+                                }
                             }
                         }
 

@@ -42,6 +42,7 @@
             this.toolStripMenuItemContextInsertTerm = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemContextInsertAbbreviatedTerm = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemContextInsertTemplate = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemContextInsertConstant = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemContextInsertPset = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemContextInsertProperty = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemContextInsertQset = new System.Windows.Forms.ToolStripMenuItem();
@@ -241,7 +242,6 @@
             this.backgroundWorkerGenerate = new System.ComponentModel.BackgroundWorker();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.openFileDialogMerge = new System.Windows.Forms.OpenFileDialog();
-            this.openFileDialogValidate = new System.Windows.Forms.OpenFileDialog();
             this.backgroundWorkerValidate = new System.ComponentModel.BackgroundWorker();
             this.imageListRules = new System.Windows.Forms.ImageList(this.components);
             this.saveFileDialogModule = new System.Windows.Forms.SaveFileDialog();
@@ -289,6 +289,7 @@
             this.treeView.Name = "treeView";
             this.treeView.BeforeLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.treeView_BeforeLabelEdit);
             this.treeView.AfterLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.treeView_AfterLabelEdit);
+            this.treeView.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.treeView_ItemDrag);
             this.treeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TreeView_AfterSelect);
             this.treeView.MouseUp += new System.Windows.Forms.MouseEventHandler(this.treeView_MouseUp);
             // 
@@ -313,6 +314,7 @@
             this.toolStripMenuItemContextInsertTerm,
             this.toolStripMenuItemContextInsertAbbreviatedTerm,
             this.toolStripMenuItemContextInsertTemplate,
+            this.toolStripMenuItemContextInsertConstant,
             this.toolStripMenuItemContextInsertPset,
             this.toolStripMenuItemContextInsertProperty,
             this.toolStripMenuItemContextInsertQset,
@@ -369,6 +371,12 @@
             resources.ApplyResources(this.toolStripMenuItemContextInsertTemplate, "toolStripMenuItemContextInsertTemplate");
             this.toolStripMenuItemContextInsertTemplate.Name = "toolStripMenuItemContextInsertTemplate";
             this.toolStripMenuItemContextInsertTemplate.Click += new System.EventHandler(this.toolStripMenuItemInsertTemplate_Click);
+            // 
+            // toolStripMenuItemContextInsertConstant
+            // 
+            resources.ApplyResources(this.toolStripMenuItemContextInsertConstant, "toolStripMenuItemContextInsertConstant");
+            this.toolStripMenuItemContextInsertConstant.Name = "toolStripMenuItemContextInsertConstant";
+            this.toolStripMenuItemContextInsertConstant.Click += new System.EventHandler(this.toolStripMenuItemInsertEnumerationConstant_Click);
             // 
             // toolStripMenuItemContextInsertPset
             // 
@@ -569,9 +577,9 @@
             this.ctlProperties.Name = "ctlProperties";
             this.ctlProperties.SelectedAttribute = null;
             this.ctlProperties.SelectedRule = null;
+            this.ctlProperties.Navigate += new System.EventHandler(this.ctlProperties_Navigate);
             this.ctlProperties.RuleSelectionChanged += new System.EventHandler(this.ctlProperties_RuleSelectionChanged);
             this.ctlProperties.RuleContentChanged += new System.EventHandler(this.ctlProperties_RuleContentChanged);
-            this.ctlProperties.Load += new System.EventHandler(this.ctlProperties_Load);
             // 
             // textBoxHTML
             // 
@@ -1813,11 +1821,6 @@
             this.openFileDialogMerge.DefaultExt = "ifcdoc";
             resources.ApplyResources(this.openFileDialogMerge, "openFileDialogMerge");
             // 
-            // openFileDialogValidate
-            // 
-            this.openFileDialogValidate.DefaultExt = "ifc";
-            resources.ApplyResources(this.openFileDialogValidate, "openFileDialogValidate");
-            // 
             // backgroundWorkerValidate
             // 
             this.backgroundWorkerValidate.WorkerReportsProgress = true;
@@ -1969,7 +1972,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem5;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemToolsValidate;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem8;
-        private System.Windows.Forms.OpenFileDialog openFileDialogValidate;
         private System.ComponentModel.BackgroundWorker backgroundWorkerValidate;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemToolsSourceCode;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemGenerateBallotSubmission;
@@ -2099,5 +2101,6 @@
         private System.Windows.Forms.ToolStripMenuItem buildFromSubschemaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemEditBuildConcepts;
         private System.Windows.Forms.OpenFileDialog openFileDialogExpress;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemContextInsertConstant;
     }
 }

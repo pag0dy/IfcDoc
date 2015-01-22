@@ -252,7 +252,7 @@ namespace IfcDoc.Format.HTM
         {
             DocObject ent = null;
             string schema = null;
-            if (definition != null && definition.StartsWith("Ifc") && 
+            if (definition != null && //definition.StartsWith("Ifc") && 
                 this.m_mapEntity.TryGetValue(definition, out ent) && 
                 this.m_mapSchema.TryGetValue(definition, out schema))
             {
@@ -1231,19 +1231,22 @@ namespace IfcDoc.Format.HTM
 
             this.WriteLine("<tr>");
             this.WriteLine("<th>Entity</th>");
-            Dictionary<DocObject, bool>[] maps = new Dictionary<DocObject, bool>[views.Length];
-            for (int iView = 0; iView < views.Length; iView++)
+
+            if (views != null)
             {
-                maps[iView] = new Dictionary<DocObject, bool>();
-                DocModelView docView = views[iView];
-                docProject.RegisterObjectsInScope(docView, maps[iView]);
+                Dictionary<DocObject, bool>[] maps = new Dictionary<DocObject, bool>[views.Length];
+                for (int iView = 0; iView < views.Length; iView++)
+                {
+                    maps[iView] = new Dictionary<DocObject, bool>();
+                    DocModelView docView = views[iView];
+                    docProject.RegisterObjectsInScope(docView, maps[iView]);
 
-                this.WriteLine("<th>" + docView.Code + "</th>");
+                    this.WriteLine("<th>" + docView.Code + "</th>");
+                }
+                this.WriteLine("</tr>");
+
+                WriteInheritanceMappingLevel(null, alphaEntity.Values, maps, 0);
             }
-            this.WriteLine("</tr>");
-
-            WriteInheritanceMappingLevel(null, alphaEntity.Values, maps, 0);
-
             this.WriteLine("</table>");
 
             this.WriteFooter(Properties.Settings.Default.Footer);
@@ -1272,6 +1275,9 @@ namespace IfcDoc.Format.HTM
                     sB.Append("</td>");
                 }
             }
+
+            if (dictionaryViews != null && (!isTemplateUsed || !String.IsNullOrEmpty(docTemplateDefinition.Code))) // new: don't display unused templates - only adds clutter
+                return;
 
             this.WriteLine("<tr><td>");
             for (int i = 0; i < level; i++)
@@ -1315,6 +1321,7 @@ namespace IfcDoc.Format.HTM
                     }
 
                     bool includeitem = false;
+#if false // temp
                     for (int iView = 0; iView < maps.Length; iView++)
                     {
                         if(maps[iView].TryGetValue(entity, out include) && include)
@@ -1323,6 +1330,7 @@ namespace IfcDoc.Format.HTM
                             break;
                         }
                     }
+#endif
 
                     if (includeitem)
                     {
@@ -1925,10 +1933,6 @@ namespace IfcDoc.Format.HTM
                 {
                     this.m_writer.WriteLine(target.Name.ToLower() + "/content.htm\">");
                 }
-                else
-                {
-                    this.ToString();
-                }
 
                 this.m_writer.WriteLine(prefix + " " + (iFigure + 1).ToString() + " &mdash; " + figurename + "</a><br />");
             }
@@ -2191,8 +2195,14 @@ namespace IfcDoc.Format.HTM
                         {
                             if (this.m_included == null || this.m_included.ContainsKey(docEnt))
                             {
-                                mapEntity.Add(docEnt.Name, docEnt);
-                                mapGeneral.Add(docEnt.Name, docEnt);
+                                if (!mapEntity.ContainsKey(docEnt.Name))
+                                {
+                                    mapEntity.Add(docEnt.Name, docEnt);
+                                }
+                                if (!mapGeneral.ContainsKey(docEnt.Name))
+                                {
+                                    mapGeneral.Add(docEnt.Name, docEnt);
+                                }
                             }
                         }
 
@@ -2517,6 +2527,10 @@ namespace IfcDoc.Format.HTM
     "<td>&nbsp;</td>" +
     "</tr>" +
     "<tr>" +
+    "<td>EXPRESS XSD configuration</td>" +
+    "<td><a href=\"" + linkprefix + ".xml.txt\">" + code + ".xml</a></td>" +
+    "<td>&nbsp;</td>" +
+    "</tr>" +
     "</table>");
             }
 
@@ -2854,6 +2868,65 @@ namespace IfcDoc.Format.HTM
             this.WriteLine("</dd>");
         }
 
+        internal void WriteChangeLog(DocDefinition entity, DocProject docProject)
+        {
+            Dictionary<DocChangeSet, DocChangeAction> mapChange = new Dictionary<DocChangeSet, DocChangeAction>();
+            foreach (DocChangeSet docChangeSet in docProject.ChangeSets)
+            {
+                foreach (DocChangeAction docChangeSection in docChangeSet.ChangesEntities)
+                {
+                    foreach (DocChangeAction docChangeSchema in docChangeSection.Changes)
+                    {
+                        foreach (DocChangeAction docChangeEntity in docChangeSchema.Changes)
+                        {
+                            if (docChangeEntity.Name.Equals(entity.Name) && docChangeEntity.HasChanges())
+                            {
+                                try
+                                {
+                                    // could show up twice, for case of an entity moving between schemas
+                                    if (!mapChange.ContainsKey(docChangeSet))
+                                    {
+                                        mapChange.Add(docChangeSet, docChangeEntity);
+                                    }
+                                }
+                                catch
+                                {
+                                    mapChange.ToString();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (mapChange.Count > 0)
+            {
+                this.WriteLine("<details>");
+                this.WriteLine("<summary>Change log</summary>");
+
+                this.WriteLine("<table class=\"gridtable\">");
+                this.WriteLine("<tr>" +
+                    "<th>Item</th>" +
+                    "<th>SPF</th>" +
+                    "<th>XML</th>" +
+                    "<th>Change</th>" +
+                    "<th>Description</th>" +
+                    "</tr>");
+
+                foreach (DocChangeSet docChangeSet in mapChange.Keys)
+                {
+                    this.WriteLine("<td colspan=5><b><a href=\"../../../annex/annex-f/" + DocumentationISO.MakeLinkName(docChangeSet) + "/index.htm\">" + docChangeSet.Name + "</a></b></td>");
+                    DocChangeAction docChangeAction = mapChange[docChangeSet];
+                    this.WriteChangeItem(docChangeAction, 2);
+                }
+
+                this.WriteLine("</table>");
+
+                this.WriteLine("</details>");
+            }
+
+
+        }
     }    
 
 }

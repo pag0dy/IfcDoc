@@ -117,7 +117,841 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="label1.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 21</value>
+  </data>
+  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>248, 13</value>
+  </data>
+  <data name="label1.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="label1.Text" xml:space="preserve">
+    <value>Root folder path where to generate documentation:</value>
+  </data>
+  <data name="&gt;&gt;label1.Name" xml:space="preserve">
+    <value>label1</value>
+  </data>
+  <data name="&gt;&gt;label1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label1.Parent" xml:space="preserve">
+    <value>groupBoxLocation</value>
+  </data>
+  <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="textBoxPath.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 38</value>
+  </data>
+  <data name="textBoxPath.Size" type="System.Drawing.Size, System.Drawing">
+    <value>484, 20</value>
+  </data>
+  <data name="textBoxPath.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;textBoxPath.Name" xml:space="preserve">
+    <value>textBoxPath</value>
+  </data>
+  <data name="&gt;&gt;textBoxPath.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;textBoxPath.Parent" xml:space="preserve">
+    <value>groupBoxLocation</value>
+  </data>
+  <data name="&gt;&gt;textBoxPath.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="buttonPath.Location" type="System.Drawing.Point, System.Drawing">
+    <value>499, 36</value>
+  </data>
+  <data name="buttonPath.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="buttonPath.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="buttonPath.Text" xml:space="preserve">
+    <value>Browse...</value>
+  </data>
+  <data name="&gt;&gt;buttonPath.Name" xml:space="preserve">
+    <value>buttonPath</value>
+  </data>
+  <data name="&gt;&gt;buttonPath.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;buttonPath.Parent" xml:space="preserve">
+    <value>groupBoxLocation</value>
+  </data>
+  <data name="&gt;&gt;buttonPath.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="textBoxHeader.Location" type="System.Drawing.Point, System.Drawing">
+    <value>157, 15</value>
+  </data>
+  <data name="textBoxHeader.Size" type="System.Drawing.Size, System.Drawing">
+    <value>417, 20</value>
+  </data>
+  <data name="textBoxHeader.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;textBoxHeader.Name" xml:space="preserve">
+    <value>textBoxHeader</value>
+  </data>
+  <data name="&gt;&gt;textBoxHeader.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;textBoxHeader.Parent" xml:space="preserve">
+    <value>groupBoxDetails</value>
+  </data>
+  <data name="&gt;&gt;textBoxHeader.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="textBoxFooter.Location" type="System.Drawing.Point, System.Drawing">
+    <value>157, 41</value>
+  </data>
+  <data name="textBoxFooter.Size" type="System.Drawing.Size, System.Drawing">
+    <value>417, 20</value>
+  </data>
+  <data name="textBoxFooter.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;textBoxFooter.Name" xml:space="preserve">
+    <value>textBoxFooter</value>
+  </data>
+  <data name="&gt;&gt;textBoxFooter.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;textBoxFooter.Parent" xml:space="preserve">
+    <value>groupBoxDetails</value>
+  </data>
+  <data name="&gt;&gt;textBoxFooter.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="checkBoxHeader.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="checkBoxHeader.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 17</value>
+  </data>
+  <data name="checkBoxHeader.Size" type="System.Drawing.Size, System.Drawing">
+    <value>133, 17</value>
+  </data>
+  <data name="checkBoxHeader.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="checkBoxHeader.Text" xml:space="preserve">
+    <value>Header on each page:</value>
+  </data>
+  <data name="&gt;&gt;checkBoxHeader.Name" xml:space="preserve">
+    <value>checkBoxHeader</value>
+  </data>
+  <data name="&gt;&gt;checkBoxHeader.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;checkBoxHeader.Parent" xml:space="preserve">
+    <value>groupBoxDetails</value>
+  </data>
+  <data name="&gt;&gt;checkBoxHeader.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="checkBoxFooter.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="checkBoxFooter.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 43</value>
+  </data>
+  <data name="checkBoxFooter.Size" type="System.Drawing.Size, System.Drawing">
+    <value>128, 17</value>
+  </data>
+  <data name="checkBoxFooter.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="checkBoxFooter.Text" xml:space="preserve">
+    <value>Footer on each page:</value>
+  </data>
+  <data name="&gt;&gt;checkBoxFooter.Name" xml:space="preserve">
+    <value>checkBoxFooter</value>
+  </data>
+  <data name="&gt;&gt;checkBoxFooter.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;checkBoxFooter.Parent" xml:space="preserve">
+    <value>groupBoxDetails</value>
+  </data>
+  <data name="&gt;&gt;checkBoxFooter.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="checkBoxSuppressHistory.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="checkBoxSuppressHistory.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 69</value>
+  </data>
+  <data name="checkBoxSuppressHistory.Size" type="System.Drawing.Size, System.Drawing">
+    <value>169, 17</value>
+  </data>
+  <data name="checkBoxSuppressHistory.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="checkBoxSuppressHistory.Text" xml:space="preserve">
+    <value>Suppress version history notes</value>
+  </data>
+  <data name="&gt;&gt;checkBoxSuppressHistory.Name" xml:space="preserve">
+    <value>checkBoxSuppressHistory</value>
+  </data>
+  <data name="&gt;&gt;checkBoxSuppressHistory.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;checkBoxSuppressHistory.Parent" xml:space="preserve">
+    <value>groupBoxDetails</value>
+  </data>
+  <data name="&gt;&gt;checkBoxSuppressHistory.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="checkBoxSuppressXML.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="checkBoxSuppressXML.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 94</value>
+  </data>
+  <data name="checkBoxSuppressXML.Size" type="System.Drawing.Size, System.Drawing">
+    <value>267, 17</value>
+  </data>
+  <data name="checkBoxSuppressXML.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="checkBoxSuppressXML.Text" xml:space="preserve">
+    <value>Suppress property set and quantity set links to XML</value>
+  </data>
+  <data name="&gt;&gt;checkBoxSuppressXML.Name" xml:space="preserve">
+    <value>checkBoxSuppressXML</value>
+  </data>
+  <data name="&gt;&gt;checkBoxSuppressXML.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;checkBoxSuppressXML.Parent" xml:space="preserve">
+    <value>groupBoxDetails</value>
+  </data>
+  <data name="&gt;&gt;checkBoxSuppressXML.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;checkBoxSkip.Name" xml:space="preserve">
+    <value>checkBoxSkip</value>
+  </data>
+  <data name="&gt;&gt;checkBoxSkip.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;checkBoxSkip.Parent" xml:space="preserve">
+    <value>groupBoxLocation</value>
+  </data>
+  <data name="&gt;&gt;checkBoxSkip.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="groupBoxLocation.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 6</value>
+  </data>
+  <data name="groupBoxLocation.Size" type="System.Drawing.Size, System.Drawing">
+    <value>580, 94</value>
+  </data>
+  <data name="groupBoxLocation.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="groupBoxLocation.Text" xml:space="preserve">
+    <value>Location</value>
+  </data>
+  <data name="&gt;&gt;groupBoxLocation.Name" xml:space="preserve">
+    <value>groupBoxLocation</value>
+  </data>
+  <data name="&gt;&gt;groupBoxLocation.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;groupBoxLocation.Parent" xml:space="preserve">
+    <value>tabPage1</value>
+  </data>
+  <data name="&gt;&gt;groupBoxLocation.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="checkBoxSkip.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="checkBoxSkip.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 65</value>
+  </data>
+  <data name="checkBoxSkip.Size" type="System.Drawing.Size, System.Drawing">
+    <value>352, 17</value>
+  </data>
+  <data name="checkBoxSkip.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="checkBoxSkip.Text" xml:space="preserve">
+    <value>Skip regeneration of diagrams and examples (for quick update of text)</value>
+  </data>
+  <data name="&gt;&gt;checkBoxSkip.Name" xml:space="preserve">
+    <value>checkBoxSkip</value>
+  </data>
+  <data name="&gt;&gt;checkBoxSkip.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;checkBoxSkip.Parent" xml:space="preserve">
+    <value>groupBoxLocation</value>
+  </data>
+  <data name="&gt;&gt;checkBoxSkip.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;checkBoxSuppressXSD.Name" xml:space="preserve">
+    <value>checkBoxSuppressXSD</value>
+  </data>
+  <data name="&gt;&gt;checkBoxSuppressXSD.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;checkBoxSuppressXSD.Parent" xml:space="preserve">
+    <value>groupBoxDetails</value>
+  </data>
+  <data name="&gt;&gt;checkBoxSuppressXSD.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;checkBoxExpressEnclosed.Name" xml:space="preserve">
+    <value>checkBoxExpressEnclosed</value>
+  </data>
+  <data name="&gt;&gt;checkBoxExpressEnclosed.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;checkBoxExpressEnclosed.Parent" xml:space="preserve">
+    <value>groupBoxDetails</value>
+  </data>
+  <data name="&gt;&gt;checkBoxExpressEnclosed.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="groupBoxDetails.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 6</value>
+  </data>
+  <data name="groupBoxDetails.Size" type="System.Drawing.Size, System.Drawing">
+    <value>580, 167</value>
+  </data>
+  <data name="groupBoxDetails.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="groupBoxDetails.Text" xml:space="preserve">
+    <value>ISO Documentation Conformance</value>
+  </data>
+  <data name="&gt;&gt;groupBoxDetails.Name" xml:space="preserve">
+    <value>groupBoxDetails</value>
+  </data>
+  <data name="&gt;&gt;groupBoxDetails.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;groupBoxDetails.Parent" xml:space="preserve">
+    <value>tabPage2</value>
+  </data>
+  <data name="&gt;&gt;groupBoxDetails.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="checkBoxSuppressXSD.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="checkBoxSuppressXSD.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 144</value>
+  </data>
+  <data name="checkBoxSuppressXSD.Size" type="System.Drawing.Size, System.Drawing">
+    <value>145, 17</value>
+  </data>
+  <data name="checkBoxSuppressXSD.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="checkBoxSuppressXSD.Text" xml:space="preserve">
+    <value>Suppress XSD definitions</value>
+  </data>
+  <data name="&gt;&gt;checkBoxSuppressXSD.Name" xml:space="preserve">
+    <value>checkBoxSuppressXSD</value>
+  </data>
+  <data name="&gt;&gt;checkBoxSuppressXSD.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;checkBoxSuppressXSD.Parent" xml:space="preserve">
+    <value>groupBoxDetails</value>
+  </data>
+  <data name="&gt;&gt;checkBoxSuppressXSD.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="checkBoxExpressEnclosed.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="checkBoxExpressEnclosed.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 119</value>
+  </data>
+  <data name="checkBoxExpressEnclosed.Size" type="System.Drawing.Size, System.Drawing">
+    <value>258, 17</value>
+  </data>
+  <data name="checkBoxExpressEnclosed.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="checkBoxExpressEnclosed.Text" xml:space="preserve">
+    <value>Enclose EXPRESS definitions in comments *) .. (*</value>
+  </data>
+  <data name="&gt;&gt;checkBoxExpressEnclosed.Name" xml:space="preserve">
+    <value>checkBoxExpressEnclosed</value>
+  </data>
+  <data name="&gt;&gt;checkBoxExpressEnclosed.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;checkBoxExpressEnclosed.Parent" xml:space="preserve">
+    <value>groupBoxDetails</value>
+  </data>
+  <data name="&gt;&gt;checkBoxExpressEnclosed.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="buttonOK.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Right</value>
+  </data>
+  <data name="buttonOK.Location" type="System.Drawing.Point, System.Drawing">
+    <value>456, 407</value>
+  </data>
+  <data name="buttonOK.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="buttonOK.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="buttonOK.Text" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="&gt;&gt;buttonOK.Name" xml:space="preserve">
+    <value>buttonOK</value>
+  </data>
+  <data name="&gt;&gt;buttonOK.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;buttonOK.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;buttonOK.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="buttonCancel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Right</value>
+  </data>
+  <data name="buttonCancel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>537, 407</value>
+  </data>
+  <data name="buttonCancel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="buttonCancel.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="buttonCancel.Text" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="&gt;&gt;buttonCancel.Name" xml:space="preserve">
+    <value>buttonCancel</value>
+  </data>
+  <data name="&gt;&gt;buttonCancel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;buttonCancel.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;buttonCancel.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
   <metadata name="folderBrowserDialog.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <data name="checkBoxRequirement.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="checkBoxRequirement.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 19</value>
+  </data>
+  <data name="checkBoxRequirement.Size" type="System.Drawing.Size, System.Drawing">
+    <value>163, 17</value>
+  </data>
+  <data name="checkBoxRequirement.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="checkBoxRequirement.Text" xml:space="preserve">
+    <value>Exchange requirement tables</value>
+  </data>
+  <data name="&gt;&gt;checkBoxRequirement.Name" xml:space="preserve">
+    <value>checkBoxRequirement</value>
+  </data>
+  <data name="&gt;&gt;checkBoxRequirement.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;checkBoxRequirement.Parent" xml:space="preserve">
+    <value>groupBoxModelView</value>
+  </data>
+  <data name="&gt;&gt;checkBoxRequirement.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;checkBoxExcludeWhereRules.Name" xml:space="preserve">
+    <value>checkBoxExcludeWhereRules</value>
+  </data>
+  <data name="&gt;&gt;checkBoxExcludeWhereRules.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;checkBoxExcludeWhereRules.Parent" xml:space="preserve">
+    <value>groupBoxModelView</value>
+  </data>
+  <data name="&gt;&gt;checkBoxExcludeWhereRules.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;checkBoxConceptTables.Name" xml:space="preserve">
+    <value>checkBoxConceptTables</value>
+  </data>
+  <data name="&gt;&gt;checkBoxConceptTables.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;checkBoxConceptTables.Parent" xml:space="preserve">
+    <value>groupBoxModelView</value>
+  </data>
+  <data name="&gt;&gt;checkBoxConceptTables.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="groupBoxModelView.Location" type="System.Drawing.Point, System.Drawing">
+    <value>7, 179</value>
+  </data>
+  <data name="groupBoxModelView.Size" type="System.Drawing.Size, System.Drawing">
+    <value>579, 96</value>
+  </data>
+  <data name="groupBoxModelView.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="groupBoxModelView.Text" xml:space="preserve">
+    <value>MVD Documentation Conformance</value>
+  </data>
+  <data name="&gt;&gt;groupBoxModelView.Name" xml:space="preserve">
+    <value>groupBoxModelView</value>
+  </data>
+  <data name="&gt;&gt;groupBoxModelView.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;groupBoxModelView.Parent" xml:space="preserve">
+    <value>tabPage2</value>
+  </data>
+  <data name="&gt;&gt;groupBoxModelView.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="checkBoxExcludeWhereRules.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="checkBoxExcludeWhereRules.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 65</value>
+  </data>
+  <data name="checkBoxExcludeWhereRules.Size" type="System.Drawing.Size, System.Drawing">
+    <value>135, 17</value>
+  </data>
+  <data name="checkBoxExcludeWhereRules.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="checkBoxExcludeWhereRules.Text" xml:space="preserve">
+    <value>Suppress Where Rules</value>
+  </data>
+  <data name="&gt;&gt;checkBoxExcludeWhereRules.Name" xml:space="preserve">
+    <value>checkBoxExcludeWhereRules</value>
+  </data>
+  <data name="&gt;&gt;checkBoxExcludeWhereRules.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;checkBoxExcludeWhereRules.Parent" xml:space="preserve">
+    <value>groupBoxModelView</value>
+  </data>
+  <data name="&gt;&gt;checkBoxExcludeWhereRules.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="checkBoxConceptTables.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="checkBoxConceptTables.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 42</value>
+  </data>
+  <data name="checkBoxConceptTables.Size" type="System.Drawing.Size, System.Drawing">
+    <value>129, 17</value>
+  </data>
+  <data name="checkBoxConceptTables.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="checkBoxConceptTables.Text" xml:space="preserve">
+    <value>Rule parameter tables</value>
+  </data>
+  <data name="&gt;&gt;checkBoxConceptTables.Name" xml:space="preserve">
+    <value>checkBoxConceptTables</value>
+  </data>
+  <data name="&gt;&gt;checkBoxConceptTables.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;checkBoxConceptTables.Parent" xml:space="preserve">
+    <value>groupBoxModelView</value>
+  </data>
+  <data name="&gt;&gt;checkBoxConceptTables.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="tabControl.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
+  </data>
+  <data name="groupBoxViews.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
+  </data>
+  <data name="checkedListBoxViews.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
+  </data>
+  <data name="checkedListBoxViews.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 20</value>
+  </data>
+  <data name="checkedListBoxViews.Size" type="System.Drawing.Size, System.Drawing">
+    <value>565, 214</value>
+  </data>
+  <data name="checkedListBoxViews.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;checkedListBoxViews.Name" xml:space="preserve">
+    <value>checkedListBoxViews</value>
+  </data>
+  <data name="&gt;&gt;checkedListBoxViews.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckedListBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;checkedListBoxViews.Parent" xml:space="preserve">
+    <value>groupBoxViews</value>
+  </data>
+  <data name="&gt;&gt;checkedListBoxViews.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="groupBoxViews.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 106</value>
+  </data>
+  <data name="groupBoxViews.Size" type="System.Drawing.Size, System.Drawing">
+    <value>580, 251</value>
+  </data>
+  <data name="groupBoxViews.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="groupBoxViews.Text" xml:space="preserve">
+    <value>Model Views</value>
+  </data>
+  <data name="&gt;&gt;groupBoxViews.Name" xml:space="preserve">
+    <value>groupBoxViews</value>
+  </data>
+  <data name="&gt;&gt;groupBoxViews.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;groupBoxViews.Parent" xml:space="preserve">
+    <value>tabPage1</value>
+  </data>
+  <data name="&gt;&gt;groupBoxViews.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="tabPage1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 22</value>
+  </data>
+  <data name="tabPage1.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="tabPage1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>592, 363</value>
+  </data>
+  <data name="tabPage1.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="tabPage1.Text" xml:space="preserve">
+    <value>Content</value>
+  </data>
+  <data name="&gt;&gt;tabPage1.Name" xml:space="preserve">
+    <value>tabPage1</value>
+  </data>
+  <data name="&gt;&gt;tabPage1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tabPage1.Parent" xml:space="preserve">
+    <value>tabControl</value>
+  </data>
+  <data name="&gt;&gt;tabPage1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;groupBoxExamples.Name" xml:space="preserve">
+    <value>groupBoxExamples</value>
+  </data>
+  <data name="&gt;&gt;groupBoxExamples.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;groupBoxExamples.Parent" xml:space="preserve">
+    <value>tabPage2</value>
+  </data>
+  <data name="&gt;&gt;groupBoxExamples.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="tabPage2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 22</value>
+  </data>
+  <data name="tabPage2.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="tabPage2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>592, 363</value>
+  </data>
+  <data name="tabPage2.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="tabPage2.Text" xml:space="preserve">
+    <value>Format</value>
+  </data>
+  <data name="&gt;&gt;tabPage2.Name" xml:space="preserve">
+    <value>tabPage2</value>
+  </data>
+  <data name="&gt;&gt;tabPage2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tabPage2.Parent" xml:space="preserve">
+    <value>tabControl</value>
+  </data>
+  <data name="&gt;&gt;tabPage2.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="tabControl.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 12</value>
+  </data>
+  <data name="tabControl.Size" type="System.Drawing.Size, System.Drawing">
+    <value>600, 389</value>
+  </data>
+  <data name="tabControl.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;tabControl.Name" xml:space="preserve">
+    <value>tabControl</value>
+  </data>
+  <data name="&gt;&gt;tabControl.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabControl, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tabControl.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;tabControl.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="groupBoxExamples.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="&gt;&gt;checkBoxExampleXML.Name" xml:space="preserve">
+    <value>checkBoxExampleXML</value>
+  </data>
+  <data name="&gt;&gt;checkBoxExampleXML.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;checkBoxExampleXML.Parent" xml:space="preserve">
+    <value>groupBoxExamples</value>
+  </data>
+  <data name="&gt;&gt;checkBoxExampleXML.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;checkBoxExampleSPF.Name" xml:space="preserve">
+    <value>checkBoxExampleSPF</value>
+  </data>
+  <data name="&gt;&gt;checkBoxExampleSPF.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;checkBoxExampleSPF.Parent" xml:space="preserve">
+    <value>groupBoxExamples</value>
+  </data>
+  <data name="&gt;&gt;checkBoxExampleSPF.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="groupBoxExamples.Location" type="System.Drawing.Point, System.Drawing">
+    <value>7, 281</value>
+  </data>
+  <data name="groupBoxExamples.Size" type="System.Drawing.Size, System.Drawing">
+    <value>579, 76</value>
+  </data>
+  <data name="groupBoxExamples.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="groupBoxExamples.Text" xml:space="preserve">
+    <value>Examples</value>
+  </data>
+  <data name="&gt;&gt;groupBoxExamples.Name" xml:space="preserve">
+    <value>groupBoxExamples</value>
+  </data>
+  <data name="&gt;&gt;groupBoxExamples.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;groupBoxExamples.Parent" xml:space="preserve">
+    <value>tabPage2</value>
+  </data>
+  <data name="&gt;&gt;groupBoxExamples.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="checkBoxExampleXML.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 42</value>
+  </data>
+  <data name="checkBoxExampleXML.Size" type="System.Drawing.Size, System.Drawing">
+    <value>565, 24</value>
+  </data>
+  <data name="checkBoxExampleXML.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="checkBoxExampleXML.Text" xml:space="preserve">
+    <value>IFC-XML (ISO 10303-28)</value>
+  </data>
+  <data name="&gt;&gt;checkBoxExampleXML.Name" xml:space="preserve">
+    <value>checkBoxExampleXML</value>
+  </data>
+  <data name="&gt;&gt;checkBoxExampleXML.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;checkBoxExampleXML.Parent" xml:space="preserve">
+    <value>groupBoxExamples</value>
+  </data>
+  <data name="&gt;&gt;checkBoxExampleXML.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="checkBoxExampleSPF.Location" type="System.Drawing.Point, System.Drawing">
+    <value>8, 19</value>
+  </data>
+  <data name="checkBoxExampleSPF.Size" type="System.Drawing.Size, System.Drawing">
+    <value>565, 24</value>
+  </data>
+  <data name="checkBoxExampleSPF.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="checkBoxExampleSPF.Text" xml:space="preserve">
+    <value>IFC-SPF (ISO 10303-21)</value>
+  </data>
+  <data name="&gt;&gt;checkBoxExampleSPF.Name" xml:space="preserve">
+    <value>checkBoxExampleSPF</value>
+  </data>
+  <data name="&gt;&gt;checkBoxExampleSPF.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;checkBoxExampleSPF.Parent" xml:space="preserve">
+    <value>groupBoxExamples</value>
+  </data>
+  <data name="&gt;&gt;checkBoxExampleSPF.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>624, 441</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Generate Documentation</value>
+  </data>
+  <data name="&gt;&gt;folderBrowserDialog.Name" xml:space="preserve">
+    <value>folderBrowserDialog</value>
+  </data>
+  <data name="&gt;&gt;folderBrowserDialog.Type" xml:space="preserve">
+    <value>System.Windows.Forms.FolderBrowserDialog, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>FormGenerate</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>

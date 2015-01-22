@@ -38,6 +38,8 @@ namespace IfcDoc
             this.checkBoxRequirement.Checked = Properties.Settings.Default.Requirement;
             this.checkBoxConceptTables.Checked = Properties.Settings.Default.ConceptTables;
             this.checkBoxExcludeWhereRules.Checked = Properties.Settings.Default.NoWhereRules;
+            this.checkBoxExampleSPF.Checked = Properties.Settings.Default.ExampleSPF;
+            this.checkBoxExampleXML.Checked = Properties.Settings.Default.ExampleXML;
         }
 
         protected override void OnClosed(EventArgs e)
@@ -57,6 +59,8 @@ namespace IfcDoc
                 Properties.Settings.Default.Requirement = this.checkBoxRequirement.Checked;
                 Properties.Settings.Default.ConceptTables = this.checkBoxConceptTables.Checked;
                 Properties.Settings.Default.NoWhereRules = this.checkBoxExcludeWhereRules.Checked;
+                Properties.Settings.Default.ExampleSPF = this.checkBoxExampleSPF.Checked;
+                Properties.Settings.Default.ExampleXML = this.checkBoxExampleXML.Checked;
                 Properties.Settings.Default.Save();
             }
         }

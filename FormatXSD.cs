@@ -101,11 +101,17 @@ namespace IfcDoc.Format.XSD
                 {
                     foreach (DocEntity docEnt in docSchema.Entities)
                     {
-                        map.Add(docEnt.Name, docEnt);
+                        if(!map.ContainsKey(docEnt.Name))
+                        { 
+                            map.Add(docEnt.Name, docEnt);
+                        }
                     }
                     foreach (DocType docType in docSchema.Types)
                     {
-                        map.Add(docType.Name, docType);
+                        if(!map.ContainsKey(docType.Name))
+                        {
+                            map.Add(docType.Name, docType);
+                        }
                     }
                 }
             }
@@ -148,17 +154,21 @@ namespace IfcDoc.Format.XSD
                         {
                             if (this.m_included == null || this.m_included.ContainsKey(docEnt))
                             {
-                                mapEntity.Add(docEnt.Name, docEnt);
+                                if (!mapEntity.ContainsKey(docEnt.Name))
+                                {
+                                    mapEntity.Add(docEnt.Name, docEnt);
+                                }
 
                                 // check for any attributes that are lists of value types requiring wrapper, e.g. IfcTextFontName
                                 foreach (DocAttribute docAttr in docEnt.Attributes)
                                 {
                                     DocObject docObjRef = null;
-                                    if (docAttr.GetAggregation() != DocAggregationEnum.NONE && 
+                                    if (docAttr.DefinedType != null &&
+                                        docAttr.GetAggregation() != DocAggregationEnum.NONE && 
                                         map.TryGetValue(docAttr.DefinedType, out docObjRef) && 
                                         docObjRef is DocDefined && 
                                         docAttr.XsdFormat == DocXsdFormatEnum.Element &&
-                                        !docAttr.XsdTagless && 
+                                        !(docAttr.XsdTagless == true) && 
                                         !sort.ContainsKey(docAttr.DefinedType))
                                     {
                                         sort.Add(docAttr.DefinedType, docAttr.DefinedType);
@@ -275,17 +285,6 @@ namespace IfcDoc.Format.XSD
                     }
                 }
 
-                // double wrapper
-                writer.WriteLine("\t<xs:element name=\"double-wrapper\" nillable=\"true\">");
-                writer.WriteLine("\t\t<xs:complexType>");
-                writer.WriteLine("\t\t\t<xs:simpleContent>");
-                writer.WriteLine("\t\t\t\t<xs:extension base=\"xs:double\">");
-                writer.WriteLine("\t\t\t\t\t<xs:attributeGroup ref=\"ifc:instanceAttributes\"/>");
-                writer.WriteLine("\t\t\t\t</xs:extension>");
-                writer.WriteLine("\t\t\t</xs:simpleContent>");
-                writer.WriteLine("\t\t</xs:complexType>");
-                writer.WriteLine("\t</xs:element>");
-
                 writer.WriteLine("</xs:schema>");
             }                    
         }
@@ -336,14 +335,14 @@ namespace IfcDoc.Format.XSD
                 sb.Append("\"");
             }
 
-            if (docAttr.IsOptional() || 
+            if (docAttr.IsOptional || 
                 mapDef is DocEntity && (docAttr.GetAggregation() == DocAggregationEnum.NONE || docAttr.GetAggregationNestingLower() == 1 && docAttr.GetAggregationNestingUpper() == 1) || 
                 docAttr.Inverse != null)
             {
                 sb.Append(" nillable=\"true\"");
             }
 
-            if (docAttr.IsOptional() || docAttr.Inverse != null || IsAttributeOverridden(docEntity, docAttr, map))// || (docAttr.GetAggregation() == DocAggregationEnum.SET && docAttr.GetAggregationNestingLower() == 0))// || docAttr.XsdFormat == DocXsdFormatEnum.Attribute)
+            if (docAttr.IsOptional || docAttr.Inverse != null || IsAttributeOverridden(docEntity, docAttr, map))// || (docAttr.GetAggregation() == DocAggregationEnum.SET && docAttr.GetAggregationNestingLower() == 0))// || docAttr.XsdFormat == DocXsdFormatEnum.Attribute)
             {
                 sb.Append(" minOccurs=\"0\"");
             }
@@ -630,7 +629,7 @@ namespace IfcDoc.Format.XSD
             {
                 if (included == null || included.ContainsKey(docAttr))
                 {
-                    if (docAttr.XsdFormat != DocXsdFormatEnum.Hidden && !docAttr.XsdTagless)
+                    if (docAttr.XsdFormat != DocXsdFormatEnum.Hidden && !(docAttr.XsdTagless == true) && docAttr.DefinedType != null)
                     {
                         DocObject mapDef = null;
                         map.TryGetValue(docAttr.DefinedType, out mapDef);
@@ -676,14 +675,14 @@ namespace IfcDoc.Format.XSD
             {
                 if (included == null || included.ContainsKey(docAttr))
                 {
-                    if (docAttr.XsdFormat != DocXsdFormatEnum.Hidden)// && docAttr.XsdFormat != DocXsdFormatEnum.Element*/)
+                    if (docAttr.XsdFormat != DocXsdFormatEnum.Hidden && docAttr.DefinedType != null)// && docAttr.XsdFormat != DocXsdFormatEnum.Element*/)
                     {
                         DocObject mapDef = null;
                         if ((docAttr.Inverse == null || docAttr.XsdFormat == DocXsdFormatEnum.Attribute) &&
-                            docAttr.Derived == null && (docAttr.XsdFormat != DocXsdFormatEnum.Element || docAttr.XsdTagless))
+                            docAttr.Derived == null && (docAttr.XsdFormat != DocXsdFormatEnum.Element || docAttr.XsdTagless == true))
                         {
                             if ((map.TryGetValue(docAttr.DefinedType, out mapDef) == false && !docAttr.DefinedType.StartsWith("BINARY")) ||
-                                (mapDef is DocDefined || mapDef is DocEnumeration || docAttr.XsdTagless/* || docAttr.XsdFormat == DocXsdFormatEnum.Attribute*/))
+                                (mapDef is DocDefined || mapDef is DocEnumeration || docAttr.XsdTagless == true/* || docAttr.XsdFormat == DocXsdFormatEnum.Attribute*/))
                             {
                                 if (mapDef == null || (included == null || included.ContainsKey(mapDef)))
                                 {

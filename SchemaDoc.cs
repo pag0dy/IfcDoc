@@ -152,11 +152,13 @@ namespace IfcDoc.Schema.DOC
 
     public enum DocXsdFormatEnum
     {
-        Default = 0,
-        Hidden = 1,    // for direct attribute, don't include as inverse is defined instead
-        Attribute = 2, // represent as attribute
-        Element = 3,   // represent as element
-        Content = 4,   // represent as content
+        Default = IfcDoc.Schema.CNF.exp_attribute.unspecified,
+        Hidden = IfcDoc.Schema.CNF.exp_attribute.no_tag,    // for direct attribute, don't include as inverse is defined instead
+        Attribute = IfcDoc.Schema.CNF.exp_attribute.attribute_tag, // represent as attribute
+        Element = IfcDoc.Schema.CNF.exp_attribute.double_tag,   // represent as element
+        Content = IfcDoc.Schema.CNF.exp_attribute.attribute_content,   // represent as content
+        Type = IfcDoc.Schema.CNF.exp_attribute.type_tag,
+        Simple = IfcDoc.Schema.CNF.exp_attribute.no_tag_simple
     }
 
     /// <summary>
@@ -419,29 +421,180 @@ namespace IfcDoc.Schema.DOC
     /// </summary>
     public class DocProject : SEntity
     {
-        [DataMember(Order = 0)] public List<DocSection> Sections;
-        [DataMember(Order = 1)] public List<DocAnnex> Annexes; // inserted in 1.2
-        [DataMember(Order = 2)] public List<DocTemplateDefinition> Templates;
-        [DataMember(Order = 3)] public List<DocModelView> ModelViews; // new in 2.7
-        [DataMember(Order = 4)] public List<DocChangeSet> ChangeSets; // new in 2.7
-        [DataMember(Order = 5)] public List<DocExample> Examples; // new in 4.2
-        [DataMember(Order = 6)] public List<DocReference> NormativeReferences; // new in 4.3
-        [DataMember(Order = 7)] public List<DocReference> InformativeReferences; // new in 4.3
-        [DataMember(Order = 8)] public List<DocTerm> Terms; // new in 4.3
-        [DataMember(Order = 9)] public List<DocAbbreviation> Abbreviations; // new in 4.3
+        [DataMember(Order = 0)] private List<DocSection> _Sections;
+        [DataMember(Order = 1)] private List<DocAnnex> _Annexes; // inserted in 1.2
+        [DataMember(Order = 2)] private List<DocTemplateDefinition> _Templates;
+        [DataMember(Order = 3)] private List<DocModelView> _ModelViews; // new in 2.7
+        [DataMember(Order = 4)] private List<DocChangeSet> _ChangeSets; // new in 2.7
+        [DataMember(Order = 5)] private List<DocExample> _Examples; // new in 4.2
+        [DataMember(Order = 6)] private List<DocReference> _NormativeReferences; // new in 4.3
+        [DataMember(Order = 7)] private List<DocReference> _InformativeReferences; // new in 4.3
+        [DataMember(Order = 8)] private List<DocTerm> _Terms; // new in 4.3
+        [DataMember(Order = 9)] private List<DocAbbreviation> _Abbreviations; // new in 4.3
+        [DataMember(Order = 10)] private List<DocAnnotation> _Annotations; // new in 8.7: Cover | Foreword | Introduction
 
         public DocProject()
         {
-            this.Sections = new List<DocSection>();
-            this.Annexes = new List<DocAnnex>();
-            this.Templates = new List<DocTemplateDefinition>();
-            this.ModelViews = new List<DocModelView>();
-            this.ChangeSets = new List<DocChangeSet>();
-            this.Examples = new List<DocExample>();
-            this.NormativeReferences = new List<DocReference>();
-            this.InformativeReferences = new List<DocReference>();
-            this.Terms = new List<DocTerm>();
-            this.Abbreviations = new List<DocAbbreviation>();
+        }
+
+        public List<DocSection> Sections
+        {
+            get
+            {
+                if (this._Sections == null)
+                {
+                    this._Sections = new List<DocSection>();
+                    this._Sections.Add(new DocSection("Scope"));
+                    this._Sections.Add(new DocSection("Normative references"));
+                    this._Sections.Add(new DocSection("Terms, definitions, and abbreviated terms"));
+                    this._Sections.Add(new DocSection("Fundamental concepts and assumptions"));
+                    this._Sections.Add(new DocSection("Core data schemas"));
+                    this._Sections.Add(new DocSection("Shared element data schemas"));
+                    this._Sections.Add(new DocSection("Domain specific data schemas"));
+                    this._Sections.Add(new DocSection("Resource definition data schemas"));
+                }
+                return this._Sections;
+            }
+        }
+
+        public List<DocAnnex> Annexes
+        {
+            get
+            {
+                if (this._Annexes == null)
+                {
+                    this._Annexes = new List<DocAnnex>();
+                    this._Annexes.Add(new DocAnnex("Computer interpretable listings"));
+                    this._Annexes.Add(new DocAnnex("Alphabetical listings"));
+                    this._Annexes.Add(new DocAnnex("Inheritance listings"));
+                    this._Annexes.Add(new DocAnnex("Diagrams"));
+                    this._Annexes.Add(new DocAnnex("Examples"));
+                    this._Annexes.Add(new DocAnnex("Change logs"));
+                }
+                return this._Annexes;
+            }
+        }
+
+        public List<DocTemplateDefinition> Templates
+        {
+            get
+            {
+                if(this._Templates == null)
+                {
+                    this._Templates = new List<DocTemplateDefinition>();
+                }
+
+                return this._Templates;
+            }
+        }
+
+        public List<DocModelView> ModelViews
+        {
+            get
+            {
+                if (this._ModelViews == null)
+                {
+                    this._ModelViews = new List<DocModelView>();
+                }
+
+                return this._ModelViews;
+            }
+        }
+
+        public List<DocChangeSet> ChangeSets
+        {
+            get
+            {
+                if (this._ChangeSets == null)
+                {
+                    this._ChangeSets = new List<DocChangeSet>();
+                }
+
+                return this._ChangeSets;
+            }
+        }
+
+        public List<DocExample> Examples
+        {
+            get
+            {
+                if (this._Examples == null)
+                {
+                    this._Examples = new List<DocExample>();
+                }
+
+                return this._Examples;
+            }
+        }
+
+        public List<DocReference> NormativeReferences
+        {
+            get
+            {
+                if (this._NormativeReferences == null)
+                {
+                    this._NormativeReferences = new List<DocReference>();
+                }
+
+                return this._NormativeReferences;
+            }
+        }
+
+        public List<DocReference> InformativeReferences
+        {
+            get
+            {
+                if (this._InformativeReferences == null)
+                {
+                    this._InformativeReferences = new List<DocReference>();
+                }
+
+                return this._InformativeReferences;
+            }
+        }
+
+        public List<DocTerm> Terms
+        {
+            get
+            {
+                if (this._Terms == null)
+                {
+                    this._Terms = new List<DocTerm>();
+                }
+
+                return this._Terms;
+            }
+        }
+
+        public List<DocAbbreviation> Abbreviations
+        {
+            get
+            {
+                if (this._Abbreviations == null)
+                {
+                    this._Abbreviations = new List<DocAbbreviation>();
+                }
+
+                return this._Abbreviations;
+            }
+        }
+        
+        // new in 8.7: Cover | TOC | Foreword | Introduction
+        public List<DocAnnotation> Annotations
+        {
+            get
+            {
+                if (this._Annotations == null)
+                {
+                    this._Annotations = new List<DocAnnotation>();
+                    this._Annotations.Add(new DocAnnotation("Cover page"));
+                    this._Annotations.Add(new DocAnnotation("Contents"));
+                    this._Annotations.Add(new DocAnnotation("Foreword"));
+                    this._Annotations.Add(new DocAnnotation("Introduction"));
+                }
+
+                return this._Annotations;
+            }
         }
 
         public DocTemplateDefinition GetTemplate(Guid guid)
@@ -902,7 +1055,7 @@ namespace IfcDoc.Schema.DOC
                 foreach (DocAttribute docAttribute in entity.Attributes)
                 {
                     DocDefinition docAttrType = this.GetDefinition(docAttribute.DefinedType);
-                    if (!docAttribute.IsOptional() && docAttribute.Inverse == null) // new (4.0): only pull in mandatory attributes
+                    if (!docAttribute.IsOptional && docAttribute.Inverse == null) // new (4.0): only pull in mandatory attributes
                     {
                         included[docAttribute] = true;
 
@@ -1098,10 +1251,10 @@ namespace IfcDoc.Schema.DOC
             // special case -- if view references self, then include everything (no filtering)
             if (!String.IsNullOrEmpty(docView.BaseView))
             {
-                Guid guidBase;
-                if (docView.BaseView.ToString() == docView.Uuid.ToString())
+                foreach (DocSection docSection in this.Sections)
                 {
-                    foreach (DocSection docSection in this.Sections)
+                    // hack -- if section has code defined, then include everything within section -- used for FHWA reference schemas -- todo: use an explicit attribute
+                    if (!String.IsNullOrEmpty(docSection.Code) )
                     {
                         foreach (DocSchema docSchema in docSection.Schemas)
                         {
@@ -1141,16 +1294,17 @@ namespace IfcDoc.Schema.DOC
                         }
                     }
                 }
-                else if(Guid.TryParse(docView.BaseView, out guidBase))
-                {
-                    // register base view
-                    DocModelView docViewBase = this.GetView(guidBase);
-                    if(docViewBase != null)
-                    {
-                        RegisterObjectsInScope(docViewBase, included);
-                    }
-                }
+            }
 
+            Guid guidBase;
+            if (!String.IsNullOrEmpty(docView.BaseView) && Guid.TryParse(docView.BaseView, out guidBase))
+            {
+                // register base view
+                DocModelView docViewBase = this.GetView(guidBase);
+                if (docViewBase != null && docViewBase != docView)
+                {
+                    RegisterObjectsInScope(docViewBase, included);
+                }
             }
 
             if (this.Examples != null)
@@ -1849,7 +2003,7 @@ namespace IfcDoc.Schema.DOC
         [DataMember(Order = 0)] public string Entity; // string to avoid referential dependencies
         [DataMember(Order = 1)] public string Attribute; // string to avoid referential dependencies
         [DataMember(Order = 2)] public DocXsdFormatEnum XsdFormat;  
-        [DataMember(Order = 3)] public bool XsdTagless;
+        [DataMember(Order = 3)] public bool? XsdTagless;
     }
 
     // custom field types may be IFC Types (defined types, enumerations) to indicate that a *value* should be specified of the particular type.
@@ -2220,20 +2374,23 @@ namespace IfcDoc.Schema.DOC
 
                     foreach (DocTemplateItem docInnerItem in docInnerConcept.Items)
                     {
-                        bool itemmatch = true;
-                        foreach (DocModelRule docInnerRule in docInnerConcept.Definition.Rules)
+                        if (!docInnerItem.Optional)
                         {
-                            bool? innerResult = docInnerRule.Validate(value, docInnerItem, typemap, trace, root);
-                            if (innerResult != null && !innerResult.Value)
+                            bool itemmatch = true;
+                            foreach (DocModelRule docInnerRule in docInnerConcept.Definition.Rules)
                             {
-                                itemmatch = false;
+                                bool? innerResult = docInnerRule.Validate(value, docInnerItem, typemap, trace, root);
+                                if (innerResult != null && !innerResult.Value)
+                                {
+                                    itemmatch = false;
+                                }
                             }
-                        }
 
-                        if (itemmatch)
-                        {
-                            docInnerItem.ValidationStructure[root] = true;
-                            return true;
+                            if (itemmatch)
+                            {
+                                docInnerItem.ValidationStructure[root] = true;
+                                return true;
+                            }
                         }
                     }
 
@@ -2313,6 +2470,7 @@ namespace IfcDoc.Schema.DOC
             {
                 int tracelen = trace.Count;
 
+                bool skip = false;
                 foreach (DocModelRule rule in this.Rules)
                 {
                     while (trace.Count > tracelen)
@@ -2328,8 +2486,15 @@ namespace IfcDoc.Schema.DOC
                     }
                     else if(result == null)
                     {
-                        return null;
+                        skip = true;
+                        // keep going
+                        //return null;
                     }
+                }
+
+                if(skip)
+                {
+                    return null;
                 }
 
                 // keep last failure path intact
@@ -2353,7 +2518,7 @@ namespace IfcDoc.Schema.DOC
             trace.Add(this);
 
             if (target == null)
-                return false; // todo: verify
+                return false;
 
             // (1) check if field is defined on target object; if not, then this rule does not apply.
             FieldInfo fieldinfo = target.GetType().GetField(this.Name);
@@ -2868,7 +3033,6 @@ namespace IfcDoc.Schema.DOC
                         population.Add(lvalue, lvalue);
                         return true;
                     }
-                    break;
             }
             
             bool result = false;
@@ -3548,7 +3712,6 @@ namespace IfcDoc.Schema.DOC
                     if (field == null)
                     {
                         // bail
-                        this.ToString();
                         return null;
                     }
                     generator.Emit(OpCodes.Castclass, type);
@@ -4075,8 +4238,9 @@ namespace IfcDoc.Schema.DOC
     public class DocTemplateItem : DocObject // now inherits from DocObject
     {
         [DataMember(Order = 0)] private List<DocTemplateUsage> _Concepts;// IfcDoc 6.3: for parameters consisting of lists of objects -- translates to nested concepts in mvdXML
+        [DataMember(Order = 1)] private bool _Optional; // IfcDoc 8.7: indicate whether item is optional
         //[DataMember(Order = 0), Obsolete] private string _PredefinedType; // e.g. 'TOGGLESWITCH'
-        [DataMember(Order = 1), Obsolete] private string _Field1; // e.g. 'Power'
+        //[DataMember(Order = 1), Obsolete] private string _Field1; // e.g. 'Power'
         [DataMember(Order = 2), Obsolete] private string _Field2; // e.g. 'The power from the circuit.'
         [DataMember(Order = 3), Obsolete] private string _Field3; // e.g. 'ELECTRICAL'
         [DataMember(Order = 4), Obsolete] private string _Field4; // e.g. 'SOURCE'
@@ -4099,6 +4263,18 @@ namespace IfcDoc.Schema.DOC
                 }
 
                 return this._Concepts;
+            }
+        }
+
+        public bool Optional
+        {
+            get
+            {
+                return this._Optional;
+            }
+            set
+            {
+                this._Optional = value;
             }
         }
 
@@ -4247,6 +4423,11 @@ namespace IfcDoc.Schema.DOC
         public DocAnnotation()
         {
             this.Annotations = new List<DocAnnotation>();
+        }
+
+        public DocAnnotation(string name) : base()
+        {
+            this.Name = name;
         }
     }
 
@@ -5302,7 +5483,7 @@ namespace IfcDoc.Schema.DOC
         [DataMember(Order = 10)] private List<DocPoint> _DiagramLine; // line coordinates
         [DataMember(Order = 11)] private DocRectangle _DiagramLabel; // position of label
         [DataMember(Order = 12)] private DocXsdFormatEnum _XsdFormat;  // NEW in IfcDoc 4.9f: tag behavior
-        [DataMember(Order = 13)] private bool _XsdTagless; // NEW in IfcDoc 5.0b: tagless
+        [DataMember(Order = 13)] private bool? _XsdTagless; // NEW in IfcDoc 5.0b: tagless; 8.7: NULLABLE
 
         public string DefinedType
         {
@@ -5352,6 +5533,7 @@ namespace IfcDoc.Schema.DOC
             }
         }
 
+        // 2 = unique
         public int AggregationFlag
         {
             get
@@ -5461,7 +5643,7 @@ namespace IfcDoc.Schema.DOC
             }
         }
 
-        public bool XsdTagless
+        public bool? XsdTagless
         {
             get
             {
@@ -5478,9 +5660,23 @@ namespace IfcDoc.Schema.DOC
             return (DocAggregationEnum)this.AggregationType;
         }
 
-        public bool IsOptional()
+        public bool IsOptional
         {
-            return ((this.AttributeFlags & 1) != 0);
+            get
+            {
+                return ((this.AttributeFlags & 1) != 0);
+            }
+            set
+            {
+                if (value)
+                {
+                    this.AttributeFlags |= 1;
+                }
+                else
+                {
+                    this.AttributeFlags &= ~1;
+                }
+            }
         }
 
         /// <summary>

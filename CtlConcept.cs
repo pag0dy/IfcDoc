@@ -310,7 +310,27 @@ namespace IfcDoc
                     if (ruleEntity != null)
                     {
                         DocObject docObjRef = null;
-                        this.m_map.TryGetValue(ruleEntity.Name, out docObjRef);
+
+                        if (this.m_template != null && !String.IsNullOrEmpty(this.m_template.Code))
+                        {
+                            foreach(DocSection docSection in this.m_project.Sections)
+                            {
+                                foreach(DocSchema docSchema in docSection.Schemas)
+                                {
+                                    if (docSchema.Name.Equals(this.m_template.Code, StringComparison.OrdinalIgnoreCase))
+                                    {
+                                        docObjRef = docSchema.GetDefinition(ruleEntity.Name);
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+
+                        if (docObjRef == null)
+                        {
+                            this.m_map.TryGetValue(ruleEntity.Name, out docObjRef);
+                        }
+
                         if (docObjRef is DocEntity)
                         {
                             docEntity = (DocEntity)docObjRef;

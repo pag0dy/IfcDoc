@@ -48,11 +48,6 @@ namespace IfcDoc
             }
 
             DocChangeSet docChangeSet = new DocChangeSet();
-            if (projectCurr.ChangeSets == null)
-            {
-                // compat
-                projectCurr.ChangeSets = new List<DocChangeSet>();
-            }
             projectCurr.ChangeSets.Add(docChangeSet);
             docChangeSet.Name = projectPrev.Sections[0].Code;
             docChangeSet.VersionBaseline = projectPrev.Sections[0].Version;

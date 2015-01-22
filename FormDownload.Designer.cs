@@ -43,54 +43,47 @@
             // 
             // buttonCancel
             // 
-            this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            resources.ApplyResources(this.buttonCancel, "buttonCancel");
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(697, 89);
+            this.errorProvider.SetError(this.buttonCancel, resources.GetString("buttonCancel.Error"));
+            this.errorProvider.SetIconAlignment(this.buttonCancel, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("buttonCancel.IconAlignment"))));
+            this.errorProvider.SetIconPadding(this.buttonCancel, ((int)(resources.GetObject("buttonCancel.IconPadding"))));
             this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.Size = new System.Drawing.Size(75, 23);
-            this.buttonCancel.TabIndex = 4;
-            this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
             // 
             // buttonOK
             // 
-            this.buttonOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonOK.Location = new System.Drawing.Point(616, 89);
+            resources.ApplyResources(this.buttonOK, "buttonOK");
+            this.errorProvider.SetError(this.buttonOK, resources.GetString("buttonOK.Error"));
+            this.errorProvider.SetIconAlignment(this.buttonOK, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("buttonOK.IconAlignment"))));
+            this.errorProvider.SetIconPadding(this.buttonOK, ((int)(resources.GetObject("buttonOK.IconPadding"))));
             this.buttonOK.Name = "buttonOK";
-            this.buttonOK.Size = new System.Drawing.Size(75, 23);
-            this.buttonOK.TabIndex = 3;
-            this.buttonOK.Text = "OK";
             this.buttonOK.UseVisualStyleBackColor = true;
             this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(9, 9);
+            resources.ApplyResources(this.label1, "label1");
+            this.errorProvider.SetError(this.label1, resources.GetString("label1.Error"));
+            this.errorProvider.SetIconAlignment(this.label1, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("label1.IconAlignment"))));
+            this.errorProvider.SetIconPadding(this.label1, ((int)(resources.GetObject("label1.IconPadding"))));
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(282, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Open file from a website or repository at the following URL:";
             // 
             // textBoxUrl
             // 
-            this.textBoxUrl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxUrl.Location = new System.Drawing.Point(12, 25);
+            resources.ApplyResources(this.textBoxUrl, "textBoxUrl");
+            this.errorProvider.SetError(this.textBoxUrl, resources.GetString("textBoxUrl.Error"));
+            this.errorProvider.SetIconAlignment(this.textBoxUrl, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("textBoxUrl.IconAlignment"))));
+            this.errorProvider.SetIconPadding(this.textBoxUrl, ((int)(resources.GetObject("textBoxUrl.IconPadding"))));
             this.textBoxUrl.Name = "textBoxUrl";
-            this.textBoxUrl.Size = new System.Drawing.Size(760, 20);
-            this.textBoxUrl.TabIndex = 1;
-            this.textBoxUrl.Text = "http://www.buildingsmart-tech.org/downloads/view-definitions/mvd-baselines/mvdxml" +
-    "-ifc4-baseline-section/ifc4-repository/at_download/file";
             // 
             // progressBar
             // 
-            this.progressBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.progressBar.Location = new System.Drawing.Point(13, 52);
+            resources.ApplyResources(this.progressBar, "progressBar");
+            this.errorProvider.SetError(this.progressBar, resources.GetString("progressBar.Error"));
+            this.errorProvider.SetIconAlignment(this.progressBar, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("progressBar.IconAlignment"))));
+            this.errorProvider.SetIconPadding(this.progressBar, ((int)(resources.GetObject("progressBar.IconPadding"))));
             this.progressBar.Name = "progressBar";
-            this.progressBar.Size = new System.Drawing.Size(759, 23);
-            this.progressBar.TabIndex = 2;
             // 
             // backgroundWorkerDownload
             // 
@@ -103,36 +96,32 @@
             // errorProvider
             // 
             this.errorProvider.ContainerControl = this;
+            resources.ApplyResources(this.errorProvider, "errorProvider");
             // 
             // labelError
             // 
-            this.labelError.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.labelError.AutoSize = true;
-            this.labelError.Location = new System.Drawing.Point(13, 99);
+            resources.ApplyResources(this.labelError, "labelError");
+            this.errorProvider.SetError(this.labelError, resources.GetString("labelError.Error"));
+            this.errorProvider.SetIconAlignment(this.labelError, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("labelError.IconAlignment"))));
+            this.errorProvider.SetIconPadding(this.labelError, ((int)(resources.GetObject("labelError.IconPadding"))));
             this.labelError.Name = "labelError";
-            this.labelError.Size = new System.Drawing.Size(0, 13);
-            this.labelError.TabIndex = 5;
             // 
             // FormDownload
             // 
             this.AcceptButton = this.buttonOK;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
-            this.ClientSize = new System.Drawing.Size(784, 124);
             this.Controls.Add(this.labelError);
             this.Controls.Add(this.progressBar);
             this.Controls.Add(this.textBoxUrl);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonOK);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(400, 160);
             this.Name = "FormDownload";
             this.ShowInTaskbar = false;
-            this.Text = "Download";
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

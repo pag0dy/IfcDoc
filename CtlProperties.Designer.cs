@@ -69,10 +69,6 @@
             this.textBoxIdentityUuid = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.tabPageTemplate = new System.Windows.Forms.TabPage();
-            this.buttonTemplateClear = new System.Windows.Forms.Button();
-            this.buttonTemplateEntity = new System.Windows.Forms.Button();
-            this.textBoxTemplateEntity = new System.Windows.Forms.TextBox();
-            this.labelTemplateEntity = new System.Windows.Forms.Label();
             this.tabPageConcept = new System.Windows.Forms.TabPage();
             this.tabPageRequirements = new System.Windows.Forms.TabPage();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -121,7 +117,6 @@
             this.textBoxEntityBase = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.tabPageAttribute = new System.Windows.Forms.TabPage();
-            this.label17 = new System.Windows.Forms.Label();
             this.label28 = new System.Windows.Forms.Label();
             this.label27 = new System.Windows.Forms.Label();
             this.textBoxAttributeAggregationMax = new System.Windows.Forms.TextBox();
@@ -175,12 +170,12 @@
             this.panelIcon = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
             this.tabPageUsage = new System.Windows.Forms.TabPage();
-            this.buttonUsageMigrate = new System.Windows.Forms.Button();
-            this.buttonUsageEdit = new System.Windows.Forms.Button();
             this.listViewUsage = new System.Windows.Forms.ListView();
             this.columnHeaderUsageView = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderUsageEntity = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.label21 = new System.Windows.Forms.Label();
+            this.toolStrip2 = new System.Windows.Forms.ToolStrip();
+            this.toolStripButtonUsageNavigate = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonUsageMigrate = new System.Windows.Forms.ToolStripButton();
             this.tabPageExample = new System.Windows.Forms.TabPage();
             this.checkedListBoxExampleViews = new System.Windows.Forms.CheckedListBox();
             this.label30 = new System.Windows.Forms.Label();
@@ -202,6 +197,9 @@
             this.imageListRules = new System.Windows.Forms.ImageList(this.components);
             this.openFileDialogIcon = new System.Windows.Forms.OpenFileDialog();
             this.openFileDialogExample = new System.Windows.Forms.OpenFileDialog();
+            this.label3 = new System.Windows.Forms.Label();
+            this.textBoxAttributeDerived = new System.Windows.Forms.TextBox();
+            this.checkBoxAttributeUnique = new System.Windows.Forms.CheckBox();
             this.ctlRules = new IfcDoc.CtlRules();
             this.ctlParameters = new IfcDoc.CtlParameters();
             this.ctlOperators = new IfcDoc.CtlOperators();
@@ -227,6 +225,7 @@
             this.tabPageView.SuspendLayout();
             this.tabPageExchange.SuspendLayout();
             this.tabPageUsage.SuspendLayout();
+            this.toolStrip2.SuspendLayout();
             this.tabPageExample.SuspendLayout();
             this.tabPageOperations.SuspendLayout();
             this.tabPageConceptRoot.SuspendLayout();
@@ -240,22 +239,20 @@
             // 
             // splitContainerTranslation.Panel1
             // 
-            resources.ApplyResources(this.splitContainerTranslation.Panel1, "splitContainerTranslation.Panel1");
             this.splitContainerTranslation.Panel1.Controls.Add(this.listViewLocale);
             // 
             // splitContainerTranslation.Panel2
             // 
-            resources.ApplyResources(this.splitContainerTranslation.Panel2, "splitContainerTranslation.Panel2");
             this.splitContainerTranslation.Panel2.Controls.Add(this.textBoxGeneralDescription);
             this.splitContainerTranslation.Panel2.Controls.Add(this.textBoxGeneralName);
             // 
             // listViewLocale
             // 
-            resources.ApplyResources(this.listViewLocale, "listViewLocale");
             this.listViewLocale.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeaderLocale,
             this.columnHeaderName,
             this.columnHeaderDesc});
+            resources.ApplyResources(this.listViewLocale, "listViewLocale");
             this.listViewLocale.FullRowSelect = true;
             this.listViewLocale.HideSelection = false;
             this.listViewLocale.Name = "listViewLocale";
@@ -289,7 +286,6 @@
             // 
             // tabControl
             // 
-            resources.ApplyResources(this.tabControl, "tabControl");
             this.tabControl.Controls.Add(this.tabPageGeneral);
             this.tabControl.Controls.Add(this.tabPageIdentity);
             this.tabControl.Controls.Add(this.tabPageTemplate);
@@ -307,42 +303,43 @@
             this.tabControl.Controls.Add(this.tabPageExample);
             this.tabControl.Controls.Add(this.tabPageOperations);
             this.tabControl.Controls.Add(this.tabPageConceptRoot);
+            resources.ApplyResources(this.tabControl, "tabControl");
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
             // 
             // tabPageGeneral
             // 
-            resources.ApplyResources(this.tabPageGeneral, "tabPageGeneral");
             this.tabPageGeneral.Controls.Add(this.splitContainerTranslation);
             this.tabPageGeneral.Controls.Add(this.toolStripDocumentation);
             this.tabPageGeneral.Controls.Add(this.label16);
             this.tabPageGeneral.Controls.Add(this.label15);
             this.tabPageGeneral.Controls.Add(this.textBoxLocaleURL);
             this.tabPageGeneral.Controls.Add(this.comboBoxLocaleCategory);
+            resources.ApplyResources(this.tabPageGeneral, "tabPageGeneral");
             this.tabPageGeneral.Name = "tabPageGeneral";
             this.tabPageGeneral.UseVisualStyleBackColor = true;
             this.tabPageGeneral.Click += new System.EventHandler(this.tabPageGeneral_Click);
             // 
             // toolStripDocumentation
             // 
-            resources.ApplyResources(this.toolStripDocumentation, "toolStripDocumentation");
             this.toolStripDocumentation.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStripDocumentation.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripButtonTranslationInsert,
             this.toolStripButtonTranslationRemove});
+            resources.ApplyResources(this.toolStripDocumentation, "toolStripDocumentation");
             this.toolStripDocumentation.Name = "toolStripDocumentation";
             // 
             // toolStripButtonTranslationInsert
             // 
-            resources.ApplyResources(this.toolStripButtonTranslationInsert, "toolStripButtonTranslationInsert");
             this.toolStripButtonTranslationInsert.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            resources.ApplyResources(this.toolStripButtonTranslationInsert, "toolStripButtonTranslationInsert");
             this.toolStripButtonTranslationInsert.Name = "toolStripButtonTranslationInsert";
             this.toolStripButtonTranslationInsert.Click += new System.EventHandler(this.toolStripButtonTranslationInsert_Click);
             // 
             // toolStripButtonTranslationRemove
             // 
-            resources.ApplyResources(this.toolStripButtonTranslationRemove, "toolStripButtonTranslationRemove");
             this.toolStripButtonTranslationRemove.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            resources.ApplyResources(this.toolStripButtonTranslationRemove, "toolStripButtonTranslationRemove");
             this.toolStripButtonTranslationRemove.Name = "toolStripButtonTranslationRemove";
             this.toolStripButtonTranslationRemove.Click += new System.EventHandler(this.toolStripButtonTranslationRemove_Click);
             // 
@@ -364,8 +361,8 @@
             // 
             // comboBoxLocaleCategory
             // 
-            resources.ApplyResources(this.comboBoxLocaleCategory, "comboBoxLocaleCategory");
             this.comboBoxLocaleCategory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            resources.ApplyResources(this.comboBoxLocaleCategory, "comboBoxLocaleCategory");
             this.comboBoxLocaleCategory.FormattingEnabled = true;
             this.comboBoxLocaleCategory.Items.AddRange(new object[] {
             resources.GetString("comboBoxLocaleCategory.Items"),
@@ -378,7 +375,6 @@
             // 
             // tabPageIdentity
             // 
-            resources.ApplyResources(this.tabPageIdentity, "tabPageIdentity");
             this.tabPageIdentity.Controls.Add(this.button3);
             this.tabPageIdentity.Controls.Add(this.button2);
             this.tabPageIdentity.Controls.Add(this.button1);
@@ -398,6 +394,7 @@
             this.tabPageIdentity.Controls.Add(this.label9);
             this.tabPageIdentity.Controls.Add(this.textBoxIdentityUuid);
             this.tabPageIdentity.Controls.Add(this.label7);
+            resources.ApplyResources(this.tabPageIdentity, "tabPageIdentity");
             this.tabPageIdentity.Name = "tabPageIdentity";
             this.tabPageIdentity.UseVisualStyleBackColor = true;
             // 
@@ -530,54 +527,25 @@
             // 
             // tabPageTemplate
             // 
-            resources.ApplyResources(this.tabPageTemplate, "tabPageTemplate");
             this.tabPageTemplate.Controls.Add(this.ctlRules);
-            this.tabPageTemplate.Controls.Add(this.buttonTemplateClear);
-            this.tabPageTemplate.Controls.Add(this.buttonTemplateEntity);
-            this.tabPageTemplate.Controls.Add(this.textBoxTemplateEntity);
-            this.tabPageTemplate.Controls.Add(this.labelTemplateEntity);
+            resources.ApplyResources(this.tabPageTemplate, "tabPageTemplate");
             this.tabPageTemplate.Name = "tabPageTemplate";
             this.tabPageTemplate.UseVisualStyleBackColor = true;
             // 
-            // buttonTemplateClear
-            // 
-            resources.ApplyResources(this.buttonTemplateClear, "buttonTemplateClear");
-            this.buttonTemplateClear.Name = "buttonTemplateClear";
-            this.buttonTemplateClear.UseVisualStyleBackColor = true;
-            this.buttonTemplateClear.Click += new System.EventHandler(this.buttonTemplateClear_Click);
-            // 
-            // buttonTemplateEntity
-            // 
-            resources.ApplyResources(this.buttonTemplateEntity, "buttonTemplateEntity");
-            this.buttonTemplateEntity.Name = "buttonTemplateEntity";
-            this.buttonTemplateEntity.UseVisualStyleBackColor = true;
-            this.buttonTemplateEntity.Click += new System.EventHandler(this.buttonTemplateEntity_Click);
-            // 
-            // textBoxTemplateEntity
-            // 
-            resources.ApplyResources(this.textBoxTemplateEntity, "textBoxTemplateEntity");
-            this.textBoxTemplateEntity.Name = "textBoxTemplateEntity";
-            this.textBoxTemplateEntity.ReadOnly = true;
-            // 
-            // labelTemplateEntity
-            // 
-            resources.ApplyResources(this.labelTemplateEntity, "labelTemplateEntity");
-            this.labelTemplateEntity.Name = "labelTemplateEntity";
-            // 
             // tabPageConcept
             // 
-            resources.ApplyResources(this.tabPageConcept, "tabPageConcept");
             this.tabPageConcept.Controls.Add(this.ctlParameters);
+            resources.ApplyResources(this.tabPageConcept, "tabPageConcept");
             this.tabPageConcept.Name = "tabPageConcept";
             this.tabPageConcept.UseVisualStyleBackColor = true;
             // 
             // tabPageRequirements
             // 
-            resources.ApplyResources(this.tabPageRequirements, "tabPageRequirements");
             this.tabPageRequirements.Controls.Add(this.groupBox2);
             this.tabPageRequirements.Controls.Add(this.groupBox1);
             this.tabPageRequirements.Controls.Add(this.listViewExchange);
             this.tabPageRequirements.Controls.Add(this.labelRequirementsExchanges);
+            resources.ApplyResources(this.tabPageRequirements, "tabPageRequirements");
             this.tabPageRequirements.Name = "tabPageRequirements";
             this.tabPageRequirements.UseVisualStyleBackColor = true;
             // 
@@ -689,7 +657,6 @@
             // 
             // tabPagePropertySet
             // 
-            resources.ApplyResources(this.tabPagePropertySet, "tabPagePropertySet");
             this.tabPagePropertySet.Controls.Add(this.buttonApplicabilityAddTemplate);
             this.tabPagePropertySet.Controls.Add(this.buttonPsetApplicabilityDelete);
             this.tabPagePropertySet.Controls.Add(this.listViewPsetApplicability);
@@ -697,6 +664,7 @@
             this.tabPagePropertySet.Controls.Add(this.comboBoxPsetType);
             this.tabPagePropertySet.Controls.Add(this.buttonApplicabilityAddEntity);
             this.tabPagePropertySet.Controls.Add(this.label1);
+            resources.ApplyResources(this.tabPagePropertySet, "tabPagePropertySet");
             this.tabPagePropertySet.Name = "tabPagePropertySet";
             this.tabPagePropertySet.UseVisualStyleBackColor = true;
             // 
@@ -771,7 +739,6 @@
             // 
             // tabPageProperty
             // 
-            resources.ApplyResources(this.tabPageProperty, "tabPageProperty");
             this.tabPageProperty.Controls.Add(this.buttonPropertyEnumRemove);
             this.tabPageProperty.Controls.Add(this.buttonPropertyEnumInsert);
             this.tabPageProperty.Controls.Add(this.listViewPropertyEnums);
@@ -781,6 +748,7 @@
             this.tabPageProperty.Controls.Add(this.labelPropertyType);
             this.tabPageProperty.Controls.Add(this.label4);
             this.tabPageProperty.Controls.Add(this.comboBoxPropertyType);
+            resources.ApplyResources(this.tabPageProperty, "tabPageProperty");
             this.tabPageProperty.Name = "tabPageProperty";
             this.tabPageProperty.UseVisualStyleBackColor = true;
             // 
@@ -861,9 +829,9 @@
             // 
             // tabPageQuantity
             // 
-            resources.ApplyResources(this.tabPageQuantity, "tabPageQuantity");
             this.tabPageQuantity.Controls.Add(this.labelQuantityType);
             this.tabPageQuantity.Controls.Add(this.comboBoxQuantityType);
+            resources.ApplyResources(this.tabPageQuantity, "tabPageQuantity");
             this.tabPageQuantity.Name = "tabPageQuantity";
             this.tabPageQuantity.UseVisualStyleBackColor = true;
             // 
@@ -889,12 +857,12 @@
             // 
             // tabPageEntity
             // 
-            resources.ApplyResources(this.tabPageEntity, "tabPageEntity");
             this.tabPageEntity.Controls.Add(this.buttonEntityBaseClear);
             this.tabPageEntity.Controls.Add(this.checkBoxEntityAbstract);
             this.tabPageEntity.Controls.Add(this.buttonEntityBase);
             this.tabPageEntity.Controls.Add(this.textBoxEntityBase);
             this.tabPageEntity.Controls.Add(this.label6);
+            resources.ApplyResources(this.tabPageEntity, "tabPageEntity");
             this.tabPageEntity.Name = "tabPageEntity";
             this.tabPageEntity.UseVisualStyleBackColor = true;
             // 
@@ -932,8 +900,9 @@
             // 
             // tabPageAttribute
             // 
-            resources.ApplyResources(this.tabPageAttribute, "tabPageAttribute");
-            this.tabPageAttribute.Controls.Add(this.label17);
+            this.tabPageAttribute.Controls.Add(this.checkBoxAttributeUnique);
+            this.tabPageAttribute.Controls.Add(this.textBoxAttributeDerived);
+            this.tabPageAttribute.Controls.Add(this.label3);
             this.tabPageAttribute.Controls.Add(this.label28);
             this.tabPageAttribute.Controls.Add(this.label27);
             this.tabPageAttribute.Controls.Add(this.textBoxAttributeAggregationMax);
@@ -953,14 +922,9 @@
             this.tabPageAttribute.Controls.Add(this.buttonAttributeType);
             this.tabPageAttribute.Controls.Add(this.textBoxAttributeType);
             this.tabPageAttribute.Controls.Add(this.label8);
+            resources.ApplyResources(this.tabPageAttribute, "tabPageAttribute");
             this.tabPageAttribute.Name = "tabPageAttribute";
             this.tabPageAttribute.UseVisualStyleBackColor = true;
-            this.tabPageAttribute.Click += new System.EventHandler(this.tabPageAttribute_Click);
-            // 
-            // label17
-            // 
-            resources.ApplyResources(this.label17, "label17");
-            this.label17.Name = "label17";
             // 
             // label28
             // 
@@ -986,7 +950,6 @@
             // 
             // comboBoxAttributeAggregation
             // 
-            resources.ApplyResources(this.comboBoxAttributeAggregation, "comboBoxAttributeAggregation");
             this.comboBoxAttributeAggregation.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxAttributeAggregation.FormattingEnabled = true;
             this.comboBoxAttributeAggregation.Items.AddRange(new object[] {
@@ -995,6 +958,7 @@
             resources.GetString("comboBoxAttributeAggregation.Items2"),
             resources.GetString("comboBoxAttributeAggregation.Items3"),
             resources.GetString("comboBoxAttributeAggregation.Items4")});
+            resources.ApplyResources(this.comboBoxAttributeAggregation, "comboBoxAttributeAggregation");
             this.comboBoxAttributeAggregation.Name = "comboBoxAttributeAggregation";
             this.comboBoxAttributeAggregation.SelectedIndexChanged += new System.EventHandler(this.comboBoxAttributeAggregation_SelectedIndexChanged);
             // 
@@ -1060,6 +1024,7 @@
             // 
             resources.ApplyResources(this.checkBoxXsdTagless, "checkBoxXsdTagless");
             this.checkBoxXsdTagless.Name = "checkBoxXsdTagless";
+            this.checkBoxXsdTagless.ThreeState = true;
             this.checkBoxXsdTagless.UseVisualStyleBackColor = true;
             this.checkBoxXsdTagless.CheckedChanged += new System.EventHandler(this.checkBoxXsdTagless_CheckedChanged);
             // 
@@ -1114,8 +1079,8 @@
             // 
             // tabPageExpression
             // 
-            resources.ApplyResources(this.tabPageExpression, "tabPageExpression");
             this.tabPageExpression.Controls.Add(this.textBoxExpression);
+            resources.ApplyResources(this.tabPageExpression, "tabPageExpression");
             this.tabPageExpression.Name = "tabPageExpression";
             this.tabPageExpression.UseVisualStyleBackColor = true;
             // 
@@ -1129,7 +1094,6 @@
             // 
             // tabPageView
             // 
-            resources.ApplyResources(this.tabPageView, "tabPageView");
             this.tabPageView.Controls.Add(this.listViewViewXsd);
             this.tabPageView.Controls.Add(this.comboBoxViewXsd);
             this.tabPageView.Controls.Add(this.checkBoxViewXsdTagless);
@@ -1139,6 +1103,7 @@
             this.tabPageView.Controls.Add(this.buttonViewBase);
             this.tabPageView.Controls.Add(this.textBoxViewBase);
             this.tabPageView.Controls.Add(this.label19);
+            resources.ApplyResources(this.tabPageView, "tabPageView");
             this.tabPageView.Name = "tabPageView";
             this.tabPageView.UseVisualStyleBackColor = true;
             // 
@@ -1182,7 +1147,9 @@
             resources.GetString("comboBoxViewXsd.Items1"),
             resources.GetString("comboBoxViewXsd.Items2"),
             resources.GetString("comboBoxViewXsd.Items3"),
-            resources.GetString("comboBoxViewXsd.Items4")});
+            resources.GetString("comboBoxViewXsd.Items4"),
+            resources.GetString("comboBoxViewXsd.Items5"),
+            resources.GetString("comboBoxViewXsd.Items6")});
             this.comboBoxViewXsd.Name = "comboBoxViewXsd";
             this.comboBoxViewXsd.SelectedIndexChanged += new System.EventHandler(this.comboBoxViewXsd_SelectedIndexChanged);
             // 
@@ -1190,6 +1157,7 @@
             // 
             resources.ApplyResources(this.checkBoxViewXsdTagless, "checkBoxViewXsdTagless");
             this.checkBoxViewXsdTagless.Name = "checkBoxViewXsdTagless";
+            this.checkBoxViewXsdTagless.ThreeState = true;
             this.checkBoxViewXsdTagless.UseVisualStyleBackColor = true;
             this.checkBoxViewXsdTagless.CheckedChanged += new System.EventHandler(this.checkBoxViewXsdTagless_CheckedChanged);
             // 
@@ -1232,7 +1200,6 @@
             // 
             // tabPageExchange
             // 
-            resources.ApplyResources(this.tabPageExchange, "tabPageExchange");
             this.tabPageExchange.Controls.Add(this.label24);
             this.tabPageExchange.Controls.Add(this.comboBoxExchangeClassReceiver);
             this.tabPageExchange.Controls.Add(this.label23);
@@ -1246,6 +1213,7 @@
             this.tabPageExchange.Controls.Add(this.buttonExchangeIconChange);
             this.tabPageExchange.Controls.Add(this.panelIcon);
             this.tabPageExchange.Controls.Add(this.label2);
+            resources.ApplyResources(this.tabPageExchange, "tabPageExchange");
             this.tabPageExchange.Name = "tabPageExchange";
             this.tabPageExchange.UseVisualStyleBackColor = true;
             // 
@@ -1558,39 +1526,24 @@
             // 
             // tabPageUsage
             // 
-            resources.ApplyResources(this.tabPageUsage, "tabPageUsage");
-            this.tabPageUsage.Controls.Add(this.buttonUsageMigrate);
-            this.tabPageUsage.Controls.Add(this.buttonUsageEdit);
             this.tabPageUsage.Controls.Add(this.listViewUsage);
-            this.tabPageUsage.Controls.Add(this.label21);
+            this.tabPageUsage.Controls.Add(this.toolStrip2);
+            resources.ApplyResources(this.tabPageUsage, "tabPageUsage");
             this.tabPageUsage.Name = "tabPageUsage";
             this.tabPageUsage.UseVisualStyleBackColor = true;
             // 
-            // buttonUsageMigrate
-            // 
-            resources.ApplyResources(this.buttonUsageMigrate, "buttonUsageMigrate");
-            this.buttonUsageMigrate.Name = "buttonUsageMigrate";
-            this.buttonUsageMigrate.UseVisualStyleBackColor = true;
-            this.buttonUsageMigrate.Click += new System.EventHandler(this.buttonUsageMigrate_Click);
-            // 
-            // buttonUsageEdit
-            // 
-            resources.ApplyResources(this.buttonUsageEdit, "buttonUsageEdit");
-            this.buttonUsageEdit.Name = "buttonUsageEdit";
-            this.buttonUsageEdit.UseVisualStyleBackColor = true;
-            this.buttonUsageEdit.Click += new System.EventHandler(this.buttonUsageEdit_Click);
-            // 
             // listViewUsage
             // 
-            resources.ApplyResources(this.listViewUsage, "listViewUsage");
             this.listViewUsage.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeaderUsageView,
             this.columnHeaderUsageEntity});
+            resources.ApplyResources(this.listViewUsage, "listViewUsage");
             this.listViewUsage.FullRowSelect = true;
             this.listViewUsage.HideSelection = false;
             this.listViewUsage.Name = "listViewUsage";
             this.listViewUsage.UseCompatibleStateImageBehavior = false;
             this.listViewUsage.View = System.Windows.Forms.View.Details;
+            this.listViewUsage.ItemActivate += new System.EventHandler(this.listViewUsage_ItemActivate);
             this.listViewUsage.SelectedIndexChanged += new System.EventHandler(this.listViewUsage_SelectedIndexChanged);
             // 
             // columnHeaderUsageView
@@ -1601,20 +1554,38 @@
             // 
             resources.ApplyResources(this.columnHeaderUsageEntity, "columnHeaderUsageEntity");
             // 
-            // label21
+            // toolStrip2
             // 
-            resources.ApplyResources(this.label21, "label21");
-            this.label21.Name = "label21";
+            this.toolStrip2.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripButtonUsageNavigate,
+            this.toolStripButtonUsageMigrate});
+            resources.ApplyResources(this.toolStrip2, "toolStrip2");
+            this.toolStrip2.Name = "toolStrip2";
+            // 
+            // toolStripButtonUsageNavigate
+            // 
+            this.toolStripButtonUsageNavigate.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            resources.ApplyResources(this.toolStripButtonUsageNavigate, "toolStripButtonUsageNavigate");
+            this.toolStripButtonUsageNavigate.Name = "toolStripButtonUsageNavigate";
+            this.toolStripButtonUsageNavigate.Click += new System.EventHandler(this.buttonUsageEdit_Click);
+            // 
+            // toolStripButtonUsageMigrate
+            // 
+            this.toolStripButtonUsageMigrate.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            resources.ApplyResources(this.toolStripButtonUsageMigrate, "toolStripButtonUsageMigrate");
+            this.toolStripButtonUsageMigrate.Name = "toolStripButtonUsageMigrate";
+            this.toolStripButtonUsageMigrate.Click += new System.EventHandler(this.buttonUsageMigrate_Click);
             // 
             // tabPageExample
             // 
-            resources.ApplyResources(this.tabPageExample, "tabPageExample");
             this.tabPageExample.Controls.Add(this.checkedListBoxExampleViews);
             this.tabPageExample.Controls.Add(this.label30);
             this.tabPageExample.Controls.Add(this.label25);
             this.tabPageExample.Controls.Add(this.textBoxExample);
             this.tabPageExample.Controls.Add(this.buttonExampleClear);
             this.tabPageExample.Controls.Add(this.buttonExampleLoad);
+            resources.ApplyResources(this.tabPageExample, "tabPageExample");
             this.tabPageExample.Name = "tabPageExample";
             this.tabPageExample.UseVisualStyleBackColor = true;
             // 
@@ -1657,26 +1628,26 @@
             // 
             // tabPageOperations
             // 
-            resources.ApplyResources(this.tabPageOperations, "tabPageOperations");
             this.tabPageOperations.Controls.Add(this.ctlOperators);
+            resources.ApplyResources(this.tabPageOperations, "tabPageOperations");
             this.tabPageOperations.Name = "tabPageOperations";
             this.tabPageOperations.UseVisualStyleBackColor = true;
             // 
             // tabPageConceptRoot
             // 
-            resources.ApplyResources(this.tabPageConceptRoot, "tabPageConceptRoot");
             this.tabPageConceptRoot.Controls.Add(this.listViewConceptRoot);
             this.tabPageConceptRoot.Controls.Add(this.toolStrip1);
+            resources.ApplyResources(this.tabPageConceptRoot, "tabPageConceptRoot");
             this.tabPageConceptRoot.Name = "tabPageConceptRoot";
             this.tabPageConceptRoot.UseVisualStyleBackColor = true;
             // 
             // listViewConceptRoot
             // 
-            resources.ApplyResources(this.listViewConceptRoot, "listViewConceptRoot");
             this.listViewConceptRoot.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeaderRootTemplate,
             this.columnHeaderRootEntity,
             this.columnHeaderRootStatus});
+            resources.ApplyResources(this.listViewConceptRoot, "listViewConceptRoot");
             this.listViewConceptRoot.Name = "listViewConceptRoot";
             this.listViewConceptRoot.SmallImageList = this.imageListInheritance;
             this.listViewConceptRoot.UseCompatibleStateImageBehavior = false;
@@ -1706,34 +1677,34 @@
             // 
             // toolStrip1
             // 
-            resources.ApplyResources(this.toolStrip1, "toolStrip1");
             this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItemModeInherit,
             this.toolStripMenuItemModeOverride,
             this.toolStripMenuItemModeSuppress});
+            resources.ApplyResources(this.toolStrip1, "toolStrip1");
             this.toolStrip1.Name = "toolStrip1";
             // 
             // toolStripMenuItemModeInherit
             // 
-            resources.ApplyResources(this.toolStripMenuItemModeInherit, "toolStripMenuItemModeInherit");
             this.toolStripMenuItemModeInherit.Checked = true;
             this.toolStripMenuItemModeInherit.CheckState = System.Windows.Forms.CheckState.Checked;
             this.toolStripMenuItemModeInherit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            resources.ApplyResources(this.toolStripMenuItemModeInherit, "toolStripMenuItemModeInherit");
             this.toolStripMenuItemModeInherit.Name = "toolStripMenuItemModeInherit";
             this.toolStripMenuItemModeInherit.Click += new System.EventHandler(this.toolStripMenuItemModeInherit_Click);
             // 
             // toolStripMenuItemModeOverride
             // 
-            resources.ApplyResources(this.toolStripMenuItemModeOverride, "toolStripMenuItemModeOverride");
             this.toolStripMenuItemModeOverride.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            resources.ApplyResources(this.toolStripMenuItemModeOverride, "toolStripMenuItemModeOverride");
             this.toolStripMenuItemModeOverride.Name = "toolStripMenuItemModeOverride";
             this.toolStripMenuItemModeOverride.Click += new System.EventHandler(this.toolStripMenuItemModeOverride_Click);
             // 
             // toolStripMenuItemModeSuppress
             // 
-            resources.ApplyResources(this.toolStripMenuItemModeSuppress, "toolStripMenuItemModeSuppress");
             this.toolStripMenuItemModeSuppress.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            resources.ApplyResources(this.toolStripMenuItemModeSuppress, "toolStripMenuItemModeSuppress");
             this.toolStripMenuItemModeSuppress.Name = "toolStripMenuItemModeSuppress";
             this.toolStripMenuItemModeSuppress.Click += new System.EventHandler(this.toolStripMenuItemModeSuppress_Click);
             // 
@@ -1752,12 +1723,30 @@
             this.openFileDialogExample.DefaultExt = "ifc";
             resources.ApplyResources(this.openFileDialogExample, "openFileDialogExample");
             // 
+            // label3
+            // 
+            resources.ApplyResources(this.label3, "label3");
+            this.label3.Name = "label3";
+            // 
+            // textBoxAttributeDerived
+            // 
+            resources.ApplyResources(this.textBoxAttributeDerived, "textBoxAttributeDerived");
+            this.textBoxAttributeDerived.Name = "textBoxAttributeDerived";
+            this.textBoxAttributeDerived.TextChanged += new System.EventHandler(this.textBoxAttributeDerived_TextChanged);
+            // 
+            // checkBoxAttributeUnique
+            // 
+            resources.ApplyResources(this.checkBoxAttributeUnique, "checkBoxAttributeUnique");
+            this.checkBoxAttributeUnique.Name = "checkBoxAttributeUnique";
+            this.checkBoxAttributeUnique.UseVisualStyleBackColor = true;
+            this.checkBoxAttributeUnique.CheckedChanged += new System.EventHandler(this.checkBoxAttributeUnique_CheckedChanged);
+            // 
             // ctlRules
             // 
-            resources.ApplyResources(this.ctlRules, "ctlRules");
             this.ctlRules.Attribute = null;
             this.ctlRules.BaseTemplate = null;
             this.ctlRules.CurrentInstance = null;
+            resources.ApplyResources(this.ctlRules, "ctlRules");
             this.ctlRules.Name = "ctlRules";
             this.ctlRules.Project = null;
             this.ctlRules.Selection = null;
@@ -1767,18 +1756,18 @@
             // 
             // ctlParameters
             // 
-            resources.ApplyResources(this.ctlParameters, "ctlParameters");
             this.ctlParameters.ConceptLeaf = null;
             this.ctlParameters.ConceptRoot = null;
             this.ctlParameters.CurrentInstance = null;
+            resources.ApplyResources(this.ctlParameters, "ctlParameters");
             this.ctlParameters.Name = "ctlParameters";
             this.ctlParameters.Project = null;
             // 
             // ctlOperators
             // 
-            resources.ApplyResources(this.ctlOperators, "ctlOperators");
             this.ctlOperators.CurrentInstance = null;
             this.ctlOperators.CurrentPopulation = null;
+            resources.ApplyResources(this.ctlOperators, "ctlOperators");
             this.ctlOperators.Name = "ctlOperators";
             this.ctlOperators.Project = null;
             this.ctlOperators.Rule = null;
@@ -1803,7 +1792,6 @@
             this.tabPageIdentity.ResumeLayout(false);
             this.tabPageIdentity.PerformLayout();
             this.tabPageTemplate.ResumeLayout(false);
-            this.tabPageTemplate.PerformLayout();
             this.tabPageConcept.ResumeLayout(false);
             this.tabPageRequirements.ResumeLayout(false);
             this.tabPageRequirements.PerformLayout();
@@ -1829,6 +1817,8 @@
             this.tabPageExchange.PerformLayout();
             this.tabPageUsage.ResumeLayout(false);
             this.tabPageUsage.PerformLayout();
+            this.toolStrip2.ResumeLayout(false);
+            this.toolStrip2.PerformLayout();
             this.tabPageExample.ResumeLayout(false);
             this.tabPageExample.PerformLayout();
             this.tabPageOperations.ResumeLayout(false);
@@ -1847,12 +1837,9 @@
         private System.Windows.Forms.TabPage tabPageRequirements;
         private System.Windows.Forms.Label labelRequirementsExchanges;
         private System.Windows.Forms.TabPage tabPageTemplate;
-        private System.Windows.Forms.Label labelTemplateEntity;
         private System.Windows.Forms.TabPage tabPageGeneral;
         private System.Windows.Forms.TextBox textBoxGeneralDescription;
         private System.Windows.Forms.TextBox textBoxGeneralName;
-        private System.Windows.Forms.Button buttonTemplateEntity;
-        private System.Windows.Forms.TextBox textBoxTemplateEntity;
         private System.Windows.Forms.ListView listViewExchange;
         private System.Windows.Forms.ColumnHeader columnHeaderExchangeName;
         private System.Windows.Forms.ColumnHeader columnHeaderExchangeImport;
@@ -1952,12 +1939,9 @@
         private System.Windows.Forms.ColumnHeader columnHeader2;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.TabPage tabPageUsage;
-        private System.Windows.Forms.Button buttonUsageMigrate;
-        private System.Windows.Forms.Button buttonUsageEdit;
         private System.Windows.Forms.ListView listViewUsage;
         private System.Windows.Forms.ColumnHeader columnHeaderUsageView;
         private System.Windows.Forms.ColumnHeader columnHeaderUsageEntity;
-        private System.Windows.Forms.Label label21;
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.ComboBox comboBoxExchangeClassReceiver;
         private System.Windows.Forms.Label label23;
@@ -1978,7 +1962,6 @@
         private System.Windows.Forms.ComboBox comboBoxAttributeAggregation;
         private System.Windows.Forms.Button buttonAttributeAggregationRemove;
         private System.Windows.Forms.Button buttonAttributeAggregationInsert;
-        private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Button buttonViewXsdDelete;
         private System.Windows.Forms.Button buttonViewXsdAttribute;
         private System.Windows.Forms.Label label29;
@@ -1994,7 +1977,6 @@
         private System.Windows.Forms.Button buttonExampleClear;
         private System.Windows.Forms.Button buttonExampleLoad;
         private System.Windows.Forms.OpenFileDialog openFileDialogExample;
-        private System.Windows.Forms.Button buttonTemplateClear;
         private System.Windows.Forms.CheckedListBox checkedListBoxExampleViews;
         private System.Windows.Forms.Label label30;
         private System.Windows.Forms.Label label25;
@@ -2017,5 +1999,11 @@
         private System.Windows.Forms.ColumnHeader columnHeaderRootEntity;
         private System.Windows.Forms.ColumnHeader columnHeaderRootStatus;
         private System.Windows.Forms.ImageList imageListInheritance;
+        private System.Windows.Forms.ToolStrip toolStrip2;
+        private System.Windows.Forms.ToolStripButton toolStripButtonUsageNavigate;
+        private System.Windows.Forms.ToolStripButton toolStripButtonUsageMigrate;
+        private System.Windows.Forms.TextBox textBoxAttributeDerived;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.CheckBox checkBoxAttributeUnique;
     }
 }

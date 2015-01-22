@@ -405,7 +405,7 @@ namespace IfcDoc.Format.MDB
                             {
                                 byte[] bval = (byte[])val;
                                 sb.Append("'");
-                                sb.Append(BitConverter.ToString(bval));// this.ToString();
+                                sb.Append(BitConverter.ToString(bval));
                                 sb.Append("'");
                             }
                             else if (val != null)

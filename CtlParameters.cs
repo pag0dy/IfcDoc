@@ -46,12 +46,18 @@ namespace IfcDoc
                         {
                             foreach (DocEntity docEntity in docSchema.Entities)
                             {
-                                this.m_map.Add(docEntity.Name, docEntity);
+                                if(!this.m_map.ContainsKey(docEntity.Name))
+                                {
+                                    this.m_map.Add(docEntity.Name, docEntity);
+                                }
                             }
 
                             foreach (DocType docType in docSchema.Types)
                             {
-                                this.m_map.Add(docType.Name, docType);
+                                if(!this.m_map.ContainsKey(docType.Name))
+                                {
+                                    this.m_map.Add(docType.Name, docType);
+                                }
                             }
                         }
                     }
@@ -269,6 +275,11 @@ namespace IfcDoc
 
                 int row = this.dataGridViewConceptRules.Rows.Add(values);
                 this.dataGridViewConceptRules.Rows[row].Tag = item;
+
+                if(item.Optional)
+                {
+                    this.dataGridViewConceptRules.Rows[row].DefaultCellStyle.ForeColor = Color.Gray;
+                }
             }
 
             if (this.dataGridViewConceptRules.SelectedCells.Count > 0)
@@ -285,6 +296,15 @@ namespace IfcDoc
             this.toolStripButtonTemplateRemove.Enabled = (this.dataGridViewConceptRules.SelectedRows.Count == 1 && this.dataGridViewConceptRules.SelectedRows[0].Index < this.dataGridViewConceptRules.Rows.Count - 1);
             this.toolStripButtonMoveDown.Enabled = (this.dataGridViewConceptRules.SelectedRows.Count == 1 && this.dataGridViewConceptRules.SelectedRows[0].Index < this.dataGridViewConceptRules.Rows.Count - 2); // exclude New row
             this.toolStripButtonMoveUp.Enabled = (this.dataGridViewConceptRules.SelectedRows.Count == 1 && this.dataGridViewConceptRules.SelectedRows[0].Index > 0 && this.dataGridViewConceptRules.SelectedRows[0].Index < this.dataGridViewConceptRules.Rows.Count - 1);
+            this.toolStripButtonItemOptional.Enabled = (this.dataGridViewConceptRules.SelectedRows.Count == 1);
+            if (this.dataGridViewConceptRules.SelectedRows.Count > 0)
+            {
+                this.toolStripButtonItemOptional.Checked = ((DocTemplateItem)this.dataGridViewConceptRules.SelectedRows[0].Tag).Optional;
+            }
+            else
+            {
+                this.toolStripButtonItemOptional.Checked = false;
+            }
         }
 
         private void dataGridViewConceptRules_UserAddedRow(object sender, DataGridViewRowEventArgs e)
@@ -537,6 +557,22 @@ namespace IfcDoc
 
                     //this.textBoxConceptTemplate.Text = this.m_conceptleaf.Definition.Name;
                 }
+            }
+        }
+
+        private void toolStripButtonItemOptional_Click(object sender, EventArgs e)
+        {
+            this.toolStripButtonItemOptional.Checked = !this.toolStripButtonItemOptional.Checked;
+
+            DataGridViewRow band = this.dataGridViewConceptRules.SelectedRows[0];
+            ((DocTemplateItem)band.Tag).Optional = this.toolStripButtonItemOptional.Checked;
+            if (this.toolStripButtonItemOptional.Checked)
+            {
+                band.DefaultCellStyle.ForeColor = Color.Gray;
+            }
+            else
+            {
+                band.DefaultCellStyle.ForeColor = Color.Black;
             }
         }
     }

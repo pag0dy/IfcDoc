@@ -133,6 +133,13 @@
       <DependentUpon>CtlRules.cs</DependentUpon>
     </Compile>
     <Compile Include="DocumentationISO.cs" />
+    <Compile Include="FormValidate.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormValidate.Designer.cs">
+      <DependentUpon>FormValidate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormatSML.cs" />
     <Compile Include="FormParameters.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -145,6 +152,7 @@
     <Compile Include="FormSelectExchange.Designer.cs">
       <DependentUpon>FormSelectExchange.cs</DependentUpon>
     </Compile>
+    <Compile Include="SchemaXsd.cs" />
     <Compile Include="ThemedTreeView.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -341,6 +349,9 @@
     <EmbeddedResource Include="CtlRules.resx">
       <DependentUpon>CtlRules.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormValidate.resx">
+      <DependentUpon>FormValidate.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormCode.resx">
       <DependentUpon>FormCode.cs</DependentUpon>
     </EmbeddedResource>
@@ -354,6 +365,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormEdit.ja.resx">
       <DependentUpon>FormEdit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormGenerate.ja.resx">
+      <DependentUpon>FormGenerate.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormMerge.resx">
       <DependentUpon>FormMerge.cs</DependentUpon>

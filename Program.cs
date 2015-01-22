@@ -2386,6 +2386,255 @@ namespace IfcDoc
             }
         }
 
+        internal static void ExportCnfAttribute(IfcDoc.Schema.CNF.entity ent, DocAttribute docAttr, DocXsdFormatEnum xsdformat, bool? tagless)
+        {
+            Schema.CNF.exp_attribute exp = Schema.CNF.exp_attribute.unspecified;
+            bool keep = true;
+            switch (xsdformat)
+            {
+                case DocXsdFormatEnum.Content:
+                    exp = Schema.CNF.exp_attribute.attribute_content;
+                    break;
+
+                case DocXsdFormatEnum.Attribute:
+                    exp = Schema.CNF.exp_attribute.attribute_tag;
+                    break;
+
+                case DocXsdFormatEnum.Element:
+                    exp = Schema.CNF.exp_attribute.double_tag;
+                    break;
+
+                case DocXsdFormatEnum.Hidden:
+                    keep = false;
+                    break;
+
+                default:
+                    break;
+            }
+
+            if (!String.IsNullOrEmpty(docAttr.Inverse))
+            {
+                IfcDoc.Schema.CNF.inverse inv = new Schema.CNF.inverse();
+                inv.select = docAttr.Name;
+                inv.exp_attribute = exp;
+                ent.inverse.Add(inv);
+            }
+            else
+            {
+                IfcDoc.Schema.CNF.attribute att = new Schema.CNF.attribute();
+                att.select = docAttr.Name;
+                att.exp_attribute = exp;
+                att.keep = keep;
+
+                if (tagless != null)
+                {
+                    if (tagless == true)
+                    {
+                        att.tagless = Schema.CNF.boolean_or_unspecified.boolean_true;
+                    }
+                    else
+                    {
+                        att.tagless = Schema.CNF.boolean_or_unspecified.boolean_false;
+                    }
+                }
+                ent.attribute.Add(att);
+            }
+
+        }
+
+        internal static void ExportCnf(IfcDoc.Schema.CNF.configuration cnf, DocProject docProject, DocModelView[] docViews, Dictionary<DocObject, bool> included)
+        {
+            // configure general settings
+
+/*
+  <cnf:option inheritance="true" exp-type="unspecified" concrete-attribute="attribute-content" entity-attribute="double-tag" tagless="unspecified" naming-convention="preserve-case" generate-keys="false"/>
+  <cnf:schema targetNamespace="http://www.buildingsmart-tech.org/ifcXML/IFC4/final" embed-schema-items="true" elementFormDefault="qualified" attributeFormDefault="unqualified">
+    <cnf:namespace prefix="ifc" alias="http://www.buildingsmart-tech.org/ifcXML/IFC4/final"/>
+  </cnf:schema>
+  <cnf:uosElement name="ifcXML"/>
+  <cnf:type select="NUMBER" map="xs:double"/>
+  <cnf:type select="BINARY" map="xs:hexBinary"/>  
+  <cnf:type select="IfcStrippedOptional" keep="false"/>
+*/
+            cnf.id = "IFC4";
+
+            IfcDoc.Schema.CNF.option opt = new Schema.CNF.option();
+            opt.inheritance = true;
+            opt.exp_type = Schema.CNF.exp_type.unspecified;
+            opt.concrete_attribute = Schema.CNF.exp_attribute_global.attribute_content;
+            opt.entity_attribute = Schema.CNF.exp_attribute_global.double_tag;
+            opt.tagless = Schema.CNF.boolean_or_unspecified.unspecified; 
+            opt.naming_convention = Schema.CNF.naming_convention.preserve_case;
+            opt.generate_keys = false;
+            cnf.option.Add(opt);
+
+            IfcDoc.Schema.CNF.schema sch = new IfcDoc.Schema.CNF.schema();
+            sch.targetNamespace = "http://www.buildingsmart-tech.org/ifcXML/IFC4/final"; //... make parameter...
+            sch.embed_schema_items = true;
+            sch.elementFormDefault = Schema.CNF.qual.qualified;
+            sch.attributeFormDefault = Schema.CNF.qual.unqualified;
+
+            IfcDoc.Schema.CNF._namespace ns = new Schema.CNF._namespace();
+            ns.prefix = "ifc";
+            ns.alias = "http://www.buildingsmart-tech.org/ifcXML/IFC4/final";
+            sch._namespace = ns;
+
+            cnf.schema.Add(sch);
+
+            IfcDoc.Schema.CNF.uosElement uos = new Schema.CNF.uosElement();
+            uos.name = "ifcXML";
+            cnf.uosElement.Add(uos);
+
+            IfcDoc.Schema.CNF.type typeNumber = new Schema.CNF.type();
+            typeNumber.select = "NUMBER";
+            typeNumber.map = "xs:double";
+            cnf.type.Add(typeNumber);
+
+            IfcDoc.Schema.CNF.type typeBinary = new Schema.CNF.type();
+            typeBinary.select = "BINARY";
+            typeBinary.map = "xs:hexBinary";
+            cnf.type.Add(typeBinary);
+
+            IfcDoc.Schema.CNF.type typeStripped = new Schema.CNF.type();
+            typeStripped.select = "IfcStrippedOptional";
+            typeStripped.keep = false;
+            cnf.type.Add(typeStripped);
+
+            SortedDictionary<string, IfcDoc.Schema.CNF.entity> mapEntity = new SortedDictionary<string, Schema.CNF.entity>();
+
+            // export default configuration -- also export for Common Use Definitions (base view defined as itself to include everything)
+            //if (docViews == null || docViews.Length == 0 || (docViews.Length == 1 && docViews[0].BaseView == docViews[0].Uuid.ToString()))
+            {
+                foreach (DocSection docSection in docProject.Sections)
+                {
+                    foreach (DocSchema docSchema in docSection.Schemas)
+                    {
+                        foreach(DocEntity docEntity in docSchema.Entities)
+                        {
+                            bool include = true; //... check if included in graph?
+                            if (included != null && !included.ContainsKey(docEntity))
+                            {
+                                include = false;
+                            }
+
+                            if (include)
+                            {
+                                foreach (DocAttribute docAttr in docEntity.Attributes)
+                                {
+                                    if (docAttr.XsdFormat != DocXsdFormatEnum.Default || docAttr.XsdTagless == true)
+                                    {
+                                        IfcDoc.Schema.CNF.entity ent = null;
+                                        if (!mapEntity.TryGetValue(docEntity.Name, out ent))
+                                        {
+                                            ent = new Schema.CNF.entity();
+                                            ent.select = docEntity.Name;
+                                            mapEntity.Add(docEntity.Name, ent);
+                                        }
+
+                                        ExportCnfAttribute(ent, docAttr, docAttr.XsdFormat, docAttr.XsdTagless);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            // export view-specific configuration
+            foreach (DocModelView docView in docViews)
+            {
+                foreach (DocXsdFormat format in docView.XsdFormats)
+                {
+                    DocEntity docEntity = docProject.GetDefinition(format.Entity) as DocEntity;
+                    if (docEntity != null)
+                    {
+                        DocAttribute docAttr = null;
+                        foreach (DocAttribute docEachAttr in docEntity.Attributes)
+                        {
+                            if (docEachAttr.Name != null && docEachAttr.Name.Equals(format.Attribute))
+                            {
+                                docAttr = docEachAttr;
+                                break;
+                            }
+                        }
+
+                        if (docAttr != null)
+                        {
+                            IfcDoc.Schema.CNF.entity ent = null;
+                            if (!mapEntity.TryGetValue(docEntity.Name, out ent))
+                            {
+                                ent = new Schema.CNF.entity();
+                                mapEntity.Add(docEntity.Name, ent);
+                            }
+
+                            ExportCnfAttribute(ent, docAttr, format.XsdFormat, format.XsdTagless);
+                        }
+                    }
+                }
+            }
+
+            // add at end, such that sorted
+            foreach(IfcDoc.Schema.CNF.entity ent in mapEntity.Values)
+            {
+                cnf.entity.Add(ent);
+            }
+        }
+
+        internal static void ImportCnfAttribute(IfcDoc.Schema.CNF.exp_attribute exp_attribute, bool keep, Schema.CNF.boolean_or_unspecified tagless, DocEntity docEntity, DocAttribute docAttribute, DocModelView docView)
+        {
+            DocXsdFormatEnum xsdformat = DocXsdFormatEnum.Default;
+            if (exp_attribute == Schema.CNF.exp_attribute.attribute_content)
+            {
+                xsdformat = DocXsdFormatEnum.Content;
+            }
+            else if (exp_attribute == Schema.CNF.exp_attribute.attribute_tag)
+            {
+                xsdformat = DocXsdFormatEnum.Attribute;
+            }
+            else if (exp_attribute == Schema.CNF.exp_attribute.double_tag)
+            {
+                xsdformat = DocXsdFormatEnum.Element;
+            }
+            else if (!keep)
+            {
+                xsdformat = DocXsdFormatEnum.Hidden;
+            }
+            else
+            {
+                xsdformat = DocXsdFormatEnum.Element;
+            }
+
+            bool? booltagless = null;
+            switch (tagless)
+            {
+                case Schema.CNF.boolean_or_unspecified.boolean_true:
+                    booltagless = true;
+                    break;
+
+                case Schema.CNF.boolean_or_unspecified.boolean_false:
+                    booltagless = false;
+                    break;
+            }
+
+            if (docView != null)
+            {
+                // configure specific model view
+                DocXsdFormat docFormat = new DocXsdFormat();
+                docFormat.Entity = docEntity.Name;
+                docFormat.Attribute = docAttribute.Name;
+                docFormat.XsdFormat = xsdformat;
+                docFormat.XsdTagless = booltagless;
+                docView.XsdFormats.Add(docFormat);
+            }
+            else
+            {
+                // configure default
+                docAttribute.XsdFormat = xsdformat;
+                docAttribute.XsdTagless = booltagless;
+            }
+
+        }
+
         internal static void ImportCnf(IfcDoc.Schema.CNF.configuration cnf, DocProject docProject, DocModelView docView)
         {
             Dictionary<string, DocEntity> mapEntity = new Dictionary<string, DocEntity>();
@@ -2414,44 +2663,7 @@ namespace IfcDoc
                             {
                                 if (atr.select != null && atr.select.Equals(docAttribute.Name))
                                 {
-                                    DocXsdFormatEnum xsdformat = DocXsdFormatEnum.Default;
-                                    if (atr.exp_attribute == "attribute-content")
-                                    {
-                                        xsdformat = DocXsdFormatEnum.Content;
-                                    }
-                                    else if (atr.exp_attribute == "attribute-tag")
-                                    {
-                                        xsdformat = DocXsdFormatEnum.Attribute;
-                                    }
-                                    else if (atr.exp_attribute == "double-tag")
-                                    {
-                                        xsdformat = DocXsdFormatEnum.Element;
-                                    }
-                                    else if (!atr.keep)
-                                    {
-                                        xsdformat = DocXsdFormatEnum.Hidden;
-                                    }
-                                    else
-                                    {
-                                        xsdformat = DocXsdFormatEnum.Element;
-                                    }
-
-                                    if (docView != null)
-                                    {
-                                        // configure specific model view
-                                        DocXsdFormat docFormat = new DocXsdFormat();
-                                        docFormat.Entity = docEntity.Name;
-                                        docFormat.Attribute = docAttribute.Name;
-                                        docFormat.XsdTagless = atr.tagless;
-                                        docFormat.XsdFormat = xsdformat;
-                                        docView.XsdFormats.Add(docFormat);
-                                    }
-                                    else
-                                    {
-                                        // configure default
-                                        docAttribute.XsdFormat = xsdformat;
-                                        docAttribute.XsdTagless = atr.tagless;
-                                    }
+                                    ImportCnfAttribute(atr.exp_attribute, atr.keep, atr.tagless, docEntity, docAttribute, docView);
                                 }
                             }
                         }
@@ -2466,23 +2678,7 @@ namespace IfcDoc
                             {
                                 if (inv.select != null && inv.select.Equals(docAttribute.Name))
                                 {
-                                    // found it
-                                    if (inv.exp_attribute == "attribute-content")
-                                    {
-                                        docAttribute.XsdFormat = DocXsdFormatEnum.Content;
-                                    }
-                                    else if (inv.exp_attribute == "attribute-tag")
-                                    {
-                                        docAttribute.XsdFormat = DocXsdFormatEnum.Attribute;
-                                    }
-                                    else if (inv.exp_attribute == "double-tag")
-                                    {
-                                        docAttribute.XsdFormat = DocXsdFormatEnum.Element;
-                                    }
-                                    else
-                                    {
-                                        docAttribute.XsdFormat = DocXsdFormatEnum.Default;
-                                    }
+                                    ImportCnfAttribute(inv.exp_attribute, true, Schema.CNF.boolean_or_unspecified.unspecified, docEntity, docAttribute, docView);
                                 }
                             }
                         }
@@ -2669,6 +2865,256 @@ namespace IfcDoc
                 }
             }
         }
+
+        internal static string ImportXsdType(string xsdtype)
+        {
+            if (xsdtype == null)
+                return null;
+
+            switch (xsdtype)
+            {
+                case "xs:string":
+                case "xs:anyURI":
+                    return "STRING";
+
+                case "xs:decimal":
+                case "xs:float":
+                case "xs:double":
+                    return "REAL";
+
+                case "xs:integer":
+                case "xs:byte": // signed 8-bit
+                case "xs:short": // signed 16-bit
+                case "xs:int": // signed 32-bit
+                case "xs:long": // signed 64-bit
+                    return "INTEGER";
+
+                case "xs:boolean":
+                    return "BOOLEAN";
+
+                case "xs:base64Binary":
+                case "xs:hexBinary":
+                    return "BINARY";
+
+                default:
+                    return xsdtype;
+            }
+        }
+
+        internal static string ImportXsdAnnotation(IfcDoc.Schema.XSD.annotation annotation)
+        {
+            if (annotation == null)
+                return null;
+            
+            StringBuilder sb = new StringBuilder();
+            foreach (string s in annotation.documentation)
+            {
+                sb.AppendLine("<p>");
+                sb.AppendLine(s);
+                sb.AppendLine("</p>");
+            }
+            return sb.ToString();            
+        }
+
+        internal static void ImportXsdElement(IfcDoc.Schema.XSD.element sub, DocEntity docEntity, bool list)
+        {
+            DocAttribute docAttr = new DocAttribute();
+            docEntity.Attributes.Add(docAttr);
+            if (!String.IsNullOrEmpty(sub.name))
+            {
+                docAttr.Name = sub.name;
+            }
+            else
+            {
+                docAttr.Name = sub.reftype;
+            }
+
+            if (!String.IsNullOrEmpty(sub.type))
+            {
+                docAttr.DefinedType = sub.type;
+            }
+            else
+            {
+                docAttr.DefinedType = sub.reftype;
+            }
+            // list or set??...
+
+            if (list || sub.minOccurs != null)
+            {
+                if (list || sub.maxOccurs != null)
+                {
+                    // list
+                    if (list || sub.maxOccurs == "unbounded")
+                    {
+                        docAttr.AggregationType = 1; // list
+                        if (!String.IsNullOrEmpty(sub.minOccurs))
+                        {
+                            docAttr.AggregationLower = sub.minOccurs;
+                        }
+                        else
+                        {
+                            docAttr.AggregationLower = "0";
+                        }
+                        docAttr.AggregationUpper = "?";
+                    }
+                }
+                else if (sub.minOccurs == "0")
+                {
+                    docAttr.IsOptional = true;
+                }
+            }
+
+            docAttr.Documentation = ImportXsdAnnotation(sub.annotation);
+        }
+
+        internal static void ImportXsdSimple(IfcDoc.Schema.XSD.simpleType simple, DocSchema docSchema, string name)
+        {
+            string thename = simple.name;
+            if (simple.name == null)
+            {
+                thename = name;
+            }
+
+            if (simple.restriction != null && simple.restriction.enumeration.Count > 0)
+            {
+                DocEnumeration docEnum = new DocEnumeration();
+                docSchema.Types.Add(docEnum);
+                docEnum.Name = thename;
+                docEnum.Documentation = ImportXsdAnnotation(simple.annotation);
+                foreach (IfcDoc.Schema.XSD.enumeration en in simple.restriction.enumeration)
+                {
+                    DocConstant docConst = new DocConstant();
+                    docConst.Name = en.value;
+                    docConst.Documentation = ImportXsdAnnotation(en.annotation);
+
+                    docEnum.Constants.Add(docConst);
+                }
+            }
+            else
+            {
+                DocDefined docDef = new DocDefined();
+                docDef.Name = thename;
+                docDef.Documentation = ImportXsdAnnotation(simple.annotation);
+                if (simple.restriction != null)
+                {
+                    docDef.DefinedType = ImportXsdType(simple.restriction.basetype);
+                }
+                docSchema.Types.Add(docDef);
+            }
+        }
+
+        internal static void ImportXsdAttribute(IfcDoc.Schema.XSD.attribute att, DocSchema docSchema, DocEntity docEntity)
+        {
+            DocAttribute docAttr = new DocAttribute();
+            docEntity.Attributes.Add(docAttr);
+            docAttr.Name = att.name;
+            docAttr.IsOptional = (att.use == Schema.XSD.use.optional);
+
+            if (att.simpleType != null)
+            {
+                string refname = docEntity.Name + "_" + att.name;
+                docAttr.DefinedType = refname;
+                ImportXsdSimple(att.simpleType, docSchema, refname);
+            }
+            else
+            {
+                docAttr.DefinedType = ImportXsdType(att.type);
+            }
+        }
+
+        internal static void ImportXsdComplex(IfcDoc.Schema.XSD.complexType complex, DocSchema docSchema, DocEntity docEntity)
+        {
+            if (complex == null)
+                return;
+
+            foreach (IfcDoc.Schema.XSD.attribute att in complex.attribute)
+            {
+                ImportXsdAttribute(att, docSchema, docEntity);
+            }
+
+            if (complex.choice != null)
+            {
+                foreach (IfcDoc.Schema.XSD.element sub in complex.choice.element)
+                {
+                    ImportXsdElement(sub, docEntity, true);
+                }
+            }
+
+            if (complex.sequence != null)
+            {
+                foreach (IfcDoc.Schema.XSD.element sub in complex.sequence.element)
+                {
+                    ImportXsdElement(sub, docEntity, true);
+                }
+            }
+
+            if (complex.all != null)
+            {
+                foreach (IfcDoc.Schema.XSD.element sub in complex.all.element)
+                {
+                    ImportXsdElement(sub, docEntity, true);
+                }
+            }
+
+            if (complex.complexContent != null)
+            {
+                if(complex.complexContent.extension != null)
+                {
+                    docEntity.BaseDefinition = complex.complexContent.extension.basetype;
+
+                    foreach (IfcDoc.Schema.XSD.attribute att in complex.complexContent.extension.attribute)
+                    {
+                        ImportXsdAttribute(att, docSchema, docEntity);
+                    }
+
+                    if(complex.complexContent.extension.choice != null)
+                    {
+                        foreach (IfcDoc.Schema.XSD.element sub in complex.complexContent.extension.choice.element)
+                        {
+                            ImportXsdElement(sub, docEntity, true);
+                        }
+                    }
+                }
+            }
+        }
+
+        internal static void ImportXsd(IfcDoc.Schema.XSD.schema schema, DocProject docProject)
+        {
+            // use resource-level section
+            DocSection docSection = docProject.Sections[6]; // domain-specific schemas
+
+            DocSchema docSchema = new DocSchema();
+            docSchema.Name = schema.id;//??
+            docSchema.Code = schema.id;
+            docSchema.Version = schema.version;
+            docSection.Schemas.Add(docSchema);
+
+            foreach(IfcDoc.Schema.XSD.simpleType simple in schema.simpleType)
+            {
+                ImportXsdSimple(simple, docSchema, null);
+            }
+
+            foreach (IfcDoc.Schema.XSD.complexType complex in schema.complexType)
+            {
+                DocEntity docEntity = new DocEntity();
+                docSchema.Entities.Add(docEntity);
+                docEntity.Name = complex.name;
+                docEntity.Documentation = ImportXsdAnnotation(complex.annotation);
+
+                ImportXsdComplex(complex, docSchema, docEntity);
+            }
+
+            foreach (IfcDoc.Schema.XSD.element element in schema.element)
+            {
+                DocEntity docEntity = new DocEntity();
+                docSchema.Entities.Add(docEntity);
+                docEntity.Name = element.name;
+                docEntity.Documentation = ImportXsdAnnotation(element.annotation);
+
+                ImportXsdComplex(element.complexType, docSchema, docEntity);
+            }
+        }
+
     }
 
 }

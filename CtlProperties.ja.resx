@@ -126,11 +126,76 @@
   <data name="columnHeaderDesc.Text" xml:space="preserve">
     <value>説明</value>
   </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="toolStripButtonTranslationInsert.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABUSURBVDhP3cxBCgAhCEBRj+3xvJlNBJNNX4iGNi1eUNoX
+        Efd/nkNVt6SBXh/xXjIws8H5QLt0FIgw8P2UuTkQ0adoCkT1jQK0dy5AeA8Gq97APvcCZN1yd7JMcNIA
+        AAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="toolStripButtonTranslationRemove.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAzSURBVDhPY2Bg+P+fMgwkKioqyMLDzQAIh3iM1YADBw4Q
+        hYezAaRgDAPIwcPJAPLx//8ARLZjI8VMTLsAAAAASUVORK5CYII=
+</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="label16.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label15.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="tabPageGeneral.Text" xml:space="preserve">
     <value>文書化</value>
   </data>
+  <data name="button3.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="button2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="button1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label20.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label14.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label13.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label12.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label11.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label10.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label9.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label7.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="tabPageIdentity.Text" xml:space="preserve">
     <value>一致</value>
+  </data>
+  <data name="buttonTemplateClear.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="buttonTemplateEntity.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="labelTemplateEntity.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
   </data>
   <data name="tabPageTemplate.Text" xml:space="preserve">
     <value>テンプレート</value>
@@ -138,14 +203,39 @@
   <data name="tabPageConcept.Text" xml:space="preserve">
     <value>概念</value>
   </data>
+  <data name="radioButtonExportNone.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="radioButtonExportExcluded.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="radioButtonExportMandatory.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="radioButtonExportOptional.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="radioButtonImportNone.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="radioButtonImportExcluded.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="radioButtonImportOptional.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="radioButtonImportMandatory.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="labelRequirementsExchanges.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <data name="tabPageRequirements.Text" xml:space="preserve">
     <value>必要条件</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="buttonApplicabilityAddTemplate.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="buttonApplicabilityAddTemplate.Location" type="System.Drawing.Point, System.Drawing">
     <value>114, 356</value>
   </data>
@@ -184,129 +274,6 @@
   </data>
   <data name="tabPagePropertySet.Text" xml:space="preserve">
     <value>適用性</value>
-  </data>
-  <data name="tabPageProperty.Text" xml:space="preserve">
-    <value>プロパティ</value>
-  </data>
-  <data name="tabPageQuantity.Text" xml:space="preserve">
-    <value>数量</value>
-  </data>
-  <data name="tabPageEntity.Text" xml:space="preserve">
-    <value>実体</value>
-  </data>
-  <data name="tabPageAttribute.Text" xml:space="preserve">
-    <value>属性</value>
-  </data>
-  <data name="tabPageExpression.Text" xml:space="preserve">
-    <value>表現</value>
-  </data>
-  <data name="tabPageView.Text" xml:space="preserve">
-    <value>ビュー</value>
-  </data>
-  <data name="tabPageExchange.Text" xml:space="preserve">
-    <value>交換</value>
-  </data>
-  <data name="tabPageUsage.Text" xml:space="preserve">
-    <value>使用</value>
-  </data>
-  <data name="tabPageExample.Text" xml:space="preserve">
-    <value>実例</value>
-  </data>
-  <data name="tabPageOperations.Text" xml:space="preserve">
-    <value>操作</value>
-  </data>
-  <data name="tabPageConceptRoot.Text" xml:space="preserve">
-    <value>インヘリタンス</value>
-  </data>
-  <data name="toolStripButtonTranslationInsert.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABUSURBVDhP3cxBCgAhCEBRj+3xvJlNBJNNX4iGNi1eUNoX
-        Efd/nkNVt6SBXh/xXjIws8H5QLt0FIgw8P2UuTkQ0adoCkT1jQK0dy5AeA8Gq97APvcCZN1yd7JMcNIA
-        AAAASUVORK5CYII=
-</value>
-  </data>
-  <data name="toolStripButtonTranslationRemove.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAzSURBVDhPY2Bg+P+fMgwkKioqyMLDzQAIh3iM1YADBw4Q
-        hYezAaRgDAPIwcPJAPLx//8ARLZjI8VMTLsAAAAASUVORK5CYII=
-</value>
-  </data>
-  <data name="label16.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="label15.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="button3.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="button2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="button1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="label20.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="label14.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="label13.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="label12.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="label11.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="label10.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="label9.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="label7.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="buttonTemplateClear.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="buttonTemplateEntity.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="labelTemplateEntity.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="radioButtonExportNone.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="radioButtonExportExcluded.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="radioButtonExportMandatory.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="radioButtonExportOptional.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="radioButtonImportNone.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="radioButtonImportExcluded.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="radioButtonImportOptional.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="radioButtonImportMandatory.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="labelRequirementsExchanges.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
   </data>
   <data name="buttonPropertyEnumRemove.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -377,6 +344,9 @@
   <data name="comboBoxPropertyType.Items6" xml:space="preserve">
     <value>コンプレックス</value>
   </data>
+  <data name="tabPageProperty.Text" xml:space="preserve">
+    <value>プロパティ</value>
+  </data>
   <data name="labelQuantityType.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
@@ -403,6 +373,9 @@
   </data>
   <data name="comboBoxQuantityType.Items5" xml:space="preserve">
     <value>Q_時間</value>
+  </data>
+  <data name="tabPageQuantity.Text" xml:space="preserve">
+    <value>数量</value>
   </data>
   <data name="buttonEntityBaseClear.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -433,6 +406,9 @@
   </data>
   <data name="label6.Text" xml:space="preserve">
     <value>スーパークラス</value>
+  </data>
+  <data name="tabPageEntity.Text" xml:space="preserve">
+    <value>実体</value>
   </data>
   <data name="label17.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -560,6 +536,12 @@
   <data name="label8.Text" xml:space="preserve">
     <value>型</value>
   </data>
+  <data name="tabPageAttribute.Text" xml:space="preserve">
+    <value>属性</value>
+  </data>
+  <data name="tabPageExpression.Text" xml:space="preserve">
+    <value>表現</value>
+  </data>
   <data name="columnHeader3.Text" xml:space="preserve">
     <value>実体</value>
   </data>
@@ -634,6 +616,9 @@
   </data>
   <data name="label19.Text" xml:space="preserve">
     <value>底面図</value>
+  </data>
+  <data name="tabPageView.Text" xml:space="preserve">
+    <value>ビュー</value>
   </data>
   <data name="label24.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -1376,6 +1361,9 @@
   <data name="label2.Text" xml:space="preserve">
     <value>アイコン （16×16 テーブル内のハイパーリンクに使用される）</value>
   </data>
+  <data name="tabPageExchange.Text" xml:space="preserve">
+    <value>交換</value>
+  </data>
   <data name="buttonUsageMigrate.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
@@ -1402,6 +1390,9 @@
   </data>
   <data name="label21.Text" xml:space="preserve">
     <value>このテンプレートは次のエンティティで使用されている</value>
+  </data>
+  <data name="tabPageUsage.Text" xml:space="preserve">
+    <value>使用</value>
   </data>
   <data name="label30.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -1433,6 +1424,12 @@
   <data name="buttonExampleLoad.Text" xml:space="preserve">
     <value>ロード·ファイル</value>
   </data>
+  <data name="tabPageExample.Text" xml:space="preserve">
+    <value>実例</value>
+  </data>
+  <data name="tabPageOperations.Text" xml:space="preserve">
+    <value>操作</value>
+  </data>
   <data name="columnHeaderRootTemplate.Text" xml:space="preserve">
     <value>テンプレート</value>
   </data>
@@ -1447,7 +1444,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAABy
-        CwAAAk1TRnQBSQFMAgEBBAEAASgBAAEoAQABEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
+        CwAAAk1TRnQBSQFMAgEBBAEAATABAAEwAQABEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
         AwABQAMAASADAAEBAQABCAYAAQgYAAGAAgABgAMAAoABAAGAAwABgAEAAYABAAKAAgADwAEAAcAB3AHA
         AQAB8AHKAaYBAAEzBQABMwEAATMBAAEzAQACMwIAAxYBAAMcAQADIgEAAykBAANVAQADTQEAA0IBAAM5
         AQABgAF8Af8BAAJQAf8BAAGTAQAB1gEAAf8B7AHMAQABxgHWAe8BAAHWAucBAAGQAakBrQIAAf8BMwMA
@@ -1548,5 +1545,8 @@
         U6teMfwkS42XOWpJ9HB5GhrSUlwZM2Qcm09msTKm+QO8wa4cjfvjIfGkmbzmPX7HNX+J4+BI3BcXqYi6
         GHnNewm/syD8BvfA1J6LMQqMAAAAAElFTkSuQmCC
 </value>
+  </data>
+  <data name="tabPageConceptRoot.Text" xml:space="preserve">
+    <value>インヘリタンス</value>
   </data>
 </root>

@@ -226,5 +226,53 @@ namespace IfcDoc.Properties {
                 this["SkipDiagrams"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ExampleSPF {
+            get {
+                return ((bool)(this["ExampleSPF"]));
+            }
+            set {
+                this["ExampleSPF"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ExampleXML {
+            get {
+                return ((bool)(this["ExampleXML"]));
+            }
+            set {
+                this["ExampleXML"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ValidateFile {
+            get {
+                return ((string)(this["ValidateFile"]));
+            }
+            set {
+                this["ValidateFile"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ValidateReport {
+            get {
+                return ((bool)(this["ValidateReport"]));
+            }
+            set {
+                this["ValidateReport"] = value;
+            }
+        }
     }
 }

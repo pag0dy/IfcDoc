@@ -264,10 +264,6 @@ namespace IfcDoc
                         DocObject docObj = (DocObject)parentinfo.Original;
                         docObj.RegisterLocalization(localChange.Locale, localChange.Name, localChange.Documentation);
                     }
-                    else
-                    {
-                        this.ToString();
-                    }
                 }
                 else
                 {

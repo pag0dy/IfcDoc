@@ -51,12 +51,22 @@ namespace IfcDoc
                 {
                     foreach (DocEntity docEntity in docSchema.Entities)
                     {
-                        m_map.Add(docEntity.Name, docEntity);
+                        if(!this.m_map.ContainsKey(docEntity.Name))
+                        {
+                            m_map.Add(docEntity.Name, docEntity);
+                        }
                     }
 
                     foreach (DocType docType in docSchema.Types)
                     {
-                        m_map.Add(docType.Name, docType);
+                        try
+                        {
+                            m_map.Add(docType.Name, docType);
+                        }
+                        catch
+                        {
+
+                        }
                     }
                 }
             }
@@ -68,6 +78,7 @@ namespace IfcDoc
         {
             foreach (DocTemplateDefinition docTemplate in list)
             {
+#if false
                 bool include = false;
 
                 // check for inheritance                
@@ -112,6 +123,8 @@ namespace IfcDoc
                 {
                     LoadTemplate(null, docTemplate);
                 }
+#endif
+                LoadTemplate(null, docTemplate);
             }
         }
 

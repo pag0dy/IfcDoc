@@ -76,6 +76,7 @@ namespace IfcDoc.Schema
     public abstract class SEntity : SRecord
     {
         static Dictionary<Type, IList<FieldInfo>> s_fieldmap = new Dictionary<Type, IList<FieldInfo>>(); // cached field lists in declaration order
+        static Dictionary<Type, IList<FieldInfo>> s_inversemap = new Dictionary<Type, IList<FieldInfo>>();
         static Dictionary<Type, IList<PropertyInfo>> s_propertymapdeclared = new Dictionary<Type, IList<PropertyInfo>>(); // cached properties per type
         static Dictionary<Type, IList<PropertyInfo>> s_propertymapinverse = new Dictionary<Type, IList<PropertyInfo>>(); // cached properties per type
 
@@ -107,6 +108,42 @@ namespace IfcDoc.Schema
             s_fieldmap.Add(type, fields);
 
             return fields;
+        }
+
+        public static IList<FieldInfo> GetFieldsInverse(Type type)
+        {
+            IList<FieldInfo> fields = null;
+            if (s_inversemap.TryGetValue(type, out fields))
+            {
+                return fields;
+            }
+
+            fields = new List<FieldInfo>();
+            BuildInverseList(type, fields);
+            s_inversemap.Add(type, fields);
+
+            return fields;
+        }
+
+        private static void BuildInverseList(Type type, IList<FieldInfo> list)
+        {
+            if (type.IsValueType)
+                return;
+
+            if (type.BaseType != null && type.BaseType != typeof(object) && type.BaseType != typeof(SEntity))
+            {
+                BuildInverseList(type.BaseType, list);
+            }
+
+            FieldInfo[] fields = type.GetFields(BindingFlags.DeclaredOnly | BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+            foreach (FieldInfo field in fields)
+            {
+                if (field.IsDefined(typeof(DataLookupAttribute), false))
+                {
+                    //DataLookupAttribute attr = (DataLookupAttribute)field.GetCustomAttributes(typeof(DataLookupAttribute), false)[0];
+                    list.Add(field);
+                }
+            }
         }
 
         private static void BuildFieldList(Type type, IList<FieldInfo> list)

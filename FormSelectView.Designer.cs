@@ -41,63 +41,44 @@
             // 
             // labelDescription
             // 
-            this.labelDescription.AutoSize = true;
-            this.labelDescription.Location = new System.Drawing.Point(12, 8);
+            resources.ApplyResources(this.labelDescription, "labelDescription");
             this.labelDescription.Name = "labelDescription";
-            this.labelDescription.Size = new System.Drawing.Size(159, 13);
-            this.labelDescription.TabIndex = 12;
-            this.labelDescription.Text = "Select the model view definition.";
             // 
             // buttonCancel
             // 
-            this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            resources.ApplyResources(this.buttonCancel, "buttonCancel");
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(537, 326);
             this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.Size = new System.Drawing.Size(75, 23);
-            this.buttonCancel.TabIndex = 11;
-            this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
             // 
             // buttonOK
             // 
-            this.buttonOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            resources.ApplyResources(this.buttonOK, "buttonOK");
             this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.buttonOK.Location = new System.Drawing.Point(456, 326);
             this.buttonOK.Name = "buttonOK";
-            this.buttonOK.Size = new System.Drawing.Size(75, 23);
-            this.buttonOK.TabIndex = 10;
-            this.buttonOK.Text = "OK";
             this.buttonOK.UseVisualStyleBackColor = true;
             // 
             // listView
             // 
-            this.listView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            resources.ApplyResources(this.listView, "listView");
             this.listView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeaderName,
             this.columnHeaderType});
             this.listView.FullRowSelect = true;
-            this.listView.Location = new System.Drawing.Point(12, 25);
             this.listView.MultiSelect = false;
             this.listView.Name = "listView";
-            this.listView.Size = new System.Drawing.Size(600, 292);
             this.listView.SmallImageList = this.imageList;
-            this.listView.TabIndex = 9;
             this.listView.UseCompatibleStateImageBehavior = false;
             this.listView.View = System.Windows.Forms.View.Details;
             this.listView.ItemActivate += new System.EventHandler(this.listView_ItemActivate);
             // 
             // columnHeaderName
             // 
-            this.columnHeaderName.Text = "View";
-            this.columnHeaderName.Width = 256;
+            resources.ApplyResources(this.columnHeaderName, "columnHeaderName");
             // 
             // columnHeaderType
             // 
-            this.columnHeaderType.Text = "Version";
-            this.columnHeaderType.Width = 256;
+            resources.ApplyResources(this.columnHeaderType, "columnHeaderType");
             // 
             // imageList
             // 
@@ -108,10 +89,9 @@
             // FormSelectView
             // 
             this.AcceptButton = this.buttonOK;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
-            this.ClientSize = new System.Drawing.Size(624, 361);
             this.Controls.Add(this.labelDescription);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonOK);
@@ -120,7 +100,6 @@
             this.MinimizeBox = false;
             this.Name = "FormSelectView";
             this.ShowInTaskbar = false;
-            this.Text = "Select View";
             this.ResumeLayout(false);
             this.PerformLayout();
 

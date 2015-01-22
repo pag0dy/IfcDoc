@@ -29,6 +29,7 @@ namespace IfcDoc
         bool m_loadreq; // suppress updates of requirements while loading
         bool m_editcon; // suppress updates of concepts while moving or deleting
         bool m_loadagg;
+        bool m_loadall;
         SEntity m_instance; // optional instance to highlight
 
         //public FormProperties(DocObject docObject, DocObject docParent, DocProject docProject) : this()
@@ -43,6 +44,8 @@ namespace IfcDoc
             {
                 return;
             }
+
+            this.m_loadall = true;
 
             this.m_target = path[path.Length-1];
             if (path.Length > 1)
@@ -63,12 +66,18 @@ namespace IfcDoc
                 {
                     foreach (DocEntity docEntity in docSchema.Entities)
                     {
-                        this.m_map.Add(docEntity.Name, docEntity);
+                        if(!this.m_map.ContainsKey(docEntity.Name))
+                        {
+                            this.m_map.Add(docEntity.Name, docEntity);
+                        }
                     }
 
                     foreach (DocType docType in docSchema.Types)
                     {
-                        this.m_map.Add(docType.Name, docType);
+                        if(!this.m_map.ContainsKey(docType.Name))
+                        {
+                            this.m_map.Add(docType.Name, docType);
+                        }
                     }
                 }
             }                
@@ -121,6 +130,10 @@ namespace IfcDoc
                     {
                     }
                 }
+                else
+                {
+                    this.textBoxViewBase.Text = string.Empty;
+                }
 
                 if (docView.XsdFormats != null)
                 {
@@ -155,6 +168,10 @@ namespace IfcDoc
                     {
                     }
                 }
+                else
+                {
+                    this.panelIcon.BackgroundImage = null;
+                }
 
                 this.comboBoxExchangeClassProcess.Text = docExchange.ExchangeClass;
                 this.comboBoxExchangeClassSender.Text = docExchange.SenderClass;
@@ -164,7 +181,6 @@ namespace IfcDoc
             {
                 this.tabControl.TabPages.Add(this.tabPageTemplate);
                 DocTemplateDefinition docTemplate = (DocTemplateDefinition)docObject;
-                this.textBoxTemplateEntity.Text = docTemplate.Type;
 
                 this.tabControl.TabPages.Add(this.tabPageOperations);
 
@@ -328,9 +344,24 @@ namespace IfcDoc
                 this.tabControl.TabPages.Add(this.tabPageAttribute);
                 this.textBoxAttributeType.Text = docAttribute.DefinedType;
                 this.textBoxAttributeInverse.Text = docAttribute.Inverse;
+                this.textBoxAttributeDerived.Text = docAttribute.Derived;
 
-                this.checkBoxAttributeOptional.Checked = docAttribute.IsOptional();
-                this.checkBoxXsdTagless.Checked = docAttribute.XsdTagless;
+                this.checkBoxAttributeOptional.Checked = docAttribute.IsOptional;
+                if (docAttribute.XsdTagless != null)
+                {
+                    if(docAttribute.XsdTagless == true)
+                    {
+                        this.checkBoxXsdTagless.CheckState = CheckState.Checked;
+                    }
+                    else
+                    {
+                        this.checkBoxXsdTagless.CheckState = CheckState.Unchecked;
+                    }
+                }
+                else
+                {
+                    this.checkBoxXsdTagless.CheckState = CheckState.Indeterminate;
+                }
                 this.comboBoxAttributeXsdFormat.SelectedItem = docAttribute.XsdFormat.ToString();
 
                 this.LoadAttributeCardinality();
@@ -423,6 +454,7 @@ namespace IfcDoc
                 this.tabControl.SelectedTab = tabpageExist;
             }
 
+            this.m_loadall = false;
         }
 
         public SEntity[] CurrentPopulation
@@ -592,46 +624,6 @@ namespace IfcDoc
                 tnRule.BackColor = Color.Empty;
             }
             tnRule.ToolTipText = tooltip;
-        }
-
-        private void buttonTemplateEntity_Click(object sender, EventArgs e)
-        {
-            // determine base class from parent template if any
-
-            string classname = null;// now can support any entity "IfcRoot";
-            if (this.m_parent is DocTemplateDefinition)
-            {
-                classname = ((DocTemplateDefinition)this.m_parent).Type;
-            }
-
-            DocObject docobj = null;
-            DocEntity docEntity = null;
-            if (classname != null)
-            {
-                if (this.m_map.TryGetValue(classname, out docobj))
-                {
-                    docEntity = (DocEntity)docobj;
-                }
-            }
-
-            // get selected entity
-            DocTemplateDefinition docTemplate = (DocTemplateDefinition)this.m_target;
-            DocObject target = null;
-            DocEntity entity = null;
-            if (docTemplate.Type != null && m_map.TryGetValue(docTemplate.Type, out target))
-            {
-                entity = (DocEntity)target;
-            }
-
-            using (FormSelectEntity form = new FormSelectEntity(docEntity, entity, this.m_project, SelectDefinitionOptions.Entity))
-            {
-                DialogResult res = form.ShowDialog(this);
-                if (res == DialogResult.OK && form.SelectedEntity != null)
-                {   
-                    docTemplate.Type = form.SelectedEntity.Name;
-                    this.textBoxTemplateEntity.Text = docTemplate.Type;
-                }
-            }
         }
 
         private void listViewExchange_SelectedIndexChanged(object sender, EventArgs e)
@@ -839,6 +831,9 @@ namespace IfcDoc
 
         private void textBoxGeneralName_TextChanged(object sender, EventArgs e)
         {
+            if (this.m_loadall)
+                return;
+
             if (this.listViewLocale.SelectedItems.Count > 0)
             {
                 foreach (ListViewItem lvi in this.listViewLocale.SelectedItems)
@@ -858,6 +853,9 @@ namespace IfcDoc
 
         private void textBoxGeneralDescription_TextChanged(object sender, EventArgs e)
         {
+            if (this.m_loadall)
+                return;
+
             if (this.listViewLocale.SelectedItems.Count > 0)
             {
                 foreach (ListViewItem lvi in this.listViewLocale.SelectedItems)
@@ -1163,7 +1161,7 @@ namespace IfcDoc
                     {
                         DocAttribute docAttr = (DocAttribute)this.m_target;
 
-                        if (docAttr.Definition.DiagramRectangle != null)
+                        if (docAttr.Definition != null && docAttr.Definition.DiagramRectangle != null)
                         {
                             docDef.DiagramRectangle = new DocRectangle();
                             docDef.DiagramNumber = docAttr.Definition.DiagramNumber;
@@ -1497,7 +1495,6 @@ namespace IfcDoc
                 if (docAttr.XsdFormat != formatnew)
                 {
                     docAttr.XsdFormat = formatnew;
-                    //... set modified
                 }
             }
         }
@@ -1505,16 +1502,36 @@ namespace IfcDoc
         private void checkBoxXsdTagless_CheckedChanged(object sender, EventArgs e)
         {
             DocAttribute docAttr = (DocAttribute)this.m_target;
-            docAttr.XsdTagless = this.checkBoxXsdTagless.Checked;
+            switch(this.checkBoxXsdTagless.CheckState)
+            {
+                case CheckState.Checked:
+                    docAttr.XsdTagless = true;
+                    break;
+
+                case CheckState.Unchecked:
+                    docAttr.XsdTagless = false;
+                    break;
+
+                case CheckState.Indeterminate:
+                    docAttr.XsdTagless = null;
+                    break;
+            }
         }
+
+        public event EventHandler Navigate;
 
         private void buttonUsageEdit_Click(object sender, EventArgs e)
         {
-            DocObject[] path = (DocObject[])this.listViewUsage.SelectedItems[0].Tag;
+            if (this.Navigate != null)
+            {
+                this.Navigate(this, EventArgs.Empty);
+            }
+
+            /*
             using (FormProperties form = new FormProperties(path, this.m_project))
             {
                 form.ShowDialog(this);
-            }
+            }*/
         }
 
         private void buttonUsageMigrate_Click(object sender, EventArgs e)
@@ -1542,8 +1559,8 @@ namespace IfcDoc
 
         private void listViewUsage_SelectedIndexChanged(object sender, EventArgs e)
         {
-            this.buttonUsageEdit.Enabled = (this.listViewUsage.SelectedItems.Count == 1);
-            this.buttonUsageMigrate.Enabled = (this.listViewUsage.SelectedItems.Count > 0);
+            this.toolStripButtonUsageNavigate.Enabled = (this.listViewUsage.SelectedItems.Count == 1);
+            this.toolStripButtonUsageMigrate.Enabled = (this.listViewUsage.SelectedItems.Count > 0);
         }
 
         private void comboBoxExchangeClassProcess_Validated(object sender, EventArgs e)
@@ -1786,15 +1803,36 @@ namespace IfcDoc
                 return;
 
             DocXsdFormat docFormat = (DocXsdFormat)this.listViewViewXsd.SelectedItems[0].Tag;
-            docFormat.XsdFormat = (DocXsdFormatEnum)this.comboBoxViewXsd.SelectedIndex;
+            docFormat.XsdFormat = (DocXsdFormatEnum)Enum.Parse(typeof(DocXsdFormatEnum), this.comboBoxViewXsd.SelectedItem as string);
             this.listViewViewXsd.SelectedItems[0].SubItems[2].Text = docFormat.XsdFormat.ToString();
         }
 
         private void checkBoxViewXsdTagless_CheckedChanged(object sender, EventArgs e)
         {
             DocXsdFormat docFormat = (DocXsdFormat)this.listViewViewXsd.SelectedItems[0].Tag;
-            docFormat.XsdTagless = this.checkBoxViewXsdTagless.Checked;
-            this.listViewViewXsd.SelectedItems[0].SubItems[3].Text = docFormat.XsdTagless.ToString();
+            switch(this.checkBoxViewXsdTagless.CheckState)
+            {
+                case CheckState.Checked:
+                    docFormat.XsdTagless = true;
+                    break;
+
+                case CheckState.Unchecked:
+                    docFormat.XsdTagless = false;
+                    break;
+
+                case CheckState.Indeterminate:
+                    docFormat.XsdTagless = null;
+                    break;
+            }
+
+            if (docFormat.XsdTagless != null)
+            {
+                this.listViewViewXsd.SelectedItems[0].SubItems[3].Text = docFormat.XsdTagless.ToString();
+            }
+            else
+            {
+                this.listViewViewXsd.SelectedItems[0].SubItems[3].Text = String.Empty;
+            }
         }
 
         private void listViewViewXsd_SelectedIndexChanged(object sender, EventArgs e)
@@ -1805,8 +1843,8 @@ namespace IfcDoc
             {
                 this.comboBoxViewXsd.Enabled = false;
                 this.comboBoxViewXsd.SelectedIndex = 0;
-                this.checkBoxXsdTagless.Enabled = false;
-                this.checkBoxXsdTagless.Checked = false;
+                this.checkBoxViewXsdTagless.Enabled = false;
+                this.checkBoxViewXsdTagless.Checked = false;
                 return;
             }
 
@@ -1815,7 +1853,21 @@ namespace IfcDoc
 
             DocXsdFormat docFormat = (DocXsdFormat)this.listViewViewXsd.SelectedItems[0].Tag;
             this.comboBoxViewXsd.SelectedIndex = (int)docFormat.XsdFormat;
-            this.checkBoxViewXsdTagless.Checked = docFormat.XsdTagless;
+            if (docFormat.XsdTagless != null)
+            {
+                if (docFormat.XsdTagless == true)
+                {
+                    this.checkBoxViewXsdTagless.CheckState = CheckState.Checked;
+                }
+                else
+                {
+                    this.checkBoxViewXsdTagless.CheckState = CheckState.Unchecked;
+                }
+            }
+            else
+            {
+                this.checkBoxViewXsdTagless.CheckState = CheckState.Indeterminate;
+            }
         }
 
         private void buttonExampleLoad_Click(object sender, EventArgs e)
@@ -1845,13 +1897,6 @@ namespace IfcDoc
             DocExample docExample = (DocExample)this.m_target;
             docExample.File = null;
             this.textBoxExample.Text = String.Empty;
-        }
-
-        private void buttonTemplateClear_Click(object sender, EventArgs e)
-        {
-            DocTemplateDefinition docTemplate = (DocTemplateDefinition)this.m_target;
-            docTemplate.Type = null;
-            this.textBoxTemplateEntity.Text = String.Empty;
         }
 
         private void checkedListBoxExampleViews_ItemCheck(object sender, ItemCheckEventArgs e)
@@ -1970,6 +2015,18 @@ namespace IfcDoc
             set
             {
                 this.ctlRules.Attribute = value;
+            }
+        }
+
+        public DocObject[] SelectedUsage
+        {
+            get
+            {
+                if(this.listViewUsage.SelectedItems.Count == 0)
+                    return null;
+
+                DocObject[] path = (DocObject[])this.listViewUsage.SelectedItems[0].Tag;
+                return path;
             }
         }
 
@@ -2109,9 +2166,42 @@ namespace IfcDoc
             this.toolStripMenuItemModeSuppress.Enabled = true;
         }
 
-        private void tabPageAttribute_Click(object sender, EventArgs e)
+        private void listViewUsage_ItemActivate(object sender, EventArgs e)
         {
+            buttonUsageEdit_Click(this.toolStripButtonUsageNavigate, EventArgs.Empty);
+        }
 
+        private void checkBoxAttributeUnique_CheckedChanged(object sender, EventArgs e)
+        {
+            if (this.m_loadagg)
+                return;
+
+            DocAttribute docAttr = this.GetAttributeAggregation();
+            if (this.checkBoxAttributeUnique.Checked)
+            {
+                docAttr.AggregationFlag = 2;
+            }
+            else
+            {
+                docAttr.AggregationFlag = 0;
+            }
+            this.LoadAttributeCardinality();
+        }
+
+        private void textBoxAttributeDerived_TextChanged(object sender, EventArgs e)
+        {
+            if (this.m_loadall)
+                return;
+
+            DocAttribute docAttr = (DocAttribute)this.m_target;
+            if (!String.IsNullOrEmpty(this.textBoxAttributeDerived.Text))
+            {
+                docAttr.Derived = this.textBoxAttributeDerived.Text;
+            }
+            else
+            {
+                docAttr.Derived = null;
+            }
         }
 
         

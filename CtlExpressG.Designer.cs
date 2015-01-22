@@ -32,6 +32,10 @@
             // 
             // CtlExpressG
             // 
+            this.AllowDrop = true;
+            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.CtlExpressG_DragDrop);
+            this.DragEnter += new System.Windows.Forms.DragEventHandler(this.CtlExpressG_DragEnter);
+            this.DragOver += new System.Windows.Forms.DragEventHandler(this.CtlExpressG_DragOver);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.CtlExpressG_MouseDown);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.CtlExpressG_MouseMove);
             this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.CtlExpressG_MouseUp);

@@ -138,8 +138,14 @@ namespace IfcDoc.Format.EXP
                         {
                             if (this.m_included == null || this.m_included.ContainsKey(docEnt))
                             {
-                                mapEntity.Add(docEnt.Name, docEnt);
-                                mapGeneral.Add(docEnt.Name, docEnt);
+                                if (!mapEntity.ContainsKey(docEnt.Name))
+                                {
+                                    mapEntity.Add(docEnt.Name, docEnt);
+                                }
+                                if (!mapGeneral.ContainsKey(docEnt.Name))
+                                {
+                                    mapGeneral.Add(docEnt.Name, docEnt);
+                                }
                             }
                         }
 
@@ -176,6 +182,10 @@ namespace IfcDoc.Format.EXP
                 }
 
                 string schemaid = "IFC4";
+                if(!String.IsNullOrEmpty(this.m_project.Sections[0].Code))
+                {
+                    schemaid = this.m_project.Sections[0].Code;
+                }
                 string org = "buildingSMART International Limited";
 
                 writer.Write("" + 
@@ -424,7 +434,7 @@ DateTime.Today.ToLongDateString() + "\r\n" + //"December 27, 2012\r\n" +
                             writer.Write(attr.Name);
                             writer.Write(" : ");
 
-                            if (attr.IsOptional())
+                            if (attr.IsOptional)
                             {
                                 writer.Write("OPTIONAL ");
                             }

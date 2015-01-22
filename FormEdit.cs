@@ -243,21 +243,6 @@ namespace IfcDoc
 
             // init defaults
             this.m_project = new DocProject();
-            this.m_project.Sections = new List<DocSection>();
-            this.m_project.Sections.Add(new DocSection("Scope"));
-            this.m_project.Sections.Add(new DocSection("Normative references"));
-            this.m_project.Sections.Add(new DocSection("Terms, definitions, and abbreviated terms"));
-            this.m_project.Sections.Add(new DocSection("Fundamental concepts and assumptions"));
-            this.m_project.Sections.Add(new DocSection("Core data schemas"));
-            this.m_project.Sections.Add(new DocSection("Shared element data schemas"));
-            this.m_project.Sections.Add(new DocSection("Domain specific data schemas"));
-            this.m_project.Sections.Add(new DocSection("Resource definition data schemas"));
-            this.m_project.Annexes.Add(new DocAnnex("Computer interpretable listings"));
-            this.m_project.Annexes.Add(new DocAnnex("Alphabetical listings"));
-            this.m_project.Annexes.Add(new DocAnnex("Inheritance listings"));
-            this.m_project.Annexes.Add(new DocAnnex("Diagrams"));
-            this.m_project.Annexes.Add(new DocAnnex("Examples"));
-            this.m_project.Annexes.Add(new DocAnnex("Change logs"));
 
             this.m_project.Annexes[1].Code = "IFC4"; // schema id
 
@@ -332,6 +317,17 @@ namespace IfcDoc
                     }
 #endif
                 }
+                else if(o is DocAttribute)
+                {
+#if false
+                    // files before V8.7 didn't have nullable tagless
+                    DocAttribute docAttr = (DocAttribute)o;
+                    if (docAttr.XsdTagless == false)
+                    {
+                        docAttr.XsdTagless = null;
+                    }
+#endif
+                }
                 else if (o is DocExchangeDefinition)
                 {
                     // files before V4.9 had Description field; no longer needed so use regular Documentation field again.
@@ -401,12 +397,6 @@ namespace IfcDoc
             {
                 MessageBox.Show(this, "File is invalid; no project is defined.", "Error", MessageBoxButtons.OK);
                 return;
-            }
-
-            // include collection if needed (2.7+)
-            if (this.m_project.ModelViews == null)
-            {
-                this.m_project.ModelViews = new List<DocModelView>();
             }
 
             // now capture any template definitions (upgrade in V3.5)
@@ -707,7 +697,7 @@ namespace IfcDoc
                         case ".ifcdoc":
                             using (FormatSPF format = new FormatSPF(this.m_file, SchemaDOC.Types, this.m_instances))
                             {
-                                format.InitHeaders(this.m_file, "IFCDOC_8_6");
+                                format.InitHeaders(this.m_file, "IFCDOC_8_8");
                                 format.Save();
                             }
                             break;
@@ -1115,7 +1105,7 @@ namespace IfcDoc
                             }
                             else if (filename.Contains("ifcXML"))
                             {
-                                using(FormatXML format = new FormatXML(filename, typeof(configuration), SchemaCNF.DefaultNamespace))
+                                using (FormatXML format = new FormatXML(filename, typeof(configuration), null, SchemaCNF.Prefixes))
                                 {
                                     try
                                     {
@@ -1176,6 +1166,21 @@ namespace IfcDoc
                                 catch (System.Exception xx)
                                 {
                                     MessageBox.Show(this, xx.Message, "Import IFD");
+                                }
+                            }
+                            break;
+
+                        case ".xsd":
+                            using (FormatXML format = new FormatXML(filename, typeof(IfcDoc.Schema.XSD.schema), IfcDoc.Schema.XSD.SchemaXsd.DefaultNamespace))
+                            {
+                                try
+                                {
+                                    format.Load();
+                                    Program.ImportXsd((IfcDoc.Schema.XSD.schema)format.Instance, this.m_project);
+                                }
+                                catch(System.Exception xx)
+                                {
+                                    MessageBox.Show(this, xx.Message, "Import XSD");
                                 }
                             }
                             break;
@@ -2201,7 +2206,10 @@ namespace IfcDoc
                     DocEntity docEntity = (DocEntity)entity;
                     if (docEntity.Name != null)
                     {
-                        mapEntity.Add(docEntity.Name, docEntity);
+                        if(!mapEntity.ContainsKey(docEntity.Name))
+                        {
+                            mapEntity.Add(docEntity.Name, docEntity);
+                        }
                     }
                 }
                 else if (entity is DocType)
@@ -2248,7 +2256,10 @@ namespace IfcDoc
                     {
                         if (def.Name != null)
                         {
-                            mapSchema.Add(def.Name, docSchema.Name);
+                            if(!mapSchema.ContainsKey(def.Name))
+                            {
+                                mapSchema.Add(def.Name, docSchema.Name);
+                            }
                         }
                     }
                     foreach (DocType def in docSchema.Types)
@@ -2715,6 +2726,12 @@ namespace IfcDoc
                 }
             }
 
+            // put annotation sections at end
+            foreach (DocAnnotation annotation in this.m_project.Annotations)
+            {
+                LoadNode(null, annotation, annotation.Name, false);
+            }
+
             // force update of main pain
             if (this.treeView.Nodes.Count > 0)
             {
@@ -3094,7 +3111,7 @@ namespace IfcDoc
                 if (obj is DocSchema)
                 {
                     this.toolStripMenuItemEditDelete.Enabled = true;
-
+                    this.ToolStripMenuItemEditCut.Enabled = true;
                     this.toolStripMenuItemEditPaste.Enabled = (this.m_clipboard is DocPropertySet);
 
                     this.toolStripMenuItemInsertPropertyset.Enabled = true;
@@ -3359,14 +3376,15 @@ namespace IfcDoc
                 {
                     this.toolStripMenuItemEditDelete.Enabled = true;
                 }
-
-                if (obj is DocSection)
+                else if (obj is DocSection)
                 {
                     this.toolStripMenuItemEditRename.Enabled = false;
 
                     if (e.Node.Index >= 4 && e.Node.Index < 8)
                     {
+                        this.toolStripMenuItemEditRename.Enabled = true;
                         this.toolStripMenuItemInsertSchema.Enabled = true;
+                        this.toolStripMenuItemEditPaste.Enabled = (this.m_clipboard is DocSchema);
                     }
 
                     // special cases
@@ -3412,6 +3430,7 @@ namespace IfcDoc
             // copy state to context menu
             this.toolStripMenuItemContextSeparator.Visible = this.toolStripMenuItemContextInsert.Visible;
             this.deleteToolStripMenuItem.Enabled = this.toolStripMenuItemEditDelete.Enabled;
+            this.toolStripMenuItemContextInsertConstant.Visible = toolStripMenuItemInsertEnumerationConstant.Enabled;
 
             // copy state to toolbar
             this.ToolStripButtonEditCut.Enabled = this.ToolStripMenuItemEditCut.Enabled;
@@ -3882,9 +3901,6 @@ namespace IfcDoc
                 // root template
                 this.m_project.Templates.Add(doctemplate);
 
-                doctemplate.Type = "IfcRoot";
-
-                //tn = this.treeView.Nodes[3].Nodes[0]; // hard-coded
                 tn = this.treeView.Nodes[3]; // hard-coded
                 tn = LoadNode(tn, doctemplate, doctemplate.Name, true);
                 this.treeView.SelectedNode = tn;
@@ -3895,31 +3911,17 @@ namespace IfcDoc
 
         private void toolStripMenuItemInsertViewDefinition_Click(object sender, EventArgs e)
         {
-            if (this.m_project.ModelViews == null)
-            {
-                // compat
-                this.m_project.ModelViews = new List<DocModelView>();
-            }
-
             DocModelView docView = new DocModelView();
             this.m_project.ModelViews.Add(docView);
 
             TreeNode tnParent = this.treeView.Nodes[0];
             this.treeView.SelectedNode = this.LoadNode(tnParent, docView, docView.ToString(), true);
 
-            toolStripMenuItemEditProperties_Click(this, e);
+            toolStripMenuItemEditRename_Click(this, e);
         }
 
         private void toolStripMenuItemInsertExchange_Click(object sender, EventArgs e)
         {
-            if (this.m_project.ModelViews == null)
-            {
-                // compat
-                this.m_project.ModelViews = new List<DocModelView>();
-            }
-
-            // must select modelview
-
             DocModelView docView = this.treeView.SelectedNode.Tag as DocModelView;
             DocExchangeDefinition docExchange = new DocExchangeDefinition();
             docView.Exchanges.Add(docExchange);
@@ -4338,7 +4340,21 @@ namespace IfcDoc
             if (this.treeView.Focused)
             {
                 DocObject docSelect = this.treeView.SelectedNode.Tag as DocObject;
-                if (docSelect is DocSchema && this.m_clipboard is DocPropertySet)
+                if (docSelect is DocSection && this.m_clipboard is DocSchema)
+                {
+                    DocSchema docSchema = (DocSchema)this.m_clipboard;
+                    DocSection docSectionNew = (DocSection)docSelect;
+                    DocSection docSectionOld = (DocSection)this.m_clipboardNode.Parent.Tag;
+
+                    docSectionOld.Schemas.Remove(docSchema);
+                    docSectionNew.Schemas.Add(docSchema);
+
+                    this.m_clipboardNode.Remove();
+                    TreeNode tnSchema = this.LoadNode(this.treeView.SelectedNode, docSchema, docSchema.Name, true);
+                    this.treeView.SelectedNode = tnSchema;
+                    LoadNodeSchema(tnSchema, docSchema);
+                }
+                else if (docSelect is DocSchema && this.m_clipboard is DocPropertySet)
                 {
                     DocSchema schemaNew = (DocSchema)docSelect;
                     DocPropertySet psetOld = (DocPropertySet)this.m_clipboard;
@@ -4688,10 +4704,6 @@ namespace IfcDoc
             else
             {
                 // top-level
-                if (this.m_project.Examples == null)
-                {
-                    this.m_project.Examples = new List<DocExample>();
-                }
                 this.m_project.Examples.Add(docExample);
 
                 TreeNode tn = LoadNode(this.treeView.Nodes[12], docExample, docExample.Name, true);
@@ -5056,6 +5068,49 @@ namespace IfcDoc
 
         private void toolStripMenuItemToolsValidate_Click(object sender, EventArgs e)
         {
+            DocModelView docView = null;
+            if (this.m_filterviews != null && this.m_filterviews.Length > 0)
+            {
+                docView = this.m_filterviews[0];
+            }
+
+            using (FormValidate form = new FormValidate(this.m_project, docView, this.m_filterexchange))
+            {
+                DialogResult res = form.ShowDialog();
+                if (res != DialogResult.OK || String.IsNullOrEmpty(Properties.Settings.Default.ValidateFile))
+                    return;
+
+                this.m_filterviews = new DocModelView[] {form.SelectedView};
+                this.m_filterexchange = form.SelectedExchange;
+
+                using (this.m_formProgress = new FormProgress())
+                {
+                    this.m_formProgress.Text = "Validating File";
+                    this.m_formProgress.Description = "Validating file...";
+
+                    this.backgroundWorkerValidate.RunWorkerAsync();
+
+                    res = this.m_formProgress.ShowDialog();
+                    if (res != DialogResult.OK)
+                    {
+                        this.backgroundWorkerValidate.CancelAsync();
+                    }
+                }
+
+                if (this.m_exception != null)
+                {
+                    MessageBox.Show(this, this.m_exception.Message, "Error");
+                    this.m_exception = null;
+                    return;
+                }
+
+                // show window
+                this.splitContainerEdit.Panel2Collapsed = false;
+                this.InitInstanceList();
+
+            }
+
+#if false
             DialogResult res = this.openFileDialogValidate.ShowDialog();
             if (res != DialogResult.OK)
                 return;
@@ -5099,7 +5154,7 @@ namespace IfcDoc
                     this.InitInstanceList();
                 }
             }
-
+#endif
         }
 
         private void InitInstanceList()
@@ -5387,7 +5442,7 @@ namespace IfcDoc
                 m_loading = true;
                 Dictionary<long, SEntity> instances = new Dictionary<long, SEntity>();
                 this.backgroundWorkerValidate.ReportProgress(++progress, "Loading file...");
-                using (FormatSPF format = new FormatSPF(this.openFileDialogValidate.FileName, typemap, instances))
+                using (FormatSPF format = new FormatSPF(Properties.Settings.Default.ValidateFile, typemap, instances))
                 {
                     format.Load();
 
@@ -5426,7 +5481,7 @@ namespace IfcDoc
                                     }
                                 }
 
-                                if (list.Count > 0)
+                                //if (list.Count > 0)
                                 {
                                     sb.AppendLine("<h3>" + docRoot.ApplicableEntity.Name + " (" + list.Count + ")</h3>");
 
@@ -5459,40 +5514,43 @@ namespace IfcDoc
                 grandtotalpercent = 100 * grandtotalpass / grandtotallist;
             }
 
-            string path = this.openFileDialogValidate.FileName + ".htm";
-            using (System.IO.FileStream fs = new System.IO.FileStream(path, System.IO.FileMode.Create))
+            if (Properties.Settings.Default.ValidateReport)
             {
-                using (System.IO.StreamWriter writer = new System.IO.StreamWriter(fs))
+                string path = Properties.Settings.Default.ValidateFile + ".htm";
+                using (System.IO.FileStream fs = new System.IO.FileStream(path, System.IO.FileMode.Create))
                 {
-                    writer.WriteLine("<html>");
-                    writer.WriteLine("<body>");
-
-                    string exchange = null;
-                    if(this.m_filterexchange != null)
+                    using (System.IO.StreamWriter writer = new System.IO.StreamWriter(fs))
                     {
-                        exchange = this.m_filterexchange.Name;
+                        writer.WriteLine("<html>");
+                        writer.WriteLine("<body>");
+
+                        string exchange = null;
+                        if (this.m_filterexchange != null)
+                        {
+                            exchange = this.m_filterexchange.Name;
+                        }
+
+                        writer.WriteLine("<h1>Validation Results</h1>");
+                        writer.WriteLine("<table border='1'>");
+                        writer.WriteLine("<tr><td>Instance File</td><td>" + Properties.Settings.Default.ValidateFile + "</td></tr>");
+                        writer.WriteLine("<tr><td>Project File</td><td>" + this.m_file + "</td></tr>");
+                        writer.WriteLine("<tr><td>Model View</td><td>" + this.m_filterviews[0].Name + "</td></tr>");
+                        writer.WriteLine("<tr><td>Exchange</td><td>" + exchange + "</td></tr>");
+                        writer.WriteLine("<tr><td>Tests Executed</td><td>" + grandtotallist + "</td></tr>");
+                        writer.WriteLine("<tr><td>Tests Passed</td><td>" + grandtotalpass + "</td></tr>");
+                        writer.WriteLine("<tr><td>Tests Percentage</td><td>" + grandtotalpercent + "%</td></tr>");
+                        writer.WriteLine("</table>");
+
+                        writer.WriteLine(sb.ToString());
+
+                        writer.WriteLine("</body>");
+                        writer.WriteLine("</html>");
                     }
-
-                    writer.WriteLine("<h1>Validation Results</h1>");
-                    writer.WriteLine("<table border='1'>");
-                    writer.WriteLine("<tr><td>Instance File</td><td>" + this.openFileDialogValidate.FileName + "</td></tr>");
-                    writer.WriteLine("<tr><td>Project File</td><td>" + this.m_file + "</td></tr>");
-                    writer.WriteLine("<tr><td>Model View</td><td>" + this.m_filterviews[0].Name + "</td></tr>");
-                    writer.WriteLine("<tr><td>Exchange</td><td>" + exchange + "</td></tr>");
-                    writer.WriteLine("<tr><td>Tests Executed</td><td>" + grandtotallist + "</td></tr>");
-                    writer.WriteLine("<tr><td>Tests Passed</td><td>" + grandtotalpass + "</td></tr>");
-                    writer.WriteLine("<tr><td>Tests Percentage</td><td>" + grandtotalpercent + "%</td></tr>");
-                    writer.WriteLine("</table>");
-
-                    writer.WriteLine(sb.ToString());
-
-                    writer.WriteLine("</body>");
-                    writer.WriteLine("</html>");
                 }
-            }
 
-            // launch
-            System.Diagnostics.Process.Start(path);
+                // launch
+                System.Diagnostics.Process.Start(path);
+            }
         }
 
         /// <summary>
@@ -5509,9 +5567,8 @@ namespace IfcDoc
         /// <param name="grandtotallist">The total tests executed.</param>
         private void ValidateConcept(DocTemplateUsage docUsage, DocModelView docView, DocExchangeRequirementEnum reqInherit, Type typeEntity, List<SEntity> list, StringBuilder sb, Dictionary<string, Type> typemap, ref int grandtotalpass, ref int grandtotallist)
         {
-            if (docUsage.Definition.IsDisabled || docUsage.Suppress)
+            if (docUsage.Definition == null || docUsage.Definition.IsDisabled || docUsage.Suppress)
                 return;
-
 
             DocExchangeRequirementEnum req = DocExchangeRequirementEnum.NotRelevant;
             bool includeconcept = true;
@@ -5565,14 +5622,16 @@ namespace IfcDoc
                 }
             }
 
-            //if (docUsage.Definition.Name.Contains("Property Sets for") && typeEntity.Name == "IfcBeam")//-069
-            if (docUsage.Definition.Name.Contains("PCI-103"))//-069
-            {
-                this.ToString();
-            }
-
             if (!includeconcept)
                 return;
+
+            if (list.Count == 0)
+            {
+                sb.Append("<details><summary>");
+                sb.Append(docUsage.Definition.Name);
+                sb.AppendLine("</summary></details>");
+                return;
+            }
 
             StringBuilder sbDetail = new StringBuilder();
 
@@ -5599,199 +5658,206 @@ namespace IfcDoc
 
                         foreach (DocTemplateItem docItem in docUsage.Items)
                         {
-                            trace.Clear();
-
-                            if (docItem == docUsage.Items[0])
+                            if (!docItem.Optional)
                             {
-                                sbDetail.Append("<tr valign=\"top\"><td rowspan=\"" + docUsage.Items.Count + "\">#");
-                                sbDetail.Append(ent.OID);
-                                sbDetail.Append("</td>");
-                            }
-                            else
-                            {
-                                sbDetail.Append("<tr valign=\"top\">");
-                            }
+                                trace.Clear();
 
-                            for (int iParam = 0; iParam < parameterrules.Length; iParam++)
-                            {
-                                DocModelRule prule = parameterrules[iParam];
-
-                                sbDetail.Append("<td>");
-                                DocTemplateUsage docUsageInner = docItem.GetParameterConcept(prule.Identification, null);//verify...
-                                if (docUsageInner != null)
+                                if (docItem == docUsage.Items[0])
                                 {
-                                    // report inner rules...
-                                    foreach (DocTemplateItem docItemInner in docUsageInner.Items)
-                                    {
-                                        sbDetail.Append(docItemInner.RuleParameters);
-                                        sbDetail.Append("<br/>");
-                                    }
+                                    sbDetail.Append("<tr valign=\"top\"><td rowspan=\"" + docUsage.Items.Count + "\">#");
+                                    sbDetail.Append(ent.OID);
+                                    sbDetail.Append("</td>");
                                 }
                                 else
                                 {
-                                    string pval = docItem.GetParameterValue(prule.Identification);
-                                    sbDetail.Append(pval);
-                                }
-                                sbDetail.Append("</td>");
-                            }
-
-                            sbDetail.Append("<td>");
-                            bool? result = true;
-                            foreach (DocModelRule rule in docUsage.Definition.Rules)
-                            {
-                                trace.Clear();
-                                bool? itemresult = rule.Validate(ent, docItem, typemap, trace, ent);
-                                if (itemresult != null && !itemresult.Value && result != null)
-                                {
-                                    result = false;
-                                }
-                                else if (itemresult == null)
-                                {
-                                    result = null; //verify: was commented out -- put back in to indicate that entire rule is inapplicable.
-                                }
-                            }
-
-                            if (result != null && !result.Value)
-                            {
-                                foreach (DocModelRule mm in trace)
-                                {
-                                    if (mm is DocModelRuleEntity)
-                                    {
-                                        sbDetail.Append("\\");
-                                    }
-                                    else if (mm is DocModelRuleAttribute)
-                                    {
-                                        sbDetail.Append(".");
-                                    }
-                                    sbDetail.Append(mm.Name);
+                                    sbDetail.Append("<tr valign=\"top\">");
                                 }
 
-                                docItem.ValidationStructure[ent] = false;
-                                docUsage.ValidationStructure[ent] = false;
-                                docUsage.Validation = false;
-                                docUsage.Definition.Validation = false;
-                                fail++;
-                            }
-                            else if (result != null && result.Value)
-                            {
-                                // check for any nested failures
-                                foreach (DocTemplateUsage docInnerConcept in docItem.Concepts)
+                                for (int iParam = 0; iParam < parameterrules.Length; iParam++)
                                 {
-                                    foreach (DocTemplateItem docInnerItem in docInnerConcept.Items)
+                                    DocModelRule prule = parameterrules[iParam];
+
+                                    sbDetail.Append("<td>");
+                                    DocTemplateUsage docUsageInner = docItem.GetParameterConcept(prule.Identification, null);//verify...
+                                    if (docUsageInner != null)
                                     {
-                                        if (docInnerItem.ValidationStructure.Count == 0)
+                                        // report inner rules...
+                                        foreach (DocTemplateItem docItemInner in docUsageInner.Items)
                                         {
-                                            sbDetail.Append("~");
-                                            sbDetail.Append(docInnerItem.RuleParameters);
-                                            sbDetail.Append("<br/>");
-
-                                            result = false;
-                                            docItem.ValidationStructure[ent] = false;
-                                            docUsage.ValidationStructure[ent] = false;
-                                            docUsage.Validation = false;
-                                            docUsage.Definition.Validation = false;
-                                            fail++;
-                                            break;
-                                        }
-                                    }
-                                }
-
-                                if (result != null && result.Value)
-                                {
-                                    sbDetail.Append("+");
-                                    pass++;
-
-                                    docItem.ValidationStructure[ent] = true;
-                                    if (!docUsage.ValidationStructure.ContainsKey(ent)) // if no failures so far, then concept passes for now
-                                    {
-                                        docUsage.ValidationStructure[ent] = true;
-                                    }
-                                }
-                            }
-                            else if (result == null)
-                            {
-                                sbDetail.Append("*"); // NOT APPLICABLE
-
-                                docItem.ValidationStructure[ent] = true;
-                                if (!docUsage.ValidationStructure.ContainsKey(ent))
-                                {
-                                    docUsage.ValidationStructure[ent] = true;
-                                }
-                            }
-
-                            sbDetail.Append("</td><td>");
-
-                            if (result == null)
-                            {
-                                // don't evaluate constraint if it doesn't apply
-                            }
-                            else if (method != null)
-                            {
-                                try
-                                {
-                                    bool[] ruleresult = (bool[])method.Invoke(ent, null);//, args);
-                                    if (ruleresult != null)
-                                    {
-                                        bool allpass = true;
-                                        foreach (bool compresult in ruleresult)
-                                        {
-                                            if (!compresult)
+                                            if (!docItemInner.Optional)
                                             {
-                                                allpass = false;
-                                                break;
+                                                sbDetail.Append(docItemInner.RuleParameters);
+                                                sbDetail.Append("<br/>");
                                             }
-                                        }
-
-                                        if (allpass)
-                                        {
-                                            sbDetail.Append("+");
-                                            passRule++;
-
-                                            docUsage.ValidationConstraints[ent] = true;
-
-                                            if (docUsage.Validation == null)
-                                            {
-                                                docUsage.Validation = true;
-                                            }
-                                        }
-                                        else
-                                        {
-                                            // run detailed report
-                                            foreach (DocModelRule rule in docUsage.Definition.Rules)
-                                            {
-                                                TraceRule(docUsage.Definition, rule, sbDetail, ent, list);
-                                            }
-
-
-                                            failRule++;
-
-                                            docUsage.ValidationConstraints[ent] = false;
-                                            docUsage.Validation = false;
                                         }
                                     }
                                     else
                                     {
-                                        sbDetail.Append("FAIL");
+                                        string pval = docItem.GetParameterValue(prule.Identification);
+                                        sbDetail.Append(pval);
+                                    }
+                                    sbDetail.Append("</td>");
+                                }
+
+                                sbDetail.Append("<td>");
+                                bool? result = true;
+                                foreach (DocModelRule rule in docUsage.Definition.Rules)
+                                {
+                                    trace.Clear();
+                                    bool? itemresult = rule.Validate(ent, docItem, typemap, trace, ent);
+                                    if (itemresult != null && !itemresult.Value && result != null)
+                                    {
+                                        result = false;
+                                        break;
+                                    }
+                                    else if (itemresult == null)
+                                    {
+                                        result = null; //verify: was commented out -- put back in to indicate that entire rule is inapplicable.
+                                    }
+                                }
+
+                                if (result != null && !result.Value)
+                                {
+                                    foreach (DocModelRule mm in trace)
+                                    {
+                                        if (mm is DocModelRuleEntity)
+                                        {
+                                            sbDetail.Append("\\");
+                                        }
+                                        else if (mm is DocModelRuleAttribute)
+                                        {
+                                            sbDetail.Append(".");
+                                        }
+                                        sbDetail.Append(mm.Name);
+                                    }
+
+                                    docItem.ValidationStructure[ent] = false;
+                                    docUsage.ValidationStructure[ent] = false;
+                                    docUsage.Validation = false;
+                                    docUsage.Definition.Validation = false;
+                                    fail++;
+                                }
+                                else if (result != null && result.Value)
+                                {
+                                    // check for any nested failures
+                                    foreach (DocTemplateUsage docInnerConcept in docItem.Concepts)
+                                    {
+                                        foreach (DocTemplateItem docInnerItem in docInnerConcept.Items)
+                                        {
+                                            if (!docInnerItem.Optional && docInnerItem.ValidationStructure.Count == 0)
+                                            {
+                                                sbDetail.Append("~");
+                                                sbDetail.Append(docInnerItem.RuleParameters);
+                                                sbDetail.Append("<br/>");
+
+                                                result = false;
+                                                docItem.ValidationStructure[ent] = false;
+                                                docUsage.ValidationStructure[ent] = false;
+                                                docUsage.Validation = false;
+                                                docUsage.Definition.Validation = false;
+                                                fail++;
+                                                break;
+                                            }
+                                        }
+                                    }
+
+                                    if (result != null && result.Value)
+                                    {
+                                        sbDetail.Append("+");
+                                        pass++;
+
+                                        docItem.ValidationStructure[ent] = true;
+                                        if (!docUsage.ValidationStructure.ContainsKey(ent)) // if no failures so far, then concept passes for now
+                                        {
+                                            docUsage.ValidationStructure[ent] = true;
+                                        }
+                                    }
+                                }
+                                else if (result == null)
+                                {
+                                    sbDetail.Append("*"); // NOT APPLICABLE
+
+                                    docItem.ValidationStructure[ent] = true;
+                                    if (!docUsage.ValidationStructure.ContainsKey(ent))
+                                    {
+                                        docUsage.ValidationStructure[ent] = true;
+                                    }
+                                }
+
+                                sbDetail.Append("</td><td>");
+
+                                if (result == null)
+                                {
+                                    // don't evaluate constraint if it doesn't apply
+                                }
+                                else if (method != null)
+                                {
+                                    try
+                                    {
+                                        bool[] ruleresult = (bool[])method.Invoke(ent, null);//, args);
+                                        if (ruleresult != null)
+                                        {
+                                            bool allpass = true;
+                                            foreach (bool compresult in ruleresult)
+                                            {
+                                                if (!compresult)
+                                                {
+                                                    allpass = false;
+                                                    break;
+                                                }
+                                            }
+
+                                            if (allpass)
+                                            {
+                                                sbDetail.Append("+");
+                                                passRule++;
+
+                                                docUsage.ValidationConstraints[ent] = true;
+
+                                                if (docUsage.Validation == null)
+                                                {
+                                                    docUsage.Validation = true;
+                                                }
+                                            }
+                                            else
+                                            {
+                                                // run detailed report
+                                                foreach (DocModelRule rule in docUsage.Definition.Rules)
+                                                {
+                                                    TraceRule(docUsage.Definition, rule, sbDetail, ent, list);
+                                                }
+
+
+                                                failRule++;
+
+                                                docUsage.ValidationConstraints[ent] = false;
+                                                docUsage.Validation = false;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            sbDetail.Append("FAIL");
+                                            failRule++;
+                                        }
+                                    }
+                                    catch (System.Reflection.TargetInvocationException et)
+                                    {
+                                        sbDetail.Append(et.InnerException.GetType().Name);
+                                        failRule++;
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        sbDetail.Append(ex.GetType().Name);
                                         failRule++;
                                     }
                                 }
-                                catch (System.Reflection.TargetInvocationException et)
+                                else
                                 {
-                                    sbDetail.Append(et.InnerException.GetType().Name);
-                                    failRule++;
+                                    sbDetail.Append("FAIL - Incompatible Template");
                                 }
-                                catch (Exception ex)
-                                {
-                                    sbDetail.Append(ex.GetType().Name);
-                                    failRule++;
-                                }
-                            }
-                            else
-                            {
-                                sbDetail.Append("FAIL - Incompatible Template");
-                            }
 
-                            sbDetail.AppendLine("</td></tr>");
+                                sbDetail.AppendLine("</td></tr>");
+                            }
                         }
                     }
                     else
@@ -5842,7 +5908,6 @@ namespace IfcDoc
 
                         if (result == null)
                         {
-                            sbDetail.Append("*");
                             // no applicable rules, so passing
                             pass++;
                         }
@@ -5863,7 +5928,11 @@ namespace IfcDoc
                             fail++;
                         }
 
-                        if (ruleFail == null)
+                        if (result == null)
+                        {
+                            sbDetail.Append("*");
+                        }
+                        else if (ruleFail == null)
                         {
                             sbDetail.Append("+");
                         }
@@ -5968,7 +6037,7 @@ namespace IfcDoc
 
                     if (subtotalpass > 0)
                     {
-                        grandtotalpass++;
+                        //grandtotalpass++;
                         sbNested.AppendLine("<p>RESULT: PASS (" + subtotalpass + "/" + subtotallist + ")</p>");
                     }
                     else
@@ -6212,11 +6281,6 @@ namespace IfcDoc
         private void toolStripMenuItemInsertNormative_Click(object sender, EventArgs e)
         {
             DocReference docNorm = new DocReference();
-
-            if(this.m_project.NormativeReferences == null)
-            {
-                this.m_project.NormativeReferences = new List<DocReference>();
-            }
             this.m_project.NormativeReferences.Add(docNorm);
 
             TreeNode tnParent = this.treeView.Nodes[1];
@@ -6228,10 +6292,6 @@ namespace IfcDoc
         private void toolStripMenuItemInsertBibliography_Click(object sender, EventArgs e)
         {
             DocReference docNorm = new DocReference();
-            if (this.m_project.InformativeReferences == null)
-            {
-                this.m_project.InformativeReferences = new List<DocReference>();
-            }
             this.m_project.InformativeReferences.Add(docNorm);
 
             TreeNode tnParent = this.treeView.Nodes[14];
@@ -6258,10 +6318,6 @@ namespace IfcDoc
             }
             else
             {
-                if (this.m_project.Terms == null)
-                {
-                    this.m_project.Terms = new List<DocTerm>();
-                }
                 this.m_project.Terms.Add(docNorm);
             
                 this.treeView.SelectedNode = this.LoadNode(tnParent, docNorm, docNorm.ToString(), true, this.m_project.Terms.Count - 1);
@@ -6273,10 +6329,6 @@ namespace IfcDoc
         private void toolStripMenuItemInsertAbbreviatedTerm_Click(object sender, EventArgs e)
         {
             DocAbbreviation docNorm = new DocAbbreviation();
-            if (this.m_project.Abbreviations == null)
-            {
-                this.m_project.Abbreviations = new List<DocAbbreviation>();
-            }
             this.m_project.Abbreviations.Add(docNorm);
 
             TreeNode tnParent = this.treeView.Nodes[2];
@@ -6342,8 +6394,8 @@ namespace IfcDoc
                     {
                         docAttr.Definition = form.SelectedEntity;
 
-                        docAttr.DiagramLine.Add(new DocPoint(docEntity.DiagramRectangle.X + docEntity.DiagramRectangle.Width, docEntity.DiagramRectangle.Y + docEntity.Attributes.IndexOf(docAttr) * 100.0));
-                        docAttr.DiagramLine.Add(new DocPoint(form.SelectedEntity.DiagramRectangle.X, form.SelectedEntity.DiagramRectangle.Y + form.SelectedEntity.DiagramRectangle.Height / 2));
+                        //docAttr.DiagramLine.Add(new DocPoint(docEntity.DiagramRectangle.X + docEntity.DiagramRectangle.Width, docEntity.DiagramRectangle.Y + docEntity.Attributes.IndexOf(docAttr) * 100.0));
+                        //docAttr.DiagramLine.Add(new DocPoint(form.SelectedEntity.DiagramRectangle.X, form.SelectedEntity.DiagramRectangle.Y + form.SelectedEntity.DiagramRectangle.Height / 2));
                     }
                     else
                     {
@@ -6402,35 +6454,36 @@ namespace IfcDoc
                         else
                         {
                             docAttr.Definition = docDefTarget;
-
-                            // check if there's a page reference target -- use that if it exists
-                            foreach(DocPageTarget docPageTarget in docSchema.PageTargets)
-                            {
-                                if (docPageTarget.Definition == docDefTarget)
-                                {
-                                    DocPageSource docPageSource = new DocPageSource();
-                                    docPageTarget.Sources.Add(docPageSource);
-                                    //docPageSource.Target = docPageTarget;
-                                    docPageSource.DiagramRectangle = new DocRectangle();
-                                    docPageSource.DiagramRectangle.X = docEntity.DiagramRectangle.X + docEntity.DiagramRectangle.Width + 100;
-                                    docPageSource.DiagramRectangle.Y = docEntity.DiagramRectangle.Y + (docEntity.Attributes.Count - 1) * 100;
-                                    docPageSource.DiagramRectangle.Width = 400.0;
-                                    docPageSource.DiagramRectangle.Height = 50.0;
-
-                                    docAttr.Definition = docPageSource;
-
-                                    docAttr.DiagramLine.Add(new DocPoint(docEntity.DiagramRectangle.X + docEntity.DiagramRectangle.Width, docPageSource.DiagramRectangle.Y + docPageSource.DiagramRectangle.Height / 2));
-                                    docAttr.DiagramLine.Add(new DocPoint(docPageSource.DiagramRectangle.X, docPageSource.DiagramRectangle.Y + docPageSource.DiagramRectangle.Height / 2));
-                                    break;
-                                }
-                            }
                         }
 
-                        if (docAttr.DiagramLine.Count == 0)
+                    }
+
+                    // check if there's a page reference target -- use that if it exists
+                    foreach (DocPageTarget docPageTarget in docSchema.PageTargets)
+                    {
+                        if (docPageTarget.Definition == docAttr.Definition)
                         {
-                            docAttr.DiagramLine.Add(new DocPoint(docEntity.DiagramRectangle.X + docEntity.DiagramRectangle.Width, docDefTarget.DiagramRectangle.Y + docDefTarget.DiagramRectangle.Height / 2));
-                            docAttr.DiagramLine.Add(new DocPoint(docDefTarget.DiagramRectangle.X, docDefTarget.DiagramRectangle.Y + docDefTarget.DiagramRectangle.Height / 2));
+                            DocPageSource docPageSource = new DocPageSource();
+                            docPageTarget.Sources.Add(docPageSource);
+                            //docPageSource.Target = docPageTarget;
+                            docPageSource.DiagramRectangle = new DocRectangle();
+                            docPageSource.DiagramRectangle.X = docEntity.DiagramRectangle.X + docEntity.DiagramRectangle.Width + 100;
+                            docPageSource.DiagramRectangle.Y = docEntity.DiagramRectangle.Y + (docEntity.Attributes.Count - 1) * 100;
+                            docPageSource.DiagramRectangle.Width = 400.0;
+                            docPageSource.DiagramRectangle.Height = 50.0;
+
+                            docAttr.Definition = docPageSource;
+
+                            docAttr.DiagramLine.Add(new DocPoint(docEntity.DiagramRectangle.X + docEntity.DiagramRectangle.Width, docPageSource.DiagramRectangle.Y + docPageSource.DiagramRectangle.Height / 2));
+                            docAttr.DiagramLine.Add(new DocPoint(docPageSource.DiagramRectangle.X, docPageSource.DiagramRectangle.Y + docPageSource.DiagramRectangle.Height / 2));
+                            break;
                         }
+                    }
+
+                    if (docAttr.DiagramLine.Count == 0)
+                    {
+                        docAttr.DiagramLine.Add(new DocPoint(docEntity.DiagramRectangle.X + docEntity.DiagramRectangle.Width, docAttr.Definition.DiagramRectangle.Y + docAttr.Definition.DiagramRectangle.Height / 2));
+                        docAttr.DiagramLine.Add(new DocPoint(docAttr.Definition.DiagramRectangle.X, docAttr.Definition.DiagramRectangle.Y + docAttr.Definition.DiagramRectangle.Height / 2));
                     }
 
                     docAttr.DiagramLabel = new DocRectangle();
@@ -6830,9 +6883,10 @@ namespace IfcDoc
         private void treeView_BeforeLabelEdit(object sender, NodeLabelEditEventArgs e)
         {
             object target = e.Node.Tag;
-            if(target is DocSection)
+            if (target is DocSection)
             {
-                e.CancelEdit = true;
+                int iSection = this.m_project.Sections.IndexOf((DocSection)target);
+                e.CancelEdit = (iSection < 4 || iSection > 7);
             }
             else if (target is DocObject)
             {
@@ -7990,9 +8044,36 @@ namespace IfcDoc
             this.LoadTree();
         }
 
-        private void ctlProperties_Load(object sender, EventArgs e)
+        private void ctlProperties_Navigate(object sender, EventArgs e)
         {
+            if (this.ctlProperties.SelectedUsage != null && this.ctlProperties.SelectedUsage.Length == 3)
+            {
+                DocEntity docEnt = (DocEntity)this.ctlProperties.SelectedUsage[0];
+                DocConceptRoot docRoot = (DocConceptRoot)this.ctlProperties.SelectedUsage[1];
+                DocTemplateUsage docUsage = (DocTemplateUsage)this.ctlProperties.SelectedUsage[2];
 
+                TreeNode tnEntity = this.m_mapTree[docEnt.Name.ToLowerInvariant()];
+                foreach(TreeNode tnRoot in tnEntity.Nodes)
+                {
+                    if(tnRoot.Tag == docRoot)
+                    {
+                        foreach(TreeNode tnUsage in tnRoot.Nodes)
+                        {
+                            if(tnUsage.Tag == docUsage)
+                            {
+                                this.treeView.SelectedNode = tnUsage;
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private void treeView_ItemDrag(object sender, ItemDragEventArgs e)
+        {
+            TreeNode tn = (TreeNode)e.Item;
+            this.DoDragDrop(tn.Tag, DragDropEffects.Move);
         }
     }
 }

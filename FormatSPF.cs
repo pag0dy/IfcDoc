@@ -1423,10 +1423,6 @@ namespace IfcDoc.Format.SPF
                             sb.Append(chHex);
                             i += 3;
                         }
-                        else
-                        {
-                            this.ToString(); // bad format
-                        }
                     }
                     else if (ch == '\\')
                     {
@@ -1608,7 +1604,14 @@ namespace IfcDoc.Format.SPF
 
                         string strval = line.Substring(x0, x - x0);
 
-                        ParseField(field, instance, strval);
+                        try
+                        {
+                            ParseField(field, instance, strval);
+                        }
+                        catch(System.Exception xx)
+                        {
+                            this.m_errors.Add("#" + this.m_currentinstance + " ." + field.Name + " - " + xx.Message);
+                        }
 
                         // reset to next
                         x0 = x + 1;
@@ -1637,8 +1640,7 @@ namespace IfcDoc.Format.SPF
             catch (System.Exception xxx)
             {
                 // invalid data!
-                xxx.ToString();
-                System.Diagnostics.Debug.WriteLine("SPF Reader: " + xxx.ToString());
+                this.m_errors.Add("#" + this.m_currentinstance + " - " + xxx.Message);
             }
         }
 
@@ -1830,9 +1832,9 @@ namespace IfcDoc.Format.SPF
             FILE_NAME hName = new FILE_NAME();
             hName.Name = filename;
             hName.OriginatingSystem = "buildingSMART IFC Documentation Generator";
-            hName.PreprocessorVersion = "buildingSMART IFCDOC 8.6"; // was "buildingSMART IFCDOC" for 2.7 and earlier;
-            hName.Author.Add(System.Environment.UserName);
-            hName.Organization.Add(System.Environment.UserDomainName);
+            hName.PreprocessorVersion = "buildingSMART IFCDOC 8.8"; // was "buildingSMART IFCDOC" for 2.7 and earlier;
+            //hName.Author.Add(System.Environment.UserName);
+            //hName.Organization.Add(System.Environment.UserDomainName);
             hName.Timestamp = DateTime.UtcNow;
 
             FILE_SCHEMA hSchema = new FILE_SCHEMA();

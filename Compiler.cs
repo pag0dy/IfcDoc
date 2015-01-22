@@ -61,8 +61,11 @@ namespace IfcDoc
                     {
                         if (included == null || included.ContainsKey(docEntity))
                         {
-                            this.m_definitions.Add(docEntity.Name, docEntity);
-                            this.m_namespaces.Add(docEntity.Name, docSchema.Name);
+                            if (!this.m_definitions.ContainsKey(docEntity.Name))
+                            {
+                                this.m_definitions.Add(docEntity.Name, docEntity);
+                                this.m_namespaces.Add(docEntity.Name, docSchema.Name);
+                            }
                         }
                     }
 
@@ -70,8 +73,11 @@ namespace IfcDoc
                     {
                         if (included == null || included.ContainsKey(docType))
                         {
-                            this.m_definitions.Add(docType.Name, docType);
-                            this.m_namespaces.Add(docType.Name, docSchema.Name);
+                            if (!this.m_definitions.ContainsKey(docType.Name))
+                            {
+                                this.m_definitions.Add(docType.Name, docType);
+                                this.m_namespaces.Add(docType.Name, docSchema.Name);
+                            }
                         }
                     }
                 }
@@ -346,11 +352,6 @@ namespace IfcDoc
         /// <returns></returns>
         public Type RegisterType(string strtype)
         {
-            if(strtype == "IfcLabel")
-            {
-                this.ToString();
-            }
-
             // this implementation maps direct and inverse attributes to fields for brevity; a production implementation would use properties as well
 
             if (strtype == null)
@@ -469,7 +470,7 @@ namespace IfcDoc
 
                             typefield = typeof(List<>).MakeGenericType(new Type[] { typefield });
                         }
-                        else if (typefield.IsValueType && docAttribute.IsOptional())
+                        else if (typefield.IsValueType && docAttribute.IsOptional)
                         {
                             typefield = typeof(Nullable<>).MakeGenericType(new Type[] { typefield });
                         }
@@ -566,28 +567,30 @@ namespace IfcDoc
                 }
 
                 Type typeliteral = RegisterType(docDef.DefinedType);
-
-                if (docDef.Aggregation != null && docDef.Aggregation.AggregationType != 0)
+                if (typeliteral != null)
                 {
-                    typeliteral = typeof(List<>).MakeGenericType(new Type[] { typeliteral });
-                }
-                else
-                {
-                    FieldInfo fieldval = typeliteral.GetField("Value");
-                    while (fieldval != null)
+                    if (docDef.Aggregation != null && docDef.Aggregation.AggregationType != 0)
                     {
-                        typeliteral = fieldval.FieldType;
-                        fieldval = typeliteral.GetField("Value");
+                        typeliteral = typeof(List<>).MakeGenericType(new Type[] { typeliteral });
                     }
+                    else
+                    {
+                        FieldInfo fieldval = typeliteral.GetField("Value");
+                        while (fieldval != null)
+                        {
+                            typeliteral = fieldval.FieldType;
+                            fieldval = typeliteral.GetField("Value");
+                        }
+                    }
+
+                    FieldBuilder fieldValue = tb.DefineField("Value", typeliteral, FieldAttributes.Public);
+
+                    type = tb.CreateType();
+
+                    Dictionary<string, FieldInfo> mapField = new Dictionary<string, FieldInfo>();
+                    mapField.Add("Value", fieldValue);
+                    this.m_fields.Add(type, mapField);
                 }
-
-                FieldBuilder fieldValue = tb.DefineField("Value", typeliteral, FieldAttributes.Public);
-
-                type = tb.CreateType();
-
-                Dictionary<string, FieldInfo> mapField = new Dictionary<string, FieldInfo>();
-                mapField.Add("Value", fieldValue);
-                this.m_fields.Add(type, mapField);
             }
 
             this.m_types.Add(strtype, type);
@@ -632,6 +635,9 @@ namespace IfcDoc
                     }
                 }
             }
+
+            if (dtd.Type == null)
+                return null;
 
             TypeBuilder tb = (System.Reflection.Emit.TypeBuilder)this.RegisterType(dtd.Type);
             if (tb == null)

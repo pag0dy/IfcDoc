@@ -62,6 +62,7 @@ namespace IfcDoc
             {
                 this.m_template = value;
                 LoadTemplateGraph();
+                UpdateCommands();
             }
         }
 
@@ -154,7 +155,7 @@ namespace IfcDoc
             this.treeViewTemplate.BeginUpdate();
             this.treeViewTemplate.Nodes.Clear();
 
-            if (this.m_template == null)
+            if (this.m_template == null || String.IsNullOrEmpty(this.m_template.Type))
             {
                 this.treeViewTemplate.EndUpdate();
                 return;
@@ -289,6 +290,32 @@ namespace IfcDoc
             if (this.m_template == null)
                 return;
 
+            if (this.treeViewTemplate.Nodes.Count == 0)
+            {
+                DocEntity docEntityBase = null;
+                if (this.m_parent is DocTemplateDefinition)
+                {
+                    string classname = ((DocTemplateDefinition)this.m_parent).Type;
+                    docEntityBase = this.m_project.GetDefinition(classname) as DocEntity;
+                }
+
+                // get selected entity
+                DocEntity docEntityThis = this.m_project.GetDefinition(this.m_template.Type) as DocEntity;
+                
+                using (FormSelectEntity form = new FormSelectEntity(docEntityBase, docEntityThis, this.m_project, SelectDefinitionOptions.Entity))
+                {
+                    DialogResult res = form.ShowDialog(this);
+                    if (res == DialogResult.OK && form.SelectedEntity != null)
+                    {
+                        this.m_template.Type = form.SelectedEntity.Name;
+                        this.LoadTemplateGraph();
+                        this.ContentChanged(this, EventArgs.Empty);
+                    }
+                }
+
+                return;
+            }
+
             if (this.m_attribute != null && !String.IsNullOrEmpty(this.m_attribute.DefinedType))
             {
                 DocTemplateDefinition docTemplate = this.m_template;
@@ -309,7 +336,29 @@ namespace IfcDoc
 
                     default:
                         {
-                            DocObject docobj = this.m_project.GetDefinition(docAttribute.DefinedType);
+                            // qualify schema
+                            DocObject docobj = null;
+
+                            if (!String.IsNullOrEmpty(this.m_template.Code))
+                            {
+                                foreach(DocSection docSection in this.m_project.Sections)
+                                {
+                                    foreach (DocSchema docSchema in docSection.Schemas)
+                                    {
+                                        if (docSchema.Name.Equals(this.m_template.Code, StringComparison.OrdinalIgnoreCase))
+                                        {
+                                            docobj = docSchema.GetDefinition(docAttribute.DefinedType);
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+
+                            if (docobj == null)
+                            {
+                                docobj = this.m_project.GetDefinition(docAttribute.DefinedType);
+                            }
+
                             using (FormSelectEntity form = new FormSelectEntity((DocDefinition)docobj, null, this.m_project, SelectDefinitionOptions.Entity | SelectDefinitionOptions.Type))
                             {
                                 DialogResult res = form.ShowDialog(this);
@@ -372,8 +421,8 @@ namespace IfcDoc
                     rule = this.treeViewTemplate.SelectedNode.Tag as DocModelRule;
                 }
 
-                if (rule == null)
-                    return;
+                //if (rule == null)
+                //   return;
 
                 DocTemplateDefinition docTemplate = (DocTemplateDefinition)this.m_template;
 
@@ -451,6 +500,13 @@ namespace IfcDoc
                     dme.References.Remove(dtd);
                     this.treeViewTemplate.SelectedNode.Remove();
                 }
+                else
+                {
+                    this.m_template.Type = null;
+                    this.treeViewTemplate.Nodes.Clear();
+                }
+                UpdateCommands();
+                this.ContentChanged(this, EventArgs.Empty);
                 return;
             }
 
@@ -533,15 +589,19 @@ namespace IfcDoc
             }
 
             this.toolStripButtonTemplateInsert.Enabled = insert;
-            this.toolStripButtonTemplateRemove.Enabled = (this.Selection != null && !locked) || (this.treeViewTemplate.SelectedNode != null && this.treeViewTemplate.SelectedNode.Tag is DocTemplateDefinition && this.treeViewTemplate.SelectedNode.Tag != this.m_template);
+            this.toolStripButtonTemplateRemove.Enabled = (this.Selection != null && !locked) || (this.treeViewTemplate.SelectedNode != null && this.treeViewTemplate.SelectedNode.Tag is DocTemplateDefinition);
             this.toolStripButtonTemplateUpdate.Enabled = ((this.Selection is DocModelRuleAttribute || (this.Selection is DocModelRuleEntity)) && !locked);
             this.toolStripButtonRuleRef.Enabled = (this.Selection is DocModelRuleEntity);
 
             TreeNode tnSelect = this.treeViewTemplate.SelectedNode;
-            TreeNode tnParent = this.treeViewTemplate.SelectedNode.Parent;
+            TreeNode tnParent = null;
+            if(tnSelect != null)
+            { 
+                tnParent = this.treeViewTemplate.SelectedNode.Parent;
+            }
+            
             this.toolStripButtonMoveUp.Enabled = (tnParent != null && tnParent.Nodes.IndexOf(tnSelect) > 0) && !locked;
             this.toolStripButtonMoveDown.Enabled = (tnParent != null && tnParent.Nodes.IndexOf(tnSelect) < tnParent.Nodes.Count - 1) && !locked;
-
             this.toolStripButtonSetDefault.Enabled = (this.Selection is DocModelRuleAttribute || this.Selection is DocModelRuleEntity);
         }
 
