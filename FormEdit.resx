@@ -411,6 +411,53 @@
   <data name="toolStripMenuItemContextInsertProperty.Visible" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
+  <data name="toolStripMenuItemContextInsertPropertyEnum.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAEnSURBVDhPYxjm4Pvb8/8f7wsA40d7/f/f2+H5/8YGx/+X
+        Vlr8P7PI8P+jiyv/Q5ViByCN398u+//19YL/X57P/P/p8cT/H+91/n93o/7/60ul/9ty3Akb8O31/P9f
+        ns38X9W9/H9+45z/6VVT/7++WPz/5enM/41pzoQN+PJsxv9PD/v/v7/T+v/ttZr/ry4W/X95Kv3/06Mx
+        /2uTHCAGEPLrzf2Z/6t6lv3Pa5wNdsHTw1FgtVVxNhADQBxCfn11Pv//8xMpQM2RYEsebHf5Xx5liTCA
+        kF8nVgb97y70+d+S6fq/Lsn+f0WM1f/TBzYjDCDKr7jAoz1+/z8+6Pv//nYrfr/iAveBgfb+dvP/N1cq
+        8fsVFwClqPkdcf9nNkTg9+sgBAwMANsQU5TL62k1AAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="toolStripMenuItemContextInsertPropertyEnum.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="toolStripMenuItemContextInsertPropertyEnum.Size" type="System.Drawing.Size, System.Drawing">
+    <value>196, 22</value>
+  </data>
+  <data name="toolStripMenuItemContextInsertPropertyEnum.Text" xml:space="preserve">
+    <value>Property Enumeration</value>
+  </data>
+  <data name="toolStripMenuItemContextInsertPropertyEnum.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="toolStripMenuItemContextInsertPropertyConstant.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAFeSURBVDhP7ZHdK4NhGMbf/8mBpFBKKzU1RKKUzFoRSeJg
+        FOWrRtGSz9rQhlnYshiSTbT3QBtlw0Z7xxR24N0yU5fneTa0ev4B5Tr/XR/3LfwrV1e3D7DYz2C0ujFr
+        PsSkcQ/6OQdGprcwOGVF37gZPaMmOPZPkUVytUrgb32kPyEn3vEcf0P08RU3dzFcBCIQ/WGou/V8A5PN
+        w+A0gRPJFIFlSAS+vn+CPyBB9IXgEYNoaB/mG8xbjhgsJ2myDJVah+KqNuQpmkhyCG4CuzyXqNb08w0M
+        JheDX0htKRYntWlyBF5SmyZT2HFwDmVjL99gYmGHbZZimc2qZh1Ksg0obCfwutOLsrpOvsHYzDaiFCab
+        2cF84Z/aNNnqFLG8eYKiyla+wZDBlqkdpNf+3UxhmrxC4MW1YxQoNXwD+l964VrtAKtPtyrqu1Ba08FS
+        Cyu0yC9vwdLGLt/gL0oQvgBfyDULH4KzUwAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="toolStripMenuItemContextInsertPropertyConstant.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="toolStripMenuItemContextInsertPropertyConstant.Size" type="System.Drawing.Size, System.Drawing">
+    <value>196, 22</value>
+  </data>
+  <data name="toolStripMenuItemContextInsertPropertyConstant.Text" xml:space="preserve">
+    <value>Property Constant</value>
+  </data>
+  <data name="toolStripMenuItemContextInsertPropertyConstant.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
   <data name="toolStripMenuItemContextInsertQset.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
@@ -521,7 +568,7 @@
 </value>
   </data>
   <data name="toolStripMenuItemContextInsert.Size" type="System.Drawing.Size, System.Drawing">
-    <value>112, 22</value>
+    <value>152, 22</value>
   </data>
   <data name="toolStripMenuItemContextInsert.Text" xml:space="preserve">
     <value>&amp;Insert</value>
@@ -530,7 +577,7 @@
     <value>Fuchsia</value>
   </data>
   <data name="toolStripMenuItemEnableDisable.Size" type="System.Drawing.Size, System.Drawing">
-    <value>112, 22</value>
+    <value>152, 22</value>
   </data>
   <data name="toolStripMenuItemEnableDisable.Text" xml:space="preserve">
     <value>Disable</value>
@@ -539,7 +586,7 @@
     <value>False</value>
   </data>
   <data name="toolStripMenuItemContextSeparator.Size" type="System.Drawing.Size, System.Drawing">
-    <value>109, 6</value>
+    <value>149, 6</value>
   </data>
   <data name="deleteToolStripMenuItem.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
@@ -561,13 +608,13 @@
 </value>
   </data>
   <data name="deleteToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>112, 22</value>
+    <value>152, 22</value>
   </data>
   <data name="deleteToolStripMenuItem.Text" xml:space="preserve">
     <value>&amp;Delete</value>
   </data>
   <data name="contextMenuStrip.Size" type="System.Drawing.Size, System.Drawing">
-    <value>113, 76</value>
+    <value>153, 98</value>
   </data>
   <data name="&gt;&gt;contextMenuStrip.Name" xml:space="preserve">
     <value>contextMenuStrip</value>
@@ -589,7 +636,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAAAQ
-        fwAAAk1TRnQBSQFMAgEBKgEAAZQBBAGUAQQBEAEAARABAAT/ARkBAAj/AUIBTQE2BwABNgMAASgDAAFA
+        fwAAAk1TRnQBSQFMAgEBKgEAAcwBBAHMAQQBEAEAARABAAT/ARkBAAj/AUIBTQE2BwABNgMAASgDAAFA
         AwABsAMAAQEBAAEYBgABhP8A/wBdABv2EgAn9mwAA/YJQgP2CUID9hIAA/YGQgP2A0ID9gNCA/YDQgP2
         BkID9mwAA/YDQgP2A0ID9gNCA/YDQgP2EgAD9gNCG/YDQgP2bAAD9glCA/YDQgP2A0ID9hIAA/YDQgP2
         A0ID9gNCA/YJQgP2A0ID9mwACfYDQgP2A0ID9gNCA/YSAAn2A0ID9gNCA/YDQgP2A0IJ9mwAA/YJQgP2
@@ -1150,7 +1197,7 @@
     <value>treeView</value>
   </data>
   <data name="&gt;&gt;treeView.Type" xml:space="preserve">
-    <value>IfcDoc.ThemedTreeView, IfcDoc, Version=8.7.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>IfcDoc.ThemedTreeView, IfcDoc, Version=9.2.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;treeView.Parent" xml:space="preserve">
     <value>splitContainerRoot.Panel1</value>
@@ -1207,7 +1254,7 @@
     <value>ctlConcept</value>
   </data>
   <data name="&gt;&gt;ctlConcept.Type" xml:space="preserve">
-    <value>IfcDoc.CtlConcept, IfcDoc, Version=8.7.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>IfcDoc.CtlConcept, IfcDoc, Version=9.2.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;ctlConcept.Parent" xml:space="preserve">
     <value>splitContainerWorkspace.Panel1</value>
@@ -1243,7 +1290,7 @@
     <value>ctlExpressG</value>
   </data>
   <data name="&gt;&gt;ctlExpressG.Type" xml:space="preserve">
-    <value>IfcDoc.CtlExpressG, IfcDoc, Version=8.7.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>IfcDoc.CtlExpressG, IfcDoc, Version=9.2.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;ctlExpressG.Parent" xml:space="preserve">
     <value>splitContainerWorkspace.Panel1</value>
@@ -1273,7 +1320,7 @@
     <value>ctlCheckGrid</value>
   </data>
   <data name="&gt;&gt;ctlCheckGrid.Type" xml:space="preserve">
-    <value>IfcDoc.CtlCheckGrid, IfcDoc, Version=8.7.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>IfcDoc.CtlCheckGrid, IfcDoc, Version=9.2.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;ctlCheckGrid.Parent" xml:space="preserve">
     <value>splitContainerWorkspace.Panel1</value>
@@ -1303,7 +1350,7 @@
     <value>ctlInheritance</value>
   </data>
   <data name="&gt;&gt;ctlInheritance.Type" xml:space="preserve">
-    <value>IfcDoc.CtlInheritance, IfcDoc, Version=8.7.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>IfcDoc.CtlInheritance, IfcDoc, Version=9.2.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;ctlInheritance.Parent" xml:space="preserve">
     <value>splitContainerWorkspace.Panel1</value>
@@ -1339,7 +1386,7 @@
     <value>ctlProperties</value>
   </data>
   <data name="&gt;&gt;ctlProperties.Type" xml:space="preserve">
-    <value>IfcDoc.CtlProperties, IfcDoc, Version=8.7.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>IfcDoc.CtlProperties, IfcDoc, Version=9.2.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;ctlProperties.Parent" xml:space="preserve">
     <value>splitContainerWorkspace.Panel2</value>
@@ -1509,6 +1556,15 @@
   <data name="&gt;&gt;splitContainerEdit.Panel1.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
+  <data name="splitContainerInstances.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="splitContainerInstances.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 25</value>
+  </data>
+  <data name="splitContainerInstances.Orientation" type="System.Windows.Forms.Orientation, System.Windows.Forms">
+    <value>Horizontal</value>
+  </data>
   <data name="columnHeaderInstanceID.Text" xml:space="preserve">
     <value>#</value>
   </data>
@@ -1522,10 +1578,10 @@
     <value>Fill</value>
   </data>
   <data name="listViewValidate.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 25</value>
+    <value>0, 0</value>
   </data>
   <data name="listViewValidate.Size" type="System.Drawing.Size, System.Drawing">
-    <value>221, 490</value>
+    <value>221, 245</value>
   </data>
   <metadata name="imageListValidate.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>191, 95</value>
@@ -1535,7 +1591,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAABy
-        CwAAAk1TRnQBSQFMAgEBBAEAAXABAAFwAQABEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
+        CwAAAk1TRnQBSQFMAgEBBAEAAagBAAGoAQABEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
         AwABQAMAASADAAEBAQABCAYAAQgYAAGAAgABgAMAAoABAAGAAwABgAEAAYABAAKAAgADwAEAAcAB3AHA
         AQAB8AHKAaYBAAEzBQABMwEAATMBAAEzAQACMwIAAxYBAAMcAQADIgEAAykBAANVAQADTQEAA0IBAAM5
         AQABgAF8Af8BAAJQAf8BAAGTAQAB1gEAAf8B7AHMAQABxgHWAe8BAAHWAucBAAGQAakBrQIAAf8BMwMA
@@ -1596,9 +1652,78 @@
     <value>System.Windows.Forms.ListView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;listViewValidate.Parent" xml:space="preserve">
-    <value>splitContainerEdit.Panel2</value>
+    <value>splitContainerInstances.Panel1</value>
   </data>
   <data name="&gt;&gt;listViewValidate.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;splitContainerInstances.Panel1.Name" xml:space="preserve">
+    <value>splitContainerInstances.Panel1</value>
+  </data>
+  <data name="&gt;&gt;splitContainerInstances.Panel1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.SplitterPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;splitContainerInstances.Panel1.Parent" xml:space="preserve">
+    <value>splitContainerInstances</value>
+  </data>
+  <data name="&gt;&gt;splitContainerInstances.Panel1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="treeViewInstance.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="treeViewInstance.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="treeViewInstance.Size" type="System.Drawing.Size, System.Drawing">
+    <value>221, 241</value>
+  </data>
+  <data name="treeViewInstance.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;treeViewInstance.Name" xml:space="preserve">
+    <value>treeViewInstance</value>
+  </data>
+  <data name="&gt;&gt;treeViewInstance.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TreeView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;treeViewInstance.Parent" xml:space="preserve">
+    <value>splitContainerInstances.Panel2</value>
+  </data>
+  <data name="&gt;&gt;treeViewInstance.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;splitContainerInstances.Panel2.Name" xml:space="preserve">
+    <value>splitContainerInstances.Panel2</value>
+  </data>
+  <data name="&gt;&gt;splitContainerInstances.Panel2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.SplitterPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;splitContainerInstances.Panel2.Parent" xml:space="preserve">
+    <value>splitContainerInstances</value>
+  </data>
+  <data name="&gt;&gt;splitContainerInstances.Panel2.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="splitContainerInstances.Size" type="System.Drawing.Size, System.Drawing">
+    <value>221, 490</value>
+  </data>
+  <data name="splitContainerInstances.SplitterDistance" type="System.Int32, mscorlib">
+    <value>245</value>
+  </data>
+  <data name="splitContainerInstances.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;splitContainerInstances.Name" xml:space="preserve">
+    <value>splitContainerInstances</value>
+  </data>
+  <data name="&gt;&gt;splitContainerInstances.Type" xml:space="preserve">
+    <value>System.Windows.Forms.SplitContainer, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;splitContainerInstances.Parent" xml:space="preserve">
+    <value>splitContainerEdit.Panel2</value>
+  </data>
+  <data name="&gt;&gt;splitContainerInstances.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <metadata name="toolStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
@@ -2284,7 +2409,7 @@
 </value>
   </data>
   <data name="toolStripMenuItemViewWeb.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 22</value>
+    <value>147, 22</value>
   </data>
   <data name="toolStripMenuItemViewWeb.Text" xml:space="preserve">
     <value>&amp;Web View</value>
@@ -2297,7 +2422,7 @@
 </value>
   </data>
   <data name="toolStripMenuItemViewText.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 22</value>
+    <value>147, 22</value>
   </data>
   <data name="toolStripMenuItemViewText.Text" xml:space="preserve">
     <value>&amp;Text View</value>
@@ -2311,7 +2436,7 @@
 </value>
   </data>
   <data name="toolStripMenuItemViewDiagram.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 22</value>
+    <value>147, 22</value>
   </data>
   <data name="toolStripMenuItemViewDiagram.Text" xml:space="preserve">
     <value>&amp;Diagram View</value>
@@ -2942,7 +3067,7 @@
     <value>Fuchsia</value>
   </data>
   <data name="toolStripMenuItemInsertTemplate.Size" type="System.Drawing.Size, System.Drawing">
-    <value>172, 22</value>
+    <value>171, 22</value>
   </data>
   <data name="toolStripMenuItemInsertTemplate.Text" xml:space="preserve">
     <value>Concept &amp;Template</value>
@@ -2951,7 +3076,7 @@
     <value>Adds a concept template to the documentation (in Section 4), which may be instantiated as use definitions at applicable entities.</value>
   </data>
   <data name="toolStripMenuItem2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>169, 6</value>
+    <value>168, 6</value>
   </data>
   <data name="toolStripMenuItemInsertViewDefinition.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -2972,7 +3097,7 @@
     <value>Fuchsia</value>
   </data>
   <data name="toolStripMenuItemInsertViewDefinition.Size" type="System.Drawing.Size, System.Drawing">
-    <value>172, 22</value>
+    <value>171, 22</value>
   </data>
   <data name="toolStripMenuItemInsertViewDefinition.Text" xml:space="preserve">
     <value>&amp;Model View</value>
@@ -2998,7 +3123,7 @@
     <value>Fuchsia</value>
   </data>
   <data name="toolStripMenuItemInsertExchange.Size" type="System.Drawing.Size, System.Drawing">
-    <value>172, 22</value>
+    <value>171, 22</value>
   </data>
   <data name="toolStripMenuItemInsertExchange.Text" xml:space="preserve">
     <value>&amp;Exchange</value>
@@ -3024,7 +3149,7 @@
 </value>
   </data>
   <data name="toolStripMenuItemInsertConceptRoot.Size" type="System.Drawing.Size, System.Drawing">
-    <value>172, 22</value>
+    <value>171, 22</value>
   </data>
   <data name="toolStripMenuItemInsertConceptRoot.Text" xml:space="preserve">
     <value>Concept &amp;Root</value>
@@ -3049,7 +3174,7 @@
     <value>Fuchsia</value>
   </data>
   <data name="toolStripMenuItemInsertConceptLeaf.Size" type="System.Drawing.Size, System.Drawing">
-    <value>172, 22</value>
+    <value>171, 22</value>
   </data>
   <data name="toolStripMenuItemInsertConceptLeaf.Text" xml:space="preserve">
     <value>&amp;Concept...</value>
@@ -3384,7 +3509,7 @@
     <value>Generate &amp;Module...</value>
   </data>
   <data name="toolStripMenuItemTools.Size" type="System.Drawing.Size, System.Drawing">
-    <value>48, 20</value>
+    <value>47, 20</value>
   </data>
   <data name="toolStripMenuItemTools.Text" xml:space="preserve">
     <value>&amp;Tools</value>
@@ -4014,7 +4139,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAABO
-        CwAAAk1TRnQBSQFMAgEBBQEAARABAwEQAQMBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
+        CwAAAk1TRnQBSQFMAgEBBQEAAUgBAwFIAQMBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
         AwABQAMAASADAAEBAQABCAYAAQgYAAGAAgABgAMAAoABAAGAAwABgAEAAYABAAKAAgADwAEAAcAB3AHA
         AQAB8AHKAaYBAAEzBQABMwEAATMBAAEzAQACMwIAAxYBAAMcAQADIgEAAykBAANVAQADTQEAA0IBAAM5
         AQABgAF8Af8BAAJQAf8BAAGTAQAB1gEAAf8B7AHMAQABxgHWAe8BAAHWAucBAAGQAakBrQIAAf8BMwMA
@@ -4085,6 +4210,9 @@
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
+  </metadata>
+  <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>166</value>
   </metadata>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
     <value>964, 564</value>
@@ -5498,6 +5626,18 @@
   </data>
   <data name="&gt;&gt;openFileDialogExpress.Type" xml:space="preserve">
     <value>System.Windows.Forms.OpenFileDialog, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStripMenuItemContextInsertPropertyEnum.Name" xml:space="preserve">
+    <value>toolStripMenuItemContextInsertPropertyEnum</value>
+  </data>
+  <data name="&gt;&gt;toolStripMenuItemContextInsertPropertyEnum.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStripMenuItemContextInsertPropertyConstant.Name" xml:space="preserve">
+    <value>toolStripMenuItemContextInsertPropertyConstant</value>
+  </data>
+  <data name="&gt;&gt;toolStripMenuItemContextInsertPropertyConstant.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>FormEdit</value>

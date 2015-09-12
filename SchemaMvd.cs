@@ -102,10 +102,11 @@ namespace IfcDoc.Schema.MVD
     {
         [DataMember(Order = 0)] public TemplateRef Template; // links to ConceptTemplate
         [DataMember(Order = 1)] public List<ConceptRequirement> Requirements = new List<ConceptRequirement>();
-        [DataMember(Order = 2)] public List<TemplateRule> Rules = new List<TemplateRule>();
+        //[DataMember(Order = 2)] public List<TemplateRule> Rules = new List<TemplateRule>();
+        [DataMember(Order = 2)] public TemplateRules TemplateRules = new TemplateRules();
         [DataMember(Order = 3)] public List<Concept> SubConcepts; // added v3.8
         [DataMember(Order = 4), XmlAttribute("override")] public bool Override; // added in v5.6
-        [DataMember(Order = 5)] public BaseConcept BaseConcept;
+        [DataMember(Order = 5), XmlElement("baseConcept")] public BaseConcept BaseConcept;
     }
 
     // used to map xpath
@@ -212,8 +213,16 @@ namespace IfcDoc.Schema.MVD
     [XmlType("ConceptRoot")]
     public class ConceptRoot : Element
     {
-        [DataMember(Order = 0), XmlAttribute("applicableRootEntity")] public string ApplicableRootEntity; // e.g. 'IfcBeam'
-        [DataMember(Order = 1)] public List<Concept> Concepts = new List<Concept>(); // really Concept but fixed according to sample data to get xml serializer working
+        [DataMember(Order = 0)] public ApplicabilityRules Applicability;
+        [DataMember(Order = 1), XmlAttribute("applicableRootEntity")] public string ApplicableRootEntity; // e.g. 'IfcBeam'
+        [DataMember(Order = 2)] public List<Concept> Concepts = new List<Concept>(); // really Concept but fixed according to sample data to get xml serializer working
+    }
+
+    [XmlType("ApplicabilityRules")]
+    public class ApplicabilityRules : Element
+    {
+        [DataMember(Order = 0)] public TemplateRef Template;
+        [DataMember(Order = 1)] public TemplateRules TemplateRules;
     }
 
     [XmlType("AbstractRule")]
@@ -227,9 +236,9 @@ namespace IfcDoc.Schema.MVD
     public class AttributeRule : AbstractRule
     {
         [DataMember(Order = 0), XmlAttribute("AttributeName")] public string AttributeName;
-        [DataMember(Order = 1), XmlAttribute("Cardinality")] public CardinalityType Cardinality;
-        [DataMember(Order = 2)] public List<EntityRule> EntityRules;
-        [DataMember(Order = 3)] public List<Constraint> Constraints;
+        //[DataMember(Order = 1), XmlAttribute("Cardinality")] public CardinalityType Cardinality;
+        [DataMember(Order = 1)] public List<EntityRule> EntityRules;
+        [DataMember(Order = 2)] public List<Constraint> Constraints;
     }
 
     public enum CardinalityType
@@ -245,11 +254,10 @@ namespace IfcDoc.Schema.MVD
     public class EntityRule : AbstractRule
     {
         [DataMember(Order = 0), XmlAttribute("EntityName")] public string EntityName;
-        [DataMember(Order = 1), XmlAttribute("Cardinality")] public CardinalityType Cardinality;
-        [DataMember(Order = 2)] public List<AttributeRule> AttributeRules;
-        [DataMember(Order = 3)] public List<EntityRule> EntityRules;
-        [DataMember(Order = 4)] public List<Constraint> Constraints;
-        [DataMember(Order = 5)] public List<TemplateRef> References; // MVDXML 1.1 -- links to concept templates defined on referenced entity
+        //[DataMember(Order = 1), XmlAttribute("Cardinality")] public CardinalityType Cardinality;
+        [DataMember(Order = 1)] public List<AttributeRule> AttributeRules;
+        [DataMember(Order = 2)] public List<Constraint> Constraints;
+        [DataMember(Order = 3)] public List<TemplateRef> References; // MVDXML 1.1 -- links to concept templates defined on referenced entity
     }
 
     [XmlType("Constraint")]
@@ -263,5 +271,24 @@ namespace IfcDoc.Schema.MVD
     {
         [DataMember(Order = 0), XmlAttribute("Parameters")] public string Parameters;
         [DataMember(Order = 1)] public List<Concept> References; // proposed for mvdxml 1.1 -- not yet approved
+    }
+
+    [XmlType("TemplateRules")] // added in mvdXML 1.1d
+    public class TemplateRules
+    {
+        [DataMember(Order = 0), XmlAttribute("operator")] public TemplateOperator Operator;
+        [DataMember(Order = 1), XmlElement(typeof(TemplateRule))] public List<TemplateRule> TemplateRule = new List<TemplateRule>();
+        [DataMember(Order = 2), XmlElement(typeof(TemplateRules))] public TemplateRules InnerRules;
+    }
+
+    public enum TemplateOperator // added in mvdXML 1.1d
+    {
+        [XmlEnum("and")]  And = 0,
+        [XmlEnum("or")]   Or = 1,
+        [XmlEnum("not")]  Not = 2,
+        [XmlEnum("nand")] Nand = 3,
+        [XmlEnum("nor")]  Nor = 4,
+        [XmlEnum("xor")]  Xor = 5,
+        [XmlEnum("nxor")] Nxor = 6,
     }
 }

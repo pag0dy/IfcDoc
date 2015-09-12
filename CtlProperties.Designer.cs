@@ -69,7 +69,9 @@
             this.textBoxIdentityUuid = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.tabPageTemplate = new System.Windows.Forms.TabPage();
+            this.ctlRules = new IfcDoc.CtlRules();
             this.tabPageConcept = new System.Windows.Forms.TabPage();
+            this.ctlParameters = new IfcDoc.CtlParameters();
             this.tabPageRequirements = new System.Windows.Forms.TabPage();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.radioButtonExportNone = new System.Windows.Forms.RadioButton();
@@ -117,6 +119,9 @@
             this.textBoxEntityBase = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.tabPageAttribute = new System.Windows.Forms.TabPage();
+            this.checkBoxAttributeUnique = new System.Windows.Forms.CheckBox();
+            this.textBoxAttributeDerived = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.label28 = new System.Windows.Forms.Label();
             this.label27 = new System.Windows.Forms.Label();
             this.textBoxAttributeAggregationMax = new System.Windows.Forms.TextBox();
@@ -142,6 +147,11 @@
             this.tabPageExpression = new System.Windows.Forms.TabPage();
             this.textBoxExpression = new System.Windows.Forms.TextBox();
             this.tabPageView = new System.Windows.Forms.TabPage();
+            this.textBoxViewXsdNamespace = new System.Windows.Forms.TextBox();
+            this.buttonViewEntity = new System.Windows.Forms.Button();
+            this.textBoxViewRoot = new System.Windows.Forms.TextBox();
+            this.labelViewEntity = new System.Windows.Forms.Label();
+            this.checkBoxViewIncludeAll = new System.Windows.Forms.CheckBox();
             this.listViewViewXsd = new System.Windows.Forms.ListView();
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -184,6 +194,7 @@
             this.buttonExampleClear = new System.Windows.Forms.Button();
             this.buttonExampleLoad = new System.Windows.Forms.Button();
             this.tabPageOperations = new System.Windows.Forms.TabPage();
+            this.ctlOperators = new IfcDoc.CtlOperators();
             this.tabPageConceptRoot = new System.Windows.Forms.TabPage();
             this.listViewConceptRoot = new System.Windows.Forms.ListView();
             this.columnHeaderRootTemplate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -194,15 +205,18 @@
             this.toolStripMenuItemModeInherit = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemModeOverride = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemModeSuppress = new System.Windows.Forms.ToolStripMenuItem();
+            this.tabPageChange = new System.Windows.Forms.TabPage();
+            this.listViewChange = new System.Windows.Forms.ListView();
+            this.columnHeaderChangeAspect = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeaderChangeOld = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeaderChangeNew = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.toolStripChange = new System.Windows.Forms.ToolStrip();
+            this.toolStripButtonChangeSPF = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonChangeXML = new System.Windows.Forms.ToolStripButton();
+            this.toolStripComboBoxChange = new System.Windows.Forms.ToolStripComboBox();
             this.imageListRules = new System.Windows.Forms.ImageList(this.components);
             this.openFileDialogIcon = new System.Windows.Forms.OpenFileDialog();
             this.openFileDialogExample = new System.Windows.Forms.OpenFileDialog();
-            this.label3 = new System.Windows.Forms.Label();
-            this.textBoxAttributeDerived = new System.Windows.Forms.TextBox();
-            this.checkBoxAttributeUnique = new System.Windows.Forms.CheckBox();
-            this.ctlRules = new IfcDoc.CtlRules();
-            this.ctlParameters = new IfcDoc.CtlParameters();
-            this.ctlOperators = new IfcDoc.CtlOperators();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerTranslation)).BeginInit();
             this.splitContainerTranslation.Panel1.SuspendLayout();
             this.splitContainerTranslation.Panel2.SuspendLayout();
@@ -230,6 +244,8 @@
             this.tabPageOperations.SuspendLayout();
             this.tabPageConceptRoot.SuspendLayout();
             this.toolStrip1.SuspendLayout();
+            this.tabPageChange.SuspendLayout();
+            this.toolStripChange.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainerTranslation
@@ -303,6 +319,7 @@
             this.tabControl.Controls.Add(this.tabPageExample);
             this.tabControl.Controls.Add(this.tabPageOperations);
             this.tabControl.Controls.Add(this.tabPageConceptRoot);
+            this.tabControl.Controls.Add(this.tabPageChange);
             resources.ApplyResources(this.tabControl, "tabControl");
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
@@ -532,12 +549,35 @@
             this.tabPageTemplate.Name = "tabPageTemplate";
             this.tabPageTemplate.UseVisualStyleBackColor = true;
             // 
+            // ctlRules
+            // 
+            this.ctlRules.Attribute = null;
+            this.ctlRules.BaseTemplate = null;
+            this.ctlRules.CurrentInstance = null;
+            resources.ApplyResources(this.ctlRules, "ctlRules");
+            this.ctlRules.Name = "ctlRules";
+            this.ctlRules.Project = null;
+            this.ctlRules.Selection = null;
+            this.ctlRules.Template = null;
+            this.ctlRules.SelectionChanged += new System.EventHandler(this.ctlRules_SelectionChanged);
+            this.ctlRules.ContentChanged += new System.EventHandler(this.ctlRules_ContentChanged);
+            // 
             // tabPageConcept
             // 
             this.tabPageConcept.Controls.Add(this.ctlParameters);
             resources.ApplyResources(this.tabPageConcept, "tabPageConcept");
             this.tabPageConcept.Name = "tabPageConcept";
             this.tabPageConcept.UseVisualStyleBackColor = true;
+            // 
+            // ctlParameters
+            // 
+            this.ctlParameters.ConceptItem = null;
+            this.ctlParameters.ConceptLeaf = null;
+            this.ctlParameters.ConceptRoot = null;
+            this.ctlParameters.CurrentInstance = null;
+            resources.ApplyResources(this.ctlParameters, "ctlParameters");
+            this.ctlParameters.Name = "ctlParameters";
+            this.ctlParameters.Project = null;
             // 
             // tabPageRequirements
             // 
@@ -926,6 +966,24 @@
             this.tabPageAttribute.Name = "tabPageAttribute";
             this.tabPageAttribute.UseVisualStyleBackColor = true;
             // 
+            // checkBoxAttributeUnique
+            // 
+            resources.ApplyResources(this.checkBoxAttributeUnique, "checkBoxAttributeUnique");
+            this.checkBoxAttributeUnique.Name = "checkBoxAttributeUnique";
+            this.checkBoxAttributeUnique.UseVisualStyleBackColor = true;
+            this.checkBoxAttributeUnique.CheckedChanged += new System.EventHandler(this.checkBoxAttributeUnique_CheckedChanged);
+            // 
+            // textBoxAttributeDerived
+            // 
+            resources.ApplyResources(this.textBoxAttributeDerived, "textBoxAttributeDerived");
+            this.textBoxAttributeDerived.Name = "textBoxAttributeDerived";
+            this.textBoxAttributeDerived.TextChanged += new System.EventHandler(this.textBoxAttributeDerived_TextChanged);
+            // 
+            // label3
+            // 
+            resources.ApplyResources(this.label3, "label3");
+            this.label3.Name = "label3";
+            // 
             // label28
             // 
             resources.ApplyResources(this.label28, "label28");
@@ -1094,6 +1152,11 @@
             // 
             // tabPageView
             // 
+            this.tabPageView.Controls.Add(this.textBoxViewXsdNamespace);
+            this.tabPageView.Controls.Add(this.buttonViewEntity);
+            this.tabPageView.Controls.Add(this.textBoxViewRoot);
+            this.tabPageView.Controls.Add(this.labelViewEntity);
+            this.tabPageView.Controls.Add(this.checkBoxViewIncludeAll);
             this.tabPageView.Controls.Add(this.listViewViewXsd);
             this.tabPageView.Controls.Add(this.comboBoxViewXsd);
             this.tabPageView.Controls.Add(this.checkBoxViewXsdTagless);
@@ -1106,6 +1169,37 @@
             resources.ApplyResources(this.tabPageView, "tabPageView");
             this.tabPageView.Name = "tabPageView";
             this.tabPageView.UseVisualStyleBackColor = true;
+            // 
+            // textBoxViewXsdNamespace
+            // 
+            resources.ApplyResources(this.textBoxViewXsdNamespace, "textBoxViewXsdNamespace");
+            this.textBoxViewXsdNamespace.Name = "textBoxViewXsdNamespace";
+            this.textBoxViewXsdNamespace.TextChanged += new System.EventHandler(this.textBoxViewXsdNamespace_TextChanged);
+            // 
+            // buttonViewEntity
+            // 
+            resources.ApplyResources(this.buttonViewEntity, "buttonViewEntity");
+            this.buttonViewEntity.Name = "buttonViewEntity";
+            this.buttonViewEntity.UseVisualStyleBackColor = true;
+            this.buttonViewEntity.Click += new System.EventHandler(this.buttonViewEntity_Click);
+            // 
+            // textBoxViewRoot
+            // 
+            resources.ApplyResources(this.textBoxViewRoot, "textBoxViewRoot");
+            this.textBoxViewRoot.Name = "textBoxViewRoot";
+            this.textBoxViewRoot.ReadOnly = true;
+            // 
+            // labelViewEntity
+            // 
+            resources.ApplyResources(this.labelViewEntity, "labelViewEntity");
+            this.labelViewEntity.Name = "labelViewEntity";
+            // 
+            // checkBoxViewIncludeAll
+            // 
+            resources.ApplyResources(this.checkBoxViewIncludeAll, "checkBoxViewIncludeAll");
+            this.checkBoxViewIncludeAll.Name = "checkBoxViewIncludeAll";
+            this.checkBoxViewIncludeAll.UseVisualStyleBackColor = true;
+            this.checkBoxViewIncludeAll.CheckedChanged += new System.EventHandler(this.checkBoxViewIncludeAll_CheckedChanged);
             // 
             // listViewViewXsd
             // 
@@ -1633,6 +1727,16 @@
             this.tabPageOperations.Name = "tabPageOperations";
             this.tabPageOperations.UseVisualStyleBackColor = true;
             // 
+            // ctlOperators
+            // 
+            this.ctlOperators.CurrentInstance = null;
+            this.ctlOperators.CurrentPopulation = null;
+            resources.ApplyResources(this.ctlOperators, "ctlOperators");
+            this.ctlOperators.Name = "ctlOperators";
+            this.ctlOperators.Project = null;
+            this.ctlOperators.Rule = null;
+            this.ctlOperators.Template = null;
+            // 
             // tabPageConceptRoot
             // 
             this.tabPageConceptRoot.Controls.Add(this.listViewConceptRoot);
@@ -1708,6 +1812,70 @@
             this.toolStripMenuItemModeSuppress.Name = "toolStripMenuItemModeSuppress";
             this.toolStripMenuItemModeSuppress.Click += new System.EventHandler(this.toolStripMenuItemModeSuppress_Click);
             // 
+            // tabPageChange
+            // 
+            this.tabPageChange.Controls.Add(this.listViewChange);
+            this.tabPageChange.Controls.Add(this.toolStripChange);
+            resources.ApplyResources(this.tabPageChange, "tabPageChange");
+            this.tabPageChange.Name = "tabPageChange";
+            this.tabPageChange.UseVisualStyleBackColor = true;
+            // 
+            // listViewChange
+            // 
+            this.listViewChange.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeaderChangeAspect,
+            this.columnHeaderChangeOld,
+            this.columnHeaderChangeNew});
+            resources.ApplyResources(this.listViewChange, "listViewChange");
+            this.listViewChange.Name = "listViewChange";
+            this.listViewChange.UseCompatibleStateImageBehavior = false;
+            this.listViewChange.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeaderChangeAspect
+            // 
+            resources.ApplyResources(this.columnHeaderChangeAspect, "columnHeaderChangeAspect");
+            // 
+            // columnHeaderChangeOld
+            // 
+            resources.ApplyResources(this.columnHeaderChangeOld, "columnHeaderChangeOld");
+            // 
+            // columnHeaderChangeNew
+            // 
+            resources.ApplyResources(this.columnHeaderChangeNew, "columnHeaderChangeNew");
+            // 
+            // toolStripChange
+            // 
+            this.toolStripChange.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStripChange.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripButtonChangeSPF,
+            this.toolStripButtonChangeXML,
+            this.toolStripComboBoxChange});
+            resources.ApplyResources(this.toolStripChange, "toolStripChange");
+            this.toolStripChange.Name = "toolStripChange";
+            // 
+            // toolStripButtonChangeSPF
+            // 
+            this.toolStripButtonChangeSPF.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            resources.ApplyResources(this.toolStripButtonChangeSPF, "toolStripButtonChangeSPF");
+            this.toolStripButtonChangeSPF.Name = "toolStripButtonChangeSPF";
+            // 
+            // toolStripButtonChangeXML
+            // 
+            this.toolStripButtonChangeXML.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            resources.ApplyResources(this.toolStripButtonChangeXML, "toolStripButtonChangeXML");
+            this.toolStripButtonChangeXML.Name = "toolStripButtonChangeXML";
+            // 
+            // toolStripComboBoxChange
+            // 
+            resources.ApplyResources(this.toolStripComboBoxChange, "toolStripComboBoxChange");
+            this.toolStripComboBoxChange.Items.AddRange(new object[] {
+            resources.GetString("toolStripComboBoxChange.Items"),
+            resources.GetString("toolStripComboBoxChange.Items1"),
+            resources.GetString("toolStripComboBoxChange.Items2"),
+            resources.GetString("toolStripComboBoxChange.Items3"),
+            resources.GetString("toolStripComboBoxChange.Items4")});
+            this.toolStripComboBoxChange.Name = "toolStripComboBoxChange";
+            // 
             // imageListRules
             // 
             this.imageListRules.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
@@ -1722,56 +1890,6 @@
             // 
             this.openFileDialogExample.DefaultExt = "ifc";
             resources.ApplyResources(this.openFileDialogExample, "openFileDialogExample");
-            // 
-            // label3
-            // 
-            resources.ApplyResources(this.label3, "label3");
-            this.label3.Name = "label3";
-            // 
-            // textBoxAttributeDerived
-            // 
-            resources.ApplyResources(this.textBoxAttributeDerived, "textBoxAttributeDerived");
-            this.textBoxAttributeDerived.Name = "textBoxAttributeDerived";
-            this.textBoxAttributeDerived.TextChanged += new System.EventHandler(this.textBoxAttributeDerived_TextChanged);
-            // 
-            // checkBoxAttributeUnique
-            // 
-            resources.ApplyResources(this.checkBoxAttributeUnique, "checkBoxAttributeUnique");
-            this.checkBoxAttributeUnique.Name = "checkBoxAttributeUnique";
-            this.checkBoxAttributeUnique.UseVisualStyleBackColor = true;
-            this.checkBoxAttributeUnique.CheckedChanged += new System.EventHandler(this.checkBoxAttributeUnique_CheckedChanged);
-            // 
-            // ctlRules
-            // 
-            this.ctlRules.Attribute = null;
-            this.ctlRules.BaseTemplate = null;
-            this.ctlRules.CurrentInstance = null;
-            resources.ApplyResources(this.ctlRules, "ctlRules");
-            this.ctlRules.Name = "ctlRules";
-            this.ctlRules.Project = null;
-            this.ctlRules.Selection = null;
-            this.ctlRules.Template = null;
-            this.ctlRules.SelectionChanged += new System.EventHandler(this.ctlRules_SelectionChanged);
-            this.ctlRules.ContentChanged += new System.EventHandler(this.ctlRules_ContentChanged);
-            // 
-            // ctlParameters
-            // 
-            this.ctlParameters.ConceptLeaf = null;
-            this.ctlParameters.ConceptRoot = null;
-            this.ctlParameters.CurrentInstance = null;
-            resources.ApplyResources(this.ctlParameters, "ctlParameters");
-            this.ctlParameters.Name = "ctlParameters";
-            this.ctlParameters.Project = null;
-            // 
-            // ctlOperators
-            // 
-            this.ctlOperators.CurrentInstance = null;
-            this.ctlOperators.CurrentPopulation = null;
-            resources.ApplyResources(this.ctlOperators, "ctlOperators");
-            this.ctlOperators.Name = "ctlOperators";
-            this.ctlOperators.Project = null;
-            this.ctlOperators.Rule = null;
-            this.ctlOperators.Template = null;
             // 
             // CtlProperties
             // 
@@ -1826,6 +1944,10 @@
             this.tabPageConceptRoot.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            this.tabPageChange.ResumeLayout(false);
+            this.tabPageChange.PerformLayout();
+            this.toolStripChange.ResumeLayout(false);
+            this.toolStripChange.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -2005,5 +2127,19 @@
         private System.Windows.Forms.TextBox textBoxAttributeDerived;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.CheckBox checkBoxAttributeUnique;
+        private System.Windows.Forms.CheckBox checkBoxViewIncludeAll;
+        private System.Windows.Forms.Button buttonViewEntity;
+        private System.Windows.Forms.TextBox textBoxViewRoot;
+        private System.Windows.Forms.Label labelViewEntity;
+        private System.Windows.Forms.TextBox textBoxViewXsdNamespace;
+        private System.Windows.Forms.TabPage tabPageChange;
+        private System.Windows.Forms.ListView listViewChange;
+        private System.Windows.Forms.ColumnHeader columnHeaderChangeAspect;
+        private System.Windows.Forms.ColumnHeader columnHeaderChangeOld;
+        private System.Windows.Forms.ColumnHeader columnHeaderChangeNew;
+        private System.Windows.Forms.ToolStrip toolStripChange;
+        private System.Windows.Forms.ToolStripButton toolStripButtonChangeSPF;
+        private System.Windows.Forms.ToolStripButton toolStripButtonChangeXML;
+        private System.Windows.Forms.ToolStripComboBox toolStripComboBoxChange;
     }
 }

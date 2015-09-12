@@ -57,6 +57,10 @@ namespace IfcDoc
             {
                 this.textBoxReference.Text = valuepath.ToString();
             }
+            else
+            {
+                this.textBoxReference.Text = String.Empty;
+            }
 
             while (valuepath != null)
             {
@@ -152,8 +156,10 @@ namespace IfcDoc
                                     }
 
                                     // drill in
-                                    docBase = this.m_map[formAttribute.SelectedAttribute.DefinedType] as DocDefinition;
-
+                                    if (this.m_map.ContainsKey(formAttribute.SelectedAttribute.DefinedType))
+                                    {
+                                        docBase = this.m_map[formAttribute.SelectedAttribute.DefinedType] as DocDefinition;
+                                    }
                                 }
                                 else
                                 {
@@ -199,6 +205,40 @@ namespace IfcDoc
 
         private void listViewReference_SelectedIndexChanged(object sender, EventArgs e)
         {
+        }
+
+        private void buttonProperty_Click(object sender, EventArgs e)
+        {
+            using(FormSelectProperty form = new FormSelectProperty(this.m_base as DocEntity, this.m_project, false))
+            {
+                if(form.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
+                {
+                    string valueprop = "NominalValue";
+                    switch(form.SelectedProperty.PropertyType)
+                    {
+                        case DocPropertyTemplateTypeEnum.P_BOUNDEDVALUE:
+                            valueprop = "SetPointValue";
+                            break;
+
+                        case DocPropertyTemplateTypeEnum.P_ENUMERATEDVALUE:
+                            valueprop = "EnumerationValues";
+                            break;
+
+                        case DocPropertyTemplateTypeEnum.P_LISTVALUE:
+                            valueprop = "ListValues";
+                            break;
+
+                            // other property types are not supported
+                    }
+
+                    string value = @"\" + this.m_base.Name + @".IsDefinedBy['" + form.SelectedPropertySet +
+                        @"']\IfcRelDefinesByProperties.RelatingPropertyDefinition\IfcPropertySet.HasProperties['" + form.SelectedProperty +
+                        @"']\" + form.SelectedProperty.GetEntityName() + @"." + valueprop + @"\" + form.SelectedProperty.PrimaryDataType;
+
+                    CvtValuePath valuepath = CvtValuePath.Parse(value, this.m_map);
+                    LoadValuePath(valuepath);
+                }
+            }
         }
     }
 }

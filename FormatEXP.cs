@@ -69,9 +69,10 @@ namespace IfcDoc.Format.EXP
         /// <summary>
         /// Replaces references to schemas with longform schema name, e.g. IFC4.
         /// </summary>
-        /// <param name="expression"></param>
+        /// <param name="expression">The expression to read</param>
+        /// <param name="schemaidentifier">The schema identifier to use, such as 'IFC4'</param>
         /// <returns></returns>
-        private string MakeLongFormExpression(string expression)
+        private string MakeLongFormExpression(string expression, string schemaidentifier)
         {
             if (expression == null)
                 return null;
@@ -79,7 +80,7 @@ namespace IfcDoc.Format.EXP
             if (!this.m_longform)
                 return expression;
 
-            string replace = "'IFC4.";
+            string replace = "'" + schemaidentifier + ".";
             foreach (DocSection docSection in this.m_project.Sections)
             {
                 foreach (DocSchema docSchema in docSection.Schemas)
@@ -119,7 +120,10 @@ namespace IfcDoc.Format.EXP
                             {
                                 if (docType is DocDefined)
                                 {
-                                    mapDefined.Add(docType.Name, (DocDefined)docType);
+                                    if (!mapDefined.ContainsKey(docType.Name))
+                                    {
+                                        mapDefined.Add(docType.Name, (DocDefined)docType);
+                                    }
                                 }
                                 else if (docType is DocEnumeration)
                                 {
@@ -130,7 +134,10 @@ namespace IfcDoc.Format.EXP
                                     mapSelect.Add(docType.Name, (DocSelect)docType);
                                 }
 
-                                mapGeneral.Add(docType.Name, docType);
+                                if (!mapGeneral.ContainsKey(docType.Name))
+                                {
+                                    mapGeneral.Add(docType.Name, docType);
+                                }
                             }
                         }
 
@@ -262,7 +269,7 @@ DateTime.Today.ToLongDateString() + "\r\n" + //"December 27, 2012\r\n" +
                             writer.Write("\t");
                             writer.Write(where.Name);
                             writer.Write(" : ");
-                            writer.Write(MakeLongFormExpression(where.Expression));
+                            writer.Write(MakeLongFormExpression(where.Expression, schemaid));
                             writer.WriteLine(";");
                         }
                     }
@@ -582,7 +589,7 @@ DateTime.Today.ToLongDateString() + "\r\n" + //"December 27, 2012\r\n" +
                             writer.Write("\t");
                             writer.Write(where.Name);
                             writer.Write(" : ");
-                            writer.Write(MakeLongFormExpression(where.Expression));
+                            writer.Write(MakeLongFormExpression(where.Expression, schemaid));
                             writer.WriteLine(";");
                         }
                     }
@@ -596,7 +603,7 @@ DateTime.Today.ToLongDateString() + "\r\n" + //"December 27, 2012\r\n" +
                 {
                     writer.Write("FUNCTION ");
                     writer.WriteLine(docFunction.Name);
-                    writer.WriteLine(MakeLongFormExpression(docFunction.Expression));
+                    writer.WriteLine(MakeLongFormExpression(docFunction.Expression, schemaid));
                     writer.WriteLine("END_FUNCTION;");
                     writer.WriteLine();
                 }
@@ -620,7 +627,7 @@ DateTime.Today.ToLongDateString() + "\r\n" + //"December 27, 2012\r\n" +
                         writer.Write("      ");
                         writer.Write(docWhere.Name);
                         writer.Write(" : ");
-                        writer.Write(MakeLongFormExpression(docWhere.Expression));
+                        writer.Write(MakeLongFormExpression(docWhere.Expression, schemaid));
                         writer.WriteLine(";");
                     }
 

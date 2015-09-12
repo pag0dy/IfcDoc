@@ -302,6 +302,7 @@ namespace IfcDoc.Format.PNG
                     g.FillEllipse(Brushes.Blue, new Rectangle(x + CX - DX - CY, y + CY * (iAttr+1), CY, CY));
                 }
 
+#if false
                 string card = ruleAttribute.GetCardinalityExpression();
                 if (g != null && card != null)
                 {
@@ -329,6 +330,7 @@ namespace IfcDoc.Format.PNG
                         }
                     }
                 }
+#endif
             }
         }
 

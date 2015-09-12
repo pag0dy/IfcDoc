@@ -44,15 +44,9 @@ namespace IfcDoc
         /// <param name="views">Optional filter of views to export.</param>
         /// <param name="schemas">Optional filter of schemas to export.</param>
         /// <param name="locales">Optional filter of locales to export.</param>
-        /// <param name="formatted">If true, appends .txt extension and generates formatted htm file for documentation purposes.</param>
-        public static void DoExport(DocProject docProject, string filepath, DocModelView[] views, string[] locales, Dictionary<long, SEntity> instances, bool formatted)
+        public static void DoExport(DocProject docProject, string filepath, DocModelView[] views, string[] locales, Dictionary<long, SEntity> instances)
         {
             string ext = System.IO.Path.GetExtension(filepath).ToLower();
-
-            if (formatted)
-            {
-                filepath = filepath + ".txt";
-            }
 
             Dictionary<DocObject, bool> included = null;
             if (views != null)
@@ -309,6 +303,14 @@ namespace IfcDoc
             // format content
             StringBuilder sb = new StringBuilder();
 
+            if(!String.IsNullOrEmpty(def.ExchangeClass))
+            {
+                sb.AppendLine("<table class=\"gridtable\">");
+                sb.AppendLine("<tr><th>Process</th><th>Sender</th><th>Receiver</th></tr>");
+                sb.AppendLine("<tr><td>" + def.ExchangeClass + "</td><td>" + def.SenderClass + "</td><td>" + def.ReceiverClass + "</td></tr>");
+                sb.AppendLine("</table>");
+            }
+
             // 1. manual content
             sb.Append(def.Documentation);
 
@@ -370,6 +372,7 @@ namespace IfcDoc
 
                         if (reqImport != DocExchangeRequirementEnum.NotRelevant || reqExport != DocExchangeRequirementEnum.NotRelevant)
                         {
+#if false
                             sb.Append("<tr><td>&nbsp;&nbsp;<a href=\"../../");
                             sb.Append(schema.ToLower());
                             sb.Append("/lexical/");
@@ -377,6 +380,12 @@ namespace IfcDoc
                             sb.Append(".htm#");
                             sb.Append(MakeLinkName(docConcept.Definition));
                             sb.Append("\">");
+                            sb.Append(docConcept.Definition.Name);
+                            sb.Append("</a></td><td>");
+#endif
+                            sb.Append("<tr><td>&nbsp;&nbsp;<a href=\"../../templates/");
+                            sb.Append(MakeLinkName(docConcept.Definition));
+                            sb.Append(".htm\">");
                             sb.Append(docConcept.Definition.Name);
                             sb.Append("</a></td><td>");
 
@@ -1098,10 +1107,11 @@ namespace IfcDoc
         /// <summary>
         /// If matching figure exists, generates HTML including the figure and increments the figure count.
         /// </summary>
+        /// <param name="docProject">The project</param>
         /// <param name="definition">Object for which to find figure.</param>
         /// <param name="dtd">Optional template for which to find figure.</param>
         /// <param name="caption">Caption of definition used in determining figure caption, e.g. 'Beam'</param>
-        /// <param name="iFigure">Number of figure; will be incremented if figure is found.</param>
+        /// <param name="listFigures">List of figures for determining numbering; appended as applicable by function.</param>
         /// <returns></returns>
         private static string FormatFigure(DocProject docProject, DocObject definition, DocTemplateDefinition dtd, string caption, List<ContentRef> listFigures)
         {
@@ -1273,6 +1283,7 @@ namespace IfcDoc
                                                 if (docConceptInner != null)
                                                 {
                                                     string inner = FormatConceptTable(docProject, docModelView, (DocEntity)docDef, root, docConceptInner, mapEntity, mapSchema);
+                                                    sb.Append("<a href=\"../../templates/" + MakeLinkName(docTemplateInner) + ".htm\">" + docTemplateInner.Name + "</a><br/>");
                                                     sb.Append(inner);
                                                 }
 
@@ -1283,6 +1294,11 @@ namespace IfcDoc
 
                                 if (docTemplateInner == null && value != null && mapSchema.TryGetValue(value, out schema))
                                 {
+                                    if(value.StartsWith("Pset_"))
+                                    {
+                                        value.ToString();
+                                    }
+
                                     sb.Append("<a href=\"../../");
                                     sb.Append(schema.ToLower());
                                     sb.Append("/lexical/");
@@ -1526,7 +1542,7 @@ namespace IfcDoc
 
                 return content.Replace(fieldname, format);
             }
-            else if (docDef == null)
+            else //if (docDef == null)
             {
                 // hyperlink to property set definition
                 DocSchema docSchema = null;
@@ -1552,11 +1568,12 @@ namespace IfcDoc
                     return content.Replace(fieldname, fieldvalue);
                 }
             }
+            /*
             else
             {
                 // simple replace -- hyperlink may markup value later
                 return content.Replace(fieldname, fieldvalue);
-            }
+            }*/
 
             return content;
         }
@@ -1570,6 +1587,8 @@ namespace IfcDoc
             Dictionary<string, DocObject> mapEntity,
             Dictionary<string, string> mapSchema,
             Dictionary<string, Type> typemap,
+            List<ContentRef> listFigures, 
+            List<ContentRef> listTables,
             FormatHTM htmTOC,
             FormatHTM htmSectionTOC
             )
@@ -1591,7 +1610,7 @@ namespace IfcDoc
                 using (FormatHTM htmExample = new FormatHTM(pathExample, mapEntity, mapSchema, included))
                 {
                     htmExample.WriteHeader(docExample.Name, 2);
-                    htmExample.WriteScript(-5, 1, 0, 0);
+                    htmExample.WriteScript(-5, indexpath[0], 0, 0);
                     htmExample.WriteLine("<h3 class=\"std\">" + indexpathstring + " " + docExample.Name + "</h3>");
 
                     // table of files
@@ -1636,8 +1655,10 @@ namespace IfcDoc
                         }
                     }
 
+                    docExample.Documentation = UpdateNumbering(docExample.Documentation, listFigures, listTables, docExample);
+
                     htmExample.WriteDocumentationForISO(docExample.Documentation, docExample, false);
-                    htmExample.WriteLine("<p><a href=\"../../link/" + MakeLinkName(docExample) + ".htm\" target=\"_top\" ><img src=\"../../img/permlink.png\" style=\"border: 0px\" title=\"Link to this page\" alt=\"Link to this page\"/>&nbsp; Link to this page</a></p>");
+                    htmExample.WriteLinkTo(docExample);
                     htmExample.WriteFooter(Properties.Settings.Default.Footer);
                 }
 
@@ -1727,7 +1748,12 @@ namespace IfcDoc
                 string urlExample = "annex-e/" + MakeLinkName(docExample) + ".htm";
                 htmTOC.WriteTOC(2, "<a class=\"listing-link\" href=\"annex/" + urlExample + "\" >" + indexpathstring + " " + docExample.Name + "</a>");
 
-                string htmllink = "<a class=\"listing-link\" href=\"" + urlExample + "\" target=\"info\">" + docExample.Name + "</a>";
+                string linkid = "";
+                if(indexpath.Count == 1)
+                {
+                    linkid = indexpath[0].ToString();
+                }
+                string htmllink = "<a class=\"listing-link\" id=\"" + linkid + "\" href=\"" + urlExample + "\" target=\"info\">" + docExample.Name + "</a>";
                 htmSectionTOC.WriteLine("<tr class=\"std\"><td class=\"menu\">" + indexpathstring + " " + htmllink + "</td></tr>");
 
                 if (docExample.Examples.Count > 0)
@@ -1735,7 +1761,7 @@ namespace IfcDoc
                     indexpath.Add(0);
                     foreach(DocExample docSub in docExample.Examples)
                     {
-                        GenerateExample(docSub, listFormats, path, indexpath, included, mapEntity, mapSchema, typemap, htmTOC, htmSectionTOC);
+                        GenerateExample(docSub, listFormats, path, indexpath, included, mapEntity, mapSchema, typemap, listFigures, listTables, htmTOC, htmSectionTOC);
                     }
                     indexpath.RemoveAt(indexpath.Count - 1);
                 }
@@ -1818,7 +1844,7 @@ namespace IfcDoc
                 }
 
                 // write url for incoming page link                
-                htmTemplate.WriteLine("<p><a href=\"../../link/" + MakeLinkName(docTemplate) + ".htm\" target=\"_top\" ><img src=\"../../img/permlink.png\" style=\"border: 0px\" title=\"Link to this page\" alt=\"Link to this page\"/>&nbsp; Link to this page</a></p>");
+                htmTemplate.WriteLinkTo(docTemplate);
 
                 htmTemplate.WriteFooter(Properties.Settings.Default.Footer);
             }
@@ -1859,8 +1885,6 @@ namespace IfcDoc
             List<ContentRef> listFigures, 
             List<ContentRef> listTables)
         {
-            DocTemplateDefinition dtd = null;
-
             StringBuilder sb = new StringBuilder();
 
             // find concepts for entity
@@ -1875,54 +1899,6 @@ namespace IfcDoc
                         if (docRoot.ApplicableEntity == entity)
                         {
                             hasConceptsAtEntity = true;
-                        }
-                    }
-
-                    if (hasConceptsAtEntity)
-                    {
-                        sb.AppendLine("<section>");
-                        sb.AppendLine("<h5 class=\"num\">Definitions applying to " + docView.Name + "</h5>");
-
-                        // link to instance diagram
-                        string linkdiagram = MakeLinkName(docView) + "/" + MakeLinkName(entity) + ".htm";
-                        sb.Append("<p><a href=\"../../../annex/annex-d/" + linkdiagram + "\"><img style=\"border: 0px\" src=\"../../../img/diagram.png\" />&nbsp;Instance diagram</a></p>");
-
-                        sb.AppendLine("<hr />");
-
-                        foreach (DocConceptRoot docRoot in docView.ConceptRoots)
-                        {
-                            if (docRoot.ApplicableEntity == entity)
-                            {
-
-                                sb.Append(docRoot.Documentation);
-
-                                if (docRoot.Concepts.Count > 0)
-                                {
-                                    sb.AppendLine("<details>");
-                                    sb.AppendLine("<summary>Concept usage</summary>");
-                                    foreach (DocTemplateUsage eachusage in docRoot.Concepts)
-                                    {
-                                        if (eachusage.Definition != null)
-                                        {
-                                            if (included == null || included.ContainsKey(eachusage.Definition))
-                                            {
-                                                if (eachusage.Documentation != null)
-                                                {
-                                                    eachusage.Documentation = UpdateNumbering(eachusage.Documentation, listFigures, listTables, entity);
-                                                }
-
-                                                string eachtext = FormatConcept(docProject, entity, docRoot, eachusage, mapEntity, mapSchema, listFigures, listTables);
-                                                sb.Append(eachtext);
-                                                sb.AppendLine();
-                                            }
-                                        }
-                                    }
-                                    sb.AppendLine("</details>");
-                                }
-
-
-
-                            }
                         }
                     }
 
@@ -2014,6 +1990,45 @@ namespace IfcDoc
                         docSuper = docProject.GetDefinition(docSuper.BaseDefinition) as DocEntity;
                     }
 
+                    if (hasConceptsAtEntity || listLines.Count > 0)
+                    {
+                        sb.AppendLine("<section>");
+                        sb.AppendLine("<h5 class=\"num\">Definitions applying to " + docView.Name + "</h5>");
+
+                        // link to instance diagram
+                        if (hasConceptsAtEntity)
+                        {
+                            string linkdiagram = MakeLinkName(docView) + "/" + MakeLinkName(entity) + ".htm";
+                            sb.Append("<p><a href=\"../../../annex/annex-d/" + linkdiagram + "\"><img style=\"border: 0px\" src=\"../../../img/diagram.png\" />&nbsp;Instance diagram</a></p>");
+                        }
+
+                        sb.AppendLine("<hr />");
+
+                        foreach (DocConceptRoot docRoot in docView.ConceptRoots)
+                        {
+                            if (docRoot.ApplicableEntity == entity)
+                            {
+
+                                sb.Append(docRoot.Documentation);
+
+                                if (docRoot.Concepts.Count > 0)
+                                {
+                                    sb.AppendLine("<details>");
+                                    sb.AppendLine("<summary>Concept usage</summary>");
+                                    foreach (DocTemplateUsage eachusage in docRoot.Concepts)
+                                    {
+                                        FormatEntityUsage(docProject, entity, docRoot, eachusage, mapEntity, mapSchema, listFigures, listTables, included, sb);
+                                    }
+                                    sb.AppendLine("</details>");
+                                }
+
+
+
+                            }
+                        }
+                    }
+
+
                     // now format inherited use definitions
                     if (listLines.Count > 0)
                     {
@@ -2039,21 +2054,40 @@ namespace IfcDoc
                 }
             }
 
-            //sb.AppendLine("<hr />");
-
-            // add figure if it exists
-#if false // don't use anymore
-            string fig = FormatFigure(docProject, entity, dtd, entity.Text, listFigures);
-            if (fig != null)
-            {
-                sb.Append(fig);
-            }
-#endif
-
             sb = sb.Replace("<EPM-HTML>", "");
             sb = sb.Replace("</EPM-HTML>", "");
 
             return sb.ToString();
+        }
+
+        private static void FormatEntityUsage(DocProject docProject, DocEntity entity, DocConceptRoot docRoot, DocTemplateUsage eachusage, Dictionary<string, DocObject> mapEntity, Dictionary<string, string> mapSchema, List<ContentRef> listFigures, List<ContentRef> listTables, Dictionary<DocObject, bool> included, StringBuilder sb)
+        {
+            if (eachusage.Definition != null)
+            {
+                if (included == null || included.ContainsKey(eachusage.Definition))
+                {
+                    if (eachusage.Documentation != null)
+                    {
+                        eachusage.Documentation = UpdateNumbering(eachusage.Documentation, listFigures, listTables, entity);
+                    }
+
+                    string eachtext = FormatConcept(docProject, entity, docRoot, eachusage, mapEntity, mapSchema, listFigures, listTables);
+                    sb.Append(eachtext);
+                    sb.AppendLine();
+
+                    if (eachusage.Concepts.Count > 0)
+                    {
+                        sb.AppendLine("<details>");
+                        sb.AppendLine("<summary>Concept alternates</summary>");
+
+                        foreach (DocTemplateUsage innerusage in eachusage.Concepts)
+                        {
+                            FormatEntityUsage(docProject, entity, docRoot, innerusage, mapEntity, mapSchema, listFigures, listTables, included, sb);
+                        }
+                        sb.AppendLine("</details>");
+                    }
+                }
+            }
         }
 
 
@@ -2228,14 +2262,35 @@ namespace IfcDoc
                 }
             }
 
+            Dictionary<DocObject, bool>[] dictionaryViews = new Dictionary<DocObject, bool>[docProject.ModelViews.Count];
+            for (int i = 0; i < docProject.ModelViews.Count; i++)
+            {
+                DocModelView docView = docProject.ModelViews[i];
+                if (included != null && included.ContainsKey(docView))
+                {
+                    dictionaryViews[i] = new Dictionary<DocObject, bool>();
+                    docProject.RegisterObjectsInScope(docProject.ModelViews[i], dictionaryViews[i]);
+                }
+            }
+
+
             DocEntity docEntityRoot = docProject.GetDefinition("IfcRoot") as DocEntity;
 
             // upper contents page
             string pathHeaderFrame = path + "\\content.htm";
             using (FormatHTM htmProp = new FormatHTM(pathHeaderFrame, mapEntity, mapSchema, included))
             {
-                string projectname = docProject.Annotations[0].Code;
-                string projectcopy = docProject.Annotations[0].Copyright;
+                DocAnnotation docCover = docProject.Annotations[0];
+                string projectname = docCover.Code;
+                if (!String.IsNullOrEmpty(docCover.Version))
+                {
+                    projectname += " - " + docCover.Version;
+                }
+                if (!String.IsNullOrEmpty(docCover.Status))
+                {
+                    projectname += " [" + docCover.Status + "]";
+                }
+                string projectcopy = docCover.Copyright;
 
                 htmProp.Write(
 "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\r\n" + 
@@ -2347,6 +2402,7 @@ namespace IfcDoc
 
                 htmSection.WriteLine("      <h1 class=\"std\">" + docAnnotation.Name + "</h1>");
                 htmSection.WriteLine(docAnnotation.Documentation);
+                htmSection.WriteLinkTo("foreword", 0);
                 htmSection.WriteFooter(Properties.Settings.Default.Footer);
             }
 
@@ -2364,6 +2420,7 @@ namespace IfcDoc
 
                 htmSection.WriteLine("      <h1 class=\"std\">" + docAnnotation.Name + "</h1>");
                 htmSection.WriteLine(docAnnotation.Documentation);
+                htmSection.WriteLinkTo("introduction", 0);
                 htmSection.WriteFooter(Properties.Settings.Default.Footer);
             }
 
@@ -2699,7 +2756,7 @@ namespace IfcDoc
                                 {
                                     foreach (DocReference docRef in docProject.NormativeReferences)
                                     {
-                                        htmSection.WriteLine("<dt class=\"normativereference\"><a id=\"" + MakeLinkName(docRef) + "\" id=\"" + MakeLinkName(docRef) + "\">" + docRef.Name + "</a>, <i>" + docRef.Documentation + "</i></dt>");
+                                        htmSection.WriteLine("<dt class=\"normativereference\"><a id=\"" + MakeLinkName(docRef) + "\">" + docRef.Name + "</a>, <i>" + docRef.Documentation + "</i></dt>");
                                         htmSection.WriteLine("<dd>&nbsp;</dd>");
                                     }
                                 }
@@ -2751,15 +2808,11 @@ namespace IfcDoc
                                 htmSection.WriteLine("<table class=\"gridtable\">");
                                 htmSection.WriteLine("<tr><th>Template</th>");
 
-                                Dictionary<DocObject, bool>[] dictionaryViews = new Dictionary<DocObject, bool>[docProject.ModelViews.Count];
-
                                 for (int i = 0; i < docProject.ModelViews.Count; i++)
                                 {
                                     DocModelView docView = docProject.ModelViews[i];
                                     if (included != null && included.ContainsKey(docView))
                                     {
-                                        dictionaryViews[i] = new Dictionary<DocObject, bool>();
-                                        docProject.RegisterObjectsInScope(docProject.ModelViews[i], dictionaryViews[i]);
                                         htmSection.WriteLine("<th>" + docProject.ModelViews[i].Name + "</th>");
                                     }
                                 }
@@ -2787,6 +2840,8 @@ namespace IfcDoc
                                 }
                             }
                             htmSection.WriteLine("</p>");
+
+                            htmSection.WriteLinkTo("chapter-" + iSection, 1);
 
                             htmSection.WriteFooter(Properties.Settings.Default.Footer);
                         }
@@ -2899,6 +2954,32 @@ namespace IfcDoc
                                                             htmDef.WriteLine("</table>");
                                                             htmDef.WriteSummaryFooter();
                                                         }
+                                                        else if (type is DocSelect)
+                                                        {
+                                                            DocSelect docSelect = (DocSelect)type;
+
+                                                            htmDef.WriteSummaryHeader("Select definition", true);
+                                                            htmDef.WriteLine("<table class=\"attributes\">");
+                                                            htmDef.WriteLine("<tr><th>Type</th><th>Description</th></tr>");
+                                                            foreach (DocSelectItem docSelectItem in docSelect.Selects)
+                                                            {
+                                                                DocObject docRef = null;
+                                                                if (mapEntity.TryGetValue(docSelectItem.Name, out docRef))
+                                                                {
+                                                                    if (included == null || included.ContainsKey(docRef))
+                                                                    {
+                                                                        htmDef.Write("<tr><td>");
+                                                                        htmDef.WriteDefinition(docSelectItem.Name);
+                                                                        //htmDef.Write(docSelectItem.Name);
+                                                                        htmDef.Write("</td><td>");
+                                                                        htmDef.Write(docSelectItem.Documentation);
+                                                                        htmDef.Write("</td></tr>");
+                                                                    }
+                                                                }
+                                                            }
+                                                            htmDef.WriteLine("</table>");
+                                                            htmDef.WriteSummaryFooter();
+                                                        }
 
                                                         htmDef.WriteLine("</section>");
 
@@ -2960,7 +3041,7 @@ namespace IfcDoc
                                                         htmDef.WriteLine("</section>");
 
                                                         // write url for incoming page link
-                                                        htmDef.WriteLine("<p><a href=\"../../../link/" + MakeLinkName(type) + ".htm\" target=\"_top\" ><img src=\"../../../img/permlink.png\" style=\"border: 0px\" title=\"Link to this page\" alt=\"Link to this page\"/>&nbsp; Link to this page</a></p>");
+                                                        htmDef.WriteLinkTo(type);
 
                                                         htmDef.WriteFooter(Properties.Settings.Default.Footer);
                                                     }
@@ -3014,7 +3095,18 @@ namespace IfcDoc
                                                             htmDef.WriteSummaryHeader("Attribute definitions", true);
 
                                                             htmDef.WriteLine("<table class=\"attributes\">");
-                                                            htmDef.WriteLine("<tr><th>#</th><th>Attribute</th><th>Type</th><th>Cardinality</th><th>Description</th></tr>");
+                                                            htmDef.WriteLine("<tr><th>#</th><th>Attribute</th><th>Type</th><th>Cardinality</th><th>Description</th>");
+
+                                                            if (views != null)
+                                                            {
+                                                                foreach (DocModelView docViewHeader in views)
+                                                                {
+                                                                    htmDef.Write("<th>");
+                                                                    htmDef.Write(docViewHeader.Name.Substring(0, 1));
+                                                                    htmDef.Write("</th>");
+                                                                }
+                                                            }
+                                                            htmDef.WriteLine("</tr>");
 
                                                             int sequence = 0;
 
@@ -3033,7 +3125,7 @@ namespace IfcDoc
                                                                 }
                                                             }
 
-                                                            htmDef.WriteEntityAttributes(entity, entity, ref sequence);
+                                                            htmDef.WriteEntityAttributes(entity, entity, views, dictionaryViews, ref sequence);
 
                                                             htmDef.WriteLine("</table>");
 
@@ -3109,10 +3201,20 @@ namespace IfcDoc
                                                         htmDef.WriteSummaryHeader("Attribute inheritance", false);
 
                                                         htmDef.WriteLine("<table class=\"attributes\">");
-                                                        htmDef.WriteLine("<tr><th>#</th><th>Attribute</th><th>Type</th><th>Cardinality</th><th>Description</th></tr>");
+                                                        htmDef.Write("<tr><th>#</th><th>Attribute</th><th>Type</th><th>Cardinality</th><th>Description</th>");
+                                                        if(views != null)
+                                                        {
+                                                            foreach(DocModelView docViewHeader in views)
+                                                            {
+                                                                htmDef.Write("<th>");
+                                                                htmDef.Write(docViewHeader.Name.Substring(0, 1));
+                                                                htmDef.Write("</th>");
+                                                            }
+                                                        }
+                                                        htmDef.WriteLine("</tr>");
 
                                                         int sequenceX = 0;
-                                                        htmDef.WriteEntityInheritance(entity, entity, ref sequenceX);
+                                                        htmDef.WriteEntityInheritance(entity, entity, views, dictionaryViews, ref sequenceX);
 
                                                         htmDef.WriteLine("</table>");
 
@@ -3171,7 +3273,7 @@ namespace IfcDoc
                                                         htmDef.WriteLine("</section>");
 
                                                         // write url for incoming page link
-                                                        htmDef.WriteLine("<p><a href=\"../../../link/" + MakeLinkName(entity) + ".htm\" target=\"_top\" ><img src=\"../../../img/permlink.png\" style=\"border: 0px\" title=\"Link to this page\" alt=\"Link to this page\"/>&nbsp; Link to this page</a></p>");
+                                                        htmDef.WriteLinkTo(entity);
 
                                                         htmDef.WriteFooter(Properties.Settings.Default.Footer);
                                                     }
@@ -3229,7 +3331,7 @@ namespace IfcDoc
                                                         htmDef.WriteLine("</section>");
 
                                                         // write url for incoming page link
-                                                        htmDef.WriteLine("<p><a href=\"../../../link/" + MakeLinkName(entity) + ".htm\" target=\"_top\" ><img src=\"../../../img/permlink.png\" style=\"border: 0px\" title=\"Link to this page\" alt=\"Link to this page\"/>&nbsp; Link to this page</a></p>");
+                                                        htmDef.WriteLinkTo(entity);
 
                                                         htmDef.WriteFooter(Properties.Settings.Default.Footer);
                                                     }
@@ -3287,7 +3389,7 @@ namespace IfcDoc
                                                         htmDef.WriteLine("</section>");
 
                                                         // write url for incoming page link
-                                                        htmDef.WriteLine("<p><a href=\"../../../link/" + MakeLinkName(entity) + ".htm\" target=\"_top\" ><img src=\"../../../img/permlink.png\" style=\"border: 0px\" title=\"Link to this page\" alt=\"Link to this page\"/>&nbsp; Link to this page</a></p>");
+                                                        htmDef.WriteLinkTo(entity);
 
                                                         htmDef.WriteFooter(Properties.Settings.Default.Footer);
                                                     }
@@ -3388,7 +3490,7 @@ namespace IfcDoc
                                                         htmDef.WriteProperties(entity.Properties);
 
                                                         // write url for incoming page link
-                                                        htmDef.WriteLine("<p><a href=\"../../../link/" + MakeLinkName(entity) + ".htm\" target=\"_top\" ><img src=\"../../../img/permlink.png\" style=\"border: 0px\" title=\"Link to this page\" alt=\"Link to this page\"/>&nbsp; Link to this page</a></p>");
+                                                        htmDef.WriteLinkTo(entity);
 
                                                         htmDef.WriteFooter(Properties.Settings.Default.Footer);
                                                     }
@@ -3447,36 +3549,49 @@ namespace IfcDoc
 
                                                         htmDef.WriteLine("</table>");
 
-                                                        htmDef.WriteLine("<ul>\r\n");
+                                                        htmDef.WriteLine("<table class=\"gridtable\">");
+                                                        htmDef.WriteLine("<tr><th>Name</th><th>Description</th></tr>");
+
+                                                        bool showdefaultdesc = true;
+
                                                         foreach (DocPropertyConstant docprop in entity.Constants)
                                                         {
-                                                            htmDef.WriteLine("<li><b>" + docprop.Name + "</b><br/>");
+                                                            htmDef.WriteLine("<tr><td>" + docprop.Name + "</td><td>");
 
-                                                            htmDef.WriteLine("<table>");
-
-                                                            docprop.Localization.Sort();
-                                                            foreach (DocLocalization doclocal in docprop.Localization)
+                                                            if (docprop.Localization.Count > 0)
                                                             {
-                                                                string localname = doclocal.Name;
-                                                                string localdesc = doclocal.Documentation;
-
-                                                                string localid = doclocal.Locale.Substring(0, 2).ToLower();
-
-                                                                if (localid.Equals("en", StringComparison.InvariantCultureIgnoreCase) && localdesc == null)
+                                                                htmDef.WriteLine("<table class=\"gridtable\">");
+                                                                docprop.Localization.Sort();
+                                                                foreach (DocLocalization doclocal in docprop.Localization)
                                                                 {
-                                                                    localdesc = docprop.Documentation;
+                                                                    string localname = doclocal.Name;
+                                                                    string localdesc = doclocal.Documentation;
+
+                                                                    string localid = doclocal.Locale.Substring(0, 2).ToLower();
+
+                                                                    if (localid.Equals("en", StringComparison.InvariantCultureIgnoreCase) && localdesc == null)
+                                                                    {
+                                                                        localdesc = docprop.Documentation;
+                                                                        showdefaultdesc = false;
+                                                                    }
+
+                                                                    htmDef.WriteLine("<tr><td><img src=\"../../../img/locale-" + localid + ".png\" /></td><td><b>" + localname + "</b></td><td>" + localdesc + "</td></tr>");
                                                                 }
-
-                                                                htmDef.WriteLine("<tr><td><img src=\"../../../img/locale-" + localid + ".png\" /></td><td><b>" + localname + "</b>: " + localdesc + "</td></tr>");
+                                                                htmDef.WriteLine("</table>");
                                                             }
-                                                            htmDef.WriteLine("</table>");
 
-                                                            htmDef.WriteLine("</li>\r\n");
+                                                            if(showdefaultdesc)
+                                                            {
+                                                                htmDef.WriteLine(docprop.Documentation);
+                                                            }
+
+                                                            htmDef.WriteLine("</td></tr>");
                                                         }
-                                                        htmDef.WriteLine("</ul>\r\n");
+
+                                                        htmDef.WriteLine("</table>");
 
                                                         // write url for incoming page link
-                                                        //htmDef.WriteLine("<p><a href=\"../../../link/" + MakeLinkName(entity) + ".htm\" target=\"_top\" ><img src=\"../../../img/permlink.png\" style=\"border: 0px\" title=\"Link to this page\" alt=\"Link to this page\"/>&nbsp; Link to this page</a></p>");
+                                                        htmDef.WriteLinkTo(entity);
 
                                                         htmDef.WriteFooter(Properties.Settings.Default.Footer);
                                                     }
@@ -3550,16 +3665,18 @@ namespace IfcDoc
                                                         }
 
                                                         // write each quantity
-                                                        htmDef.WriteLine("<ul>\r\n");
+                                                        htmDef.WriteLine("<table class=\"gridtable\">");
+                                                        htmDef.WriteLine("<tr><th>Name</th><th>Type</th><th>Description</th>");
                                                         foreach (DocQuantity docprop in entity.Quantities)
                                                         {
-                                                            htmDef.WriteLine("<li><b>" + docprop.Name + "</b><br/>");
+                                                            htmDef.WriteLine("<tr><td>" + docprop.Name + "</td><td>");
                                                             htmDef.WriteDefinition(docprop.QuantityType.ToString());
-                                                            htmDef.WriteLine("<br/>");
+                                                            htmDef.WriteLine("</td><td>");
 
-                                                            if (!Properties.Settings.Default.NoXml)
+                                                            bool showdefaultdesc = false;
+                                                            if(docprop.Localization.Count > 0)
                                                             {
-                                                                htmDef.WriteLine("<table>");
+                                                                htmDef.WriteLine("<table class=\"gridtable\">");
 
                                                                 docprop.Localization.Sort();
                                                                 foreach (DocLocalization doclocal in docprop.Localization)
@@ -3569,26 +3686,27 @@ namespace IfcDoc
 
                                                                     string localid = doclocal.Locale.Substring(0, 2).ToLower();
 
-                                                                    if (localid.Equals("en", StringComparison.InvariantCultureIgnoreCase) && localdesc == null)
+                                                                    if (String.IsNullOrEmpty(localdesc) && localid.Equals("en", StringComparison.InvariantCultureIgnoreCase) && localdesc == null)
                                                                     {
                                                                         localdesc = docprop.Documentation;
+                                                                        showdefaultdesc = false;
                                                                     }
 
-                                                                    htmDef.WriteLine("<tr><td><img src=\"../../../img/locale-" + localid + ".png\" /></td><td><b>" + localname + "</b>: " + localdesc + "</td></tr>");
+                                                                    htmDef.WriteLine("<tr><td><img src=\"../../../img/locale-" + localid + ".png\" /></td><td><b>" + localname + "</b></td><td>" + localdesc + "</td></tr>");
                                                                 }
                                                                 htmDef.WriteLine("</table>");
                                                             }
-                                                            else
+                                                            if(showdefaultdesc)
                                                             {
-                                                                htmDef.WriteDocumentationForISO(docprop.Documentation + "</li>\r\n", null, Properties.Settings.Default.NoHistory);
+                                                                htmDef.WriteLine(docprop.Documentation);
                                                             }
 
-                                                            htmDef.WriteLine("</li>\r\n");
+                                                            htmDef.WriteLine("</td></tr>");
                                                         }
-                                                        htmDef.WriteLine("</ul>\r\n");
+                                                        htmDef.WriteLine("</table>");
 
                                                         // write url for incoming page link
-                                                        htmDef.WriteLine("<p><a href=\"../../../link/" + MakeLinkName(entity) + ".htm\" target=\"_top\" ><img src=\"../../../img/permlink.png\" style=\"border: 0px\" title=\"Link to this page\" alt=\"Link to this page\"/>&nbsp; Link to this page</a></p>");
+                                                        htmDef.WriteLinkTo(entity);
 
                                                         htmDef.WriteFooter(Properties.Settings.Default.Footer);
                                                     }
@@ -3608,6 +3726,9 @@ namespace IfcDoc
                                     // v1.8: write links to express-g                                
                                     htmSchema.WriteLine(
                                     "<p><a href=\"../../annex/annex-d/" + MakeLinkName(schema) + "/index.htm\" ><img src=\"../../img/diagram.png\" style=\"border: 0px\" title=\"Link to EXPRESS-G diagram\" alt=\"Link to EXPRESS-G diagram\">&nbsp;EXPRESS-G diagram</a></p>");
+
+                                    // link to this page
+                                    htmSchema.WriteLinkTo(schema);
 
                                     htmSchema.WriteFooter(Properties.Settings.Default.Footer);
                                 }
@@ -3654,7 +3775,7 @@ namespace IfcDoc
                         if (chAnnex == 'A')
                         {
                             // create page for model view
-                            htmSection.WriteComputerListing("IFC4", "ifc4", 0);
+                            //htmSection.WriteComputerListing("IFC4", "ifc4", 0);
 
                             /*
                             DoExport(docProject, path + @"\annex\annex-a\default\ifc4.exp", null, null, instances, true);
@@ -3692,6 +3813,7 @@ namespace IfcDoc
                             htmSection.WriteInheritanceMapping(docProject, views);
                         }
 
+                        htmSection.WriteLinkTo("annex-" + chAnnex.ToString().ToLower(), 1);
                         htmSection.WriteFooter(Properties.Settings.Default.Footer);
                     }
 
@@ -3740,11 +3862,11 @@ namespace IfcDoc
                                             {
                                                 DocModelView[] modelviews = docProject.GetViewInheritance(docModelView);
 
-                                                DoExport(docProject, path + @"\annex\annex-a\" + MakeLinkName(docModelView) + @"\" + docModelView.Code + ".exp", modelviews, locales, instances, true);
-                                                DoExport(docProject, path + @"\annex\annex-a\" + MakeLinkName(docModelView) + @"\" + docModelView.Code + ".xsd", modelviews, locales, instances, true);
-                                                DoExport(docProject, path + @"\annex\annex-a\" + MakeLinkName(docModelView) + @"\" + docModelView.Code + ".ifc", modelviews, locales, instances, true);
-                                                DoExport(docProject, path + @"\annex\annex-a\" + MakeLinkName(docModelView) + @"\" + docModelView.Code + ".ifcxml", modelviews, locales, instances, true);
-                                                DoExport(docProject, path + @"\annex\annex-a\" + MakeLinkName(docModelView) + @"\" + docModelView.Code + ".xml", modelviews, locales, instances, true);
+                                                DoExport(docProject, path + @"\annex\annex-a\" + MakeLinkName(docModelView) + @"\" + docModelView.Code + ".exp", modelviews, locales, instances);
+                                                DoExport(docProject, path + @"\annex\annex-a\" + MakeLinkName(docModelView) + @"\" + docModelView.Code + ".xsd", modelviews, locales, instances);
+                                                DoExport(docProject, path + @"\annex\annex-a\" + MakeLinkName(docModelView) + @"\" + docModelView.Code + ".ifc", modelviews, locales, instances);
+                                                DoExport(docProject, path + @"\annex\annex-a\" + MakeLinkName(docModelView) + @"\" + docModelView.Code + ".ifcxml", modelviews, locales, instances);
+                                                DoExport(docProject, path + @"\annex\annex-a\" + MakeLinkName(docModelView) + @"\" + docModelView.Code + ".xml", modelviews, locales, instances);
 
                                                 using (FormatHTM htmExpress = new FormatHTM(path + @"\annex\annex-a\" + MakeLinkName(docModelView) + @"\" + docModelView.Code + ".exp.htm", mapEntity, mapSchema, included))
                                                 {
@@ -3758,7 +3880,7 @@ namespace IfcDoc
                                                 using (FormatHTM htmXSD = new FormatHTM(path + @"\annex\annex-a\" + MakeLinkName(docModelView) + @"\" + docModelView.Code + ".xsd.htm", mapEntity, mapSchema, included))
                                                 {
                                                     string xsdcontent = null;
-                                                    using (System.IO.StreamReader reader = new System.IO.StreamReader(path + @"\annex\annex-a\" + MakeLinkName(docModelView) + @"\" + docModelView.Code + ".xsd.txt"))
+                                                    using (System.IO.StreamReader reader = new System.IO.StreamReader(path + @"\annex\annex-a\" + MakeLinkName(docModelView) + @"\" + docModelView.Code + ".xsd"))
                                                     {
                                                         xsdcontent = reader.ReadToEnd();
                                                     }
@@ -3770,7 +3892,7 @@ namespace IfcDoc
                                                 }
                                             }
 
-                                            DoExport(docProject, path + @"\annex\annex-a\" + MakeLinkName(docModelView) + @"\" + docModelView.Code + ".mvdxml", new DocModelView[] { docModelView }, locales, instances, true);
+                                            DoExport(docProject, path + @"\annex\annex-a\" + MakeLinkName(docModelView) + @"\" + docModelView.Code + ".mvdxml", new DocModelView[] { docModelView }, locales, instances);
 
                                         }
                                     }
@@ -3859,38 +3981,38 @@ namespace IfcDoc
                                 // generate alphabetical listings
                                 using (FormatHTM htmAlpha1 = new FormatHTM(path + "/annex/annex-b/alphabeticalorder_definedtypes.htm", mapEntity, mapSchema, included))
                                 {
-                                    htmAlpha1.WriteAlphabeticalListing<DocDefined>("Defined Types", Properties.Settings.Default.Footer);
+                                    htmAlpha1.WriteAlphabeticalListing<DocDefined>("Defined Types", path, "definedtypes");
                                 }
                                 using (FormatHTM htmAlpha1 = new FormatHTM(path + "/annex/annex-b/alphabeticalorder_enumtypes.htm", mapEntity, mapSchema, included))
                                 {
-                                    htmAlpha1.WriteAlphabeticalListing<DocEnumeration>("Enumeration Types", Properties.Settings.Default.Footer);
+                                    htmAlpha1.WriteAlphabeticalListing<DocEnumeration>("Enumeration Types", path, "enumtypes");
                                 }
                                 using (FormatHTM htmAlpha1 = new FormatHTM(path + "/annex/annex-b/alphabeticalorder_selecttypes.htm", mapEntity, mapSchema, included))
                                 {
-                                    htmAlpha1.WriteAlphabeticalListing<DocSelect>("Select Types", Properties.Settings.Default.Footer);
+                                    htmAlpha1.WriteAlphabeticalListing<DocSelect>("Select Types", path, "selecttypes");
                                 }
                                 using (FormatHTM htmAlpha1 = new FormatHTM(path + "/annex/annex-b/alphabeticalorder_entities.htm", mapEntity, mapSchema, included))
                                 {
-                                    htmAlpha1.WriteAlphabeticalListing<DocEntity>("Entities", Properties.Settings.Default.Footer);
+                                    htmAlpha1.WriteAlphabeticalListing<DocEntity>("Entities", path, "entities");
                                 }
                                 using (FormatHTM htmAlpha1 = new FormatHTM(path + "/annex/annex-b/alphabeticalorder_functions.htm", mapEntity, mapSchema, included))
                                 {
-                                    htmAlpha1.WriteAlphabeticalListing<DocFunction>("Functions", Properties.Settings.Default.Footer);
+                                    htmAlpha1.WriteAlphabeticalListing<DocFunction>("Functions", path, "functions");
                                 }
                                 using (FormatHTM htmAlpha1 = new FormatHTM(path + "/annex/annex-b/alphabeticalorder_rules.htm", mapEntity, mapSchema, included))
                                 {
-                                    htmAlpha1.WriteAlphabeticalListing<DocGlobalRule>("Rules", Properties.Settings.Default.Footer);
+                                    htmAlpha1.WriteAlphabeticalListing<DocGlobalRule>("Rules", path, "rules");
                                 }
                                 // no translations currently -- enable in future
                                 using (FormatHTM htmAlpha1 = new FormatHTM(path + "/annex/annex-b/alphabeticalorder_psets.htm", mapEntity, mapSchema, included))
                                 {
-                                    htmAlpha1.WriteAlphabeticalListing<DocPropertySet>("Property Sets", Properties.Settings.Default.Footer);
+                                    htmAlpha1.WriteAlphabeticalListing<DocPropertySet>("Property Sets", path, "psets");
                                 }
                                 using (FormatHTM htmAlpha1 = new FormatHTM(path + "/annex/annex-b/alphabeticalorder_qsets.htm", mapEntity, mapSchema, included))
                                 {
-                                    htmAlpha1.WriteAlphabeticalListing<DocQuantitySet>("Quantity Sets", Properties.Settings.Default.Footer);
+                                    htmAlpha1.WriteAlphabeticalListing<DocQuantitySet>("Quantity Sets", path, "qsets");
                                 }
-
+                                
 
                                 // generate localized listings
                                 foreach (string locale in listLocale.Keys)
@@ -3899,35 +4021,35 @@ namespace IfcDoc
 
                                     using (FormatHTM htmAlpha1 = new FormatHTM(path + "/annex/annex-b/" + locale + "/alphabeticalorder_definedtypes.htm", mapEntity, mapSchema, included))
                                     {
-                                        htmAlpha1.WriteLocalizedListing<DocDefined>("Defined Types", code);
+                                        htmAlpha1.WriteLocalizedListing<DocDefined>("Defined Types", code, path, "definedtypes");
                                     }
                                     using (FormatHTM htmAlpha1 = new FormatHTM(path + "/annex/annex-b/" + locale + "/alphabeticalorder_enumtypes.htm", mapEntity, mapSchema, included))
                                     {
-                                        htmAlpha1.WriteLocalizedListing<DocEnumeration>("Enumeration Types", code);
+                                        htmAlpha1.WriteLocalizedListing<DocEnumeration>("Enumeration Types", code, path, "enumtypes");
                                     }
                                     using (FormatHTM htmAlpha1 = new FormatHTM(path + "/annex/annex-b/" + locale + "/alphabeticalorder_selecttypes.htm", mapEntity, mapSchema, included))
                                     {
-                                        htmAlpha1.WriteLocalizedListing<DocSelect>("Select Types", code);
+                                        htmAlpha1.WriteLocalizedListing<DocSelect>("Select Types", code, path, "selecttypes");
                                     }
                                     using (FormatHTM htmAlpha1 = new FormatHTM(path + "/annex/annex-b/" + locale + "/alphabeticalorder_entities.htm", mapEntity, mapSchema, included))
                                     {
-                                        htmAlpha1.WriteLocalizedListing<DocEntity>("Entities", code);
+                                        htmAlpha1.WriteLocalizedListing<DocEntity>("Entities", code, path, "entities");
                                     }
                                     using (FormatHTM htmAlpha1 = new FormatHTM(path + "/annex/annex-b/" + locale + "/alphabeticalorder_functions.htm", mapEntity, mapSchema, included))
                                     {
-                                        htmAlpha1.WriteLocalizedListing<DocFunction>("Functions", code);
+                                        htmAlpha1.WriteLocalizedListing<DocFunction>("Functions", code, path, "functions");
                                     }
                                     using (FormatHTM htmAlpha1 = new FormatHTM(path + "/annex/annex-b/" + locale + "/alphabeticalorder_rules.htm", mapEntity, mapSchema, included))
                                     {
-                                        htmAlpha1.WriteLocalizedListing<DocGlobalRule>("Rules", code);
+                                        htmAlpha1.WriteLocalizedListing<DocGlobalRule>("Rules", code, path, "rules");
                                     }
                                     using (FormatHTM htmAlpha1 = new FormatHTM(path + "/annex/annex-b/" + locale + "/alphabeticalorder_psets.htm", mapEntity, mapSchema, included))
                                     {
-                                        htmAlpha1.WriteLocalizedListing<DocPropertySet>("Property Sets", code);
+                                        htmAlpha1.WriteLocalizedListing<DocPropertySet>("Property Sets", code, path, "psets");
                                     }
                                     using (FormatHTM htmAlpha1 = new FormatHTM(path + "/annex/annex-b/" + locale + "/alphabeticalorder_qsets.htm", mapEntity, mapSchema, included))
                                     {
-                                        htmAlpha1.WriteLocalizedListing<DocQuantitySet>("Quantity Sets", code);
+                                        htmAlpha1.WriteLocalizedListing<DocQuantitySet>("Quantity Sets", code, path, "qsets");
                                     }
 
                                 }
@@ -3974,8 +4096,13 @@ namespace IfcDoc
                                                             htmCover.WriteLine("<area shape=\"rect\" coords=\"" + rc.Left + "," + rc.Top + "," + rc.Right + "," + rc.Bottom + "\" href=\"" + hyperlink + "\" alt=\"" + docEntref.Name + "\" />");
                                                         }
                                                         htmCover.WriteLine("</map>");
-
+                                                        htmCover.WriteLinkTo("inheritance-" + MakeLinkName(docView), 3);
                                                         htmCover.WriteFooter(String.Empty);
+
+                                                        using (FormatHTM htmLink = new FormatHTM(path + "/link/inheritance-" + MakeLinkName(docView) + ".htm", mapEntity, mapSchema, included))
+                                                        {
+                                                            htmLink.WriteLinkPage("../annex/annex-c/" + DocumentationISO.MakeLinkName(docView) + "/index.htm");
+                                                        }
                                                     }
 
                                                     // create image after (depends on directory being created first)
@@ -3997,7 +4124,7 @@ namespace IfcDoc
                                             htmSectionTOC.WriteLine("<tr class=\"std\"><td class=\"menu\">C." + iView + ".1 <a href=\"annex-c/" + MakeLinkName(docView) + "/all.htm\" target=\"info\" >All entities</a></td></tr>");
                                             using (FormatHTM htmInheritAll = new FormatHTM(path + "/annex/annex-c/" + MakeLinkName(docView) + "/all.htm", mapEntity, mapSchema, included))
                                             {
-                                                htmInheritAll.WriteInheritanceListing(null, false, "All entities");
+                                                htmInheritAll.WriteInheritanceListing(null, false, "All entities", docView, path, "all");
                                             }
 
                                             // specific inheritance
@@ -4005,14 +4132,14 @@ namespace IfcDoc
                                             htmSectionTOC.WriteLine("<tr class=\"std\"><td class=\"menu\">C." + iView + ".2 <a href=\"annex-c/" + MakeLinkName(docView) + "/roots.htm\" target=\"info\" >Rooted entities</a></td></tr>");
                                             using (FormatHTM htmInheritAll = new FormatHTM(path + "/annex/annex-c/" + MakeLinkName(docView) + "/roots.htm", mapEntity, mapSchema, included))
                                             {
-                                                htmInheritAll.WriteInheritanceListing("IfcRoot", false, "Rooted entities");
+                                                htmInheritAll.WriteInheritanceListing("IfcRoot", false, "Rooted entities", docView, path, "roots");
                                             }
 
                                             htmTOC.WriteTOC(1, "<a class=\"listing-link\" href=\"annex/annex-c/" + MakeLinkName(docView) + "/types.htm\" >C." + iView + ".3 Object types</a>");
                                             htmSectionTOC.WriteLine("<tr class=\"std\"><td class=\"menu\">C." + iView + ".3 <a href=\"annex-c/" + MakeLinkName(docView) + "/types.htm\" target=\"info\" >Object types</a></td></tr>");
                                             using (FormatHTM htmInheritAll = new FormatHTM(path + "/annex/annex-c/" + MakeLinkName(docView) + "/types.htm", mapEntity, mapSchema, included))
                                             {
-                                                htmInheritAll.WriteInheritanceListing("IfcObject", true, "Object types");
+                                                htmInheritAll.WriteInheritanceListing("IfcObject", true, "Object types", docView, path, "types");
                                             }
 
                                             htmSectionTOC.WriteLine("<tr><td>&nbsp;</td></tr>");
@@ -4348,7 +4475,7 @@ namespace IfcDoc
                                             }
                                         }
 
-                                        GenerateExample(docExample, listFormats, path, indexpath, included, mapEntity, mapSchema, typemap, htmTOC, htmSectionTOC);
+                                        GenerateExample(docExample, listFormats, path, indexpath, included, mapEntity, mapSchema, typemap, listFigures, listTables, htmTOC, htmSectionTOC);
                                     }
                                 }
                                 break;
@@ -4369,7 +4496,7 @@ namespace IfcDoc
                                             htmWhatsnew.WriteScript(iAnnex, iChangeset, 0, 0);
                                             htmWhatsnew.WriteLine("<h4 class=\"std\">F." + iChangeset + " " + docChangeSet.Name + "</h4>");
                                             htmWhatsnew.WriteDocumentationForISO(docChangeSet.Documentation, docChangeSet, false);
-
+                                            htmWhatsnew.WriteLinkTo(MakeLinkName(docChangeSet), 3);
                                             htmWhatsnew.WriteFooter(Properties.Settings.Default.Footer);
                                         }
 
@@ -4398,6 +4525,7 @@ namespace IfcDoc
                                             }
 
                                             htmChange.WriteLine("</table>");
+                                            htmChange.WriteLinkTo(MakeLinkName(docChangeSet) + "-changelog", 3);
                                             htmChange.WriteFooter(Properties.Settings.Default.Footer);
                                         }
 
@@ -4429,6 +4557,7 @@ namespace IfcDoc
                                             }
 
                                             htmChange.WriteLine("</table>");
+                                            htmChange.WriteLinkTo(MakeLinkName(docChangeSet) + "-properties", 3);
                                             htmChange.WriteFooter(Properties.Settings.Default.Footer);
                                         }
 
@@ -4461,6 +4590,7 @@ namespace IfcDoc
                                             }
 
                                             htmChange.WriteLine("</table>");
+                                            htmChange.WriteLinkTo(MakeLinkName(docChangeSet) + "-quantities", 3);
                                             htmChange.WriteFooter(Properties.Settings.Default.Footer);
                                         }
 
@@ -4523,6 +4653,8 @@ namespace IfcDoc
                 htmTOC.WriteLine("<p>");
                 htmTOC.WriteContentRefs(listFigures, "Figure");
                 htmTOC.WriteLine("</p>");
+
+                htmTOC.WriteLine("<p></p>");
 
                 // write tables
                 htmTOC.WriteLine("<h1 class=\"std\">Tables</h1>");
@@ -4598,7 +4730,7 @@ namespace IfcDoc
                             DocObject refobj = (DocObject)mapEntity[refkey];
                             string display = refobj.Name;//refnumber; // new: use names for bSI; numbers for ISO
 
-                            if (refobj is DocPropertySet)
+                            if (refobj is DocPropertySet || refobj is DocPropertyEnumeration)
                             {
                                 htmIndex.Write(comma + "<a class=\"listing-link\" title=\"" + refobj.Name + "\" href=\"schema/" + mapSchema[refkey].ToLower() + "/pset/" + refobj.Name.ToLower() + ".htm\">" + display + "</a>");
                             }
@@ -4625,8 +4757,19 @@ namespace IfcDoc
                 // new: incoming links
                 foreach(DocSection docLinkSection in docProject.Sections)
                 {
-                    foreach(DocSchema docLinkSchema in docLinkSection.Schemas)
+                    int iSection = docProject.Sections.IndexOf(docLinkSection) + 1;
+                    using (FormatHTM htmLink = new FormatHTM(path + "/link/chapter-" + iSection.ToString() + ".htm", mapEntity, mapSchema, included))
                     {
+                        htmLink.WriteLinkPage("../schema/chapter-" + iSection.ToString() + ".htm");
+                    }
+
+                    foreach (DocSchema docLinkSchema in docLinkSection.Schemas)
+                    {
+                        using (FormatHTM htmLink = new FormatHTM(path + "/link/" + MakeLinkName(docLinkSchema) + ".htm", mapEntity, mapSchema, included))
+                        {
+                            htmLink.WriteLinkPage("../schema/" + docLinkSchema.Name.ToLower() + "/content.htm");
+                        }
+
                         foreach (DocEntity docLinkObj in docLinkSchema.Entities)
                         {
                             if (included == null || included.ContainsKey(docLinkObj))
@@ -4682,6 +4825,17 @@ namespace IfcDoc
                             }
                         }
 
+                        foreach (DocPropertyEnumeration docLinkObj in docLinkSchema.PropertyEnums)
+                        {
+                            if (included == null || included.ContainsKey(docLinkObj))
+                            {
+                                using (FormatHTM htmLink = new FormatHTM(path + "/link/" + MakeLinkName(docLinkObj) + ".htm", mapEntity, mapSchema, included))
+                                {
+                                    htmLink.WriteLinkPage("../schema/" + docLinkSchema.Name.ToLower() + "/pset/" + MakeLinkName(docLinkObj) + ".htm");
+                                }
+                            }
+                        }
+
                         foreach (DocQuantitySet docLinkObj in docLinkSchema.QuantitySets)
                         {
                             if (included == null || included.ContainsKey(docLinkObj))
@@ -4691,6 +4845,56 @@ namespace IfcDoc
                                     htmLink.WriteLinkPage("../schema/" + docLinkSchema.Name.ToLower() + "/qset/" + MakeLinkName(docLinkObj) + ".htm");
                                 }
                             }
+                        }
+                    }
+                }
+
+                char chAnnex = 'a';
+                foreach(DocAnnex docAnnex in docProject.Annexes)
+                {
+                    using (FormatHTM htmLink = new FormatHTM(path + "/link/annex-" + chAnnex + ".htm", mapEntity, mapSchema, included))
+                    {
+                        htmLink.WriteLinkPage("../annex/annex-" + chAnnex + ".htm");
+                    }
+
+                    chAnnex++;
+                }
+
+                foreach(DocAnnotation docAnnot in docProject.Annotations)
+                {
+                    using (FormatHTM htmLink = new FormatHTM(path + "/link/" + MakeLinkName(docAnnot) + ".htm", mapEntity, mapSchema, included))
+                    {
+                        htmLink.WriteLinkPage("../" + MakeLinkName(docAnnot) + ".htm");
+                    }
+                }
+
+                foreach(DocChangeSet docChange in docProject.ChangeSets)
+                {
+                    using (FormatHTM htmLink = new FormatHTM(path + "/link/" + MakeLinkName(docChange) + ".htm", mapEntity, mapSchema, included))
+                    {
+                        htmLink.WriteLinkPage("../annex/annex-f/" + MakeLinkName(docChange) + "/index.htm");
+                    }
+                    using (FormatHTM htmLink = new FormatHTM(path + "/link/" + MakeLinkName(docChange) + "-changelog.htm", mapEntity, mapSchema, included))
+                    {
+                        htmLink.WriteLinkPage("../annex/annex-f/" + MakeLinkName(docChange) + "/changelog.htm");
+                    }
+                    using (FormatHTM htmLink = new FormatHTM(path + "/link/" + MakeLinkName(docChange) + "-properties.htm", mapEntity, mapSchema, included))
+                    {
+                        htmLink.WriteLinkPage("../annex/annex-f/" + MakeLinkName(docChange) + "/properties.htm");
+                    }
+                    using (FormatHTM htmLink = new FormatHTM(path + "/link/" + MakeLinkName(docChange) + "-quantities.htm", mapEntity, mapSchema, included))
+                    {
+                        htmLink.WriteLinkPage("../annex/annex-f/" + MakeLinkName(docChange) + "/quantities.htm");
+                    }
+                }
+
+                foreach(DocModelView docView in docProject.ModelViews)
+                {
+                    if (docView.Code != null)
+                    {
+                        using (FormatHTM htmLink = new FormatHTM(path + "/link/listing-" + docView.Code.ToLower() + ".htm", mapEntity, mapSchema, included))
+                        {
+                            htmLink.WriteLinkPage("../annex/annex-a/" + MakeLinkName(docView) + "/index.htm");
                         }
                     }
                 }

@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CtlParameters));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripButtonTemplateInsert = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonTemplateRemove = new System.Windows.Forms.ToolStripButton();
@@ -43,11 +43,22 @@
             this.toolStripMenuItemModeOverride = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemModeSuppress = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripButtonConceptTemplate = new System.Windows.Forms.ToolStripButton();
-            this.dataGridViewConceptRules = new System.Windows.Forms.DataGridView();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonItemOptional = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButtonShowFailures = new System.Windows.Forms.ToolStripButton();
+            this.toolStripComboBoxOperator = new System.Windows.Forms.ToolStripComboBox();
+            this.dataGridViewConceptRules = new System.Windows.Forms.DataGridView();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.listView1 = new System.Windows.Forms.ListView();
+            this.columnHeaderInstance = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeaderName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewConceptRules)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStrip1
@@ -62,7 +73,10 @@
             this.toolStripSplitButtonInheritance,
             this.toolStripButtonConceptTemplate,
             this.toolStripSeparator2,
-            this.toolStripButtonItemOptional});
+            this.toolStripButtonItemOptional,
+            this.toolStripSeparator3,
+            this.toolStripButtonShowFailures,
+            this.toolStripComboBoxOperator});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(400, 25);
@@ -172,47 +186,6 @@
             this.toolStripButtonConceptTemplate.Text = "Change Template";
             this.toolStripButtonConceptTemplate.Click += new System.EventHandler(this.toolStripButtonConceptTemplate_Click);
             // 
-            // dataGridViewConceptRules
-            // 
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridViewConceptRules.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
-            this.dataGridViewConceptRules.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridViewConceptRules.DefaultCellStyle = dataGridViewCellStyle5;
-            this.dataGridViewConceptRules.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridViewConceptRules.Location = new System.Drawing.Point(0, 25);
-            this.dataGridViewConceptRules.MultiSelect = false;
-            this.dataGridViewConceptRules.Name = "dataGridViewConceptRules";
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridViewConceptRules.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
-            this.dataGridViewConceptRules.Size = new System.Drawing.Size(400, 375);
-            this.dataGridViewConceptRules.TabIndex = 5;
-            this.dataGridViewConceptRules.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewConceptRules_CellContentClick);
-            this.dataGridViewConceptRules.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewConceptRules_CellEnter);
-            this.dataGridViewConceptRules.CellValidated += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewConceptRules_CellValidated);
-            this.dataGridViewConceptRules.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dataGridViewConceptRules_DataError);
-            this.dataGridViewConceptRules.SelectionChanged += new System.EventHandler(this.dataGridViewConceptRules_SelectionChanged);
-            this.dataGridViewConceptRules.UserAddedRow += new System.Windows.Forms.DataGridViewRowEventHandler(this.dataGridViewConceptRules_UserAddedRow);
-            this.dataGridViewConceptRules.UserDeletedRow += new System.Windows.Forms.DataGridViewRowEventHandler(this.dataGridViewConceptRules_UserDeletedRow);
-            // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
@@ -229,17 +202,134 @@
             this.toolStripButtonItemOptional.Text = "Optional";
             this.toolStripButtonItemOptional.Click += new System.EventHandler(this.toolStripButtonItemOptional_Click);
             // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripButtonShowFailures
+            // 
+            this.toolStripButtonShowFailures.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonShowFailures.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonShowFailures.Image")));
+            this.toolStripButtonShowFailures.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonShowFailures.Name = "toolStripButtonShowFailures";
+            this.toolStripButtonShowFailures.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButtonShowFailures.Text = "Show Failed Instances";
+            this.toolStripButtonShowFailures.Click += new System.EventHandler(this.toolStripButtonShowFailures_Click);
+            // 
+            // toolStripComboBoxOperator
+            // 
+            this.toolStripComboBoxOperator.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.toolStripComboBoxOperator.Items.AddRange(new object[] {
+            "AND",
+            "OR",
+            "NOT",
+            "NAND",
+            "NOR",
+            "XOR",
+            "NXOR"});
+            this.toolStripComboBoxOperator.Name = "toolStripComboBoxOperator";
+            this.toolStripComboBoxOperator.Size = new System.Drawing.Size(121, 25);
+            this.toolStripComboBoxOperator.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBoxOperator_SelectedIndexChanged);
+            // 
+            // dataGridViewConceptRules
+            // 
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewConceptRules.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.dataGridViewConceptRules.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridViewConceptRules.DefaultCellStyle = dataGridViewCellStyle2;
+            this.dataGridViewConceptRules.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridViewConceptRules.Location = new System.Drawing.Point(0, 0);
+            this.dataGridViewConceptRules.MultiSelect = false;
+            this.dataGridViewConceptRules.Name = "dataGridViewConceptRules";
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewConceptRules.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            this.dataGridViewConceptRules.Size = new System.Drawing.Size(400, 375);
+            this.dataGridViewConceptRules.TabIndex = 5;
+            this.dataGridViewConceptRules.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewConceptRules_CellContentClick);
+            this.dataGridViewConceptRules.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewConceptRules_CellEnter);
+            this.dataGridViewConceptRules.CellValidated += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewConceptRules_CellValidated);
+            this.dataGridViewConceptRules.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dataGridViewConceptRules_DataError);
+            this.dataGridViewConceptRules.SelectionChanged += new System.EventHandler(this.dataGridViewConceptRules_SelectionChanged);
+            this.dataGridViewConceptRules.UserAddedRow += new System.Windows.Forms.DataGridViewRowEventHandler(this.dataGridViewConceptRules_UserAddedRow);
+            this.dataGridViewConceptRules.UserDeletedRow += new System.Windows.Forms.DataGridViewRowEventHandler(this.dataGridViewConceptRules_UserDeletedRow);
+            // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 25);
+            this.splitContainer1.Name = "splitContainer1";
+            this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.dataGridViewConceptRules);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.listView1);
+            this.splitContainer1.Panel2Collapsed = true;
+            this.splitContainer1.Size = new System.Drawing.Size(400, 375);
+            this.splitContainer1.SplitterDistance = 199;
+            this.splitContainer1.TabIndex = 6;
+            // 
+            // listView1
+            // 
+            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeaderInstance,
+            this.columnHeaderName});
+            this.listView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listView1.Location = new System.Drawing.Point(0, 0);
+            this.listView1.Name = "listView1";
+            this.listView1.Size = new System.Drawing.Size(150, 46);
+            this.listView1.TabIndex = 0;
+            this.listView1.UseCompatibleStateImageBehavior = false;
+            this.listView1.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeaderInstance
+            // 
+            this.columnHeaderInstance.Text = "#";
+            this.columnHeaderInstance.Width = 120;
+            // 
+            // columnHeaderName
+            // 
+            this.columnHeaderName.Text = "Name";
+            this.columnHeaderName.Width = 200;
+            // 
             // CtlParameters
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.dataGridViewConceptRules);
+            this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.toolStrip1);
             this.Name = "CtlParameters";
             this.Size = new System.Drawing.Size(400, 400);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewConceptRules)).EndInit();
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+            this.splitContainer1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -261,5 +351,12 @@
         private System.Windows.Forms.ToolStripButton toolStripButtonConceptTemplate;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripButton toolStripButtonItemOptional;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripButton toolStripButtonShowFailures;
+        private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.ColumnHeader columnHeaderInstance;
+        private System.Windows.Forms.ColumnHeader columnHeaderName;
+        private System.Windows.Forms.ToolStripComboBox toolStripComboBoxOperator;
     }
 }

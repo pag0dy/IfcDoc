@@ -112,22 +112,22 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="textBox1.Text" xml:space="preserve">
     <value>IFC Documentation Generator
-Version 8.8 (January 21, 2015)
+Version 9.4 (September 12, 2015)
 © Copyright 2011-2015 buildingSMART International Ltd.
 
 Model Support Group (MSG)
 Thomas Liebich - MSG Leader (tl@aec3.com)
 
-Comments, issues or any other feedback should be sent to:
-Tim Chipman (timc@constructivity.com)
+Comments, issues or any other feedback may be posted at:
+https://github.com/BuildingSMART/IfcDoc
 
-MVD-XML Version 1.1</value>
+MVD-XML Version 1.1d</value>
   </data>
 </root>

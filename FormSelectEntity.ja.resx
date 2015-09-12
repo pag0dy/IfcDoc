@@ -117,19 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="buttonCancel.Text" xml:space="preserve">
-    <value>キャンセル</value>
-  </data>
-  <data name="buttonOK.Text" xml:space="preserve">
-    <value>ＯＫ</value>
-  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="labelPredefined.Size" type="System.Drawing.Size, System.Drawing">
-    <value>66, 13</value>
-  </data>
-  <data name="labelPredefined.Text" xml:space="preserve">
-    <value>定義済み型</value>
-  </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABAAgAICAQAAAAAADoAgAAhgAAABAQEAAAAAAAKAEAAG4DAAAwMAAAAQAIAKgOAACWBAAAICAAAAEA
@@ -526,8 +514,5 @@
         h//eq4j/1qOE/9yph//ZqYktAAAAAAAAAAAAAAAAAAAAAMAAAADAAAAAwAAAAMAAAADAAK7/wADn/8AA
         0f/AAM//wADP/8AAzf/AAMv/wADK/8AAyP/AAMb/wADF/8APw/8=
 </value>
-  </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>定義をセレクト</value>
   </data>
 </root>

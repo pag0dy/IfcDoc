@@ -500,6 +500,11 @@ namespace IfcDoc
                             docAttr.DiagramLine[1].Y = selection.DiagramRectangle.Y + (selection.DiagramRectangle.Height * (double)each / (double)(count+1));
                             docAttr.DiagramLine[2].Y = selection.DiagramRectangle.Y + (selection.DiagramRectangle.Height * (double)each / (double)(count+1));
                         }
+
+                        if (docAttr.DiagramLabel == null)
+                        {
+                            docAttr.DiagramLabel = new DocRectangle();
+                        }
                         docAttr.DiagramLabel.X = docAttr.DiagramLine[0].X;
                         docAttr.DiagramLabel.Y = docAttr.DiagramLine[2].Y - 20.0;
                     }

@@ -117,76 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="comboBoxMetric.Items" xml:space="preserve">
-    <value>値</value>
-  </data>
-  <data name="comboBoxMetric.Items1" xml:space="preserve">
-    <value>サイズ</value>
-  </data>
-  <data name="comboBoxMetric.Items2" xml:space="preserve">
-    <value>型</value>
-  </data>
-  <data name="comboBoxMetric.Items3" xml:space="preserve">
-    <value>一意</value>
-  </data>
-  <data name="comboBoxOperator.Items" xml:space="preserve">
-    <value>均等割</value>
-  </data>
-  <data name="comboBoxOperator.Items1" xml:space="preserve">
-    <value>ノットイコール</value>
-  </data>
-  <data name="comboBoxOperator.Items2" xml:space="preserve">
-    <value>より大きい</value>
-  </data>
-  <data name="comboBoxOperator.Items3" xml:space="preserve">
-    <value>より大きいまたは等しい</value>
-  </data>
-  <data name="comboBoxOperator.Items4" xml:space="preserve">
-    <value>より小さい</value>
-  </data>
-  <data name="comboBoxOperator.Items5" xml:space="preserve">
-    <value>より小さいまたは等しい</value>
-  </data>
-  <data name="comboBoxOperator.Items6" xml:space="preserve">
-    <value>含まれる</value>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="label5.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>45, 13</value>
-  </data>
-  <data name="label1.Text" xml:space="preserve">
-    <value>メトリック</value>
-  </data>
-  <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>43, 13</value>
-  </data>
-  <data name="label2.Text" xml:space="preserve">
-    <value>演算子</value>
-  </data>
-  <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>19, 13</value>
-  </data>
-  <data name="label3.Text" xml:space="preserve">
-    <value>値</value>
-  </data>
-  <data name="buttonOK.Text" xml:space="preserve">
-    <value>ＯＫ</value>
-  </data>
-  <data name="buttonCancel.Text" xml:space="preserve">
-    <value>キャンセル</value>
-  </data>
-  <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>31, 13</value>
-  </data>
-  <data name="label4.Text" xml:space="preserve">
-    <value>表現</value>
-  </data>
-  <data name="label5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>255, 13</value>
-  </data>
-  <data name="label5.Text" xml:space="preserve">
-    <value>複数の値のために、コンマや別々のラインを使用する。</value>
-  </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABAAIAICAAAAEAIACoEAAAJgAAABAQAAABACAAaAQAAM4QAAAoAAAAIAAAAEAAAAABACAAAAAAAAAA

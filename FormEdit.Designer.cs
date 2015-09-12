@@ -31,7 +31,6 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormEdit));
             this.splitContainerRoot = new System.Windows.Forms.SplitContainer();
-            this.treeView = new IfcDoc.ThemedTreeView();
             this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItemContextInsert = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemContextInsertModelView = new System.Windows.Forms.ToolStripMenuItem();
@@ -57,18 +56,15 @@
             this.panelWorkspace = new System.Windows.Forms.Panel();
             this.panelDiagram = new System.Windows.Forms.Panel();
             this.splitContainerWorkspace = new System.Windows.Forms.SplitContainer();
-            this.ctlConcept = new IfcDoc.CtlConcept();
-            this.ctlExpressG = new IfcDoc.CtlExpressG();
-            this.ctlCheckGrid = new IfcDoc.CtlCheckGrid();
-            this.ctlInheritance = new IfcDoc.CtlInheritance();
-            this.ctlProperties = new IfcDoc.CtlProperties();
             this.textBoxHTML = new System.Windows.Forms.TextBox();
             this.webBrowser = new System.Windows.Forms.WebBrowser();
+            this.splitContainerInstances = new System.Windows.Forms.SplitContainer();
             this.listViewValidate = new System.Windows.Forms.ListView();
             this.columnHeaderInstanceID = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderInstanceType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderInstanceName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.imageListValidate = new System.Windows.Forms.ImageList(this.components);
+            this.treeViewInstance = new System.Windows.Forms.TreeView();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabelValidateFile = new System.Windows.Forms.ToolStripLabel();
             this.toolStripButtonValidateClose = new System.Windows.Forms.ToolStripButton();
@@ -246,6 +242,14 @@
             this.imageListRules = new System.Windows.Forms.ImageList(this.components);
             this.saveFileDialogModule = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialogExpress = new System.Windows.Forms.OpenFileDialog();
+            this.treeView = new IfcDoc.ThemedTreeView();
+            this.ctlConcept = new IfcDoc.CtlConcept();
+            this.ctlExpressG = new IfcDoc.CtlExpressG();
+            this.ctlCheckGrid = new IfcDoc.CtlCheckGrid();
+            this.ctlInheritance = new IfcDoc.CtlInheritance();
+            this.ctlProperties = new IfcDoc.CtlProperties();
+            this.toolStripMenuItemContextInsertPropertyEnum = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemContextInsertPropertyConstant = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerRoot)).BeginInit();
             this.splitContainerRoot.Panel1.SuspendLayout();
             this.splitContainerRoot.Panel2.SuspendLayout();
@@ -261,6 +265,10 @@
             this.splitContainerWorkspace.Panel1.SuspendLayout();
             this.splitContainerWorkspace.Panel2.SuspendLayout();
             this.splitContainerWorkspace.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainerInstances)).BeginInit();
+            this.splitContainerInstances.Panel1.SuspendLayout();
+            this.splitContainerInstances.Panel2.SuspendLayout();
+            this.splitContainerInstances.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.toolStripMain.SuspendLayout();
@@ -278,20 +286,6 @@
             // splitContainerRoot.Panel2
             // 
             this.splitContainerRoot.Panel2.Controls.Add(this.splitContainerEdit);
-            // 
-            // treeView
-            // 
-            this.treeView.ContextMenuStrip = this.contextMenuStrip;
-            resources.ApplyResources(this.treeView, "treeView");
-            this.treeView.HideSelection = false;
-            this.treeView.ImageList = this.imageListIcon;
-            this.treeView.LabelEdit = true;
-            this.treeView.Name = "treeView";
-            this.treeView.BeforeLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.treeView_BeforeLabelEdit);
-            this.treeView.AfterLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.treeView_AfterLabelEdit);
-            this.treeView.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.treeView_ItemDrag);
-            this.treeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TreeView_AfterSelect);
-            this.treeView.MouseUp += new System.Windows.Forms.MouseEventHandler(this.treeView_MouseUp);
             // 
             // contextMenuStrip
             // 
@@ -317,6 +311,8 @@
             this.toolStripMenuItemContextInsertConstant,
             this.toolStripMenuItemContextInsertPset,
             this.toolStripMenuItemContextInsertProperty,
+            this.toolStripMenuItemContextInsertPropertyEnum,
+            this.toolStripMenuItemContextInsertPropertyConstant,
             this.toolStripMenuItemContextInsertQset,
             this.toolStripMenuItemContextInsertQuantity,
             this.toolStripMenuItemContextInsertExample,
@@ -489,7 +485,7 @@
             // 
             // splitContainerEdit.Panel2
             // 
-            this.splitContainerEdit.Panel2.Controls.Add(this.listViewValidate);
+            this.splitContainerEdit.Panel2.Controls.Add(this.splitContainerInstances);
             this.splitContainerEdit.Panel2.Controls.Add(this.toolStrip1);
             this.splitContainerEdit.Panel2Collapsed = true;
             // 
@@ -524,63 +520,6 @@
             // 
             this.splitContainerWorkspace.Panel2.Controls.Add(this.ctlProperties);
             // 
-            // ctlConcept
-            // 
-            resources.ApplyResources(this.ctlConcept, "ctlConcept");
-            this.ctlConcept.ConceptRoot = null;
-            this.ctlConcept.CurrentInstance = null;
-            this.ctlConcept.Map = null;
-            this.ctlConcept.Name = "ctlConcept";
-            this.ctlConcept.Project = null;
-            this.ctlConcept.Selection = null;
-            this.ctlConcept.Template = null;
-            this.ctlConcept.SelectionChanged += new System.EventHandler(this.ctlConcept_SelectionChanged);
-            this.ctlConcept.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ctlConcept_MouseDoubleClick);
-            // 
-            // ctlExpressG
-            // 
-            resources.ApplyResources(this.ctlExpressG, "ctlExpressG");
-            this.ctlExpressG.Map = null;
-            this.ctlExpressG.Mode = IfcDoc.ToolMode.Select;
-            this.ctlExpressG.Name = "ctlExpressG";
-            this.ctlExpressG.Schema = null;
-            this.ctlExpressG.ScrollToSelection = true;
-            this.ctlExpressG.Selection = null;
-            this.ctlExpressG.SelectionChanged += new System.EventHandler(this.ctlExpressG_SelectionChanged);
-            this.ctlExpressG.LinkOperation += new System.EventHandler(this.ctlExpressG_LinkOperation);
-            this.ctlExpressG.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ctlExpressG_MouseDoubleClick);
-            // 
-            // ctlCheckGrid
-            // 
-            resources.ApplyResources(this.ctlCheckGrid, "ctlCheckGrid");
-            this.ctlCheckGrid.CheckGridSource = null;
-            this.ctlCheckGrid.Mode = IfcDoc.ToolMode.Select;
-            this.ctlCheckGrid.Name = "ctlCheckGrid";
-            this.ctlCheckGrid.Selection = null;
-            this.ctlCheckGrid.SelectionChanged += new System.EventHandler(this.ctlCheckGrid_SelectionChanged);
-            // 
-            // ctlInheritance
-            // 
-            resources.ApplyResources(this.ctlInheritance, "ctlInheritance");
-            this.ctlInheritance.Entity = null;
-            this.ctlInheritance.Mode = IfcDoc.ToolMode.Select;
-            this.ctlInheritance.ModelView = null;
-            this.ctlInheritance.Name = "ctlInheritance";
-            this.ctlInheritance.Project = null;
-            this.ctlInheritance.SelectionChanged += new System.EventHandler(this.ctlInheritance_SelectionChanged);
-            // 
-            // ctlProperties
-            // 
-            this.ctlProperties.CurrentInstance = null;
-            this.ctlProperties.CurrentPopulation = null;
-            resources.ApplyResources(this.ctlProperties, "ctlProperties");
-            this.ctlProperties.Name = "ctlProperties";
-            this.ctlProperties.SelectedAttribute = null;
-            this.ctlProperties.SelectedRule = null;
-            this.ctlProperties.Navigate += new System.EventHandler(this.ctlProperties_Navigate);
-            this.ctlProperties.RuleSelectionChanged += new System.EventHandler(this.ctlProperties_RuleSelectionChanged);
-            this.ctlProperties.RuleContentChanged += new System.EventHandler(this.ctlProperties_RuleContentChanged);
-            // 
             // textBoxHTML
             // 
             this.textBoxHTML.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -593,6 +532,19 @@
             resources.ApplyResources(this.webBrowser, "webBrowser");
             this.webBrowser.Name = "webBrowser";
             this.webBrowser.Navigating += new System.Windows.Forms.WebBrowserNavigatingEventHandler(this.WebBrowser_Navigating);
+            // 
+            // splitContainerInstances
+            // 
+            resources.ApplyResources(this.splitContainerInstances, "splitContainerInstances");
+            this.splitContainerInstances.Name = "splitContainerInstances";
+            // 
+            // splitContainerInstances.Panel1
+            // 
+            this.splitContainerInstances.Panel1.Controls.Add(this.listViewValidate);
+            // 
+            // splitContainerInstances.Panel2
+            // 
+            this.splitContainerInstances.Panel2.Controls.Add(this.treeViewInstance);
             // 
             // listViewValidate
             // 
@@ -630,6 +582,13 @@
             this.imageListValidate.Images.SetKeyName(1, "Approved.png");
             this.imageListValidate.Images.SetKeyName(2, "Processed.png");
             this.imageListValidate.Images.SetKeyName(3, "NotApproved.png");
+            // 
+            // treeViewInstance
+            // 
+            this.treeViewInstance.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            resources.ApplyResources(this.treeViewInstance, "treeViewInstance");
+            this.treeViewInstance.Name = "treeViewInstance";
+            this.treeViewInstance.BeforeExpand += new System.Windows.Forms.TreeViewCancelEventHandler(this.treeViewInstance_BeforeExpand);
             // 
             // toolStrip1
             // 
@@ -1847,6 +1806,90 @@
             // 
             resources.ApplyResources(this.openFileDialogExpress, "openFileDialogExpress");
             // 
+            // treeView
+            // 
+            this.treeView.ContextMenuStrip = this.contextMenuStrip;
+            resources.ApplyResources(this.treeView, "treeView");
+            this.treeView.HideSelection = false;
+            this.treeView.ImageList = this.imageListIcon;
+            this.treeView.LabelEdit = true;
+            this.treeView.Name = "treeView";
+            this.treeView.BeforeLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.treeView_BeforeLabelEdit);
+            this.treeView.AfterLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.treeView_AfterLabelEdit);
+            this.treeView.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.treeView_ItemDrag);
+            this.treeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TreeView_AfterSelect);
+            this.treeView.MouseUp += new System.Windows.Forms.MouseEventHandler(this.treeView_MouseUp);
+            // 
+            // ctlConcept
+            // 
+            resources.ApplyResources(this.ctlConcept, "ctlConcept");
+            this.ctlConcept.ConceptRoot = null;
+            this.ctlConcept.CurrentInstance = null;
+            this.ctlConcept.Map = null;
+            this.ctlConcept.Name = "ctlConcept";
+            this.ctlConcept.Project = null;
+            this.ctlConcept.Selection = null;
+            this.ctlConcept.Template = null;
+            this.ctlConcept.SelectionChanged += new System.EventHandler(this.ctlConcept_SelectionChanged);
+            this.ctlConcept.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ctlConcept_MouseDoubleClick);
+            // 
+            // ctlExpressG
+            // 
+            this.ctlExpressG.AllowDrop = true;
+            resources.ApplyResources(this.ctlExpressG, "ctlExpressG");
+            this.ctlExpressG.Map = null;
+            this.ctlExpressG.Mode = IfcDoc.ToolMode.Select;
+            this.ctlExpressG.Name = "ctlExpressG";
+            this.ctlExpressG.Schema = null;
+            this.ctlExpressG.ScrollToSelection = true;
+            this.ctlExpressG.Selection = null;
+            this.ctlExpressG.SelectionChanged += new System.EventHandler(this.ctlExpressG_SelectionChanged);
+            this.ctlExpressG.LinkOperation += new System.EventHandler(this.ctlExpressG_LinkOperation);
+            this.ctlExpressG.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ctlExpressG_MouseDoubleClick);
+            // 
+            // ctlCheckGrid
+            // 
+            resources.ApplyResources(this.ctlCheckGrid, "ctlCheckGrid");
+            this.ctlCheckGrid.CheckGridSource = null;
+            this.ctlCheckGrid.Mode = IfcDoc.ToolMode.Select;
+            this.ctlCheckGrid.Name = "ctlCheckGrid";
+            this.ctlCheckGrid.Selection = null;
+            this.ctlCheckGrid.SelectionChanged += new System.EventHandler(this.ctlCheckGrid_SelectionChanged);
+            // 
+            // ctlInheritance
+            // 
+            resources.ApplyResources(this.ctlInheritance, "ctlInheritance");
+            this.ctlInheritance.Entity = null;
+            this.ctlInheritance.Mode = IfcDoc.ToolMode.Select;
+            this.ctlInheritance.ModelView = null;
+            this.ctlInheritance.Name = "ctlInheritance";
+            this.ctlInheritance.Project = null;
+            this.ctlInheritance.SelectionChanged += new System.EventHandler(this.ctlInheritance_SelectionChanged);
+            // 
+            // ctlProperties
+            // 
+            this.ctlProperties.CurrentInstance = null;
+            this.ctlProperties.CurrentPopulation = null;
+            resources.ApplyResources(this.ctlProperties, "ctlProperties");
+            this.ctlProperties.Name = "ctlProperties";
+            this.ctlProperties.SelectedAttribute = null;
+            this.ctlProperties.SelectedRule = null;
+            this.ctlProperties.Navigate += new System.EventHandler(this.ctlProperties_Navigate);
+            this.ctlProperties.RuleSelectionChanged += new System.EventHandler(this.ctlProperties_RuleSelectionChanged);
+            this.ctlProperties.RuleContentChanged += new System.EventHandler(this.ctlProperties_RuleContentChanged);
+            // 
+            // toolStripMenuItemContextInsertPropertyEnum
+            // 
+            resources.ApplyResources(this.toolStripMenuItemContextInsertPropertyEnum, "toolStripMenuItemContextInsertPropertyEnum");
+            this.toolStripMenuItemContextInsertPropertyEnum.Name = "toolStripMenuItemContextInsertPropertyEnum";
+            this.toolStripMenuItemContextInsertPropertyEnum.Click += new System.EventHandler(this.toolStripMenuItemInsertPropertyEnumeration_Click);
+            // 
+            // toolStripMenuItemContextInsertPropertyConstant
+            // 
+            resources.ApplyResources(this.toolStripMenuItemContextInsertPropertyConstant, "toolStripMenuItemContextInsertPropertyConstant");
+            this.toolStripMenuItemContextInsertPropertyConstant.Name = "toolStripMenuItemContextInsertPropertyConstant";
+            this.toolStripMenuItemContextInsertPropertyConstant.Click += new System.EventHandler(this.toolStripMenuItemInsertPropertyConstant_Click);
+            // 
             // FormEdit
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -1873,6 +1916,10 @@
             this.splitContainerWorkspace.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerWorkspace)).EndInit();
             this.splitContainerWorkspace.ResumeLayout(false);
+            this.splitContainerInstances.Panel1.ResumeLayout(false);
+            this.splitContainerInstances.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainerInstances)).EndInit();
+            this.splitContainerInstances.ResumeLayout(false);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
@@ -2102,5 +2149,9 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemEditBuildConcepts;
         private System.Windows.Forms.OpenFileDialog openFileDialogExpress;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemContextInsertConstant;
+        private System.Windows.Forms.SplitContainer splitContainerInstances;
+        private System.Windows.Forms.TreeView treeViewInstance;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemContextInsertPropertyEnum;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemContextInsertPropertyConstant;
     }
 }

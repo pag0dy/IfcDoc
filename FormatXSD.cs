@@ -137,7 +137,10 @@ namespace IfcDoc.Format.XSD
                             {
                                 if (docType is DocDefined)
                                 {
-                                    mapDefined.Add(docType.Name, (DocDefined)docType);
+                                    if (!mapDefined.ContainsKey(docType.Name))
+                                    {
+                                        mapDefined.Add(docType.Name, (DocDefined)docType);
+                                    }
                                 }
                                 else if (docType is DocEnumeration)
                                 {

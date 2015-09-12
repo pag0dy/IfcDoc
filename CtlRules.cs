@@ -231,7 +231,7 @@ namespace IfcDoc
 
             string tooltip = docRule.Name;
             // decorative text doesn't allow treeview path to work -- use tooltip in UI now instead
-            tooltip += docRule.GetCardinalityExpression();
+            //tooltip += docRule.GetCardinalityExpression();
             if (!String.IsNullOrEmpty(docRule.Identification))
             {
                 tooltip += " <" + docRule.Identification + ">";
@@ -675,6 +675,13 @@ namespace IfcDoc
             {
                 if (form.ShowDialog(this) == DialogResult.OK && form.SelectedTemplate != null)
                 {
+                    // check for possible recursion
+                    if(form.SelectedTemplate == this.m_template || form.SelectedTemplate.IsTemplateReferenced(this.m_template))
+                    {
+                        MessageBox.Show("Recursive template referencing is not supported.");
+                        return;
+                    }
+
                     docRule.References.Add(form.SelectedTemplate);
 
                     LoadTemplateGraph(tnSelect, docRule);

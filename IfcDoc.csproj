@@ -133,6 +133,13 @@
       <DependentUpon>CtlRules.cs</DependentUpon>
     </Compile>
     <Compile Include="DocumentationISO.cs" />
+    <Compile Include="DifferenceEngine.cs" />
+    <Compile Include="FormSelectProperty.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSelectProperty.Designer.cs">
+      <DependentUpon>FormSelectProperty.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormValidate.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -348,6 +355,30 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CtlRules.resx">
       <DependentUpon>CtlRules.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormConstraint.ja.resx">
+      <DependentUpon>FormConstraint.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormMerge.ja.resx">
+      <DependentUpon>FormMerge.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormPublish.ja.resx">
+      <DependentUpon>FormPublish.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormReference.ja.resx">
+      <DependentUpon>FormReference.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormRule.ja.resx">
+      <DependentUpon>FormRule.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSelectEntity.ja.resx">
+      <DependentUpon>FormSelectEntity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSelectLocale.ja.resx">
+      <DependentUpon>FormSelectLocale.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSelectProperty.resx">
+      <DependentUpon>FormSelectProperty.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormValidate.resx">
       <DependentUpon>FormValidate.cs</DependentUpon>

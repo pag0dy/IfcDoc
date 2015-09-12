@@ -15,6 +15,7 @@ namespace IfcDoc
     {
         DocProject m_project;
         DocConceptRoot m_conceptroot;
+        DocObject m_conceptitem; // optional outer item
         DocTemplateUsage m_conceptleaf;
         DocModelRule m_selectedcolumn;
         Dictionary<string, DocObject> m_map;
@@ -80,6 +81,18 @@ namespace IfcDoc
             }
         }
 
+        public DocObject ConceptItem
+        {
+            get
+            {
+                return this.m_conceptitem;
+            }
+            set
+            {
+                this.m_conceptitem = value;
+            }
+        }
+
         /// <summary>
         /// The concept defining rows of items with parameters
         /// </summary>
@@ -120,29 +133,63 @@ namespace IfcDoc
                     if (row.Tag != null)
                     {
                         DocTemplateItem item = (DocTemplateItem)row.Tag;
-                        bool result;
                         if (this.m_instance != null)
                         {
-                            if (item.ValidationStructure.TryGetValue(this.m_instance, out result))
+                            bool? testresult = item.GetResultForObject(this.m_instance);
+                            if(testresult != null && testresult.Value)
                             {
-                                if (result)
+                                row.DefaultCellStyle.BackColor = System.Drawing.Color.Lime;
+                            }
+                            else
+                            {
+                                if (item.Optional)
                                 {
-                                    row.DefaultCellStyle.BackColor = System.Drawing.Color.Lime;
+                                    row.DefaultCellStyle.BackColor = System.Drawing.Color.Yellow;
                                 }
                                 else
                                 {
                                     row.DefaultCellStyle.BackColor = System.Drawing.Color.Red;
                                 }
                             }
-                            else
-                            {
-                                row.DefaultCellStyle.BackColor = System.Drawing.Color.Red;// Yellow;
-                            }
                         }
                         else
                         {
                             row.DefaultCellStyle.BackColor = System.Drawing.Color.Empty;
                         }
+                    }
+                }
+
+                this.listView1.Items.Clear();
+
+                if (docUsage != null && this.CurrentInstance != null)
+                {
+                    List<SEntity> listMismatch = docUsage.GetValidationMismatches(this.CurrentInstance, this.ConceptItem);
+                    foreach (SEntity o in listMismatch)
+                    {
+                        ListViewItem lvi = new ListViewItem();
+                        lvi.Tag = o;
+                        lvi.Text = o.OID.ToString();
+
+                        System.Reflection.FieldInfo field = o.GetType().GetField("Name");
+                        if (field != null)
+                        {
+                            object oname = field.GetValue(o);
+                            if (oname != null)
+                            {
+                                System.Reflection.FieldInfo fieldValue = oname.GetType().GetField("Value");
+                                if (fieldValue != null)
+                                {
+                                    oname = fieldValue.GetValue(oname);
+                                }
+
+                                if(oname != null)
+                                {
+                                    lvi.SubItems.Add(oname.ToString());
+                                }
+                            }
+                        }
+
+                        this.listView1.Items.Add(lvi);
                     }
                 }
             }
@@ -170,6 +217,8 @@ namespace IfcDoc
                 this.toolStripSplitButtonInheritance.Image = this.toolStripMenuItemModeInherit.Image;
                 this.toolStripMenuItemModeInherit.Checked = true;
             }
+
+            this.toolStripComboBoxOperator.SelectedIndex = (int)this.m_conceptleaf.Operator;
         }
 
         private void LoadUsage()
@@ -190,10 +239,16 @@ namespace IfcDoc
                 foreach (DocModelRule rule in this.m_columns)
                 {
                     DataGridViewColumn column = new DataGridViewColumn();
+                    column.Tag = rule;
                     column.HeaderText = rule.Identification;
                     column.ValueType = typeof(string);//?
                     column.CellTemplate = new DataGridViewTextBoxCell();
                     column.Width = 200;
+
+                    if(rule.IsCondition())
+                    {
+                        column.HeaderText += "?";
+                    }
 
                     // override cell template for special cases
                     DocConceptRoot docConceptRoot = (DocConceptRoot)this.m_conceptroot;
@@ -292,12 +347,15 @@ namespace IfcDoc
 
         private void dataGridViewConceptRules_SelectionChanged(object sender, EventArgs e)
         {
+            if (this.m_editcon)
+                return;
+
             //toolStripButtonTemplateInsert
             this.toolStripButtonTemplateRemove.Enabled = (this.dataGridViewConceptRules.SelectedRows.Count == 1 && this.dataGridViewConceptRules.SelectedRows[0].Index < this.dataGridViewConceptRules.Rows.Count - 1);
             this.toolStripButtonMoveDown.Enabled = (this.dataGridViewConceptRules.SelectedRows.Count == 1 && this.dataGridViewConceptRules.SelectedRows[0].Index < this.dataGridViewConceptRules.Rows.Count - 2); // exclude New row
             this.toolStripButtonMoveUp.Enabled = (this.dataGridViewConceptRules.SelectedRows.Count == 1 && this.dataGridViewConceptRules.SelectedRows[0].Index > 0 && this.dataGridViewConceptRules.SelectedRows[0].Index < this.dataGridViewConceptRules.Rows.Count - 1);
             this.toolStripButtonItemOptional.Enabled = (this.dataGridViewConceptRules.SelectedRows.Count == 1);
-            if (this.dataGridViewConceptRules.SelectedRows.Count > 0)
+            if (this.dataGridViewConceptRules.SelectedRows.Count > 0 && this.dataGridViewConceptRules.SelectedRows[0].Tag is DocTemplateItem)
             {
                 this.toolStripButtonItemOptional.Checked = ((DocTemplateItem)this.dataGridViewConceptRules.SelectedRows[0].Tag).Optional;
             }
@@ -338,10 +396,19 @@ namespace IfcDoc
                 if (val != null)
                 {
                     DataGridViewColumn col = this.dataGridViewConceptRules.Columns[i];
-                    sb.Append(col.HeaderText);
-                    sb.Append("=");
-                    sb.Append(val as string);
-                    sb.Append(";");
+                    if (col.Tag is DocModelRule)
+                    {
+                        DocModelRule rule = (DocModelRule)col.Tag;
+
+                        sb.Append(rule.Identification);
+                        sb.Append("=");
+                        sb.Append(val as string);
+                        sb.Append(";");
+                    }
+                    else
+                    {
+                        this.ToString(); // description???
+                    }
                 }
             }
 
@@ -388,7 +455,7 @@ namespace IfcDoc
                         }
                         else if (form.ValuePath == "")
                         {
-                            cell.Value = "\\";
+                            cell.Value = String.Empty;// "\\";
                         }
                         dataGridViewConceptRules_CellValidated(this, e);
                         this.dataGridViewConceptRules.NotifyCurrentCellDirty(true);
@@ -432,6 +499,7 @@ namespace IfcDoc
                         {
                             form.Project = this.m_project;
                             form.ConceptRoot = this.m_conceptroot;
+                            form.ConceptItem = docConceptItem;
                             form.ConceptLeaf = docConceptInner;
                             form.CurrentInstance = this.m_instance;
                             form.ShowDialog(this);
@@ -465,14 +533,18 @@ namespace IfcDoc
             int index = this.dataGridViewConceptRules.SelectedRows[0].Index;
             DocTemplateUsage docUsage = (DocTemplateUsage)this.m_conceptleaf;
             docUsage.Items.RemoveAt(index);
+            this.m_editcon = false;
 
             LoadUsage();
 
+            /*
+            this.m_editcon = true;
             if (this.dataGridViewConceptRules.Rows.Count > index)
             {
                 this.dataGridViewConceptRules.Rows[index].Selected = true;
             }
             this.m_editcon = false;
+            */
         }
 
         private void toolStripButtonMoveUp_Click(object sender, EventArgs e)
@@ -574,6 +646,17 @@ namespace IfcDoc
             {
                 band.DefaultCellStyle.ForeColor = Color.Black;
             }
+        }
+
+        private void toolStripButtonShowFailures_Click(object sender, EventArgs e)
+        {
+            this.toolStripButtonShowFailures.Checked = !this.toolStripButtonShowFailures.Checked;
+            this.splitContainer1.Panel2Collapsed = !this.toolStripButtonShowFailures.Checked;
+        }
+
+        private void toolStripComboBoxOperator_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.m_conceptleaf.Operator = (DocTemplateOperator)this.toolStripComboBoxOperator.SelectedIndex;
         }
     }
 }

@@ -114,6 +114,9 @@ namespace IfcDoc
                 this.tabControl.TabPages.Add(this.tabPageView);
 
                 DocModelView docView = (DocModelView)docObject;
+                this.checkBoxViewIncludeAll.Checked = docView.IncludeAllDefinitions;
+                this.textBoxViewRoot.Text = docView.RootEntity;
+
                 if (docView.BaseView != null)
                 {
                     this.textBoxViewBase.Text = docView.BaseView;
@@ -135,6 +138,7 @@ namespace IfcDoc
                     this.textBoxViewBase.Text = string.Empty;
                 }
 
+                this.textBoxViewXsdNamespace.Text = docView.XsdUri;
                 if (docView.XsdFormats != null)
                 {
                     foreach (DocXsdFormat docFormat in docView.XsdFormats)
@@ -186,6 +190,14 @@ namespace IfcDoc
 
                 this.tabControl.TabPages.Add(this.tabPageUsage);
                 this.listViewUsage.Items.Clear();
+
+                // usage from other templates
+                foreach(DocTemplateDefinition docTemp in this.m_project.Templates)
+                {
+                    InitUsageFromTemplate(docTemp, docTemplate);
+                }
+
+                // usage from model views
                 foreach (DocModelView docView in this.m_project.ModelViews)
                 {
                     foreach (DocConceptRoot docRoot in docView.ConceptRoots)
@@ -219,7 +231,11 @@ namespace IfcDoc
                 this.tabControl.TabPages.Add(this.tabPageConceptRoot);
 
                 DocConceptRoot docRoot = (DocConceptRoot)docObject;
-                DocEntity docEntity = (DocEntity)this.m_parent;
+
+                //DocEntity docEntity = (DocEntity)this.m_parent;
+
+                DocEntity docEntity = docRoot.ApplicableEntity;
+
                 DocModelView docView = null;
                 foreach (DocModelView docViewEach in this.m_project.ModelViews)
                 {
@@ -302,6 +318,7 @@ namespace IfcDoc
 
                 this.ctlParameters.Project = this.m_project;
                 this.ctlParameters.ConceptRoot = this.m_path[3] as DocConceptRoot;
+                this.ctlParameters.ConceptItem = this.ctlParameters.ConceptRoot;
                 this.ctlParameters.ConceptLeaf = docUsage;
 
                 this.LoadModelView();
@@ -448,6 +465,47 @@ namespace IfcDoc
                     this.checkedListBoxExampleViews.Items.Add(docView, (docExample.Views.Contains(docView)));
                 }
             }
+            else if(docObject is DocChangeAction)
+            {
+                this.tabControl.TabPages.Add(this.tabPageChange);
+                DocChangeAction docChange = (DocChangeAction)docObject;
+                this.toolStripButtonChangeSPF.Checked = docChange.ImpactSPF;
+                this.toolStripButtonChangeXML.Checked = docChange.ImpactXML;
+
+                switch(docChange.Action)
+                {
+                    case DocChangeActionEnum.NOCHANGE:
+                        this.toolStripComboBoxChange.SelectedIndex = 0;
+                        break;
+                    
+                    case DocChangeActionEnum.ADDED:
+                        this.toolStripComboBoxChange.SelectedIndex = 1;
+                        break;
+
+                    case DocChangeActionEnum.DELETED:
+                        this.toolStripComboBoxChange.SelectedIndex = 2;
+                        break;
+
+                    case DocChangeActionEnum.MODIFIED:
+                        this.toolStripComboBoxChange.SelectedIndex = 3;
+                        break;
+
+                    case DocChangeActionEnum.MOVED:
+                        this.toolStripComboBoxChange.SelectedIndex = 4;
+                        break;
+
+                }
+
+                this.listViewChange.Items.Clear();
+                foreach(DocChangeAspect docAspect in docChange.Aspects)
+                {
+                    ListViewItem lvi = new ListViewItem();
+                    lvi.Text = docAspect.Aspect.ToString();
+                    lvi.SubItems.Add(docAspect.OldValue);
+                    lvi.SubItems.Add(docAspect.NewValue);
+                    this.listViewChange.Items.Add(lvi);
+                }
+            }
 
             if (tabpageExist != null && this.tabControl.TabPages.Contains(tabpageExist))
             {
@@ -455,6 +513,44 @@ namespace IfcDoc
             }
 
             this.m_loadall = false;
+        }
+
+        private void InitUsageFromTemplateRule(DocTemplateDefinition docTemp, DocTemplateDefinition docSource, DocModelRule docRule)
+        {
+            if (docRule is DocModelRuleEntity)
+            {
+                DocModelRuleEntity docRuleEntity = (DocModelRuleEntity)docRule;
+                if (docRuleEntity.References.Contains(docSource))
+                {
+                    DocObject[] usagepath = new DocObject[] { docTemp };
+
+                    ListViewItem lvi = new ListViewItem();
+                    lvi.Tag = usagepath;
+                    lvi.Text = "[Template]";
+                    lvi.SubItems.Add(docTemp.Name);
+                    this.listViewUsage.Items.Add(lvi);
+                }
+            }
+
+            // recurse
+            foreach(DocModelRule docInner in docRule.Rules)
+            {
+                InitUsageFromTemplateRule(docTemp, docSource, docInner);
+            }
+        }
+
+        private void InitUsageFromTemplate(DocTemplateDefinition docTemp, DocTemplateDefinition docSource)
+        {
+            foreach (DocModelRule docRule in docTemp.Rules)
+            {
+                InitUsageFromTemplateRule(docTemp, docSource, docRule);
+            }
+
+            // recurse
+            foreach(DocTemplateDefinition docSub in docTemp.Templates)
+            {
+                InitUsageFromTemplate(docSub, docSource);
+            }
         }
 
         public SEntity[] CurrentPopulation
@@ -613,7 +709,7 @@ namespace IfcDoc
 
             string tooltip = docRule.Name;
             // decorative text doesn't allow treeview path to work -- use tooltip in UI now instead
-            tooltip += docRule.GetCardinalityExpression();
+            //tooltip += docRule.GetCardinalityExpression();
             if (!String.IsNullOrEmpty(docRule.Identification))
             {
                 tooltip += " <" + docRule.Identification + ">";
@@ -1163,12 +1259,34 @@ namespace IfcDoc
 
                         if (docAttr.Definition != null && docAttr.Definition.DiagramRectangle != null)
                         {
-                            docDef.DiagramRectangle = new DocRectangle();
-                            docDef.DiagramNumber = docAttr.Definition.DiagramNumber;
-                            docDef.DiagramRectangle.X = docAttr.Definition.DiagramRectangle.X;
-                            docDef.DiagramRectangle.Y = docAttr.Definition.DiagramRectangle.Y;
-                            docDef.DiagramRectangle.Width = docAttr.Definition.DiagramRectangle.Width;
-                            docDef.DiagramRectangle.Height = docAttr.Definition.DiagramRectangle.Height;
+                            // find page target, make page reference
+                            if(docDef is DocDefinitionRef)
+                            {
+                                DocDefinitionRef ddr = (DocDefinitionRef)docDef;
+                                
+                                // find existing page target
+                                foreach(DocPageTarget docPageTarget in docSchema.PageTargets)
+                                {
+                                    if(docPageTarget.Definition == ddr)
+                                    {
+                                        // found it -- make page source
+                                        DocPageSource docPageSource = new DocPageSource();
+                                        docPageTarget.Sources.Add(docPageSource);
+                                        docDef = docPageSource;
+                                        break;
+                                    }
+                                }
+                            }
+
+                            if (docDef.DiagramRectangle == null)
+                            {
+                                docDef.DiagramRectangle = new DocRectangle();
+                                docDef.DiagramNumber = docAttr.Definition.DiagramNumber;
+                                docDef.DiagramRectangle.X = docAttr.Definition.DiagramRectangle.X;
+                                docDef.DiagramRectangle.Y = docAttr.Definition.DiagramRectangle.Y;
+                                docDef.DiagramRectangle.Width = docAttr.Definition.DiagramRectangle.Width;
+                                docDef.DiagramRectangle.Height = docAttr.Definition.DiagramRectangle.Height;
+                            }
                         }
 
                         docAttr.Definition = docDef;
@@ -1548,10 +1666,17 @@ namespace IfcDoc
                     {
                         ListViewItem lvi = this.listViewUsage.SelectedItems[0];
                         DocObject[] path = (DocObject[])lvi.Tag;
-                        DocTemplateUsage usage = (DocTemplateUsage)path[2];
-                        usage.Definition = form.SelectedTemplate;
+                        if (path.Length == 3)
+                        {
+                            DocTemplateUsage usage = (DocTemplateUsage)path[2];
+                            usage.Definition = form.SelectedTemplate;
 
-                        lvi.Remove();
+                            lvi.Remove();
+                        }
+                        else
+                        {
+                            return;
+                        }
                     }
                 }
             }
@@ -1560,7 +1685,20 @@ namespace IfcDoc
         private void listViewUsage_SelectedIndexChanged(object sender, EventArgs e)
         {
             this.toolStripButtonUsageNavigate.Enabled = (this.listViewUsage.SelectedItems.Count == 1);
-            this.toolStripButtonUsageMigrate.Enabled = (this.listViewUsage.SelectedItems.Count > 0);
+
+            bool migrate = false;
+            if (this.listViewUsage.SelectedItems.Count > 0)
+            {
+                migrate = true;
+                foreach(ListViewItem lvi in this.listViewUsage.SelectedItems)
+                {
+                    if(lvi.Text.Equals("[Template]"))
+                    {
+                        migrate = false;
+                    }
+                }
+            }
+            this.toolStripButtonUsageMigrate.Enabled = migrate;
         }
 
         private void comboBoxExchangeClassProcess_Validated(object sender, EventArgs e)
@@ -2202,6 +2340,39 @@ namespace IfcDoc
             {
                 docAttr.Derived = null;
             }
+        }
+
+        private void checkBoxViewIncludeAll_CheckedChanged(object sender, EventArgs e)
+        {
+            DocModelView docView = (DocModelView)this.m_target;
+            docView.IncludeAllDefinitions = this.checkBoxViewIncludeAll.Checked;
+        }
+
+        private void buttonViewEntity_Click(object sender, EventArgs e)
+        {
+            DocModelView docView = (DocModelView)this.m_target;
+            using(FormSelectEntity form = new FormSelectEntity(null, null, this.m_project, SelectDefinitionOptions.Entity))
+            {
+                if(form.ShowDialog(this) == DialogResult.OK)
+                {
+                    if (form.SelectedEntity != null)
+                    {
+                        docView.RootEntity = form.SelectedEntity.Name;
+                    }
+                    else
+                    {
+                        docView.RootEntity = null;
+                    }
+                }
+            }
+
+            this.textBoxViewRoot.Text = docView.RootEntity;
+        }
+
+        private void textBoxViewXsdNamespace_TextChanged(object sender, EventArgs e)
+        {
+            DocModelView docView = (DocModelView)this.m_target;
+            docView.XsdUri = this.textBoxViewXsdNamespace.Text;
         }
 
         

@@ -124,9 +124,6 @@
   <data name="label1.Text" xml:space="preserve">
     <value>Publish file to a repository at the following URL:</value>
   </data>
-  <data name="&gt;&gt;buttonOK.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
   <data name="&gt;&gt;textBoxComments.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
@@ -143,6 +140,9 @@
     <value>System.ComponentModel.BackgroundWorker, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="label1.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
+    <value>MiddleRight</value>
+  </data>
   <data name="textBoxUrl.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
     <value>MiddleRight</value>
   </data>
@@ -155,26 +155,21 @@
   <data name="buttonOK.Error" xml:space="preserve">
     <value />
   </data>
-  <data name="textBoxUrl.Location" type="System.Drawing.Point, System.Drawing">
-    <value>15, 25</value>
-  </data>
-  <data name="buttonOK.Location" type="System.Drawing.Point, System.Drawing">
-    <value>219, 229</value>
-  </data>
   <data name="progressBar.Location" type="System.Drawing.Point, System.Drawing">
     <value>16, 200</value>
   </data>
   <data name="labelError.Error" xml:space="preserve">
     <value />
   </data>
-  <data name="buttonOK.Text" xml:space="preserve">
-    <value>OK</value>
-  </data>
   <data name="buttonOK.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 23</value>
   </data>
   <data name="&gt;&gt;label1.Name" xml:space="preserve">
     <value>label1</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="progressBar.IconPadding" type="System.Int32, mscorlib">
+    <value>0</value>
   </data>
   <data name="textBoxComments.Size" type="System.Drawing.Size, System.Drawing">
     <value>360, 122</value>
@@ -185,15 +180,17 @@
   <data name="progressBar.Size" type="System.Drawing.Size, System.Drawing">
     <value>359, 23</value>
   </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="buttonCancel.IconPadding" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
   <data name="labelError.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
   </data>
-  <data name="&gt;&gt;labelSummary.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="labelSummary.Text" xml:space="preserve">
+    <value>Summary of changes:</value>
+  </data>
+  <data name="labelError.Location" type="System.Drawing.Point, System.Drawing">
+    <value>16, 238</value>
   </data>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
     <value>6, 13</value>
@@ -216,6 +213,9 @@
   <data name="&gt;&gt;label1.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
+  <data name="progressBar.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
+    <value>MiddleRight</value>
+  </data>
   <data name="progressBar.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
   </data>
@@ -224,6 +224,9 @@
   </data>
   <data name="textBoxUrl.IconPadding" type="System.Int32, mscorlib">
     <value>0</value>
+  </data>
+  <data name="&gt;&gt;label1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="label1.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -234,8 +237,8 @@
   <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
     <value>228, 13</value>
   </data>
-  <data name="&gt;&gt;buttonCancel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="buttonCancel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
   </data>
   <data name="label1.IconPadding" type="System.Int32, mscorlib">
     <value>0</value>
@@ -267,10 +270,10 @@
   <data name="buttonCancel.Text" xml:space="preserve">
     <value>Cancel</value>
   </data>
-  <data name="labelSummary.Size" type="System.Drawing.Size, System.Drawing">
-    <value>109, 13</value>
-  </data>
   <data name="labelSummary.IconPadding" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="textBoxComments.IconPadding" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
   <data name="&gt;&gt;buttonCancel.Name" xml:space="preserve">
@@ -291,9 +294,6 @@
   <data name="&gt;&gt;textBoxUrl.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="textBoxUrl.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
   <data name="textBoxUrl.Error" xml:space="preserve">
     <value />
   </data>
@@ -304,9 +304,6 @@
     <value>MiddleRight</value>
   </data>
   <data name="buttonOK.IconPadding" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;labelError.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <data name="&gt;&gt;errorProvider.Type" xml:space="preserve">
@@ -332,6 +329,9 @@
   </data>
   <data name="textBoxComments.Error" xml:space="preserve">
     <value />
+  </data>
+  <data name="&gt;&gt;labelError.Parent" xml:space="preserve">
+    <value>$this</value>
   </data>
   <data name="label1.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -767,26 +767,20 @@
   <data name="&gt;&gt;buttonOK.Name" xml:space="preserve">
     <value>buttonOK</value>
   </data>
-  <data name="labelSummary.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
   <data name="textBoxComments.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
     <value>MiddleRight</value>
   </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>FormPublish</value>
-  </data>
-  <data name="progressBar.IconPadding" type="System.Int32, mscorlib">
-    <value>0</value>
+  <data name="buttonOK.Location" type="System.Drawing.Point, System.Drawing">
+    <value>219, 229</value>
   </data>
   <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
     <value>12, 9</value>
   </data>
-  <data name="buttonCancel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 23</value>
+  <data name="buttonOK.Text" xml:space="preserve">
+    <value>OK</value>
   </data>
-  <data name="progressBar.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
-    <value>MiddleRight</value>
+  <data name="textBoxUrl.Location" type="System.Drawing.Point, System.Drawing">
+    <value>15, 25</value>
   </data>
   <data name="buttonCancel.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
@@ -800,14 +794,20 @@
   <data name="textBoxComments.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Bottom, Left, Right</value>
   </data>
-  <data name="label1.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
-    <value>MiddleRight</value>
+  <data name="textBoxComments.Location" type="System.Drawing.Point, System.Drawing">
+    <value>15, 72</value>
+  </data>
+  <data name="textBoxUrl.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
   </data>
   <data name="textBoxComments.Multiline" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="&gt;&gt;labelError.Parent" xml:space="preserve">
-    <value>$this</value>
+  <data name="labelSummary.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="progressBar.Error" xml:space="preserve">
     <value />
@@ -815,8 +815,8 @@
   <data name="&gt;&gt;buttonCancel.ZOrder" xml:space="preserve">
     <value>6</value>
   </data>
-  <data name="textBoxComments.IconPadding" type="System.Int32, mscorlib">
-    <value>0</value>
+  <data name="labelSummary.Size" type="System.Drawing.Size, System.Drawing">
+    <value>109, 13</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>Publish</value>
@@ -830,8 +830,8 @@
   <data name="&gt;&gt;progressBar.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="labelError.Location" type="System.Drawing.Point, System.Drawing">
-    <value>16, 238</value>
+  <data name="&gt;&gt;buttonCancel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="buttonCancel.IconAlignment" type="System.Windows.Forms.ErrorIconAlignment, System.Windows.Forms">
     <value>MiddleRight</value>
@@ -839,35 +839,32 @@
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
     <value>384, 264</value>
   </data>
-  <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>FormPublish</value>
   </data>
-  <data name="textBoxComments.Location" type="System.Drawing.Point, System.Drawing">
-    <value>15, 72</value>
+  <data name="&gt;&gt;buttonOK.ZOrder" xml:space="preserve">
+    <value>7</value>
   </data>
-  <data name="labelSummary.Text" xml:space="preserve">
-    <value>Summary of changes:</value>
+  <data name="&gt;&gt;labelSummary.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;errorProvider.Name" xml:space="preserve">
     <value>errorProvider</value>
   </data>
+  <data name="&gt;&gt;labelError.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
   <data name="labelError.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
-  </data>
-  <data name="&gt;&gt;label1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="buttonOK.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Right</value>
   </data>
-  <metadata name="backgroundWorkerPublish.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
-  <metadata name="$this.Language" type="System.Globalization.CultureInfo, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>ja</value>
-  </metadata>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
+  </metadata>
+  <metadata name="backgroundWorkerPublish.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
   </metadata>
   <metadata name="errorProvider.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>213, 17</value>

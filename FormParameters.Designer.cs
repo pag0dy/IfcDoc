@@ -34,11 +34,12 @@
             // 
             // ctlParameters
             // 
-            resources.ApplyResources(this.ctlParameters, "ctlParameters");
             this.ctlParameters.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ctlParameters.ConceptItem = null;
             this.ctlParameters.ConceptLeaf = null;
             this.ctlParameters.ConceptRoot = null;
             this.ctlParameters.CurrentInstance = null;
+            resources.ApplyResources(this.ctlParameters, "ctlParameters");
             this.ctlParameters.Name = "ctlParameters";
             this.ctlParameters.Project = null;
             // 

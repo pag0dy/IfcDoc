@@ -1112,11 +1112,13 @@ namespace IfcDoc.Schema.DOC
         private void RegisterRule(Dictionary<DocObject, bool> included, DocEntity docEntity, DocModelRuleAttribute docRuleAttr, Dictionary<DocModelRuleAttribute, DocEntity> mapVirtualAttributes)
         {
             // cardinality of 0:0 indicates excluded
+#if false
             if (docRuleAttr.CardinalityMin == -1 && docRuleAttr.CardinalityMax == -1)
             {
                 // excluded
             }
             else
+#endif
             {
                 DocAttribute docAttr = GetEntityAttribute(docEntity, docRuleAttr.Name);
                 if (docAttr != null)
@@ -1249,48 +1251,44 @@ namespace IfcDoc.Schema.DOC
             }
 
             // special case -- if view references self, then include everything (no filtering)
-            if (!String.IsNullOrEmpty(docView.BaseView))
+            if (docView.IncludeAllDefinitions)
             {
                 foreach (DocSection docSection in this.Sections)
                 {
-                    // hack -- if section has code defined, then include everything within section -- used for FHWA reference schemas -- todo: use an explicit attribute
-                    if (!String.IsNullOrEmpty(docSection.Code) )
+                    foreach (DocSchema docSchema in docSection.Schemas)
                     {
-                        foreach (DocSchema docSchema in docSection.Schemas)
+                        included[docSchema] = true;
+                        foreach (DocType docType in docSchema.Types)
                         {
-                            included[docSchema] = true;
-                            foreach (DocType docType in docSchema.Types)
+                            included[docType] = true;
+                        }
+                        foreach (DocEntity docEntity in docSchema.Entities)
+                        {
+                            included[docEntity] = true;
+                            foreach (DocAttribute docAttr in docEntity.Attributes)
                             {
-                                included[docType] = true;
+                                included[docAttr] = true;
                             }
-                            foreach (DocEntity docEntity in docSchema.Entities)
-                            {
-                                included[docEntity] = true;
-                                foreach (DocAttribute docAttr in docEntity.Attributes)
-                                {
-                                    included[docAttr] = true;
-                                }
-                            }
-                            foreach (DocFunction docFunc in docSchema.Functions)
-                            {
-                                included[docFunc] = true;
-                            }
-                            foreach (DocGlobalRule docRule in docSchema.GlobalRules)
-                            {
-                                included[docRule] = true;
-                            }
-                            foreach (DocPropertySet docProp in docSchema.PropertySets)
-                            {
-                                included[docProp] = true;
-                            }
-                            foreach (DocPropertyEnumeration docEnum in docSchema.PropertyEnums)
-                            {
-                                included[docEnum] = true;
-                            }
-                            foreach (DocQuantitySet docQuan in docSchema.QuantitySets)
-                            {
-                                included[docQuan] = true;
-                            }
+                        }
+                        foreach (DocFunction docFunc in docSchema.Functions)
+                        {
+                            included[docFunc] = true;
+                        }
+                        foreach (DocGlobalRule docRule in docSchema.GlobalRules)
+                        {
+                            included[docRule] = true;
+                        }
+                        foreach (DocPropertySet docProp in docSchema.PropertySets)
+                        {
+                            included[docProp] = true;
+                        }
+                        foreach (DocPropertyEnumeration docEnum in docSchema.PropertyEnums)
+                        {
+                            included[docEnum] = true;
+                        }
+                        foreach (DocQuantitySet docQuan in docSchema.QuantitySets)
+                        {
+                            included[docQuan] = true;
                         }
                     }
                 }
@@ -1349,7 +1347,7 @@ namespace IfcDoc.Schema.DOC
                             {
                                 foreach(DocAttribute docAttr in docEntity.Attributes)
                                 {
-                                    if(docAttr.Name.Equals(docVirtualRule.Name))
+                                    if (docAttr.Name != null && docAttr.Name.Equals(docVirtualRule.Name))
                                     {
                                         // check if it inherits from entity (innermost check as it's expensive)
                                         bool inherits = false;
@@ -1423,33 +1421,7 @@ namespace IfcDoc.Schema.DOC
                             // include any types used for properties
                             foreach (DocProperty docProp in docPset.Properties)
                             {
-                                string propclass = "IfcPropertySingleValue";
-                                switch (docProp.PropertyType)
-                                {
-                                    case DocPropertyTemplateTypeEnum.P_SINGLEVALUE:
-                                        propclass = "IfcPropertySingleValue";
-                                        break;
-
-                                    case DocPropertyTemplateTypeEnum.P_BOUNDEDVALUE:
-                                        propclass = "IfcPropertyBoundedValue";
-                                        break;
-
-                                    case DocPropertyTemplateTypeEnum.P_ENUMERATEDVALUE:
-                                        propclass = "IfcPropertyEnumeratedValue";
-                                        break;
-
-                                    case DocPropertyTemplateTypeEnum.P_LISTVALUE:
-                                        propclass = "IfcPropertyListValue";
-                                        break;
-
-                                    case DocPropertyTemplateTypeEnum.P_TABLEVALUE:
-                                        propclass = "IfcPropertyTableValue";
-                                        break;
-
-                                    case DocPropertyTemplateTypeEnum.P_REFERENCEVALUE:
-                                        propclass = "IfcPropertyReferenceValue";
-                                        break;
-                                }
+                                string propclass = docProp.GetEntityName();
                                 DocEntity docPropType = this.GetDefinition(propclass) as DocEntity;
                                 if(docPropType != null)
                                 {
@@ -1992,6 +1964,17 @@ namespace IfcDoc.Schema.DOC
                 docTemplate.PropagateRule(rulepath);
             }
         }
+
+        internal bool IsTemplateReferenced(DocTemplateDefinition docTemplateDefinition)
+        {
+            foreach(DocModelRule docRule in this.Rules)
+            {
+                if (docRule.IsTemplateReferenced(docTemplateDefinition))
+                    return true;
+            }
+
+            return false;
+        }
     }
 
     // this is kept as single structure (rather than on ConceptRoot) such that all formatting info can be easily accessed in one place, and not comingle usage of concepts
@@ -2017,6 +2000,8 @@ namespace IfcDoc.Schema.DOC
         [DataMember(Order = 2)] string _BaseView; // new in 3.9
         [DataMember(Order = 3)] string _XsdUri; // new in 5.4
         [DataMember(Order = 4)] List<DocXsdFormat> _XsdFormats; // new in 5.7
+        [DataMember(Order = 5)] bool _IncludeAllDefinitions; // new in 8.9: if true, then don't filter out unreferenced entities/attributes
+        [DataMember(Order = 6)] string _RootEntity; // new in 8.9: indicates root entity of schema, as shown in inheritance diagram
 
         private Dictionary<DocObject, bool> m_filtercache; // for performance, remember items within scope of model view; built on demand, cleared whenever there's a change that could impact
 
@@ -2084,6 +2069,30 @@ namespace IfcDoc.Schema.DOC
             }
         }
 
+        public bool IncludeAllDefinitions
+        {
+            get
+            {
+                return this._IncludeAllDefinitions;
+            }
+            set
+            {
+                this._IncludeAllDefinitions = value;
+            }
+        }
+
+        public string RootEntity
+        {
+            get
+            {
+                return this._RootEntity;
+            }
+            set
+            {
+                this._RootEntity = value;
+            }
+        }
+
         public DocConceptRoot GetConceptRoot(Guid guid)
         {            
             if (this.ConceptRoots != null)
@@ -2146,8 +2155,11 @@ namespace IfcDoc.Schema.DOC
     // new in IfcDoc 3.5 -- organizes concepts according to MVD
     public class DocConceptRoot : DocObject
     {
-        [DataMember(Order = 0)] DocEntity _ApplicableEntity;
-        [DataMember(Order = 1)] List<DocTemplateUsage> _Concepts;
+        [DataMember(Order = 0)] private DocEntity _ApplicableEntity;
+        [DataMember(Order = 1)] private List<DocTemplateUsage> _Concepts;
+        [DataMember(Order = 2)] private DocTemplateDefinition _ApplicableTemplate; // V9.3: optional template definition to be used for determining applicability
+        [DataMember(Order = 3)] private List<DocTemplateItem> _ApplicableItems; // V9.3: items used for template definition
+        [DataMember(Order = 4)] private DocTemplateOperator _ApplicableOperator; // V9.3: operator used for items
 
         public DocConceptRoot()
         {
@@ -2171,6 +2183,42 @@ namespace IfcDoc.Schema.DOC
             get
             {                
                 return this._Concepts;
+            }
+        }
+
+        public DocTemplateDefinition ApplicableTemplate
+        {
+            get
+            {
+                return this._ApplicableTemplate;
+            }
+            set
+            {
+                this._ApplicableTemplate = value;
+            }
+        }
+
+        public List<DocTemplateItem> ApplicableItems
+        {
+            get
+            {
+                if(this._ApplicableItems == null)
+                {
+                    this._ApplicableItems = new List<DocTemplateItem>();
+                }
+                return this._ApplicableItems;
+            }
+        }
+
+        public DocTemplateOperator ApplicableOperator
+        {
+            get
+            {
+                return this._ApplicableOperator;
+            }
+            set
+            {
+                this._ApplicableOperator = value;
             }
         }
 
@@ -2218,8 +2266,8 @@ namespace IfcDoc.Schema.DOC
         [DataMember(Order = 2)] public string Identification; // the template parameter ID
         [DataMember(Order = 3)] public List<DocModelRule> Rules; // subrules
         //[DataMember(Order = 4)] public DocModelRuleTypeEnum Type; // deleted in IfcDoc 2.7        
-        [DataMember(Order = 4)] public int CardinalityMin; // -1 means undefined // added in IfcDoc 3.3
-        [DataMember(Order = 5)] public int CardinalityMax; // -1 means unbounded // added in IfcDoc 3.3
+        [DataMember(Order = 4), Obsolete] public int CardinalityMin; // -1 means undefined // added in IfcDoc 3.3 ; DEPRECATED
+        [DataMember(Order = 5), Obsolete] public int CardinalityMax; // -1 means unbounded // added in IfcDoc 3.3 ; DEPRECATED
 
         public DocModelRule()
         {
@@ -2254,6 +2302,7 @@ namespace IfcDoc.Schema.DOC
             }
         }
 
+#if false
         public string GetCardinalityExpression()
         {
             if (this.CardinalityMin == 0 && this.CardinalityMax == 0)
@@ -2275,8 +2324,13 @@ namespace IfcDoc.Schema.DOC
 
             return " [" + min + ":" + max + "]";
         }
+#endif
+        public abstract bool? Validate(object target, DocTemplateItem docItem, Dictionary<string, Type> typemap, List<DocModelRule> trace, SEntity root, DocTemplateUsage docOuterConcept);
 
-        public abstract bool? Validate(object target, DocTemplateItem docItem, Dictionary<string, Type> typemap, List<DocModelRule> trace, SEntity root);
+        public virtual bool IsTemplateReferenced(DocTemplateDefinition docTemplate)
+        {
+            return false;
+        }
 
         /// <summary>
         /// Makes deep copy of rule and all child rules
@@ -2357,8 +2411,9 @@ namespace IfcDoc.Schema.DOC
         /// <param name="typemap">Map identifiers to compiled types.</param>
         /// <param name="trace">Sequence of rules leading up to this check, used for reporting any failures.</param>
         /// <param name="root">The root object, used for recording pass/fail status for nested rules.</param>
+        /// <param name="docOuterConcept">Outer concept, used for recording objects that failed.</param>
         /// <returns>True if passing, False if failing, Null if inapplicable.</returns>
-        private bool? ValidateItem(object value, DocTemplateItem docItem, Dictionary<string, Type> typemap, List<DocModelRule> trace, SEntity root)
+        private bool? ValidateItem(object value, DocTemplateItem docItem, Dictionary<string, Type> typemap, List<DocModelRule> trace, SEntity root, DocTemplateUsage docOuterConcept)
         {
             // (3) if parameter is defined, check for match
             if (!String.IsNullOrEmpty(this.Identification))
@@ -2372,32 +2427,141 @@ namespace IfcDoc.Schema.DOC
                     if (docInnerConcept.Items.Count == 0)
                         return true; // no items to check
 
+                    // V9.0: new behavior: if something isn't listed as a rule, then it fails
                     foreach (DocTemplateItem docInnerItem in docInnerConcept.Items)
                     {
-                        if (!docInnerItem.Optional)
+                        if (docInnerItem.RuleParameters.Contains("Fire"))
                         {
-                            bool itemmatch = true;
+                            this.ToString();
+                        }
+
+                        //if (!docInnerItem.Optional)
+                        {
+                            bool applies = true;
+                            bool alltrue = true;
                             foreach (DocModelRule docInnerRule in docInnerConcept.Definition.Rules)
                             {
-                                bool? innerResult = docInnerRule.Validate(value, docInnerItem, typemap, trace, root);
-                                if (innerResult != null && !innerResult.Value)
+                                // all inner rules must return true for the template item
+                                bool? innerResult = docInnerRule.Validate(value, docInnerItem, typemap, trace, root, docInnerConcept);
+                                if(innerResult != null)
                                 {
-                                    itemmatch = false;
+                                    if(!innerResult.Value)
+                                    {
+                                        if (value is SEntity)
+                                        {
+                                            List<SEntity> list = docInnerConcept.GetValidationMismatches(root, docOuterConcept);
+                                            list.Add((SEntity)value);
+                                        }
+
+                                        alltrue = false;
+                                        break;
+                                    }
+#if false
+                                    if (innerResult.Value)
+                                    {
+                                        if(docInnerItem.RuleParameters.Contains("Flame"))
+                                        {
+                                            this.ToString();
+                                        }
+
+                                        // passes, regardless if optional or required
+                                        docInnerItem.ValidationStructure[root] = true;
+
+                                        if (!docInnerConcept.ValidationStructure.ContainsKey(root))
+                                        {
+                                            docInnerConcept.ValidationStructure[root] = true;
+
+                                            if (docInnerConcept.Validation == null)
+                                            {
+                                                docInnerConcept.Validation = true;
+                                            }
+                                        }
+                                        itemresult = true;
+                                        break;
+                                    }
+                                    else
+                                    {
+                                        // fails -- if required
+#if true
+                                        if (!docInnerItem.ValidationStructure.ContainsKey(root))
+                                        {
+                                            docInnerItem.ValidationStructure[root] = false;
+                                            if (!docInnerItem.Optional)
+                                            {
+                                                docInnerConcept.ValidationStructure[root] = false;
+                                                docInnerConcept.Validation = false;
+                                                itemresult = false;
+                                            }
+                                        }
+#endif
+                                    }
+                                    //break;
+#endif
+                                }
+                                else
+                                {
+                                    // doesn't apply -- a conditional parameter didn't match
+                                    applies = false;
+                                    break;
                                 }
                             }
 
-                            if (itemmatch)
+                            if(applies)
                             {
-                                docInnerItem.ValidationStructure[root] = true;
-                                return true;
+                                if(alltrue)
+                                {
+                                    docInnerItem.ValidationStructure[root] = alltrue;
+                                    if (!docInnerConcept.ValidationStructure.ContainsKey(root))
+                                    {
+                                        docInnerConcept.ValidationStructure[root] = true;
+                                        docInnerConcept.Validation = true;
+                                    }
+                                    return true;
+                                }
+                                else
+                                {
+                                    //docInnerConcept.ValidationStructure[root] = false;
+                                    //docInnerConcept.Validation = false;
+                                }
+                            }
+                            else
+                            {
+
                             }
                         }
+
                     }
 
-                    // nothing matched
+#if false
+                    if (itemresult == null || itemresult == false)
+                    {
+                        docInnerConcept.ValidationStructure[root] = false;
+                        docInnerConcept.Validation = false;
+                        return false;
+                    }
+#endif
+                    // item found that was unexpected
                     docInnerConcept.ValidationStructure[root] = false;
                     docInnerConcept.Validation = false;
+
+                    if (docItem != null)
+                    {
+                        List<SEntity> listMismatch = docInnerConcept.GetValidationMismatches(root, docItem);
+                        listMismatch.Add((SEntity)value);
+                    }
+                    else
+                    {
+                        this.ToString();
+                    }
+
                     return false;
+                        /*
+                    else
+                    {
+                        docInnerConcept.ValidationStructure[root] = true;
+                        docInnerConcept.Validation = true;
+
+                    }*/
                 }
                 else
                 {
@@ -2457,6 +2621,12 @@ namespace IfcDoc.Schema.DOC
                             }
                             else
                             {
+                                if (value is SEntity)
+                                {
+                                    List<SEntity> listMismatch = docOuterConcept.GetValidationMismatches(root, docItem);
+                                    listMismatch.Add((SEntity)value);
+                                }
+
                                 // constraint evaluated to false and conditioned applied.
                                 return false;
                             }
@@ -2479,7 +2649,7 @@ namespace IfcDoc.Schema.DOC
                     }
 
                     // attribute rule is true if at least one entity filter matches or one constraint filter matches
-                    bool? result = rule.Validate(value, docItem, typemap, trace, root);
+                    bool? result = rule.Validate(value, docItem, typemap, trace, root, docOuterConcept);
                     if (result != null && result.Value)
                     {
                         return result;
@@ -2513,7 +2683,7 @@ namespace IfcDoc.Schema.DOC
         /// <param name="trace"></param>
         /// <param name="root">Root object used for associating status of rules at referenced templates</param>
         /// <returns></returns>
-        public override bool? Validate(object target, DocTemplateItem docItem, Dictionary<string, Type> typemap, List<DocModelRule> trace, SEntity root)
+        public override bool? Validate(object target, DocTemplateItem docItem, Dictionary<string, Type> typemap, List<DocModelRule> trace, SEntity root, DocTemplateUsage docOuterConcept)
         {
             trace.Add(this);
 
@@ -2527,6 +2697,9 @@ namespace IfcDoc.Schema.DOC
 
             // (2) extract the value
             object value = fieldinfo.GetValue(target); // may be null
+
+            if (docItem != null && value == null)
+                return false; // structure required to exist
 
             if (value is System.Collections.IList)
             {
@@ -2544,7 +2717,7 @@ namespace IfcDoc.Schema.DOC
                         trace.RemoveAt(tracelen);
                     }
 
-                    bool? result = ValidateItem(o, docItem, typemap, trace, root);                    
+                    bool? result = ValidateItem(o, docItem, typemap, trace, root, docOuterConcept);                    
                     if (result != null)
                     {
                         if (result.Value)
@@ -2553,21 +2726,20 @@ namespace IfcDoc.Schema.DOC
                         }
                         else
                         {
-
                             fail++;
                         }
                     }
                 }
 
                 bool? checkcard = null;
-#if false
+#if true
                 if (docItem != null)
                 {
-                    checkcard = (fail == 0);
+                    checkcard = (pass > 0);// (fail == 0);
                 }
                 else 
 #endif
-                if (this.CardinalityMin == 0 && this.CardinalityMax == 0) // uninitialized; same as schema
+                //if (this.CardinalityMin == 0 && this.CardinalityMax == 0) // uninitialized; same as schema
                 {
                     if (pass > 0)
                     {
@@ -2583,6 +2755,7 @@ namespace IfcDoc.Schema.DOC
                     }
                     //!!checkcard = (pass > 0);// (fail == 0);
                 }
+#if false
                 else if(this.CardinalityMin == -1 && this.CardinalityMax == -1)  // restricted (should not be present) (0:0)
                 {
                     checkcard = (pass == 0);
@@ -2611,6 +2784,7 @@ namespace IfcDoc.Schema.DOC
                 {
                     checkcard = true;
                 }
+#endif
 
                 if (checkcard == null || checkcard.Value)
                 {
@@ -2625,6 +2799,7 @@ namespace IfcDoc.Schema.DOC
             }
             else
             {
+#if false
                 if (this.CardinalityMin == 1 && value == null)
                 {
                     // must be one
@@ -2641,10 +2816,10 @@ namespace IfcDoc.Schema.DOC
                     trace.Remove(this);
                     return true;
                 }
-
+#endif
                 // validate single
-                bool? checkitem = ValidateItem(value, docItem, typemap, trace, root);
-                if(checkitem == null || checkitem.Value)
+                bool? checkitem = ValidateItem(value, docItem, typemap, trace, root, docOuterConcept);
+                if(checkitem == null || !checkitem.Value)
                 {
                     trace.Remove(this);
                 }
@@ -2687,6 +2862,11 @@ namespace IfcDoc.Schema.DOC
             }
         }
 
+        public override bool IsTemplateReferenced(DocTemplateDefinition docTemplate)
+        {
+            return this.References.Contains(docTemplate);
+        }
+
         /// <summary>
         /// Validates rules for an entity.
         /// </summary>
@@ -2694,7 +2874,7 @@ namespace IfcDoc.Schema.DOC
         /// <param name="docItem">Template item to validate.</param>
         /// <param name="typemap">Map of type names to type definitions.</param>
         /// <returns>True if passing, False if failing, or null if inapplicable.</returns>
-        public override bool? Validate(object target, DocTemplateItem docItem, Dictionary<string, Type> typemap, List<DocModelRule> trace, SEntity root)
+        public override bool? Validate(object target, DocTemplateItem docItem, Dictionary<string, Type> typemap, List<DocModelRule> trace, SEntity root, DocTemplateUsage docOuterConcept)
         {
             trace.Add(this);
 
@@ -2712,21 +2892,51 @@ namespace IfcDoc.Schema.DOC
             if (target is SEntity)
             {
                 bool canpass = true; // if false, then can only be null (if not applicable due to parameter filtered out), or false (failure)
+
+                // first pass: catch any conditional parameters
                 foreach (DocModelRule rule in this.Rules)
-                {                    
-                    bool? result = rule.Validate((SEntity)target, docItem, typemap, trace, root);
-
-                    // entity rule is inapplicable if any attribute rules are inapplicable
-                    if (result == null)
+                {
+                    if (rule.IsCondition())
                     {
-                        trace.Remove(this);
-                        return null;
+                        bool? result = rule.Validate((SEntity)target, docItem, typemap, trace, root, docOuterConcept);
+
+                        // entity rule is inapplicable if any attribute rules are inapplicable
+                        if (result == null || !result.Value)
+                        {
+                            trace.Remove(this);
+                            return null;
+                        }
+
+#if false
+                        // entity rule fails if any attribute rules fail
+                        if (!result.Value)
+                        {
+                            return null;
+                            canpass = false;
+                        }
+#endif
                     }
+                }
 
-                    // entity rule fails if any attribute rules fail
-                    if (!result.Value)
+                // second pass: catch any non-conditional parameters
+                foreach (DocModelRule rule in this.Rules)
+                {
+                    if (!rule.IsCondition())
                     {
-                        canpass = false;
+                        bool? result = rule.Validate((SEntity)target, docItem, typemap, trace, root, docOuterConcept);
+
+                        // entity rule is inapplicable if any attribute rules are inapplicable
+                        if (result == null)
+                        {
+                            trace.Remove(this);
+                            return null;
+                        }
+
+                        // entity rule fails if any attribute rules fail
+                        if (!result.Value)
+                        {
+                            canpass = false;
+                        }
                     }
                 }
 
@@ -2748,7 +2958,7 @@ namespace IfcDoc.Schema.DOC
     {
         [DataMember(Order = 0)] public DocOpExpression Expression; // new in IfcDoc 6.1
 
-        public override bool? Validate(object target, DocTemplateItem docItem, Dictionary<string, Type> typemap, List<DocModelRule> trace, SEntity root)
+        public override bool? Validate(object target, DocTemplateItem docItem, Dictionary<string, Type> typemap, List<DocModelRule> trace, SEntity root, DocTemplateUsage docOuterConcept)
         {
             // constraint validation is now done in compiled code -- indicate pass to keep going
             return true;
@@ -3981,6 +4191,17 @@ namespace IfcDoc.Schema.DOC
         IsUnique = 0xFF0002, // custom op for uniqueness
     }
 
+    public enum DocTemplateOperator
+    {
+        And = 0, // every row must be true
+        Or = 1,  // at least one row must be true
+        Not = 2, // at least one row must be false
+        Nand = 3,// reverse of AND: every row must be false 
+        Nor = 4, // reverse of OR:
+        Xor = 5, // only one row must be true
+        Nxor = 6,// reverse of XOR: ??
+    }
+
     /// <summary>
     /// Concept (usage of a template)
     /// </summary>
@@ -3993,10 +4214,12 @@ namespace IfcDoc.Schema.DOC
         [DataMember(Order = 3)] private bool _Override; // new in 5.0; if true, then any concepts of same template from supertypes are not inherited
         [DataMember(Order = 4)] private bool _Suppress; // new in 8.2; if true, then concept is disallowed
         [DataMember(Order = 5)] private List<DocTemplateUsage> _Concepts; // new in 8.6: nested concepts, where only one is required to pass
+        [DataMember(Order = 6)] private DocTemplateOperator    _Operator; // new in 9.3
 
         private bool? _validation; // unserialized; null: no applicable instances; false: one or more failures; true: all pass
         private Dictionary<object, bool> _validateStructure; // 
         private Dictionary<object, bool> _validateConstraints; // 
+        private Dictionary<SEntity, Dictionary<DocObject, List<SEntity>>> _validateMismatches;
 
         public DocTemplateUsage()
         {
@@ -4023,6 +4246,10 @@ namespace IfcDoc.Schema.DOC
         {
             get
             {
+                if(this.Items.Count == 1 && this.Items[0].RuleParameters.Contains("SandwichWallBehavior"))
+                {
+                    this.ToString();
+                }
                 if(this._validateStructure == null)
                 {
                     this._validateStructure = new Dictionary<object, bool>();
@@ -4041,6 +4268,39 @@ namespace IfcDoc.Schema.DOC
                 }
                 return this._validateConstraints;
             }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="o">The root entity being tested</param>
+        /// <param name="outer">outer template item or concept root to qualify</param>
+        /// <returns></returns>
+        public List<SEntity> GetValidationMismatches(SEntity o, DocObject outer)
+        {
+            if (o == null)
+                return null;
+
+            if (this._validateMismatches == null)
+            {
+                this._validateMismatches = new Dictionary<SEntity, Dictionary<DocObject, List<SEntity>>>();
+            }
+
+            Dictionary<DocObject, List<SEntity>> dictionaryItem = null;
+            if(!this._validateMismatches.TryGetValue(o, out dictionaryItem))
+            {
+                dictionaryItem = new Dictionary<DocObject, List<SEntity>>();
+                this._validateMismatches.Add(o, dictionaryItem);
+            }
+
+            List<SEntity> list = null;
+            if(!dictionaryItem.TryGetValue(outer, out list))
+            {
+                list = new List<SEntity>();
+                dictionaryItem.Add(outer, list);
+            }
+
+            return list;
         }
 
         public override string ToString()
@@ -4109,6 +4369,18 @@ namespace IfcDoc.Schema.DOC
             set
             {
                 this._Suppress = value;
+            }
+        }
+
+        public DocTemplateOperator Operator
+        {
+            get
+            {
+                return this._Operator;
+            }
+            set
+            {
+                this._Operator = value;
             }
         }
 
@@ -4200,17 +4472,109 @@ namespace IfcDoc.Schema.DOC
             this.Validation = null;
             this.ValidationStructure.Clear();
             this.ValidationConstraints.Clear();
+            this._validateMismatches = null;
 
             foreach (DocTemplateItem docItem in this.Items)
             {
                 docItem.ValidationStructure.Clear();
                 docItem.ValidationConstraints.Clear();
+
+                foreach(DocTemplateUsage innerusage in docItem.Concepts)
+                {
+                    innerusage.ResetValidation();
+                }
             }
 
             foreach(DocTemplateUsage docNest in this.Concepts)
             {
                 docNest.ResetValidation();
             }
+        }
+
+        /// <summary>
+        /// Returns test result for object
+        /// </summary>
+        /// <param name="?"></param>
+        /// <returns></returns>
+        public bool? GetResultForObject(object o)
+        {
+            if (o == null)
+            {
+                return false;
+            }
+
+            bool hasstructure = false;
+            bool structure = false;
+            hasstructure = ValidationStructure.TryGetValue(o, out structure);
+
+            bool hasconstraint = false;
+            bool constraint = false;
+            hasconstraint = ValidationConstraints.TryGetValue(o, out constraint);
+
+            if ((hasstructure && !structure) || (hasconstraint && !constraint))
+                return false;
+
+            int total = 0;
+            int pass = 0;
+            int fail = 0;
+
+            foreach (DocTemplateItem docItem in this.Items)
+            {
+                //if (!docItem.Optional)
+                {
+                    bool? innerresult = docItem.GetResultForObject(o);
+                    if (innerresult != null)
+                    {
+                        total++;
+
+                        if (innerresult.Value)
+                        {
+                            pass++;
+                        }
+                        else
+                        {
+                            if (!docItem.Optional)
+                            {
+                                fail++;
+                            }
+                        }
+                    }
+                }
+            }
+
+            bool result = false;
+            switch(this.Operator)
+            {
+                case DocTemplateOperator.And:
+                    result = (pass == total);
+                    break;
+
+                case DocTemplateOperator.Or:
+                    result = (pass >= 1 && total >= 1);
+                    break;
+
+                case DocTemplateOperator.Not:
+                    result = (pass != total);
+                    break;
+
+                case DocTemplateOperator.Nand:
+                    result = (pass != total);
+                    break;
+
+                case DocTemplateOperator.Nor:
+                    result = !(pass >= 1 && total >= 1);
+                    break;
+
+                case DocTemplateOperator.Xor:
+                    result = (pass == 1 && total > 1);
+                    break;
+
+                case DocTemplateOperator.Nxor:
+                    result = !(pass == 1 && total > 1);
+                    break;
+            }
+
+            return result;
         }
     }
 
@@ -4340,7 +4704,18 @@ namespace IfcDoc.Schema.DOC
                 string[] args = parm.Split(new char[] { '=' }, StringSplitOptions.RemoveEmptyEntries);
                 if (args.Length == 2)
                 {
-                    if (args[0].Equals(key))
+                    string[] nameparts = args[0].Split(new char[] {'.'}, StringSplitOptions.RemoveEmptyEntries);
+                    string fieldname = null;
+                    if (nameparts.Length == 2)
+                    {
+                        fieldname = nameparts[1];
+                    }
+                    else
+                    {
+                        fieldname = args[0];
+                    }
+
+                    if (fieldname.Equals(key))
                     {
                         return args[1];
                     }
@@ -4382,8 +4757,52 @@ namespace IfcDoc.Schema.DOC
                 }
                 return this._validateConstraints;
             }
+        
         }
 
+        /// <summary>
+        /// Returns test result for object
+        /// </summary>
+        /// <param name="?"></param>
+        /// <returns></returns>
+        public bool? GetResultForObject(object o)
+        {
+            //if (this.Optional)
+            //    return null;
+
+            bool hasstructure = false;
+            bool structure = false;
+            hasstructure = ValidationStructure.TryGetValue(o, out structure);
+
+            bool hasconstraint = false;
+            bool constraint = false;
+            hasconstraint = ValidationConstraints.TryGetValue(o, out constraint);
+
+            if ((hasstructure && !structure) || (hasconstraint && !constraint))
+            {
+                if (this.Optional)
+                    return null;
+
+                return false;
+            }
+
+            // check nested
+            bool alltrue = true;
+            foreach(DocTemplateUsage docUsage in this.Concepts)
+            {
+                bool? innerresult = docUsage.GetResultForObject(o);
+                if (innerresult == null || !innerresult.Value)
+                    alltrue = false;
+            }
+
+            if (alltrue && hasstructure)
+                return true;
+
+            if (this.Optional)
+                return null;
+
+            return false;
+        }
     }
   
     /// <summary>
@@ -6187,6 +6606,39 @@ namespace IfcDoc.Schema.DOC
             return q;
         }
 
+
+        public string GetEntityName()
+        {
+            string propclass = "IfcPropertySingleValue";
+            switch (this.PropertyType)
+            {
+                case DocPropertyTemplateTypeEnum.P_SINGLEVALUE:
+                    propclass = "IfcPropertySingleValue";
+                    break;
+
+                case DocPropertyTemplateTypeEnum.P_BOUNDEDVALUE:
+                    propclass = "IfcPropertyBoundedValue";
+                    break;
+
+                case DocPropertyTemplateTypeEnum.P_ENUMERATEDVALUE:
+                    propclass = "IfcPropertyEnumeratedValue";
+                    break;
+
+                case DocPropertyTemplateTypeEnum.P_LISTVALUE:
+                    propclass = "IfcPropertyListValue";
+                    break;
+
+                case DocPropertyTemplateTypeEnum.P_TABLEVALUE:
+                    propclass = "IfcPropertyTableValue";
+                    break;
+
+                case DocPropertyTemplateTypeEnum.P_REFERENCEVALUE:
+                    propclass = "IfcPropertyReferenceValue";
+                    break;
+            }
+
+            return propclass;
+        }
     }
 
     public enum DocPropertyTemplateTypeEnum
@@ -6217,6 +6669,17 @@ namespace IfcDoc.Schema.DOC
             {
                 return this._Constants;
             }
+        }
+
+        internal DocPropertyConstant GetConstant(string p)
+        {
+            foreach (DocPropertyConstant docQuantity in this.Constants)
+            {
+                if (docQuantity.Name.Equals(p))
+                    return docQuantity;
+            }
+
+            return null;
         }
     }
 
@@ -6380,6 +6843,31 @@ namespace IfcDoc.Schema.DOC
         {
             this._Aspects = new List<DocChangeAspect>();
             this._Changes = new List<DocChangeAction>();
+        }
+
+        public DocChangeAction Copy()
+        {
+            DocChangeAction clone = new DocChangeAction();
+            clone.Name = this.Name;
+            clone.Documentation = this.Documentation;
+            clone.Code = this.Code;
+            clone.Action = this.Action;
+            clone.ImpactSPF = this.ImpactSPF;
+            clone.ImpactXML = this.ImpactXML;
+
+            foreach(DocChangeAspect aspect in this.Aspects)
+            {
+                DocChangeAspect newaspect = new DocChangeAspect(aspect.Aspect, aspect.OldValue, aspect.NewValue);
+                clone.Aspects.Add(newaspect);
+            }
+
+            foreach(DocChangeAction change in this.Changes)
+            {
+                DocChangeAction subaction = change.Copy();
+                clone.Changes.Add(subaction);
+            }
+
+            return clone;
         }
 
         public override void Delete()

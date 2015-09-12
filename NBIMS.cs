@@ -27,15 +27,20 @@ namespace IfcDoc
             int cx = 0;
             int cy = 0;
 
-            using (System.Drawing.Image image = IfcDoc.Format.PNG.FormatPNG.CreateTemplateDiagram(docTemplate, mapEntity, new Dictionary<System.Drawing.Rectangle, DocModelRule>(), project, null))
+            System.Drawing.Image image = IfcDoc.Format.PNG.FormatPNG.CreateTemplateDiagram(docTemplate, mapEntity, new Dictionary<System.Drawing.Rectangle, DocModelRule>(), project, null);
+            
+            if (image != null)
             {
-                cx = image.Width;
-                cy = image.Height;
-                string filepath = path + "\\" + docTemplate.Name.ToLower().Replace(' ', '-') + ".png";
-                image.Save(filepath, System.Drawing.Imaging.ImageFormat.Png);
+                using (image)
+                {
+                    cx = image.Width;
+                    cy = image.Height;
+                    string filepath = path + "\\" + docTemplate.Name.ToLower().Replace(' ', '-') + ".png";
+                    image.Save(filepath, System.Drawing.Imaging.ImageFormat.Png);
 
-                cx = cx / 2;
-                cy = cy / 2;
+                    cx = cx / 2;
+                    cy = cy / 2;
+                }
             }
 
             return "<br/><img src=\"" + docTemplate.Name.ToLower().Replace(' ', '-') + ".png\" width=\"" + cx + "\" height=\"" + cy + "\"/>";
@@ -1037,7 +1042,7 @@ namespace IfcDoc
 
         private static void WriteModelRule(FormatHTM format, DocModelRule docRule, string path)
         {
-            format.Write("<tr><td>" + path + "</td><td>" + docRule.GetCardinalityExpression() + "</td><td>" + docRule.Identification + "</td></tr>");
+            format.Write("<tr><td>" + path + "</td><td>" + /*docRule.GetCardinalityExpression() + */"</td><td>" + docRule.Identification + "</td></tr>");
 
             if (docRule.Rules != null)
             {

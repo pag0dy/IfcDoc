@@ -1307,7 +1307,14 @@ namespace IfcDoc.Format.SPF
                     nExpectedCount++;
                     if (value != null)
                     {
-                        list.Add(value);
+                        try
+                        {
+                            list.Add(value);
+                        }
+                        catch(ArgumentException e)
+                        {
+                            this.m_errors.Add("#" + this.m_currentinstance + " - " + e.Message);
+                        }
                     }
                     else
                     {
@@ -1497,7 +1504,7 @@ namespace IfcDoc.Format.SPF
 
             if (t == null)
             {                
-                System.Diagnostics.Debug.WriteLine(strType);
+                //System.Diagnostics.Debug.WriteLine(strType);
                 return null;
             }
 

@@ -42,6 +42,18 @@ namespace IfcDoc
             }
         }
 
+        public DocObject ConceptItem
+        {
+            get
+            {
+                return this.ctlParameters.ConceptItem;
+            }
+            set
+            {
+                this.ctlParameters.ConceptItem = value;
+            }
+        }
+
         public DocTemplateUsage ConceptLeaf
         {
             get

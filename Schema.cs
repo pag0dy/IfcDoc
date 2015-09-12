@@ -6,6 +6,7 @@
 // Note:        This specific file has dual copyright such that both organizations maintain all rights to its use.
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reflection;
@@ -73,7 +74,8 @@ namespace IfcDoc.Schema
     /// <summary>
     /// A context-bound object that can query relationships or pull content dynamically from broker
     /// </summary>
-    public abstract class SEntity : SRecord
+    public abstract class SEntity : SRecord,
+        ICloneable
     {
         static Dictionary<Type, IList<FieldInfo>> s_fieldmap = new Dictionary<Type, IList<FieldInfo>>(); // cached field lists in declaration order
         static Dictionary<Type, IList<FieldInfo>> s_inversemap = new Dictionary<Type, IList<FieldInfo>>();
@@ -270,6 +272,80 @@ namespace IfcDoc.Schema
 
             // fall back on internal type
             return this.GetType().Name;
+        }
+
+
+
+        public object Clone()
+        {
+            Type t = this.GetType();
+
+            // make a copy, attached to broker
+            SEntity clone = (SEntity)Activator.CreateInstance(t);
+
+            // reference all registered fields
+            IList<FieldInfo> fields = SEntity.GetFieldsOrdered(t);
+            foreach (FieldInfo field in fields)
+            {
+                if (field.FieldType.IsValueType || field.FieldType == typeof(string))
+                {
+                    // copy over value types
+                    object val = field.GetValue(this);
+                    field.SetValue(clone, val);
+                }
+                else if (field.FieldType.IsInterface || typeof(SEntity).IsAssignableFrom(field.FieldType))
+                {
+                    // make unique copy of referenced type except for owner history!!!
+                    object val = field.GetValue(this);
+                    if (val is SEntity)
+                    {
+                        SEntity sentity = (SEntity)val;
+
+                        SEntity valclone = (SEntity)sentity.Clone();
+                        field.SetValue(clone, valclone);
+                    }
+                    else
+                    {
+                        field.SetValue(clone, val);
+                    }
+                }
+                else if (typeof(IList).IsAssignableFrom(field.FieldType))
+                {
+                    IList listSource = (IList)field.GetValue(this);
+                    if (listSource != null)
+                    {
+                        // don't copy collections, but initialize new collection
+                        System.Collections.IList listClone = (System.Collections.IList)Activator.CreateInstance(field.FieldType);
+                        field.SetValue(clone, listClone);
+
+                        Type[] genericargs = field.FieldType.GetGenericArguments();
+                        if (genericargs.Length == 1)
+                        {
+                            foreach (object element in listSource)
+                            {
+                                object elemClone = null;
+
+                                // clone resources -- don't carry over rooted objects
+                                if (element is ICloneable)
+                                {
+                                    // clone resources, list of list, e.g. IfcBSplineSurface
+                                    elemClone = ((ICloneable)element).Clone();
+                                }
+                                else
+                                {
+                                    // i.e. length coordinate
+                                    elemClone = element;
+                                }
+
+                                // now add to list, INCLUDING IF NULL such as blank entries of table
+                                listClone.Add(elemClone);
+                            }
+                        }
+                    }
+                }
+            }
+
+            return clone;
         }
     }
 

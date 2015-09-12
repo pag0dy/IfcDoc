@@ -5,7 +5,10 @@
 // Copyright:   (c) 2012 BuildingSmart International Ltd.
 // License:     http://www.buildingsmart-tech.org/legal
 
+// Portions of code within this file originated from DifferenceEngine on CodeProject.org (file containing referenced data definitions).
+
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,11 +18,14 @@ using System.Windows.Forms;
 
 using IfcDoc.Schema.DOC;
 
+using DifferenceEngine;
+
 namespace IfcDoc
 {
     public partial class FormMerge : Form
     {
         bool m_ignore;
+        Dictionary<Guid, DocObject> m_mapOriginal;
 
         public FormMerge()
         {
@@ -30,6 +36,8 @@ namespace IfcDoc
 
         public FormMerge(Dictionary<Guid, DocObject> mapOriginal, DocProject docChange) : this()
         {
+            this.m_mapOriginal = mapOriginal;
+
             // add nodes for everything, then delete ones that haven't changed or don't have any children
 
             // iterate and find changes in documentation
@@ -52,42 +60,142 @@ namespace IfcDoc
                                 DocObject docOriginalType = null;
                                 if (mapOriginal.TryGetValue(docChangeType.Uuid, out docOriginalType))
                                 {
+                                    TreeNode tnType = null;
+
                                     if (!String.Equals(docOriginalType.Documentation, docChangeType.Documentation))
                                     {
-                                        this.AddNode(tnSchema, new ChangeInfo(docOriginalSchema.Name + "." + docOriginalType.Name, docOriginalType, docChangeType));
+                                        tnType = this.AddNode(tnSchema, new ChangeInfo(docOriginalSchema.Name + "." + docOriginalType.Name, docOriginalType, docChangeType));
+                                    }
+
+                                    if (docChangeType is DocEnumeration)
+                                    {
+                                        DocEnumeration docChangeEnum = (DocEnumeration)docChangeType;
+                                        foreach (DocConstant docChangeConst in docChangeEnum.Constants)
+                                        {
+                                            DocObject docOriginalConst = null;
+                                            if (mapOriginal.TryGetValue(docChangeConst.Uuid, out docOriginalConst))
+                                            {
+                                                if (!String.Equals(docOriginalConst.Documentation, docChangeConst.Documentation))
+                                                {
+                                                    if (tnType == null)
+                                                    {
+                                                        tnType = this.AddNode(tnSchema, new ChangeInfo(docOriginalSchema.Name + "." + docOriginalType.Name, docOriginalType, docChangeType));
+                                                    }
+                                                    this.AddNode(tnType, new ChangeInfo(docOriginalSchema.Name + "." + docOriginalType.Name + "." + docOriginalConst.Name, docOriginalConst, docChangeConst));
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (tnType == null)
+                                                {
+                                                    tnType = this.AddNode(tnSchema, new ChangeInfo(docOriginalSchema.Name + "." + docOriginalType.Name, docOriginalType, docChangeType));
+                                                }
+
+                                                // NEW:
+                                                this.AddNode(tnType, new ChangeInfo(docOriginalSchema.Name + "." + docOriginalType.Name + "." + docOriginalConst.Name, null, docChangeConst));
+                                            }
+                                        }
                                     }
                                 }
                             }
 
                             foreach (DocEntity docChangeEntity in docChangeSchema.Entities)
                             {
-                                DocObject docOriginalEntity = null;
-                                if (mapOriginal.TryGetValue(docChangeEntity.Uuid, out docOriginalEntity))
+                                DocObject docOriginalObj = null;
+                                if (mapOriginal.TryGetValue(docChangeEntity.Uuid, out docOriginalObj))
                                 {
+                                    DocEntity docOriginalEntity = (DocEntity)docOriginalObj;
                                     TreeNode tnEntity = null;
-                                    if (!String.Equals(((DocEntity)docOriginalEntity).Documentation, docChangeEntity.Documentation)) // special case
+                                    
+                                    if(!String.Equals(docOriginalEntity.Documentation, docChangeEntity.Documentation))
                                     {
                                         tnEntity = this.AddNode(tnSchema, new ChangeInfo(docOriginalSchema.Name + "." + docOriginalEntity.Name, docOriginalEntity, docChangeEntity));
                                     }
 
+                                    // add attributes
                                     foreach (DocAttribute docChangeAttr in docChangeEntity.Attributes)
                                     {
                                         DocObject docOriginalAttr = null;
                                         if (mapOriginal.TryGetValue(docChangeAttr.Uuid, out docOriginalAttr))
                                         {
-                                            if (!String.Equals(docOriginalAttr.Documentation, docChangeAttr.Documentation))
+                                            if (!String.Equals(docOriginalAttr.Name, docChangeAttr.Name) ||
+                                                !String.Equals(docOriginalAttr.Documentation, docChangeAttr.Documentation))
+                                            {
+                                                if(tnEntity == null)
+                                                {
+                                                    tnEntity = this.AddNode(tnSchema, new ChangeInfo(docOriginalSchema.Name + "." + docOriginalEntity.Name, docOriginalEntity, docChangeEntity));
+                                                }
+                                                this.AddNode(tnEntity, new ChangeInfo(docOriginalSchema.Name + "." + docOriginalEntity.Name + "." + docOriginalAttr.Name, docOriginalAttr, docChangeAttr));
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (tnEntity == null)
+                                            {
+                                                tnEntity = this.AddNode(tnSchema, new ChangeInfo(docOriginalSchema.Name + "." + docOriginalEntity.Name, docOriginalEntity, docChangeEntity));
+                                            }
+
+                                            // new attribute
+                                            this.AddNode(tnEntity, new ChangeInfo(docOriginalSchema.Name + "." + docOriginalEntity.Name + "." + docChangeAttr.Name, null, docChangeAttr));
+                                        }
+                                    }
+
+                                    // remove attributes
+                                    foreach (DocAttribute docOriginalAttr in docOriginalEntity.Attributes)
+                                    {
+                                        bool bFound = false;
+                                        foreach(DocAttribute docChangeAttr in docChangeEntity.Attributes)
+                                        {
+                                            if (docOriginalAttr.Uuid.Equals(docChangeAttr.Uuid))
+                                            {
+                                                bFound = true;
+                                                break;
+                                            }
+                                        }
+
+                                        if(!bFound)
+                                        {
+                                            if (tnEntity == null)
+                                            {
+                                                tnEntity = this.AddNode(tnSchema, new ChangeInfo(docOriginalSchema.Name + "." + docOriginalEntity.Name, docOriginalEntity, docChangeEntity));
+                                            }
+
+                                            // delete attribute
+                                            this.AddNode(tnEntity, new ChangeInfo(docOriginalSchema.Name + "." + docOriginalEntity.Name + "." + docOriginalAttr.Name, docOriginalAttr, null));
+                                        }
+                                    }
+
+                                    foreach (DocWhereRule docChangeWhere in docChangeEntity.WhereRules)
+                                    {
+                                        DocObject docOriginalWhere = null;
+                                        if (mapOriginal.TryGetValue(docChangeWhere.Uuid, out docOriginalWhere))
+                                        {
+                                            DocWhereRule docOriginalWhereRule = (DocWhereRule)docOriginalWhere;
+                                            if (!String.Equals(docOriginalWhere.Name, docChangeWhere.Name) ||
+                                                !String.Equals(docOriginalWhere.Documentation, docChangeWhere.Documentation) ||
+                                                !String.Equals(docOriginalWhereRule.Expression, docChangeWhere.Expression))
                                             {
                                                 if (tnEntity == null)
                                                 {
                                                     tnEntity = this.AddNode(tnSchema, new ChangeInfo(docOriginalSchema.Name + "." + docOriginalEntity.Name, docOriginalEntity, docChangeEntity));
                                                 }
 
-                                                this.AddNode(tnEntity, new ChangeInfo(docOriginalSchema.Name + "." + docOriginalEntity.Name + "." + docOriginalAttr.Name, docOriginalAttr, docChangeAttr));
+                                                this.AddNode(tnEntity, new ChangeInfo(docOriginalSchema.Name + "." + docOriginalEntity.Name + "." + docOriginalWhere.Name, docOriginalWhere, docChangeWhere));
                                             }
+                                        }
+                                        else
+                                        {
+                                            if (tnEntity == null)
+                                            {
+                                                tnEntity = this.AddNode(tnSchema, new ChangeInfo(docOriginalSchema.Name + "." + docOriginalEntity.Name, docOriginalEntity, docChangeEntity));
+                                            }
+
+                                            // new where rule
+                                            this.AddNode(tnEntity, new ChangeInfo(docOriginalSchema.Name + "." + docOriginalEntity.Name + "." + docChangeWhere.Name, null, docChangeWhere));
                                         }
                                     }
 
-                                    foreach (DocWhereRule docChangeAttr in docChangeEntity.WhereRules)
+                                    foreach (DocUniqueRule docChangeAttr in docChangeEntity.UniqueRules)
                                     {
                                         DocObject docOriginalAttr = null;
                                         if (mapOriginal.TryGetValue(docChangeAttr.Uuid, out docOriginalAttr))
@@ -105,6 +213,29 @@ namespace IfcDoc
                                     }
                                 }
                                 
+                            }
+
+                            foreach (DocFunction docChangeFunction in docChangeSchema.Functions)
+                            {
+                                DocObject docOriginalFunc = null;
+                                if (mapOriginal.TryGetValue(docChangeFunction.Uuid, out docOriginalFunc))
+                                {
+                                    TreeNode tnType = null;
+
+                                    DocFunction docOriginalFunction = (DocFunction)docOriginalFunc;
+
+                                    if (!String.Equals(docOriginalFunction.Name, docChangeFunction.Name) || 
+                                        !String.Equals(docOriginalFunction.Documentation, docChangeFunction.Documentation) ||
+                                        !String.Equals(docOriginalFunction.Expression, docChangeFunction.Expression))
+                                    {
+                                        tnType = this.AddNode(tnSchema, new ChangeInfo(docOriginalSchema.Name + "." + docOriginalFunction.Name, docOriginalFunction, docChangeFunction));
+                                    }
+                                }
+                                else
+                                {
+                                    // new attribute
+                                    this.AddNode(tnSchema, new ChangeInfo(docOriginalSchema.Name + "." + docChangeFunction.Name, null, docChangeFunction));
+                                }
                             }
 
                             foreach (DocPropertySet docChangePset in docChangeSchema.PropertySets)
@@ -141,6 +272,91 @@ namespace IfcDoc
                                                 if (docOriginalLocal != null)
                                                 {
                                                     if(!String.Equals(docOriginalLocal.Documentation, docChangeLocal.Documentation))
+                                                    {
+                                                        if (tnPset == null)
+                                                        {
+                                                            tnPset = this.AddNode(tnSchema, new ChangeInfo(docOriginalSchema.Name + "." + docOriginalPset.Name, docOriginalPset, docChangePset));
+                                                        }
+
+                                                        if (tnProperty == null)
+                                                        {
+                                                            tnProperty = this.AddNode(tnPset, new ChangeInfo(docOriginalSchema.Name + "." + docOriginalPset.Name + "." + docOriginalProp.Name, docOriginalProp, docChangeProp));
+                                                        }
+
+                                                        this.AddNode(tnProperty, new ChangeInfo(docChangeLocal.Locale, docOriginalLocal, docChangeLocal));
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    if (tnPset == null)
+                                                    {
+                                                        tnPset = this.AddNode(tnSchema, new ChangeInfo(docOriginalSchema.Name + "." + docOriginalPset.Name, docOriginalPset, docChangePset));
+                                                    }
+
+                                                    if (tnProperty == null)
+                                                    {
+                                                        tnProperty = this.AddNode(tnPset, new ChangeInfo(docOriginalSchema.Name + "." + docOriginalPset.Name + "." + docOriginalProp.Name, docOriginalProp, docChangeProp));
+                                                    }
+
+                                                    // new localization
+                                                    this.AddNode(tnProperty, new ChangeInfo(docChangeLocal.Locale, docOriginalLocal, docChangeLocal));
+                                                }
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (tnPset == null)
+                                            {
+                                                tnPset = this.AddNode(tnSchema, new ChangeInfo(docOriginalSchema.Name + "." + docOriginalPset.Name, docOriginalPset, docChangePset));
+                                            }
+
+                                            // NEW:
+                                            this.AddNode(tnPset, new ChangeInfo(docChangeSchema.Name + "." + docChangePset.Name + "." + docChangeProp.Name, null, docChangeProp));
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    // NEW:
+                                    this.AddNode(tnSchema, new ChangeInfo(docChangeSchema.Name + "." + docChangePset.Name, null, docChangePset));
+                                }
+
+                            }
+
+                            foreach (DocPropertyEnumeration docChangePset in docChangeSchema.PropertyEnums)
+                            {
+                                DocObject docOriginalPset = null;
+                                if (mapOriginal.TryGetValue(docChangePset.Uuid, out docOriginalPset))
+                                {
+                                    TreeNode tnPset = null;
+                                    if (!String.Equals(docOriginalPset.Documentation, docChangePset.Documentation))
+                                    {
+                                        tnPset = this.AddNode(tnSchema, new ChangeInfo(docOriginalSchema.Name + "." + docOriginalPset.Name, docOriginalPset, docChangePset));
+                                    }
+
+                                    foreach (DocPropertyConstant docChangeProp in docChangePset.Constants)
+                                    {
+                                        DocObject docOriginalProp = ((DocPropertyEnumeration)docOriginalPset).GetConstant(docChangeProp.Name);
+                                        if (docOriginalProp != null)
+                                        {
+                                            TreeNode tnProperty = null;
+                                            if (!String.Equals(docOriginalProp.Documentation, docChangeProp.Documentation))
+                                            {
+                                                if (tnPset == null)
+                                                {
+                                                    tnPset = this.AddNode(tnSchema, new ChangeInfo(docOriginalSchema.Name + "." + docOriginalPset.Name, docOriginalPset, docChangePset));
+                                                }
+
+                                                tnProperty = this.AddNode(tnPset, new ChangeInfo(docOriginalSchema.Name + "." + docOriginalPset.Name + "." + docOriginalProp.Name, docOriginalProp, docChangeProp));
+                                            }
+
+                                            // localization
+                                            foreach (DocLocalization docChangeLocal in docChangeProp.Localization)
+                                            {
+                                                DocLocalization docOriginalLocal = docOriginalProp.GetLocalization(docChangeLocal.Locale);
+                                                if (docOriginalLocal != null)
+                                                {
+                                                    if (!String.Equals(docOriginalLocal.Documentation, docChangeLocal.Documentation))
                                                     {
                                                         if (tnPset == null)
                                                         {
@@ -264,10 +480,107 @@ namespace IfcDoc
                         DocObject docObj = (DocObject)parentinfo.Original;
                         docObj.RegisterLocalization(localChange.Locale, localChange.Name, localChange.Documentation);
                     }
+                    else if(info.Change is DocAttribute)
+                    {
+                        DocAttribute localAttr = (DocAttribute)info.Change;
+
+                        ChangeInfo parentinfo = (ChangeInfo)tn.Parent.Tag;
+                        DocEntity docEntity = (DocEntity)parentinfo.Original;
+
+                        DocAttribute docAttr = (DocAttribute)localAttr.Clone();
+                        docEntity.Attributes.Add(docAttr);
+                    }
+                    else if(info.Change is DocWhereRule)
+                    {
+                        DocWhereRule localAttr = (DocWhereRule)info.Change;
+
+                        ChangeInfo parentinfo = (ChangeInfo)tn.Parent.Tag;
+                        DocEntity docEntity = (DocEntity)parentinfo.Original;
+
+                        DocWhereRule docAttr = (DocWhereRule)localAttr.Clone();
+                        docEntity.WhereRules.Add(docAttr);
+                    }
+                    else if(info.Change is DocFunction)
+                    {
+                        DocFunction localAttr = (DocFunction)info.Change;
+
+                        ChangeInfo parentinfo = (ChangeInfo)tn.Parent.Tag;
+                        DocSchema docSchema = (DocSchema)parentinfo.Original;
+
+                        DocFunction docAttr = (DocFunction)localAttr.Clone();
+                        docSchema.Functions.Add(docAttr);
+                    }
+                    else if(info.Change is DocConstant)
+                    {
+                        this.ToString();
+                    }
+                    else if(info.Change is DocProperty)
+                    {
+                        this.ToString();
+
+                        DocProperty localProp = (DocProperty)info.Change;
+
+                        ChangeInfo parentinfo = (ChangeInfo)tn.Parent.Tag;
+                        DocPropertySet docPset = (DocPropertySet)parentinfo.Original;
+
+                        DocProperty docProperty = (DocProperty)localProp.Clone();
+                        docPset.Properties.Add(docProperty);
+                    }
+                    else if(info.Change is DocPropertyConstant)
+                    {
+                        this.ToString();
+
+                        DocPropertyConstant localProp = (DocPropertyConstant)info.Change;
+
+                        ChangeInfo parentinfo = (ChangeInfo)tn.Parent.Tag;
+                        DocPropertyEnumeration docPset = (DocPropertyEnumeration)parentinfo.Original;
+
+                        DocPropertyEnumeration docEnumChange = (DocPropertyEnumeration)parentinfo.Change;
+                        int index = docEnumChange.Constants.IndexOf(localProp);
+
+                        DocPropertyConstant docProperty = (DocPropertyConstant)localProp.Clone();
+                        docPset.Constants.Insert(index, docProperty);
+                    }
+                    else
+                    {
+                        this.ToString();
+                    }
+                }
+                else if(info.Change == null)
+                {
+                    // removal of definition
+                    if (info.Original is DocAttribute)
+                    {
+                        DocAttribute docAttr = (DocAttribute)info.Original;
+                        ChangeInfo parentinfo = (ChangeInfo)tn.Parent.Tag;
+                        DocEntity docEntity = (DocEntity)parentinfo.Original;
+
+                        docEntity.Attributes.Remove(docAttr);
+                        docAttr.Delete();
+                    }
+                    else
+                    {
+                        this.ToString();
+                    }
                 }
                 else
                 {
+                    // change of documentation
+                    info.Original.Name = info.Change.Name;
                     info.Original.Documentation = info.Change.Documentation;
+
+                    if (info.Original is DocWhereRule)
+                    {
+                        DocWhereRule whereOriginal = (DocWhereRule)info.Original;
+                        DocWhereRule whereChange = (DocWhereRule)info.Change;
+                        whereOriginal.Expression = whereChange.Expression;
+                    }
+                    else if(info.Original is DocFunction)
+                    {
+                        DocFunction whereOriginal = (DocFunction)info.Original;
+                        DocFunction whereChange = (DocFunction)info.Change;
+                        whereOriginal.Expression = whereChange.Expression;
+                    }
                 }
             }
 
@@ -292,18 +605,25 @@ namespace IfcDoc
 
         private void radioButtonOriginal_Click(object sender, EventArgs e)
         {
-            this.treeView.SelectedNode.Checked = true;
+            this.treeView.SelectedNode.Checked = false;
         }
 
         private void radioButtonChange_Click(object sender, EventArgs e)
         {
-            this.treeView.SelectedNode.Checked = false;
+            this.treeView.SelectedNode.Checked = true;
         }
 
         private void UpdateNode(TreeNode tn)
         {
             ChangeInfo changeinfo = (ChangeInfo)tn.Tag;
-            tn.Text = changeinfo.Change.Name;
+            if (changeinfo.Change != null)
+            {
+                tn.Text = changeinfo.Change.Name;
+            }
+            else if(changeinfo.Original != null)
+            {
+                tn.Text = changeinfo.Original.Name;
+            }
 
             // back color indicates change type
             if (changeinfo.Original == null)
@@ -351,17 +671,94 @@ namespace IfcDoc
 
         private void treeView_AfterSelect(object sender, TreeViewEventArgs e)
         {
+            this.lvSource.Items.Clear();
+            this.lvDestination.Items.Clear();
+
             ChangeInfo info = (ChangeInfo)this.treeView.SelectedNode.Tag;
 
-            if (info.Original != null)
+            DiffList_TextString source = new DiffList_TextString(info.Original != null ? info.Original.Documentation : String.Empty);
+            DiffList_TextString destination = new DiffList_TextString(info.Change != null ? info.Change.Documentation : String.Empty);
+            DiffEngine de = new DiffEngine();
+            de.ProcessDiff(source, destination, DiffEngineLevel.SlowPerfect);
+            ArrayList DiffLines = de.DiffReport();
+
+            ListViewItem lviS;
+            ListViewItem lviD;
+            int cnt = 1;
+            int i;
+
+            foreach (DiffResultSpan drs in DiffLines)
             {
-                this.textBoxOriginal.Text = info.Original.Documentation;
+                switch (drs.Status)
+                {
+                    case DiffResultSpanStatus.DeleteSource:
+                        for (i = 0; i < drs.Length; i++)
+                        {
+                            lviS = new ListViewItem(cnt.ToString("00000"));
+                            lviD = new ListViewItem(cnt.ToString("00000"));
+                            lviS.BackColor = Color.Red;
+                            lviS.SubItems.Add(((TextLine)source.GetByIndex(drs.SourceIndex + i)).Line);
+                            lviD.BackColor = Color.LightGray;
+                            lviD.SubItems.Add("");
+
+                            lvSource.Items.Add(lviS);
+                            lvDestination.Items.Add(lviD);
+                            cnt++;
+                        }
+
+                        break;
+                    case DiffResultSpanStatus.NoChange:
+                        for (i = 0; i < drs.Length; i++)
+                        {
+                            lviS = new ListViewItem(cnt.ToString("00000"));
+                            lviD = new ListViewItem(cnt.ToString("00000"));
+                            lviS.BackColor = Color.White;
+                            lviS.SubItems.Add(((TextLine)source.GetByIndex(drs.SourceIndex + i)).Line);
+                            lviD.BackColor = Color.White;
+                            lviD.SubItems.Add(((TextLine)destination.GetByIndex(drs.DestIndex + i)).Line);
+
+                            lvSource.Items.Add(lviS);
+                            lvDestination.Items.Add(lviD);
+                            cnt++;
+                        }
+
+                        break;
+                    case DiffResultSpanStatus.AddDestination:
+                        for (i = 0; i < drs.Length; i++)
+                        {
+                            lviS = new ListViewItem(cnt.ToString("00000"));
+                            lviD = new ListViewItem(cnt.ToString("00000"));
+                            lviS.BackColor = Color.LightGray;
+                            lviS.SubItems.Add("");
+                            lviD.BackColor = Color.LightGreen;
+                            lviD.SubItems.Add(((TextLine)destination.GetByIndex(drs.DestIndex + i)).Line);
+
+                            lvSource.Items.Add(lviS);
+                            lvDestination.Items.Add(lviD);
+                            cnt++;
+                        }
+
+                        break;
+                    case DiffResultSpanStatus.Replace:
+                        for (i = 0; i < drs.Length; i++)
+                        {
+                            lviS = new ListViewItem(cnt.ToString("00000"));
+                            lviD = new ListViewItem(cnt.ToString("00000"));
+                            lviS.BackColor = Color.Red;
+                            lviS.SubItems.Add(((TextLine)source.GetByIndex(drs.SourceIndex + i)).Line);
+                            lviD.BackColor = Color.LightGreen;
+                            lviD.SubItems.Add(((TextLine)destination.GetByIndex(drs.DestIndex + i)).Line);
+
+                            lvSource.Items.Add(lviS);
+                            lvDestination.Items.Add(lviD);
+                            cnt++;
+                        }
+
+                        break;
+                }
+
             }
-            else
-            {
-                this.textBoxOriginal.Text = String.Empty;
-            }
-            this.textBoxChange.Text = info.Change.Documentation;
+
 
             this.radioButtonOriginal.Checked = !this.treeView.SelectedNode.Checked;
             this.radioButtonChange.Checked = this.treeView.SelectedNode.Checked;
@@ -392,6 +789,42 @@ namespace IfcDoc
             foreach (TreeNode tnSub in tn.Nodes)
             {
                 CheckNode(tnSub, state);
+            }
+        }
+
+        private void lvSource_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (lvSource.SelectedItems.Count > 0)
+            {
+                ListViewItem lvi = lvDestination.Items[lvSource.SelectedItems[0].Index];
+                lvi.Selected = true;
+                lvi.EnsureVisible();
+            }
+        }
+
+        private void lvDestination_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (lvDestination.SelectedItems.Count > 0)
+            {
+                ListViewItem lvi = lvSource.Items[lvDestination.SelectedItems[0].Index];
+                lvi.Selected = true;
+                lvi.EnsureVisible();
+            }
+        }
+
+        private void lvSource_Resize(object sender, EventArgs e)
+        {
+            if (lvSource.Width > 100)
+            {
+                lvSource.Columns[1].Width = -2;
+            }
+        }
+
+        private void lvDestination_Resize(object sender, EventArgs e)
+        {
+            if (lvDestination.Width > 100)
+            {
+                lvDestination.Columns[1].Width = -2;
             }
         }
     }

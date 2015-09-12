@@ -117,61 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="label2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>85, 13</value>
-  </data>
-  <data name="label3.Text" xml:space="preserve">
-    <value>テンプレート利用</value>
-  </data>
-  <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>31, 13</value>
-  </data>
-  <data name="label2.Text" xml:space="preserve">
-    <value>濃度</value>
-  </data>
-  <data name="comboBoxCardinality.Items" xml:space="preserve">
-    <value>（スキーマとして）</value>
-  </data>
-  <data name="comboBoxCardinality.Items1" xml:space="preserve">
-    <value>ゼロ</value>
-  </data>
-  <data name="comboBoxCardinality.Items2" xml:space="preserve">
-    <value>ゼロ対一</value>
-  </data>
-  <data name="comboBoxCardinality.Items3" xml:space="preserve">
-    <value>一つ</value>
-  </data>
-  <data name="comboBoxCardinality.Items4" xml:space="preserve">
-    <value>一対多数の</value>
-  </data>
-  <data name="buttonCancel.Text" xml:space="preserve">
-    <value>キャンセル</value>
-  </data>
-  <data name="buttonOK.Text" xml:space="preserve">
-    <value>ＯＫ</value>
-  </data>
-  <data name="comboBoxUsage.Items" xml:space="preserve">
-    <value>なし</value>
-  </data>
-  <data name="comboBoxUsage.Items1" xml:space="preserve">
-    <value>条件</value>
-  </data>
-  <data name="comboBoxUsage.Items2" xml:space="preserve">
-    <value>制約集</value>
-  </data>
-  <data name="label5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>73, 13</value>
-  </data>
-  <data name="label5.Text" xml:space="preserve">
-    <value>パラメーター名</value>
-  </data>
-  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>31, 13</value>
-  </data>
-  <data name="label1.Text" xml:space="preserve">
-    <value>動作</value>
-  </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABAAIAICAAAAEAIACoEAAAJgAAABAQAAABACAAaAQAAM4QAAAoAAAAIAAAAEAAAAABACAAAAAAAAAA
@@ -266,8 +216,5 @@
         rv/Puan/ybOk/8mzpOcAAAAAAAAAAAAAAAD//wAA4AEAAOABVf8AAVP/AAFP/wABTP8AAUn/AAFG/wAB
         RP8AAUH/4AE//+ABPP/gATr/4AFS/+ADTv/gB0v/
 </value>
-  </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>ルール</value>
   </data>
 </root>

@@ -24,6 +24,9 @@ namespace IfcDoc
         DocProject m_project;
         SelectDefinitionOptions m_options;
 
+        Dictionary<DocDefinition, TreeNode> m_mapAlpha;
+        Dictionary<DocDefinition, TreeNode> m_mapInherit;
+
         public FormSelectEntity()
         {
             InitializeComponent();
@@ -48,14 +51,19 @@ namespace IfcDoc
             this.m_project = project;
             this.m_options = options;
 
+            this.m_mapAlpha = new Dictionary<DocDefinition, TreeNode>();
+            this.m_mapInherit = new Dictionary<DocDefinition, TreeNode>();
+
             // load subtypes, sort alphabetically
             if (this.m_basetype is DocEntity)
             {
                 this.LoadEntity(null, (DocEntity)this.m_basetype);
+                this.tabControl1.TabPages.RemoveAt(1);
             }
             else if (this.m_basetype is DocSelect)
             {
                 this.LoadSelect(null, (DocSelect)this.m_basetype);
+                this.tabControl1.TabPages.RemoveAt(1);
             }
             else if (this.m_basetype != null)
             {
@@ -63,12 +71,15 @@ namespace IfcDoc
                 TreeNode tn = new TreeNode();
                 tn.Tag = basetype;
                 tn.Text = basetype.Name;
-                this.treeView.Nodes.Add(tn);
+                this.treeViewInheritance.Nodes.Add(tn);
+
+                this.tabControl1.TabPages.RemoveAt(1);
             }
             else
             {
                 // all entities
                 SortedList<string, DocDefinition> sort = new SortedList<string, DocDefinition>();
+                SortedList<string, DocDefinition> sortAll = new SortedList<string, DocDefinition>();
                 foreach (DocSection docSection in this.m_project.Sections)
                 {
                     foreach (DocSchema docSchema in docSection.Schemas)
@@ -82,6 +93,11 @@ namespace IfcDoc
                                     sort.Add(docEntity.Name, docEntity);
                                 }
                             }
+
+                            if (!sortAll.ContainsKey(docEntity.Name))
+                            {
+                                sortAll.Add(docEntity.Name, docEntity);
+                            }
                         }
 
                         if ((options & SelectDefinitionOptions.Type) != 0)
@@ -90,6 +106,11 @@ namespace IfcDoc
                             foreach (DocType docType in docSchema.Types)
                             {
                                 sort.Add(docType.Name, docType);
+
+                                if (!sortAll.ContainsKey(docType.Name))
+                                {
+                                    sortAll.Add(docType.Name, docType);
+                                }
                             }
                         }
                     }
@@ -106,15 +127,24 @@ namespace IfcDoc
                         this.LoadType(null, (DocType)docDef);
                     }
                 }
+
+                foreach(DocDefinition docDef in sortAll.Values)
+                {
+                    TreeNode tnAlpha = new TreeNode();
+                    tnAlpha.Tag = docDef;
+                    tnAlpha.Text = docDef.Name;
+                    this.m_mapAlpha.Add(docDef, tnAlpha);
+                    this.treeViewAlphabetical.Nodes.Add(tnAlpha);
+                }
             }
 
-            if (this.treeView.SelectedNode == null && this.treeView.Nodes.Count > 0)
+            if (this.treeViewInheritance.SelectedNode == null && this.treeViewInheritance.Nodes.Count > 0)
             {
-                this.treeView.SelectedNode = this.treeView.Nodes[0];
+                this.treeViewInheritance.SelectedNode = this.treeViewInheritance.Nodes[0];
             }
 
-            this.treeView.ExpandAll();
-            this.treeView.Focus();
+            this.treeViewInheritance.ExpandAll();
+            this.treeViewInheritance.Focus();
         }
 
         private void LoadSelect(TreeNode tnParent, DocSelect select)
@@ -133,7 +163,7 @@ namespace IfcDoc
             }
             else
             {
-                this.treeView.Nodes.Add(tn);
+                this.treeViewInheritance.Nodes.Add(tn);
             }
 
             // add subtypes
@@ -188,6 +218,7 @@ namespace IfcDoc
             TreeNode tn = new TreeNode();
             tn.Tag = type;
             tn.Text = type.Name;
+            this.m_mapInherit.Add(type, tn);
 
             if (tnParent != null)
             {
@@ -195,12 +226,12 @@ namespace IfcDoc
             }
             else
             {
-                this.treeView.Nodes.Add(tn);
+                this.treeViewInheritance.Nodes.Add(tn);
             }
 
             if (this.m_selection == type)
             {
-                this.treeView.SelectedNode = tn;
+                this.treeViewInheritance.SelectedNode = tn;
             }
 
             // special case if typed as aggregation to an entity, e.g. IfcPropertySetDefinitionSet
@@ -232,10 +263,15 @@ namespace IfcDoc
             if (entity == null)
                 return; // no such entity
 
+            if (this.m_mapInherit.ContainsKey(entity))
+                return;
+
             // add entity
             TreeNode tn = new TreeNode();
             tn.Tag = entity;
             tn.Text = entity.Name;
+            
+            this.m_mapInherit.Add(entity, tn);
 
             if (tnParent != null)
             {
@@ -243,12 +279,12 @@ namespace IfcDoc
             }
             else
             {
-                this.treeView.Nodes.Add(tn);
+                this.treeViewInheritance.Nodes.Add(tn);
             }
 
             if (this.m_selection == entity)
             {
-                this.treeView.SelectedNode = tn;
+                this.treeViewInheritance.SelectedNode = tn;
             }
 
             this.LoadPredefined();
@@ -286,10 +322,10 @@ namespace IfcDoc
             this.comboBoxPredefined.SelectedIndex = -1;
             this.comboBoxPredefined.Text = String.Empty;
 
-            if (this.treeView.SelectedNode == null)
+            if (this.treeViewInheritance.SelectedNode == null)
                 return;
 
-            DocEntity entity = this.treeView.SelectedNode.Tag as DocEntity;
+            DocEntity entity = this.treeViewInheritance.SelectedNode.Tag as DocEntity;
             if (entity == null)
                 return;            
 
@@ -333,16 +369,16 @@ namespace IfcDoc
         {
             get
             {
-                if (this.treeView.SelectedNode == null)
+                if (this.treeViewInheritance.SelectedNode == null)
                     return null;
 
-                if (this.treeView.SelectedNode.Tag is DocDefinition)
+                if (this.treeViewInheritance.SelectedNode.Tag is DocDefinition)
                 {
-                    return this.treeView.SelectedNode.Tag as DocDefinition;
+                    return this.treeViewInheritance.SelectedNode.Tag as DocDefinition;
                 }
-                else if (this.treeView.SelectedNode.Tag is DocConstant)
+                else if (this.treeViewInheritance.SelectedNode.Tag is DocConstant)
                 {
-                    return this.treeView.SelectedNode.Parent.Tag as DocDefinition;
+                    return this.treeViewInheritance.SelectedNode.Parent.Tag as DocDefinition;
                 }
 
                 return null;
@@ -360,8 +396,31 @@ namespace IfcDoc
             }
         }
 
-        private void treeView_AfterSelect(object sender, TreeViewEventArgs e)
+        private void treeViewInheritance_AfterSelect(object sender, TreeViewEventArgs e)
         {
+            if (this.treeViewInheritance.SelectedNode == null)
+                return;
+
+            DocDefinition entity = this.treeViewInheritance.SelectedNode.Tag as DocDefinition;
+            if (entity != null && this.m_mapAlpha.ContainsKey(entity))
+            {
+                this.treeViewAlphabetical.SelectedNode = this.m_mapAlpha[entity];
+            }
+
+            this.LoadPredefined();
+        }
+
+        private void treeViewAlphabetical_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            if (this.treeViewAlphabetical.SelectedNode == null)
+                return;
+
+            DocEntity entity = this.treeViewAlphabetical.SelectedNode.Tag as DocEntity;
+            if (entity != null)
+            {
+                this.treeViewInheritance.SelectedNode = this.m_mapInherit[entity];
+            }
+
             this.LoadPredefined();
         }
     }

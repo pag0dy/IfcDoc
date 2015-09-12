@@ -15,6 +15,41 @@ namespace IfcDoc
         /// <param name="projectCurr">The current project where change log entries are generated.</param>
         public static void Generate(DocProject projectPrev, DocProject projectCurr)
         {
+            // copy over any previous change logs
+            foreach(DocChangeSet prevCS in projectPrev.ChangeSets)
+            {
+                DocChangeSet currCS = new DocChangeSet();
+                currCS.Name = prevCS.Name;
+                currCS.Documentation = prevCS.Documentation;
+                currCS.VersionBaseline = prevCS.VersionBaseline;
+                currCS.VersionCompared = prevCS.VersionCompared;
+                projectCurr.ChangeSets.Add(currCS);
+
+                foreach(DocChangeAction prevCA in prevCS.ChangesEntities)
+                {
+                    DocChangeAction currCA = prevCA.Copy();
+                    currCS.ChangesEntities.Add(currCA);
+                }
+
+                if (prevCS.ChangesProperties != null)
+                {
+                    foreach (DocChangeAction prevCA in prevCS.ChangesProperties)
+                    {
+                        DocChangeAction currCA = prevCA.Copy();
+                        currCS.ChangesProperties.Add(currCA);
+                    }
+                }
+
+                if (prevCS.ChangesQuantities != null)
+                {
+                    foreach (DocChangeAction prevCA in prevCS.ChangesQuantities)
+                    {
+                        DocChangeAction currCA = prevCA.Copy();
+                        currCS.ChangesQuantities.Add(currCA);
+                    }
+                }
+            }
+
             // build maps            
             Dictionary<string, DocObject> mapNew = new Dictionary<string, DocObject>();
             foreach (DocSection docSection in projectCurr.Sections)
@@ -139,12 +174,15 @@ namespace IfcDoc
                                             {
                                                 docChangeType.Action = DocChangeActionEnum.MOVED;
                                                 docChangeType.Aspects.Add(new DocChangeAspect(DocChangeAspectEnum.SCHEMA, docOtherSchema.Name.ToUpper(), docSchema.Name.ToUpper()));
+                                                docTypeBase = docOtherType;
+                                                break;
                                             }
                                         }
                                     }
                                 }
                             }
-                            else
+                            
+                            if(docTypeBase != null)
                             {
                                 // existing type
 
@@ -276,6 +314,11 @@ namespace IfcDoc
                         // compare entities
                         foreach (DocEntity docEntity in docSchema.Entities)
                         {
+                            if (docEntity.Name.Equals("IfcWindowLiningProperties"))
+                            {
+                                docEntity.ToString();
+                            }
+
                             DocChangeAction docChangeEntity = new DocChangeAction();
                             docChangeSchema.Changes.Add(docChangeEntity);
                             docChangeEntity.Name = docEntity.Name;
@@ -309,6 +352,7 @@ namespace IfcDoc
 
                                                 docChangeEntity.Action = DocChangeActionEnum.MOVED;
                                                 docChangeEntity.Aspects.Add(new DocChangeAspect(DocChangeAspectEnum.SCHEMA, docOtherSchema.Name.ToUpper(), docSchema.Name.ToUpper()));
+                                                break;
                                             }
                                         }
                                     }
@@ -480,11 +524,11 @@ namespace IfcDoc
                                                 }
 
                                                 //todo: add generic check that traverses multiple levels of defined types; in the interest of hitting deadline, hard-coded hack for now
-                                                if (docNew.Name == "IfcPositiveInteger" && docAspect.OldValue == "INTEGER")
+                                                if (docNew != null && docNew.Name == "IfcPositiveInteger" && docAspect.OldValue == "INTEGER")
                                                 {
                                                     impact = false;
                                                 }
-                                                if (docNew.Name == "IfcBinary" && docAspect.OldValue == "BINARY (32)")
+                                                if (docNew != null && docNew.Name == "IfcBinary" && docAspect.OldValue == "BINARY (32)")
                                                 {
                                                     impact = false;
                                                 }

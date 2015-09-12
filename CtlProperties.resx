@@ -1105,7 +1105,7 @@
     <value>ctlRules</value>
   </data>
   <data name="&gt;&gt;ctlRules.Type" xml:space="preserve">
-    <value>IfcDoc.CtlRules, IfcDoc, Version=8.8.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>IfcDoc.CtlRules, IfcDoc, Version=9.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;ctlRules.Parent" xml:space="preserve">
     <value>tabPageTemplate</value>
@@ -1156,7 +1156,7 @@
     <value>ctlParameters</value>
   </data>
   <data name="&gt;&gt;ctlParameters.Type" xml:space="preserve">
-    <value>IfcDoc.CtlParameters, IfcDoc, Version=8.7.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>IfcDoc.CtlParameters, IfcDoc, Version=9.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;ctlParameters.Parent" xml:space="preserve">
     <value>tabPageConcept</value>
@@ -3195,6 +3195,141 @@
   <data name="&gt;&gt;tabPageExpression.ZOrder" xml:space="preserve">
     <value>10</value>
   </data>
+  <data name="textBoxViewXsdNamespace.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="textBoxViewXsdNamespace.Location" type="System.Drawing.Point, System.Drawing">
+    <value>7, 151</value>
+  </data>
+  <data name="textBoxViewXsdNamespace.Size" type="System.Drawing.Size, System.Drawing">
+    <value>331, 20</value>
+  </data>
+  <data name="textBoxViewXsdNamespace.TabIndex" type="System.Int32, mscorlib">
+    <value>29</value>
+  </data>
+  <data name="&gt;&gt;textBoxViewXsdNamespace.Name" xml:space="preserve">
+    <value>textBoxViewXsdNamespace</value>
+  </data>
+  <data name="&gt;&gt;textBoxViewXsdNamespace.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;textBoxViewXsdNamespace.Parent" xml:space="preserve">
+    <value>tabPageView</value>
+  </data>
+  <data name="&gt;&gt;textBoxViewXsdNamespace.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="buttonViewEntity.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="buttonViewEntity.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="buttonViewEntity.Location" type="System.Drawing.Point, System.Drawing">
+    <value>263, 66</value>
+  </data>
+  <data name="buttonViewEntity.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="buttonViewEntity.TabIndex" type="System.Int32, mscorlib">
+    <value>28</value>
+  </data>
+  <data name="buttonViewEntity.Text" xml:space="preserve">
+    <value>Select...</value>
+  </data>
+  <data name="&gt;&gt;buttonViewEntity.Name" xml:space="preserve">
+    <value>buttonViewEntity</value>
+  </data>
+  <data name="&gt;&gt;buttonViewEntity.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;buttonViewEntity.Parent" xml:space="preserve">
+    <value>tabPageView</value>
+  </data>
+  <data name="&gt;&gt;buttonViewEntity.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="textBoxViewRoot.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="textBoxViewRoot.Location" type="System.Drawing.Point, System.Drawing">
+    <value>7, 68</value>
+  </data>
+  <data name="textBoxViewRoot.Size" type="System.Drawing.Size, System.Drawing">
+    <value>250, 20</value>
+  </data>
+  <data name="textBoxViewRoot.TabIndex" type="System.Int32, mscorlib">
+    <value>27</value>
+  </data>
+  <data name="&gt;&gt;textBoxViewRoot.Name" xml:space="preserve">
+    <value>textBoxViewRoot</value>
+  </data>
+  <data name="&gt;&gt;textBoxViewRoot.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;textBoxViewRoot.Parent" xml:space="preserve">
+    <value>tabPageView</value>
+  </data>
+  <data name="&gt;&gt;textBoxViewRoot.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="labelViewEntity.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="labelViewEntity.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="labelViewEntity.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 51</value>
+  </data>
+  <data name="labelViewEntity.Size" type="System.Drawing.Size, System.Drawing">
+    <value>244, 13</value>
+  </data>
+  <data name="labelViewEntity.TabIndex" type="System.Int32, mscorlib">
+    <value>26</value>
+  </data>
+  <data name="labelViewEntity.Text" xml:space="preserve">
+    <value>Base Entity: (shown as root in inheritance diagram)</value>
+  </data>
+  <data name="&gt;&gt;labelViewEntity.Name" xml:space="preserve">
+    <value>labelViewEntity</value>
+  </data>
+  <data name="&gt;&gt;labelViewEntity.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;labelViewEntity.Parent" xml:space="preserve">
+    <value>tabPageView</value>
+  </data>
+  <data name="&gt;&gt;labelViewEntity.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="checkBoxViewIncludeAll.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="checkBoxViewIncludeAll.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 103</value>
+  </data>
+  <data name="checkBoxViewIncludeAll.Size" type="System.Drawing.Size, System.Drawing">
+    <value>221, 17</value>
+  </data>
+  <data name="checkBoxViewIncludeAll.TabIndex" type="System.Int32, mscorlib">
+    <value>25</value>
+  </data>
+  <data name="checkBoxViewIncludeAll.Text" xml:space="preserve">
+    <value>Include all schema definitions (no filtering)</value>
+  </data>
+  <data name="&gt;&gt;checkBoxViewIncludeAll.Name" xml:space="preserve">
+    <value>checkBoxViewIncludeAll</value>
+  </data>
+  <data name="&gt;&gt;checkBoxViewIncludeAll.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;checkBoxViewIncludeAll.Parent" xml:space="preserve">
+    <value>tabPageView</value>
+  </data>
+  <data name="&gt;&gt;checkBoxViewIncludeAll.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
   <data name="listViewViewXsd.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Bottom, Left, Right</value>
   </data>
@@ -3211,10 +3346,10 @@
     <value>Tagless</value>
   </data>
   <data name="listViewViewXsd.Location" type="System.Drawing.Point, System.Drawing">
-    <value>7, 74</value>
+    <value>7, 177</value>
   </data>
   <data name="listViewViewXsd.Size" type="System.Drawing.Size, System.Drawing">
-    <value>331, 276</value>
+    <value>331, 173</value>
   </data>
   <data name="listViewViewXsd.TabIndex" type="System.Int32, mscorlib">
     <value>24</value>
@@ -3229,7 +3364,7 @@
     <value>tabPageView</value>
   </data>
   <data name="&gt;&gt;listViewViewXsd.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>5</value>
   </data>
   <data name="comboBoxViewXsd.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Right</value>
@@ -3274,7 +3409,7 @@
     <value>tabPageView</value>
   </data>
   <data name="&gt;&gt;comboBoxViewXsd.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>6</value>
   </data>
   <data name="checkBoxViewXsdTagless.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Right</value>
@@ -3307,7 +3442,7 @@
     <value>tabPageView</value>
   </data>
   <data name="&gt;&gt;checkBoxViewXsdTagless.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>7</value>
   </data>
   <data name="buttonViewXsdDelete.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left</value>
@@ -3340,7 +3475,7 @@
     <value>tabPageView</value>
   </data>
   <data name="&gt;&gt;buttonViewXsdDelete.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>8</value>
   </data>
   <data name="buttonViewXsdAttribute.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left</value>
@@ -3370,7 +3505,7 @@
     <value>tabPageView</value>
   </data>
   <data name="&gt;&gt;buttonViewXsdAttribute.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>9</value>
   </data>
   <data name="label29.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -3379,16 +3514,16 @@
     <value>NoControl</value>
   </data>
   <data name="label29.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 57</value>
+    <value>6, 133</value>
   </data>
   <data name="label29.Size" type="System.Drawing.Size, System.Drawing">
-    <value>119, 13</value>
+    <value>92, 13</value>
   </data>
   <data name="label29.TabIndex" type="System.Int32, mscorlib">
     <value>14</value>
   </data>
   <data name="label29.Text" xml:space="preserve">
-    <value>XSD Tag Configuration:</value>
+    <value>XML Namespace:</value>
   </data>
   <data name="&gt;&gt;label29.Name" xml:space="preserve">
     <value>label29</value>
@@ -3400,7 +3535,7 @@
     <value>tabPageView</value>
   </data>
   <data name="&gt;&gt;label29.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>10</value>
   </data>
   <data name="buttonViewBase.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
@@ -3430,7 +3565,7 @@
     <value>tabPageView</value>
   </data>
   <data name="&gt;&gt;buttonViewBase.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>11</value>
   </data>
   <data name="textBoxViewBase.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -3454,7 +3589,7 @@
     <value>tabPageView</value>
   </data>
   <data name="&gt;&gt;textBoxViewBase.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>12</value>
   </data>
   <data name="label19.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -3466,13 +3601,13 @@
     <value>6, 9</value>
   </data>
   <data name="label19.Size" type="System.Drawing.Size, System.Drawing">
-    <value>60, 13</value>
+    <value>251, 13</value>
   </data>
   <data name="label19.TabIndex" type="System.Int32, mscorlib">
     <value>10</value>
   </data>
   <data name="label19.Text" xml:space="preserve">
-    <value>Base View:</value>
+    <value>Base View: (definitions are included from base view)</value>
   </data>
   <data name="&gt;&gt;label19.Name" xml:space="preserve">
     <value>label19</value>
@@ -3484,7 +3619,7 @@
     <value>tabPageView</value>
   </data>
   <data name="&gt;&gt;label19.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>13</value>
   </data>
   <data name="tabPageView.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 22</value>
@@ -4428,9 +4563,6 @@
   <data name="&gt;&gt;labelExchangeApplicability.ZOrder" xml:space="preserve">
     <value>8</value>
   </data>
-  <data name="buttonExchangeIconClear.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
-  </data>
   <data name="buttonExchangeIconClear.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
@@ -4457,9 +4589,6 @@
   </data>
   <data name="&gt;&gt;buttonExchangeIconClear.ZOrder" xml:space="preserve">
     <value>9</value>
-  </data>
-  <data name="buttonExchangeIconChange.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
   </data>
   <data name="buttonExchangeIconChange.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -4922,7 +5051,7 @@
     <value>ctlOperators</value>
   </data>
   <data name="&gt;&gt;ctlOperators.Type" xml:space="preserve">
-    <value>IfcDoc.CtlOperators, IfcDoc, Version=8.7.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>IfcDoc.CtlOperators, IfcDoc, Version=9.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;ctlOperators.Parent" xml:space="preserve">
     <value>tabPageOperations</value>
@@ -4992,7 +5121,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAABy
-        CwAAAk1TRnQBSQFMAgEBBAEAAXQBAAF0AQABEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
+        CwAAAk1TRnQBSQFMAgEBBAEAAZwBAAGcAQABEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
         AwABQAMAASADAAEBAQABCAYAAQgYAAGAAgABgAMAAoABAAGAAwABgAEAAYABAAKAAgADwAEAAcAB3AHA
         AQAB8AHKAaYBAAEzBQABMwEAATMBAAEzAQACMwIAAxYBAAMcAQADIgEAAykBAANVAQADTQEAA0IBAAM5
         AQABgAF8Af8BAAJQAf8BAAGTAQAB1gEAAf8B7AHMAQABxgHWAe8BAAHWAucBAAGQAakBrQIAAf8BMwMA
@@ -5189,6 +5318,177 @@
   </data>
   <data name="&gt;&gt;tabPageConceptRoot.ZOrder" xml:space="preserve">
     <value>16</value>
+  </data>
+  <data name="columnHeaderChangeAspect.Text" xml:space="preserve">
+    <value>Aspect</value>
+  </data>
+  <data name="columnHeaderChangeAspect.Width" type="System.Int32, mscorlib">
+    <value>120</value>
+  </data>
+  <data name="columnHeaderChangeOld.Text" xml:space="preserve">
+    <value>Old Value</value>
+  </data>
+  <data name="columnHeaderChangeOld.Width" type="System.Int32, mscorlib">
+    <value>120</value>
+  </data>
+  <data name="columnHeaderChangeNew.Text" xml:space="preserve">
+    <value>New Value</value>
+  </data>
+  <data name="columnHeaderChangeNew.Width" type="System.Int32, mscorlib">
+    <value>120</value>
+  </data>
+  <data name="listViewChange.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="listViewChange.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 28</value>
+  </data>
+  <data name="listViewChange.Size" type="System.Drawing.Size, System.Drawing">
+    <value>346, 363</value>
+  </data>
+  <data name="listViewChange.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;listViewChange.Name" xml:space="preserve">
+    <value>listViewChange</value>
+  </data>
+  <data name="&gt;&gt;listViewChange.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ListView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;listViewChange.Parent" xml:space="preserve">
+    <value>tabPageChange</value>
+  </data>
+  <data name="&gt;&gt;listViewChange.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <metadata name="toolStripChange.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>1043, 17</value>
+  </metadata>
+  <data name="toolStripButtonChangeSPF.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="toolStripButtonChangeSPF.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAIDSURBVDhPpZLrS5NhGMb3j4SWh0oRQVExD4gonkDpg4hG
+        YKxG6WBogkMZKgPNCEVJFBGdGETEvgwyO9DJE5syZw3PIlPEE9pgBCLZ5XvdMB8Ew8gXbl54nuf63dd9
+        0OGSnwCahxbPRNPAPMw9Xpg6ZmF46kZZ0xSKzJPIrhpDWsVnpBhGkKx3nAX8Pv7z1zg8OoY/cITdn4fw
+        bf/C0kYAN3Ma/w3gWfZL5kzTKBxjWyK2DftwI9tyMYCZKXbNHaD91bLYJrDXsYbrWfUKwJrPE9M2M1Oc
+        VzOOpHI7Jr376Hi9ogHqFIANO0/MmmmbmSmm9a8ze+I4MrNWAdjtoJgWcx+PSzg166yZZ8xM8XvXDix9
+        c4jIqFYAjoriBV9AhEPv1mH/sonogha0afbZMMZz+yreTGyhpusHwtNNCsA5U1zS4BLxzJIfg299qO32
+        Ir7UJtZfftyATqeT+8o2D8JSjQrAJblrncYL7ZJ2+bfaFnC/1S1NjL3diRat7qrO7wLRP3HjWsojBeCo
+        mDEo5mNjuweFGvjWg2EBhCbpkW78htSHHwRyNdmgAFzPEee2iFkzayy2OLXzT4gr6UdUnlXrullsxxQ+
+        kx0g8BTA3aZlButjSTyjODq/WcQcW/B/Je4OQhLvKQDnzN1mp0nnkvAhR8VuMzNrpm1mpjgkoVwB/v8D
+        TgDQASA1MVpwzwAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="toolStripButtonChangeSPF.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="toolStripButtonChangeSPF.Size" type="System.Drawing.Size, System.Drawing">
+    <value>30, 22</value>
+  </data>
+  <data name="toolStripButtonChangeSPF.Text" xml:space="preserve">
+    <value>SPF</value>
+  </data>
+  <data name="toolStripButtonChangeXML.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="toolStripButtonChangeXML.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAIDSURBVDhPpZLrS5NhGMb3j4SWh0oRQVExD4gonkDpg4hG
+        YKxG6WBogkMZKgPNCEVJFBGdGETEvgwyO9DJE5syZw3PIlPEE9pgBCLZ5XvdMB8Ew8gXbl54nuf63dd9
+        0OGSnwCahxbPRNPAPMw9Xpg6ZmF46kZZ0xSKzJPIrhpDWsVnpBhGkKx3nAX8Pv7z1zg8OoY/cITdn4fw
+        bf/C0kYAN3Ma/w3gWfZL5kzTKBxjWyK2DftwI9tyMYCZKXbNHaD91bLYJrDXsYbrWfUKwJrPE9M2M1Oc
+        VzOOpHI7Jr376Hi9ogHqFIANO0/MmmmbmSmm9a8ze+I4MrNWAdjtoJgWcx+PSzg166yZZ8xM8XvXDix9
+        c4jIqFYAjoriBV9AhEPv1mH/sonogha0afbZMMZz+yreTGyhpusHwtNNCsA5U1zS4BLxzJIfg299qO32
+        Ir7UJtZfftyATqeT+8o2D8JSjQrAJblrncYL7ZJ2+bfaFnC/1S1NjL3diRat7qrO7wLRP3HjWsojBeCo
+        mDEo5mNjuweFGvjWg2EBhCbpkW78htSHHwRyNdmgAFzPEee2iFkzayy2OLXzT4gr6UdUnlXrullsxxQ+
+        kx0g8BTA3aZlButjSTyjODq/WcQcW/B/Je4OQhLvKQDnzN1mp0nnkvAhR8VuMzNrpm1mpjgkoVwB/v8D
+        TgDQASA1MVpwzwAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="toolStripButtonChangeXML.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="toolStripButtonChangeXML.Size" type="System.Drawing.Size, System.Drawing">
+    <value>35, 22</value>
+  </data>
+  <data name="toolStripButtonChangeXML.Text" xml:space="preserve">
+    <value>XML</value>
+  </data>
+  <data name="toolStripComboBoxChange.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="toolStripComboBoxChange.Items" xml:space="preserve">
+    <value>NOCHANGE</value>
+  </data>
+  <data name="toolStripComboBoxChange.Items1" xml:space="preserve">
+    <value>ADDED</value>
+  </data>
+  <data name="toolStripComboBoxChange.Items2" xml:space="preserve">
+    <value>DELETED</value>
+  </data>
+  <data name="toolStripComboBoxChange.Items3" xml:space="preserve">
+    <value>MODIFIED</value>
+  </data>
+  <data name="toolStripComboBoxChange.Items4" xml:space="preserve">
+    <value>MOVED</value>
+  </data>
+  <data name="toolStripComboBoxChange.Size" type="System.Drawing.Size, System.Drawing">
+    <value>121, 25</value>
+  </data>
+  <data name="toolStripChange.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="toolStripChange.Size" type="System.Drawing.Size, System.Drawing">
+    <value>346, 25</value>
+  </data>
+  <data name="toolStripChange.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="toolStripChange.Text" xml:space="preserve">
+    <value>toolStrip3</value>
+  </data>
+  <data name="&gt;&gt;toolStripChange.Name" xml:space="preserve">
+    <value>toolStripChange</value>
+  </data>
+  <data name="&gt;&gt;toolStripChange.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStripChange.Parent" xml:space="preserve">
+    <value>tabPageChange</value>
+  </data>
+  <data name="&gt;&gt;toolStripChange.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="tabPageChange.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 22</value>
+  </data>
+  <data name="tabPageChange.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="tabPageChange.Size" type="System.Drawing.Size, System.Drawing">
+    <value>352, 394</value>
+  </data>
+  <data name="tabPageChange.TabIndex" type="System.Int32, mscorlib">
+    <value>19</value>
+  </data>
+  <data name="tabPageChange.Text" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="&gt;&gt;tabPageChange.Name" xml:space="preserve">
+    <value>tabPageChange</value>
+  </data>
+  <data name="&gt;&gt;tabPageChange.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tabPageChange.Parent" xml:space="preserve">
+    <value>tabControl</value>
+  </data>
+  <data name="&gt;&gt;tabPageChange.ZOrder" xml:space="preserve">
+    <value>17</value>
   </data>
   <data name="tabControl.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -5432,6 +5732,42 @@
   </data>
   <data name="&gt;&gt;toolStripMenuItemModeSuppress.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;columnHeaderChangeAspect.Name" xml:space="preserve">
+    <value>columnHeaderChangeAspect</value>
+  </data>
+  <data name="&gt;&gt;columnHeaderChangeAspect.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;columnHeaderChangeOld.Name" xml:space="preserve">
+    <value>columnHeaderChangeOld</value>
+  </data>
+  <data name="&gt;&gt;columnHeaderChangeOld.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;columnHeaderChangeNew.Name" xml:space="preserve">
+    <value>columnHeaderChangeNew</value>
+  </data>
+  <data name="&gt;&gt;columnHeaderChangeNew.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStripButtonChangeSPF.Name" xml:space="preserve">
+    <value>toolStripButtonChangeSPF</value>
+  </data>
+  <data name="&gt;&gt;toolStripButtonChangeSPF.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStripButtonChangeXML.Name" xml:space="preserve">
+    <value>toolStripButtonChangeXML</value>
+  </data>
+  <data name="&gt;&gt;toolStripButtonChangeXML.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStripComboBoxChange.Name" xml:space="preserve">
+    <value>toolStripComboBoxChange</value>
+  </data>
+  <data name="&gt;&gt;toolStripComboBoxChange.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;imageListRules.Name" xml:space="preserve">
     <value>imageListRules</value>

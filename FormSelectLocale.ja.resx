@@ -117,13 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="buttonOK.Text" xml:space="preserve">
-    <value>ＯＫ</value>
-  </data>
-  <data name="buttonCancel.Text" xml:space="preserve">
-    <value>キャンセル</value>
-  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="buttonOK.Location" type="System.Drawing.Point, System.Drawing">
+    <value>216, 466</value>
+  </data>
+  <data name="buttonCancel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>297, 466</value>
+  </data>
+  <data name="treeViewLocale.Size" type="System.Drawing.Size, System.Drawing">
+    <value>359, 445</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>384, 501</value>
+  </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABAAYAMDAAAAEACACoDgAAZgAAACAgAAABAAgAqAgAAA4PAAAQEAAAAQAIAGgFAAC2FwAAMDAAAAEA
@@ -502,8 +508,5 @@
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8AcAAOADAADAAQAAgAAAAIAA
         AACAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAwAEAAOADAADwB3jG//8Z/w==
 </value>
-  </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>ロケールをセレクト</value>
   </data>
 </root>
