@@ -11,6 +11,7 @@ using System.ComponentModel;
 using System.Reflection;
 using System.Text;
 
+using IfcDoc.Schema;
 using IfcDoc.Schema.DOC;
 
 namespace IfcDoc
@@ -288,6 +289,209 @@ namespace IfcDoc
                 this.m_inner.AppendString(sb);
             }
         }
+
+        /// <summary>
+        /// Gets value referenced by path.
+        /// </summary>
+        /// <param name="target">The relative object to retrieve the value.</param>
+        /// <param name="parameters">Optional parameters for substitution.</param>
+        /// <returns>The value on the object along the expression path.</returns>
+        public object GetValue(SEntity target, Dictionary<string, SEntity> parameters)
+        {
+            if (target == null)
+                throw new ArgumentNullException("target");
+
+            if (this.m_type == null)
+            {
+                return target.GetType();
+            }
+
+            if (!this.m_type.IsInstanceOfType(target))
+                return null; // doesn't apply
+
+            if (this.m_property == null)
+            {
+                return target; // for general case, if no attribute specified, then return object itself
+                //return target.GetType(); // need some way to extract type directly such as for COBie
+            }
+
+            object value = null;
+
+            if (this.m_property.PropertyType.IsGenericType &&
+                typeof(System.Collections.IList).IsAssignableFrom(this.m_property.PropertyType) &&
+                (typeof(SEntity).IsAssignableFrom(this.m_property.PropertyType.GetGenericArguments()[0]) || this.m_property.PropertyType.GetGenericArguments()[0].IsInterface))
+            {
+                System.Collections.IList list = (System.Collections.IList)this.m_property.GetValue(target, null);
+
+                // if expecting array, then return it.
+                //if (this.m_vector)
+                if (this.m_vector || (this.m_identifier == null && this.m_inner == null)) // 2014-01-20: RICS export of door schedules to show quantity
+                {
+                    return list;
+                }
+                else if (this.m_identifier != null && this.m_identifier.StartsWith("@") && parameters == null)
+                {
+                    // return filtered list based on expected type -- may be none if no compatible types -- e.g. COBie properties only return IfcPropertyEnumeratedValue
+                    if (this.InnerPath != null && this.InnerPath.Type != null)
+                    {
+                        List<SEntity> listFilter = null;
+                        foreach (SEntity ent in list)
+                        {
+                            if (this.InnerPath.Type.IsInstanceOfType(ent))
+                            {
+                                if (listFilter == null)
+                                {
+                                    listFilter = new List<SEntity>();
+                                }
+                                listFilter.Add(ent);
+                            }
+                        }
+
+                        return listFilter;
+                    }
+                    else
+                    {
+                        return list;
+                    }
+                }
+
+                if (list != null)
+                {
+                    foreach (object eachelem in list)
+                    {
+                        // derived class may have its own specific property (e.g. IfcSIUnit, IfcConversionBasedUnit)
+                        if (this.m_identifier != null)
+                        {
+                            Type eachtype = eachelem.GetType();
+                            DefaultPropertyAttribute[] attrs = (DefaultPropertyAttribute[])eachtype.GetCustomAttributes(typeof(DefaultPropertyAttribute), true);
+                            PropertyInfo propElem = null;
+                            if (attrs.Length > 0)
+                            {
+                                propElem = eachtype.GetProperty(attrs[0].Name);
+                            }
+                            else
+                            {
+                                propElem = eachtype.GetProperty("Name");
+                            }
+
+                            if (propElem != null)
+                            {
+                                object eachname = propElem.GetValue(eachelem, null); // IStepValueString, or Enum (e.g. IfcNamedUnit.UnitType)
+
+#if false
+                                // special case for properties/quantities
+                                if (eachname == null && eachelem is IfcRelDefinesByProperties)
+                                {
+                                    IfcRelDefinesByProperties rdp = (IfcRelDefinesByProperties)eachelem;
+                                    eachname = rdp.RelatingPropertyDefinition.Name.GetValueOrDefault().Value;
+                                }
+#endif
+                                if (eachname != null)
+                                {
+                                    if (this.m_identifier.StartsWith("@"))
+                                    {
+                                        // parameterized query -- substitute parameter
+                                        if (parameters != null)
+                                        {
+                                            SEntity specelem = null;
+                                            if (parameters.TryGetValue(this.m_identifier.Substring(1), out specelem))
+                                            {
+                                                if (this.m_inner != null)
+                                                {
+                                                    object eachvalue = this.m_inner.GetValue(specelem, parameters);
+                                                    return eachvalue; // return no matter what, since specific element was requested.
+                                                }
+                                                else
+                                                {
+                                                    return specelem;
+                                                }
+
+                                            }
+                                        }
+                                        else
+                                        {
+                                            return null; // no parameters specified, so can't resolve value.
+                                        }
+                                    }
+                                    else if (this.m_identifier.Equals(eachname.ToString()))
+                                    {
+                                        if (this.m_inner != null)
+                                        {
+                                            // yes -- drill in
+                                            object eachvalue = this.m_inner.GetValue((SEntity)eachelem, parameters);
+                                            if (eachvalue != null)
+                                            {
+                                                return eachvalue; // if no value, keep going until compatible match is found
+                                            }
+                                        }
+                                        else
+                                        {
+                                            return eachelem;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        else if (this.m_inner != null)
+                        {
+                            object eachvalue = this.m_inner.GetValue((SEntity)eachelem, parameters);
+                            if (eachvalue != null)
+                            {
+                                return eachvalue;
+                            }
+                        }
+                        else
+                        {
+                            return eachelem;
+                        }
+                    }
+                }
+            }
+            else if (this.m_inner != null)
+            {
+                value = this.m_property.GetValue(target, null);
+                if (value is SEntity)
+                {
+                    value = this.m_inner.GetValue((SEntity)value, parameters);
+
+                    if (this.m_identifier != null && value != null)
+                    {
+                        // qualify the value
+                        Type eachtype = value.GetType();
+                        DefaultMemberAttribute[] attrs = (DefaultMemberAttribute[])eachtype.GetCustomAttributes(typeof(DefaultMemberAttribute), true);
+                        PropertyInfo propElem = null;
+                        if (attrs.Length > 0)
+                        {
+                            propElem = eachtype.GetProperty(attrs[0].MemberName);
+                        }
+                        else
+                        {
+                            propElem = eachtype.GetProperty("Name");
+                        }
+
+                        if (propElem != null)
+                        {
+                            object name = propElem.GetValue(value, null);
+                            if (name == null || !this.m_identifier.Equals(name.ToString()))
+                            {
+                                return null;
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                value = this.m_property.GetValue(target, null);
+            }
+
+            return value;
+        }
+
+
+
+
+
     }
 
 

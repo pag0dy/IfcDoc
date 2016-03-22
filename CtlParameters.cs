@@ -136,7 +136,11 @@ namespace IfcDoc
                         if (this.m_instance != null)
                         {
                             bool? testresult = item.GetResultForObject(this.m_instance);
-                            if(testresult != null && testresult.Value)
+                            if(testresult == null)
+                            {
+                                row.DefaultCellStyle.BackColor = System.Drawing.Color.Gray;
+                            }
+                            else if(testresult.Value)
                             {
                                 row.DefaultCellStyle.BackColor = System.Drawing.Color.Lime;
                             }
@@ -202,23 +206,32 @@ namespace IfcDoc
             this.toolStripMenuItemModeSuppress.Checked = false;
             this.toolStripMenuItemModeOverride.Checked = false;
             this.toolStripMenuItemModeInherit.Checked = false;
-            if (this.m_conceptleaf.Suppress)
+            if (this.m_conceptleaf != null)
             {
-                this.toolStripSplitButtonInheritance.Image = this.toolStripMenuItemModeSuppress.Image;
-                this.toolStripMenuItemModeSuppress.Checked = true;
-            }
-            else if (this.m_conceptleaf.Override)
-            {
-                this.toolStripSplitButtonInheritance.Image = this.toolStripMenuItemModeOverride.Image;
-                this.toolStripMenuItemModeOverride.Checked = true;
+                this.toolStripSplitButtonInheritance.Visible = true;
+
+                if (this.m_conceptleaf.Suppress)
+                {
+                    this.toolStripSplitButtonInheritance.Image = this.toolStripMenuItemModeSuppress.Image;
+                    this.toolStripMenuItemModeSuppress.Checked = true;
+                }
+                else if (this.m_conceptleaf.Override)
+                {
+                    this.toolStripSplitButtonInheritance.Image = this.toolStripMenuItemModeOverride.Image;
+                    this.toolStripMenuItemModeOverride.Checked = true;
+                }
+                else
+                {
+                    this.toolStripSplitButtonInheritance.Image = this.toolStripMenuItemModeInherit.Image;
+                    this.toolStripMenuItemModeInherit.Checked = true;
+                }
+
+                this.toolStripComboBoxOperator.SelectedIndex = (int)this.m_conceptleaf.Operator;
             }
             else
             {
-                this.toolStripSplitButtonInheritance.Image = this.toolStripMenuItemModeInherit.Image;
-                this.toolStripMenuItemModeInherit.Checked = true;
+                this.toolStripSplitButtonInheritance.Visible = false;
             }
-
-            this.toolStripComboBoxOperator.SelectedIndex = (int)this.m_conceptleaf.Operator;
         }
 
         private void LoadUsage()
@@ -227,15 +240,27 @@ namespace IfcDoc
             this.dataGridViewConceptRules.Rows.Clear();
             this.dataGridViewConceptRules.Columns.Clear();
 
-            if (this.m_conceptroot == null || this.m_conceptleaf == null)// || !this.m_conceptroot.Concepts.Contains(this.m_conceptleaf))
+            if (this.m_conceptroot == null)
                 return;
 
             LoadInheritance();
 
-            DocTemplateUsage docUsage = (DocTemplateUsage)this.m_conceptleaf;
-            if (docUsage.Definition != null)
+            List<DocTemplateItem> listItems = null;
+            DocTemplateDefinition docTemplate = null;
+            if (this.m_conceptleaf != null)
             {
-                this.m_columns = docUsage.Definition.GetParameterRules();
+                docTemplate = this.m_conceptleaf.Definition;
+                listItems = this.m_conceptleaf.Items;
+            }
+            else
+            {
+                docTemplate = this.m_conceptroot.ApplicableTemplate;
+                listItems = this.m_conceptroot.ApplicableItems;
+            }
+
+            if (docTemplate != null)
+            {
+                this.m_columns = docTemplate.GetParameterRules();
                 foreach (DocModelRule rule in this.m_columns)
                 {
                     DataGridViewColumn column = new DataGridViewColumn();
@@ -252,10 +277,15 @@ namespace IfcDoc
 
                     // override cell template for special cases
                     DocConceptRoot docConceptRoot = (DocConceptRoot)this.m_conceptroot;
-                    DocEntity docEntity = this.m_project.GetDefinition(docUsage.Definition.Type) as DocEntity;// docConceptRoot.ApplicableEntity;
-                    foreach (DocModelRuleAttribute docRule in docUsage.Definition.Rules)
+                    DocEntity docEntity = this.m_project.GetDefinition(docTemplate.Type) as DocEntity;// docConceptRoot.ApplicableEntity;
+                    foreach (DocModelRuleAttribute docRule in docTemplate.Rules)
                     {
                         DocAttribute docAttribute = docEntity.ResolveParameterAttribute(docRule, rule.Identification, m_map);
+                        if(docAttribute == null)
+                        {
+                            // try on type itself, e.g. PredefinedType
+                            docAttribute = docConceptRoot.ApplicableEntity.ResolveParameterAttribute(docRule, rule.Identification, m_map);
+                        }
                         if (docAttribute != null)
                         {
                             DocObject docDef = null;
@@ -309,7 +339,7 @@ namespace IfcDoc
             coldesc.Width = 400;
             this.dataGridViewConceptRules.Columns.Add(coldesc);
 
-            foreach (DocTemplateItem item in docUsage.Items)
+            foreach (DocTemplateItem item in listItems)
             {
                 string[] values = new string[this.dataGridViewConceptRules.Columns.Count];
 
@@ -368,13 +398,27 @@ namespace IfcDoc
         private void dataGridViewConceptRules_UserAddedRow(object sender, DataGridViewRowEventArgs e)
         {
             DocTemplateItem dti = new DocTemplateItem();
-            this.m_conceptleaf.Items.Add(dti);
+            if (this.m_conceptleaf != null)
+            {
+                this.m_conceptleaf.Items.Add(dti);
+            }
+            else
+            {
+                this.m_conceptroot.ApplicableItems.Add(dti);
+            }
             e.Row.Tag = dti;
         }
 
         private void dataGridViewConceptRules_UserDeletedRow(object sender, DataGridViewRowEventArgs e)
         {
-            this.m_conceptleaf.Items.Remove((DocTemplateItem)e.Row.Tag);
+            if (this.m_conceptleaf != null)
+            {
+                this.m_conceptleaf.Items.Remove((DocTemplateItem)e.Row.Tag);
+            }
+            else
+            {
+                this.m_conceptroot.ApplicableItems.Remove((DocTemplateItem)e.Row.Tag);
+            }
         }
 
         private void dataGridViewConceptRules_DataError(object sender, DataGridViewDataErrorEventArgs e)
@@ -412,10 +456,19 @@ namespace IfcDoc
                 }
             }
 
-            DocTemplateUsage docUsage = (DocTemplateUsage)this.m_conceptleaf;
-            if (docUsage.Items.Count > e.RowIndex)
+            List<DocTemplateItem> listItems = null;
+            if(this.m_conceptleaf != null)
             {
-                DocTemplateItem docItem = docUsage.Items[e.RowIndex];
+                listItems = this.m_conceptleaf.Items;
+            }
+            else
+            {
+                listItems = this.m_conceptroot.ApplicableItems;
+            }
+
+            if (listItems.Count > e.RowIndex)
+            {
+                DocTemplateItem docItem = listItems[e.RowIndex];
                 docItem.RuleParameters = sb.ToString();
                 object val = this.dataGridViewConceptRules[this.dataGridViewConceptRules.Columns.Count - 1, e.RowIndex].Value;
                 docItem.Documentation = val as string;
@@ -531,30 +584,36 @@ namespace IfcDoc
         {
             this.m_editcon = true;
             int index = this.dataGridViewConceptRules.SelectedRows[0].Index;
-            DocTemplateUsage docUsage = (DocTemplateUsage)this.m_conceptleaf;
-            docUsage.Items.RemoveAt(index);
+            if(this.m_conceptleaf != null)
+            {
+                this.m_conceptleaf.Items.RemoveAt(index);
+            }
+            else
+            {
+                this.m_conceptroot.ApplicableItems.RemoveAt(index);
+            }
             this.m_editcon = false;
 
             LoadUsage();
-
-            /*
-            this.m_editcon = true;
-            if (this.dataGridViewConceptRules.Rows.Count > index)
-            {
-                this.dataGridViewConceptRules.Rows[index].Selected = true;
-            }
-            this.m_editcon = false;
-            */
         }
 
         private void toolStripButtonMoveUp_Click(object sender, EventArgs e)
         {
             this.m_editcon = true;
             int index = this.dataGridViewConceptRules.SelectedRows[0].Index;
-            DocTemplateUsage docUsage = (DocTemplateUsage)this.m_conceptleaf;
-            DocTemplateItem dti = docUsage.Items[index];
-            docUsage.Items.Insert(index - 1, dti);
-            docUsage.Items.RemoveAt(index + 1);
+
+            List<DocTemplateItem> listItems = null;
+            if(this.m_conceptleaf != null)
+            {
+                listItems = this.m_conceptleaf.Items;
+            }
+            else
+            {
+                listItems = this.m_conceptroot.ApplicableItems;
+            }
+            DocTemplateItem dti = listItems[index];
+            listItems.Insert(index - 1, dti);
+            listItems.RemoveAt(index + 1);
 
             LoadUsage();
             this.m_editcon = false;
@@ -566,10 +625,19 @@ namespace IfcDoc
             int index = this.dataGridViewConceptRules.SelectedRows[0].Index;
             if (index < this.dataGridViewConceptRules.Rows.Count - 2)
             {
-                DocTemplateUsage docUsage = (DocTemplateUsage)this.m_conceptleaf;
-                DocTemplateItem dti = docUsage.Items[index];
-                docUsage.Items.Insert(index + 2, dti);
-                docUsage.Items.RemoveAt(index);
+                List<DocTemplateItem> listItems = null;
+                if (this.m_conceptleaf != null)
+                {
+                    listItems = this.m_conceptleaf.Items;
+                }
+                else
+                {
+                    listItems = this.m_conceptroot.ApplicableItems;
+                }
+
+                DocTemplateItem dti = listItems[index];
+                listItems.Insert(index + 2, dti);
+                listItems.RemoveAt(index);
 
                 LoadUsage();
                 this.dataGridViewConceptRules.Rows[index + 1].Selected = true;
@@ -620,14 +688,33 @@ namespace IfcDoc
 
         private void toolStripButtonConceptTemplate_Click(object sender, EventArgs e)
         {
-            using (FormSelectTemplate form = new FormSelectTemplate(this.m_conceptleaf.Definition, this.m_project, this.m_conceptroot.ApplicableEntity))
+            DocTemplateDefinition docTemplate = null;
+            if (this.m_conceptleaf != null)
+            {
+                docTemplate = this.m_conceptleaf.Definition;
+            }
+            else
+            {
+                docTemplate = this.m_conceptroot.ApplicableTemplate;
+            }
+
+            using (FormSelectTemplate form = new FormSelectTemplate(docTemplate, this.m_project, this.m_conceptroot.ApplicableEntity))
             {
                 if (form.ShowDialog(this) == DialogResult.OK && form.SelectedTemplate != null)
                 {
-                    this.m_conceptleaf.Definition = form.SelectedTemplate;
-                    this.m_conceptleaf.Items.Clear();
+                    if (this.m_conceptleaf != null)
+                    {
+                        this.m_conceptleaf.Definition = form.SelectedTemplate;
+                        this.m_conceptleaf.Items.Clear();
+                    }
+                    else
+                    {
+                        this.m_conceptroot.ApplicableTemplate = form.SelectedTemplate;
+                        this.m_conceptroot.ApplicableItems.Clear();
+                    }
 
-                    //this.textBoxConceptTemplate.Text = this.m_conceptleaf.Definition.Name;
+                    this.LoadUsage();
+                    this.LoadInheritance();
                 }
             }
         }

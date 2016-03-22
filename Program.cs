@@ -16,9 +16,12 @@ using IfcDoc.Schema.MVD;
 using IfcDoc.Schema.PSD;
 using IfcDoc.Schema.IFC;
 using IfcDoc.Schema.SCH;
-using IfcDoc.Format.MDB;
 using IfcDoc.Format.SPF;
 using IfcDoc.Format.HTM;
+
+#if MDB
+    using IfcDoc.Format.MDB;
+#endif
 
 namespace IfcDoc
 {
@@ -1242,7 +1245,7 @@ namespace IfcDoc
                         ifcProp.Enumerators = new IfcPropertyEnumeration();
                         ifcProp.GlobalId = SGuid.Format(docEnumeration.Uuid);
                         ifcProp.Enumerators.Name = docEnumeration.Name;
-                        ifcProp.Enumerators.EnumerationValues = new List<IfcLabel>();
+                        ifcProp.Enumerators.EnumerationValues = new List<IfcValue>();
                         ifcProp.SecondaryMeasureType = null;
 
                         foreach(DocPropertyConstant docConst in docEnumeration.Constants)
@@ -1597,7 +1600,10 @@ namespace IfcDoc
             }
 
             docprop.Name = def.Name;
-            docprop.Documentation = def.Definition.Trim();
+            if (def.Definition != null)
+            {
+                docprop.Documentation = def.Definition.Trim();
+            }
             docprop.PropertyType = proptype;
             docprop.PrimaryDataType = datatype;
             docprop.SecondaryDataType = elemtype.Trim();
@@ -1891,7 +1897,29 @@ namespace IfcDoc
                         }
 
                         docReq.Applicability = (DocExchangeApplicabilityEnum)mvdReq.Applicability;
-                        docReq.Requirement = (DocExchangeRequirementEnum)mvdReq.Requirement;
+
+                        switch(mvdReq.Requirement)
+                        {
+                            case RequirementEnum.Mandatory:
+                                docReq.Requirement = DocExchangeRequirementEnum.Mandatory;
+                                break;
+
+                            case RequirementEnum.Recommended:
+                                docReq.Requirement = DocExchangeRequirementEnum.Optional;
+                                break;
+
+                            case RequirementEnum.NotRelevant:
+                                docReq.Requirement = DocExchangeRequirementEnum.NotRelevant;
+                                break;
+
+                            case RequirementEnum.NotRecommended:
+                                docReq.Requirement = DocExchangeRequirementEnum.NotRecommended;
+                                break;
+
+                            case RequirementEnum.Excluded:
+                                docReq.Requirement = DocExchangeRequirementEnum.Excluded;
+                                break;
+                        }
                     }
                 }
 
@@ -2112,11 +2140,11 @@ namespace IfcDoc
                             break;
 
                         case DocExchangeRequirementEnum.Optional:
-                            mvdRequirement.Requirement = RequirementEnum.Optional;
+                            mvdRequirement.Requirement = RequirementEnum.Recommended;
                             break;
 
                         default:
-                            mvdRequirement.Requirement = RequirementEnum.Optional;
+                            mvdRequirement.Requirement = RequirementEnum.NotRelevant;
                             break;
                     }
 
@@ -2162,6 +2190,7 @@ namespace IfcDoc
             DocProject docProject,
             Dictionary<DocObject, bool> included)
         {
+            mvd.Uuid = Guid.NewGuid(); // changes every time saved
             mvd.Name = String.Empty;
 
             foreach (DocTemplateDefinition docTemplateDef in docProject.Templates)
@@ -2239,6 +2268,16 @@ namespace IfcDoc
             }
         }
 
+        private static string EnsureValidString(string value)
+        {
+            if (String.IsNullOrEmpty(value))
+            {
+                return null;
+            }
+
+            return value;
+        }
+
         /// <summary>
         /// Helper function to populate attributes
         /// </summary>
@@ -2246,19 +2285,21 @@ namespace IfcDoc
         /// <param name="doc"></param>
         private static void ExportMvdObject(Element mvd, DocObject doc)
         {
-            mvd.Name = doc.Name;
+            mvd.Name = EnsureValidString(doc.Name);
             mvd.Uuid = doc.Uuid;
-            mvd.Version = doc.Version;
-            mvd.Owner = doc.Owner;
-            mvd.Status = doc.Status;
-            mvd.Copyright = doc.Copyright;
-            mvd.Code = doc.Code;
-            mvd.Author = doc.Author;
+            mvd.Version = EnsureValidString(doc.Version);
+            mvd.Owner = EnsureValidString(doc.Owner);
+            mvd.Status = EnsureValidString(doc.Status);
+            mvd.Copyright = EnsureValidString(doc.Copyright);
+            mvd.Code = EnsureValidString(doc.Code);
+            mvd.Author = EnsureValidString(doc.Author);
 
+#if false // why?
             if(mvd.Name == null)
             {
                 mvd.Name = String.Empty;
             }
+#endif
 
             if (doc.Documentation != null)
             {

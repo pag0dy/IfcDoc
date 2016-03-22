@@ -38,6 +38,7 @@ namespace IfcDoc
             TabPage tabpageExist = this.tabControl.SelectedTab;
 
             this.tabControl.TabPages.Clear();
+            this.panelIdentityIcon.Visible = false;
 
             this.m_path = path;
             if (this.m_path == null)
@@ -153,6 +154,23 @@ namespace IfcDoc
                         this.listViewViewXsd.Items.Add(lvi);
                     }
                 }
+
+                this.panelIdentityIcon.Visible = true;
+                if (docView.Icon != null)
+                {
+                    try
+                    {
+                        this.panelIcon.BackgroundImage = Image.FromStream(new System.IO.MemoryStream(docView.Icon));
+                    }
+                    catch
+                    {
+                    }
+                }
+                else
+                {
+                    this.panelIcon.BackgroundImage = null;
+                }
+
             }
             else if (docObject is DocExchangeDefinition)
             {
@@ -162,6 +180,7 @@ namespace IfcDoc
                 this.checkBoxExchangeImport.Checked = ((docExchange.Applicability & DocExchangeApplicabilityEnum.Import) != 0);
                 this.checkBoxExchangeExport.Checked = ((docExchange.Applicability & DocExchangeApplicabilityEnum.Export) != 0);
 
+                this.panelIdentityIcon.Visible = true;
                 if (docExchange.Icon != null)
                 {
                     try
@@ -228,9 +247,17 @@ namespace IfcDoc
             }
             else if (docObject is DocConceptRoot)
             {
+                this.tabPageConcept.Text = "Applicability";
+                this.tabControl.TabPages.Add(this.tabPageConcept);
                 this.tabControl.TabPages.Add(this.tabPageConceptRoot);
 
                 DocConceptRoot docRoot = (DocConceptRoot)docObject;
+
+                this.ctlParameters.Project = this.m_project;
+                this.ctlParameters.ConceptRoot = docRoot;
+                this.ctlParameters.ConceptItem = this.ctlParameters.ConceptRoot;
+                this.ctlParameters.ConceptLeaf = null;
+
 
                 //DocEntity docEntity = (DocEntity)this.m_parent;
 
@@ -311,6 +338,7 @@ namespace IfcDoc
             }
             else if (docObject is DocTemplateUsage)
             {
+                this.tabPageConcept.Text = "Concept";
                 this.tabControl.TabPages.Add(this.tabPageConcept);
                 this.tabControl.TabPages.Add(this.tabPageRequirements);
 
@@ -441,8 +469,9 @@ namespace IfcDoc
             }
             else if (docObject is DocExample)
             {
-                this.tabControl.TabPages.Add(this.tabPagePropertySet);
-                this.tabControl.TabPages.Add(this.tabPageExample);
+                this.tabControl.TabPages.Add(this.tabPageExample); // 
+                this.tabControl.TabPages.Add(this.tabPageViews); // applicable views
+                this.tabControl.TabPages.Add(this.tabPagePropertySet); // applicable entities
                 this.LoadApplicability();
                 this.comboBoxPsetType.Enabled = false;
                 this.buttonApplicabilityAddTemplate.Visible = true;
@@ -451,19 +480,46 @@ namespace IfcDoc
                 if (docExample.File != null)
                 {
                     this.textBoxExample.Text = Encoding.ASCII.GetString(docExample.File);
-                    this.buttonExampleClear.Enabled = true;
+                    this.toolStripButtonExampleClear.Enabled = true;
                 }
                 else
                 {
                     this.textBoxExample.Text = String.Empty;
-                    this.buttonExampleClear.Enabled = false;
+                    this.toolStripButtonExampleClear.Enabled = false;
                 }
 
-                this.checkedListBoxExampleViews.Items.Clear();
-                foreach (DocModelView docView in this.m_project.ModelViews)
+                this.LoadReferencedViews();
+            }
+            else if(docObject is DocPublication)
+            {
+                DocPublication docPublication = (DocPublication)docObject;
+
+                this.tabControl.TabPages.Add(this.tabPagePublication);
+                this.tabControl.TabPages.Add(this.tabPageViews);
+                this.tabControl.TabPages.Add(this.tabPageFormats);
+                this.LoadReferencedViews();
+
+                this.textBoxHeader.Text = docPublication.Header;
+                this.textBoxFooter.Text = docPublication.Footer;
+                this.checkBoxPublishHideHistory.Checked = docPublication.HideHistory;
+                this.checkBoxPublishISO.Checked = docPublication.ISO;
+                this.checkBoxPublishUML.Checked = docPublication.UML;
+                //this.checkBoxPublishComparison.Checked = docPublication.Comparison;
+                this.checkBoxPublishExchangeTables.Checked = docPublication.Exchanges;
+
+                this.listViewFormats.Items.Clear();
+                foreach(DocFormat docFormat in docPublication.Formats)
                 {
-                    this.checkedListBoxExampleViews.Items.Add(docView, (docExample.Views.Contains(docView)));
+                    ListViewItem lvi = new ListViewItem();
+                    lvi.ImageIndex = 0;
+                    lvi.Tag = docFormat;
+                    lvi.Text = docFormat.FormatType.ToString();
+                    lvi.SubItems.Add(docFormat.FormatOptions.ToString());
+                    this.listViewFormats.Items.Add(lvi);
                 }
+
+
+                UpdateFormatOption();
             }
             else if(docObject is DocChangeAction)
             {
@@ -720,172 +776,6 @@ namespace IfcDoc
                 tnRule.BackColor = Color.Empty;
             }
             tnRule.ToolTipText = tooltip;
-        }
-
-        private void listViewExchange_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (this.listViewExchange.SelectedItems.Count == 0)
-            {
-                // disable all
-                this.radioButtonImportNone.Enabled = false;
-                this.radioButtonImportExcluded.Enabled = false;
-                this.radioButtonImportOptional.Enabled = false;
-                this.radioButtonImportMandatory.Enabled = false;
-                this.radioButtonExportNone.Enabled = false;
-                this.radioButtonExportExcluded.Enabled = false;
-                this.radioButtonExportOptional.Enabled = false;
-                this.radioButtonExportMandatory.Enabled = false;
-                return;
-            }
-
-            this.radioButtonImportNone.Enabled = true;
-            this.radioButtonImportExcluded.Enabled = true;
-            this.radioButtonImportOptional.Enabled = true;
-            this.radioButtonImportMandatory.Enabled = true;
-            this.radioButtonExportNone.Enabled = true;
-            this.radioButtonExportExcluded.Enabled = true;
-            this.radioButtonExportOptional.Enabled = true;
-            this.radioButtonExportMandatory.Enabled = true;
-
-            LoadExchangeRequirement(this.radioButtonImportNone, DocExchangeApplicabilityEnum.Import, DocExchangeRequirementEnum.NotRelevant);
-            LoadExchangeRequirement(this.radioButtonImportExcluded, DocExchangeApplicabilityEnum.Import, DocExchangeRequirementEnum.Excluded);
-            LoadExchangeRequirement(this.radioButtonImportOptional, DocExchangeApplicabilityEnum.Import, DocExchangeRequirementEnum.Optional);
-            LoadExchangeRequirement(this.radioButtonImportMandatory, DocExchangeApplicabilityEnum.Import, DocExchangeRequirementEnum.Mandatory);
-            LoadExchangeRequirement(this.radioButtonExportNone, DocExchangeApplicabilityEnum.Export, DocExchangeRequirementEnum.NotRelevant);
-            LoadExchangeRequirement(this.radioButtonExportExcluded, DocExchangeApplicabilityEnum.Export, DocExchangeRequirementEnum.Excluded);
-            LoadExchangeRequirement(this.radioButtonExportOptional, DocExchangeApplicabilityEnum.Export, DocExchangeRequirementEnum.Optional);
-            LoadExchangeRequirement(this.radioButtonExportMandatory, DocExchangeApplicabilityEnum.Export, DocExchangeRequirementEnum.Mandatory);
-        }
-
-        private void LoadExchangeRequirement(RadioButton button, DocExchangeApplicabilityEnum applicability, DocExchangeRequirementEnum requirement)
-        {
-            DocTemplateUsage docUsage = (DocTemplateUsage)this.m_target;
-
-            bool? common = null; // the common value
-            bool varies = false; // whether value varies among objects
-
-            foreach (ListViewItem lvi in this.listViewExchange.SelectedItems)
-            {
-                DocExchangeDefinition docDef = (DocExchangeDefinition)lvi.Tag;
-
-                // find exchange on usage
-                foreach (DocExchangeItem docItem in docUsage.Exchanges)
-                {
-                    if (docItem.Exchange == docDef && docItem.Applicability == applicability)
-                    {
-                        bool eachval = (docItem.Requirement == requirement);
-                        if (common == null)
-                        {
-                            common = eachval;
-                        }
-                        else if (common != eachval)
-                        {
-                            varies = true;
-                        }
-                    }
-                }
-            }
-
-            this.m_loadreq = true;
-            button.Checked = (common == true && !varies);
-            this.m_loadreq = false;
-        }
-
-        private void ApplyExchangeRequirement(DocExchangeApplicabilityEnum applicability, DocExchangeRequirementEnum requirement)
-        {
-            if (m_loadreq)
-                return;
-
-            // commit changes
-
-            DocTemplateUsage docUsage = (DocTemplateUsage)this.m_target;
-
-            foreach (ListViewItem lvi in this.listViewExchange.SelectedItems)
-            {
-                DocExchangeDefinition docExchange = (DocExchangeDefinition)lvi.Tag;
-
-                // find existing  
-                bool exists = false;
-                foreach (DocExchangeItem docItem in docUsage.Exchanges)
-                {
-                    if (docItem.Exchange == docExchange && docItem.Applicability == applicability)
-                    {
-                        // found it
-                        if (requirement == DocExchangeRequirementEnum.NotRelevant)
-                        {
-                            // delete item (reduce size)
-                            docUsage.Exchanges.Remove(docItem);
-                            docItem.Delete();
-                        }
-                        else
-                        {
-                            // update item
-                            docItem.Requirement = requirement;
-                        }
-                        exists = true;
-                        break; // perf, and collection may have been modified
-                    }
-                }
-
-                if (!exists)
-                {
-                    DocExchangeItem docItem = new DocExchangeItem();
-                    docItem.Exchange = docExchange;
-                    docItem.Applicability = applicability;
-                    docItem.Requirement = requirement;
-                    docUsage.Exchanges.Add(docItem);
-                }
-
-                // update list
-                if (applicability == DocExchangeApplicabilityEnum.Import)
-                {
-                    lvi.SubItems[1].Text = requirement.ToString();
-                }
-                else if (applicability == DocExchangeApplicabilityEnum.Export)
-                {
-                    lvi.SubItems[2].Text = requirement.ToString();
-                }
-            }            
-        }
-
-        private void radioButtonImportNone_CheckedChanged(object sender, EventArgs e)
-        {
-            ApplyExchangeRequirement(DocExchangeApplicabilityEnum.Import, DocExchangeRequirementEnum.NotRelevant);
-        }
-
-        private void radioButtonImportExcluded_CheckedChanged(object sender, EventArgs e)
-        {
-            ApplyExchangeRequirement(DocExchangeApplicabilityEnum.Import, DocExchangeRequirementEnum.Excluded);
-        }
-
-        private void radioButtonImportOptional_CheckedChanged(object sender, EventArgs e)
-        {
-            ApplyExchangeRequirement(DocExchangeApplicabilityEnum.Import, DocExchangeRequirementEnum.Optional);
-        }
-
-        private void radioButtonImportMandatory_CheckedChanged(object sender, EventArgs e)
-        {
-            ApplyExchangeRequirement(DocExchangeApplicabilityEnum.Import, DocExchangeRequirementEnum.Mandatory);
-        }
-
-        private void radioButtonExportNone_CheckedChanged(object sender, EventArgs e)
-        {
-            ApplyExchangeRequirement(DocExchangeApplicabilityEnum.Export, DocExchangeRequirementEnum.NotRelevant);
-        }
-
-        private void radioButtonExportExcluded_CheckedChanged(object sender, EventArgs e)
-        {
-            ApplyExchangeRequirement(DocExchangeApplicabilityEnum.Export, DocExchangeRequirementEnum.Excluded);
-        }
-
-        private void radioButtonExportOptional_CheckedChanged(object sender, EventArgs e)
-        {
-            ApplyExchangeRequirement(DocExchangeApplicabilityEnum.Export, DocExchangeRequirementEnum.Optional);
-        }
-
-        private void radioButtonExportMandatory_CheckedChanged(object sender, EventArgs e)
-        {
-            ApplyExchangeRequirement(DocExchangeApplicabilityEnum.Export, DocExchangeRequirementEnum.Mandatory);
         }
 
         private void listViewLocale_SelectedIndexChanged(object sender, EventArgs e)
@@ -1564,17 +1454,25 @@ namespace IfcDoc
             if (res != System.Windows.Forms.DialogResult.OK)
                 return;
 
-            DocExchangeDefinition docExchange = (DocExchangeDefinition)this.m_target;
-
+            byte[] icon = null;
             try
             {
                 using (System.IO.FileStream filestream = new System.IO.FileStream(this.openFileDialogIcon.FileName, System.IO.FileMode.Open, System.IO.FileAccess.Read))
                 {
-                    docExchange.Icon = new byte[filestream.Length];
-                    filestream.Read(docExchange.Icon, 0, docExchange.Icon.Length);
+                    icon = new byte[filestream.Length];
+                    filestream.Read(icon, 0, icon.Length);
                 }
 
-                this.panelIcon.BackgroundImage = Image.FromStream(new System.IO.MemoryStream(docExchange.Icon));
+                this.panelIcon.BackgroundImage = Image.FromStream(new System.IO.MemoryStream(icon));
+
+                if(this.m_target is DocExchangeDefinition)
+                {
+                    ((DocExchangeDefinition)this.m_target).Icon = icon;
+                }
+                else if(this.m_target is DocModelView)
+                {
+                    ((DocModelView)this.m_target).Icon = icon;
+                }
             }
             catch(Exception x)
             {
@@ -1584,9 +1482,15 @@ namespace IfcDoc
 
         private void buttonExchangeIconClear_Click(object sender, EventArgs e)
         {
-            DocExchangeDefinition docExchange = (DocExchangeDefinition)this.m_target;
+            if(this.m_target is DocExchangeDefinition)
+            {
+                ((DocExchangeDefinition)this.m_target).Icon = null;
+            }
+            else if (this.m_target is DocModelView)
+            {
+                ((DocModelView)this.m_target).Icon = null;
+            }
 
-            docExchange.Icon = null;
             this.panelIcon.BackgroundImage = null;
         }
 
@@ -2013,20 +1917,26 @@ namespace IfcDoc
             if (this.openFileDialogExample.ShowDialog() == DialogResult.OK)
             {
                 DocExample docExample = (DocExample)this.m_target;
-                using(System.IO.FileStream fs = new System.IO.FileStream(this.openFileDialogExample.FileName, System.IO.FileMode.Open))
+                try
                 {
-                    if (fs.Length < Int32.MaxValue)
+                    using (System.IO.FileStream fs = new System.IO.FileStream(this.openFileDialogExample.FileName, System.IO.FileMode.Open, System.IO.FileAccess.Read))
                     {
-                        docExample.File = new byte[fs.Length];
-                        fs.Read(docExample.File, 0, (int)fs.Length);
-                        this.textBoxExample.Text = Encoding.ASCII.GetString(docExample.File);
-                    }
-                    else
-                    {
-                        MessageBox.Show("File is too large. Example files must be 2 GB or less, and recommended to be far less than that for documentation usability.");
+                        if (fs.Length < Int32.MaxValue)
+                        {
+                            docExample.File = new byte[fs.Length];
+                            fs.Read(docExample.File, 0, (int)fs.Length);
+                            this.textBoxExample.Text = Encoding.ASCII.GetString(docExample.File);
+                        }
+                        else
+                        {
+                            MessageBox.Show("File is too large. Example files must be 2 GB or less, and recommended to be far less than that for documentation usability.");
+                        }
                     }
                 }
-
+                catch(Exception xx)
+                {
+                    MessageBox.Show(xx.Message);
+                }
             }
         }
 
@@ -2035,27 +1945,6 @@ namespace IfcDoc
             DocExample docExample = (DocExample)this.m_target;
             docExample.File = null;
             this.textBoxExample.Text = String.Empty;
-        }
-
-        private void checkedListBoxExampleViews_ItemCheck(object sender, ItemCheckEventArgs e)
-        {
-            DocExample docExample = (DocExample)this.m_target;
-            DocModelView docView = (DocModelView)this.checkedListBoxExampleViews.Items[e.Index];
-            if (e.NewValue == CheckState.Checked)
-            {
-                if (!docExample.Views.Contains(docView))
-                {
-                    docExample.Views.Add(docView);
-                }
-            }
-            else if(e.NewValue == CheckState.Unchecked)
-            {
-                while (docExample.Views.Contains(docView))
-                {
-                    docExample.Views.Remove(docView);
-                }
-            }
-
         }
 
         private void buttonEntityBase_Click(object sender, EventArgs e)
@@ -2375,6 +2264,358 @@ namespace IfcDoc
             docView.XsdUri = this.textBoxViewXsdNamespace.Text;
         }
 
-        
+        private void toolStripButtonReqImportMandatory_Click(object sender, EventArgs e)
+        {
+            this.ApplyExchangeRequirement(this.toolStripButtonReqImportMandatory, DocExchangeApplicabilityEnum.Import, DocExchangeRequirementEnum.Mandatory);
+        }
+
+        private void toolStripButtonReqImportRecommended_Click(object sender, EventArgs e)
+        {
+            this.ApplyExchangeRequirement(this.toolStripButtonReqImportRecommended, DocExchangeApplicabilityEnum.Import, DocExchangeRequirementEnum.Optional);
+        }
+
+        private void toolStripButtonReqImportNotRecommended_Click(object sender, EventArgs e)
+        {
+            this.ApplyExchangeRequirement(this.toolStripButtonReqImportNotRecommended, DocExchangeApplicabilityEnum.Import, DocExchangeRequirementEnum.NotRecommended);
+        }
+
+        private void toolStripButtonReqImportExcluded_Click(object sender, EventArgs e)
+        {
+            this.ApplyExchangeRequirement(this.toolStripButtonReqImportExcluded, DocExchangeApplicabilityEnum.Import, DocExchangeRequirementEnum.Excluded);
+        }
+
+        private void toolStripButtonReqExportExcluded_Click(object sender, EventArgs e)
+        {
+            this.ApplyExchangeRequirement(this.toolStripButtonReqExportExcluded, DocExchangeApplicabilityEnum.Export, DocExchangeRequirementEnum.Excluded);
+        }
+
+        private void toolStripButtonReqExportNotRecommended_Click(object sender, EventArgs e)
+        {
+            this.ApplyExchangeRequirement(this.toolStripButtonReqExportNotRecommended, DocExchangeApplicabilityEnum.Export, DocExchangeRequirementEnum.NotRecommended);
+        }
+
+        private void toolStripButtonReqExportRecommended_Click(object sender, EventArgs e)
+        {
+            this.ApplyExchangeRequirement(this.toolStripButtonReqExportRecommended, DocExchangeApplicabilityEnum.Export, DocExchangeRequirementEnum.Optional);
+        }
+
+        private void toolStripButtonReqExportMandatory_Click(object sender, EventArgs e)
+        {
+            this.ApplyExchangeRequirement(this.toolStripButtonReqExportMandatory, DocExchangeApplicabilityEnum.Export, DocExchangeRequirementEnum.Mandatory);
+        }
+
+        private void listViewExchange_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (this.listViewExchange.SelectedItems.Count == 0)
+            {
+                // disable all
+                this.toolStripButtonReqImportMandatory.Enabled = false;
+                this.toolStripButtonReqImportRecommended.Enabled = false;
+                this.toolStripButtonReqImportNotRecommended.Enabled = false;
+                this.toolStripButtonReqImportExcluded.Enabled = false;
+                this.toolStripButtonReqExportExcluded.Enabled = false;
+                this.toolStripButtonReqExportNotRecommended.Enabled = false;
+                this.toolStripButtonReqExportRecommended.Enabled = false;
+                this.toolStripButtonReqExportMandatory.Enabled = false;
+                return;
+            }
+
+            this.toolStripButtonReqImportMandatory.Enabled = true;
+            this.toolStripButtonReqImportRecommended.Enabled = true;
+            this.toolStripButtonReqImportNotRecommended.Enabled = true;
+            this.toolStripButtonReqImportExcluded.Enabled = true;
+            this.toolStripButtonReqExportExcluded.Enabled = true;
+            this.toolStripButtonReqExportNotRecommended.Enabled = true;
+            this.toolStripButtonReqExportRecommended.Enabled = true;
+            this.toolStripButtonReqExportMandatory.Enabled = true;
+
+            LoadExchangeRequirement(this.toolStripButtonReqImportMandatory, DocExchangeApplicabilityEnum.Import, DocExchangeRequirementEnum.Mandatory);
+            LoadExchangeRequirement(this.toolStripButtonReqImportRecommended, DocExchangeApplicabilityEnum.Import, DocExchangeRequirementEnum.Optional);
+            LoadExchangeRequirement(this.toolStripButtonReqImportNotRecommended, DocExchangeApplicabilityEnum.Import, DocExchangeRequirementEnum.NotRecommended);
+            LoadExchangeRequirement(this.toolStripButtonReqImportExcluded, DocExchangeApplicabilityEnum.Import, DocExchangeRequirementEnum.Excluded);
+            LoadExchangeRequirement(this.toolStripButtonReqExportExcluded, DocExchangeApplicabilityEnum.Export, DocExchangeRequirementEnum.Excluded);
+            LoadExchangeRequirement(this.toolStripButtonReqExportNotRecommended, DocExchangeApplicabilityEnum.Export, DocExchangeRequirementEnum.NotRecommended);
+            LoadExchangeRequirement(this.toolStripButtonReqExportRecommended, DocExchangeApplicabilityEnum.Export, DocExchangeRequirementEnum.Optional);
+            LoadExchangeRequirement(this.toolStripButtonReqExportMandatory, DocExchangeApplicabilityEnum.Export, DocExchangeRequirementEnum.Mandatory);
+        }
+
+        private void LoadExchangeRequirement(ToolStripButton button, DocExchangeApplicabilityEnum applicability, DocExchangeRequirementEnum requirement)
+        {
+            DocTemplateUsage docUsage = (DocTemplateUsage)this.m_target;
+
+            bool? common = null; // the common value
+            bool varies = false; // whether value varies among objects
+
+            foreach (ListViewItem lvi in this.listViewExchange.SelectedItems)
+            {
+                DocExchangeDefinition docDef = (DocExchangeDefinition)lvi.Tag;
+
+                // find exchange on usage
+                foreach (DocExchangeItem docItem in docUsage.Exchanges)
+                {
+                    if (docItem.Exchange == docDef && docItem.Applicability == applicability)
+                    {
+                        bool eachval = (docItem.Requirement == requirement);
+                        if (common == null)
+                        {
+                            common = eachval;
+                        }
+                        else if (common != eachval)
+                        {
+                            varies = true;
+                        }
+                    }
+                }
+            }
+
+            this.m_loadreq = true;
+            button.Checked = (common == true && !varies);
+            this.m_loadreq = false;
+        }
+
+        private void ApplyExchangeRequirement(ToolStripButton button, DocExchangeApplicabilityEnum applicability, DocExchangeRequirementEnum requirement)
+        {
+            if (m_loadreq)
+                return;
+
+            // if already checked, then reset
+            if (button.Checked)
+            {
+                requirement = DocExchangeRequirementEnum.NotRelevant;
+            }
+
+            // commit changes
+
+            DocTemplateUsage docUsage = (DocTemplateUsage)this.m_target;
+
+            foreach (ListViewItem lvi in this.listViewExchange.SelectedItems)
+            {
+                DocExchangeDefinition docExchange = (DocExchangeDefinition)lvi.Tag;
+
+                // find existing  
+                bool exists = false;
+                foreach (DocExchangeItem docItem in docUsage.Exchanges)
+                {
+                    if (docItem.Exchange == docExchange && docItem.Applicability == applicability)
+                    {
+                        // found it
+                        if (requirement == DocExchangeRequirementEnum.NotRelevant)
+                        {
+                            // delete item (reduce size)
+                            docUsage.Exchanges.Remove(docItem);
+                            docItem.Delete();
+                        }
+                        else
+                        {
+                            // update item
+                            docItem.Requirement = requirement;
+                        }
+                        exists = true;
+                        break; // perf, and collection may have been modified
+                    }
+                }
+
+                if (!exists)
+                {
+                    DocExchangeItem docItem = new DocExchangeItem();
+                    docItem.Exchange = docExchange;
+                    docItem.Applicability = applicability;
+                    docItem.Requirement = requirement;
+                    docUsage.Exchanges.Add(docItem);
+                }
+
+                // update list
+                if (applicability == DocExchangeApplicabilityEnum.Import)
+                {
+                    lvi.SubItems[1].Text = requirement.ToString();
+                }
+                else if (applicability == DocExchangeApplicabilityEnum.Export)
+                {
+                    lvi.SubItems[2].Text = requirement.ToString();
+                }
+
+                // force update of buttons
+                listViewExchange_SelectedIndexChanged(this, EventArgs.Empty);
+            }
+
+        }
+
+        private void LoadReferencedViews()
+        {
+            List<DocModelView> list = null;
+            if (this.m_target is DocPublication)
+            {
+                list = ((DocPublication)this.m_target).Views;
+            }
+            else if (this.m_target is DocExample)
+            {
+                list = ((DocExample)this.m_target).Views;
+            }
+
+            this.listViewViews.Items.Clear();
+            foreach (DocModelView docView in list)
+            {
+                ListViewItem lvi = new ListViewItem();
+                lvi.Tag = docView;
+                lvi.Text = docView.Name;
+                this.listViewViews.Items.Add(lvi);
+            }
+        }
+
+        private void toolStripButtonViewInsert_Click(object sender, EventArgs e)
+        {
+            List<DocModelView> list = null;
+            if (this.m_target is DocPublication)
+            {
+                list = ((DocPublication)this.m_target).Views;
+            }
+            else if (this.m_target is DocExample)
+            {
+                list = ((DocExample)this.m_target).Views;
+            }
+
+            using (FormSelectView form = new FormSelectView(this.m_project, "Select the view(s) to include."))
+            {
+                if (form.ShowDialog(this) == DialogResult.OK)
+                {
+                    foreach(DocModelView docView in form.Selection)
+                    {
+                        if(!list.Contains(docView))
+                        {
+                            list.Add(docView);
+                        }
+                    }
+
+                    this.LoadReferencedViews();
+                }
+            }
+
+        }
+
+        private void toolStripButtonViewRemove_Click(object sender, EventArgs e)
+        {
+            List<DocModelView> list = null;
+            if (this.m_target is DocPublication)
+            {
+                list = ((DocPublication)this.m_target).Views;
+            }
+            else if (this.m_target is DocExample)
+            {
+                list = ((DocExample)this.m_target).Views;
+            }
+
+            for (int i = this.listViewViews.SelectedIndices.Count-1; i >= 0; i--)
+            {
+                list.RemoveAt(this.listViewViews.SelectedIndices[i]);
+            }
+
+            this.LoadReferencedViews();
+        }
+
+        private void listViewViews_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.toolStripButtonViewRemove.Enabled = (this.listViewViews.SelectedIndices.Count > 0);
+        }
+
+        private void toolStripButtonFormatSchema_Click(object sender, EventArgs e)
+        {
+            SetFormatOption(DocFormatOptionEnum.Schema);
+        }
+
+        private void toolStripButtonFormatExamples_Click(object sender, EventArgs e)
+        {
+            SetFormatOption(DocFormatOptionEnum.Examples);
+        }
+
+        private void toolStripButtonFormatMarkup_Click(object sender, EventArgs e)
+        {
+            SetFormatOption(DocFormatOptionEnum.Markup);
+        }
+
+        private void SetFormatOption(DocFormatOptionEnum option)
+        {
+            DocFormat docFormat = (DocFormat)this.listViewFormats.SelectedItems[0].Tag;
+            docFormat.FormatOptions = option;
+
+            this.listViewFormats.SelectedItems[0].SubItems[1].Text = option.ToString();
+            UpdateFormatOption();
+        }
+
+        private void listViewFormats_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdateFormatOption();
+        }
+
+        private void UpdateFormatOption()
+        {
+            if (this.listViewFormats.SelectedItems.Count == 1)
+            {
+                this.toolStripButtonFormatSchema.Enabled = true;
+                this.toolStripButtonFormatExamples.Enabled = true;
+                this.toolStripButtonFormatMarkup.Enabled = true;
+
+                ListViewItem lvi = (ListViewItem)this.listViewFormats.SelectedItems[0];
+                DocFormat docFormat = (DocFormat)lvi.Tag;
+                this.toolStripButtonFormatNone.Checked = (docFormat.FormatOptions == DocFormatOptionEnum.None);
+                this.toolStripButtonFormatSchema.Checked = (docFormat.FormatOptions == DocFormatOptionEnum.Schema);
+                this.toolStripButtonFormatExamples.Checked = (docFormat.FormatOptions == DocFormatOptionEnum.Examples);
+                this.toolStripButtonFormatMarkup.Checked = (docFormat.FormatOptions == DocFormatOptionEnum.Markup);
+                lvi.SubItems[1].Text = docFormat.FormatOptions.ToString();
+            }
+            else
+            {
+                this.toolStripButtonFormatSchema.Enabled = false;
+                this.toolStripButtonFormatExamples.Enabled = false;
+                this.toolStripButtonFormatMarkup.Enabled = false;
+            }
+
+        }
+
+        private void toolStripButtonFormatNone_Click(object sender, EventArgs e)
+        {
+            SetFormatOption(DocFormatOptionEnum.None);
+        }
+
+        private void checkBoxPublishISO_CheckedChanged(object sender, EventArgs e)
+        {
+            DocPublication docPub = (DocPublication)this.m_target;
+            docPub.ISO = this.checkBoxPublishISO.Checked;
+        }
+
+        private void checkBoxPublishHideHistory_CheckedChanged(object sender, EventArgs e)
+        {
+            DocPublication docPub = (DocPublication)this.m_target;
+            docPub.HideHistory = this.checkBoxPublishHideHistory.Checked;
+        }
+
+        private void checkBoxPublishUML_CheckedChanged(object sender, EventArgs e)
+        {
+            DocPublication docPub = (DocPublication)this.m_target;
+            docPub.UML = this.checkBoxPublishUML.Checked;
+        }
+
+        private void textBoxHeader_TextChanged(object sender, EventArgs e)
+        {
+            DocPublication docPub = (DocPublication)this.m_target;
+            docPub.Header = textBoxHeader.Text;
+        }
+
+        private void textBoxFooter_TextChanged(object sender, EventArgs e)
+        {
+            DocPublication docPub = (DocPublication)this.m_target;
+            docPub.Footer = textBoxFooter.Text;
+        }
+
+        private void checkBoxPublishComparison_CheckedChanged(object sender, EventArgs e)
+        {
+            DocPublication docPub = (DocPublication)this.m_target;
+            //docPub.Comparison = checkBoxPublishComparison.Checked;
+        }
+
+        private void checkBoxPublishExchangeTables_CheckedChanged(object sender, EventArgs e)
+        {
+            DocPublication docPub = (DocPublication)this.m_target;
+            docPub.Exchanges = checkBoxPublishExchangeTables.Checked;
+        }
     }
 }

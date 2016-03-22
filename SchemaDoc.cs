@@ -205,6 +205,22 @@ namespace IfcDoc.Schema.DOC
             base.Delete();            
         }
 
+
+        internal protected virtual void FindQuery(string query, bool searchtext, List<DocFindResult> results)
+        {
+            if (!searchtext && this.Name != null && this.Name.ToLower().Contains(query.ToLower()))
+            {
+                results.Add(new DocFindResult(this, null, -1, 0));
+            }
+
+            if (searchtext && this.Documentation != null && this.Documentation.ToLower().Contains(query.ToLower()))
+            {
+                // only find first result
+                int offset = this.Documentation.IndexOf(query);
+                results.Add(new DocFindResult(this, null, offset, query.Length));
+            }
+        }
+
         public DocLocalization GetLocalization(string locale)
         {
             DocLocalization docLocal = null;
@@ -353,9 +369,13 @@ namespace IfcDoc.Schema.DOC
                 {
                     this._Status = "_" + value;
                 }
-                else
+                else if(!String.IsNullOrEmpty(value))
                 {
                     this._Status = value;
+                }
+                else
+                {
+                    this._Status = null;
                 }
             }
         }
@@ -416,6 +436,344 @@ namespace IfcDoc.Schema.DOC
         }
     }
 
+    public enum DocFormatTypeEnum
+    {
+        //[DisplayName("XML")]
+        [Description("IFC XSD long form schema")]
+        XML = 1,
+
+        //[DisplayName("STEP")]
+        [Description("IFC EXPRESS long form schema")]
+        STEP = 2,
+
+        //[DisplayName("SQL")]
+        [Description("Structured Query Language (SQL)")]
+        SQL = 3,
+
+        //[DisplayName("RDF")]
+        [Description("Resource Description Framework (RDF)")]
+        RDF = 4,
+
+        //[DisplayName("Java")]
+        [Description("Java Programming Language")]
+        JSON = 5,
+
+        //[DisplayName("C#")]
+        [Description("C# Programming Language")]
+        CS = 6, // CShart
+    }
+
+    public enum DocFormatOptionEnum
+    {
+        None = 0,
+        Schema = 1,
+        Examples = 2,
+        Markup = 3,
+    }
+
+    /// <summary>
+    /// Configuration settings for generating output format, such as CSharp, Express, 
+    /// </summary>
+    public class DocFormat : SEntity // new in IfcDoc 9.6
+    {
+        [DataMember(Order = 0)] private DocFormatTypeEnum _FormatType;
+        [DataMember(Order = 1)] private DocFormatOptionEnum _FormatOptions;
+
+        public DocFormat()
+        {
+
+        }
+
+        public DocFormat(DocFormatTypeEnum type, DocFormatOptionEnum options)
+        {
+            this._FormatType = type;
+            this._FormatOptions = options;
+        }
+
+        public DocFormatTypeEnum FormatType
+        {
+            get
+            {
+                return this._FormatType;
+            }
+            set
+            {
+                this._FormatType = value;
+            }
+        }
+
+        public DocFormatOptionEnum FormatOptions
+        {
+            get
+            {
+                return this._FormatOptions;
+            }
+            set
+            {
+                this._FormatOptions = value;
+            }
+        }
+
+        public string ExtensionSchema
+        {
+            get
+            {
+                switch (this.FormatType)
+                {
+                    case DocFormatTypeEnum.XML:
+                        return "xsd";
+
+                    case DocFormatTypeEnum.STEP:
+                        return "exp";
+
+                    case DocFormatTypeEnum.JSON:
+                        return "java";
+
+                    case DocFormatTypeEnum.CS:
+                        return "cs";
+
+                    case DocFormatTypeEnum.SQL:
+                        return "sql";
+
+                    case DocFormatTypeEnum.RDF:
+                        return "rdf";
+                }
+                return "txt"; // fallback if unknown
+            }
+        }
+
+        public string ExtensionInstances
+        {
+            get
+            {
+                switch(this.FormatType)
+                {
+                    case DocFormatTypeEnum.XML:
+                        return "ifcxml";
+
+                    case DocFormatTypeEnum.STEP:
+                        return "ifc";
+
+                    case DocFormatTypeEnum.JSON:
+                        return "json";
+
+                    case DocFormatTypeEnum.CS:
+                        return null;
+
+                    case DocFormatTypeEnum.SQL:
+                        return "csv";
+
+                    case DocFormatTypeEnum.RDF:
+                        return "rdf";
+
+                }
+                return "txt"; // fallback if unknown
+            }
+        }
+    }
+
+    /// <summary>
+    /// Settings for an overall publication, which defines introductory pages and may include 0-many views
+    /// </summary>
+    public class DocPublication : DocObject
+    {
+        [DataMember(Order = 0)] private List<DocModelView> _Views;
+        [DataMember(Order = 1)] private List<DocFormat> _Formats;
+        [DataMember(Order = 2)] private List<string> _Locales;
+        [DataMember(Order = 3)] private List<DocAnnotation> _Annotations; // Forward + Introduction
+        [DataMember(Order = 4)] private string _Header;
+        [DataMember(Order = 5)] private string _Footer;
+        [DataMember(Order = 6)] private bool _HideHistory; // hide version history
+        [DataMember(Order = 7)] private bool _ISO; // ISO format -- comply to strict formatting, such as using comments for EXPRESS language
+        [DataMember(Order = 8)] private bool _UML; // IfcDoc 9.8: UML diagrams instead of Express-G
+        [DataMember(Order = 9)] private bool _Comparison; // IfcDoc 9.9: compare mappings between tabular exchanges, e.g. GSA
+        [DataMember(Order = 10)] private bool _Exchanges; // IfcDoc 9.9: show exchange tables
+
+        // unserialized
+        private List<string> m_errorlog; // list of filenames missing for images
+
+        public List<string> ErrorLog
+        {
+            get
+            {
+                if(this.m_errorlog == null)
+                {
+                    this.m_errorlog = new List<string>();
+                }
+
+                return this.m_errorlog;
+            }
+        }
+
+        public List<DocModelView> Views
+        {
+            get
+            {
+                if(this._Views == null)
+                {
+                    this._Views = new List<DocModelView>();
+                }
+                return this._Views;
+            }
+        }
+
+        public List<DocFormat> Formats
+        {
+            get
+            {
+                if(this._Formats == null)
+                {
+                    this._Formats = new List<DocFormat>();
+
+                    this._Formats.Add(new DocFormat(DocFormatTypeEnum.XML, DocFormatOptionEnum.Examples));
+                    this._Formats.Add(new DocFormat(DocFormatTypeEnum.STEP, DocFormatOptionEnum.Examples));
+                }
+
+                // upgrade to V9.7
+                if (this._Formats.Count == 2)
+                {
+                    this._Formats.Add(new DocFormat(DocFormatTypeEnum.SQL, DocFormatOptionEnum.None));
+                    this._Formats.Add(new DocFormat(DocFormatTypeEnum.RDF, DocFormatOptionEnum.None));
+                    this._Formats.Add(new DocFormat(DocFormatTypeEnum.JSON, DocFormatOptionEnum.None));
+                    this._Formats.Add(new DocFormat(DocFormatTypeEnum.CS, DocFormatOptionEnum.None));
+                }
+
+                return this._Formats;
+            }
+        }
+
+        public List<string> Locales
+        {
+            get
+            {
+                if(this._Locales == null)
+                {
+                    this._Locales = new List<string>();
+                }
+                return this._Locales;
+            }
+        }
+
+        public List<DocAnnotation> Annotations
+        {
+            get
+            {
+                if(this._Annotations == null)
+                {
+                    this._Annotations = new List<DocAnnotation>();
+                }
+                return this._Annotations;
+            }
+        }
+
+        public string Header
+        {
+            get
+            {
+                return this._Header;
+            }
+            set
+            {
+                this._Header = value;
+            }
+        }
+
+        public string Footer
+        {
+            get
+            {
+                return this._Footer;
+            }
+            set
+            {
+                this._Footer = value;
+            }
+        }
+
+        public bool HideHistory
+        {
+            get
+            {
+                return this._HideHistory;
+            }
+            set
+            {
+                this._HideHistory = value;
+            }
+        }
+
+        public bool ISO
+        {
+            get
+            {
+                return this._ISO;
+            }
+            set
+            {
+                this._ISO = value;
+            }
+        }
+
+        public bool UML
+        {
+            get
+            {
+                return this._UML;
+            }
+            set
+            {
+                this._UML = value;
+            }
+        }
+
+        public bool Comparison
+        {
+            get
+            {
+                return this._Comparison;
+            }
+            set
+            {
+                this._Comparison = value;
+            }
+        }
+
+        public bool Exchanges
+        {
+            get
+            {
+                return this._Exchanges;
+            }
+            set
+            {
+                this._Exchanges = value;
+            }
+        }
+
+        public override void Delete()
+        {
+            foreach(DocAnnotation docAnnotation in this.Annotations)
+            {
+                docAnnotation.Delete();
+            }
+
+            base.Delete();            
+        }
+
+        public DocFormatOptionEnum GetFormatOption(DocFormatTypeEnum docFormatTypeEnum)
+        {
+            foreach(DocFormat docFormat in this.Formats)
+            {
+                if (docFormat.FormatType == docFormatTypeEnum) 
+                {
+                    return docFormat.FormatOptions;
+                }
+            }
+
+            return DocFormatOptionEnum.None;
+        }
+    }
+
     /// <summary>
     /// The single root of the documentation having sections in order of ISO documentation
     /// </summary>
@@ -432,6 +790,7 @@ namespace IfcDoc.Schema.DOC
         [DataMember(Order = 8)] private List<DocTerm> _Terms; // new in 4.3
         [DataMember(Order = 9)] private List<DocAbbreviation> _Abbreviations; // new in 4.3
         [DataMember(Order = 10)] private List<DocAnnotation> _Annotations; // new in 8.7: Cover | Foreword | Introduction
+        [DataMember(Order = 11)] private List<DocPublication> _Publications; // new in 9.6
 
         public DocProject()
         {
@@ -579,7 +938,8 @@ namespace IfcDoc.Schema.DOC
             }
         }
         
-        // new in 8.7: Cover | TOC | Foreword | Introduction
+        // new in 8.7: Cover | TOC | Foreword | Introduction; deprecated in 9.6 - replaced by Publications
+        // deprecated in 9.6 -- moved to publications
         public List<DocAnnotation> Annotations
         {
             get
@@ -587,13 +947,39 @@ namespace IfcDoc.Schema.DOC
                 if (this._Annotations == null)
                 {
                     this._Annotations = new List<DocAnnotation>();
+                    /* old behavior shown as commentes
                     this._Annotations.Add(new DocAnnotation("Cover page"));
                     this._Annotations.Add(new DocAnnotation("Contents"));
                     this._Annotations.Add(new DocAnnotation("Foreword"));
                     this._Annotations.Add(new DocAnnotation("Introduction"));
+                    */
                 }
 
                 return this._Annotations;
+            }
+        }
+
+        // new in 9.6
+        public List<DocPublication> Publications
+        {
+            get
+            {
+                if (this._Publications == null)
+                {
+                    this._Publications = new List<DocPublication>();
+#if false
+                    // initialize default publication
+                    DocPublication docPub = new DocPublication();
+                    docPub.Name = "Default";
+                    docPub.Documentation = "";
+                    this._Publications.Add(docPub);
+
+                    docPub.Annotations.Add(new DocAnnotation("Foreword"));
+                    docPub.Annotations.Add(new DocAnnotation("Introduction"));
+#endif
+                }
+
+                return this._Publications;
             }
         }
 
@@ -635,6 +1021,26 @@ namespace IfcDoc.Schema.DOC
                     {
                         if (docType.Name != null && docType.Name.Equals(def))
                             return docType;
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        public DocFunction GetFunction(string def)
+        {
+            if (def == null)
+                return null;
+
+            foreach (DocSection docSection in this.Sections)
+            {
+                foreach (DocSchema docSchema in docSection.Schemas)
+                {
+                    foreach (DocFunction docFunc in docSchema.Functions)
+                    {
+                        if (docFunc.Name != null && docFunc.Name.Equals(def))
+                            return docFunc;
                     }
                 }
             }
@@ -1029,6 +1435,49 @@ namespace IfcDoc.Schema.DOC
             }
         }
 
+        private void RegisterFunction(Dictionary<DocObject, bool> included, DocFunction docFunc)
+        {
+            if (included.ContainsKey(docFunc))
+                return;
+
+            included[docFunc] = true;
+
+            RegisterExpression(included, docFunc.Expression);
+        }
+
+        private void RegisterExpression(Dictionary<DocObject, bool> included, string escaped)
+        {
+            if (escaped == null)
+                return;
+
+            int iStart = -1;
+            for (int i = 0; i < escaped.Length; i++)
+            {
+                char ch = escaped[i];
+                if (Char.IsLetterOrDigit(ch))
+                {
+                    if (iStart == -1)
+                    {
+                        iStart = i;
+                    }
+                }
+                else
+                {
+                    if (iStart != -1)
+                    {
+                        // end: write buffer
+                        string identifier = escaped.Substring(iStart, i - iStart);
+                        DocFunction docFunc = this.GetFunction(identifier);
+                        if (docFunc != null)
+                        {
+                            RegisterFunction(included, docFunc);
+                        }
+                        iStart = -1;
+                    }
+                }
+            }
+        }
+
         private void RegisterEntity(Dictionary<DocObject, bool> included, DocEntity entity)
         {
             try
@@ -1345,7 +1794,7 @@ namespace IfcDoc.Schema.DOC
                         {
                             if (included.ContainsKey(docEntity))
                             {
-                                foreach(DocAttribute docAttr in docEntity.Attributes)
+                                foreach (DocAttribute docAttr in docEntity.Attributes)
                                 {
                                     if (docAttr.Name != null && docAttr.Name.Equals(docVirtualRule.Name))
                                     {
@@ -1374,7 +1823,7 @@ namespace IfcDoc.Schema.DOC
                                                 {
                                                     RegisterEntity(included, (DocEntity)docAttrType);
                                                 }
-                                                else if(docAttrType is DocDefined)
+                                                else if (docAttrType is DocDefined)
                                                 {
                                                     RegisterDefined(included, (DocDefined)docAttrType);
                                                 }
@@ -1382,6 +1831,12 @@ namespace IfcDoc.Schema.DOC
                                         }
                                         break;
                                     }
+                                }
+
+                                foreach (DocWhereRule docWhere in docEntity.WhereRules)
+                                {
+                                    // extract function references from expression ...docWhere.Expression
+                                    RegisterExpression(included, docWhere.Expression);
                                 }
                             }
                         }
@@ -1538,11 +1993,12 @@ namespace IfcDoc.Schema.DOC
                 {
                     if (included.ContainsKey(docSchema))
                     {
+#if false
                         foreach (DocFunction docFunction in docSchema.Functions)
                         {
                             included[docFunction] = true;
                         }
-
+#endif
                         foreach (DocGlobalRule docRule in docSchema.GlobalRules)
                         {
                             included[docRule] = true;
@@ -1631,6 +2087,142 @@ namespace IfcDoc.Schema.DOC
             {
                 RegisterConcept(docChild, included, mapVirtualAttributes);
             }
+        }
+
+        /// <summary>
+        /// Finds all occurrences of text within project.
+        /// </summary>
+        /// <param name="query">The text to query.</param>
+        /// <param name="searchtext">Whether to search within descriptions or just names</param>
+        /// <returns></returns>
+        public List<DocFindResult> Find(string query, bool searchtext)
+        {
+            List<DocFindResult> results = new List<DocFindResult>();
+            foreach (DocSection docSection in this.Sections)
+            {
+                docSection.FindQuery(query, searchtext, results);
+
+                if (docSection == this.Sections[0])
+                {
+                    foreach (DocTemplateDefinition docTemp in this.Templates)
+                    {
+                        docTemp.FindQuery(query, searchtext, results);
+                    }
+                }
+                else if (docSection == this.Sections[1])
+                {
+                    // norm refs
+                    foreach (DocReference docRef in this.NormativeReferences)
+                    {
+                        docRef.FindQuery(query, searchtext, results);
+                    }
+                }
+                else if (docSection == this.Sections[2])
+                {
+                    // terms
+                    foreach (DocTerm docTerm in this.Terms)
+                    {
+                        docTerm.FindQuery(query, searchtext, results);
+                    }
+                    foreach (DocAbbreviation docAbbr in this.Abbreviations)
+                    {
+                        docAbbr.FindQuery(query, searchtext, results);
+                    }
+                }
+                else if (docSection == this.Sections[3])
+                {
+                    foreach (DocModelView docView in this.ModelViews)
+                    {
+                        docView.FindQuery(query, searchtext, results);
+                        foreach (DocExchangeDefinition docExchange in docView.Exchanges)
+                        {
+                            docExchange.FindQuery(query, searchtext, results);
+                        }
+
+                        foreach (DocConceptRoot docRoot in docView.ConceptRoots)
+                        {
+                            docRoot.FindQuery(query, searchtext, results);
+                            foreach (DocTemplateUsage docConc in docRoot.Concepts)
+                            {
+                                docConc.FindQuery(query, searchtext, results);
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (DocSchema docSchema in docSection.Schemas)
+                    {
+                        docSchema.FindQuery(query, searchtext, results);
+                        foreach (DocType docType in docSchema.Types)
+                        {
+                            docType.FindQuery(query, searchtext, results);
+                            if (docType is DocEnumeration)
+                            {
+                                DocEnumeration docEnum = (DocEnumeration)docType;
+                                foreach (DocConstant docConst in docEnum.Constants)
+                                {
+                                    docConst.FindQuery(query, searchtext, results);
+                                }
+                            }
+                        }
+                        foreach (DocEntity docEntity in docSchema.Entities)
+                        {
+                            docEntity.FindQuery(query, searchtext, results);
+                            foreach (DocAttribute docAttr in docEntity.Attributes)
+                            {
+                                docAttr.FindQuery(query, searchtext, results);
+                            }
+                        }
+                        foreach (DocFunction docFunc in docSchema.Functions)
+                        {
+                            docFunc.FindQuery(query, searchtext, results);
+                        }
+                        foreach (DocGlobalRule docGlob in docSchema.GlobalRules)
+                        {
+                            docGlob.FindQuery(query, searchtext, results);
+                        }
+                        foreach (DocPropertyEnumeration docPset in docSchema.PropertyEnums)
+                        {
+                            docPset.FindQuery(query, searchtext, results);
+                            foreach (DocPropertyConstant docProp in docPset.Constants)
+                            {
+                                docProp.FindQuery(query, searchtext, results);
+                            }
+                        }
+                        foreach (DocPropertySet docPset in docSchema.PropertySets)
+                        {
+                            docPset.FindQuery(query, searchtext, results);
+                            foreach (DocProperty docProp in docPset.Properties)
+                            {
+                                docProp.FindQuery(query, searchtext, results);
+                            }
+                        }
+                        foreach (DocQuantitySet docPset in docSchema.QuantitySets)
+                        {
+                            docPset.FindQuery(query, searchtext, results);
+                            foreach (DocQuantity docProp in docPset.Quantities)
+                            {
+                                docProp.FindQuery(query, searchtext, results);
+                            }
+                        }
+                    }
+                }
+            }
+            foreach (DocAnnex docSection in this.Annexes)
+            {
+                docSection.FindQuery(query, searchtext, results);
+
+                if (docSection == this.Annexes[4])
+                {
+                    foreach (DocExample docExample in this.Examples)
+                    {
+                        docExample.FindQuery(query, searchtext, results);
+                    }
+                }
+            }
+
+            return results;
         }
     }
 
@@ -1724,6 +2316,16 @@ namespace IfcDoc.Schema.DOC
                 }
 
                 return this._Templates;
+            }
+        }
+
+        protected internal override void FindQuery(string query, bool searchtext, List<DocFindResult> results)
+        {
+            base.FindQuery(query, searchtext, results);
+
+            foreach(DocTemplateDefinition docSub in this.Templates)
+            {
+                docSub.FindQuery(query, searchtext, results);
             }
         }
 
@@ -2002,6 +2604,7 @@ namespace IfcDoc.Schema.DOC
         [DataMember(Order = 4)] List<DocXsdFormat> _XsdFormats; // new in 5.7
         [DataMember(Order = 5)] bool _IncludeAllDefinitions; // new in 8.9: if true, then don't filter out unreferenced entities/attributes
         [DataMember(Order = 6)] string _RootEntity; // new in 8.9: indicates root entity of schema, as shown in inheritance diagram
+        [DataMember(Order = 7)] public byte[] _Icon; // embedded PNG file of 16x16 icon // added in IfcDoc 9.6
 
         private Dictionary<DocObject, bool> m_filtercache; // for performance, remember items within scope of model view; built on demand, cleared whenever there's a change that could impact
 
@@ -2093,6 +2696,18 @@ namespace IfcDoc.Schema.DOC
             }
         }
 
+        public byte[] Icon
+        {
+            get
+            {
+                return this._Icon;
+            }
+            set
+            {
+                this._Icon = value;
+            }
+        }
+
         public DocConceptRoot GetConceptRoot(Guid guid)
         {            
             if (this.ConceptRoots != null)
@@ -2139,7 +2754,7 @@ namespace IfcDoc.Schema.DOC
                 }
             }
 
-            if(this.ConceptRoots != null)
+            if (this.ConceptRoots != null)
             {
                 foreach(DocConceptRoot docRoot in this.ConceptRoots)
                 {
@@ -2325,7 +2940,7 @@ namespace IfcDoc.Schema.DOC
             return " [" + min + ":" + max + "]";
         }
 #endif
-        public abstract bool? Validate(object target, DocTemplateItem docItem, Dictionary<string, Type> typemap, List<DocModelRule> trace, SEntity root, DocTemplateUsage docOuterConcept);
+        public abstract bool? Validate(object target, DocTemplateItem docItem, Dictionary<string, Type> typemap, List<DocModelRule> trace, SEntity root, DocTemplateUsage docOuterConcept, Dictionary<DocModelRuleAttribute, bool> conditions);
 
         public virtual bool IsTemplateReferenced(DocTemplateDefinition docTemplate)
         {
@@ -2336,7 +2951,7 @@ namespace IfcDoc.Schema.DOC
         /// Makes deep copy of rule and all child rules
         /// </summary>
         /// <returns></returns>
-        public object Clone()
+        public override object Clone()
         {
             DocModelRule modelrule = (DocModelRule)Activator.CreateInstance(this.GetType()); // force constructor to get called to hook up events MemberwiseClone();
             modelrule.Name = this.Name;
@@ -2413,7 +3028,7 @@ namespace IfcDoc.Schema.DOC
         /// <param name="root">The root object, used for recording pass/fail status for nested rules.</param>
         /// <param name="docOuterConcept">Outer concept, used for recording objects that failed.</param>
         /// <returns>True if passing, False if failing, Null if inapplicable.</returns>
-        private bool? ValidateItem(object value, DocTemplateItem docItem, Dictionary<string, Type> typemap, List<DocModelRule> trace, SEntity root, DocTemplateUsage docOuterConcept)
+        private bool? ValidateItem(object value, DocTemplateItem docItem, Dictionary<string, Type> typemap, List<DocModelRule> trace, SEntity root, DocTemplateUsage docOuterConcept, Dictionary<DocModelRuleAttribute, bool> conditions)
         {
             // (3) if parameter is defined, check for match
             if (!String.IsNullOrEmpty(this.Identification))
@@ -2442,7 +3057,7 @@ namespace IfcDoc.Schema.DOC
                             foreach (DocModelRule docInnerRule in docInnerConcept.Definition.Rules)
                             {
                                 // all inner rules must return true for the template item
-                                bool? innerResult = docInnerRule.Validate(value, docInnerItem, typemap, trace, root, docInnerConcept);
+                                bool? innerResult = docInnerRule.Validate(value, docInnerItem, typemap, trace, root, docInnerConcept, conditions);
                                 if(innerResult != null)
                                 {
                                     if(!innerResult.Value)
@@ -2555,13 +3170,6 @@ namespace IfcDoc.Schema.DOC
                     }
 
                     return false;
-                        /*
-                    else
-                    {
-                        docInnerConcept.ValidationStructure[root] = true;
-                        docInnerConcept.Validation = true;
-
-                    }*/
                 }
                 else
                 {
@@ -2649,7 +3257,7 @@ namespace IfcDoc.Schema.DOC
                     }
 
                     // attribute rule is true if at least one entity filter matches or one constraint filter matches
-                    bool? result = rule.Validate(value, docItem, typemap, trace, root, docOuterConcept);
+                    bool? result = rule.Validate(value, docItem, typemap, trace, root, docOuterConcept, conditions);
                     if (result != null && result.Value)
                     {
                         return result;
@@ -2683,7 +3291,7 @@ namespace IfcDoc.Schema.DOC
         /// <param name="trace"></param>
         /// <param name="root">Root object used for associating status of rules at referenced templates</param>
         /// <returns></returns>
-        public override bool? Validate(object target, DocTemplateItem docItem, Dictionary<string, Type> typemap, List<DocModelRule> trace, SEntity root, DocTemplateUsage docOuterConcept)
+        public override bool? Validate(object target, DocTemplateItem docItem, Dictionary<string, Type> typemap, List<DocModelRule> trace, SEntity root, DocTemplateUsage docOuterConcept, Dictionary<DocModelRuleAttribute, bool> conditions)
         {
             trace.Add(this);
 
@@ -2697,10 +3305,13 @@ namespace IfcDoc.Schema.DOC
 
             // (2) extract the value
             object value = fieldinfo.GetValue(target); // may be null
+            //if (value == null)
+            //    return null; // nothing there to check; V9.5
 
             if (docItem != null && value == null)
                 return false; // structure required to exist
 
+            bool? checkcard = null;
             if (value is System.Collections.IList)
             {
                 System.Collections.IList list = (System.Collections.IList)value;
@@ -2717,7 +3328,7 @@ namespace IfcDoc.Schema.DOC
                         trace.RemoveAt(tracelen);
                     }
 
-                    bool? result = ValidateItem(o, docItem, typemap, trace, root, docOuterConcept);                    
+                    bool? result = ValidateItem(o, docItem, typemap, trace, root, docOuterConcept, conditions);                    
                     if (result != null)
                     {
                         if (result.Value)
@@ -2731,60 +3342,26 @@ namespace IfcDoc.Schema.DOC
                     }
                 }
 
-                bool? checkcard = null;
-#if true
+#if true // ???Georgia Tech PCI-103 per V9.4 Review -- change to allow
                 if (docItem != null)
                 {
+                    // previous behavior in V9.4 was:
                     checkcard = (pass > 0);// (fail == 0);
                 }
                 else 
-#endif
-                //if (this.CardinalityMin == 0 && this.CardinalityMax == 0) // uninitialized; same as schema
-                {
-                    if (pass > 0)
-                    {
-                        checkcard = true;
-                    }
-                    else if(fail > 0)
-                    {
-                        checkcard = false;
-                    }
-                    else
-                    {
-                        checkcard = null;
-                    }
-                    //!!checkcard = (pass > 0);// (fail == 0);
-                }
-#if false
-                else if(this.CardinalityMin == -1 && this.CardinalityMax == -1)  // restricted (should not be present) (0:0)
-                {
-                    checkcard = (pass == 0);
-                }
-                else if (this.CardinalityMin == 0 && this.CardinalityMax == 1)
-                {
-                    checkcard = (pass == 0 || pass == 1);
-                }
-                else if (this.CardinalityMin == 1 && this.CardinalityMax == 1)
-                {
-                    if (pass == 1)
-                    {
-                        checkcard = true;
-                    }
-                    else if(fail > 0)
-                    {
-                        checkcard = false;
-                    }
-                    // otherwise null
-                }
-                else if (this.CardinalityMin == 1)
-                {
-                    checkcard = (fail == 0);
-                }
-                else
+#endif    
+                if (pass > 0)
                 {
                     checkcard = true;
                 }
-#endif
+                else if(fail > 0)
+                {
+                    checkcard = false;
+                }
+                else
+                {
+                    checkcard = null;
+                }
 
                 if (checkcard == null || checkcard.Value)
                 {
@@ -2795,38 +3372,25 @@ namespace IfcDoc.Schema.DOC
 
                     trace.Remove(this);
                 }
-                return checkcard;
             }
             else
             {
-#if false
-                if (this.CardinalityMin == 1 && value == null)
-                {
-                    // must be one
-                    return false;
-                }
-                else if (this.CardinalityMin == -1 && this.CardinalityMax == -1 && value != null)
-                {
-                    // must be zero
-                    return false;
-                }
-                else if (this.CardinalityMin == 0 && this.CardinalityMax == 1 && value == null)
-                {
-                    // may be null
-                    trace.Remove(this);
-                    return true;
-                }
-#endif
                 // validate single
-                bool? checkitem = ValidateItem(value, docItem, typemap, trace, root, docOuterConcept);
-                if(checkitem == null || !checkitem.Value)
+                checkcard = ValidateItem(value, docItem, typemap, trace, root, docOuterConcept, conditions);
+                if (checkcard == null || !checkcard.Value)
                 {
                     trace.Remove(this);
                 }
 
-                return checkitem;
             }
 
+            // if parameter, mark it as matched
+            if (checkcard != null && this.IsCondition())
+            {
+                conditions.Add(this, checkcard.Value);
+            }
+
+            return checkcard;
         }
     }
 
@@ -2874,7 +3438,7 @@ namespace IfcDoc.Schema.DOC
         /// <param name="docItem">Template item to validate.</param>
         /// <param name="typemap">Map of type names to type definitions.</param>
         /// <returns>True if passing, False if failing, or null if inapplicable.</returns>
-        public override bool? Validate(object target, DocTemplateItem docItem, Dictionary<string, Type> typemap, List<DocModelRule> trace, SEntity root, DocTemplateUsage docOuterConcept)
+        public override bool? Validate(object target, DocTemplateItem docItem, Dictionary<string, Type> typemap, List<DocModelRule> trace, SEntity root, DocTemplateUsage docOuterConcept, Dictionary<DocModelRuleAttribute, bool> conditions)
         {
             trace.Add(this);
 
@@ -2898,7 +3462,7 @@ namespace IfcDoc.Schema.DOC
                 {
                     if (rule.IsCondition())
                     {
-                        bool? result = rule.Validate((SEntity)target, docItem, typemap, trace, root, docOuterConcept);
+                        bool? result = rule.Validate((SEntity)target, docItem, typemap, trace, root, docOuterConcept, conditions);
 
                         // entity rule is inapplicable if any attribute rules are inapplicable
                         if (result == null || !result.Value)
@@ -2923,7 +3487,7 @@ namespace IfcDoc.Schema.DOC
                 {
                     if (!rule.IsCondition())
                     {
-                        bool? result = rule.Validate((SEntity)target, docItem, typemap, trace, root, docOuterConcept);
+                        bool? result = rule.Validate((SEntity)target, docItem, typemap, trace, root, docOuterConcept, conditions);
 
                         // entity rule is inapplicable if any attribute rules are inapplicable
                         if (result == null)
@@ -2958,7 +3522,7 @@ namespace IfcDoc.Schema.DOC
     {
         [DataMember(Order = 0)] public DocOpExpression Expression; // new in IfcDoc 6.1
 
-        public override bool? Validate(object target, DocTemplateItem docItem, Dictionary<string, Type> typemap, List<DocModelRule> trace, SEntity root, DocTemplateUsage docOuterConcept)
+        public override bool? Validate(object target, DocTemplateItem docItem, Dictionary<string, Type> typemap, List<DocModelRule> trace, SEntity root, DocTemplateUsage docOuterConcept, Dictionary<DocModelRuleAttribute, bool> conditions)
         {
             // constraint validation is now done in compiled code -- indicate pass to keep going
             return true;
@@ -4270,6 +4834,16 @@ namespace IfcDoc.Schema.DOC
             }
         }
 
+        protected internal override void FindQuery(string query, bool searchtext, List<DocFindResult> results)
+        {
+            base.FindQuery(query, searchtext, results);
+
+            foreach(DocTemplateUsage docSub in this.Concepts)
+            {
+                docSub.FindQuery(query, searchtext, results);
+            }
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -4542,6 +5116,11 @@ namespace IfcDoc.Schema.DOC
                 }
             }
 
+            if (this.Items.Count > 0 && total == 0) // no items meet conditions
+            {
+                return null; // not applicable
+            }
+
             bool result = false;
             switch(this.Operator)
             {
@@ -4594,9 +5173,10 @@ namespace IfcDoc.Schema.DOC
     public enum DocExchangeRequirementEnum
     {
         Mandatory = 1,
-        Optional = 2,
+        Optional = 2, // "Recommended"
         NotRelevant = 3,
-        Excluded = 4,
+        NotRecommended = 4,
+        Excluded = 5,
     }
 
     public class DocTemplateItem : DocObject // now inherits from DocObject
@@ -4773,6 +5353,8 @@ namespace IfcDoc.Schema.DOC
             bool hasstructure = false;
             bool structure = false;
             hasstructure = ValidationStructure.TryGetValue(o, out structure);
+            if (!hasstructure)
+                return null; // condition not met (V9.5)
 
             bool hasconstraint = false;
             bool constraint = false;
@@ -5513,6 +6095,8 @@ namespace IfcDoc.Schema.DOC
         [DataMember(Order = 0)] private DocRectangle _DiagramRectangle; // replaces template status (Integer) in v3.5
         [DataMember(Order = 1)] private int _DiagramNumber; // used to determine hyperlink to EXPRESS-G diagram [inserted in v1.2]        
 
+        private Type m_runtimetype; // corresponding compiled type
+
         public DocRectangle DiagramRectangle
         {
             get
@@ -5536,6 +6120,27 @@ namespace IfcDoc.Schema.DOC
                 this._DiagramNumber = value;
             }
         }
+
+        public Type RuntimeType
+        {
+            get
+            {
+                return this.m_runtimetype;
+            }
+            set
+            {
+                this.m_runtimetype = value;
+            }
+        }
+
+        public bool IsInstanceOfType(object target)
+        {
+            if (this.m_runtimetype == null)
+                return false;
+
+            return this.m_runtimetype.IsInstanceOfType(target);
+        }
+
     }
 
     /// <summary>
@@ -5904,6 +6509,8 @@ namespace IfcDoc.Schema.DOC
         [DataMember(Order = 12)] private DocXsdFormatEnum _XsdFormat;  // NEW in IfcDoc 4.9f: tag behavior
         [DataMember(Order = 13)] private bool? _XsdTagless; // NEW in IfcDoc 5.0b: tagless; 8.7: NULLABLE
 
+        private FieldInfo m_runtimefield; // holds compiled property definition
+
         public string DefinedType
         {
             get
@@ -6173,6 +6780,43 @@ namespace IfcDoc.Schema.DOC
             }
 
             base.Delete();
+        }
+
+        public FieldInfo RuntimeField
+        {
+            get
+            {
+                return this.m_runtimefield;
+            }
+            set
+            {
+                this.m_runtimefield = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets value on runtime instance
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public object GetValue(object obj, object[] index)
+        {
+            if (this.m_runtimefield == null)
+                return null;
+
+            return this.m_runtimefield.GetValue(obj);
+        }
+
+        public Type PropertyType
+        {
+            get
+            {
+                if (this.m_runtimefield == null)
+                    return null;
+
+                return this.m_runtimefield.FieldType;
+            }
         }
     }
 
@@ -6589,6 +7233,16 @@ namespace IfcDoc.Schema.DOC
             get
             {
                 return this._Elements;
+            }
+        }
+
+        protected internal override void FindQuery(string query, bool searchtext, List<DocFindResult> results)
+        {
+            base.FindQuery(query, searchtext, results);
+
+            foreach(DocProperty docProp in this.Elements)
+            {
+                docProp.FindQuery(query, searchtext, results);
             }
         }
 
@@ -7116,6 +7770,16 @@ namespace IfcDoc.Schema.DOC
                 this._File = value;
             }
         }
+
+        protected internal override void FindQuery(string query, bool searchtext, List<DocFindResult> results)
+        {
+            base.FindQuery(query, searchtext, results);
+
+            foreach(DocExample docEx in this.Examples)
+            {
+                docEx.FindQuery(query, searchtext, results);
+            }
+        }
     }
 
     /// <summary>
@@ -7136,5 +7800,103 @@ namespace IfcDoc.Schema.DOC
         NUMBER = 5,
         STRING = 6,
         BINARY = 7,
+    }
+
+    /// <summary>
+    /// Used for searching objects; not persistent
+    /// </summary>
+    public class DocFindResult
+    {
+        DocObject _Target;
+        string _Locale; // null for default
+        int _Offset; // -1 if object
+        int _Length; // 0 of object
+
+        public DocFindResult(DocObject target, string locale, int offset, int length)
+        {
+            this._Target = target;
+            this._Locale = locale;
+            this._Offset = offset;
+            this._Length = length;
+        }
+
+        public DocObject Target
+        {
+            get
+            {
+                return this._Target;
+            }
+        }
+
+        public string Locale
+        {
+            get
+            {
+                return this._Locale;
+            }
+        }
+
+        public int Offset
+        {
+            get
+            {
+                return this._Offset;
+            }
+        }
+
+        public int Length
+        {
+            get
+            {
+                return this._Length;
+            }
+        }
+    }
+
+    interface IFormatExtension
+    {
+        /// <summary>
+        /// Formats an entity data type.
+        /// </summary>
+        /// <param name="docEntity"></param>
+        /// <returns></returns>
+        string FormatEntity(DocEntity docEntity, Dictionary<string, DocObject> map, Dictionary<DocObject, bool> included);
+
+        /// <summary>
+        /// Formats an enumeration data type.
+        /// </summary>
+        /// <param name="docEnumeration"></param>
+        /// <returns></returns>
+        string FormatEnumeration(DocEnumeration docEnumeration);
+
+        /// <summary>
+        /// Formats a select data type
+        /// </summary>
+        /// <param name="docSelect"></param>
+        /// <returns></returns>
+        string FormatSelect(DocSelect docSelect);
+
+        /// <summary>
+        /// Formats a defined data type
+        /// </summary>
+        /// <param name="docDefined"></param>
+        /// <returns></returns>
+        string FormatDefined(DocDefined docDefined);
+
+        /// <summary>
+        /// Formats all schema definitions within project
+        /// </summary>
+        /// <param name="docProject"></param>
+        /// <returns></returns>
+        string FormatDefinitions(DocProject docProject, Dictionary<string, DocObject> map, Dictionary<DocObject, bool> included);
+
+        /// <summary>
+        /// Formats instance data for a data population.
+        /// </summary>
+        /// <param name="docPublication">The publication, which determines applicable model view(s).</param>
+        /// <param name="instances">Map of object identifiers and instances.</param>
+        /// <returns></returns>
+        string FormatData(DocPublication docPublication, DocExchangeDefinition docExchange, Dictionary<string, DocObject> map, Dictionary<long, SEntity> instances);
+
     }
 }

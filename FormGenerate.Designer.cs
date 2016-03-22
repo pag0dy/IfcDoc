@@ -32,40 +32,18 @@
             this.label1 = new System.Windows.Forms.Label();
             this.textBoxPath = new System.Windows.Forms.TextBox();
             this.buttonPath = new System.Windows.Forms.Button();
-            this.textBoxHeader = new System.Windows.Forms.TextBox();
-            this.textBoxFooter = new System.Windows.Forms.TextBox();
-            this.checkBoxHeader = new System.Windows.Forms.CheckBox();
-            this.checkBoxFooter = new System.Windows.Forms.CheckBox();
-            this.checkBoxSuppressHistory = new System.Windows.Forms.CheckBox();
-            this.checkBoxSuppressXML = new System.Windows.Forms.CheckBox();
-            this.groupBoxLocation = new System.Windows.Forms.GroupBox();
             this.checkBoxSkip = new System.Windows.Forms.CheckBox();
-            this.groupBoxDetails = new System.Windows.Forms.GroupBox();
-            this.checkBoxSuppressXSD = new System.Windows.Forms.CheckBox();
-            this.checkBoxExpressEnclosed = new System.Windows.Forms.CheckBox();
             this.buttonOK = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
-            this.checkBoxRequirement = new System.Windows.Forms.CheckBox();
-            this.groupBoxModelView = new System.Windows.Forms.GroupBox();
-            this.checkBoxExcludeWhereRules = new System.Windows.Forms.CheckBox();
-            this.checkBoxConceptTables = new System.Windows.Forms.CheckBox();
-            this.tabControl = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.groupBoxViews = new System.Windows.Forms.GroupBox();
             this.checkedListBoxViews = new System.Windows.Forms.CheckedListBox();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.groupBoxExamples = new System.Windows.Forms.GroupBox();
-            this.checkBoxExampleXML = new System.Windows.Forms.CheckBox();
-            this.checkBoxExampleSPF = new System.Windows.Forms.CheckBox();
-            this.groupBoxLocation.SuspendLayout();
-            this.groupBoxDetails.SuspendLayout();
-            this.groupBoxModelView.SuspendLayout();
-            this.tabControl.SuspendLayout();
-            this.tabPage1.SuspendLayout();
-            this.groupBoxViews.SuspendLayout();
-            this.tabPage2.SuspendLayout();
-            this.groupBoxExamples.SuspendLayout();
+            this.label2 = new System.Windows.Forms.Label();
+            this.buttonImagesDocumentation = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
+            this.textBoxImagesDocumentation = new System.Windows.Forms.TextBox();
+            this.buttonImagesExamples = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.textBoxImagesExamples = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // label1
@@ -86,83 +64,11 @@
             this.buttonPath.UseVisualStyleBackColor = true;
             this.buttonPath.Click += new System.EventHandler(this.buttonPath_Click);
             // 
-            // textBoxHeader
-            // 
-            resources.ApplyResources(this.textBoxHeader, "textBoxHeader");
-            this.textBoxHeader.Name = "textBoxHeader";
-            // 
-            // textBoxFooter
-            // 
-            resources.ApplyResources(this.textBoxFooter, "textBoxFooter");
-            this.textBoxFooter.Name = "textBoxFooter";
-            // 
-            // checkBoxHeader
-            // 
-            resources.ApplyResources(this.checkBoxHeader, "checkBoxHeader");
-            this.checkBoxHeader.Name = "checkBoxHeader";
-            this.checkBoxHeader.UseVisualStyleBackColor = true;
-            this.checkBoxHeader.CheckedChanged += new System.EventHandler(this.checkBoxHeader_CheckedChanged);
-            // 
-            // checkBoxFooter
-            // 
-            resources.ApplyResources(this.checkBoxFooter, "checkBoxFooter");
-            this.checkBoxFooter.Name = "checkBoxFooter";
-            this.checkBoxFooter.UseVisualStyleBackColor = true;
-            this.checkBoxFooter.CheckedChanged += new System.EventHandler(this.checkBoxFooter_CheckedChanged);
-            // 
-            // checkBoxSuppressHistory
-            // 
-            resources.ApplyResources(this.checkBoxSuppressHistory, "checkBoxSuppressHistory");
-            this.checkBoxSuppressHistory.Name = "checkBoxSuppressHistory";
-            this.checkBoxSuppressHistory.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxSuppressXML
-            // 
-            resources.ApplyResources(this.checkBoxSuppressXML, "checkBoxSuppressXML");
-            this.checkBoxSuppressXML.Name = "checkBoxSuppressXML";
-            this.checkBoxSuppressXML.UseVisualStyleBackColor = true;
-            // 
-            // groupBoxLocation
-            // 
-            this.groupBoxLocation.Controls.Add(this.checkBoxSkip);
-            this.groupBoxLocation.Controls.Add(this.buttonPath);
-            this.groupBoxLocation.Controls.Add(this.label1);
-            this.groupBoxLocation.Controls.Add(this.textBoxPath);
-            resources.ApplyResources(this.groupBoxLocation, "groupBoxLocation");
-            this.groupBoxLocation.Name = "groupBoxLocation";
-            this.groupBoxLocation.TabStop = false;
-            // 
             // checkBoxSkip
             // 
             resources.ApplyResources(this.checkBoxSkip, "checkBoxSkip");
             this.checkBoxSkip.Name = "checkBoxSkip";
             this.checkBoxSkip.UseVisualStyleBackColor = true;
-            // 
-            // groupBoxDetails
-            // 
-            this.groupBoxDetails.Controls.Add(this.checkBoxSuppressXSD);
-            this.groupBoxDetails.Controls.Add(this.checkBoxExpressEnclosed);
-            this.groupBoxDetails.Controls.Add(this.textBoxHeader);
-            this.groupBoxDetails.Controls.Add(this.textBoxFooter);
-            this.groupBoxDetails.Controls.Add(this.checkBoxHeader);
-            this.groupBoxDetails.Controls.Add(this.checkBoxSuppressXML);
-            this.groupBoxDetails.Controls.Add(this.checkBoxFooter);
-            this.groupBoxDetails.Controls.Add(this.checkBoxSuppressHistory);
-            resources.ApplyResources(this.groupBoxDetails, "groupBoxDetails");
-            this.groupBoxDetails.Name = "groupBoxDetails";
-            this.groupBoxDetails.TabStop = false;
-            // 
-            // checkBoxSuppressXSD
-            // 
-            resources.ApplyResources(this.checkBoxSuppressXSD, "checkBoxSuppressXSD");
-            this.checkBoxSuppressXSD.Name = "checkBoxSuppressXSD";
-            this.checkBoxSuppressXSD.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxExpressEnclosed
-            // 
-            resources.ApplyResources(this.checkBoxExpressEnclosed, "checkBoxExpressEnclosed");
-            this.checkBoxExpressEnclosed.Name = "checkBoxExpressEnclosed";
-            this.checkBoxExpressEnclosed.UseVisualStyleBackColor = true;
             // 
             // buttonOK
             // 
@@ -178,90 +84,54 @@
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
             // 
-            // checkBoxRequirement
-            // 
-            resources.ApplyResources(this.checkBoxRequirement, "checkBoxRequirement");
-            this.checkBoxRequirement.Name = "checkBoxRequirement";
-            this.checkBoxRequirement.UseVisualStyleBackColor = true;
-            // 
-            // groupBoxModelView
-            // 
-            this.groupBoxModelView.Controls.Add(this.checkBoxExcludeWhereRules);
-            this.groupBoxModelView.Controls.Add(this.checkBoxConceptTables);
-            this.groupBoxModelView.Controls.Add(this.checkBoxRequirement);
-            resources.ApplyResources(this.groupBoxModelView, "groupBoxModelView");
-            this.groupBoxModelView.Name = "groupBoxModelView";
-            this.groupBoxModelView.TabStop = false;
-            // 
-            // checkBoxExcludeWhereRules
-            // 
-            resources.ApplyResources(this.checkBoxExcludeWhereRules, "checkBoxExcludeWhereRules");
-            this.checkBoxExcludeWhereRules.Name = "checkBoxExcludeWhereRules";
-            this.checkBoxExcludeWhereRules.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxConceptTables
-            // 
-            resources.ApplyResources(this.checkBoxConceptTables, "checkBoxConceptTables");
-            this.checkBoxConceptTables.Name = "checkBoxConceptTables";
-            this.checkBoxConceptTables.UseVisualStyleBackColor = true;
-            // 
-            // tabControl
-            // 
-            resources.ApplyResources(this.tabControl, "tabControl");
-            this.tabControl.Controls.Add(this.tabPage1);
-            this.tabControl.Controls.Add(this.tabPage2);
-            this.tabControl.Name = "tabControl";
-            this.tabControl.SelectedIndex = 0;
-            // 
-            // tabPage1
-            // 
-            this.tabPage1.Controls.Add(this.groupBoxViews);
-            this.tabPage1.Controls.Add(this.groupBoxLocation);
-            resources.ApplyResources(this.tabPage1, "tabPage1");
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // groupBoxViews
-            // 
-            resources.ApplyResources(this.groupBoxViews, "groupBoxViews");
-            this.groupBoxViews.Controls.Add(this.checkedListBoxViews);
-            this.groupBoxViews.Name = "groupBoxViews";
-            this.groupBoxViews.TabStop = false;
-            // 
             // checkedListBoxViews
             // 
             resources.ApplyResources(this.checkedListBoxViews, "checkedListBoxViews");
             this.checkedListBoxViews.FormattingEnabled = true;
             this.checkedListBoxViews.Name = "checkedListBoxViews";
+            this.checkedListBoxViews.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBoxViews_ItemCheck);
+            this.checkedListBoxViews.SelectedIndexChanged += new System.EventHandler(this.checkedListBoxViews_SelectedIndexChanged);
             // 
-            // tabPage2
+            // label2
             // 
-            this.tabPage2.Controls.Add(this.groupBoxExamples);
-            this.tabPage2.Controls.Add(this.groupBoxDetails);
-            this.tabPage2.Controls.Add(this.groupBoxModelView);
-            resources.ApplyResources(this.tabPage2, "tabPage2");
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            resources.ApplyResources(this.label2, "label2");
+            this.label2.Name = "label2";
             // 
-            // groupBoxExamples
+            // buttonImagesDocumentation
             // 
-            resources.ApplyResources(this.groupBoxExamples, "groupBoxExamples");
-            this.groupBoxExamples.Controls.Add(this.checkBoxExampleXML);
-            this.groupBoxExamples.Controls.Add(this.checkBoxExampleSPF);
-            this.groupBoxExamples.Name = "groupBoxExamples";
-            this.groupBoxExamples.TabStop = false;
+            resources.ApplyResources(this.buttonImagesDocumentation, "buttonImagesDocumentation");
+            this.buttonImagesDocumentation.Name = "buttonImagesDocumentation";
+            this.buttonImagesDocumentation.UseVisualStyleBackColor = true;
+            this.buttonImagesDocumentation.Click += new System.EventHandler(this.buttonImagesDocumentation_Click);
             // 
-            // checkBoxExampleXML
+            // label3
             // 
-            resources.ApplyResources(this.checkBoxExampleXML, "checkBoxExampleXML");
-            this.checkBoxExampleXML.Name = "checkBoxExampleXML";
-            this.checkBoxExampleXML.UseVisualStyleBackColor = true;
+            resources.ApplyResources(this.label3, "label3");
+            this.label3.Name = "label3";
             // 
-            // checkBoxExampleSPF
+            // textBoxImagesDocumentation
             // 
-            resources.ApplyResources(this.checkBoxExampleSPF, "checkBoxExampleSPF");
-            this.checkBoxExampleSPF.Name = "checkBoxExampleSPF";
-            this.checkBoxExampleSPF.UseVisualStyleBackColor = true;
+            resources.ApplyResources(this.textBoxImagesDocumentation, "textBoxImagesDocumentation");
+            this.textBoxImagesDocumentation.Name = "textBoxImagesDocumentation";
+            this.textBoxImagesDocumentation.ReadOnly = true;
+            // 
+            // buttonImagesExamples
+            // 
+            resources.ApplyResources(this.buttonImagesExamples, "buttonImagesExamples");
+            this.buttonImagesExamples.Name = "buttonImagesExamples";
+            this.buttonImagesExamples.UseVisualStyleBackColor = true;
+            this.buttonImagesExamples.Click += new System.EventHandler(this.buttonImagesExamples_Click);
+            // 
+            // label4
+            // 
+            resources.ApplyResources(this.label4, "label4");
+            this.label4.Name = "label4";
+            // 
+            // textBoxImagesExamples
+            // 
+            resources.ApplyResources(this.textBoxImagesExamples, "textBoxImagesExamples");
+            this.textBoxImagesExamples.Name = "textBoxImagesExamples";
+            this.textBoxImagesExamples.ReadOnly = true;
             // 
             // FormGenerate
             // 
@@ -269,25 +139,26 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.CancelButton = this.buttonCancel;
             resources.ApplyResources(this, "$this");
-            this.Controls.Add(this.tabControl);
+            this.Controls.Add(this.buttonImagesExamples);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.textBoxImagesExamples);
+            this.Controls.Add(this.buttonImagesDocumentation);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.textBoxImagesDocumentation);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.checkedListBoxViews);
+            this.Controls.Add(this.checkBoxSkip);
+            this.Controls.Add(this.buttonPath);
             this.Controls.Add(this.buttonCancel);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.buttonOK);
+            this.Controls.Add(this.textBoxPath);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FormGenerate";
             this.ShowInTaskbar = false;
-            this.groupBoxLocation.ResumeLayout(false);
-            this.groupBoxLocation.PerformLayout();
-            this.groupBoxDetails.ResumeLayout(false);
-            this.groupBoxDetails.PerformLayout();
-            this.groupBoxModelView.ResumeLayout(false);
-            this.groupBoxModelView.PerformLayout();
-            this.tabControl.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
-            this.groupBoxViews.ResumeLayout(false);
-            this.tabPage2.ResumeLayout(false);
-            this.groupBoxExamples.ResumeLayout(false);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -296,31 +167,17 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox textBoxPath;
         private System.Windows.Forms.Button buttonPath;
-        private System.Windows.Forms.TextBox textBoxHeader;
-        private System.Windows.Forms.TextBox textBoxFooter;
-        private System.Windows.Forms.CheckBox checkBoxHeader;
-        private System.Windows.Forms.CheckBox checkBoxFooter;
-        private System.Windows.Forms.CheckBox checkBoxSuppressHistory;
-        private System.Windows.Forms.CheckBox checkBoxSuppressXML;
-        private System.Windows.Forms.GroupBox groupBoxLocation;
-        private System.Windows.Forms.GroupBox groupBoxDetails;
         private System.Windows.Forms.Button buttonOK;
         private System.Windows.Forms.Button buttonCancel;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
-        private System.Windows.Forms.CheckBox checkBoxExpressEnclosed;
-        private System.Windows.Forms.CheckBox checkBoxRequirement;
-        private System.Windows.Forms.GroupBox groupBoxModelView;
-        private System.Windows.Forms.CheckBox checkBoxSuppressXSD;
-        private System.Windows.Forms.CheckBox checkBoxConceptTables;
-        private System.Windows.Forms.TabControl tabControl;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.GroupBox groupBoxViews;
         private System.Windows.Forms.CheckedListBox checkedListBoxViews;
-        private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.CheckBox checkBoxSkip;
-        private System.Windows.Forms.CheckBox checkBoxExcludeWhereRules;
-        private System.Windows.Forms.GroupBox groupBoxExamples;
-        private System.Windows.Forms.CheckBox checkBoxExampleXML;
-        private System.Windows.Forms.CheckBox checkBoxExampleSPF;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button buttonImagesDocumentation;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox textBoxImagesDocumentation;
+        private System.Windows.Forms.Button buttonImagesExamples;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox textBoxImagesExamples;
     }
 }

@@ -69,10 +69,11 @@ namespace IfcDoc.Schema.MVD
         {
             DefaultNamespace,
             "http://buildingsmart-tech.org/mvdXML/mvdXML1-0",
-            "http://buildingsmart-tech.org/mvdXML/mvdXML_V1-0"
+            "http://buildingsmart-tech.org/mvdXML/mvdXML_V1-0",
+            "http://buildingsmart-tech.org/mvdXML/mvdXML1-1"
         };
 
-        public const string DefaultNamespace = "http://buildingsmart-tech.org/mvdXML/mvdXML1-1";
+        public const string DefaultNamespace = "http://www.buildingsmart-tech.org/mvd/XML/1.1";
     }
 
     [XmlType("ConceptTemplate")]
@@ -135,9 +136,10 @@ namespace IfcDoc.Schema.MVD
     public enum RequirementEnum
     {
         [XmlEnum("mandatory")] Mandatory = 1,
-        [XmlEnum("optional")] Optional = 2,
-        [XmlEnum("not relevant")] NotRelevant = 3,
-        [XmlEnum("excluded")] Excluded = 4,
+        [XmlEnum("recommended")] Recommended = 2,
+        [XmlEnum("not-relevent")] NotRelevant = 3,
+        [XmlEnum("not-recommended")] NotRecommended = 4,
+        [XmlEnum("excluded")] Excluded = 5,
     }
 
     [XmlType("ModelView")]
@@ -236,25 +238,14 @@ namespace IfcDoc.Schema.MVD
     public class AttributeRule : AbstractRule
     {
         [DataMember(Order = 0), XmlAttribute("AttributeName")] public string AttributeName;
-        //[DataMember(Order = 1), XmlAttribute("Cardinality")] public CardinalityType Cardinality;
         [DataMember(Order = 1)] public List<EntityRule> EntityRules;
         [DataMember(Order = 2)] public List<Constraint> Constraints;
-    }
-
-    public enum CardinalityType
-    {
-        _asSchema = 0, // 3.8: was previously "Default" 
-        Zero = 1,
-        ZeroToOne = 2,
-        One = 3,
-        OneToMany = 4
     }
 
     [XmlType("EntityRule")]
     public class EntityRule : AbstractRule
     {
         [DataMember(Order = 0), XmlAttribute("EntityName")] public string EntityName;
-        //[DataMember(Order = 1), XmlAttribute("Cardinality")] public CardinalityType Cardinality;
         [DataMember(Order = 1)] public List<AttributeRule> AttributeRules;
         [DataMember(Order = 2)] public List<Constraint> Constraints;
         [DataMember(Order = 3)] public List<TemplateRef> References; // MVDXML 1.1 -- links to concept templates defined on referenced entity

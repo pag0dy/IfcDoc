@@ -42,10 +42,18 @@ namespace IfcDoc
 
         public void ReportProgress(int step, object state)
         {
-            this.progressBar.Maximum = this.m_progressmax;
-            if (step <= this.progressBar.Maximum)
+            if (step >= 0)
             {
-                this.progressBar.Value = step;
+                this.progressBar.Maximum = this.m_progressmax;
+                if (step <= this.progressBar.Maximum)
+                {
+                    this.progressBar.Value = step;
+                }
+            }
+            else
+            {
+                this.Text += " - Error";
+                this.buttonCancel.Text = "Close";
             }
 
             if (state != null)

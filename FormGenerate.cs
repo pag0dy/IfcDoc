@@ -26,43 +26,20 @@ namespace IfcDoc
             InitializeComponent();
 
             this.textBoxPath.Text = Properties.Settings.Default.OutputPath;
+            this.textBoxImagesDocumentation.Text = Properties.Settings.Default.InputPathGeneral;
+            this.textBoxImagesExamples.Text = Properties.Settings.Default.InputPathExamples;
             this.checkBoxSkip.Checked = Properties.Settings.Default.SkipDiagrams;
-            this.textBoxHeader.Text = Properties.Settings.Default.Header;
-            this.textBoxFooter.Text = Properties.Settings.Default.Footer;
-            this.checkBoxHeader.Checked = !String.IsNullOrEmpty(this.textBoxHeader.Text);
-            this.checkBoxFooter.Checked = !String.IsNullOrEmpty(this.textBoxFooter.Text);
-            this.checkBoxSuppressHistory.Checked = Properties.Settings.Default.NoHistory;
-            this.checkBoxSuppressXML.Checked = Properties.Settings.Default.NoXml;
-            this.checkBoxExpressEnclosed.Checked = Properties.Settings.Default.ExpressComments;
-            this.checkBoxSuppressXSD.Checked = Properties.Settings.Default.NoXsd;
-            this.checkBoxRequirement.Checked = Properties.Settings.Default.Requirement;
-            this.checkBoxConceptTables.Checked = Properties.Settings.Default.ConceptTables;
-            this.checkBoxExcludeWhereRules.Checked = Properties.Settings.Default.NoWhereRules;
-            this.checkBoxExampleSPF.Checked = Properties.Settings.Default.ExampleSPF;
-            this.checkBoxExampleXML.Checked = Properties.Settings.Default.ExampleXML;
         }
 
         protected override void OnClosed(EventArgs e)
         {
             base.OnClosed(e);
 
-            if (this.DialogResult == DialogResult.OK)
-            {
-                Properties.Settings.Default.OutputPath = this.textBoxPath.Text;
-                Properties.Settings.Default.SkipDiagrams = this.checkBoxSkip.Checked;
-                Properties.Settings.Default.Header = this.textBoxHeader.Text;
-                Properties.Settings.Default.Footer = this.textBoxFooter.Text;
-                Properties.Settings.Default.NoHistory = this.checkBoxSuppressHistory.Checked;
-                Properties.Settings.Default.NoXml = this.checkBoxSuppressXML.Checked;
-                Properties.Settings.Default.ExpressComments = this.checkBoxExpressEnclosed.Checked;
-                Properties.Settings.Default.NoXsd = this.checkBoxSuppressXSD.Checked;
-                Properties.Settings.Default.Requirement = this.checkBoxRequirement.Checked;
-                Properties.Settings.Default.ConceptTables = this.checkBoxConceptTables.Checked;
-                Properties.Settings.Default.NoWhereRules = this.checkBoxExcludeWhereRules.Checked;
-                Properties.Settings.Default.ExampleSPF = this.checkBoxExampleSPF.Checked;
-                Properties.Settings.Default.ExampleXML = this.checkBoxExampleXML.Checked;
-                Properties.Settings.Default.Save();
-            }
+            Properties.Settings.Default.OutputPath = this.textBoxPath.Text;
+            Properties.Settings.Default.InputPathGeneral = this.textBoxImagesDocumentation.Text;
+            Properties.Settings.Default.InputPathExamples = this.textBoxImagesExamples.Text;
+            Properties.Settings.Default.SkipDiagrams = this.checkBoxSkip.Checked;
+            Properties.Settings.Default.Save();
         }
 
         private void buttonPath_Click(object sender, EventArgs e)
@@ -86,24 +63,24 @@ namespace IfcDoc
                 this.m_project = value;
 
                 this.checkedListBoxViews.Items.Clear();
-                foreach (DocModelView docView in this.m_project.ModelViews)
+                foreach (DocPublication docView in this.m_project.Publications)
                 {
                     this.checkedListBoxViews.Items.Add(docView);
                 }
             }
         }
 
-        public DocModelView[] Views
+        public DocPublication[] Publications
         {
             get
             {
-                List<DocModelView> list = new List<DocModelView>();
+                List<DocPublication> list = new List<DocPublication>();
                 for(int i =0; i < checkedListBoxViews.Items.Count; i++)
                 {
                     bool check = this.checkedListBoxViews.GetItemChecked(i);
                     if(check)
                     {
-                        list.Add((DocModelView)this.checkedListBoxViews.Items[i]);
+                        list.Add((DocPublication)this.checkedListBoxViews.Items[i]);
                     }
                 }
 
@@ -118,7 +95,7 @@ namespace IfcDoc
             {
                 if(value != null)
                 {
-                    foreach(DocModelView view in value)
+                    foreach (DocPublication view in value)
                     {
                         int index = this.checkedListBoxViews.Items.IndexOf(view);
                         if (index >= 0)
@@ -130,86 +107,43 @@ namespace IfcDoc
             }
         }
 
-        public string[] Locales
+        private void UpdateEnabled()
         {
-            get
-            {
-                return null;//...
-            }
-            set
-            {
-                //...
-            }
+            this.buttonOK.Enabled = (this.Publications != null && this.Publications.Length > 0);
         }
 
-        public string SelectedPath
+        private void checkedListBoxViews_SelectedIndexChanged(object sender, EventArgs e)
         {
-            get
-            {
-                return this.textBoxPath.Text;
-            }
+            this.UpdateEnabled();
         }
 
-        public string PageHeader
+        private void checkedListBoxViews_ItemCheck(object sender, ItemCheckEventArgs e)
         {
-            get
+            this.UpdateEnabled();
+            if (e.NewValue == CheckState.Checked)
             {
-                if (this.checkBoxHeader.Checked)
-                {
-                    return this.textBoxHeader.Text;
-                }
-
-                return null;
+                this.buttonOK.Enabled = true;
             }
         }
 
-        public string PageFooter
+        private void buttonImagesDocumentation_Click(object sender, EventArgs e)
         {
-            get
+            this.folderBrowserDialog.SelectedPath = this.textBoxImagesDocumentation.Text;
+            DialogResult res = this.folderBrowserDialog.ShowDialog();
+            if (res == DialogResult.OK)
             {
-                if (this.checkBoxFooter.Checked)
-                {
-                    return this.textBoxFooter.Text;
-                }
-
-                return null;
+                this.textBoxImagesDocumentation.Text = this.folderBrowserDialog.SelectedPath;
             }
         }
 
-        public bool SuppressHistory
+        private void buttonImagesExamples_Click(object sender, EventArgs e)
         {
-            get
+            this.folderBrowserDialog.SelectedPath = this.textBoxImagesExamples.Text;
+            DialogResult res = this.folderBrowserDialog.ShowDialog();
+            if (res == DialogResult.OK)
             {
-                return this.checkBoxSuppressHistory.Checked;
+                this.textBoxImagesExamples.Text = this.folderBrowserDialog.SelectedPath;
             }
-        }
-
-        public bool SuppressXML
-        {
-            get
-            {
-                return this.checkBoxSuppressXML.Checked;
-            }
-        }
-
-        public bool ExpressEnclosed
-        {
-            get
-            {
-                return this.checkBoxExpressEnclosed.Checked;
-            }
-        }
-
-        private void checkBoxHeader_CheckedChanged(object sender, EventArgs e)
-        {
-            if (!checkBoxHeader.Checked)
-                this.textBoxHeader.Text = "";
-        }
-
-        private void checkBoxFooter_CheckedChanged(object sender, EventArgs e)
-        {
-            if (!checkBoxFooter.Checked)
-                this.textBoxFooter.Text = "";
         }
 
     }

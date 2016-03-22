@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormEdit));
             this.splitContainerRoot = new System.Windows.Forms.SplitContainer();
+            this.treeView = new IfcDoc.ThemedTreeView();
             this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItemContextInsert = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemContextInsertModelView = new System.Windows.Forms.ToolStripMenuItem();
@@ -44,6 +45,8 @@
             this.toolStripMenuItemContextInsertConstant = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemContextInsertPset = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemContextInsertProperty = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemContextInsertPropertyEnum = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemContextInsertPropertyConstant = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemContextInsertQset = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemContextInsertQuantity = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemContextInsertExample = new System.Windows.Forms.ToolStripMenuItem();
@@ -56,6 +59,11 @@
             this.panelWorkspace = new System.Windows.Forms.Panel();
             this.panelDiagram = new System.Windows.Forms.Panel();
             this.splitContainerWorkspace = new System.Windows.Forms.SplitContainer();
+            this.ctlConcept = new IfcDoc.CtlConcept();
+            this.ctlExpressG = new IfcDoc.CtlExpressG();
+            this.ctlCheckGrid = new IfcDoc.CtlCheckGrid();
+            this.ctlInheritance = new IfcDoc.CtlInheritance();
+            this.ctlProperties = new IfcDoc.CtlProperties();
             this.textBoxHTML = new System.Windows.Forms.TextBox();
             this.webBrowser = new System.Windows.Forms.WebBrowser();
             this.splitContainerInstances = new System.Windows.Forms.SplitContainer();
@@ -99,7 +107,7 @@
             this.toolStripMenuItemEditMoveDown = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemEditMoveOut = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemEditMoveIn = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem7 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.modelViewDefinitionToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.buildFromSubschemaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemEditBuildConcepts = new System.Windows.Forms.ToolStripMenuItem();
@@ -162,11 +170,16 @@
             this.toolStripMenuItemInsertExchange = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemInsertConceptRoot = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemInsertConceptLeaf = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem20 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripMenuItemInsertPublication = new System.Windows.Forms.ToolStripMenuItem();
             this.diagramToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemModeSelect = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemModeMove = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemModeLink = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem15 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripMenuItemStyleExpressG = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemStyleUML = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem7 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemDiagramFormatTree = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemDiagramFormatPageRef = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem16 = new System.Windows.Forms.ToolStripSeparator();
@@ -199,6 +212,8 @@
             this.ToolStripMenuItemGenerateBallotSubmission = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemToolsSourceCode = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemToolsModule = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem22 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripMenuItemDictionaryUpload = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemHelpAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialogLoad = new System.Windows.Forms.OpenFileDialog();
@@ -233,6 +248,13 @@
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonToolsGenerate = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonHelp = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonFindNext = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonFindPrev = new System.Windows.Forms.ToolStripButton();
+            this.toolStripTextBoxFind = new System.Windows.Forms.ToolStripTextBox();
+            this.toolStripDropDownButtonFind = new System.Windows.Forms.ToolStripDropDownButton();
+            this.toolStripMenuItemFindItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemFindText = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemFindPage = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialogChanges = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialogChanges = new System.Windows.Forms.SaveFileDialog();
             this.backgroundWorkerGenerate = new System.ComponentModel.BackgroundWorker();
@@ -242,14 +264,6 @@
             this.imageListRules = new System.Windows.Forms.ImageList(this.components);
             this.saveFileDialogModule = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialogExpress = new System.Windows.Forms.OpenFileDialog();
-            this.treeView = new IfcDoc.ThemedTreeView();
-            this.ctlConcept = new IfcDoc.CtlConcept();
-            this.ctlExpressG = new IfcDoc.CtlExpressG();
-            this.ctlCheckGrid = new IfcDoc.CtlCheckGrid();
-            this.ctlInheritance = new IfcDoc.CtlInheritance();
-            this.ctlProperties = new IfcDoc.CtlProperties();
-            this.toolStripMenuItemContextInsertPropertyEnum = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemContextInsertPropertyConstant = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerRoot)).BeginInit();
             this.splitContainerRoot.Panel1.SuspendLayout();
             this.splitContainerRoot.Panel2.SuspendLayout();
@@ -286,6 +300,20 @@
             // splitContainerRoot.Panel2
             // 
             this.splitContainerRoot.Panel2.Controls.Add(this.splitContainerEdit);
+            // 
+            // treeView
+            // 
+            this.treeView.ContextMenuStrip = this.contextMenuStrip;
+            resources.ApplyResources(this.treeView, "treeView");
+            this.treeView.HideSelection = false;
+            this.treeView.ImageList = this.imageListIcon;
+            this.treeView.LabelEdit = true;
+            this.treeView.Name = "treeView";
+            this.treeView.BeforeLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.treeView_BeforeLabelEdit);
+            this.treeView.AfterLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.treeView_AfterLabelEdit);
+            this.treeView.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.treeView_ItemDrag);
+            this.treeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TreeView_AfterSelect);
+            this.treeView.MouseUp += new System.Windows.Forms.MouseEventHandler(this.treeView_MouseUp);
             // 
             // contextMenuStrip
             // 
@@ -386,6 +414,18 @@
             this.toolStripMenuItemContextInsertProperty.Name = "toolStripMenuItemContextInsertProperty";
             this.toolStripMenuItemContextInsertProperty.Click += new System.EventHandler(this.toolStripMenuItemInsertProperty_Click);
             // 
+            // toolStripMenuItemContextInsertPropertyEnum
+            // 
+            resources.ApplyResources(this.toolStripMenuItemContextInsertPropertyEnum, "toolStripMenuItemContextInsertPropertyEnum");
+            this.toolStripMenuItemContextInsertPropertyEnum.Name = "toolStripMenuItemContextInsertPropertyEnum";
+            this.toolStripMenuItemContextInsertPropertyEnum.Click += new System.EventHandler(this.toolStripMenuItemInsertPropertyEnumeration_Click);
+            // 
+            // toolStripMenuItemContextInsertPropertyConstant
+            // 
+            resources.ApplyResources(this.toolStripMenuItemContextInsertPropertyConstant, "toolStripMenuItemContextInsertPropertyConstant");
+            this.toolStripMenuItemContextInsertPropertyConstant.Name = "toolStripMenuItemContextInsertPropertyConstant";
+            this.toolStripMenuItemContextInsertPropertyConstant.Click += new System.EventHandler(this.toolStripMenuItemInsertPropertyConstant_Click);
+            // 
             // toolStripMenuItemContextInsertQset
             // 
             resources.ApplyResources(this.toolStripMenuItemContextInsertQset, "toolStripMenuItemContextInsertQset");
@@ -473,6 +513,8 @@
             this.imageListIcon.Images.SetKeyName(39, "Microsoft.VS.Action.16x16.png");
             this.imageListIcon.Images.SetKeyName(40, "DocTerm.png");
             this.imageListIcon.Images.SetKeyName(41, "DocAbbreviation.png");
+            this.imageListIcon.Images.SetKeyName(42, "Microsoft.VisualStudio.Blend.Html.Intrinsic.Div.Contenteditable.16x16.png");
+            this.imageListIcon.Images.SetKeyName(43, "Microsoft.VisualStudio.Blend.Html.Intrinsic.Aside.16x16.png");
             // 
             // splitContainerEdit
             // 
@@ -519,6 +561,65 @@
             // splitContainerWorkspace.Panel2
             // 
             this.splitContainerWorkspace.Panel2.Controls.Add(this.ctlProperties);
+            // 
+            // ctlConcept
+            // 
+            resources.ApplyResources(this.ctlConcept, "ctlConcept");
+            this.ctlConcept.ConceptRoot = null;
+            this.ctlConcept.CurrentInstance = null;
+            this.ctlConcept.Map = null;
+            this.ctlConcept.Name = "ctlConcept";
+            this.ctlConcept.Project = null;
+            this.ctlConcept.Selection = null;
+            this.ctlConcept.Template = null;
+            this.ctlConcept.SelectionChanged += new System.EventHandler(this.ctlConcept_SelectionChanged);
+            this.ctlConcept.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ctlConcept_MouseDoubleClick);
+            // 
+            // ctlExpressG
+            // 
+            this.ctlExpressG.AllowDrop = true;
+            resources.ApplyResources(this.ctlExpressG, "ctlExpressG");
+            this.ctlExpressG.Format = IfcDoc.Format.PNG.DiagramFormat.ExpressG;
+            this.ctlExpressG.Map = null;
+            this.ctlExpressG.Mode = IfcDoc.ToolMode.Select;
+            this.ctlExpressG.Name = "ctlExpressG";
+            this.ctlExpressG.Schema = null;
+            this.ctlExpressG.ScrollToSelection = true;
+            this.ctlExpressG.Selection = null;
+            this.ctlExpressG.SelectionChanged += new System.EventHandler(this.ctlExpressG_SelectionChanged);
+            this.ctlExpressG.LinkOperation += new System.EventHandler(this.ctlExpressG_LinkOperation);
+            this.ctlExpressG.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ctlExpressG_MouseDoubleClick);
+            // 
+            // ctlCheckGrid
+            // 
+            resources.ApplyResources(this.ctlCheckGrid, "ctlCheckGrid");
+            this.ctlCheckGrid.CheckGridSource = null;
+            this.ctlCheckGrid.Mode = IfcDoc.ToolMode.Select;
+            this.ctlCheckGrid.Name = "ctlCheckGrid";
+            this.ctlCheckGrid.Selection = null;
+            this.ctlCheckGrid.SelectionChanged += new System.EventHandler(this.ctlCheckGrid_SelectionChanged);
+            // 
+            // ctlInheritance
+            // 
+            resources.ApplyResources(this.ctlInheritance, "ctlInheritance");
+            this.ctlInheritance.Entity = null;
+            this.ctlInheritance.Mode = IfcDoc.ToolMode.Select;
+            this.ctlInheritance.ModelView = null;
+            this.ctlInheritance.Name = "ctlInheritance";
+            this.ctlInheritance.Project = null;
+            this.ctlInheritance.SelectionChanged += new System.EventHandler(this.ctlInheritance_SelectionChanged);
+            // 
+            // ctlProperties
+            // 
+            this.ctlProperties.CurrentInstance = null;
+            this.ctlProperties.CurrentPopulation = null;
+            resources.ApplyResources(this.ctlProperties, "ctlProperties");
+            this.ctlProperties.Name = "ctlProperties";
+            this.ctlProperties.SelectedAttribute = null;
+            this.ctlProperties.SelectedRule = null;
+            this.ctlProperties.Navigate += new System.EventHandler(this.ctlProperties_Navigate);
+            this.ctlProperties.RuleSelectionChanged += new System.EventHandler(this.ctlProperties_RuleSelectionChanged);
+            this.ctlProperties.RuleContentChanged += new System.EventHandler(this.ctlProperties_RuleContentChanged);
             // 
             // textBoxHTML
             // 
@@ -759,7 +860,7 @@
             this.toolStripMenuItemEditMoveDown,
             this.toolStripMenuItemEditMoveOut,
             this.toolStripMenuItemEditMoveIn,
-            this.toolStripMenuItem7,
+            this.toolStripMenuItem1,
             this.modelViewDefinitionToolStripMenuItem1});
             this.toolStripMenuItemEdit.Name = "toolStripMenuItemEdit";
             resources.ApplyResources(this.toolStripMenuItemEdit, "toolStripMenuItemEdit");
@@ -828,10 +929,10 @@
             this.toolStripMenuItemEditMoveIn.Name = "toolStripMenuItemEditMoveIn";
             this.toolStripMenuItemEditMoveIn.Click += new System.EventHandler(this.toolStripMenuItemEditMoveIn_Click);
             // 
-            // toolStripMenuItem7
+            // toolStripMenuItem1
             // 
-            this.toolStripMenuItem7.Name = "toolStripMenuItem7";
-            resources.ApplyResources(this.toolStripMenuItem7, "toolStripMenuItem7");
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            resources.ApplyResources(this.toolStripMenuItem1, "toolStripMenuItem1");
             // 
             // modelViewDefinitionToolStripMenuItem1
             // 
@@ -888,7 +989,9 @@
             this.documentationToolStripMenuItem,
             this.schemaDefinitionToolStripMenuItem,
             this.userDataDefinitionToolStripMenuItem,
-            this.modelViewDefinitionToolStripMenuItem});
+            this.modelViewDefinitionToolStripMenuItem,
+            this.toolStripMenuItem20,
+            this.toolStripMenuItemInsertPublication});
             this.toolStripMenuItemInsert.Name = "toolStripMenuItemInsert";
             resources.ApplyResources(this.toolStripMenuItemInsert, "toolStripMenuItemInsert");
             // 
@@ -1254,6 +1357,17 @@
             this.toolStripMenuItemInsertConceptLeaf.Name = "toolStripMenuItemInsertConceptLeaf";
             this.toolStripMenuItemInsertConceptLeaf.Click += new System.EventHandler(this.toolStripMenuItemInsertUseDefinition_Click);
             // 
+            // toolStripMenuItem20
+            // 
+            this.toolStripMenuItem20.Name = "toolStripMenuItem20";
+            resources.ApplyResources(this.toolStripMenuItem20, "toolStripMenuItem20");
+            // 
+            // toolStripMenuItemInsertPublication
+            // 
+            resources.ApplyResources(this.toolStripMenuItemInsertPublication, "toolStripMenuItemInsertPublication");
+            this.toolStripMenuItemInsertPublication.Name = "toolStripMenuItemInsertPublication";
+            this.toolStripMenuItemInsertPublication.Click += new System.EventHandler(this.toolStripMenuItemInsertPublication_Click);
+            // 
             // diagramToolStripMenuItem
             // 
             this.diagramToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -1261,6 +1375,9 @@
             this.toolStripMenuItemModeMove,
             this.toolStripMenuItemModeLink,
             this.toolStripMenuItem15,
+            this.toolStripMenuItemStyleExpressG,
+            this.toolStripMenuItemStyleUML,
+            this.toolStripMenuItem7,
             this.toolStripMenuItemDiagramFormatTree,
             this.toolStripMenuItemDiagramFormatPageRef,
             this.toolStripMenuItem16,
@@ -1295,6 +1412,25 @@
             // 
             this.toolStripMenuItem15.Name = "toolStripMenuItem15";
             resources.ApplyResources(this.toolStripMenuItem15, "toolStripMenuItem15");
+            // 
+            // toolStripMenuItemStyleExpressG
+            // 
+            this.toolStripMenuItemStyleExpressG.Checked = true;
+            this.toolStripMenuItemStyleExpressG.CheckState = System.Windows.Forms.CheckState.Checked;
+            resources.ApplyResources(this.toolStripMenuItemStyleExpressG, "toolStripMenuItemStyleExpressG");
+            this.toolStripMenuItemStyleExpressG.Name = "toolStripMenuItemStyleExpressG";
+            this.toolStripMenuItemStyleExpressG.Click += new System.EventHandler(this.toolStripMenuItemStyleExpressG_Click);
+            // 
+            // toolStripMenuItemStyleUML
+            // 
+            resources.ApplyResources(this.toolStripMenuItemStyleUML, "toolStripMenuItemStyleUML");
+            this.toolStripMenuItemStyleUML.Name = "toolStripMenuItemStyleUML";
+            this.toolStripMenuItemStyleUML.Click += new System.EventHandler(this.toolStripMenuItemStyleUML_Click);
+            // 
+            // toolStripMenuItem7
+            // 
+            this.toolStripMenuItem7.Name = "toolStripMenuItem7";
+            resources.ApplyResources(this.toolStripMenuItem7, "toolStripMenuItem7");
             // 
             // toolStripMenuItemDiagramFormatTree
             // 
@@ -1470,7 +1606,9 @@
             this.toolStripMenuItemToolsISO,
             this.ToolStripMenuItemGenerateBallotSubmission,
             this.toolStripMenuItemToolsSourceCode,
-            this.toolStripMenuItemToolsModule});
+            this.toolStripMenuItemToolsModule,
+            this.toolStripMenuItem22,
+            this.toolStripMenuItemDictionaryUpload});
             this.toolStripMenuItemTools.Name = "toolStripMenuItemTools";
             resources.ApplyResources(this.toolStripMenuItemTools, "toolStripMenuItemTools");
             // 
@@ -1508,6 +1646,17 @@
             this.toolStripMenuItemToolsModule.Name = "toolStripMenuItemToolsModule";
             resources.ApplyResources(this.toolStripMenuItemToolsModule, "toolStripMenuItemToolsModule");
             this.toolStripMenuItemToolsModule.Click += new System.EventHandler(this.toolStripMenuItemToolsModule_Click);
+            // 
+            // toolStripMenuItem22
+            // 
+            this.toolStripMenuItem22.Name = "toolStripMenuItem22";
+            resources.ApplyResources(this.toolStripMenuItem22, "toolStripMenuItem22");
+            // 
+            // toolStripMenuItemDictionaryUpload
+            // 
+            this.toolStripMenuItemDictionaryUpload.Name = "toolStripMenuItemDictionaryUpload";
+            resources.ApplyResources(this.toolStripMenuItemDictionaryUpload, "toolStripMenuItemDictionaryUpload");
+            this.toolStripMenuItemDictionaryUpload.Click += new System.EventHandler(this.toolStripMenuItemDictionaryUpload_Click);
             // 
             // helpToolStripMenuItem
             // 
@@ -1573,7 +1722,11 @@
             this.toolStripButtonModeLink,
             this.toolStripSeparator3,
             this.toolStripButtonToolsGenerate,
-            this.toolStripButtonHelp});
+            this.toolStripButtonHelp,
+            this.toolStripButtonFindNext,
+            this.toolStripButtonFindPrev,
+            this.toolStripTextBoxFind,
+            this.toolStripDropDownButtonFind});
             resources.ApplyResources(this.toolStripMain, "toolStripMain");
             this.toolStripMain.Name = "toolStripMain";
             // 
@@ -1752,6 +1905,59 @@
             this.toolStripButtonHelp.Name = "toolStripButtonHelp";
             this.toolStripButtonHelp.Click += new System.EventHandler(this.toolStripMenuItemHelpAbout_Click);
             // 
+            // toolStripButtonFindNext
+            // 
+            this.toolStripButtonFindNext.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripButtonFindNext.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            resources.ApplyResources(this.toolStripButtonFindNext, "toolStripButtonFindNext");
+            this.toolStripButtonFindNext.Name = "toolStripButtonFindNext";
+            this.toolStripButtonFindNext.Click += new System.EventHandler(this.toolStripButtonFindNext_Click);
+            // 
+            // toolStripButtonFindPrev
+            // 
+            this.toolStripButtonFindPrev.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripButtonFindPrev.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            resources.ApplyResources(this.toolStripButtonFindPrev, "toolStripButtonFindPrev");
+            this.toolStripButtonFindPrev.Name = "toolStripButtonFindPrev";
+            this.toolStripButtonFindPrev.Click += new System.EventHandler(this.toolStripButtonFindPrev_Click);
+            // 
+            // toolStripTextBoxFind
+            // 
+            this.toolStripTextBoxFind.AcceptsReturn = true;
+            this.toolStripTextBoxFind.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            resources.ApplyResources(this.toolStripTextBoxFind, "toolStripTextBoxFind");
+            this.toolStripTextBoxFind.Name = "toolStripTextBoxFind";
+            this.toolStripTextBoxFind.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.toolStripTextBoxFind_KeyPress);
+            this.toolStripTextBoxFind.Validated += new System.EventHandler(this.toolStripTextBoxFind_Validated);
+            // 
+            // toolStripDropDownButtonFind
+            // 
+            this.toolStripDropDownButtonFind.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripDropDownButtonFind.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItemFindItem,
+            this.toolStripMenuItemFindText,
+            this.toolStripMenuItemFindPage});
+            resources.ApplyResources(this.toolStripDropDownButtonFind, "toolStripDropDownButtonFind");
+            this.toolStripDropDownButtonFind.Name = "toolStripDropDownButtonFind";
+            // 
+            // toolStripMenuItemFindItem
+            // 
+            resources.ApplyResources(this.toolStripMenuItemFindItem, "toolStripMenuItemFindItem");
+            this.toolStripMenuItemFindItem.Name = "toolStripMenuItemFindItem";
+            this.toolStripMenuItemFindItem.Click += new System.EventHandler(this.toolStripMenuItemFindItem_Click);
+            // 
+            // toolStripMenuItemFindText
+            // 
+            resources.ApplyResources(this.toolStripMenuItemFindText, "toolStripMenuItemFindText");
+            this.toolStripMenuItemFindText.Name = "toolStripMenuItemFindText";
+            this.toolStripMenuItemFindText.Click += new System.EventHandler(this.toolStripMenuItemFindText_Click);
+            // 
+            // toolStripMenuItemFindPage
+            // 
+            resources.ApplyResources(this.toolStripMenuItemFindPage, "toolStripMenuItemFindPage");
+            this.toolStripMenuItemFindPage.Name = "toolStripMenuItemFindPage";
+            this.toolStripMenuItemFindPage.Click += new System.EventHandler(this.toolStripMenuItemFindPage_Click);
+            // 
             // openFileDialogChanges
             // 
             this.openFileDialogChanges.DefaultExt = "ifcdoc";
@@ -1805,90 +2011,6 @@
             // openFileDialogExpress
             // 
             resources.ApplyResources(this.openFileDialogExpress, "openFileDialogExpress");
-            // 
-            // treeView
-            // 
-            this.treeView.ContextMenuStrip = this.contextMenuStrip;
-            resources.ApplyResources(this.treeView, "treeView");
-            this.treeView.HideSelection = false;
-            this.treeView.ImageList = this.imageListIcon;
-            this.treeView.LabelEdit = true;
-            this.treeView.Name = "treeView";
-            this.treeView.BeforeLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.treeView_BeforeLabelEdit);
-            this.treeView.AfterLabelEdit += new System.Windows.Forms.NodeLabelEditEventHandler(this.treeView_AfterLabelEdit);
-            this.treeView.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.treeView_ItemDrag);
-            this.treeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.TreeView_AfterSelect);
-            this.treeView.MouseUp += new System.Windows.Forms.MouseEventHandler(this.treeView_MouseUp);
-            // 
-            // ctlConcept
-            // 
-            resources.ApplyResources(this.ctlConcept, "ctlConcept");
-            this.ctlConcept.ConceptRoot = null;
-            this.ctlConcept.CurrentInstance = null;
-            this.ctlConcept.Map = null;
-            this.ctlConcept.Name = "ctlConcept";
-            this.ctlConcept.Project = null;
-            this.ctlConcept.Selection = null;
-            this.ctlConcept.Template = null;
-            this.ctlConcept.SelectionChanged += new System.EventHandler(this.ctlConcept_SelectionChanged);
-            this.ctlConcept.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ctlConcept_MouseDoubleClick);
-            // 
-            // ctlExpressG
-            // 
-            this.ctlExpressG.AllowDrop = true;
-            resources.ApplyResources(this.ctlExpressG, "ctlExpressG");
-            this.ctlExpressG.Map = null;
-            this.ctlExpressG.Mode = IfcDoc.ToolMode.Select;
-            this.ctlExpressG.Name = "ctlExpressG";
-            this.ctlExpressG.Schema = null;
-            this.ctlExpressG.ScrollToSelection = true;
-            this.ctlExpressG.Selection = null;
-            this.ctlExpressG.SelectionChanged += new System.EventHandler(this.ctlExpressG_SelectionChanged);
-            this.ctlExpressG.LinkOperation += new System.EventHandler(this.ctlExpressG_LinkOperation);
-            this.ctlExpressG.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ctlExpressG_MouseDoubleClick);
-            // 
-            // ctlCheckGrid
-            // 
-            resources.ApplyResources(this.ctlCheckGrid, "ctlCheckGrid");
-            this.ctlCheckGrid.CheckGridSource = null;
-            this.ctlCheckGrid.Mode = IfcDoc.ToolMode.Select;
-            this.ctlCheckGrid.Name = "ctlCheckGrid";
-            this.ctlCheckGrid.Selection = null;
-            this.ctlCheckGrid.SelectionChanged += new System.EventHandler(this.ctlCheckGrid_SelectionChanged);
-            // 
-            // ctlInheritance
-            // 
-            resources.ApplyResources(this.ctlInheritance, "ctlInheritance");
-            this.ctlInheritance.Entity = null;
-            this.ctlInheritance.Mode = IfcDoc.ToolMode.Select;
-            this.ctlInheritance.ModelView = null;
-            this.ctlInheritance.Name = "ctlInheritance";
-            this.ctlInheritance.Project = null;
-            this.ctlInheritance.SelectionChanged += new System.EventHandler(this.ctlInheritance_SelectionChanged);
-            // 
-            // ctlProperties
-            // 
-            this.ctlProperties.CurrentInstance = null;
-            this.ctlProperties.CurrentPopulation = null;
-            resources.ApplyResources(this.ctlProperties, "ctlProperties");
-            this.ctlProperties.Name = "ctlProperties";
-            this.ctlProperties.SelectedAttribute = null;
-            this.ctlProperties.SelectedRule = null;
-            this.ctlProperties.Navigate += new System.EventHandler(this.ctlProperties_Navigate);
-            this.ctlProperties.RuleSelectionChanged += new System.EventHandler(this.ctlProperties_RuleSelectionChanged);
-            this.ctlProperties.RuleContentChanged += new System.EventHandler(this.ctlProperties_RuleContentChanged);
-            // 
-            // toolStripMenuItemContextInsertPropertyEnum
-            // 
-            resources.ApplyResources(this.toolStripMenuItemContextInsertPropertyEnum, "toolStripMenuItemContextInsertPropertyEnum");
-            this.toolStripMenuItemContextInsertPropertyEnum.Name = "toolStripMenuItemContextInsertPropertyEnum";
-            this.toolStripMenuItemContextInsertPropertyEnum.Click += new System.EventHandler(this.toolStripMenuItemInsertPropertyEnumeration_Click);
-            // 
-            // toolStripMenuItemContextInsertPropertyConstant
-            // 
-            resources.ApplyResources(this.toolStripMenuItemContextInsertPropertyConstant, "toolStripMenuItemContextInsertPropertyConstant");
-            this.toolStripMenuItemContextInsertPropertyConstant.Name = "toolStripMenuItemContextInsertPropertyConstant";
-            this.toolStripMenuItemContextInsertPropertyConstant.Click += new System.EventHandler(this.toolStripMenuItemInsertPropertyConstant_Click);
             // 
             // FormEdit
             // 
@@ -1998,7 +2120,6 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemEditPaste;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemEditMoveUp;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemEditMoveDown;
-        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem7;
         private System.ComponentModel.BackgroundWorker backgroundWorkerGenerate;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemContextInsertRoot;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemContextInsertPset;
@@ -2153,5 +2274,20 @@
         private System.Windows.Forms.TreeView treeViewInstance;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemContextInsertPropertyEnum;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemContextInsertPropertyConstant;
+        private System.Windows.Forms.ToolStripButton toolStripButtonFindNext;
+        private System.Windows.Forms.ToolStripButton toolStripButtonFindPrev;
+        private System.Windows.Forms.ToolStripTextBox toolStripTextBoxFind;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButtonFind;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemFindItem;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemFindText;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemFindPage;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem20;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemInsertPublication;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemStyleExpressG;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemStyleUML;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem7;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem22;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemDictionaryUpload;
     }
 }

@@ -71,6 +71,14 @@ namespace IfcDoc.Schema
     {
     }
 
+    [Flags]
+    public enum FieldScope
+    {
+        Direct = 1,
+        Inverse = 2,
+        All = 3,
+    }
+
     /// <summary>
     /// A context-bound object that can query relationships or pull content dynamically from broker
     /// </summary>
@@ -79,6 +87,7 @@ namespace IfcDoc.Schema
     {
         static Dictionary<Type, IList<FieldInfo>> s_fieldmap = new Dictionary<Type, IList<FieldInfo>>(); // cached field lists in declaration order
         static Dictionary<Type, IList<FieldInfo>> s_inversemap = new Dictionary<Type, IList<FieldInfo>>();
+        static Dictionary<Type, IList<FieldInfo>> s_fieldallmap = new Dictionary<Type, IList<FieldInfo>>();
         static Dictionary<Type, IList<PropertyInfo>> s_propertymapdeclared = new Dictionary<Type, IList<PropertyInfo>>(); // cached properties per type
         static Dictionary<Type, IList<PropertyInfo>> s_propertymapinverse = new Dictionary<Type, IList<PropertyInfo>>(); // cached properties per type
 
@@ -97,6 +106,21 @@ namespace IfcDoc.Schema
             return null;
         }
 
+        public static IList<FieldInfo> GetFieldsAll(Type type)
+        {
+            IList<FieldInfo> fields = null;
+            if (s_fieldallmap.TryGetValue(type, out fields))
+            {
+                return fields;
+            }
+
+            fields = new List<FieldInfo>();
+            BuildFieldList(type, fields, FieldScope.All);
+            s_fieldallmap.Add(type, fields);
+
+            return fields;
+        }
+
         public static IList<FieldInfo> GetFieldsOrdered(Type type)
         {
             IList<FieldInfo> fields = null;
@@ -106,7 +130,7 @@ namespace IfcDoc.Schema
             }
 
             fields = new List<FieldInfo>();
-            BuildFieldList(type, fields);
+            BuildFieldList(type, fields, FieldScope.Direct);
             s_fieldmap.Add(type, fields);
 
             return fields;
@@ -121,36 +145,15 @@ namespace IfcDoc.Schema
             }
 
             fields = new List<FieldInfo>();
-            BuildInverseList(type, fields);
+            BuildFieldList(type, fields, FieldScope.Inverse);
             s_inversemap.Add(type, fields);
 
             return fields;
         }
 
-        private static void BuildInverseList(Type type, IList<FieldInfo> list)
+        private static void BuildFieldList(Type type, IList<FieldInfo> list, FieldScope scope)
         {
-            if (type.IsValueType)
-                return;
-
-            if (type.BaseType != null && type.BaseType != typeof(object) && type.BaseType != typeof(SEntity))
-            {
-                BuildInverseList(type.BaseType, list);
-            }
-
-            FieldInfo[] fields = type.GetFields(BindingFlags.DeclaredOnly | BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
-            foreach (FieldInfo field in fields)
-            {
-                if (field.IsDefined(typeof(DataLookupAttribute), false))
-                {
-                    //DataLookupAttribute attr = (DataLookupAttribute)field.GetCustomAttributes(typeof(DataLookupAttribute), false)[0];
-                    list.Add(field);
-                }
-            }
-        }
-
-        private static void BuildFieldList(Type type, IList<FieldInfo> list)
-        {
-            if (type.IsValueType)
+            if (type.IsValueType && ((scope & FieldScope.Direct)!=0))
             {
                 FieldInfo fieldinfo = type.GetField("Value");
                 if (fieldinfo != null)
@@ -162,25 +165,41 @@ namespace IfcDoc.Schema
 
             if (type.BaseType != null && type.BaseType != typeof(object) && type.BaseType != typeof(SEntity))
             {
-                BuildFieldList(type.BaseType, list);
+                BuildFieldList(type.BaseType, list, scope);
             }
 
             FieldInfo[] fields = type.GetFields(BindingFlags.DeclaredOnly | BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
             FieldInfo[] sorted = new FieldInfo[fields.Length];
-            foreach (FieldInfo field in fields)
+
+            if ((scope & FieldScope.Direct) != 0)
             {
-                if (field.IsDefined(typeof(DataMemberAttribute), false))
+                foreach (FieldInfo field in fields)
                 {
-                    DataMemberAttribute attr = (DataMemberAttribute)field.GetCustomAttributes(typeof(DataMemberAttribute), false)[0];
-                    sorted[attr.Order] = field;
+                    if (field.IsDefined(typeof(DataMemberAttribute), false))
+                    {
+                        DataMemberAttribute attr = (DataMemberAttribute)field.GetCustomAttributes(typeof(DataMemberAttribute), false)[0];
+                        sorted[attr.Order] = field;
+                    }
+                }
+
+                foreach (FieldInfo sort in sorted)
+                {
+                    if (sort != null)
+                    {
+                        list.Add(sort);
+                    }
                 }
             }
 
-            foreach (FieldInfo sort in sorted)
+            if ((scope & FieldScope.Inverse) != 0)
             {
-                if (sort != null)
+                foreach (FieldInfo field in fields)
                 {
-                    list.Add(sort);
+                    if (field.IsDefined(typeof(DataLookupAttribute), false))
+                    {
+                        // sort order...
+                        list.Add(field);
+                    }
                 }
             }
         }
@@ -276,7 +295,7 @@ namespace IfcDoc.Schema
 
 
 
-        public object Clone()
+        public virtual object Clone()
         {
             Type t = this.GetType();
 

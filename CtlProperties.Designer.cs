@@ -47,13 +47,11 @@
             this.textBoxLocaleURL = new System.Windows.Forms.TextBox();
             this.comboBoxLocaleCategory = new System.Windows.Forms.ComboBox();
             this.tabPageIdentity = new System.Windows.Forms.TabPage();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.label20 = new System.Windows.Forms.Label();
-            this.listViewAccess = new System.Windows.Forms.ListView();
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.panelIdentityIcon = new System.Windows.Forms.Panel();
+            this.panelIcon = new System.Windows.Forms.Panel();
+            this.buttonExchangeIconClear = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.buttonExchangeIconChange = new System.Windows.Forms.Button();
             this.textBoxIdentityCopyright = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
             this.textBoxIdentityOwner = new System.Windows.Forms.TextBox();
@@ -73,21 +71,19 @@
             this.tabPageConcept = new System.Windows.Forms.TabPage();
             this.ctlParameters = new IfcDoc.CtlParameters();
             this.tabPageRequirements = new System.Windows.Forms.TabPage();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.radioButtonExportNone = new System.Windows.Forms.RadioButton();
-            this.radioButtonExportExcluded = new System.Windows.Forms.RadioButton();
-            this.radioButtonExportMandatory = new System.Windows.Forms.RadioButton();
-            this.radioButtonExportOptional = new System.Windows.Forms.RadioButton();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.radioButtonImportNone = new System.Windows.Forms.RadioButton();
-            this.radioButtonImportExcluded = new System.Windows.Forms.RadioButton();
-            this.radioButtonImportOptional = new System.Windows.Forms.RadioButton();
-            this.radioButtonImportMandatory = new System.Windows.Forms.RadioButton();
             this.listViewExchange = new System.Windows.Forms.ListView();
             this.columnHeaderExchangeName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderExchangeImport = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderExchangeExport = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.labelRequirementsExchanges = new System.Windows.Forms.Label();
+            this.toolStrip3 = new System.Windows.Forms.ToolStrip();
+            this.toolStripButtonReqImportMandatory = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonReqImportRecommended = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonReqImportNotRecommended = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonReqImportExcluded = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonReqExportMandatory = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonReqExportRecommended = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonReqExportNotRecommended = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonReqExportExcluded = new System.Windows.Forms.ToolStripButton();
             this.tabPagePropertySet = new System.Windows.Forms.TabPage();
             this.buttonApplicabilityAddTemplate = new System.Windows.Forms.Button();
             this.buttonPsetApplicabilityDelete = new System.Windows.Forms.Button();
@@ -175,10 +171,6 @@
             this.checkBoxExchangeExport = new System.Windows.Forms.CheckBox();
             this.checkBoxExchangeImport = new System.Windows.Forms.CheckBox();
             this.labelExchangeApplicability = new System.Windows.Forms.Label();
-            this.buttonExchangeIconClear = new System.Windows.Forms.Button();
-            this.buttonExchangeIconChange = new System.Windows.Forms.Button();
-            this.panelIcon = new System.Windows.Forms.Panel();
-            this.label2 = new System.Windows.Forms.Label();
             this.tabPageUsage = new System.Windows.Forms.TabPage();
             this.listViewUsage = new System.Windows.Forms.ListView();
             this.columnHeaderUsageView = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -187,12 +179,10 @@
             this.toolStripButtonUsageNavigate = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonUsageMigrate = new System.Windows.Forms.ToolStripButton();
             this.tabPageExample = new System.Windows.Forms.TabPage();
-            this.checkedListBoxExampleViews = new System.Windows.Forms.CheckedListBox();
-            this.label30 = new System.Windows.Forms.Label();
-            this.label25 = new System.Windows.Forms.Label();
             this.textBoxExample = new System.Windows.Forms.TextBox();
-            this.buttonExampleClear = new System.Windows.Forms.Button();
-            this.buttonExampleLoad = new System.Windows.Forms.Button();
+            this.toolStrip4 = new System.Windows.Forms.ToolStrip();
+            this.toolStripButtonExampleLoad = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonExampleClear = new System.Windows.Forms.ToolStripButton();
             this.tabPageOperations = new System.Windows.Forms.TabPage();
             this.ctlOperators = new IfcDoc.CtlOperators();
             this.tabPageConceptRoot = new System.Windows.Forms.TabPage();
@@ -214,9 +204,33 @@
             this.toolStripButtonChangeSPF = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonChangeXML = new System.Windows.Forms.ToolStripButton();
             this.toolStripComboBoxChange = new System.Windows.Forms.ToolStripComboBox();
+            this.tabPageViews = new System.Windows.Forms.TabPage();
+            this.listViewViews = new System.Windows.Forms.ListView();
+            this.columnHeaderViewName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.toolStripViews = new System.Windows.Forms.ToolStrip();
+            this.toolStripButtonViewInsert = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonViewRemove = new System.Windows.Forms.ToolStripButton();
+            this.tabPagePublication = new System.Windows.Forms.TabPage();
+            this.checkBoxPublishUML = new System.Windows.Forms.CheckBox();
+            this.textBoxFooter = new System.Windows.Forms.TextBox();
+            this.textBoxHeader = new System.Windows.Forms.TextBox();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.checkBoxPublishISO = new System.Windows.Forms.CheckBox();
+            this.checkBoxPublishHideHistory = new System.Windows.Forms.CheckBox();
+            this.tabPageFormats = new System.Windows.Forms.TabPage();
+            this.listViewFormats = new System.Windows.Forms.ListView();
+            this.columnHeaderFormatName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeaderFormatOutput = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.toolStrip5 = new System.Windows.Forms.ToolStrip();
+            this.toolStripButtonFormatNone = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonFormatSchema = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonFormatExamples = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonFormatMarkup = new System.Windows.Forms.ToolStripButton();
             this.imageListRules = new System.Windows.Forms.ImageList(this.components);
             this.openFileDialogIcon = new System.Windows.Forms.OpenFileDialog();
             this.openFileDialogExample = new System.Windows.Forms.OpenFileDialog();
+            this.checkBoxPublishExchangeTables = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerTranslation)).BeginInit();
             this.splitContainerTranslation.Panel1.SuspendLayout();
             this.splitContainerTranslation.Panel2.SuspendLayout();
@@ -225,11 +239,11 @@
             this.tabPageGeneral.SuspendLayout();
             this.toolStripDocumentation.SuspendLayout();
             this.tabPageIdentity.SuspendLayout();
+            this.panelIdentityIcon.SuspendLayout();
             this.tabPageTemplate.SuspendLayout();
             this.tabPageConcept.SuspendLayout();
             this.tabPageRequirements.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            this.groupBox1.SuspendLayout();
+            this.toolStrip3.SuspendLayout();
             this.tabPagePropertySet.SuspendLayout();
             this.tabPageProperty.SuspendLayout();
             this.tabPageQuantity.SuspendLayout();
@@ -241,11 +255,17 @@
             this.tabPageUsage.SuspendLayout();
             this.toolStrip2.SuspendLayout();
             this.tabPageExample.SuspendLayout();
+            this.toolStrip4.SuspendLayout();
             this.tabPageOperations.SuspendLayout();
             this.tabPageConceptRoot.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.tabPageChange.SuspendLayout();
             this.toolStripChange.SuspendLayout();
+            this.tabPageViews.SuspendLayout();
+            this.toolStripViews.SuspendLayout();
+            this.tabPagePublication.SuspendLayout();
+            this.tabPageFormats.SuspendLayout();
+            this.toolStrip5.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainerTranslation
@@ -320,6 +340,9 @@
             this.tabControl.Controls.Add(this.tabPageOperations);
             this.tabControl.Controls.Add(this.tabPageConceptRoot);
             this.tabControl.Controls.Add(this.tabPageChange);
+            this.tabControl.Controls.Add(this.tabPageViews);
+            this.tabControl.Controls.Add(this.tabPagePublication);
+            this.tabControl.Controls.Add(this.tabPageFormats);
             resources.ApplyResources(this.tabControl, "tabControl");
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
@@ -392,11 +415,7 @@
             // 
             // tabPageIdentity
             // 
-            this.tabPageIdentity.Controls.Add(this.button3);
-            this.tabPageIdentity.Controls.Add(this.button2);
-            this.tabPageIdentity.Controls.Add(this.button1);
-            this.tabPageIdentity.Controls.Add(this.label20);
-            this.tabPageIdentity.Controls.Add(this.listViewAccess);
+            this.tabPageIdentity.Controls.Add(this.panelIdentityIcon);
             this.tabPageIdentity.Controls.Add(this.textBoxIdentityCopyright);
             this.tabPageIdentity.Controls.Add(this.label14);
             this.tabPageIdentity.Controls.Add(this.textBoxIdentityOwner);
@@ -415,46 +434,39 @@
             this.tabPageIdentity.Name = "tabPageIdentity";
             this.tabPageIdentity.UseVisualStyleBackColor = true;
             // 
-            // button3
+            // panelIdentityIcon
             // 
-            resources.ApplyResources(this.button3, "button3");
-            this.button3.Name = "button3";
-            this.button3.UseVisualStyleBackColor = true;
+            this.panelIdentityIcon.Controls.Add(this.panelIcon);
+            this.panelIdentityIcon.Controls.Add(this.buttonExchangeIconClear);
+            this.panelIdentityIcon.Controls.Add(this.label2);
+            this.panelIdentityIcon.Controls.Add(this.buttonExchangeIconChange);
+            resources.ApplyResources(this.panelIdentityIcon, "panelIdentityIcon");
+            this.panelIdentityIcon.Name = "panelIdentityIcon";
             // 
-            // button2
+            // panelIcon
             // 
-            resources.ApplyResources(this.button2, "button2");
-            this.button2.Name = "button2";
-            this.button2.UseVisualStyleBackColor = true;
+            resources.ApplyResources(this.panelIcon, "panelIcon");
+            this.panelIcon.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelIcon.Name = "panelIcon";
             // 
-            // button1
+            // buttonExchangeIconClear
             // 
-            resources.ApplyResources(this.button1, "button1");
-            this.button1.Name = "button1";
-            this.button1.UseVisualStyleBackColor = true;
+            resources.ApplyResources(this.buttonExchangeIconClear, "buttonExchangeIconClear");
+            this.buttonExchangeIconClear.Name = "buttonExchangeIconClear";
+            this.buttonExchangeIconClear.UseVisualStyleBackColor = true;
+            this.buttonExchangeIconClear.Click += new System.EventHandler(this.buttonExchangeIconClear_Click);
             // 
-            // label20
+            // label2
             // 
-            resources.ApplyResources(this.label20, "label20");
-            this.label20.Name = "label20";
+            resources.ApplyResources(this.label2, "label2");
+            this.label2.Name = "label2";
             // 
-            // listViewAccess
+            // buttonExchangeIconChange
             // 
-            resources.ApplyResources(this.listViewAccess, "listViewAccess");
-            this.listViewAccess.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1,
-            this.columnHeader2});
-            this.listViewAccess.Name = "listViewAccess";
-            this.listViewAccess.UseCompatibleStateImageBehavior = false;
-            this.listViewAccess.View = System.Windows.Forms.View.Details;
-            // 
-            // columnHeader1
-            // 
-            resources.ApplyResources(this.columnHeader1, "columnHeader1");
-            // 
-            // columnHeader2
-            // 
-            resources.ApplyResources(this.columnHeader2, "columnHeader2");
+            resources.ApplyResources(this.buttonExchangeIconChange, "buttonExchangeIconChange");
+            this.buttonExchangeIconChange.Name = "buttonExchangeIconChange";
+            this.buttonExchangeIconChange.UseVisualStyleBackColor = true;
+            this.buttonExchangeIconChange.Click += new System.EventHandler(this.buttonExchangeIconChange_Click);
             // 
             // textBoxIdentityCopyright
             // 
@@ -581,97 +593,19 @@
             // 
             // tabPageRequirements
             // 
-            this.tabPageRequirements.Controls.Add(this.groupBox2);
-            this.tabPageRequirements.Controls.Add(this.groupBox1);
             this.tabPageRequirements.Controls.Add(this.listViewExchange);
-            this.tabPageRequirements.Controls.Add(this.labelRequirementsExchanges);
+            this.tabPageRequirements.Controls.Add(this.toolStrip3);
             resources.ApplyResources(this.tabPageRequirements, "tabPageRequirements");
             this.tabPageRequirements.Name = "tabPageRequirements";
             this.tabPageRequirements.UseVisualStyleBackColor = true;
             // 
-            // groupBox2
-            // 
-            resources.ApplyResources(this.groupBox2, "groupBox2");
-            this.groupBox2.Controls.Add(this.radioButtonExportNone);
-            this.groupBox2.Controls.Add(this.radioButtonExportExcluded);
-            this.groupBox2.Controls.Add(this.radioButtonExportMandatory);
-            this.groupBox2.Controls.Add(this.radioButtonExportOptional);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.TabStop = false;
-            // 
-            // radioButtonExportNone
-            // 
-            resources.ApplyResources(this.radioButtonExportNone, "radioButtonExportNone");
-            this.radioButtonExportNone.Name = "radioButtonExportNone";
-            this.radioButtonExportNone.UseVisualStyleBackColor = true;
-            this.radioButtonExportNone.CheckedChanged += new System.EventHandler(this.radioButtonExportNone_CheckedChanged);
-            // 
-            // radioButtonExportExcluded
-            // 
-            resources.ApplyResources(this.radioButtonExportExcluded, "radioButtonExportExcluded");
-            this.radioButtonExportExcluded.Name = "radioButtonExportExcluded";
-            this.radioButtonExportExcluded.UseVisualStyleBackColor = true;
-            this.radioButtonExportExcluded.CheckedChanged += new System.EventHandler(this.radioButtonExportExcluded_CheckedChanged);
-            // 
-            // radioButtonExportMandatory
-            // 
-            resources.ApplyResources(this.radioButtonExportMandatory, "radioButtonExportMandatory");
-            this.radioButtonExportMandatory.Name = "radioButtonExportMandatory";
-            this.radioButtonExportMandatory.UseVisualStyleBackColor = true;
-            this.radioButtonExportMandatory.CheckedChanged += new System.EventHandler(this.radioButtonExportMandatory_CheckedChanged);
-            // 
-            // radioButtonExportOptional
-            // 
-            resources.ApplyResources(this.radioButtonExportOptional, "radioButtonExportOptional");
-            this.radioButtonExportOptional.Name = "radioButtonExportOptional";
-            this.radioButtonExportOptional.UseVisualStyleBackColor = true;
-            this.radioButtonExportOptional.CheckedChanged += new System.EventHandler(this.radioButtonExportOptional_CheckedChanged);
-            // 
-            // groupBox1
-            // 
-            resources.ApplyResources(this.groupBox1, "groupBox1");
-            this.groupBox1.Controls.Add(this.radioButtonImportNone);
-            this.groupBox1.Controls.Add(this.radioButtonImportExcluded);
-            this.groupBox1.Controls.Add(this.radioButtonImportOptional);
-            this.groupBox1.Controls.Add(this.radioButtonImportMandatory);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.TabStop = false;
-            // 
-            // radioButtonImportNone
-            // 
-            resources.ApplyResources(this.radioButtonImportNone, "radioButtonImportNone");
-            this.radioButtonImportNone.Name = "radioButtonImportNone";
-            this.radioButtonImportNone.UseVisualStyleBackColor = true;
-            this.radioButtonImportNone.CheckedChanged += new System.EventHandler(this.radioButtonImportNone_CheckedChanged);
-            // 
-            // radioButtonImportExcluded
-            // 
-            resources.ApplyResources(this.radioButtonImportExcluded, "radioButtonImportExcluded");
-            this.radioButtonImportExcluded.Name = "radioButtonImportExcluded";
-            this.radioButtonImportExcluded.UseVisualStyleBackColor = true;
-            this.radioButtonImportExcluded.CheckedChanged += new System.EventHandler(this.radioButtonImportExcluded_CheckedChanged);
-            // 
-            // radioButtonImportOptional
-            // 
-            resources.ApplyResources(this.radioButtonImportOptional, "radioButtonImportOptional");
-            this.radioButtonImportOptional.Name = "radioButtonImportOptional";
-            this.radioButtonImportOptional.UseVisualStyleBackColor = true;
-            this.radioButtonImportOptional.CheckedChanged += new System.EventHandler(this.radioButtonImportOptional_CheckedChanged);
-            // 
-            // radioButtonImportMandatory
-            // 
-            resources.ApplyResources(this.radioButtonImportMandatory, "radioButtonImportMandatory");
-            this.radioButtonImportMandatory.Name = "radioButtonImportMandatory";
-            this.radioButtonImportMandatory.UseVisualStyleBackColor = true;
-            this.radioButtonImportMandatory.CheckedChanged += new System.EventHandler(this.radioButtonImportMandatory_CheckedChanged);
-            // 
             // listViewExchange
             // 
-            resources.ApplyResources(this.listViewExchange, "listViewExchange");
             this.listViewExchange.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeaderExchangeName,
             this.columnHeaderExchangeImport,
             this.columnHeaderExchangeExport});
+            resources.ApplyResources(this.listViewExchange, "listViewExchange");
             this.listViewExchange.HideSelection = false;
             this.listViewExchange.Name = "listViewExchange";
             this.listViewExchange.UseCompatibleStateImageBehavior = false;
@@ -690,10 +624,80 @@
             // 
             resources.ApplyResources(this.columnHeaderExchangeExport, "columnHeaderExchangeExport");
             // 
-            // labelRequirementsExchanges
+            // toolStrip3
             // 
-            resources.ApplyResources(this.labelRequirementsExchanges, "labelRequirementsExchanges");
-            this.labelRequirementsExchanges.Name = "labelRequirementsExchanges";
+            this.toolStrip3.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStrip3.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripButtonReqImportMandatory,
+            this.toolStripButtonReqImportRecommended,
+            this.toolStripButtonReqImportNotRecommended,
+            this.toolStripButtonReqImportExcluded,
+            this.toolStripButtonReqExportMandatory,
+            this.toolStripButtonReqExportRecommended,
+            this.toolStripButtonReqExportNotRecommended,
+            this.toolStripButtonReqExportExcluded});
+            resources.ApplyResources(this.toolStrip3, "toolStrip3");
+            this.toolStrip3.Name = "toolStrip3";
+            // 
+            // toolStripButtonReqImportMandatory
+            // 
+            this.toolStripButtonReqImportMandatory.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            resources.ApplyResources(this.toolStripButtonReqImportMandatory, "toolStripButtonReqImportMandatory");
+            this.toolStripButtonReqImportMandatory.Name = "toolStripButtonReqImportMandatory";
+            this.toolStripButtonReqImportMandatory.Click += new System.EventHandler(this.toolStripButtonReqImportMandatory_Click);
+            // 
+            // toolStripButtonReqImportRecommended
+            // 
+            this.toolStripButtonReqImportRecommended.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            resources.ApplyResources(this.toolStripButtonReqImportRecommended, "toolStripButtonReqImportRecommended");
+            this.toolStripButtonReqImportRecommended.Name = "toolStripButtonReqImportRecommended";
+            this.toolStripButtonReqImportRecommended.Click += new System.EventHandler(this.toolStripButtonReqImportRecommended_Click);
+            // 
+            // toolStripButtonReqImportNotRecommended
+            // 
+            this.toolStripButtonReqImportNotRecommended.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            resources.ApplyResources(this.toolStripButtonReqImportNotRecommended, "toolStripButtonReqImportNotRecommended");
+            this.toolStripButtonReqImportNotRecommended.Name = "toolStripButtonReqImportNotRecommended";
+            this.toolStripButtonReqImportNotRecommended.Click += new System.EventHandler(this.toolStripButtonReqImportNotRecommended_Click);
+            // 
+            // toolStripButtonReqImportExcluded
+            // 
+            this.toolStripButtonReqImportExcluded.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            resources.ApplyResources(this.toolStripButtonReqImportExcluded, "toolStripButtonReqImportExcluded");
+            this.toolStripButtonReqImportExcluded.Name = "toolStripButtonReqImportExcluded";
+            this.toolStripButtonReqImportExcluded.Click += new System.EventHandler(this.toolStripButtonReqImportExcluded_Click);
+            // 
+            // toolStripButtonReqExportMandatory
+            // 
+            this.toolStripButtonReqExportMandatory.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripButtonReqExportMandatory.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            resources.ApplyResources(this.toolStripButtonReqExportMandatory, "toolStripButtonReqExportMandatory");
+            this.toolStripButtonReqExportMandatory.Name = "toolStripButtonReqExportMandatory";
+            this.toolStripButtonReqExportMandatory.Click += new System.EventHandler(this.toolStripButtonReqExportMandatory_Click);
+            // 
+            // toolStripButtonReqExportRecommended
+            // 
+            this.toolStripButtonReqExportRecommended.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripButtonReqExportRecommended.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            resources.ApplyResources(this.toolStripButtonReqExportRecommended, "toolStripButtonReqExportRecommended");
+            this.toolStripButtonReqExportRecommended.Name = "toolStripButtonReqExportRecommended";
+            this.toolStripButtonReqExportRecommended.Click += new System.EventHandler(this.toolStripButtonReqExportRecommended_Click);
+            // 
+            // toolStripButtonReqExportNotRecommended
+            // 
+            this.toolStripButtonReqExportNotRecommended.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripButtonReqExportNotRecommended.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            resources.ApplyResources(this.toolStripButtonReqExportNotRecommended, "toolStripButtonReqExportNotRecommended");
+            this.toolStripButtonReqExportNotRecommended.Name = "toolStripButtonReqExportNotRecommended";
+            this.toolStripButtonReqExportNotRecommended.Click += new System.EventHandler(this.toolStripButtonReqExportNotRecommended_Click);
+            // 
+            // toolStripButtonReqExportExcluded
+            // 
+            this.toolStripButtonReqExportExcluded.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripButtonReqExportExcluded.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            resources.ApplyResources(this.toolStripButtonReqExportExcluded, "toolStripButtonReqExportExcluded");
+            this.toolStripButtonReqExportExcluded.Name = "toolStripButtonReqExportExcluded";
+            this.toolStripButtonReqExportExcluded.Click += new System.EventHandler(this.toolStripButtonReqExportExcluded_Click);
             // 
             // tabPagePropertySet
             // 
@@ -1303,10 +1307,6 @@
             this.tabPageExchange.Controls.Add(this.checkBoxExchangeExport);
             this.tabPageExchange.Controls.Add(this.checkBoxExchangeImport);
             this.tabPageExchange.Controls.Add(this.labelExchangeApplicability);
-            this.tabPageExchange.Controls.Add(this.buttonExchangeIconClear);
-            this.tabPageExchange.Controls.Add(this.buttonExchangeIconChange);
-            this.tabPageExchange.Controls.Add(this.panelIcon);
-            this.tabPageExchange.Controls.Add(this.label2);
             resources.ApplyResources(this.tabPageExchange, "tabPageExchange");
             this.tabPageExchange.Name = "tabPageExchange";
             this.tabPageExchange.UseVisualStyleBackColor = true;
@@ -1593,31 +1593,6 @@
             resources.ApplyResources(this.labelExchangeApplicability, "labelExchangeApplicability");
             this.labelExchangeApplicability.Name = "labelExchangeApplicability";
             // 
-            // buttonExchangeIconClear
-            // 
-            resources.ApplyResources(this.buttonExchangeIconClear, "buttonExchangeIconClear");
-            this.buttonExchangeIconClear.Name = "buttonExchangeIconClear";
-            this.buttonExchangeIconClear.UseVisualStyleBackColor = true;
-            this.buttonExchangeIconClear.Click += new System.EventHandler(this.buttonExchangeIconClear_Click);
-            // 
-            // buttonExchangeIconChange
-            // 
-            resources.ApplyResources(this.buttonExchangeIconChange, "buttonExchangeIconChange");
-            this.buttonExchangeIconChange.Name = "buttonExchangeIconChange";
-            this.buttonExchangeIconChange.UseVisualStyleBackColor = true;
-            this.buttonExchangeIconChange.Click += new System.EventHandler(this.buttonExchangeIconChange_Click);
-            // 
-            // panelIcon
-            // 
-            resources.ApplyResources(this.panelIcon, "panelIcon");
-            this.panelIcon.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panelIcon.Name = "panelIcon";
-            // 
-            // label2
-            // 
-            resources.ApplyResources(this.label2, "label2");
-            this.label2.Name = "label2";
-            // 
             // tabPageUsage
             // 
             this.tabPageUsage.Controls.Add(this.listViewUsage);
@@ -1673,32 +1648,11 @@
             // 
             // tabPageExample
             // 
-            this.tabPageExample.Controls.Add(this.checkedListBoxExampleViews);
-            this.tabPageExample.Controls.Add(this.label30);
-            this.tabPageExample.Controls.Add(this.label25);
             this.tabPageExample.Controls.Add(this.textBoxExample);
-            this.tabPageExample.Controls.Add(this.buttonExampleClear);
-            this.tabPageExample.Controls.Add(this.buttonExampleLoad);
+            this.tabPageExample.Controls.Add(this.toolStrip4);
             resources.ApplyResources(this.tabPageExample, "tabPageExample");
             this.tabPageExample.Name = "tabPageExample";
             this.tabPageExample.UseVisualStyleBackColor = true;
-            // 
-            // checkedListBoxExampleViews
-            // 
-            resources.ApplyResources(this.checkedListBoxExampleViews, "checkedListBoxExampleViews");
-            this.checkedListBoxExampleViews.FormattingEnabled = true;
-            this.checkedListBoxExampleViews.Name = "checkedListBoxExampleViews";
-            this.checkedListBoxExampleViews.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBoxExampleViews_ItemCheck);
-            // 
-            // label30
-            // 
-            resources.ApplyResources(this.label30, "label30");
-            this.label30.Name = "label30";
-            // 
-            // label25
-            // 
-            resources.ApplyResources(this.label25, "label25");
-            this.label25.Name = "label25";
             // 
             // textBoxExample
             // 
@@ -1706,19 +1660,28 @@
             this.textBoxExample.Name = "textBoxExample";
             this.textBoxExample.ReadOnly = true;
             // 
-            // buttonExampleClear
+            // toolStrip4
             // 
-            resources.ApplyResources(this.buttonExampleClear, "buttonExampleClear");
-            this.buttonExampleClear.Name = "buttonExampleClear";
-            this.buttonExampleClear.UseVisualStyleBackColor = true;
-            this.buttonExampleClear.Click += new System.EventHandler(this.buttonExampleClear_Click);
+            this.toolStrip4.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStrip4.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripButtonExampleLoad,
+            this.toolStripButtonExampleClear});
+            resources.ApplyResources(this.toolStrip4, "toolStrip4");
+            this.toolStrip4.Name = "toolStrip4";
             // 
-            // buttonExampleLoad
+            // toolStripButtonExampleLoad
             // 
-            resources.ApplyResources(this.buttonExampleLoad, "buttonExampleLoad");
-            this.buttonExampleLoad.Name = "buttonExampleLoad";
-            this.buttonExampleLoad.UseVisualStyleBackColor = true;
-            this.buttonExampleLoad.Click += new System.EventHandler(this.buttonExampleLoad_Click);
+            this.toolStripButtonExampleLoad.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            resources.ApplyResources(this.toolStripButtonExampleLoad, "toolStripButtonExampleLoad");
+            this.toolStripButtonExampleLoad.Name = "toolStripButtonExampleLoad";
+            this.toolStripButtonExampleLoad.Click += new System.EventHandler(this.buttonExampleLoad_Click);
+            // 
+            // toolStripButtonExampleClear
+            // 
+            this.toolStripButtonExampleClear.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            resources.ApplyResources(this.toolStripButtonExampleClear, "toolStripButtonExampleClear");
+            this.toolStripButtonExampleClear.Name = "toolStripButtonExampleClear";
+            this.toolStripButtonExampleClear.Click += new System.EventHandler(this.buttonExampleClear_Click);
             // 
             // tabPageOperations
             // 
@@ -1876,6 +1839,178 @@
             resources.GetString("toolStripComboBoxChange.Items4")});
             this.toolStripComboBoxChange.Name = "toolStripComboBoxChange";
             // 
+            // tabPageViews
+            // 
+            this.tabPageViews.Controls.Add(this.listViewViews);
+            this.tabPageViews.Controls.Add(this.toolStripViews);
+            resources.ApplyResources(this.tabPageViews, "tabPageViews");
+            this.tabPageViews.Name = "tabPageViews";
+            this.tabPageViews.UseVisualStyleBackColor = true;
+            // 
+            // listViewViews
+            // 
+            this.listViewViews.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeaderViewName});
+            resources.ApplyResources(this.listViewViews, "listViewViews");
+            this.listViewViews.Name = "listViewViews";
+            this.listViewViews.UseCompatibleStateImageBehavior = false;
+            this.listViewViews.View = System.Windows.Forms.View.Details;
+            this.listViewViews.SelectedIndexChanged += new System.EventHandler(this.listViewViews_SelectedIndexChanged);
+            // 
+            // columnHeaderViewName
+            // 
+            resources.ApplyResources(this.columnHeaderViewName, "columnHeaderViewName");
+            // 
+            // toolStripViews
+            // 
+            this.toolStripViews.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStripViews.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripButtonViewInsert,
+            this.toolStripButtonViewRemove});
+            resources.ApplyResources(this.toolStripViews, "toolStripViews");
+            this.toolStripViews.Name = "toolStripViews";
+            // 
+            // toolStripButtonViewInsert
+            // 
+            this.toolStripButtonViewInsert.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            resources.ApplyResources(this.toolStripButtonViewInsert, "toolStripButtonViewInsert");
+            this.toolStripButtonViewInsert.Name = "toolStripButtonViewInsert";
+            this.toolStripButtonViewInsert.Click += new System.EventHandler(this.toolStripButtonViewInsert_Click);
+            // 
+            // toolStripButtonViewRemove
+            // 
+            this.toolStripButtonViewRemove.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            resources.ApplyResources(this.toolStripButtonViewRemove, "toolStripButtonViewRemove");
+            this.toolStripButtonViewRemove.Name = "toolStripButtonViewRemove";
+            this.toolStripButtonViewRemove.Click += new System.EventHandler(this.toolStripButtonViewRemove_Click);
+            // 
+            // tabPagePublication
+            // 
+            this.tabPagePublication.Controls.Add(this.checkBoxPublishExchangeTables);
+            this.tabPagePublication.Controls.Add(this.checkBoxPublishUML);
+            this.tabPagePublication.Controls.Add(this.textBoxFooter);
+            this.tabPagePublication.Controls.Add(this.textBoxHeader);
+            this.tabPagePublication.Controls.Add(this.label17);
+            this.tabPagePublication.Controls.Add(this.label5);
+            this.tabPagePublication.Controls.Add(this.checkBoxPublishISO);
+            this.tabPagePublication.Controls.Add(this.checkBoxPublishHideHistory);
+            resources.ApplyResources(this.tabPagePublication, "tabPagePublication");
+            this.tabPagePublication.Name = "tabPagePublication";
+            this.tabPagePublication.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxPublishUML
+            // 
+            resources.ApplyResources(this.checkBoxPublishUML, "checkBoxPublishUML");
+            this.checkBoxPublishUML.Name = "checkBoxPublishUML";
+            this.checkBoxPublishUML.UseVisualStyleBackColor = true;
+            this.checkBoxPublishUML.CheckedChanged += new System.EventHandler(this.checkBoxPublishUML_CheckedChanged);
+            // 
+            // textBoxFooter
+            // 
+            resources.ApplyResources(this.textBoxFooter, "textBoxFooter");
+            this.textBoxFooter.Name = "textBoxFooter";
+            this.textBoxFooter.TextChanged += new System.EventHandler(this.textBoxFooter_TextChanged);
+            // 
+            // textBoxHeader
+            // 
+            resources.ApplyResources(this.textBoxHeader, "textBoxHeader");
+            this.textBoxHeader.Name = "textBoxHeader";
+            this.textBoxHeader.TextChanged += new System.EventHandler(this.textBoxHeader_TextChanged);
+            // 
+            // label17
+            // 
+            resources.ApplyResources(this.label17, "label17");
+            this.label17.Name = "label17";
+            // 
+            // label5
+            // 
+            resources.ApplyResources(this.label5, "label5");
+            this.label5.Name = "label5";
+            // 
+            // checkBoxPublishISO
+            // 
+            resources.ApplyResources(this.checkBoxPublishISO, "checkBoxPublishISO");
+            this.checkBoxPublishISO.Name = "checkBoxPublishISO";
+            this.checkBoxPublishISO.UseVisualStyleBackColor = true;
+            this.checkBoxPublishISO.CheckedChanged += new System.EventHandler(this.checkBoxPublishISO_CheckedChanged);
+            // 
+            // checkBoxPublishHideHistory
+            // 
+            resources.ApplyResources(this.checkBoxPublishHideHistory, "checkBoxPublishHideHistory");
+            this.checkBoxPublishHideHistory.Name = "checkBoxPublishHideHistory";
+            this.checkBoxPublishHideHistory.UseVisualStyleBackColor = true;
+            this.checkBoxPublishHideHistory.CheckedChanged += new System.EventHandler(this.checkBoxPublishHideHistory_CheckedChanged);
+            // 
+            // tabPageFormats
+            // 
+            this.tabPageFormats.Controls.Add(this.listViewFormats);
+            this.tabPageFormats.Controls.Add(this.toolStrip5);
+            resources.ApplyResources(this.tabPageFormats, "tabPageFormats");
+            this.tabPageFormats.Name = "tabPageFormats";
+            this.tabPageFormats.UseVisualStyleBackColor = true;
+            // 
+            // listViewFormats
+            // 
+            this.listViewFormats.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeaderFormatName,
+            this.columnHeaderFormatOutput});
+            resources.ApplyResources(this.listViewFormats, "listViewFormats");
+            this.listViewFormats.FullRowSelect = true;
+            this.listViewFormats.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
+            ((System.Windows.Forms.ListViewItem)(resources.GetObject("listViewFormats.Items"))),
+            ((System.Windows.Forms.ListViewItem)(resources.GetObject("listViewFormats.Items1"))),
+            ((System.Windows.Forms.ListViewItem)(resources.GetObject("listViewFormats.Items2"))),
+            ((System.Windows.Forms.ListViewItem)(resources.GetObject("listViewFormats.Items3")))});
+            this.listViewFormats.MultiSelect = false;
+            this.listViewFormats.Name = "listViewFormats";
+            this.listViewFormats.SmallImageList = this.imageListInheritance;
+            this.listViewFormats.UseCompatibleStateImageBehavior = false;
+            this.listViewFormats.View = System.Windows.Forms.View.Details;
+            this.listViewFormats.SelectedIndexChanged += new System.EventHandler(this.listViewFormats_SelectedIndexChanged);
+            // 
+            // columnHeaderFormatName
+            // 
+            resources.ApplyResources(this.columnHeaderFormatName, "columnHeaderFormatName");
+            // 
+            // columnHeaderFormatOutput
+            // 
+            resources.ApplyResources(this.columnHeaderFormatOutput, "columnHeaderFormatOutput");
+            // 
+            // toolStrip5
+            // 
+            this.toolStrip5.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStrip5.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripButtonFormatNone,
+            this.toolStripButtonFormatSchema,
+            this.toolStripButtonFormatExamples,
+            this.toolStripButtonFormatMarkup});
+            resources.ApplyResources(this.toolStrip5, "toolStrip5");
+            this.toolStrip5.Name = "toolStrip5";
+            // 
+            // toolStripButtonFormatNone
+            // 
+            resources.ApplyResources(this.toolStripButtonFormatNone, "toolStripButtonFormatNone");
+            this.toolStripButtonFormatNone.Name = "toolStripButtonFormatNone";
+            this.toolStripButtonFormatNone.Click += new System.EventHandler(this.toolStripButtonFormatNone_Click);
+            // 
+            // toolStripButtonFormatSchema
+            // 
+            resources.ApplyResources(this.toolStripButtonFormatSchema, "toolStripButtonFormatSchema");
+            this.toolStripButtonFormatSchema.Name = "toolStripButtonFormatSchema";
+            this.toolStripButtonFormatSchema.Click += new System.EventHandler(this.toolStripButtonFormatSchema_Click);
+            // 
+            // toolStripButtonFormatExamples
+            // 
+            resources.ApplyResources(this.toolStripButtonFormatExamples, "toolStripButtonFormatExamples");
+            this.toolStripButtonFormatExamples.Name = "toolStripButtonFormatExamples";
+            this.toolStripButtonFormatExamples.Click += new System.EventHandler(this.toolStripButtonFormatExamples_Click);
+            // 
+            // toolStripButtonFormatMarkup
+            // 
+            resources.ApplyResources(this.toolStripButtonFormatMarkup, "toolStripButtonFormatMarkup");
+            this.toolStripButtonFormatMarkup.Name = "toolStripButtonFormatMarkup";
+            this.toolStripButtonFormatMarkup.Click += new System.EventHandler(this.toolStripButtonFormatMarkup_Click);
+            // 
             // imageListRules
             // 
             this.imageListRules.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
@@ -1890,6 +2025,13 @@
             // 
             this.openFileDialogExample.DefaultExt = "ifc";
             resources.ApplyResources(this.openFileDialogExample, "openFileDialogExample");
+            // 
+            // checkBoxPublishExchangeTables
+            // 
+            resources.ApplyResources(this.checkBoxPublishExchangeTables, "checkBoxPublishExchangeTables");
+            this.checkBoxPublishExchangeTables.Name = "checkBoxPublishExchangeTables";
+            this.checkBoxPublishExchangeTables.UseVisualStyleBackColor = true;
+            this.checkBoxPublishExchangeTables.CheckedChanged += new System.EventHandler(this.checkBoxPublishExchangeTables_CheckedChanged);
             // 
             // CtlProperties
             // 
@@ -1909,14 +2051,14 @@
             this.toolStripDocumentation.PerformLayout();
             this.tabPageIdentity.ResumeLayout(false);
             this.tabPageIdentity.PerformLayout();
+            this.panelIdentityIcon.ResumeLayout(false);
+            this.panelIdentityIcon.PerformLayout();
             this.tabPageTemplate.ResumeLayout(false);
             this.tabPageConcept.ResumeLayout(false);
             this.tabPageRequirements.ResumeLayout(false);
             this.tabPageRequirements.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.toolStrip3.ResumeLayout(false);
+            this.toolStrip3.PerformLayout();
             this.tabPagePropertySet.ResumeLayout(false);
             this.tabPagePropertySet.PerformLayout();
             this.tabPageProperty.ResumeLayout(false);
@@ -1939,6 +2081,8 @@
             this.toolStrip2.PerformLayout();
             this.tabPageExample.ResumeLayout(false);
             this.tabPageExample.PerformLayout();
+            this.toolStrip4.ResumeLayout(false);
+            this.toolStrip4.PerformLayout();
             this.tabPageOperations.ResumeLayout(false);
             this.tabPageConceptRoot.ResumeLayout(false);
             this.tabPageConceptRoot.PerformLayout();
@@ -1948,6 +2092,16 @@
             this.tabPageChange.PerformLayout();
             this.toolStripChange.ResumeLayout(false);
             this.toolStripChange.PerformLayout();
+            this.tabPageViews.ResumeLayout(false);
+            this.tabPageViews.PerformLayout();
+            this.toolStripViews.ResumeLayout(false);
+            this.toolStripViews.PerformLayout();
+            this.tabPagePublication.ResumeLayout(false);
+            this.tabPagePublication.PerformLayout();
+            this.tabPageFormats.ResumeLayout(false);
+            this.tabPageFormats.PerformLayout();
+            this.toolStrip5.ResumeLayout(false);
+            this.toolStrip5.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1957,7 +2111,6 @@
         private System.Windows.Forms.TabControl tabControl;
         private System.Windows.Forms.TabPage tabPageConcept;
         private System.Windows.Forms.TabPage tabPageRequirements;
-        private System.Windows.Forms.Label labelRequirementsExchanges;
         private System.Windows.Forms.TabPage tabPageTemplate;
         private System.Windows.Forms.TabPage tabPageGeneral;
         private System.Windows.Forms.TextBox textBoxGeneralDescription;
@@ -1966,20 +2119,10 @@
         private System.Windows.Forms.ColumnHeader columnHeaderExchangeName;
         private System.Windows.Forms.ColumnHeader columnHeaderExchangeImport;
         private System.Windows.Forms.ColumnHeader columnHeaderExchangeExport;
-        private System.Windows.Forms.RadioButton radioButtonExportMandatory;
-        private System.Windows.Forms.RadioButton radioButtonExportOptional;
-        private System.Windows.Forms.RadioButton radioButtonExportExcluded;
-        private System.Windows.Forms.RadioButton radioButtonExportNone;
-        private System.Windows.Forms.RadioButton radioButtonImportMandatory;
-        private System.Windows.Forms.RadioButton radioButtonImportOptional;
-        private System.Windows.Forms.RadioButton radioButtonImportExcluded;
-        private System.Windows.Forms.RadioButton radioButtonImportNone;
         private System.Windows.Forms.ListView listViewLocale;
         private System.Windows.Forms.ColumnHeader columnHeaderLocale;
         private System.Windows.Forms.ColumnHeader columnHeaderName;
         private System.Windows.Forms.ColumnHeader columnHeaderDesc;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TabPage tabPagePropertySet;
         private System.Windows.Forms.Button buttonApplicabilityAddEntity;
         private System.Windows.Forms.Label label1;
@@ -2040,10 +2183,6 @@
         private System.Windows.Forms.ListView listViewPropertyEnums;
         private System.Windows.Forms.ColumnHeader columnHeaderPropertyEnum;
         private System.Windows.Forms.TabPage tabPageExchange;
-        private System.Windows.Forms.Panel panelIcon;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button buttonExchangeIconClear;
-        private System.Windows.Forms.Button buttonExchangeIconChange;
         private System.Windows.Forms.CheckBox checkBoxExchangeExport;
         private System.Windows.Forms.CheckBox checkBoxExchangeImport;
         private System.Windows.Forms.Label labelExchangeApplicability;
@@ -2053,13 +2192,6 @@
         private System.Windows.Forms.Label labelAttributeXsdFormat;
         private System.Windows.Forms.ComboBox comboBoxAttributeXsdFormat;
         private System.Windows.Forms.CheckBox checkBoxXsdTagless;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Label label20;
-        private System.Windows.Forms.ListView listViewAccess;
-        private System.Windows.Forms.ColumnHeader columnHeader1;
-        private System.Windows.Forms.ColumnHeader columnHeader2;
-        private System.Windows.Forms.Button button3;
         private System.Windows.Forms.TabPage tabPageUsage;
         private System.Windows.Forms.ListView listViewUsage;
         private System.Windows.Forms.ColumnHeader columnHeaderUsageView;
@@ -2096,12 +2228,7 @@
         private System.Windows.Forms.ColumnHeader columnHeader6;
         private System.Windows.Forms.TabPage tabPageExample;
         private System.Windows.Forms.TextBox textBoxExample;
-        private System.Windows.Forms.Button buttonExampleClear;
-        private System.Windows.Forms.Button buttonExampleLoad;
         private System.Windows.Forms.OpenFileDialog openFileDialogExample;
-        private System.Windows.Forms.CheckedListBox checkedListBoxExampleViews;
-        private System.Windows.Forms.Label label30;
-        private System.Windows.Forms.Label label25;
         private System.Windows.Forms.Button buttonEntityBaseClear;
         private CtlRules ctlRules;
         private CtlParameters ctlParameters;
@@ -2141,5 +2268,46 @@
         private System.Windows.Forms.ToolStripButton toolStripButtonChangeSPF;
         private System.Windows.Forms.ToolStripButton toolStripButtonChangeXML;
         private System.Windows.Forms.ToolStripComboBox toolStripComboBoxChange;
+        private System.Windows.Forms.ToolStrip toolStrip3;
+        private System.Windows.Forms.ToolStripButton toolStripButtonReqImportMandatory;
+        private System.Windows.Forms.ToolStripButton toolStripButtonReqImportRecommended;
+        private System.Windows.Forms.ToolStripButton toolStripButtonReqImportNotRecommended;
+        private System.Windows.Forms.ToolStripButton toolStripButtonReqImportExcluded;
+        private System.Windows.Forms.ToolStripButton toolStripButtonReqExportMandatory;
+        private System.Windows.Forms.ToolStripButton toolStripButtonReqExportRecommended;
+        private System.Windows.Forms.ToolStripButton toolStripButtonReqExportNotRecommended;
+        private System.Windows.Forms.ToolStripButton toolStripButtonReqExportExcluded;
+        private System.Windows.Forms.TabPage tabPageViews;
+        private System.Windows.Forms.ListView listViewViews;
+        private System.Windows.Forms.ColumnHeader columnHeaderViewName;
+        private System.Windows.Forms.ToolStrip toolStripViews;
+        private System.Windows.Forms.ToolStripButton toolStripButtonViewInsert;
+        private System.Windows.Forms.ToolStripButton toolStripButtonViewRemove;
+        private System.Windows.Forms.ToolStrip toolStrip4;
+        private System.Windows.Forms.ToolStripButton toolStripButtonExampleLoad;
+        private System.Windows.Forms.ToolStripButton toolStripButtonExampleClear;
+        private System.Windows.Forms.Panel panelIdentityIcon;
+        private System.Windows.Forms.Panel panelIcon;
+        private System.Windows.Forms.Button buttonExchangeIconClear;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button buttonExchangeIconChange;
+        private System.Windows.Forms.TabPage tabPagePublication;
+        private System.Windows.Forms.TextBox textBoxFooter;
+        private System.Windows.Forms.TextBox textBoxHeader;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.CheckBox checkBoxPublishISO;
+        private System.Windows.Forms.CheckBox checkBoxPublishHideHistory;
+        private System.Windows.Forms.TabPage tabPageFormats;
+        private System.Windows.Forms.ListView listViewFormats;
+        private System.Windows.Forms.ColumnHeader columnHeaderFormatName;
+        private System.Windows.Forms.ColumnHeader columnHeaderFormatOutput;
+        private System.Windows.Forms.ToolStrip toolStrip5;
+        private System.Windows.Forms.ToolStripButton toolStripButtonFormatSchema;
+        private System.Windows.Forms.ToolStripButton toolStripButtonFormatExamples;
+        private System.Windows.Forms.ToolStripButton toolStripButtonFormatMarkup;
+        private System.Windows.Forms.ToolStripButton toolStripButtonFormatNone;
+        private System.Windows.Forms.CheckBox checkBoxPublishUML;
+        private System.Windows.Forms.CheckBox checkBoxPublishExchangeTables;
     }
 }

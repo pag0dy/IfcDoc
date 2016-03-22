@@ -79,17 +79,14 @@ namespace IfcDoc.Format.XSD
         {
             string xmlns = "http://www.buildingsmart-tech.org/ifcXML/IFC4/final";
 
-            if (this.m_views != null && this.m_views.Length == 1 && !String.IsNullOrEmpty(this.m_views[0].Code))
+            // use XSD configuration of first view
+            if (this.m_views != null && this.m_views.Length >= 1 && !String.IsNullOrEmpty(this.m_views[0].Code))
             {
                 DocModelView docView = this.m_views[0];
 
                 if (!String.IsNullOrEmpty(docView.XsdUri))
                 {
                     xmlns = docView.XsdUri;
-                }
-                else if (!String.IsNullOrEmpty(docView.Code))
-                {
-                    xmlns = "http://www.buildingsmart-tech.org/ifcXML/MVD4/" + docView.Code;
                 }
             }
 
@@ -626,12 +623,17 @@ namespace IfcDoc.Format.XSD
 
             bool hascontent = false;
 
-            // attributes for entities
+            // inline elements
             bool hassequence = false;
             foreach (DocAttribute docAttr in docEntity.Attributes)
             {
                 if (included == null || included.ContainsKey(docAttr))
                 {
+                    if (docAttr.Name.Equals("Pixel"))
+                    {
+                        docAttr.ToString();
+                    }
+
                     if (docAttr.XsdFormat != DocXsdFormatEnum.Hidden && !(docAttr.XsdTagless == true) && docAttr.DefinedType != null)
                     {
                         DocObject mapDef = null;
@@ -643,7 +645,8 @@ namespace IfcDoc.Format.XSD
                             if (mapDef is DocEntity ||
                                 mapDef is DocSelect ||
                                 docAttr.XsdFormat == DocXsdFormatEnum.Element ||
-                                docAttr.DefinedType.StartsWith("BINARY"))
+                                docAttr.XsdFormat == DocXsdFormatEnum.Attribute)
+                                //docAttr.DefinedType.StartsWith("BINARY"))*/
                             {
                                 if (!hascontent)
                                 {
@@ -678,14 +681,19 @@ namespace IfcDoc.Format.XSD
             {
                 if (included == null || included.ContainsKey(docAttr))
                 {
-                    if (docAttr.XsdFormat != DocXsdFormatEnum.Hidden && docAttr.DefinedType != null)// && docAttr.XsdFormat != DocXsdFormatEnum.Element*/)
+                    if(docAttr.Name.Equals("Pixel"))
+                    {
+                        docAttr.ToString();
+                    }
+
+                    if (docAttr.XsdFormat != DocXsdFormatEnum.Hidden && docAttr.XsdFormat != DocXsdFormatEnum.Attribute)//docAttr.DefinedType != null)// && docAttr.XsdFormat != DocXsdFormatEnum.Element*/)
                     {
                         DocObject mapDef = null;
                         if ((docAttr.Inverse == null || docAttr.XsdFormat == DocXsdFormatEnum.Attribute) &&
                             docAttr.Derived == null && (docAttr.XsdFormat != DocXsdFormatEnum.Element || docAttr.XsdTagless == true))
                         {
-                            if ((map.TryGetValue(docAttr.DefinedType, out mapDef) == false && !docAttr.DefinedType.StartsWith("BINARY")) ||
-                                (mapDef is DocDefined || mapDef is DocEnumeration || docAttr.XsdTagless == true/* || docAttr.XsdFormat == DocXsdFormatEnum.Attribute*/))
+                            if ((!map.TryGetValue(docAttr.DefinedType, out mapDef)) || // native type
+                                (mapDef is DocDefined || mapDef is DocEnumeration || docAttr.XsdTagless == true))
                             {
                                 if (mapDef == null || (included == null || included.ContainsKey(mapDef)))
                                 {
@@ -726,10 +734,8 @@ namespace IfcDoc.Format.XSD
                                     }
                                     else
                                     {
-                                        if (true) // all attributes optional in XSD? docAttr.IsOptional())
-                                        {
-                                            sb.Append(" use=\"optional\"");
-                                        }
+                                        // all attributes optional in XSD
+                                        sb.Append(" use=\"optional\"");
 
                                         sb.Append(">");
                                         sb.AppendLine();
@@ -739,16 +745,20 @@ namespace IfcDoc.Format.XSD
                                         sb.AppendLine("\t\t\t\t\t\t\t<xs:simpleType>");
 
                                         sb.Append("\t\t\t\t\t\t\t\t<xs:list itemType=\"");
-                                        sb.Append(ToXsdType(docAttr.DefinedType));
+
+                                        if (docAttr.DefinedType == "IfcBinary")
+                                        {
+                                            // workaround: // for lists of BINARY, revert to xs:hexBinary for efficieny; todo: update schema
+                                            sb.Append("xs:hexBinary");
+                                        }
+                                        else
+                                        {
+                                            sb.Append(ToXsdType(docAttr.DefinedType)); 
+                                        }
                                         sb.Append("\"/>");
                                         sb.AppendLine();
 
                                         sb.AppendLine("\t\t\t\t\t\t\t</xs:simpleType>");
-
-                                        if (docAttr.Name.Equals("OffsetValues"))
-                                        {
-                                            sb.ToString();
-                                        }
 
                                         int iLower = docAttr.GetAggregationNestingLower();
                                         int iUpper = docAttr.GetAggregationNestingUpper();
@@ -941,10 +951,9 @@ namespace IfcDoc.Format.XSD
                     defined = "xs:double";
                     break;
 
-                case "IfcBinary":
                 case "BINARY":
                 case "BINARY (32)":
-                    defined = "xs:hexBinary"; // byte-aligned, so regular hex encoding
+                    defined = "ifc:hexBinary";
                     break;
             }
 
@@ -1058,6 +1067,26 @@ namespace IfcDoc.Format.XSD
                     sb.Append("\t</xs:simpleType>");
                     sb.AppendLine();
                 }
+            }
+            else if(docDefined.DefinedType.Equals("BINARY"))
+            {
+                sb.Append("\t<xs:complexType name=\"");
+                sb.Append(docDefined.Name);
+                sb.Append("\">");
+                sb.AppendLine();
+
+                sb.AppendLine("\t\t<xs:simpleContent>");
+                
+                sb.Append("\t\t\t<xs:extension base=\"");
+                sb.Append(defined);
+                sb.AppendLine("\">");
+
+                sb.AppendLine("\t\t\t</xs:extension>");
+
+                sb.AppendLine("\t\t</xs:simpleContent>");
+
+                sb.Append("\t</xs:complexType>");
+                sb.AppendLine();
             }
             else
             {

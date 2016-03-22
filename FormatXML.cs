@@ -49,6 +49,15 @@ namespace IfcDoc.Format.XML
             this.m_prefixes = prefixes;
         }
 
+        public FormatXML(Stream stream, Type type, string defaultnamespace, XmlSerializerNamespaces prefixes)
+        {
+            this.m_url = null;
+            this.m_stream = stream;
+            this.m_type = type;
+            this.m_namespace = defaultnamespace;
+            this.m_prefixes = prefixes;
+        }
+
         public void Dispose()
         {
             if (this.m_stream != null)

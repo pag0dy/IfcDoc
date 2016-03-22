@@ -36,6 +36,7 @@ namespace IfcDoc
         Dictionary<DocObject, PointF> m_pointmap; // store previous coordinates of objects being moved to avoid round-off issues
         SizeF m_selectionsize; // size of selection when mouse down
         ToolMode m_toolmode;
+        DiagramFormat m_diagramformat;
         List<DocDefinition> m_multiselect;
 
         public const int PageX = 600;
@@ -143,7 +144,7 @@ namespace IfcDoc
                         }
                     }
 
-#if false
+#if true
                     if (docDef != null)
                     {
                         if (docDef.DiagramNumber != 0 && this.m_schema.DiagramPagesHorz != 0)
@@ -210,11 +211,24 @@ namespace IfcDoc
             }
         }
 
+        public DiagramFormat Format
+        {
+            get
+            {
+                return this.m_diagramformat;
+            }
+            set
+            {
+                this.m_diagramformat = value;
+                this.Redraw();
+            }
+        }
+
         protected override void OnPaint(PaintEventArgs pe)
         {
             if (this.m_image == null && this.m_schema != null && this.m_map != null)
             {
-                this.m_image = FormatPNG.CreateSchemaDiagram(this.m_schema, this.m_map);
+                this.m_image = FormatPNG.CreateSchemaDiagram(this.m_schema, this.m_map, this.m_diagramformat);
                 this.AutoScrollMinSize = new Size(this.m_image.Width, this.m_image.Height);
             }
 
@@ -668,6 +682,17 @@ namespace IfcDoc
                         {
                             docSelection.DiagramRectangle.X = ptSelection.X + dx / Factor;
                             docSelection.DiagramRectangle.Y = ptSelection.Y + dy / Factor;
+                        }
+                        else
+                        {
+                            if(docSelection.DiagramRectangle.Width < 64)
+                            {
+                                docSelection.DiagramRectangle.Width = 64;
+                            }
+                            if (docSelection.DiagramRectangle.Height < 64)
+                            {
+                                docSelection.DiagramRectangle.Height = 64;
+                            }
                         }
 
                         if (this.m_selection is DocDefinition)
@@ -1339,4 +1364,5 @@ namespace IfcDoc
         Move = 1,
         Link = 2,
     }
+
 }

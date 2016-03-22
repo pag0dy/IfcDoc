@@ -422,18 +422,25 @@ namespace IfcDoc.Format.SPF
                         Type t = ParseType(strConstructor);
                         if (t != null)
                         {
-                            SEntity instance = (SEntity)this.CreateInstance(t);
-                            instance.OID = id;
-
-                            // set the object in position
-                            if (this.m_instances.ContainsKey(id))
+                            if (!t.IsAbstract)
                             {
-                                this.m_errors.Add("#" + id + " - Duplicate instance identifier");
-                                //throw new FormatException("Bad format: duplicate object identifier: #" + id.ToString());
+                                SEntity instance = (SEntity)this.CreateInstance(t);
+                                instance.OID = id;
+
+                                // set the object in position
+                                if (this.m_instances.ContainsKey(id))
+                                {
+                                    this.m_errors.Add("#" + id + " - Duplicate instance identifier");
+                                    //throw new FormatException("Bad format: duplicate object identifier: #" + id.ToString());
+                                }
+                                else
+                                {
+                                    this.m_instances.Add(id, instance);
+                                }
                             }
                             else
                             {
-                                this.m_instances.Add(id, instance);
+                                this.m_errors.Add("#" + id + " - Abstract type: " + strConstructor);
                             }
                         }
                         else
@@ -446,7 +453,7 @@ namespace IfcDoc.Format.SPF
 
                 case ParseScope.DataFields:
                     {
-                        if(m_markup != null)
+                        if (m_markup != null)
                         {
                             m_markup.Append("<a id=\""); // name no longer supported in HTML5; must use id
                             m_markup.Append(id);
@@ -520,94 +527,6 @@ namespace IfcDoc.Format.SPF
             return result;
         }
 
-#if false
-        private void MarkNext(StreamReader reader, StringBuilder sb)
-        {
-            // reads the next expression
-            // skips whitespace, goes until ";" (ignores comments and string literals)
-
-            ParseCommand parse = ParseCommand.Open;
-            while (parse != ParseCommand.End)
-            {
-                int iChar = reader.Read();
-                if (iChar == -1)
-                {
-                    // end of file
-                    return;
-                }
-
-                char ch = (char)iChar;
-
-                // case of "/**** " -> back in comment mode
-                if (parse == ParseCommand.CommentLeave && ch != '/')
-                {
-                    parse = ParseCommand.Comment;
-                }
-
-
-                switch (ch)
-                {
-                    case ';': // done
-                        if (parse == ParseCommand.Open)
-                        {
-                            return;
-                        }
-                        break;
-
-                    case '/': // about to enter a command or about to leave a comment
-                        if (parse == ParseCommand.Open)
-                        {
-                            sb.Append("<span style=\"color:green\">");
-                            sb.Append(ch);
-
-                            parse = ParseCommand.CommentEnter;
-                        }
-                        else if (parse == ParseCommand.CommentLeave)
-                        {
-                            sb.Append(ch);
-                            sb.Append("</span>");
-
-                            parse = ParseCommand.Open;
-                        }
-                        break;
-
-                    case '*':
-                        if (parse == ParseCommand.CommentEnter)
-                        {
-                            parse = ParseCommand.Comment;
-                        }
-                        else if (parse == ParseCommand.Comment)
-                        {
-                            parse = ParseCommand.CommentLeave;
-                        }
-                        sb.Append(ch);
-                        break;
-
-                    case '\r':
-                        break;
-
-                    case '\n':
-                        sb.Append("<br>\r\n");
-                        break;
-
-                    case '\'':
-                        if (parse == ParseCommand.Open)
-                        {
-                            parse = ParseCommand.String;
-                        }
-                        else if (parse == ParseCommand.String)
-                        {
-                            parse = ParseCommand.Open;
-                        }
-                        sb.Append(ch);
-                        break;
-                }
-            }
-
-            return; // end of file!
-
-        }
-#endif
         private enum ParseSection
         {
             Unknown = 0, // waiting for ISO-STEP directive
@@ -1193,7 +1112,7 @@ namespace IfcDoc.Format.SPF
             if (strval[0] == '#')
             {
                 // reference to another object
-                int iIndex = Int32.Parse(strval.Substring(1));
+                long iIndex = Int64.Parse(strval.Substring(1));
 
                 if (!this.m_instances.ContainsKey(iIndex))
                 {
@@ -1664,7 +1583,10 @@ namespace IfcDoc.Format.SPF
 
         private void ParseField(FieldInfo field, object instance, string strval)
         {
-            if (m_markup != null && this.m_parsescope == ParseScope.DataFields)
+            bool annotatefields = false;
+
+            this.m_marktitle = String.Empty;
+            if (annotatefields && m_markup != null && this.m_parsescope == ParseScope.DataFields)
             {
                 StringBuilder sbTitle = new StringBuilder();
                 sbTitle.Append(field.Name);
@@ -1704,7 +1626,7 @@ namespace IfcDoc.Format.SPF
             // "*" means accept existing/derived value
             if (strval.Length == 0 || strval[0] == '*')
             {
-                if (m_markup != null && this.m_parsescope == ParseScope.DataFields)
+                if (annotatefields && m_markup != null && this.m_parsescope == ParseScope.DataFields)
                 {
                     m_markup.Append(strval);
                     m_markup.Append("</a>");
@@ -1839,7 +1761,7 @@ namespace IfcDoc.Format.SPF
             FILE_NAME hName = new FILE_NAME();
             hName.Name = filename;
             hName.OriginatingSystem = "buildingSMART IFC Documentation Generator";
-            hName.PreprocessorVersion = "buildingSMART IFCDOC 8.8"; // was "buildingSMART IFCDOC" for 2.7 and earlier;
+            hName.PreprocessorVersion = "buildingSMART IFCDOC 9.9"; // was "buildingSMART IFCDOC" for 2.7 and earlier;
             //hName.Author.Add(System.Environment.UserName);
             //hName.Organization.Add(System.Environment.UserDomainName);
             hName.Timestamp = DateTime.UtcNow;

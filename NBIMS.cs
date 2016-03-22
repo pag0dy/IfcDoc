@@ -229,7 +229,7 @@ namespace IfcDoc
 
             using (FormatHTM format = new FormatHTM(path + @"\" + docView.Code + ".htm", mapEntity, new Dictionary<string, string>(), included))
             {
-                format.WriteHeader(docView.Name, 0);
+                format.WriteHeader(docView.Name, 0, null);
 
                 // 1 Scope
                 // 1.1 Business Case Description
@@ -552,7 +552,7 @@ namespace IfcDoc
                     format.WriteLine(docRoot.ApplicableEntity.Documentation);
                     format.WriteLine("<br/>");
 
-                    format.WriteExpressEntityAndDocumentation(docRoot.ApplicableEntity, true, false);
+                    format.WriteExpressEntitySpecification(docRoot.ApplicableEntity, true, false);
                     format.WriteLine("<br/>");
                     format.WriteFormatted(xsd);
                 }

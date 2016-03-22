@@ -441,6 +441,7 @@ namespace IfcDoc
                 DocEntity docEntity = this.m_project.GetDefinition(typename) as DocEntity;
                 if (docEntity == null)
                 {
+#if false // constraints now edited at operations
                     // launch dialog for constraint
                     using (FormConstraint form = new FormConstraint())
                     {
@@ -458,6 +459,7 @@ namespace IfcDoc
                             docTemplate.PropagateRule(this.treeViewTemplate.SelectedNode.FullPath);
                         }
                     }
+#endif
                 }
                 else
                 {

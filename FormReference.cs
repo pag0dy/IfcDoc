@@ -240,5 +240,50 @@ namespace IfcDoc
                 }
             }
         }
+
+        private void buttonQuantity_Click(object sender, EventArgs e)
+        {
+
+            using (FormSelectQuantity form = new FormSelectQuantity(this.m_base as DocEntity, this.m_project, false))
+            {
+                if (form.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
+                {
+                    string suffix = null;
+                    switch (form.SelectedQuantity.QuantityType)
+                    {
+                        case DocQuantityTemplateTypeEnum.Q_AREA:
+                            suffix = @"IfcQuantityArea.AreaValue\IfcAreaMeasure";
+                            break;
+
+                        case DocQuantityTemplateTypeEnum.Q_COUNT:
+                            suffix = @"IfcQuantityCount.CountValue\IfcInteger";
+                            break;
+
+                        case DocQuantityTemplateTypeEnum.Q_LENGTH:
+                            suffix = @"IfcQuantityLength.LengthValue\IfcLengthMeasure";
+                            break;
+
+                        case DocQuantityTemplateTypeEnum.Q_TIME:
+                            suffix = @"IfcQuantityTime.TimeValue\IfcTimeMeasure";
+                            break;
+
+                        case DocQuantityTemplateTypeEnum.Q_VOLUME:
+                            suffix = @"IfcQuantityVolume.VolumeValue\IfcVolumeMeasure";
+                            break;
+
+                        case DocQuantityTemplateTypeEnum.Q_WEIGHT:
+                            suffix = @"IfcQuantityWeight.WeightValue\IfcWeightMeasure";
+                            break;
+                    }
+
+                    string value = @"\" + this.m_base.Name + @".IsDefinedBy['" + form.SelectedQuantitySet +
+                        @"']\IfcRelDefinesByProperties.RelatingPropertyDefinition\IfcElementQuantity.Quantities['" + form.SelectedQuantity +
+                        @"']\" + suffix;
+
+                    CvtValuePath valuepath = CvtValuePath.Parse(value, this.m_map);
+                    LoadValuePath(valuepath);
+                }
+            }
+        }
     }
 }

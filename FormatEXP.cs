@@ -260,8 +260,7 @@ DateTime.Today.ToLongDateString() + "\r\n" + //"December 27, 2012\r\n" +
 
                     writer.WriteLine(";");
 
-                    // where rules -- excluded from any MVD
-                    if (!Properties.Settings.Default.NoWhereRules && docDef.WhereRules != null && docDef.WhereRules.Count > 0)
+                    if (docDef.WhereRules.Count > 0)
                     {
                         writer.WriteLine(" WHERE");
                         foreach (DocWhereRule where in docDef.WhereRules)
@@ -559,7 +558,7 @@ DateTime.Today.ToLongDateString() + "\r\n" + //"December 27, 2012\r\n" +
                     }
 
                     // unique rules
-                    if(!Properties.Settings.Default.NoWhereRules && docEntity.UniqueRules != null && docEntity.UniqueRules.Count > 0)
+                    if(docEntity.UniqueRules.Count > 0)
                     {
                         writer.WriteLine(" UNIQUE");
                         foreach (DocUniqueRule where in docEntity.UniqueRules)
@@ -581,7 +580,7 @@ DateTime.Today.ToLongDateString() + "\r\n" + //"December 27, 2012\r\n" +
                     }
 
                     // where rules
-                    if (!Properties.Settings.Default.NoWhereRules && docEntity.WhereRules != null && docEntity.WhereRules.Count > 0)
+                    if (docEntity.WhereRules.Count > 0)
                     {
                         writer.WriteLine(" WHERE");
                         foreach (DocWhereRule where in docEntity.WhereRules)

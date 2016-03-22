@@ -6,11 +6,14 @@
 // License:     http://www.buildingsmart-tech.org/legal
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Reflection;
 using System.Text;
 using System.Xml.Serialization;
 
+using IfcDoc.Schema;
 // Contains subset of IFC schema used for property set templates
 
 namespace IfcDoc.Schema.IFC
@@ -195,7 +198,7 @@ namespace IfcDoc.Schema.IFC
     public class IfcPropertyEnumeration : SEntity
     {
         [DataMember(Order = 0), XmlAttribute("Name")] public string Name;
-        [DataMember(Order = 1)] public List<IfcLabel> EnumerationValues;
+        [DataMember(Order = 1)] public List<IfcValue> EnumerationValues;
         [DataMember(Order = 2)] public object Unit;
     }
 
@@ -295,4 +298,5 @@ namespace IfcDoc.Schema.IFC
         [DataMember(Order = 0), XmlIgnore] public IfcProject RelatingContext;
         [DataMember(Order = 1)] public List<IfcPropertySetTemplate> RelatedDefinitions = new List<IfcPropertySetTemplate>();
     }
+
 }

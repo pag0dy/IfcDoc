@@ -133,7 +133,25 @@ namespace IfcDoc
                     this.m_types[tClosed.Name] = tClosed;
                 }
                 listBase.Clear();
+
+
+                // record bindings
+                DocDefinition docDef = this.m_definitions[key] as DocDefinition;
+                if (docDef != null)
+                {
+                    docDef.RuntimeType = this.m_types[key];
+
+                    if(docDef is DocEntity)
+                    {
+                        DocEntity docEnt = (DocEntity)docDef;
+                        foreach(DocAttribute docAttr in docEnt.Attributes)
+                        {
+                            docAttr.RuntimeField = docDef.RuntimeType.GetField(docAttr.Name);
+                        }
+                    }
+                }
             }
+
         }
 
         private void CompileConcept(DocTemplateUsage concept, DocModelView view, TypeBuilder tb)

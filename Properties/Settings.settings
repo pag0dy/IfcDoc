@@ -3,43 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="OutputPath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">C:\ISODOC</Value>
-    </Setting>
-    <Setting Name="Header" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
-    <Setting Name="Footer" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
-    <Setting Name="NoHistory" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
-    <Setting Name="NoXml" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
-    <Setting Name="ExpressComments" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
-    <Setting Name="DiagramTemplate" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
-    </Setting>
-    <Setting Name="DiagramConcept" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
-    </Setting>
-    <Setting Name="Requirement" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
-    </Setting>
-    <Setting Name="RuleListing" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
-    </Setting>
-    <Setting Name="ConceptTables" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
-    </Setting>
-    <Setting Name="NoXsd" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
-    <Setting Name="ExpressG" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)">C:\IFC</Value>
     </Setting>
     <Setting Name="CodePath" Type="System.String" Scope="User">
       <Value Profile="(Default)">C:\IFC_CODE</Value>
@@ -47,16 +11,7 @@
     <Setting Name="CodeLanguage" Type="System.String" Scope="User">
       <Value Profile="(Default)">C#</Value>
     </Setting>
-    <Setting Name="NoWhereRules" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
     <Setting Name="SkipDiagrams" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
-    <Setting Name="ExampleSPF" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
-    </Setting>
-    <Setting Name="ExampleXML" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="ValidateFile" Type="System.String" Scope="User">
@@ -64,6 +19,12 @@
     </Setting>
     <Setting Name="ValidateReport" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="InputPathGeneral" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\IFCDOC\figures</Value>
+    </Setting>
+    <Setting Name="InputPathExamples" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\IFCDOC\examples</Value>
     </Setting>
   </Settings>
 </SettingsFile>

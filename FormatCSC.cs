@@ -9,11 +9,13 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
+using IfcDoc.Schema;
 using IfcDoc.Schema.DOC;
 
 namespace IfcDoc.Format.CSC
 {
-    internal class FormatCSC : IDisposable
+    internal class FormatCSC : IDisposable,
+        IFormatExtension
     {
         string m_filename;
         DocProject m_project;
@@ -50,6 +52,11 @@ namespace IfcDoc.Format.CSC
                     }
                 }
             }
+        }
+
+        public FormatCSC()
+        {
+            this.m_filename = null;
         }
 
         public FormatCSC(string filename)
@@ -109,150 +116,26 @@ namespace IfcDoc.Format.CSC
                     if (this.m_definition is DocDefined)
                     {
                         DocDefined docDefined = (DocDefined)this.m_definition;
-
-                        writer.WriteLine("\tpublic struct " + this.m_definition.Name);
-                        writer.WriteLine("\t{");
-                        writer.WriteLine("\t\t" + docDefined.DefinedType + " Value;"); 
-                        writer.WriteLine("\t}");
+                        string text = this.Indent(this.FormatDefined(docDefined), 1);
+                        writer.WriteLine(text);
                     }
                     else if (this.m_definition is DocSelect)
                     {
-                        writer.WriteLine("\tpublic interface " + this.m_definition.Name);
-                        writer.WriteLine("\t{");
-                        writer.WriteLine("\t}");
+                        DocSelect docSelect = (DocSelect)this.m_definition;
+                        string text = this.Indent(this.FormatSelect(docSelect), 1);
+                        writer.WriteLine(text);
                     }
                     else if (this.m_definition is DocEnumeration)
                     {
-                        DocEnumeration docEnumumeration = (DocEnumeration)this.m_definition;
-
-                        writer.WriteLine("\tpublic enum " + this.m_definition.Name);
-                        writer.WriteLine("\t{");
-                        int counter = 0;
-                        foreach (DocConstant docConstant in docEnumumeration.Constants)
-                        {
-                            counter++;
-                            int val = counter;
-
-                            if (docConstant.Name.Equals("NOTDEFINED"))
-                            {
-                                val = 0;
-                            }
-                            else if (docConstant.Name.Equals("USERDEFINED"))
-                            {
-                                val = -1;
-                            }
-
-                            writer.WriteLine("\t\t" + docConstant.Name + " = " + val + ",");
-                        }
-                        writer.WriteLine("\t}");
+                        DocEnumeration docEnumeration = (DocEnumeration)this.m_definition;
+                        string text = this.Indent(this.FormatEnumeration(docEnumeration), 1);
+                        writer.WriteLine(text);
                     }
                     else if (this.m_definition is DocEntity)
                     {
                         DocEntity docEntity = (DocEntity)this.m_definition;
-
-                        string basedef = docEntity.BaseDefinition;
-                        if (String.IsNullOrEmpty(basedef))
-                        {
-                            basedef = "IfcBase";
-                        }
-
-                        writer.WriteLine("\tpublic partial class " + this.m_definition.Name + " : " + basedef);
-                        writer.WriteLine("\t{");
-
-                        // fields
-                        foreach (DocAttribute docAttribute in docEntity.Attributes)
-                        {
-                            switch (docAttribute.GetAggregation())
-                            {
-                                case DocAggregationEnum.SET:
-                                    writer.WriteLine("\t\tprivate ICollection<" + docAttribute.DefinedType + "> _" + docAttribute.Name + ";");
-                                    break;
-
-                                case DocAggregationEnum.LIST:
-                                    writer.WriteLine("\t\tprivate IList<" + docAttribute.DefinedType + "> _" + docAttribute.Name + ";");
-                                    break;
-
-                                default:
-                                    writer.WriteLine("\t\tprivate " + docAttribute.DefinedType + " _" + docAttribute.Name + ";");
-                                    break;
-                            }
-                        }
-
-                        // constructor
-                        writer.WriteLine();
-                        writer.WriteLine("\t\tpublic " + docEntity.Name + "()");
-                        writer.WriteLine("\t\t{");
-                        //... values...
-                        writer.WriteLine("\t\t}");
-
-                        // properties
-                        foreach (DocAttribute docAttribute in docEntity.Attributes)
-                        {
-                            writer.WriteLine();
-
-                            switch(docAttribute.GetAggregation())
-                            {
-                                case DocAggregationEnum.SET:
-                                    writer.WriteLine("\t\tpublic ICollection<" + docAttribute.DefinedType + "> " + docAttribute.Name);
-                                    break;
-
-                                case DocAggregationEnum.LIST:
-                                    writer.WriteLine("\t\tpublic IList<" + docAttribute.DefinedType + "> " + docAttribute.Name);
-                                    break;
-
-                                default:
-                                    writer.WriteLine("\t\tpublic " + docAttribute.DefinedType + " " + docAttribute.Name);
-                                    break;
-                            }
-                            writer.WriteLine("\t\t{");
-
-                            writer.WriteLine("\t\t\tget");
-                            writer.WriteLine("\t\t\t{");
-                            writer.WriteLine("\t\t\t\treturn this._" + docAttribute.Name + ";");
-                            writer.WriteLine("\t\t\t}");
-
-                            if (docAttribute.GetAggregation() == DocAggregationEnum.NONE)
-                            {
-                                writer.WriteLine("\t\t\tset");
-                                writer.WriteLine("\t\t\t{");
-
-                                writer.WriteLine("\t\t\t\tthis.OnBeforePropertyChange(\"" + docAttribute.Name + "\");");
-                                writer.WriteLine("\t\t\t\tthis._" + docAttribute.Name + " = value;");
-                                writer.WriteLine("\t\t\t\tthis.OnAfterPropertyChange(\"" + docAttribute.Name + "\");");
-
-                                writer.WriteLine("\t\t\t}");
-                            }
-
-                            writer.WriteLine("\t\t}");
-                        }
-
-                        // serialization
-                        writer.WriteLine();
-                        writer.WriteLine("\t\tprivate void GetObjectData(SerializationInfo info, StreamingContext context)");
-                        writer.WriteLine("\t\t{");
-                        foreach (DocAttribute docAttribute in docEntity.Attributes)
-                        {
-                            if (docAttribute.Inverse == null && docAttribute.Derived == null)
-                            {
-                                writer.WriteLine("\t\t\tinfo.AddValue(\"" + docAttribute.Name + "\", this._" + docAttribute.Name + ");"); 
-                            }
-                        }
-                        writer.WriteLine("\t\t}");
-
-                        writer.WriteLine();
-                        writer.WriteLine("\t\tprivate void SetObjectData(SerializationInfo info, StreamingContext context)");
-                        writer.WriteLine("\t\t{");
-                        foreach (DocAttribute docAttribute in docEntity.Attributes)
-                        {
-                            if (docAttribute.Inverse == null && docAttribute.Derived == null)
-                            {
-                                string method = "GetValue";
-                                writer.WriteLine("\t\t\tthis._" + docAttribute.Name + " = info." + method + "(\"" + docAttribute.Name + "\");");
-                            }
-                        }
-                        writer.WriteLine("\t\t}");
-
-                        writer.WriteLine("\t}");
+                        string text = this.Indent(this.FormatEntity(docEntity, null, null), 1);
+                        writer.WriteLine(docEntity);
                     }
 
                     writer.WriteLine("}");
@@ -405,5 +288,274 @@ namespace IfcDoc.Format.CSC
         }
 
         #endregion
+
+        /// <summary>
+        /// Inserts tabs for each line
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="level"></param>
+        /// <returns></returns>
+        private string Indent(string text, int level)
+        {
+            for(int i = 0; i < level; i++)
+            {
+                text = "\t" + text;
+                text = text.Replace("\r\n", "\r\n\t");
+            }
+
+            return text;
+        }
+
+        public string FormatEntity(DocEntity docEntity, Dictionary<string, DocObject> map, Dictionary<DocObject, bool> included)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            string basedef = docEntity.BaseDefinition;
+            if (String.IsNullOrEmpty(basedef))
+            {
+                basedef = "IfcBase";
+            }
+
+            sb.Append("public partial ");
+            if(docEntity.IsAbstract())
+            {
+                sb.Append("abstract ");
+            }
+            sb.AppendLine("class " + docEntity.Name + " : " + basedef);
+            sb.AppendLine("{");
+
+            // fields
+            int order = 0;
+            foreach (DocAttribute docAttribute in docEntity.Attributes)
+            {
+                bool inscope = false;
+                
+                included.TryGetValue(docAttribute, out inscope);
+
+                if(docAttribute.Inverse == null)
+                {
+                    sb.Append("\t[DataMember(Order=" + order + ")] ");
+                    order++;
+                }
+                else if(inscope)
+                {
+                    sb.Append("\t[DataLookup(\"" + docAttribute.Inverse + "\")] ");
+                }
+
+                if (docAttribute.Inverse == null || inscope)
+                {
+                    DocObject docRef = null;
+                    map.TryGetValue(docAttribute.DefinedType, out docRef);
+
+                    string optional = "";
+                    if(docAttribute.IsOptional && (docRef == null || docRef is DocDefined))
+                    {
+                        optional = "?";
+                    }
+
+                    switch (docAttribute.GetAggregation())
+                    {
+                        case DocAggregationEnum.SET:
+                            sb.AppendLine("ISet<" + docAttribute.DefinedType + "> _" + docAttribute.Name + ";");
+                            break;
+
+                        case DocAggregationEnum.LIST:
+                            sb.AppendLine("IList<" + docAttribute.DefinedType + "> _" + docAttribute.Name + ";");
+                            break;
+
+                        default:
+                            sb.AppendLine(docAttribute.DefinedType + optional + " _" + docAttribute.Name + ";");
+                            break;
+                    }
+                }
+            }
+
+#if false // make an option...
+            // constructor
+            sb.AppendLine();
+            sb.AppendLine("\tpublic " + docEntity.Name + "()");
+            sb.AppendLine("\t{");
+            //... values...
+            sb.AppendLine("\t}");
+#endif
+
+            // properties
+#if false // make an option...
+            foreach (DocAttribute docAttribute in docEntity.Attributes)
+            {
+                sb.AppendLine();
+
+                switch (docAttribute.GetAggregation())
+                {
+                    case DocAggregationEnum.SET:
+                        sb.AppendLine("\tpublic ICollection<" + docAttribute.DefinedType + "> " + docAttribute.Name);
+                        break;
+
+                    case DocAggregationEnum.LIST:
+                        sb.AppendLine("\tpublic IList<" + docAttribute.DefinedType + "> " + docAttribute.Name);
+                        break;
+
+                    default:
+                        sb.AppendLine("\tpublic " + docAttribute.DefinedType + " " + docAttribute.Name);
+                        break;
+                }
+                sb.AppendLine("\t\t{");
+
+                sb.AppendLine("\t\tget");
+                sb.AppendLine("\t\t{");
+                sb.AppendLine("\t\t\treturn this._" + docAttribute.Name + ";");
+                sb.AppendLine("\t\t}");
+
+                if (docAttribute.GetAggregation() == DocAggregationEnum.NONE)
+                {
+                    sb.AppendLine("\t\tset");
+                    sb.AppendLine("\t\t{");
+
+                    sb.AppendLine("\t\t\tthis.OnBeforePropertyChange(\"" + docAttribute.Name + "\");");
+                    sb.AppendLine("\t\t\tthis._" + docAttribute.Name + " = value;");
+                    sb.AppendLine("\t\t\tthis.OnAfterPropertyChange(\"" + docAttribute.Name + "\");");
+
+                    sb.AppendLine("\t\t}");
+                }
+
+                sb.AppendLine("\t}");
+            }
+#endif
+
+#if false // make an option...
+            // serialization
+            writer.WriteLine();
+            writer.WriteLine("\t\tprivate void GetObjectData(SerializationInfo info, StreamingContext context)");
+            writer.WriteLine("\t\t{");
+            foreach (DocAttribute docAttribute in docEntity.Attributes)
+            {
+                if (docAttribute.Inverse == null && docAttribute.Derived == null)
+                {
+                    writer.WriteLine("\t\t\tinfo.AddValue(\"" + docAttribute.Name + "\", this._" + docAttribute.Name + ");");
+                }
+            }
+            writer.WriteLine("\t\t}");
+
+            writer.WriteLine();
+            writer.WriteLine("\t\tprivate void SetObjectData(SerializationInfo info, StreamingContext context)");
+            writer.WriteLine("\t\t{");
+            foreach (DocAttribute docAttribute in docEntity.Attributes)
+            {
+                if (docAttribute.Inverse == null && docAttribute.Derived == null)
+                {
+                    string method = "GetValue";
+                    writer.WriteLine("\t\t\tthis._" + docAttribute.Name + " = info." + method + "(\"" + docAttribute.Name + "\");");
+                }
+            }
+            writer.WriteLine("\t\t}");
+#endif
+
+            sb.AppendLine("}");
+            return sb.ToString();
+        }
+
+        public string FormatEnumeration(DocEnumeration docEnumeration)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine("public enum " + docEnumeration.Name);
+            sb.AppendLine("{");
+            int counter = 0;
+            foreach (DocConstant docConstant in docEnumeration.Constants)
+            {
+                int val;
+
+                if (docConstant.Name.Equals("NOTDEFINED"))
+                {
+                    val = 0;
+                }
+                else if (docConstant.Name.Equals("USERDEFINED"))
+                {
+                    val = -1;
+                }
+                else
+                {
+                    counter++;
+                    val = counter;
+                }
+
+                sb.AppendLine("\t" + docConstant.Name + " = " + val + ",");
+            }
+            sb.Append("}");
+            return sb.ToString();
+        }
+
+        public string FormatSelect(DocSelect docSelect)
+        {
+            return 
+                "public interface " + docSelect.Name + "\r\n" +
+                "{\r\n"+ 
+                "}";
+        }
+
+        public string FormatDefined(DocDefined docDefined)
+        {
+            return 
+                "public struct " + docDefined.Name + "\r\n" + 
+                "{\r\n" +
+                "\t" + docDefined.DefinedType + " Value;\r\n" +
+                "}";
+        }
+
+        public string FormatDefinitions(DocProject docProject, Dictionary<string, DocObject> map, Dictionary<DocObject, bool> included)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (DocSection docSection in docProject.Sections)
+            {
+                foreach (DocSchema docSchema in docSection.Schemas)
+                {
+                    foreach (DocType docType in docSchema.Types)
+                    {
+                        bool use = false;
+                        included.TryGetValue(docType, out use);
+                        if (use)
+                        {
+                            if (docType is DocDefined)
+                            {
+                                DocDefined docDefined = (DocDefined)docType;
+                                string text = this.Indent(this.FormatDefined(docDefined), 1);
+                                sb.AppendLine(text);
+                            }
+                            else if (docType is DocSelect)
+                            {
+                                DocSelect docSelect = (DocSelect)docType;
+                                string text = this.Indent(this.FormatSelect(docSelect), 1);
+                                sb.AppendLine(text);
+                            }
+                            else if (docType is DocEnumeration)
+                            {
+                                DocEnumeration docEnumeration = (DocEnumeration)docType;
+                                string text = this.Indent(this.FormatEnumeration(docEnumeration), 1);
+                                sb.AppendLine(text);
+                            }
+                        }
+                    }
+
+                    foreach (DocEntity docEntity in docSchema.Entities)
+                    {
+                        bool use = false;
+                        included.TryGetValue(docEntity, out use);
+                        if (use)
+                        {
+                            string text = this.Indent(this.FormatEntity(docEntity, map, included), 1);
+                            sb.AppendLine(text);
+                        }
+                    }
+                }
+
+            }
+
+            return sb.ToString();
+        }
+
+        public string FormatData(DocPublication docPublication, DocExchangeDefinition docExchange, Dictionary<string, DocObject> map, Dictionary<long, SEntity> instances)
+        {
+            //...???
+            return null;
+        }
     }
 }

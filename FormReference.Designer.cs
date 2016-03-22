@@ -40,6 +40,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.textBoxReference = new System.Windows.Forms.TextBox();
             this.buttonProperty = new System.Windows.Forms.Button();
+            this.buttonQuantity = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // listViewReference
@@ -113,12 +114,20 @@
             this.buttonProperty.UseVisualStyleBackColor = true;
             this.buttonProperty.Click += new System.EventHandler(this.buttonProperty_Click);
             // 
+            // buttonQuantity
+            // 
+            resources.ApplyResources(this.buttonQuantity, "buttonQuantity");
+            this.buttonQuantity.Name = "buttonQuantity";
+            this.buttonQuantity.UseVisualStyleBackColor = true;
+            this.buttonQuantity.Click += new System.EventHandler(this.buttonQuantity_Click);
+            // 
             // FormReference
             // 
             this.AcceptButton = this.buttonOK;
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
+            this.Controls.Add(this.buttonQuantity);
             this.Controls.Add(this.buttonProperty);
             this.Controls.Add(this.textBoxReference);
             this.Controls.Add(this.label1);
@@ -150,5 +159,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox textBoxReference;
         private System.Windows.Forms.Button buttonProperty;
+        private System.Windows.Forms.Button buttonQuantity;
     }
 }

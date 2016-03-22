@@ -463,6 +463,17 @@ namespace IfcDoc.Format.PNG
                         {
                             brush = Brushes.Gray;
                         }
+                        if(String.IsNullOrEmpty(display))
+                        {
+                            if(docAttr.IsOptional)
+                            {
+                                display = "[0:1]";
+                            }
+                            else
+                            {
+                                display = "[1:1]";
+                            }
+                        }
 
                         g.DrawString(docAttr.Name, font, brush, x, y + CY * (iAttr + 1));
                         using (StringFormat fmt = new StringFormat())
@@ -846,7 +857,7 @@ namespace IfcDoc.Format.PNG
             g.DrawPath(pen, path);
         }
 
-        internal static Image CreateSchemaDiagram(DocSchema docSchema, Dictionary<string, DocObject> map)
+        internal static Image CreateSchemaDiagram(DocSchema docSchema, Dictionary<string, DocObject> map, DiagramFormat format)
         {
             float pageX = (float)CtlExpressG.PageX;
             float pageY = (float)CtlExpressG.PageY;
@@ -891,289 +902,432 @@ namespace IfcDoc.Format.PNG
                     sf.Alignment = StringAlignment.Center;
                     sf.LineAlignment = StringAlignment.Center;
 
+                    StringFormat sfLeft = new StringFormat(StringFormat.GenericDefault);
+                    sfLeft.Alignment = StringAlignment.Near;
+                    sfLeft.LineAlignment = StringAlignment.Near;
+                    sfLeft.FormatFlags = StringFormatFlags.NoWrap;
+
                     using (Font font = new Font(FontFamily.GenericSansSerif, 7.0f))
                     {
                         using (Font fontBold = new Font(font, FontStyle.Bold))
                         {
-                            foreach (DocType docType in docSchema.Types)
+                            using (Font fontBoldItalic = new Font(font, FontStyle.Bold | FontStyle.Italic))
                             {
-                                if (docType.DiagramRectangle != null)
+                                foreach (DocType docType in docSchema.Types)
                                 {
-                                    Rectangle rc = new Rectangle(
-                                        (int)(docType.DiagramRectangle.X * Factor),
-                                        (int)(docType.DiagramRectangle.Y * Factor),
-                                        (int)(docType.DiagramRectangle.Width * Factor),
-                                        (int)(docType.DiagramRectangle.Height * Factor));
-
-                                    g.FillRectangle(Brushes.Lime, rc);
-                                    g.DrawRectangle(penDash, rc);
-                                    g.DrawString(docType.Name, font, Brushes.Black, rc, sf);
-
-                                    if (docType is DocEnumeration)
-                                    {
-                                        g.DrawLine(penDash, rc.Right - 6, rc.Top, rc.Right - 6, rc.Bottom);
-                                    }
-                                    else if(docType is DocDefined)
-                                    {
-                                        DocDefined docItem = (DocDefined)docType;
-                                        if (docItem.DiagramLine.Count > 0)
-                                        {
-                                            DrawLine(g, Pens.Black, docItem.DiagramLine);
-                                        }
-                                    }
-                                    else if (docType is DocSelect)
-                                    {
-                                        g.DrawLine(penDash, rc.Left + 6, rc.Top, rc.Left + 6, rc.Bottom);
-
-                                        DocSelect docSelect = (DocSelect)docType;
-
-                                        if (docSelect.Tree != null)
-                                        {
-                                            foreach (DocLine docItem in docSelect.Tree)
-                                            {
-                                                if (docItem.Definition != null)
-                                                {
-                                                    DrawLine(g, Pens.Black, docItem.DiagramLine);
-                                                }
-                                                else
-                                                {
-                                                    // tree structure -- don't draw endcap
-                                                    for (int i = 0; i < docItem.DiagramLine.Count - 1; i++)
-                                                    {
-                                                        g.DrawLine(Pens.Black,
-                                                            new Point((int)(docItem.DiagramLine[i].X * Factor), (int)(docItem.DiagramLine[i].Y * Factor)),
-                                                            new Point((int)(docItem.DiagramLine[i + 1].X * Factor), (int)(docItem.DiagramLine[i + 1].Y * Factor)));
-                                                    }
-
-                                                    foreach (DocLine docItem2 in docItem.Tree)
-                                                    {
-                                                        // link parent if necessary (needed for imported vex diagrams)
-                                                        g.DrawLine(Pens.Black,
-                                                            new Point((int)(docItem.DiagramLine[docItem.DiagramLine.Count - 1].X * Factor), (int)(docItem.DiagramLine[docItem.DiagramLine.Count - 1].Y * Factor)),
-                                                            new Point((int)(docItem2.DiagramLine[0].X * Factor), (int)(docItem2.DiagramLine[0].Y * Factor)));
-
-                                                        DrawLine(g, Pens.Black, docItem2.DiagramLine);
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-
-
-                            foreach (DocEntity docType in docSchema.Entities)
-                            {
-                                if (docType.DiagramRectangle != null)
-                                {
-                                    string caption = docType.Name;
-                                    if (docType.WhereRules.Count > 0 || docType.UniqueRules.Count > 0)
-                                    {
-                                        caption = "*" + caption;
-                                    }
-                                    if (docType.IsAbstract())
-                                    {
-                                        caption = "(ABS)\r\n" + caption;
-                                    }
-
-                                    Rectangle rc = new Rectangle(
-                                        (int)(docType.DiagramRectangle.X * Factor),
-                                        (int)(docType.DiagramRectangle.Y * Factor),
-                                        (int)(docType.DiagramRectangle.Width * Factor),
-                                        (int)(docType.DiagramRectangle.Height * Factor));
-                                    g.FillRectangle(Brushes.Yellow, rc);
-                                    g.DrawRectangle(Pens.Black, rc);
-                                    g.DrawString(caption, fontBold, Brushes.Black, rc, sf);
-                                }
-
-                                foreach (DocAttribute docAttr in docType.Attributes)
-                                {
-                                    if (docAttr.DiagramLine != null)
-                                    {
-                                        Pen pen = new Pen(System.Drawing.Color.Black);
-
-                                        if (docAttr.IsOptional)
-                                        {
-                                            pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
-                                        }
-
-                                        using (pen)
-                                        {
-                                            DrawLine(g, pen, docAttr.DiagramLine);
-                                        }
-
-                                    }
-
-                                    if (docAttr.DiagramLabel != null && docAttr.DiagramLine != null)
-                                    {
-                                        string caption = docAttr.Name;
-                                        if (!String.IsNullOrEmpty(docAttr.Inverse))
-                                        {
-                                            caption = "(" + docAttr.DefinedType + "." + docAttr.Inverse + ")\r\n(INV) " + caption;
-                                        }
-                                        if (docAttr.GetAggregation() != DocAggregationEnum.NONE)
-                                        {
-                                            caption += " " + docAttr.GetAggregationExpression();
-                                        }
-
-                                        // determine X/Y based on midpoint of stated coordinate and target attribute
-                                        double x = (docAttr.DiagramLabel.X + docAttr.DiagramLine[docAttr.DiagramLine.Count - 1].X) * 0.5 * Factor;
-                                        double y = docAttr.DiagramLabel.Y * Factor;
-                                        g.DrawString(caption, font, Brushes.Black, (int)x, (int)y, sf);
-                                    }
-                                }
-
-                                foreach (DocLine docSub in docType.Tree)
-                                {
-                                    DrawTree(g, docSub, Factor, Point.Empty);
-                                }
-                            }
-
-                            if (docSchema.PageTargets != null)
-                            {
-                                using (Pen penRound = new Pen(Color.Black))
-                                {
-                                    penRound.StartCap = LineCap.Round;
-                                    penRound.EndCap = LineCap.Round;
-                                    int[] pagecounters = new int[64];
-
-                                    foreach (DocPageTarget docTarget in docSchema.PageTargets)
-                                    {
-                                        pagecounters[docTarget.DiagramNumber]++;
-
-                                        int page = docSchema.GetDefinitionPageNumber(docTarget);
-                                        int item = docSchema.GetPageTargetItemNumber(docTarget);
-                                        string caption = page + "," + item;
-
-                                        if (docTarget.DiagramRectangle != null)
-                                        {
-                                            Rectangle rc = new Rectangle(
-                                                (int)(docTarget.DiagramRectangle.X * Factor),
-                                                (int)(docTarget.DiagramRectangle.Y * Factor),
-                                                (int)(docTarget.DiagramRectangle.Width * Factor),
-                                                (int)(docTarget.DiagramRectangle.Height * Factor));
-                                            DrawRoundedRectangle(g, rc, (int)(docTarget.DiagramRectangle.Height * Factor), penRound, Brushes.Silver);
-                                            g.DrawString(caption, font, Brushes.Black, rc, sf);
-                                        }
-
-                                        if (docTarget.DiagramLine != null)
-                                        {
-                                            using (Pen penBlue = new Pen(Color.Blue, 2.0f))
-                                            {
-                                                for (int i = 0; i < docTarget.DiagramLine.Count - 1; i++)
-                                                {
-                                                    g.DrawLine(penBlue,
-                                                        new Point((int)(docTarget.DiagramLine[i].X * Factor), (int)(docTarget.DiagramLine[i].Y * Factor)),
-                                                        new Point((int)(docTarget.DiagramLine[i + 1].X * Factor), (int)(docTarget.DiagramLine[i + 1].Y * Factor)));
-                                                }
-                                            }
-                                        }
-
-                                        int iSource = 0;
-                                        foreach (DocPageSource docSource in docTarget.Sources)
-                                        {
-                                            iSource++;
-                                            if (docSource.DiagramRectangle != null)
-                                            {
-                                                Rectangle rc = new Rectangle(
-                                                    (int)(docSource.DiagramRectangle.X * Factor),
-                                                    (int)(docSource.DiagramRectangle.Y * Factor),
-                                                    (int)(docSource.DiagramRectangle.Width * Factor),
-                                                    (int)(docSource.DiagramRectangle.Height * Factor));
-                                                DrawRoundedRectangle(g, rc, (int)(docSource.DiagramRectangle.Height * Factor), penRound, Brushes.Silver);
-
-                                                string name = docSource.Name;
-                                                if (docTarget.Definition != null)
-                                                {
-                                                    name = page + "," + item + " " + docTarget.Definition.Name;
-                                                }
-
-                                                g.DrawString(name, font, Brushes.Black, rc, sf);
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-
-                            if (docSchema.SchemaRefs != null)
-                            {
-                                foreach (DocSchemaRef docSchemaRef in docSchema.SchemaRefs)
-                                {
-                                    foreach (DocDefinitionRef docDefRef in docSchemaRef.Definitions)
-                                    {
-                                        if (docDefRef.DiagramRectangle != null)
-                                        {
-                                            //string caption = docSchemaRef.Name.ToUpper() + "." + docDefRef.Name;
-
-                                            Rectangle rc = new Rectangle(
-                                                (int)(docDefRef.DiagramRectangle.X * Factor),
-                                                (int)(docDefRef.DiagramRectangle.Y * Factor),
-                                                (int)(docDefRef.DiagramRectangle.Width * Factor),
-                                                (int)(docDefRef.DiagramRectangle.Height * Factor));
-
-                                            Rectangle rcInner = rc;
-                                            rcInner.Y = rc.Y + rc.Height / 3;
-                                            rcInner.Height = rc.Height / 3;
-
-                                            g.FillRectangle(Brushes.Silver, rc);
-                                            g.DrawRectangle(penDash, rc);
-                                            DrawRoundedRectangle(g, rcInner, 8, Pens.Black, Brushes.Silver);
-
-                                            //rc.Y -= 6;
-                                            rc.Height = 12;
-                                            g.DrawString(docSchemaRef.Name.ToUpper(), font, Brushes.Black, rc, sf);
-
-                                            //rc.Y += 12;
-                                            rc.Y = rcInner.Y;
-                                            g.DrawString(docDefRef.Name, font, Brushes.Black, rc, sf);
-
-                                            foreach (DocLine docSub in docDefRef.Tree)
-                                            {
-                                                DrawTree(g, docSub, Factor, Point.Empty);
-                                            }
-
-                                        }
-
-                                    }
-                                }
-                            }
-
-                            if (docSchema.Comments != null)
-                            {
-                                using (Font fontItalic = new Font(font, FontStyle.Italic))
-                                {
-                                    foreach (DocComment docComment in docSchema.Comments)
-                                    {
-                                        if (docComment.DiagramRectangle != null)
-                                        {
-                                            Rectangle rc = new Rectangle(
-                                                (int)(docComment.DiagramRectangle.X * Factor),
-                                                (int)(docComment.DiagramRectangle.Y * Factor),
-                                                (int)(docComment.DiagramRectangle.Width * Factor),
-                                                (int)(docComment.DiagramRectangle.Height * Factor));
-                                            g.DrawString(docComment.Documentation, fontItalic, Brushes.Blue, rc, sf);
-                                        }
-                                    }
-                                }
-                            }
-
-                            if(docSchema.Primitives != null)
-                            {
-                                foreach(DocPrimitive docPrimitive in docSchema.Primitives)
-                                {
-                                    if (docPrimitive.DiagramRectangle != null)
+                                    if (docType.DiagramRectangle != null)
                                     {
                                         Rectangle rc = new Rectangle(
-                                            (int)(docPrimitive.DiagramRectangle.X * Factor),
-                                            (int)(docPrimitive.DiagramRectangle.Y * Factor),
-                                            (int)(docPrimitive.DiagramRectangle.Width * Factor),
-                                            (int)(docPrimitive.DiagramRectangle.Height * Factor));
+                                            (int)(docType.DiagramRectangle.X * Factor),
+                                            (int)(docType.DiagramRectangle.Y * Factor),
+                                            (int)(docType.DiagramRectangle.Width * Factor),
+                                            (int)(docType.DiagramRectangle.Height * Factor));
 
-                                        g.FillRectangle(Brushes.Lime, rc);
-                                        g.DrawRectangle(Pens.Black, rc);
-                                        g.DrawString(docPrimitive.Name, font, Brushes.Black, rc, sf);
+                                        if (format == DiagramFormat.ExpressG)
+                                        {
+                                            g.FillRectangle(Brushes.Lime, rc);
+                                            g.DrawRectangle(penDash, rc);
+                                            g.DrawString(docType.Name, font, Brushes.Black, rc, sf);
 
-                                        g.DrawLine(Pens.Black, rc.Right - 6, rc.Top, rc.Right - 6, rc.Bottom);
+                                            if (docType is DocEnumeration)
+                                            {
+                                                g.DrawLine(penDash, rc.Right - 6, rc.Top, rc.Right - 6, rc.Bottom);
+                                            }
+                                            else if(docType is DocSelect)
+                                            {
+                                                g.DrawLine(penDash, rc.Left + 6, rc.Top, rc.Left + 6, rc.Bottom);
+                                            }
+                                            else if (docType is DocDefined)
+                                            {
+                                                DocDefined docItem = (DocDefined)docType;
+                                                if (docItem.DiagramLine.Count > 0)
+                                                {
+                                                    DrawLine(g, Pens.Black, docItem.DiagramLine, format);
+                                                }
+                                            }
+                                        }
+                                        else if (format == DiagramFormat.UML)
+                                        {
+                                            g.FillRectangle(Brushes.LightYellow, rc);
+                                            g.DrawRectangle(Pens.Black, rc);
+
+                                            Rectangle rcTop = rc;
+                                            rcTop.Height = 8;
+
+                                            Rectangle rcName = new Rectangle(rc.X, rc.Y + 8, rc.Width, 16);
+                                            string typename = null;
+                                            if (docType is DocEnumeration)
+                                            {
+                                                typename = "enumeration";
+                                                g.DrawLine(Pens.Black, rcName.X, rcName.Bottom, rcName.Right, rcName.Bottom);
+                                            }
+                                            else if (docType is DocSelect)
+                                            {
+                                                typename = "interface";
+                                            }
+                                            else if (docType is DocDefined)
+                                            {
+                                                typename = "datatype";
+                                            }
+
+                                            g.DrawString(Char.ConvertFromUtf32(0xAB) + typename + Char.ConvertFromUtf32(0xBB), font, Brushes.Black, rcTop, sf);
+                                            g.DrawString(docType.Name, font, Brushes.Black, rcName, sf);
+
+                                            // members of enumeration...
+                                        }
+
+
+                                        if (docType is DocSelect)
+                                        {
+                                            DocSelect docSelect = (DocSelect)docType;
+
+                                            if (docSelect.Tree != null)
+                                            {
+                                                foreach (DocLine docItem in docSelect.Tree)
+                                                {
+                                                    if (docItem.Definition != null)
+                                                    {
+                                                        DrawLine(g, Pens.Black, docItem.DiagramLine, format);
+                                                    }
+                                                    else
+                                                    {
+                                                        // tree structure -- don't draw endcap
+                                                        for (int i = 0; i < docItem.DiagramLine.Count - 1; i++)
+                                                        {
+                                                            g.DrawLine(Pens.Black,
+                                                                new Point((int)(docItem.DiagramLine[i].X * Factor), (int)(docItem.DiagramLine[i].Y * Factor)),
+                                                                new Point((int)(docItem.DiagramLine[i + 1].X * Factor), (int)(docItem.DiagramLine[i + 1].Y * Factor)));
+                                                        }
+
+                                                        foreach (DocLine docItem2 in docItem.Tree)
+                                                        {
+                                                            // link parent if necessary (needed for imported vex diagrams)
+                                                            g.DrawLine(Pens.Black,
+                                                                new Point((int)(docItem.DiagramLine[docItem.DiagramLine.Count - 1].X * Factor), (int)(docItem.DiagramLine[docItem.DiagramLine.Count - 1].Y * Factor)),
+                                                                new Point((int)(docItem2.DiagramLine[0].X * Factor), (int)(docItem2.DiagramLine[0].Y * Factor)));
+
+                                                            DrawLine(g, Pens.Black, docItem2.DiagramLine, format);
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+
+
+                                foreach (DocEntity docType in docSchema.Entities)
+                                {
+                                    if (docType.DiagramRectangle != null)
+                                    {
+                                        Rectangle rc = new Rectangle(
+                                            (int)(docType.DiagramRectangle.X * Factor),
+                                            (int)(docType.DiagramRectangle.Y * Factor),
+                                            (int)(docType.DiagramRectangle.Width * Factor),
+                                            (int)(docType.DiagramRectangle.Height * Factor));
+
+                                        string caption = docType.Name;
+
+                                        if (format == DiagramFormat.ExpressG)
+                                        {
+                                            if (docType.WhereRules.Count > 0 || docType.UniqueRules.Count > 0)
+                                            {
+                                                caption = "*" + caption;
+                                            }
+                                            if (docType.IsAbstract())
+                                            {
+                                                caption = "(ABS)\r\n" + caption;
+                                            }
+                                            g.FillRectangle(Brushes.Yellow, rc);
+                                            g.DrawRectangle(Pens.Black, rc);
+                                            g.DrawString(caption, fontBold, Brushes.Black, rc, sf);
+                                        }
+                                        else if (format == DiagramFormat.UML)
+                                        {
+                                            g.FillRectangle(Brushes.LightYellow, rc);
+                                            g.DrawRectangle(Pens.Red, rc);
+
+                                            Rectangle rcTop = rc;
+                                            rcTop.Height = 16;
+
+                                            if (docType.IsAbstract())
+                                            {
+                                                g.DrawString(caption, fontBoldItalic, Brushes.Black, rcTop, sf);
+                                            }
+                                            else
+                                            {
+                                                g.DrawString(caption, fontBold, Brushes.Black, rcTop, sf);
+                                            }
+
+                                            g.DrawLine(Pens.Black, rcTop.Left, rcTop.Bottom, rcTop.Right, rcTop.Bottom);
+
+                                            // attributes of value types...
+                                            int y = rcTop.Bottom;
+                                            foreach (DocAttribute docAttr in docType.Attributes)
+                                            {
+                                                DocObject docAttrType = null;
+
+                                                // include native types, enumerations, and defined types
+                                                if(!map.TryGetValue(docAttr.DefinedType, out docAttrType) || docAttrType is DocEnumeration || docAttrType is DocDefined)
+                                                {
+                                                    Rectangle rcAttr = new Rectangle(rc.Left, y, rc.Width, 12);
+                                                    g.DrawString(docAttr.Name + ":" + docAttr.DefinedType, font, Brushes.Black, rcAttr, sfLeft);
+                                                    y += 12;
+                                                }
+                                            }
+                                        }
+
+                                    }
+
+                                    foreach (DocAttribute docAttr in docType.Attributes)
+                                    {
+                                        bool include = true;
+                                        if(format == DiagramFormat.UML)
+                                        {
+                                            DocObject docAttrType = null;
+                                            include = (map.TryGetValue(docAttr.DefinedType, out docAttrType) && (docAttrType is DocEntity || docAttrType is DocSelect));
+                                        }
+
+                                        if (include)
+                                        {
+                                            if (docAttr.DiagramLine != null)
+                                            {
+                                                Pen pen = new Pen(System.Drawing.Color.Black);
+
+                                                if (docAttr.IsOptional)
+                                                {
+                                                    pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
+                                                }
+
+                                                using (pen)
+                                                {
+                                                    DrawLine(g, pen, docAttr.DiagramLine, format);
+                                                }
+
+                                            }
+
+                                            if (docAttr.DiagramLabel != null && docAttr.DiagramLine != null)
+                                            {
+                                                if (format == DiagramFormat.ExpressG)
+                                                {
+                                                    string caption = docAttr.Name;
+                                                    if (!String.IsNullOrEmpty(docAttr.Inverse))
+                                                    {
+                                                        caption = "(" + docAttr.DefinedType + "." + docAttr.Inverse + ")\r\n(INV) " + caption;
+                                                    }
+                                                    if (docAttr.GetAggregation() != DocAggregationEnum.NONE)
+                                                    {
+                                                        caption += " " + docAttr.GetAggregationExpression();
+                                                    }
+
+                                                    // determine X/Y based on midpoint of stated coordinate and target attribute
+                                                    double x = (docAttr.DiagramLabel.X + docAttr.DiagramLine[docAttr.DiagramLine.Count - 1].X) * 0.5 * Factor;
+                                                    double y = docAttr.DiagramLabel.Y * Factor;
+                                                    g.DrawString(caption, font, Brushes.Black, (int)x, (int)y, sf);
+                                                }
+                                                else if(format == DiagramFormat.UML)
+                                                {
+                                                    double xHead = docAttr.DiagramLine[0].X * Factor;
+
+                                                    double x = docAttr.DiagramLine[docAttr.DiagramLine.Count - 1].X * Factor;
+                                                    double y = docAttr.DiagramLine[docAttr.DiagramLine.Count - 1].Y * Factor;
+
+                                                    
+
+                                                    StringFormat sfFar = new StringFormat();
+                                                    if (x > xHead)
+                                                    {
+                                                        sfFar.Alignment = StringAlignment.Far;
+                                                        x -= 8;
+                                                    }
+                                                    else
+                                                    {
+                                                        sfFar.Alignment = StringAlignment.Near;
+                                                        x += 8;
+                                                    }
+                                                    sfFar.LineAlignment = StringAlignment.Far;
+                                                    g.DrawString(docAttr.Name, font, Brushes.Black, (int)x, (int)y, sfFar);
+                                                    sfFar.LineAlignment = StringAlignment.Near;
+                                                    g.DrawString(docAttr.GetAggregationExpression(), font, Brushes.Black, (int)x, (int)y, sfFar);
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    foreach (DocLine docSub in docType.Tree)
+                                    {
+                                        DrawTree(g, docSub, Factor, Point.Empty, format);
+                                    }
+                                }
+
+                                if (docSchema.PageTargets != null)
+                                {
+                                    using (Pen penRound = new Pen(Color.Black))
+                                    {
+                                        penRound.StartCap = LineCap.Round;
+                                        penRound.EndCap = LineCap.Round;
+
+                                        foreach (DocPageTarget docTarget in docSchema.PageTargets)
+                                        {
+                                            bool include = true;
+                                            if(format == DiagramFormat.UML)
+                                            {
+                                                DocObject docRef = null;
+                                                if (map.TryGetValue(docTarget.Definition.Name, out docRef))
+                                                {
+                                                    include = (docRef is DocEntity || docRef is DocSelect);
+                                                }
+                                            }
+
+                                            if (include)
+                                            {
+
+
+                                            int page = docSchema.GetDefinitionPageNumber(docTarget);
+                                            int item = docSchema.GetPageTargetItemNumber(docTarget);
+                                            string caption = page + "," + item;
+
+                                            if (docTarget.DiagramRectangle != null)
+                                            {
+                                                Rectangle rc = new Rectangle(
+                                                    (int)(docTarget.DiagramRectangle.X * Factor),
+                                                    (int)(docTarget.DiagramRectangle.Y * Factor),
+                                                    (int)(docTarget.DiagramRectangle.Width * Factor),
+                                                    (int)(docTarget.DiagramRectangle.Height * Factor));
+                                                DrawRoundedRectangle(g, rc, (int)(docTarget.DiagramRectangle.Height * Factor), penRound, Brushes.Silver);
+                                                g.DrawString(caption, font, Brushes.Black, rc, sf);
+                                            }
+
+                                            if (docTarget.DiagramLine != null)
+                                            {
+                                                using (Pen penBlue = new Pen(Color.Blue, 2.0f))
+                                                {
+                                                    for (int i = 0; i < docTarget.DiagramLine.Count - 1; i++)
+                                                    {
+                                                        g.DrawLine(penBlue,
+                                                            new Point((int)(docTarget.DiagramLine[i].X * Factor), (int)(docTarget.DiagramLine[i].Y * Factor)),
+                                                            new Point((int)(docTarget.DiagramLine[i + 1].X * Factor), (int)(docTarget.DiagramLine[i + 1].Y * Factor)));
+                                                    }
+                                                }
+                                            }
+
+                                                int iSource = 0;
+                                                foreach (DocPageSource docSource in docTarget.Sources)
+                                                {
+                                                    iSource++;
+                                                    if (docSource.DiagramRectangle != null)
+                                                    {
+                                                        Rectangle rc = new Rectangle(
+                                                            (int)(docSource.DiagramRectangle.X * Factor),
+                                                            (int)(docSource.DiagramRectangle.Y * Factor),
+                                                            (int)(docSource.DiagramRectangle.Width * Factor),
+                                                            (int)(docSource.DiagramRectangle.Height * Factor));
+                                                        DrawRoundedRectangle(g, rc, (int)(docSource.DiagramRectangle.Height * Factor), penRound, Brushes.Silver);
+
+                                                        string name = docSource.Name;
+                                                        if (docTarget.Definition != null)
+                                                        {
+                                                            name = page + "," + item + " " + docTarget.Definition.Name;
+                                                        }
+
+                                                        g.DrawString(name, font, Brushes.Black, rc, sf);
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+
+                                if (docSchema.SchemaRefs != null)
+                                {
+                                    foreach (DocSchemaRef docSchemaRef in docSchema.SchemaRefs)
+                                    {
+                                        foreach (DocDefinitionRef docDefRef in docSchemaRef.Definitions)
+                                        {
+                                            bool include = true;
+                                            if (format == DiagramFormat.UML)
+                                            {
+                                                DocObject docRef = null;
+                                                if (map.TryGetValue(docDefRef.Name, out docRef))
+                                                {
+                                                    include = (docRef is DocEntity || docRef is DocSelect);
+                                                }
+                                            }
+
+                                            if (include && docDefRef.DiagramRectangle != null)
+                                            {
+                                                //string caption = docSchemaRef.Name.ToUpper() + "." + docDefRef.Name;
+
+                                                Rectangle rc = new Rectangle(
+                                                    (int)(docDefRef.DiagramRectangle.X * Factor),
+                                                    (int)(docDefRef.DiagramRectangle.Y * Factor),
+                                                    (int)(docDefRef.DiagramRectangle.Width * Factor),
+                                                    (int)(docDefRef.DiagramRectangle.Height * Factor));
+
+                                                Rectangle rcInner = rc;
+                                                rcInner.Y = rc.Y + rc.Height / 3;
+                                                rcInner.Height = rc.Height / 3;
+
+                                                g.FillRectangle(Brushes.Silver, rc);
+                                                g.DrawRectangle(penDash, rc);
+                                                DrawRoundedRectangle(g, rcInner, 8, Pens.Black, Brushes.Silver);
+
+                                                //rc.Y -= 6;
+                                                rc.Height = 12;
+                                                g.DrawString(docSchemaRef.Name.ToUpper(), font, Brushes.Black, rc, sf);
+
+                                                //rc.Y += 12;
+                                                rc.Y = rcInner.Y;
+                                                g.DrawString(docDefRef.Name, font, Brushes.Black, rc, sf);
+
+                                                foreach (DocLine docSub in docDefRef.Tree)
+                                                {
+                                                    DrawTree(g, docSub, Factor, Point.Empty, format);
+                                                }
+
+                                            }
+
+                                        }
+                                    }
+                                }
+
+                                if (docSchema.Comments != null && format == DiagramFormat.ExpressG)
+                                {
+                                    using (Font fontItalic = new Font(font, FontStyle.Italic))
+                                    {
+                                        foreach (DocComment docComment in docSchema.Comments)
+                                        {
+                                            if (docComment.DiagramRectangle != null)
+                                            {
+                                                Rectangle rc = new Rectangle(
+                                                    (int)(docComment.DiagramRectangle.X * Factor),
+                                                    (int)(docComment.DiagramRectangle.Y * Factor),
+                                                    (int)(docComment.DiagramRectangle.Width * Factor),
+                                                    (int)(docComment.DiagramRectangle.Height * Factor));
+                                                g.DrawString(docComment.Documentation, fontItalic, Brushes.Blue, rc, sf);
+                                            }
+                                        }
+                                    }
+                                }
+
+                                if (docSchema.Primitives != null && format == DiagramFormat.ExpressG)
+                                {
+                                    foreach (DocPrimitive docPrimitive in docSchema.Primitives)
+                                    {
+                                        if (docPrimitive.DiagramRectangle != null)
+                                        {
+                                            Rectangle rc = new Rectangle(
+                                                (int)(docPrimitive.DiagramRectangle.X * Factor),
+                                                (int)(docPrimitive.DiagramRectangle.Y * Factor),
+                                                (int)(docPrimitive.DiagramRectangle.Width * Factor),
+                                                (int)(docPrimitive.DiagramRectangle.Height * Factor));
+
+                                            g.FillRectangle(Brushes.Lime, rc);
+                                            g.DrawRectangle(Pens.Black, rc);
+                                            g.DrawString(docPrimitive.Name, font, Brushes.Black, rc, sf);
+
+                                            g.DrawLine(Pens.Black, rc.Right - 6, rc.Top, rc.Right - 6, rc.Bottom);
+                                        }
                                     }
                                 }
                             }
@@ -1185,50 +1339,129 @@ namespace IfcDoc.Format.PNG
             return image;
         }
 
-        private static void DrawLine(Graphics g, Pen pen, List<DocPoint> line)
+        private static void DrawLine(Graphics g, Pen pen, List<DocPoint> line, DiagramFormat format)
         {
             for (int i = 0; i < line.Count - 1; i++)
             {
                 Point ptA = new Point((int)(line[i].X * Factor), (int)(line[i].Y * Factor));
                 Point ptB = new Point((int)(line[i + 1].X * Factor), (int)(line[i + 1].Y * Factor));
-                g.DrawLine(pen, ptA, ptB);
                 if (i == line.Count - 2)
                 {
-                    DrawEndCap(g, ptA, ptB);
+                    int cap = DrawEndCap(g, ptA, ptB, format);
+
+                    // adjust for cap size
+                    if(ptB.X > ptA.X)
+                    {
+                        ptB.X -= cap;
+                    }
+                    else if (ptB.X < ptA.X)
+                    {
+                        ptB.X += cap;
+                    }
+                    if (ptB.Y > ptA.Y)
+                    {
+                        ptB.Y -= cap;
+                    }
+                    else if (ptB.Y < ptA.Y)
+                    {
+                        ptB.Y += cap;
+                    }
                 }
+
+                g.DrawLine(pen, ptA, ptB);
             }
         }
 
-        private static void DrawEndCap(Graphics g, Point ptA, Point ptB)
+        private static int DrawEndCap(Graphics g, Point ptA, Point ptB, DiagramFormat format)
         {
             int rad = 4;
+            int mul = 1;
+
+            if(format == DiagramFormat.UML)
+            {
+                rad = 5;
+                mul = 1;
+            }
+
             Rectangle rc = new Rectangle(ptB.X - rad, ptB.Y - rad, rad * 2, rad * 2);
             if (ptB.X > ptA.X)
             {
-                rc.X -= rad;
+                rc.X -= rad * mul;
+                rc.Width = rc.Width * mul;
             }
             else if (ptB.X < ptA.X)
             {
-                rc.X += rad;
+                rc.X += rad * mul;
+                rc.Width = rc.Width * mul;
             }
             else if (ptB.Y > ptA.Y)
             {
-                rc.Y -= rad;
+                rc.Y -= rad * mul;
+                rc.Height = rc.Height * mul;
             }
             else if (ptB.Y < ptA.Y)
             {
-                rc.Y += rad;
+                rc.Y += rad * mul;
+                rc.Height = rc.Height * mul;
             }
-            g.FillEllipse(Brushes.White, rc);
-            g.DrawEllipse(Pens.Black, rc);
+
+            if (format == DiagramFormat.ExpressG)
+            {
+                // circle
+                g.FillEllipse(Brushes.White, rc);
+                g.DrawEllipse(Pens.Black, rc);
+            }
+            else if(format == DiagramFormat.UML)
+            {
+                // diamond
+                g.DrawPolygon(Pens.Black, new Point[] 
+                    {
+                        new Point(rc.Left, rc.Top + rc.Height/2),
+                        new Point(rc.Left + rc.Width/2, rc.Bottom),
+                        new Point(rc.Right, rc.Top + rc.Height / 2),
+                        new Point(rc.Left + rc.Width / 2, rc.Top),
+                        new Point(rc.Left, rc.Top + rc.Height/2)
+                    });
+
+                // filled if composition...
+            }
+
+            return rad;
         }
 
-        private static void DrawTree(Graphics g, DocLine docSub, double factor, Point ptLast)
+        private static void DrawTree(Graphics g, DocLine docSub, double factor, Point ptLast, DiagramFormat format)
         {
             Point ptNext = Point.Empty;
             if (docSub.DiagramLine != null)
             {
-                using (Pen pen = new Pen(Color.Black, 3.0f))
+                float penwidth = 0.0f;
+                if(format == DiagramFormat.ExpressG)
+                {
+                    penwidth = 3.0f;
+                }
+                else if (format == DiagramFormat.UML)
+                {
+                    // draw arrow at supertype
+                    if (ptLast == Point.Empty && docSub.DiagramLine.Count >= 2)
+                    {
+                        using (Pen penAttr = new Pen(Color.Black))
+                        {
+                            AdjustableArrowCap cap = new AdjustableArrowCap(6.0f, 6.0f, true);
+
+                            penAttr.StartCap = LineCap.Custom;
+                            penAttr.CustomStartCap = cap;
+                            g.DrawLine(penAttr,
+                                (float)(docSub.DiagramLine[0].X * factor),
+                                (float)(docSub.DiagramLine[0].Y * factor),
+                                (float)(docSub.DiagramLine[1].X * factor),
+                                (float)(docSub.DiagramLine[1].Y * factor));
+
+                            
+                        }
+                    }
+                }
+
+                using (Pen pen = new Pen(Color.Black, penwidth))
                 {
                     for (int i = 0; i < docSub.DiagramLine.Count - 1; i++)
                     {
@@ -1250,7 +1483,7 @@ namespace IfcDoc.Format.PNG
 
             foreach (DocLine docInner in docSub.Tree)
             {
-                DrawTree(g, docInner, factor, ptNext);
+                DrawTree(g, docInner, factor, ptNext, format);
             }
         }
 
@@ -1426,5 +1659,11 @@ namespace IfcDoc.Format.PNG
 
             return rc;
         }
+    }
+
+    public enum DiagramFormat
+    {
+        ExpressG = 0,
+        UML = 1,
     }
 }

@@ -9,11 +9,13 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
+using IfcDoc.Schema;
 using IfcDoc.Schema.DOC;
 
 namespace IfcDoc.Format.CSC
 {
-    internal class FormatJAV : IDisposable
+    internal class FormatJAV : IDisposable,
+        IFormatExtension
     {
         string m_filename;
         DocProject m_project;
@@ -50,6 +52,11 @@ namespace IfcDoc.Format.CSC
                     }
                 }
             }
+        }
+
+        public FormatJAV()
+        {
+            this.m_filename = null;
         }
 
         public FormatJAV(string filename)
@@ -374,6 +381,177 @@ namespace IfcDoc.Format.CSC
             }
 
             return null;
+        }
+
+        public string FormatEntity(DocEntity docEntity, Dictionary<string, DocObject> map, Dictionary<DocObject, bool> included)
+        {
+            string basedef = docEntity.BaseDefinition;
+            if (String.IsNullOrEmpty(basedef))
+            {
+                basedef = "IfcBase";
+            }
+
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine("public class " + docEntity.Name + " extends " + basedef);
+            sb.AppendLine("{");
+
+            // fields
+            foreach (DocAttribute docAttribute in docEntity.Attributes)
+            {
+                string deftype = docAttribute.DefinedType;
+
+                // if defined type, use raw type (avoiding extra memory allocation)
+                DocObject docDef = null;
+                map.TryGetValue(deftype, out docDef);
+                if (docDef is DocDefined)
+                {
+                    deftype = ((DocDefined)docDef).DefinedType;
+
+                    switch (deftype)
+                    {
+                        case "STRING":
+                            deftype = "string";
+                            break;
+
+                        case "INTEGER":
+                            deftype = "int";
+                            break;
+
+                        case "REAL":
+                            deftype = "double";
+                            break;
+
+                        case "BOOLEAN":
+                            deftype = "bool";
+                            break;
+
+                        case "LOGICAL":
+                            deftype = "int";
+                            break;
+
+                        case "BINARY":
+                            deftype = "byte[]";
+                            break;
+                    }
+                }
+
+                switch (docAttribute.GetAggregation())
+                {
+                    case DocAggregationEnum.SET:
+                        sb.AppendLine("\tprivate " + deftype + "[] " + docAttribute.Name + ";");
+                        break;
+
+                    case DocAggregationEnum.LIST:
+                        sb.AppendLine("\tprivate " + deftype + "[] " + docAttribute.Name + ";");
+                        break;
+
+                    default:
+                        sb.AppendLine("\tprivate " + deftype + " " + docAttribute.Name + ";");
+                        break;
+                }
+            }
+
+            sb.AppendLine("}");
+            return sb.ToString();
+        }
+
+        public string FormatEnumeration(DocEnumeration docEnumeration)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine("public enum " + docEnumeration.Name);
+            sb.AppendLine("{");
+            foreach (DocConstant docConstant in docEnumeration.Constants)
+            {
+                sb.AppendLine("\t" + docConstant.Name + ",");
+            }
+            sb.AppendLine("}");
+            return sb.ToString();
+        }
+
+        public string FormatSelect(DocSelect docSelect)
+        {
+            return "public interface " + docSelect.Name + "\r\n{\r\n}\r\n";
+        }
+
+        public string FormatDefined(DocDefined docDefined)
+        {
+            // nothing -- java does not support structures
+            return "/* " + docDefined.Name + " : " + docDefined.DefinedType + " (Java does not support structures, so usage of defined types are inline for efficiency.) */\r\n";
+        }
+
+        public string FormatDefinitions(DocProject docProject, Dictionary<string, DocObject> map, Dictionary<DocObject, bool> included)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (DocSection docSection in docProject.Sections)
+            {
+                foreach (DocSchema docSchema in docSection.Schemas)
+                {
+                    foreach (DocType docType in docSchema.Types)
+                    {
+                        bool use = false;
+                        included.TryGetValue(docType, out use);
+                        if (use)
+                        {
+                            if (docType is DocDefined)
+                            {
+                                DocDefined docDefined = (DocDefined)docType;
+                                string text = this.Indent(this.FormatDefined(docDefined), 1);
+                                sb.AppendLine(text);
+                            }
+                            else if (docType is DocSelect)
+                            {
+                                DocSelect docSelect = (DocSelect)docType;
+                                string text = this.Indent(this.FormatSelect(docSelect), 1);
+                                sb.AppendLine(text);
+                            }
+                            else if (docType is DocEnumeration)
+                            {
+                                DocEnumeration docEnumeration = (DocEnumeration)docType;
+                                string text = this.Indent(this.FormatEnumeration(docEnumeration), 1);
+                                sb.AppendLine(text);
+                            }
+                            sb.AppendLine();
+                        }
+                    }
+
+                    foreach (DocEntity docEntity in docSchema.Entities)
+                    {
+                        bool use = false;
+                        included.TryGetValue(docEntity, out use);
+                        if (use)
+                        {
+                            string text = this.Indent(this.FormatEntity(docEntity, map, included), 1);
+                            sb.AppendLine(text);
+                            sb.AppendLine();
+                        }
+                    }
+                }
+
+            }
+
+            return sb.ToString();
+        }
+
+        public string FormatData(DocPublication docPublication, DocExchangeDefinition docExchange, Dictionary<string, DocObject> map, Dictionary<long, SEntity> instances)
+        {
+            return null;
+        }
+
+        /// <summary>
+        /// Inserts tabs for each line
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="level"></param>
+        /// <returns></returns>
+        private string Indent(string text, int level)
+        {
+            for (int i = 0; i < level; i++)
+            {
+                text = "\t" + text;
+                text = text.Replace("\r\n", "\r\n\t");
+            }
+
+            return text;
         }
     }
 }
