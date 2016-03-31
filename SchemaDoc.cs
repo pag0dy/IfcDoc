@@ -633,7 +633,7 @@ namespace IfcDoc.Schema.DOC
                 if (this._Formats.Count == 2)
                 {
                     this._Formats.Add(new DocFormat(DocFormatTypeEnum.SQL, DocFormatOptionEnum.None));
-                    this._Formats.Add(new DocFormat(DocFormatTypeEnum.RDF, DocFormatOptionEnum.None));
+                    this._Formats.Add(new DocFormat(DocFormatTypeEnum.RDF, DocFormatOptionEnum.Examples));
                     this._Formats.Add(new DocFormat(DocFormatTypeEnum.JSON, DocFormatOptionEnum.None));
                     this._Formats.Add(new DocFormat(DocFormatTypeEnum.CS, DocFormatOptionEnum.None));
                 }

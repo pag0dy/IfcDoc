@@ -3505,6 +3505,25 @@ namespace IfcDoc
                                                                         htmDef.WriteExpressTypeAndDocumentation(type, !docPublication.HideHistory, docPublication.ISO);
                                                                         break;
 
+                                                                    case DocFormatTypeEnum.RDF:
+                                                                        htmDef.WriteSummaryHeader("OWL Specification", false);
+                                                                        htmDef.Write("<div class=\"rdf><code class=\"rdf>");
+                                                                        //if (type is DocSelect)
+                                                                        //{
+                                                                        //    htmDef.WriteFormatted(FormatOWL.FormatSelect((DocSelect)type, mapEntity, included));
+                                                                        //}
+                                                                        //else if (type is DocEnumeration)
+                                                                        //{
+                                                                        //    htmDef.WriteFormatted(FormatOWL.FormatEnumeration((DocEnumeration)type));
+                                                                        //}
+                                                                        //else if (type is DocDefined)
+                                                                        //{
+                                                                        //    htmDef.WriteFormatted(FormatOWL.FormatDefined((DocDefined)type, mapEntity));
+                                                                        //}
+                                                                        htmDef.Write("</code></div>");
+                                                                        htmDef.WriteSummaryFooter();
+                                                                        break;
+
                                                                     default:
                                                                         if (formatext != null)
                                                                         {
@@ -3782,6 +3801,14 @@ namespace IfcDoc
 
                                                                     case DocFormatTypeEnum.STEP:
                                                                         htmDef.WriteExpressEntitySpecification(entity, !docPublication.HideHistory, docPublication.ISO);
+                                                                        break;
+
+                                                                    case DocFormatTypeEnum.RDF:
+                                                                        htmDef.WriteSummaryHeader("OWL specification (TTL)", false);
+                                                                        htmDef.Write("<div class=\"owl\"><code class=\"owl\">");
+                                                                        //TODO:: htmDef.WriteFormatted(FormatXSD.FormatEntity(entity, mapEntity, included));
+                                                                        htmDef.Write("</code></div>");
+                                                                        htmDef.WriteSummaryFooter();
                                                                         break;
 
                                                                     default:
@@ -4428,7 +4455,7 @@ namespace IfcDoc
                                                     htmXSD.WriteFormatted(xsdcontent);
                                                     htmXSD.WriteFooter("");
                                                 }
-                                            }
+                                            }                                            
 
                                             DoExport(docProject, path + @"\annex\annex-a\" + MakeLinkName(docModelView) + @"\" + docModelView.Code + ".mvdxml", new DocModelView[] { docModelView }, locales, instances);
 
