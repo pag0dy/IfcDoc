@@ -61,27 +61,12 @@ div.not-numbered {
 	background-color: #ffffff;
 }
 
-div.xsd {
+div.xsd, div.express  {
 	margin: 10px;
 	padding: 5px;
 	border: 1px solid gray;
 	border-radius: 8px;
 }
-
-div.express {
-	margin: 10px;
-	padding: 5px;
-	border: 1px solid gray;
-	border-radius: 8px;
-}
-
-div.owl {
-	margin: 10px;
-	padding: 5px;
-	border: 1px solid gray;
-	border-radius: 8px;
-}
-
 
 /* ---------------------------------------------------------------- */
 /* Styles of header definitions                                     */

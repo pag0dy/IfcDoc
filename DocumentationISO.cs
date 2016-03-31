@@ -3507,8 +3507,7 @@ namespace IfcDoc
 
                                                                     case DocFormatTypeEnum.RDF:
                                                                         htmDef.WriteSummaryHeader("OWL Specification (TTL)", false);
-                                                                        htmDef.Write("<div class=\"owl\"><code class=\"owl\">");
-                                                                        //htmDef.Write("<div class=\"xsd\"><code class=\"xsd\">");
+                                                                        htmDef.Write("<div class=\"xsd\"><code class=\"owl\">");
                                                                         if (type is DocSelect)
                                                                         {
                                                                             htmDef.WriteFormatted(FormatOWL.FormatSelect((DocSelect)type, mapEntity, included));
