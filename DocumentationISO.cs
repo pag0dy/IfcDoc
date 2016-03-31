@@ -3506,20 +3506,21 @@ namespace IfcDoc
                                                                         break;
 
                                                                     case DocFormatTypeEnum.RDF:
-                                                                        htmDef.WriteSummaryHeader("OWL Specification", false);
-                                                                        htmDef.Write("<div class=\"rdf><code class=\"rdf>");
-                                                                        //if (type is DocSelect)
-                                                                        //{
-                                                                        //    htmDef.WriteFormatted(FormatOWL.FormatSelect((DocSelect)type, mapEntity, included));
-                                                                        //}
-                                                                        //else if (type is DocEnumeration)
-                                                                        //{
-                                                                        //    htmDef.WriteFormatted(FormatOWL.FormatEnumeration((DocEnumeration)type));
-                                                                        //}
-                                                                        //else if (type is DocDefined)
-                                                                        //{
-                                                                        //    htmDef.WriteFormatted(FormatOWL.FormatDefined((DocDefined)type, mapEntity));
-                                                                        //}
+                                                                        htmDef.WriteSummaryHeader("OWL Specification (TTL)", false);
+                                                                        htmDef.Write("<div class=\"owl\"><code class=\"owl\">");
+                                                                        //htmDef.Write("<div class=\"xsd\"><code class=\"xsd\">");
+                                                                        if (type is DocSelect)
+                                                                        {
+                                                                            htmDef.WriteFormatted(FormatOWL.FormatSelect((DocSelect)type, mapEntity, included));
+                                                                        }
+                                                                        else if (type is DocEnumeration)
+                                                                        {
+                                                                            htmDef.WriteFormatted(FormatOWL.FormatEnumeration((DocEnumeration)type));
+                                                                        }
+                                                                        else if (type is DocDefined)
+                                                                        {
+                                                                            //htmDef.WriteFormatted(FormatOWL.FormatDefined((DocDefined)type, mapEntity));
+                                                                        }
                                                                         htmDef.Write("</code></div>");
                                                                         htmDef.WriteSummaryFooter();
                                                                         break;
@@ -3804,7 +3805,7 @@ namespace IfcDoc
                                                                         break;
 
                                                                     case DocFormatTypeEnum.RDF:
-                                                                        htmDef.WriteSummaryHeader("OWL specification (TTL)", false);
+                                                                        htmDef.WriteSummaryHeader("OWL Specification (TTL)", false);
                                                                         htmDef.Write("<div class=\"owl\"><code class=\"owl\">");
                                                                         //TODO:: htmDef.WriteFormatted(FormatXSD.FormatEntity(entity, mapEntity, included));
                                                                         htmDef.Write("</code></div>");

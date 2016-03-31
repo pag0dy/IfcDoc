@@ -61,7 +61,21 @@ div.not-numbered {
 	background-color: #ffffff;
 }
 
-div.xsd, div.express {
+div.xsd {
+	margin: 10px;
+	padding: 5px;
+	border: 1px solid gray;
+	border-radius: 8px;
+}
+
+div.express {
+	margin: 10px;
+	padding: 5px;
+	border: 1px solid gray;
+	border-radius: 8px;
+}
+
+div.owl {
 	margin: 10px;
 	padding: 5px;
 	border: 1px solid gray;
@@ -361,6 +375,11 @@ code.xsd {
 	font-size: small;
 }
 
+code.owl {
+	font-family: consolas, monospace;
+	font-size: small;
+}
+
 /* ---------------------------------------------------------------- */
 /* styles for texts     											*/
 
@@ -375,6 +394,11 @@ span.express {
 }
 
 span.xsd {
+	font-family: consolas, monospace;
+	font-size: small;
+}
+
+span.owl {
 	font-family: consolas, monospace;
 	font-size: small;
 }
