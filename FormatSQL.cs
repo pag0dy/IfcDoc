@@ -126,7 +126,7 @@ namespace IfcDoc
             return null; // nothing to define
         }
 
-        public string FormatSelect(DocSelect docSelect)
+        public string FormatSelect(DocSelect docSelect, Dictionary<string, DocObject> map, Dictionary<DocObject, bool> included)
         {
             return null; // nothing to define
         }
@@ -159,7 +159,7 @@ namespace IfcDoc
                             else if (docType is DocSelect)
                             {
                                 DocSelect docSelect = (DocSelect)docType;
-                                string text = this.FormatSelect(docSelect);
+                                string text = this.FormatSelect(docSelect, map, included);
                                 sb.AppendLine(text);
                             }
                             else if (docType is DocEnumeration)

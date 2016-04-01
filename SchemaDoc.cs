@@ -450,9 +450,9 @@ namespace IfcDoc.Schema.DOC
         [Description("Structured Query Language (SQL)")]
         SQL = 3,
 
-        //[DisplayName("RDF")]
-        [Description("Resource Description Framework (RDF)")]
-        RDF = 4,
+        //[DisplayName("OWL")]
+        [Description("Web Ontology Language (OWL)")]
+        OWL = 4,
 
         //[DisplayName("Java")]
         [Description("Java Programming Language")]
@@ -535,8 +535,8 @@ namespace IfcDoc.Schema.DOC
                     case DocFormatTypeEnum.SQL:
                         return "sql";
 
-                    case DocFormatTypeEnum.RDF:
-                        return "rdf";
+                    case DocFormatTypeEnum.OWL:
+                        return "owl";
                 }
                 return "txt"; // fallback if unknown
             }
@@ -563,8 +563,8 @@ namespace IfcDoc.Schema.DOC
                     case DocFormatTypeEnum.SQL:
                         return "csv";
 
-                    case DocFormatTypeEnum.RDF:
-                        return "rdf";
+                    case DocFormatTypeEnum.OWL:
+                        return "owl";
 
                 }
                 return "txt"; // fallback if unknown
@@ -633,7 +633,7 @@ namespace IfcDoc.Schema.DOC
                 if (this._Formats.Count == 2)
                 {
                     this._Formats.Add(new DocFormat(DocFormatTypeEnum.SQL, DocFormatOptionEnum.None));
-                    this._Formats.Add(new DocFormat(DocFormatTypeEnum.RDF, DocFormatOptionEnum.Examples));
+                    this._Formats.Add(new DocFormat(DocFormatTypeEnum.OWL, DocFormatOptionEnum.Examples));
                     this._Formats.Add(new DocFormat(DocFormatTypeEnum.JSON, DocFormatOptionEnum.None));
                     this._Formats.Add(new DocFormat(DocFormatTypeEnum.CS, DocFormatOptionEnum.None));
                 }
@@ -7874,7 +7874,8 @@ namespace IfcDoc.Schema.DOC
         /// </summary>
         /// <param name="docSelect"></param>
         /// <returns></returns>
-        string FormatSelect(DocSelect docSelect);
+        //string FormatSelect(DocSelect docSelect);
+        string FormatSelect(DocSelect docSelect, Dictionary<string, DocObject> map, Dictionary<DocObject, bool> included);
 
         /// <summary>
         /// Formats a defined data type

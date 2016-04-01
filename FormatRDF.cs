@@ -21,7 +21,7 @@ namespace IfcDoc
             return null;
         }
 
-        public string FormatSelect(DocSelect docSelect)
+        public string FormatSelect(DocSelect docSelect, Dictionary<string, DocObject> map, Dictionary<DocObject, bool> included)
         {
             return null;
         }
