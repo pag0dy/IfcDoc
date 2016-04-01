@@ -152,9 +152,238 @@ namespace IfcDoc
             return sb.ToString();
         }
 
+        public static string ToXsdType(string typename)
+        {
+            string defined = "ifc:" + typename;
+            switch (typename)
+            {
+                case "BOOLEAN":
+                    defined = "xs:boolean";
+                    break;
+
+                case "LOGICAL":
+                    defined = "ifc:logical";
+                    break;
+
+                case "INTEGER":
+                    defined = "xs:long";
+                    break;
+
+                case "STRING":
+                    defined = "xs:normalizedString";
+                    break;
+
+                case "REAL":
+                case "NUMBER":
+                    defined = "xs:double";
+                    break;
+
+                case "BINARY":
+                case "BINARY (32)":
+                    defined = "ifc:hexBinary";
+                    break;
+            }
+
+            return defined;
+        }
+
         public string FormatDefined(DocDefined docDefined)
         {
-            return null;
+            string defined = ToXsdType(docDefined.DefinedType);
+
+            StringBuilder sb = new StringBuilder();
+
+            if (docDefined.Aggregation != null)
+            {
+                string aggtype = docDefined.Aggregation.GetAggregation().ToString().ToLower();
+
+                if (docDefined.Aggregation.GetAggregation() == DocAggregationEnum.SET)
+                {
+                    sb.Append("\t<xs:complexType name=\"");
+                    sb.Append(docDefined.Name);
+                    sb.Append("\">");
+                    sb.AppendLine();
+
+                    sb.AppendLine("\t\t<xs:sequence>");
+                    sb.Append("\t\t\t<xs:element ref=\"");
+                    sb.Append(defined);
+                    sb.AppendLine("\" maxOccurs=\"unbounded\"/>");
+                    sb.AppendLine("\t\t</xs:sequence>");
+
+                    sb.Append("\t\t<xs:attribute ref=\"ifc:itemType\" fixed=\"");
+                    sb.Append(defined);
+                    sb.AppendLine("\"/>");
+
+                    sb.Append("\t\t<xs:attribute ref=\"ifc:cType\" fixed=\"");
+                    sb.Append(aggtype);
+                    sb.AppendLine("\"/>");
+
+                    sb.Append("\t\t<xs:attribute ref=\"ifc:arraySize\" use=\"");
+                    sb.Append("optional");
+                    sb.AppendLine("\"/>");
+
+                    sb.Append("\t</xs:complexType>");
+                    sb.AppendLine();
+                }
+                else
+                {
+
+                    sb.Append("\t<xs:complexType name=\"");
+                    sb.Append(docDefined.Name);
+                    sb.Append("\">");
+                    sb.AppendLine();
+
+                    sb.AppendLine("\t\t<xs:simpleContent>");
+                    sb.Append("\t\t\t<xs:extension base=\"ifc:List-");
+                    sb.Append(docDefined.Name);
+                    sb.AppendLine("\">");
+
+                    sb.Append("\t\t\t\t<xs:attribute ref=\"ifc:itemType\" fixed=\"");
+                    sb.Append(defined);
+                    sb.AppendLine("\"/>");
+
+                    sb.Append("\t\t\t\t<xs:attribute ref=\"ifc:cType\" fixed=\"");
+                    sb.Append(aggtype);
+                    sb.AppendLine("\"/>");
+
+                    sb.Append("\t\t\t\t<xs:attribute ref=\"ifc:arraySize\" use=\"");
+                    sb.Append("optional");
+                    sb.AppendLine("\"/>");
+
+                    sb.AppendLine("\t\t\t</xs:extension>");
+                    sb.AppendLine("\t\t</xs:simpleContent>");
+
+                    sb.Append("\t</xs:complexType>");
+                    sb.AppendLine();
+
+                    // simple type
+                    sb.Append("\t<xs:simpleType name=\"List-");
+                    sb.Append(docDefined.Name);
+                    sb.Append("\">");
+                    sb.AppendLine();
+
+                    sb.AppendLine("\t\t<xs:restriction>");
+                    sb.AppendLine("\t\t\t<xs:simpleType>");
+                    sb.Append("\t\t\t\t<xs:list itemType=\"");
+                    sb.Append(defined);
+                    sb.AppendLine("\"/>");
+                    sb.AppendLine("\t\t\t</xs:simpleType>");
+
+                    if (docDefined.Aggregation.GetAggregation() == DocAggregationEnum.ARRAY)
+                    {
+                        sb.Append("\t\t\t<xs:minLength value=\"");
+                        sb.Append(docDefined.Aggregation.GetAggregationNestingUpper());
+                        sb.AppendLine("\"/>");
+                    }
+                    else if (docDefined.Aggregation.AggregationLower != null)
+                    {
+                        sb.Append("\t\t\t<xs:minLength value=\"");
+                        sb.Append(docDefined.Aggregation.GetAggregationNestingLower());
+                        sb.AppendLine("\"/>");
+                    }
+
+                    if (docDefined.Aggregation.AggregationUpper != null)
+                    {
+                        sb.Append("\t\t\t<xs:maxLength value=\"");
+                        sb.Append(docDefined.Aggregation.GetAggregationNestingUpper());
+                        sb.AppendLine("\"/>");
+                    }
+
+                    sb.AppendLine("\t\t</xs:restriction>");
+
+                    sb.Append("\t</xs:simpleType>");
+                    sb.AppendLine();
+                }
+            }
+            else if (docDefined.DefinedType.Equals("BINARY"))
+            {
+                sb.Append("\t<xs:complexType name=\"");
+                sb.Append(docDefined.Name);
+                sb.Append("\">");
+                sb.AppendLine();
+
+                sb.AppendLine("\t\t<xs:simpleContent>");
+
+                sb.Append("\t\t\t<xs:extension base=\"");
+                sb.Append(defined);
+                sb.AppendLine("\">");
+
+                sb.AppendLine("\t\t\t</xs:extension>");
+
+                sb.AppendLine("\t\t</xs:simpleContent>");
+
+                sb.Append("\t</xs:complexType>");
+                sb.AppendLine();
+            }
+            else
+            {
+                sb.Append("\t<xs:simpleType name=\"");
+                sb.Append(docDefined.Name);
+                sb.Append("\">");
+                sb.AppendLine();
+
+                sb.Append("\t\t<xs:restriction base=\"");
+                sb.Append(defined);
+
+                if (docDefined.Length > 0)
+                {
+                    sb.Append("\">");
+                    sb.AppendLine();
+
+                    sb.Append("\t\t\t<xs:maxLength value=\"");
+                    sb.Append(docDefined.Length);
+                    sb.AppendLine("\"/>");
+
+                    sb.AppendLine("\t\t</xs:restriction>");
+                }
+                else if (docDefined.Length < 0)
+                {
+                    // fixed
+                    sb.Append("\">");
+                    sb.AppendLine();
+
+                    sb.Append("\t\t\t<xs:minLength value=\"");
+                    sb.Append(-docDefined.Length);
+                    sb.AppendLine("\"/>");
+
+                    sb.Append("\t\t\t<xs:maxLength value=\"");
+                    sb.Append(-docDefined.Length);
+                    sb.AppendLine("\"/>");
+
+                    sb.AppendLine("\t\t</xs:restriction>");
+                }
+                else if (docDefined.Aggregation != null)
+                {
+                    sb.Append("\">");
+                    sb.AppendLine();
+
+                    if (docDefined.Aggregation.AggregationLower != null)
+                    {
+                        sb.Append("\t\t\t<xs:minLength value=\"");
+                        sb.Append(docDefined.Aggregation.GetAggregationNestingLower());
+                        sb.AppendLine("\"/>");
+                    }
+
+                    if (docDefined.Aggregation.AggregationUpper != null)
+                    {
+                        sb.Append("\t\t\t<xs:maxLength value=\"");
+                        sb.Append(docDefined.Aggregation.GetAggregationNestingUpper());
+                        sb.AppendLine("\"/>");
+                    }
+
+                    sb.AppendLine("\t\t</xs:restriction>");
+                }
+                else
+                {
+                    sb.Append("\"/>");
+                    sb.AppendLine();
+                }
+
+                sb.Append("\t</xs:simpleType>");
+                sb.AppendLine();
+            }
+
+            return sb.ToString();
         }
 
         public string FormatDefinitions(DocProject docProject, Dictionary<string, DocObject> map, Dictionary<DocObject, bool> included)

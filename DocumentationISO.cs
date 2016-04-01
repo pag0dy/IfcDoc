@@ -2597,9 +2597,107 @@ namespace IfcDoc
             foreach (DocPublication docPub in publications)
             {
                 string relpath = path + @"\" + MakeLinkName(docPub);
+                //GeneratePublicationStub(docProject, relpath, instances, mapEntity, mapSchema, docPub, worker, formProgress);
                 GeneratePublication(docProject, relpath, instances, mapEntity, mapSchema, docPub, worker, formProgress);
             }
 
+        }
+
+        public static void GeneratePublicationStub(
+            DocProject docProject,
+            string path,
+            Dictionary<long, SEntity> instances,
+            Dictionary<string, DocObject> mapEntity,
+            Dictionary<string, string> mapSchema,
+            DocPublication docPublication,
+            BackgroundWorker worker,
+            FormProgress formProgress)
+        {
+            instances.Clear(); // clear out old state from mvdxml export
+            docPublication.ErrorLog.Clear();
+
+            int iSection = 0;
+            foreach (DocSection section in docProject.Sections)
+            {
+                iSection++;
+
+
+                // each schema
+                int iSchema = 0;
+                foreach (DocSchema schema in section.Schemas)
+                {
+                        iSchema++;
+
+                    // each type
+                    if (schema.Types.Count > 0)
+                    {
+
+                        int iType = 0;
+
+                        foreach (DocType type in schema.Types)
+                        {
+
+                            if (type.Name.Equals("IfcNullStyle", StringComparison.OrdinalIgnoreCase) && schema.Name.Equals("IfcConstructionMgmtDomain", StringComparison.OrdinalIgnoreCase))
+                            {
+                                // bug -- exclude
+                            }
+                            else
+                            {
+                                //using (FormatHTM htmDef = new FormatHTM(pathSchema + @"\" + schema.Name.ToLower() + "\\lexical\\" + type.Name.ToLower() + ".htm", mapEntity, mapSchema, included))
+                                //{
+                                    foreach (DocFormat docFormat in docPublication.Formats)
+                                    {
+                                        if (docFormat.FormatOptions != DocFormatOptionEnum.None)
+                                        {
+                                            // future: componentize all formats
+                                            IFormatExtension formatext = null;
+                                            //mapFormats.TryGetValue(docFormat.FormatType, out formatext);
+                                            switch (docFormat.FormatType)
+                                            {
+                                                case DocFormatTypeEnum.XML:
+                                                    Console.Out.WriteLine("XSD Specification");
+                                                    if (type is DocSelect)
+                                                    {
+                                                    Console.Out.WriteLine(FormatXSD.FormatSelect((DocSelect)type, mapEntity, null));
+                                                    }
+                                                    else if (type is DocEnumeration)
+                                                    {
+                                                    Console.Out.WriteLine(FormatXSD.FormatEnum((DocEnumeration)type));
+                                                    }
+                                                    else if (type is DocDefined)
+                                                    {
+                                                    Console.Out.WriteLine(FormatXSD.FormatDefined((DocDefined)type, mapEntity));
+                                                    }
+                                                    break;
+                                                
+                                                case DocFormatTypeEnum.RDF:
+                                                Console.Out.WriteLine("OWL Specification (TTL)", false);
+                                                    if (type is DocSelect)
+                                                    {
+                                                    Console.Out.WriteLine(FormatOWL.FormatSelect((DocSelect)type, mapEntity, null));
+                                                    }
+                                                    else if (type is DocEnumeration)
+                                                    {
+                                                    Console.Out.WriteLine(FormatOWL.FormatEnumeration((DocEnumeration)type));
+                                                    }
+                                                    else if (type is DocDefined)
+                                                    {
+                                                        //htmDef.WriteFormatted(FormatOWL.FormatDefined((DocDefined)type, mapEntity));
+                                                    }
+                                                    break;
+
+                                                default:
+                                                Console.Out.WriteLine("default");
+                                                    break;
+                                            }
+                                        }
+                                    //}
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         public static void GeneratePublication(
