@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections;
 
 using IfcDoc.Schema;
 using IfcDoc.Schema.DOC;
@@ -11,6 +12,8 @@ namespace IfcDoc
 {
     public class FormatOWL : IFormatExtension
     {
+        public static ArrayList listPropertiesOutput = new ArrayList();
+
         public FormatOWL()
         {        }
 
@@ -19,61 +22,42 @@ namespace IfcDoc
 
            StringBuilder sb = new StringBuilder();
 
-           sb.Append("ifc:");
-           sb.Append(docEntity.Name);
-           sb.Append("\t\trdf:type \towl:Class ;");
-           sb.AppendLine();
-           sb.Append("\trdfs:label  \t\"");
-           sb.Append(docEntity.Name);
-           sb.Append("\" .");
-           sb.AppendLine();
+           sb.AppendLine("ifc:" + docEntity.Name);
+           sb.AppendLine("\trdf:type \towl:Class ;");
+           sb.AppendLine("\trdfs:label  \t\"" + docEntity.Name + "\" .");
+            sb.AppendLine();
 
-           // TO DO: to be completed
+            // TO DO: to be completed
 
-           return sb.ToString();
+            return sb.ToString();
         }
 
         public string FormatEnumeration(DocEnumeration docEnumeration)
         {
             StringBuilder sb = new StringBuilder();
 
-            sb.Append("\tifc:");
-            sb.Append(docEnumeration.Name);
-            sb.AppendLine();
-
-            sb.Append("\t\trdf:type owl:Class ;");
-            sb.AppendLine();
+            sb.AppendLine("ifc:" + docEnumeration.Name);
+            sb.AppendLine("\trdf:type owl:Class ;");
 
             //Add parent SELECT classes
             
             //possibly add the items in a oneof
-            sb.Append("\t\towl:equivalentClass");
-            sb.AppendLine();
-            sb.Append("\t\t\t[");
-            sb.AppendLine();
-            sb.Append("\t\t\t\trdf:type owl:Class ;");
-            sb.AppendLine();
-            sb.Append("\t\t\t\towl:oneOf ");
-            sb.AppendLine();
-            sb.Append("\t\t\t\t\t( ");
-            sb.AppendLine();
+            sb.AppendLine("\towl:equivalentClass");
+            sb.AppendLine("\t\t[");
+            sb.AppendLine("\t\t\trdf:type owl:Class ;");
+            sb.AppendLine("\t\t\towl:oneOf ");
+            sb.AppendLine("\t\t\t\t( ");
 
             foreach (DocConstant docConst in docEnumeration.Constants)
             {
-                sb.Append("\t\t\t\t\tifc:");
-                sb.Append(docConst.Name.ToUpper());
-                sb.Append(" ");
-                sb.AppendLine();
+                sb.AppendLine("\t\t\t\tifc:" + docConst.Name.ToUpper() + " ");
             }
 
             //close oneof
-            sb.Append("\t\t\t\t\t) ");
-            sb.AppendLine();
-            sb.Append("\t\t\t] ; ");
-            sb.AppendLine();
+            sb.AppendLine("\t\t\t\t) ");
+            sb.AppendLine("\t\t] ; ");
 
-
-            sb.Append("\t\trdfs:subClassOf expr:ENUMERATION .");
+            sb.AppendLine("\trdfs:subClassOf expr:ENUMERATION .");
             sb.AppendLine();
 
             return sb.ToString();
@@ -84,21 +68,19 @@ namespace IfcDoc
         {
            StringBuilder sb = new StringBuilder();
 
-           sb.Append("ifc:");
-           sb.Append(docEnumeration.Name);
-           sb.AppendLine();
-
+           sb.AppendLine("ifc:"+ docEnumeration.Name);
            sb.AppendLine("\trdf:type owl:Class ;");
            sb.AppendLine("\trdfs:subClassOf expr:ENUMERATION .");
            sb.AppendLine();
 
            // define individuals
            foreach (DocConstant docConst in docEnumeration.Constants)
-           {
-              sb.AppendLine("ifc:" + docConst.Name.ToUpper() + "\trdf:type\t" + "ifc:" + docEnumeration.Name + " , owl:NamedIndividual ;");
-              sb.AppendLine("\trdfs:label  \"" + docConst.Name.ToUpper() + "\" .");
-              sb.AppendLine();
-           }
+            {
+                sb.AppendLine("ifc:" + docConst.Name.ToUpper());
+                sb.AppendLine("\trdf:type " + "ifc:" + docEnumeration.Name + " , owl:NamedIndividual ;");
+                sb.AppendLine("\trdfs:label  \"" + docConst.Name.ToUpper() + "\" .");
+                sb.AppendLine();
+            }
 
            return sb.ToString();
         }
@@ -107,26 +89,17 @@ namespace IfcDoc
         {
             StringBuilder sb = new StringBuilder();
 
-            sb.Append("\tifc:");
-            sb.Append(docSelect.Name);
-            sb.AppendLine();
-
-            sb.Append("\t\trdf:type owl:Class ;");
-            sb.AppendLine();
+            sb.AppendLine("ifc:" + docSelect.Name);
+            sb.AppendLine("\trdf:type owl:Class ;");
 
             //Add parent SELECT classes
 
             //possibly add the individuals here as a union
-            sb.Append("\t\towl:equivalentClass");
-            sb.AppendLine();
-            sb.Append("\t\t\t[");
-            sb.AppendLine();
-            sb.Append("\t\t\t\trdf:type owl:Class ;");
-            sb.AppendLine();
-            sb.Append("\t\t\t\towl:unionOf ");
-            sb.AppendLine();
-            sb.Append("\t\t\t\t\t( ");
-            sb.AppendLine();
+            sb.AppendLine("\towl:equivalentClass");
+            sb.AppendLine("\t\t[");
+            sb.AppendLine("\t\t\trdf:type owl:Class ;");
+            sb.AppendLine("\t\t\towl:unionOf ");
+            sb.AppendLine("\t\t\t\t( ");
 
             // entities
             foreach (DocSelectItem docItem in docSelect.Selects)
@@ -136,21 +109,15 @@ namespace IfcDoc
                 {
                    if (included == null || included.ContainsKey(mapDef))
                     {
-                        sb.Append("\t\t\t\t\t\tifc:");
-                        sb.Append(docItem.Name + " ");
-                        sb.AppendLine();
+                        sb.AppendLine("\t\t\t\t\tifc:" + docItem.Name + " ");
                     }
                 }
             }
 
             //close unionof
-            sb.Append("\t\t\t\t\t) ");
-            sb.AppendLine();
-            sb.Append("\t\t\t] ; ");
-            sb.AppendLine();
-
-
-            sb.Append("\t\trdfs:subClassOf expr:SELECT .");
+            sb.AppendLine("\t\t\t\t) ");
+            sb.AppendLine("\t\t] ; ");
+            sb.AppendLine("\trdfs:subClassOf expr:SELECT .");
             sb.AppendLine();
 
             return sb.ToString();
@@ -161,27 +128,25 @@ namespace IfcDoc
         {
            StringBuilder sb = new StringBuilder();
 
-           sb.Append("ifc:");
-           sb.Append(docSelect.Name);
-           sb.Append("\trdf:type owl:Class ;");
-           sb.AppendLine();
+           sb.AppendLine("ifc:" + docSelect.Name);
+           sb.AppendLine("\trdf:type owl:Class ;");
            sb.AppendLine("\trdfs:subClassOf expr:SELECT ;");
-           sb.Append("\trdfs:label  \"");
-           sb.Append(docSelect.Name);
-           sb.Append("\" .");
-           sb.AppendLine();
+           sb.AppendLine("\trdfs:label  \"" + docSelect.Name + "\" .");
+            sb.AppendLine();
 
+            //Add parent SELECT classes
 
-           // entities
-           foreach (DocSelectItem docItem in docSelect.Selects)
+            // entities
+            foreach (DocSelectItem docItem in docSelect.Selects)
            {
               DocObject mapDef = null;
               if (map.TryGetValue(docItem.Name, out mapDef))
               {
                  if (included == null || included.ContainsKey(mapDef))
                  {
-                    sb.AppendLine("ifc:" + docItem.Name + "\trdfs:subClassOf ifc:" + docSelect.Name + " .");
-                    sb.AppendLine();
+                        sb.AppendLine("ifc:" + docItem.Name);
+                        sb.AppendLine("\trdfs:subClassOf ifc:" + docSelect.Name + " .");
+                        sb.AppendLine();
                  }
               }
            }
@@ -191,39 +156,128 @@ namespace IfcDoc
 
         public static string ToXsdType(string typename)
         {
-           //// TO DO: to be revised (also xsd in place of xs)
-
             string defined = "ifc:" + typename;
             switch (typename)
             {
                 case "BOOLEAN":
-                    defined = "xs:boolean";
+                    defined = "expr:BOOLEAN";
                     break;
 
                 case "LOGICAL":
-                    defined = "ifc:logical";
+                    defined = "expr:LOGICAL";
                     break;
 
                 case "INTEGER":
-                    defined = "xs:long";
+                    defined = "expr:INTEGER";
                     break;
 
                 case "STRING":
-                    defined = "xs:normalizedString";
+                    defined = "expr:STRING";
                     break;
 
                 case "REAL":
+                    defined = "expr:REAL";
+                    break;
+
                 case "NUMBER":
-                    defined = "xs:double";
+                    defined = "expr:NUMBER";
                     break;
 
                 case "BINARY":
+                    defined = "expr:BINARY";
+                    break;
+
                 case "BINARY (32)":
-                    defined = "ifc:hexBinary";
+                    defined = "expr:BINARY";
                     break;
             }
 
             return defined;
+        }
+
+        private string WriteMinCardRestr(string className, string attrName, int minCard, bool asEntity)
+        {
+            string output = "";
+		    output+=" ;\r\n";
+            output += "\trdfs:subClassOf" + "\r\n";
+
+            string tab = "\t";
+		    if(asEntity==true){
+                output += "\t\t[" + "\r\n";
+                output += "\t\t\trdf:type owl:Restriction ; " + "\r\n";
+                output += "\t\t\towl:onProperty ifc:" + attrName + " ;\r\n";
+                output += "\t\t\towl:allValuesFrom" + "\r\n";
+                tab += "\t\t";
+            }
+		    for (int i = 0; i <= minCard -1; i++) {
+			    tab += "\t";
+                output += tab + "[" + "\r\n";
+                output += tab + "\trdf:type owl:Restriction ; " + "\r\n";
+                output += tab + "\towl:onProperty list:hasNext ; " + "\r\n";
+                output += tab + "\towl:someValuesFrom ";
+                if(i!=minCard-1)
+                    output += "\r\n";
+            }
+            output += className + "\r\n";
+		    for (int i = 0; i <= minCard - 1; i++) {
+				tab = tab.Substring(1);
+                output += tab + "\t]";
+                if (i != minCard - 1)
+                    output += "\r\n";
+            }
+
+		    if(asEntity==true){
+                output += "\t\t]";
+		    }
+            return output;
+	    }
+
+        private string WriteMaxCardRestr(string className, string attrName, int maxCard, bool asEntity)
+        {
+            string output = "";
+            output += " ;\r\n";
+            output += "\trdfs:subClassOf" + "\r\n";
+
+            string tab = "\t";
+            if (asEntity == true)
+            {
+                output += "\t\t[" + "\r\n";
+                output += "\t\t\trdf:type owl:Restriction ; " + "\r\n";
+                output += "\t\t\towl:onProperty ifc:" + attrName + " ;\r\n";
+                output += "\t\t\towl:allValuesFrom" + "\r\n";
+                tab += "\t\t";
+            }
+            for (int i = 0; i < maxCard - 1; i++)
+            {
+                tab += "\t";
+                output += tab + "[" + "\r\n";
+                output += tab + "\trdf:type owl:Restriction ; " + "\r\n";
+                output += tab + "\towl:onProperty list:hasNext ; " + "\r\n";
+                output += tab + "\towl:someValuesFrom ";
+                if (i != maxCard)
+                    output += "\r\n";
+            }
+
+            tab += "\t";
+            output += tab + "[" + "\r\n";
+            output += tab + "\trdf:type owl:Restriction ; " + "\r\n";
+            output += tab + "\towl:onProperty list:hasNext ; " + "\r\n";
+            output += tab + "\towl:onClass " + className + " ;" + "\r\n";
+            output += tab + "\towl:qualifiedCardinality \"1\"^^xsd:nonNegativeInteger " + "\r\n";
+
+            tab=tab.Substring(1);
+            output += tab + "\t]" + "\r\n";	
+		
+		    for(int i = 0; i<maxCard-1;i++){		
+			    tab=tab.Substring(1);
+                output += tab + "\t]";
+                if (i != maxCard)
+                    output += "\r\n";
+            }		
+		    if(asEntity==true)
+                output += "\t\t]";
+
+            return output;
         }
 
         public string FormatDefined(DocDefined docDefined)
@@ -232,196 +286,119 @@ namespace IfcDoc
 
             StringBuilder sb = new StringBuilder();
 
-           //// TO DO (code copied from XSD case)
-            //if (docDefined.Aggregation != null)
-            //{
-            //    string aggtype = docDefined.Aggregation.GetAggregation().ToString().ToLower();
+            if (docDefined.Aggregation != null)
+            {
+                string aggtype = docDefined.Aggregation.GetAggregation().ToString().ToLower();
 
-            //    if (docDefined.Aggregation.GetAggregation() == DocAggregationEnum.SET)
-            //    {
-            //        sb.Append("\t<xs:complexType name=\"");
-            //        sb.Append(docDefined.Name);
-            //        sb.Append("\">");
-            //        sb.AppendLine();
+                if (docDefined.Aggregation.GetAggregation() == DocAggregationEnum.SET)
+                {
+                    //IfcPropertySetDefinitionSet
 
-            //        sb.AppendLine("\t\t<xs:sequence>");
-            //        sb.Append("\t\t\t<xs:element ref=\"");
-            //        sb.Append(defined);
-            //        sb.AppendLine("\" maxOccurs=\"unbounded\"/>");
-            //        sb.AppendLine("\t\t</xs:sequence>");
+                    sb.AppendLine("ifc:" + docDefined.Name);
+                    sb.AppendLine("\trdf:type owl:Class ;");
 
-            //        sb.Append("\t\t<xs:attribute ref=\"ifc:itemType\" fixed=\"");
-            //        sb.Append(defined);
-            //        sb.AppendLine("\"/>");
+                    //TODO:: Add (SELECT) parent classes  
 
-            //        sb.Append("\t\t<xs:attribute ref=\"ifc:cType\" fixed=\"");
-            //        sb.Append(aggtype);
-            //        sb.AppendLine("\"/>");
+                    sb.AppendLine("\trdfs:subClassOf ");
+                    sb.AppendLine("\t\t[ ");
+                    sb.AppendLine("\t\t\trdf:type owl:Restriction ;");
+                    sb.AppendLine("\t\t\towl:allValuesFrom " + defined + " ;");
+                    sb.AppendLine("\t\t\towl:onProperty expr:hasSet");
+                    sb.AppendLine("\t\t] ;");
+                    sb.AppendLine("\t" + "rdfs:subClassOf ");
+                    sb.AppendLine("\t\t" + "[");
+                    sb.AppendLine("\t\t\t" + "rdf:type owl:Restriction ;");
+                    sb.AppendLine("\t\t\t" + "owl:minQualifiedCardinality \"" + 1
+                        + "\"^^xsd:nonNegativeInteger ;");
+                    sb.AppendLine("\t\t\towl:onProperty expr:hasSet ;");
+                    sb.AppendLine("\t\t\t" + "owl:onClass " + defined);
+                    sb.AppendLine("\t\t] .");
+                    sb.AppendLine();
+                }
+                else if (docDefined.Aggregation.GetAggregation() == DocAggregationEnum.LIST || docDefined.Aggregation.GetAggregation() == DocAggregationEnum.ARRAY)
+                {
 
-            //        sb.Append("\t\t<xs:attribute ref=\"ifc:arraySize\" use=\"");
-            //        sb.Append("optional");
-            //        sb.AppendLine("\"/>");
+                    //Console.Out.WriteLine("defined type --" + docDefined.Aggregation.GetAggregation() + "-- : " + docDefined.Name);
 
-            //        sb.Append("\t</xs:complexType>");
-            //        sb.AppendLine();
-            //    }
-            //    else
-            //    {
+                    sb.AppendLine("ifc:" + docDefined.Name);
+                    sb.AppendLine("\trdf:type owl:Class ;");
+                    sb.Append("\trdfs:subClassOf " + defined + "_List ");
 
-            //        sb.Append("\t<xs:complexType name=\"");
-            //        sb.Append(docDefined.Name);
-            //        sb.Append("\">");
-            //        sb.AppendLine();
+                    //TODO:: Add (SELECT) parent classes   
 
-            //        sb.AppendLine("\t\t<xs:simpleContent>");
-            //        sb.Append("\t\t\t<xs:extension base=\"ifc:List-");
-            //        sb.Append(docDefined.Name);
-            //        sb.AppendLine("\">");
+                    //check for cardinality restrictions and add if available
+                    string cards = "";
+                    if (docDefined.Aggregation.GetAggregationNestingLower() >= 1)
+                        cards += WriteMinCardRestr(defined + "_List", "hasNext", docDefined.Aggregation.GetAggregationNestingLower(), false);
+                    if (docDefined.Aggregation.GetAggregationNestingUpper() > 1)
+                        cards += WriteMaxCardRestr(defined + "_EmptyList", "hasNext", docDefined.Aggregation.GetAggregationNestingUpper(), false);
+                    cards += ".";
+                    sb.AppendLine(cards);
+                    sb.AppendLine();
 
-            //        sb.Append("\t\t\t\t<xs:attribute ref=\"ifc:itemType\" fixed=\"");
-            //        sb.Append(defined);
-            //        sb.AppendLine("\"/>");
+                    if (defined.StartsWith("ifc"))
+                    {
+                        if (!listPropertiesOutput.Contains(defined))
+                        {
+                            // property already contained in resulting OWL file
+                            // (.TTL) -> no need to write additional property		
+                            listPropertiesOutput.Add(defined);
 
-            //        sb.Append("\t\t\t\t<xs:attribute ref=\"ifc:cType\" fixed=\"");
-            //        sb.Append(aggtype);
-            //        sb.AppendLine("\"/>");
+                            sb.AppendLine(defined + "_EmptyList");
+                            sb.AppendLine("\trdf:type owl:Class ;");
+                            sb.AppendLine("\trdfs:subClassOf list:EmptyList, " + defined + "_List" + " .");
+                            sb.AppendLine();
 
-            //        sb.Append("\t\t\t\t<xs:attribute ref=\"ifc:arraySize\" use=\"");
-            //        sb.Append("optional");
-            //        sb.AppendLine("\"/>");
+                            sb.AppendLine(defined + "_List");
+                            sb.AppendLine("\trdf:type owl:Class ;");
+                            sb.AppendLine("\trdfs:subClassOf list:OWLList ;");
+                            sb.AppendLine("\trdfs:subClassOf");
+                            sb.AppendLine("\t\t[");
+                            sb.AppendLine("\t\t\trdf:type owl:Restriction ;");
+                            sb.AppendLine("\t\t\towl:onProperty list:hasContents ;");
+                            sb.AppendLine("\t\t\towl:allValuesFrom " + defined);
+                            sb.AppendLine("\t\t] ;");
+                            sb.AppendLine("\trdfs:subClassOf");
+                            sb.AppendLine("\t\t[");
+                            sb.AppendLine("\t\t\trdf:type owl:Restriction ;");
+                            sb.AppendLine("\t\t\towl:onProperty list:isFollowedBy ;");
+                            sb.AppendLine("\t\t\towl:allValuesFrom " + defined + "_List");
+                            sb.AppendLine("\t\t] ;");
+                            sb.AppendLine("\trdfs:subClassOf");
+                            sb.AppendLine("\t\t[");
+                            sb.AppendLine("\t\t\trdf:type owl:Restriction ;");
+                            sb.AppendLine("\t\t\towl:onProperty list:hasNext ;");
+                            sb.AppendLine("\t\t\towl:allValuesFrom " + defined + "_List");
+                            sb.AppendLine("\t\t] .");
+                            sb.AppendLine();
+                        }
+                    }
+                }
+            }
+            else
+            {
+                sb.AppendLine("ifc:" + docDefined.Name);
+                sb.AppendLine("\trdf:type owl:Class ;");
 
-            //        sb.AppendLine("\t\t\t</xs:extension>");
-            //        sb.AppendLine("\t\t</xs:simpleContent>");
+                //TODO:: add parent selects
 
-            //        sb.Append("\t</xs:complexType>");
-            //        sb.AppendLine();
+                sb.AppendLine("\trdfs:subClassOf " + defined + " .");
+                sb.AppendLine();
 
-            //        // simple type
-            //        sb.Append("\t<xs:simpleType name=\"List-");
-            //        sb.Append(docDefined.Name);
-            //        sb.Append("\">");
-            //        sb.AppendLine();
+                if (docDefined.Length > 0 || docDefined.Length < 0 || docDefined.Aggregation != null)
+                {
+                    //TODO: possibly add restrictions here
 
-            //        sb.AppendLine("\t\t<xs:restriction>");
-            //        sb.AppendLine("\t\t\t<xs:simpleType>");
-            //        sb.Append("\t\t\t\t<xs:list itemType=\"");
-            //        sb.Append(defined);
-            //        sb.AppendLine("\"/>");
-            //        sb.AppendLine("\t\t\t</xs:simpleType>");
+                    //TYPE IfcGloballyUniqueId = STRING(22) FIXED;
+                    //END_TYPE;
 
-            //        if (docDefined.Aggregation.GetAggregation() == DocAggregationEnum.ARRAY)
-            //        {
-            //            sb.Append("\t\t\t<xs:minLength value=\"");
-            //            sb.Append(docDefined.Aggregation.GetAggregationNestingUpper());
-            //            sb.AppendLine("\"/>");
-            //        }
-            //        else if (docDefined.Aggregation.AggregationLower != null)
-            //        {
-            //            sb.Append("\t\t\t<xs:minLength value=\"");
-            //            sb.Append(docDefined.Aggregation.GetAggregationNestingLower());
-            //            sb.AppendLine("\"/>");
-            //        }
+                    //TYPE IfcIdentifier = STRING(255);
+                    //END_TYPE;
 
-            //        if (docDefined.Aggregation.AggregationUpper != null)
-            //        {
-            //            sb.Append("\t\t\t<xs:maxLength value=\"");
-            //            sb.Append(docDefined.Aggregation.GetAggregationNestingUpper());
-            //            sb.AppendLine("\"/>");
-            //        }
-
-            //        sb.AppendLine("\t\t</xs:restriction>");
-
-            //        sb.Append("\t</xs:simpleType>");
-            //        sb.AppendLine();
-            //    }
-            //}
-            //else if (docDefined.DefinedType.Equals("BINARY"))
-            //{
-            //    sb.Append("\t<xs:complexType name=\"");
-            //    sb.Append(docDefined.Name);
-            //    sb.Append("\">");
-            //    sb.AppendLine();
-
-            //    sb.AppendLine("\t\t<xs:simpleContent>");
-
-            //    sb.Append("\t\t\t<xs:extension base=\"");
-            //    sb.Append(defined);
-            //    sb.AppendLine("\">");
-
-            //    sb.AppendLine("\t\t\t</xs:extension>");
-
-            //    sb.AppendLine("\t\t</xs:simpleContent>");
-
-            //    sb.Append("\t</xs:complexType>");
-            //    sb.AppendLine();
-            //}
-            //else
-            //{
-            //    sb.Append("\t<xs:simpleType name=\"");
-            //    sb.Append(docDefined.Name);
-            //    sb.Append("\">");
-            //    sb.AppendLine();
-
-            //    sb.Append("\t\t<xs:restriction base=\"");
-            //    sb.Append(defined);
-
-            //    if (docDefined.Length > 0)
-            //    {
-            //        sb.Append("\">");
-            //        sb.AppendLine();
-
-            //        sb.Append("\t\t\t<xs:maxLength value=\"");
-            //        sb.Append(docDefined.Length);
-            //        sb.AppendLine("\"/>");
-
-            //        sb.AppendLine("\t\t</xs:restriction>");
-            //    }
-            //    else if (docDefined.Length < 0)
-            //    {
-            //        // fixed
-            //        sb.Append("\">");
-            //        sb.AppendLine();
-
-            //        sb.Append("\t\t\t<xs:minLength value=\"");
-            //        sb.Append(-docDefined.Length);
-            //        sb.AppendLine("\"/>");
-
-            //        sb.Append("\t\t\t<xs:maxLength value=\"");
-            //        sb.Append(-docDefined.Length);
-            //        sb.AppendLine("\"/>");
-
-            //        sb.AppendLine("\t\t</xs:restriction>");
-            //    }
-            //    else if (docDefined.Aggregation != null)
-            //    {
-            //        sb.Append("\">");
-            //        sb.AppendLine();
-
-            //        if (docDefined.Aggregation.AggregationLower != null)
-            //        {
-            //            sb.Append("\t\t\t<xs:minLength value=\"");
-            //            sb.Append(docDefined.Aggregation.GetAggregationNestingLower());
-            //            sb.AppendLine("\"/>");
-            //        }
-
-            //        if (docDefined.Aggregation.AggregationUpper != null)
-            //        {
-            //            sb.Append("\t\t\t<xs:maxLength value=\"");
-            //            sb.Append(docDefined.Aggregation.GetAggregationNestingUpper());
-            //            sb.AppendLine("\"/>");
-            //        }
-
-            //        sb.AppendLine("\t\t</xs:restriction>");
-            //    }
-            //    else
-            //    {
-            //        sb.Append("\"/>");
-            //        sb.AppendLine();
-            //    }
-
-            //    sb.Append("\t</xs:simpleType>");
-            //    sb.AppendLine();
-            //}
+                    //TYPE IfcLabel = STRING(255);
+                    //END_TYPE;
+                }
+            }
 
             return sb.ToString();
         }
@@ -464,8 +441,10 @@ namespace IfcDoc
            sb.AppendLine("\tvann:preferredNamespacePrefix  \"ifc\" ;");
            sb.AppendLine("\tvann:preferredNamespaceUri     \"" + ifcxmlns + "\" ;");
            sb.AppendLine("\towl:imports                    <https://w3id.org/express> .");
+            sb.AppendLine();
 
-     
+
+
 
            foreach (DocSection docSection in docProject.Sections)
            {
@@ -482,21 +461,21 @@ namespace IfcDoc
                        {
                           DocDefined docDefined = (DocDefined)docType;
                           string text = this.FormatDefined(docDefined);
-                          sb.AppendLine(text);
+                          sb.Append(text);
                        }
                        else if (docType is DocSelect)
                        {
                           DocSelect docSelect = (DocSelect)docType;
                           string text = this.FormatSelectCompListing(docSelect,map,included);
                           //string text = this.FormatSelect(docSelect);
-                          sb.AppendLine(text);
+                          sb.Append(text);
                        }
                        else if (docType is DocEnumeration)
                        {
                           DocEnumeration docEnumeration = (DocEnumeration)docType;
                           string text = this.FormatEnumerationCompListing(docEnumeration);
                           //string text = this.FormatEnumeration(docEnumeration);
-                          sb.AppendLine(text);
+                          sb.Append(text);
                        }
                     }
                  }
@@ -509,12 +488,13 @@ namespace IfcDoc
                     if (use)
                     {
                        string text = this.FormatEntity(docEntity, map, included);
-                       sb.AppendLine(text);
+                       sb.Append(text);
                     }
                  }
               }
 
            }
+            listPropertiesOutput.Clear();
            return sb.ToString();
         }
 

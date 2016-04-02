@@ -3896,13 +3896,13 @@ namespace IfcDoc
                                                                         htmDef.WriteExpressEntitySpecification(entity, !docPublication.HideHistory, docPublication.ISO);
                                                                         break;
 
-                                                                    case DocFormatTypeEnum.OWL:
-                                                                        htmDef.WriteSummaryHeader("OWL Specification (TTL)", false);
-                                                                        htmDef.Write("<div class=\"owl\"><code class=\"owl\">");
-                                                                        //TODO:: htmDef.WriteFormatted(FormatXSD.FormatEntity(entity, mapEntity, included));
-                                                                        htmDef.Write("</code></div>");
-                                                                        htmDef.WriteSummaryFooter();
-                                                                        break;
+                                                                    //case DocFormatTypeEnum.OWL:
+                                                                    //    htmDef.WriteSummaryHeader("OWL Specification (TTL)", false);
+                                                                    //    htmDef.Write("<div class=\"xsd\"><code class=\"owl\">");
+                                                                    //    //TODO:: htmDef.WriteFormatted(FormatXSD.FormatEntity(entity, mapEntity, included));
+                                                                    //    htmDef.Write("</code></div>");
+                                                                    //    htmDef.WriteSummaryFooter();
+                                                                    //    break;
 
                                                                     default:
                                                                         if(formatext != null)
@@ -3923,6 +3923,8 @@ namespace IfcDoc
                                                         }
 
                                                         htmDef.WriteLine("</section>");
+
+                                                        FormatOWL.listPropertiesOutput.Clear();
 
                                                         // write url for incoming page link
                                                         htmDef.WriteLinkTo(entity);
@@ -4396,6 +4398,7 @@ namespace IfcDoc
                             "</html>\r\n");
                     }
                 }
+
 
                 int iAnnex = 0;
                 char chAnnex = 'A';
