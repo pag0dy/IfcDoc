@@ -23,8 +23,10 @@ namespace IfcDoc
 
         public string FormatEntity(DocEntity docEntity, Dictionary<string, DocObject> map, Dictionary<DocObject, bool> included)
         {
+           return FormatEntityFull(docEntity, map, included, false);
         }
 
+        public string FormatEntityFull(DocEntity docEntity, Dictionary<string, DocObject> map, Dictionary<DocObject, bool> included, bool fullListing)
         {
            // entity
            StringBuilder sb = new StringBuilder();
@@ -326,9 +328,11 @@ namespace IfcDoc
 
         public string FormatEnumeration(DocEnumeration docEnumeration)
         {
+           return FormatEnumerationFull(docEnumeration, false);
         }
 
        // version for computer interpretable listing
+        public string FormatEnumerationFull(DocEnumeration docEnumeration,bool fullListing)
         {
            StringBuilder sb = new StringBuilder();
 
@@ -381,9 +385,11 @@ namespace IfcDoc
 
         public string FormatSelect(DocSelect docSelect, Dictionary<string, DocObject> map, Dictionary<DocObject, bool> included)
         {
+           return FormatSelectFull(docSelect, map, included, false);
         }
 
         // version for computer interpretable listing
+        public string FormatSelectFull(DocSelect docSelect, Dictionary<string, DocObject> map, Dictionary<DocObject, bool> included, bool fullListing)
         {
            StringBuilder sb = new StringBuilder();
 
@@ -565,8 +571,10 @@ namespace IfcDoc
 
         public string FormatDefined(DocDefined docDefined)
         {
+           return FormatDefinedFull(docDefined, false) ;
         }
 
+        public string FormatDefinedFull(DocDefined docDefined,bool fullListing)
         {
             StringBuilder sb = new StringBuilder();
 
@@ -801,16 +809,19 @@ namespace IfcDoc
                        if (docType is DocDefined)
                        {
                           DocDefined docDefined = (DocDefined)docType;
+                          string text = this.FormatDefinedFull(docDefined,true);
                           sb.Append(text);
                        }
                        else if (docType is DocSelect)
                        {
                           DocSelect docSelect = (DocSelect)docType;
+                          string text = this.FormatSelectFull(docSelect,map,included,true);
                           sb.Append(text);
                        }
                        else if (docType is DocEnumeration)
                        {
                           DocEnumeration docEnumeration = (DocEnumeration)docType;
+                          string text = this.FormatEnumerationFull(docEnumeration,true);
                           sb.Append(text);
                        }
                     }
@@ -823,6 +834,7 @@ namespace IfcDoc
 
                     if (use)
                     {
+                       string text = this.FormatEntityFull(docEntity, map, included,true);
                        sb.Append(text);
                     }
                  }
