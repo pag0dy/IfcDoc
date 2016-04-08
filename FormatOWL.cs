@@ -156,15 +156,15 @@ namespace IfcDoc
                  actualTargetString = actualTargetString + "_List";
                  if (newlistdef.Length > 0)
                     sbLists.Append(newlistdef);
-                 if (docAttr.AggregationAttribute != null)
+
+                 DocAttribute docAggregate = docAttr.AggregationAttribute;
+                 while (docAggregate != null)
                  {
                     newlistdef = createListClass(actualTargetString);
                     actualTargetString = actualTargetString + "_List";
                     if (newlistdef.Length > 0) sbLists.Append(newlistdef);
-                    if (docAttr.AggregationAttribute.AggregationAttribute != null)
-                    {
-                       // TO DO: to deal with further levels of nested list in a more efficient way
-                    }
+
+                    docAggregate = docAggregate.AggregationAttribute;
                  }
               }
 
