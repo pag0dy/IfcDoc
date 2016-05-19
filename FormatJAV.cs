@@ -12,7 +12,9 @@ using System.Text;
 using IfcDoc.Schema;
 using IfcDoc.Schema.DOC;
 
-namespace IfcDoc.Format.CSC
+using System.Runtime.Serialization.Json;
+
+namespace IfcDoc.Format.JAV
 {
     internal class FormatJAV : IDisposable,
         IFormatExtension
@@ -402,7 +404,11 @@ namespace IfcDoc.Format.CSC
 
                 // if defined type, use raw type (avoiding extra memory allocation)
                 DocObject docDef = null;
-                map.TryGetValue(deftype, out docDef);
+                if (deftype != null)
+                {
+                    map.TryGetValue(deftype, out docDef);
+                }
+
                 if (docDef is DocDefined)
                 {
                     deftype = ((DocDefined)docDef).DefinedType;
@@ -468,7 +474,7 @@ namespace IfcDoc.Format.CSC
             return sb.ToString();
         }
 
-        public string FormatSelect(DocSelect docSelect)
+        public string FormatSelect(DocSelect docSelect, Dictionary<string, DocObject> map, Dictionary<DocObject, bool> included)
         {
             return "public interface " + docSelect.Name + "\r\n{\r\n}\r\n";
         }
@@ -501,7 +507,7 @@ namespace IfcDoc.Format.CSC
                             else if (docType is DocSelect)
                             {
                                 DocSelect docSelect = (DocSelect)docType;
-                                string text = this.Indent(this.FormatSelect(docSelect), 1);
+                                string text = this.Indent(this.FormatSelect(docSelect, null, null), 1);
                                 sb.AppendLine(text);
                             }
                             else if (docType is DocEnumeration)
@@ -534,7 +540,41 @@ namespace IfcDoc.Format.CSC
 
         public string FormatData(DocPublication docPublication, DocExchangeDefinition docExchange, Dictionary<string, DocObject> map, Dictionary<long, SEntity> instances)
         {
-            return null;
+            System.IO.MemoryStream stream = new System.IO.MemoryStream();
+            if (instances.Count > 0)
+            {
+                SEntity rootproject = null;
+                foreach (SEntity ent in instances.Values)
+                {
+                    if (ent.GetType().Name.Equals("IfcProject"))
+                    {
+                        rootproject = ent;
+                        break;
+                    }
+                }
+
+                if (rootproject != null)
+                {
+                    Type type = rootproject.GetType();
+
+                    DataContractJsonSerializer contract = new DataContractJsonSerializer(type);
+
+                    try
+                    {
+                        contract.WriteObject(stream, rootproject);
+                    }
+                    catch(Exception xx)
+                    {
+                        //...
+                        xx.ToString();                        
+                    }
+                }
+            }
+
+            stream.Position = 0;
+            System.IO.TextReader reader = new System.IO.StreamReader(stream);
+            string content = reader.ReadToEnd();
+            return content;
         }
 
         /// <summary>

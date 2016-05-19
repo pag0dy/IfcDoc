@@ -544,9 +544,10 @@ namespace IfcDoc
 
                 format.WriteLine("<h3>7.1.2 Data definitions</h3>");
                 format.WriteLine("<p>Each entity data definition is described within subsections as follows, with electronic representations provided in EXPRESS and XSD formats.</p>");
+                FormatXSD formatXSD = new FormatXSD(null);
                 foreach (DocConceptRoot docRoot in sortConceptRoot)
                 {
-                    string xsd = FormatXSD.FormatEntity(docRoot.ApplicableEntity, mapEntity, included);
+                    string xsd = formatXSD.FormatEntity(docRoot.ApplicableEntity, mapEntity, included);
 
                     format.WriteLine("<h4>" + docRoot.ApplicableEntity.Name + "</h4>");
                     format.WriteLine(docRoot.ApplicableEntity.Documentation);

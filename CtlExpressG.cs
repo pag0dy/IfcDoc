@@ -144,7 +144,6 @@ namespace IfcDoc
                         }
                     }
 
-#if true
                     if (docDef != null)
                     {
                         if (docDef.DiagramNumber != 0 && this.m_schema.DiagramPagesHorz != 0)
@@ -152,10 +151,16 @@ namespace IfcDoc
                             int pageY = (docDef.DiagramNumber - 1) / this.m_schema.DiagramPagesHorz;
                             int pageX = (docDef.DiagramNumber - 1) % this.m_schema.DiagramPagesHorz;
 
-                            this.AutoScrollPosition = new Point(pageX * PageX, pageY * PageY);
+                            // also scroll vertically if not visible
+                            int incY = 0;
+                            if (docDef.DiagramRectangle.Y > this.ClientSize.Height)
+                            {
+                                incY = (int)(docDef.DiagramRectangle.Y * CtlExpressG.Factor) - (pageY * PageY);
+                            }
+
+                            this.AutoScrollPosition = new Point(pageX * PageX, pageY * PageY + incY);
                         }
                     }
-#endif
                 }
 
                 this.Invalidate();
@@ -418,8 +423,16 @@ namespace IfcDoc
                     LayoutLine(docEntity, docAttr.Definition, docAttr.DiagramLine);
                     if (docAttr.DiagramLabel != null)
                     {
-                        docAttr.DiagramLabel.X = docAttr.DiagramLine[0].X;
-                        docAttr.DiagramLabel.Y = docAttr.DiagramLine[2].Y - 20.0;
+                        if (docAttr.DiagramLine[2].Y > docAttr.DiagramLine[0].Y)
+                        {
+                            docAttr.DiagramLabel.X = docAttr.DiagramLine[0].X;
+                            docAttr.DiagramLabel.Y = docAttr.DiagramLine[0].Y + 20.0;
+                        }
+                        else
+                        {
+                            docAttr.DiagramLabel.X = docAttr.DiagramLine[0].X;
+                            docAttr.DiagramLabel.Y = docAttr.DiagramLine[0].Y - 20.0;
+                        }
                     }
                 }
 
@@ -519,13 +532,35 @@ namespace IfcDoc
                         {
                             docAttr.DiagramLabel = new DocRectangle();
                         }
-                        docAttr.DiagramLabel.X = docAttr.DiagramLine[0].X;
-                        docAttr.DiagramLabel.Y = docAttr.DiagramLine[2].Y - 20.0;
+
+                        if (docAttr.DiagramLine[2].Y > docAttr.DiagramLine[0].Y)
+                        {
+                            docAttr.DiagramLabel.X = docAttr.DiagramLine[0].X;
+                            docAttr.DiagramLabel.Y = docAttr.DiagramLine[0].Y + 20.0;
+                        }
+                        else
+                        {
+                            docAttr.DiagramLabel.X = docAttr.DiagramLine[0].X;
+                            docAttr.DiagramLabel.Y = docAttr.DiagramLine[0].Y - 20.0;
+                        }
                     }
+                }
+
+                if (docEntity.Name.Equals("IfcBooleanResult"))
+                {
+                    this.ToString();
                 }
 
                 foreach(DocLine docLine in docEntity.Tree)
                 {
+                    // workaround to fix-up broken data (due to bug in previous import from Visual Express -- no longer occurs with new files)
+#if false
+                    if (docLine.Definition == null && selection is DocEntity && ((DocEntity)selection).BaseDefinition == docEntity.Name)
+                    {
+                        docLine.Definition = selection;
+                        System.Diagnostics.Debug.WriteLine("CtlExpressG::LayoutDefinition -- fixed up null reference to subtype");
+                    }
+#endif
                     if (docLine.Definition == selection)
                     {
                         LayoutLine(docEntity, docLine.Definition, docLine.DiagramLine);
@@ -611,6 +646,10 @@ namespace IfcDoc
             this.m_schema.DiagramPagesHorz = 1 + (int)Math.Floor(cx * Factor / PageX);
             this.m_schema.DiagramPagesVert = 1 + (int)Math.Floor(cy * Factor / PageY);
 
+            int px = (int)(selection.DiagramRectangle.X * Factor / CtlExpressG.PageX);
+            int py = (int)(selection.DiagramRectangle.Y * Factor / CtlExpressG.PageY);
+            int page = 1 + py * this.m_schema.DiagramPagesHorz + px;
+            selection.DiagramNumber = page;
         }
 
         private void CtlExpressG_MouseMove(object sender, MouseEventArgs e)

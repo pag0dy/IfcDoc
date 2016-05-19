@@ -208,13 +208,13 @@
     <value>12, 330</value>
   </data>
   <data name="checkBoxSkip.Size" type="System.Drawing.Size, System.Drawing">
-    <value>352, 17</value>
+    <value>254, 17</value>
   </data>
   <data name="checkBoxSkip.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
   </data>
   <data name="checkBoxSkip.Text" xml:space="preserve">
-    <value>Skip regeneration of diagrams and examples (for quick update of text)</value>
+    <value>Skip regeneration of examples (for faster update)</value>
   </data>
   <data name="&gt;&gt;checkBoxSkip.Name" xml:space="preserve">
     <value>checkBoxSkip</value>

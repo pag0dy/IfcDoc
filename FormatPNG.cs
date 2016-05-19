@@ -862,7 +862,7 @@ namespace IfcDoc.Format.PNG
             float pageX = (float)CtlExpressG.PageX;
             float pageY = (float)CtlExpressG.PageY;
 
-            int cDiagrams = docSchema.GetDiagramCount();
+            int cDiagrams = docSchema.UpdateDiagramPageNumbers();
             int cPagesY = docSchema.DiagramPagesVert;
             int cPagesX = docSchema.DiagramPagesHorz;
             if(cPagesX == 0 || cPagesY == 0)

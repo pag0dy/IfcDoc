@@ -336,6 +336,12 @@ namespace IfcDoc.Format.HTM
                             string hyperlink = @"../../../schema/" + schema.ToLower() + @"/lexical/" + definition.ToLower() + ".htm";
                             return "<a href=\"" + hyperlink + "\">" + definition + "</a>";
                         }
+                        else if(this.m_stream is FileStream && ((FileStream)this.m_stream).Name.Contains("\\schema\\templates\\"))
+                        {
+                            // hack to force relative directory
+                            string hyperlink = @"../" + schema.ToLower() + @"/lexical/" + definition.ToLower() + ".htm";
+                            return "<a href=\"" + hyperlink + "\">" + definition + "</a>";
+                        }
                         else if(ent is DocPropertySet || ent is DocPropertyEnumeration)
                         {
                             string hyperlink = @"../../" + schema.ToLower() + @"/pset/" + definition.ToLower() + ".htm";
@@ -2587,23 +2593,26 @@ namespace IfcDoc.Format.HTM
                 {
                     if (format.FormatOptions != DocFormatOptionEnum.None)
                     {
-                        System.Reflection.FieldInfo fieldEnum = typeof(DocFormatTypeEnum).GetField(format.FormatType.ToString(), System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public);
-                        System.ComponentModel.DescriptionAttribute[] descattrs = (System.ComponentModel.DescriptionAttribute[])fieldEnum.GetCustomAttributes(typeof(System.ComponentModel.DescriptionAttribute), false);
-
-                        string desc = format.FormatType.ToString();
-                        if (descattrs.Length == 1)
+                        System.Reflection.FieldInfo fieldEnum = typeof(DocFormatSchemaEnum).GetField(format.FormatType.ToString(), System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public);
+                        if (fieldEnum != null)
                         {
-                            desc = descattrs[0].Description;
+                            System.ComponentModel.DescriptionAttribute[] descattrs = (System.ComponentModel.DescriptionAttribute[])fieldEnum.GetCustomAttributes(typeof(System.ComponentModel.DescriptionAttribute), false);
+
+                            string desc = format.FormatType.ToString();
+                            if (descattrs.Length == 1)
+                            {
+                                desc = descattrs[0].Description;
+                            }
+
+                            string ext = format.ExtensionSchema;
+
+                            this.Write(
+                                "<tr>" +
+                                "<td>" + desc + "</td>" +
+                                "<td><a href=\"" + linkprefix + "." + ext + "\">" + code + "." + ext + "</a></td>" +
+                                "<td><a href=\"" + linkprefix + "." + ext + ".htm\">" + code + "." + ext + ".htm</a></td>" +
+                                "</tr>");
                         }
-
-                        string ext = format.ExtensionSchema;
-
-                        this.Write(
-                            "<tr>" +
-                            "<td>" + desc + "</td>" +
-                            "<td><a href=\"" + linkprefix + "." + ext + "\">" + code + "." + ext + "</a></td>" +
-                            "<td><a href=\"" + linkprefix + "." + ext + ".htm\">" + code + "." + ext + ".htm</a></td>" +
-                            "</tr>");
                     }
                 }
 
@@ -2709,7 +2718,7 @@ namespace IfcDoc.Format.HTM
                 this.WriteLine("<p>");
                 
                 // determine number of diagrams
-                int iLastDiagram = docSchema.GetDiagramCount();
+                int iLastDiagram = docSchema.UpdateDiagramPageNumbers();
 
                 // write thumbnail links for each diagram
                 for (int iDiagram = 1; iDiagram <= iLastDiagram; iDiagram++)

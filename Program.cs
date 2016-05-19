@@ -1857,23 +1857,10 @@ namespace IfcDoc
             DocTemplateDefinition docTemplateDef = docProject.GetTemplate(mvdNode.Template.Ref);
             if (docTemplateDef != null)
             {
-                // lookup use definition
-                docUse.Uuid = mvdNode.Uuid;
-                docUse.Name = mvdNode.Name;
+                ImportMvdObject(mvdNode, docUse);
+
                 docUse.Definition = docTemplateDef;
                 docUse.Override = mvdNode.Override;
-
-                // content
-                if (mvdNode.Definitions != null)
-                {
-                    foreach (Definition mvdDef in mvdNode.Definitions)
-                    {
-                        if (mvdDef.Body != null)
-                        {
-                            docUse.Documentation = mvdDef.Body.Content;
-                        }
-                    }
-                }
 
                 // exchange requirements
                 foreach (ConceptRequirement mvdReq in mvdNode.Requirements)
@@ -1947,7 +1934,7 @@ namespace IfcDoc
             DocTemplateItem docItem = new DocTemplateItem();
             docItem.Documentation = rule.Description;
             docItem.RuleInstanceID = rule.RuleID;
-            docItem.RuleParameters = rule.Parameters;
+            docItem.ParseParameterExpressions(rule.Parameters); // convert from mvdXML
 
             if (rule.References != null)
             {
@@ -2095,12 +2082,12 @@ namespace IfcDoc
             }
         }
 
-        private static void ExportMvdConcept(Concept mvdConceptLeaf, DocTemplateUsage docTemplateUsage)
+        internal static void ExportMvdConcept(Concept mvdConceptLeaf, DocTemplateUsage docTemplateUsage, bool documentation)
         {
             if (docTemplateUsage.Definition == null)
                 return;
 
-            ExportMvdObject(mvdConceptLeaf, docTemplateUsage);
+            ExportMvdObject(mvdConceptLeaf, docTemplateUsage, documentation);
 
             mvdConceptLeaf.Template = new TemplateRef();
             mvdConceptLeaf.Template.Ref = docTemplateUsage.Definition.Uuid;
@@ -2169,7 +2156,7 @@ namespace IfcDoc
                     {
                         Concept mvdInner = new Concept();
                         mvdTemplateRule.References.Add(mvdInner);
-                        ExportMvdConcept(mvdInner, docInner);
+                        ExportMvdConcept(mvdInner, docInner, documentation);
                     }
                 }
             }
@@ -2180,7 +2167,10 @@ namespace IfcDoc
             TemplateRule mvdTemplateRule = new TemplateRule();
             mvdTemplateRule.RuleID = docRule.RuleInstanceID;
             mvdTemplateRule.Description = docRule.Documentation;
-            mvdTemplateRule.Parameters = docRule.RuleParameters;
+
+            // new: use special mvdXML 1.1 syntax
+            mvdTemplateRule.Parameters = docRule.FormatParameterExpressions(); // was RuleParameters;
+            
             return mvdTemplateRule;
         }
 
@@ -2199,7 +2189,7 @@ namespace IfcDoc
                 {
                     ConceptTemplate mvdConceptTemplate = new ConceptTemplate();
                     mvd.Templates.Add(mvdConceptTemplate);
-                    ExportMvdTemplate(mvdConceptTemplate, docTemplateDef, included);
+                    ExportMvdTemplate(mvdConceptTemplate, docTemplateDef, included, true);
                 }
             }
 
@@ -2209,7 +2199,7 @@ namespace IfcDoc
                 {
                     ModelView mvdModelView = new ModelView();
                     mvd.Views.Add(mvdModelView);
-                    ExportMvdObject(mvdModelView, docModelView);
+                    ExportMvdObject(mvdModelView, docModelView, true);
                     mvdModelView.ApplicableSchema = "IFC4";
                     mvdModelView.BaseView = docModelView.BaseView;
 
@@ -2217,7 +2207,7 @@ namespace IfcDoc
                     {
                         ExchangeRequirement mvdExchangeDef = new ExchangeRequirement();
                         mvdModelView.ExchangeRequirements.Add(mvdExchangeDef);
-                        ExportMvdObject(mvdExchangeDef, docExchangeDef);
+                        ExportMvdObject(mvdExchangeDef, docExchangeDef, true);
                         switch (docExchangeDef.Applicability)
                         {
                             case DocExchangeApplicabilityEnum.Export:
@@ -2239,32 +2229,37 @@ namespace IfcDoc
                             ConceptRoot mvdConceptRoot = new ConceptRoot();
                             mvdModelView.Roots.Add(mvdConceptRoot);
 
-                            ExportMvdObject(mvdConceptRoot, docRoot);
-                            mvdConceptRoot.ApplicableRootEntity = docRoot.ApplicableEntity.Name;
-                            if (docRoot.ApplicableTemplate != null)
-                            {
-                                mvdConceptRoot.Applicability = new ApplicabilityRules();
-                                mvdConceptRoot.Applicability.Template = new TemplateRef();
-                                mvdConceptRoot.Applicability.Template.Ref = docRoot.ApplicableTemplate.Uuid;
-                                mvdConceptRoot.Applicability.TemplateRules = new TemplateRules();
-
-                                mvdConceptRoot.Applicability.TemplateRules.Operator = (TemplateOperator)Enum.Parse(typeof(TemplateOperator), docRoot.ApplicableOperator.ToString());
-                                foreach (DocTemplateItem docItem in docRoot.ApplicableItems)
-                                {
-                                    TemplateRule rule = ExportMvdItem(docItem);
-                                    mvdConceptRoot.Applicability.TemplateRules.TemplateRule.Add(rule);
-                                }
-                            }
-
-                            foreach (DocTemplateUsage docTemplateUsage in docRoot.Concepts)
-                            {
-                                Concept mvdConceptLeaf = new Concept();
-                                mvdConceptRoot.Concepts.Add(mvdConceptLeaf);
-                                ExportMvdConcept(mvdConceptLeaf, docTemplateUsage);
-                            }
+                            Program.ExportMvdConceptRoot(mvdConceptRoot, docRoot, true);
                         }
                     }
                 }
+            }
+        }
+
+        internal static void ExportMvdConceptRoot(ConceptRoot mvdConceptRoot, DocConceptRoot docRoot, bool documentation)
+        {
+            ExportMvdObject(mvdConceptRoot, docRoot, documentation);
+            mvdConceptRoot.ApplicableRootEntity = docRoot.ApplicableEntity.Name;
+            if (docRoot.ApplicableTemplate != null)
+            {
+                mvdConceptRoot.Applicability = new ApplicabilityRules();
+                mvdConceptRoot.Applicability.Template = new TemplateRef();
+                mvdConceptRoot.Applicability.Template.Ref = docRoot.ApplicableTemplate.Uuid;
+                mvdConceptRoot.Applicability.TemplateRules = new TemplateRules();
+
+                mvdConceptRoot.Applicability.TemplateRules.Operator = (TemplateOperator)Enum.Parse(typeof(TemplateOperator), docRoot.ApplicableOperator.ToString());
+                foreach (DocTemplateItem docItem in docRoot.ApplicableItems)
+                {
+                    TemplateRule rule = ExportMvdItem(docItem);
+                    mvdConceptRoot.Applicability.TemplateRules.TemplateRule.Add(rule);
+                }
+            }
+
+            foreach (DocTemplateUsage docTemplateUsage in docRoot.Concepts)
+            {
+                Concept mvdConceptLeaf = new Concept();
+                mvdConceptRoot.Concepts.Add(mvdConceptLeaf);
+                ExportMvdConcept(mvdConceptLeaf, docTemplateUsage, documentation);
             }
         }
 
@@ -2283,7 +2278,7 @@ namespace IfcDoc
         /// </summary>
         /// <param name="mvd"></param>
         /// <param name="doc"></param>
-        private static void ExportMvdObject(Element mvd, DocObject doc)
+        private static void ExportMvdObject(Element mvd, DocObject doc, bool documentation)
         {
             mvd.Name = EnsureValidString(doc.Name);
             mvd.Uuid = doc.Uuid;
@@ -2301,7 +2296,7 @@ namespace IfcDoc
             }
 #endif
 
-            if (doc.Documentation != null)
+            if (documentation && doc.Documentation != null)
             {
                 Definition mvdDef = new Definition();
                 mvdDef.Body = new Body();
@@ -2327,9 +2322,9 @@ namespace IfcDoc
             }
         }
 
-        private static void ExportMvdTemplate(ConceptTemplate mvdTemplate, DocTemplateDefinition docTemplateDef, Dictionary<DocObject, bool> included)
+        internal static void ExportMvdTemplate(ConceptTemplate mvdTemplate, DocTemplateDefinition docTemplateDef, Dictionary<DocObject, bool> included, bool documentation)
         {
-            ExportMvdObject(mvdTemplate, docTemplateDef);
+            ExportMvdObject(mvdTemplate, docTemplateDef, documentation);
             mvdTemplate.ApplicableEntity = docTemplateDef.Type;
 
             if (docTemplateDef.Rules != null && docTemplateDef.Rules.Count > 0)
@@ -2355,39 +2350,11 @@ namespace IfcDoc
                     {
                         ConceptTemplate mvdSub = new ConceptTemplate();
                         mvdTemplate.SubTemplates.Add(mvdSub);
-                        ExportMvdTemplate(mvdSub, docSub, included);
+                        ExportMvdTemplate(mvdSub, docSub, included, documentation);
                     }
                 }
             }
         }
-
-#if false
-        private static CardinalityType ExportCardinalityType(DocModelRule rule)
-        {
-            if (rule.CardinalityMin == 0 && rule.CardinalityMax == 0)
-            {
-                return CardinalityType._asSchema;
-            }
-            else if (rule.CardinalityMin == -1 && rule.CardinalityMax == -1)
-            {
-                return CardinalityType.Zero;
-            }
-            else if (rule.CardinalityMin == 0 && rule.CardinalityMax == 1)
-            {
-                return CardinalityType.ZeroToOne;
-            }
-            else if (rule.CardinalityMin == 1 && rule.CardinalityMax == 1)
-            {
-                return CardinalityType.One;
-            }
-            else if (rule.CardinalityMin == 1 && rule.CardinalityMax == -1)
-            {
-                return CardinalityType.OneToMany;
-            }
-
-            return CardinalityType._asSchema;
-        }
-#endif
 
         private static void ExportMvdRule(AttributeRule mvdRule, DocModelRule docRule)
         {

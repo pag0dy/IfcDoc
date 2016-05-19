@@ -17,7 +17,9 @@ using IfcDoc.Schema.DOC;
 
 namespace IfcDoc
 {
-    class FormatSQL : IFormatExtension
+    class FormatSQL : 
+        IFormatExtension,
+        IFormatData
     {
         private void BuildFields(StringBuilder sb, DocEntity docEntity, Dictionary<string, DocObject> map)
         {
@@ -42,7 +44,7 @@ namespace IfcDoc
 
                     DocObject docRef = null;
 
-                    if (!map.TryGetValue(docAttr.DefinedType, out docRef) || docRef is DocDefined)
+                    if (docAttr.DefinedType == null || !map.TryGetValue(docAttr.DefinedType, out docRef) || docRef is DocDefined)
                     {
                         string deftype = docAttr.DefinedType;
                         if(docRef is DocDefined)
@@ -126,7 +128,7 @@ namespace IfcDoc
             return null; // nothing to define
         }
 
-        public string FormatSelect(DocSelect docSelect)
+        public string FormatSelect(DocSelect docSelect, Dictionary<string, DocObject> map, Dictionary<DocObject, bool> included)
         {
             return null; // nothing to define
         }
@@ -159,7 +161,7 @@ namespace IfcDoc
                             else if (docType is DocSelect)
                             {
                                 DocSelect docSelect = (DocSelect)docType;
-                                string text = this.FormatSelect(docSelect);
+                                string text = this.FormatSelect(docSelect, null, null);
                                 sb.AppendLine(text);
                             }
                             else if (docType is DocEnumeration)
@@ -189,7 +191,7 @@ namespace IfcDoc
             return sb.ToString();
         }
 
-        public string FormatData(DocPublication docPublication, DocExchangeDefinition docExchange, Dictionary<string, DocObject> map, Dictionary<long, SEntity> instances)
+        public string FormatData(DocPublication docPublication, DocExchangeDefinition docExchange, Dictionary<string, DocObject> map, Dictionary<long, SEntity> instances, SEntity root, bool markup)
         {
             //Guid guidMapping = Guid.Parse("");//...
 

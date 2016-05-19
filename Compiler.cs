@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Reflection;
 using System.Reflection.Emit;
+using System.Runtime.Serialization;
 
 using IfcDoc.Schema;
 using IfcDoc.Schema.DOC;
@@ -445,6 +446,12 @@ namespace IfcDoc
                 // add typebuilder to map temporarily in case referenced by an attribute within same class or base class
                 this.m_types.Add(strtype, tb);
 
+                // custom attributes (required for JSON serialization)
+                ConstructorInfo conContract = (typeof(DataContractAttribute).GetConstructor(new Type[] { }));
+                PropertyInfo propContractReference = typeof(DataContractAttribute).GetProperty("IsReference");
+                CustomAttributeBuilder cbContract = new CustomAttributeBuilder(conContract, new object[] { }, new PropertyInfo[] { propContractReference }, new object[] { false }); // consider setting IsReference to true if/when serializers like JSON support such referencing
+                tb.SetCustomAttribute(cbContract);
+
                 // interfaces implemented by type (SELECTS)
                 foreach (DocDefinition docdef in this.m_definitions.Values)
                 {
@@ -466,8 +473,11 @@ namespace IfcDoc
                 Dictionary<string, FieldInfo> mapField = new Dictionary<string, FieldInfo>();
                 this.m_fields.Add(tb, mapField);
 
-                ConstructorInfo conMember = typeof(DataMemberAttribute).GetConstructor(new Type[] { typeof(int) });
+                ConstructorInfo conMember = typeof(DataMemberAttribute).GetConstructor(new Type[] { /*typeof(int)*/ });
                 ConstructorInfo conLookup = typeof(DataLookupAttribute).GetConstructor(new Type[] { typeof(string) });
+
+                PropertyInfo propMemberOrder = typeof(DataMemberAttribute).GetProperty("Order");
+
                 int order = 0;
                 foreach (DocAttribute docAttribute in docEntity.Attributes)
                 {
@@ -499,7 +509,8 @@ namespace IfcDoc
                         if (String.IsNullOrEmpty(docAttribute.Inverse))
                         {
                             // direct attributes are fields marked for serialization
-                            CustomAttributeBuilder cb = new CustomAttributeBuilder(conMember, new object[] { order });
+                            //CustomAttributeBuilder cb = new CustomAttributeBuilder(conMember, new object[] { order });
+                            CustomAttributeBuilder cb = new CustomAttributeBuilder(conMember, new object[] {}, new PropertyInfo[] { propMemberOrder }, new object[] { order });
                             fb.SetCustomAttribute(cb);
                             order++;
                         }

@@ -69,6 +69,7 @@
             resources.ApplyResources(this.checkBoxSkip, "checkBoxSkip");
             this.checkBoxSkip.Name = "checkBoxSkip";
             this.checkBoxSkip.UseVisualStyleBackColor = true;
+            this.checkBoxSkip.CheckedChanged += new System.EventHandler(this.checkBoxSkip_CheckedChanged);
             // 
             // buttonOK
             // 

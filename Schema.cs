@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reflection;
 using System.Text;
+using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 namespace IfcDoc.Schema
@@ -18,16 +19,18 @@ namespace IfcDoc.Schema
     /// <summary>
     /// Base class for any record (including entities and commands)
     /// </summary>
+    [DataContract]
     public abstract class SRecord
     {
         private long m_localID;
+#if false
         private bool m_existing;
-
+#endif
         public SRecord()
         {
         }
 
-        [Browsable(false), XmlIgnore()]
+        [Browsable(false), XmlIgnore(), IgnoreDataMember]
         public long OID
         {
             get
@@ -45,7 +48,8 @@ namespace IfcDoc.Schema
             }
         }
 
-        [Browsable(false), XmlIgnore()]
+#if false
+        [Browsable(false), XmlIgnore(), IgnoreDataMember]
         public bool Existing
         {
             get
@@ -57,6 +61,7 @@ namespace IfcDoc.Schema
                 this.m_existing = value;
             }
         }
+#endif
 
         public virtual void Delete()
         {
@@ -82,6 +87,7 @@ namespace IfcDoc.Schema
     /// <summary>
     /// A context-bound object that can query relationships or pull content dynamically from broker
     /// </summary>
+    [DataContract]
     public abstract class SEntity : SRecord,
         ICloneable
     {
@@ -226,6 +232,7 @@ namespace IfcDoc.Schema
             base.Delete();
         }
 
+#if false
         /// <summary>
         /// Marks object as in-use (setting Exists to True) such that any unmarked objects may then be garbage collected.
         /// </summary>
@@ -267,7 +274,7 @@ namespace IfcDoc.Schema
                 }
             }
         }
-
+#endif
         /// <summary>
         /// Gets user-friendly caption describing the type of object.
         /// </summary>
@@ -368,6 +375,7 @@ namespace IfcDoc.Schema
         }
     }
 
+#if false // use .net WCF attributes now
 
     /// <summary>
     /// This shadows the WCF definition, allowing for future forward compatibility
@@ -436,6 +444,7 @@ namespace IfcDoc.Schema
             }
         }
     }
+#endif
 
     /// <summary>
     /// Indicates that field is populated by looking up a field on a target object.

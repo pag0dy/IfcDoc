@@ -146,5 +146,10 @@ namespace IfcDoc
             }
         }
 
+        private void checkBoxSkip_CheckedChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.SkipDiagrams = this.checkBoxSkip.Checked;
+        }
+
     }
 }

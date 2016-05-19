@@ -211,6 +211,7 @@
             this.toolStripButtonViewInsert = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonViewRemove = new System.Windows.Forms.ToolStripButton();
             this.tabPagePublication = new System.Windows.Forms.TabPage();
+            this.checkBoxPublishExchangeTables = new System.Windows.Forms.CheckBox();
             this.checkBoxPublishUML = new System.Windows.Forms.CheckBox();
             this.textBoxFooter = new System.Windows.Forms.TextBox();
             this.textBoxHeader = new System.Windows.Forms.TextBox();
@@ -230,7 +231,6 @@
             this.imageListRules = new System.Windows.Forms.ImageList(this.components);
             this.openFileDialogIcon = new System.Windows.Forms.OpenFileDialog();
             this.openFileDialogExample = new System.Windows.Forms.OpenFileDialog();
-            this.checkBoxPublishExchangeTables = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerTranslation)).BeginInit();
             this.splitContainerTranslation.Panel1.SuspendLayout();
             this.splitContainerTranslation.Panel2.SuspendLayout();
@@ -1898,6 +1898,13 @@
             this.tabPagePublication.Name = "tabPagePublication";
             this.tabPagePublication.UseVisualStyleBackColor = true;
             // 
+            // checkBoxPublishExchangeTables
+            // 
+            resources.ApplyResources(this.checkBoxPublishExchangeTables, "checkBoxPublishExchangeTables");
+            this.checkBoxPublishExchangeTables.Name = "checkBoxPublishExchangeTables";
+            this.checkBoxPublishExchangeTables.UseVisualStyleBackColor = true;
+            this.checkBoxPublishExchangeTables.CheckedChanged += new System.EventHandler(this.checkBoxPublishExchangeTables_CheckedChanged);
+            // 
             // checkBoxPublishUML
             // 
             resources.ApplyResources(this.checkBoxPublishUML, "checkBoxPublishUML");
@@ -2025,13 +2032,6 @@
             // 
             this.openFileDialogExample.DefaultExt = "ifc";
             resources.ApplyResources(this.openFileDialogExample, "openFileDialogExample");
-            // 
-            // checkBoxPublishExchangeTables
-            // 
-            resources.ApplyResources(this.checkBoxPublishExchangeTables, "checkBoxPublishExchangeTables");
-            this.checkBoxPublishExchangeTables.Name = "checkBoxPublishExchangeTables";
-            this.checkBoxPublishExchangeTables.UseVisualStyleBackColor = true;
-            this.checkBoxPublishExchangeTables.CheckedChanged += new System.EventHandler(this.checkBoxPublishExchangeTables_CheckedChanged);
             // 
             // CtlProperties
             // 

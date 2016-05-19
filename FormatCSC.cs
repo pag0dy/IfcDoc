@@ -122,7 +122,7 @@ namespace IfcDoc.Format.CSC
                     else if (this.m_definition is DocSelect)
                     {
                         DocSelect docSelect = (DocSelect)this.m_definition;
-                        string text = this.Indent(this.FormatSelect(docSelect), 1);
+                        string text = this.Indent(this.FormatSelect(docSelect, null, null), 1);
                         writer.WriteLine(text);
                     }
                     else if (this.m_definition is DocEnumeration)
@@ -345,8 +345,10 @@ namespace IfcDoc.Format.CSC
                 if (docAttribute.Inverse == null || inscope)
                 {
                     DocObject docRef = null;
-                    map.TryGetValue(docAttribute.DefinedType, out docRef);
-
+                    if (docAttribute.DefinedType != null)
+                    {
+                        map.TryGetValue(docAttribute.DefinedType, out docRef);
+                    }
                     string optional = "";
                     if(docAttribute.IsOptional && (docRef == null || docRef is DocDefined))
                     {
@@ -484,7 +486,7 @@ namespace IfcDoc.Format.CSC
             return sb.ToString();
         }
 
-        public string FormatSelect(DocSelect docSelect)
+        public string FormatSelect(DocSelect docSelect, Dictionary<string, DocObject> map, Dictionary<DocObject, bool> included)
         {
             return 
                 "public interface " + docSelect.Name + "\r\n" +
@@ -523,7 +525,7 @@ namespace IfcDoc.Format.CSC
                             else if (docType is DocSelect)
                             {
                                 DocSelect docSelect = (DocSelect)docType;
-                                string text = this.Indent(this.FormatSelect(docSelect), 1);
+                                string text = this.Indent(this.FormatSelect(docSelect, null, null), 1);
                                 sb.AppendLine(text);
                             }
                             else if (docType is DocEnumeration)
