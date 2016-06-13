@@ -450,9 +450,9 @@ namespace IfcDoc.Schema.DOC
         [Description("Structured Query Language (SQL)")]
         SQL = 3,
 
-        //[DisplayName("OWL")]
-        [Description("Web Ontology Language (OWL)")]
-        OWL = 4,
+        //[DisplayName("TTL")]
+        [Description("ifcOWL Web Ontology Language (OWL)")]
+        TTL = 4,
 
         //[DisplayName("Java")]
         [Description("Java Programming Language")]
@@ -535,7 +535,7 @@ namespace IfcDoc.Schema.DOC
                     case DocFormatTypeEnum.SQL:
                         return "sql";
 
-                    case DocFormatTypeEnum.OWL:
+                    case DocFormatTypeEnum.TTL:
                         return "owl";
                 }
                 return "txt"; // fallback if unknown
@@ -563,8 +563,8 @@ namespace IfcDoc.Schema.DOC
                     case DocFormatTypeEnum.SQL:
                         return "csv";
 
-                    case DocFormatTypeEnum.OWL:
-                        return "owl";
+                    case DocFormatTypeEnum.TTL:
+                        return "ttl";
 
                 }
                 return "txt"; // fallback if unknown
@@ -633,7 +633,7 @@ namespace IfcDoc.Schema.DOC
                 if (this._Formats.Count == 2)
                 {
                     this._Formats.Add(new DocFormat(DocFormatTypeEnum.SQL, DocFormatOptionEnum.None));
-                    this._Formats.Add(new DocFormat(DocFormatTypeEnum.OWL, DocFormatOptionEnum.Examples));
+                    this._Formats.Add(new DocFormat(DocFormatTypeEnum.TTL, DocFormatOptionEnum.Examples));
                     this._Formats.Add(new DocFormat(DocFormatTypeEnum.JSON, DocFormatOptionEnum.None));
                     this._Formats.Add(new DocFormat(DocFormatTypeEnum.CS, DocFormatOptionEnum.None));
                 }

@@ -2020,7 +2020,6 @@ namespace IfcDoc
 
                                     case DocFormatTypeEnum.XML:
                                         {
-
                                             // use xml namespace of first view
                                             string xmlns = "http://www.buildingsmart-tech.org/ifcXML/IFC4/final";
                                             if (docExample.Views.Count > 0 && !String.IsNullOrEmpty(docExample.Views[0].XsdUri))
@@ -2042,6 +2041,31 @@ namespace IfcDoc
                                                 xmlExample.Markup = true;
                                                 xmlExample.Save();
                                             }
+                                        }
+                                        break;
+
+                                    case DocFormatTypeEnum.TTL:
+                                        {
+                                            string ns = "http://ifcowl.openbimstandards.org/IFC4_ADD1#";
+
+                                            string pathTTL = path + @"\annex\annex-e\" + MakeLinkName(docExample) + ".ttl";
+                                            Console.Out.WriteLine("------------------------------------------------");
+                                            Console.Out.WriteLine("converting file: " + MakeLinkName(docExample) + ".ttl");
+                                            Console.Out.WriteLine("------------------------------------------------");
+                                            using (FormatTTL_Stream TTLExample = new FormatTTL_Stream(new System.IO.FileStream(pathTTL, System.IO.FileMode.Create, System.IO.FileAccess.ReadWrite), ns))
+                                            {
+                                                TTLExample.Instances = spfExample.Instances;
+                                                TTLExample.Save();
+                                            }
+
+                                            //TODO: redo the HTM part later on
+                                            //string pathTTLHTM = path + @"\annex\annex-e\" + MakeLinkName(docExample) + ".ttl.htm";
+                                            //using (FormatTTL_Stream TTLExample = new FormatTTL_Stream(new System.IO.FileStream(pathTTLHTM, System.IO.FileMode.Create, System.IO.FileAccess.ReadWrite), ns))
+                                            //{
+                                            //    TTLExample.Instances = spfExample.Instances;
+                                            //    TTLExample.Markup = true;
+                                            //    TTLExample.Save();
+                                            //}
                                         }
                                         break;
 
@@ -2069,10 +2093,7 @@ namespace IfcDoc
                                 }
                             }
                         }
-
-
                     }
-
                 }
 
                 using (FormatHTM htmLink = new FormatHTM(path + "/link/" + MakeLinkName(docExample) + ".htm", mapEntity, mapSchema, included))
@@ -2598,121 +2619,11 @@ namespace IfcDoc
             foreach (DocPublication docPub in publications)
             {
                 string relpath = path + @"\" + MakeLinkName(docPub);
-                //GeneratePublicationStub(docProject, relpath, instances, mapEntity, mapSchema, docPub, worker, formProgress);
                 GeneratePublication(docProject, relpath, instances, mapEntity, mapSchema, docPub, worker, formProgress);
             }
 
         }
-
-        public static void GeneratePublicationStub(
-            DocProject docProject,
-            string path,
-            Dictionary<long, SEntity> instances,
-            Dictionary<string, DocObject> mapEntity,
-            Dictionary<string, string> mapSchema,
-            DocPublication docPublication,
-            BackgroundWorker worker,
-            FormProgress formProgress)
-        {
-            instances.Clear(); // clear out old state from mvdxml export
-            docPublication.ErrorLog.Clear();
-
-
-            Dictionary<DocFormatTypeEnum, IFormatExtension> mapFormats = new Dictionary<DocFormatTypeEnum, IFormatExtension>();
-            foreach (DocFormat docFormat in docPublication.Formats)
-            {
-               switch (docFormat.FormatType)
-               {
-                  case DocFormatTypeEnum.OWL:
-                     mapFormats.Add(docFormat.FormatType, new FormatOWL());
-                     break;
-               }
-            }
-
-            int iSection = 0;
-            foreach (DocSection section in docProject.Sections)
-            {
-                iSection++;
-
-
-                // each schema
-                int iSchema = 0;
-                foreach (DocSchema schema in section.Schemas)
-                {
-                        iSchema++;
-
-                    // each type
-                    if (schema.Types.Count > 0)
-                    {
-
-                        int iType = 0;
-
-                        foreach (DocType type in schema.Types)
-                        {
-
-                            if (type.Name.Equals("IfcNullStyle", StringComparison.OrdinalIgnoreCase) && schema.Name.Equals("IfcConstructionMgmtDomain", StringComparison.OrdinalIgnoreCase))
-                            {
-                                // bug -- exclude
-                            }
-                            else
-                            {
-                                //using (FormatHTM htmDef = new FormatHTM(pathSchema + @"\" + schema.Name.ToLower() + "\\lexical\\" + type.Name.ToLower() + ".htm", mapEntity, mapSchema, included))
-                                //{
-                                    foreach (DocFormat docFormat in docPublication.Formats)
-                                    {
-                                        if (docFormat.FormatOptions != DocFormatOptionEnum.None)
-                                        {
-                                            // future: componentize all formats
-                                            IFormatExtension formatext = null;
-                                            mapFormats.TryGetValue(docFormat.FormatType, out formatext);
-                                            switch (docFormat.FormatType)
-                                            {
-                                                case DocFormatTypeEnum.XML:
-                                                    Console.Out.WriteLine("XSD Specification");
-                                                    if (type is DocSelect)
-                                                    {
-                                                    Console.Out.WriteLine(FormatXSD.FormatSelect((DocSelect)type, mapEntity, null));
-                                                    }
-                                                    else if (type is DocEnumeration)
-                                                    {
-                                                    Console.Out.WriteLine(FormatXSD.FormatEnum((DocEnumeration)type));
-                                                    }
-                                                    else if (type is DocDefined)
-                                                    {
-                                                    Console.Out.WriteLine(FormatXSD.FormatDefined((DocDefined)type, mapEntity));
-                                                    }
-                                                    break;
-                                                
-
-                                                default:
-                                                Console.Out.WriteLine("OWL or else");
-                                                    if (formatext != null)
-                                                    {
-                                                       if (type is DocSelect)
-                                                       {
-                                                          Console.Out.WriteLine(formatext.FormatSelect((DocSelect)type, mapEntity, null));
-                                                       }
-                                                       else if (type is DocEnumeration)
-                                                       {
-                                                           Console.Out.WriteLine(formatext.FormatEnumeration((DocEnumeration)type));
-                                                       }
-                                                       else if (type is DocDefined)
-                                                       {
-                                                           Console.Out.WriteLine(formatext.FormatDefined((DocDefined)type));
-                                                       }
-                                                    }
-                                                    break;
-                                            }
-                                        }
-                                    //}
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
+                
         public static void GeneratePublication(
             DocProject docProject, 
             string path,
@@ -2740,9 +2651,9 @@ namespace IfcDoc
             {
                 switch(docFormat.FormatType)
                 {
-                    case DocFormatTypeEnum.OWL:
-                        mapFormats.Add(docFormat.FormatType, new FormatOWL());
-                        break;
+                    //case DocFormatTypeEnum.TTL:
+                    //    mapFormats.Add(docFormat.FormatType, new FormatTTL());
+                    //    break;
 
                     case DocFormatTypeEnum.SQL:
                         mapFormats.Add(docFormat.FormatType, new FormatSQL());
@@ -3895,14 +3806,6 @@ namespace IfcDoc
                                                                     case DocFormatTypeEnum.STEP:
                                                                         htmDef.WriteExpressEntitySpecification(entity, !docPublication.HideHistory, docPublication.ISO);
                                                                         break;
-
-                                                                    //case DocFormatTypeEnum.OWL:
-                                                                    //    htmDef.WriteSummaryHeader("OWL Specification (TTL)", false);
-                                                                    //    htmDef.Write("<div class=\"xsd\"><code class=\"owl\">");
-                                                                    //    //TODO:: htmDef.WriteFormatted(FormatXSD.FormatEntity(entity, mapEntity, included));
-                                                                    //    htmDef.Write("</code></div>");
-                                                                    //    htmDef.WriteSummaryFooter();
-                                                                    //    break;
 
                                                                     default:
                                                                         if(formatext != null)
