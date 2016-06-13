@@ -854,8 +854,10 @@ namespace IfcDoc
             return sb.ToString();
         }
 
+        //UNUSED!!!! => Use FormatTTL_Stream.FormatData() instead
         public string FormatData(DocPublication docPublication, DocExchangeDefinition docExchange, Dictionary<string, DocObject> map, Dictionary<long, SEntity> instances, SEntity root, bool markup)
         {
+            //UNUSED!!!! => Use FormatTTL_Stream.FormatData() instead
             return null;
         }
     }

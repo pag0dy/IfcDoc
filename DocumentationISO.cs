@@ -2051,7 +2051,7 @@ namespace IfcDoc
                                         break;
 #endif // now use generic formatters
 
-                                    case DocFormatTypeEnum.TTL:
+                                    case DocFormatSchemaEnum.TTL:
                                         {
                                             string ns = "http://ifcowl.openbimstandards.org/IFC4_ADD1#";
 
@@ -2768,9 +2768,9 @@ namespace IfcDoc
             {
                 switch(docFormat.FormatType)
                 {
-                    case DocFormatSchemaEnum.OWL:
+                    case DocFormatSchemaEnum.TTL:
                         mapFormatSchema.Add(docFormat.FormatType, new FormatOWL());
-                        mapFormatData.Add(docFormat.FormatType, new FormatTTL_Stream());
+                        mapFormatData.Add(docFormat.FormatType, new FormatOWL());
                         break;
 
                     case DocFormatSchemaEnum.SQL:

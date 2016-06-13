@@ -582,7 +582,7 @@ namespace IfcDoc.Schema.DOC
                     case DocFormatSchemaEnum.SQL:
                         return "sql";
 
-                    case DocFormatTypeEnum.TTL:
+                    case DocFormatSchemaEnum.TTL:
                         return "owl";
                 }
                 return "txt"; // fallback if unknown
@@ -610,7 +610,7 @@ namespace IfcDoc.Schema.DOC
                     case DocFormatSchemaEnum.SQL:
                         return "csv";
 
-                    case DocFormatTypeEnum.TTL:
+                    case DocFormatSchemaEnum.TTL:
                         return "ttl";
 
                 }
@@ -679,10 +679,10 @@ namespace IfcDoc.Schema.DOC
                 // upgrade to V9.7
                 if (this._Formats.Count == 2)
                 {
-                    this._Formats.Add(new DocFormat(DocFormatTypeEnum.SQL, DocFormatOptionEnum.None));
-                    this._Formats.Add(new DocFormat(DocFormatTypeEnum.TTL, DocFormatOptionEnum.Examples));
-                    this._Formats.Add(new DocFormat(DocFormatTypeEnum.JSON, DocFormatOptionEnum.None));
-                    this._Formats.Add(new DocFormat(DocFormatTypeEnum.CS, DocFormatOptionEnum.None));
+                    this._Formats.Add(new DocFormat(DocFormatSchemaEnum.SQL, DocFormatOptionEnum.None));
+                    this._Formats.Add(new DocFormat(DocFormatSchemaEnum.TTL, DocFormatOptionEnum.Examples));
+                    this._Formats.Add(new DocFormat(DocFormatSchemaEnum.JSON, DocFormatOptionEnum.None));
+                    this._Formats.Add(new DocFormat(DocFormatSchemaEnum.CS, DocFormatOptionEnum.None));
                 }
 
                 return this._Formats;
@@ -8183,10 +8183,7 @@ namespace IfcDoc.Schema.DOC
         /// </summary>
         /// <param name="docSelect"></param>
         /// <returns></returns>
-<<<<<<< HEAD
-        //string FormatSelect(DocSelect docSelect);
-=======
->>>>>>> 8452699e7ace653c9457d7bb233e9da6980e4b58
+
         string FormatSelect(DocSelect docSelect, Dictionary<string, DocObject> map, Dictionary<DocObject, bool> included);
 
         /// <summary>

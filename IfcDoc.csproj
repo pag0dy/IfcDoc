@@ -152,7 +152,6 @@
     <Compile Include="CtlRules.Designer.cs">
       <DependentUpon>CtlRules.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataDictionary.cs" />
     <Compile Include="DocumentationISO.cs" />
     <Compile Include="DifferenceEngine.cs" />
     <Compile Include="FormatOWL.cs" />
@@ -192,7 +191,6 @@
     <Compile Include="FormSelectExchange.Designer.cs">
       <DependentUpon>FormSelectExchange.cs</DependentUpon>
     </Compile>
-    <Compile Include="peregrineapi.cs" />
     <Compile Include="SchemaXsd.cs" />
     <Compile Include="ThemedTreeView.cs">
       <SubType>Component</SubType>

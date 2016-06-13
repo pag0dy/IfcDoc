@@ -7,7 +7,7 @@
 
 using System;
 using System.IO;
-using System.Xml.Serialization;
+using System.Runtime.Serialization;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,7 +19,8 @@ using System.Reflection;
 
 namespace IfcDoc
 {
-    public class FormatTTL_Stream : IDisposable
+    public class FormatTTL_Stream: IDisposable,
+        IFormatData
     {
         Stream m_stream;
         string m_owlURI;
@@ -154,6 +155,9 @@ namespace IfcDoc
         //WRITING ENTITIES
         public void Save()
         {
+            if (m_instances == null || m_instances.Count == 0)
+                return;
+
             //get highest available ID and start counting from there
             m_nextID = m_instances.Keys.Aggregate((l, r) => l > r ? l : r);
             
@@ -1169,6 +1173,19 @@ namespace IfcDoc
             {
                 this.m_stream.Close();
             }
+        }
+
+        public string FormatData(DocPublication docPublication, DocExchangeDefinition docExchange, Dictionary<string, DocObject> map, Dictionary<long, SEntity> instances, SEntity root, bool markup)
+        {
+            this.m_stream = new System.IO.MemoryStream();
+            this.Instances = instances;
+            this.Markup = markup;
+            this.Save();
+
+            this.m_stream.Position = 0;
+            StreamReader reader = new StreamReader(this.m_stream);
+            string content = reader.ReadToEnd();
+            return content;            
         }
     }
 }
