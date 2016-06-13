@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 using System.Xml.Serialization;
+using System.Runtime.Serialization;
 
 namespace IfcDoc.Schema.MVD
 {
@@ -137,7 +138,7 @@ namespace IfcDoc.Schema.MVD
     {
         [XmlEnum("mandatory")] Mandatory = 1,
         [XmlEnum("recommended")] Recommended = 2,
-        [XmlEnum("not-relevent")] NotRelevant = 3,
+        [XmlEnum("not-relevant")] NotRelevant = 3,
         [XmlEnum("not-recommended")] NotRecommended = 4,
         [XmlEnum("excluded")] Excluded = 5,
     }
@@ -158,33 +159,24 @@ namespace IfcDoc.Schema.MVD
         [DataMember(Order = 1), XmlElement("Link")] public List<Link> Links;
     }
 
-    public class Body : SEntity,
-        IXmlSerializable
+    public class Body : SEntity
     {
-        [DataMember(Order = 0), XmlText()] public string Content;
+        [DataMember(Order = 0), XmlIgnore] public string Content;
         [DataMember(Order = 1), XmlAttribute("lang")] public string Lang;
         [DataMember(Order = 2), XmlAttribute("tags")] public string Tags;
 
-        #region IXmlSerializable Members
-
-        public System.Xml.Schema.XmlSchema GetSchema()
+        [XmlElement("")]
+        public System.Xml.XmlCDataSection ContentCData
         {
-            return null;
+            get
+            {
+                return new System.Xml.XmlDocument().CreateCDataSection(this.Content);
+            }
+            set
+            {
+                this.Content = value.Value;
+            }
         }
-
-        public void ReadXml(System.Xml.XmlReader reader)
-        {
-            reader.ReadStartElement();
-            this.Content = reader.ReadString();
-            reader.ReadEndElement();
-        }
-
-        public void WriteXml(System.Xml.XmlWriter writer)
-        {
-            writer.WriteCData(this.Content);
-        }
-
-        #endregion
     }
 
     [XmlType("Link")]
@@ -194,7 +186,20 @@ namespace IfcDoc.Schema.MVD
         [DataMember(Order = 1), XmlAttribute("category")] public CategoryEnum Category;
         [DataMember(Order = 2), XmlAttribute("title")] public string Title;
         [DataMember(Order = 3), XmlAttribute("href")] public string Href;
-        [DataMember(Order = 4), XmlText()] public string Content;
+        [DataMember(Order = 4), XmlIgnore] public string Content;
+
+        [XmlElement("")]
+        public System.Xml.XmlCDataSection ContentCData
+        {
+            get
+            {
+                return new System.Xml.XmlDocument().CreateCDataSection(this.Content);
+            }
+            set
+            {
+                this.Content = value.Value;
+            }
+        }
     }
 
     public enum CategoryEnum

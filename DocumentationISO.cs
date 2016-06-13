@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Text;
+using System.Xml.Serialization;
 
 using IfcDoc.Schema;
 using IfcDoc.Schema.DOC;
@@ -17,6 +18,8 @@ using IfcDoc.Schema.PSD;
 using IfcDoc.Schema.MVD;
 using IfcDoc.Format.EXP;
 using IfcDoc.Format.CSC;
+using IfcDoc.Format.JAV;
+using IfcDoc.Format.JSN;
 using IfcDoc.Format.HTM;
 using IfcDoc.Format.XSD;
 using IfcDoc.Format.XML;
@@ -413,9 +416,9 @@ namespace IfcDoc
 
                                 // new for GSA: cross-tab report to show mappings between exchanges and applications and vice-versa
                                 List<DocModelView> listViewCross = new List<DocModelView>();
-                                if (docPublication.Comparison)
+                                if (true)//docPublication.Comparison)
                                 {
-                                    foreach (DocModelView docEachView in docProject.ModelViews)
+                                    foreach (DocModelView docEachView in docPublication.Views)
                                     {
                                         if (docEachView != docView )
                                         {
@@ -738,7 +741,7 @@ namespace IfcDoc
             // create the figure file
             string filename = MakeLinkName(def) + ".png";
             Dictionary<Rectangle, DocModelRule> layout = new Dictionary<Rectangle, DocModelRule>();
-            if (!Properties.Settings.Default.SkipDiagrams)
+            //if (!Properties.Settings.Default.SkipDiagrams)
             {
                 try
                 {
@@ -1856,7 +1859,9 @@ namespace IfcDoc
             List<ContentRef> listTables,
             FormatHTM htmTOC,
             FormatHTM htmSectionTOC,
-            Dictionary<long, SEntity> outerinstancemap // instance data of parent example, if inherited
+            Dictionary<DocFormatSchemaEnum, IFormatData> mapFormats,
+            Dictionary<long, SEntity> outerinstancemap, // instance data of parent example, if inherited
+            SEntity outerinstanceroot
             )
         {
             if (included == null || included.ContainsKey(docExample))
@@ -1938,7 +1943,7 @@ namespace IfcDoc
                                 {
                                     // matches -- generate
                                     FormatSQL fmt = new FormatSQL();
-                                    string content = fmt.FormatData(docPublication, docExchange, mapEntity, outerinstancemap);
+                                    string content = fmt.FormatData(docPublication, docExchange, mapEntity, outerinstancemap, outerinstanceroot, false);
                                     htmExample.Write(content);
                                     break;
                                 }
@@ -1962,7 +1967,7 @@ namespace IfcDoc
                     {
                         string pathListing = path + @"\annex\annex-e\" + MakeLinkName(docExample) + ".ifc.htm";
 
-                        if (docPublication.GetFormatOption(DocFormatTypeEnum.STEP) == DocFormatOptionEnum.Examples)//Properties.Settings.Default.ExampleSPF)
+                        if (docPublication.GetFormatOption(DocFormatSchemaEnum.STEP) == DocFormatOptionEnum.Examples)//Properties.Settings.Default.ExampleSPF)
                         {
                             using (FormatHTM htmListing = new FormatHTM(pathListing, mapEntity, mapSchema, included))
                             {
@@ -2015,10 +2020,11 @@ namespace IfcDoc
                             {
                                 switch(docFormat.FormatType)
                                 {
-                                    case DocFormatTypeEnum.STEP:
+                                    case DocFormatSchemaEnum.STEP:
                                         break; // do nothing
 
-                                    case DocFormatTypeEnum.XML:
+#if false
+                                    case DocFormatSchemaEnum.XML: // TODO: use generic formatter
                                         {
                                             // use xml namespace of first view
                                             string xmlns = "http://www.buildingsmart-tech.org/ifcXML/IFC4/final";
@@ -2043,6 +2049,7 @@ namespace IfcDoc
                                             }
                                         }
                                         break;
+#endif // now use generic formatters
 
                                     case DocFormatTypeEnum.TTL:
                                         {
@@ -2069,6 +2076,7 @@ namespace IfcDoc
                                         }
                                         break;
 
+									#if false
                                     case DocFormatTypeEnum.SQL: // todo: support others...
                                         // use formatter
                                         {
@@ -2087,6 +2095,32 @@ namespace IfcDoc
                                                 fmtHTM.WriteHeader(docExample.Name, 2, docPublication.Header);
                                                 fmtHTM.Write(content);
                                                 fmtHTM.WriteFooter("");
+                                            }
+                                        }
+                                        break;
+#endif
+
+                                    default: // pluggable formatters
+                                        {
+                                            IFormatData formatext = null;
+                                            if(mapFormats.TryGetValue(docFormat.FormatType, out formatext))
+                                            {
+                                                string content = formatext.FormatData(docPublication, null, mapEntity, spfExample.Instances, rootproject, false);                                                
+                                                string pathRAW = path + @"\annex\annex-e\" + MakeLinkName(docExample) + "." + docFormat.ExtensionInstances;
+                                                using (System.IO.StreamWriter writer = new System.IO.StreamWriter(pathRAW, false))
+                                                {
+                                                    writer.Write(content);
+                                                }
+
+                                                string conmark = formatext.FormatData(docPublication, null, mapEntity, spfExample.Instances, rootproject, true);
+                                                string pathHTM = pathRAW + ".htm";
+                                                using (FormatHTM fmtHTM = new FormatHTM(pathHTM, mapEntity, mapSchema, included))
+                                                {
+                                                    fmtHTM.WriteHeader(docExample.Name, 2, docPublication.Header);
+                                                    fmtHTM.Write(conmark);
+                                                    fmtHTM.WriteFooter("");
+                                                }
+
                                             }
                                         }
                                         break;
@@ -2118,7 +2152,7 @@ namespace IfcDoc
                     indexpath.Add(0);
                     foreach(DocExample docSub in docExample.Examples)
                     {
-                        GenerateExample(docPublication, docSub, listFormats, path, indexpath, included, mapEntity, mapSchema, typemap, listFigures, listTables, htmTOC, htmSectionTOC, outerinstancemap);
+                        GenerateExample(docPublication, docSub, listFormats, path, indexpath, included, mapEntity, mapSchema, typemap, listFigures, listTables, htmTOC, htmSectionTOC, mapFormats, outerinstancemap, outerinstanceroot);
                     }
                     indexpath.RemoveAt(indexpath.Count - 1);
                 }
@@ -2174,6 +2208,47 @@ namespace IfcDoc
 
                 string doc = FormatTemplate(docProject, docTemplate, listFigures, listTables, mapEntity, mapSchema, included, path);
                 htmTemplate.WriteDocumentationMarkup(doc, docTemplate, docPublication);
+
+                // write formatted mvdXML
+                //htmTemplate.WriteLine("<details open=\"open\">");
+                //htmTemplate.WriteLine("<summary>mvdXML</summary>");
+
+                ConceptTemplate mvdTemplate = new ConceptTemplate();
+                Program.ExportMvdTemplate(mvdTemplate, docTemplate, included, false);
+                XmlSerializer ser = new XmlSerializer(typeof(ConceptTemplate));
+                StringBuilder mvdOutput = new StringBuilder();
+                using (System.IO.Stream streamMVD = new System.IO.MemoryStream())
+                {
+                    ser.Serialize(streamMVD, mvdTemplate, null);
+                    streamMVD.Position = 0;
+                    using(System.IO.StreamReader reader = new System.IO.StreamReader(streamMVD))
+                    {
+                        while(!reader.EndOfStream)
+                        {
+                            string mvdLine = reader.ReadLine();
+
+                            int pos = 0;
+                            while(pos < mvdLine.Length && mvdLine[pos] == ' ')
+                            {
+                                mvdOutput.Append("\t");
+                                pos++;
+                            }
+
+                            // replace any leading spaces with tabs for proper formatting
+                            string mvdMark = mvdLine.Substring(pos, mvdLine.Length - pos);
+                            mvdOutput.AppendLine(mvdMark);
+                        }
+                    }
+                }
+
+                htmTemplate.WriteSummaryHeader("mvdXML Specification", false);
+                htmTemplate.WriteLine("<div class=\"xsd\"><code class=\"xsd\">");
+                htmTemplate.WriteExpression(mvdOutput.ToString()); //... need to use tabs...
+                htmTemplate.WriteLine("</code></div>");
+                htmTemplate.WriteSummaryFooter();
+
+                //htmTemplate.WriteLine("</details>");
+
 
                 if (docProject.Examples != null)
                 {
@@ -2246,11 +2321,6 @@ namespace IfcDoc
             string path,
             DocPublication docPublication)
         {
-            if(entity.Name.Equals("IfcElement"))
-            {
-                entity.ToString();
-            }
-
             StringBuilder sb = new StringBuilder();
 
             // find concepts for entity
@@ -2408,7 +2478,10 @@ namespace IfcDoc
                             }
                         }
 
-                        listLines.Add(sbSuper.ToString());
+                        if (sbSuper.Length > 0)
+                        {
+                            listLines.Add(sbSuper.ToString());
+                        }
 
                         // go to base type
                         docSuper = docProject.GetDefinition(docSuper.BaseDefinition) as DocEntity;
@@ -2451,9 +2524,48 @@ namespace IfcDoc
                                         FormatEntityUsage(docProject, entity, docRoot, eachusage, mapEntity, mapSchema, listFigures, listTables, included, sb, path, docPublication);
                                     }
                                     sb.AppendLine("</details>");
+
+                                    //... mvdXML for entire root
+                                    ConceptRoot mvdConceptRoot = new ConceptRoot();
+                                    Program.ExportMvdConceptRoot(mvdConceptRoot, docRoot, false);
+                                    XmlSerializer ser = new XmlSerializer(typeof(ConceptRoot));
+                                    StringBuilder mvdOutput = new StringBuilder();
+                                    using (System.IO.Stream streamMVD = new System.IO.MemoryStream())
+                                    {
+                                        ser.Serialize(streamMVD, mvdConceptRoot, null);
+                                        streamMVD.Position = 0;
+                                        using (System.IO.StreamReader reader = new System.IO.StreamReader(streamMVD))
+                                        {
+                                            while (!reader.EndOfStream)
+                                            {
+                                                string mvdLine = reader.ReadLine();
+
+                                                int pos = 0;
+                                                while (pos < mvdLine.Length && mvdLine[pos] == ' ')
+                                                {
+                                                    mvdOutput.Append("\t");
+                                                    pos++;
+                                                }
+
+                                                // replace any leading spaces with tabs for proper formatting
+                                                string mvdMark = mvdLine.Substring(pos, mvdLine.Length - pos);
+                                                mvdOutput.AppendLine(mvdMark);
+                                            }
+                                        }
+                                    }
+
+                                    string html = System.Web.HttpUtility.HtmlEncode(mvdOutput.ToString());
+                                    html = html.Replace("\r\n", "<br/>\r\n");
+                                    html = html.Replace("\t", "&nbsp;");
+
+                                    //sb.AppendLine("<section>");
+                                    sb.AppendLine("<details><summary>mvdXML Specification</summary>");
+                                    sb.AppendLine("<div class=\"xsd\"><code class=\"xsd\">");
+                                    sb.AppendLine(html); //... need to use tabs...
+                                    //sb.AppendLine(mvdOutput.ToString());
+                                    sb.AppendLine("</code></div></details>");
+                                    //sb.AppendLine("</section>");
                                 }
-
-
 
                             }
                         }
@@ -2646,26 +2758,40 @@ namespace IfcDoc
             DocModelView[] views = docPublication.Views.ToArray();
             string[] locales = docPublication.Locales.ToArray();
 
-            Dictionary<DocFormatTypeEnum, IFormatExtension> mapFormats = new Dictionary<DocFormatTypeEnum, IFormatExtension>();
-            foreach(DocFormat docFormat in docPublication.Formats)
+            List<DocXsdFormat> xsdFormatBase = docProject.BuildXsdFormatList();
+            string xmlns = "http://www.buildingsmart-tech.org/ifcXML/IFC4/final";
+
+            // for now these are paired; in future they may be split
+            Dictionary<DocFormatSchemaEnum, IFormatExtension> mapFormatSchema = new Dictionary<DocFormatSchemaEnum, IFormatExtension>();
+            Dictionary<DocFormatSchemaEnum, IFormatData> mapFormatData = new Dictionary<DocFormatSchemaEnum, IFormatData>();
+            foreach (DocFormat docFormat in docPublication.Formats)
             {
                 switch(docFormat.FormatType)
                 {
-                    //case DocFormatTypeEnum.TTL:
-                    //    mapFormats.Add(docFormat.FormatType, new FormatTTL());
-                    //    break;
-
-                    case DocFormatTypeEnum.SQL:
-                        mapFormats.Add(docFormat.FormatType, new FormatSQL());
+                    case DocFormatSchemaEnum.OWL:
+                        mapFormatSchema.Add(docFormat.FormatType, new FormatOWL());
+                        mapFormatData.Add(docFormat.FormatType, new FormatTTL_Stream());
                         break;
 
-                    case DocFormatTypeEnum.CS:
-                        mapFormats.Add(docFormat.FormatType, new FormatCSC());
+                    case DocFormatSchemaEnum.SQL:
+                        mapFormatSchema.Add(docFormat.FormatType, new FormatSQL());
+                        mapFormatData.Add(docFormat.FormatType, new FormatSQL());
                         break;
 
-                    case DocFormatTypeEnum.JSON:
-                        mapFormats.Add(docFormat.FormatType, new FormatJAV());
+                    case DocFormatSchemaEnum.CS:
+                        mapFormatSchema.Add(docFormat.FormatType, new FormatCSC());
                         break;
+
+                    case DocFormatSchemaEnum.JSON:
+                        mapFormatSchema.Add(docFormat.FormatType, new FormatJAV());
+                        mapFormatData.Add(docFormat.FormatType, new FormatJSN(xsdFormatBase, xmlns, docPublication.Code));
+                        break;
+
+                    case DocFormatSchemaEnum.XML:
+                        mapFormatSchema.Add(docFormat.FormatType, new FormatXSD(null));
+                        mapFormatData.Add(docFormat.FormatType, new FormatSML(new System.IO.MemoryStream(), xsdFormatBase, xmlns, docPublication.Code));
+                        break;
+
                 }
             }
 
@@ -3208,7 +3334,7 @@ namespace IfcDoc
                                             htmSectionTOC.WriteLine("<tr><td>&nbsp;</td></tr>");
                                             htmSectionTOC.WriteLine("<tr class=\"std\"><td class=\"menu\">" + htmllink + "</td></tr>");
 
-                                            if (true)//Properties.Settings.Default.Requirement)
+                                            if (docPublication.Exchanges)
                                             {
                                                 int iExchange = 0;
                                                 foreach (DocExchangeDefinition docExchange in docModelView.Exchanges)
@@ -3501,10 +3627,11 @@ namespace IfcDoc
                                                             {
                                                                 // future: componentize all formats
                                                                 IFormatExtension formatext = null;
-                                                                mapFormats.TryGetValue(docFormat.FormatType, out formatext);
+                                                                mapFormatSchema.TryGetValue(docFormat.FormatType, out formatext);
                                                                 switch (docFormat.FormatType)
                                                                 {
-                                                                    case DocFormatTypeEnum.XML:
+#if false
+                                                                    case DocFormatSchemaEnum.XML:
                                                                         htmDef.WriteSummaryHeader("XSD Specification", false);
                                                                         htmDef.Write("<div class=\"xsd\"><code class=\"xsd\">");
                                                                         if (type is DocSelect)
@@ -3522,8 +3649,8 @@ namespace IfcDoc
                                                                         htmDef.Write("</code></div>");
                                                                         htmDef.WriteSummaryFooter();
                                                                         break;
-
-                                                                    case DocFormatTypeEnum.STEP:
+#endif
+                                                                    case DocFormatSchemaEnum.STEP:
                                                                         htmDef.WriteExpressTypeAndDocumentation(type, !docPublication.HideHistory, docPublication.ISO);
                                                                         break;
 
@@ -3534,7 +3661,7 @@ namespace IfcDoc
                                                                             string output = null;
                                                                             if (type is DocSelect)
                                                                             {
-                                                                               output = formatext.FormatSelect((DocSelect)type, mapEntity, included);
+                                                                                output = formatext.FormatSelect((DocSelect)type, mapEntity, included);
                                                                             }
                                                                             else if (type is DocEnumeration)
                                                                             {
@@ -3750,7 +3877,8 @@ namespace IfcDoc
                                                         htmDef.WriteSummaryFooter();
 
                                                         string conceptdocumentation = FormatEntityConcepts(docProject, entity, mapEntity, mapSchema, included, listFigures, listTables, path, docPublication);
-                                                        htmDef.WriteDocumentationMarkup(conceptdocumentation, entity, docPublication);
+                                                        htmDef.WriteLine(conceptdocumentation);
+                                                        //htmDef.WriteDocumentationMarkup(conceptdocumentation, entity, docPublication);
 
                                                         if (docProject.Examples != null)
                                                         {
@@ -3792,18 +3920,20 @@ namespace IfcDoc
                                                             {
                                                                 // future: componentize all formats
                                                                 IFormatExtension formatext = null;
-                                                                mapFormats.TryGetValue(docFormat.FormatType, out formatext);
+                                                                mapFormatSchema.TryGetValue(docFormat.FormatType, out formatext);
                                                                 switch(docFormat.FormatType)
                                                                 {
-                                                                    case DocFormatTypeEnum.XML:
+#if false
+                                                                    case DocFormatSchemaEnum.XML:
                                                                         htmDef.WriteSummaryHeader("XSD Specification", false);
                                                                         htmDef.Write("<div class=\"xsd\"><code class=\"xsd\">");
                                                                         htmDef.WriteFormatted(FormatXSD.FormatEntity(entity, mapEntity, included));
                                                                         htmDef.Write("</code></div>");
                                                                         htmDef.WriteSummaryFooter();
                                                                         break;
+#endif
 
-                                                                    case DocFormatTypeEnum.STEP:
+                                                                    case DocFormatSchemaEnum.STEP:
                                                                         htmDef.WriteExpressEntitySpecification(entity, !docPublication.HideHistory, docPublication.ISO);
                                                                         break;
 
@@ -4432,7 +4562,7 @@ namespace IfcDoc
                                             DoExport(docProject, path + @"\annex\annex-a\" + MakeLinkName(docModelView) + @"\" + docModelView.Code + "-psd.zip", modelviews, locales, instances);
                                             DoExport(docProject, path + @"\annex\annex-a\" + MakeLinkName(docModelView) + @"\" + docModelView.Code + "-qto.zip", modelviews, locales, instances);
 
-                                            if (docPublication.GetFormatOption(DocFormatTypeEnum.STEP) != DocFormatOptionEnum.None)
+                                            if (docPublication.GetFormatOption(DocFormatSchemaEnum.STEP) != DocFormatOptionEnum.None)
                                             {
                                                 using (FormatHTM htmExpress = new FormatHTM(path + @"\annex\annex-a\" + MakeLinkName(docModelView) + @"\" + docModelView.Code + ".exp.htm", mapEntity, mapSchema, included))
                                                 {
@@ -4443,7 +4573,8 @@ namespace IfcDoc
                                                 }
                                             }
 
-                                            if (docPublication.GetFormatOption(DocFormatTypeEnum.XML) != DocFormatOptionEnum.None)
+#if false
+                                            if (docPublication.GetFormatOption(DocFormatSchemaEnum.XML) != DocFormatOptionEnum.None)
                                             {
                                                 using (FormatHTM htmXSD = new FormatHTM(path + @"\annex\annex-a\" + MakeLinkName(docModelView) + @"\" + docModelView.Code + ".xsd.htm", mapEntity, mapSchema, included))
                                                 {
@@ -4458,7 +4589,9 @@ namespace IfcDoc
                                                     htmXSD.WriteFormatted(xsdcontent);
                                                     htmXSD.WriteFooter("");
                                                 }
-                                            }                                            
+
+                                            }
+#endif
 
                                             DoExport(docProject, path + @"\annex\annex-a\" + MakeLinkName(docModelView) + @"\" + docModelView.Code + ".mvdxml", new DocModelView[] { docModelView }, locales, instances);
 
@@ -4473,7 +4606,7 @@ namespace IfcDoc
                                             foreach(DocFormat docFormat in docPublication.Formats)
                                             {
                                                 IFormatExtension formatextension = null;
-                                                if (mapFormats.TryGetValue(docFormat.FormatType, out formatextension))
+                                                if (docFormat.FormatOptions != DocFormatOptionEnum.None && mapFormatSchema.TryGetValue(docFormat.FormatType, out formatextension))
                                                 {
                                                     //string content = formatextension.FormatDefinitions(docProject, mapEntity, included);
                                                     string content = formatextension.FormatDefinitions(docProject, mapEntity, view_included);
@@ -4671,7 +4804,7 @@ namespace IfcDoc
                                             htmSectionTOC.WriteLine("<tr class=\"std\"><td class=\"menu\">C." + iView + " <a href=\"annex-c/" + MakeLinkName(docView) + "/index.htm\" target=\"info\" >" + docView.Name + "</a></td></tr>");
 
                                             // diagram for view
-                                            if (!Properties.Settings.Default.SkipDiagrams)
+                                            //if (!Properties.Settings.Default.SkipDiagrams)
                                             {
                                                 Dictionary<DocObject, bool> viewinclude = new Dictionary<DocObject, bool>();
                                                 Dictionary<Rectangle, DocEntity> mapRectangle = new Dictionary<Rectangle, DocEntity>();
@@ -4777,10 +4910,10 @@ namespace IfcDoc
                                             htmSectionTOC.WriteLine("<tr class=\"std\"><td class=\"menu\">D.1." + iDiagramSection + "." + iSchema + " <a href=\"annex-d/" + MakeLinkName(docSchema) + "/index.htm\" target=\"info\" >" + docSchema.Name + "</a></td></tr>");
 
                                             // determine number of diagrams
-                                            int iLastDiagram = docSchema.GetDiagramCount();
+                                            int iLastDiagram = docSchema.UpdateDiagramPageNumbers();
 
                                             // generate diagrams
-                                            if (!Properties.Settings.Default.SkipDiagrams)
+                                            //if (!Properties.Settings.Default.SkipDiagrams)
                                             {
                                                 Image imageSchema = FormatPNG.CreateSchemaDiagram(docSchema, mapEntity, diagramformat);
 
@@ -5019,31 +5152,8 @@ namespace IfcDoc
                                 break;
 
                             case 'E':
-                                if (docProject.Examples != null)
+                                if (docProject.Examples != null && !Properties.Settings.Default.SkipDiagrams)
                                 {
-                                    List<DocXsdFormat> xsdFormatBase = new List<DocXsdFormat>();
-                                    foreach(DocSection docSection in docProject.Sections)
-                                    {
-                                        foreach(DocSchema docSchema in docSection.Schemas)
-                                        {
-                                            foreach(DocEntity docEntity in docSchema.Entities)
-                                            {
-                                                foreach(DocAttribute docAttr in docEntity.Attributes)
-                                                {
-                                                    if(docAttr.XsdFormat != DocXsdFormatEnum.Default || docAttr.XsdTagless != null)
-                                                    {
-                                                        DocXsdFormat xsdformat = new DocXsdFormat();
-                                                        xsdformat.Entity = docEntity.Name;
-                                                        xsdformat.Attribute = docAttr.Name;
-                                                        xsdformat.XsdFormat = docAttr.XsdFormat;
-                                                        xsdformat.XsdTagless = docAttr.XsdTagless;
-                                                        xsdFormatBase.Add(xsdformat);
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-
                                     List<int> indexpath = new List<int>();
                                     indexpath.Add(0);
                                     foreach(DocExample docExample in docProject.Examples)
@@ -5059,7 +5169,7 @@ namespace IfcDoc
                                                 typemap.Add(t.Name.ToUpper(), t);
                                             }
                                         }
-                                        catch
+                                        catch(System.Reflection.ReflectionTypeLoadException)
                                         {
                                             // schema could not be compiled according to definition
                                         }
@@ -5073,7 +5183,7 @@ namespace IfcDoc
                                             }
                                         }
 
-                                        GenerateExample(docPublication, docExample, listFormats, path, indexpath, included, mapEntity, mapSchema, typemap, listFigures, listTables, htmTOC, htmSectionTOC, null);
+                                        GenerateExample(docPublication, docExample, listFormats, path, indexpath, included, mapEntity, mapSchema, typemap, listFigures, listTables, htmTOC, htmSectionTOC, mapFormatData, null, null);
                                     }
                                 }
                                 break;

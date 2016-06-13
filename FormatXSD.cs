@@ -14,6 +14,7 @@ using IfcDoc.Schema.DOC;
 namespace IfcDoc.Format.XSD
 {
     internal class FormatXSD : 
+        IFormatExtension,
         IDisposable,
         IComparer<string>
     {
@@ -77,19 +78,6 @@ namespace IfcDoc.Format.XSD
 
         public void Save()
         {
-            string xmlns = "http://www.buildingsmart-tech.org/ifcXML/IFC4/final";
-
-            // use XSD configuration of first view
-            if (this.m_views != null && this.m_views.Length >= 1 && !String.IsNullOrEmpty(this.m_views[0].Code))
-            {
-                DocModelView docView = this.m_views[0];
-
-                if (!String.IsNullOrEmpty(docView.XsdUri))
-                {
-                    xmlns = docView.XsdUri;
-                }
-            }
-
             // build map of types
             Dictionary<string, DocObject> map = new Dictionary<string, DocObject>();
             foreach (DocSection docSection in this.m_project.Sections)
@@ -113,180 +101,9 @@ namespace IfcDoc.Format.XSD
                 }
             }
 
-            SortedList<string, DocDefined> mapDefined = new SortedList<string, DocDefined>(this);
-            SortedList<string, DocEnumeration> mapEnum = new SortedList<string, DocEnumeration>(this);
-            SortedList<string, DocSelect> mapSelect = new SortedList<string, DocSelect>(this);
-            SortedList<string, DocEntity> mapEntity = new SortedList<string, DocEntity>(this);
-            SortedList<string, DocFunction> mapFunction = new SortedList<string, DocFunction>(this);
-            SortedList<string, DocGlobalRule> mapRule = new SortedList<string, DocGlobalRule>(this);
+            string content = this.FormatDefinitions(this.m_project, map, this.m_included);
 
-            SortedList<string, string> sort = new SortedList<string, string>(new FormatXSD(null));
 
-            foreach (DocSection docSection in this.m_project.Sections)
-            {
-                foreach (DocSchema docSchema in docSection.Schemas)
-                {
-                    if (this.m_included == null || this.m_included.ContainsKey(docSchema))
-                    {
-                        foreach (DocType docType in docSchema.Types)
-                        {
-                            if (this.m_included == null || this.m_included.ContainsKey(docType))
-                            {
-                                if (docType is DocDefined)
-                                {
-                                    if (!mapDefined.ContainsKey(docType.Name))
-                                    {
-                                        mapDefined.Add(docType.Name, (DocDefined)docType);
-                                    }
-                                }
-                                else if (docType is DocEnumeration)
-                                {
-                                    mapEnum.Add(docType.Name, (DocEnumeration)docType);
-                                }
-                                else if (docType is DocSelect)
-                                {
-                                    mapSelect.Add(docType.Name, (DocSelect)docType);
-                                }
-                            }
-                        }
-
-                        foreach (DocEntity docEnt in docSchema.Entities)
-                        {
-                            if (this.m_included == null || this.m_included.ContainsKey(docEnt))
-                            {
-                                if (!mapEntity.ContainsKey(docEnt.Name))
-                                {
-                                    mapEntity.Add(docEnt.Name, docEnt);
-                                }
-
-                                // check for any attributes that are lists of value types requiring wrapper, e.g. IfcTextFontName
-                                foreach (DocAttribute docAttr in docEnt.Attributes)
-                                {
-                                    DocObject docObjRef = null;
-                                    if (docAttr.DefinedType != null &&
-                                        docAttr.GetAggregation() != DocAggregationEnum.NONE && 
-                                        map.TryGetValue(docAttr.DefinedType, out docObjRef) && 
-                                        docObjRef is DocDefined && 
-                                        docAttr.XsdFormat == DocXsdFormatEnum.Element &&
-                                        !(docAttr.XsdTagless == true) && 
-                                        !sort.ContainsKey(docAttr.DefinedType))
-                                    {
-                                        sort.Add(docAttr.DefinedType, docAttr.DefinedType);
-                                    }
-                                }
-                            }
-                        }
-
-                        foreach (DocFunction docFunc in docSchema.Functions)
-                        {
-                            if ((this.m_included == null || this.m_included.ContainsKey(docFunc)) && !mapFunction.ContainsKey(docFunc.Name))
-                            {
-                                mapFunction.Add(docFunc.Name, docFunc);
-                            }
-                        }
-
-                        foreach (DocGlobalRule docRule in docSchema.GlobalRules)
-                        {
-                            if (this.m_included == null || this.m_included.ContainsKey(docRule))
-                            {
-                                mapRule.Add(docRule.Name, docRule);
-                            }
-                        }
-                    }
-                }
-            }
-
-            using (System.IO.StreamWriter writer = new System.IO.StreamWriter(this.m_filename))
-            {
-                writer.WriteLine("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-                writer.WriteLine("<xs:schema xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" " + 
-                    "xmlns:ifc=\"" + xmlns + "\" " +
-                    "targetNamespace=\"" + xmlns + "\" "+
-                    "elementFormDefault=\"qualified\" attributeFormDefault=\"unqualified\" >");
-
-                WriteResource(writer, "IfcDoc.xsd1.txt");
-
-                // Entities
-                writer.WriteLine("\t<!-- element and complex type declarations (for ENTITY definitions) -->");
-                foreach (DocEntity docEntity in mapEntity.Values)
-                {
-                    writer.Write(FormatEntity(docEntity, map, this.m_included));                    
-                }
-
-                // Selects
-                writer.WriteLine("\t<!-- group declarations (for SELECT data type definitions) -->");
-                foreach (DocSelect docSelect in mapSelect.Values)
-                {
-                    writer.Write(FormatSelect(docSelect, map, this.m_included));
-                }
-
-                // Enumerations
-                writer.WriteLine("\t<!-- enumeration type declarations (for ENUMERATION data type definitions) -->");
-                foreach (DocEnumeration docEnum in mapEnum.Values)
-                {
-                    writer.Write(FormatEnum(docEnum));
-                }
-
-                // Defined Types
-                writer.WriteLine("\t<!-- simple type declarations (for TYPE defined data type definitions) -->");
-                foreach (DocDefined docDefined in mapDefined.Values)
-                {
-                    writer.Write(FormatDefinedSimple(docDefined));
-                }
-
-                WriteResource(writer, "IfcDoc.xsd2.txt");
-
-                // sort selects alphabetically
-                Queue<DocSelectItem> queue = new Queue<DocSelectItem>();
-                foreach (DocSelect docSelect in mapSelect.Values)
-                {
-                    foreach (DocSelectItem docSelItem in docSelect.Selects)
-                    {
-                        queue.Enqueue(docSelItem);
-                    }
-                }
-                List<DocDefined> listWrapper = new List<DocDefined>(); // keep track of wrapped types
-                while (queue.Count > 0)
-                {
-                    DocSelectItem docItem = queue.Dequeue();
-
-                    DocObject mapDef = null;
-                    if (map.TryGetValue(docItem.Name, out mapDef))
-                    {
-                        if (mapDef is DocSelect)
-                        {
-                            // expand each
-                            DocSelect docSub = (DocSelect)mapDef;
-                            foreach (DocSelectItem dsi in docSub.Selects)
-                            {
-                                queue.Enqueue(dsi);
-                            }
-                        }
-                        else if (!sort.ContainsKey(docItem.Name))
-                        {
-                            if (this.m_included == null || this.m_included.ContainsKey(mapDef))
-                            {
-                                sort.Add(docItem.Name, docItem.Name);
-                            }
-                        }
-                    }
-                }
-
-                writer.WriteLine("\t<!-- base global wrapper declaration for atomic simple types (for embeded base schema definitions) -->");
-                foreach (string docItem in sort.Values)
-                {
-                    DocObject mapDef = null;
-                    if (map.TryGetValue(docItem, out mapDef) && mapDef is DocType)
-                    {
-                        if (this.m_included == null || this.m_included.ContainsKey(mapDef))
-                        {
-                            writer.Write(FormatTypeWrapper((DocType)mapDef, map));
-                        }
-                    }
-                }
-
-                writer.WriteLine("</xs:schema>");
-            }                    
         }
 
         public static bool IsAttributeOverridden(DocEntity ent, DocAttribute attr, Dictionary<string, DocObject> map)
@@ -463,7 +280,135 @@ namespace IfcDoc.Format.XSD
             return sb.ToString();
         }
 
-        public static string FormatEntity(DocEntity docEntity, Dictionary<string, DocObject> map, Dictionary<DocObject, bool> included)
+        public static string ToXsdType(string typename)
+        {
+            string defined = "ifc:" + typename;
+            switch (typename)
+            {
+                case "BOOLEAN":
+                    defined = "xs:boolean";
+                    break;
+
+                case "LOGICAL":
+                    defined = "ifc:logical";
+                    break;
+
+                case "INTEGER":
+                    defined = "xs:long";
+                    break;
+
+                case "STRING":
+                    defined = "xs:normalizedString";
+                    break;
+
+                case "REAL":
+                case "NUMBER":
+                    defined = "xs:double";
+                    break;
+
+                case "BINARY":
+                case "BINARY (32)":
+                    defined = "ifc:hexBinary";
+                    break;
+            }
+
+            return defined;
+        }
+
+        public static string FormatTypeWrapper(DocType docDefined, Dictionary<string, DocObject> map)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            // wrapper
+            /*
+    <xs:element name="IfcPressureMeasure-wrapper" nillable="true">
+        <xs:complexType>
+            <xs:simpleContent>
+                <xs:extension base="ifc:IfcPressureMeasure">
+                    <xs:attributeGroup ref="ifc:instanceAttributes"/>
+                </xs:extension>
+            </xs:simpleContent>
+        </xs:complexType>
+    </xs:element>
+            */
+
+            bool complex = false;
+            if (docDefined is DocDefined)
+            {
+                DocDefined docDef = (DocDefined)docDefined;
+                DocObject docobj = null;
+                if (docDef.DefinedType != null && map.TryGetValue(docDef.DefinedType, out docobj) && docobj is DocEntity)
+                {
+                    complex = true;
+                }
+            }
+
+            sb.Append("\t<xs:element name=\"");
+            sb.Append(docDefined.Name);
+            sb.Append("-wrapper\" nillable=\"true\">");
+            sb.AppendLine();
+
+            sb.AppendLine("\t\t<xs:complexType>");
+
+            if (complex)
+            {
+                sb.AppendLine("\t\t\t<xs:complexContent>");
+            }
+            else
+            {
+                sb.AppendLine("\t\t\t<xs:simpleContent>");
+            }
+
+            sb.Append("\t\t\t\t<xs:extension base=\"");
+            sb.Append(ToXsdType(docDefined.Name));
+            sb.AppendLine("\">");
+
+            sb.AppendLine("\t\t\t\t\t<xs:attributeGroup ref=\"ifc:instanceAttributes\"/>");
+
+            sb.AppendLine("\t\t\t\t</xs:extension>");
+
+            if (complex)
+            {
+                sb.AppendLine("\t\t\t</xs:complexContent>");
+            }
+            else
+            {
+                sb.AppendLine("\t\t\t</xs:simpleContent>");
+            }
+            sb.AppendLine("\t\t</xs:complexType>");
+
+            sb.Append("\t</xs:element>");
+
+            sb.AppendLine();
+
+            return sb.ToString();
+        }
+
+#if false
+        public static string FormatDefined(DocDefined docDefined, Dictionary<string, DocObject> map)
+        {
+            return FormatDefined(docDefined) + FormatTypeWrapper(docDefined, map);
+        }
+#endif
+
+        #region IDisposable Members
+
+        public void Dispose()
+        {            
+        }
+
+        #endregion
+
+        #region IComparer Members
+
+        public int Compare(string x, string y)
+        {
+            return String.CompareOrdinal((string)x, (string)y);
+        }
+
+        #endregion
+
+        public string FormatEntity(DocEntity docEntity, Dictionary<string, DocObject> map, Dictionary<DocObject, bool> included)
         {
             string basetype = docEntity.BaseDefinition;
             if (String.IsNullOrEmpty(basetype))
@@ -532,7 +477,7 @@ namespace IfcDoc.Format.XSD
                     bool derived = false;
                     foreach (DocAttribute docAttrThis in docEntity.Attributes)
                     {
-                        if(docAttrSuper.Name.Equals(docAttrThis.Name))
+                        if (docAttrSuper.Name.Equals(docAttrThis.Name))
                         {
                             derived = true;
                             break;
@@ -646,7 +591,7 @@ namespace IfcDoc.Format.XSD
                                 mapDef is DocSelect ||
                                 docAttr.XsdFormat == DocXsdFormatEnum.Element ||
                                 docAttr.XsdFormat == DocXsdFormatEnum.Attribute)
-                                //docAttr.DefinedType.StartsWith("BINARY"))*/
+                            //docAttr.DefinedType.StartsWith("BINARY"))*/
                             {
                                 if (!hascontent)
                                 {
@@ -681,7 +626,7 @@ namespace IfcDoc.Format.XSD
             {
                 if (included == null || included.ContainsKey(docAttr))
                 {
-                    if(docAttr.Name.Equals("Pixel"))
+                    if (docAttr.Name.Equals("Pixel"))
                     {
                         docAttr.ToString();
                     }
@@ -692,7 +637,7 @@ namespace IfcDoc.Format.XSD
                         if ((docAttr.Inverse == null || docAttr.XsdFormat == DocXsdFormatEnum.Attribute) &&
                             docAttr.Derived == null && (docAttr.XsdFormat != DocXsdFormatEnum.Element || docAttr.XsdTagless == true))
                         {
-                            if ((!map.TryGetValue(docAttr.DefinedType, out mapDef)) || // native type
+                            if (docAttr.DefinedType == null || (!map.TryGetValue(docAttr.DefinedType, out mapDef)) || // native type
                                 (mapDef is DocDefined || mapDef is DocEnumeration || docAttr.XsdTagless == true))
                             {
                                 if (mapDef == null || (included == null || included.ContainsKey(mapDef)))
@@ -753,7 +698,7 @@ namespace IfcDoc.Format.XSD
                                         }
                                         else
                                         {
-                                            sb.Append(ToXsdType(docAttr.DefinedType)); 
+                                            sb.Append(ToXsdType(docAttr.DefinedType));
                                         }
                                         sb.Append("\"/>");
                                         sb.AppendLine();
@@ -819,10 +764,37 @@ namespace IfcDoc.Format.XSD
             return sb.ToString();
         }
 
-        public static string FormatSelect(DocSelect docSelect, Dictionary<string, DocObject> map, Dictionary<DocObject, bool> included)
+        public string FormatEnumeration(DocEnumeration docEnum)
         {
             StringBuilder sb = new StringBuilder();
-            
+
+            sb.Append("\t<xs:simpleType name=\"");
+            sb.Append(docEnum.Name);
+            sb.Append("\">");
+            sb.AppendLine();
+
+            sb.AppendLine("\t\t<xs:restriction base=\"xs:string\">");
+
+            foreach (DocConstant docConst in docEnum.Constants)
+            {
+                sb.Append("\t\t\t<xs:enumeration value=\"");
+                sb.Append(docConst.Name.ToLower());
+                sb.Append("\"/>");
+                sb.AppendLine();
+            }
+
+            sb.AppendLine("\t\t</xs:restriction>");
+
+            sb.Append("\t</xs:simpleType>");
+            sb.AppendLine();
+
+            return sb.ToString();
+        }
+
+        public string FormatSelect(DocSelect docSelect, Dictionary<string, DocObject> map, Dictionary<DocObject, bool> included)
+        {
+            StringBuilder sb = new StringBuilder();
+
             sb.Append("\t<xs:group name=\"");
             sb.Append(docSelect.Name);
             sb.Append("\">");
@@ -839,7 +811,7 @@ namespace IfcDoc.Format.XSD
 
             // sort selects alphabetically
             SortedList<string, DocSelectItem> sort = new SortedList<string, DocSelectItem>(new FormatXSD(null));
-            while(queue.Count > 0)
+            while (queue.Count > 0)
             {
                 DocSelectItem docItem = queue.Dequeue();
 
@@ -855,7 +827,7 @@ namespace IfcDoc.Format.XSD
                             queue.Enqueue(dsi);
                         }
                     }
-                    else if((included == null || included.ContainsKey(mapDef)) && !sort.ContainsKey(docItem.Name))
+                    else if ((included == null || included.ContainsKey(mapDef)) && !sort.ContainsKey(docItem.Name))
                     {
                         //TODO: if abstract entity, then go through subtypes...
                         sort.Add(docItem.Name, docItem);
@@ -898,69 +870,7 @@ namespace IfcDoc.Format.XSD
             return sb.ToString();
         }
 
-        public static string FormatEnum(DocEnumeration docEnum)
-        {
-            StringBuilder sb = new StringBuilder();
-
-            sb.Append("\t<xs:simpleType name=\"");
-            sb.Append(docEnum.Name);
-            sb.Append("\">");
-            sb.AppendLine();
-
-            sb.AppendLine("\t\t<xs:restriction base=\"xs:string\">");
-
-            foreach (DocConstant docConst in docEnum.Constants)
-            {
-                sb.Append("\t\t\t<xs:enumeration value=\"");
-                sb.Append(docConst.Name.ToLower());
-                sb.Append("\"/>");
-                sb.AppendLine();
-            }
-
-            sb.AppendLine("\t\t</xs:restriction>");
-
-            sb.Append("\t</xs:simpleType>");
-            sb.AppendLine();
-
-            return sb.ToString();
-        }
-
-        public static string ToXsdType(string typename)
-        {
-            string defined = "ifc:" + typename;
-            switch (typename)
-            {
-                case "BOOLEAN":
-                    defined = "xs:boolean";
-                    break;
-
-                case "LOGICAL":
-                    defined = "ifc:logical";
-                    break;
-
-                case "INTEGER":
-                    defined = "xs:long";
-                    break;
-
-                case "STRING":
-                    defined = "xs:normalizedString";
-                    break;
-
-                case "REAL":
-                case "NUMBER":
-                    defined = "xs:double";
-                    break;
-
-                case "BINARY":
-                case "BINARY (32)":
-                    defined = "ifc:hexBinary";
-                    break;
-            }
-
-            return defined;
-        }
-
-        public static string FormatDefinedSimple(DocDefined docDefined)
+        public string FormatDefined(DocDefined docDefined)
         {
             string defined = ToXsdType(docDefined.DefinedType);
 
@@ -1068,7 +978,7 @@ namespace IfcDoc.Format.XSD
                     sb.AppendLine();
                 }
             }
-            else if(docDefined.DefinedType.Equals("BINARY"))
+            else if (docDefined.DefinedType != null && docDefined.DefinedType.Equals("BINARY"))
             {
                 sb.Append("\t<xs:complexType name=\"");
                 sb.Append(docDefined.Name);
@@ -1076,7 +986,7 @@ namespace IfcDoc.Format.XSD
                 sb.AppendLine();
 
                 sb.AppendLine("\t\t<xs:simpleContent>");
-                
+
                 sb.Append("\t\t\t<xs:extension base=\"");
                 sb.Append(defined);
                 sb.AppendLine("\">");
@@ -1159,95 +1069,201 @@ namespace IfcDoc.Format.XSD
             return sb.ToString();
         }
 
-        public static string FormatTypeWrapper(DocType docDefined, Dictionary<string, DocObject> map)
+        public string FormatDefinitions(DocProject docProject, Dictionary<string, DocObject> map, Dictionary<DocObject, bool> included)
         {
-            StringBuilder sb = new StringBuilder();
-
-            // wrapper
-            /*
-    <xs:element name="IfcPressureMeasure-wrapper" nillable="true">
-        <xs:complexType>
-            <xs:simpleContent>
-                <xs:extension base="ifc:IfcPressureMeasure">
-                    <xs:attributeGroup ref="ifc:instanceAttributes"/>
-                </xs:extension>
-            </xs:simpleContent>
-        </xs:complexType>
-    </xs:element>
-            */
-
-            bool complex = false;
-            if (docDefined is DocDefined)
+            string xmlns = "http://www.buildingsmart-tech.org/ifcXML/IFC4/final"; //...
+            // use XSD configuration of first view
+            if (this.m_views != null && this.m_views.Length >= 1 && !String.IsNullOrEmpty(this.m_views[0].Code))
             {
-                DocDefined docDef = (DocDefined)docDefined;
-                DocObject docobj = null;
-                if (docDef.DefinedType != null && map.TryGetValue(docDef.DefinedType, out docobj) && docobj is DocEntity)
+                DocModelView docView = this.m_views[0];
+
+                if (!String.IsNullOrEmpty(docView.XsdUri))
                 {
-                    complex = true;
+                    xmlns = docView.XsdUri;
                 }
             }
 
-            sb.Append("\t<xs:element name=\"");
-            sb.Append(docDefined.Name);
-            sb.Append("-wrapper\" nillable=\"true\">");
-            sb.AppendLine();
+            SortedList<string, DocDefined> mapDefined = new SortedList<string, DocDefined>(this);
+            SortedList<string, DocEnumeration> mapEnum = new SortedList<string, DocEnumeration>(this);
+            SortedList<string, DocSelect> mapSelect = new SortedList<string, DocSelect>(this);
+            SortedList<string, DocEntity> mapEntity = new SortedList<string, DocEntity>(this);
+            SortedList<string, DocFunction> mapFunction = new SortedList<string, DocFunction>(this);
+            SortedList<string, DocGlobalRule> mapRule = new SortedList<string, DocGlobalRule>(this);
 
-            sb.AppendLine("\t\t<xs:complexType>");
+            SortedList<string, string> sort = new SortedList<string, string>(new FormatXSD(null));
 
-            if (complex)
+            foreach (DocSection docSection in docProject.Sections)
             {
-                sb.AppendLine("\t\t\t<xs:complexContent>");
+                foreach (DocSchema docSchema in docSection.Schemas)
+                {
+                    if (this.m_included == null || this.m_included.ContainsKey(docSchema))
+                    {
+                        foreach (DocType docType in docSchema.Types)
+                        {
+                            if (this.m_included == null || this.m_included.ContainsKey(docType))
+                            {
+                                if (docType is DocDefined)
+                                {
+                                    if (!mapDefined.ContainsKey(docType.Name))
+                                    {
+                                        mapDefined.Add(docType.Name, (DocDefined)docType);
+                                    }
+                                }
+                                else if (docType is DocEnumeration)
+                                {
+                                    mapEnum.Add(docType.Name, (DocEnumeration)docType);
+                                }
+                                else if (docType is DocSelect)
+                                {
+                                    mapSelect.Add(docType.Name, (DocSelect)docType);
+                                }
+                            }
+                        }
+
+                        foreach (DocEntity docEnt in docSchema.Entities)
+                        {
+                            if (this.m_included == null || this.m_included.ContainsKey(docEnt))
+                            {
+                                if (!mapEntity.ContainsKey(docEnt.Name))
+                                {
+                                    mapEntity.Add(docEnt.Name, docEnt);
+                                }
+
+                                // check for any attributes that are lists of value types requiring wrapper, e.g. IfcTextFontName
+                                foreach (DocAttribute docAttr in docEnt.Attributes)
+                                {
+                                    DocObject docObjRef = null;
+                                    if (docAttr.DefinedType != null &&
+                                        docAttr.GetAggregation() != DocAggregationEnum.NONE &&
+                                        map.TryGetValue(docAttr.DefinedType, out docObjRef) &&
+                                        docObjRef is DocDefined &&
+                                        docAttr.XsdFormat == DocXsdFormatEnum.Element &&
+                                        !(docAttr.XsdTagless == true) &&
+                                        !sort.ContainsKey(docAttr.DefinedType))
+                                    {
+                                        sort.Add(docAttr.DefinedType, docAttr.DefinedType);
+                                    }
+                                }
+                            }
+                        }
+
+                        foreach (DocFunction docFunc in docSchema.Functions)
+                        {
+                            if ((this.m_included == null || this.m_included.ContainsKey(docFunc)) && !mapFunction.ContainsKey(docFunc.Name))
+                            {
+                                mapFunction.Add(docFunc.Name, docFunc);
+                            }
+                        }
+
+                        foreach (DocGlobalRule docRule in docSchema.GlobalRules)
+                        {
+                            if (this.m_included == null || this.m_included.ContainsKey(docRule))
+                            {
+                                mapRule.Add(docRule.Name, docRule);
+                            }
+                        }
+                    }
+                }
             }
-            else
+
+            System.IO.MemoryStream stream = new System.IO.MemoryStream();
+            using (System.IO.StreamWriter writer = new System.IO.StreamWriter(stream))
             {
-                sb.AppendLine("\t\t\t<xs:simpleContent>");
+                writer.WriteLine("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+                writer.WriteLine("<xs:schema xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" " +
+                    "xmlns:ifc=\"" + xmlns + "\" " +
+                    "targetNamespace=\"" + xmlns + "\" " +
+                    "elementFormDefault=\"qualified\" attributeFormDefault=\"unqualified\" >");
+
+                WriteResource(writer, "IfcDoc.xsd1.txt");
+
+                // Entities
+                writer.WriteLine("\t<!-- element and complex type declarations (for ENTITY definitions) -->");
+                foreach (DocEntity docEntity in mapEntity.Values)
+                {
+                    writer.Write(FormatEntity(docEntity, map, this.m_included));
+                }
+
+                // Selects
+                writer.WriteLine("\t<!-- group declarations (for SELECT data type definitions) -->");
+                foreach (DocSelect docSelect in mapSelect.Values)
+                {
+                    writer.Write(FormatSelect(docSelect, map, this.m_included));
+                }
+
+                // Enumerations
+                writer.WriteLine("\t<!-- enumeration type declarations (for ENUMERATION data type definitions) -->");
+                foreach (DocEnumeration docEnum in mapEnum.Values)
+                {
+                    writer.Write(FormatEnumeration(docEnum));
+                }
+
+                // Defined Types
+                writer.WriteLine("\t<!-- simple type declarations (for TYPE defined data type definitions) -->");
+                foreach (DocDefined docDefined in mapDefined.Values)
+                {
+                    writer.Write(FormatDefined(docDefined));
+                }
+
+                WriteResource(writer, "IfcDoc.xsd2.txt");
+
+                // sort selects alphabetically
+                Queue<DocSelectItem> queue = new Queue<DocSelectItem>();
+                foreach (DocSelect docSelect in mapSelect.Values)
+                {
+                    foreach (DocSelectItem docSelItem in docSelect.Selects)
+                    {
+                        queue.Enqueue(docSelItem);
+                    }
+                }
+                List<DocDefined> listWrapper = new List<DocDefined>(); // keep track of wrapped types
+                while (queue.Count > 0)
+                {
+                    DocSelectItem docItem = queue.Dequeue();
+
+                    DocObject mapDef = null;
+                    if (map.TryGetValue(docItem.Name, out mapDef))
+                    {
+                        if (mapDef is DocSelect)
+                        {
+                            // expand each
+                            DocSelect docSub = (DocSelect)mapDef;
+                            foreach (DocSelectItem dsi in docSub.Selects)
+                            {
+                                queue.Enqueue(dsi);
+                            }
+                        }
+                        else if (!sort.ContainsKey(docItem.Name))
+                        {
+                            if (this.m_included == null || this.m_included.ContainsKey(mapDef))
+                            {
+                                sort.Add(docItem.Name, docItem.Name);
+                            }
+                        }
+                    }
+                }
+
+                writer.WriteLine("\t<!-- base global wrapper declaration for atomic simple types (for embeded base schema definitions) -->");
+                foreach (string docItem in sort.Values)
+                {
+                    DocObject mapDef = null;
+                    if (map.TryGetValue(docItem, out mapDef) && mapDef is DocType)
+                    {
+                        if (this.m_included == null || this.m_included.ContainsKey(mapDef))
+                        {
+                            writer.Write(FormatTypeWrapper((DocType)mapDef, map));
+                        }
+                    }
+                }
+
+                writer.WriteLine("</xs:schema>");
+
+                writer.Flush();
+
+                stream.Position = 0;
+                System.IO.StreamReader reader = new System.IO.StreamReader(stream);
+                return reader.ReadToEnd();
             }
-
-            sb.Append("\t\t\t\t<xs:extension base=\"");
-            sb.Append(ToXsdType(docDefined.Name));
-            sb.AppendLine("\">");
-
-            sb.AppendLine("\t\t\t\t\t<xs:attributeGroup ref=\"ifc:instanceAttributes\"/>");
-
-            sb.AppendLine("\t\t\t\t</xs:extension>");
-
-            if (complex)
-            {
-                sb.AppendLine("\t\t\t</xs:complexContent>");
-            }
-            else
-            {
-                sb.AppendLine("\t\t\t</xs:simpleContent>");
-            }
-            sb.AppendLine("\t\t</xs:complexType>");
-
-            sb.Append("\t</xs:element>");
-
-            sb.AppendLine();
-
-            return sb.ToString();
         }
-
-        public static string FormatDefined(DocDefined docDefined, Dictionary<string, DocObject> map)
-        {
-            return FormatDefinedSimple(docDefined) + FormatTypeWrapper(docDefined, map);
-        }
-
-        #region IDisposable Members
-
-        public void Dispose()
-        {            
-        }
-
-        #endregion
-
-        #region IComparer Members
-
-        public int Compare(string x, string y)
-        {
-            return String.CompareOrdinal((string)x, (string)y);
-        }
-
-        #endregion
     }
 }

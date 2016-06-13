@@ -12,6 +12,7 @@ using System.ComponentModel;
 using System.Reflection;
 using System.Text;
 using System.Xml.Serialization;
+using System.Runtime.Serialization;
 
 using IfcDoc.Schema;
 // Contains subset of IFC schema used for property set templates

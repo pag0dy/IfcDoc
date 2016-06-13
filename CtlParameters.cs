@@ -665,25 +665,49 @@ namespace IfcDoc
             }
         }
 
+        private void UpdateInheritance()
+        {
+            // hacky, but not worth making a general-purpose update notification
+            DocTemplateUsage docConcept = (DocTemplateUsage)this.m_conceptleaf;
+            TreeNode tn = (TreeNode)docConcept.Tag;
+            if (docConcept.Suppress)
+            {
+                tn.ImageIndex = 46;
+                tn.SelectedImageIndex = 46;
+            }
+            else if (docConcept.Override)
+            {
+                tn.ImageIndex = 45;
+                tn.SelectedImageIndex = 45;
+            }
+            else
+            {
+                tn.ImageIndex = 44;
+                tn.SelectedImageIndex = 44;
+            }
+
+            this.LoadInheritance();
+        }
+
         private void toolStripMenuItemModeInherit_Click(object sender, EventArgs e)
         {
             this.m_conceptleaf.Override = false;
             this.m_conceptleaf.Suppress = false;
-            this.LoadInheritance();
+            this.UpdateInheritance();
         }
 
         private void toolStripMenuItemModeOverride_Click(object sender, EventArgs e)
         {
             this.m_conceptleaf.Override = true;
             this.m_conceptleaf.Suppress = false;
-            this.LoadInheritance();
+            this.UpdateInheritance();
         }
 
         private void toolStripMenuItemModeSuppress_Click(object sender, EventArgs e)
         {
             this.m_conceptleaf.Override = true;
             this.m_conceptleaf.Suppress = true;
-            this.LoadInheritance();
+            this.UpdateInheritance();
         }
 
         private void toolStripButtonConceptTemplate_Click(object sender, EventArgs e)

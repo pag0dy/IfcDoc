@@ -61,18 +61,6 @@ namespace IfcDoc.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool SkipDiagrams {
-            get {
-                return ((bool)(this["SkipDiagrams"]));
-            }
-            set {
-                this["SkipDiagrams"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string ValidateFile {
             get {
@@ -116,6 +104,18 @@ namespace IfcDoc.Properties {
             }
             set {
                 this["InputPathExamples"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool SkipDiagrams {
+            get {
+                return ((bool)(this["SkipDiagrams"]));
+            }
+            set {
+                this["SkipDiagrams"] = value;
             }
         }
     }
