@@ -152,11 +152,11 @@
     <Compile Include="CtlRules.Designer.cs">
       <DependentUpon>CtlRules.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataDictionary.cs" />
     <Compile Include="DocumentationISO.cs" />
     <Compile Include="DifferenceEngine.cs" />
-    <Compile Include="FormatJSN.cs" />
     <Compile Include="FormatOWL.cs" />
+    <Compile Include="FormatTTL_Stream.cs" />
+    <Compile Include="FormatJSN.cs" />
     <Compile Include="FormatSMF.cs" />
     <Compile Include="FormatSQL.cs" />
     <Compile Include="FormatZIP.cs" />
@@ -191,7 +191,6 @@
     <Compile Include="FormSelectExchange.Designer.cs">
       <DependentUpon>FormSelectExchange.cs</DependentUpon>
     </Compile>
-    <Compile Include="peregrineapi.cs" />
     <Compile Include="SchemaXsd.cs" />
     <Compile Include="ThemedTreeView.cs">
       <SubType>Component</SubType>
@@ -371,6 +370,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CtlProperties.resx">
       <DependentUpon>CtlProperties.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="CtlRules.resx">
       <DependentUpon>CtlRules.cs</DependentUpon>
@@ -504,6 +504,18 @@
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="proplistIFC2X3_Final.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="proplistIFC2X3_TC1.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="proplistIFC4.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="proplistIFC4_ADD1.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>

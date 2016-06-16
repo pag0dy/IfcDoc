@@ -8601,7 +8601,7 @@ namespace IfcDoc
 
         private void toolStripMenuItemDictionaryUpload_Click(object sender, EventArgs e)
         {
-            DataDictionary.Upload(this.m_project);
+            //DataDictionary.Upload(this.m_project);
 
         }
 
@@ -8617,7 +8617,7 @@ namespace IfcDoc
                     {
                         dlgExport.Filter = 
                             "IFC-JSN (*.ifcjsn)|*.ifcjsn|"+
-                            "IFC-RDF (*.ifcrdf)|*.ifcrdf|" +
+                            "IFC-RDF (*.ttl)|*.ttl|" +
                             "IFC-XML (*.ifcxml)|*.ifcxml";
 
                         dlgExport.Title = "Convert [Step 2 of 2]: Specify the output file and format";
@@ -8677,6 +8677,7 @@ namespace IfcDoc
                             List<DocXsdFormat> xsdFormatBase = this.m_project.BuildXsdFormatList();
                             string xmlns = "http://www.buildingsmart-tech.org/ifcXML/IFC4/final";
                             string code = "IFC4";//...
+                            string ifcowlns = "http://ifcowl.openbimstandards.org/IFC4_ADD1";
 
                             try
                             {
@@ -8688,7 +8689,7 @@ namespace IfcDoc
                                         break;
 
                                     case 2:
-                                        formatter = new FormatOWL();
+                                        formatter = new FormatTTL_Stream(new System.IO.MemoryStream(), ifcowlns);
                                         break;
 
                                     case 3:

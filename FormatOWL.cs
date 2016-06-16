@@ -30,6 +30,9 @@ namespace IfcDoc
 
         public string FormatEntityFull(DocEntity docEntity, Dictionary<string, DocObject> map, Dictionary<DocObject, bool> included, bool fullListing)
         {
+
+		
+		
             // entity
             StringBuilder sb = new StringBuilder();
             // object properties
@@ -69,7 +72,6 @@ namespace IfcDoc
             // abstract class
             if (docEntity.IsAbstract())
             {
-
                 sb.AppendLine("\trdfs:subClassOf ");
                 sb.AppendLine("\t\t[ ");
                 sb.AppendLine("\t\t\trdf:type owl:Class ;");
@@ -87,11 +89,9 @@ namespace IfcDoc
             }
 
 
-
             // attributes -> create properties and restrictions
             foreach (DocAttribute docAttr in docEntity.Attributes)
             {
-
                 // check if Attr must be skipped (1) - not included attribute
                 if (included != null)
                     if (!included.ContainsKey(docAttr))
@@ -493,6 +493,7 @@ namespace IfcDoc
             output += "\trdfs:subClassOf" + "\r\n";
 
             string tab = "\t";
+
             if (asEntity == true)
             {
                 output += "\t\t[" + "\r\n";
@@ -501,6 +502,7 @@ namespace IfcDoc
                 output += "\t\t\towl:allValuesFrom" + "\r\n";
                 tab += "\t\t";
             }
+
             for (int i = 0; i <= minCard - 1; i++)
             {
                 tab += "\t";
@@ -769,11 +771,10 @@ namespace IfcDoc
             sb.AppendLine("\towl:imports                    <https://w3id.org/express> .");
             sb.AppendLine();
 
-
             // check which Inverse Attributes must be discarded because of conflicts
             // get subtypes of an entity
             foreach (DocSection docSection in docProject.Sections)
-            {
+            {			
                 foreach (DocSchema docSchema in docSection.Schemas)
                 {
                     foreach (DocEntity docEntity in docSchema.Entities)
@@ -853,8 +854,10 @@ namespace IfcDoc
             return sb.ToString();
         }
 
+        //UNUSED!!!! => Use FormatTTL_Stream.FormatData() instead
         public string FormatData(DocPublication docPublication, DocExchangeDefinition docExchange, Dictionary<string, DocObject> map, Dictionary<long, SEntity> instances, SEntity root, bool markup)
         {
+            //UNUSED!!!! => Use FormatTTL_Stream.FormatData() instead
             return null;
         }
     }

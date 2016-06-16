@@ -453,9 +453,9 @@ namespace IfcDoc.Schema.DOC
         [Description("Structured Query Language (SQL)")]
         SQL = 3,
 
-        //[DisplayName("RDF")]
-        [Description("Resource Description Framework (RDF)")]
-        OWL = 4,
+        //[DisplayName("TTL")]
+        [Description("ifcOWL Web Ontology Language (OWL)")]
+        TTL = 4,
 
         //[DisplayName("Java")]
         [Description("Java Programming Language")]
@@ -582,8 +582,8 @@ namespace IfcDoc.Schema.DOC
                     case DocFormatSchemaEnum.SQL:
                         return "sql";
 
-                    case DocFormatSchemaEnum.OWL:
-                        return "rdf";
+                    case DocFormatSchemaEnum.TTL:
+                        return "owl";
                 }
                 return "txt"; // fallback if unknown
             }
@@ -610,8 +610,8 @@ namespace IfcDoc.Schema.DOC
                     case DocFormatSchemaEnum.SQL:
                         return "csv";
 
-                    case DocFormatSchemaEnum.OWL:
-                        return "rdf";
+                    case DocFormatSchemaEnum.TTL:
+                        return "ttl";
 
                 }
                 return "txt"; // fallback if unknown
@@ -680,7 +680,7 @@ namespace IfcDoc.Schema.DOC
                 if (this._Formats.Count == 2)
                 {
                     this._Formats.Add(new DocFormat(DocFormatSchemaEnum.SQL, DocFormatOptionEnum.None));
-                    this._Formats.Add(new DocFormat(DocFormatSchemaEnum.OWL, DocFormatOptionEnum.None));
+                    this._Formats.Add(new DocFormat(DocFormatSchemaEnum.TTL, DocFormatOptionEnum.Examples));
                     this._Formats.Add(new DocFormat(DocFormatSchemaEnum.JSON, DocFormatOptionEnum.None));
                     this._Formats.Add(new DocFormat(DocFormatSchemaEnum.CS, DocFormatOptionEnum.None));
                 }
@@ -8183,6 +8183,7 @@ namespace IfcDoc.Schema.DOC
         /// </summary>
         /// <param name="docSelect"></param>
         /// <returns></returns>
+
         string FormatSelect(DocSelect docSelect, Dictionary<string, DocObject> map, Dictionary<DocObject, bool> included);
 
         /// <summary>
