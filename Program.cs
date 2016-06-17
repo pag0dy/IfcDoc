@@ -2100,6 +2100,11 @@ namespace IfcDoc
                 if (docExchangeRef.Exchange != null)
                 {
                     ConceptRequirement mvdRequirement = new ConceptRequirement();
+
+                    if(mvdConceptLeaf.Requirements == null)
+                    {
+                        mvdConceptLeaf.Requirements = new List<ConceptRequirement>();
+                    }
                     mvdConceptLeaf.Requirements.Add(mvdRequirement);
                     switch (docExchangeRef.Applicability)
                     {
@@ -2139,24 +2144,27 @@ namespace IfcDoc
                 }
             }
 
-            // rules                                    
-            mvdConceptLeaf.TemplateRules = new TemplateRules();
-            mvdConceptLeaf.TemplateRules.Operator = (TemplateOperator)Enum.Parse(typeof(TemplateOperator), docTemplateUsage.Operator.ToString());
-            foreach (DocTemplateItem docRule in docTemplateUsage.Items)
+            // rules         
+            if (docTemplateUsage.Items.Count > 0)
             {
-                TemplateRule mvdTemplateRule = ExportMvdItem(docRule);
-                mvdConceptLeaf.TemplateRules.TemplateRule.Add(mvdTemplateRule);
-
-                // using proposed mvdXML schema
-                if (docRule.Concepts.Count > 0)
+                mvdConceptLeaf.TemplateRules = new TemplateRules();
+                mvdConceptLeaf.TemplateRules.Operator = (TemplateOperator)Enum.Parse(typeof(TemplateOperator), docTemplateUsage.Operator.ToString());
+                foreach (DocTemplateItem docRule in docTemplateUsage.Items)
                 {
-                    mvdConceptLeaf.SubConcepts = new List<Concept>();
-                    mvdTemplateRule.References = new List<Concept>();
-                    foreach (DocTemplateUsage docInner in docRule.Concepts)
+                    TemplateRule mvdTemplateRule = ExportMvdItem(docRule);
+                    mvdConceptLeaf.TemplateRules.TemplateRule.Add(mvdTemplateRule);
+
+                    // using proposed mvdXML schema
+                    if (false) // was removed from mvdXML final schema, so no longer possible to capture inner templates such as valid property names and values /// docRule.Concepts.Count > 0)
                     {
-                        Concept mvdInner = new Concept();
-                        mvdTemplateRule.References.Add(mvdInner);
-                        ExportMvdConcept(mvdInner, docInner, documentation);
+                        mvdConceptLeaf.SubConcepts = new List<Concept>();
+                        mvdTemplateRule.References = new List<Concept>();
+                        foreach (DocTemplateUsage docInner in docRule.Concepts)
+                        {
+                            Concept mvdInner = new Concept();
+                            mvdTemplateRule.References.Add(mvdInner);
+                            ExportMvdConcept(mvdInner, docInner, documentation);
+                        }
                     }
                 }
             }
@@ -2165,7 +2173,10 @@ namespace IfcDoc
         internal static TemplateRule ExportMvdItem(DocTemplateItem docRule)
         {
             TemplateRule mvdTemplateRule = new TemplateRule();
-            mvdTemplateRule.RuleID = docRule.RuleInstanceID;
+            if (!String.IsNullOrEmpty(docRule.RuleInstanceID))
+            {
+                mvdTemplateRule.RuleID = docRule.RuleInstanceID;
+            }
             mvdTemplateRule.Description = docRule.Documentation;
 
             // new: use special mvdXML 1.1 syntax
@@ -2239,6 +2250,12 @@ namespace IfcDoc
         internal static void ExportMvdConceptRoot(ConceptRoot mvdConceptRoot, DocConceptRoot docRoot, bool documentation)
         {
             ExportMvdObject(mvdConceptRoot, docRoot, documentation);
+
+            if (String.IsNullOrEmpty(mvdConceptRoot.Name))
+            {
+                mvdConceptRoot.Name = docRoot.ApplicableEntity.Name;
+            }
+
             mvdConceptRoot.ApplicableRootEntity = docRoot.ApplicableEntity.Name;
             if (docRoot.ApplicableTemplate != null)
             {
@@ -2342,12 +2359,16 @@ namespace IfcDoc
             // recurse through sub-templates
             if (docTemplateDef.Templates != null && docTemplateDef.Templates.Count > 0)
             {
-                mvdTemplate.SubTemplates = new List<ConceptTemplate>();
 
                 foreach (DocTemplateDefinition docSub in docTemplateDef.Templates)
                 {
                     if (included == null || included.ContainsKey(docSub))
                     {
+                        if (mvdTemplate.SubTemplates == null)
+                        {
+                            mvdTemplate.SubTemplates = new List<ConceptTemplate>();
+                        }
+
                         ConceptTemplate mvdSub = new ConceptTemplate();
                         mvdTemplate.SubTemplates.Add(mvdSub);
                         ExportMvdTemplate(mvdSub, docSub, included, documentation);
@@ -2358,7 +2379,10 @@ namespace IfcDoc
 
         private static void ExportMvdRule(AttributeRule mvdRule, DocModelRule docRule)
         {
-            mvdRule.RuleID = docRule.Identification;
+            if (!String.IsNullOrEmpty(docRule.Identification))
+            {
+                mvdRule.RuleID = docRule.Identification;
+            }
             mvdRule.Description = docRule.Description;
             mvdRule.AttributeName = docRule.Name;
             //mvdRule.Cardinality = ExportCardinalityType(docRule);
@@ -2392,8 +2416,9 @@ namespace IfcDoc
                             mvdRuleEntity.AttributeRules.Add(mvdRuleAttribute);
                             ExportMvdRule(mvdRuleAttribute, docRuleAttribute);
                         }
-                        else if (docRuleAttribute is DocModelRuleConstraint)
+                        else if (docRuleAttribute is DocModelRuleConstraint && !String.IsNullOrEmpty(docRuleAttribute.Description))
                         {
+                            
                             if(mvdRuleEntity.Constraints == null)
                             {
                                 mvdRuleEntity.Constraints = new List<Constraint>();

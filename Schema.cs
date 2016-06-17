@@ -23,9 +23,7 @@ namespace IfcDoc.Schema
     public abstract class SRecord
     {
         private long m_localID;
-#if false
-        private bool m_existing;
-#endif
+
         public SRecord()
         {
         }

@@ -1786,11 +1786,6 @@ namespace IfcDoc.Format.HTM
             }
             else
             {
-                if(current.Name.Contains("IfcMaterialDefinitionRepresentation") || current.Name.Contains("IfcVirtualGridIntersection"))
-                {
-                    this.ToString();
-                }
-
                 int i = content.Length - 1;
                 while (i > 0)
                 {

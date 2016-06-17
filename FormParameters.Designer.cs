@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormParameters));
             this.ctlParameters = new IfcDoc.CtlParameters();
+            this.comboBoxTemplate = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // ctlParameters
@@ -43,11 +44,20 @@
             this.ctlParameters.Name = "ctlParameters";
             this.ctlParameters.Project = null;
             // 
+            // comboBoxTemplate
+            // 
+            resources.ApplyResources(this.comboBoxTemplate, "comboBoxTemplate");
+            this.comboBoxTemplate.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxTemplate.FormattingEnabled = true;
+            this.comboBoxTemplate.Name = "comboBoxTemplate";
+            this.comboBoxTemplate.SelectedIndexChanged += new System.EventHandler(this.comboBoxTemplate_SelectedIndexChanged);
+            // 
             // FormParameters
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.ctlParameters);
+            this.Controls.Add(this.comboBoxTemplate);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FormParameters";
@@ -59,6 +69,7 @@
         #endregion
 
         private CtlParameters ctlParameters;
+        private System.Windows.Forms.ComboBox comboBoxTemplate;
 
     }
 }

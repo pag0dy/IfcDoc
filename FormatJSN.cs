@@ -233,7 +233,7 @@ namespace IfcDoc.Format.JSN
             this.m_writer.WriteLine("]");
         }
 
-        public string FormatData(DocPublication docPublication, DocExchangeDefinition docExchange, Dictionary<string, DocObject> map, Dictionary<long, SEntity> instances, SEntity root, bool markup)
+        public string FormatData(DocProject docProject, DocPublication docPublication, DocExchangeDefinition docExchange, Dictionary<string, DocObject> map, Dictionary<long, SEntity> instances, SEntity root, bool markup)
         {
             this.m_indent = 0;
             this.m_stream = new System.IO.MemoryStream();

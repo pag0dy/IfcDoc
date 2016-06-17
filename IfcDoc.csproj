@@ -160,6 +160,12 @@
     <Compile Include="FormatSMF.cs" />
     <Compile Include="FormatSQL.cs" />
     <Compile Include="FormatZIP.cs" />
+    <Compile Include="FormFilterDefinitions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormFilterDefinitions.Designer.cs">
+      <DependentUpon>FormFilterDefinitions.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormSelectProperty.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -378,6 +384,9 @@
     <EmbeddedResource Include="FormConstraint.ja.resx">
       <DependentUpon>FormConstraint.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormFilterDefinitions.resx">
+      <DependentUpon>FormFilterDefinitions.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormMerge.ja.resx">
       <DependentUpon>FormMerge.cs</DependentUpon>
     </EmbeddedResource>
@@ -504,18 +513,6 @@
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-    <None Include="proplistIFC2X3_Final.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="proplistIFC2X3_TC1.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="proplistIFC4.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="proplistIFC4_ADD1.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>

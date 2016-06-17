@@ -42,6 +42,10 @@ namespace IfcDoc
         
         long m_nextID = 0;
 
+        public FormatTTL_Stream() : this(new System.IO.MemoryStream(), "http://ifcowl.openbimstandards.org/IFC4_ADD1")
+        {
+        }
+
         public FormatTTL_Stream(Stream stream, string owlURI)
         {
             this.m_stream = stream;
@@ -104,6 +108,8 @@ namespace IfcDoc
             m_fullpropertynames = new Dictionary<string, ObjectProperty>();
             try
             {
+                // old: read from file
+#if false
                 //TODO: make this work for multiple schemas
                 //TODO: get the schema from the internal code, instead of from an external CSV file
                 string x = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "proplistIFC4_ADD1.csv");
@@ -119,6 +125,7 @@ namespace IfcDoc
                         m_fullpropertynames.Add(row[1] + "_" + row[0], new ObjectProperty(row[0], row[1], row[2], row[3]));
                     }
                 }
+#endif
             }
             catch (Exception e)
             {
@@ -438,7 +445,9 @@ namespace IfcDoc
                 }
 
                 //create listObject
+#if VERBOSE
                 Console.Out.WriteLine("Message: Creating ListOfListWithValues with XSDType : " + fieldValue.FieldType.Name);
+#endif
                 //newListObject = GetListObject(ft.Name + "_List_", ft.Name, valuelist, fieldValue.GetType().Name);
                 newListObject = GetListObject(ft.Name + "_List_", ft.Name, valuelist, fieldValue.FieldType.Name);
 
@@ -890,7 +899,9 @@ namespace IfcDoc
 
         private void WriteLiteralValue(string xsdType, string literalString)
         {
+#if VERBOSE
             Console.Out.WriteLine("WriteLiteralValue: " + "xsdtype: " + xsdType + " - literalString " + literalString);
+#endif
             WriteIndent();
             if (xsdType.Equals("integer", StringComparison.CurrentCultureIgnoreCase) || xsdType.Equals("Int64", StringComparison.CurrentCultureIgnoreCase))
                 m_writer.Write("express:hasInteger" + " " + literalString + " ");
@@ -931,10 +942,14 @@ namespace IfcDoc
             if (obj.ifcowlclass.Equals("INTEGER") || obj.ifcowlclass.Equals("REAL") || obj.ifcowlclass.Equals("DOUBLE") || obj.ifcowlclass.Equals("BINARY") || obj.ifcowlclass.Equals("BOOLEAN") || obj.ifcowlclass.Equals("LOGICAL") || obj.ifcowlclass.Equals("STRING"))
                 ns = "express:";
             WriteType(ns + obj.ifcowlclass + ";\r\n");
+#if VERBOSE
             Console.Out.WriteLine("WriteExtraEntity: " + "obj.URI: " + obj.URI + " - xsdtype " + obj.XSDType);
+#endif
             WriteLiteralValue(obj.XSDType, obj.encodedvalue);
             m_writer.Write(".\r\n\r\n");
+#if VERBOSE
             Console.Out.WriteLine("written URIObject: " + "inst:" + obj.URI + " with VALUE " + obj.encodedvalue + " and TYPE " + obj.XSDType);
+#endif
             return;
         }
         
@@ -953,12 +968,16 @@ namespace IfcDoc
                     if (i == 0)
                     {
                         m_writer.Write("inst:" + obj.URI + "\r\n");
+#if VERBOSE
                         Console.Out.WriteLine("written ListOfListObject: " + "inst:" + obj.URI + " with TYPE " + obj.XSDType);
+#endif
                     }
                     else
                     {
                         m_writer.Write("inst:" + obj.ifcowlclass + "_List_List_" + m_nextID + "\r\n");
+#if VERBOSE
                         Console.Out.WriteLine("written ListOfListObject: " + "inst:" + obj.ifcowlclass + "_List_List_" + m_nextID + " with TYPE " + obj.XSDType);
+#endif
                     }
                  
                     //m_writer.Write("inst:" + obj.URI + "\r\n");
@@ -1060,11 +1079,12 @@ namespace IfcDoc
 
         private URIObject GetURIObject(string domain, string encodedvalue, string XSDType)
         {
+#if VERBOSE
             if (XSDType.Equals("RTFieldInfo", StringComparison.CurrentCultureIgnoreCase))
                 Console.Out.WriteLine("Warning: Found RTFieldInfo XSDType for encodedvalue: " + encodedvalue);
             else
                 Console.Out.WriteLine("Found seemingly ok XSDType for encodedvalue : " + encodedvalue + " - " + domain);
-
+#endif
             //WARNING: _VALUE_ and _TYPE_ could be in the other strings
             string fullObject = domain + "_VALUE_" + encodedvalue + "_TYPE_" + XSDType;
 
@@ -1120,7 +1140,9 @@ namespace IfcDoc
             {
                 if (XSDType != "###ENTITY###")
                 {
+#if VERBOSE
                     Console.Out.WriteLine("GetListObject().GetURIObject()");
+#endif
                     //URIObject uo = GetURIObject(ifcowlclass, values[i], values[i].GetType().Name);
                     URIObject uo = GetURIObject(ifcowlclass, values[i], XSDType);
                     values[i] = uo.URI;
@@ -1145,13 +1167,17 @@ namespace IfcDoc
 
             if (XSDType == "###ENTITY###")
             {
+#if VERBOSE
                 Console.Out.WriteLine("Creating GetListObject list with XSDType : " + ifcowlclass);
+#endif
                 obj = new ListObject(listname + m_nextID, listname.Substring(0,listname.Length-1), ifcowlclass, values, ifcowlclass);
             }
             else
             {
+#if VERBOSE
                 //create the additional datatype value
                 Console.Out.WriteLine("Creating GetListObject list with XSDType : " + XSDType);
+#endif
                 obj = new ListObject(listname + m_nextID, listname.Substring(0, listname.Length - 1), ifcowlclass, values, XSDType);
             }
 
@@ -1175,8 +1201,52 @@ namespace IfcDoc
             }
         }
 
-        public string FormatData(DocPublication docPublication, DocExchangeDefinition docExchange, Dictionary<string, DocObject> map, Dictionary<long, SEntity> instances, SEntity root, bool markup)
+        public string FormatData(DocProject docProject, DocPublication docPublication, DocExchangeDefinition docExchange, Dictionary<string, DocObject> map, Dictionary<long, SEntity> instances, SEntity root, bool markup)
         {
+            // load properties
+            this.m_fullpropertynames.Clear();
+            foreach(DocSection docSection in docProject.Sections)
+            {
+                foreach(DocSchema docSchema in docSection.Schemas)
+                {
+                    foreach(DocEntity docEntity in docSchema.Entities)
+                    {
+                        if(!docEntity.IsAbstract())
+                        {
+                            DocEntity docClass = docEntity;
+                            while(docClass != null)
+                            {
+                                foreach(DocAttribute docAttr in docClass.Attributes)
+                                {
+                                    if (String.IsNullOrEmpty(docAttr.Derived) &&
+                                        String.IsNullOrEmpty(docAttr.Inverse))
+                                    {
+                                        string row0 = docEntity.Name;
+                                        string row1 = docAttr.Name;
+                                        string row2 = docAttr.Name + "_" + docClass.Name;
+                                        string row3 = "ENTITY";
+
+                                        DocAggregationEnum docAggr = docAttr.GetAggregation();
+                                        if(docAggr == DocAggregationEnum.SET)
+                                        {
+                                            row3 = "SET";
+                                        }
+                                        else if(docAggr == DocAggregationEnum.LIST)
+                                        {
+                                            row3 = "LIST";
+                                        }
+
+                                        this.m_fullpropertynames.Add(row1 + "_" + row0, new ObjectProperty(row0, row1, row2, row3));
+                                    }
+                                }
+
+                                docClass = docProject.GetDefinition(docClass.BaseDefinition) as DocEntity;
+                            }
+                        }
+                    }
+                }
+            }
+
             this.m_stream = new System.IO.MemoryStream();
             this.Instances = instances;
             this.Markup = markup;

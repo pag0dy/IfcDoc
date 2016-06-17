@@ -20,16 +20,20 @@ namespace IfcDoc
     public partial class FormRule : Form
     {
         DocModelRule m_rule;
+        DocProject m_project;
+        DocTemplateDefinition m_template;
 
         public FormRule()
         {
             InitializeComponent();
         }
 
-        public FormRule(DocModelRule rule)
+        public FormRule(DocModelRule rule, DocProject project, DocTemplateDefinition template)
             : this()
         {
             this.m_rule = rule;
+            this.m_project = project;
+            this.m_template = template;
 
             this.Text = this.m_rule.Name;
             this.textBoxIdentifier.Text = this.m_rule.Identification;
@@ -75,7 +79,9 @@ namespace IfcDoc
 
         private void textBoxIdentifier_TextChanged(object sender, EventArgs e)
         {
-            this.m_rule.Identification = this.textBoxIdentifier.Text;
+            //this.m_rule.Identification = this.textBoxIdentifier.Text;
+
+            //this.m_rule.RenameParameter(this.textBoxIdentifier.Text, this.m_project, this.m_template);
         }
 
         private void comboBoxCardinality_SelectedIndexChanged(object sender, EventArgs e)
@@ -173,5 +179,18 @@ namespace IfcDoc
                     break;
             }
         }
+
+        private void buttonOK_Click(object sender, EventArgs e)
+        {
+            // update
+            if (this.m_rule.Identification != this.textBoxIdentifier.Text)
+            {
+                this.m_rule.RenameParameter(this.textBoxIdentifier.Text, this.m_project, this.m_template);
+            }
+
+            this.Close();
+        }
+
+        
     }
 }

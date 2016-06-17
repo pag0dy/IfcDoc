@@ -65,16 +65,20 @@ namespace IfcDoc.Schema.MVD
         [DataMember(Order = 0)] public List<ConceptTemplate> Templates = new List<ConceptTemplate>();
         [DataMember(Order = 1)] public List<ModelView> Views = new List<ModelView>();
 
+        [XmlAttribute("schemalocation", Namespace="http://www.w3.org/2001/XMLSchema-instance")]
+        public string schemalocation = "http://buildingsmart-tech.org/mvd/XML/1.1 http://www.buildingsmart-tech.org/mvd/XML/1.1/mvdXML_V1.1.xsd";
+
         // namespaces in order of attempts to load
         public static readonly string[] Namespaces = new string[]
         {
             DefaultNamespace,
             "http://buildingsmart-tech.org/mvdXML/mvdXML1-0",
             "http://buildingsmart-tech.org/mvdXML/mvdXML_V1-0",
-            "http://buildingsmart-tech.org/mvdXML/mvdXML1-1"
+            "http://buildingsmart-tech.org/mvdXML/mvdXML1-1",
+            "http://www.buildingsmart-tech.org/mvd/XML/1.1"
         };
 
-        public const string DefaultNamespace = "http://www.buildingsmart-tech.org/mvd/XML/1.1";
+        public const string DefaultNamespace = "http://buildingsmart-tech.org/mvd/XML/1.1";
     }
 
     [XmlType("ConceptTemplate")]
@@ -103,9 +107,9 @@ namespace IfcDoc.Schema.MVD
     public class Concept : Element
     {
         [DataMember(Order = 0)] public TemplateRef Template; // links to ConceptTemplate
-        [DataMember(Order = 1)] public List<ConceptRequirement> Requirements = new List<ConceptRequirement>();
+        [DataMember(Order = 1)] public List<ConceptRequirement> Requirements;
         //[DataMember(Order = 2)] public List<TemplateRule> Rules = new List<TemplateRule>();
-        [DataMember(Order = 2)] public TemplateRules TemplateRules = new TemplateRules();
+        [DataMember(Order = 2)] public TemplateRules TemplateRules;
         [DataMember(Order = 3)] public List<Concept> SubConcepts; // added v3.8
         [DataMember(Order = 4), XmlAttribute("override")] public bool Override; // added in v5.6
         [DataMember(Order = 5), XmlElement("baseConcept")] public BaseConcept BaseConcept;
@@ -159,28 +163,83 @@ namespace IfcDoc.Schema.MVD
         [DataMember(Order = 1), XmlElement("Link")] public List<Link> Links;
     }
 
-    public class Body : SEntity
+#if false
+    public class CDATA : IXmlSerializable
     {
-        [DataMember(Order = 0), XmlIgnore] public string Content;
-        [DataMember(Order = 1), XmlAttribute("lang")] public string Lang;
-        [DataMember(Order = 2), XmlAttribute("tags")] public string Tags;
+        private string text;
 
-        [XmlElement("")]
-        public System.Xml.XmlCDataSection ContentCData
+        public CDATA()
+        { 
+        }
+
+        public CDATA(string text)
         {
-            get
-            {
-                return new System.Xml.XmlDocument().CreateCDataSection(this.Content);
-            }
-            set
-            {
-                this.Content = value.Value;
-            }
+            this.text = text;
+        }
+
+        public string Text
+        {
+            get { return text; }
+        }
+
+        /// <summary>
+        /// Interface implementation not used here.
+        /// </summary>
+        System.Xml.Schema.XmlSchema IXmlSerializable.GetSchema()
+        {
+            return null;
+        }
+
+        /// <summary>
+        /// Interface implementation, which reads the content of the CDATA tag
+        /// </summary>
+        void IXmlSerializable.ReadXml(System.Xml.XmlReader reader)
+        {
+            this.text = reader.ReadElementString();
+        }
+
+        /// <summary>
+        /// Interface implementation, which writes the CDATA tag to the xml
+        /// </summary>
+        void IXmlSerializable.WriteXml(System.Xml.XmlWriter writer)
+        {
+            writer.WriteCData(this.text);
         }
     }
+#endif
 
-    [XmlType("Link")]
-    public class Link : SEntity
+    public class Body : SEntity,
+        IXmlSerializable
+    {
+        [DataMember(Order = 0), XmlText] public string Content;
+        [DataMember(Order = 1), XmlAttribute("lang")] public string Lang;
+        [DataMember(Order = 2), XmlAttribute("tags")] public string Tags;
+      
+        #region IXmlSerializable Members
+
+        public System.Xml.Schema.XmlSchema GetSchema()
+        {
+            return null;
+        }
+
+        public void ReadXml(System.Xml.XmlReader reader)
+        {
+            reader.ReadStartElement();
+            this.Content = reader.ReadString();
+            reader.ReadEndElement();
+        }
+
+        public void WriteXml(System.Xml.XmlWriter writer)
+        {
+            writer.WriteCData(this.Content);
+        }
+
+        #endregion
+    }
+
+    //[XmlType("Link")]
+    public class Link : SEntity,
+        IXmlSerializable
     {
         [DataMember(Order = 0), XmlAttribute("lang")] public string Lang;
         [DataMember(Order = 1), XmlAttribute("category")] public CategoryEnum Category;
@@ -188,18 +247,32 @@ namespace IfcDoc.Schema.MVD
         [DataMember(Order = 3), XmlAttribute("href")] public string Href;
         [DataMember(Order = 4), XmlIgnore] public string Content;
 
-        [XmlElement("")]
-        public System.Xml.XmlCDataSection ContentCData
+        #region IXmlSerializable Members
+
+        public System.Xml.Schema.XmlSchema GetSchema()
         {
-            get
-            {
-                return new System.Xml.XmlDocument().CreateCDataSection(this.Content);
-            }
-            set
-            {
-                this.Content = value.Value;
-            }
+            return null;
         }
+
+        public void ReadXml(System.Xml.XmlReader reader)
+        {
+            //... read attributes...
+
+            reader.ReadStartElement();
+            this.Content = reader.ReadString();
+            reader.ReadEndElement();
+        }
+
+        public void WriteXml(System.Xml.XmlWriter writer)
+        {
+            writer.WriteAttributeString("lang", this.Lang);
+            writer.WriteAttributeString("category", this.Category.ToString());
+            writer.WriteAttributeString("title", this.Title);
+            writer.WriteAttributeString("href", this.Href);
+            writer.WriteCData(this.Content);
+        }
+
+        #endregion
     }
 
     public enum CategoryEnum

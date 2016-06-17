@@ -95,13 +95,8 @@
             this.buttonApplicabilityAddEntity = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.tabPageProperty = new System.Windows.Forms.TabPage();
-            this.buttonPropertyEnumRemove = new System.Windows.Forms.Button();
-            this.buttonPropertyEnumInsert = new System.Windows.Forms.Button();
-            this.listViewPropertyEnums = new System.Windows.Forms.ListView();
-            this.columnHeaderPropertyEnum = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.labelPropertyEnumeration = new System.Windows.Forms.Label();
-            this.buttonPropertyData = new System.Windows.Forms.Button();
-            this.textBoxPropertyData = new System.Windows.Forms.TextBox();
+            this.buttonPropertyDataPrimary = new System.Windows.Forms.Button();
+            this.textBoxPropertyDataPrimary = new System.Windows.Forms.TextBox();
             this.labelPropertyType = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.comboBoxPropertyType = new System.Windows.Forms.ComboBox();
@@ -231,6 +226,9 @@
             this.imageListRules = new System.Windows.Forms.ImageList(this.components);
             this.openFileDialogIcon = new System.Windows.Forms.OpenFileDialog();
             this.openFileDialogExample = new System.Windows.Forms.OpenFileDialog();
+            this.buttonPropertyDataSecondary = new System.Windows.Forms.Button();
+            this.textBoxPropertyDataSecondary = new System.Windows.Forms.TextBox();
+            this.label18 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerTranslation)).BeginInit();
             this.splitContainerTranslation.Panel1.SuspendLayout();
             this.splitContainerTranslation.Panel2.SuspendLayout();
@@ -783,12 +781,11 @@
             // 
             // tabPageProperty
             // 
-            this.tabPageProperty.Controls.Add(this.buttonPropertyEnumRemove);
-            this.tabPageProperty.Controls.Add(this.buttonPropertyEnumInsert);
-            this.tabPageProperty.Controls.Add(this.listViewPropertyEnums);
-            this.tabPageProperty.Controls.Add(this.labelPropertyEnumeration);
-            this.tabPageProperty.Controls.Add(this.buttonPropertyData);
-            this.tabPageProperty.Controls.Add(this.textBoxPropertyData);
+            this.tabPageProperty.Controls.Add(this.buttonPropertyDataSecondary);
+            this.tabPageProperty.Controls.Add(this.textBoxPropertyDataSecondary);
+            this.tabPageProperty.Controls.Add(this.label18);
+            this.tabPageProperty.Controls.Add(this.buttonPropertyDataPrimary);
+            this.tabPageProperty.Controls.Add(this.textBoxPropertyDataPrimary);
             this.tabPageProperty.Controls.Add(this.labelPropertyType);
             this.tabPageProperty.Controls.Add(this.label4);
             this.tabPageProperty.Controls.Add(this.comboBoxPropertyType);
@@ -796,54 +793,18 @@
             this.tabPageProperty.Name = "tabPageProperty";
             this.tabPageProperty.UseVisualStyleBackColor = true;
             // 
-            // buttonPropertyEnumRemove
+            // buttonPropertyDataPrimary
             // 
-            resources.ApplyResources(this.buttonPropertyEnumRemove, "buttonPropertyEnumRemove");
-            this.buttonPropertyEnumRemove.Name = "buttonPropertyEnumRemove";
-            this.buttonPropertyEnumRemove.UseVisualStyleBackColor = true;
-            this.buttonPropertyEnumRemove.Click += new System.EventHandler(this.buttonPropertyEnumRemove_Click);
+            resources.ApplyResources(this.buttonPropertyDataPrimary, "buttonPropertyDataPrimary");
+            this.buttonPropertyDataPrimary.Name = "buttonPropertyDataPrimary";
+            this.buttonPropertyDataPrimary.UseVisualStyleBackColor = true;
+            this.buttonPropertyDataPrimary.Click += new System.EventHandler(this.buttonPropertyData_Click);
             // 
-            // buttonPropertyEnumInsert
+            // textBoxPropertyDataPrimary
             // 
-            resources.ApplyResources(this.buttonPropertyEnumInsert, "buttonPropertyEnumInsert");
-            this.buttonPropertyEnumInsert.Name = "buttonPropertyEnumInsert";
-            this.buttonPropertyEnumInsert.UseVisualStyleBackColor = true;
-            this.buttonPropertyEnumInsert.Click += new System.EventHandler(this.buttonPropertyEnumInsert_Click);
-            // 
-            // listViewPropertyEnums
-            // 
-            resources.ApplyResources(this.listViewPropertyEnums, "listViewPropertyEnums");
-            this.listViewPropertyEnums.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeaderPropertyEnum});
-            this.listViewPropertyEnums.LabelEdit = true;
-            this.listViewPropertyEnums.Name = "listViewPropertyEnums";
-            this.listViewPropertyEnums.UseCompatibleStateImageBehavior = false;
-            this.listViewPropertyEnums.View = System.Windows.Forms.View.Details;
-            this.listViewPropertyEnums.AfterLabelEdit += new System.Windows.Forms.LabelEditEventHandler(this.listViewPropertyEnums_AfterLabelEdit);
-            this.listViewPropertyEnums.SelectedIndexChanged += new System.EventHandler(this.listViewPropertyEnums_SelectedIndexChanged);
-            // 
-            // columnHeaderPropertyEnum
-            // 
-            resources.ApplyResources(this.columnHeaderPropertyEnum, "columnHeaderPropertyEnum");
-            // 
-            // labelPropertyEnumeration
-            // 
-            resources.ApplyResources(this.labelPropertyEnumeration, "labelPropertyEnumeration");
-            this.labelPropertyEnumeration.Name = "labelPropertyEnumeration";
-            // 
-            // buttonPropertyData
-            // 
-            resources.ApplyResources(this.buttonPropertyData, "buttonPropertyData");
-            this.buttonPropertyData.Name = "buttonPropertyData";
-            this.buttonPropertyData.UseVisualStyleBackColor = true;
-            this.buttonPropertyData.Click += new System.EventHandler(this.buttonPropertyData_Click);
-            // 
-            // textBoxPropertyData
-            // 
-            resources.ApplyResources(this.textBoxPropertyData, "textBoxPropertyData");
-            this.textBoxPropertyData.Name = "textBoxPropertyData";
-            this.textBoxPropertyData.ReadOnly = true;
-            this.textBoxPropertyData.TextChanged += new System.EventHandler(this.textBoxPropertyData_TextChanged);
+            resources.ApplyResources(this.textBoxPropertyDataPrimary, "textBoxPropertyDataPrimary");
+            this.textBoxPropertyDataPrimary.Name = "textBoxPropertyDataPrimary";
+            this.textBoxPropertyDataPrimary.ReadOnly = true;
             // 
             // labelPropertyType
             // 
@@ -1659,6 +1620,7 @@
             resources.ApplyResources(this.textBoxExample, "textBoxExample");
             this.textBoxExample.Name = "textBoxExample";
             this.textBoxExample.ReadOnly = true;
+            this.textBoxExample.TextChanged += new System.EventHandler(this.textBoxExample_TextChanged);
             // 
             // toolStrip4
             // 
@@ -2033,6 +1995,24 @@
             this.openFileDialogExample.DefaultExt = "ifc";
             resources.ApplyResources(this.openFileDialogExample, "openFileDialogExample");
             // 
+            // buttonPropertyDataSecondary
+            // 
+            resources.ApplyResources(this.buttonPropertyDataSecondary, "buttonPropertyDataSecondary");
+            this.buttonPropertyDataSecondary.Name = "buttonPropertyDataSecondary";
+            this.buttonPropertyDataSecondary.UseVisualStyleBackColor = true;
+            this.buttonPropertyDataSecondary.Click += new System.EventHandler(this.buttonPropertyDataSecondary_Click);
+            // 
+            // textBoxPropertyDataSecondary
+            // 
+            resources.ApplyResources(this.textBoxPropertyDataSecondary, "textBoxPropertyDataSecondary");
+            this.textBoxPropertyDataSecondary.Name = "textBoxPropertyDataSecondary";
+            this.textBoxPropertyDataSecondary.ReadOnly = true;
+            // 
+            // label18
+            // 
+            resources.ApplyResources(this.label18, "label18");
+            this.label18.Name = "label18";
+            // 
             // CtlProperties
             // 
             resources.ApplyResources(this, "$this");
@@ -2131,8 +2111,8 @@
         private System.Windows.Forms.TabPage tabPageProperty;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox comboBoxPropertyType;
-        private System.Windows.Forms.Button buttonPropertyData;
-        private System.Windows.Forms.TextBox textBoxPropertyData;
+        private System.Windows.Forms.Button buttonPropertyDataPrimary;
+        private System.Windows.Forms.TextBox textBoxPropertyDataPrimary;
         private System.Windows.Forms.Label labelPropertyType;
         private System.Windows.Forms.TabPage tabPageEntity;
         private System.Windows.Forms.Button buttonEntityBase;
@@ -2166,7 +2146,6 @@
         private System.Windows.Forms.Label labelAttributeAggregation;
         private System.Windows.Forms.TabPage tabPageExpression;
         private System.Windows.Forms.TextBox textBoxExpression;
-        private System.Windows.Forms.Label labelPropertyEnumeration;
         private System.Windows.Forms.TabPage tabPageQuantity;
         private System.Windows.Forms.Label labelQuantityType;
         private System.Windows.Forms.ComboBox comboBoxQuantityType;
@@ -2178,10 +2157,6 @@
         private System.Windows.Forms.ColumnHeader columnHeaderPsetEntity;
         private System.Windows.Forms.ColumnHeader columnHeaderPsetPredefined;
         private System.Windows.Forms.Button buttonPsetApplicabilityDelete;
-        private System.Windows.Forms.Button buttonPropertyEnumRemove;
-        private System.Windows.Forms.Button buttonPropertyEnumInsert;
-        private System.Windows.Forms.ListView listViewPropertyEnums;
-        private System.Windows.Forms.ColumnHeader columnHeaderPropertyEnum;
         private System.Windows.Forms.TabPage tabPageExchange;
         private System.Windows.Forms.CheckBox checkBoxExchangeExport;
         private System.Windows.Forms.CheckBox checkBoxExchangeImport;
@@ -2309,5 +2284,8 @@
         private System.Windows.Forms.ToolStripButton toolStripButtonFormatNone;
         private System.Windows.Forms.CheckBox checkBoxPublishUML;
         private System.Windows.Forms.CheckBox checkBoxPublishExchangeTables;
+        private System.Windows.Forms.Button buttonPropertyDataSecondary;
+        private System.Windows.Forms.TextBox textBoxPropertyDataSecondary;
+        private System.Windows.Forms.Label label18;
     }
 }

@@ -11,8 +11,7 @@ using IfcDoc.Schema.DOC;
 namespace IfcDoc
 {
     public class FormatOWL : 
-        IFormatExtension,
-        IFormatData
+        IFormatExtension
     {
         public static HashSet<string> listPropertiesOutput = new HashSet<string>();
         public static HashSet<string> addedIndividuals = new HashSet<string>();
@@ -852,13 +851,6 @@ namespace IfcDoc
             }
             listPropertiesOutput.Clear();
             return sb.ToString();
-        }
-
-        //UNUSED!!!! => Use FormatTTL_Stream.FormatData() instead
-        public string FormatData(DocPublication docPublication, DocExchangeDefinition docExchange, Dictionary<string, DocObject> map, Dictionary<long, SEntity> instances, SEntity root, bool markup)
-        {
-            //UNUSED!!!! => Use FormatTTL_Stream.FormatData() instead
-            return null;
         }
     }
 }

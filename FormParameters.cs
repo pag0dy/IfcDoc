@@ -13,6 +13,8 @@ namespace IfcDoc
 {
     public partial class FormParameters : Form
     {
+        DocModelRuleAttribute m_attr;
+
         public FormParameters()
         {
             InitializeComponent();
@@ -75,6 +77,59 @@ namespace IfcDoc
             set
             {
                 this.ctlParameters.CurrentInstance = value;
+            }
+        }
+
+        private void comboBoxTemplate_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            DocModelRuleEntity sel = this.comboBoxTemplate.SelectedItem as DocModelRuleEntity;
+            if (sel == null)
+                return;
+
+            if (sel.References.Count > 0)
+            {
+                DocTemplateDefinition docTemplateInner = sel.References[0];
+                DocTemplateUsage docConceptInner = ((DocTemplateItem)this.ConceptItem).RegisterParameterConcept(this.ConceptAttr.Identification, docTemplateInner);
+                this.ConceptLeaf = docConceptInner;
+            }
+        }
+
+        public DocModelRuleAttribute ConceptAttr 
+        {
+            get
+            {
+                return this.m_attr;
+            }
+            set
+            {
+                this.m_attr = value;
+
+                this.comboBoxTemplate.Items.Clear();
+                if (this.m_attr == null)
+                    return;
+
+                foreach(DocModelRule rule in this.m_attr.Rules)
+                {
+                    this.comboBoxTemplate.Items.Add(rule);
+                }
+                this.comboBoxTemplate.SelectedIndex = 0;
+
+                /*
+                if (dma.Rules.Count > 0 && dma.Rules[0] is DocModelRuleEntity)
+                {
+                    DocModelRuleEntity dme = (DocModelRuleEntity)dma.Rules[0];
+                    if (dme.References.Count == 1)
+                    {
+                        docTemplateInner = dme.References[0];
+
+                        if (dma.Rules.Count > 1)
+                        {
+                            // prompt user to select which template...
+                        }
+                    }
+                }
+                 */
+
             }
         }
     }

@@ -1111,7 +1111,11 @@ namespace IfcDoc.Format.PNG
                                                 if (format == DiagramFormat.ExpressG)
                                                 {
                                                     string caption = docAttr.Name;
-                                                    if (!String.IsNullOrEmpty(docAttr.Inverse))
+                                                    if(!String.IsNullOrEmpty(docAttr.Derived))
+                                                    {
+                                                        caption = "(DER) " + caption;
+                                                    }
+                                                    else if (!String.IsNullOrEmpty(docAttr.Inverse))
                                                     {
                                                         caption = "(" + docAttr.DefinedType + "." + docAttr.Inverse + ")\r\n(INV) " + caption;
                                                     }

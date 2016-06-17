@@ -973,7 +973,7 @@ namespace IfcDoc.Format.SPF
 
             // value types
             Type typewrap = null;
-            while (type.IsValueType && !type.IsPrimitive)
+            while (type.IsValueType && !type.IsPrimitive && !type.IsEnum)
             {
                 FieldInfo fieldValue = type.GetField("Value");
                 if (fieldValue != null)
@@ -1761,7 +1761,7 @@ namespace IfcDoc.Format.SPF
             FILE_NAME hName = new FILE_NAME();
             hName.Name = filename;
             hName.OriginatingSystem = "buildingSMART IFC Documentation Generator";
-            hName.PreprocessorVersion = "buildingSMART IFCDOC 10.2"; // was "buildingSMART IFCDOC" for 2.7 and earlier;
+            hName.PreprocessorVersion = "buildingSMART IFCDOC 10.4"; // was "buildingSMART IFCDOC" for 2.7 and earlier;
             //hName.Author.Add(System.Environment.UserName);
             //hName.Organization.Add(System.Environment.UserDomainName);
             hName.Timestamp = DateTime.UtcNow;

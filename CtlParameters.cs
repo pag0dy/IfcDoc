@@ -523,22 +523,23 @@ namespace IfcDoc
 
                 DocTemplateDefinition docTemplateInner = null;
                 DocModelRule docRule = this.m_columns[e.ColumnIndex];
+                DocModelRuleAttribute dma = null;
                 if(docRule is DocModelRuleAttribute)
                 {
-                    DocModelRuleAttribute dma = (DocModelRuleAttribute)docRule;
+                    dma = (DocModelRuleAttribute)docRule;
                     if (dma.Rules.Count > 0 && dma.Rules[0] is DocModelRuleEntity)
                     {
                         DocModelRuleEntity dme = (DocModelRuleEntity)dma.Rules[0];
-                        if(dme.References.Count == 1)
+                        if (dme.References.Count == 1)
                         {
                             docTemplateInner = dme.References[0];
 
-                            if(dma.Rules.Count > 1)
+                            //if (dma.Rules.Count > 1)
                             {
                                 // prompt user to select which template...
                             }
                         }
-                    }
+                    }                    
                 }
 
                 if (docTemplateInner != null)
@@ -553,6 +554,8 @@ namespace IfcDoc
                             form.Project = this.m_project;
                             form.ConceptRoot = this.m_conceptroot;
                             form.ConceptItem = docConceptItem;
+                            form.ConceptAttr = dma;
+
                             form.ConceptLeaf = docConceptInner;
                             form.CurrentInstance = this.m_instance;
                             form.ShowDialog(this);

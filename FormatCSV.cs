@@ -18,6 +18,7 @@ namespace IfcDoc
         string m_filename;
         DocProject m_project;
         string[] m_locales;
+        DocDefinitionScopeEnum m_scope;
 
         public FormatCSV(string filename)
         {
@@ -48,6 +49,18 @@ namespace IfcDoc
             set
             {
                 this.m_locales = value;
+            }
+        }
+
+        public DocDefinitionScopeEnum Scope
+        {
+            get
+            {
+                return this.m_scope;
+            }
+            set
+            {
+                this.m_scope = value;
             }
         }
 
@@ -276,42 +289,57 @@ namespace IfcDoc
 
                 if (docEntity is DocEntity)
                 {
-                    DocEntity docEnt = (DocEntity)docEntity;
-                    foreach(DocAttribute docAttr in docEnt.Attributes)
+                    if ((this.m_scope & DocDefinitionScopeEnum.EntityAttribute) != 0)
                     {
-                        WriteItem(writer, docAttr, 1, docEntity.Name);
+                        DocEntity docEnt = (DocEntity)docEntity;
+                        foreach (DocAttribute docAttr in docEnt.Attributes)
+                        {
+                            WriteItem(writer, docAttr, 1, docEntity.Name);
+                        }
                     }
                 }
                 else if (docEntity is DocEnumeration)
                 {
-                    DocEnumeration docEnum = (DocEnumeration)docEntity;
-                    foreach(DocConstant docConst in docEnum.Constants)
+                    if ((this.m_scope & DocDefinitionScopeEnum.TypeConstant) != 0)
                     {
-                        WriteItem(writer, docConst, 1, docEntity.Name);
+                        DocEnumeration docEnum = (DocEnumeration)docEntity;
+                        foreach (DocConstant docConst in docEnum.Constants)
+                        {
+                            WriteItem(writer, docConst, 1, docEntity.Name);
+                        }
                     }
                 }
                 else if(docEntity is DocPropertySet)
                 {
-                    DocPropertySet docPset = (DocPropertySet)docEntity;
-                    foreach(DocProperty docProp in docPset.Properties)
+                    if ((this.m_scope & DocDefinitionScopeEnum.PsetProperty) != 0)
                     {
-                        WriteItem(writer, docProp, 1, docEntity.Name);
+                        DocPropertySet docPset = (DocPropertySet)docEntity;
+                        foreach (DocProperty docProp in docPset.Properties)
+                        {
+                            WriteItem(writer, docProp, 1, docEntity.Name);
+                        }
                     }
                 }
                 else if(docEntity is DocPropertyEnumeration)
                 {
-                    DocPropertyEnumeration docPE = (DocPropertyEnumeration)docEntity;
-                    foreach(DocPropertyConstant docPC in docPE.Constants)
+                    if ((this.m_scope & DocDefinitionScopeEnum.PEnumConstant) != 0)
                     {
-                        WriteItem(writer, docPC, 1, docEntity.Name);
+                        DocPropertyEnumeration docPE = (DocPropertyEnumeration)docEntity;
+                        foreach (DocPropertyConstant docPC in docPE.Constants)
+                        {
+                            WriteItem(writer, docPC, 1, docEntity.Name);
+                        }
                     }
                 }
                 else if(docEntity is DocQuantitySet)
                 {
-                    DocQuantitySet docQset = (DocQuantitySet)docEntity;
-                    foreach(DocQuantity docQuan in docQset.Quantities)
+                    if ((this.m_scope & DocDefinitionScopeEnum.QsetQuantity) != 0)
                     {
-                        WriteItem(writer, docQuan, 1, docEntity.Name);
+                        DocQuantitySet docQset = (DocQuantitySet)docEntity;
+                        foreach (DocQuantity docQuan in docQset.Quantities)
+                        {
+                            WriteItem(writer, docQuan, 1, docEntity.Name);
+                        }
                     }
                 }
             }
@@ -351,31 +379,45 @@ namespace IfcDoc
                 {
                     foreach (DocSchema docSchema in docSection.Schemas)
                     {
-                        foreach (DocEntity docEntity in docSchema.Entities) // have attributes
+                        if ((this.m_scope & DocDefinitionScopeEnum.Entity) != 0)
                         {
-                            sortlistEntity.Add(docEntity.Name, docEntity);
+                            foreach (DocEntity docEntity in docSchema.Entities) // have attributes
+                            {
+                                sortlistEntity.Add(docEntity.Name, docEntity);
+                            }
                         }
 
-                        foreach (DocType docEntity in docSchema.Types) //docEnumeration docConstant
+                        if ((this.m_scope & DocDefinitionScopeEnum.Type) != 0)
                         {
-                            sortlistType.Add(docEntity.Name, docEntity);
+                            foreach (DocType docEntity in docSchema.Types) //docEnumeration docConstant
+                            {
+                                sortlistType.Add(docEntity.Name, docEntity);
+                            }
                         }
 
-                        foreach (DocPropertyEnumeration docPE in docSchema.PropertyEnums) //docPropertyConstant
+                        if ((this.m_scope & DocDefinitionScopeEnum.PEnum) != 0)
                         {
-                            sortlistEnum.Add(docPE.Name, docPE);
+                            foreach (DocPropertyEnumeration docPE in docSchema.PropertyEnums) //docPropertyConstant
+                            {
+                                sortlistEnum.Add(docPE.Name, docPE);
+                            }
                         }
 
-                        foreach (DocPropertySet docPset in docSchema.PropertySets) //Property
+                        if ((this.m_scope & DocDefinitionScopeEnum.Pset) != 0)
                         {
-                            sortlistPset.Add(docPset.Name, docPset);
+                            foreach (DocPropertySet docPset in docSchema.PropertySets) //Property
+                            {
+                                sortlistPset.Add(docPset.Name, docPset);
+                            }
                         }
 
-                        foreach (DocQuantitySet docQset in docSchema.QuantitySets) //Quantities
+                        if ((this.m_scope & DocDefinitionScopeEnum.Qset) != 0)
                         {
-                            sortlistQset.Add(docQset.Name, docQset);
+                            foreach (DocQuantitySet docQset in docSchema.QuantitySets) //Quantities
+                            {
+                                sortlistQset.Add(docQset.Name, docQset);
+                            }
                         }
-
                     }
                 }
 

@@ -455,7 +455,7 @@ namespace IfcDoc.Schema.DOC
 
         //[DisplayName("TTL")]
         [Description("ifcOWL Web Ontology Language (OWL)")]
-        TTL = 4,
+        OWL = 4, // for transition, keep identifier as OWL for now so existing .ifcdoc files still work
 
         //[DisplayName("Java")]
         [Description("Java Programming Language")]
@@ -582,7 +582,7 @@ namespace IfcDoc.Schema.DOC
                     case DocFormatSchemaEnum.SQL:
                         return "sql";
 
-                    case DocFormatSchemaEnum.TTL:
+                    case DocFormatSchemaEnum.OWL:
                         return "owl";
                 }
                 return "txt"; // fallback if unknown
@@ -610,7 +610,7 @@ namespace IfcDoc.Schema.DOC
                     case DocFormatSchemaEnum.SQL:
                         return "csv";
 
-                    case DocFormatSchemaEnum.TTL:
+                    case DocFormatSchemaEnum.OWL:
                         return "ttl";
 
                 }
@@ -680,7 +680,7 @@ namespace IfcDoc.Schema.DOC
                 if (this._Formats.Count == 2)
                 {
                     this._Formats.Add(new DocFormat(DocFormatSchemaEnum.SQL, DocFormatOptionEnum.None));
-                    this._Formats.Add(new DocFormat(DocFormatSchemaEnum.TTL, DocFormatOptionEnum.Examples));
+                    this._Formats.Add(new DocFormat(DocFormatSchemaEnum.OWL, DocFormatOptionEnum.None));
                     this._Formats.Add(new DocFormat(DocFormatSchemaEnum.JSON, DocFormatOptionEnum.None));
                     this._Formats.Add(new DocFormat(DocFormatSchemaEnum.CS, DocFormatOptionEnum.None));
                 }
@@ -2951,17 +2951,66 @@ namespace IfcDoc.Schema.DOC
     public abstract class DocModelRule : SEntity,
         ICloneable// abstract in IfcDoc 2.7
     {
-        [DataMember(Order = 0)] public string Name; // the attribute or entity name, case-sensitive
-        [DataMember(Order = 1)] public string Description; // used as human description on template rules; otherwise holds special encodings
-        [DataMember(Order = 2)] public string Identification; // the template parameter ID
-        [DataMember(Order = 3)] public List<DocModelRule> Rules; // subrules
+        [DataMember(Order = 0)] private string _Name; // the attribute or entity name, case-sensitive
+        [DataMember(Order = 1)] private string _Description; // used as human description on template rules; otherwise holds special encodings
+        [DataMember(Order = 2)] private string _Identification; // the template parameter ID
+        [DataMember(Order = 3)] private List<DocModelRule> _Rules; // subrules
         //[DataMember(Order = 4)] public DocModelRuleTypeEnum Type; // deleted in IfcDoc 2.7        
         [DataMember(Order = 4), Obsolete] public int CardinalityMin; // -1 means undefined // added in IfcDoc 3.3 ; DEPRECATED
         [DataMember(Order = 5), Obsolete] public int CardinalityMax; // -1 means unbounded // added in IfcDoc 3.3 ; DEPRECATED
 
         public DocModelRule()
         {
-            this.Rules = new List<DocModelRule>();
+            this._Rules = new List<DocModelRule>();
+        }
+
+        public string Name
+        {
+            get
+            {
+                return this._Name;
+            }
+            set
+            {
+                this._Name = value;
+            }
+        }
+
+        public string Description
+        {
+            get
+            {
+                return this._Description;
+            }
+            set
+            {
+                this._Description = value;
+            }
+        }
+
+        public string Identification
+        {
+            get
+            {
+                return this._Identification;
+            }
+            set
+            {
+                this._Identification = value;  // carefull -- when renaming, also check
+            }
+        }
+
+        public List<DocModelRule> Rules
+        {
+            get
+            {
+                return this._Rules;
+            }
+        }
+
+        public override string ToString()
+        {
+            return this.Name;
         }
 
         public override void Delete()
@@ -3078,6 +3127,33 @@ namespace IfcDoc.Schema.DOC
                 }
             }
         }
+
+        public void RenameParameter(string identification, DocProject docProject, DocTemplateDefinition docTemplateDefinition)
+        {
+
+            if (String.IsNullOrEmpty(this.Identification))
+            {
+                // setting, nothing to rename
+                this.Identification = identification;
+                return;
+            }
+
+            // otherwise renaming or clearing
+            foreach(DocModelView docView in docProject.ModelViews)
+            {
+                foreach(DocConceptRoot docRoot in docView.ConceptRoots)
+                {
+                    foreach(DocTemplateUsage docConcept in docRoot.Concepts)
+                    {
+                        docConcept.RenameParameter(docTemplateDefinition, this.Identification, identification);
+                    }
+                }
+            }
+
+            // now update
+            this.Identification = identification;
+        }
+        
     }
 
     public class DocModelRuleAttribute : DocModelRule
@@ -5117,6 +5193,37 @@ namespace IfcDoc.Schema.DOC
             base.Delete();
         }
 
+        public void RenameParameter(DocTemplateDefinition template, string oldid, string newid)
+        {
+            if (this.Definition == template)
+            {
+                foreach (DocTemplateItem docItem in this.Items)
+                {
+                    DocExpression[] expressions = docItem.GetParameterExpressions();
+                    if(expressions != null)
+                    {
+                        for(int i = 0; i < expressions.Length; i++)
+                        {
+                            DocExpression expr = expressions[i];
+                            if (expr.Name == oldid)
+                            {
+                                // rename it
+                                expr.Name = newid;
+                                docItem.SetParameterExpressions(expressions);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+
+            // subitems
+            foreach(DocTemplateUsage docSub in this.Concepts)
+            {
+                docSub.RenameParameter(template, oldid, newid);
+            }
+        }
+
         public void ResetValidation()
         {
             this.Validation = null;
@@ -5274,7 +5381,7 @@ namespace IfcDoc.Schema.DOC
         LESS_THAN_OR_EQUAL = 5,
     }
 
-    public class DocExpression : SEntity
+    public class DocExpression //: SEntity
     {
         [DataMember(Order = 0)] public string Name;
         [DataMember(Order = 1)] public DocMetricEnum Metric;
@@ -5453,6 +5560,22 @@ namespace IfcDoc.Schema.DOC
             return expr;
         }
 
+        public void SetParameterExpressions(DocExpression[] expressions)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (DocExpression exp in expressions)
+            {
+                if (!String.IsNullOrEmpty(exp.Name)) // null if deleted
+                {
+                    sb.Append(exp.Name);
+                    sb.Append("=");
+                    sb.Append(exp.Value);
+                    sb.Append(";");
+                }
+            }
+            this.RuleParameters = sb.ToString();
+        }
+
         /// <summary>
         /// Returns mvdXML-formatted expression for all parameters
         /// </summary>
@@ -5594,6 +5717,8 @@ namespace IfcDoc.Schema.DOC
 
             return false;
         }
+
+
     }
   
     /// <summary>
@@ -6315,6 +6440,86 @@ namespace IfcDoc.Schema.DOC
 
             this.Entities.Clear();
             this.Entities.AddRange(sortEntity.Values);
+        }
+
+        /// <summary>
+        /// Sorts function list according to alphabetical name
+        /// </summary>
+        public void SortFunctions()
+        {
+            SortedList<string, DocFunction> sortEntity = new SortedList<string, DocFunction>();
+
+            foreach (DocFunction docType in this.Functions)
+            {
+                sortEntity.Add(docType.Name, docType);
+            }
+
+            this.Functions.Clear();
+            this.Functions.AddRange(sortEntity.Values);
+        }
+
+        /// <summary>
+        /// Sorts function list according to alphabetical name
+        /// </summary>
+        public void SortGlobalRules()
+        {
+            SortedList<string, DocGlobalRule> sortEntity = new SortedList<string, DocGlobalRule>();
+
+            foreach (DocGlobalRule docType in this.GlobalRules)
+            {
+                sortEntity.Add(docType.Name, docType);
+            }
+
+            this.GlobalRules.Clear();
+            this.GlobalRules.AddRange(sortEntity.Values);
+        }
+
+        /// <summary>
+        /// Sorts property sets list according to alphabetical name
+        /// </summary>
+        public void SortPropertySets()
+        {
+            SortedList<string, DocPropertySet> sortEntity = new SortedList<string, DocPropertySet>();
+
+            foreach (DocPropertySet docType in this.PropertySets)
+            {
+                sortEntity.Add(docType.Name, docType);
+            }
+
+            this.PropertySets.Clear();
+            this.PropertySets.AddRange(sortEntity.Values);
+        }
+
+        /// <summary>
+        /// Sorts property sets list according to alphabetical name
+        /// </summary>
+        public void SortPropertyEnums()
+        {
+            SortedList<string, DocPropertyEnumeration> sortEntity = new SortedList<string, DocPropertyEnumeration>();
+
+            foreach (DocPropertyEnumeration docType in this.PropertyEnums)
+            {
+                sortEntity.Add(docType.Name, docType);
+            }
+
+            this.PropertyEnums.Clear();
+            this.PropertyEnums.AddRange(sortEntity.Values);
+        }
+
+        /// <summary>
+        /// Sorts quantity sets list according to alphabetical name
+        /// </summary>
+        public void SortQuantitySets()
+        {
+            SortedList<string, DocQuantitySet> sortEntity = new SortedList<string, DocQuantitySet>();
+
+            foreach (DocQuantitySet docType in this.QuantitySets)
+            {
+                sortEntity.Add(docType.Name, docType);
+            }
+
+            this.QuantitySets.Clear();
+            this.QuantitySets.AddRange(sortEntity.Values);
         }
 
         public int GetDefinitionPageNumber(DocDefinition docEntity)
@@ -8143,6 +8348,28 @@ namespace IfcDoc.Schema.DOC
         }
     }
 
+    [Flags]
+    public enum DocDefinitionScopeEnum
+    {
+        None = 0,
+
+        Type = 0x10,
+        TypeConstant = 0x01,
+        Entity = 0x20,
+        EntityAttribute = 0x02,
+
+        Pset = 0x40,
+        PsetProperty = 0x04,
+
+        PEnum = 0x80,
+        PEnumConstant = 0x88,
+
+        Qset = 0x1000,
+        QsetQuantity = 0x0100,
+
+        Default = 0xFFFF,
+    }
+
     /// <summary>
     /// Formats instance data
     /// </summary>
@@ -8156,7 +8383,7 @@ namespace IfcDoc.Schema.DOC
         /// <param name="instance">The root object instance (IfcProject).</param>
         /// <param name="markup">If true, generate HTML markup with output</param>
         /// <returns></returns>
-        string FormatData(DocPublication docPublication, DocExchangeDefinition docExchange, Dictionary<string, DocObject> map, Dictionary<long, SEntity> instances, SEntity root, bool markup);
+        string FormatData(DocProject docProject, DocPublication docPublication, DocExchangeDefinition docExchange, Dictionary<string, DocObject> map, Dictionary<long, SEntity> instances, SEntity root, bool markup);
     }
 
     /// <summary>
@@ -8183,7 +8410,6 @@ namespace IfcDoc.Schema.DOC
         /// </summary>
         /// <param name="docSelect"></param>
         /// <returns></returns>
-
         string FormatSelect(DocSelect docSelect, Dictionary<string, DocObject> map, Dictionary<DocObject, bool> included);
 
         /// <summary>

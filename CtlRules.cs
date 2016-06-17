@@ -558,7 +558,7 @@ namespace IfcDoc
                 }
                 else
                 {
-                    using (FormRule form = new FormRule(docRule))
+                    using (FormRule form = new FormRule(docRule, this.m_project, this.m_template))
                     {
                         form.ShowDialog(this);
                     }

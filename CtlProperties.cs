@@ -47,528 +47,531 @@ namespace IfcDoc
             }
 
             this.m_loadall = true;
-
-            this.m_target = path[path.Length-1];
-            if (path.Length > 1)
+            try
             {
-                this.m_parent = path[path.Length - 2];
-            }
-            this.m_project = docProject;
-            this.m_map = new Dictionary<string, DocObject>();
 
-            DocObject docObject = this.m_target;
-
-            this.toolStripButtonTranslationRemove.Enabled = false;
-
-            // build map
-            foreach (DocSection docSection in this.m_project.Sections)
-            {
-                foreach (DocSchema docSchema in docSection.Schemas)
+                this.m_target = path[path.Length - 1];
+                if (path.Length > 1)
                 {
-                    foreach (DocEntity docEntity in docSchema.Entities)
+                    this.m_parent = path[path.Length - 2];
+                }
+                this.m_project = docProject;
+                this.m_map = new Dictionary<string, DocObject>();
+
+                DocObject docObject = this.m_target;
+
+                this.toolStripButtonTranslationRemove.Enabled = false;
+
+                // build map
+                foreach (DocSection docSection in this.m_project.Sections)
+                {
+                    foreach (DocSchema docSchema in docSection.Schemas)
                     {
-                        if(!this.m_map.ContainsKey(docEntity.Name))
+                        foreach (DocEntity docEntity in docSchema.Entities)
                         {
-                            this.m_map.Add(docEntity.Name, docEntity);
-                        }
-                    }
-
-                    foreach (DocType docType in docSchema.Types)
-                    {
-                        if(!this.m_map.ContainsKey(docType.Name))
-                        {
-                            this.m_map.Add(docType.Name, docType);
-                        }
-                    }
-                }
-            }                
-
-            // General pages applies to all definitions
-            this.tabControl.TabPages.Add(this.tabPageGeneral);
-
-            this.textBoxGeneralName.Enabled = false;
-            this.textBoxGeneralName.Text = docObject.Name;
-            this.textBoxGeneralDescription.Text = docObject.Documentation;
-
-            this.listViewLocale.Items.Clear();
-            foreach (DocLocalization docLocal in docObject.Localization)
-            {
-                ListViewItem lvi = new ListViewItem();
-                lvi.Tag = docLocal;
-                lvi.Text = docLocal.Locale;
-                lvi.SubItems.Add(docLocal.Name);
-                lvi.SubItems.Add(docLocal.Documentation);
-                this.listViewLocale.Items.Add(lvi);
-            }
-
-            this.tabControl.TabPages.Add(this.tabPageIdentity);
-            this.textBoxIdentityUuid.Text = docObject.Uuid.ToString();
-            this.textBoxIdentityCode.Text = docObject.Code;
-            this.textBoxIdentityVersion.Text = docObject.Version;
-            this.comboBoxIdentityStatus.Text = docObject.Status;
-            this.textBoxIdentityAuthor.Text = docObject.Author;
-            this.textBoxIdentityOwner.Text = docObject.Owner;
-            this.textBoxIdentityCopyright.Text = docObject.Copyright;
-
-            if (docObject is DocModelView)
-            {
-                this.tabControl.TabPages.Add(this.tabPageView);
-
-                DocModelView docView = (DocModelView)docObject;
-                this.checkBoxViewIncludeAll.Checked = docView.IncludeAllDefinitions;
-                this.textBoxViewRoot.Text = docView.RootEntity;
-
-                if (docView.BaseView != null)
-                {
-                    this.textBoxViewBase.Text = docView.BaseView;
-                    try
-                    {
-                        Guid guidView = new Guid(docView.BaseView);
-                        DocModelView docViewBase = this.m_project.GetView(guidView);
-                        if (docViewBase != null)
-                        {
-                            this.textBoxViewBase.Text = docViewBase.Name;
-                        }
-                    }
-                    catch
-                    {
-                    }
-                }
-                else
-                {
-                    this.textBoxViewBase.Text = string.Empty;
-                }
-
-                this.textBoxViewXsdNamespace.Text = docView.XsdUri;
-                if (docView.XsdFormats != null)
-                {
-                    foreach (DocXsdFormat docFormat in docView.XsdFormats)
-                    {
-                        ListViewItem lvi = new ListViewItem();
-                        lvi.Tag = docFormat;
-                        lvi.Text = docFormat.Entity;
-                        lvi.SubItems.Add(docFormat.Attribute);
-                        lvi.SubItems.Add(docFormat.XsdFormat.ToString());
-                        lvi.SubItems.Add(docFormat.XsdTagless.ToString());
-
-                        this.listViewViewXsd.Items.Add(lvi);
-                    }
-                }
-
-                this.panelIdentityIcon.Visible = true;
-                if (docView.Icon != null)
-                {
-                    try
-                    {
-                        this.panelIcon.BackgroundImage = Image.FromStream(new System.IO.MemoryStream(docView.Icon));
-                    }
-                    catch
-                    {
-                    }
-                }
-                else
-                {
-                    this.panelIcon.BackgroundImage = null;
-                }
-
-            }
-            else if (docObject is DocExchangeDefinition)
-            {
-                this.tabControl.TabPages.Add(this.tabPageExchange);
-
-                DocExchangeDefinition docExchange = (DocExchangeDefinition)docObject;
-                this.checkBoxExchangeImport.Checked = ((docExchange.Applicability & DocExchangeApplicabilityEnum.Import) != 0);
-                this.checkBoxExchangeExport.Checked = ((docExchange.Applicability & DocExchangeApplicabilityEnum.Export) != 0);
-
-                this.panelIdentityIcon.Visible = true;
-                if (docExchange.Icon != null)
-                {
-                    try
-                    {
-                        this.panelIcon.BackgroundImage = Image.FromStream(new System.IO.MemoryStream(docExchange.Icon));
-                    }
-                    catch
-                    {
-                    }
-                }
-                else
-                {
-                    this.panelIcon.BackgroundImage = null;
-                }
-
-                this.comboBoxExchangeClassProcess.Text = docExchange.ExchangeClass;
-                this.comboBoxExchangeClassSender.Text = docExchange.SenderClass;
-                this.comboBoxExchangeClassReceiver.Text = docExchange.ReceiverClass;
-            }
-            else if (docObject is DocTemplateDefinition)
-            {
-                this.tabControl.TabPages.Add(this.tabPageTemplate);
-                DocTemplateDefinition docTemplate = (DocTemplateDefinition)docObject;
-
-                this.tabControl.TabPages.Add(this.tabPageOperations);
-
-                this.tabControl.TabPages.Add(this.tabPageUsage);
-                this.listViewUsage.Items.Clear();
-
-                // usage from other templates
-                foreach(DocTemplateDefinition docTemp in this.m_project.Templates)
-                {
-                    InitUsageFromTemplate(docTemp, docTemplate);
-                }
-
-                // usage from model views
-                foreach (DocModelView docView in this.m_project.ModelViews)
-                {
-                    foreach (DocConceptRoot docRoot in docView.ConceptRoots)
-                    {
-                        foreach (DocTemplateUsage docUsage in docRoot.Concepts)
-                        {
-                            if (docUsage.Definition == docTemplate)
+                            if (!this.m_map.ContainsKey(docEntity.Name))
                             {
-                                DocObject[] usagepath = new DocObject[] { docRoot.ApplicableEntity, docRoot, docUsage };
+                                this.m_map.Add(docEntity.Name, docEntity);
+                            }
+                        }
 
-                                ListViewItem lvi = new ListViewItem();
-                                lvi.Tag = usagepath;
-                                lvi.Text = docView.Name;
-                                lvi.SubItems.Add(docRoot.ApplicableEntity.Name);
-                                this.listViewUsage.Items.Add(lvi);
+                        foreach (DocType docType in docSchema.Types)
+                        {
+                            if (!this.m_map.ContainsKey(docType.Name))
+                            {
+                                this.m_map.Add(docType.Name, docType);
                             }
                         }
                     }
                 }
 
-                this.ctlRules.Project = this.m_project;
-                this.ctlRules.BaseTemplate = this.m_parent as DocTemplateDefinition;
-                this.ctlRules.Template = docTemplate;
+                // General pages applies to all definitions
+                this.tabControl.TabPages.Add(this.tabPageGeneral);
 
-                this.ctlOperators.Project = this.m_project;
-                this.ctlOperators.Template = docTemplate;
-                this.ctlOperators.Rule = null;
-            }
-            else if (docObject is DocConceptRoot)
-            {
-                this.tabPageConcept.Text = "Applicability";
-                this.tabControl.TabPages.Add(this.tabPageConcept);
-                this.tabControl.TabPages.Add(this.tabPageConceptRoot);
+                this.textBoxGeneralName.Enabled = false;
+                this.textBoxGeneralName.Text = docObject.Name;
+                this.textBoxGeneralDescription.Text = docObject.Documentation;
 
-                DocConceptRoot docRoot = (DocConceptRoot)docObject;
-
-                this.ctlParameters.Project = this.m_project;
-                this.ctlParameters.ConceptRoot = docRoot;
-                this.ctlParameters.ConceptItem = this.ctlParameters.ConceptRoot;
-                this.ctlParameters.ConceptLeaf = null;
-
-
-                //DocEntity docEntity = (DocEntity)this.m_parent;
-
-                DocEntity docEntity = docRoot.ApplicableEntity;
-
-                DocModelView docView = null;
-                foreach (DocModelView docViewEach in this.m_project.ModelViews)
+                this.listViewLocale.Items.Clear();
+                foreach (DocLocalization docLocal in docObject.Localization)
                 {
-                    if (docViewEach.ConceptRoots.Contains(docRoot))
-                    {
-                        docView = docViewEach;
-                        break;
-                    }
+                    ListViewItem lvi = new ListViewItem();
+                    lvi.Tag = docLocal;
+                    lvi.Text = docLocal.Locale;
+                    lvi.SubItems.Add(docLocal.Name);
+                    lvi.SubItems.Add(docLocal.Documentation);
+                    this.listViewLocale.Items.Add(lvi);
                 }
 
-                DocModelView[] listViews = docProject.GetViewInheritance(docView); ;
+                this.tabControl.TabPages.Add(this.tabPageIdentity);
+                this.textBoxIdentityUuid.Text = docObject.Uuid.ToString();
+                this.textBoxIdentityCode.Text = docObject.Code;
+                this.textBoxIdentityVersion.Text = docObject.Version;
+                this.comboBoxIdentityStatus.Text = docObject.Status;
+                this.textBoxIdentityAuthor.Text = docObject.Author;
+                this.textBoxIdentityOwner.Text = docObject.Owner;
+                this.textBoxIdentityCopyright.Text = docObject.Copyright;
 
-
-                // find all inherited concepts
-                List<DocTemplateDefinition> listTemplate = new List<DocTemplateDefinition>();
-                Dictionary<DocTemplateDefinition, DocEntity> mapTemplate = new Dictionary<DocTemplateDefinition, DocEntity>();
-                Dictionary<DocTemplateDefinition, DocModelView> mapView = new Dictionary<DocTemplateDefinition, DocModelView>();
-                while (docEntity != null)
+                if (docObject is DocModelView)
                 {
-                    foreach (DocModelView docSuperView in listViews)
+                    this.tabControl.TabPages.Add(this.tabPageView);
+
+                    DocModelView docView = (DocModelView)docObject;
+                    this.checkBoxViewIncludeAll.Checked = docView.IncludeAllDefinitions;
+                    this.textBoxViewRoot.Text = docView.RootEntity;
+
+                    if (docView.BaseView != null)
                     {
-                        foreach (DocConceptRoot docRootEach in docSuperView.ConceptRoots)
+                        this.textBoxViewBase.Text = docView.BaseView;
+                        try
                         {
-                            if (docRootEach.ApplicableEntity == docEntity)
+                            Guid guidView = new Guid(docView.BaseView);
+                            DocModelView docViewBase = this.m_project.GetView(guidView);
+                            if (docViewBase != null)
                             {
-                                foreach (DocTemplateUsage docConcept in docRootEach.Concepts)
+                                this.textBoxViewBase.Text = docViewBase.Name;
+                            }
+                        }
+                        catch
+                        {
+                        }
+                    }
+                    else
+                    {
+                        this.textBoxViewBase.Text = string.Empty;
+                    }
+
+                    this.textBoxViewXsdNamespace.Text = docView.XsdUri;
+                    if (docView.XsdFormats != null)
+                    {
+                        foreach (DocXsdFormat docFormat in docView.XsdFormats)
+                        {
+                            ListViewItem lvi = new ListViewItem();
+                            lvi.Tag = docFormat;
+                            lvi.Text = docFormat.Entity;
+                            lvi.SubItems.Add(docFormat.Attribute);
+                            lvi.SubItems.Add(docFormat.XsdFormat.ToString());
+                            lvi.SubItems.Add(docFormat.XsdTagless.ToString());
+
+                            this.listViewViewXsd.Items.Add(lvi);
+                        }
+                    }
+
+                    this.panelIdentityIcon.Visible = true;
+                    if (docView.Icon != null)
+                    {
+                        try
+                        {
+                            this.panelIcon.BackgroundImage = Image.FromStream(new System.IO.MemoryStream(docView.Icon));
+                        }
+                        catch
+                        {
+                        }
+                    }
+                    else
+                    {
+                        this.panelIcon.BackgroundImage = null;
+                    }
+
+                }
+                else if (docObject is DocExchangeDefinition)
+                {
+                    this.tabControl.TabPages.Add(this.tabPageExchange);
+
+                    DocExchangeDefinition docExchange = (DocExchangeDefinition)docObject;
+                    this.checkBoxExchangeImport.Checked = ((docExchange.Applicability & DocExchangeApplicabilityEnum.Import) != 0);
+                    this.checkBoxExchangeExport.Checked = ((docExchange.Applicability & DocExchangeApplicabilityEnum.Export) != 0);
+
+                    this.panelIdentityIcon.Visible = true;
+                    if (docExchange.Icon != null)
+                    {
+                        try
+                        {
+                            this.panelIcon.BackgroundImage = Image.FromStream(new System.IO.MemoryStream(docExchange.Icon));
+                        }
+                        catch
+                        {
+                        }
+                    }
+                    else
+                    {
+                        this.panelIcon.BackgroundImage = null;
+                    }
+
+                    this.comboBoxExchangeClassProcess.Text = docExchange.ExchangeClass;
+                    this.comboBoxExchangeClassSender.Text = docExchange.SenderClass;
+                    this.comboBoxExchangeClassReceiver.Text = docExchange.ReceiverClass;
+                }
+                else if (docObject is DocTemplateDefinition)
+                {
+                    this.tabControl.TabPages.Add(this.tabPageTemplate);
+                    DocTemplateDefinition docTemplate = (DocTemplateDefinition)docObject;
+
+                    this.tabControl.TabPages.Add(this.tabPageOperations);
+
+                    this.tabControl.TabPages.Add(this.tabPageUsage);
+                    this.listViewUsage.Items.Clear();
+
+                    // usage from other templates
+                    foreach (DocTemplateDefinition docTemp in this.m_project.Templates)
+                    {
+                        InitUsageFromTemplate(docTemp, docTemplate);
+                    }
+
+                    // usage from model views
+                    foreach (DocModelView docView in this.m_project.ModelViews)
+                    {
+                        foreach (DocConceptRoot docRoot in docView.ConceptRoots)
+                        {
+                            foreach (DocTemplateUsage docUsage in docRoot.Concepts)
+                            {
+                                if (docUsage.Definition == docTemplate)
                                 {
-                                    if (docConcept.Definition != null)
-                                    {
-                                        if (listTemplate.Contains(docConcept.Definition))
-                                        {
-                                            listTemplate.Remove(docConcept.Definition);
-                                        }
-                                        listTemplate.Insert(0, docConcept.Definition);
-                                        mapTemplate[docConcept.Definition] = docEntity;
-                                        mapView[docConcept.Definition] = docSuperView;
-                                    }
+                                    DocObject[] usagepath = new DocObject[] { docRoot.ApplicableEntity, docRoot, docUsage };
+
+                                    ListViewItem lvi = new ListViewItem();
+                                    lvi.Tag = usagepath;
+                                    lvi.Text = docView.Name;
+                                    lvi.SubItems.Add(docRoot.ApplicableEntity.Name);
+                                    this.listViewUsage.Items.Add(lvi);
                                 }
                             }
                         }
                     }
 
-                    // recurse upwards
-                    docEntity = this.m_project.GetDefinition(docEntity.BaseDefinition) as DocEntity;
+                    this.ctlRules.Project = this.m_project;
+                    this.ctlRules.BaseTemplate = this.m_parent as DocTemplateDefinition;
+                    this.ctlRules.Template = docTemplate;
+
+                    this.ctlOperators.Project = this.m_project;
+                    this.ctlOperators.Template = docTemplate;
+                    this.ctlOperators.Rule = null;
                 }
-
-                this.listViewConceptRoot.Items.Clear();
-                foreach (DocTemplateDefinition dtd in listTemplate)
+                else if (docObject is DocConceptRoot)
                 {
-                    ListViewItem lvi = new ListViewItem();
-                    lvi.Tag = dtd;
-                    lvi.Text = dtd.Name;
+                    this.tabPageConcept.Text = "Applicability";
+                    this.tabControl.TabPages.Add(this.tabPageConcept);
+                    this.tabControl.TabPages.Add(this.tabPageConceptRoot);
 
-                    DocEntity docTemplateEntity = mapTemplate[dtd];
-                    lvi.SubItems.Add(docTemplateEntity.Name);
+                    DocConceptRoot docRoot = (DocConceptRoot)docObject;
 
-                    DocModelView docTemplateView = mapView[dtd];
-                    lvi.SubItems.Add(docTemplateView.Name);
+                    this.ctlParameters.Project = this.m_project;
+                    this.ctlParameters.ConceptRoot = docRoot;
+                    this.ctlParameters.ConceptItem = this.ctlParameters.ConceptRoot;
+                    this.ctlParameters.ConceptLeaf = null;
 
-                    // find local override if any
-                    lvi.ImageIndex = 3;
-                    foreach (DocTemplateUsage docConcept in docRoot.Concepts)
+
+                    //DocEntity docEntity = (DocEntity)this.m_parent;
+
+                    DocEntity docEntity = docRoot.ApplicableEntity;
+
+                    DocModelView docView = null;
+                    foreach (DocModelView docViewEach in this.m_project.ModelViews)
                     {
-                        if(docConcept.Definition == dtd)
+                        if (docViewEach.ConceptRoots.Contains(docRoot))
                         {
-                            UpdateConceptInheritance(lvi, docConcept);
+                            docView = docViewEach;
                             break;
                         }
                     }
 
-                    this.listViewConceptRoot.Items.Add(lvi);
-                }
-            }
-            else if (docObject is DocTemplateUsage)
-            {
-                this.tabPageConcept.Text = "Concept";
-                this.tabControl.TabPages.Add(this.tabPageConcept);
-                this.tabControl.TabPages.Add(this.tabPageRequirements);
+                    DocModelView[] listViews = docProject.GetViewInheritance(docView); ;
 
-                DocTemplateUsage docUsage = (DocTemplateUsage)docObject;
 
-                this.ctlParameters.Project = this.m_project;
-                this.ctlParameters.ConceptRoot = this.m_path[3] as DocConceptRoot;
-                this.ctlParameters.ConceptItem = this.ctlParameters.ConceptRoot;
-                this.ctlParameters.ConceptLeaf = docUsage;
-
-                this.LoadModelView();
-            }
-            else if (docObject is DocSchema)
-            {
-                DocSchema docSchema = (DocSchema)docObject;
-            }
-            else if (docObject is DocEntity)
-            {
-                DocEntity docEntity = (DocEntity)docObject;
-
-                this.tabControl.TabPages.Add(this.tabPageEntity);
-                this.textBoxEntityBase.Text = docEntity.BaseDefinition;
-                this.checkBoxEntityAbstract.Checked = docEntity.IsAbstract();
-            }
-            else if(docObject is DocDefined)
-            {
-                DocDefined docDefined = (DocDefined)docObject;
-
-                this.textBoxAttributeType.Text = docDefined.DefinedType;
-
-                this.tabControl.TabPages.Add(this.tabPageAttribute);
-
-                this.labelAttributeInverse.Visible = false;
-                this.textBoxAttributeInverse.Visible = false;
-                this.buttonAttributeInverse.Visible = false;
-
-                this.checkBoxAttributeOptional.Visible = false;
-                this.checkBoxXsdTagless.Visible = false;
-                this.labelAttributeXsdFormat.Visible = false;
-                this.comboBoxAttributeXsdFormat.Visible = false;
-
-                this.LoadAttributeCardinality();
-            }
-            else if (docObject is DocAttribute)
-            {
-                DocAttribute docAttribute = (DocAttribute)docObject;
-
-                this.tabControl.TabPages.Add(this.tabPageAttribute);
-                this.textBoxAttributeType.Text = docAttribute.DefinedType;
-                this.textBoxAttributeInverse.Text = docAttribute.Inverse;
-                this.textBoxAttributeDerived.Text = docAttribute.Derived;
-
-                this.checkBoxAttributeOptional.Checked = docAttribute.IsOptional;
-                if (docAttribute.XsdTagless != null)
-                {
-                    if(docAttribute.XsdTagless == true)
+                    // find all inherited concepts
+                    List<DocTemplateDefinition> listTemplate = new List<DocTemplateDefinition>();
+                    Dictionary<DocTemplateDefinition, DocEntity> mapTemplate = new Dictionary<DocTemplateDefinition, DocEntity>();
+                    Dictionary<DocTemplateDefinition, DocModelView> mapView = new Dictionary<DocTemplateDefinition, DocModelView>();
+                    while (docEntity != null)
                     {
-                        this.checkBoxXsdTagless.CheckState = CheckState.Checked;
+                        foreach (DocModelView docSuperView in listViews)
+                        {
+                            foreach (DocConceptRoot docRootEach in docSuperView.ConceptRoots)
+                            {
+                                if (docRootEach.ApplicableEntity == docEntity)
+                                {
+                                    foreach (DocTemplateUsage docConcept in docRootEach.Concepts)
+                                    {
+                                        if (docConcept.Definition != null)
+                                        {
+                                            if (listTemplate.Contains(docConcept.Definition))
+                                            {
+                                                listTemplate.Remove(docConcept.Definition);
+                                            }
+                                            listTemplate.Insert(0, docConcept.Definition);
+                                            mapTemplate[docConcept.Definition] = docEntity;
+                                            mapView[docConcept.Definition] = docSuperView;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        // recurse upwards
+                        docEntity = this.m_project.GetDefinition(docEntity.BaseDefinition) as DocEntity;
+                    }
+
+                    this.listViewConceptRoot.Items.Clear();
+                    foreach (DocTemplateDefinition dtd in listTemplate)
+                    {
+                        ListViewItem lvi = new ListViewItem();
+                        lvi.Tag = dtd;
+                        lvi.Text = dtd.Name;
+
+                        DocEntity docTemplateEntity = mapTemplate[dtd];
+                        lvi.SubItems.Add(docTemplateEntity.Name);
+
+                        DocModelView docTemplateView = mapView[dtd];
+                        lvi.SubItems.Add(docTemplateView.Name);
+
+                        // find local override if any
+                        lvi.ImageIndex = 3;
+                        foreach (DocTemplateUsage docConcept in docRoot.Concepts)
+                        {
+                            if (docConcept.Definition == dtd)
+                            {
+                                UpdateConceptInheritance(lvi, docConcept);
+                                break;
+                            }
+                        }
+
+                        this.listViewConceptRoot.Items.Add(lvi);
+                    }
+                }
+                else if (docObject is DocTemplateUsage)
+                {
+                    this.tabPageConcept.Text = "Concept";
+                    this.tabControl.TabPages.Add(this.tabPageConcept);
+                    this.tabControl.TabPages.Add(this.tabPageRequirements);
+
+                    DocTemplateUsage docUsage = (DocTemplateUsage)docObject;
+
+                    this.ctlParameters.Project = this.m_project;
+                    this.ctlParameters.ConceptRoot = this.m_path[3] as DocConceptRoot;
+                    this.ctlParameters.ConceptItem = this.ctlParameters.ConceptRoot;
+                    this.ctlParameters.ConceptLeaf = docUsage;
+
+                    this.LoadModelView();
+                }
+                else if (docObject is DocSchema)
+                {
+                    DocSchema docSchema = (DocSchema)docObject;
+                }
+                else if (docObject is DocEntity)
+                {
+                    DocEntity docEntity = (DocEntity)docObject;
+
+                    this.tabControl.TabPages.Add(this.tabPageEntity);
+                    this.textBoxEntityBase.Text = docEntity.BaseDefinition;
+                    this.checkBoxEntityAbstract.Checked = docEntity.IsAbstract();
+                }
+                else if (docObject is DocDefined)
+                {
+                    DocDefined docDefined = (DocDefined)docObject;
+
+                    this.textBoxAttributeType.Text = docDefined.DefinedType;
+
+                    this.tabControl.TabPages.Add(this.tabPageAttribute);
+
+                    this.labelAttributeInverse.Visible = false;
+                    this.textBoxAttributeInverse.Visible = false;
+                    this.buttonAttributeInverse.Visible = false;
+
+                    this.checkBoxAttributeOptional.Visible = false;
+                    this.checkBoxXsdTagless.Visible = false;
+                    this.labelAttributeXsdFormat.Visible = false;
+                    this.comboBoxAttributeXsdFormat.Visible = false;
+
+                    this.LoadAttributeCardinality();
+                }
+                else if (docObject is DocAttribute)
+                {
+                    DocAttribute docAttribute = (DocAttribute)docObject;
+
+                    this.tabControl.TabPages.Add(this.tabPageAttribute);
+                    this.textBoxAttributeType.Text = docAttribute.DefinedType;
+                    this.textBoxAttributeInverse.Text = docAttribute.Inverse;
+                    this.textBoxAttributeDerived.Text = docAttribute.Derived;
+
+                    this.checkBoxAttributeOptional.Checked = docAttribute.IsOptional;
+                    if (docAttribute.XsdTagless != null)
+                    {
+                        if (docAttribute.XsdTagless == true)
+                        {
+                            this.checkBoxXsdTagless.CheckState = CheckState.Checked;
+                        }
+                        else
+                        {
+                            this.checkBoxXsdTagless.CheckState = CheckState.Unchecked;
+                        }
                     }
                     else
                     {
-                        this.checkBoxXsdTagless.CheckState = CheckState.Unchecked;
+                        this.checkBoxXsdTagless.CheckState = CheckState.Indeterminate;
                     }
+                    this.comboBoxAttributeXsdFormat.SelectedItem = docAttribute.XsdFormat.ToString();
+
+                    this.LoadAttributeCardinality();
                 }
-                else
+                else if (docObject is DocConstraint)
                 {
-                    this.checkBoxXsdTagless.CheckState = CheckState.Indeterminate;
+                    DocConstraint docConstraint = (DocConstraint)docObject;
+
+                    this.tabControl.TabPages.Add(this.tabPageExpression);
+                    this.textBoxExpression.Text = docConstraint.Expression;
                 }
-                this.comboBoxAttributeXsdFormat.SelectedItem = docAttribute.XsdFormat.ToString();
-
-                this.LoadAttributeCardinality();
-            }
-            else if (docObject is DocConstraint)
-            {
-                DocConstraint docConstraint = (DocConstraint)docObject;
-
-                this.tabControl.TabPages.Add(this.tabPageExpression);
-                this.textBoxExpression.Text = docConstraint.Expression;
-            }
-            else if (docObject is DocPropertySet)
-            {
-                this.tabControl.TabPages.Add(this.tabPagePropertySet);
-
-                DocPropertySet docPset = (DocPropertySet)docObject;
-                this.LoadApplicability();
-
-                this.comboBoxPsetType.Text = docPset.PropertySetType;
-            }
-            else if (docObject is DocProperty)
-            {
-                this.tabControl.TabPages.Add(this.tabPageProperty);
-
-                DocProperty docProp = (DocProperty)docObject;
-                this.comboBoxPropertyType.Text = docProp.PropertyType.ToString();
-                this.textBoxPropertyData.Text = docProp.PrimaryDataType;
-
-                if (!String.IsNullOrEmpty(docProp.SecondaryDataType))
+                else if (docObject is DocPropertySet)
                 {
-                    string[] enumhost = docProp.SecondaryDataType.Split(new char[] { ':' }, StringSplitOptions.RemoveEmptyEntries);
-                    if (enumhost.Length == 2)
+                    this.tabControl.TabPages.Add(this.tabPagePropertySet);
+
+                    DocPropertySet docPset = (DocPropertySet)docObject;
+                    this.LoadApplicability();
+
+                    this.comboBoxPsetType.Text = docPset.PropertySetType;
+                }
+                else if (docObject is DocProperty)
+                {
+                    this.tabControl.TabPages.Add(this.tabPageProperty);
+
+                    DocProperty docProp = (DocProperty)docObject;
+
+                    // backward compatibility:
+                    string secondary = docProp.SecondaryDataType;
+                    if (!String.IsNullOrEmpty(secondary))
                     {
-                        string[] enumvals = enumhost[1].Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-
-                        this.textBoxPropertyData.Text = enumhost[0];
-                        this.listViewPropertyEnums.Items.Clear();
-                        foreach (string eachenum in enumvals)
+                        string[] enumhost = secondary.Split(new char[] { ':' }, StringSplitOptions.RemoveEmptyEntries);
+                        if (enumhost.Length == 2)
                         {
-                            ListViewItem lvi = new ListViewItem();
-                            lvi.Tag = eachenum;
-                            lvi.Text = eachenum;
-                            this.listViewPropertyEnums.Items.Add(lvi);
+                            secondary = enumhost[0];
+                            docProp.SecondaryDataType = secondary; // update data underneath for future consistency
                         }
                     }
+
+                    this.comboBoxPropertyType.Text = docProp.PropertyType.ToString();
+
+                    this.LoadPropertyType();
                 }
-            }
-            else if (docObject is DocQuantitySet)
-            {
-                this.tabControl.TabPages.Add(this.tabPagePropertySet);
-                this.LoadApplicability();
-                this.comboBoxPsetType.Enabled = false;
-            }
-            else if (docObject is DocQuantity)
-            {
-                this.tabControl.TabPages.Add(this.tabPageQuantity);
-
-                DocQuantity docProp = (DocQuantity)docObject;
-                this.comboBoxQuantityType.Text = docProp.QuantityType.ToString();
-            }
-            else if (docObject is DocExample)
-            {
-                this.tabControl.TabPages.Add(this.tabPageExample); // 
-                this.tabControl.TabPages.Add(this.tabPageViews); // applicable views
-                this.tabControl.TabPages.Add(this.tabPagePropertySet); // applicable entities
-                this.LoadApplicability();
-                this.comboBoxPsetType.Enabled = false;
-                this.buttonApplicabilityAddTemplate.Visible = true;
-
-                DocExample docExample = (DocExample)docObject;
-                if (docExample.File != null)
+                else if (docObject is DocQuantitySet)
                 {
-                    this.textBoxExample.Text = Encoding.ASCII.GetString(docExample.File);
-                    this.toolStripButtonExampleClear.Enabled = true;
+                    this.tabControl.TabPages.Add(this.tabPagePropertySet);
+                    this.LoadApplicability();
+                    this.comboBoxPsetType.Enabled = false;
                 }
-                else
+                else if (docObject is DocQuantity)
                 {
-                    this.textBoxExample.Text = String.Empty;
-                    this.toolStripButtonExampleClear.Enabled = false;
+                    this.tabControl.TabPages.Add(this.tabPageQuantity);
+
+                    DocQuantity docProp = (DocQuantity)docObject;
+                    this.comboBoxQuantityType.Text = docProp.QuantityType.ToString();
+                }
+                else if (docObject is DocExample)
+                {
+                    this.tabControl.TabPages.Add(this.tabPageExample); // 
+                    this.tabControl.TabPages.Add(this.tabPageViews); // applicable views
+                    this.tabControl.TabPages.Add(this.tabPagePropertySet); // applicable entities
+                    this.LoadApplicability();
+                    this.comboBoxPsetType.Enabled = false;
+                    this.buttonApplicabilityAddTemplate.Visible = true;
+
+                    DocExample docExample = (DocExample)docObject;
+                    if (docExample.File != null)
+                    {
+                        this.textBoxExample.Text = Encoding.ASCII.GetString(docExample.File);
+                        this.toolStripButtonExampleClear.Enabled = true;
+                        this.textBoxExample.ReadOnly = false;
+                        this.textBoxExample.Focus();
+                    }
+                    else
+                    {
+                        this.textBoxExample.Text = String.Empty;
+                        this.toolStripButtonExampleClear.Enabled = false;
+                        this.textBoxExample.ReadOnly = true;
+                    }
+
+                    this.LoadReferencedViews();
+                }
+                else if (docObject is DocPublication)
+                {
+                    DocPublication docPublication = (DocPublication)docObject;
+
+                    this.tabControl.TabPages.Add(this.tabPagePublication);
+                    this.tabControl.TabPages.Add(this.tabPageViews);
+                    this.tabControl.TabPages.Add(this.tabPageFormats);
+                    this.LoadReferencedViews();
+
+                    this.textBoxHeader.Text = docPublication.Header;
+                    this.textBoxFooter.Text = docPublication.Footer;
+                    this.checkBoxPublishHideHistory.Checked = docPublication.HideHistory;
+                    this.checkBoxPublishISO.Checked = docPublication.ISO;
+                    this.checkBoxPublishUML.Checked = docPublication.UML;
+                    //this.checkBoxPublishComparison.Checked = docPublication.Comparison;
+                    this.checkBoxPublishExchangeTables.Checked = docPublication.Exchanges;
+
+                    this.listViewFormats.Items.Clear();
+                    foreach (DocFormat docFormat in docPublication.Formats)
+                    {
+                        ListViewItem lvi = new ListViewItem();
+                        lvi.ImageIndex = 0;
+                        lvi.Tag = docFormat;
+                        lvi.Text = docFormat.FormatType.ToString();
+                        lvi.SubItems.Add(docFormat.FormatOptions.ToString());
+                        this.listViewFormats.Items.Add(lvi);
+                    }
+
+
+                    UpdateFormatOption();
+                }
+                else if (docObject is DocChangeAction)
+                {
+                    this.tabControl.TabPages.Add(this.tabPageChange);
+                    DocChangeAction docChange = (DocChangeAction)docObject;
+                    this.toolStripButtonChangeSPF.Checked = docChange.ImpactSPF;
+                    this.toolStripButtonChangeXML.Checked = docChange.ImpactXML;
+
+                    switch (docChange.Action)
+                    {
+                        case DocChangeActionEnum.NOCHANGE:
+                            this.toolStripComboBoxChange.SelectedIndex = 0;
+                            break;
+
+                        case DocChangeActionEnum.ADDED:
+                            this.toolStripComboBoxChange.SelectedIndex = 1;
+                            break;
+
+                        case DocChangeActionEnum.DELETED:
+                            this.toolStripComboBoxChange.SelectedIndex = 2;
+                            break;
+
+                        case DocChangeActionEnum.MODIFIED:
+                            this.toolStripComboBoxChange.SelectedIndex = 3;
+                            break;
+
+                        case DocChangeActionEnum.MOVED:
+                            this.toolStripComboBoxChange.SelectedIndex = 4;
+                            break;
+
+                    }
+
+                    this.listViewChange.Items.Clear();
+                    foreach (DocChangeAspect docAspect in docChange.Aspects)
+                    {
+                        ListViewItem lvi = new ListViewItem();
+                        lvi.Text = docAspect.Aspect.ToString();
+                        lvi.SubItems.Add(docAspect.OldValue);
+                        lvi.SubItems.Add(docAspect.NewValue);
+                        this.listViewChange.Items.Add(lvi);
+                    }
                 }
 
-                this.LoadReferencedViews();
+                if (tabpageExist != null && this.tabControl.TabPages.Contains(tabpageExist))
+                {
+                    this.tabControl.SelectedTab = tabpageExist;
+                }
             }
-            else if(docObject is DocPublication)
+            finally
             {
-                DocPublication docPublication = (DocPublication)docObject;
-
-                this.tabControl.TabPages.Add(this.tabPagePublication);
-                this.tabControl.TabPages.Add(this.tabPageViews);
-                this.tabControl.TabPages.Add(this.tabPageFormats);
-                this.LoadReferencedViews();
-
-                this.textBoxHeader.Text = docPublication.Header;
-                this.textBoxFooter.Text = docPublication.Footer;
-                this.checkBoxPublishHideHistory.Checked = docPublication.HideHistory;
-                this.checkBoxPublishISO.Checked = docPublication.ISO;
-                this.checkBoxPublishUML.Checked = docPublication.UML;
-                //this.checkBoxPublishComparison.Checked = docPublication.Comparison;
-                this.checkBoxPublishExchangeTables.Checked = docPublication.Exchanges;
-
-                this.listViewFormats.Items.Clear();
-                foreach(DocFormat docFormat in docPublication.Formats)
-                {
-                    ListViewItem lvi = new ListViewItem();
-                    lvi.ImageIndex = 0;
-                    lvi.Tag = docFormat;
-                    lvi.Text = docFormat.FormatType.ToString();
-                    lvi.SubItems.Add(docFormat.FormatOptions.ToString());
-                    this.listViewFormats.Items.Add(lvi);
-                }
-
-
-                UpdateFormatOption();
+                this.m_loadall = false;
             }
-            else if(docObject is DocChangeAction)
-            {
-                this.tabControl.TabPages.Add(this.tabPageChange);
-                DocChangeAction docChange = (DocChangeAction)docObject;
-                this.toolStripButtonChangeSPF.Checked = docChange.ImpactSPF;
-                this.toolStripButtonChangeXML.Checked = docChange.ImpactXML;
-
-                switch(docChange.Action)
-                {
-                    case DocChangeActionEnum.NOCHANGE:
-                        this.toolStripComboBoxChange.SelectedIndex = 0;
-                        break;
-                    
-                    case DocChangeActionEnum.ADDED:
-                        this.toolStripComboBoxChange.SelectedIndex = 1;
-                        break;
-
-                    case DocChangeActionEnum.DELETED:
-                        this.toolStripComboBoxChange.SelectedIndex = 2;
-                        break;
-
-                    case DocChangeActionEnum.MODIFIED:
-                        this.toolStripComboBoxChange.SelectedIndex = 3;
-                        break;
-
-                    case DocChangeActionEnum.MOVED:
-                        this.toolStripComboBoxChange.SelectedIndex = 4;
-                        break;
-
-                }
-
-                this.listViewChange.Items.Clear();
-                foreach(DocChangeAspect docAspect in docChange.Aspects)
-                {
-                    ListViewItem lvi = new ListViewItem();
-                    lvi.Text = docAspect.Aspect.ToString();
-                    lvi.SubItems.Add(docAspect.OldValue);
-                    lvi.SubItems.Add(docAspect.NewValue);
-                    this.listViewChange.Items.Add(lvi);
-                }
-            }
-
-            if (tabpageExist != null && this.tabControl.TabPages.Contains(tabpageExist))
-            {
-                this.tabControl.SelectedTab = tabpageExist;
-            }
-
-            this.m_loadall = false;
         }
 
         private void InitUsageFromTemplateRule(DocTemplateDefinition docTemp, DocTemplateDefinition docSource, DocModelRule docRule)
@@ -910,9 +913,65 @@ namespace IfcDoc
             docPset.PropertySetType = this.comboBoxPsetType.Text;
         }
 
-        private void comboBoxPropertyType_SelectedIndexChanged(object sender, EventArgs e)
+        private void LoadPropertyType()
         {
             DocProperty docProperty = (DocProperty)this.m_target;
+            this.textBoxPropertyDataPrimary.Text = docProperty.PrimaryDataType;
+            this.textBoxPropertyDataSecondary.Text = docProperty.SecondaryDataType;
+
+            switch (docProperty.PropertyType)
+            {
+                case DocPropertyTemplateTypeEnum.P_SINGLEVALUE:
+                    this.buttonPropertyDataPrimary.Enabled = true;
+                    this.buttonPropertyDataSecondary.Enabled = false;
+                    break;
+
+                case DocPropertyTemplateTypeEnum.P_BOUNDEDVALUE:
+                    this.buttonPropertyDataPrimary.Enabled = true;
+                    this.buttonPropertyDataSecondary.Enabled = false;
+                    break;
+
+                case DocPropertyTemplateTypeEnum.P_ENUMERATEDVALUE:
+                    this.buttonPropertyDataPrimary.Enabled = false; // fixed to IfcLabel
+                    this.buttonPropertyDataSecondary.Enabled = true;
+                    break;
+
+                case DocPropertyTemplateTypeEnum.P_LISTVALUE:
+                    this.buttonPropertyDataPrimary.Enabled = true;
+                    this.buttonPropertyDataSecondary.Enabled = false;
+                    break;
+
+                case DocPropertyTemplateTypeEnum.P_TABLEVALUE:
+                    this.buttonPropertyDataPrimary.Enabled = true;
+                    this.buttonPropertyDataSecondary.Enabled = true;
+                    break;
+
+                case DocPropertyTemplateTypeEnum.P_REFERENCEVALUE:
+                    this.buttonPropertyDataPrimary.Enabled = true;
+                    this.buttonPropertyDataSecondary.Enabled = true;
+                    break;
+
+                case DocPropertyTemplateTypeEnum.COMPLEX:
+                    this.buttonPropertyDataPrimary.Enabled = false;
+                    this.buttonPropertyDataSecondary.Enabled = false;
+                    break;
+            }
+        }
+
+        private void comboBoxPropertyType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (this.m_loadall)
+                return;            
+
+            DocProperty docProperty = (DocProperty)this.m_target;
+
+            // if old value was reference, then must reset to label
+            if (docProperty.PropertyType == DocPropertyTemplateTypeEnum.P_REFERENCEVALUE ||
+                String.IsNullOrEmpty(docProperty.PrimaryDataType))
+            {
+                docProperty.PrimaryDataType = "IfcLabel";
+            }
+            
             try
             {
                 docProperty.PropertyType = (DocPropertyTemplateTypeEnum)Enum.Parse(typeof(DocPropertyTemplateTypeEnum), this.comboBoxPropertyType.SelectedItem.ToString());
@@ -922,69 +981,45 @@ namespace IfcDoc
                 docProperty.PropertyType = DocPropertyTemplateTypeEnum.COMPLEX;
             }
 
-            this.listViewPropertyEnums.Items.Clear();
-            this.buttonPropertyEnumRemove.Enabled = false;
             switch (docProperty.PropertyType)
             {
-                case DocPropertyTemplateTypeEnum.P_ENUMERATEDVALUE: // add/remove enum values
-                    this.textBoxPropertyData.Text = "PEnum_";
-                    this.textBoxPropertyData.ReadOnly = true;//false;
-                    this.buttonPropertyData.Enabled = true;//false;
-                    this.listViewPropertyEnums.Enabled = false;//true;
-                    this.buttonPropertyEnumInsert.Enabled = false;//true;
-                    //this.listViewPropertyEnums.Items.Add(new ListViewItem("OTHER"));
-                    //this.listViewPropertyEnums.Items.Add(new ListViewItem("NOTKNOWN"));
-                    //this.listViewPropertyEnums.Items.Add(new ListViewItem("UNSET"));
-                    this.listViewPropertyEnums.LabelEdit = false;//true;
+                case DocPropertyTemplateTypeEnum.P_SINGLEVALUE:
+                    docProperty.SecondaryDataType = String.Empty;
                     break;
 
-                //case DocPropertyTemplateTypeEnum.P_TABLEVALUE: // add/remove column types? // or P_REFERENCEVALUE with IfcTable?
-                //    break;
+                case DocPropertyTemplateTypeEnum.P_BOUNDEDVALUE:
+                    docProperty.SecondaryDataType = String.Empty;
+                    break;
+
+                case DocPropertyTemplateTypeEnum.P_LISTVALUE:
+                    docProperty.SecondaryDataType = String.Empty;
+                    break;
+
+                case DocPropertyTemplateTypeEnum.P_TABLEVALUE:
+                    if(String.IsNullOrEmpty(docProperty.SecondaryDataType))
+                    {
+                        docProperty.SecondaryDataType = "IfcReal";
+                    }
+                    break;
+
+                case DocPropertyTemplateTypeEnum.P_ENUMERATEDVALUE: // add/remove enum values
+                    docProperty.PrimaryDataType = "IfcLabel";
+                    docProperty.SecondaryDataType = String.Empty; // must select
+                    break;
 
                 case DocPropertyTemplateTypeEnum.P_REFERENCEVALUE:
-                    this.textBoxPropertyData.Text = "IfcTimeSeries";
-                    this.textBoxPropertyData.ReadOnly = true;
-                    this.buttonPropertyData.Enabled = true;
-                    this.listViewPropertyEnums.Enabled = true;
-                    this.buttonPropertyEnumInsert.Enabled = true;
-                    this.listViewPropertyEnums.Items.Add(new ListViewItem("IfcReal"));
-                    this.listViewPropertyEnums.LabelEdit = false;
-                    break;
-
-                default:
-                    this.textBoxPropertyData.Text = "IfcLabel";
-                    this.textBoxPropertyData.ReadOnly = true;
-                    this.buttonPropertyData.Enabled = true;
-                    this.listViewPropertyEnums.Enabled = false;
-                    this.buttonPropertyEnumInsert.Enabled = false;
+                    docProperty.PrimaryDataType = "IfcTimeSeries";
+                    docProperty.SecondaryDataType = "IfcReal";
                     break;
             }            
+
+            // update
+            this.LoadPropertyType();
         }
 
         private void buttonPropertyData_Click(object sender, EventArgs e)
         {
             DocProperty docTemplate = (DocProperty)this.m_target;
-
-            if(docTemplate.PropertyType == DocPropertyTemplateTypeEnum.P_ENUMERATEDVALUE)
-            {
-                // browse for property enumeration
-                using(FormSelectPropertyEnum form = new FormSelectPropertyEnum(this.m_project, null))
-                {
-                    if (form.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
-                    {
-                        if (form.Selection != null)
-                        {
-                            docTemplate.PrimaryDataType = form.Selection.Name;
-                        }
-                        else
-                        {
-                            docTemplate.PrimaryDataType = String.Empty;
-                        }
-                        this.textBoxPropertyData.Text = docTemplate.PrimaryDataType;
-                    }
-                }
-                return;
-            }
 
             string basetypename = "IfcValue";
             switch (docTemplate.PropertyType)
@@ -1015,15 +1050,68 @@ namespace IfcDoc
                 if (res == DialogResult.OK && form.SelectedEntity != null)
                 {
                     docTemplate.PrimaryDataType = form.SelectedEntity.Name;
-                    this.textBoxPropertyData.Text = docTemplate.PrimaryDataType;
+                    this.textBoxPropertyDataPrimary.Text = docTemplate.PrimaryDataType;
                 }
             }            
         }
 
-        private void textBoxPropertyData_TextChanged(object sender, EventArgs e)
+        private void buttonPropertyDataSecondary_Click(object sender, EventArgs e)
         {
-            //DocProperty docTemplate = (DocProperty)this.m_target;
-            //docTemplate.PrimaryDataType = this.textBoxPropertyData.Text;
+            DocProperty docTemplate = (DocProperty)this.m_target;
+
+            DocSchema docSchema = null;
+            DocPropertyEnumeration docEnum = this.m_project.FindPropertyEnumeration(docTemplate.SecondaryDataType, out docSchema);
+
+            if (docTemplate.PropertyType == DocPropertyTemplateTypeEnum.P_ENUMERATEDVALUE)
+            {
+                // browse for property enumeration
+                using (FormSelectPropertyEnum form = new FormSelectPropertyEnum(this.m_project, docEnum))
+                {
+                    if (form.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
+                    {
+                        if (form.Selection != null)
+                        {
+                            docTemplate.PrimaryDataType = "IfcLabel";
+                            docTemplate.SecondaryDataType = form.Selection.Name;
+                        }
+                        else
+                        {
+                            docTemplate.PrimaryDataType = "IfcLabel";
+                            docTemplate.SecondaryDataType = String.Empty;
+                        }
+                        this.textBoxPropertyDataPrimary.Text = docTemplate.PrimaryDataType;
+                        this.textBoxPropertyDataSecondary.Text = docTemplate.SecondaryDataType;
+                    }
+                }
+                return;
+            }
+
+            string basetypename = "IfcValue";
+            DocObject docobj = null;
+            DocDefinition docEntity = null;
+            if (this.m_map.TryGetValue(basetypename, out docobj))
+            {
+                docEntity = (DocDefinition)docobj;
+            }
+
+            // get selected entity
+            DocObject target = null;
+            DocDefinition entity = null;
+            if (docTemplate.PrimaryDataType != null && m_map.TryGetValue(docTemplate.PrimaryDataType, out target))
+            {
+                entity = (DocDefinition)target;
+            }
+
+            using (FormSelectEntity form = new FormSelectEntity(docEntity, entity, this.m_project, SelectDefinitionOptions.Entity | SelectDefinitionOptions.Type))
+            {
+                DialogResult res = form.ShowDialog(this);
+                if (res == DialogResult.OK && form.SelectedEntity != null)
+                {
+                    docTemplate.SecondaryDataType = form.SelectedEntity.Name;
+                    this.textBoxPropertyDataSecondary.Text = docTemplate.SecondaryDataType;
+                }
+            }            
+
         }
 
         private void textBoxIdentityCode_TextChanged(object sender, EventArgs e)
@@ -1323,103 +1411,6 @@ namespace IfcDoc
         private void listViewPsetApplicability_SelectedIndexChanged(object sender, EventArgs e)
         {
             this.buttonPsetApplicabilityDelete.Enabled = (this.listViewPsetApplicability.SelectedItems.Count > 0);
-        }
-
-        private void buttonPropertyEnumInsert_Click(object sender, EventArgs e)
-        {
-            if (this.comboBoxPropertyType.SelectedIndex == 5)
-            {
-                // reference value -- pick type of column for table or time series
-                DocObject docBase = null;
-                if (this.m_map.TryGetValue("IfcValue", out docBase))
-                {
-                    using (FormSelectEntity form = new FormSelectEntity(docBase as DocDefinition, null, this.m_project, SelectDefinitionOptions.Type))
-                    {
-                        if (form.ShowDialog(this) == DialogResult.OK && form.SelectedEntity != null)
-                        {
-                            ListViewItem lvi = new ListViewItem();
-                            lvi.Tag = form.SelectedEntity;
-                            lvi.Text = form.SelectedEntity.Name;
-                            this.listViewPropertyEnums.Items.Add(lvi);
-                            this.SavePropertyEnums();
-                        }
-                    }
-                }
-            }
-            else
-            {
-                ListViewItem lvi = new ListViewItem();
-                this.listViewPropertyEnums.Items.Add(lvi);
-                lvi.BeginEdit();
-            }
-        }
-
-        private void buttonPropertyEnumRemove_Click(object sender, EventArgs e)
-        {
-            for (int i = this.listViewPropertyEnums.SelectedItems.Count - 1; i >= 0; i--)
-            {
-                this.listViewPropertyEnums.SelectedItems[i].Remove();
-            }
-
-            this.SavePropertyEnums();
-        }
-
-        private void listViewPropertyEnums_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            this.buttonPropertyEnumRemove.Enabled = (this.listViewPropertyEnums.SelectedItems.Count > 0);
-        }
-
-        private void listViewPropertyEnums_AfterLabelEdit(object sender, LabelEditEventArgs e)
-        {
-            if (e.CancelEdit)
-            {
-                //this.listViewPropertyEnums.Items[e.Item].Tag;
-                //this.listViewPropertyEnums.Items[e.Item].Text = e.Label;
-                //...
-                return;
-            }
-
-            this.listViewPropertyEnums.Items[e.Item].Text = e.Label;
-            this.SavePropertyEnums();
-        }
-
-        private void SavePropertyEnums()
-        {
-            // save enums or table columns
-
-            DocProperty docProp = (DocProperty)this.m_target;
-            if (docProp.PropertyType == DocPropertyTemplateTypeEnum.P_ENUMERATEDVALUE)
-            {
-                StringBuilder sb = new StringBuilder();
-                sb.Append(this.textBoxPropertyData.Text);
-                sb.Append(":");
-                foreach (ListViewItem lvi in this.listViewPropertyEnums.Items)
-                {
-                    if (sb[sb.Length - 1] != ':')
-                    {
-                        sb.Append(",");
-                    }
-
-                    sb.Append(lvi.Text);
-                }
-
-                docProp.SecondaryDataType = sb.ToString();
-            }
-            else
-            {
-                StringBuilder sb = new StringBuilder();
-                foreach (ListViewItem lvi in this.listViewPropertyEnums.Items)
-                {
-                    if (sb.Length != 0)
-                    {
-                        sb.Append(",");
-                    }
-
-                    sb.Append(lvi.Text);
-                }
-
-                docProp.SecondaryDataType = sb.ToString();
-            }
         }
 
         private void checkBoxExchangeImport_CheckedChanged(object sender, EventArgs e)
@@ -2617,5 +2608,15 @@ namespace IfcDoc
             DocPublication docPub = (DocPublication)this.m_target;
             docPub.Exchanges = checkBoxPublishExchangeTables.Checked;
         }
+
+        private void textBoxExample_TextChanged(object sender, EventArgs e)
+        {
+            if (this.m_loadall)
+                return;
+
+            DocExample docExample = (DocExample)this.m_target;
+            docExample.File = Encoding.ASCII.GetBytes(this.textBoxExample.Text);
+        }
+
     }
 }
