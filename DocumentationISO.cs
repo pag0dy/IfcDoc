@@ -2761,9 +2761,9 @@ namespace IfcDoc
             {
                 switch(docFormat.FormatType)
                 {
-                    case DocFormatSchemaEnum.OWL:
+                    case DocFormatSchemaEnum.TTL:
                         mapFormatSchema.Add(docFormat.FormatType, new FormatOWL());
-                        mapFormatData.Add(docFormat.FormatType, new FormatTTL_Stream());
+                        mapFormatData.Add(docFormat.FormatType, new FormatTTL());
                         break;
 
                     case DocFormatSchemaEnum.SQL:

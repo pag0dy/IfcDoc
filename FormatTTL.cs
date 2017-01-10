@@ -19,7 +19,7 @@ using System.Reflection;
 
 namespace IfcDoc
 {
-    public class FormatTTL_Stream: IDisposable,
+    public class FormatTTL: IDisposable,
         IFormatData
     {
         Stream m_stream;
@@ -36,23 +36,22 @@ namespace IfcDoc
         Dictionary<string, ListObject> m_listOfListObjects;
         Dictionary<string, ListObject> m_listObjects;
         Dictionary<string, URIObject> m_objectProperties;
-        Dictionary<string, ObjectProperty> m_fullpropertynames;
-        
+        Dictionary<string, ObjectProperty> m_fullpropertynames = new Dictionary<string, ObjectProperty>();
+
         HashSet<SEntity> m_saved; // keeps track of entities already written, which can be referenced
         
         long m_nextID = 0;
 
-        public FormatTTL_Stream() : this(new System.IO.MemoryStream(), "http://ifcowl.openbimstandards.org/IFC4_ADD1")
+        public FormatTTL() : this(new System.IO.MemoryStream(), "http://ifcowl.openbimstandards.org/IFC4_ADD1")
         {
         }
 
-        public FormatTTL_Stream(Stream stream, string owlURI)
+        public FormatTTL(Stream stream, string owlURI)
         {
             this.m_stream = stream;
             this.m_owlURI = owlURI;
             string timeLog = DateTime.Now.ToString("yyyyMMdd_HHmmss"); //h:mm:ss tt
-            this.m_baseURI = "http://linkedbuildingdata.net/ifc/resources" + timeLog + "/";
-            this.LoadPropertyNamesFromCSV();
+            this.m_baseURI = "http://linkedbuildingdata.net/ifc/resources" + timeLog + "/";            
         }
 
         private class ListObject
@@ -100,39 +99,9 @@ namespace IfcDoc
             public string domain;
             public string originalName;
             public string name;
-            public string setorlist; //ENTITY, SET, LISTOFLIST, LIST, ARRAY
+            public string setorlist; //ENTITY, SET, LIST, LISTOFLIST, ARRAY || ACTUALLY, ONLY ENTITY, SET, AND LIST are available here (see FormatTTL.FormatData())
         }
-
-        private void LoadPropertyNamesFromCSV()
-        {
-            m_fullpropertynames = new Dictionary<string, ObjectProperty>();
-            try
-            {
-                // old: read from file
-#if false
-                //TODO: make this work for multiple schemas
-                //TODO: get the schema from the internal code, instead of from an external CSV file
-                string x = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "proplistIFC4_ADD1.csv");
-                using (StreamReader readFile = new StreamReader(x))
-                {
-                    string line;
-                    string[] row;
-
-                    while ((line = readFile.ReadLine()) != null)
-                    {
-                        row = line.Split(',');
-                        //string s = char.ToLower(row[1][0]) + row[1].Substring(1);
-                        m_fullpropertynames.Add(row[1] + "_" + row[0], new ObjectProperty(row[0], row[1], row[2], row[3]));
-                    }
-                }
-#endif
-            }
-            catch (Exception e)
-            {
-                Console.Out.WriteLine("ERROR FormatTTL_Stream.cs: unable to read file: " + "proplistIFC4_ADD1.csv" + " - "+e.InnerException);
-            }
-        }
-
+        
         /// <summary>
         /// The dictionary with all project instances
         /// </summary>
@@ -189,14 +158,16 @@ namespace IfcDoc
                 SEntity ent = entry.Value;
                 this.WriteEntity(ent, num);
             }
+            this.m_writer.Flush();
 
             //write additional entities
             Console.Out.WriteLine("\r\n+ start writing additional entities +");
             foreach (KeyValuePair<string, URIObject> entry in m_valueObjects)
             {
                 URIObject obj = entry.Value;
-                WriteExtraEntity(obj);
+                this.WriteExtraEntity(obj);
             }
+            this.m_writer.Flush();
             Console.Out.WriteLine("+ end writing additional entities +");
 
             Console.Out.WriteLine("\r\n+ start writing additional list objects +");
@@ -205,6 +176,7 @@ namespace IfcDoc
                 ListObject obj = entry.Value;
                 this.WriteExtraListObject(obj);
             }
+            this.m_writer.Flush();
             Console.Out.WriteLine("+ end writing additional list objects +");
 
             Console.Out.WriteLine("\r\n+ start writing additional list of list objects +");
@@ -213,6 +185,7 @@ namespace IfcDoc
                 ListObject obj = entry.Value;
                 this.WriteExtraListOfListObject(obj);
             }
+            this.m_writer.Flush();
             Console.Out.WriteLine("+ end writing additional list of list objects +");
 
             //footer
@@ -224,11 +197,13 @@ namespace IfcDoc
                 this.m_writer.Write("  </body>\r\n");
                 this.m_writer.Write("</html>\r\n");
                 this.m_writer.Write("\r\n");
+                this.m_writer.Flush();
             }
             else
             {
                 // nothing...
                 this.m_writer.Write("\r\n\r\n");
+                this.m_writer.Flush();
             }
         }
                         
@@ -269,9 +244,14 @@ namespace IfcDoc
             {
                 if (f.IsDefined(typeof(DataMemberAttribute)))
                 {
+                    object v = f.GetValue(o);
+
+                    //don't spend time in empty attributes
+                    if (v == null)
+                        continue;
+
                     // write data type properties
                     Type ft = f.FieldType;
-                    Console.Out.WriteLine("\r\n++ writing attribute: " + ft.Name);
 
                     bool isvaluelist = (ft.IsGenericType && ft.GetGenericTypeDefinition() == typeof(List<>) && ft.GetGenericArguments()[0].IsValueType);
                     bool isvaluelistlist = (ft.IsGenericType && // e.g. IfcTriangulatedFaceSet.Normals
@@ -279,129 +259,48 @@ namespace IfcDoc
                         ft.GetGenericArguments()[0].IsGenericType &&
                         ft.GetGenericArguments()[0].GetGenericTypeDefinition() == typeof(List<>) &&
                         ft.GetGenericArguments()[0].GetGenericArguments()[0].IsValueType);
+                    bool isentitylist = (ft.IsGenericType && ft.GetGenericTypeDefinition() == typeof(List<>));
+                    bool isentitylistlist = (ft.IsGenericType &&
+                        ft.GetGenericTypeDefinition() == typeof(List<>) &&
+                        ft.GetGenericArguments()[0].IsGenericType &&
+                        ft.GetGenericArguments()[0].GetGenericTypeDefinition() == typeof(List<>));
+
 
                     if (isvaluelistlist || isvaluelist || ft.IsValueType)
-                    {
-                        //Console.Out.WriteLine("WriteDataValueAttribute()");
-                        object v = f.GetValue(o);
-                        if (v != null)
+                    {        
+                        if (isvaluelistlist)
                         {
-                            m_writer.Write(";" + "\r\n");
-                            //m_writer.Write(" ");
-                            WriteIndent();
-                            ObjectProperty p = GetObjectProperty(f.Name + "_" + t.Name);
-                            if (p == null)
-                                Console.Out.WriteLine("Warning: objectproperty not found : " + f.Name + "_" + t.Name);
-                            
-                            m_writer.Write("ifcowl:" + p.name + " ");
-
-                            if (isvaluelistlist)
-                            {
-                                System.Collections.IList list = (System.Collections.IList)v;
-                                WriteListOfListWithValues(ft, list);
-                            }
-                            else if (isvaluelist)
-                            {
-                                System.Collections.IList list = (System.Collections.IList)v;
-                                WriteListWithValues(ft, list);                                
-                            }
-                            else
-                            {
-                                WriteTypeValue(ft,v);
-                            }
+                            System.Collections.IList list = (System.Collections.IList)v;
+                            WriteListOfListWithValues(t, f, list);
+                        }
+                        else if (isvaluelist)
+                        {
+                            System.Collections.IList list = (System.Collections.IList)v;
+                            WriteListWithValues(t, f, list);
                         }
                         else
                         {
-                            //Console.Out.WriteLine("Empty value: skipping");
+                            WriteTypeValue(t, f, v);
                         }
                     }
-                    else
+                    else if (isentitylist || isentitylistlist)
                     {
-                        //Console.Out.WriteLine("WriteObjectPropertyAttribute()");
-                        //Writing object properties            
                         ObjectProperty p = GetObjectProperty(f.Name + "_" + o.GetType().Name);
-                        if (p == null)
-                            Console.Out.WriteLine("Warning: objectproperty not found : " + f.Name + "_" + o.GetType().Name);
-
-                        //Writing output
-                        object v = f.GetValue(o);
-                        if (v != null)
+                        if (isentitylistlist)
                         {
-                            if (v.GetType() == typeof(SEntity))
-                            {
-                                //WriteAttribute(o, f, owlClass);
-                                //m_writer.Write(owlClass + "_" + ((SEntity)value).OID);
-                                Console.Out.WriteLine("WARNING: ATTR object prop exception : " + v.ToString() + " - " + f.Name + " - " + ft.ToString());
-                            }
-                            else
-                            {
-                                if (typeof(System.Collections.ICollection).IsAssignableFrom(ft))
-                                {
-                                    System.Collections.IList list = (System.Collections.IList)v;
-                                    WriteListKindOfObjectProperty(f, v, ft, p, list);
-                                }                            
-                                else if (v is SEntity)
-                                {
-                                    //found simple object property. give propertyname and URI num
-                                    m_writer.Write(";" + "\r\n");
-                                    WriteIndent();
-                                    m_writer.Write("ifcowl:" + p.name + " ");
-
-                                    Type vt = v.GetType();
-                                    this.m_writer.Write("inst:" + vt.Name + "_" + ((SEntity)v).OID);
-                                    //There is more in the WriteAttibute method (HTM notation)
-                                }
-                                else if (f.FieldType.IsInterface && v is ValueType)
-                                {
-                                    m_writer.Write(";" + "\r\n");
-                                    WriteIndent();
-                                    m_writer.Write("ifcowl:" + p.name + " ");
-
-                                    Type vt = v.GetType();
-                                    Console.Out.WriteLine("WriteEntityAttributes.GetURIObject()");
-                                    URIObject newUriObject = GetURIObject(vt.Name, vt.GetField("Value").GetValue(v).ToString(), vt.GetField("Value").FieldType.Name);
-                                    m_writer.Write("inst:" + newUriObject.URI);
-                                    //this.WriteValueWrapper(v);
-                                }
-                                else if (f.FieldType.IsValueType) // must be IfcBinary
-                                {
-                                    Console.Out.WriteLine("MESSAGE-CHECK: Write IfcBinary 1");
-                                    m_writer.Write(";" + "\r\n");
-                                    WriteIndent();
-                                    m_writer.Write("ifcowl:" + p.name + " ");
-
-                                    FieldInfo fieldValue = f.FieldType.GetField("Value");
-                                    if (fieldValue != null)
-                                    {
-                                        v = fieldValue.GetValue(v);
-                                        if (v is byte[])
-                                        {
-                                            // binary data type - we don't support anything other than 8-bit aligned, though IFC doesn't either so no point in supporting extraBits
-                                            byte[] bytes = (byte[])v;
-
-                                            char[] s_hexchar = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
-                                            StringBuilder sb = new StringBuilder(bytes.Length * 2);
-                                            for (int i = 0; i < bytes.Length; i++)
-                                            {
-                                                byte b = bytes[i];
-                                                sb.Append(s_hexchar[b / 0x10]);
-                                                sb.Append(s_hexchar[b % 0x10]);
-                                            }
-                                            v = sb.ToString();
-                                            this.m_writer.WriteLine("\""+v+ "\"");
-                                        }
-                                    }
-                                }
-                                else
-                                {
-                                    Console.Out.WriteLine("Warning: Found some other kind of object property: " + p.domain + " - " + p.name);
-                                }
-                            }                        
+                            System.Collections.IList list = (System.Collections.IList)v;
+                            WriteListOfListWithEntities(t, f, list);
                         }
-                        else
+                        else if (isentitylist)
                         {
-                            Console.Out.WriteLine("Empty value: skipping");
+                            System.Collections.IList list = (System.Collections.IList)v;
+                            WriteListWithEntities(t, f, list);
                         }
+                    }
+                    else {
+                        //non-list attributes
+                        ObjectProperty p = GetObjectProperty(f.Name + "_" + o.GetType().Name);                        
+                        WriteAnyOtherThing(f, p, v);
                     }
                 }
                 else
@@ -410,116 +309,440 @@ namespace IfcDoc
                 }
             }
 
-            m_writer.Write(".\r\n\r\n");
-            Console.Out.WriteLine("End of attribute");
+            this.m_writer.Write(".\r\n\r\n");
+            //Console.Out.WriteLine("End of attributes");
 
             return;
         }
 
-        private void WriteListOfListWithValues(Type ft, System.Collections.IList list)
+        private void WriteAnyOtherThing(FieldInfo f, ObjectProperty p, object v)
         {
-            //Console.Out.WriteLine("WriteListOfListWithValues()");
-            //example:
-            //owl: allValuesFrom expr:INTEGER_List_List;
-            //owl: onProperty ifc:coordIndex_IfcTriangulatedFaceSet
-            ft = ft.GetGenericArguments()[0].GetGenericArguments()[0];
-            FieldInfo fieldValue = ft.GetField("Value");
-            
-            List<string> listoflists = new List<string>();
-            ListObject newListObject;
-
-            for (int i = 0; i < list.Count; i++)
+            if (v is SEntity)
             {
-                //new List of List
-                List<string> valuelist = new List<string>();
-                System.Collections.IList listInner = (System.Collections.IList)list[i];
-                for (int j = 0; j < listInner.Count; j++)
-                {
-                    object elem = listInner[j];
-                    if (elem != null) // should never be null, but be safe
-                    {
-                        elem = fieldValue.GetValue(elem);
-                        string encodedvalue = System.Security.SecurityElement.Escape(elem.ToString());
-                        valuelist.Add(encodedvalue);
-                    }
-                }
+                //found simple object property. give propertyname and URI num
+                this.m_writer.Write(";" + "\r\n");
+                WriteIndent();
+                this.m_writer.Write("ifcowl:" + p.name + " ");
 
-                //create listObject
-#if VERBOSE
-                Console.Out.WriteLine("Message: Creating ListOfListWithValues with XSDType : " + fieldValue.FieldType.Name);
-#endif
-                //newListObject = GetListObject(ft.Name + "_List_", ft.Name, valuelist, fieldValue.GetType().Name);
-                newListObject = GetListObject(ft.Name + "_List_", ft.Name, valuelist, fieldValue.FieldType.Name);
-
-                //Console.Out.WriteLine("written list prop (as obj. prop - part of list of list): attr = " + "inst:" + newListObject.URI);
-
-                //add to listOfList
-                listoflists.Add(newListObject.URI);
+                Type vt = v.GetType();
+                this.m_writer.Write("inst:" + vt.Name + "_" + ((SEntity)v).OID);
+                //There is more in the WriteAttibute method (HTM notation)
             }
-
-            ListObject newListOfListObject = GetListOfListObject(ft.Name, listoflists, "###LISTOFLIST###");
-            m_writer.Write("inst:" + newListOfListObject.URI);
-            Console.Out.WriteLine("written list of list prop (as obj. prop): attr = " + "inst:" + newListOfListObject.URI);
-        }
-
-        private void WriteListWithValues(Type ft, System.Collections.IList list)
-        {
-            //Console.Out.WriteLine("WriteListWithValues() started");
-            ft = ft.GetGenericArguments()[0];
-
-            List<string> valuelist = new List<string>();
-
-            FieldInfo fieldValue = ft.GetField("Value");
-            for (int i = 0; i < list.Count; i++)
+            else if (f.FieldType.IsInterface && v is ValueType)
             {
-                object elem = list[i];
-                if (elem != null) // should never be null, but be safe
+                this.m_writer.Write(";" + "\r\n");
+                WriteIndent();
+                this.m_writer.Write("ifcowl:" + p.name + " ");
+
+                Type vt = v.GetType();
+                URIObject newUriObject = GetURIObject(vt.Name, vt.GetField("Value").GetValue(v).ToString(), vt.GetField("Value").FieldType.Name);
+                this.m_writer.Write("inst:" + newUriObject.URI);
+                //this.WriteValueWrapper(v);
+            }
+            else if (f.FieldType.IsValueType) // must be IfcBinary
+            {
+                Console.Out.WriteLine("MESSAGE-CHECK: Write IfcBinary 1");
+                this.m_writer.Write(";" + "\r\n");
+                WriteIndent();
+                this.m_writer.Write("ifcowl:" + p.name + " ");
+
+                FieldInfo fieldValue = f.FieldType.GetField("Value");
+                if (fieldValue != null)
                 {
-                    elem = fieldValue.GetValue(elem);
-                    if (elem is byte[])
+                    v = fieldValue.GetValue(v);
+                    if (v is byte[])
                     {
-                        // IfcPixelTexture.Pixels
-                        if (i == 0)
-                            Console.Out.WriteLine("MESSAGE-CHECK: Write IfcBinary 2");
-                        byte[] bytes = (byte[])elem;
+                        // binary data type - we don't support anything other than 8-bit aligned, though IFC doesn't either so no point in supporting extraBits
+                        byte[] bytes = (byte[])v;
 
                         char[] s_hexchar = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
                         StringBuilder sb = new StringBuilder(bytes.Length * 2);
-                        for (int z = 0; z < bytes.Length; z++)
+                        for (int i = 0; i < bytes.Length; i++)
                         {
-                            byte b = bytes[z];
+                            byte b = bytes[i];
                             sb.Append(s_hexchar[b / 0x10]);
                             sb.Append(s_hexchar[b % 0x10]);
                         }
-                        valuelist.Add(sb.ToString());
-                    }
-                    else
-                    {
-                        //Simple list: like an IfcCartesianPoint
-                        string encodedvalue = System.Security.SecurityElement.Escape(elem.ToString());
-                        valuelist.Add(encodedvalue);
+                        v = sb.ToString();
+                        this.m_writer.WriteLine("\"" + v + "\"");
                     }
                 }
             }
-
-            Console.Out.WriteLine("Message: Creating WriteListWithValues with XSDType : " + fieldValue.FieldType.Name);
-            //Console.Out.WriteLine("Warning: Creating WriteListWithValues with XSDType : " + fieldValue.GetType().Name);
-            ListObject newListObject = GetListObject(ft.Name + "_List_", ft.Name, valuelist, fieldValue.FieldType.Name);
-            m_writer.Write("inst:" + newListObject.URI);
-            //Console.Out.WriteLine("WriteListWithValues() finished");
+            else
+            {
+                Console.Out.WriteLine("Warning: Found some other kind of object property: " + p.domain + " - " + p.name);
+            }
         }
 
-        private void WriteTypeValue(Type ft, object v)
+        private void WriteListOfListWithEntities(Type t, FieldInfo f, System.Collections.IList list)
         {
-            string owlClass = ft.Name;
-            if (owlClass.StartsWith("Nullable"))
-                owlClass = ft.GetGenericArguments()[0].Name;
+            //example:
+            //owl: allValuesFrom expr:INTEGER_List_List;
+            //owl: onProperty ifc:coordIndex_IfcTriangulatedFaceSet
 
-            if (ft.IsGenericType && ft.GetGenericTypeDefinition() == typeof(Nullable<>))
+            //Console.Out.WriteLine("\r\n++ writing attribute: " + f.Name);
+            ObjectProperty p = GetObjectProperty(f.Name + "_" + t.Name);
+            if (p.setorlist == "SET")
+            {
+                //SET
+                Console.Out.WriteLine("\r\nWARNING: UNHANDLED SET ATTRIBUTE" + f.Name);
+            }
+            else
+            {
+
+                Type ft = f.FieldType;
+                ft = ft.GetGenericArguments()[0].GetGenericArguments()[0];
+
+                this.m_writer.Write(";" + "\r\n");
+                this.WriteIndent();
+                this.m_writer.Write("ifcowl:" + p.name + " ");
+
+                List<string> listoflists = new List<string>();
+                ListObject newListObject;
+
+                for (int i = 0; i < list.Count; i++)
+                {
+                    //new List of List
+                    List<string> valuelist = new List<string>();
+                    System.Collections.IList listInner = (System.Collections.IList)list[i];
+                    for (int j = 0; j < listInner.Count; j++)
+                    {
+                        object e = listInner[j];
+                        if (e != null) // should never be null, but be safe
+                        {
+                            if (e is SEntity)
+                            {
+                                Type vt = e.GetType();
+                                valuelist.Add(vt.Name + "_" + ((SEntity)e).OID);
+                            }
+                            else
+                            {
+                                Console.Out.WriteLine("WARNING - unhandled list of list type: " + e.ToString());
+                            }
+                        }
+                    }
+
+                    //create listObject
+                    //Console.Out.WriteLine("Message: Creating WriteListKindOfObjectProperty list with XSDType : " + "###ENTITY###");
+                    newListObject = GetListObject(ft.Name + "_List_", ft.Name, valuelist, "###ENTITY###");
+
+                    //add to listOfList
+                    listoflists.Add(newListObject.URI);
+                }
+
+                ListObject newListOfListObject = GetListOfListObject(ft.Name, listoflists, "###LISTOFLIST###");
+                this.m_writer.Write("inst:" + newListOfListObject.URI);
+            }
+        }
+
+        private void WriteListOfListWithValues(Type t, FieldInfo f, System.Collections.IList list)
+        {
+            //Console.Out.WriteLine("\r\n++ writing attribute: " + f.Name);
+            ObjectProperty p = GetObjectProperty(f.Name + "_" + t.Name);
+            if (p.setorlist == "SET")
+            {
+                //SET
+                Console.Out.WriteLine("\r\nWARNING: UNHANDLED SET ATTRIBUTE" + f.Name);
+            }
+            else
+            {
+                //LIST
+                Type ft = f.FieldType;
+                this.m_writer.Write(";" + "\r\n");
+                this.WriteIndent();
+                this.m_writer.Write("ifcowl:" + p.name + " ");
+
+                //Console.Out.WriteLine("WriteListOfListWithValues()");
+                //example:
+                //owl: allValuesFrom expr:INTEGER_List_List;
+                //owl: onProperty ifc:coordIndex_IfcTriangulatedFaceSet
+                ft = ft.GetGenericArguments()[0].GetGenericArguments()[0];
+                FieldInfo fieldValue = ft.GetField("Value");
+
+                List<string> listoflists = new List<string>();
+                ListObject newListObject;
+
+                for (int i = 0; i < list.Count; i++)
+                {
+                    //new List of List
+                    List<string> valuelist = new List<string>();
+                    System.Collections.IList listInner = (System.Collections.IList)list[i];
+                    for (int j = 0; j < listInner.Count; j++)
+                    {
+                        object elem = listInner[j];
+                        if (elem != null) // should never be null, but be safe
+                        {
+                            elem = fieldValue.GetValue(elem);
+                            string encodedvalue = System.Security.SecurityElement.Escape(elem.ToString());
+                            valuelist.Add(encodedvalue);
+                        }
+                    }
+
+                    //create listObject
+                    #if VERBOSE
+                    Console.Out.WriteLine("Message: Creating ListOfListWithValues with XSDType : " + fieldValue.FieldType.Name);
+                    #endif
+                    newListObject = GetListObject(ft.Name + "_List_", ft.Name, valuelist, fieldValue.FieldType.Name);
+
+                    //add to listOfList
+                    listoflists.Add(newListObject.URI);
+                }
+
+                ListObject newListOfListObject = GetListOfListObject(ft.Name, listoflists, "###LISTOFLIST###");
+                this.m_writer.Write("inst:" + newListOfListObject.URI);
+                //Console.Out.WriteLine("written list of list prop (as obj. prop): attr = " + "inst:" + newListOfListObject.URI);
+            }
+        }
+
+        private void WriteListWithEntities(Type t, FieldInfo f, System.Collections.IList list)
+        {
+            //Console.Out.WriteLine("\r\n++ writing attribute: " + f.Name);
+            ObjectProperty p = GetObjectProperty(f.Name + "_" + t.Name);
+
+            if (p.setorlist == "SET")
+            {
+                //SET
+                for (int i = 0; i < list.Count; i++)
+                {
+                    if (list[i] is SEntity)
+                    {                    
+                        Type vt = list[i].GetType();
+                        this.m_writer.Write(";" + "\r\n");
+                        this.WriteIndent();
+                        this.m_writer.Write("ifcowl:" + p.name + " ");                        
+                        this.m_writer.Write("inst:" + vt.Name + "_" + ((SEntity)list[i]).OID);
+                        //Console.Out.WriteLine("written object prop to SET:" + p.name + " - " + vt.Name + "_" + ((SEntity)list[i]).OID);
+                    }
+                    else{
+                        Console.Out.WriteLine("WARNING: We found an unhandled SET of things that are NOT entities: " + f.Name);
+                    }
+                }
+            }
+            else
+            {
+                //LIST
+                Type ft = f.FieldType;
+                ft = ft.GetGenericArguments()[0];
+                List<string> valuelist = new List<string>();
+                string ifcowlclass = "";
+
+                object e = list[0];
+                Type vt = e.GetType();
+                if (e is SEntity)
+                {
+                    for (int i = 0; i < list.Count; i++)
+                    {
+                        e = list[i];
+                        ifcowlclass = vt.Name;
+                        valuelist.Add(vt.Name + "_" + ((SEntity)e).OID);
+                    }
+
+                    this.m_writer.Write(";" + "\r\n");
+                    this.WriteIndent();
+                    this.m_writer.Write("ifcowl:" + p.name + " ");
+                    ListObject newListObject = GetListObject(ifcowlclass + "_List_", ifcowlclass, valuelist, "###ENTITY###");
+                    this.m_writer.Write("inst:" + newListObject.URI);
+                    //IfcRepresentation_List_#121_#145_#137
+                }
+                else
+                {
+                    //find out whether we have a list of lists; or a list of values
+                    if (vt.IsValueType && !vt.IsPrimitive)
+                    {
+                        FieldInfo fieldValue = vt.GetField("Value");
+                        if (fieldValue != null)
+                        {
+                            e = fieldValue.GetValue(e);
+                        }
+                    }
+
+                    if (e is System.Collections.IList)
+                    {
+                        //e.g. #205= IFCINDEXEDPOLYCURVE($,(IFCLINEINDEX((1,2)),IFCARCINDEX((2,3,4))),$);
+                        Type typewrap = null;
+                        for (int i = 0; i < list.Count; i++)
+                        {
+                            e = list[i];
+                            vt = e.GetType();
+                            while (vt.IsValueType && !vt.IsPrimitive)
+                            {
+                                FieldInfo fieldValue1 = vt.GetField("Value");
+                                if (fieldValue1 != null)
+                                {
+                                    e = fieldValue1.GetValue(e);
+                                    typewrap = vt;
+                                    vt = fieldValue1.FieldType;
+                                }
+                                else
+                                {
+                                    break;
+                                }
+                            }
+
+                            // e.g. IfcBinary
+                            // e.g. IfcCompoundPlaneAngleMeasure (LIST)
+                            System.Collections.IList innerlist1 = (System.Collections.IList)e;
+                            vt = vt.GetGenericArguments()[0];
+                            FieldInfo fieldValue = vt.GetField("Value");
+
+                            if (typewrap.Name != "IfcBinary")
+                            {
+                                List<String> innerlist2 = new List<String>();
+                                for (int j = 0; j < innerlist1.Count; j++)
+                                {
+                                    object elem = innerlist1[j];
+                                    if (elem != null) // should never be null, but be safe
+                                    {
+                                        elem = fieldValue.GetValue(elem);
+                                        string encodedvalue = System.Security.SecurityElement.Escape(elem.ToString());
+                                        innerlist2.Add(encodedvalue);
+                                    }
+                                }
+                                string s = fieldValue.FieldType.Name;
+                                if (s == "Int64" || s == "Double" || s == "String" || s == "Number" || s == "Real" || s == "Integer" || s == "Logical" || s == "Boolean" || s == "Binary")
+                                    s = CheckForExpressPrimaryTypes(s);
+                                ListObject newInnerListObject = GetListObject(typewrap.Name + "_", vt.Name, innerlist2, s);
+                                valuelist.Add(newInnerListObject.URI);
+                            }
+                            //else
+                            //{
+                            //    string fullvalue = "";
+                            //    for (int i = 0; i < list.Count; i++)
+                            //    {
+                            //        object elem = list[i];
+                            //        if (elem != null) // should never be null, but be safe
+                            //        {
+                            //            string encodedvalue = System.Security.SecurityElement.Escape(elem.ToString());
+                            //            fullvalue += Int32.Parse(encodedvalue).ToString("X");
+                            //        }
+                            //    }
+                            //    Console.Out.WriteLine("\r\n++ writing attribute: " + f.Name);
+                            //    this.m_writer.Write(";" + "\r\n");
+                            //    this.WriteIndent();
+                            //    ObjectProperty p = GetObjectProperty(f.Name + "_" + t.Name);
+                            //    this.m_writer.Write("ifcowl:" + p.name + " ");
+                            //    this.m_writer.Write(fullvalue);
+                            //}
+                        }
+                        this.m_writer.Write(";" + "\r\n");
+                        this.WriteIndent();
+                        this.m_writer.Write("ifcowl:" + p.name + " ");
+                        ListObject newListObject = GetListObject(ft.Name + "_List_", ft.Name, valuelist, "###ENTITY###");
+                        this.m_writer.Write("inst:" + newListObject.URI);
+                        //IfcRepresentation_List_#121_#145_#137
+                    }
+                    else
+                    {
+                        //e.g. #226= IFCPROPERTYENUMERATION($,(IFCLABEL('NEW'),IFCLABEL('EXISTING'),IFCLABEL('DEMOLISH'),IFCLABEL('TEMPORARY'),IFCLABEL('OTHER'),IFCLABEL('NOTKNOWN'),IFCLABEL('UNSET')),$);
+                        Type typewrap = null;
+                        for (int i = 0; i < list.Count; i++)
+                        {
+                            e = list[i];
+                            vt = e.GetType();
+                            while (vt.IsValueType && !vt.IsPrimitive)
+                            {
+                                FieldInfo fieldValue = vt.GetField("Value");
+                                if (fieldValue != null)
+                                {
+                                    e = fieldValue.GetValue(e);
+                                    if (typewrap == null)
+                                    {
+                                        typewrap = vt;
+                                    }
+                                    vt = fieldValue.FieldType;
+                                }
+                                else
+                                {
+                                    break;
+                                }
+                            }
+                            if (e != null)
+                            {
+                                string encodedvalue = System.Security.SecurityElement.Escape(e.ToString());
+                                valuelist.Add(encodedvalue);
+                            }
+                        }
+
+                        this.m_writer.Write(";" + "\r\n");
+                        this.WriteIndent();
+                        this.m_writer.Write("ifcowl:" + p.name + " ");
+                        ListObject newListObject = GetListObject(ft.Name + "_List_", typewrap.Name, valuelist, vt.Name);
+                        this.m_writer.Write("inst:" + newListObject.URI);
+                        //IfcRepresentation_List_#121_#145_#137
+                    }
+                }                               
+            }
+        }
+
+        private void WriteListWithValues(Type t, FieldInfo f, System.Collections.IList list)
+        {
+            //Console.Out.WriteLine("\r\n++ writing attribute: " + f.Name);
+            ObjectProperty p = GetObjectProperty(f.Name + "_" + t.Name);            
+            
+            if (p.setorlist == "SET")
+            {
+                //SET, such as IfcRecurrencePattern.weekdayComponent > IfcDayInWeekNumber
+                for (int i = 0; i < list.Count; i++)
+                    WriteTypeValue(t,f,list[i]);
+            }
+            else
+            {
+                //LIST, the most common option
+                Type ft = f.FieldType;
+                ft = ft.GetGenericArguments()[0];
+                List<string> valuelist = new List<string>();
+                FieldInfo fieldValue = ft.GetField("Value");
+
+                //Simply retrieving the values and putting them in valuelist
+                for (int i = 0; i < list.Count; i++)
+                {
+                    object elem = list[i];
+                    if (elem != null) // should never be null, but be safe
+                    {
+                        elem = fieldValue.GetValue(elem);
+                        if (elem is byte[])
+                        {
+                            // IfcPixelTexture.Pixels
+                            if (i == 0)
+                                Console.Out.WriteLine("MESSAGE-CHECK: Write IfcBinary 2");
+                            byte[] bytes = (byte[])elem;
+
+                            char[] s_hexchar = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
+                            StringBuilder sb = new StringBuilder(bytes.Length * 2);
+                            for (int z = 0; z < bytes.Length; z++)
+                            {
+                                byte b = bytes[z];
+                                sb.Append(s_hexchar[b / 0x10]);
+                                sb.Append(s_hexchar[b % 0x10]);
+                            }
+                            valuelist.Add(sb.ToString());
+                        }
+                        else
+                        {
+                            //Simple list: like an IfcCartesianPoint
+                            string encodedvalue = System.Security.SecurityElement.Escape(elem.ToString());
+                            valuelist.Add(encodedvalue);
+                        }
+                    }
+                }
+
+                this.m_writer.Write(";" + "\r\n");
+                this.WriteIndent();
+                this.m_writer.Write("ifcowl:" + p.name + " ");
+                ListObject newListObject = GetListObject(ft.Name + "_List_", ft.Name, valuelist, fieldValue.FieldType.Name);
+                this.m_writer.Write("inst:" + newListObject.URI);
+            }
+        }
+
+        private void WriteTypeValue(Type t, FieldInfo f, object v)
+        {
+            Type ft = f.FieldType;
+            if (ft.IsGenericType && (ft.GetGenericTypeDefinition() == typeof(Nullable<>)||ft.GetGenericTypeDefinition() == typeof(List<>)))
             {
                 // special case for Nullable types
                 ft = ft.GetGenericArguments()[0];
             }
+            string owlClass = ft.Name;
 
             Type typewrap = null;
             while (ft.IsValueType && !ft.IsPrimitive)
@@ -542,8 +765,13 @@ namespace IfcDoc
 
             if (ft.IsEnum)
             {
+                //Console.Out.WriteLine("\r\n++ writing attribute: " + f.Name);
+                this.m_writer.Write(";" + "\r\n");
+                this.WriteIndent();
+                ObjectProperty p = GetObjectProperty(f.Name + "_" + t.Name);
+                this.m_writer.Write("ifcowl:" + p.name + " ");
                 //write enumproperty
-                m_writer.Write("ifcowl:" + v);
+                this.m_writer.Write("ifcowl:" + v);
             }
             if (ft == typeof(bool))
             {
@@ -552,12 +780,12 @@ namespace IfcDoc
 
             if (v is System.Collections.IList)
             {
-                // IfcBinary!!
-                Console.Out.WriteLine("WARNING-TOCHECK: Write IfcBinary 3");
+                // e.g. IfcBinary
+                // e.g. IfcCompoundPlaneAngleMeasure (LIST)
+                //Console.Out.WriteLine("WARNING-TOCHECK: Write IfcBinary 3");
                 System.Collections.IList list = (System.Collections.IList)v;
 
-                //TODO: make sure this is also valid for othter Types with Lists
-                if (owlClass == "IfcCompoundPlaneAngleMeasure")
+                if (owlClass != "IfcBinary")
                 {
                     List<String> valuelist = new List<String>();
                     for (int i = 0; i < list.Count; i++)
@@ -573,9 +801,13 @@ namespace IfcDoc
                     string s = ft.Name;
                     if (s == "Int64" || s == "Double" || s == "String" || s == "Number" || s == "Real" || s == "Integer" || s == "Logical" || s == "Boolean" || s == "Binary")
                         s = CheckForExpressPrimaryTypes(s);
-                    Console.Out.WriteLine("Message: Creating IfcCompoundPlaneAngleMeasure list with XSDType : " + ft.Name);
-                    ListObject newListObject = GetListObject(owlClass + "_List_", s, valuelist, ft.Name);
-                    m_writer.Write("inst:" + newListObject.URI);
+                    Console.Out.WriteLine("\r\n++ writing attribute: " + f.Name);
+                    this.m_writer.Write(";" + "\r\n");
+                    this.WriteIndent();
+                    ObjectProperty p = GetObjectProperty(f.Name + "_" + t.Name);
+                    this.m_writer.Write("ifcowl:" + p.name + " ");
+                    ListObject newListObject = GetListObject(owlClass + "_", s, valuelist, ft.Name);
+                    this.m_writer.Write("inst:" + newListObject.URI);
                 }
                 else
                 {
@@ -586,12 +818,16 @@ namespace IfcDoc
                         if (elem != null) // should never be null, but be safe
                         {
                             string encodedvalue = System.Security.SecurityElement.Escape(elem.ToString());
-
                             fullvalue += Int32.Parse(encodedvalue).ToString("X");
                         }
                     }
+                    Console.Out.WriteLine("\r\n++ writing attribute: " + f.Name);
+                    this.m_writer.Write(";" + "\r\n");
+                    this.WriteIndent();
+                    ObjectProperty p = GetObjectProperty(f.Name + "_" + t.Name);
+                    this.m_writer.Write("ifcowl:" + p.name + " ");
                     this.m_writer.Write(fullvalue);
-                }                
+                }
             }
             else if (v != null && !ft.IsEnum)
             {
@@ -599,181 +835,18 @@ namespace IfcDoc
 
                 if (owlClass == "Int64" || owlClass == "Double" || owlClass == "String" || owlClass == "Number" || owlClass == "Real" || owlClass == "Integer" || owlClass == "Logical" || owlClass == "Boolean" || owlClass == "Binary")
                     owlClass = CheckForExpressPrimaryTypes(owlClass);
+
                 Console.Out.WriteLine("WriteTypeValue.GetURIObject()");
                 URIObject newUriObject = GetURIObject(owlClass, encodedvalue, ft.Name);
-                m_writer.Write("inst:" + newUriObject.URI);                               
+                Console.Out.WriteLine("\r\n++ writing attribute: " + f.Name);
+                this.m_writer.Write(";" + "\r\n");
+                this.WriteIndent();
+                ObjectProperty p = GetObjectProperty(f.Name + "_" + t.Name);
+                this.m_writer.Write("ifcowl:" + p.name + " ");
+                this.m_writer.Write("inst:" + newUriObject.URI);
             }
         }
 
-        private void WriteListKindOfObjectProperty(FieldInfo f, object v, Type ft, ObjectProperty p, System.Collections.IList list)
-        {
-            Console.Out.WriteLine("WriteListKindOfObjectProperty()");
-            if (p.setorlist.Equals("LIST"))
-            {
-                ft = ft.GetGenericArguments()[0];
-                //inst:IfcLengthMeasure_List_42.
-                List<String> valuelist = new List<String>();
-                m_writer.Write(";" + "\r\n");
-                this.WriteIndent();
-                m_writer.Write("ifcowl:" + p.name + " ");
-                string xsdt = "";
-
-                for (int i = 0; i < list.Count; i++)
-                {
-                    object e = list[i];
-                    if (e is SEntity)
-                    {
-                        Type vt = e.GetType();
-                        xsdt = vt.Name;
-                        valuelist.Add(vt.Name + "_" + ((SEntity)e).OID);
-                    }
-                    else
-                    {
-                        Type vt = e.GetType();
-                        xsdt = ft.Name;
-
-                        object x = vt.GetField("Value").GetValue(e);
-
-                        if (x is System.Collections.IList)
-                        {
-                            //IfcLineIndex, IfcArcIndex
-                            //IfcSegmentIndexSelect
-                            System.Collections.IList l = (System.Collections.IList)x;
-                            List<string> sl = new List<string>();
-                            for (int j = 0; j < l.Count; j++)
-                            {
-                                object elem = l[j];
-                                if (elem != null) // should never be null, but be safe
-                                {
-                                    string encodedvalue = System.Security.SecurityElement.Escape(elem.GetType().GetField("Value").GetValue(elem).ToString());
-                                    sl.Add(encodedvalue);
-                                }                                
-                            }
-
-                            Console.Out.WriteLine("Message: Creating WriteListKindOfObjectProperty list with XSDType : " + l[0].GetType().GetField("Value").FieldType.Name);
-                            ListObject newTypeListObject = GetListObject(vt.Name+"_", l[0].GetType().Name.ToString(), sl, l[0].GetType().GetField("Value").FieldType.Name); 
-                            
-                            Console.Out.WriteLine("Handling list of types - newListObject.URI : " + newTypeListObject.URI + " with type " + l[0].GetType().GetField("Value").FieldType.Name);
-                            valuelist.Add(newTypeListObject.URI);
-                        }
-                        else
-                        {
-                            Console.Out.WriteLine("WriteInnerListKindOfObjectProperty.GetURIObject()");
-                            URIObject newUriObject = GetURIObject(vt.Name, vt.GetField("Value").GetValue(e).ToString(), vt.GetField("Value").FieldType.Name);
-                            Console.Out.WriteLine("Handling list of types - newUriObject.URI : " + newUriObject.URI + " with type " + vt.GetField("Value").FieldType.Name);
-                            valuelist.Add(newUriObject.URI);
-                        }
-
-                    }
-                }
-
-                Console.Out.WriteLine("Message: Creating WriteListKindOfObjectProperty list with XSDType : " + "###ENTITY###");
-                ListObject newListObject = GetListObject(xsdt + "_List_", xsdt, valuelist, "###ENTITY###");
-                m_writer.Write("inst:" + newListObject.URI);
-                //IfcRepresentation_List_#121_#145_#137
-            }
-
-            else if (p.setorlist.Equals("LISTOFLIST"))
-            {
-                //example:
-                //owl: allValuesFrom expr:INTEGER_List_List;
-                //owl: onProperty ifc:coordIndex_IfcTriangulatedFaceSet
-                ft = ft.GetGenericArguments()[0].GetGenericArguments()[0];
-
-                m_writer.Write(";" + "\r\n");
-                this.WriteIndent();
-                m_writer.Write("ifcowl:" + p.name + " ");
-
-                List<string> listoflists = new List<string>();
-                ListObject newListObject;
-
-                for (int i = 0; i < list.Count; i++)
-                {
-                    //new List of List
-                    List<string> valuelist = new List<string>();
-                    System.Collections.IList listInner = (System.Collections.IList)list[i];
-                    for (int j = 0; j < listInner.Count; j++)
-                    {
-                        object e = listInner[j];
-                        if (e != null) // should never be null, but be safe
-                        {
-                            if (e is SEntity)
-                            {
-                                Type vt = e.GetType();
-                                valuelist.Add(vt.Name + "_" + ((SEntity)e).OID);
-                            }
-                            else
-                            {
-                                Console.Out.WriteLine("WARNING - unhandled list of list: " + e.ToString());
-                            }
-                        }
-                    }
-
-                    //create listObject
-                    Console.Out.WriteLine("Message: Creating WriteListKindOfObjectProperty list with XSDType : " + "###ENTITY###");
-                    newListObject = GetListObject(ft.Name+"_List_", ft.Name, valuelist, "###ENTITY###");
-
-                    //add to listOfList
-                    listoflists.Add(newListObject.URI);
-                }
-
-                ListObject newListOfListObject = GetListOfListObject(ft.Name, listoflists, "###LISTOFLIST###");
-                m_writer.Write("inst:" + newListOfListObject.URI);
-                //Console.Out.WriteLine("written list of list prop (as obj. prop): attr = " + "inst:" + newListOfListObject.URI);
-            }
-
-            else {
-                for (int i = 0; i < list.Count; i++)
-                {
-                    object e = list[i];
-                    if (e is SEntity)
-                    {
-                        if (p.setorlist.Equals("SET"))
-                        {
-                            m_writer.Write(";" + "\r\n");
-                            WriteIndent();
-                            m_writer.Write("ifcowl:" + p.name + " ");
-
-                            Type vt = e.GetType();
-                            this.m_writer.Write("inst:" + vt.Name + "_" + ((SEntity)e).OID);
-                            Console.Out.WriteLine("written object prop to SET:" + p.name + " - " + vt.Name + "_" + ((SEntity)e).OID);
-                        }
-                        else if (p.setorlist.Equals("LIST") || p.setorlist.Equals("LISTOFLIST"))
-                        {
-                            //Already handled in the code above
-                        }
-                        else
-                        {
-                            Console.Out.WriteLine("Warning: Found something that should not be possible : " + p.name + " - " + ((SEntity)e).OID + " - not handled");
-                        }
-                    }
-                    else if (e is System.Collections.IList)
-                    {
-                        Console.Out.WriteLine("Skipping: because already handled above (LIST OF LIST)");
-                    }
-                    else
-                    {
-                        //#77= IFCTRIMMEDCURVE(#83,(IFCPARAMETERVALUE(0.0),#78),(IFCPARAMETERVALUE(1.52202550844946),#79),.T.,.PARAMETER.);
-                        //#78= IFCCARTESIANPOINT((0.0,0.0,0.0));
-                        
-                        // if flat-list (e.g. structural load Locations) or list of strings (e.g. IfcPostalAddress.AddressLines), must wrap
-                        //this.WriteValueWrapper(e);
-                        m_writer.Write(";" + "\r\n");
-                        WriteIndent();
-                        m_writer.Write("ifcowl:" + p.name + " ");
-                        Type vt = e.GetType();
-                        Console.Out.WriteLine("WriteListKindOfObjectProperty.GetURIObject() - A");
-                        URIObject newUriObject = GetURIObject(vt.Name, vt.GetField("Value").GetValue(e).ToString(), vt.GetField("Value").FieldType.Name);
-                        if (newUriObject.XSDType == "Value")
-                            Console.Out.WriteLine("warning: found Value XSDType");
-                        m_writer.Write("inst:" + newUriObject.URI);
-                        Console.Out.WriteLine("WARNING-TOCHECK: found list of data values - handled : " + "ifcowl:" + p.name + " inst: " + newUriObject.URI);
-                    }
-                }
-            }
-        }
-
-        //WRITE HELPER METHODS
         private void WriteHeader()
         {
             if (this.m_markup)
@@ -820,9 +893,9 @@ namespace IfcDoc
             this.m_writer.Write("inst:" + newline);
             m_indent = 0;
             m_indent++;
-            WriteIndent();
+            this.WriteIndent();
             this.m_writer.Write("rdf:type owl:Ontology;" + newline);
-            WriteIndent();
+            this.WriteIndent();
             if (this.m_markup)
                 this.m_writer.Write("owl:imports &lt;" + m_owlURI + "&gt; ." + newline + newline);
             else
@@ -899,33 +972,33 @@ namespace IfcDoc
 
         private void WriteLiteralValue(string xsdType, string literalString)
         {
-#if VERBOSE
+            #if VERBOSE
             Console.Out.WriteLine("WriteLiteralValue: " + "xsdtype: " + xsdType + " - literalString " + literalString);
-#endif
-            WriteIndent();
+            #endif
+            this.WriteIndent();
             if (xsdType.Equals("integer", StringComparison.CurrentCultureIgnoreCase) || xsdType.Equals("Int64", StringComparison.CurrentCultureIgnoreCase))
-                m_writer.Write("express:hasInteger" + " " + literalString + " ");
+                this.m_writer.Write("express:hasInteger" + " " + literalString + " ");
             else if (xsdType.Equals("double", StringComparison.CurrentCultureIgnoreCase))
-                m_writer.Write("express:has" + xsdType + " \"" + literalString.Replace(',','.') + "\"^^xsd:double ");
+                this.m_writer.Write("express:has" + xsdType + " \"" + literalString.Replace(',','.') + "\"^^xsd:double ");
             else if (xsdType.Equals("hexBinary", StringComparison.CurrentCultureIgnoreCase))
-                m_writer.Write("express:has" + xsdType + " " + literalString + " ");
+                this.m_writer.Write("express:has" + xsdType + " " + literalString + " ");
             else if (xsdType.Equals("boolean", StringComparison.CurrentCultureIgnoreCase))
-                m_writer.Write("express:has" + xsdType + " " + literalString.ToLower() + " ");
+                this.m_writer.Write("express:has" + xsdType + " " + literalString.ToLower() + " ");
             else if (xsdType.Equals("logical", StringComparison.CurrentCultureIgnoreCase))
             {
                 if (literalString.Equals(".F.", StringComparison.CurrentCultureIgnoreCase))
-                    m_writer.Write("express:has" + xsdType + " express:FALSE ");
+                    this.m_writer.Write("express:has" + xsdType + " express:FALSE ");
                 else if (literalString.Equals(".T.", StringComparison.CurrentCultureIgnoreCase))
-                    m_writer.Write("express:has" + xsdType + " express:TRUE ");
+                    this.m_writer.Write("express:has" + xsdType + " express:TRUE ");
                 else if (literalString.Equals(".U.", StringComparison.CurrentCultureIgnoreCase))
-                    m_writer.Write("express:has" + xsdType + " express:UNKNOWN ");
+                    this.m_writer.Write("express:has" + xsdType + " express:UNKNOWN ");
                 else
                     Console.Out.WriteLine("WARNING: found odd logical value: " + literalString);
             }
             else if (xsdType.Equals("string", StringComparison.CurrentCultureIgnoreCase))
-                m_writer.Write("express:has" + xsdType + " \"" + literalString + "\" ");
+                this.m_writer.Write("express:has" + xsdType + " \"" + literalString + "\" ");
             else {
-                m_writer.Write("express:has" + xsdType + " \"" + literalString + "\" ");
+                this.m_writer.Write("express:has" + xsdType + " \"" + literalString + "\" ");
                 Console.Out.WriteLine("WARNING: found xsdType " + xsdType + " - not sure what to do with it");
             }
 
@@ -936,20 +1009,20 @@ namespace IfcDoc
         private void WriteExtraEntity(URIObject obj)
         {
             m_indent = 0;
-            m_writer.Write("inst:" + obj.URI + "\r\n");
+            this.m_writer.Write("inst:" + obj.URI + "\r\n");
             m_indent++;
             string ns = "ifcowl:";
             if (obj.ifcowlclass.Equals("INTEGER") || obj.ifcowlclass.Equals("REAL") || obj.ifcowlclass.Equals("DOUBLE") || obj.ifcowlclass.Equals("BINARY") || obj.ifcowlclass.Equals("BOOLEAN") || obj.ifcowlclass.Equals("LOGICAL") || obj.ifcowlclass.Equals("STRING"))
                 ns = "express:";
             WriteType(ns + obj.ifcowlclass + ";\r\n");
-#if VERBOSE
+            #if VERBOSE
             Console.Out.WriteLine("WriteExtraEntity: " + "obj.URI: " + obj.URI + " - xsdtype " + obj.XSDType);
-#endif
+            #endif
             WriteLiteralValue(obj.XSDType, obj.encodedvalue);
-            m_writer.Write(".\r\n\r\n");
-#if VERBOSE
+            this.m_writer.Write(".\r\n\r\n");
+            #if VERBOSE
             Console.Out.WriteLine("written URIObject: " + "inst:" + obj.URI + " with VALUE " + obj.encodedvalue + " and TYPE " + obj.XSDType);
-#endif
+            #endif
             return;
         }
         
@@ -967,25 +1040,25 @@ namespace IfcDoc
                     m_indent = 0;
                     if (i == 0)
                     {
-                        m_writer.Write("inst:" + obj.URI + "\r\n");
-#if VERBOSE
+                        this.m_writer.Write("inst:" + obj.URI + "\r\n");
+                        #if VERBOSE
                         Console.Out.WriteLine("written ListOfListObject: " + "inst:" + obj.URI + " with TYPE " + obj.XSDType);
-#endif
+                        #endif
                     }
                     else
                     {
-                        m_writer.Write("inst:" + obj.ifcowlclass + "_List_List_" + m_nextID + "\r\n");
-#if VERBOSE
+                        this.m_writer.Write("inst:" + obj.ifcowlclass + "_List_List_" + m_nextID + "\r\n");
+                        #if VERBOSE
                         Console.Out.WriteLine("written ListOfListObject: " + "inst:" + obj.ifcowlclass + "_List_List_" + m_nextID + " with TYPE " + obj.XSDType);
-#endif
+                        #endif
                     }
                  
                     //m_writer.Write("inst:" + obj.URI + "\r\n");
                     m_indent++;
                     WriteType(ns + obj.ifcowlclass + "_List_List" + ";\r\n");
-                    WriteIndent();
+                    this.WriteIndent();
                     m_nextID++;
-                    m_writer.Write("list:hasContents inst:" + obj.values[i]);
+                    this.m_writer.Write("list:hasContents inst:" + obj.values[i]);
 
                     //generate
                     //List<string> values_double = obj.values;
@@ -994,11 +1067,11 @@ namespace IfcDoc
 
                     if ((obj.values.Count - i) > 1)
                     {
-                        m_writer.Write(";\r\n");
-                        WriteIndent();
-                        m_writer.Write("list:hasNext inst:" + obj.ifcowlclass + "_List_List_" + m_nextID);
+                        this.m_writer.Write(";\r\n");
+                        this.WriteIndent();
+                        this.m_writer.Write("list:hasNext inst:" + obj.ifcowlclass + "_List_List_" + m_nextID);
                     }
-                    m_writer.Write(".\r\n\r\n");
+                    this.m_writer.Write(".\r\n\r\n");
                 }
             }
             else
@@ -1018,32 +1091,32 @@ namespace IfcDoc
                 m_indent = 0;
 
                 if (i == 0)
-                //{
-                    m_writer.Write("inst:" + obj.URI + "\r\n");
+                    //{
+                    this.m_writer.Write("inst:" + obj.URI + "\r\n");
                     //Console.Out.WriteLine("written ListObject: " + "inst:" + obj.URI + " with TYPE " + obj.XSDType);
                 //}
                 else
-                //{
-                    m_writer.Write("inst:" + obj.listtype + "_" + m_nextID + "\r\n");
+                    //{
+                    this.m_writer.Write("inst:" + obj.listtype + "_" + m_nextID + "\r\n");
                 //    Console.Out.WriteLine("written ListObject: " + "inst:" + obj.listtype + "_" + m_nextID + " with TYPE " + obj.XSDType);
                 //}
                 
                 m_indent++;
-                WriteType(ns + obj.listtype + ";\r\n");
-                WriteIndent();
+                this.WriteType(ns + obj.listtype + ";\r\n");
+                this.WriteIndent();
 
-                m_writer.Write("list:hasContents inst:" + obj.values[i]);
+                this.m_writer.Write("list:hasContents inst:" + obj.values[i]);
 
                 //generate
                 m_nextID++;
 
                 if ((obj.values.Count-i) > 1)
                 {
-                    m_writer.Write(";\r\n");
-                    WriteIndent();
-                    m_writer.Write("list:hasNext inst:" + obj.listtype + "_" + m_nextID);
+                    this.m_writer.Write(";\r\n");
+                    this.WriteIndent();
+                    this.m_writer.Write("list:hasNext inst:" + obj.listtype + "_" + m_nextID);
                 }
-                m_writer.Write(".\r\n\r\n");
+                this.m_writer.Write(".\r\n\r\n");
             }            
 
             return;
@@ -1079,12 +1152,12 @@ namespace IfcDoc
 
         private URIObject GetURIObject(string domain, string encodedvalue, string XSDType)
         {
-#if VERBOSE
+            #if VERBOSE
             if (XSDType.Equals("RTFieldInfo", StringComparison.CurrentCultureIgnoreCase))
                 Console.Out.WriteLine("Warning: Found RTFieldInfo XSDType for encodedvalue: " + encodedvalue);
             else
                 Console.Out.WriteLine("Found seemingly ok XSDType for encodedvalue : " + encodedvalue + " - " + domain);
-#endif
+            #endif
             //WARNING: _VALUE_ and _TYPE_ could be in the other strings
             string fullObject = domain + "_VALUE_" + encodedvalue + "_TYPE_" + XSDType;
 
@@ -1140,10 +1213,9 @@ namespace IfcDoc
             {
                 if (XSDType != "###ENTITY###")
                 {
-#if VERBOSE
+                    #if VERBOSE
                     Console.Out.WriteLine("GetListObject().GetURIObject()");
-#endif
-                    //URIObject uo = GetURIObject(ifcowlclass, values[i], values[i].GetType().Name);
+                    #endif
                     URIObject uo = GetURIObject(ifcowlclass, values[i], XSDType);
                     values[i] = uo.URI;
                     encodedvalue += uo.URI;
@@ -1167,17 +1239,17 @@ namespace IfcDoc
 
             if (XSDType == "###ENTITY###")
             {
-#if VERBOSE
+                #if VERBOSE
                 Console.Out.WriteLine("Creating GetListObject list with XSDType : " + ifcowlclass);
-#endif
+                #endif
                 obj = new ListObject(listname + m_nextID, listname.Substring(0,listname.Length-1), ifcowlclass, values, ifcowlclass);
             }
             else
             {
-#if VERBOSE
+                #if VERBOSE
                 //create the additional datatype value
                 Console.Out.WriteLine("Creating GetListObject list with XSDType : " + XSDType);
-#endif
+                #endif
                 obj = new ListObject(listname + m_nextID, listname.Substring(0, listname.Length - 1), ifcowlclass, values, XSDType);
             }
 
