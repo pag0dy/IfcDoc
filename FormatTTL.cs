@@ -193,7 +193,6 @@ namespace IfcDoc
             {
                 this.m_writer.Write("<br/>\r\n");
                 this.m_writer.Write("</tt>\r\n");
-
                 this.m_writer.Write("  </body>\r\n");
                 this.m_writer.Write("</html>\r\n");
                 this.m_writer.Write("\r\n");
@@ -233,11 +232,6 @@ namespace IfcDoc
         private void WriteEntityAttributes(SEntity o)
         {
             Type t = o.GetType();
-
-            if (t.Name.Equals("IfcPixelTexture"))
-            {
-                this.ToString();
-            }            
 
             IList<FieldInfo> fields = SEntity.GetFieldsAll(t);
             foreach (FieldInfo f in fields)
@@ -729,7 +723,10 @@ namespace IfcDoc
                 this.m_writer.Write(";" + "\r\n");
                 this.WriteIndent();
                 this.m_writer.Write("ifcowl:" + p.name + " ");
-                ListObject newListObject = GetListObject(ft.Name + "_List_", ft.Name, valuelist, fieldValue.FieldType.Name);
+                string s = fieldValue.FieldType.Name;
+                if (s == "Int64" || s == "Double" || s == "String" || s == "Number" || s == "Real" || s == "Integer" || s == "Logical" || s == "Boolean" || s == "Binary" || s == "Byte[]")
+                    s = CheckForExpressPrimaryTypes(s);
+                ListObject newListObject = GetListObject(ft.Name + "_List_", ft.Name, valuelist, s);
                 this.m_writer.Write("inst:" + newListObject.URI);
             }
         }
@@ -782,7 +779,7 @@ namespace IfcDoc
             {
                 // e.g. IfcBinary
                 // e.g. IfcCompoundPlaneAngleMeasure (LIST)
-                //Console.Out.WriteLine("WARNING-TOCHECK: Write IfcBinary 3");
+                Console.Out.WriteLine("WARNING-TOCHECK: Write IfcBinary 3");
                 System.Collections.IList list = (System.Collections.IList)v;
 
                 if (owlClass != "IfcBinary")
@@ -955,8 +952,10 @@ namespace IfcDoc
                 return "REAL";
             else if (owlClass.Equals("double", StringComparison.CurrentCultureIgnoreCase))
                 return "DOUBLE";
+            else if (owlClass.Equals("Byte[]", StringComparison.CurrentCultureIgnoreCase))
+                return "HexBinary";
             else if (owlClass.Equals("Binary", StringComparison.CurrentCultureIgnoreCase))
-                return "BINARY";
+                return "HexBinary";
             else if (owlClass.Equals("boolean", StringComparison.CurrentCultureIgnoreCase))
                 return "BOOLEAN";
             else if (owlClass.Equals("logical", StringComparison.CurrentCultureIgnoreCase))
@@ -981,7 +980,7 @@ namespace IfcDoc
             else if (xsdType.Equals("double", StringComparison.CurrentCultureIgnoreCase))
                 this.m_writer.Write("express:has" + xsdType + " \"" + literalString.Replace(',','.') + "\"^^xsd:double ");
             else if (xsdType.Equals("hexBinary", StringComparison.CurrentCultureIgnoreCase))
-                this.m_writer.Write("express:has" + xsdType + " " + literalString + " ");
+                this.m_writer.Write("express:has" + xsdType + " \"" + literalString + "\"^^xsd:hexBinary ");
             else if (xsdType.Equals("boolean", StringComparison.CurrentCultureIgnoreCase))
                 this.m_writer.Write("express:has" + xsdType + " " + literalString.ToLower() + " ");
             else if (xsdType.Equals("logical", StringComparison.CurrentCultureIgnoreCase))
@@ -1208,8 +1207,8 @@ namespace IfcDoc
             //Console.Out.WriteLine("started GetListObject run for list with number of elements: " + values.Count);
             ListObject obj;
 
-            string encodedvalue = "";
-            for (int i=0; i < values.Count; i++)
+            string encodedvalue = "";            
+            for (int i = 0; i < values.Count; i++)
             {
                 if (XSDType != "###ENTITY###")
                 {
@@ -1218,22 +1217,28 @@ namespace IfcDoc
                     #endif
                     URIObject uo = GetURIObject(ifcowlclass, values[i], XSDType);
                     values[i] = uo.URI;
-                    encodedvalue += uo.URI;
+                    if (ifcowlclass != "IfcBinary")
+                        encodedvalue += uo.URI;
                 }
-                else {
-                    encodedvalue += values[i];
+                else
+                {
+                    if (ifcowlclass != "IfcBinary")
+                        encodedvalue += values[i];
                 }
-                encodedvalue += "_";
+                if (ifcowlclass != "IfcBinary")
+                    encodedvalue += "_";
             }
 
             //WARNING: _LIST_ could be in the other strings
             //IfcLengthMeasure_List_0_0_0
             //IfcRepresentation_List_#121_#145_#137
             //encodedvalue = ifcowlclass + "_LIST_" + encodedvalue;
-            encodedvalue = listname + encodedvalue;
 
-            if (m_listObjects.ContainsKey(encodedvalue))
-                return (ListObject)m_listObjects[encodedvalue]; 
+            if (ifcowlclass != "IfcBinary")
+                encodedvalue = listname + encodedvalue;
+
+            if (m_listObjects.ContainsKey(encodedvalue) && ifcowlclass != "IfcBinary")
+                return (ListObject)m_listObjects[encodedvalue];            
 
             m_nextID++;
 
@@ -1253,7 +1258,10 @@ namespace IfcDoc
                 obj = new ListObject(listname + m_nextID, listname.Substring(0, listname.Length - 1), ifcowlclass, values, XSDType);
             }
 
-            m_listObjects.Add(encodedvalue, obj);
+            if (ifcowlclass == "IfcBinary")
+                m_listObjects.Add("-1", obj);
+            else
+                m_listObjects.Add(encodedvalue, obj);
 
             //Console.Out.WriteLine("finished GetListObject run for list with number of elements: " + values.Count);
             return obj;       
