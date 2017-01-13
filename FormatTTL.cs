@@ -779,7 +779,7 @@ namespace IfcDoc
             {
                 // e.g. IfcBinary
                 // e.g. IfcCompoundPlaneAngleMeasure (LIST)
-                Console.Out.WriteLine("WARNING-TOCHECK: Write IfcBinary 3");
+                //Console.Out.WriteLine("WARNING-TOCHECK: Write IfcBinary 3");
                 System.Collections.IList list = (System.Collections.IList)v;
 
                 if (owlClass != "IfcBinary")
@@ -823,13 +823,18 @@ namespace IfcDoc
                     this.WriteIndent();
                     ObjectProperty p = GetObjectProperty(f.Name + "_" + t.Name);
                     this.m_writer.Write("ifcowl:" + p.name + " ");
-                    this.m_writer.Write(fullvalue);
+                    
+                    string s = ft.Name;
+                    if (s == "Int64" || s == "Double" || s == "String" || s == "Number" || s == "Real" || s == "Integer" || s == "Logical" || s == "Boolean" || s == "Binary" || s == "Byte[]")
+                        s = CheckForExpressPrimaryTypes(s);
+                    URIObject uo = GetURIObject(owlClass, fullvalue, s);
+                    this.m_writer.Write("inst:" + uo.URI);
                 }
             }
             else if (v != null && !ft.IsEnum)
             {
                 string encodedvalue = System.Security.SecurityElement.Escape(v.ToString());
-
+                encodedvalue = encodedvalue.Replace("\n", "\\n");
                 if (owlClass == "Int64" || owlClass == "Double" || owlClass == "String" || owlClass == "Number" || owlClass == "Real" || owlClass == "Integer" || owlClass == "Logical" || owlClass == "Boolean" || owlClass == "Binary")
                     owlClass = CheckForExpressPrimaryTypes(owlClass);
 
@@ -870,7 +875,7 @@ namespace IfcDoc
             string header = "# baseURI: " + m_baseURI + newline;
             header += "# imports: " + m_owlURI + newline + newline;
 
-            string schema = "@prefix ifcowl: <" + m_owlURI + "> ." + newline;
+            string schema = "@prefix ifcowl: <" + m_owlURI + "#> ." + newline;
             schema += "@prefix inst: <" + m_baseURI + "> ." + newline;
             schema += "@prefix list: <" + "https://w3id.org/list#" + "> ." + newline;
             schema += "@prefix express: <" + "https://w3id.org/express#" + "> ." + newline;
