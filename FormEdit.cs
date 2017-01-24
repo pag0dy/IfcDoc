@@ -8767,7 +8767,7 @@ namespace IfcDoc
             {
                 dlgImport.Title = "Convert [Step 1 of 2]: Choose the input file";
                 dlgImport.Filter = "IFC-SPF (*.ifc)|*.ifc";
-                if(dlgImport.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
+                if (dlgImport.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
                 {
                     using(SaveFileDialog dlgExport = new SaveFileDialog())
                     {
@@ -8776,9 +8776,10 @@ namespace IfcDoc
                             "IFC-RDF (*.ttl)|*.ttl|" +
                             "IFC-XML (*.ifcxml)|*.ifcxml";
 
+                        dlgExport.FilterIndex = 2;
                         dlgExport.Title = "Convert [Step 2 of 2]: Specify the output file and format";
                         dlgExport.FileName = System.IO.Path.GetFileNameWithoutExtension(dlgImport.FileName);
-                        if(dlgExport.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
+                        if (dlgExport.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
                         {
                             //todo: run in background, show progress
 
@@ -8846,7 +8847,7 @@ namespace IfcDoc
                                         break;
 
                                     case 2:
-                                        formatter = new FormatTTL_Stream(new System.IO.MemoryStream(), ifcowlns);
+                                        formatter = new FormatTTL(new System.IO.MemoryStream(), ifcowlns);
                                         break;
 
                                     case 3:
@@ -8858,6 +8859,7 @@ namespace IfcDoc
                                 {
                                     string content = formatter.FormatData(this.m_project, null, null, mapEntity, instances, rootproject, false);
 
+                                    System.IO.File.WriteAllText(dlgExport.FileName, "");
                                     using (System.IO.FileStream filestream = System.IO.File.OpenWrite(dlgExport.FileName))
                                     {
                                         System.IO.TextWriter writer = new System.IO.StreamWriter(filestream);

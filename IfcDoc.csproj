@@ -155,7 +155,7 @@
     <Compile Include="DocumentationISO.cs" />
     <Compile Include="DifferenceEngine.cs" />
     <Compile Include="FormatOWL.cs" />
-    <Compile Include="FormatTTL_Stream.cs" />
+    <Compile Include="FormatTTL.cs" />
     <Compile Include="FormatJSN.cs" />
     <Compile Include="FormatSMF.cs" />
     <Compile Include="FormatSQL.cs" />
@@ -370,6 +370,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CtlOperators.resx">
       <DependentUpon>CtlOperators.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="CtlParameters.resx">
       <DependentUpon>CtlParameters.cs</DependentUpon>

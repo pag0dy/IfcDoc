@@ -455,7 +455,7 @@ namespace IfcDoc.Schema.DOC
 
         //[DisplayName("TTL")]
         [Description("ifcOWL Web Ontology Language (OWL)")]
-        OWL = 4, // for transition, keep identifier as OWL for now so existing .ifcdoc files still work
+        TTL = 4, // for transition, keep identifier as OWL for now so existing .ifcdoc files still work
 
         //[DisplayName("Java")]
         [Description("Java Programming Language")]
@@ -582,7 +582,7 @@ namespace IfcDoc.Schema.DOC
                     case DocFormatSchemaEnum.SQL:
                         return "sql";
 
-                    case DocFormatSchemaEnum.OWL:
+                    case DocFormatSchemaEnum.TTL:
                         return "owl";
                 }
                 return "txt"; // fallback if unknown
@@ -610,7 +610,7 @@ namespace IfcDoc.Schema.DOC
                     case DocFormatSchemaEnum.SQL:
                         return "csv";
 
-                    case DocFormatSchemaEnum.OWL:
+                    case DocFormatSchemaEnum.TTL:
                         return "ttl";
 
                 }
@@ -680,7 +680,7 @@ namespace IfcDoc.Schema.DOC
                 if (this._Formats.Count == 2)
                 {
                     this._Formats.Add(new DocFormat(DocFormatSchemaEnum.SQL, DocFormatOptionEnum.None));
-                    this._Formats.Add(new DocFormat(DocFormatSchemaEnum.OWL, DocFormatOptionEnum.None));
+                    this._Formats.Add(new DocFormat(DocFormatSchemaEnum.TTL, DocFormatOptionEnum.None));
                     this._Formats.Add(new DocFormat(DocFormatSchemaEnum.JSON, DocFormatOptionEnum.None));
                     this._Formats.Add(new DocFormat(DocFormatSchemaEnum.CS, DocFormatOptionEnum.None));
                 }
