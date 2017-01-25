@@ -118,5 +118,17 @@ namespace IfcDoc.Properties {
                 this["SkipDiagrams"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ConverterPath {
+            get {
+                return ((string)(this["ConverterPath"]));
+            }
+            set {
+                this["ConverterPath"] = value;
+            }
+        }
     }
 }

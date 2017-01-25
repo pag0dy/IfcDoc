@@ -71,19 +71,24 @@ namespace IfcDoc
                 }
             }
 
-            LoadTemplates(project.Templates);
+            LoadTemplates(null, project.Templates);
         }
 
-        private void LoadTemplates(List<DocTemplateDefinition> list)
+        private void LoadTemplates(TreeNode tnParent, List<DocTemplateDefinition> list)
         {
             foreach (DocTemplateDefinition docTemplate in list)
             {
-#if false
+#if true
                 bool include = false;
+
+                if(docTemplate.Name.Contains("Spatial"))
+                {
+                    this.ToString();
+                }
 
                 // check for inheritance                
                 DocObject docApplicableEntity = null;
-                if (this.m_entity == null)
+                if (this.m_entity == null || String.IsNullOrEmpty(docTemplate.Type))
                 {
                     include = true;
                 }
@@ -113,18 +118,21 @@ namespace IfcDoc
                         }
                     }
                 }
-                else if (docTemplate.Type == null)
-                {
-                    // recurse
-                    LoadTemplates(docTemplate.Templates);
-                }
 
                 if (include)
                 {
-                    LoadTemplate(null, docTemplate);
+                    LoadTemplate(tnParent, docTemplate);
                 }
-#endif
+
+                //else if (docTemplate.Type == null)
+                //{
+                    // recurse
+                //    LoadTemplates(tnParent, docTemplate.Templates);
+                //}
+
+#else
                 LoadTemplate(null, docTemplate);
+#endif
             }
         }
 
@@ -149,10 +157,12 @@ namespace IfcDoc
                 this.treeView.SelectedNode = tn;
             }
 
+            this.LoadTemplates(tn, template.Templates);
+            /*
             foreach (DocTemplateDefinition sub in template.Templates)
             {
                 LoadTemplate(tn, sub);
-            }
+            }*/
         }
 
         public DocTemplateDefinition SelectedTemplate
@@ -163,6 +173,52 @@ namespace IfcDoc
                     return null;
 
                 return this.treeView.SelectedNode.Tag as DocTemplateDefinition;
+            }
+        }
+
+        private void treeView_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            DocTemplateDefinition dtd = (DocTemplateDefinition)this.treeView.SelectedNode.Tag;
+            this.ctlConcept.Map = this.m_map;
+            this.ctlConcept.Project = this.m_project;
+            this.ctlConcept.Template = dtd;
+            this.ctlConcept.Enabled = true;
+            SetContent(dtd);
+        }
+
+        private void ctlConcept_SelectionChanged(object sender, EventArgs e)
+        {
+            if (this.ctlConcept.CurrentAttribute != null)
+            {
+                SetContent(this.ctlConcept.CurrentAttribute);
+            }
+            else if (this.ctlConcept.Selection is DocModelRuleEntity)
+            {
+                DocModelRuleEntity dmr = (DocModelRuleEntity)this.ctlConcept.Selection;
+                DocObject obj = null;
+                this.m_map.TryGetValue(dmr.Name, out obj);
+                this.SetContent(obj);
+            }
+            else
+            {
+                DocTemplateDefinition dtd = (DocTemplateDefinition)this.treeView.SelectedNode.Tag;
+                this.SetContent(dtd);
+            }
+        }
+
+        private void SetContent(DocObject obj)
+        {
+            string s = System.IO.Path.GetDirectoryName(Application.ExecutablePath) + "\\content\\ifc-styles.css";
+            string header = "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"><link rel=\"stylesheet\" type=\"text/css\" href=\"" + s + "\"></head><body>";
+            string footer = "</body></html>";
+            this.webBrowser.Navigate("about:blank");
+            if (obj != null)
+            {
+                this.webBrowser.DocumentText = header + obj.Documentation + footer;
+            }
+            else
+            {
+                this.webBrowser.DocumentText = String.Empty;
             }
         }
     }

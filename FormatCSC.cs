@@ -20,12 +20,13 @@ namespace IfcDoc.Format.CSC
         string m_filename;
         DocProject m_project;
         DocDefinition m_definition;
+        Dictionary<string, DocObject> m_map;
 
         /// <summary>
         /// Generates folder of definitions
         /// </summary>
         /// <param name="path"></param>
-        public static void GenerateCode(DocProject project, string path)
+        public static void GenerateCode(DocProject project, string path, Dictionary<string, DocObject> map)
         {
             foreach (DocSection docSection in project.Sections)
             {
@@ -37,6 +38,7 @@ namespace IfcDoc.Format.CSC
                         {
                             format.Instance = project;
                             format.Definition = docType;
+                            format.Map = map;
                             format.Save();
                         }
                     }
@@ -47,10 +49,19 @@ namespace IfcDoc.Format.CSC
                         {
                             format.Instance = project;
                             format.Definition = docType;
+                            format.Map = map;
                             format.Save();
                         }
                     }
                 }
+            }
+
+            // save properties
+            using(FormatCSC format = new FormatCSC(path + @"\pset.cs"))
+            {
+                format.Instance = project;
+                format.Map = map;
+                format.Save();
             }
         }
 
@@ -91,6 +102,18 @@ namespace IfcDoc.Format.CSC
             }
         }
 
+        public Dictionary<string, DocObject> Map
+        {
+            get
+            {
+                return this.m_map;
+            }
+            set
+            {
+                this.m_map = value;
+            }
+        }
+
         public void Save()
         {
             string dirpath = System.IO.Path.GetDirectoryName(this.m_filename);
@@ -112,7 +135,7 @@ namespace IfcDoc.Format.CSC
                 {
                     writer.WriteLine("namespace BuildingSmart.IFC");
                     writer.WriteLine("{");
-                    
+
                     if (this.m_definition is DocDefined)
                     {
                         DocDefined docDefined = (DocDefined)this.m_definition;
@@ -122,7 +145,7 @@ namespace IfcDoc.Format.CSC
                     else if (this.m_definition is DocSelect)
                     {
                         DocSelect docSelect = (DocSelect)this.m_definition;
-                        string text = this.Indent(this.FormatSelect(docSelect, null, null), 1);
+                        string text = this.Indent(this.FormatSelect(docSelect, this.m_map, null), 1);
                         writer.WriteLine(text);
                     }
                     else if (this.m_definition is DocEnumeration)
@@ -134,7 +157,7 @@ namespace IfcDoc.Format.CSC
                     else if (this.m_definition is DocEntity)
                     {
                         DocEntity docEntity = (DocEntity)this.m_definition;
-                        string text = this.Indent(this.FormatEntity(docEntity, null, null), 1);
+                        string text = this.Indent(this.FormatEntity(docEntity, this.m_map, null), 1);
                         writer.WriteLine(docEntity);
                     }
 
@@ -156,7 +179,10 @@ namespace IfcDoc.Format.CSC
                             foreach (DocPropertySet docPset in docSchema.PropertySets)
                             {
                                 writer.WriteLine("    /// <summary>");
-                                writer.WriteLine("    /// " + docPset.Documentation.Replace('\r', ' ').Replace('\n', ' '));
+                                if (docPset.Documentation != null)
+                                {
+                                    writer.WriteLine("    /// " + docPset.Documentation.Replace('\r', ' ').Replace('\n', ' '));
+                                }
                                 writer.WriteLine("    /// </summary>");
 
                                 writer.WriteLine("    public class " + docPset.Name + " : Pset");
@@ -165,7 +191,10 @@ namespace IfcDoc.Format.CSC
                                 foreach (DocProperty docProperty in docPset.Properties)
                                 {
                                     writer.WriteLine("        /// <summary>");
-                                    writer.WriteLine("        /// " + docProperty.Documentation.Replace('\r', ' ').Replace('\n', ' '));
+                                    if (docProperty.Documentation != null)
+                                    {
+                                        writer.WriteLine("        /// " + docProperty.Documentation.Replace('\r', ' ').Replace('\n', ' '));
+                                    }
                                     writer.WriteLine("        /// </summary>");
 
                                     switch (docProperty.PropertyType)
@@ -175,20 +204,19 @@ namespace IfcDoc.Format.CSC
                                             break;
 
                                         case DocPropertyTemplateTypeEnum.P_ENUMERATEDVALUE:
-                                            // record enum for later
                                             {
-                                                string[] parts = docProperty.SecondaryDataType.Split(':');
-                                                if (parts.Length == 2)
+                                                string typename = docProperty.SecondaryDataType;
+                                                if (typename == null)
                                                 {
-                                                    string typename = parts[0];
-                                                    if (!mapEnums.ContainsKey(typename))
-                                                    {
-                                                        string[] enums = parts[1].Split(',');
-                                                        mapEnums.Add(typename, enums);
-
-                                                        writer.WriteLine("        public " + typename + " " + docProperty.Name + " { get { return this.GetValue<" + typename + ">(\"" + docProperty.Name + "\"); } set { this.SetValue<" + typename + ">(\"" + docProperty.Name + "\", value); } }");
-                                                    }
+                                                    typename = docProperty.PrimaryDataType; // older version
                                                 }
+                                                int colon = typename.IndexOf(':');
+                                                if(colon > 0)
+                                                {
+                                                    // backwards compatibility
+                                                    typename = typename.Substring(0, colon);
+                                                }
+                                                writer.WriteLine("        public " + typename + " " + docProperty.Name + " { get { return this.GetValue<" + typename + ">(\"" + docProperty.Name + "\"); } set { this.SetValue<" + typename + ">(\"" + docProperty.Name + "\", value); } }");
                                             }
                                             break;
 
@@ -225,9 +253,58 @@ namespace IfcDoc.Format.CSC
                                 writer.WriteLine("    }");
                                 writer.WriteLine();
                             }
-                        }
-                    }
 
+                            foreach (DocPropertyEnumeration docEnum in docSchema.PropertyEnums)
+                            {
+                                writer.WriteLine("    /// <summary>");
+                                writer.WriteLine("    /// </summary>");
+                                writer.WriteLine("    public enum " + docEnum.Name);
+                                writer.WriteLine("    {");
+
+                                int counter = 0;
+                                foreach (DocPropertyConstant docConst in docEnum.Constants)
+                                {
+                                    int num = 0;
+                                    string id = docConst.Name.ToUpper().Trim('.').Replace('-', '_');
+                                    switch (id)
+                                    {
+                                        case "OTHER":
+                                            num = -1;
+                                            break;
+
+                                        case "NOTKNOWN":
+                                            num = -2;
+                                            break;
+
+                                        case "UNSET":
+                                            num = 0;
+                                            break;
+
+                                        default:
+                                            counter++;
+                                            num = counter;
+                                            break;
+                                    }
+
+                                    if (id[0] >= '0' && id[0] <= '9')
+                                    {
+                                        id = "_" + id; // avoid numbers
+                                    }
+
+                                    writer.WriteLine("        /// <summary></summary>");
+                                    writer.WriteLine("        " + docConst.Name + " = " + num + ",");
+                                }
+
+                                writer.WriteLine("    }");
+                                writer.WriteLine();
+                            }
+
+                            //writer.WriteLine("}");                        
+
+
+
+
+#if false
                     // enums
                     foreach (string strEnum in mapEnums.Keys)
                     {
@@ -277,6 +354,9 @@ namespace IfcDoc.Format.CSC
                     }
 
                     writer.WriteLine("}");
+#endif
+                        }
+                    }
                 }
             }
         }
@@ -329,8 +409,15 @@ namespace IfcDoc.Format.CSC
             foreach (DocAttribute docAttribute in docEntity.Attributes)
             {
                 bool inscope = false;
-                
-                included.TryGetValue(docAttribute, out inscope);
+
+                if (included != null)
+                {
+                    included.TryGetValue(docAttribute, out inscope);
+                }
+                else
+                {
+                    inscope = true;
+                }
 
                 if(docAttribute.Inverse == null)
                 {
@@ -503,7 +590,7 @@ namespace IfcDoc.Format.CSC
                 "}";
         }
 
-        public string FormatDefinitions(DocProject docProject, Dictionary<string, DocObject> map, Dictionary<DocObject, bool> included)
+        public string FormatDefinitions(DocProject docProject, DocPublication docPublication, Dictionary<string, DocObject> map, Dictionary<DocObject, bool> included)
         {
             StringBuilder sb = new StringBuilder();
             foreach (DocSection docSection in docProject.Sections)

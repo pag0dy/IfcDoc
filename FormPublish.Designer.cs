@@ -40,49 +40,36 @@
             this.backgroundWorkerPublish = new System.ComponentModel.BackgroundWorker();
             this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.labelError = new System.Windows.Forms.Label();
+            this.comboBoxProtocol = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
             this.SuspendLayout();
             // 
             // progressBar
             // 
             resources.ApplyResources(this.progressBar, "progressBar");
-            this.errorProvider.SetError(this.progressBar, resources.GetString("progressBar.Error"));
-            this.errorProvider.SetIconAlignment(this.progressBar, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("progressBar.IconAlignment"))));
-            this.errorProvider.SetIconPadding(this.progressBar, ((int)(resources.GetObject("progressBar.IconPadding"))));
             this.progressBar.Name = "progressBar";
             // 
             // textBoxUrl
             // 
             resources.ApplyResources(this.textBoxUrl, "textBoxUrl");
-            this.errorProvider.SetError(this.textBoxUrl, resources.GetString("textBoxUrl.Error"));
-            this.errorProvider.SetIconAlignment(this.textBoxUrl, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("textBoxUrl.IconAlignment"))));
-            this.errorProvider.SetIconPadding(this.textBoxUrl, ((int)(resources.GetObject("textBoxUrl.IconPadding"))));
             this.textBoxUrl.Name = "textBoxUrl";
             // 
             // label1
             // 
             resources.ApplyResources(this.label1, "label1");
-            this.errorProvider.SetError(this.label1, resources.GetString("label1.Error"));
-            this.errorProvider.SetIconAlignment(this.label1, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("label1.IconAlignment"))));
-            this.errorProvider.SetIconPadding(this.label1, ((int)(resources.GetObject("label1.IconPadding"))));
             this.label1.Name = "label1";
             // 
             // buttonCancel
             // 
             resources.ApplyResources(this.buttonCancel, "buttonCancel");
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.errorProvider.SetError(this.buttonCancel, resources.GetString("buttonCancel.Error"));
-            this.errorProvider.SetIconAlignment(this.buttonCancel, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("buttonCancel.IconAlignment"))));
-            this.errorProvider.SetIconPadding(this.buttonCancel, ((int)(resources.GetObject("buttonCancel.IconPadding"))));
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
             // 
             // buttonOK
             // 
             resources.ApplyResources(this.buttonOK, "buttonOK");
-            this.errorProvider.SetError(this.buttonOK, resources.GetString("buttonOK.Error"));
-            this.errorProvider.SetIconAlignment(this.buttonOK, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("buttonOK.IconAlignment"))));
-            this.errorProvider.SetIconPadding(this.buttonOK, ((int)(resources.GetObject("buttonOK.IconPadding"))));
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.UseVisualStyleBackColor = true;
             this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
@@ -90,17 +77,11 @@
             // textBoxComments
             // 
             resources.ApplyResources(this.textBoxComments, "textBoxComments");
-            this.errorProvider.SetError(this.textBoxComments, resources.GetString("textBoxComments.Error"));
-            this.errorProvider.SetIconAlignment(this.textBoxComments, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("textBoxComments.IconAlignment"))));
-            this.errorProvider.SetIconPadding(this.textBoxComments, ((int)(resources.GetObject("textBoxComments.IconPadding"))));
             this.textBoxComments.Name = "textBoxComments";
             // 
             // labelSummary
             // 
             resources.ApplyResources(this.labelSummary, "labelSummary");
-            this.errorProvider.SetError(this.labelSummary, resources.GetString("labelSummary.Error"));
-            this.errorProvider.SetIconAlignment(this.labelSummary, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("labelSummary.IconAlignment"))));
-            this.errorProvider.SetIconPadding(this.labelSummary, ((int)(resources.GetObject("labelSummary.IconPadding"))));
             this.labelSummary.Name = "labelSummary";
             // 
             // backgroundWorkerPublish
@@ -114,15 +95,28 @@
             // errorProvider
             // 
             this.errorProvider.ContainerControl = this;
-            resources.ApplyResources(this.errorProvider, "errorProvider");
             // 
             // labelError
             // 
             resources.ApplyResources(this.labelError, "labelError");
-            this.errorProvider.SetError(this.labelError, resources.GetString("labelError.Error"));
-            this.errorProvider.SetIconAlignment(this.labelError, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("labelError.IconAlignment"))));
-            this.errorProvider.SetIconPadding(this.labelError, ((int)(resources.GetObject("labelError.IconPadding"))));
             this.labelError.Name = "labelError";
+            // 
+            // comboBoxProtocol
+            // 
+            this.comboBoxProtocol.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxProtocol.FormattingEnabled = true;
+            this.comboBoxProtocol.Items.AddRange(new object[] {
+            resources.GetString("comboBoxProtocol.Items"),
+            resources.GetString("comboBoxProtocol.Items1"),
+            resources.GetString("comboBoxProtocol.Items2")});
+            resources.ApplyResources(this.comboBoxProtocol, "comboBoxProtocol");
+            this.comboBoxProtocol.Name = "comboBoxProtocol";
+            this.comboBoxProtocol.SelectedIndexChanged += new System.EventHandler(this.comboBoxProtocol_SelectedIndexChanged);
+            // 
+            // label2
+            // 
+            resources.ApplyResources(this.label2, "label2");
+            this.label2.Name = "label2";
             // 
             // FormPublish
             // 
@@ -130,6 +124,8 @@
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.comboBoxProtocol);
             this.Controls.Add(this.labelError);
             this.Controls.Add(this.labelSummary);
             this.Controls.Add(this.textBoxComments);
@@ -142,6 +138,7 @@
             this.MinimizeBox = false;
             this.Name = "FormPublish";
             this.ShowInTaskbar = false;
+            this.Load += new System.EventHandler(this.FormPublish_Load);
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -160,5 +157,7 @@
         private System.ComponentModel.BackgroundWorker backgroundWorkerPublish;
         private System.Windows.Forms.ErrorProvider errorProvider;
         private System.Windows.Forms.Label labelError;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ComboBox comboBoxProtocol;
     }
 }

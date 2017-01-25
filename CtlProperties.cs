@@ -32,6 +32,11 @@ namespace IfcDoc
         bool m_loadall;
         SEntity m_instance; // optional instance to highlight
 
+        public event EventHandler Navigate;
+        public event EventHandler RuleSelectionChanged;
+        public event EventHandler RuleContentChanged;
+        public event EventHandler SchemaChanged; // regen EXPRESS-G diagram
+
         //public FormProperties(DocObject docObject, DocObject docParent, DocProject docProject) : this()
         public void Init(DocObject[] path, DocProject docProject)
         {
@@ -69,7 +74,7 @@ namespace IfcDoc
                     {
                         foreach (DocEntity docEntity in docSchema.Entities)
                         {
-                            if (!this.m_map.ContainsKey(docEntity.Name))
+                            if (docEntity.Name != null && !this.m_map.ContainsKey(docEntity.Name))
                             {
                                 this.m_map.Add(docEntity.Name, docEntity);
                             }
@@ -347,7 +352,7 @@ namespace IfcDoc
                     DocTemplateUsage docUsage = (DocTemplateUsage)docObject;
 
                     this.ctlParameters.Project = this.m_project;
-                    this.ctlParameters.ConceptRoot = this.m_path[3] as DocConceptRoot;
+                    this.ctlParameters.ConceptRoot = this.m_path[2] as DocConceptRoot;// this.m_path[3] as DocConceptRoot;
                     this.ctlParameters.ConceptItem = this.ctlParameters.ConceptRoot;
                     this.ctlParameters.ConceptLeaf = docUsage;
 
@@ -447,6 +452,7 @@ namespace IfcDoc
                         }
                     }
 
+                    this.comboBoxPropertyAccess.Text = docProp.AccessState.ToString();
                     this.comboBoxPropertyType.Text = docProp.PropertyType.ToString();
 
                     this.LoadPropertyType();
@@ -463,6 +469,7 @@ namespace IfcDoc
 
                     DocQuantity docProp = (DocQuantity)docObject;
                     this.comboBoxQuantityType.Text = docProp.QuantityType.ToString();
+                    this.comboBoxQuantityAccess.Text = docProp.AccessState.ToString();
                 }
                 else if (docObject is DocExample)
                 {
@@ -479,6 +486,13 @@ namespace IfcDoc
                         this.textBoxExample.Text = Encoding.ASCII.GetString(docExample.File);
                         this.toolStripButtonExampleClear.Enabled = true;
                         this.textBoxExample.ReadOnly = false;
+                        this.textBoxExample.Focus();
+                    }
+                    else if(docExample.Path != null)
+                    {
+                        this.textBoxExample.Text = docExample.Path;
+                        this.toolStripButtonExampleClear.Enabled = true;
+                        this.textBoxExample.ReadOnly = true;
                         this.textBoxExample.Focus();
                     }
                     else
@@ -506,6 +520,7 @@ namespace IfcDoc
                     this.checkBoxPublishUML.Checked = docPublication.UML;
                     //this.checkBoxPublishComparison.Checked = docPublication.Comparison;
                     this.checkBoxPublishExchangeTables.Checked = docPublication.Exchanges;
+                    this.checkBoxPublishHtmlExamples.Checked = docPublication.HtmlExamples;
 
                     this.listViewFormats.Items.Clear();
                     foreach (DocFormat docFormat in docPublication.Formats)
@@ -688,8 +703,10 @@ namespace IfcDoc
             this.listViewExchange.Items.Clear();
 
             // find the view
-            DocModelView docView = null;
-            DocConceptRoot docRoot = (DocConceptRoot)this.m_path[3];
+            DocModelView docView = (DocModelView)this.m_path[1];//null;
+            DocConceptRoot docRoot = (DocConceptRoot)this.m_path[2];// this.m_path[3];
+
+#if false
             foreach (DocModelView eachView in this.m_project.ModelViews)
             {
                 if (eachView.ConceptRoots.Contains(docRoot))
@@ -698,6 +715,7 @@ namespace IfcDoc
                     break;
                 }
             }
+#endif
             if (docView == null)
                 return;
 
@@ -1011,6 +1029,11 @@ namespace IfcDoc
                     docProperty.PrimaryDataType = "IfcTimeSeries";
                     docProperty.SecondaryDataType = "IfcReal";
                     break;
+
+                case DocPropertyTemplateTypeEnum.COMPLEX:
+                    docProperty.PrimaryDataType = String.Empty;
+                    docProperty.SecondaryDataType = String.Empty;
+                    break;
             }            
 
             // update
@@ -1184,7 +1207,14 @@ namespace IfcDoc
 
         private void buttonAttributeType_Click(object sender, EventArgs e)
         {
-            using (FormSelectEntity form = new FormSelectEntity(null, null, this.m_project, SelectDefinitionOptions.Entity | SelectDefinitionOptions.Type))
+            DocDefinition selection = null;
+            if (this.m_target is DocAttribute)
+            {
+                DocAttribute docAttr = (DocAttribute)this.m_target;
+                selection = this.m_project.GetDefinition(docAttr.DefinedType);
+            }
+
+            using (FormSelectEntity form = new FormSelectEntity(null, selection, this.m_project, SelectDefinitionOptions.Entity | SelectDefinitionOptions.Type))
             {
                 if (form.ShowDialog(this) == DialogResult.OK && form.SelectedEntity != null)
                 {
@@ -1214,7 +1244,7 @@ namespace IfcDoc
                                     if (docSchemaReference == null)
                                     {
                                         docSchemaReference = new DocSchemaRef();
-                                        docSchemaReference.Name = docOtherSchema.Name;
+                                        docSchemaReference.Name = docOtherSchema.Name.ToUpper();
                                         docSchema.SchemaRefs.Add(docSchemaReference);
                                     }
 
@@ -1288,6 +1318,12 @@ namespace IfcDoc
                         docDefined.DefinedType = form.SelectedEntity.Name;
                         this.textBoxAttributeType.Text = docDefined.DefinedType;
                     }
+
+                    if (this.SchemaChanged != null)
+                    {
+                        this.SchemaChanged(this, EventArgs.Empty);
+                    }
+
                 }
             }
         }
@@ -1303,6 +1339,11 @@ namespace IfcDoc
             {
                 docAttr.AttributeFlags &= ~1;
             }
+
+            if (this.SchemaChanged != null)
+            {
+                this.SchemaChanged(this, EventArgs.Empty);
+            }
         }
 
         private void checkBoxEntityAbstract_CheckedChanged(object sender, EventArgs e)
@@ -1315,6 +1356,11 @@ namespace IfcDoc
             else
             {
                 docAttr.EntityFlags |= 0x20;
+            }
+
+            if (this.SchemaChanged != null)
+            {
+                this.SchemaChanged(this, EventArgs.Empty);
             }
         }
 
@@ -1531,8 +1577,6 @@ namespace IfcDoc
             }
         }
 
-        public event EventHandler Navigate;
-
         private void buttonUsageEdit_Click(object sender, EventArgs e)
         {
             if (this.Navigate != null)
@@ -1731,6 +1775,10 @@ namespace IfcDoc
             }
 
             this.LoadAttributeCardinality();
+            if (this.SchemaChanged != null)
+            {
+                this.SchemaChanged(this, EventArgs.Empty);
+            }
         }
 
         private void buttonAttributeAggregationRemove_Click(object sender, EventArgs e)
@@ -1745,6 +1793,10 @@ namespace IfcDoc
             docAttr.AggregationAttribute = null;
 
             this.LoadAttributeCardinality();
+            if (this.SchemaChanged != null)
+            {
+                this.SchemaChanged(this, EventArgs.Empty);
+            }
         }
 
         private void comboBoxAttributeAggregation_SelectedIndexChanged(object sender, EventArgs e)
@@ -1758,6 +1810,10 @@ namespace IfcDoc
                 docAttr.AggregationType = this.comboBoxAttributeAggregation.SelectedIndex;
                 this.LoadAttributeCardinality();
             }
+            if (this.SchemaChanged != null)
+            {
+                this.SchemaChanged(this, EventArgs.Empty);
+            }
         }
 
         private void textBoxAttributeAggregationMin_TextChanged(object sender, EventArgs e)
@@ -1768,6 +1824,10 @@ namespace IfcDoc
             DocAttribute docAttr = this.GetAttributeAggregation();
             docAttr.AggregationLower = this.textBoxAttributeAggregationMin.Text;
             this.LoadAttributeCardinality();
+            if (this.SchemaChanged != null)
+            {
+                this.SchemaChanged(this, EventArgs.Empty);
+            }
         }
 
         private void textBoxAttributeAggregationMax_TextChanged(object sender, EventArgs e)
@@ -1778,6 +1838,10 @@ namespace IfcDoc
             DocAttribute docAttr = this.GetAttributeAggregation();
             docAttr.AggregationUpper = this.textBoxAttributeAggregationMax.Text;
             this.LoadAttributeCardinality();
+            if (this.SchemaChanged != null)
+            {
+                this.SchemaChanged(this, EventArgs.Empty);
+            }
         }
 
  
@@ -1914,6 +1978,7 @@ namespace IfcDoc
                     {
                         if (fs.Length < Int32.MaxValue)
                         {
+                            docExample.Path = null;
                             docExample.File = new byte[fs.Length];
                             fs.Read(docExample.File, 0, (int)fs.Length);
                             this.textBoxExample.Text = Encoding.ASCII.GetString(docExample.File);
@@ -1935,6 +2000,7 @@ namespace IfcDoc
         {
             DocExample docExample = (DocExample)this.m_target;
             docExample.File = null;
+            docExample.Path = null;
             this.textBoxExample.Text = String.Empty;
         }
 
@@ -1952,10 +2018,125 @@ namespace IfcDoc
                 DialogResult res = form.ShowDialog(this);
                 if (res == DialogResult.OK && form.SelectedEntity != null)
                 {
+                    //todo: circular inheritance check...
+
                     docEntity.BaseDefinition = form.SelectedEntity.Name;
                     this.textBoxEntityBase.Text = docEntity.BaseDefinition;
+
+                    // find existing type or reference type in schema
+                    DocSchema docSchema = (DocSchema)this.m_path[1];
+
+                    // 1. Existing entity in schema
+                    // 2. Existing reference in schema
+                    // 3. Make new reference to other schema
+
+                    DocDefinition docDef = docSchema.GetDefinition(form.SelectedEntity.Name);
+                    if (docDef == null)
+                    {
+                        // generate link to schema
+                        foreach (DocSection docSection in this.m_project.Sections)
+                        {
+                            foreach (DocSchema docOtherSchema in docSection.Schemas)
+                            {
+                                docDef = docOtherSchema.GetDefinition(form.SelectedEntity.Name);
+                                if (docDef is DocEntity)
+                                {
+                                    DocEntity docEntityBase = (DocEntity)docDef;
+                                    DocSchemaRef docSchemaReference = null;
+                                    foreach (DocSchemaRef docSchemaRef in docSchema.SchemaRefs)
+                                    {
+                                        if (String.Equals(docSchemaRef.Name, docOtherSchema.Name, StringComparison.OrdinalIgnoreCase))
+                                        {
+                                            docSchemaReference = docSchemaRef;
+                                            break;
+                                        }
+                                    }
+
+                                    if (docSchemaReference == null)
+                                    {
+                                        docSchemaReference = new DocSchemaRef();
+                                        docSchemaReference.Name = docOtherSchema.Name.ToUpper();
+                                        docSchema.SchemaRefs.Add(docSchemaReference);
+                                    }
+
+                                    DocDefinitionRef docDefRef = new DocDefinitionRef();
+                                    docDef = docDefRef;
+                                    docDef.Name = form.SelectedEntity.Name;
+                                    docSchemaReference.Definitions.Add((DocDefinitionRef)docDef);
+
+                                    docDef.DiagramRectangle = new DocRectangle();
+                                    docDef.DiagramNumber = docEntity.DiagramNumber;
+                                    docDef.DiagramRectangle.X = docEntity.DiagramRectangle.X;
+                                    docDef.DiagramRectangle.Y = docEntity.DiagramRectangle.Y - 200;
+                                    docDef.DiagramRectangle.Width = docEntity.DiagramRectangle.Width;
+                                    docDef.DiagramRectangle.Height = 100;
+
+                                }
+
+                                break;
+
+                            }
+
+                            if (docDef != null)
+                                break;
+                        }
+                    }
+
+                    if (docDef != null && docDef.DiagramRectangle != null)
+                    {
+                        // find page target, make page reference
+                        if (docDef is DocDefinitionRef)
+                        {
+                            DocDefinitionRef ddr = (DocDefinitionRef)docDef;
+
+                            // find existing page target
+                            foreach (DocPageTarget docPageTarget in docSchema.PageTargets)
+                            {
+                                if (docPageTarget.Definition == ddr)
+                                {
+                                    // found it -- make page source
+                                    DocPageSource docPageSource = new DocPageSource();
+                                    docPageTarget.Sources.Add(docPageSource);
+                                    docDef = docPageSource;
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (docDef.DiagramRectangle == null)
+                        {
+                            docDef.DiagramRectangle = new DocRectangle();
+                            docDef.DiagramNumber = docEntity.DiagramNumber;
+                            docDef.DiagramRectangle.X = docEntity.DiagramRectangle.X;
+                            docDef.DiagramRectangle.Y = docEntity.DiagramRectangle.Y - 100;
+                            docDef.DiagramRectangle.Width = docEntity.DiagramRectangle.Width;
+                            docDef.DiagramRectangle.Height = docEntity.DiagramRectangle.Height;
+                        }
+
+                        DocLine docLine = new DocLine();
+                        CtlExpressG.LayoutLine(docDef, docEntity, docLine.DiagramLine);
+                        docLine.Definition = docEntity;
+
+                        if (docDef is DocEntity)
+                        {
+                            ((DocEntity)docDef).Tree.Add(docLine);
+                        }
+                        else if(docDef is DocDefinitionRef)
+                        {
+                            ((DocDefinitionRef)docDef).Tree.Add(docLine);
+
+                        }
+
+                    }
+
+                    if(this.SchemaChanged != null)
+                    {
+                        this.SchemaChanged(this, EventArgs.Empty);
+                    }
                 }
+
             }
+
         }
 
         private void buttonEntityBaseClear_Click(object sender, EventArgs e)
@@ -1980,8 +2161,19 @@ namespace IfcDoc
                         }
                     }
 
+
                     foreach (DocLine docLine in docEntBase.Tree)
                     {
+                        foreach(DocLine docLineSub in docLine.Tree)
+                        {
+                            if(docLineSub.Definition == docEntity)
+                            {
+                                docLineSub.Delete();
+                                docLine.Tree.Remove(docLineSub);
+                                break;
+                            }
+                        }
+
                         if (docLine.Definition == docEntity)
                         {
                             docLine.Delete();
@@ -1991,7 +2183,41 @@ namespace IfcDoc
                     }
                 }
 
+                DocSchema docSchema = this.m_project.GetSchemaOfDefinition(docEntity);
+
+                foreach(DocSchemaRef docSchemaRef in docSchema.SchemaRefs)
+                {
+                    foreach (DocDefinitionRef docEntBase in docSchemaRef.Definitions)
+                    {
+                        foreach (DocLine docLine in docEntBase.Tree)
+                        {
+                            foreach (DocLine docLineSub in docLine.Tree)
+                            {
+                                if (docLineSub.Definition == docEntity)
+                                {
+                                    docLineSub.Delete();
+                                    docLine.Tree.Remove(docLineSub);
+                                    break;
+                                }
+                            }
+
+                            if (docLine.Definition == docEntity)
+                            {
+                                docLine.Delete();
+                                docEntBase.Tree.Remove(docLine);
+                                break;
+                            }
+                        }
+                    }
+                }
+
                 docEntity.BaseDefinition = null;
+            }
+
+            this.textBoxEntityBase.Text = String.Empty;
+            if (this.SchemaChanged != null)
+            {
+                this.SchemaChanged(this, EventArgs.Empty);
             }
         }
 
@@ -2011,7 +2237,7 @@ namespace IfcDoc
 
         }
 
-        public DocModelRule SelectedRule
+        public SEntity SelectedRule
         {
             get
             {
@@ -2020,7 +2246,7 @@ namespace IfcDoc
             set
             {
                 this.ctlRules.Selection = value;
-                this.ctlOperators.Rule = value;
+                this.ctlOperators.Rule = value as DocModelRule;
             }
         }
 
@@ -2063,9 +2289,6 @@ namespace IfcDoc
                 this.RuleContentChanged(this, e);
             }
         }
-
-        public event EventHandler RuleSelectionChanged;
-        public event EventHandler RuleContentChanged;
 
         private void toolStripButtonTranslationInsert_Click(object sender, EventArgs e)
         {
@@ -2616,6 +2839,40 @@ namespace IfcDoc
 
             DocExample docExample = (DocExample)this.m_target;
             docExample.File = Encoding.ASCII.GetBytes(this.textBoxExample.Text);
+        }
+
+        private void comboBoxPropertyAccess_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (this.m_loadall)
+                return;
+
+            DocProperty docProperty = (DocProperty)this.m_target;
+            docProperty.AccessState = (DocStateEnum)this.comboBoxPropertyAccess.SelectedIndex;
+        }
+
+        private void comboBoxQuantityAccess_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (this.m_loadall)
+                return;
+
+            DocQuantity docProperty = (DocQuantity)this.m_target;
+            docProperty.AccessState = (DocStateEnum)this.comboBoxPropertyAccess.SelectedIndex;
+        }
+
+        private void checkBoxPublishHtmlExamples_CheckedChanged(object sender, EventArgs e)
+        {
+            DocPublication docPub = (DocPublication)this.m_target;
+            docPub.HtmlExamples = checkBoxPublishHtmlExamples.Checked;
+        }
+
+        private void toolStripButtonExampleLink_Click(object sender, EventArgs e)
+        {
+            if (this.openFileDialogExample.ShowDialog() == DialogResult.OK)
+            {
+                DocExample docExample = (DocExample)this.m_target;
+                docExample.Path = this.openFileDialogExample.FileName;
+                docExample.File = null;
+            }
         }
 
     }

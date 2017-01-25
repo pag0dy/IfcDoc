@@ -314,9 +314,20 @@ namespace IfcDoc
                     if ((this.m_scope & DocDefinitionScopeEnum.PsetProperty) != 0)
                     {
                         DocPropertySet docPset = (DocPropertySet)docEntity;
+                        DocEntity docApp = null;
+                        DocEntity[] docApplicable = docPset.GetApplicableTypeDefinitions(this.m_project);
+                        if (docApplicable != null && docApplicable.Length > 0 && docApplicable[0] != null)
+                        {
+                            docApp = this.m_project.GetDefinition(docApplicable[0].BaseDefinition) as DocEntity;
+                        }
                         foreach (DocProperty docProp in docPset.Properties)
                         {
-                            WriteItem(writer, docProp, 1, docEntity.Name);
+                            // filter out leaf properties defined at common pset (e.g. Reference, Status)
+                            DocProperty docSuper = this.m_project.FindProperty(docProp.Name, docApp);
+                            if (docSuper == docProp || docSuper == null)
+                            {
+                                WriteItem(writer, docProp, 1, docEntity.Name);
+                            }
                         }
                     }
                 }

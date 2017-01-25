@@ -158,7 +158,10 @@ namespace IfcDoc
                         }
                         else
                         {
-                            row.DefaultCellStyle.BackColor = System.Drawing.Color.Empty;
+                            //row.DefaultCellStyle.BackColor = System.Drawing.Color.Empty;
+
+                            //...
+                            row.DefaultCellStyle.BackColor = item.GetColor();
                         }
                     }
                 }
@@ -258,6 +261,22 @@ namespace IfcDoc
                 listItems = this.m_conceptroot.ApplicableItems;
             }
 
+            // add usage column
+            DataGridViewColumn colflag = new DataGridViewColumn();
+            colflag.HeaderText = "Usage";
+            DataGridViewComboBoxCell cellflag = new DataGridViewComboBoxCell();
+            colflag.CellTemplate = cellflag;
+            colflag.Width = 80;
+            cellflag.MaxDropDownItems = 32;
+            cellflag.DropDownWidth = 80;
+            cellflag.Items.Add("Key");
+            cellflag.Items.Add("Reference");
+            cellflag.Items.Add("Required");
+            cellflag.Items.Add("Optional");
+            cellflag.Items.Add("Calculated");
+            cellflag.Items.Add("System");
+            this.dataGridViewConceptRules.Columns.Add(colflag);
+
             if (docTemplate != null)
             {
                 this.m_columns = docTemplate.GetParameterRules();
@@ -343,6 +362,8 @@ namespace IfcDoc
             {
                 string[] values = new string[this.dataGridViewConceptRules.Columns.Count];
 
+                values[0] = item.GetUsage();
+
                 if (this.m_columns != null)
                 {
                     for (int i = 0; i < this.m_columns.Length; i++)
@@ -351,7 +372,7 @@ namespace IfcDoc
                         string val = item.GetParameterValue(parmname);
                         if (val != null)
                         {
-                            values[i] = val;
+                            values[i + 1] = val;
                         }
                     }
                 }
@@ -361,10 +382,7 @@ namespace IfcDoc
                 int row = this.dataGridViewConceptRules.Rows.Add(values);
                 this.dataGridViewConceptRules.Rows[row].Tag = item;
 
-                if(item.Optional)
-                {
-                    this.dataGridViewConceptRules.Rows[row].DefaultCellStyle.ForeColor = Color.Gray;
-                }
+                //this.dataGridViewConceptRules.Rows[row].DefaultCellStyle.BackColor = item.GetColor();
             }
 
             if (this.dataGridViewConceptRules.SelectedCells.Count > 0)
@@ -472,6 +490,9 @@ namespace IfcDoc
                 docItem.RuleParameters = sb.ToString();
                 object val = this.dataGridViewConceptRules[this.dataGridViewConceptRules.Columns.Count - 1, e.RowIndex].Value;
                 docItem.Documentation = val as string;
+
+                object usage = this.dataGridViewConceptRules[0, e.RowIndex].Value;
+                docItem.SetUsage(usage as string);
             }
         }
 
@@ -522,7 +543,7 @@ namespace IfcDoc
                 // get the model view
 
                 DocTemplateDefinition docTemplateInner = null;
-                DocModelRule docRule = this.m_columns[e.ColumnIndex];
+                DocModelRule docRule = this.m_columns[e.ColumnIndex - 1];
                 DocModelRuleAttribute dma = null;
                 if(docRule is DocModelRuleAttribute)
                 {
@@ -585,6 +606,9 @@ namespace IfcDoc
 
         private void toolStripButtonTemplateRemove_Click(object sender, EventArgs e)
         {
+            if (this.dataGridViewConceptRules.SelectedRows.Count == 0)
+                return;
+
             this.m_editcon = true;
             int index = this.dataGridViewConceptRules.SelectedRows[0].Index;
             if(this.m_conceptleaf != null)
@@ -598,6 +622,12 @@ namespace IfcDoc
             this.m_editcon = false;
 
             LoadUsage();
+
+            if (this.dataGridViewConceptRules.Rows.Count > index)
+            {
+                this.dataGridViewConceptRules.Rows[index].Selected = true;
+                //... how to change caret?
+            }
         }
 
         private void toolStripButtonMoveUp_Click(object sender, EventArgs e)
@@ -771,6 +801,25 @@ namespace IfcDoc
         private void toolStripComboBoxOperator_SelectedIndexChanged(object sender, EventArgs e)
         {
             this.m_conceptleaf.Operator = (DocTemplateOperator)this.toolStripComboBoxOperator.SelectedIndex;
+        }
+
+        private void dataGridViewConceptRules_CurrentCellDirtyStateChanged(object sender, EventArgs e)
+        {
+            // fired when combobox changes -- handle immediately to update color
+            if (this.dataGridViewConceptRules.SelectedCells.Count == 1 && 
+                this.dataGridViewConceptRules.SelectedCells[0].ColumnIndex == 0 &&
+                this.dataGridViewConceptRules.SelectedCells[0].RowIndex >= 0)
+            {
+                int row = this.dataGridViewConceptRules.SelectedCells[0].RowIndex;
+
+                DocTemplateItem docItem = (DocTemplateItem)this.dataGridViewConceptRules.SelectedCells[0].OwningRow.Tag;
+                if (docItem != null)
+                {
+                    docItem.SetUsage(this.dataGridViewConceptRules.SelectedCells[0].Value as string);
+                    this.dataGridViewConceptRules.SelectedCells[0].OwningRow.DefaultCellStyle.BackColor = docItem.GetColor();
+                    this.dataGridViewConceptRules.InvalidateRow(row);
+                }
+            }
         }
     }
 }

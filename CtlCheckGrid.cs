@@ -118,6 +118,36 @@ namespace IfcDoc
 
                     // draw cell
                     CellValue val = this.m_datasource.GetCell(iRow, iCol);
+                    Brush brush = Brushes.Gray; // incompatible
+                    switch(val)
+                    {
+                        case CellValue.None:
+                            brush = Brushes.LightGray;
+                            break;
+
+                        case CellValue.Mandatory:
+                            brush = Brushes.LightGreen;
+                            break;
+
+                        case CellValue.Recommended:
+                            brush = Brushes.Blue;
+                            break;
+
+                        case CellValue.NotRelevant:
+                            brush = Brushes.White;
+                            break;
+
+                        case CellValue.NotRecommended:
+                            brush = Brushes.Yellow;
+                            break;
+
+                        case CellValue.Excluded:
+                            brush = Brushes.Red;
+                            break;
+                    }
+                    g.FillRectangle(brush, new Rectangle(SX + iCol * CX + 1, SY + iRow * CY + 1, CX - 1, CY - 1));
+
+#if false
                     if (val != CellValue.Unavailable)
                     {
                         g.FillRectangle(Brushes.White, new Rectangle(SX + iCol * CX + 1, SY + iRow * CY + 1, CX-1, CY-1));
@@ -134,6 +164,7 @@ namespace IfcDoc
                     {
                         g.FillRectangle(Brushes.DarkGray, new Rectangle(SX + iCol * CX + 1, SY + iRow * CY + 1, CX - 1, CY - 1));
                     }
+#endif
                 }
             }
         }
@@ -192,19 +223,19 @@ namespace IfcDoc
             {
                     
                 case CellValue.None:
-                    newval = CellValue.Optional;
+                    newval = CellValue.Recommended;
                     break;
 
-                case CellValue.Optional:
-                    newval = CellValue.Required;
+                case CellValue.Recommended:
+                    newval = CellValue.Mandatory;
                     break;
 
-                case CellValue.Required:
+                case CellValue.Mandatory:
                     newval = CellValue.None;
                     break;
 
                 default:
-                    newval = CellValue.Required;
+                    newval = CellValue.Mandatory;
                     break;
             }
             this.m_datasource.SetCell(iRow, iCol, newval);
@@ -314,24 +345,39 @@ namespace IfcDoc
     public enum CellValue
     {
         /// <summary>
-        /// Cannot be edited
+        /// Black -- entry is not possible (not compatible)
         /// </summary>
         Unavailable = -1,
 
         /// <summary>
-        /// Blank value
+        /// Grey -- entry is possible but not defined
         /// </summary>
         None = 0,
 
         /// <summary>
-        /// Half slash for optional
+        /// Green indicator
         /// </summary>
-        Optional = 1,
+        Mandatory = 1,
 
         /// <summary>
-        /// X for required
+        /// Blue indicator
         /// </summary>
-        Required = 2,
+        Recommended = 2,
+
+        /// <summary>
+        /// White indicator - entry defined
+        /// </summary>
+        NotRelevant = 3,
+
+        /// <summary>
+        /// Yellow indicator
+        /// </summary>
+        NotRecommended = 4, 
+
+        /// <summary>
+        /// Red indicator
+        /// </summary>
+        Excluded = 5,
     }
 
     /// <summary>
@@ -352,11 +398,17 @@ namespace IfcDoc
 
         public int GetColumnCount()
         {
+            if (this.m_view == null)
+                return 0;
+
             return this.m_view.Exchanges.Count;
         }
 
         public int GetRowCount()
         {
+            if (this.m_view == null)
+                return 0;
+
             return this.m_view.ConceptRoots.Count;
         }
 
@@ -420,15 +472,24 @@ namespace IfcDoc
                             switch (docEx.Requirement)
                             {
                                 case DocExchangeRequirementEnum.Mandatory:
-                                    return CellValue.Required;
+                                    return CellValue.Mandatory;
 
                                 case DocExchangeRequirementEnum.Optional:
-                                    return CellValue.Optional;
+                                    return CellValue.Recommended;
+
+                                case DocExchangeRequirementEnum.NotRelevant:
+                                    return CellValue.NotRelevant;
+
+                                case DocExchangeRequirementEnum.NotRecommended:
+                                    return CellValue.NotRecommended;
+
+                                case DocExchangeRequirementEnum.Excluded:
+                                    return CellValue.Excluded;
                             }
                         }
                     }
 
-                    return CellValue.None;
+                    return CellValue.NotRelevant;
                 }
             }
 
@@ -460,11 +521,11 @@ namespace IfcDoc
             DocExchangeRequirementEnum req = DocExchangeRequirementEnum.NotRelevant;
             switch (val)
             {
-                case CellValue.Required:
+                case CellValue.Mandatory:
                     req = DocExchangeRequirementEnum.Mandatory;
                     break;
 
-                case CellValue.Optional:
+                case CellValue.Recommended:
                     req = DocExchangeRequirementEnum.Optional;
                     break;
             }
@@ -618,10 +679,10 @@ namespace IfcDoc
                             switch (docItem.Requirement)
                             {
                                 case DocExchangeRequirementEnum.Mandatory:
-                                    return CellValue.Required;
+                                    return CellValue.Mandatory;
 
                                 case DocExchangeRequirementEnum.Optional:
-                                    return CellValue.Optional;
+                                    return CellValue.Recommended;
 
                                 default:
                                     return CellValue.None;
@@ -659,11 +720,11 @@ namespace IfcDoc
             DocExchangeRequirementEnum req = DocExchangeRequirementEnum.NotRelevant;
             switch (val)
             {
-                case CellValue.Required:
+                case CellValue.Mandatory:
                     req = DocExchangeRequirementEnum.Mandatory;
                     break;
 
-                case CellValue.Optional:
+                case CellValue.Recommended:
                     req = DocExchangeRequirementEnum.Optional;
                     break;
             }
@@ -806,13 +867,24 @@ namespace IfcDoc
                             switch (docExchangeItem.Requirement)
                             {
                                 case DocExchangeRequirementEnum.Mandatory:
-                                    return CellValue.Required;
+                                    return CellValue.Mandatory;
 
                                 case DocExchangeRequirementEnum.Optional:
-                                    return CellValue.Optional;
+                                    return CellValue.Recommended;
+
+                                case DocExchangeRequirementEnum.NotRelevant:
+                                    return CellValue.NotRelevant;
+
+                                case DocExchangeRequirementEnum.NotRecommended:
+                                    return CellValue.NotRecommended;
+
+                                case DocExchangeRequirementEnum.Excluded:
+                                    return CellValue.Excluded;
                             }
                         }
                     }
+
+                    return CellValue.NotRelevant;
                 }
             }
 
@@ -844,11 +916,11 @@ namespace IfcDoc
             DocExchangeRequirementEnum req = DocExchangeRequirementEnum.NotRelevant;
             switch (val)
             {
-                case CellValue.Required:
+                case CellValue.Mandatory:
                     req = DocExchangeRequirementEnum.Mandatory;
                     break;
 
-                case CellValue.Optional:
+                case CellValue.Recommended:
                     req = DocExchangeRequirementEnum.Optional;
                     break;
             }

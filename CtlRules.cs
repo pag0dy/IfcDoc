@@ -17,7 +17,7 @@ namespace IfcDoc
         DocTemplateDefinition m_parent;
         DocTemplateDefinition m_template;
         DocAttribute m_attribute;
-        DocModelRule m_selection;
+        SEntity m_selection;
         SEntity m_instance;
 
         public event EventHandler SelectionChanged;
@@ -79,7 +79,7 @@ namespace IfcDoc
             }
         }
 
-        public DocModelRule Selection
+        public SEntity Selection
         {
             get
             {
@@ -500,6 +500,8 @@ namespace IfcDoc
                 {
                     DocModelRuleEntity dme = (DocModelRuleEntity)this.treeViewTemplate.SelectedNode.Parent.Tag;
                     dme.References.Remove(dtd);
+                    this.m_template.PropagateRule(this.treeViewTemplate.SelectedNode.Parent.FullPath);
+
                     this.treeViewTemplate.SelectedNode.Remove();
                 }
                 else
@@ -610,7 +612,7 @@ namespace IfcDoc
         private void treeViewTemplate_AfterSelect(object sender, TreeViewEventArgs e)
         {
             this.m_attribute = null;
-            this.m_selection = e.Node.Tag as DocModelRule;
+            this.m_selection = e.Node.Tag as SEntity;
             UpdateCommands();
 
             if (this.SelectionChanged != null)
@@ -684,9 +686,21 @@ namespace IfcDoc
                         return;
                     }
 
-                    docRule.References.Add(form.SelectedTemplate);
+                    DocTemplateDefinition dtd = form.SelectedTemplate;
+                    docRule.References.Add(dtd);
 
-                    LoadTemplateGraph(tnSelect, docRule);
+                    TreeNode tnTemplate = LoadTemplateRuleNode(tnSelect, dtd, dtd.Name);
+                    if (dtd.Rules != null)
+                    {
+                        foreach (DocModelRule docTemplateRule in dtd.Rules)
+                        {
+                            LoadTemplateGraph(tnTemplate, docTemplateRule);
+                        }
+                    }
+
+                    this.m_template.PropagateRule(this.treeViewTemplate.SelectedNode.FullPath);
+
+                    //LoadTemplateGraph(tnSelect, docRule);
                 }
             }
         }

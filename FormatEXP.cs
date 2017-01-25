@@ -188,11 +188,7 @@ namespace IfcDoc.Format.EXP
                     writer.BaseStream.SetLength(0);
                 }
 
-                string schemaid = "IFC4";
-                if(!String.IsNullOrEmpty(this.m_project.Sections[0].Code))
-                {
-                    schemaid = this.m_project.Sections[0].Code;
-                }
+                string schemaid = this.m_project.GetSchemaIdentifier();
                 string org = "buildingSMART International Limited";
 
                 writer.Write("" + 
@@ -221,7 +217,7 @@ DateTime.Today.ToLongDateString() + "\r\n" + //"December 27, 2012\r\n" +
 "\r\n" +
 "*)\r\n" +
 "\r\n");
-                writer.WriteLine("SCHEMA " + schemaid + ";");
+                writer.WriteLine("SCHEMA " + schemaid.ToUpper() + ";");
                 writer.WriteLine();
 
                 // stripped optional applicable if MVD is used
@@ -325,7 +321,14 @@ DateTime.Today.ToLongDateString() + "\r\n" + //"December 27, 2012\r\n" +
                     SortedList<string, DocSelectItem> sortSelect = new SortedList<string, DocSelectItem>(this);
                     foreach (DocSelectItem docSelectItem in docSelect.Selects)
                     {
-                        sortSelect.Add(docSelectItem.Name, docSelectItem);
+                        if (!sortSelect.ContainsKey(docSelectItem.Name))
+                        {
+                            sortSelect.Add(docSelectItem.Name, docSelectItem);
+                        }
+                        else
+                        {
+                            this.ToString();
+                        }
                     }
 
                     int nSelect = 0;

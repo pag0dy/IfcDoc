@@ -14,17 +14,34 @@ using System.IO;
 using System.Net;
 using System.Text;
 using System.Windows.Forms;
+using IfcDoc.Schema.DOC;
 
 namespace IfcDoc
 {
     public partial class FormPublish : Form
     {
         string m_localpath;
+        DocProject m_project;
         Exception m_exception;
+        string m_username;
+        string m_password; // use SecureString if/when bsDD is secured
+        int m_protocol;
 
         public FormPublish()
         {
             InitializeComponent();
+        }
+
+        public DocProject Project
+        {
+            get
+            {
+                return this.m_project;
+            }
+            set
+            {
+                this.m_project = value;
+            }
         }
 
         public string Url
@@ -53,6 +70,21 @@ namespace IfcDoc
 
         private void buttonOK_Click(object sender, EventArgs e)
         {
+            // credentials
+            if(this.comboBoxProtocol.SelectedIndex != 0)
+            {
+                using (FormCredentials formCred = new FormCredentials())
+                {
+                    if(formCred.ShowDialog(this) != System.Windows.Forms.DialogResult.OK)
+                    {
+                        return;
+                    }
+
+                    this.m_username = formCred.Username;
+                    this.m_password = formCred.Password;
+                }
+            }
+
             this.textBoxUrl.Enabled = false;
             this.progressBar.Value = 0;
             this.buttonOK.Enabled = false;
@@ -68,34 +100,46 @@ namespace IfcDoc
             this.m_exception = null;
             try
             {
-                WebRequest request = HttpWebRequest.Create(this.textBoxUrl.Text);
-                request.Method = "POST";
-
-                using (FileStream streamFile = new FileStream(this.m_localpath, FileMode.Open))
+                switch(this.m_protocol)
                 {
-                    request.ContentLength = streamFile.Length;
-                    request.ContentType = "application/step";
-                    request.Headers[HttpRequestHeader.ContentLocation] = System.IO.Path.GetFileName(this.m_localpath);
-                    
-                    // for now, treat content type as opaque document attachment (don't set Content-Type to 'application/step')
-                    // future: treat as project file that be merged and compared
-                    
-                    using (Stream streamWeb = request.GetRequestStream())
-                    {
+                    case 0:
                         {
-                            byte[] buffer = new byte[8192];
-                            int len = 0;
-                            do
+                            WebRequest request = HttpWebRequest.Create(this.textBoxUrl.Text);
+                            request.Method = "POST";
+
+                            using (FileStream streamFile = new FileStream(this.m_localpath, FileMode.Open))
                             {
-                                len = streamFile.Read(buffer, 0, buffer.Length);
-                                if (len > 0)
+                                request.ContentLength = streamFile.Length;
+                                request.ContentType = "application/step";
+                                request.Headers[HttpRequestHeader.ContentLocation] = System.IO.Path.GetFileName(this.m_localpath);
+
+                                // for now, treat content type as opaque document attachment (don't set Content-Type to 'application/step')
+                                // future: treat as project file that be merged and compared
+
+                                using (Stream streamWeb = request.GetRequestStream())
                                 {
-                                    streamWeb.Write(buffer, 0, len);
-                                    this.backgroundWorkerPublish.ReportProgress((int)(100L * streamFile.Position / streamFile.Length));
+                                    {
+                                        byte[] buffer = new byte[8192];
+                                        int len = 0;
+                                        do
+                                        {
+                                            len = streamFile.Read(buffer, 0, buffer.Length);
+                                            if (len > 0)
+                                            {
+                                                streamWeb.Write(buffer, 0, len);
+                                                this.backgroundWorkerPublish.ReportProgress((int)(100L * streamFile.Position / streamFile.Length));
+                                            }
+                                        } while (len > 0);
+                                    }
                                 }
-                            } while (len > 0);
+                            }
                         }
-                    }
+                        break;
+
+                    case 1:
+                    case 2:
+                        DataDictionary.Upload(this.m_project, this.textBoxUrl.Text, this.m_username, this.m_password);
+                        break;
                 }
             }
             catch (Exception x)
@@ -122,6 +166,31 @@ namespace IfcDoc
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }
+        }
+
+        private void comboBoxProtocol_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch(this.comboBoxProtocol.SelectedIndex)
+            {
+                case 0:
+                    this.textBoxUrl.Text = "http://mvd.buildingsmart-tech.org/ifc4";
+                    break;
+
+                case 1:
+                    this.textBoxUrl.Text = "http://test.bsdd.buildingsmart.org/";
+                    break;
+
+                case 2:
+                    this.textBoxUrl.Text = "http://bsdd.buildingsmart.org/";
+                    break;
+            }
+
+            this.m_protocol = this.comboBoxProtocol.SelectedIndex;
+        }
+
+        private void FormPublish_Load(object sender, EventArgs e)
+        {
+            this.comboBoxProtocol.SelectedIndex = 1;
         }
     }
 }

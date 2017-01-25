@@ -20,6 +20,7 @@ namespace IfcDoc.Format.XSD
     {
         string m_filename;
         DocProject m_project;
+        DocPublication m_publication;
         DocModelView[] m_views;
         Dictionary<DocObject, bool> m_included;
 
@@ -28,7 +29,7 @@ namespace IfcDoc.Format.XSD
             this.m_filename = path;
         }
 
-        public DocProject Instance
+        public DocProject Project
         {
             get
             {
@@ -37,6 +38,18 @@ namespace IfcDoc.Format.XSD
             set
             {
                 this.m_project = value;
+            }
+        }
+
+        public DocPublication Publication
+        {
+            get
+            {
+                return this.m_publication;
+            }
+            set
+            {
+                this.m_publication = value;
             }
         }
 
@@ -101,9 +114,22 @@ namespace IfcDoc.Format.XSD
                 }
             }
 
-            string content = this.FormatDefinitions(this.m_project, map, this.m_included);
+            string content = this.FormatDefinitions(this.m_project, this.m_publication, map, this.m_included);
 
+            string dirpath = System.IO.Path.GetDirectoryName(this.m_filename);
+            if (!System.IO.Directory.Exists(dirpath))
+            {
+                System.IO.Directory.CreateDirectory(dirpath);
+            }
 
+            using (System.IO.StreamWriter writer = new System.IO.StreamWriter(this.m_filename))
+            {
+                if (writer.BaseStream.CanSeek)
+                {
+                    writer.BaseStream.SetLength(0);
+                }
+                writer.Write(content);
+            }
         }
 
         public static bool IsAttributeOverridden(DocEntity ent, DocAttribute attr, Dictionary<string, DocObject> map)
@@ -134,10 +160,48 @@ namespace IfcDoc.Format.XSD
 
         private static string FormatAttribute(DocEntity docEntity, DocAttribute docAttr, Dictionary<string, DocObject> map)
         {
+            if(docAttr.Name.Equals("InnerCoordIndices"))
+            {
+                docAttr.ToString();
+            }
+
             DocObject mapDef = null;
             map.TryGetValue(docAttr.DefinedType, out mapDef);
 
+            string xsdtype = ToXsdType(docAttr.DefinedType);
+
             StringBuilder sb = new StringBuilder();
+
+
+            bool sequencewrapper = (mapDef is DocDefined && docAttr.AggregationUpper == "?" && docAttr.AggregationAttribute != null && docAttr.AggregationAttribute.AggregationUpper == "?");
+            if (sequencewrapper)
+            {
+                // IfcIndexPolygonalFaceWithVoids.InnerCoordIndices
+
+                sb.Append("\t\t\t\t\t<xs:element name=\"" + docAttr.Name + "\" minOccurs=\"0\">");
+                sb.AppendLine();
+
+                sb.Append("\t\t\t\t\t\t<xs:complexType>");
+                sb.AppendLine();
+
+                sb.Append("\t\t\t\t\t\t\t<xs:sequence>");
+                sb.AppendLine();
+
+                xsdtype = xsdtype.Replace(":", ":Seq-"); 
+
+                sb.Append("\t\t\t\t\t\t\t\t<xs:element name=\"Seq-" + mapDef.Name + "-wrapper\" type=\"" + xsdtype + "\" maxOccurs=\"unbounded\" />");
+                sb.AppendLine();
+                sb.Append("\t\t\t\t\t\t\t</xs:sequence>");
+                sb.AppendLine();
+
+                sb.Append("\t\t\t\t\t\t</xs:complexType>");
+                sb.AppendLine();
+
+                sb.Append("\t\t\t\t\t</xs:element>");
+                sb.AppendLine();
+
+                return sb.ToString();
+            }
 
             sb.Append("\t\t\t\t\t<xs:element");
 
@@ -189,10 +253,13 @@ namespace IfcDoc.Format.XSD
                     sb.Append("\t\t\t\t\t\t\t\t<xs:element ref=\"");
                 }
 
-                string xsdtype = ToXsdType(docAttr.DefinedType);
                 if (mapDef == null)
                 {
                     xsdtype = xsdtype.Replace("xs:", "ifc:") + "-wrapper";
+                }
+                else if (sequencewrapper)
+                {
+                    xsdtype = xsdtype.Replace(":", ":Seq-"); // IfcIndexPolygonalFaceWithVoids.InnerCoordIndices
                 }
                 else if (docAttr.XsdFormat == DocXsdFormatEnum.Element && (mapDef is DocDefined || mapDef is DocEnumeration))
                 {
@@ -410,6 +477,11 @@ namespace IfcDoc.Format.XSD
 
         public string FormatEntity(DocEntity docEntity, Dictionary<string, DocObject> map, Dictionary<DocObject, bool> included)
         {
+            if (docEntity.Name.Equals("IfcIndexedPolygonalFaceWithVoids"))
+            {
+                docEntity.ToString();
+            }
+
             string basetype = docEntity.BaseDefinition;
             if (String.IsNullOrEmpty(basetype))
             {
@@ -574,11 +646,6 @@ namespace IfcDoc.Format.XSD
             {
                 if (included == null || included.ContainsKey(docAttr))
                 {
-                    if (docAttr.Name.Equals("Pixel"))
-                    {
-                        docAttr.ToString();
-                    }
-
                     if (docAttr.XsdFormat != DocXsdFormatEnum.Hidden && !(docAttr.XsdTagless == true) && docAttr.DefinedType != null)
                     {
                         DocObject mapDef = null;
@@ -587,11 +654,19 @@ namespace IfcDoc.Format.XSD
                         if ((docAttr.Inverse == null || docAttr.XsdFormat == DocXsdFormatEnum.Element || docAttr.XsdFormat == DocXsdFormatEnum.Attribute) &&
                             docAttr.Derived == null)
                         {
+                            // special case for IfcIndexedPolygonalFaceWithVoids.InnerCoordIndices
+                            bool sequencewrapper = (mapDef is DocDefined && docAttr.AggregationUpper == "?" && docAttr.AggregationAttribute != null && docAttr.AggregationAttribute.AggregationUpper == "?");
+
+                            if (sequencewrapper)
+                            {
+                                sequencewrapper.ToString();
+                            }
+
                             if (mapDef is DocEntity ||
                                 mapDef is DocSelect ||
+                                sequencewrapper ||
                                 docAttr.XsdFormat == DocXsdFormatEnum.Element ||
                                 docAttr.XsdFormat == DocXsdFormatEnum.Attribute)
-                            //docAttr.DefinedType.StartsWith("BINARY"))*/
                             {
                                 if (!hascontent)
                                 {
@@ -626,10 +701,6 @@ namespace IfcDoc.Format.XSD
             {
                 if (included == null || included.ContainsKey(docAttr))
                 {
-                    if (docAttr.Name.Equals("Pixel"))
-                    {
-                        docAttr.ToString();
-                    }
 
                     if (docAttr.XsdFormat != DocXsdFormatEnum.Hidden && docAttr.XsdFormat != DocXsdFormatEnum.Attribute)//docAttr.DefinedType != null)// && docAttr.XsdFormat != DocXsdFormatEnum.Element*/)
                     {
@@ -637,10 +708,13 @@ namespace IfcDoc.Format.XSD
                         if ((docAttr.Inverse == null || docAttr.XsdFormat == DocXsdFormatEnum.Attribute) &&
                             docAttr.Derived == null && (docAttr.XsdFormat != DocXsdFormatEnum.Element || docAttr.XsdTagless == true))
                         {
-                            if (docAttr.DefinedType == null || (!map.TryGetValue(docAttr.DefinedType, out mapDef)) || // native type
+
+                            if (docAttr.DefinedType == null || 
+                                (!map.TryGetValue(docAttr.DefinedType, out mapDef)) || // native type
                                 (mapDef is DocDefined || mapDef is DocEnumeration || docAttr.XsdTagless == true))
                             {
-                                if (mapDef == null || (included == null || included.ContainsKey(mapDef)))
+                                bool sequencewrapper = (mapDef is DocDefined && docAttr.AggregationUpper == "?" && docAttr.AggregationAttribute != null && docAttr.AggregationAttribute.AggregationUpper == "?");
+                                if (!sequencewrapper && (mapDef == null || (included == null || included.ContainsKey(mapDef))))
                                 {
                                     if (!hascontent)
                                     {
@@ -760,6 +834,8 @@ namespace IfcDoc.Format.XSD
 
             sb.Append("\t</xs:complexType>");
             sb.AppendLine();
+
+            // also capture Sequence types...
 
             return sb.ToString();
         }
@@ -1069,9 +1145,11 @@ namespace IfcDoc.Format.XSD
             return sb.ToString();
         }
 
-        public string FormatDefinitions(DocProject docProject, Dictionary<string, DocObject> map, Dictionary<DocObject, bool> included)
+        public string FormatDefinitions(DocProject docProject, DocPublication docPublication, Dictionary<string, DocObject> map, Dictionary<DocObject, bool> included)
         {
-            string xmlns = "http://www.buildingsmart-tech.org/ifcXML/IFC4/final"; //...
+            this.m_included = included;
+
+            string xmlns = docProject.GetSchemaURI(docPublication);
             // use XSD configuration of first view
             if (this.m_views != null && this.m_views.Length >= 1 && !String.IsNullOrEmpty(this.m_views[0].Code))
             {
@@ -1090,7 +1168,7 @@ namespace IfcDoc.Format.XSD
             SortedList<string, DocFunction> mapFunction = new SortedList<string, DocFunction>(this);
             SortedList<string, DocGlobalRule> mapRule = new SortedList<string, DocGlobalRule>(this);
 
-            SortedList<string, string> sort = new SortedList<string, string>(new FormatXSD(null));
+            SortedList<string, string> sort = new SortedList<string, string>(this);
 
             foreach (DocSection docSection in docProject.Sections)
             {

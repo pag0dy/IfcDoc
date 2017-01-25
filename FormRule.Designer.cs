@@ -36,9 +36,9 @@
             this.buttonOK = new System.Windows.Forms.Button();
             this.comboBoxUsage = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.textBoxBehavior = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.textBoxPrefix = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // label3
@@ -50,7 +50,6 @@
             // 
             resources.ApplyResources(this.textBoxIdentifier, "textBoxIdentifier");
             this.textBoxIdentifier.Name = "textBoxIdentifier";
-            this.textBoxIdentifier.TextChanged += new System.EventHandler(this.textBoxIdentifier_TextChanged);
             // 
             // comboBoxCardinality
             // 
@@ -98,21 +97,20 @@
             resources.ApplyResources(this.label5, "label5");
             this.label5.Name = "label5";
             // 
-            // textBoxBehavior
+            // label2
             // 
-            resources.ApplyResources(this.textBoxBehavior, "textBoxBehavior");
-            this.textBoxBehavior.Name = "textBoxBehavior";
-            this.textBoxBehavior.ReadOnly = true;
+            resources.ApplyResources(this.label2, "label2");
+            this.label2.Name = "label2";
             // 
             // label1
             // 
             resources.ApplyResources(this.label1, "label1");
             this.label1.Name = "label1";
             // 
-            // label2
+            // textBoxPrefix
             // 
-            resources.ApplyResources(this.label2, "label2");
-            this.label2.Name = "label2";
+            resources.ApplyResources(this.textBoxPrefix, "textBoxPrefix");
+            this.textBoxPrefix.Name = "textBoxPrefix";
             // 
             // FormRule
             // 
@@ -121,7 +119,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.textBoxBehavior);
+            this.Controls.Add(this.textBoxPrefix);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.comboBoxUsage);
             this.Controls.Add(this.buttonCancel);
@@ -148,8 +146,8 @@
         private System.Windows.Forms.Button buttonOK;
         private System.Windows.Forms.ComboBox comboBoxUsage;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox textBoxBehavior;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox textBoxPrefix;
     }
 }

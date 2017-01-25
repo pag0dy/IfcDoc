@@ -67,9 +67,7 @@
             this.textBoxIdentityUuid = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.tabPageTemplate = new System.Windows.Forms.TabPage();
-            this.ctlRules = new IfcDoc.CtlRules();
             this.tabPageConcept = new System.Windows.Forms.TabPage();
-            this.ctlParameters = new IfcDoc.CtlParameters();
             this.tabPageRequirements = new System.Windows.Forms.TabPage();
             this.listViewExchange = new System.Windows.Forms.ListView();
             this.columnHeaderExchangeName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -95,12 +93,19 @@
             this.buttonApplicabilityAddEntity = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.tabPageProperty = new System.Windows.Forms.TabPage();
+            this.label20 = new System.Windows.Forms.Label();
+            this.comboBoxPropertyAccess = new System.Windows.Forms.ComboBox();
+            this.buttonPropertyDataSecondary = new System.Windows.Forms.Button();
+            this.textBoxPropertyDataSecondary = new System.Windows.Forms.TextBox();
+            this.label18 = new System.Windows.Forms.Label();
             this.buttonPropertyDataPrimary = new System.Windows.Forms.Button();
             this.textBoxPropertyDataPrimary = new System.Windows.Forms.TextBox();
             this.labelPropertyType = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.comboBoxPropertyType = new System.Windows.Forms.ComboBox();
             this.tabPageQuantity = new System.Windows.Forms.TabPage();
+            this.label21 = new System.Windows.Forms.Label();
+            this.comboBoxQuantityAccess = new System.Windows.Forms.ComboBox();
             this.labelQuantityType = new System.Windows.Forms.Label();
             this.comboBoxQuantityType = new System.Windows.Forms.ComboBox();
             this.tabPageEntity = new System.Windows.Forms.TabPage();
@@ -177,9 +182,9 @@
             this.textBoxExample = new System.Windows.Forms.TextBox();
             this.toolStrip4 = new System.Windows.Forms.ToolStrip();
             this.toolStripButtonExampleLoad = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonExampleLink = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonExampleClear = new System.Windows.Forms.ToolStripButton();
             this.tabPageOperations = new System.Windows.Forms.TabPage();
-            this.ctlOperators = new IfcDoc.CtlOperators();
             this.tabPageConceptRoot = new System.Windows.Forms.TabPage();
             this.listViewConceptRoot = new System.Windows.Forms.ListView();
             this.columnHeaderRootTemplate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -206,6 +211,7 @@
             this.toolStripButtonViewInsert = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonViewRemove = new System.Windows.Forms.ToolStripButton();
             this.tabPagePublication = new System.Windows.Forms.TabPage();
+            this.checkBoxPublishHtmlExamples = new System.Windows.Forms.CheckBox();
             this.checkBoxPublishExchangeTables = new System.Windows.Forms.CheckBox();
             this.checkBoxPublishUML = new System.Windows.Forms.CheckBox();
             this.textBoxFooter = new System.Windows.Forms.TextBox();
@@ -226,9 +232,10 @@
             this.imageListRules = new System.Windows.Forms.ImageList(this.components);
             this.openFileDialogIcon = new System.Windows.Forms.OpenFileDialog();
             this.openFileDialogExample = new System.Windows.Forms.OpenFileDialog();
-            this.buttonPropertyDataSecondary = new System.Windows.Forms.Button();
-            this.textBoxPropertyDataSecondary = new System.Windows.Forms.TextBox();
-            this.label18 = new System.Windows.Forms.Label();
+            this.ctlRules = new IfcDoc.CtlRules();
+            this.ctlParameters = new IfcDoc.CtlParameters();
+            this.ctlOperators = new IfcDoc.CtlOperators();
+            this.textBoxPublicationNote = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerTranslation)).BeginInit();
             this.splitContainerTranslation.Panel1.SuspendLayout();
             this.splitContainerTranslation.Panel2.SuspendLayout();
@@ -502,6 +509,7 @@
             // comboBoxIdentityStatus
             // 
             resources.ApplyResources(this.comboBoxIdentityStatus, "comboBoxIdentityStatus");
+            this.comboBoxIdentityStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxIdentityStatus.FormattingEnabled = true;
             this.comboBoxIdentityStatus.Items.AddRange(new object[] {
             resources.GetString("comboBoxIdentityStatus.Items"),
@@ -559,35 +567,12 @@
             this.tabPageTemplate.Name = "tabPageTemplate";
             this.tabPageTemplate.UseVisualStyleBackColor = true;
             // 
-            // ctlRules
-            // 
-            this.ctlRules.Attribute = null;
-            this.ctlRules.BaseTemplate = null;
-            this.ctlRules.CurrentInstance = null;
-            resources.ApplyResources(this.ctlRules, "ctlRules");
-            this.ctlRules.Name = "ctlRules";
-            this.ctlRules.Project = null;
-            this.ctlRules.Selection = null;
-            this.ctlRules.Template = null;
-            this.ctlRules.SelectionChanged += new System.EventHandler(this.ctlRules_SelectionChanged);
-            this.ctlRules.ContentChanged += new System.EventHandler(this.ctlRules_ContentChanged);
-            // 
             // tabPageConcept
             // 
             this.tabPageConcept.Controls.Add(this.ctlParameters);
             resources.ApplyResources(this.tabPageConcept, "tabPageConcept");
             this.tabPageConcept.Name = "tabPageConcept";
             this.tabPageConcept.UseVisualStyleBackColor = true;
-            // 
-            // ctlParameters
-            // 
-            this.ctlParameters.ConceptItem = null;
-            this.ctlParameters.ConceptLeaf = null;
-            this.ctlParameters.ConceptRoot = null;
-            this.ctlParameters.CurrentInstance = null;
-            resources.ApplyResources(this.ctlParameters, "ctlParameters");
-            this.ctlParameters.Name = "ctlParameters";
-            this.ctlParameters.Project = null;
             // 
             // tabPageRequirements
             // 
@@ -781,6 +766,8 @@
             // 
             // tabPageProperty
             // 
+            this.tabPageProperty.Controls.Add(this.label20);
+            this.tabPageProperty.Controls.Add(this.comboBoxPropertyAccess);
             this.tabPageProperty.Controls.Add(this.buttonPropertyDataSecondary);
             this.tabPageProperty.Controls.Add(this.textBoxPropertyDataSecondary);
             this.tabPageProperty.Controls.Add(this.label18);
@@ -792,6 +779,43 @@
             resources.ApplyResources(this.tabPageProperty, "tabPageProperty");
             this.tabPageProperty.Name = "tabPageProperty";
             this.tabPageProperty.UseVisualStyleBackColor = true;
+            // 
+            // label20
+            // 
+            resources.ApplyResources(this.label20, "label20");
+            this.label20.Name = "label20";
+            // 
+            // comboBoxPropertyAccess
+            // 
+            resources.ApplyResources(this.comboBoxPropertyAccess, "comboBoxPropertyAccess");
+            this.comboBoxPropertyAccess.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxPropertyAccess.FormattingEnabled = true;
+            this.comboBoxPropertyAccess.Items.AddRange(new object[] {
+            resources.GetString("comboBoxPropertyAccess.Items"),
+            resources.GetString("comboBoxPropertyAccess.Items1"),
+            resources.GetString("comboBoxPropertyAccess.Items2"),
+            resources.GetString("comboBoxPropertyAccess.Items3"),
+            resources.GetString("comboBoxPropertyAccess.Items4")});
+            this.comboBoxPropertyAccess.Name = "comboBoxPropertyAccess";
+            this.comboBoxPropertyAccess.SelectedIndexChanged += new System.EventHandler(this.comboBoxPropertyAccess_SelectedIndexChanged);
+            // 
+            // buttonPropertyDataSecondary
+            // 
+            resources.ApplyResources(this.buttonPropertyDataSecondary, "buttonPropertyDataSecondary");
+            this.buttonPropertyDataSecondary.Name = "buttonPropertyDataSecondary";
+            this.buttonPropertyDataSecondary.UseVisualStyleBackColor = true;
+            this.buttonPropertyDataSecondary.Click += new System.EventHandler(this.buttonPropertyDataSecondary_Click);
+            // 
+            // textBoxPropertyDataSecondary
+            // 
+            resources.ApplyResources(this.textBoxPropertyDataSecondary, "textBoxPropertyDataSecondary");
+            this.textBoxPropertyDataSecondary.Name = "textBoxPropertyDataSecondary";
+            this.textBoxPropertyDataSecondary.ReadOnly = true;
+            // 
+            // label18
+            // 
+            resources.ApplyResources(this.label18, "label18");
+            this.label18.Name = "label18";
             // 
             // buttonPropertyDataPrimary
             // 
@@ -834,11 +858,32 @@
             // 
             // tabPageQuantity
             // 
+            this.tabPageQuantity.Controls.Add(this.label21);
+            this.tabPageQuantity.Controls.Add(this.comboBoxQuantityAccess);
             this.tabPageQuantity.Controls.Add(this.labelQuantityType);
             this.tabPageQuantity.Controls.Add(this.comboBoxQuantityType);
             resources.ApplyResources(this.tabPageQuantity, "tabPageQuantity");
             this.tabPageQuantity.Name = "tabPageQuantity";
             this.tabPageQuantity.UseVisualStyleBackColor = true;
+            // 
+            // label21
+            // 
+            resources.ApplyResources(this.label21, "label21");
+            this.label21.Name = "label21";
+            // 
+            // comboBoxQuantityAccess
+            // 
+            resources.ApplyResources(this.comboBoxQuantityAccess, "comboBoxQuantityAccess");
+            this.comboBoxQuantityAccess.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxQuantityAccess.FormattingEnabled = true;
+            this.comboBoxQuantityAccess.Items.AddRange(new object[] {
+            resources.GetString("comboBoxQuantityAccess.Items"),
+            resources.GetString("comboBoxQuantityAccess.Items1"),
+            resources.GetString("comboBoxQuantityAccess.Items2"),
+            resources.GetString("comboBoxQuantityAccess.Items3"),
+            resources.GetString("comboBoxQuantityAccess.Items4")});
+            this.comboBoxQuantityAccess.Name = "comboBoxQuantityAccess";
+            this.comboBoxQuantityAccess.SelectedIndexChanged += new System.EventHandler(this.comboBoxQuantityAccess_SelectedIndexChanged);
             // 
             // labelQuantityType
             // 
@@ -1627,6 +1672,7 @@
             this.toolStrip4.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStrip4.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripButtonExampleLoad,
+            this.toolStripButtonExampleLink,
             this.toolStripButtonExampleClear});
             resources.ApplyResources(this.toolStrip4, "toolStrip4");
             this.toolStrip4.Name = "toolStrip4";
@@ -1637,6 +1683,13 @@
             resources.ApplyResources(this.toolStripButtonExampleLoad, "toolStripButtonExampleLoad");
             this.toolStripButtonExampleLoad.Name = "toolStripButtonExampleLoad";
             this.toolStripButtonExampleLoad.Click += new System.EventHandler(this.buttonExampleLoad_Click);
+            // 
+            // toolStripButtonExampleLink
+            // 
+            this.toolStripButtonExampleLink.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            resources.ApplyResources(this.toolStripButtonExampleLink, "toolStripButtonExampleLink");
+            this.toolStripButtonExampleLink.Name = "toolStripButtonExampleLink";
+            this.toolStripButtonExampleLink.Click += new System.EventHandler(this.toolStripButtonExampleLink_Click);
             // 
             // toolStripButtonExampleClear
             // 
@@ -1651,16 +1704,6 @@
             resources.ApplyResources(this.tabPageOperations, "tabPageOperations");
             this.tabPageOperations.Name = "tabPageOperations";
             this.tabPageOperations.UseVisualStyleBackColor = true;
-            // 
-            // ctlOperators
-            // 
-            this.ctlOperators.CurrentInstance = null;
-            this.ctlOperators.CurrentPopulation = null;
-            resources.ApplyResources(this.ctlOperators, "ctlOperators");
-            this.ctlOperators.Name = "ctlOperators";
-            this.ctlOperators.Project = null;
-            this.ctlOperators.Rule = null;
-            this.ctlOperators.Template = null;
             // 
             // tabPageConceptRoot
             // 
@@ -1848,6 +1891,8 @@
             // 
             // tabPagePublication
             // 
+            this.tabPagePublication.Controls.Add(this.textBoxPublicationNote);
+            this.tabPagePublication.Controls.Add(this.checkBoxPublishHtmlExamples);
             this.tabPagePublication.Controls.Add(this.checkBoxPublishExchangeTables);
             this.tabPagePublication.Controls.Add(this.checkBoxPublishUML);
             this.tabPagePublication.Controls.Add(this.textBoxFooter);
@@ -1859,6 +1904,13 @@
             resources.ApplyResources(this.tabPagePublication, "tabPagePublication");
             this.tabPagePublication.Name = "tabPagePublication";
             this.tabPagePublication.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxPublishHtmlExamples
+            // 
+            resources.ApplyResources(this.checkBoxPublishHtmlExamples, "checkBoxPublishHtmlExamples");
+            this.checkBoxPublishHtmlExamples.Name = "checkBoxPublishHtmlExamples";
+            this.checkBoxPublishHtmlExamples.UseVisualStyleBackColor = true;
+            this.checkBoxPublishHtmlExamples.CheckedChanged += new System.EventHandler(this.checkBoxPublishHtmlExamples_CheckedChanged);
             // 
             // checkBoxPublishExchangeTables
             // 
@@ -1995,23 +2047,46 @@
             this.openFileDialogExample.DefaultExt = "ifc";
             resources.ApplyResources(this.openFileDialogExample, "openFileDialogExample");
             // 
-            // buttonPropertyDataSecondary
+            // ctlRules
             // 
-            resources.ApplyResources(this.buttonPropertyDataSecondary, "buttonPropertyDataSecondary");
-            this.buttonPropertyDataSecondary.Name = "buttonPropertyDataSecondary";
-            this.buttonPropertyDataSecondary.UseVisualStyleBackColor = true;
-            this.buttonPropertyDataSecondary.Click += new System.EventHandler(this.buttonPropertyDataSecondary_Click);
+            this.ctlRules.Attribute = null;
+            this.ctlRules.BaseTemplate = null;
+            this.ctlRules.CurrentInstance = null;
+            resources.ApplyResources(this.ctlRules, "ctlRules");
+            this.ctlRules.Name = "ctlRules";
+            this.ctlRules.Project = null;
+            this.ctlRules.Selection = null;
+            this.ctlRules.Template = null;
+            this.ctlRules.SelectionChanged += new System.EventHandler(this.ctlRules_SelectionChanged);
+            this.ctlRules.ContentChanged += new System.EventHandler(this.ctlRules_ContentChanged);
             // 
-            // textBoxPropertyDataSecondary
+            // ctlParameters
             // 
-            resources.ApplyResources(this.textBoxPropertyDataSecondary, "textBoxPropertyDataSecondary");
-            this.textBoxPropertyDataSecondary.Name = "textBoxPropertyDataSecondary";
-            this.textBoxPropertyDataSecondary.ReadOnly = true;
+            this.ctlParameters.ConceptItem = null;
+            this.ctlParameters.ConceptLeaf = null;
+            this.ctlParameters.ConceptRoot = null;
+            this.ctlParameters.CurrentInstance = null;
+            resources.ApplyResources(this.ctlParameters, "ctlParameters");
+            this.ctlParameters.Name = "ctlParameters";
+            this.ctlParameters.Project = null;
             // 
-            // label18
+            // ctlOperators
             // 
-            resources.ApplyResources(this.label18, "label18");
-            this.label18.Name = "label18";
+            this.ctlOperators.CurrentInstance = null;
+            this.ctlOperators.CurrentPopulation = null;
+            resources.ApplyResources(this.ctlOperators, "ctlOperators");
+            this.ctlOperators.Name = "ctlOperators";
+            this.ctlOperators.Project = null;
+            this.ctlOperators.Rule = null;
+            this.ctlOperators.Template = null;
+            // 
+            // textBoxPublicationNote
+            // 
+            resources.ApplyResources(this.textBoxPublicationNote, "textBoxPublicationNote");
+            this.textBoxPublicationNote.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.textBoxPublicationNote.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBoxPublicationNote.Name = "textBoxPublicationNote";
+            this.textBoxPublicationNote.ReadOnly = true;
             // 
             // CtlProperties
             // 
@@ -2287,5 +2362,12 @@
         private System.Windows.Forms.Button buttonPropertyDataSecondary;
         private System.Windows.Forms.TextBox textBoxPropertyDataSecondary;
         private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.ComboBox comboBoxPropertyAccess;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.ComboBox comboBoxQuantityAccess;
+        private System.Windows.Forms.CheckBox checkBoxPublishHtmlExamples;
+        private System.Windows.Forms.ToolStripButton toolStripButtonExampleLink;
+        private System.Windows.Forms.TextBox textBoxPublicationNote;
     }
 }

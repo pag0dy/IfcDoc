@@ -415,7 +415,7 @@ namespace IfcDoc
             if (this.treeViewAlphabetical.SelectedNode == null)
                 return;
 
-            DocEntity entity = this.treeViewAlphabetical.SelectedNode.Tag as DocEntity;
+            DocDefinition entity = this.treeViewAlphabetical.SelectedNode.Tag as DocDefinition;
             if (entity != null)
             {
                 this.treeViewInheritance.SelectedNode = this.m_mapInherit[entity];

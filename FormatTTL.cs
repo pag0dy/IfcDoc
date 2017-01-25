@@ -1,4 +1,4 @@
-﻿// Name:        FormatTTL.cs
+// Name:        FormatTTL.cs
 // Description: Reads/writes TTL File (RDF, compliant with ifcOWL).
 // Author:      Pieter Pauwels
 // Origination: Work performed for BuildingSmart by Pieter Pauwels
@@ -19,7 +19,7 @@ using System.Reflection;
 
 namespace IfcDoc
 {
-    public class FormatTTL: IDisposable,
+    public class FormatTTL : IDisposable,
         IFormatData
     {
         Stream m_stream;
@@ -39,19 +39,16 @@ namespace IfcDoc
         Dictionary<string, ObjectProperty> m_fullpropertynames = new Dictionary<string, ObjectProperty>();
 
         HashSet<SEntity> m_saved; // keeps track of entities already written, which can be referenced
-        
-        long m_nextID = 0;
 
-        public FormatTTL() : this(new System.IO.MemoryStream(), "http://ifcowl.openbimstandards.org/IFC4_ADD1")
-        {
-        }
+        long m_nextID = 0;
 
         public FormatTTL(Stream stream, string owlURI)
         {
             this.m_stream = stream;
             this.m_owlURI = owlURI;
             string timeLog = DateTime.Now.ToString("yyyyMMdd_HHmmss"); //h:mm:ss tt
-            this.m_baseURI = "http://linkedbuildingdata.net/ifc/resources" + timeLog + "/";            
+            this.m_baseURI = "http://linkedbuildingdata.net/ifc/resources" + timeLog + "/";
+            // TWC: URIs are now dynamically configured and made consistent for all formats, so above could be updated to rely on parameters instead
         }
 
         private class ListObject
@@ -101,7 +98,7 @@ namespace IfcDoc
             public string name;
             public string setorlist; //ENTITY, SET, LIST, LISTOFLIST, ARRAY || ACTUALLY, ONLY ENTITY, SET, AND LIST are available here (see FormatTTL.FormatData())
         }
-        
+
         /// <summary>
         /// The dictionary with all project instances
         /// </summary>
@@ -112,7 +109,7 @@ namespace IfcDoc
                 this.m_instances = value;
             }
         }
-        
+
         /// <summary>
         /// Whether to save as HTML with hyperlinks for object references (to anchors within file) and entity references (to topics within documentation).
         /// </summary>
@@ -127,7 +124,7 @@ namespace IfcDoc
                 this.m_markup = value;
             }
         }
-        
+
         //WRITING ENTITIES
         public void Save()
         {
@@ -136,10 +133,10 @@ namespace IfcDoc
 
             //get highest available ID and start counting from there
             m_nextID = m_instances.Keys.Aggregate((l, r) => l > r ? l : r);
-            
+
             // pass 2: write to file -- clear save map; retain ID map
             //this.m_saved.Clear(); //NOT NECESSARY WHEN NOT DOING THE ABOVE FIRST RUN
-            
+
             this.m_saved = new HashSet<SEntity>();
             this.m_writer = new StreamWriter(this.m_stream);
             this.m_valueObjects = new Dictionary<string, URIObject>();
@@ -205,7 +202,7 @@ namespace IfcDoc
                 this.m_writer.Flush();
             }
         }
-                        
+
         private void WriteEntity(SEntity o, long ID)
         {
             string newline = "\r\n";
@@ -214,17 +211,17 @@ namespace IfcDoc
 
             Type t = o.GetType();
             string hyperlink = "../../schema/" + t.Namespace.ToLower() + "/lexical/" + t.Name.ToLower() + "_" + ID + ".htm";
-            this.WriteStartElement(t.Name+"_"+ID, hyperlink);
-            
+            this.WriteStartElement(t.Name + "_" + ID, hyperlink);
+
             this.m_writer.Write(newline);
             m_indent++;
             Console.Out.WriteLine("\r\n--- Writing entity : " + t.Name.ToString());
             Console.Out.WriteLine("-----------------------------------");
-            this.WriteType("ifcowl:" + t.Name.ToString());            
+            this.WriteType("ifcowl:" + t.Name.ToString());
             this.WriteEntityAttributes(o);
             Console.Out.WriteLine("--------------done---------------------");
         }
-        
+
         /// <summary>
         /// </summary>
         /// <param name="o"></param>
@@ -261,7 +258,7 @@ namespace IfcDoc
 
 
                     if (isvaluelistlist || isvaluelist || ft.IsValueType)
-                    {        
+                    {
                         if (isvaluelistlist)
                         {
                             System.Collections.IList list = (System.Collections.IList)v;
@@ -291,9 +288,10 @@ namespace IfcDoc
                             WriteListWithEntities(t, f, list);
                         }
                     }
-                    else {
+                    else
+                    {
                         //non-list attributes
-                        ObjectProperty p = GetObjectProperty(f.Name + "_" + o.GetType().Name);                        
+                        ObjectProperty p = GetObjectProperty(f.Name + "_" + o.GetType().Name);
                         WriteAnyOtherThing(f, p, v);
                     }
                 }
@@ -473,9 +471,9 @@ namespace IfcDoc
                     }
 
                     //create listObject
-                    #if VERBOSE
+#if VERBOSE
                     Console.Out.WriteLine("Message: Creating ListOfListWithValues with XSDType : " + fieldValue.FieldType.Name);
-                    #endif
+#endif
                     newListObject = GetListObject(ft.Name + "_List_", ft.Name, valuelist, fieldValue.FieldType.Name);
 
                     //add to listOfList
@@ -499,15 +497,16 @@ namespace IfcDoc
                 for (int i = 0; i < list.Count; i++)
                 {
                     if (list[i] is SEntity)
-                    {                    
+                    {
                         Type vt = list[i].GetType();
                         this.m_writer.Write(";" + "\r\n");
                         this.WriteIndent();
-                        this.m_writer.Write("ifcowl:" + p.name + " ");                        
+                        this.m_writer.Write("ifcowl:" + p.name + " ");
                         this.m_writer.Write("inst:" + vt.Name + "_" + ((SEntity)list[i]).OID);
                         //Console.Out.WriteLine("written object prop to SET:" + p.name + " - " + vt.Name + "_" + ((SEntity)list[i]).OID);
                     }
-                    else{
+                    else
+                    {
                         Console.Out.WriteLine("WARNING: We found an unhandled SET of things that are NOT entities: " + f.Name);
                     }
                 }
@@ -664,20 +663,20 @@ namespace IfcDoc
                         this.m_writer.Write("inst:" + newListObject.URI);
                         //IfcRepresentation_List_#121_#145_#137
                     }
-                }                               
+                }
             }
         }
 
         private void WriteListWithValues(Type t, FieldInfo f, System.Collections.IList list)
         {
             //Console.Out.WriteLine("\r\n++ writing attribute: " + f.Name);
-            ObjectProperty p = GetObjectProperty(f.Name + "_" + t.Name);            
-            
+            ObjectProperty p = GetObjectProperty(f.Name + "_" + t.Name);
+
             if (p.setorlist == "SET")
             {
                 //SET, such as IfcRecurrencePattern.weekdayComponent > IfcDayInWeekNumber
                 for (int i = 0; i < list.Count; i++)
-                    WriteTypeValue(t,f,list[i]);
+                    WriteTypeValue(t, f, list[i]);
             }
             else
             {
@@ -734,7 +733,7 @@ namespace IfcDoc
         private void WriteTypeValue(Type t, FieldInfo f, object v)
         {
             Type ft = f.FieldType;
-            if (ft.IsGenericType && (ft.GetGenericTypeDefinition() == typeof(Nullable<>)||ft.GetGenericTypeDefinition() == typeof(List<>)))
+            if (ft.IsGenericType && (ft.GetGenericTypeDefinition() == typeof(Nullable<>) || ft.GetGenericTypeDefinition() == typeof(List<>)))
             {
                 // special case for Nullable types
                 ft = ft.GetGenericArguments()[0];
@@ -823,7 +822,7 @@ namespace IfcDoc
                     this.WriteIndent();
                     ObjectProperty p = GetObjectProperty(f.Name + "_" + t.Name);
                     this.m_writer.Write("ifcowl:" + p.name + " ");
-                    
+
                     string s = ft.Name;
                     if (s == "Int64" || s == "Double" || s == "String" || s == "Number" || s == "Real" || s == "Integer" || s == "Logical" || s == "Boolean" || s == "Binary" || s == "Byte[]")
                         s = CheckForExpressPrimaryTypes(s);
@@ -967,7 +966,8 @@ namespace IfcDoc
                 return "LOGICAL";
             else if (owlClass.Equals("string", StringComparison.CurrentCultureIgnoreCase))
                 return "STRING";
-            else {
+            else
+            {
                 Console.Out.WriteLine("WARNING: found xsdType " + owlClass + " - not sure what to do with it");
             }
 
@@ -976,14 +976,14 @@ namespace IfcDoc
 
         private void WriteLiteralValue(string xsdType, string literalString)
         {
-            #if VERBOSE
+#if VERBOSE
             Console.Out.WriteLine("WriteLiteralValue: " + "xsdtype: " + xsdType + " - literalString " + literalString);
-            #endif
+#endif
             this.WriteIndent();
             if (xsdType.Equals("integer", StringComparison.CurrentCultureIgnoreCase) || xsdType.Equals("Int64", StringComparison.CurrentCultureIgnoreCase))
                 this.m_writer.Write("express:hasInteger" + " " + literalString + " ");
             else if (xsdType.Equals("double", StringComparison.CurrentCultureIgnoreCase))
-                this.m_writer.Write("express:has" + xsdType + " \"" + literalString.Replace(',','.') + "\"^^xsd:double ");
+                this.m_writer.Write("express:has" + xsdType + " \"" + literalString.Replace(',', '.') + "\"^^xsd:double ");
             else if (xsdType.Equals("hexBinary", StringComparison.CurrentCultureIgnoreCase))
                 this.m_writer.Write("express:has" + xsdType + " \"" + literalString + "\"^^xsd:hexBinary ");
             else if (xsdType.Equals("boolean", StringComparison.CurrentCultureIgnoreCase))
@@ -1001,7 +1001,8 @@ namespace IfcDoc
             }
             else if (xsdType.Equals("string", StringComparison.CurrentCultureIgnoreCase))
                 this.m_writer.Write("express:has" + xsdType + " \"" + literalString + "\" ");
-            else {
+            else
+            {
                 this.m_writer.Write("express:has" + xsdType + " \"" + literalString + "\" ");
                 Console.Out.WriteLine("WARNING: found xsdType " + xsdType + " - not sure what to do with it");
             }
@@ -1019,17 +1020,17 @@ namespace IfcDoc
             if (obj.ifcowlclass.Equals("INTEGER") || obj.ifcowlclass.Equals("REAL") || obj.ifcowlclass.Equals("DOUBLE") || obj.ifcowlclass.Equals("BINARY") || obj.ifcowlclass.Equals("BOOLEAN") || obj.ifcowlclass.Equals("LOGICAL") || obj.ifcowlclass.Equals("STRING"))
                 ns = "express:";
             WriteType(ns + obj.ifcowlclass + ";\r\n");
-            #if VERBOSE
+#if VERBOSE
             Console.Out.WriteLine("WriteExtraEntity: " + "obj.URI: " + obj.URI + " - xsdtype " + obj.XSDType);
-            #endif
+#endif
             WriteLiteralValue(obj.XSDType, obj.encodedvalue);
             this.m_writer.Write(".\r\n\r\n");
-            #if VERBOSE
+#if VERBOSE
             Console.Out.WriteLine("written URIObject: " + "inst:" + obj.URI + " with VALUE " + obj.encodedvalue + " and TYPE " + obj.XSDType);
-            #endif
+#endif
             return;
         }
-        
+
         private void WriteExtraListOfListObject(ListObject obj)
         {
             if (obj.XSDType == "###LISTOFLIST###")
@@ -1045,18 +1046,18 @@ namespace IfcDoc
                     if (i == 0)
                     {
                         this.m_writer.Write("inst:" + obj.URI + "\r\n");
-                        #if VERBOSE
+#if VERBOSE
                         Console.Out.WriteLine("written ListOfListObject: " + "inst:" + obj.URI + " with TYPE " + obj.XSDType);
-                        #endif
+#endif
                     }
                     else
                     {
                         this.m_writer.Write("inst:" + obj.ifcowlclass + "_List_List_" + m_nextID + "\r\n");
-                        #if VERBOSE
+#if VERBOSE
                         Console.Out.WriteLine("written ListOfListObject: " + "inst:" + obj.ifcowlclass + "_List_List_" + m_nextID + " with TYPE " + obj.XSDType);
-                        #endif
+#endif
                     }
-                 
+
                     //m_writer.Write("inst:" + obj.URI + "\r\n");
                     m_indent++;
                     WriteType(ns + obj.ifcowlclass + "_List_List" + ";\r\n");
@@ -1089,7 +1090,7 @@ namespace IfcDoc
             string ns = "ifcowl:";
             if (obj.listtype.Equals("INTEGER") || obj.listtype.Equals("REAL") || obj.listtype.Equals("DOUBLE") || obj.listtype.Equals("BINARY") || obj.listtype.Equals("BOOLEAN") || obj.listtype.Equals("LOGICAL") || obj.listtype.Equals("STRING"))
                 ns = "express:";
-            
+
             for (int i = 0; i < obj.values.Count; i++)
             {
                 m_indent = 0;
@@ -1097,14 +1098,14 @@ namespace IfcDoc
                 if (i == 0)
                     //{
                     this.m_writer.Write("inst:" + obj.URI + "\r\n");
-                    //Console.Out.WriteLine("written ListObject: " + "inst:" + obj.URI + " with TYPE " + obj.XSDType);
+                //Console.Out.WriteLine("written ListObject: " + "inst:" + obj.URI + " with TYPE " + obj.XSDType);
                 //}
                 else
                     //{
                     this.m_writer.Write("inst:" + obj.listtype + "_" + m_nextID + "\r\n");
                 //    Console.Out.WriteLine("written ListObject: " + "inst:" + obj.listtype + "_" + m_nextID + " with TYPE " + obj.XSDType);
                 //}
-                
+
                 m_indent++;
                 this.WriteType(ns + obj.listtype + ";\r\n");
                 this.WriteIndent();
@@ -1114,14 +1115,14 @@ namespace IfcDoc
                 //generate
                 m_nextID++;
 
-                if ((obj.values.Count-i) > 1)
+                if ((obj.values.Count - i) > 1)
                 {
                     this.m_writer.Write(";\r\n");
                     this.WriteIndent();
                     this.m_writer.Write("list:hasNext inst:" + obj.listtype + "_" + m_nextID);
                 }
                 this.m_writer.Write(".\r\n\r\n");
-            }            
+            }
 
             return;
         }
@@ -1133,7 +1134,7 @@ namespace IfcDoc
             else
                 return true;
         }
-        
+
         private bool ListOfListObjectExists(string ListObjectConcat)
         {
             if (!m_listOfListObjects.ContainsKey(ListObjectConcat))
@@ -1156,12 +1157,12 @@ namespace IfcDoc
 
         private URIObject GetURIObject(string domain, string encodedvalue, string XSDType)
         {
-            #if VERBOSE
+#if VERBOSE
             if (XSDType.Equals("RTFieldInfo", StringComparison.CurrentCultureIgnoreCase))
                 Console.Out.WriteLine("Warning: Found RTFieldInfo XSDType for encodedvalue: " + encodedvalue);
             else
                 Console.Out.WriteLine("Found seemingly ok XSDType for encodedvalue : " + encodedvalue + " - " + domain);
-            #endif
+#endif
             //WARNING: _VALUE_ and _TYPE_ could be in the other strings
             string fullObject = domain + "_VALUE_" + encodedvalue + "_TYPE_" + XSDType;
 
@@ -1172,7 +1173,8 @@ namespace IfcDoc
                 obj = new URIObject(domain + "_" + m_nextID, domain, encodedvalue, XSDType);
                 m_valueObjects.Add(fullObject, obj);
             }
-            else { 
+            else
+            {
                 obj = (URIObject)m_valueObjects[fullObject];
             }
 
@@ -1200,7 +1202,8 @@ namespace IfcDoc
                 m_listOfListObjects.Add(encodedvalue, obj);
                 return obj;
             }
-            else {
+            else
+            {
                 obj = (ListObject)m_listOfListObjects[encodedvalue];
                 return obj;
             }
@@ -1212,14 +1215,14 @@ namespace IfcDoc
             //Console.Out.WriteLine("started GetListObject run for list with number of elements: " + values.Count);
             ListObject obj;
 
-            string encodedvalue = "";            
+            string encodedvalue = "";
             for (int i = 0; i < values.Count; i++)
             {
                 if (XSDType != "###ENTITY###")
                 {
-                    #if VERBOSE
+#if VERBOSE
                     Console.Out.WriteLine("GetListObject().GetURIObject()");
-                    #endif
+#endif
                     URIObject uo = GetURIObject(ifcowlclass, values[i], XSDType);
                     values[i] = uo.URI;
                     if (ifcowlclass != "IfcBinary")
@@ -1243,23 +1246,23 @@ namespace IfcDoc
                 encodedvalue = listname + encodedvalue;
 
             if (m_listObjects.ContainsKey(encodedvalue) && ifcowlclass != "IfcBinary")
-                return (ListObject)m_listObjects[encodedvalue];            
+                return (ListObject)m_listObjects[encodedvalue];
 
             m_nextID++;
 
             if (XSDType == "###ENTITY###")
             {
-                #if VERBOSE
+#if VERBOSE
                 Console.Out.WriteLine("Creating GetListObject list with XSDType : " + ifcowlclass);
-                #endif
-                obj = new ListObject(listname + m_nextID, listname.Substring(0,listname.Length-1), ifcowlclass, values, ifcowlclass);
+#endif
+                obj = new ListObject(listname + m_nextID, listname.Substring(0, listname.Length - 1), ifcowlclass, values, ifcowlclass);
             }
             else
             {
-                #if VERBOSE
+#if VERBOSE
                 //create the additional datatype value
                 Console.Out.WriteLine("Creating GetListObject list with XSDType : " + XSDType);
-                #endif
+#endif
                 obj = new ListObject(listname + m_nextID, listname.Substring(0, listname.Length - 1), ifcowlclass, values, XSDType);
             }
 
@@ -1269,9 +1272,9 @@ namespace IfcDoc
                 m_listObjects.Add(encodedvalue, obj);
 
             //Console.Out.WriteLine("finished GetListObject run for list with number of elements: " + values.Count);
-            return obj;       
-        }        
-        
+            return obj;
+        }
+
         public void Dispose()
         {
             if (this.m_writer != null)
@@ -1290,18 +1293,18 @@ namespace IfcDoc
         {
             // load properties
             this.m_fullpropertynames.Clear();
-            foreach(DocSection docSection in docProject.Sections)
+            foreach (DocSection docSection in docProject.Sections)
             {
-                foreach(DocSchema docSchema in docSection.Schemas)
+                foreach (DocSchema docSchema in docSection.Schemas)
                 {
-                    foreach(DocEntity docEntity in docSchema.Entities)
+                    foreach (DocEntity docEntity in docSchema.Entities)
                     {
-                        if(!docEntity.IsAbstract())
+                        if (!docEntity.IsAbstract())
                         {
                             DocEntity docClass = docEntity;
-                            while(docClass != null)
+                            while (docClass != null)
                             {
-                                foreach(DocAttribute docAttr in docClass.Attributes)
+                                foreach (DocAttribute docAttr in docClass.Attributes)
                                 {
                                     if (String.IsNullOrEmpty(docAttr.Derived) &&
                                         String.IsNullOrEmpty(docAttr.Inverse))
@@ -1312,11 +1315,11 @@ namespace IfcDoc
                                         string row3 = "ENTITY";
 
                                         DocAggregationEnum docAggr = docAttr.GetAggregation();
-                                        if(docAggr == DocAggregationEnum.SET)
+                                        if (docAggr == DocAggregationEnum.SET)
                                         {
                                             row3 = "SET";
                                         }
-                                        else if(docAggr == DocAggregationEnum.LIST)
+                                        else if (docAggr == DocAggregationEnum.LIST)
                                         {
                                             row3 = "LIST";
                                         }
@@ -1340,7 +1343,7 @@ namespace IfcDoc
             this.m_stream.Position = 0;
             StreamReader reader = new StreamReader(this.m_stream);
             string content = reader.ReadToEnd();
-            return content;            
+            return content;
         }
     }
 }

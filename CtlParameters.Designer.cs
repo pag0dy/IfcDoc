@@ -268,6 +268,7 @@
             this.dataGridViewConceptRules.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewConceptRules_CellContentClick);
             this.dataGridViewConceptRules.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewConceptRules_CellEnter);
             this.dataGridViewConceptRules.CellValidated += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewConceptRules_CellValidated);
+            this.dataGridViewConceptRules.CurrentCellDirtyStateChanged += new System.EventHandler(this.dataGridViewConceptRules_CurrentCellDirtyStateChanged);
             this.dataGridViewConceptRules.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dataGridViewConceptRules_DataError);
             this.dataGridViewConceptRules.SelectionChanged += new System.EventHandler(this.dataGridViewConceptRules_SelectionChanged);
             this.dataGridViewConceptRules.UserAddedRow += new System.Windows.Forms.DataGridViewRowEventHandler(this.dataGridViewConceptRules_UserAddedRow);

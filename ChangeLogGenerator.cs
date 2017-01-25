@@ -12,9 +12,16 @@ namespace IfcDoc
         /// Creates change log entries in current project based on a previous project.
         /// </summary>
         /// <param name="projectPrev">The previous project for which definitions are compared.</param>
-        /// <param name="projectCurr">The current project where change log entries are generated.</param>
-        public static void Generate(DocProject projectPrev, DocProject projectCurr)
+        /// <param name="docProject">The current project where change log entries are generated.</param>
+        /// <param name="docPublication">The publication where to record change logs</param>
+        public static void Generate(DocProject projectPrev, DocProject docProject, DocPublication docPublication)
         {
+            List<DocChangeSet> listChangeSets = docProject.ChangeSets;
+            if(docPublication != null)
+            {
+                listChangeSets = docPublication.ChangeSets;
+            }
+
             // copy over any previous change logs
             foreach(DocChangeSet prevCS in projectPrev.ChangeSets)
             {
@@ -23,7 +30,7 @@ namespace IfcDoc
                 currCS.Documentation = prevCS.Documentation;
                 currCS.VersionBaseline = prevCS.VersionBaseline;
                 currCS.VersionCompared = prevCS.VersionCompared;
-                projectCurr.ChangeSets.Add(currCS);
+                listChangeSets.Add(currCS);
 
                 foreach(DocChangeAction prevCA in prevCS.ChangesEntities)
                 {
@@ -52,7 +59,7 @@ namespace IfcDoc
 
             // build maps            
             Dictionary<string, DocObject> mapNew = new Dictionary<string, DocObject>();
-            foreach (DocSection docSection in projectCurr.Sections)
+            foreach (DocSection docSection in docProject.Sections)
             {
                 foreach (DocSchema docSchema in docSection.Schemas)
                 {
@@ -83,14 +90,14 @@ namespace IfcDoc
             }
 
             DocChangeSet docChangeSet = new DocChangeSet();
-            projectCurr.ChangeSets.Add(docChangeSet);
-            docChangeSet.Name = projectPrev.Sections[0].Code;
+            listChangeSets.Add(docChangeSet);
+            docChangeSet.Name = projectPrev.GetSchemaIdentifier();
             docChangeSet.VersionBaseline = projectPrev.Sections[0].Version;
 
             // iterate through each schema (new and old)
             for (int iSection = 4; iSection < 8; iSection++)
             {
-                DocSection docSection = projectCurr.Sections[iSection];
+                DocSection docSection = docProject.Sections[iSection];
                 DocSection docSectionBase = projectPrev.Sections[iSection];
 
                 DocChangeAction docChangeSection = new DocChangeAction();
@@ -561,6 +568,20 @@ namespace IfcDoc
                                                 docChangeAttribute.Action = DocChangeActionEnum.MODIFIED;
                                                 docChangeAttribute.Aspects.Add(new DocChangeAspect(DocChangeAspectEnum.AGGREGATION, docAttributeBase.GetAggregation().ToString(), docAttribute.GetAggregation().ToString()));
                                             }
+
+                                            if (docAttribute.XsdFormat != docAttributeBase.XsdFormat)
+                                            {
+                                                docChangeAttribute.Action = DocChangeActionEnum.MODIFIED;
+                                                docChangeAttribute.Aspects.Add(new DocChangeAspect(DocChangeAspectEnum.XSDFORMAT, docAttributeBase.XsdFormat.ToString(), docAttribute.XsdFormat.ToString()));
+                                                docChangeAttribute.ImpactXML = true;
+                                            }
+                                            if (docAttribute.XsdTagless.GetValueOrDefault() != docAttributeBase.XsdTagless.GetValueOrDefault())
+                                            {
+                                                docChangeAttribute.Action = DocChangeActionEnum.MODIFIED;
+                                                docChangeAttribute.Aspects.Add(new DocChangeAspect(DocChangeAspectEnum.XSDTAGLESS, docAttributeBase.XsdTagless.GetValueOrDefault().ToString(), docAttribute.XsdTagless.GetValueOrDefault().ToString()));
+                                                docChangeAttribute.ImpactXML = true;
+                                            }
+
                                         }
                                     }
 
@@ -677,7 +698,7 @@ namespace IfcDoc
                             {
                                 // entity may have moved to other schema; check other schemas
                                 DocSchema docThatSchema = null;
-                                foreach (DocSection docOtherSection in projectCurr.Sections)
+                                foreach (DocSection docOtherSection in docProject.Sections)
                                 {
                                     foreach (DocSchema docOtherSchema in docOtherSection.Schemas)
                                     {
@@ -720,126 +741,129 @@ namespace IfcDoc
                         // property sets
                         foreach (DocPropertySet docPset in docSchema.PropertySets)
                         {
-                            DocChangeAction docChangePset = new DocChangeAction();
-                            docChangeSchemaProperties.Changes.Add(docChangePset);
-                            docChangePset.Name = docPset.Name;
-
-                            // find equivalent pset
-                            DocPropertySet docPsetBase = null;
-                            foreach (DocPropertySet docEntityEach in docSchemaBase.PropertySets)
+                            if (docPset.IsVisible())
                             {
-                                if (docEntityEach.Name.Equals(docPset.Name))
-                                {
-                                    docPsetBase = docEntityEach;
-                                    break;
-                                }
-                            }
+                                DocChangeAction docChangePset = new DocChangeAction();
+                                docChangeSchemaProperties.Changes.Add(docChangePset);
+                                docChangePset.Name = docPset.Name;
 
-                            if (docPsetBase == null)
-                            {
-                                // new entity
-                                docChangePset.Action = DocChangeActionEnum.ADDED;
-
-                                // check if it was moved from another schema                                
-                                foreach (DocSection docOtherSection in projectPrev.Sections)
+                                // find equivalent pset
+                                DocPropertySet docPsetBase = null;
+                                foreach (DocPropertySet docEntityEach in docSchemaBase.PropertySets)
                                 {
-                                    foreach (DocSchema docOtherSchema in docOtherSection.Schemas)
+                                    if (docEntityEach.Name.Equals(docPset.Name))
                                     {
-                                        foreach (DocPropertySet docOtherPset in docOtherSchema.PropertySets)
-                                        {
-                                            if (docOtherPset.Name.Equals(docPset.Name))
-                                            {
-                                                docPsetBase = docOtherPset; // still compare attributes if moved (e.g. IfcRelSequence)
+                                        docPsetBase = docEntityEach;
+                                        break;
+                                    }
+                                }
 
-                                                docChangePset.Action = DocChangeActionEnum.MOVED;
-                                                docChangePset.Aspects.Add(new DocChangeAspect(DocChangeAspectEnum.SCHEMA, docOtherSchema.Name.ToUpper(), docSchema.Name.ToUpper()));
+                                if (docPsetBase == null)
+                                {
+                                    // new entity
+                                    docChangePset.Action = DocChangeActionEnum.ADDED;
+
+                                    // check if it was moved from another schema                                
+                                    foreach (DocSection docOtherSection in projectPrev.Sections)
+                                    {
+                                        foreach (DocSchema docOtherSchema in docOtherSection.Schemas)
+                                        {
+                                            foreach (DocPropertySet docOtherPset in docOtherSchema.PropertySets)
+                                            {
+                                                if (docOtherPset.Name.Equals(docPset.Name))
+                                                {
+                                                    docPsetBase = docOtherPset; // still compare attributes if moved (e.g. IfcRelSequence)
+
+                                                    docChangePset.Action = DocChangeActionEnum.MOVED;
+                                                    docChangePset.Aspects.Add(new DocChangeAspect(DocChangeAspectEnum.SCHEMA, docOtherSchema.Name.ToUpper(), docSchema.Name.ToUpper()));
+                                                }
                                             }
                                         }
                                     }
+
                                 }
 
-                            }
-
-                            if (docPsetBase != null)
-                            {
-                                // existing entity
-
-                                // compare abstract vs. non-abstract
-                                if (docPset.ApplicableType != docPsetBase.ApplicableType)
+                                if (docPsetBase != null)
                                 {
-                                    docChangePset.Action = DocChangeActionEnum.MODIFIED;
-                                    docChangePset.Aspects.Add(new DocChangeAspect(DocChangeAspectEnum.INSTANTIATION, docPsetBase.ApplicableType, docPset.ApplicableType));
-                                }
+                                    // existing entity
 
-                                // compare attributes by index
-
-                                // only report non-abstract entities; e.g. attributes may be demoted without file impact
-
-
-                                foreach (DocProperty docAttribute in docPset.Properties)
-                                {
-                                    // we only care about direct attributes
-                                    DocChangeAction docChangeAttribute = new DocChangeAction();
-                                    docChangePset.Changes.Add(docChangeAttribute);
-                                    docChangeAttribute.Name = docAttribute.Name;
-
-                                    DocProperty docAttributeBase = null;
-                                    foreach (DocProperty docEachProperty in docPsetBase.Properties)
+                                    // compare abstract vs. non-abstract
+                                    if (docPset.ApplicableType != docPsetBase.ApplicableType)
                                     {
-                                        if (docEachProperty.Name.Equals(docAttribute.Name))
-                                        {
-                                            docAttributeBase = docEachProperty;
-                                            break;
-                                        }
+                                        docChangePset.Action = DocChangeActionEnum.MODIFIED;
+                                        docChangePset.Aspects.Add(new DocChangeAspect(DocChangeAspectEnum.INSTANTIATION, docPsetBase.ApplicableType, docPset.ApplicableType));
                                     }
 
-                                    if (docAttributeBase == null)
-                                    {
-                                        // new attribute added
-                                        docChangeAttribute.Action = DocChangeActionEnum.ADDED;
-                                    }
-                                    else
-                                    {
-                                        // compare for changes
-                                        if (!docAttribute.PropertyType.Equals(docAttributeBase.PropertyType))
-                                        {
-                                            DocChangeAspect docAspect = new DocChangeAspect(DocChangeAspectEnum.INSTANTIATION, docAttributeBase.PropertyType.ToString(), docAttribute.PropertyType.ToString());
-                                            docChangeAttribute.Aspects.Add(docAspect);
-                                            docChangeAttribute.Action = DocChangeActionEnum.MODIFIED;
-                                        }
+                                    // compare attributes by index
 
-                                        if (docAttribute.PrimaryDataType != null && !docAttribute.PrimaryDataType.Trim().Equals(docAttributeBase.PrimaryDataType.Trim()))
-                                        {
-                                            DocChangeAspect docAspect = new DocChangeAspect(DocChangeAspectEnum.TYPE, docAttributeBase.PrimaryDataType, docAttribute.PrimaryDataType);
-                                            docChangeAttribute.Aspects.Add(docAspect);
-                                            docChangeAttribute.Action = DocChangeActionEnum.MODIFIED;
-                                        }
-                                    }
-                                }
+                                    // only report non-abstract entities; e.g. attributes may be demoted without file impact
 
-                                // report deleted properties
-                                foreach (DocProperty docAttributeBase in docPsetBase.Properties)
-                                {
-                                    DocProperty docAttribute = null;
-                                    foreach (DocProperty docEachProperty in docPset.Properties)
-                                    {
-                                        if (docEachProperty.Name.Equals(docAttributeBase.Name))
-                                        {
-                                            docAttribute = docEachProperty;
-                                            break;
-                                        }
-                                    }
 
-                                    if (docAttribute == null)
+                                    foreach (DocProperty docAttribute in docPset.Properties)
                                     {
+                                        // we only care about direct attributes
                                         DocChangeAction docChangeAttribute = new DocChangeAction();
                                         docChangePset.Changes.Add(docChangeAttribute);
-                                        docChangeAttribute.Name = docAttributeBase.Name;
-                                        docChangeAttribute.Action = DocChangeActionEnum.DELETED;
+                                        docChangeAttribute.Name = docAttribute.Name;
+
+                                        DocProperty docAttributeBase = null;
+                                        foreach (DocProperty docEachProperty in docPsetBase.Properties)
+                                        {
+                                            if (docEachProperty.Name.Equals(docAttribute.Name))
+                                            {
+                                                docAttributeBase = docEachProperty;
+                                                break;
+                                            }
+                                        }
+
+                                        if (docAttributeBase == null)
+                                        {
+                                            // new attribute added
+                                            docChangeAttribute.Action = DocChangeActionEnum.ADDED;
+                                        }
+                                        else
+                                        {
+                                            // compare for changes
+                                            if (!docAttribute.PropertyType.Equals(docAttributeBase.PropertyType))
+                                            {
+                                                DocChangeAspect docAspect = new DocChangeAspect(DocChangeAspectEnum.INSTANTIATION, docAttributeBase.PropertyType.ToString(), docAttribute.PropertyType.ToString());
+                                                docChangeAttribute.Aspects.Add(docAspect);
+                                                docChangeAttribute.Action = DocChangeActionEnum.MODIFIED;
+                                            }
+
+                                            if (docAttribute.PrimaryDataType != null && docAttributeBase.PrimaryDataType != null &&
+                                                !docAttribute.PrimaryDataType.Trim().Equals(docAttributeBase.PrimaryDataType.Trim()))
+                                            {
+                                                DocChangeAspect docAspect = new DocChangeAspect(DocChangeAspectEnum.TYPE, docAttributeBase.PrimaryDataType, docAttribute.PrimaryDataType);
+                                                docChangeAttribute.Aspects.Add(docAspect);
+                                                docChangeAttribute.Action = DocChangeActionEnum.MODIFIED;
+                                            }
+                                        }
+                                    }
+
+                                    // report deleted properties
+                                    foreach (DocProperty docAttributeBase in docPsetBase.Properties)
+                                    {
+                                        DocProperty docAttribute = null;
+                                        foreach (DocProperty docEachProperty in docPset.Properties)
+                                        {
+                                            if (docEachProperty.Name.Equals(docAttributeBase.Name))
+                                            {
+                                                docAttribute = docEachProperty;
+                                                break;
+                                            }
+                                        }
+
+                                        if (docAttribute == null)
+                                        {
+                                            DocChangeAction docChangeAttribute = new DocChangeAction();
+                                            docChangePset.Changes.Add(docChangeAttribute);
+                                            docChangeAttribute.Name = docAttributeBase.Name;
+                                            docChangeAttribute.Action = DocChangeActionEnum.DELETED;
+                                        }
                                     }
                                 }
                             }
-
                         }
 
                         // now find deleted psets
@@ -860,7 +884,7 @@ namespace IfcDoc
                             {
                                 // entity may have moved to other schema; check other schemas
                                 DocSchema docThatSchema = null;
-                                foreach (DocSection docOtherSection in projectCurr.Sections)
+                                foreach (DocSection docOtherSection in docProject.Sections)
                                 {
                                     foreach (DocSchema docOtherSchema in docOtherSection.Schemas)
                                     {
@@ -894,6 +918,154 @@ namespace IfcDoc
                         }
                         // end property sets
 
+                        // property enums
+                        foreach (DocPropertyEnumeration docPset in docSchema.PropertyEnums)
+                        {
+                            DocChangeAction docChangePset = new DocChangeAction();
+                            docChangeSchemaProperties.Changes.Add(docChangePset);
+                            docChangePset.Name = docPset.Name;
+
+                            // find equivalent pset
+                            DocPropertyEnumeration docPsetBase = null;
+                            foreach (DocPropertyEnumeration docEntityEach in docSchemaBase.PropertyEnums)
+                            {
+                                if (docEntityEach.Name.Equals(docPset.Name))
+                                {
+                                    docPsetBase = docEntityEach;
+                                    break;
+                                }
+                            }
+
+                            if (docPsetBase == null)
+                            {
+                                // new entity
+                                docChangePset.Action = DocChangeActionEnum.ADDED;
+
+                                // check if it was moved from another schema                                
+                                foreach (DocSection docOtherSection in projectPrev.Sections)
+                                {
+                                    foreach (DocSchema docOtherSchema in docOtherSection.Schemas)
+                                    {
+                                        foreach (DocPropertyEnumeration docOtherPset in docOtherSchema.PropertyEnums)
+                                        {
+                                            if (docOtherPset.Name.Equals(docPset.Name))
+                                            {
+                                                docPsetBase = docOtherPset;
+
+                                                docChangePset.Action = DocChangeActionEnum.MOVED;
+                                                docChangePset.Aspects.Add(new DocChangeAspect(DocChangeAspectEnum.SCHEMA, docOtherSchema.Name.ToUpper(), docSchema.Name.ToUpper()));
+                                            }
+                                        }
+                                    }
+                                }
+
+                            }
+
+                            if (docPsetBase != null)
+                            {
+                                foreach (DocPropertyConstant docAttribute in docPset.Constants)
+                                {
+                                    DocChangeAction docChangeAttribute = new DocChangeAction();
+                                    docChangePset.Changes.Add(docChangeAttribute);
+                                    docChangeAttribute.Name = docAttribute.Name;
+
+                                    DocPropertyConstant docAttributeBase = null;
+                                    foreach (DocPropertyConstant docEachProperty in docPsetBase.Constants)
+                                    {
+                                        if (docEachProperty.Name.Equals(docAttribute.Name))
+                                        {
+                                            docAttributeBase = docEachProperty;
+                                            break;
+                                        }
+                                    }
+
+                                    if (docAttributeBase == null)
+                                    {
+                                        // new constant added
+                                        docChangeAttribute.Action = DocChangeActionEnum.ADDED;
+                                    }
+                                    else
+                                    {
+                                        // compare for changes -- no state captured for constants
+                                    }
+                                }
+
+                                // report deleted properties
+                                foreach (DocPropertyConstant docAttributeBase in docPsetBase.Constants)
+                                {
+                                    DocPropertyConstant docAttribute = null;
+                                    foreach (DocPropertyConstant docEachProperty in docPset.Constants)
+                                    {
+                                        if (docEachProperty.Name.Equals(docAttributeBase.Name))
+                                        {
+                                            docAttribute = docEachProperty;
+                                            break;
+                                        }
+                                    }
+
+                                    if (docAttribute == null)
+                                    {
+                                        DocChangeAction docChangeAttribute = new DocChangeAction();
+                                        docChangePset.Changes.Add(docChangeAttribute);
+                                        docChangeAttribute.Name = docAttributeBase.Name;
+                                        docChangeAttribute.Action = DocChangeActionEnum.DELETED;
+                                    }
+                                }
+                            }
+
+                        }
+
+                        // now find deleted property enums
+                        foreach (DocPropertyEnumeration docEntityBase in docSchemaBase.PropertyEnums)
+                        {
+                            // find equivalent
+                            DocPropertyEnumeration docEntity = null;
+                            foreach (DocPropertyEnumeration docEntityEach in docSchema.PropertyEnums)
+                            {
+                                if (docEntityEach.Name.Equals(docEntityBase.Name))
+                                {
+                                    docEntity = docEntityEach;
+                                    break;
+                                }
+                            }
+
+                            if (docEntity == null)
+                            {
+                                // entity may have moved to other schema; check other schemas
+                                DocSchema docThatSchema = null;
+                                foreach (DocSection docOtherSection in docProject.Sections)
+                                {
+                                    foreach (DocSchema docOtherSchema in docOtherSection.Schemas)
+                                    {
+                                        foreach (DocPropertyEnumeration docOtherEntity in docOtherSchema.PropertyEnums)
+                                        {
+                                            if (docOtherEntity.Name.Equals(docEntityBase.Name))
+                                            {
+                                                docEntity = docOtherEntity;
+                                                docThatSchema = docOtherSchema;
+                                            }
+                                        }
+                                    }
+                                }
+
+                                DocChangeAction docChangeEntity = new DocChangeAction();
+                                docChangeSchemaProperties.Changes.Add(docChangeEntity);
+                                docChangeEntity.Name = docEntityBase.Name;
+
+                                if (docEntity != null)
+                                {
+                                    // moved from another schema
+                                    docChangeEntity.Action = DocChangeActionEnum.MOVED;
+                                    docChangeEntity.Aspects.Add(new DocChangeAspect(DocChangeAspectEnum.SCHEMA, docSchema.Name.ToUpper(), docThatSchema.Name.ToUpper()));
+                                }
+                                else
+                                {
+                                    // otherwise, deleted
+                                    docChangeEntity.Action = DocChangeActionEnum.DELETED;
+                                }
+                            }
+                        }
+                        // end property enums
 
                         // quantity sets
                         foreach (DocQuantitySet docQset in docSchema.QuantitySets)
@@ -1031,7 +1203,7 @@ namespace IfcDoc
                             {
                                 // entity may have moved to other schema; check other schemas
                                 DocSchema docThatSchema = null;
-                                foreach (DocSection docOtherSection in projectCurr.Sections)
+                                foreach (DocSection docOtherSection in docProject.Sections)
                                 {
                                     foreach (DocSchema docOtherSchema in docOtherSection.Schemas)
                                     {
@@ -1099,7 +1271,7 @@ namespace IfcDoc
 
                             // entity may have moved to other schema; check other schemas
                             DocSchema docThatSchema = null;
-                            foreach (DocSection docOtherSection in projectCurr.Sections)
+                            foreach (DocSection docOtherSection in docProject.Sections)
                             {
                                 foreach (DocSchema docOtherSchema in docOtherSection.Schemas)
                                 {
@@ -1138,7 +1310,7 @@ namespace IfcDoc
 
                             // entity may have moved to other schema; check other schemas
                             DocSchema docThatSchema = null;
-                            foreach (DocSection docOtherSection in projectCurr.Sections)
+                            foreach (DocSection docOtherSection in docProject.Sections)
                             {
                                 foreach (DocSchema docOtherSchema in docOtherSection.Schemas)
                                 {

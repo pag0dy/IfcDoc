@@ -212,16 +212,11 @@ namespace IfcDoc.Format.SML
                 "xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" " +
                 "xmlns:ifc=\"" + this.m_xsdURI + "\" " +
                 "xmlns=\"" + this.m_xsdURI + "\">";
-            /*
-                        string schema = "<ifc:ifcXML xsi:schemaLocation=\"http://www.buildingsmart-tech.org/ifcXML/IFC4 ifcXML4.xsd\" " +
-                            "xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" " +
-                            "xmlns:ifc=\"http://www.buildingsmart-tech.org/ifcXML/IFC4/final\" " +
-                            "xmlns=\"http://www.buildingsmart-tech.org/ifcXML/IFC4/final\">"; // TBD: make configurable
-            */
+
             if (this.m_markup)
             {
-                header = System.Net.WebUtility.HtmlEncode(header);// +"<br/>";
-                schema = System.Net.WebUtility.HtmlEncode(schema);// +"<br/>";
+                header = System.Net.WebUtility.HtmlEncode(header);
+                schema = System.Net.WebUtility.HtmlEncode(schema);
             }
 
             this.m_writer.WriteLine(header);

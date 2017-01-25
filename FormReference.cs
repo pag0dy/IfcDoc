@@ -214,6 +214,7 @@ namespace IfcDoc
                 if(form.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
                 {
                     string valueprop = "NominalValue";
+                    string datatype = form.SelectedProperty.PrimaryDataType;
                     switch(form.SelectedProperty.PropertyType)
                     {
                         case DocPropertyTemplateTypeEnum.P_BOUNDEDVALUE:
@@ -228,12 +229,23 @@ namespace IfcDoc
                             valueprop = "ListValues";
                             break;
 
+                        case DocPropertyTemplateTypeEnum.P_REFERENCEVALUE:
+                            valueprop = "PropertyReference";
+                            datatype = "IfcIrregularTimeSeries.Values[]\\" + form.SelectedProperty.SecondaryDataType;
+                            break;
+
                             // other property types are not supported
                     }
 
-                    string value = @"\" + this.m_base.Name + @".IsDefinedBy['" + form.SelectedPropertySet +
+                    string portprefix = String.Empty;
+                    if (form.SelectedPort != null)
+                    {
+                        portprefix = @".IsNestedBy[]\IfcRelNests.RelatedObjects['" + form.SelectedPort + @"']\IfcDistributionPort";
+                    }
+
+                    string value = @"\" + this.m_base.Name + portprefix + @".IsDefinedBy['" + form.SelectedPropertySet +
                         @"']\IfcRelDefinesByProperties.RelatingPropertyDefinition\IfcPropertySet.HasProperties['" + form.SelectedProperty +
-                        @"']\" + form.SelectedProperty.GetEntityName() + @"." + valueprop + @"\" + form.SelectedProperty.PrimaryDataType;
+                        @"']\" + form.SelectedProperty.GetEntityName() + @"." + valueprop + @"\" + datatype;
 
                     CvtValuePath valuepath = CvtValuePath.Parse(value, this.m_map);
                     LoadValuePath(valuepath);

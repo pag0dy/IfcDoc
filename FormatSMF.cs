@@ -502,11 +502,6 @@ namespace IfcDoc.Format.SMF
 
         private void WriteAttribute(SEntity o, FieldInfo f, DocXsdFormat format)
         {
-            if (f.Name.Equals("ConversionFactor") && this is IfcDoc.Format.JSN.FormatJSN)
-            {
-                this.ToString();
-            }
-
             object v = f.GetValue(o);
             if (v == null)
                 return;
@@ -515,7 +510,7 @@ namespace IfcDoc.Format.SMF
 
             Type ft = f.FieldType;
 
-            if (format == null || format.XsdFormat != DocXsdFormatEnum.Attribute)
+            if (format == null || format.XsdFormat != DocXsdFormatEnum.Attribute || f.Name.Equals("InnerCoordIndices")) //hackhack -- need to resolve...
             {
                 this.WriteOpenElement();
             }
@@ -527,6 +522,28 @@ namespace IfcDoc.Format.SMF
                 // for nested lists, flatten; e.g. IfcBSplineSurfaceWithKnots.ControlPointList
                 if (typeof(System.Collections.ICollection).IsAssignableFrom(ft.GetGenericArguments()[0]))
                 {
+                    // special case
+                    if(f.Name.Equals("InnerCoordIndices")) //hack
+                    {
+                        foreach (System.Collections.ICollection innerlist in list)
+                        {
+                            string entname = "Seq-IfcPositiveInteger-wrapper"; // hack
+                            this.WriteStartElementEntity(entname, null);
+                            this.WriteOpenElement();
+                            foreach(object e in innerlist)
+                            {
+                                object ev = e.GetType().GetField("Value").GetValue(e);
+
+                                this.m_writer.Write(ev.ToString());
+                                this.m_writer.Write(" ");
+                            }
+                            this.m_writer.WriteLine();
+                            this.WriteEndElementEntity(entname);
+                        }
+                        WriteEndElementAttribute(f.Name);
+                        return;
+                    }
+
                     System.Collections.ArrayList flatlist = new System.Collections.ArrayList();
                     foreach (System.Collections.ICollection innerlist in list)
                     {
@@ -699,7 +716,33 @@ namespace IfcDoc.Format.SMF
             }
 
             string encodedvalue = String.Empty;
-            if (v != null)
+            if (v is System.Collections.IList)
+            {
+                // IfcIndexedPolyCurve.Segments
+                System.Collections.IList list = (System.Collections.IList)v;
+                StringBuilder sb = new StringBuilder();
+                foreach(object o in list)
+                {
+                    if(sb.Length > 0)
+                    {
+                        sb.Append(" ");
+                    }
+
+                    FieldInfo fieldValueInner = o.GetType().GetField("Value");
+                    if (fieldValueInner != null)
+                    {
+                        object vInner = fieldValueInner.GetValue(o);
+                        sb.Append(vInner.ToString());
+                    }
+                    else
+                    {
+                        sb.Append(o.ToString());
+                    }
+                }
+
+                encodedvalue = sb.ToString();
+            }
+            else if (v != null)
             {
                 encodedvalue = System.Security.SecurityElement.Escape(v.ToString());
             }

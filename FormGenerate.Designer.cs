@@ -44,6 +44,11 @@
             this.buttonImagesExamples = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.textBoxImagesExamples = new System.Windows.Forms.TextBox();
+            this.buttonExternalConverter = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
+            this.textBoxExternalConverter = new System.Windows.Forms.TextBox();
+            this.openFileDialogConverter = new System.Windows.Forms.OpenFileDialog();
+            this.buttonExternalConverterClear = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -134,12 +139,46 @@
             this.textBoxImagesExamples.Name = "textBoxImagesExamples";
             this.textBoxImagesExamples.ReadOnly = true;
             // 
+            // buttonExternalConverter
+            // 
+            resources.ApplyResources(this.buttonExternalConverter, "buttonExternalConverter");
+            this.buttonExternalConverter.Name = "buttonExternalConverter";
+            this.buttonExternalConverter.UseVisualStyleBackColor = true;
+            this.buttonExternalConverter.Click += new System.EventHandler(this.buttonExternalConverter_Click);
+            // 
+            // label5
+            // 
+            resources.ApplyResources(this.label5, "label5");
+            this.label5.Name = "label5";
+            // 
+            // textBoxExternalConverter
+            // 
+            resources.ApplyResources(this.textBoxExternalConverter, "textBoxExternalConverter");
+            this.textBoxExternalConverter.Name = "textBoxExternalConverter";
+            this.textBoxExternalConverter.ReadOnly = true;
+            // 
+            // openFileDialogConverter
+            // 
+            this.openFileDialogConverter.DefaultExt = "exe";
+            resources.ApplyResources(this.openFileDialogConverter, "openFileDialogConverter");
+            // 
+            // buttonExternalConverterClear
+            // 
+            resources.ApplyResources(this.buttonExternalConverterClear, "buttonExternalConverterClear");
+            this.buttonExternalConverterClear.Name = "buttonExternalConverterClear";
+            this.buttonExternalConverterClear.UseVisualStyleBackColor = true;
+            this.buttonExternalConverterClear.Click += new System.EventHandler(this.buttonExternalConverterClear_Click);
+            // 
             // FormGenerate
             // 
             this.AcceptButton = this.buttonOK;
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.CancelButton = this.buttonCancel;
             resources.ApplyResources(this, "$this");
+            this.Controls.Add(this.buttonExternalConverterClear);
+            this.Controls.Add(this.buttonExternalConverter);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.textBoxExternalConverter);
             this.Controls.Add(this.buttonImagesExamples);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.textBoxImagesExamples);
@@ -180,5 +219,10 @@
         private System.Windows.Forms.Button buttonImagesExamples;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox textBoxImagesExamples;
+        private System.Windows.Forms.Button buttonExternalConverter;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox textBoxExternalConverter;
+        private System.Windows.Forms.OpenFileDialog openFileDialogConverter;
+        private System.Windows.Forms.Button buttonExternalConverterClear;
     }
 }

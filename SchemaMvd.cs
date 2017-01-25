@@ -42,13 +42,23 @@ namespace IfcDoc.Schema.MVD
         }
     }
     
+    public enum StatusEnum
+    {
+        [XmlEnum("sample")] Sample = 0, // default
+        [XmlEnum("proposal")] Proposal = 1,
+        [XmlEnum("mandatory")] Draft = 2,
+        [XmlEnum("candidate")] Candidate = 3,
+        [XmlEnum("final")] Final = 4,
+        [XmlEnum("deprecated")] Deprecated = -1,
+    }
+
     public abstract class Identity : SEntity
     {
         [DataMember(Order = 0), XmlAttribute("uuid")] public Guid Uuid;
         [DataMember(Order = 1), XmlAttribute("name")] public string Name;
         [DataMember(Order = 2), XmlAttribute("code")] public string Code; // e.g. 'bsi-100'
         [DataMember(Order = 3), XmlAttribute("version")] public string Version;
-        [DataMember(Order = 4), XmlAttribute("status")] public string Status; // e.g. 'draft'
+        [DataMember(Order = 4), XmlAttribute("status")] public StatusEnum Status; // e.g. 'draft'
         [DataMember(Order = 5), XmlAttribute("author")] public string Author;
         [DataMember(Order = 6), XmlAttribute("owner")] public string Owner; // e.g. 'buildingSMART international'
         [DataMember(Order = 7), XmlAttribute("copyright")] public string Copyright;
@@ -65,8 +75,8 @@ namespace IfcDoc.Schema.MVD
         [DataMember(Order = 0)] public List<ConceptTemplate> Templates = new List<ConceptTemplate>();
         [DataMember(Order = 1)] public List<ModelView> Views = new List<ModelView>();
 
-        [XmlAttribute("schemalocation", Namespace="http://www.w3.org/2001/XMLSchema-instance")]
-        public string schemalocation = "http://buildingsmart-tech.org/mvd/XML/1.1 http://www.buildingsmart-tech.org/mvd/XML/1.1/mvdXML_V1.1.xsd";
+        [XmlAttribute("schemaLocation", Namespace="http://www.w3.org/2001/XMLSchema-instance")]
+        public string schemaLocation = "http://www.buildingsmart-tech.org/mvd/XML/1.1 http://www.buildingsmart-tech.org/mvd/XML/1.1/mvdXML_V1.1_add1.xsd";
 
         // namespaces in order of attempts to load
         public static readonly string[] Namespaces = new string[]
@@ -75,7 +85,7 @@ namespace IfcDoc.Schema.MVD
             "http://buildingsmart-tech.org/mvdXML/mvdXML1-0",
             "http://buildingsmart-tech.org/mvdXML/mvdXML_V1-0",
             "http://buildingsmart-tech.org/mvdXML/mvdXML1-1",
-            "http://www.buildingsmart-tech.org/mvd/XML/1.1"
+            "http://buildingsmart-tech.org/mvd/XML/1.1"
         };
 
         public const string DefaultNamespace = "http://buildingsmart-tech.org/mvd/XML/1.1";
@@ -159,8 +169,10 @@ namespace IfcDoc.Schema.MVD
     [XmlType("Definition")]
     public class Definition : SEntity
     {
-        [DataMember(Order = 0)] public Body Body = new Body();
+        [DataMember(Order = 0), XmlElement("Body")] public List<Body> Body;
         [DataMember(Order = 1), XmlElement("Link")] public List<Link> Links;
+        //[DataMember(Order = 2), XmlAttribute("lang")] public string Lang;
+        [DataMember(Order = 2), XmlAttribute("tags")] public string Tags;
     }
 
 #if false
@@ -231,6 +243,10 @@ namespace IfcDoc.Schema.MVD
 
         public void WriteXml(System.Xml.XmlWriter writer)
         {
+            if (!String.IsNullOrEmpty(this.Lang))
+            {
+                writer.WriteAttributeString("lang", this.Lang);
+            }
             writer.WriteCData(this.Content);
         }
 
@@ -238,8 +254,8 @@ namespace IfcDoc.Schema.MVD
     }
 
     //[XmlType("Link")]
-    public class Link : SEntity,
-        IXmlSerializable
+    public class Link : SEntity
+//        IXmlSerializable
     {
         [DataMember(Order = 0), XmlAttribute("lang")] public string Lang;
         [DataMember(Order = 1), XmlAttribute("category")] public CategoryEnum Category;
@@ -247,6 +263,7 @@ namespace IfcDoc.Schema.MVD
         [DataMember(Order = 3), XmlAttribute("href")] public string Href;
         [DataMember(Order = 4), XmlIgnore] public string Content;
 
+#if false
         #region IXmlSerializable Members
 
         public System.Xml.Schema.XmlSchema GetSchema()
@@ -259,29 +276,36 @@ namespace IfcDoc.Schema.MVD
             //... read attributes...
 
             reader.ReadStartElement();
-            this.Content = reader.ReadString();
+            //this.Content = reader.ReadString();
             reader.ReadEndElement();
         }
 
         public void WriteXml(System.Xml.XmlWriter writer)
         {
-            writer.WriteAttributeString("lang", this.Lang);
+            if (!String.IsNullOrEmpty(this.Lang))
+            {
+                writer.WriteAttributeString("lang", this.Lang);
+            }
             writer.WriteAttributeString("category", this.Category.ToString());
-            writer.WriteAttributeString("title", this.Title);
+            if (!String.IsNullOrEmpty(this.Title))
+            {
+                writer.WriteAttributeString("title", this.Title);
+            }
             writer.WriteAttributeString("href", this.Href);
-            writer.WriteCData(this.Content);
+            //writer.WriteCData(this.Content);
         }
 
         #endregion
+#endif
     }
 
     public enum CategoryEnum
     {
-        [XmlEnum("definition")] Definition = 0,
-        [XmlEnum("agreement")] Agreement = 1,
-        [XmlEnum("diagram")] Diagram = 2,
-        [XmlEnum("instantiation")] Instantiation = 3,
-        [XmlEnum("example")] Example = 4,
+        [XmlEnum("definition")] definition = 0,
+        [XmlEnum("agreement")] agreement = 1,
+        [XmlEnum("diagram")] diagram = 2,
+        [XmlEnum("instantiation")] instantiation = 3,
+        [XmlEnum("example")] example = 4,
     }
 
     [XmlType("ExchangeRequirement")]
@@ -295,7 +319,7 @@ namespace IfcDoc.Schema.MVD
     {
         [DataMember(Order = 0)] public ApplicabilityRules Applicability;
         [DataMember(Order = 1), XmlAttribute("applicableRootEntity")] public string ApplicableRootEntity; // e.g. 'IfcBeam'
-        [DataMember(Order = 2)] public List<Concept> Concepts = new List<Concept>(); // really Concept but fixed according to sample data to get xml serializer working
+        [DataMember(Order = 2)] public List<Concept> Concepts;// = new List<Concept>(); // really Concept but fixed according to sample data to get xml serializer working
     }
 
     [XmlType("ApplicabilityRules")]
@@ -326,7 +350,15 @@ namespace IfcDoc.Schema.MVD
         [DataMember(Order = 0), XmlAttribute("EntityName")] public string EntityName;
         [DataMember(Order = 1)] public List<AttributeRule> AttributeRules;
         [DataMember(Order = 2)] public List<Constraint> Constraints;
-        [DataMember(Order = 3)] public List<TemplateRef> References; // MVDXML 1.1 -- links to concept templates defined on referenced entity
+        //[DataMember(Order = 3)] public List<TemplateRef> References; // MVDXML 1.1 -- links to concept templates defined on referenced entity
+        [DataMember(Order = 3)] public References References;
+    }
+
+    [XmlType("References")]
+    public class References
+    {
+        [DataMember(Order = 0), XmlAttribute("IdPrefix")] public string IdPrefix;
+        [DataMember(Order = 1), XmlElement(typeof(TemplateRef))] public List<TemplateRef> Template; // MVDXML 1.1 -- links to concept templates defined on referenced entity
     }
 
     [XmlType("Constraint")]

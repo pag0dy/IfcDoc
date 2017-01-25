@@ -1216,6 +1216,11 @@ namespace IfcDoc.Format.SPF
                             m_markup.Append(strval);
                             m_markup.Append("</a>");
                         }
+                        else if(value is System.Collections.IList)
+                        {
+                            // do nothing -- already formatted
+                            this.ToString();
+                        }
                         else if(value == null || value.GetType() == elemtype) // capture raw values (e.g. IfcCartesianPoint.Points, and avoid wrapped value types)
                         {
                             m_markup.Append(strval);
@@ -1710,6 +1715,11 @@ namespace IfcDoc.Format.SPF
                                 {
                                     foreach (FieldInfo fieldInverse in listField)
                                     {
+                                        if(itemSource.GetType().Name.Contains("Door") && fieldInverse.Name.Contains("InStructure"))
+                                        {
+                                            this.ToString();
+                                        }
+
                                         if (fieldInverse.DeclaringType.IsInstanceOfType(itemSource) &&
                                             typeof(IList).IsAssignableFrom(fieldInverse.FieldType))
                                         {
@@ -1749,7 +1759,7 @@ namespace IfcDoc.Format.SPF
 
             if (m_markup != null && this.m_parsescope == ParseScope.DataFields)
             {
-                m_markup.Append("</a>");
+                //m_markup.Append("</a>");
             }
         }
 
@@ -1761,7 +1771,7 @@ namespace IfcDoc.Format.SPF
             FILE_NAME hName = new FILE_NAME();
             hName.Name = filename;
             hName.OriginatingSystem = "buildingSMART IFC Documentation Generator";
-            hName.PreprocessorVersion = "buildingSMART IFCDOC 10.4"; // was "buildingSMART IFCDOC" for 2.7 and earlier;
+            hName.PreprocessorVersion = "buildingSMART IFCDOC 11.2"; // was "buildingSMART IFCDOC" for 2.7 and earlier;
             //hName.Author.Add(System.Environment.UserName);
             //hName.Organization.Add(System.Environment.UserDomainName);
             hName.Timestamp = DateTime.UtcNow;

@@ -26,14 +26,14 @@ namespace IfcDoc
         DocTemplateDefinition m_template;
         DocConceptRoot m_conceptroot;
         DocAttribute m_attribute;
-        DocModelRule m_selection;
-        DocModelRule m_highlight;
+        SEntity m_selection;
+        SEntity m_highlight;
         int m_iSelection; // index of attribute within selection, or -1 if entity
         int m_iHighlight;
         Rectangle m_rcSelection;
         Rectangle m_rcHighlight;
         Dictionary<string, DocObject> m_map;
-        Dictionary<Rectangle, DocModelRule> m_hitmap;
+        Dictionary<Rectangle, SEntity> m_hitmap;
         SEntity m_instance; // optional instance to highlight
 
         public event EventHandler SelectionChanged;
@@ -82,7 +82,7 @@ namespace IfcDoc
             set
             {
                 this.m_template = value;
-                this.m_hitmap = new Dictionary<Rectangle, DocModelRule>();
+                this.m_hitmap = new Dictionary<Rectangle, SEntity>();
                 Redraw();
             }
         }
@@ -96,12 +96,12 @@ namespace IfcDoc
             set
             {
                 this.m_conceptroot = value;
-                this.m_hitmap = new Dictionary<Rectangle, DocModelRule>();
+                this.m_hitmap = new Dictionary<Rectangle, SEntity>();
                 this.Redraw();
             }
         }
 
-        public DocModelRule Selection
+        public SEntity Selection
         {
             get
             {
@@ -118,14 +118,15 @@ namespace IfcDoc
                 // determine rectangle
                 foreach(Rectangle rc in this.m_hitmap.Keys)
                 {
-                    DocModelRule mr = this.m_hitmap[rc];
-                    if(mr == value)
+                    SEntity ent = this.m_hitmap[rc];
+                    DocModelRule mr = ent as DocModelRule;
+                    if (ent == value)
                     {
                         this.m_rcSelection = rc;
                         this.m_iSelection = -1;
                         break;
                     }
-                    else if(mr is DocModelRuleEntity && mr.Rules != null && mr.Rules.Contains(value))
+                    else if(value is DocModelRule && mr is DocModelRuleEntity && mr.Rules != null && mr.Rules.Contains((DocModelRule)value))
                     {
                         this.m_rcSelection = rc;
                         this.m_iSelection = -1;
@@ -141,7 +142,7 @@ namespace IfcDoc
                                 for (int i = 0; i < listAttr.Count; i++)
                                 {
                                     DocAttribute docAttr = listAttr[i];
-                                    if (docAttr.Name.Equals(value.Name))
+                                    if (docAttr.Name.Equals(((DocModelRule)value).Name))
                                     {
                                         this.m_attribute = docAttr;
                                         this.m_iSelection = i;
@@ -152,7 +153,7 @@ namespace IfcDoc
                         }
                         break;
                     }
-                    else if(mr == null && this.m_template != null && this.m_template.Rules.Contains(value))
+                    else if(mr == null && this.m_template != null && value is DocModelRule &&  this.m_template.Rules.Contains((DocModelRule)value))
                     {
                         this.m_rcSelection = rc;
                         this.m_iSelection = -1;
@@ -164,7 +165,7 @@ namespace IfcDoc
                         for (int i = 0; i < listAttr.Count; i++)
                         {
                             DocAttribute docAttr = listAttr[i];
-                            if (docAttr.Name.Equals(value.Name))
+                            if (docAttr.Name.Equals(((DocModelRule)value).Name))
                             {
                                 this.m_attribute = docAttr;
                                 this.m_iSelection = i;
@@ -292,7 +293,7 @@ namespace IfcDoc
             }
         }
 
-        private DocModelRule Pick(Point pt, out int iAttr, out DocAttribute docAttribute, out Rectangle rc)
+        private SEntity Pick(Point pt, out int iAttr, out DocAttribute docAttribute, out Rectangle rc)
         {
             docAttribute = null;
             iAttr = -1;
@@ -304,75 +305,85 @@ namespace IfcDoc
                 {
                     rc = rect;
                     iAttr = (pt.Y - rc.Top) / FormatPNG.CY - 1;
-                    DocModelRuleEntity ruleEntity = this.m_hitmap[rc] as DocModelRuleEntity;
 
-                    DocEntity docEntity = null;
-                    if (ruleEntity != null)
+                    SEntity sel = this.m_hitmap[rc];
+
+                    if (sel is DocTemplateDefinition)
                     {
-                        DocObject docObjRef = null;
+                        return sel;
+                    }
+                    else
+                    {
+                        DocModelRuleEntity ruleEntity = sel as DocModelRuleEntity;
 
-                        if (this.m_template != null && !String.IsNullOrEmpty(this.m_template.Code))
+                        DocEntity docEntity = null;
+                        if (ruleEntity != null)
                         {
-                            foreach(DocSection docSection in this.m_project.Sections)
+                            DocObject docObjRef = null;
+
+                            if (this.m_template != null && !String.IsNullOrEmpty(this.m_template.Code))
                             {
-                                foreach(DocSchema docSchema in docSection.Schemas)
+                                foreach (DocSection docSection in this.m_project.Sections)
                                 {
-                                    if (docSchema.Name.Equals(this.m_template.Code, StringComparison.OrdinalIgnoreCase))
+                                    foreach (DocSchema docSchema in docSection.Schemas)
                                     {
-                                        docObjRef = docSchema.GetDefinition(ruleEntity.Name);
-                                        break;
+                                        if (docSchema.Name.Equals(this.m_template.Code, StringComparison.OrdinalIgnoreCase))
+                                        {
+                                            docObjRef = docSchema.GetDefinition(ruleEntity.Name);
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+
+                            if (docObjRef == null)
+                            {
+                                this.m_map.TryGetValue(ruleEntity.Name, out docObjRef);
+                            }
+
+                            if (docObjRef is DocEntity)
+                            {
+                                docEntity = (DocEntity)docObjRef;
+                                List<DocAttribute> listAttr = new List<DocAttribute>();
+                                FormatPNG.BuildAttributeList(docEntity, listAttr, this.m_map);
+
+                                if (iAttr >= 0 && iAttr < listAttr.Count)
+                                {
+                                    docAttribute = listAttr[iAttr];
+                                    foreach (DocModelRule ruleAttr in ruleEntity.Rules)
+                                    {
+                                        if (ruleAttr is DocModelRuleAttribute && ruleAttr.Name.Equals(docAttribute.Name))
+                                        {
+                                            return ruleAttr;
+                                        }
                                     }
                                 }
                             }
                         }
-
-                        if (docObjRef == null)
+                        else if (this.m_template != null)
                         {
-                            this.m_map.TryGetValue(ruleEntity.Name, out docObjRef);
-                        }
-
-                        if (docObjRef is DocEntity)
-                        {
-                            docEntity = (DocEntity)docObjRef;
+                            docEntity = this.m_map[this.m_template.Type] as DocEntity;
                             List<DocAttribute> listAttr = new List<DocAttribute>();
                             FormatPNG.BuildAttributeList(docEntity, listAttr, this.m_map);
 
                             if (iAttr >= 0 && iAttr < listAttr.Count)
                             {
                                 docAttribute = listAttr[iAttr];
-                                foreach (DocModelRule ruleAttr in ruleEntity.Rules)
+                                if (this.m_template.Rules != null)
                                 {
-                                    if (ruleAttr is DocModelRuleAttribute && ruleAttr.Name.Equals(docAttribute.Name))
+                                    foreach (DocModelRule ruleAttr in this.m_template.Rules)
                                     {
-                                        return ruleAttr;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    else if (this.m_template != null)
-                    {
-                        docEntity = this.m_map[this.m_template.Type] as DocEntity;
-                        List<DocAttribute> listAttr = new List<DocAttribute>();
-                        FormatPNG.BuildAttributeList(docEntity, listAttr, this.m_map);
-
-                        if (iAttr >= 0 && iAttr < listAttr.Count)
-                        {
-                            docAttribute = listAttr[iAttr];
-                            if (this.m_template.Rules != null)
-                            {
-                                foreach (DocModelRule ruleAttr in this.m_template.Rules)
-                                {
-                                    if (ruleAttr is DocModelRuleAttribute && ruleAttr.Name.Equals(docAttribute.Name))
-                                    {
-                                        return ruleAttr;
+                                        if (ruleAttr is DocModelRuleAttribute && ruleAttr.Name.Equals(docAttribute.Name))
+                                        {
+                                            return ruleAttr;
+                                        }
                                     }
                                 }
                             }
                         }
                     }
 
-                    return ruleEntity;
+                    return sel;
                 }
             }
 

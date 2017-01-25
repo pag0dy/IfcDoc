@@ -312,20 +312,18 @@ namespace IfcDoc
             if (this.m_property == null)
             {
                 return target; // for general case, if no attribute specified, then return object itself
-                //return target.GetType(); // need some way to extract type directly such as for COBie
             }
 
             object value = null;
 
             if (this.m_property.PropertyType.IsGenericType &&
-                typeof(System.Collections.IList).IsAssignableFrom(this.m_property.PropertyType) &&
-                (typeof(SEntity).IsAssignableFrom(this.m_property.PropertyType.GetGenericArguments()[0]) || this.m_property.PropertyType.GetGenericArguments()[0].IsInterface))
+                typeof(System.Collections.IList).IsAssignableFrom(this.m_property.PropertyType))// &&
+               // (typeof(SEntity).IsAssignableFrom(this.m_property.PropertyType.GetGenericArguments()[0]) || this.m_property.PropertyType.GetGenericArguments()[0].IsInterface))
             {
                 System.Collections.IList list = (System.Collections.IList)this.m_property.GetValue(target, null);
 
                 // if expecting array, then return it.
-                //if (this.m_vector)
-                if (this.m_vector || (this.m_identifier == null && this.m_inner == null)) // 2014-01-20: RICS export of door schedules to show quantity
+                if (this.m_vector || (this.m_identifier == null && this.m_inner == null))
                 {
                     return list;
                 }
@@ -357,82 +355,12 @@ namespace IfcDoc
 
                 if (list != null)
                 {
-                    foreach (object eachelem in list)
+                    int listindex = 0; // identify by 1-based numeric index within list
+                    if(!String.IsNullOrEmpty(this.m_identifier) && Int32.TryParse(this.m_identifier, out listindex) && listindex > 0 && listindex <= list.Count)
                     {
-                        // derived class may have its own specific property (e.g. IfcSIUnit, IfcConversionBasedUnit)
-                        if (this.m_identifier != null)
-                        {
-                            Type eachtype = eachelem.GetType();
-                            DefaultPropertyAttribute[] attrs = (DefaultPropertyAttribute[])eachtype.GetCustomAttributes(typeof(DefaultPropertyAttribute), true);
-                            PropertyInfo propElem = null;
-                            if (attrs.Length > 0)
-                            {
-                                propElem = eachtype.GetProperty(attrs[0].Name);
-                            }
-                            else
-                            {
-                                propElem = eachtype.GetProperty("Name");
-                            }
+                        object eachelem = list[listindex - 1];
 
-                            if (propElem != null)
-                            {
-                                object eachname = propElem.GetValue(eachelem, null); // IStepValueString, or Enum (e.g. IfcNamedUnit.UnitType)
-
-#if false
-                                // special case for properties/quantities
-                                if (eachname == null && eachelem is IfcRelDefinesByProperties)
-                                {
-                                    IfcRelDefinesByProperties rdp = (IfcRelDefinesByProperties)eachelem;
-                                    eachname = rdp.RelatingPropertyDefinition.Name.GetValueOrDefault().Value;
-                                }
-#endif
-                                if (eachname != null)
-                                {
-                                    if (this.m_identifier.StartsWith("@"))
-                                    {
-                                        // parameterized query -- substitute parameter
-                                        if (parameters != null)
-                                        {
-                                            SEntity specelem = null;
-                                            if (parameters.TryGetValue(this.m_identifier.Substring(1), out specelem))
-                                            {
-                                                if (this.m_inner != null)
-                                                {
-                                                    object eachvalue = this.m_inner.GetValue(specelem, parameters);
-                                                    return eachvalue; // return no matter what, since specific element was requested.
-                                                }
-                                                else
-                                                {
-                                                    return specelem;
-                                                }
-
-                                            }
-                                        }
-                                        else
-                                        {
-                                            return null; // no parameters specified, so can't resolve value.
-                                        }
-                                    }
-                                    else if (this.m_identifier.Equals(eachname.ToString()))
-                                    {
-                                        if (this.m_inner != null)
-                                        {
-                                            // yes -- drill in
-                                            object eachvalue = this.m_inner.GetValue((SEntity)eachelem, parameters);
-                                            if (eachvalue != null)
-                                            {
-                                                return eachvalue; // if no value, keep going until compatible match is found
-                                            }
-                                        }
-                                        else
-                                        {
-                                            return eachelem;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        else if (this.m_inner != null)
+                        if (this.m_inner != null && eachelem is SEntity)
                         {
                             object eachvalue = this.m_inner.GetValue((SEntity)eachelem, parameters);
                             if (eachvalue != null)
@@ -443,9 +371,111 @@ namespace IfcDoc
                         else
                         {
                             return eachelem;
+                        }                        
+                    }
+
+                    foreach (object eachelem in list)
+                    {
+                        // derived class may have its own specific property (e.g. IfcSIUnit, IfcConversionBasedUnit)
+                        if (!String.IsNullOrEmpty(this.m_identifier))
+                        {
+                            Type eachtype = eachelem.GetType();
+
+                            // special cases for properties and quantities
+                            if (eachtype.Name.Equals("IfcRelDefinesByProperties"))
+                            {
+                                FieldInfo fieldRelatingPropertyDefinition = eachtype.GetField("RelatingPropertyDefinition");
+                                object ifcPropertySet = fieldRelatingPropertyDefinition.GetValue(eachelem);
+                                if (ifcPropertySet != null)
+                                {
+                                    Type typePropertySet = ifcPropertySet.GetType();
+                                    FieldInfo fieldName = typePropertySet.GetField("Name");
+                                    object ifcLabel = fieldName.GetValue(ifcPropertySet);
+                                    if (ifcLabel != null)
+                                    {
+                                        FieldInfo fieldValue = ifcLabel.GetType().GetField("Value");
+                                        if (fieldValue != null)
+                                        {
+                                            string sval = fieldValue.GetValue(ifcLabel) as string;
+                                            if (this.m_identifier.Equals(sval))
+                                            {
+                                                // matches!
+                                                if (this.m_inner != null)
+                                                {
+                                                    object eachvalue = this.m_inner.GetValue((SEntity)eachelem, parameters);
+                                                    if (eachvalue != null)
+                                                    {
+                                                        return eachvalue;
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    return eachelem;
+                                                }
+
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                // fall back on Name field for properties or quantities
+                                FieldInfo fieldName = eachtype.GetField("Name");
+                                if (fieldName != null)
+                                {
+                                    object ifcLabel = fieldName.GetValue(eachelem);
+                                    if (ifcLabel != null)
+                                    {
+                                        FieldInfo fieldValue = ifcLabel.GetType().GetField("Value");
+                                        if (fieldValue != null)
+                                        {
+                                            string sval = fieldValue.GetValue(ifcLabel) as string;
+                                            if (this.m_identifier.Equals(sval))
+                                            {
+                                                // matches!
+                                                if (this.m_inner != null)
+                                                {
+                                                    object eachvalue = this.m_inner.GetValue((SEntity)eachelem, parameters);
+                                                    if (eachvalue != null)
+                                                    {
+                                                        return eachvalue;
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    return eachelem;
+                                                }
+
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            // use first non-null item within inner reference
+                            if (this.m_inner != null && eachelem is SEntity)
+                            {
+                                object eachvalue = this.m_inner.GetValue((SEntity)eachelem, parameters);
+                                if (eachvalue != null)
+                                {
+                                    return eachvalue;
+                                }
+                            }
+                            else
+                            {
+                                return eachelem;
+                            }
                         }
                     }
+
+                    return null; // not found
                 }
+
+
+
             }
             else if (this.m_inner != null)
             {
@@ -489,9 +519,150 @@ namespace IfcDoc
         }
 
 
+        /// <summary>
+        /// Extracts description of referenced data, using properties, quantities, and attributes.
+        /// </summary>
+        /// <param name="mapEntity"></param>
+        /// <param name="docView">Optional model view, for retrieving more specific descriptions such as for ports</param>
+        /// <returns></returns>
+        public string GetDescription(Dictionary<string, DocObject> mapEntity, DocModelView docView)
+        {
+            string desc = null;
+            CvtValuePath valpath = this;
 
+            if (valpath != null &&
+                valpath.Property != null &&
+                valpath.Property.Name.Equals("IsDefinedBy") &&
+                valpath.InnerPath != null && valpath.InnerPath.Type.Name.Equals("IfcRelDefinesByProperties"))
+            {
+                DocObject docPset = null;
+                mapEntity.TryGetValue(valpath.Identifier, out docPset);
 
+                if (docPset is DocPropertySet)
+                {
+                    DocProperty docProp = ((DocPropertySet)docPset).GetProperty(valpath.InnerPath.InnerPath.Identifier);
+                    if (docProp != null)
+                    {
+                        desc = docProp.Documentation;// localize??
+                    }
+                }
+                else if (docPset is DocQuantitySet)
+                {
+                    DocQuantity docProp = ((DocQuantitySet)docPset).GetQuantity(valpath.InnerPath.InnerPath.Identifier);
+                    if (docProp != null)
+                    {
+                        desc = docProp.Documentation;// localize??
+                    }
+                }
+            }
+            else if (valpath != null &&
+                valpath.Property != null &&
+                valpath.Property.Name.Equals("HasPropertySets") &&
+                valpath.InnerPath != null && valpath.InnerPath.Type.Name.Equals("IfcPropertySet"))
+            {
+                DocObject docPset = null;
+                mapEntity.TryGetValue(valpath.Identifier, out docPset);
 
+                if (docPset is DocPropertySet)
+                {
+                    DocProperty docProp = ((DocPropertySet)docPset).GetProperty(valpath.InnerPath.Identifier);
+                    if (docProp != null)
+                    {
+                        desc = docProp.Documentation;// localize??
+                    }
+                }
+            }
+            else if(valpath != null &&
+                valpath.Property != null &&
+                valpath.Property.Name.Equals("Material") &&
+                valpath.InnerPath != null && valpath.InnerPath.Type.Name.Equals("IfcMaterial") &&
+                valpath.InnerPath.InnerPath != null && valpath.InnerPath.InnerPath.Type.Name.Equals("IfcMaterialProperties"))
+            {
+                DocObject docPset = null;
+                mapEntity.TryGetValue(valpath.InnerPath.Identifier, out docPset);
+
+                if(docPset is DocPropertySet)
+                {
+                    DocProperty docProp = ((DocPropertySet)docPset).GetProperty(valpath.InnerPath.InnerPath.Identifier);
+                    if(docProp != null)
+                    {
+                        desc = docProp.Documentation;
+                    }
+                }
+            }
+            else if (valpath != null && 
+                valpath.Property != null &&
+                valpath.Property.Name.Equals("IsNestedBy") &&
+                valpath.InnerPath != null && valpath.InnerPath.InnerPath != null && valpath.InnerPath.InnerPath != null)
+            {
+                CvtValuePath pathInner = valpath.InnerPath.InnerPath;
+                if (pathInner.Type != null && pathInner.Type.Name.Equals("IfcDistributionPort"))
+                {
+                    string portname = valpath.InnerPath.Identifier;
+                    if (pathInner.Property != null && pathInner.Property.Name.Equals("IsDefinedBy"))
+                    {
+                        // lookup description of property at port
+                        DocObject docPset = null;
+                        mapEntity.TryGetValue(pathInner.Identifier, out docPset);
+
+                        if (docPset is DocPropertySet)
+                        {
+                            DocProperty docProp = ((DocPropertySet)docPset).GetProperty(pathInner.InnerPath.InnerPath.Identifier);
+                            if (docProp != null)
+                            {
+                                desc = portname + ": " + docProp.Documentation;
+                            }
+                        }
+
+                    }
+                    else
+                    {
+                        desc = portname;
+
+                        // lookup description of port
+                        Guid guidPortNesting = new Guid("bafc93b7-d0e2-42d8-84cf-5da20ee1480a");
+                        foreach (DocConceptRoot docRoot in docView.ConceptRoots)
+                        {
+                            if (docRoot.ApplicableEntity == valpath.Type)
+                            {
+                                foreach(DocTemplateUsage docConcept in docRoot.Concepts)
+                                {
+                                    if(docConcept.Definition != null && docConcept.Definition.Uuid == guidPortNesting)
+                                    {
+                                        foreach (DocTemplateItem docItem in docConcept.Items)
+                                        {
+                                            if(docItem.Name.Equals(portname))
+                                            {
+                                                desc = docItem.Documentation;
+                                                break;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (desc == null)
+            {
+                while (valpath != null && valpath.InnerPath != null && valpath.InnerPath.Property != null)
+                {
+                    valpath = valpath.InnerPath;
+                }
+                if (valpath != null && valpath.Property != null)
+                {
+                    desc = valpath.Property.Documentation;
+                }
+                else if (valpath != null)
+                {
+                    desc = "The IFC class identifier indicating the subtype of object.";
+                }
+            }
+
+            return desc;
+        }
     }
 
 

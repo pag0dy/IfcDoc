@@ -723,7 +723,7 @@ namespace IfcDoc
             return sb.ToString();
         }
 
-        public string FormatDefinitions(DocProject docProject, Dictionary<string, DocObject> map, Dictionary<DocObject, bool> included)
+        public string FormatDefinitions(DocProject docProject, DocPublication docPublication, Dictionary<string, DocObject> map, Dictionary<DocObject, bool> included)
         {
             // clear containers
             listPropertiesOutput.Clear();
@@ -733,11 +733,11 @@ namespace IfcDoc
 
             StringBuilder sb = new StringBuilder();
 
-            string ifcversion = "IFC4";
-            // TO DO: customize the IFC version. In case of XSD, the piece of information (the full URL) is read from the .ifcdoc file
+            string ifcversion = docProject.GetSchemaIdentifier();
 
             //string ifcns = "http://www.buildingsmart-tech.org/ifcOWL/" + ifcversion;
-            string ifcns = "http://ifcowl.openbimstandards.org/" + ifcversion;
+            //string ifcns = "http://ifcowl.openbimstandards.org/" + ifcversion;
+            string ifcns = "http://www.buildingsmart-tech.org/ifc/" + ifcversion;
 
             // namespace definitions
             sb.AppendLine("@prefix :      <" + ifcns + "#> .");

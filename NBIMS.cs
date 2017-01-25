@@ -27,7 +27,7 @@ namespace IfcDoc
             int cx = 0;
             int cy = 0;
 
-            System.Drawing.Image image = IfcDoc.Format.PNG.FormatPNG.CreateTemplateDiagram(docTemplate, mapEntity, new Dictionary<System.Drawing.Rectangle, DocModelRule>(), project, null);
+            System.Drawing.Image image = IfcDoc.Format.PNG.FormatPNG.CreateTemplateDiagram(docTemplate, mapEntity, new Dictionary<System.Drawing.Rectangle, SEntity>(), project, null);
             
             if (image != null)
             {
@@ -205,14 +205,14 @@ namespace IfcDoc
 
             using (FormatXSD formatXSD = new FormatXSD(path + @"\" + docView.Code + ".xsd"))
             {
-                formatXSD.Instance = project;
+                formatXSD.Project = project;
                 formatXSD.ModelViews = new DocModelView[] { docView };
                 formatXSD.Save();
             }
 
             using (FormatSPF format = new FormatSPF(path + @"\" + docView.Code + ".ifc", Schema.IFC.SchemaIfc.Types, new Dictionary<long, SEntity>()))
             {
-                format.InitHeaders(docView.Code, "IFC4");
+                format.InitHeaders(docView.Code, project.GetSchemaIdentifier());
                 Schema.IFC.IfcProject ifcProject = new IfcDoc.Schema.IFC.IfcProject();
                 Program.ExportIfc(ifcProject, project, included);
                 format.Save();
@@ -221,7 +221,7 @@ namespace IfcDoc
             using (FormatXML format = new FormatXML(path + @"\" + docView.Code + ".mvdxml", typeof(mvdXML), mvdXML.DefaultNamespace))
             {
                 mvdXML mvd = new mvdXML();
-                Program.ExportMvd(mvd, project, included);
+                Program.ExportMvd(mvd, project, mapEntity, included);
                 format.Instance = mvd;
                 format.Save();
             }
@@ -553,7 +553,7 @@ namespace IfcDoc
                     format.WriteLine(docRoot.ApplicableEntity.Documentation);
                     format.WriteLine("<br/>");
 
-                    format.WriteExpressEntitySpecification(docRoot.ApplicableEntity, true, false);
+                    format.WriteExpressEntitySpecification(docRoot.ApplicableEntity, true, null);
                     format.WriteLine("<br/>");
                     format.WriteFormatted(xsd);
                 }
@@ -624,7 +624,7 @@ namespace IfcDoc
                         int cy = 0;
                         try
                         {
-                            using (System.Drawing.Image image = IfcDoc.Format.PNG.FormatPNG.CreateConceptDiagram(docRoot.ApplicableEntity, docView, mapEntity, new Dictionary<System.Drawing.Rectangle,DocModelRule>(), project, null))
+                            using (System.Drawing.Image image = IfcDoc.Format.PNG.FormatPNG.CreateConceptDiagram(docRoot.ApplicableEntity, docView, mapEntity, new Dictionary<System.Drawing.Rectangle,SEntity>(), project, null))
                             {
                                 cx = image.Width;
                                 cy = image.Height;

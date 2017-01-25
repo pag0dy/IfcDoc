@@ -138,7 +138,7 @@ namespace IfcDoc
             return null; // nothing to define
         }
 
-        public string FormatDefinitions(DocProject docProject, Dictionary<string, DocObject> map, Dictionary<DocObject, bool> included)
+        public string FormatDefinitions(DocProject docProject, DocPublication docPublication, Dictionary<string, DocObject> map, Dictionary<DocObject, bool> included)
         {
             StringBuilder sb = new StringBuilder();
             foreach (DocSection docSection in docProject.Sections)
@@ -222,39 +222,67 @@ namespace IfcDoc
                                 }
                             }
 
+                            // check if there are any instances to populate table
+                            if (included)
+                            {
+                                included = false;
+                                foreach (SEntity e in instances.Values)
+                                {
+                                    string eachname = e.GetType().Name;
+                                    if (docRoot.ApplicableEntity.IsInstanceOfType(e))
+                                    {
+                                        included = true;
+                                        break;
+                                    }
+                                }
+                            }
+                                        
                             if (included)
                             {
                                 string table = docConcept.Items[0].GetParameterValue("Table");
                                 string query = docConcept.Items[0].GetParameterValue("Reference");
 
-                                //if (query == null)
-                                //{
-                                //    query = String.Empty;
-                                //}
-                                
-                                //int cap = query.IndexOf('.');
-                                //string typename = query.Substring(0, cap);
-
-                                // find corresponding type?
-                                //instance.GetType().Assembly.GetType(typename);
-
-                                // query all data of given type
-                                //...
-
                                 sb.AppendLine("<h4>" + docConcept.Name + "</h4>");
                                 sb.AppendLine("<table class=\"gridtable\">");
+
+                                List<string> colstyles = new List<string>();
+                                List<string> colformat = new List<string>();
+                                List<CvtValuePath> colmaps = new List<CvtValuePath>();
 
                                 // generate header row
                                 sb.AppendLine("<tr>");
                                 foreach (DocTemplateItem docItem in docConcept.Items)
                                 {
                                     string name = docItem.GetParameterValue("Name");
-                                    string color = docItem.GetParameterValue("Color");
-                                    //... use color...
+                                    string disp = "#" + docItem.GetColor().ToArgb().ToString("X8"); //docItem.GetParameterValue("Color");docItem.GetParameterValue("Color");
+                                    string expr = docItem.GetParameterValue("Reference");
+                                    string form = docItem.GetParameterValue("Format");
 
-                                    sb.Append("<th>");
+                                    string style = "";
+                                    if (!String.IsNullOrEmpty(disp))
+                                    {
+                                        style = " style=\"background-color:" + disp + ";\"";
+                                    }
+                                    colstyles.Add(style);
+
+                                    string format = "";
+                                    if (!String.IsNullOrEmpty(form))
+                                    {
+                                        format = form;
+                                    }
+                                    colformat.Add(format);
+
+                                    string desc = "";
+                                    CvtValuePath valpath = CvtValuePath.Parse(expr, map); //todo: move out of loop
+                                    colmaps.Add(valpath);
+                                    if (valpath != null)
+                                    {
+                                        desc = /*valpath.GetDescription(map) + "&#10;&#10;" + */valpath.ToString().Replace("\\", "&#10;");
+                                    }
+
+                                    sb.Append("<th><a href=\"../../schema/views/" + DocumentationISO.MakeLinkName(docView) + "/" + DocumentationISO.MakeLinkName(docExchange) + ".htm#" + DocumentationISO.MakeLinkName(docConcept) + "\" title=\"" + desc + "\">");
                                     sb.Append(name);
-                                    sb.Append("</th>");
+                                    sb.Append("</a></th>");
                                 };
                                 sb.AppendLine("</tr>");
 
@@ -264,15 +292,23 @@ namespace IfcDoc
                                     string eachname = e.GetType().Name;
                                     if (docRoot.ApplicableEntity.IsInstanceOfType(e))
                                     {
-                                        sb.Append("<tr>");
+                                        bool includerow = true;
+                                        StringBuilder sbRow = new StringBuilder();
+
+                                        sbRow.Append("<tr>");
+                                        int iCol = 0;
                                         foreach (DocTemplateItem docItem in docConcept.Items)
                                         {
-                                            sb.Append("<td>");
+                                            sbRow.Append("<td" + colstyles[iCol]);
+                                            CvtValuePath valpath = colmaps[iCol];
+                                            string format = colformat[iCol];
 
-                                            string expr = docItem.GetParameterValue("Reference");
-                                            CvtValuePath valpath = CvtValuePath.Parse(expr, map); //todo: move out of loop
+                                            iCol++;
+
                                             if (valpath != null)
                                             {
+                                                string nn = docItem.GetParameterValue("Name");
+                   
                                                 object value = valpath.GetValue(e, null);
 
                                                 if (value == e)
@@ -317,6 +353,14 @@ namespace IfcDoc
                                                     value = ((Type)value).Name;
                                                 }
 
+                                                if (!String.IsNullOrEmpty(format))
+                                                {
+                                                    if (format.Equals("Required") && value == null)
+                                                    {
+                                                        includerow = false;
+                                                    }
+                                                }
+
                                                 if (value != null)
                                                 {
                                                     FieldInfo fieldValue = value.GetType().GetField("Value");
@@ -325,20 +369,53 @@ namespace IfcDoc
                                                         value = fieldValue.GetValue(value);
                                                     }
 
-                                                    if (value != null)
+                                                    if (format != null && format.Equals("True") && (value == null || !value.ToString().Equals("True")))
                                                     {
-                                                        sb.Append(value.ToString()); // todo: html-encode
+                                                        includerow = false;
+                                                    }
+
+                                                    if (value is Double)
+                                                    {
+                                                        sbRow.Append(" align=\"right\">");
+
+                                                        sbRow.Append(((Double)value).ToString("N3"));
+                                                    }
+                                                    else if(value is List<Int64>)
+                                                    {
+                                                        sbRow.Append(">");
+
+                                                        // latitude or longitude
+                                                        List<Int64> intlist = (List<Int64>)value;
+                                                        if(intlist.Count >= 3)
+                                                        {
+                                                            sbRow.Append(intlist[0] + "° " + intlist[1] + "' " + intlist[2] + "\"");
+                                                        }
+                                                    }
+                                                    else if (value != null)
+                                                    {
+                                                        sbRow.Append(">");
+                                                        sbRow.Append(value.ToString()); // todo: html-encode
                                                     }
                                                 }
                                                 else
                                                 {
-                                                    sb.Append("&nbsp;");
+                                                    sbRow.Append(">");
+                                                    sbRow.Append("&nbsp;");
                                                 }
                                             }
+                                            else
+                                            {
+                                                sbRow.Append(">");
+                                            }
 
-                                            sb.Append("</td>");
+                                            sbRow.Append("</td>");
                                         }
-                                        sb.AppendLine("</tr>");
+                                        sbRow.AppendLine("</tr>");
+
+                                        if(includerow)
+                                        {
+                                            sb.Append(sbRow.ToString());
+                                        }
                                     }
                                 }
 

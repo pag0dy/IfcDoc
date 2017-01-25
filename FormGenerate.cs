@@ -28,6 +28,7 @@ namespace IfcDoc
             this.textBoxPath.Text = Properties.Settings.Default.OutputPath;
             this.textBoxImagesDocumentation.Text = Properties.Settings.Default.InputPathGeneral;
             this.textBoxImagesExamples.Text = Properties.Settings.Default.InputPathExamples;
+            this.textBoxExternalConverter.Text = Properties.Settings.Default.ConverterPath;
             this.checkBoxSkip.Checked = Properties.Settings.Default.SkipDiagrams;
         }
 
@@ -149,6 +150,22 @@ namespace IfcDoc
         private void checkBoxSkip_CheckedChanged(object sender, EventArgs e)
         {
             Properties.Settings.Default.SkipDiagrams = this.checkBoxSkip.Checked;
+        }
+
+        private void buttonExternalConverter_Click(object sender, EventArgs e)
+        {
+            DialogResult res = this.openFileDialogConverter.ShowDialog(this);
+            if(res == System.Windows.Forms.DialogResult.OK)
+            {
+                this.textBoxExternalConverter.Text = this.openFileDialogConverter.FileName;
+                Properties.Settings.Default.ConverterPath = this.openFileDialogConverter.FileName;
+            }
+        }
+
+        private void buttonExternalConverterClear_Click(object sender, EventArgs e)
+        {
+            this.textBoxExternalConverter.Text = String.Empty;
+            Properties.Settings.Default.ConverterPath = String.Empty;
         }
 
     }

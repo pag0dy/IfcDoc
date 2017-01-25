@@ -71,16 +71,19 @@ namespace IfcDoc
                             {
                                 if (m_included == null || this.m_included.ContainsKey(docPset))
                                 {
-                                    Uri uri = PackUriHelper.CreatePartUri(new Uri(docPset.Name + ".xml", UriKind.Relative));
-                                    PackagePart part = zip.CreatePart(uri, "", CompressionOption.Normal);
-                                    using (Stream refstream = part.GetStream())
+                                    if (docPset.IsVisible())
                                     {
-                                        refstream.SetLength(0);
-                                        PropertySetDef psd = Program.ExportPsd(docPset, mapPropEnum);
-                                        using (FormatXML format = new FormatXML(refstream, typeof(PropertySetDef), PropertySetDef.DefaultNamespace, null))
+                                        Uri uri = PackUriHelper.CreatePartUri(new Uri(docPset.Name + ".xml", UriKind.Relative));
+                                        PackagePart part = zip.CreatePart(uri, "", CompressionOption.Normal);
+                                        using (Stream refstream = part.GetStream())
                                         {
-                                            format.Instance = psd;
-                                            format.Save();
+                                            refstream.SetLength(0);
+                                            PropertySetDef psd = Program.ExportPsd(docPset, mapPropEnum, this.m_project);
+                                            using (FormatXML format = new FormatXML(refstream, typeof(PropertySetDef), PropertySetDef.DefaultNamespace, null))
+                                            {
+                                                format.Instance = psd;
+                                                format.Save();
+                                            }
                                         }
                                     }
                                 }
@@ -98,7 +101,7 @@ namespace IfcDoc
                                     using (Stream refstream = part.GetStream())
                                     {
                                         refstream.SetLength(0);
-                                        QtoSetDef psd = Program.ExportQto(docQset);
+                                        QtoSetDef psd = Program.ExportQto(docQset, this.m_project);
                                         using (FormatXML format = new FormatXML(refstream, typeof(QtoSetDef), PropertySetDef.DefaultNamespace, null))
                                         {
                                             format.Instance = psd;

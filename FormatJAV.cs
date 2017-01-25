@@ -485,7 +485,7 @@ namespace IfcDoc.Format.JAV
             return "/* " + docDefined.Name + " : " + docDefined.DefinedType + " (Java does not support structures, so usage of defined types are inline for efficiency.) */\r\n";
         }
 
-        public string FormatDefinitions(DocProject docProject, Dictionary<string, DocObject> map, Dictionary<DocObject, bool> included)
+        public string FormatDefinitions(DocProject docProject, DocPublication docPublication, Dictionary<string, DocObject> map, Dictionary<DocObject, bool> included)
         {
             StringBuilder sb = new StringBuilder();
             foreach (DocSection docSection in docProject.Sections)

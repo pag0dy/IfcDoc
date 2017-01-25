@@ -278,7 +278,7 @@ namespace IfcDoc.Format.HTM
             for (int i = 0; i < escaped.Length; i++)
             {
                 char ch = escaped[i];
-                if (Char.IsLetterOrDigit(ch))
+                if (Char.IsLetterOrDigit(ch) && i < escaped.Length-1)
                 {
                     if (iStart == -1)
                     {
@@ -291,6 +291,20 @@ namespace IfcDoc.Format.HTM
                     {
                         // end: write buffer
                         string identifier = escaped.Substring(iStart, i - iStart);
+
+                        // uppercase for expressions? hack
+                        if (identifier.StartsWith("IFC", StringComparison.OrdinalIgnoreCase))
+                        {
+                            foreach(string s in this.m_mapEntity.Keys) // slow
+                            {
+                                if (s.Equals(identifier, StringComparison.InvariantCultureIgnoreCase))
+                                {
+                                    identifier = s;
+                                    break;
+                                }
+                            }
+                        }
+
                         if (this.m_mapEntity.ContainsKey(identifier))
                         {
                             string fmt = FormatDefinition(identifier);
@@ -658,6 +672,11 @@ namespace IfcDoc.Format.HTM
 
                 // drill in
                 docAggregation = docAggregation.AggregationAttribute;
+
+                if(docAggregation != null)
+                {
+                    this.m_writer.Write(" ");
+                }
             }
         }
 
@@ -699,7 +718,8 @@ namespace IfcDoc.Format.HTM
                 }
                 else
                 {
-                    this.m_writer.Write(BEGIN_KEYWORD + "OF" + END_KEYWORD + " ");
+                    this.m_writer.Write("[0:?] OF ");
+                    //this.m_writer.Write(BEGIN_KEYWORD + "OF" + END_KEYWORD + " ");
                 }
 
                 if ((docAggregation.AggregationFlag & 2) != 0)
@@ -713,8 +733,14 @@ namespace IfcDoc.Format.HTM
             }
         }
 
-        public void WriteSummaryHeader(string caption, bool expanded)
+        public void WriteSummaryHeader(string caption, bool expanded, DocPublication docPublication)
         {
+            if(docPublication.ISO)
+            {
+                this.m_writer.WriteLine("<p><b><u>" + caption + "</u></b></p>");
+                return;
+            }
+
             //this.m_writer.Write("<hr />");
             this.m_writer.Write("<details");
             this.m_writer.Write(expanded ? " open=\"open\"" : "");
@@ -724,18 +750,24 @@ namespace IfcDoc.Format.HTM
             //this.m_writer.WriteLine("<br/>");
         }
 
-        public void WriteSummaryFooter()
+        public void WriteSummaryFooter(DocPublication docPublication)
         {
+            if (docPublication != null && docPublication.ISO)
+            {
+                this.m_writer.WriteLine("<p></p>");
+                return;
+            }
+
             this.m_writer.WriteLine("</details>");
         }
 
-        public void WriteExpressEntitySpecification(DocEntity entity, bool suppresshistory, bool isoformat)
+        public void WriteExpressEntitySpecification(DocEntity entity, bool suppresshistory, DocPublication docPublication)
         {
-            this.WriteSummaryHeader("EXPRESS Specification", false);
+            this.WriteSummaryHeader("EXPRESS Specification", false, docPublication);
             this.m_writer.WriteLine("<div class=\"express\"><code class=\"express\">");
 
             // new: comment tag
-            if (isoformat)
+            if (docPublication != null && docPublication.ISO)
             {
                 this.WriteExpressLine(0, "*)");
             }
@@ -743,7 +775,7 @@ namespace IfcDoc.Format.HTM
             this.WriteExpressEntity(entity);
 
             // Comment tag for ISO STEP documentation requirements
-            if (isoformat)
+            if (docPublication != null && docPublication.ISO)
             {
                 this.WriteExpressLine(0, "(*");
             }
@@ -754,6 +786,7 @@ namespace IfcDoc.Format.HTM
             this.m_writer.WriteLine("</code></div>");
 
 
+#if false // no longer included
             if (isoformat)
             {
                 // inheritance
@@ -770,8 +803,9 @@ namespace IfcDoc.Format.HTM
 
                 this.m_writer.WriteLine("</span>");
             }
+#endif
 
-            this.WriteSummaryFooter();
+            this.WriteSummaryFooter(docPublication);
         }
 
         public void WriteExpressEntity(DocEntity entity)
@@ -889,14 +923,20 @@ namespace IfcDoc.Format.HTM
                 this.WriteExpressHeader(2);
                 foreach (DocWhereRule docWhere in entity.WhereRules)
                 {
+                    if(docWhere.Name.Equals("AllowedRelatedElements"))
+                    {
+                        this.ToString();
+                    }
+
                     // markup any references to functions...
-                    string html = FormatExpression(docWhere.Expression);
+                    //string html = FormatExpression(docWhere.Expression);
 
                     this.m_writer.Write("&nbsp;&nbsp;");
                     this.m_writer.Write(docWhere.Name);
                     this.m_writer.Write(" : ");
-                    this.m_writer.Write(html);
-                    this.WriteFormatted(docWhere.Expression);
+                    //this.m_writer.Write(html);
+                    this.WriteExpression(docWhere.Expression);
+                    //this.WriteFormatted(docWhere.Expression);
                     this.m_writer.Write(";<br/>");                    
                 }
 
@@ -939,22 +979,22 @@ namespace IfcDoc.Format.HTM
             WriteExpressAttributes(entity, treeleaf);
         }
 
-        public void WriteExpressTypeAndDocumentation(DocType type, bool suppresshistory, bool isoformat)
+        public void WriteExpressTypeAndDocumentation(DocType type, bool suppresshistory, DocPublication docPublication)
         {
-            this.WriteSummaryHeader("EXPRESS Specification", false);
+            this.WriteSummaryHeader("EXPRESS Specification", false, docPublication);
             this.m_writer.WriteLine("<div class=\"express\"><code class=\"express\">");
 
             this.WriteExpressHeader(2);
 
             // Per ISO doc requirement, comment tag
-            if (isoformat)
+            if (docPublication.ISO)
             {
                 this.WriteExpressLine(0, "*)");
             }
 
             WriteExpressType(type);
 
-            if (isoformat)
+            if (docPublication.ISO)
             {
                 this.WriteExpressLine(0, "(*");
             }
@@ -966,7 +1006,7 @@ namespace IfcDoc.Format.HTM
             WriteExpressDiagram(type);
 
             this.m_writer.WriteLine("</code></div>");
-            this.WriteSummaryFooter();
+            this.WriteSummaryFooter(docPublication);
 
         }
 
@@ -1271,7 +1311,21 @@ namespace IfcDoc.Format.HTM
                 DocObject obj = this.m_mapEntity[s];
                 if (obj is T && (this.m_included == null || this.m_included.ContainsKey(obj)))
                 {
-                    alphaEntity.Add(s, (T)obj);
+                    // don't add hidden psets
+                    bool add = true;
+                    if(obj is DocPropertySet)
+                    {
+                        DocPropertySet docPset = (DocPropertySet)obj;
+                        if(!docPset.IsVisible())
+                        {
+                            add = false;
+                        }
+                    }
+
+                    if (add)
+                    {
+                        alphaEntity.Add(s, (T)obj);
+                    }
                 }
             }
 
@@ -1799,11 +1853,11 @@ namespace IfcDoc.Format.HTM
                             string imgold = content.Substring(s + 1, t - s - 1);
                             imgold = imgold.Substring(imgold.LastIndexOf('/') + 1);
                             string source = Properties.Settings.Default.InputPathGeneral + "\\" + imgold;
-                            string target = Properties.Settings.Default.OutputPath + "\\" + DocumentationISO.MakeLinkName(docPublication) + "\\figures\\" + imgold;
+                            string target = Properties.Settings.Default.OutputPath + "\\" + DocumentationISO.MakeLinkName(docPublication) + "\\html\\figures\\" + imgold;
                             if (current is DocExample)
                             {
                                 source = Properties.Settings.Default.InputPathExamples + "\\" + imgold;
-                                target = Properties.Settings.Default.OutputPath + "\\" + DocumentationISO.MakeLinkName(docPublication) + "\\figures\\examples\\" + imgold;
+                                target = Properties.Settings.Default.OutputPath + "\\" + DocumentationISO.MakeLinkName(docPublication) + "\\html\\figures\\examples\\" + imgold;
                             }
 
                             target = target.ToLower();
@@ -2074,7 +2128,7 @@ namespace IfcDoc.Format.HTM
                 DocObject docobj = null;
                 if (this.m_mapSchema.TryGetValue(docChange.Name, out schema) && this.m_mapEntity.TryGetValue(docChange.Name, out docobj) && (this.m_included == null || this.m_included.ContainsKey(docobj)))
                 {
-                    if (docChange.Name.StartsWith("Pset_"))
+                    if (docChange.Name.StartsWith("Pset_") || docChange.Name.StartsWith("PEnum_"))
                     {
                         string hyperlink = @"../../../schema/" + schema.ToLower() + @"/pset/" + docChange.Name.ToLower() + ".htm";
                         sb.Append("<a href=\"" + hyperlink + "\">" + docChange.Name + "</a>");
@@ -2373,7 +2427,7 @@ namespace IfcDoc.Format.HTM
         #endregion
 
 
-        internal void WriteProperties(List<DocProperty> list)
+        internal void WriteProperties(List<DocProperty> list, DocProject docProject, DocEntity docEntity, IList<string> locales)
         {
             if (list.Count == 0)
                 return;
@@ -2381,8 +2435,21 @@ namespace IfcDoc.Format.HTM
             this.WriteLine("<table class=\"gridtable\">");
             this.WriteLine("<tr><th>Name</th><th>Type</th><th>Description</th></tr>");
 
-            foreach (DocProperty docprop in list)
+            foreach (DocProperty docpropdecl in list)
             {
+                // find property defined at supertype (e.g. Pset_ElementCommon.Reference)
+                DocProperty docprop = docProject.FindProperty(docpropdecl.Name, docEntity);
+                string suffix = "";
+                if (docprop != null && docprop != docpropdecl)
+                {
+                    suffix = "*";
+                    //System.Diagnostics.Debug.WriteLine("FormatHTM.WriteProperties() - overridden property: " + docEntity.Name + " - " + docprop.Name);
+                }
+                else
+                {
+                    docprop = docpropdecl;
+                }
+
                 string datatype = docprop.PrimaryDataType;
                 if (datatype == null)
                 {
@@ -2410,43 +2477,18 @@ namespace IfcDoc.Format.HTM
                         this.WriteDefinition(docprop.SecondaryDataType.Trim().Replace(",", ", ").Replace(":", ": "));
                     }
                 }
+                if(suffix != null)
+                {
+                    this.Write(suffix);
+                }
                 this.WriteLine("</td><td>");
 
-                // english by default
-                //this.WriteLine("<tr valign=\"top\"><td><image src=\"../../../img/locale-en.png\" /></td><td><b>" + docprop.Name + "</b>: " + docprop.Documentation + "<br /></td></tr>");
-
-                bool showdefaultdesc = true;
-                docprop.Localization.Sort();
-
-                if (docprop.Localization.Count > 0)
-                {
-                    this.WriteLine("<table class=\"gridtable\">");
-                    foreach (DocLocalization doclocal in docprop.Localization)
-                    {
-                        string localname = doclocal.Name;
-                        string localdesc = doclocal.Documentation;
-                        string localid = doclocal.Locale.Substring(0, 2).ToLower();
-
-                        if (String.IsNullOrEmpty(doclocal.Documentation) && localid.Equals("en", StringComparison.InvariantCultureIgnoreCase) && localdesc == null)
-                        {
-                            localdesc = docprop.Documentation;
-                            showdefaultdesc = false;
-                        }
-
-                        this.WriteLine("<tr><td><img src=\"../../../img/locale-" + localid + ".png\" /></td><td><b>" + localname + "</b></td><td>" + localdesc + "</td></tr>");
-                    }
-                    this.WriteLine("</table>");
-                }
-
-                if(showdefaultdesc)
-                {
-                    this.WriteLine(docprop.Documentation); // locale-generic
-                }
+                this.WriteLocalizationTable(docprop, locales); // up 3 levels for images
 
                 // complex properties
                 if (docprop.Elements != null)
                 {
-                    WriteProperties(docprop.Elements);
+                    WriteProperties(docprop.Elements, docProject, docEntity, locales);
                 }
 
                 this.WriteLine("</td></tr>");
@@ -2474,6 +2516,9 @@ namespace IfcDoc.Format.HTM
             {
                 up += "../";
             }
+
+            // jira issue... make configurable
+            this.WriteLine("<p><a href=\"http://jira.buildingsmart.org/issues/?jql=project%20%3D%20IFR%20AND%20text%20~%20%22" + identifier + "%22\" target=\"_blank\" ><img src=\"" + up + "img/external.png\" style=\"border: 0px\" title=\"Report issue\" alt=\"Report issue\"/>&nbsp; Report an issue</a></p>");
 
             this.WriteLine("<p><a href=\"" + up + "link/" + identifier + ".htm\" target=\"_top\" ><img src=\"" + up + "img/permlink.png\" style=\"border: 0px\" title=\"Link to this page\" alt=\"Link to this page\"/>&nbsp; Link to this page</a></p>");
         }
@@ -2541,18 +2586,10 @@ namespace IfcDoc.Format.HTM
         {
             int iAnnex = -1;
 
-            string codexml = code;
-            if (codexml == "ifc4")
-            {
-                codexml = "ifcXML4";
-            }
-
             string linkprefix = code;
-            string linkprefixxml = codexml;
             if (iCodeView == 0)
             {
                 linkprefix = "annex-a/default/" + linkprefix;
-                linkprefixxml = "annex-a/default/" + linkprefixxml;
             }
 
             if (iCodeView > 0)
@@ -2567,14 +2604,13 @@ namespace IfcDoc.Format.HTM
             string key2 = "";// "A." + iCodeView + ".2";
             string key3 = "";// "A." + iCodeView + ".3";
 
-            if (iCodeView > 0)//== 0 || Properties.Settings.Default.ConceptTables)
+            if (iCodeView > 0)
             {
                 // write table linking formatted listings
                 this.Write(
                     "<h4 class=\"annex\"><a>" + key1 + " Schema definitions</a></h4>" +
                     "<p class=\"std\">This schema is defined according to formats as follows.</p>" +
-                    "<p class=\"std\">&nbsp;</p>" +
-                    "<table class=\"std centric\" summary=\"listings\" width=\"80%\">" +
+                    "<table class=\"gridtable\" summary=\"listings\" width=\"80%\">" +
                     "<col width=\"60%\">" +
                     "<col width=\"20%\">" +
                     "<col width=\"20%\">" +
@@ -2604,8 +2640,8 @@ namespace IfcDoc.Format.HTM
                             this.Write(
                                 "<tr>" +
                                 "<td>" + desc + "</td>" +
-                                "<td><a href=\"" + linkprefix + "." + ext + "\">" + code + "." + ext + "</a></td>" +
-                                "<td><a href=\"" + linkprefix + "." + ext + ".htm\">" + code + "." + ext + ".htm</a></td>" +
+                                "<td><a href=\"" + linkprefix + "." + ext + "\" target=\"_blank\">" + code + "." + ext + "</a></td>" +
+                                "<td><a href=\"" + linkprefix + "." + ext + ".htm\" >" + code + "." + ext + ".htm</a></td>" +
                                 "</tr>");
                         }
                     }
@@ -2618,8 +2654,7 @@ namespace IfcDoc.Format.HTM
                 this.Write(
                     "<h4 class=\"annex\"><a>" + key2 + " Property and quantity templates</a></h4>" +
                     "<p>Property sets and quantity sets are defined according to formats as follows.</p>" +
-                    "<p>&nbsp;</p>" +
-                    "<table class=\"std centric\" summary=\"listings\" width=\"80%\">" +
+                    "<table class=\"gridtable\" summary=\"listings\" width=\"80%\">" +
                     "<col width=\"60%\">" +
                     "<col width=\"20%\">" +
                     "<col width=\"20%\">" +
@@ -2633,37 +2668,40 @@ namespace IfcDoc.Format.HTM
                     "<td>IFC-SPF property and quantity templates</td>" +
                     "<td><a href=\"" + linkprefix + ".ifc\">" + code + ".ifc</a></td>" +
                     "<td>&nbsp;</td>" +
-                    "</tr>" +
+                    "</tr>");
                     
 #if false
                     "<tr>" +
                     "<td>IFC-XML property and quantity templates</td>" +
                     "<td><a href=\"" + linkprefix + ".ifcxml\">" + code + ".ifcxml</a></td>" +
                     "<td>&nbsp;</td>" +
-                    "</tr>" +
+                    "</tr>"
 #endif
-                    "<tr>" +
-                    "<td>PSD-XML property templates in ZIP file</td>" +
-                    "<td><a href=\"" + linkprefix + "-psd.zip\">" + code + "-psd.zip</a></td>" +
-                    "<td>&nbsp;</td>" +
-                    "</tr>" +
 
-                    "<tr>" +
-                    "<td>QTO-XML quantity templates in ZIP file</td>" +
-                    "<td><a href=\"" + linkprefix + "-qto.zip\">" + code + "-qto.zip</a></td>" +
-                    "<td>&nbsp;</td>" +
-                    "</tr>" +
+                if(!docPublication.ISO)
+                {
+                    this.Write("<tr>" +
+                        "<td>PSD-XML property templates in ZIP file</td>" +
+                        "<td><a href=\"" + linkprefix + "-psd.zip_\">" + code + "-psd.zip</a></td>" +
+                        "<td>&nbsp;</td>" +
+                        "</tr>" +
 
-                    "</table>");
+                        "<tr>" +
+                        "<td>QTO-XML quantity templates in ZIP file</td>" +
+                        "<td><a href=\"" + linkprefix + "-qto.zip_\">" + code + "-qto.zip</a></td>" +
+                        "<td>&nbsp;</td>" +
+                        "</tr>");
+                }
+
+                this.Write("</table>");
             }
 
-            if (iCodeView > 0)
+            if (iCodeView > 0 && !docPublication.ISO) // don't provide mvdXML for ISO
             {
                 this.Write(
     "<h4 class=\"annex\"><a>" + key3 + " Model view definition</a></h4>" +
     "<p>Model view definitions are defined according to formats as follows.</p>" +
-    "<p>&nbsp;</p>" +
-    "<table class=\"std centric\" summary=\"listings\" width=\"80%\">" +
+    "<table class=\"gridtable\" summary=\"listings\" width=\"80%\">" +
     "<col width=\"60%\">" +
     "<col width=\"20%\">" +
     "<col width=\"20%\">" +
@@ -2674,12 +2712,12 @@ namespace IfcDoc.Format.HTM
     "</tr>" +
     "<tr>" +
     "<td>MVD-XML model view definitions</td>" +
-    "<td><a href=\"" + linkprefix + ".mvdxml\">" + code + ".mvdxml</a></td>" +
+    "<td><a href=\"" + linkprefix + ".mvdxml\" target=\"_blank\">" + code + ".mvdxml</a></td>" +
     "<td>&nbsp;</td>" +
     "</tr>" +
     "<tr>" +
     "<td>EXPRESS XSD configuration</td>" +
-    "<td><a href=\"" + linkprefix + ".xml\">" + code + ".xml</a></td>" +
+    "<td><a href=\"" + linkprefix + ".xml\" target=\"_blank\">" + code + ".xml</a></td>" +
     "<td>&nbsp;</td>" +
     "</tr>" +
     "</table>");
@@ -2729,28 +2767,123 @@ namespace IfcDoc.Format.HTM
             this.WriteFooter(docPublication.Footer);
         }
 
-        public void WriteLocalizedNames(DocDefinition entity)
+        public void WriteLocalizationSection(DocObject entity, IList<string> locales, DocPublication docPublication)
         {
+            if (locales == null)
+                return;
+
             // localization
-            this.WriteLine("<details>");
-            this.WriteLine("<summary>Natural language names</summary>");
+            this.WriteSummaryHeader("Natural language names", true, docPublication);
+
+            this.WriteLine("<table>");
+
+            if (entity.Localization.Count > 0)
+            {
+                this.WriteLine("<table class=\"gridtable\">");
+                entity.Localization.Sort();
+                foreach (DocLocalization doclocal in entity.Localization)
+                {
+                    string localname = doclocal.Name;
+
+                    string localid = doclocal.Locale.Substring(0, 2).ToLower();
+                    if (locales.Contains(localid))
+                    {
+                        this.WriteLine("<tr><td><img src=\"../../../img/locale-" + localid + ".png\" /></td><td><b>" + localname + "</b></td></tr>");
+                    }
+                }
+                this.WriteLine("</table>");
+            }
+
+            this.WriteSummaryFooter(docPublication);
+        }
+
+        public void WriteLocalizationTable(DocObject entity, IList<string> locales)
+        {
+            string defaultdesc = entity.Documentation;
+            bool tableopen = false;
+            if (entity.Localization.Count > 0)
+            {
+                entity.Localization.Sort();
+                foreach (DocLocalization doclocal in entity.Localization)
+                {
+                    string localname = doclocal.Name;
+                    string localdesc = doclocal.Documentation;
+
+                    string localid = doclocal.Locale.Substring(0, 2).ToLower();
+                    if (localid.Equals("en", StringComparison.InvariantCultureIgnoreCase) && localdesc == null)
+                    {
+                        localdesc = entity.Documentation;
+                        defaultdesc = entity.Documentation;
+                    }
+
+                    if (locales != null && locales.Contains(localid))
+                    {
+                        if(!tableopen)
+                        {
+                            this.WriteLine("<table class=\"gridtable\">");
+                            tableopen = true;
+                        }
+                        this.WriteLine("<tr><td><img src=\"../../../img/locale-" + localid + ".png\" /></td><td><b>" + localname + "</b></td><td>" + localdesc + "</td></tr>");
+                        defaultdesc = null;
+                    }
+                }
+
+                if (tableopen)
+                {
+                    this.WriteLine("</table>");
+                }
+            }
+
+            if (defaultdesc != null)
+            {
+                this.WriteLine(defaultdesc);
+            }
+#if false
+            entity.Localization.Sort(); // ensure sorted
+            foreach (DocLocalization doclocal in entity.Localization)
+            {
+                if (doclocal.Locale != null && doclocal.Locale.Length > 2)
+                {
+                    string localname = doclocal.Name;
+                    string localdesc = doclocal.Documentation;
+
+                    string localid = doclocal.Locale.Substring(0, 2).ToLower();
+                    if (locales.Contains(localid))
+                    {
+                        if (localid.Equals("en", StringComparison.InvariantCultureIgnoreCase) && localdesc == null)
+                        {
+                            localdesc = entity.Documentation;
+                        }
+
+                        this.WriteLine("<tr><td><img src=\"../../../img/locale-" + localid + ".png\" /></td><td><b> " + localname + ":</b> " + localdesc + "</td></tr>");
+                    }
+                }
+            }
+
+            this.WriteLine("</table>");
+#endif
+            /* old */
+            /*
             this.WriteLine("<table>");
             entity.Localization.Sort();
             foreach (DocLocalization doclocal in entity.Localization)
             {
-                string localname = doclocal.Name;
-                string localdesc = doclocal.Documentation;
                 string localid = doclocal.Locale.Substring(0, 2).ToLower();
-
-                if (!String.IsNullOrEmpty(localdesc))
+                if (locales.Contains(localid))
                 {
-                    localdesc = ": " + localdesc;
-                }
+                    string localname = doclocal.Name;
+                    string localdesc = doclocal.Documentation;
 
-                this.WriteLine("<tr><td><img alt=\"" + localid + "\" src=\"../../../img/locale-" + localid + ".png\" /></td><td><b>" + localname + "</b>" + localdesc + "</td></tr>");
+                    if (!String.IsNullOrEmpty(localdesc))
+                    {
+                        localdesc = ": " + localdesc;
+                    }
+
+                    this.WriteLine("<tr><td><img alt=\"" + localid + "\" src=\"../../../img/locale-" + localid + ".png\" /></td><td><b>" + localname + "</b>" + localdesc + "</td></tr>");
+                }
             }
             this.WriteLine("</table>");
-            this.WriteLine("</details>");
+             */
         }
 
         public void WriteEntityInheritance(DocEntity entity, DocEntity treeleaf, DocModelView[] views, Dictionary<DocObject, bool>[] viewmap, DocPublication docPublication, ref int sequence)
@@ -2886,17 +3019,14 @@ namespace IfcDoc.Format.HTM
 
                             if (this.m_included == null || this.m_included.ContainsKey(attr))
                             {
+                                if(attr.IsOptional)
+                                {
+                                    this.m_writer.Write("? ");
+                                }
+
                                 if(attr.GetAggregation() != DocAggregationEnum.NONE)
                                 {
                                     this.WriteAttributeAggregation(attr);
-                                }
-                                else if ((attr.AttributeFlags & 1) != 0)
-                                {
-                                    this.m_writer.Write("[0:1]");
-                                }
-                                else
-                                {
-                                    this.m_writer.Write("[1:1]");
                                 }
                             }
 
@@ -2938,19 +3068,15 @@ namespace IfcDoc.Format.HTM
 
                             this.m_writer.Write("</td><td>");
 
+                            if(attr.IsOptional)
+                            {
+                                this.m_writer.Write("? ");
+                            }
+
                             if (attr.GetAggregation() != DocAggregationEnum.NONE)
                             {
                                 this.WriteAttributeAggregation(attr);
                             }
-                            else if ((attr.AttributeFlags & 1) != 0)
-                            {
-                                this.m_writer.Write("[0:1]");
-                            }
-                            else
-                            {
-                                this.m_writer.Write("[1:1]");
-                            }
-
 
                             this.m_writer.Write("</td><td>");
                             this.WriteDocumentationMarkup(attr.Documentation, entity, docPublication);
@@ -3011,17 +3137,14 @@ namespace IfcDoc.Format.HTM
                         this.m_writer.Write("</td><td>");
                         //this.m_writer.Write(" := ");
 
+                        if (attr.IsOptional)
+                        {
+                            this.m_writer.Write("? ");
+                        }
+
                         if (attr.GetAggregation() != DocAggregationEnum.NONE)
                         {
                             this.WriteAttributeAggregation(attr);
-                        }
-                        else if ((attr.AttributeFlags & 1) != 0)
-                        {
-                            this.m_writer.Write("[0:1]");
-                        }
-                        else
-                        {
-                            this.m_writer.Write("[1:1]");
                         }
 
                         this.m_writer.Write("</td><td>");
@@ -3057,12 +3180,22 @@ namespace IfcDoc.Format.HTM
             this.WriteLine("</dd>");
         }
 
-        internal void WriteChangeLog(DocDefinition entity, DocProject docProject)
+        internal void WriteChangeLog(DocObject entity, List<DocChangeSet> listChangeSets, DocPublication docPublication)
         {
             Dictionary<DocChangeSet, DocChangeAction> mapChange = new Dictionary<DocChangeSet, DocChangeAction>();
-            foreach (DocChangeSet docChangeSet in docProject.ChangeSets)
+            foreach (DocChangeSet docChangeSet in listChangeSets)
             {
-                foreach (DocChangeAction docChangeSection in docChangeSet.ChangesEntities)
+                List<DocChangeAction> listActions = docChangeSet.ChangesEntities;
+                if(entity is DocPropertySet || entity is DocPropertyEnumeration)
+                {
+                    listActions = docChangeSet.ChangesProperties;
+                }
+                else if(entity is DocQuantitySet)
+                {
+                    listActions = docChangeSet.ChangesQuantities;
+                }
+
+                foreach (DocChangeAction docChangeSection in listActions)
                 {
                     foreach (DocChangeAction docChangeSchema in docChangeSection.Changes)
                     {
@@ -3099,8 +3232,7 @@ namespace IfcDoc.Format.HTM
 
             if (mapChange.Count > 0)
             {
-                this.WriteLine("<details>");
-                this.WriteLine("<summary>Change log</summary>");
+                this.WriteSummaryHeader("Change log", true, docPublication);
 
                 this.WriteLine("<table class=\"gridtable\">");
                 this.WriteLine("<tr>" +
@@ -3120,7 +3252,7 @@ namespace IfcDoc.Format.HTM
 
                 this.WriteLine("</table>");
 
-                this.WriteLine("</details>");
+                this.WriteSummaryFooter(docPublication);
             }
 
 

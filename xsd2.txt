@@ -67,3 +67,11 @@
 			<xs:enumeration value="unknown"/>
 		</xs:restriction>
 	</xs:simpleType>
+    <xs:simpleType name="Seq-IfcPositiveInteger">
+        <xs:restriction>
+            <xs:simpleType>
+                <xs:list itemType="ifc:IfcPositiveInteger"/>
+            </xs:simpleType>
+            <xs:minLength value="3"/>
+        </xs:restriction>
+    </xs:simpleType>

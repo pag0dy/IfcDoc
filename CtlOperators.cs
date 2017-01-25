@@ -353,6 +353,8 @@ namespace IfcDoc
 
         private void treeViewRules_AfterSelect(object sender, TreeViewEventArgs e)
         {
+            TreeNode tn = this.treeViewRules.SelectedNode;
+
             DocOp op = this.GetSelectedOp();
 
             if (this.Template == null)
@@ -369,8 +371,8 @@ namespace IfcDoc
                 return;
             }
 
-            this.toolStripButtonRuleInsert.Enabled = (this.Rule != null);
-            this.toolStripButtonRuleRemove.Enabled = (op != null);
+            this.toolStripButtonRuleInsert.Enabled = (this.Rule is DocModelRuleEntity);
+            this.toolStripButtonRuleRemove.Enabled = (tn != null);
             this.toolStripButtonRuleUpdate.Enabled = (op is DocOpStatement);
             this.toolStripButtonRuleRef.Enabled = (op is DocOpStatement && this.Rule != null);
 
@@ -423,6 +425,8 @@ namespace IfcDoc
         private void toolStripButtonRuleRemove_Click(object sender, EventArgs e)
         {
             TreeNode tn = this.treeViewRules.SelectedNode;
+            if (tn == null)
+                return;
 
             if (tn.Tag is DocModelRuleConstraint)
             {

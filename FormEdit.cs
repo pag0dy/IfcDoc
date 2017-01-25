@@ -165,12 +165,9 @@ namespace IfcDoc
             if (args.Length == 2)
             {                
                 Properties.Settings.Default.OutputPath = args[1];
-                //this.FilterInclude(
                 this.GenerateDocumentation();
                 this.Close();
             }
-
-            this.toolStripMenuItemDictionaryUpload.Visible = false; // not yet functional
         }
 
 
@@ -258,8 +255,6 @@ namespace IfcDoc
 
             // init defaults
             this.m_project = new DocProject();
-
-            this.m_project.Annexes[1].Code = "IFC4"; // schema id
 
             LoadTree();
         }
@@ -594,7 +589,7 @@ namespace IfcDoc
                         case ".ifcdoc":
                             using (FormatSPF format = new FormatSPF(this.m_file, SchemaDOC.Types, this.m_instances))
                             {
-                                format.InitHeaders(this.m_file, "IFCDOC_10_4");
+                                format.InitHeaders(this.m_file, "IFCDOC_11_2");
                                 format.Save();
                             }
                             break;
@@ -954,6 +949,7 @@ namespace IfcDoc
 
                                         }
 
+#if false
                                         // map to use definition
                                         if (this.m_mapTree.TryGetValue(qset.ApplicableType.ToLowerInvariant(), out tn))
                                         {
@@ -999,10 +995,10 @@ namespace IfcDoc
                                                 // if no template, add it
                                                 if (templateuse == null)
                                                 {
-                                                    // get the pset template
+                                                    // get the qset template
                                                     templateuse = new DocTemplateUsage();
                                                     docRoot.Concepts.Add(templateuse);
-                                                    templateuse.Definition = this.m_project.GetTemplate(new Guid("6652398e-6579-4460-8cb4-26295acfacc7"));
+                                                    templateuse.Definition = this.m_project.GetTemplate(guidTemplateQset);
                                                 }
 
                                                 if (templateuse != null)
@@ -1014,6 +1010,7 @@ namespace IfcDoc
                                                 }
                                             }
                                         }
+#endif
                                     }
                                     else
                                     {
@@ -1392,7 +1389,11 @@ namespace IfcDoc
 
                 try
                 {
-                    DocumentationISO.DoExport(this.m_project, this.saveFileDialogExport.FileName, views, locales, scope, this.m_instances);
+                    Dictionary<string, DocObject> mapEntity = new Dictionary<string, DocObject>();
+                    Dictionary<string, string> mapSchema = new Dictionary<string, string>();
+                    BuildMaps(mapEntity, mapSchema);
+
+                    DocumentationISO.DoExport(this.m_project, null, this.saveFileDialogExport.FileName, views, locales, scope, this.m_instances, mapEntity);
                 }
                 catch (Exception x)
                 {
@@ -1529,7 +1530,11 @@ namespace IfcDoc
             else if (this.treeView.SelectedNode.Tag is DocConceptRoot)
             {
                 DocConceptRoot conceptroot = (DocConceptRoot)this.treeView.SelectedNode.Tag;
-
+                DocModelView docView = (DocModelView)this.treeView.SelectedNode.Parent.Tag;
+                docView.ConceptRoots.Remove(conceptroot);
+                this.treeView.SelectedNode.Remove();
+                conceptroot.Delete();
+#if false
                 // find the model view
                 foreach (DocModelView docView in this.m_project.ModelViews)
                 {
@@ -1542,6 +1547,7 @@ namespace IfcDoc
 
                 this.treeView.SelectedNode.Remove();
                 conceptroot.Delete();
+#endif
             }
             else if (this.treeView.SelectedNode.Tag is DocTemplateUsage)
             {
@@ -1653,7 +1659,15 @@ namespace IfcDoc
             else if (this.treeView.SelectedNode.Tag is DocChangeSet)
             {
                 DocChangeSet changeset = (DocChangeSet)this.treeView.SelectedNode.Tag;
-                this.m_project.ChangeSets.Remove(changeset);
+                if (this.treeView.SelectedNode.Parent != null && this.treeView.SelectedNode.Parent.Tag is DocPublication)
+                {
+                    DocPublication docPub = (DocPublication)this.treeView.SelectedNode.Parent.Tag;
+                    docPub.ChangeSets.Remove(changeset);
+                }
+                else
+                {
+                    this.m_project.ChangeSets.Remove(changeset);
+                }
                 this.treeView.SelectedNode.Remove();
                 changeset.Delete();
             }
@@ -1668,8 +1682,16 @@ namespace IfcDoc
             else if (this.treeView.SelectedNode.Tag is DocProperty)
             {
                 DocProperty docTarget = (DocProperty)this.treeView.SelectedNode.Tag;
-                DocPropertySet docPset = (DocPropertySet)this.treeView.SelectedNode.Parent.Tag;
-                docPset.Properties.Remove(docTarget);
+                if (this.treeView.SelectedNode.Parent.Tag is DocPropertySet)
+                {
+                    DocPropertySet docPset = (DocPropertySet)this.treeView.SelectedNode.Parent.Tag;
+                    docPset.Properties.Remove(docTarget);
+                }
+                else if(this.treeView.SelectedNode.Parent.Tag is DocProperty)
+                {
+                    DocProperty docPset = (DocProperty)this.treeView.SelectedNode.Parent.Tag;
+                    docPset.Elements.Remove(docTarget);
+                }
                 this.treeView.SelectedNode.Remove();
                 docTarget.Delete();
             }
@@ -1777,6 +1799,34 @@ namespace IfcDoc
                 this.treeView.SelectedNode.Remove();
                 docTarget.Delete();
             }
+            else if(this.treeView.SelectedNode.Tag is DocSelectItem)
+            {
+                DocSelectItem docTarget = (DocSelectItem)this.treeView.SelectedNode.Tag;
+                DocSelect docSelect = (DocSelect)this.treeView.SelectedNode.Parent.Tag;
+                docSelect.Selects.Remove(docTarget);
+                this.treeView.SelectedNode.Remove();
+                docTarget.Delete();
+                
+                // remove lines
+                foreach (DocLine docLine in docSelect.Tree)
+                {
+                    if (docLine.Definition != null && docLine.Definition.Name.Contains(docTarget.Name))
+                    {
+                        docSelect.Tree.Remove(docLine);
+                        docLine.Delete();
+                        break;
+                    }
+                    foreach(DocLine docSub in docLine.Tree)
+                    {
+                        if (docSub.Definition != null && docSub.Definition.Name.Contains(docTarget.Name))
+                        {
+                            docLine.Tree.Remove(docSub);
+                            docSub.Delete();
+                            break;
+                        }
+                    }
+                }
+            }
             else if (this.treeView.SelectedNode.Tag is DocGlobalRule)
             {
                 DocGlobalRule docTarget = (DocGlobalRule)this.treeView.SelectedNode.Tag;
@@ -1867,6 +1917,15 @@ namespace IfcDoc
                 docDefRef.Delete();
 
                 DeleteReferencesForSchemaDefinition(docSchema, docDefRef);
+
+                // clear out references if none left
+                if(docSchemaRef.Definitions.Count == 0)
+                {
+                    docSchema.SchemaRefs.Remove(docSchemaRef);
+                    this.treeView.SelectedNode.Remove();
+                    docSchemaRef.Delete();
+                }
+
                 UpdateTreeDeletion();
                 this.ctlExpressG.Redraw();
             }
@@ -1897,6 +1956,27 @@ namespace IfcDoc
                         docEnt.Attributes.RemoveAt(iAttr);
                     }
                 }
+
+                // delete any subtype relations
+                foreach(DocLine docLine in docEnt.Tree)
+                {
+                    if(docLine.Definition == docDef)
+                    {
+                        docEnt.Tree.Remove(docLine);
+                        docLine.Delete();
+                        break;
+                    }
+
+                    foreach(DocLine docSub in docLine.Tree)
+                    {
+                        if(docSub.Definition == docDef)
+                        {
+                            docLine.Tree.Remove(docSub);
+                            docSub.Delete();
+                            break;
+                        }
+                    }
+                }
             }
 
             for(int iType = docSchema.Types.Count-1; iType >= 0; iType--)
@@ -1910,6 +1990,34 @@ namespace IfcDoc
                         docDefined.Delete();
                         docSchema.Types.RemoveAt(iType);
                     }
+                }
+            }
+
+            foreach(DocSchemaRef docSchemaRef in docSchema.SchemaRefs)
+            {
+                foreach(DocDefinitionRef docDefRef in docSchemaRef.Definitions)
+                {
+                    // delete any subtype relations
+                    foreach (DocLine docLine in docDefRef.Tree)
+                    {
+                        if (docLine.Definition == docDef)
+                        {
+                            docDefRef.Tree.Remove(docLine);
+                            docLine.Delete();
+                            break;
+                        }
+
+                        foreach (DocLine docSub in docLine.Tree)
+                        {
+                            if (docSub.Definition == docDef)
+                            {
+                                docLine.Tree.Remove(docSub);
+                                docSub.Delete();
+                                break;
+                            }
+                        }
+                    }
+
                 }
             }
 
@@ -1969,6 +2077,11 @@ namespace IfcDoc
                             docEntity.BaseDefinition = null;
                         }
 
+                        if(docEntity.Name.Equals("IfcCurve"))
+                        {
+                            this.ToString();
+                        }
+
                         foreach (DocSubtype docSub in docEntity.Subtypes)
                         {
                             if (docSub.DefinedType == definition)
@@ -1979,7 +2092,39 @@ namespace IfcDoc
                             }
                         }
 
-                        //... delete lines...
+                        if (docEntity.Tree != null)
+                        {
+                            foreach (DocLine docLine in docEntity.Tree)
+                            {
+                                if (docLine.Definition != null && docLine.Definition.Name.Equals(definition))
+                                {
+                                    docEntity.Tree.Remove(docLine);
+                                    docLine.Delete();
+                                    break;
+                                }
+
+                                if(docLine.Tree != null)
+                                {
+                                    foreach(DocLine docLineSub in docLine.Tree)
+                                    {
+                                        if (docLineSub.Definition != null && docLineSub.Definition.Name.Equals(definition))
+                                        {
+                                            docLine.Tree.Remove(docLineSub);
+                                            docLineSub.Delete();
+                                            break;
+                                        }
+                                    }
+                                }
+
+                                if (docLine.Tree.Count == 0)
+                                {
+                                    // dissolve the tree
+                                    docEntity.Tree.Remove(docLine);
+                                    break;
+                                }
+
+                            }
+                        }
 
                         for (int iAttr = docEntity.Attributes.Count - 1; iAttr >= 0; iAttr--)
                         {
@@ -2482,6 +2627,7 @@ namespace IfcDoc
                     LoadNode(tnType, ur, ur.Name, false);
                 }
 
+#if false
                 // new style templates
                 foreach (DocModelView docModelView in this.m_project.ModelViews)
                 {
@@ -2505,6 +2651,7 @@ namespace IfcDoc
                         }
                     }
                 }
+#endif
             }
 
             TreeNode tnGlobHeader = LoadNode(tnSchema, typeof(DocGlobalRule), "Global Rules", false);
@@ -2620,11 +2767,23 @@ namespace IfcDoc
                                 LoadNode(tnModel, docExchange, docExchange.Name, false);
                             }
 
-                            //temp: also load concept roots
-#if false
+                            // new: also load concept roots
+#if true
                             foreach(DocConceptRoot docCR in docModel.ConceptRoots)
                             {
-                                LoadNode(tnModel, docCR, docCR.ApplicableEntity.Name, false);
+                                //LoadNode(tnModel, docCR, docCR.ApplicableEntity.Name, false);
+
+                                string rootname = docCR.Name;
+                                if (String.IsNullOrEmpty(rootname))
+                                {
+                                    rootname = docCR.ToString();//docModel.Name;
+                                }
+
+                                TreeNode tnConceptRoot = LoadNode(tnModel, docCR, rootname, false);
+                                foreach (DocTemplateUsage docConcept in docCR.Concepts)
+                                {
+                                    LoadNodeConcept(tnConceptRoot, docConcept);
+                                }
                             }
 #endif
                         }
@@ -2737,6 +2896,15 @@ namespace IfcDoc
                 {
                     LoadNode(tnPub, docAnno, docAnno.Name, false);
                 }
+
+                foreach (DocChangeSet docChangeSet in docPub.ChangeSets)
+                {
+                    TreeNode tnSet = LoadNode(tnPub, docChangeSet, docChangeSet.Name, true);
+                    foreach (DocChangeAction docChangeItem in docChangeSet.ChangesEntities)
+                    {
+                        LoadTreeChange(tnSet, docChangeItem);
+                    }
+                }
             }
 
             // force update of main pain
@@ -2847,7 +3015,8 @@ namespace IfcDoc
             this.toolStripMenuItemEditCopy.Enabled = false;
             this.toolStripMenuItemEditPaste.Enabled = false;
 
-            this.toolStripMenuItemEditBuildConcepts.Enabled = false;
+            this.toolStripMenuItemInsertConceptPset.Enabled = false;
+            this.toolStripMenuItemInsertConceptQset.Enabled = false;
             this.buildFromSubschemaToolStripMenuItem.Enabled = false;
 
             this.toolStripMenuItemContextInsertModelView.Visible = false;
@@ -2859,6 +3028,12 @@ namespace IfcDoc
             this.toolStripMenuItemContextInsertNormative.Visible = false;
             this.toolStripMenuItemContextInsertTerm.Visible = false;
             this.toolStripMenuItemContextInsertAbbreviatedTerm.Visible = false;
+            this.toolStripMenuItemContextInsertSchema.Visible = false;
+            this.toolStripMenuItemContextInsertDefined.Visible = false;
+            this.toolStripMenuItemContextInsertSelect.Visible = false;
+            this.toolStripMenuItemContextInsertEnumeration.Visible = false;
+            this.toolStripMenuItemContextInsertEntity.Visible = false;
+            this.toolStripMenuItemContextInsertAttribute.Visible = false;
             this.toolStripMenuItemContextInsertPset.Visible = false;
             this.toolStripMenuItemContextInsertProperty.Visible = false;
             this.toolStripMenuItemContextInsertPropertyEnum.Visible = false;
@@ -2867,6 +3042,7 @@ namespace IfcDoc
             this.toolStripMenuItemContextInsertQuantity.Visible = false;
             this.toolStripMenuItemContextInsertExample.Visible = false;
             this.toolStripMenuItemContextInsertBibliography.Visible = false;
+            this.toolStripMenuItemContextInsertPublication.Visible = false;
             this.toolStripMenuItemContextInsert.Visible = false;
 
 
@@ -3017,7 +3193,8 @@ namespace IfcDoc
                     {
                         this.toolStripMenuItemEditMoveDown.Enabled = true;
                     }
-                    this.toolStripMenuItemEditBuildConcepts.Enabled = true;
+                    this.toolStripMenuItemInsertConceptPset.Enabled = true;
+                    this.toolStripMenuItemInsertConceptQset.Enabled = true;
                 }
                 else if(e.Node.Parent.Tag is DocTemplateUsage)
                 {
@@ -3053,9 +3230,12 @@ namespace IfcDoc
                 this.toolStripMenuItemEditRename.Enabled = true;
                 this.toolStripMenuItemEditPaste.Enabled = (this.m_clipboard is DocExchangeDefinition);
 
-                this.toolStripMenuItemEditBuildConcepts.Enabled = true;
+                this.toolStripMenuItemInsertConceptRoot.Enabled = true;
+                this.toolStripMenuItemInsertConceptPset.Enabled = true;
+                this.toolStripMenuItemInsertConceptQset.Enabled = true;
                 this.buildFromSubschemaToolStripMenuItem.Enabled = true;
 
+                this.toolStripMenuItemContextInsertRoot.Visible = true;
                 this.toolStripMenuItemContextInsertExchange.Visible = true;
                 this.toolStripMenuItemContextInsert.Visible = true;
 
@@ -3091,6 +3271,34 @@ namespace IfcDoc
                         this.toolStripMenuItemEditMoveDown.Enabled = true;
                     }
                 }
+            }
+            else if (e.Node.Tag is DocConceptRoot)
+            {
+                DocConceptRoot obj = (DocConceptRoot)e.Node.Tag;
+                this.SetContent(obj, obj.Documentation);
+
+                this.toolStripMenuItemEditDelete.Enabled = true;
+                this.toolStripMenuItemEditRename.Enabled = true;
+
+                this.toolStripMenuItemInsertConceptLeaf.Enabled = true;
+                this.toolStripMenuItemContextInsertLeaf.Visible = true;
+                this.toolStripMenuItemContextInsert.Visible = true;
+
+                if (e.Node.Parent.Tag is DocModelView)
+                {
+
+                    DocModelView ent = (DocModelView)e.Node.Parent.Tag;
+                    if (ent.ConceptRoots.IndexOf(obj) > 0)
+                    {
+                        this.toolStripMenuItemEditMoveUp.Enabled = true;
+                    }
+
+                    if(ent.ConceptRoots.IndexOf(obj) < ent.ConceptRoots.Count - 1)
+                    {
+                        this.toolStripMenuItemEditMoveDown.Enabled = true;
+                    }
+                }
+
             }
             else if (e.Node.Tag is DocChangeSet)
             {
@@ -3148,6 +3356,11 @@ namespace IfcDoc
                     this.toolStripMenuItemInsertPrimitive.Enabled = true;
                     this.toolStripMenuItemInsertReference.Enabled = true;
                     this.toolStripMenuItemInsertComment.Enabled = true;
+
+                    this.toolStripMenuItemContextInsertEntity.Visible = true;
+                    this.toolStripMenuItemContextInsertEnumeration.Visible = true;
+                    this.toolStripMenuItemContextInsertSelect.Visible = true;
+                    this.toolStripMenuItemContextInsertDefined.Visible = true;
                 }
                 else if (obj is DocType)
                 {
@@ -3156,6 +3369,9 @@ namespace IfcDoc
                     if (obj is DocEnumeration)
                     {
                         toolStripMenuItemInsertEnumerationConstant.Enabled = true;
+
+                        this.toolStripMenuItemContextInsertConstant.Visible = true;
+                        this.toolStripMenuItemContextInsert.Visible = true;
                     }
                     else if(obj is DocSelect)
                     {
@@ -3166,6 +3382,11 @@ namespace IfcDoc
                         this.toolStripMenuItemInsertWhere.Enabled = true;
                     }
                     this.toolStripMenuItemDiagramFormatPageRef.Enabled = true;
+                }
+                else if(obj is DocSelectItem)
+                {
+                    this.toolStripMenuItemEditDelete.Enabled = true;
+                    this.toolStripMenuItemEditRename.Enabled = false;
                 }
                 else if (obj is DocConstant)
                 {
@@ -3182,14 +3403,11 @@ namespace IfcDoc
                     this.toolStripMenuItemEditDelete.Enabled = true;
                     this.toolStripMenuItemEditPaste.Enabled = false;
 
-                    //this.ToolStripMenuItemEditCut.Enabled = true;
-
                     this.toolStripMenuItemInsertAttribute.Enabled = true;
                     this.toolStripMenuItemInsertUnique.Enabled = true;
                     this.toolStripMenuItemInsertWhere.Enabled = true;
-                    this.toolStripMenuItemInsertConceptRoot.Enabled = true;
 
-                    this.toolStripMenuItemContextInsertRoot.Visible = true;
+                    this.toolStripMenuItemContextInsertAttribute.Visible = true;
                     this.toolStripMenuItemContextInsert.Visible = true;
 
                     if (entity.Subtypes.Count > 0)
@@ -3234,16 +3452,11 @@ namespace IfcDoc
                 {
                     this.toolStripMenuItemEditDelete.Enabled = true;
                 }
-                else if (obj is DocSchema)
-                {
-                    this.toolStripMenuItemEditDelete.Enabled = true;
-
-                    //this.toolStripMenuItemEditPaste.Enabled = (this.m_clipboard is DocEntity);
-                }
                 else if (obj is DocFunction)
                 {
                     this.toolStripMenuItemEditDelete.Enabled = true;
                 }
+#if false
                 else if (obj is DocConceptRoot)
                 {
                     this.toolStripMenuItemEditDelete.Enabled = true;
@@ -3262,8 +3475,10 @@ namespace IfcDoc
                         this.toolStripMenuItemEditMoveDown.Enabled = (indexof < dmv.ConceptRoots.Count - 1);
                     }
 
-                    this.toolStripMenuItemEditBuildConcepts.Enabled = true;
+                    this.toolStripMenuItemInsertConceptPset.Enabled = true;
+                    this.toolStripMenuItemInsertConceptQset.Enabled = true;
                 }
+#endif
                 else if(obj is DocPropertyConstant)
                 {
                     this.toolStripMenuItemEditDelete.Enabled = true;
@@ -3296,16 +3511,33 @@ namespace IfcDoc
                     this.toolStripMenuItemEditDelete.Enabled = true;
                     this.toolStripMenuItemEditCopy.Enabled = true;
                     this.ToolStripMenuItemEditCut.Enabled = true;
+                    this.toolStripMenuItemInsertProperty.Enabled = true; // though only applicable if complex
 
-                    DocPropertySet ent = (DocPropertySet)e.Node.Parent.Tag;
-                    if (ent.Properties.IndexOf((DocProperty)obj) > 0)
+                    if (e.Node.Parent.Tag is DocPropertySet)
                     {
-                        this.toolStripMenuItemEditMoveUp.Enabled = true;
+                        DocPropertySet ent = (DocPropertySet)e.Node.Parent.Tag;
+                        if (ent.Properties.IndexOf((DocProperty)obj) > 0)
+                        {
+                            this.toolStripMenuItemEditMoveUp.Enabled = true;
+                        }
+
+                        if (ent.Properties.IndexOf((DocProperty)obj) < ent.Properties.Count - 1)
+                        {
+                            this.toolStripMenuItemEditMoveDown.Enabled = true;
+                        }
                     }
-
-                    if (ent.Properties.IndexOf((DocProperty)obj) < ent.Properties.Count - 1)
+                    else if(e.Node.Parent.Tag is DocProperty)
                     {
-                        this.toolStripMenuItemEditMoveDown.Enabled = true;
+                        DocProperty ent = (DocProperty)e.Node.Parent.Tag;
+                        if (ent.Elements.IndexOf((DocProperty)obj) > 0)
+                        {
+                            this.toolStripMenuItemEditMoveUp.Enabled = true;
+                        }
+
+                        if (ent.Elements.IndexOf((DocProperty)obj) < ent.Elements.Count - 1)
+                        {
+                            this.toolStripMenuItemEditMoveDown.Enabled = true;
+                        }
                     }
                 }
                 else if (obj is DocPropertyEnumeration)
@@ -3404,6 +3636,8 @@ namespace IfcDoc
                     {
                         this.toolStripMenuItemEditRename.Enabled = true;
                         this.toolStripMenuItemInsertSchema.Enabled = true;
+                        this.toolStripMenuItemContextInsertSchema.Visible = true;
+                        this.toolStripMenuItemContextInsert.Visible = true;
                         this.toolStripMenuItemEditPaste.Enabled = (this.m_clipboard is DocSchema);
                     }
 
@@ -3574,9 +3808,10 @@ namespace IfcDoc
                 this.ctlOperators.Rule = null;
                 */
                 this.ctlInheritance.Visible = false;
-                this.ctlCheckGrid.Visible = false;
                 this.ctlExpressG.Visible = false;
                 this.ctlConcept.Visible = true;
+
+                this.ctlCheckGrid.CheckGridSource = new CheckGridConcept(docTemplate, null, this.m_project);
             }
             else if (obj is DocModelView)
             {
@@ -3597,8 +3832,9 @@ namespace IfcDoc
                 }
                 this.ctlInheritance.Visible = true;
                 this.ctlExpressG.Visible = false;
-                this.ctlCheckGrid.Visible = false;
                 this.ctlConcept.Visible = false;
+
+                this.ctlCheckGrid.CheckGridSource = new CheckGridExchange(null, docView, this.m_project);
             }
             else if(obj is DocSection)
             {
@@ -3608,8 +3844,9 @@ namespace IfcDoc
 
                 this.ctlInheritance.Visible = false;
                 this.ctlExpressG.Visible = false;
-                this.ctlCheckGrid.Visible = false;
                 this.ctlConcept.Visible = false;
+
+                this.ctlCheckGrid.CheckGridSource = null;//??
             }
             else if (obj is DocExchangeDefinition)
             {
@@ -3618,7 +3855,6 @@ namespace IfcDoc
                 this.ctlCheckGrid.CheckGridSource = new CheckGridExchange(docExchange, docView, this.m_project);
 
                 this.ctlInheritance.Visible = false;
-                this.ctlCheckGrid.Visible = true;
                 this.ctlExpressG.Visible = false;
                 this.ctlConcept.Visible = false;
             }
@@ -3644,16 +3880,9 @@ namespace IfcDoc
                 this.ctlConcept.Template = null;
                 this.ctlConcept.ConceptRoot = docRoot;
                 this.ctlInheritance.Visible = false;
-                this.ctlCheckGrid.Visible = false;
                 this.ctlExpressG.Visible = false;
-                this.ctlConcept.Visible = true;
-
-#if false // requirements view -- move into separate view mode in future
+                this.ctlConcept.Visible = true;//!
                 this.ctlCheckGrid.CheckGridSource = new CheckGridEntity(docRoot, docView, this.m_project, mapEntity);
-                this.ctlCheckGrid.Visible = true;
-                this.ctlExpressG.Visible = false;
-                this.splitContainerConcept.Visible = false;
-#endif
             }
             else if (obj is DocTemplateUsage)
             {
@@ -3685,7 +3914,6 @@ namespace IfcDoc
                 this.ctlConcept.Template = docUsage.Definition;
                 this.ctlConcept.ConceptRoot = null;
                 this.ctlInheritance.Visible = false;
-                this.ctlCheckGrid.Visible = false;
                 this.ctlExpressG.Visible = false;
                 this.ctlConcept.Visible = true;
 
@@ -3697,12 +3925,7 @@ namespace IfcDoc
                 this.ctlParameters.ConceptLeaf = docUsage;
                 */
 
-#if false // requirements view -- move into separate view mode in future
                 this.ctlCheckGrid.CheckGridSource = new CheckGridConcept(docUsage.Definition, docView, this.m_project);
-                this.ctlCheckGrid.Visible = true;
-                this.ctlExpressG.Visible = false;
-                this.splitContainerConcept.Visible = false;
-#endif
             }
             else if (obj is DocSchema)
             {
@@ -3715,8 +3938,9 @@ namespace IfcDoc
                 this.ctlExpressG.Selection = null;
                 this.ctlExpressG.Visible = true;
                 this.ctlInheritance.Visible = false;
-                this.ctlCheckGrid.Visible = false;
                 this.ctlConcept.Visible = false;
+
+                this.ctlCheckGrid.CheckGridSource = null;
             }
             else if(obj is DocDefinition)
             {
@@ -3742,8 +3966,9 @@ namespace IfcDoc
                 }
 
                 this.ctlInheritance.Visible = false;
-                this.ctlCheckGrid.Visible = false;
                 this.ctlConcept.Visible = false;
+
+                this.ctlCheckGrid.CheckGridSource = null;
             }
             else if (obj is DocAttribute || obj is DocWhereRule || obj is DocUniqueRule || obj is DocConstant || obj is DocSchemaRef || obj is DocSelectItem)
             {
@@ -3769,8 +3994,9 @@ namespace IfcDoc
                 }
 
                 this.ctlInheritance.Visible = false;
-                this.ctlCheckGrid.Visible = false;
                 this.ctlConcept.Visible = false;
+
+                this.ctlCheckGrid.CheckGridSource = null;
             }
             else if (obj == null && this.treeView.SelectedNode != null && this.treeView.SelectedNode.Parent != null && this.treeView.SelectedNode.Parent.Tag is DocSchema)
             {
@@ -3784,15 +4010,17 @@ namespace IfcDoc
                 this.ctlExpressG.Selection = null;
                 this.ctlExpressG.Visible = true;
                 this.ctlInheritance.Visible = false;
-                this.ctlCheckGrid.Visible = false;
                 this.ctlConcept.Visible = false;
+
+                this.ctlCheckGrid.CheckGridSource = null;                 
             }
             else
             {
                 this.ctlInheritance.Visible = false;
                 this.ctlExpressG.Visible = false;
-                this.ctlCheckGrid.Visible = false;
                 this.ctlConcept.Visible = false;
+
+                this.ctlCheckGrid.CheckGridSource = null;
             }
         }
 
@@ -3963,7 +4191,7 @@ namespace IfcDoc
             docView.Exchanges.Add(docExchange);
 
             TreeNode tnParent = this.treeView.SelectedNode;
-            this.treeView.SelectedNode = this.LoadNode(tnParent, docExchange, docExchange.ToString(), false);
+            this.treeView.SelectedNode = this.LoadNode(tnParent, docExchange, docExchange.ToString(), false, docView.Exchanges.Count - 1);
 
             toolStripMenuItemEditRename_Click(this, e);
         }
@@ -3974,7 +4202,7 @@ namespace IfcDoc
             if (docConceptRoot == null)
                 return;
 
-            DocEntity docEntity = (DocEntity)this.treeView.SelectedNode.Parent.Tag as DocEntity;
+            DocEntity docEntity = docConceptRoot.ApplicableEntity;// (DocEntity)this.treeView.SelectedNode.Parent.Tag as DocEntity;
             if (docEntity == null)
                 return;
 
@@ -4032,7 +4260,9 @@ namespace IfcDoc
                 }
             }
 
-            ChangeLogGenerator.Generate(docProjectBase, this.m_project);
+            DocPublication docPub = this.treeView.SelectedNode.Tag as DocPublication; // if publication selected, then change log is specific to publication
+
+            ChangeLogGenerator.Generate(docProjectBase, this.m_project, docPub);
             this.LoadTree();
         }
 
@@ -4247,6 +4477,20 @@ namespace IfcDoc
 
                     docSchema.Properties.Remove(docProp);
                     docSchema.Properties.Insert(index, docProp);
+
+                    tnParent.Nodes.Remove(tn);
+                    tnParent.Nodes.Insert(treeindex, tn);
+                }
+                else if(tn.Parent.Tag is DocProperty)
+                {
+                    DocProperty docSchema = (DocProperty)tnParent.Tag;
+                    int index = docSchema.Elements.IndexOf(docProp);
+
+                    index += direction;
+                    treeindex += direction;
+
+                    docSchema.Elements.Remove(docProp);
+                    docSchema.Elements.Insert(index, docProp);
 
                     tnParent.Nodes.Remove(tn);
                     tnParent.Nodes.Insert(treeindex, tn);
@@ -4484,6 +4728,7 @@ namespace IfcDoc
                             localNew.URL = localOld.URL;
                             propNew.Localization.Add(localNew);
                         }
+                        psetNew.Properties.Add(propNew);
 
                         this.treeView.SelectedNode = this.LoadNode(this.treeView.SelectedNode, propNew, propNew.Name, false);
                     }
@@ -4619,9 +4864,17 @@ namespace IfcDoc
 
         private void toolStripMenuItemInsertProperty_Click(object sender, EventArgs e)
         {
-            DocPropertySet docPset = (DocPropertySet)this.treeView.SelectedNode.Tag;
             DocProperty docProp = new DocProperty();
-            docPset.Properties.Add(docProp);
+            if (this.treeView.SelectedNode.Tag is DocPropertySet)
+            {
+                DocPropertySet docPset = (DocPropertySet)this.treeView.SelectedNode.Tag;
+                docPset.Properties.Add(docProp);
+            }
+            else if(this.treeView.SelectedNode.Tag is DocProperty)
+            {
+                DocProperty docPset = (DocProperty)this.treeView.SelectedNode.Tag;
+                docPset.Elements.Add(docProp);
+            }
             docProp.PropertyType = DocPropertyTemplateTypeEnum.P_SINGLEVALUE;
             this.treeView.SelectedNode = this.LoadNode(this.treeView.SelectedNode, docProp, docProp.Name, false);
             this.toolStripMenuItemEditRename_Click(sender, e);
@@ -4637,7 +4890,7 @@ namespace IfcDoc
             DocSchema docSchema = (DocSchema)tn.Tag;
             DocQuantitySet docPset = new DocQuantitySet();
             docSchema.QuantitySets.Add(docPset);
-            this.treeView.SelectedNode = this.LoadNode(tn.Nodes[5], docPset, docPset.Name, true);
+            this.treeView.SelectedNode = this.LoadNode(tn.Nodes[6], docPset, docPset.Name, true);
             this.toolStripMenuItemEditRename_Click(sender, e);
         }
 
@@ -4653,6 +4906,29 @@ namespace IfcDoc
 
         private void toolStripMenuItemInsertConceptRoot_Click(object sender, EventArgs e)
         {
+            if(this.treeView.SelectedNode.Tag is DocModelView)
+            {
+                DocModelView docView = (DocModelView)this.treeView.SelectedNode.Tag;
+                //DocEntity docEntity = (DocEntity)this.treeView.SelectedNode.Tag;
+
+                // pick the entity
+                using (FormSelectEntity form = new FormSelectEntity(null, null, this.m_project, SelectDefinitionOptions.Entity))
+                {
+                    if (form.ShowDialog(this) == DialogResult.OK && form.SelectedEntity != null)
+                    {
+                        DocConceptRoot docConceptRoot = new DocConceptRoot();
+                        docConceptRoot.ApplicableEntity = form.SelectedEntity as DocEntity;
+                        docView.ConceptRoots.Add(docConceptRoot);
+
+                        // update tree
+                        this.treeView.SelectedNode = this.LoadNode(this.treeView.SelectedNode, docConceptRoot, docConceptRoot.ToString(), false);
+                    }
+                }
+
+            }
+
+            // old
+#if false
             DocEntity docEntity = (DocEntity)this.treeView.SelectedNode.Tag;
 
             // pick the model view definition
@@ -4670,7 +4946,7 @@ namespace IfcDoc
                     this.treeView.SelectedNode = this.LoadNode(this.treeView.SelectedNode, docConceptRoot, docView.Name, false);
                 }
             }
-
+#endif
         }
 
 
@@ -4694,14 +4970,17 @@ namespace IfcDoc
                 // swap out instances such that constructors go to different cache
                 this.m_instances = new Dictionary<long, SEntity>();
                 this.m_lastid = 0;
+                this.m_loading = true;
 
                 DocumentationISO.Generate(this.m_project, path, this.m_instances, mapEntity, mapSchema, this.m_publications, this.backgroundWorkerGenerate, this.m_formProgress);
+
+                this.m_loading = false;
 
                 // launch the content
                 foreach (DocPublication docPub in this.m_publications)
                 {
                     string relpath = path + @"\" + DocumentationISO.MakeLinkName(docPub);
-                    System.Diagnostics.Process.Start(relpath + @"\index.htm");
+                    System.Diagnostics.Process.Start(relpath + @"\html\index.htm");
                 }
             }
             catch (Exception ex)
@@ -4773,7 +5052,7 @@ namespace IfcDoc
                         {
                             foreach (DocPropertySet docPset in docSchema.PropertySets)
                             {
-                                PropertySetDef psd = Program.ExportPsd(docPset, mapPropEnum);
+                                PropertySetDef psd = Program.ExportPsd(docPset, mapPropEnum, this.m_project);
                                 string filename = System.IO.Path.Combine(this.folderBrowserDialog.SelectedPath, docPset.Name + ".xml");
                                 using (FormatXML format = new FormatXML(filename, typeof(PropertySetDef)))//, PropertySetDef.DefaultNamespace))
                                 {
@@ -4784,7 +5063,7 @@ namespace IfcDoc
 
                             foreach (DocQuantitySet docQset in docSchema.QuantitySets)
                             {
-                                QtoSetDef qto = Program.ExportQto(docQset);
+                                QtoSetDef qto = Program.ExportQto(docQset, this.m_project);
                                 string filename = System.IO.Path.Combine(this.folderBrowserDialog.SelectedPath, docQset.Name + ".xml");
                                 using (FormatXML format = new FormatXML(filename, typeof(QtoSetDef), QtoSetDef.DefaultNamespace))
                                 {
@@ -4804,25 +5083,60 @@ namespace IfcDoc
 
         private void toolStripMenuItemInsertExample_Click(object sender, EventArgs e)
         {
-            DocExample docExample = new DocExample();
-
-            if (this.treeView.SelectedNode.Tag is DocExample)
+            // new: support multiple example files
+            DialogResult res = this.openFileDialogExamples.ShowDialog(this);
+            if (res == System.Windows.Forms.DialogResult.OK)
             {
-                DocExample docParent = (DocExample)this.treeView.SelectedNode.Tag;
-                docParent.Examples.Add(docExample);
+                // generate linked examples
+                foreach(string path in this.openFileDialogExamples.FileNames)
+                {
+                    DocExample docExample = new DocExample();
+                    docExample.Name = System.IO.Path.GetFileNameWithoutExtension(path);
+                    docExample.Path = path;
 
-                TreeNode tn = LoadNode(this.treeView.SelectedNode, docExample, docExample.Name, true);
-                this.treeView.SelectedNode = tn;
+                    if (this.treeView.SelectedNode.Tag is DocExample)
+                    {
+                        DocExample docParent = (DocExample)this.treeView.SelectedNode.Tag;
+                        docParent.Examples.Add(docExample);
+
+                        // include model views from parent example
+                        foreach(DocModelView docView in docParent.Views)
+                        {
+                            docExample.Views.Add(docView);
+                        }
+
+                        LoadNode(this.treeView.SelectedNode, docExample, docExample.Name, true);
+                    }
+                    else
+                    {
+                        this.m_project.Examples.Add(docExample);
+                        LoadNode(this.treeView.Nodes[12], docExample, docExample.Name, true);
+                    }
+
+                }
             }
             else
             {
-                // top-level
-                this.m_project.Examples.Add(docExample);
+                DocExample docExample = new DocExample();
 
-                TreeNode tn = LoadNode(this.treeView.Nodes[12], docExample, docExample.Name, true);
-                this.treeView.SelectedNode = tn;
+                if (this.treeView.SelectedNode.Tag is DocExample)
+                {
+                    DocExample docParent = (DocExample)this.treeView.SelectedNode.Tag;
+                    docParent.Examples.Add(docExample);
+
+                    TreeNode tn = LoadNode(this.treeView.SelectedNode, docExample, docExample.Name, true);
+                    this.treeView.SelectedNode = tn;
+                }
+                else
+                {
+                    // top-level
+                    this.m_project.Examples.Add(docExample);
+
+                    TreeNode tn = LoadNode(this.treeView.Nodes[12], docExample, docExample.Name, true);
+                    this.treeView.SelectedNode = tn;
+                }
+                this.toolStripMenuItemEditRename_Click(sender, e);
             }
-            this.toolStripMenuItemEditRename_Click(sender, e);
 
             this.m_modified = true;
         }
@@ -5169,6 +5483,7 @@ namespace IfcDoc
         {
             using (FormPublish form = new FormPublish())
             {
+                form.Project = this.m_project;
                 form.LocalPath = this.m_file;
                 if (this.m_server != null)
                 {
@@ -5772,18 +6087,8 @@ namespace IfcDoc
                 DocModelRule[] parameterrules = docUsage.Definition.GetParameterRules();
                 Dictionary<DocModelRuleAttribute, bool> conditions = new Dictionary<DocModelRuleAttribute, bool>();
 
-                if (docUsage.Definition.Name.Contains("-086"))
-                {
-                    this.ToString();
-                }
-
                 foreach (SEntity ent in list)
                 {
-                    if(docUsage.Definition.Name.Contains("-077") && ent.GetType().Name.Equals("IfcWindow"))
-                    {
-                        this.ToString();
-                    }
-
                     object[] args = new object[0];
                     if (parameterrules != null && parameterrules.Length > 0)
                     {
@@ -6385,11 +6690,6 @@ namespace IfcDoc
                     DocEntity docEntity = (DocEntity)tnTest.Parent.Tag;
                     DocSchema docSchema = this.m_project.GetSchemaOfDefinition(docEntity);
 
-                    if (docUsage.Definition.Name.Contains("053") && docEntity.Name.Equals("IfcWall"))
-                    {
-                        this.ToString();
-                    }
-
                     if (docSchema != null && this.m_formatTest != null)
                     {
                         string typename = docSchema.Name + "." + docEntity.Name;
@@ -6457,10 +6757,14 @@ namespace IfcDoc
                 DialogResult res = form.ShowDialog();
                 if (res == System.Windows.Forms.DialogResult.OK)
                 {
+                    Dictionary<string, DocObject> mapEntity = new Dictionary<string, DocObject>();
+                    Dictionary<string, string> mapSchema = new Dictionary<string, string>();
+                    BuildMaps(mapEntity, mapSchema);
+
                     switch (form.Language)
                     {
                         case "C#":
-                            FormatCSC.GenerateCode(this.m_project, form.Path);
+                            FormatCSC.GenerateCode(this.m_project, form.Path, mapEntity);
                             break;
 
                         case "Java":
@@ -6664,7 +6968,7 @@ namespace IfcDoc
                             if (docTargetSchemaRef == null)
                             {
                                 docTargetSchemaRef = new DocSchemaRef();
-                                docTargetSchemaRef.Name = docTargetSchema.Name;
+                                docTargetSchemaRef.Name = docTargetSchema.Name.ToUpper();
                                 docSchema.SchemaRefs.Add(docTargetSchemaRef);
                             }
 
@@ -6830,7 +7134,7 @@ namespace IfcDoc
                 DocSchema docSchema = (DocSchema)tn.Tag;
                 DocPropertyEnumeration docType = new DocPropertyEnumeration();
                 docSchema.PropertyEnums.Add(docType);
-                this.treeView.SelectedNode = this.LoadNode(tn.Nodes[4], docType, null, true);
+                this.treeView.SelectedNode = this.LoadNode(tn.Nodes[5], docType, null, true);
                 toolStripMenuItemEditRename_Click(this, e);
             }
         }
@@ -6884,6 +7188,16 @@ namespace IfcDoc
                     {
                         if (tree.Count > 0 && tree[0].Definition == null)
                         {
+                            // prune the tree from bogus definitions not linked propertly (due to old bug in importing vex files)
+                            // also prevent duplicates
+                            for (int iLine = tree[0].Tree.Count - 1; iLine >= 0; iLine--)
+                            {
+                                if (tree[0].Tree[iLine].Definition == null || tree[0].Tree[iLine].Definition == docDefinition)
+                                {
+                                    tree[0].Tree.RemoveAt(iLine);
+                                }
+                            }
+
                             // existing tree structure
                             tree[0].Tree.Add(docLine);
                         }
@@ -7026,17 +7340,17 @@ namespace IfcDoc
             {
                 DocObject docObj = (DocObject)target;
 
-#if false
-                if (String.IsNullOrEmpty(e.Label))
+//#if false
+                if (e.Label == null)
                 {
-                    docObj.Name = null;
-                    e.Node.Text = docObj.ToString();
+//                    docObj.Name = null;
+//                    e.Node.Text = docObj.ToString();
                     e.CancelEdit = true;
                     return;
                 }
-#endif
+//#endif
                 bool unique = true;
-                if(target is DocProperty || target is DocQuantity || target is DocWhereRule || target is DocUniqueRule || target is DocTemplateUsage)
+                if(target is DocProperty || target is DocQuantity || target is DocPropertyConstant || target is DocConstant || target is DocWhereRule || target is DocUniqueRule || target is DocTemplateUsage || target is DocAttribute)
                 {
                     unique = false;
                 }
@@ -7068,6 +7382,23 @@ namespace IfcDoc
                             this.m_mapTree.Remove(oldkey);
                         }
                     }
+
+                    if(docObj is DocSchema)
+                    {
+                        this.m_project.Rename((DocSchema)docObj, null, null, e.Label);
+                    }
+                    else if (docObj is DocEntity || docObj is DocType)
+                    {
+                        DocSchema docSchema = (DocSchema)this.treeView.SelectedNode.Parent.Parent.Tag;
+                        this.m_project.Rename(docSchema, (DocDefinition)docObj, null, e.Label);
+                    }
+                    else if(docObj is DocAttribute)
+                    {
+                        DocSchema docSchema = (DocSchema)this.treeView.SelectedNode.Parent.Parent.Parent.Tag;
+                        DocEntity docEntity = (DocEntity)this.treeView.SelectedNode.Parent.Tag;
+                        this.m_project.Rename(docSchema, docEntity, (DocAttribute)docObj, e.Label);
+                    }
+
                     docObj.Name = e.Label;
                     e.Node.Text = docObj.ToString();
                     e.CancelEdit = true; // prevent from updating to other text
@@ -7340,12 +7671,16 @@ namespace IfcDoc
             this.toolStripButtonViewDiagram.Checked = (view == 3);
             this.panelDiagram.Visible = (view == 3);
 
-            this.toolStripMenuItemModeSelect.Enabled = (view == 3);
-            this.toolStripMenuItemModeMove.Enabled = (view == 3);
-            this.toolStripMenuItemModeLink.Enabled = (view == 3);
-            this.toolStripButtonModeSelect.Enabled = (view == 3);
-            this.toolStripButtonModeMove.Enabled = (view == 3);
-            this.toolStripButtonModeLink.Enabled = (view == 3);
+            this.toolStripMenuItemViewRequirement.Checked = (view == 4);
+            this.toolStripButtonViewRequirement.Checked = (view == 4);
+            this.ctlCheckGrid.Visible = (view == 4);
+
+            this.toolStripMenuItemModeSelect.Enabled = (view >= 3);
+            this.toolStripMenuItemModeMove.Enabled = (view >= 3);
+            this.toolStripMenuItemModeLink.Enabled = (view >= 3);
+            this.toolStripButtonModeSelect.Enabled = (view >= 3);
+            this.toolStripButtonModeMove.Enabled = (view >= 3);
+            this.toolStripButtonModeLink.Enabled = (view >= 3);
         }
 
         private void toolStripMenuItemViewWeb_Click(object sender, EventArgs e)
@@ -7362,6 +7697,12 @@ namespace IfcDoc
         {
             SetView(3);
         }
+
+        private void toolStripMenuItemViewRequirement_Click(object sender, EventArgs e)
+        {
+            SetView(4);
+        }
+
 
         private void SetMode(int mode)
         {
@@ -7543,6 +7884,32 @@ namespace IfcDoc
         /// <param name="force">If true, redirects even if on same page; if false and on same page, then doesn't redirect</param>
         private void RedirectReference(DocSchema docSchema, DocDefinition docOld, DocDefinition docNew, bool force)
         {
+            foreach(DocSchemaRef docSchemaRef in docSchema.SchemaRefs)
+            {
+                foreach(DocDefinitionRef docDefRef in docSchemaRef.Definitions)
+                {
+                    if (force || (docDefRef.DiagramNumber != docOld.DiagramNumber))
+                    {
+                        foreach (DocLine docLine in docDefRef.Tree)
+                        {
+                            if (docLine.Definition == docOld)
+                            {
+                                docLine.Definition = CreateLink(docNew, docLine.DiagramLine[0]);
+                                this.ctlExpressG.LayoutDefinition(docDefRef);
+                            }
+                            foreach (DocLine docNode in docLine.Tree)
+                            {
+                                if (docNode.Definition == docOld)
+                                {
+                                    docNode.Definition = CreateLink(docNew, docLine.DiagramLine[0]);
+                                    this.ctlExpressG.LayoutDefinition(docDefRef);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
             // find reference to each source and redirect to target definition
             foreach (DocEntity docEntity in docSchema.Entities)
             {
@@ -7641,7 +8008,7 @@ namespace IfcDoc
                         docPageTarget.Delete();
 
                         // remove from tree
-                        tnSchema.Nodes[7].Nodes[index].Remove();
+                        ////tnSchema.Nodes[7].Nodes[index].Remove();
 
                         bCreate = false;
                         break;
@@ -7759,7 +8126,7 @@ namespace IfcDoc
                             targetschemaref = docSchemaRef;
 
                             int index = sourceschema.SchemaRefs.IndexOf(docSchemaRef);
-                            tnTargetSchema = this.treeView.SelectedNode.Nodes[6].Nodes[index];
+                            tnTargetSchema = this.treeView.SelectedNode.Nodes[7].Nodes[index];
                             break;
                         }
                     }
@@ -7769,7 +8136,7 @@ namespace IfcDoc
                         targetschemaref = new DocSchemaRef();
                         targetschemaref.Name = targetschema.Name.ToUpper();
                         sourceschema.SchemaRefs.Add(targetschemaref);
-                        tnTargetSchema = LoadNode(this.treeView.SelectedNode.Nodes[6], targetschemaref, targetschemaref.Name, false);
+                        tnTargetSchema = LoadNode(this.treeView.SelectedNode.Nodes[7], targetschemaref, targetschemaref.Name, false);
                     }
 
                     // add definition reference
@@ -8061,9 +8428,9 @@ namespace IfcDoc
             // if link mode, insert a rule
             if (this.ctlExpressG.Mode == ToolMode.Select)
             {
-                if (this.ctlConcept.Selection != null)
+                if (this.ctlConcept.Selection is DocModelRule)
                 {
-                    using (FormRule form = new FormRule(this.ctlConcept.Selection, this.m_project, this.ctlConcept.Template))
+                    using (FormRule form = new FormRule((DocModelRule)this.ctlConcept.Selection, this.m_project, this.ctlConcept.Template))
                     {
                         DialogResult res = form.ShowDialog(this);
                         if (res == System.Windows.Forms.DialogResult.OK)
@@ -8085,6 +8452,7 @@ namespace IfcDoc
 
         private void ctlConcept_SelectionChanged(object sender, EventArgs e)
         {
+            
             this.ctlProperties.SelectedRule = this.ctlConcept.Selection;
             this.ctlProperties.SelectedAttribute = this.ctlConcept.CurrentAttribute;
         }
@@ -8184,7 +8552,128 @@ namespace IfcDoc
             }
         }
 
-        private void BuildConceptForPropertySets(DocConceptRoot docRoot, DocTemplateDefinition docTemplatePset, DocPropertySet[] psets)
+        private void BuildConceptForPropertySets(DocConceptRoot docRoot, DocPropertySet[] psets)
+        {
+            DocTemplateDefinition docTemplatePsetObject = this.LoadTemplate(guidTemplatePsetObject);
+            DocTemplateDefinition docTemplatePsetProfile = this.LoadTemplate(guidTemplatePsetProfile);
+            DocTemplateDefinition docTemplatePsetMaterial = this.LoadTemplate(guidTemplatePsetMaterial);
+
+            DocTemplateDefinition docTemplate = docTemplatePsetObject;
+            if (docRoot.ApplicableEntity.Name.Equals("IfcMaterial"))
+            {
+                docTemplate = docTemplatePsetMaterial;
+            }
+            else if (docRoot.ApplicableEntity.Name.Equals("IfcProfileDef") ||
+                docRoot.ApplicableEntity.Name.Equals("IfcArbitraryClosedProfileDef") ||
+                docRoot.ApplicableEntity.Name.Equals("IfcArbitraryClosedProfileDefWithVoids"))
+            {
+                docTemplate = docTemplatePsetProfile;
+            }
+
+            DocTemplateUsage docConcept = null;
+
+            // get any existing concept for psets
+            foreach (DocTemplateUsage docExistConcept in docRoot.Concepts)
+            {
+                if (docExistConcept.Definition == docTemplate)
+                {
+                    docConcept = docExistConcept;
+                    break;
+                }
+            }
+
+            if (psets.Length > 0)
+            {
+                if (docConcept == null)
+                {
+                    docConcept = new DocTemplateUsage();
+                    docConcept.Definition = docTemplate;
+                    docRoot.Concepts.Add(docConcept);
+
+                    LoadNode(this.treeView.SelectedNode, docConcept, docConcept.ToString(), false);
+                }
+
+                // remove old listings
+                for (int iExist = docConcept.Items.Count - 1; iExist >= 0; iExist--)
+                {
+                    docConcept.Items[iExist].Delete();
+                    docConcept.Items.RemoveAt(iExist);
+                }
+
+                foreach (DocPropertySet docPset in psets)
+                {
+                    //if (docPset.PropertySetType == "PSET_OCCURRENCEDRIVEN" ||
+                    //    docPset.PropertySetType == "PSET_TYPEDRIVENOVERRIDE")
+                    {
+                        // add new, in order
+                        DocTemplateItem docItemPset = new DocTemplateItem();
+                        docItemPset.RuleParameters = "PsetName=" + docPset.Name + ";";
+                        docConcept.Items.Add(docItemPset);
+
+                        //... predefined type
+
+                        //... properties...
+                        int order = 0;
+                        foreach (DocProperty docProp in docPset.Properties)
+                        {
+                            DocTemplateDefinition docInnerTemplate = null;
+                            string suffix = String.Empty;
+                            switch (docProp.PropertyType)
+                            {
+                                case DocPropertyTemplateTypeEnum.P_SINGLEVALUE:
+                                    docInnerTemplate = this.m_project.GetTemplate(guidTemplatePropertySingle);
+                                    break;
+
+                                case DocPropertyTemplateTypeEnum.P_BOUNDEDVALUE:
+                                    docInnerTemplate = this.m_project.GetTemplate(guidTemplatePropertyBounded);
+                                    break;
+
+                                case DocPropertyTemplateTypeEnum.P_ENUMERATEDVALUE:
+                                    docInnerTemplate = this.m_project.GetTemplate(guidTemplatePropertyEnumerated);
+                                    if(docProp.SecondaryDataType != null)
+                                    {
+                                        int indexcolon = docProp.SecondaryDataType.IndexOf(':');
+                                        if (indexcolon > 0)
+                                        {
+                                            suffix = "Reference=" + docProp.SecondaryDataType.Substring(0, indexcolon);
+                                        }
+                                        else
+                                        {
+                                            suffix = "Reference=" + docProp.SecondaryDataType;
+                                        }
+                                    }
+                                    break;
+
+                                case DocPropertyTemplateTypeEnum.P_LISTVALUE:
+                                    docInnerTemplate = this.m_project.GetTemplate(guidTemplatePropertyList);
+                                    break;
+
+                                case DocPropertyTemplateTypeEnum.P_TABLEVALUE:
+                                    docInnerTemplate = this.m_project.GetTemplate(guidTemplatePropertyTable);
+                                    suffix = "Reference=" + docProp.SecondaryDataType;
+                                    break;
+
+                                case DocPropertyTemplateTypeEnum.P_REFERENCEVALUE:
+                                    docInnerTemplate = this.m_project.GetTemplate(guidTemplatePropertyReference);
+                                    suffix = "Reference=" + docProp.SecondaryDataType;
+                                    break;
+                            }
+
+                            if (docInnerTemplate != null)
+                            {
+                                order++;
+                                DocTemplateUsage docInnerConcept = docItemPset.RegisterParameterConcept("Properties", docInnerTemplate);
+                                DocTemplateItem docInnerItem = new DocTemplateItem();
+                                docInnerItem.RuleParameters = "Order=" + order + ";PropertyName=" + docProp.Name + ";Value=" + docProp.PrimaryDataType + ";" + suffix;
+                                docInnerConcept.Items.Add(docInnerItem);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private void BuildConceptForQuantitySets(DocConceptRoot docRoot, DocTemplateDefinition docTemplatePset, DocQuantitySet[] psets)
         {
             DocTemplateUsage docConcept = null;
 
@@ -8206,7 +8695,14 @@ namespace IfcDoc
                     docConcept.Definition = docTemplatePset;
                     docRoot.Concepts.Add(docConcept);
 
-                    LoadNode(this.treeView.SelectedNode, docConcept, docConcept.ToString(), false);
+                    TreeNode tnEntity = this.m_mapTree[docRoot.ApplicableEntity.Name.ToLower()];
+                    foreach(TreeNode tnSub in tnEntity.Nodes)
+                    {
+                        if(tnSub.Tag == docRoot)
+                        {
+                            LoadNode(tnSub, docConcept, docConcept.ToString(), false);
+                        }
+                    }
                 }
 
                 // remove old listings
@@ -8216,133 +8712,61 @@ namespace IfcDoc
                     docConcept.Items.RemoveAt(iExist);
                 }
 
-                foreach (DocPropertySet docPset in psets)
+                foreach (DocQuantitySet docPset in psets)
                 {
-                    //if (docPset.PropertySetType == "PSET_OCCURRENCEDRIVEN" ||
-                    //    docPset.PropertySetType == "PSET_TYPEDRIVENOVERRIDE")
                     {
                         // add new, in order
                         DocTemplateItem docItemPset = new DocTemplateItem();
-                        docItemPset.RuleParameters = "Name=" + docPset.Name + ";";
+                        docItemPset.RuleParameters = "QsetName=" + docPset.Name + ";";
                         docConcept.Items.Add(docItemPset);
 
                         //... predefined type
 
                         //... properties...
                         int order = 0;
-                        foreach (DocProperty docProp in docPset.Properties)
+                        foreach (DocQuantity docProp in docPset.Quantities)
                         {
                             DocTemplateDefinition docInnerTemplate = null;
                             string suffix = String.Empty;
-                            switch (docProp.PropertyType)
+                            switch (docProp.QuantityType)
                             {
-                                case DocPropertyTemplateTypeEnum.P_SINGLEVALUE:
-                                    docInnerTemplate = this.m_project.GetTemplate(new Guid("6655f6d0-29a8-47b8-8f3d-c9fce9c9a620"));
+                                case DocQuantityTemplateTypeEnum.Q_LENGTH:
+                                    docInnerTemplate = this.m_project.GetTemplate(new Guid("dd8678e1-e300-4f70-9d63-e539db4bd11c"));
                                     break;
 
-                                case DocPropertyTemplateTypeEnum.P_BOUNDEDVALUE:
-                                    docInnerTemplate = this.m_project.GetTemplate(new Guid("3d67a2d2-761d-44d9-a09e-b7fbb1fa5632"));
+                                case DocQuantityTemplateTypeEnum.Q_AREA:
+                                    docInnerTemplate = this.m_project.GetTemplate(new Guid("65ac4747-6eff-437e-94e2-643fd4e3bf86"));
                                     break;
 
-                                case DocPropertyTemplateTypeEnum.P_ENUMERATEDVALUE:
-                                    docInnerTemplate = this.m_project.GetTemplate(new Guid("c148a099-c351-43a8-9266-5f3de0b45a95"));
-                                    suffix = "Reference=" + docProp.SecondaryDataType.Substring(0, docProp.SecondaryDataType.IndexOf(':'));
+                                case DocQuantityTemplateTypeEnum.Q_VOLUME:
+                                    docInnerTemplate = this.m_project.GetTemplate(new Guid("6491a3b0-b7e9-412a-8226-bcd91c2b0b0e"));
                                     break;
 
-                                case DocPropertyTemplateTypeEnum.P_LISTVALUE:
-                                    docInnerTemplate = this.m_project.GetTemplate(new Guid("8e10b688-9179-4e3a-8db2-6abcaafe952d"));
+                                case DocQuantityTemplateTypeEnum.Q_WEIGHT:
+                                    docInnerTemplate = this.m_project.GetTemplate(new Guid("e1016e56-3c89-4f42-9679-07e1db3c0afb"));
                                     break;
 
-                                case DocPropertyTemplateTypeEnum.P_TABLEVALUE:
-                                    docInnerTemplate = this.m_project.GetTemplate(new Guid("35c947b0-6abc-4b13-8ec7-696ef2041721"));
-                                    suffix = "Reference=" + docProp.SecondaryDataType;
+                                case DocQuantityTemplateTypeEnum.Q_COUNT:
+                                    docInnerTemplate = this.m_project.GetTemplate(new Guid("8aaeff32-572c-4f6a-ac64-e2151663cbf1"));
                                     break;
 
-                                case DocPropertyTemplateTypeEnum.P_REFERENCEVALUE:
-                                    docInnerTemplate = this.m_project.GetTemplate(new Guid("e20bc116-889b-46cc-b193-31b3e2376a8e"));
-                                    suffix = "Reference=" + docProp.SecondaryDataType;
+                                case DocQuantityTemplateTypeEnum.Q_TIME:
+                                    docInnerTemplate = this.m_project.GetTemplate(new Guid("43c4c050-04de-4b0f-9e43-708bd98201a8"));
                                     break;
                             }
 
                             if (docInnerTemplate != null)
                             {
                                 order++;
-                                DocTemplateUsage docInnerConcept = docItemPset.RegisterParameterConcept("Properties", docInnerTemplate);
+                                DocTemplateUsage docInnerConcept = docItemPset.RegisterParameterConcept("Quantities", docInnerTemplate);
                                 DocTemplateItem docInnerItem = new DocTemplateItem();
-                                docInnerItem.RuleParameters = "Order=" + order + ";Name=" + docProp.Name + ";Value=" + docProp.PrimaryDataType + ";" + suffix;
+                                docInnerItem.RuleParameters = "Order=" + order + ";QuantityName=" + docProp.Name + ";";
                                 docInnerConcept.Items.Add(docInnerItem);
                             }
                         }
                     }
                 }
             }
-        }
-
-        private void toolStripMenuItemEditBuildConcepts_Click(object sender, EventArgs e)
-        {
-            DocTemplateDefinition docTemplatePset = this.m_project.GetTemplate(new Guid("f74255a6-0c0e-4f31-84ad-24981db62461"));
-
-            // also check for new template additions
-            DocTemplateDefinition docTemplatePropertyReference = this.m_project.GetTemplate(new Guid("e20bc116-889b-46cc-b193-31b3e2376a8e"));
-
-            if (docTemplatePset == null || docTemplatePropertyReference == null)
-            {
-                // import it
-                string filepath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + @"\defaults.mvdxml";
-                this.ImportMVD(filepath);
-                docTemplatePset = this.m_project.GetTemplate(new Guid("f74255a6-0c0e-4f31-84ad-24981db62461"));
-                if(docTemplatePset == null)
-                {
-                    MessageBox.Show(this, "The required file information is missing. You may need to re-download the application from www.buildingsmart-tech.org.");
-                    return;
-                }
-            }
-
-            // select property sets within dialog
-            DocConceptRoot docRoot = null;
-            DocEntity docEntity = null; // all properties
-            if(this.treeView.SelectedNode.Tag is DocConceptRoot)
-            {
-                docRoot = (DocConceptRoot)this.treeView.SelectedNode.Tag;
-                docEntity = docRoot.ApplicableEntity;
-                using (FormSelectProperty form = new FormSelectProperty(docEntity, this.m_project, true))
-                {
-                    if (form.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
-                    {
-                        this.BuildConceptForPropertySets(docRoot, docTemplatePset, form.IncludedPropertySets);
-                    }
-                }
-            }
-            else if (this.treeView.SelectedNode.Tag is DocModelView)
-            {
-                // all entities
-                DocModelView docView = (DocModelView)this.treeView.SelectedNode.Tag;
-                foreach (DocConceptRoot docEachRoot in docView.ConceptRoots)
-                {
-                    docEntity = docEachRoot.ApplicableEntity;
-
-                    // find all property sets directly linked to object
-                    List<DocPropertySet> psets = new List<DocPropertySet>();
-                    foreach(DocSection docSection in this.m_project.Sections)
-                    {
-                        foreach(DocSchema docSchema in docSection.Schemas)
-                        {
-                            foreach(DocPropertySet docPset in docSchema.PropertySets)
-                            {
-                                if ((docPset.PropertySetType == "PSET_OCCURRENCEDRIVEN" ||
-                                    docPset.PropertySetType == "PSET_TYPEDRIVENOVERRIDE") && 
-                                    !String.IsNullOrEmpty(docPset.ApplicableType) && docPset.ApplicableType.Equals(docEntity.Name))
-                                {
-                                    psets.Add(docPset);
-                                }
-                            }
-                        }
-                    }
-
-                    this.BuildConceptForPropertySets(docEachRoot, docTemplatePset, psets.ToArray());
-                }
-            }
-
         }
 
         private void ctlProperties_RuleContentChanged(object sender, EventArgs e)
@@ -8755,19 +9179,13 @@ namespace IfcDoc
             this.toolStripMenuItemStyleUML.Checked = true;
         }
 
-        private void toolStripMenuItemDictionaryUpload_Click(object sender, EventArgs e)
-        {
-            //DataDictionary.Upload(this.m_project);
-
-        }
-
         private void toolStripMenuItemToolsConvert_Click(object sender, EventArgs e)
         {
             using(OpenFileDialog dlgImport = new OpenFileDialog())
             {
                 dlgImport.Title = "Convert [Step 1 of 2]: Choose the input file";
                 dlgImport.Filter = "IFC-SPF (*.ifc)|*.ifc";
-                if (dlgImport.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
+                if(dlgImport.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
                 {
                     using(SaveFileDialog dlgExport = new SaveFileDialog())
                     {
@@ -8776,10 +9194,9 @@ namespace IfcDoc
                             "IFC-RDF (*.ttl)|*.ttl|" +
                             "IFC-XML (*.ifcxml)|*.ifcxml";
 
-                        dlgExport.FilterIndex = 2;
                         dlgExport.Title = "Convert [Step 2 of 2]: Specify the output file and format";
                         dlgExport.FileName = System.IO.Path.GetFileNameWithoutExtension(dlgImport.FileName);
-                        if (dlgExport.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
+                        if(dlgExport.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
                         {
                             //todo: run in background, show progress
 
@@ -8832,10 +9249,11 @@ namespace IfcDoc
                             }
 
                             //TODO: use schema according to source file, look up publication...
+
+
                             List<DocXsdFormat> xsdFormatBase = this.m_project.BuildXsdFormatList();
-                            string xmlns = "http://www.buildingsmart-tech.org/ifcXML/IFC4/final";
-                            string code = "IFC4";//...
-                            string ifcowlns = "http://ifcowl.openbimstandards.org/IFC4_ADD1";
+                            string schemacode = this.m_project.GetSchemaIdentifier();
+                            string schemauri = this.m_project.GetSchemaURI(null);
 
                             try
                             {
@@ -8843,15 +9261,15 @@ namespace IfcDoc
                                 switch (dlgExport.FilterIndex)
                                 {
                                     case 1:
-                                        formatter = new FormatJSN(xsdFormatBase, xmlns, code);
+                                        formatter = new FormatJSN(xsdFormatBase, schemauri, schemacode);
                                         break;
 
                                     case 2:
-                                        formatter = new FormatTTL(new System.IO.MemoryStream(), ifcowlns);
+                                        formatter = new FormatTTL(new System.IO.MemoryStream(), schemauri);
                                         break;
 
                                     case 3:
-                                        formatter = new FormatSML(new System.IO.MemoryStream(), xsdFormatBase, xmlns, code);
+                                        formatter = new FormatSML(new System.IO.MemoryStream(), xsdFormatBase, schemauri, schemacode);
                                         break;
                                 }
 
@@ -8859,7 +9277,6 @@ namespace IfcDoc
                                 {
                                     string content = formatter.FormatData(this.m_project, null, null, mapEntity, instances, rootproject, false);
 
-                                    System.IO.File.WriteAllText(dlgExport.FileName, "");
                                     using (System.IO.FileStream filestream = System.IO.File.OpenWrite(dlgExport.FileName))
                                     {
                                         System.IO.TextWriter writer = new System.IO.StreamWriter(filestream);
@@ -8880,6 +9297,142 @@ namespace IfcDoc
             }
             //...
         }
+
+        readonly Guid guidTemplateQset = new Guid("6652398e-6579-4460-8cb4-26295acfacc7");
+        readonly Guid guidTemplatePsetObject = new Guid("f74255a6-0c0e-4f31-84ad-24981db62461");
+        readonly Guid guidTemplatePsetMaterial = new Guid("f3269e50-59bd-4660-a1df-68e93c8ba30f");
+        readonly Guid guidTemplatePsetProfile = new Guid("34ff8134-b8da-4670-9839-f24b362d6ecf");
+
+        readonly Guid guidTemplatePropertySingle = new Guid("6655f6d0-29a8-47b8-8f3d-c9fce9c9a620");
+        readonly Guid guidTemplatePropertyBounded = new Guid("3d67a2d2-761d-44d9-a09e-b7fbb1fa5632");
+        readonly Guid guidTemplatePropertyEnumerated = new Guid("c148a099-c351-43a8-9266-5f3de0b45a95");
+        readonly Guid guidTemplatePropertyList = new Guid("8e10b688-9179-4e3a-8db2-6abcaafe952d");
+        readonly Guid guidTemplatePropertyTable = new Guid("35c947b0-6abc-4b13-8ec7-696ef2041721");
+        readonly Guid guidTemplatePropertyReference = new Guid("e20bc116-889b-46cc-b193-31b3e2376a8e");
+
+        private DocTemplateDefinition LoadTemplate(Guid guidTemplate)
+        {
+            DocTemplateDefinition docTemplatePset = this.m_project.GetTemplate(guidTemplate);
+
+            if (docTemplatePset == null || docTemplatePset.Version != "10.9")
+            {
+                // import it
+                string filepath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + @"\defaults.mvdxml";
+                this.ImportMVD(filepath);
+                docTemplatePset = this.m_project.GetTemplate(guidTemplate);
+                docTemplatePset.Version = "10.9";
+                if (docTemplatePset == null)
+                {
+                    MessageBox.Show(this, "The required file information is missing. You may need to re-download the application from www.buildingsmart-tech.org.");
+                }
+            }
+
+            return docTemplatePset;
+        }
+
+        private void toolStripMenuItemInsertConceptPset_Click(object sender, EventArgs e)
+        {
+            // select property sets within dialog
+            DocConceptRoot docRoot = null;
+            DocEntity docEntity = null; // all properties
+            if (this.treeView.SelectedNode.Tag is DocConceptRoot)
+            {
+                docRoot = (DocConceptRoot)this.treeView.SelectedNode.Tag;
+                docEntity = docRoot.ApplicableEntity;
+                using (FormSelectProperty form = new FormSelectProperty(docEntity, this.m_project, true))
+                {
+                    if (form.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
+                    {
+                        this.BuildConceptForPropertySets(docRoot, form.IncludedPropertySets);
+                    }
+                }
+            }
+            else if (this.treeView.SelectedNode.Tag is DocModelView)
+            {
+                // all entities
+                DocModelView docView = (DocModelView)this.treeView.SelectedNode.Tag;
+                foreach (DocConceptRoot docEachRoot in docView.ConceptRoots)
+                {
+                    docEntity = docEachRoot.ApplicableEntity;
+
+                    // find all property sets directly linked to object
+                    List<DocPropertySet> psets = new List<DocPropertySet>();
+                    foreach (DocSection docSection in this.m_project.Sections)
+                    {
+                        foreach (DocSchema docSchema in docSection.Schemas)
+                        {
+                            foreach (DocPropertySet docPset in docSchema.PropertySets)
+                            {
+                                if ((docPset.PropertySetType == "PSET_OCCURRENCEDRIVEN" ||
+                                    docPset.PropertySetType == "PSET_TYPEDRIVENOVERRIDE") &&
+                                    !String.IsNullOrEmpty(docPset.ApplicableType) && docPset.ApplicableType.Equals(docEntity.Name))
+                                {
+                                    psets.Add(docPset);
+                                }
+                            }
+                        }
+                    }
+
+                    this.BuildConceptForPropertySets(docEachRoot, psets.ToArray());
+                }
+            }
+
+        }
+
+        private void toolStripMenuItemInsertConceptQset_Click(object sender, EventArgs e)
+        {
+            DocTemplateDefinition docTemplatePset = this.LoadTemplate(guidTemplateQset);
+
+            // select property sets within dialog
+            DocConceptRoot docRoot = null;
+            DocEntity docEntity = null; // all properties
+            if (this.treeView.SelectedNode.Tag is DocConceptRoot)
+            {
+                docRoot = (DocConceptRoot)this.treeView.SelectedNode.Tag;
+                docEntity = docRoot.ApplicableEntity;
+                using (FormSelectQuantity form = new FormSelectQuantity(docEntity, this.m_project, true))
+                {
+                    if (form.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
+                    {
+                        this.BuildConceptForQuantitySets(docRoot, docTemplatePset, form.IncludedQuantitySets);
+                    }
+                }
+            }
+            else if (this.treeView.SelectedNode.Tag is DocModelView)
+            {
+                // all entities
+                DocModelView docView = (DocModelView)this.treeView.SelectedNode.Tag;
+                foreach (DocConceptRoot docEachRoot in docView.ConceptRoots)
+                {
+                    docEntity = docEachRoot.ApplicableEntity;
+
+                    // find all property sets directly linked to object
+                    List<DocQuantitySet> psets = new List<DocQuantitySet>();
+                    foreach (DocSection docSection in this.m_project.Sections)
+                    {
+                        foreach (DocSchema docSchema in docSection.Schemas)
+                        {
+                            foreach (DocQuantitySet docPset in docSchema.QuantitySets)
+                            {
+                                if (!String.IsNullOrEmpty(docPset.ApplicableType) && docPset.ApplicableType.Equals(docEntity.Name))
+                                {
+                                    psets.Add(docPset);
+                                }
+                            }
+                        }
+                    }
+
+                    this.BuildConceptForQuantitySets(docEachRoot, docTemplatePset, psets.ToArray());
+                }
+            }
+
+        }
+
+        private void ctlProperties_SchemaChanged(object sender, EventArgs e)
+        {
+            this.ctlExpressG.Redraw();
+        }
+
         
     }
 }

@@ -571,7 +571,7 @@
     <value>ctlRules</value>
   </data>
   <data name="&gt;&gt;ctlRules.Type" xml:space="preserve">
-    <value>IfcDoc.CtlRules, IfcDoc, Version=10.3.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>IfcDoc.CtlRules, IfcDoc, Version=11.1.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;ctlRules.Parent" xml:space="preserve">
     <value>tabPageTemplate</value>
@@ -610,7 +610,7 @@
     <value>ctlParameters</value>
   </data>
   <data name="&gt;&gt;ctlParameters.Type" xml:space="preserve">
-    <value>IfcDoc.CtlParameters, IfcDoc, Version=10.3.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>IfcDoc.CtlParameters, IfcDoc, Version=11.1.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;ctlParameters.Parent" xml:space="preserve">
     <value>tabPageConcept</value>
@@ -810,23 +810,29 @@
   <data name="&gt;&gt;tabPagePropertySet.ZOrder" xml:space="preserve">
     <value>5</value>
   </data>
-  <data name="buttonPropertyDataSecondary.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
+  <data name="&gt;&gt;label20.Name" xml:space="preserve">
+    <value>label20</value>
   </data>
-  <data name="buttonPropertyDataSecondary.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
+  <data name="&gt;&gt;label20.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="buttonPropertyDataSecondary.Location" type="System.Drawing.Point, System.Drawing">
-    <value>263, 123</value>
+  <data name="&gt;&gt;label20.Parent" xml:space="preserve">
+    <value>tabPageProperty</value>
   </data>
-  <data name="buttonPropertyDataSecondary.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 23</value>
+  <data name="&gt;&gt;label20.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
-  <data name="buttonPropertyDataSecondary.TabIndex" type="System.Int32, mscorlib">
-    <value>15</value>
+  <data name="&gt;&gt;comboBoxPropertyAccess.Name" xml:space="preserve">
+    <value>comboBoxPropertyAccess</value>
   </data>
-  <data name="buttonPropertyDataSecondary.Text" xml:space="preserve">
-    <value>Select...</value>
+  <data name="&gt;&gt;comboBoxPropertyAccess.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;comboBoxPropertyAccess.Parent" xml:space="preserve">
+    <value>tabPageProperty</value>
+  </data>
+  <data name="&gt;&gt;comboBoxPropertyAccess.ZOrder" xml:space="preserve">
+    <value>1</value>
   </data>
   <data name="&gt;&gt;buttonPropertyDataSecondary.Name" xml:space="preserve">
     <value>buttonPropertyDataSecondary</value>
@@ -838,19 +844,7 @@
     <value>tabPageProperty</value>
   </data>
   <data name="&gt;&gt;buttonPropertyDataSecondary.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="textBoxPropertyDataSecondary.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
-  </data>
-  <data name="textBoxPropertyDataSecondary.Location" type="System.Drawing.Point, System.Drawing">
-    <value>7, 125</value>
-  </data>
-  <data name="textBoxPropertyDataSecondary.Size" type="System.Drawing.Size, System.Drawing">
-    <value>250, 20</value>
-  </data>
-  <data name="textBoxPropertyDataSecondary.TabIndex" type="System.Int32, mscorlib">
-    <value>14</value>
+    <value>2</value>
   </data>
   <data name="&gt;&gt;textBoxPropertyDataSecondary.Name" xml:space="preserve">
     <value>textBoxPropertyDataSecondary</value>
@@ -862,25 +856,7 @@
     <value>tabPageProperty</value>
   </data>
   <data name="&gt;&gt;textBoxPropertyDataSecondary.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="label18.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="label18.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="label18.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 107</value>
-  </data>
-  <data name="label18.Size" type="System.Drawing.Size, System.Drawing">
-    <value>114, 13</value>
-  </data>
-  <data name="label18.TabIndex" type="System.Int32, mscorlib">
-    <value>13</value>
-  </data>
-  <data name="label18.Text" xml:space="preserve">
-    <value>Secondary Data Type:</value>
+    <value>3</value>
   </data>
   <data name="&gt;&gt;label18.Name" xml:space="preserve">
     <value>label18</value>
@@ -892,25 +868,7 @@
     <value>tabPageProperty</value>
   </data>
   <data name="&gt;&gt;label18.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="buttonPropertyDataPrimary.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Right</value>
-  </data>
-  <data name="buttonPropertyDataPrimary.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="buttonPropertyDataPrimary.Location" type="System.Drawing.Point, System.Drawing">
-    <value>263, 74</value>
-  </data>
-  <data name="buttonPropertyDataPrimary.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 23</value>
-  </data>
-  <data name="buttonPropertyDataPrimary.TabIndex" type="System.Int32, mscorlib">
-    <value>12</value>
-  </data>
-  <data name="buttonPropertyDataPrimary.Text" xml:space="preserve">
-    <value>Select...</value>
+    <value>4</value>
   </data>
   <data name="&gt;&gt;buttonPropertyDataPrimary.Name" xml:space="preserve">
     <value>buttonPropertyDataPrimary</value>
@@ -922,19 +880,7 @@
     <value>tabPageProperty</value>
   </data>
   <data name="&gt;&gt;buttonPropertyDataPrimary.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="textBoxPropertyDataPrimary.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
-  </data>
-  <data name="textBoxPropertyDataPrimary.Location" type="System.Drawing.Point, System.Drawing">
-    <value>7, 76</value>
-  </data>
-  <data name="textBoxPropertyDataPrimary.Size" type="System.Drawing.Size, System.Drawing">
-    <value>250, 20</value>
-  </data>
-  <data name="textBoxPropertyDataPrimary.TabIndex" type="System.Int32, mscorlib">
-    <value>11</value>
+    <value>5</value>
   </data>
   <data name="&gt;&gt;textBoxPropertyDataPrimary.Name" xml:space="preserve">
     <value>textBoxPropertyDataPrimary</value>
@@ -946,25 +892,7 @@
     <value>tabPageProperty</value>
   </data>
   <data name="&gt;&gt;textBoxPropertyDataPrimary.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="labelPropertyType.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="labelPropertyType.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="labelPropertyType.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 58</value>
-  </data>
-  <data name="labelPropertyType.Size" type="System.Drawing.Size, System.Drawing">
-    <value>97, 13</value>
-  </data>
-  <data name="labelPropertyType.TabIndex" type="System.Int32, mscorlib">
-    <value>10</value>
-  </data>
-  <data name="labelPropertyType.Text" xml:space="preserve">
-    <value>Primary Data Type:</value>
+    <value>6</value>
   </data>
   <data name="&gt;&gt;labelPropertyType.Name" xml:space="preserve">
     <value>labelPropertyType</value>
@@ -976,25 +904,7 @@
     <value>tabPageProperty</value>
   </data>
   <data name="&gt;&gt;labelPropertyType.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="label4.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="label4.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="label4.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 9</value>
-  </data>
-  <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>76, 13</value>
-  </data>
-  <data name="label4.TabIndex" type="System.Int32, mscorlib">
-    <value>9</value>
-  </data>
-  <data name="label4.Text" xml:space="preserve">
-    <value>Property Type:</value>
+    <value>7</value>
   </data>
   <data name="&gt;&gt;label4.Name" xml:space="preserve">
     <value>label4</value>
@@ -1006,39 +916,6 @@
     <value>tabPageProperty</value>
   </data>
   <data name="&gt;&gt;label4.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="comboBoxPropertyType.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
-  </data>
-  <data name="comboBoxPropertyType.Items" xml:space="preserve">
-    <value>P_SINGLEVALUE</value>
-  </data>
-  <data name="comboBoxPropertyType.Items1" xml:space="preserve">
-    <value>P_ENUMERATEDVALUE</value>
-  </data>
-  <data name="comboBoxPropertyType.Items2" xml:space="preserve">
-    <value>P_BOUNDEDVALUE</value>
-  </data>
-  <data name="comboBoxPropertyType.Items3" xml:space="preserve">
-    <value>P_LISTVALUE</value>
-  </data>
-  <data name="comboBoxPropertyType.Items4" xml:space="preserve">
-    <value>P_TABLEVALUE</value>
-  </data>
-  <data name="comboBoxPropertyType.Items5" xml:space="preserve">
-    <value>P_REFERENCEVALUE</value>
-  </data>
-  <data name="comboBoxPropertyType.Items6" xml:space="preserve">
-    <value>COMPLEX</value>
-  </data>
-  <data name="comboBoxPropertyType.Location" type="System.Drawing.Point, System.Drawing">
-    <value>7, 27</value>
-  </data>
-  <data name="comboBoxPropertyType.Size" type="System.Drawing.Size, System.Drawing">
-    <value>331, 21</value>
-  </data>
-  <data name="comboBoxPropertyType.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
   </data>
   <data name="&gt;&gt;comboBoxPropertyType.Name" xml:space="preserve">
@@ -1051,7 +928,7 @@
     <value>tabPageProperty</value>
   </data>
   <data name="&gt;&gt;comboBoxPropertyType.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>9</value>
   </data>
   <data name="tabPageProperty.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 22</value>
@@ -1080,6 +957,30 @@
   <data name="&gt;&gt;tabPageProperty.ZOrder" xml:space="preserve">
     <value>6</value>
   </data>
+  <data name="&gt;&gt;label21.Name" xml:space="preserve">
+    <value>label21</value>
+  </data>
+  <data name="&gt;&gt;label21.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label21.Parent" xml:space="preserve">
+    <value>tabPageQuantity</value>
+  </data>
+  <data name="&gt;&gt;label21.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;comboBoxQuantityAccess.Name" xml:space="preserve">
+    <value>comboBoxQuantityAccess</value>
+  </data>
+  <data name="&gt;&gt;comboBoxQuantityAccess.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;comboBoxQuantityAccess.Parent" xml:space="preserve">
+    <value>tabPageQuantity</value>
+  </data>
+  <data name="&gt;&gt;comboBoxQuantityAccess.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
   <data name="&gt;&gt;labelQuantityType.Name" xml:space="preserve">
     <value>labelQuantityType</value>
   </data>
@@ -1090,7 +991,7 @@
     <value>tabPageQuantity</value>
   </data>
   <data name="&gt;&gt;labelQuantityType.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>2</value>
   </data>
   <data name="&gt;&gt;comboBoxQuantityType.Name" xml:space="preserve">
     <value>comboBoxQuantityType</value>
@@ -1102,7 +1003,7 @@
     <value>tabPageQuantity</value>
   </data>
   <data name="&gt;&gt;comboBoxQuantityType.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>3</value>
   </data>
   <data name="tabPageQuantity.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 22</value>
@@ -1990,7 +1891,7 @@
     <value>ctlOperators</value>
   </data>
   <data name="&gt;&gt;ctlOperators.Type" xml:space="preserve">
-    <value>IfcDoc.CtlOperators, IfcDoc, Version=10.3.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>IfcDoc.CtlOperators, IfcDoc, Version=11.1.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;ctlOperators.Parent" xml:space="preserve">
     <value>tabPageOperations</value>
@@ -2187,6 +2088,90 @@
   <data name="&gt;&gt;tabPageViews.ZOrder" xml:space="preserve">
     <value>18</value>
   </data>
+  <data name="textBoxPublicationNote.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
+  </data>
+  <data name="textBoxPublicationNote.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 242</value>
+  </data>
+  <data name="textBoxPublicationNote.Multiline" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="textBoxPublicationNote.Size" type="System.Drawing.Size, System.Drawing">
+    <value>340, 146</value>
+  </data>
+  <data name="textBoxPublicationNote.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="textBoxPublicationNote.Text" xml:space="preserve">
+    <value>For the Documentation tab, the list of translations indicates those included within the overall publication; if none specified, then all available translations are included.
+
+For the Identity tab, fields are used for generating the header frame.
+
+If change logs are specified underneath the publication, they override change logs defined for the project overall.
+
+The EXPRESS schema identifier is defined at the first node in the tree.</value>
+  </data>
+  <data name="&gt;&gt;textBoxPublicationNote.Name" xml:space="preserve">
+    <value>textBoxPublicationNote</value>
+  </data>
+  <data name="&gt;&gt;textBoxPublicationNote.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;textBoxPublicationNote.Parent" xml:space="preserve">
+    <value>tabPagePublication</value>
+  </data>
+  <data name="&gt;&gt;textBoxPublicationNote.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="checkBoxPublishHtmlExamples.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="checkBoxPublishHtmlExamples.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="checkBoxPublishHtmlExamples.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 211</value>
+  </data>
+  <data name="checkBoxPublishHtmlExamples.Size" type="System.Drawing.Size, System.Drawing">
+    <value>331, 17</value>
+  </data>
+  <data name="checkBoxPublishHtmlExamples.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="checkBoxPublishHtmlExamples.Text" xml:space="preserve">
+    <value>Provide examples with HTML annotations (increases overall size)</value>
+  </data>
+  <data name="&gt;&gt;checkBoxPublishHtmlExamples.Name" xml:space="preserve">
+    <value>checkBoxPublishHtmlExamples</value>
+  </data>
+  <data name="&gt;&gt;checkBoxPublishHtmlExamples.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;checkBoxPublishHtmlExamples.Parent" xml:space="preserve">
+    <value>tabPagePublication</value>
+  </data>
+  <data name="&gt;&gt;checkBoxPublishHtmlExamples.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="checkBoxPublishExchangeTables.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="checkBoxPublishExchangeTables.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="checkBoxPublishExchangeTables.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 188</value>
+  </data>
+  <data name="checkBoxPublishExchangeTables.Size" type="System.Drawing.Size, System.Drawing">
+    <value>261, 17</value>
+  </data>
+  <data name="checkBoxPublishExchangeTables.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="checkBoxPublishExchangeTables.Text" xml:space="preserve">
+    <value>Show tables of exchanges applicable to concepts</value>
+  </data>
   <data name="&gt;&gt;checkBoxPublishExchangeTables.Name" xml:space="preserve">
     <value>checkBoxPublishExchangeTables</value>
   </data>
@@ -2197,7 +2182,25 @@
     <value>tabPagePublication</value>
   </data>
   <data name="&gt;&gt;checkBoxPublishExchangeTables.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>2</value>
+  </data>
+  <data name="checkBoxPublishUML.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="checkBoxPublishUML.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="checkBoxPublishUML.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 165</value>
+  </data>
+  <data name="checkBoxPublishUML.Size" type="System.Drawing.Size, System.Drawing">
+    <value>213, 17</value>
+  </data>
+  <data name="checkBoxPublishUML.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="checkBoxPublishUML.Text" xml:space="preserve">
+    <value>UML diagrams (instead of EXPRESS-G)</value>
   </data>
   <data name="&gt;&gt;checkBoxPublishUML.Name" xml:space="preserve">
     <value>checkBoxPublishUML</value>
@@ -2209,7 +2212,19 @@
     <value>tabPagePublication</value>
   </data>
   <data name="&gt;&gt;checkBoxPublishUML.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>3</value>
+  </data>
+  <data name="textBoxFooter.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="textBoxFooter.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 77</value>
+  </data>
+  <data name="textBoxFooter.Size" type="System.Drawing.Size, System.Drawing">
+    <value>340, 20</value>
+  </data>
+  <data name="textBoxFooter.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
   </data>
   <data name="&gt;&gt;textBoxFooter.Name" xml:space="preserve">
     <value>textBoxFooter</value>
@@ -2221,7 +2236,19 @@
     <value>tabPagePublication</value>
   </data>
   <data name="&gt;&gt;textBoxFooter.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>4</value>
+  </data>
+  <data name="textBoxHeader.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="textBoxHeader.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 26</value>
+  </data>
+  <data name="textBoxHeader.Size" type="System.Drawing.Size, System.Drawing">
+    <value>340, 20</value>
+  </data>
+  <data name="textBoxHeader.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
   </data>
   <data name="&gt;&gt;textBoxHeader.Name" xml:space="preserve">
     <value>textBoxHeader</value>
@@ -2233,7 +2260,25 @@
     <value>tabPagePublication</value>
   </data>
   <data name="&gt;&gt;textBoxHeader.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="label17.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label17.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label17.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 61</value>
+  </data>
+  <data name="label17.Size" type="System.Drawing.Size, System.Drawing">
+    <value>68, 13</value>
+  </data>
+  <data name="label17.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
+  </data>
+  <data name="label17.Text" xml:space="preserve">
+    <value>Page Footer:</value>
   </data>
   <data name="&gt;&gt;label17.Name" xml:space="preserve">
     <value>label17</value>
@@ -2245,7 +2290,25 @@
     <value>tabPagePublication</value>
   </data>
   <data name="&gt;&gt;label17.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>6</value>
+  </data>
+  <data name="label5.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label5.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label5.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 10</value>
+  </data>
+  <data name="label5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>73, 13</value>
+  </data>
+  <data name="label5.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="label5.Text" xml:space="preserve">
+    <value>Page Header:</value>
   </data>
   <data name="&gt;&gt;label5.Name" xml:space="preserve">
     <value>label5</value>
@@ -2257,7 +2320,25 @@
     <value>tabPagePublication</value>
   </data>
   <data name="&gt;&gt;label5.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>7</value>
+  </data>
+  <data name="checkBoxPublishISO.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="checkBoxPublishISO.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="checkBoxPublishISO.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 142</value>
+  </data>
+  <data name="checkBoxPublishISO.Size" type="System.Drawing.Size, System.Drawing">
+    <value>307, 17</value>
+  </data>
+  <data name="checkBoxPublishISO.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="checkBoxPublishISO.Text" xml:space="preserve">
+    <value>ISO conformance (encapsulates EXPRESS with comments)</value>
   </data>
   <data name="&gt;&gt;checkBoxPublishISO.Name" xml:space="preserve">
     <value>checkBoxPublishISO</value>
@@ -2269,7 +2350,25 @@
     <value>tabPagePublication</value>
   </data>
   <data name="&gt;&gt;checkBoxPublishISO.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>8</value>
+  </data>
+  <data name="checkBoxPublishHideHistory.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="checkBoxPublishHideHistory.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="checkBoxPublishHideHistory.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 119</value>
+  </data>
+  <data name="checkBoxPublishHideHistory.Size" type="System.Drawing.Size, System.Drawing">
+    <value>120, 17</value>
+  </data>
+  <data name="checkBoxPublishHideHistory.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="checkBoxPublishHideHistory.Text" xml:space="preserve">
+    <value>Hide change history</value>
   </data>
   <data name="&gt;&gt;checkBoxPublishHideHistory.Name" xml:space="preserve">
     <value>checkBoxPublishHideHistory</value>
@@ -2281,7 +2380,7 @@
     <value>tabPagePublication</value>
   </data>
   <data name="&gt;&gt;checkBoxPublishHideHistory.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>9</value>
   </data>
   <data name="tabPagePublication.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 22</value>
@@ -3153,54 +3252,6 @@
   <data name="&gt;&gt;label7.ZOrder" xml:space="preserve">
     <value>14</value>
   </data>
-  <data name="ctlRules.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="ctlRules.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 3</value>
-  </data>
-  <data name="ctlRules.Size" type="System.Drawing.Size, System.Drawing">
-    <value>346, 388</value>
-  </data>
-  <data name="ctlRules.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;ctlRules.Name" xml:space="preserve">
-    <value>ctlRules</value>
-  </data>
-  <data name="&gt;&gt;ctlRules.Type" xml:space="preserve">
-    <value>IfcDoc.CtlRules, IfcDoc, Version=10.3.0.0, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;ctlRules.Parent" xml:space="preserve">
-    <value>tabPageTemplate</value>
-  </data>
-  <data name="&gt;&gt;ctlRules.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="ctlParameters.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="ctlParameters.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 3</value>
-  </data>
-  <data name="ctlParameters.Size" type="System.Drawing.Size, System.Drawing">
-    <value>346, 388</value>
-  </data>
-  <data name="ctlParameters.TabIndex" type="System.Int32, mscorlib">
-    <value>9</value>
-  </data>
-  <data name="&gt;&gt;ctlParameters.Name" xml:space="preserve">
-    <value>ctlParameters</value>
-  </data>
-  <data name="&gt;&gt;ctlParameters.Type" xml:space="preserve">
-    <value>IfcDoc.CtlParameters, IfcDoc, Version=10.3.0.0, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;ctlParameters.Parent" xml:space="preserve">
-    <value>tabPageConcept</value>
-  </data>
-  <data name="&gt;&gt;ctlParameters.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
   <data name="listViewExchange.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
@@ -3304,17 +3355,17 @@
   <data name="toolStripButtonReqImportRecommended.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAJVSURBVDhPfZNdbItRGMePrsgu5gIRDREJQkRSJBIhkZBM
-        UC6ECxJcDJEwQkLSkIlIXIzYbCZMfLV0tala52NjH+ksqZGh2dqsWD/WduvbVteum1Ti4u953hLVvOmb
-        /POc8+b/+5/nnJwjVPXuMo3Bmzpsl6B/F8OpniiOdEawvzWMnbYgNlsCWGf2YYVxCJo7X1BU9TEtTjzU
-        CyFmk9RCY3ClXn2bQL+UgSf+E85IBnb/JCzucdzsG8PFnjiOtUvY9WIUq56GMKPBD1HZmyFYJ4fonodh
-        86TR6Z1Et/8HOrwTaB5M44Eziau9CZy1x3CwTYKuZQTLLEEUmwMQN9wguIK0VOxoCeH+5yTMAyk0ucbl
-        eu9TEtfeJ3DhbRzH26PY83IUG56FMa8pCLWJAupcHFBF0opSaxCXHQnUEFD3YUyulY7vON8dx8mOKA60
-        RrDVNoLllhBKzMOY8oi2cH2AA6pJK8X6xgDOdMVwzh5HBUFcT9P86BsJ+wjeTq2vpr3PaRxGEa/OAbU5
-        AVqTj048Iu/z0GsJZW0RGdxNh1baHIaW4LkET/0Ls2r6/wUsNAxhExm3UJvbaDWuG2m+xhrCkidBzHyc
-        B+cHlNz9igV0OIvJzMAi0nyazyKwuCEAVT6cH6C67ZFPdhqZp5O48lxlyoNylRsg6j3KpkL6L+DWoLKp
-        kKqdOQFX+tLC6FM2KsnohSi3/iI4e5FEuUEvLjkyclt8QWqp8lhJvDLDa/c6Cc5eZfr4VfHD4B+cyq0V
-        EnvYm31M9Kn/DDiNWuJ9FRR72EuMUP8Gt4Em2ZC0+WsAAAAASUVORK5CYII=
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAJVSURBVDhPfZNdSJNRGMdPcxVe2EVFOIoIKooIVoEQBUGB
+        Ua0uoi4KKsiKoC8KCkZhRNCFRZpmlNHXZnNpy5x9aKkxE5aF1dANV7kPt+nebc3NaSzo4t/zvCta42Uv
+        /HnOefn//uc5h3OEqs5VpjF4kodsEvTvojjVE8HhrjD2toWw3RrARosfa8xeLDcOQXPnCwoqP6bEiXq9
+        EGI2SS00Bmfy5bcJ9EtpuGM/4QinYfNNwuIax82+MVzsieFoh4Qdz0ex8kkQMxp8EBW9aYJ1cojuWQhW
+        dwpdnkl0+36g0zOBlsEUHjgSuNobx1lbFAfaJehaR7DUEkCh2Q9xwwWCy0lLxLbWIO5/TsA8kESTc1yu
+        9z4lcO19HBfexnC8I4JdL0ax7mkIc5sCUJsooNbJAZUkrShtDuCyPY5qAmo/jMm1wv4d57tjONkZwb62
+        MDZbR7DMEkSReRhTHtIWrg9wQBVphVjb6MeZN1Gcs8VQThDX0zQ/8lrCHoK3UuuraO9zGodRwKtzQE1W
+        gNbkpRMPy/s8+EpCWXtYBnfSoZW2hKAluJjgqX9hVnX/v4AFhiFsIOMmanMLrcZ1Pc1LmoNY/DiAmY9y
+        4NyAortfMZ8OZxGZGVhImkfzWQQWNvihyoVzA1S33fLJTiPzdBJXnqtMOVC2sgNEnVvZlE//BdwaVDbl
+        U5UjK+BKX0oYvcpGJRk9EPvrfxGcuUjimEEvLtnTclt8QWqo8lhJvDLDq3c7CM5cZfr4VfHD4B+cyq3l
+        E3vYm3lM9Kn/DDiNWuJ95RV72EuMUP8GmW0mrYDKLnIAAAAASUVORK5CYII=
 </value>
   </data>
   <data name="toolStripButtonReqImportRecommended.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
@@ -3359,19 +3410,19 @@
   <data name="toolStripButtonReqImportExcluded.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAKmSURBVDhPhZPZS1RhGMbPhX9BdBveCF3NnHGrcM2F3Bg1
-        t3HSUUdz3E3LZZoaLVMzK61oIdsobIOMroLwov6AKIkgiAykjKw5c7YZF7x4et9zkpkI6sADw/D9nudd
-        vk/4WmltXHalKtqEB/rZNmjjTVBHXFD9DijeMih9dsg9+ZA7sxFsTsNSdbw2nxvnFQRhOylGYHjj5Sw2
-        Xs1i/cUM1p5NY/XRGMJ3jiF0rRf6dAuZ1kEdKofSX0hGWVguEdcILjJMtFMN2Ji/hfXnV0348TjC9/wI
-        zfQjdKkT+mQjtBEnFF8plMN5kNszEahLAsF+0k5BG20gcAqrTyax+nAU4bsE3xhA6HIX9PPNlE7tDFVA
-        GSiCfCgHwdY0/KxNZIMpkiiow06E749Q6hDCt30IXe8z4SkPtNNU+okqKEeLzfSOTEgH92DlQAIbTJNs
-        guKrQPjmoAle6UHoYjv0c5TM8EkaJJd+pAByVxaCnlRIDcn47rBFDOT+YrPXC21UMm1i0g1trBbqMCX7
-        SmgLBHebpUuNuyDVJmC5UowYSD0F0M+4oU/UG6BGqaqfJu61UzKtr5vW15oOqWk3pLpEBKpt+FIeZRDo
-        yDH65EGpx2nv3C+tS+ndZ6zMSN6CnTYEHCKWyqIMfngyoAxSGk2ZyzXArmxaVwb1nALJTWW7IjDrc2mU
-        wYo7hdaTa5Qqd+6F3JZugpxan2T0zGVvwaxPJdaIwbeaZARbUk2IVmQMikEXgc74P8AtfbBHGSyWiRrf
-        LInFpdYwSInVf4OslSoRc9mxmwSbF+lpZpz3rd2ytrifSqPePhZbjYT3RVa8K7RiocCCN/mmXudZ8MAS
-        u+nYsW2BYPMq08evih8G/8GuXNq/xGf4rPmY6Iv5/YPdRJLtP+IzfJYYIeYXRNgXOMZhBJUAAAAASUVO
-        RK5CYII=
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAKnSURBVDhPhZPZS1RhGMbPhX9BdBtCCF05Z9wqXHMhN0bN
+        bZx01NEcd9NymaZGy9TMSitayBZJjAoiugrCi/oDoiSCIDKQMpqaM2ebccGLp/c9J5mJoA48MAzf73ne
+        5fuEr1WWplVnmqJNuqFfaIc20Qx11AnVZ4fiKYfSb4PcWwC5KwfBlnSs1CRoi3lxHkEQdpJiBIY3Xy5g
+        89UCNl7MYv3ZDNYejSM8dxKhm33QZ1rJtB7qcAWUgSIyysZqqbhOcLFhop1txObiXWw8v2HCjycQnvch
+        NDuA0NUu6FNN0EYdULxlUI7lQ+7IQqA+GQT7SHsEbayRwGmsPZnC2sMxhO8TfHsQoWvd0C+1UDq1M1wJ
+        ZbAY8tFcBNvS8bMuiQ2mSaKgjjgQfjBKqcMI3/MidKvfhKfd0M5R6aeroZwoMdM7syAd2Q//4UQ2mCFZ
+        BcVbifCdIRO83ovQlQ7oFymZ4TM0SC79eCHk7mwE3WmQGlPw3W6NGMgDJWavl9upZNrElAvaeB3UEUr2
+        ltIWCO4xS5ea9kKqS8RqlRgxkHoLoZ93QZ9sMECNUlUfTdxjo2RaXw+try0DUvM+SPVJCNRY8aUiyiDQ
+        mWv0yYNST9HeuV9al9J30FiZkbwNO6wI2EWslEcZ/HBnQhmiNJoyl2uA3Tm0rkzqORWSi8p2RmDW57Io
+        A78rldaTZ5Qqdx2A3J5hgpzakGz0zGVvw6xPpZaIwbfaFARb00yIVmQMikEngY6EP8BtfbBFGSyXixrf
+        LInFpdYySIk1f4Msf7WI+ZzYLYLNi/Q0K87z1ha/vnyISqPePpZYjIT3xRa8K7JgqTAebwpMvc6Px9zu
+        2C37rh1LBJtXmT5+Vfww+A925dL+JT7DZ83HRF/M7x/sJpKs/xGf4bPECDG/ADG6FxsSsBFXAAAAAElF
+        TkSuQmCC
 </value>
   </data>
   <data name="toolStripButtonReqImportExcluded.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
@@ -3389,16 +3440,16 @@
   <data name="toolStripButtonReqExportMandatory.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAIISURBVDhPpZNfSFNRHMePKIrDMVKMkL2kFcOWGJphEYPe
-        /LPt3i1FS12tKBtlVoqJhTMhVMLmi5Y9JKYGxe6mVkJamy7F1ASLEIqgHnpXeurp2/deEkYsVPrC5+X8
-        vp9zDtxzRcwMl+zIGytdK/Tb18WRjFyu6EmcNttK8gPW9q6F6/AtNWPvrYIJLh0kSdpw0wxad5dPVSD8
-        bRQTX0ZwafosxIH0Rk6MZPNb5AVtj/tXOjH59SkCqw/Ru9yG/R2FnziyEJ1W+mcGi46feVOFl5+HoKz2
-        Y+hDN+5zA3fIBV1plo+NTBKvdWPlUNAW6VlqxcjHHgysdKFv2Yu7C424OXse5j7LD1aKiEEr/x3DE6vj
-        XKiaJ95G7/tW+Bab0fnuKrxzF9AUqUbFpBOJ5fsGWDWRBE2KTo5i/94yW4uO+Xrcma9D29xFtLx1o2Hm
-        JK6ET8ATcsD8qPgnqzJJ1aSNGJ/Z3DWvy3Aj4tJQT2yYrkR9uAyXKW7geOWA7nS2QiWH/LkFH81RPhpP
-        yIm6KKLFaMx+yy9h1Ltp7iRxwuS3tp+ail2OhZO30F/Ln6FcQJLEMb+0XrONDSrZTX/AWwjhIruEaUzG
-        4Rcycp/LyB6XkTkqIYOkBiSkkETFjniSQJIVCQaupQUlUPYS9YuILOIh3eTeFlG7qqO6IoXsIepftx1U
-        R3X/J0L8BuOHLV+T4BiJAAAAAElFTkSuQmCC
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAIISURBVDhPpZNfSFNRHMePKErDMVKMkL2kFcOWGJphEYPe
+        LLfdu6VopcsV/RllVkqKhTMhVMImhIY+KKYGxe6mVkKamy7FzASLEIqgHnxPeurp2/deFEZMVPrC5+X8
+        vp9zDtxzRcwMntqZO1L0q8BvXxVH03O4oidx2mwryQtYm9vmb8O3UI999/LHuHSIJGnDTdNv3VMyUYrw
+        j2GMfRvCtakLEAfTajkxks1vkRu0Pe1easX49+cILPegc7EJB1oKvnBkITqttGH6C09UTp7D668DUJa7
+        MfCpHU+4gTvkgq4o08dGBonXurFyOGiLdCw0YuhzB/qW2tC16MXD+VrcnbkEc5dlhZVCYtDK/8bwzOq4
+        GCrniffR+bERvg/1aH1/E97Zy7gTKUfpuBOJJfv7WDWRBE2KTrZi/9kwcwUtc9V4MFeFptmraHjnRs30
+        GdwIn4Yn5IC59+RvVmWSoknrMb6wuSveFqMu4tJQT6yZKkN1uBjXKa7jeOOA7nyWQiWbrN2Cj+YYH40n
+        5ERVFNFiNGa/5Y8w6t00d5E4YfJbm89OxC7Hwslb6G/lTVPOJ0niuF9ardjGBmXspj3mLYRwkd3CNCLj
+        yCsZOS9lZI3KyBiWkE5SAhKSSaJiRzxJIDsUCQaupQYlUPYS9YuITOIh7eTRFlG7qqO6IpnsJepftx1U
+        R3X/J0L8Bd48LVrBtjyjAAAAAElFTkSuQmCC
 </value>
   </data>
   <data name="toolStripButtonReqExportMandatory.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
@@ -3416,16 +3467,16 @@
   <data name="toolStripButtonReqExportRecommended.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAH+SURBVDhPpZNfSFNhGMbfc3ZUsCTSECMh1IIQioSSLgTJ
-        i2h3FhTUTWZFEUk3BWEXRrNSJttyhTKoxLX+SRI1qgVZaOSMbWYj0MrVyZZLMSdddfX0nIPEokmTHvjd
-        nPf5ne/j+86RtDnlXy6ucFLckTkpr97IJ3lEMWcZxRG0bfHHse3hV8hh5yM+qSA55uyfOR0oWXJ1FN5o
-        Ep2h7yi9MQ5Zu+kkJ8Ukg104gt66vm+4NjwL++AM6gKTUI573nJSTXLNzoJpCtQUeD+ggyvbX86g8fk0
-        DgUSKOl+D6na7WKjlFjMbtq0hwf2cMWm/mmc6JvCQcq1D+JY3/MZlsaeOBtWsszs/pVzT3eu9MVw5EkC
-        Bx4nsJcHaL0fR8XdCRTc0qFdeQfZur+LzXVEM53UKO6Ivpnl7ZRq7n1BZe8Eyrhy3k0dqu8jxBuD1uz/
-        weoOkm9Kv9M6UJ/dHUPxHR2rSOFt3RQ13yfIdcrzqJ4xKNZjvTQ2kPld8KNRXNGkwkIqqeIftDz7KStW
-        19MsJIoobUGb2sW7TldOh2cUsutsP+VKkiPq5ZG5Rb3AOMwG7kJkHykS1RmGdikKzf0GWe0jyLr4Gppz
-        GBZHBGpbGGIPQVpfQS4MQc4HIc2DENsLUD5DjBuRMnKUOIgzQ4yu4RiuLCVriPHXLQbDMdz/icgv0yI6
-        ncPOd9sAAAAASUVORK5CYII=
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAH+SURBVDhPpZNdSFNhHMb/5+yYUEqUIkWCqAUhFAkmXQSS
+        F9HuUiiom8yKRIJuCkQvFGcfMtmWK4xBJa71JUnUqBZkoZEr3NSGYF+rk01XYk266urpOQeJRRMnPvC7
+        Of/nd96X9z1HUqbBv0ZcoYS4w3NSUrGNT7KJYs7SiiNo2+GPYffDKchx5yM+KSWZ5mzRNAUKV12dgDeS
+        wOXhHyi68RGyqew0J/kkjV04gt6a/m+4NvIT9qFZ1ASmoZz0jHNSQVaanQXTHKjM8X5AF1e2v5xF4/MZ
+        HAvEUdjzHrJzv4uNImIxuynTGRo8wBWbB2Zwqv87jlLe+yCGLb1fYGnsjbFhJavN7n8587R6vS+Kuidx
+        HHkcx0EeoPV+DKV3J5FzS4d25R1k1+FuNjcTzXSSo7jD+naW91CqvPcV5X2TKObK2Td1qL5PEG8UWpv/
+        F6tVZK0p/U37YO2Knijy7+jYQPJu66ao+T5DrlOeR/W8hWI90UdjK5nfBT8axRVJKCwkkyz+w/lnvyW3
+        oJZmHlFE6Qja1G7edapyKjwTkH2tA5TLSaaol8bmlvQC4zDruQuRQ2SdqM4QtIsRaO43yOgcQ8aFUWjO
+        EVgcYagdIYh9GNL+GnLuFeRsENI2BLG9AOUWYtyIFJN64iDONDG6hmO4kkU2EuOvWwqGY7jLicgfz/U6
+        mmLSF3UAAAAASUVORK5CYII=
 </value>
   </data>
   <data name="toolStripButtonReqExportRecommended.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
@@ -3730,6 +3781,387 @@
   <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
     <value>6</value>
   </data>
+  <data name="label20.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label20.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label20.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 11</value>
+  </data>
+  <data name="label20.Size" type="System.Drawing.Size, System.Drawing">
+    <value>73, 13</value>
+  </data>
+  <data name="label20.TabIndex" type="System.Int32, mscorlib">
+    <value>17</value>
+  </data>
+  <data name="label20.Text" xml:space="preserve">
+    <value>Access State:</value>
+  </data>
+  <data name="&gt;&gt;label20.Name" xml:space="preserve">
+    <value>label20</value>
+  </data>
+  <data name="&gt;&gt;label20.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label20.Parent" xml:space="preserve">
+    <value>tabPageProperty</value>
+  </data>
+  <data name="&gt;&gt;label20.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="comboBoxPropertyAccess.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="comboBoxPropertyAccess.Items" xml:space="preserve">
+    <value>READWRITE</value>
+  </data>
+  <data name="comboBoxPropertyAccess.Items1" xml:space="preserve">
+    <value>READONLY</value>
+  </data>
+  <data name="comboBoxPropertyAccess.Items2" xml:space="preserve">
+    <value>LOCKED</value>
+  </data>
+  <data name="comboBoxPropertyAccess.Items3" xml:space="preserve">
+    <value>READWRITELOCKED</value>
+  </data>
+  <data name="comboBoxPropertyAccess.Items4" xml:space="preserve">
+    <value>READONLYLOCKED</value>
+  </data>
+  <data name="comboBoxPropertyAccess.Location" type="System.Drawing.Point, System.Drawing">
+    <value>7, 27</value>
+  </data>
+  <data name="comboBoxPropertyAccess.Size" type="System.Drawing.Size, System.Drawing">
+    <value>331, 21</value>
+  </data>
+  <data name="comboBoxPropertyAccess.TabIndex" type="System.Int32, mscorlib">
+    <value>16</value>
+  </data>
+  <data name="&gt;&gt;comboBoxPropertyAccess.Name" xml:space="preserve">
+    <value>comboBoxPropertyAccess</value>
+  </data>
+  <data name="&gt;&gt;comboBoxPropertyAccess.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;comboBoxPropertyAccess.Parent" xml:space="preserve">
+    <value>tabPageProperty</value>
+  </data>
+  <data name="&gt;&gt;comboBoxPropertyAccess.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="buttonPropertyDataSecondary.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="buttonPropertyDataSecondary.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="buttonPropertyDataSecondary.Location" type="System.Drawing.Point, System.Drawing">
+    <value>263, 174</value>
+  </data>
+  <data name="buttonPropertyDataSecondary.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="buttonPropertyDataSecondary.TabIndex" type="System.Int32, mscorlib">
+    <value>15</value>
+  </data>
+  <data name="buttonPropertyDataSecondary.Text" xml:space="preserve">
+    <value>Select...</value>
+  </data>
+  <data name="&gt;&gt;buttonPropertyDataSecondary.Name" xml:space="preserve">
+    <value>buttonPropertyDataSecondary</value>
+  </data>
+  <data name="&gt;&gt;buttonPropertyDataSecondary.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;buttonPropertyDataSecondary.Parent" xml:space="preserve">
+    <value>tabPageProperty</value>
+  </data>
+  <data name="&gt;&gt;buttonPropertyDataSecondary.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="textBoxPropertyDataSecondary.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="textBoxPropertyDataSecondary.Location" type="System.Drawing.Point, System.Drawing">
+    <value>7, 176</value>
+  </data>
+  <data name="textBoxPropertyDataSecondary.Size" type="System.Drawing.Size, System.Drawing">
+    <value>250, 20</value>
+  </data>
+  <data name="textBoxPropertyDataSecondary.TabIndex" type="System.Int32, mscorlib">
+    <value>14</value>
+  </data>
+  <data name="&gt;&gt;textBoxPropertyDataSecondary.Name" xml:space="preserve">
+    <value>textBoxPropertyDataSecondary</value>
+  </data>
+  <data name="&gt;&gt;textBoxPropertyDataSecondary.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;textBoxPropertyDataSecondary.Parent" xml:space="preserve">
+    <value>tabPageProperty</value>
+  </data>
+  <data name="&gt;&gt;textBoxPropertyDataSecondary.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="label18.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label18.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label18.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 158</value>
+  </data>
+  <data name="label18.Size" type="System.Drawing.Size, System.Drawing">
+    <value>114, 13</value>
+  </data>
+  <data name="label18.TabIndex" type="System.Int32, mscorlib">
+    <value>13</value>
+  </data>
+  <data name="label18.Text" xml:space="preserve">
+    <value>Secondary Data Type:</value>
+  </data>
+  <data name="&gt;&gt;label18.Name" xml:space="preserve">
+    <value>label18</value>
+  </data>
+  <data name="&gt;&gt;label18.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label18.Parent" xml:space="preserve">
+    <value>tabPageProperty</value>
+  </data>
+  <data name="&gt;&gt;label18.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="buttonPropertyDataPrimary.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="buttonPropertyDataPrimary.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="buttonPropertyDataPrimary.Location" type="System.Drawing.Point, System.Drawing">
+    <value>263, 125</value>
+  </data>
+  <data name="buttonPropertyDataPrimary.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="buttonPropertyDataPrimary.TabIndex" type="System.Int32, mscorlib">
+    <value>12</value>
+  </data>
+  <data name="buttonPropertyDataPrimary.Text" xml:space="preserve">
+    <value>Select...</value>
+  </data>
+  <data name="&gt;&gt;buttonPropertyDataPrimary.Name" xml:space="preserve">
+    <value>buttonPropertyDataPrimary</value>
+  </data>
+  <data name="&gt;&gt;buttonPropertyDataPrimary.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;buttonPropertyDataPrimary.Parent" xml:space="preserve">
+    <value>tabPageProperty</value>
+  </data>
+  <data name="&gt;&gt;buttonPropertyDataPrimary.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="textBoxPropertyDataPrimary.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="textBoxPropertyDataPrimary.Location" type="System.Drawing.Point, System.Drawing">
+    <value>7, 127</value>
+  </data>
+  <data name="textBoxPropertyDataPrimary.Size" type="System.Drawing.Size, System.Drawing">
+    <value>250, 20</value>
+  </data>
+  <data name="textBoxPropertyDataPrimary.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="&gt;&gt;textBoxPropertyDataPrimary.Name" xml:space="preserve">
+    <value>textBoxPropertyDataPrimary</value>
+  </data>
+  <data name="&gt;&gt;textBoxPropertyDataPrimary.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;textBoxPropertyDataPrimary.Parent" xml:space="preserve">
+    <value>tabPageProperty</value>
+  </data>
+  <data name="&gt;&gt;textBoxPropertyDataPrimary.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="labelPropertyType.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="labelPropertyType.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="labelPropertyType.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 109</value>
+  </data>
+  <data name="labelPropertyType.Size" type="System.Drawing.Size, System.Drawing">
+    <value>97, 13</value>
+  </data>
+  <data name="labelPropertyType.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="labelPropertyType.Text" xml:space="preserve">
+    <value>Primary Data Type:</value>
+  </data>
+  <data name="&gt;&gt;labelPropertyType.Name" xml:space="preserve">
+    <value>labelPropertyType</value>
+  </data>
+  <data name="&gt;&gt;labelPropertyType.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;labelPropertyType.Parent" xml:space="preserve">
+    <value>tabPageProperty</value>
+  </data>
+  <data name="&gt;&gt;labelPropertyType.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="label4.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label4.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label4.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 60</value>
+  </data>
+  <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>76, 13</value>
+  </data>
+  <data name="label4.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="label4.Text" xml:space="preserve">
+    <value>Property Type:</value>
+  </data>
+  <data name="&gt;&gt;label4.Name" xml:space="preserve">
+    <value>label4</value>
+  </data>
+  <data name="&gt;&gt;label4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label4.Parent" xml:space="preserve">
+    <value>tabPageProperty</value>
+  </data>
+  <data name="&gt;&gt;label4.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="comboBoxPropertyType.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="comboBoxPropertyType.Items" xml:space="preserve">
+    <value>P_SINGLEVALUE</value>
+  </data>
+  <data name="comboBoxPropertyType.Items1" xml:space="preserve">
+    <value>P_ENUMERATEDVALUE</value>
+  </data>
+  <data name="comboBoxPropertyType.Items2" xml:space="preserve">
+    <value>P_BOUNDEDVALUE</value>
+  </data>
+  <data name="comboBoxPropertyType.Items3" xml:space="preserve">
+    <value>P_LISTVALUE</value>
+  </data>
+  <data name="comboBoxPropertyType.Items4" xml:space="preserve">
+    <value>P_TABLEVALUE</value>
+  </data>
+  <data name="comboBoxPropertyType.Items5" xml:space="preserve">
+    <value>P_REFERENCEVALUE</value>
+  </data>
+  <data name="comboBoxPropertyType.Items6" xml:space="preserve">
+    <value>COMPLEX</value>
+  </data>
+  <data name="comboBoxPropertyType.Location" type="System.Drawing.Point, System.Drawing">
+    <value>7, 78</value>
+  </data>
+  <data name="comboBoxPropertyType.Size" type="System.Drawing.Size, System.Drawing">
+    <value>331, 21</value>
+  </data>
+  <data name="comboBoxPropertyType.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="&gt;&gt;comboBoxPropertyType.Name" xml:space="preserve">
+    <value>comboBoxPropertyType</value>
+  </data>
+  <data name="&gt;&gt;comboBoxPropertyType.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;comboBoxPropertyType.Parent" xml:space="preserve">
+    <value>tabPageProperty</value>
+  </data>
+  <data name="&gt;&gt;comboBoxPropertyType.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="label21.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label21.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label21.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 11</value>
+  </data>
+  <data name="label21.Size" type="System.Drawing.Size, System.Drawing">
+    <value>73, 13</value>
+  </data>
+  <data name="label21.TabIndex" type="System.Int32, mscorlib">
+    <value>19</value>
+  </data>
+  <data name="label21.Text" xml:space="preserve">
+    <value>Access State:</value>
+  </data>
+  <data name="&gt;&gt;label21.Name" xml:space="preserve">
+    <value>label21</value>
+  </data>
+  <data name="&gt;&gt;label21.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label21.Parent" xml:space="preserve">
+    <value>tabPageQuantity</value>
+  </data>
+  <data name="&gt;&gt;label21.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="comboBoxQuantityAccess.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="comboBoxQuantityAccess.Items" xml:space="preserve">
+    <value>READWRITE</value>
+  </data>
+  <data name="comboBoxQuantityAccess.Items1" xml:space="preserve">
+    <value>READONLY</value>
+  </data>
+  <data name="comboBoxQuantityAccess.Items2" xml:space="preserve">
+    <value>LOCKED</value>
+  </data>
+  <data name="comboBoxQuantityAccess.Items3" xml:space="preserve">
+    <value>READWRITELOCKED</value>
+  </data>
+  <data name="comboBoxQuantityAccess.Items4" xml:space="preserve">
+    <value>READONLYLOCKED</value>
+  </data>
+  <data name="comboBoxQuantityAccess.Location" type="System.Drawing.Point, System.Drawing">
+    <value>7, 27</value>
+  </data>
+  <data name="comboBoxQuantityAccess.Size" type="System.Drawing.Size, System.Drawing">
+    <value>331, 21</value>
+  </data>
+  <data name="comboBoxQuantityAccess.TabIndex" type="System.Int32, mscorlib">
+    <value>18</value>
+  </data>
+  <data name="&gt;&gt;comboBoxQuantityAccess.Name" xml:space="preserve">
+    <value>comboBoxQuantityAccess</value>
+  </data>
+  <data name="&gt;&gt;comboBoxQuantityAccess.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;comboBoxQuantityAccess.Parent" xml:space="preserve">
+    <value>tabPageQuantity</value>
+  </data>
+  <data name="&gt;&gt;comboBoxQuantityAccess.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
   <data name="labelQuantityType.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -3737,7 +4169,7 @@
     <value>NoControl</value>
   </data>
   <data name="labelQuantityType.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 9</value>
+    <value>6, 60</value>
   </data>
   <data name="labelQuantityType.Size" type="System.Drawing.Size, System.Drawing">
     <value>76, 13</value>
@@ -3758,7 +4190,7 @@
     <value>tabPageQuantity</value>
   </data>
   <data name="&gt;&gt;labelQuantityType.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>2</value>
   </data>
   <data name="comboBoxQuantityType.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -3782,7 +4214,7 @@
     <value>Q_TIME</value>
   </data>
   <data name="comboBoxQuantityType.Location" type="System.Drawing.Point, System.Drawing">
-    <value>7, 27</value>
+    <value>7, 78</value>
   </data>
   <data name="comboBoxQuantityType.Size" type="System.Drawing.Size, System.Drawing">
     <value>331, 21</value>
@@ -3800,7 +4232,7 @@
     <value>tabPageQuantity</value>
   </data>
   <data name="&gt;&gt;comboBoxQuantityType.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>3</value>
   </data>
   <data name="buttonEntityBaseClear.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
@@ -6125,9 +6557,6 @@
   <data name="toolStrip4.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
   </data>
-  <data name="toolStrip4.Text" xml:space="preserve">
-    <value>toolStrip4</value>
-  </data>
   <data name="&gt;&gt;toolStrip4.Name" xml:space="preserve">
     <value>toolStrip4</value>
   </data>
@@ -6165,6 +6594,26 @@
   <data name="toolStripButtonExampleLoad.Text" xml:space="preserve">
     <value>&amp;Open</value>
   </data>
+  <data name="toolStripButtonExampleLink.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABhSURBVDhPvcxRCoBACIRhj+3xvJkl24bRKINBD3/Q7uwn
+        Iu7fOj+qOooCunsaqDY0YGYQeQDrBxcAQtb9dZiHXRkZAVF+8z+w9xCoQo9fQNUG0I4Gqg0NoPOIArpu
+        YJ77AU7OZbEmCy7WAAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="toolStripButtonExampleLink.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="toolStripButtonExampleLink.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 22</value>
+  </data>
+  <data name="toolStripButtonExampleLink.Text" xml:space="preserve">
+    <value>Link File</value>
+  </data>
+  <data name="toolStripButtonExampleLink.ToolTipText" xml:space="preserve">
+    <value>Migrate selected usages to another template</value>
+  </data>
   <data name="toolStripButtonExampleClear.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
@@ -6181,30 +6630,6 @@
   </data>
   <data name="toolStripButtonExampleClear.Text" xml:space="preserve">
     <value>He&amp;lp</value>
-  </data>
-  <data name="ctlOperators.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="ctlOperators.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 3</value>
-  </data>
-  <data name="ctlOperators.Size" type="System.Drawing.Size, System.Drawing">
-    <value>346, 388</value>
-  </data>
-  <data name="ctlOperators.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;ctlOperators.Name" xml:space="preserve">
-    <value>ctlOperators</value>
-  </data>
-  <data name="&gt;&gt;ctlOperators.Type" xml:space="preserve">
-    <value>IfcDoc.CtlOperators, IfcDoc, Version=10.3.0.0, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;ctlOperators.Parent" xml:space="preserve">
-    <value>tabPageOperations</value>
-  </data>
-  <data name="&gt;&gt;ctlOperators.ZOrder" xml:space="preserve">
-    <value>0</value>
   </data>
   <data name="columnHeaderRootTemplate.Text" xml:space="preserve">
     <value>Template</value>
@@ -6241,7 +6666,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAABy
-        CwAAAk1TRnQBSQFMAgEBBAEAASQBAQEkAQEBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
+        CwAAAk1TRnQBSQFMAgEBBAEAAYwBAQGMAQEBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
         AwABQAMAASADAAEBAQABCAYAAQgYAAGAAgABgAMAAoABAAGAAwABgAEAAYABAAKAAgADwAEAAcAB3AHA
         AQAB8AHKAaYBAAEzBQABMwEAATMBAAEzAQACMwIAAxYBAAMcAQADIgEAAykBAANVAQADTQEAA0IBAAM5
         AQABgAF8Af8BAAJQAf8BAAGTAQAB1gEAAf8B7AHMAQABxgHWAe8BAAHWAucBAAGQAakBrQIAAf8BMwMA
@@ -6652,234 +7077,6 @@
   <data name="toolStripButtonViewRemove.ToolTipText" xml:space="preserve">
     <value>Remove View</value>
   </data>
-  <data name="checkBoxPublishExchangeTables.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="checkBoxPublishExchangeTables.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="checkBoxPublishExchangeTables.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 188</value>
-  </data>
-  <data name="checkBoxPublishExchangeTables.Size" type="System.Drawing.Size, System.Drawing">
-    <value>261, 17</value>
-  </data>
-  <data name="checkBoxPublishExchangeTables.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
-  </data>
-  <data name="checkBoxPublishExchangeTables.Text" xml:space="preserve">
-    <value>Show tables of exchanges applicable to concepts</value>
-  </data>
-  <data name="&gt;&gt;checkBoxPublishExchangeTables.Name" xml:space="preserve">
-    <value>checkBoxPublishExchangeTables</value>
-  </data>
-  <data name="&gt;&gt;checkBoxPublishExchangeTables.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;checkBoxPublishExchangeTables.Parent" xml:space="preserve">
-    <value>tabPagePublication</value>
-  </data>
-  <data name="&gt;&gt;checkBoxPublishExchangeTables.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="checkBoxPublishUML.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="checkBoxPublishUML.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="checkBoxPublishUML.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 165</value>
-  </data>
-  <data name="checkBoxPublishUML.Size" type="System.Drawing.Size, System.Drawing">
-    <value>213, 17</value>
-  </data>
-  <data name="checkBoxPublishUML.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
-  <data name="checkBoxPublishUML.Text" xml:space="preserve">
-    <value>UML diagrams (instead of EXPRESS-G)</value>
-  </data>
-  <data name="&gt;&gt;checkBoxPublishUML.Name" xml:space="preserve">
-    <value>checkBoxPublishUML</value>
-  </data>
-  <data name="&gt;&gt;checkBoxPublishUML.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;checkBoxPublishUML.Parent" xml:space="preserve">
-    <value>tabPagePublication</value>
-  </data>
-  <data name="&gt;&gt;checkBoxPublishUML.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="textBoxFooter.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
-  </data>
-  <data name="textBoxFooter.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 77</value>
-  </data>
-  <data name="textBoxFooter.Size" type="System.Drawing.Size, System.Drawing">
-    <value>340, 20</value>
-  </data>
-  <data name="textBoxFooter.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
-  </data>
-  <data name="&gt;&gt;textBoxFooter.Name" xml:space="preserve">
-    <value>textBoxFooter</value>
-  </data>
-  <data name="&gt;&gt;textBoxFooter.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;textBoxFooter.Parent" xml:space="preserve">
-    <value>tabPagePublication</value>
-  </data>
-  <data name="&gt;&gt;textBoxFooter.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="textBoxHeader.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
-  </data>
-  <data name="textBoxHeader.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 26</value>
-  </data>
-  <data name="textBoxHeader.Size" type="System.Drawing.Size, System.Drawing">
-    <value>340, 20</value>
-  </data>
-  <data name="textBoxHeader.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;textBoxHeader.Name" xml:space="preserve">
-    <value>textBoxHeader</value>
-  </data>
-  <data name="&gt;&gt;textBoxHeader.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;textBoxHeader.Parent" xml:space="preserve">
-    <value>tabPagePublication</value>
-  </data>
-  <data name="&gt;&gt;textBoxHeader.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="label17.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="label17.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="label17.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 61</value>
-  </data>
-  <data name="label17.Size" type="System.Drawing.Size, System.Drawing">
-    <value>68, 13</value>
-  </data>
-  <data name="label17.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="label17.Text" xml:space="preserve">
-    <value>Page Footer:</value>
-  </data>
-  <data name="&gt;&gt;label17.Name" xml:space="preserve">
-    <value>label17</value>
-  </data>
-  <data name="&gt;&gt;label17.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label17.Parent" xml:space="preserve">
-    <value>tabPagePublication</value>
-  </data>
-  <data name="&gt;&gt;label17.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="label5.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="label5.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="label5.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 10</value>
-  </data>
-  <data name="label5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>73, 13</value>
-  </data>
-  <data name="label5.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="label5.Text" xml:space="preserve">
-    <value>Page Header:</value>
-  </data>
-  <data name="&gt;&gt;label5.Name" xml:space="preserve">
-    <value>label5</value>
-  </data>
-  <data name="&gt;&gt;label5.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label5.Parent" xml:space="preserve">
-    <value>tabPagePublication</value>
-  </data>
-  <data name="&gt;&gt;label5.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="checkBoxPublishISO.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="checkBoxPublishISO.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="checkBoxPublishISO.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 142</value>
-  </data>
-  <data name="checkBoxPublishISO.Size" type="System.Drawing.Size, System.Drawing">
-    <value>109, 17</value>
-  </data>
-  <data name="checkBoxPublishISO.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="checkBoxPublishISO.Text" xml:space="preserve">
-    <value>ISO conformance</value>
-  </data>
-  <data name="&gt;&gt;checkBoxPublishISO.Name" xml:space="preserve">
-    <value>checkBoxPublishISO</value>
-  </data>
-  <data name="&gt;&gt;checkBoxPublishISO.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;checkBoxPublishISO.Parent" xml:space="preserve">
-    <value>tabPagePublication</value>
-  </data>
-  <data name="&gt;&gt;checkBoxPublishISO.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="checkBoxPublishHideHistory.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="checkBoxPublishHideHistory.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="checkBoxPublishHideHistory.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 119</value>
-  </data>
-  <data name="checkBoxPublishHideHistory.Size" type="System.Drawing.Size, System.Drawing">
-    <value>120, 17</value>
-  </data>
-  <data name="checkBoxPublishHideHistory.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="checkBoxPublishHideHistory.Text" xml:space="preserve">
-    <value>Hide change history</value>
-  </data>
-  <data name="&gt;&gt;checkBoxPublishHideHistory.Name" xml:space="preserve">
-    <value>checkBoxPublishHideHistory</value>
-  </data>
-  <data name="&gt;&gt;checkBoxPublishHideHistory.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;checkBoxPublishHideHistory.Parent" xml:space="preserve">
-    <value>tabPagePublication</value>
-  </data>
-  <data name="&gt;&gt;checkBoxPublishHideHistory.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
   <data name="columnHeaderFormatName.Text" xml:space="preserve">
     <value>Format</value>
   </data>
@@ -7140,6 +7337,78 @@
   <data name="openFileDialogExample.Title" xml:space="preserve">
     <value>Load IFC Example</value>
   </data>
+  <data name="ctlRules.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="ctlRules.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="ctlRules.Size" type="System.Drawing.Size, System.Drawing">
+    <value>346, 388</value>
+  </data>
+  <data name="ctlRules.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;ctlRules.Name" xml:space="preserve">
+    <value>ctlRules</value>
+  </data>
+  <data name="&gt;&gt;ctlRules.Type" xml:space="preserve">
+    <value>IfcDoc.CtlRules, IfcDoc, Version=11.1.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;ctlRules.Parent" xml:space="preserve">
+    <value>tabPageTemplate</value>
+  </data>
+  <data name="&gt;&gt;ctlRules.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="ctlParameters.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="ctlParameters.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="ctlParameters.Size" type="System.Drawing.Size, System.Drawing">
+    <value>346, 388</value>
+  </data>
+  <data name="ctlParameters.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="&gt;&gt;ctlParameters.Name" xml:space="preserve">
+    <value>ctlParameters</value>
+  </data>
+  <data name="&gt;&gt;ctlParameters.Type" xml:space="preserve">
+    <value>IfcDoc.CtlParameters, IfcDoc, Version=11.1.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;ctlParameters.Parent" xml:space="preserve">
+    <value>tabPageConcept</value>
+  </data>
+  <data name="&gt;&gt;ctlParameters.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="ctlOperators.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="ctlOperators.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="ctlOperators.Size" type="System.Drawing.Size, System.Drawing">
+    <value>346, 388</value>
+  </data>
+  <data name="ctlOperators.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;ctlOperators.Name" xml:space="preserve">
+    <value>ctlOperators</value>
+  </data>
+  <data name="&gt;&gt;ctlOperators.Type" xml:space="preserve">
+    <value>IfcDoc.CtlOperators, IfcDoc, Version=11.1.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;ctlOperators.Parent" xml:space="preserve">
+    <value>tabPageOperations</value>
+  </data>
+  <data name="&gt;&gt;ctlOperators.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
@@ -7327,6 +7596,12 @@
     <value>toolStripButtonExampleLoad</value>
   </data>
   <data name="&gt;&gt;toolStripButtonExampleLoad.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStripButtonExampleLink.Name" xml:space="preserve">
+    <value>toolStripButtonExampleLink</value>
+  </data>
+  <data name="&gt;&gt;toolStripButtonExampleLink.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;toolStripButtonExampleClear.Name" xml:space="preserve">

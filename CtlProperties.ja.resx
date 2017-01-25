@@ -126,6 +126,9 @@
   <data name="columnHeaderDesc.Text" xml:space="preserve">
     <value>説明</value>
   </data>
+  <data name="tabPageGeneral.Text" xml:space="preserve">
+    <value>文書化</value>
+  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="toolStripButtonTranslationInsert.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -142,60 +145,20 @@
         hYezAaRgDAPIwcPJAPLx//8ARLZjI8VMTLsAAAAASUVORK5CYII=
 </value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="label16.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="label15.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="tabPageGeneral.Text" xml:space="preserve">
-    <value>文書化</value>
-  </data>
-  <data name="button3.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="button2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="button1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="label20.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="label14.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="label13.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="label12.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="label11.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="label10.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="label9.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="label7.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
   <data name="tabPageIdentity.Text" xml:space="preserve">
     <value>一致</value>
   </data>
-  <data name="buttonTemplateClear.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
+  <data name="buttonExchangeIconClear.Text" xml:space="preserve">
+    <value>クリア</value>
   </data>
-  <data name="buttonTemplateEntity.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
+  <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>274, 13</value>
   </data>
-  <data name="labelTemplateEntity.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
+  <data name="label2.Text" xml:space="preserve">
+    <value>アイコン （16×16 テーブル内のハイパーリンクに使用される）</value>
+  </data>
+  <data name="buttonExchangeIconChange.Text" xml:space="preserve">
+    <value>セットアイコン</value>
   </data>
   <data name="tabPageTemplate.Text" xml:space="preserve">
     <value>テンプレート</value>
@@ -203,38 +166,135 @@
   <data name="tabPageConcept.Text" xml:space="preserve">
     <value>概念</value>
   </data>
-  <data name="radioButtonExportNone.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="radioButtonExportExcluded.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="radioButtonExportMandatory.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="radioButtonExportOptional.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="radioButtonImportNone.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="radioButtonImportExcluded.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="radioButtonImportOptional.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="radioButtonImportMandatory.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="labelRequirementsExchanges.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
   <data name="tabPageRequirements.Text" xml:space="preserve">
     <value>必要条件</value>
   </data>
-  <data name="buttonApplicabilityAddTemplate.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
+  <data name="toolStripButtonReqImportMandatory.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAJfSURBVDhPjZNbSJNhGMe/bETURRBdBUJ4URTEFgXRTRHa
+        IGWbzJK66GCuqDB1uFLx0MHJwqUiumpEoi3dIQ+ZRqZ5/Jxuw6ZbUzxVo8KQdRGD6MKLf8/7fWUfNMwX
+        /vDy8fx/z//hex8uzph44UBjyve0FxqsRfsakqJxWQcLOI7bRpJxzGzy5iK45EHkxyK+RsOYjUzC96UP
+        ve9daJl+iMeTJlT68lHi1iFn8ATk1cd/kjlFgDBq/8d2hJZ8mPsWwEzEj4lFHny4Cy/nbLCHamH1l6HC
+        m0eATOgH06Ht0IDMJaRdIuBDG0Y/dVPXN/B87sVwuBPd83a0TlvRGDCjdrwY5WPZKOTPCQk0zwVAFUku
+        ADpm6vFqvgk9C068XnCga/YJRbfCFqzEA/9tmH0G3HRfgmH4NK4NaJEsAqpJCo7FsQWr4AjVwTV1H84p
+        C5rf1aAhUEHmWzT7DZSNXkUBf1bozgDH2iWAVAJY3pYKcz6aKCcZha4140XC3HfIzKKz2ZmZ6UibBKCi
+        OCZPjlB8z3cdZq8Bd716GMeyUOq+iHz+DJlPrpiZDrVKAMkUp5A/j+KRTDLohF9VNJIhGPOGTq3Elmp/
+        i/ovQEkAVpRLXfRD6YLYPXsg7R/jH+11SQCJNE+sotW0Uwo4SoAr/bELY0nXp8UOpwQQX58U1fZocXkN
+        kAwy7+5MxRaLcpnM4kNii5FAb1vxTI09FC2B6Nsdamy1q7C5WYUNTSqsfypqI9031SmX1x2OnySz+JTp
+        sK1ii8E+MCqLtppYDasVl4mO7PeF0eQkxX/EalgteTjZL721DKNyzYwHAAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="toolStripButtonReqImportRecommended.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAJVSURBVDhPfZNdSJNRGMdPcxVe2EVFNIoIKooIVoEQBUGB
+        Ua0uoi4Kqgstgr5IKBiFEUEXFmmaUUZfW82lLXP2oeUHM2FZWA3dcJX7cJvu3dbcnMaCLv49z7uiNV72
+        wp/nnJf/73+eczhHqOpdpRqDJ3nYJkH/Lory3giOdIVxoC2EXdYAtlj8WG/2YpVxGJo7X1BQ9TElTj7U
+        CyHmktRCY3AmX32bxICUhjv2E45wGjbfFCyuCdzsH8fF3hiOdUjY/WIMa54GMavBB1HZlyZYJ4fonodg
+        dafQ5ZlCj+8HOj2TaBlK4YEjgat9cZy1RVHWLkHXOooVlgAKzX6IGy4QXEFaLna2BnH/cwLmwSSanBNy
+        vfcpgWvv47jwNoYTHRHsfTmGjc9CWNAUgNpEAXVODqgiaUVJcwCX7XHUEFD3YVyulfbvON8Tw6nOCA62
+        hbHNOoqVliCKzCOY9oi2cH2QA6pJq8WGRj/OdEdxzhZDBUFcT9P86BsJ+wneQa2vpb3PaxxBAa/OAbVZ
+        AVqTl048LO/z0GsJpe1hGdxDh1bSEoKW4PkET/8Ls2oG/gUsNgxjMxm3UpvbaTWum2he3BzEsicBzH6c
+        A+cGFN39ikV0OEvJzMAS0kKazyGwsMEPVS6cG6C67ZZPdgaZZ5K48lxlyoGylR0g6t3Kpnz6L+DWkLIp
+        n6odWQFX+lPC6FU2KsnogSgz/SI4c5HEcYNeXLKn5bb4gtRS5bGSeGWG1+1zEJy5yvTxq+KHwT84lVvL
+        J/awN/OY6FP/GXAatcT7yiv2sJcYof4NnuUmtS83AXEAAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="toolStripButtonReqImportNotRecommended.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAIoSURBVDhPlZPLaxNRGMVnkT/BhTs3ta2aSaJSxbcuFEWs
+        UBctoiBSsYg7Cwali660m6oggiK4VMEH6MbWR16KNG2T6tjWN1VLG5sxncTWLuK9x/PNGGyMURw43NzM
+        +Z3vu3fuNfKJmoMziXXO7HAYhdEuOFYncoPtsPvaYD/ZDzvehGx0O+zIRmQfNmDsbqhwp7s+bBjGAspn
+        zCbWOGriKnQuDuST0F9i0Jkb0B8vQL/thB49CmW1QA1thUqtQjG5FOmbwTnCO92Qb6kW6PHL0JPXCd7i
+        eA360yXo913Qr45DjbRCPW9iwGaowRVQA/XIPjBBuIOqM2b6m2k+Df3hHHUeeuws9LtT0K9PsPoRqBd7
+        oZ7tgEqvJRyA6q/F5143oJsKGoWnu1mpncBJ6DcdHvjyGOE2wvsIN7L6JlZfyYAlDFhcCjhDhQzn8Tao
+        4QPQI4eow+4oc2U1E95FeAvX3kDY71aXgEzPvIDp+AbPKOu09nijCzI4zXcubBKsc+HKgBgN6fUU25SN
+        klHmqdVseznhZWVwZUA0SKOIZtlld+RmCcgdL7VdNcCJltbGKgNSSSTzSrCksoB8TFr8s7Gayr7C18T/
+        B0zeC/wKsHvNwvdk9XZ/V7GvFtaVRUXC3kGKXKwJT9w256YjfuQe+XlM/Zi6b2KKbUqr85XpCbhwa+PC
+        IcLeUeYjt0ouhvwhqdLa3yQe8XqXiY/v5w9JC1Khf0g84iVj+H4AZbxenFtgTrIAAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="toolStripButtonReqImportExcluded.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAKnSURBVDhPhZPZS1RhGMbPhX9BdBveCF05Z9wqXHMhl2HU
+        3MZJRx3NcTctl2lqtEzNrLSihWyRwqggoqsgvKg/IEoiCCIDKaOpOXO2GRe8eHrfc5KZCOrAA8Pw/Z7n
+        Xb5P+FptaV51ZSjalAf6+Q5oky1Qx1xQ/Q4o3gooA3bIfUWQu/MQas3ESm2StliQ4BUEYScpTmB48+UC
+        Nl8tYOPFHNafzWLt0QQi8ycQvtEPfbaNTBugjlRCGSwho1yslonrBNsME+1MEzYX72Dj+XUTfjyJyH0/
+        wnODCF/phj7dDG3MCcVXDuVoIeTOHAQbUkGwn7Rb0MabCJzB2pNprD0cR+QewbeGEL7aA/1iK6VTOyNV
+        UIZskI/kI9SeiZ/1KWwwQxIFddSJyIMxSh1B5K4P4ZsDJjzjgXaWSj9VA+V4qZnelQPp8D4EDiWzwSzJ
+        Kii+KkRuD5vgtT6EL3dCv0DJDJ+mQXLpx4oh9+Qi5MmA1JSG7w5r1EAeLDV7vdRBJdMmpt3QJuqhjlKy
+        r4y2QHCvWbrUvAdSfTJWq8WogdRXDP2cG/pUowFqlKr6aeJeOyXT+nppfe1ZkFr2QmpIQbDWii+VMQbB
+        rnyjTx6UepL2zv3SupT+A8bKjORt2GlF0CFipSLG4IcnG8owpdGUuVwD7MmjdWVTz+mQ3FS2KwqzPpfH
+        GATc6bSeAqNUuXs/5I4sE+TUxlSjZy57G2Z9KrNEDb7VpSHUlmFCtCJjUAy6CHQm/QFu64M9xmC5QtT4
+        ZkksLrWOQUqs/RtkBWpELOTFbxFsXqSnOQnet/bE9eWDVBr19rHUYiS8t1nwrsSCpeJEvCky9bowEfMJ
+        8VuOXTuWCDavMn38qvhh8B/syqX9S3yGz5qPib643z/YTSRZ/yM+w2eJEeJ+ATR6Fx996KZnAAAAAElF
+        TkSuQmCC
+</value>
+  </data>
+  <data name="toolStripButtonReqExportMandatory.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAIISURBVDhPpZNfSFNRHMePKErDMVKMkL2kFcOWGJphEYPe
+        LLfdu6VopcsV/RllVkqKhTMhVMImhIY+KKYGxe6mVkKamy7FzASLEIqgHnxPeurp2/deFEZMVPrC5+X8
+        vp9zDtxzRcwMntqZO1L0q8BvXxVH03O4oidx2mwryQtYm9vmb8O3UI999/LHuHSIJGnDTdNv3VMyUYrw
+        j2GMfRvCtakLEAfTajkxks1vkRu0Pe1easX49+cILPegc7EJB1oKvnBkITqttGH6C09UTp7D668DUJa7
+        MfCpHU+4gTvkgq4o08dGBonXurFyOGiLdCw0YuhzB/qW2tC16MXD+VrcnbkEc5dlhZVCYtDK/8bwzOq4
+        GCrniffR+bERvg/1aH1/E97Zy7gTKUfpuBOJJfv7WDWRBE2KTrZi/9kwcwUtc9V4MFeFptmraHjnRs30
+        GdwIn4Yn5IC59+RvVmWSoknrMb6wuSveFqMu4tJQT6yZKkN1uBjXKa7jeOOA7nyWQiWbrN2Cj+YYH40n
+        5ERVFNFiNGa/5Y8w6t00d5E4YfJbm89OxC7Hwslb6G/lTVPOJ0niuF9ardjGBmXspj3mLYRwkd3CNCLj
+        yCsZOS9lZI3KyBiWkE5SAhKSSaJiRzxJIDsUCQaupQYlUPYS9YuITOIh7eTRFlG7qqO6IpnsJepftx1U
+        R3X/J0L8Bd48LVrBtjyjAAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="toolStripButtonReqExportRecommended.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAH+SURBVDhPpZNdSFNhHMb/5+yYUEqUIkWCqAUhFAkmXQSS
+        F9HuUiiom8yKRIJuCkQvFGcfMtmWK4xBJa71JUnUqBZkoZEr3NSGYF+rk01XYk266urpOQeJRRMnPvC7
+        Of/nd96X9z1HUqbBv0ZcoYS4w3NSUrGNT7KJYs7SiiNo2+GPYffDKchx5yM+KSWZ5mzRNAUKV12dgDeS
+        wOXhHyi68RGyqew0J/kkjV04gt6a/m+4NvIT9qFZ1ASmoZz0jHNSQVaanQXTHKjM8X5AF1e2v5xF4/MZ
+        HAvEUdjzHrJzv4uNImIxuynTGRo8wBWbB2Zwqv87jlLe+yCGLb1fYGnsjbFhJavN7n8587R6vS+Kuidx
+        HHkcx0EeoPV+DKV3J5FzS4d25R1k1+FuNjcTzXSSo7jD+naW91CqvPcV5X2TKObK2Td1qL5PEG8UWpv/
+        F6tVZK0p/U37YO2Knijy7+jYQPJu66ao+T5DrlOeR/W8hWI90UdjK5nfBT8axRVJKCwkkyz+w/lnvyW3
+        oJZmHlFE6Qja1G7edapyKjwTkH2tA5TLSaaol8bmlvQC4zDruQuRQ2SdqM4QtIsRaO43yOgcQ8aFUWjO
+        EVgcYagdIYh9GNL+GnLuFeRsENI2BLG9AOUWYtyIFJN64iDONDG6hmO4kkU2EuOvWwqGY7jLicgfz/U6
+        mmLSF3UAAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="toolStripButtonReqExportNotRecommended.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAGESURBVDhPY8AGDi/VFbyy0PjDxRW6H11N+Q2AQrxAzAiW
+        JAZcWGrU/Ptm1n8Qnlamsh0oZAjE7GBJQuDEIjPF5/s9/v//8/H//59P/oPYFrq8pUApGSAm7Ioryw0W
+        //904v+/G9H//54z+v/vUcv/BU2qV4FS9kDMBVaEC5yYZ+T09lTi/38v5v//e1oFjt/u1fof4yE+AahE
+        CYiZwYqxgVvrdQ7/e7MWbDOyASC8e6rSU6ASTyDmBytGB6fmGQZ9vloFcTqaZhD+dEjjf3qg5AKgUg0g
+        ZgFrQgb31+k9BPkXm2YYPjlf5zNQaSAQC4E1wcCpeSZJP46pYdWEjEFqiiJl1wG16AExxBWgRPNok9YH
+        bBqw4VtrdX4qSrEnAbWKATEjONH8OqmKVTE2DFLbk6d0CKjZDIjZGR6v1f2ITSE+DHIFUHM8EEswXF9l
+        /P/5Dl2S8JXlJv+BmhuAGBQjDMpAnAXEfUDcTyQGqQXpAell4AFiFSAG5TpSMEgPSC8lgIEBACv7YkkN
+        KA9iAAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="toolStripButtonReqExportExcluded.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAIzSURBVDhPpdNvSBNhHAfwk4KBJWZBVoRRRoq7u00rLaPO
+        2bTanDZdXfknU9NioyWkKQlljqw3ldWLCIIgTXrTqwihFy2Mgl74ophRFJUsM2znbn/O8NW3357hi8rY
+        oB98uON5vt977sUdt9BM1AoZk3Ke6rcLoao16UZaSiMpbDOZ8R8QPdq9Psw+6MeQKXeElvKJjm0mmi8O
+        cb1yyoKfj25Cu98HpbsGOzPTOmlrLUn8Fp/twqA2eAGzwx5od7oQudKGYSlnnLYkkspC/5qPdrF0ur0C
+        2t0eRG93IHrdicjlo5h270FT9ooBimwgi1h4oflUbXweGXAiesNFJ7ci3N+A0DkH1DNWPC7Lm6TIPpLO
+        wn/OW5tY/d1VjvClIwhfrEOoV0aoxw61w4Kgeze+NhRBzlp+i6I55O+3eLdfnAh22aCerYLaTddOC9T2
+        MgRdJZhpK4bStBUvzPowRSvJMlaaH5+NPz3VXMxOYk6aEHRKmDm+A0rLNiiNWxCoK4C/xgD3ptUPqSKQ
+        xaz8xipkfKAPRjlGwdbtYNeWIjqxkBWV+gIEDhsRkA2MV+Ln1qXqmqm6kqRwPivv+SYbWVCp3xxHpwVq
+        8+PFQ/HivCmHAef1WaNULiQ67n2liB8Hfw8l4pX0c1RuJKu4MbMYHq8Q4SOvLSLG9op4VS7gpVnAaKkA
+        r4nH05K4Z3QfW3uyiweVe0kuYR/HCXKVXEtSLOsk2YRbQmIPMZDYn5esjWQp+Z/huF96+DSWLHLtdgAA
+        AABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="tabPagePropertySet.Text" xml:space="preserve">
+    <value>適用性</value>
   </data>
   <data name="buttonApplicabilityAddTemplate.Location" type="System.Drawing.Point, System.Drawing">
     <value>114, 356</value>
@@ -245,9 +305,6 @@
   <data name="buttonApplicabilityAddTemplate.Text" xml:space="preserve">
     <value>テンプレートを追加</value>
   </data>
-  <data name="buttonPsetApplicabilityDelete.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
   <data name="buttonPsetApplicabilityDelete.Text" xml:space="preserve">
     <value>削る</value>
   </data>
@@ -257,65 +314,20 @@
   <data name="columnHeaderPsetPredefined.Text" xml:space="preserve">
     <value>定義済み型</value>
   </data>
-  <data name="labelPsetType.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="buttonApplicabilityAddEntity.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
   <data name="buttonApplicabilityAddEntity.Size" type="System.Drawing.Size, System.Drawing">
     <value>102, 23</value>
   </data>
   <data name="buttonApplicabilityAddEntity.Text" xml:space="preserve">
     <value>実体を追加</value>
   </data>
-  <data name="label1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="tabPagePropertySet.Text" xml:space="preserve">
-    <value>適用性</value>
-  </data>
-  <data name="buttonPropertyEnumRemove.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="buttonPropertyEnumRemove.Text" xml:space="preserve">
-    <value>削る</value>
-  </data>
-  <data name="buttonPropertyEnumInsert.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="buttonPropertyEnumInsert.Text" xml:space="preserve">
-    <value>加える</value>
-  </data>
-  <data name="columnHeaderPropertyEnum.Text" xml:space="preserve">
-    <value>アイテム</value>
-  </data>
-  <data name="labelPropertyEnumeration.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="labelPropertyEnumeration.Size" type="System.Drawing.Size, System.Drawing">
-    <value>44, 13</value>
-  </data>
-  <data name="labelPropertyEnumeration.Text" xml:space="preserve">
-    <value>アイテム</value>
-  </data>
-  <data name="buttonPropertyData.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="buttonPropertyData.Text" xml:space="preserve">
-    <value>セレクト</value>
-  </data>
-  <data name="labelPropertyType.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
+  <data name="tabPageProperty.Text" xml:space="preserve">
+    <value>プロパティ</value>
   </data>
   <data name="labelPropertyType.Size" type="System.Drawing.Size, System.Drawing">
     <value>47, 13</value>
   </data>
   <data name="labelPropertyType.Text" xml:space="preserve">
     <value>データ型</value>
-  </data>
-  <data name="label4.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
   </data>
   <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
     <value>63, 13</value>
@@ -344,11 +356,14 @@
   <data name="comboBoxPropertyType.Items6" xml:space="preserve">
     <value>コンプレックス</value>
   </data>
-  <data name="tabPageProperty.Text" xml:space="preserve">
-    <value>プロパティ</value>
+  <data name="tabPageQuantity.Text" xml:space="preserve">
+    <value>数量</value>
   </data>
-  <data name="labelQuantityType.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
+  <data name="label21.Size" type="System.Drawing.Size, System.Drawing">
+    <value>242, 13</value>
+  </data>
+  <data name="label21.Text" xml:space="preserve">
+    <value>このテンプレートは次のエンティティで使用されている</value>
   </data>
   <data name="labelQuantityType.Size" type="System.Drawing.Size, System.Drawing">
     <value>43, 13</value>
@@ -374,17 +389,11 @@
   <data name="comboBoxQuantityType.Items5" xml:space="preserve">
     <value>Q_時間</value>
   </data>
-  <data name="tabPageQuantity.Text" xml:space="preserve">
-    <value>数量</value>
-  </data>
-  <data name="buttonEntityBaseClear.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
+  <data name="tabPageEntity.Text" xml:space="preserve">
+    <value>実体</value>
   </data>
   <data name="buttonEntityBaseClear.Text" xml:space="preserve">
     <value>クリア</value>
-  </data>
-  <data name="checkBoxEntityAbstract.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
   </data>
   <data name="checkBoxEntityAbstract.Size" type="System.Drawing.Size, System.Drawing">
     <value>50, 17</value>
@@ -392,14 +401,8 @@
   <data name="checkBoxEntityAbstract.Text" xml:space="preserve">
     <value>抽象</value>
   </data>
-  <data name="buttonEntityBase.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
   <data name="buttonEntityBase.Text" xml:space="preserve">
     <value>セレクト</value>
-  </data>
-  <data name="label6.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
   </data>
   <data name="label6.Size" type="System.Drawing.Size, System.Drawing">
     <value>71, 13</value>
@@ -407,20 +410,8 @@
   <data name="label6.Text" xml:space="preserve">
     <value>スーパークラス</value>
   </data>
-  <data name="tabPageEntity.Text" xml:space="preserve">
-    <value>実体</value>
-  </data>
-  <data name="label17.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="label17.Size" type="System.Drawing.Size, System.Drawing">
-    <value>36, 13</value>
-  </data>
-  <data name="label17.Text" xml:space="preserve">
-    <value>大きさ</value>
-  </data>
-  <data name="label28.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
+  <data name="tabPageAttribute.Text" xml:space="preserve">
+    <value>属性</value>
   </data>
   <data name="label28.Size" type="System.Drawing.Size, System.Drawing">
     <value>31, 13</value>
@@ -428,20 +419,11 @@
   <data name="label28.Text" xml:space="preserve">
     <value>最大</value>
   </data>
-  <data name="label27.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
   <data name="label27.Size" type="System.Drawing.Size, System.Drawing">
     <value>31, 13</value>
   </data>
   <data name="label27.Text" xml:space="preserve">
     <value>最小</value>
-  </data>
-  <data name="buttonAttributeAggregationRemove.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="buttonAttributeAggregationInsert.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
   </data>
   <data name="columnHeaderCardinalityAggregation.Text" xml:space="preserve">
     <value>アグリゲーション</value>
@@ -452,14 +434,8 @@
   <data name="columnHeaderCardinalityMaximum.Text" xml:space="preserve">
     <value>最大</value>
   </data>
-  <data name="buttonAttributeInverse.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
   <data name="buttonAttributeInverse.Text" xml:space="preserve">
     <value>インバース</value>
-  </data>
-  <data name="labelAttributeInverse.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
   </data>
   <data name="labelAttributeInverse.Size" type="System.Drawing.Size, System.Drawing">
     <value>88, 13</value>
@@ -467,17 +443,11 @@
   <data name="labelAttributeInverse.Text" xml:space="preserve">
     <value>属性のインバース</value>
   </data>
-  <data name="checkBoxXsdTagless.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
   <data name="checkBoxXsdTagless.Size" type="System.Drawing.Size, System.Drawing">
     <value>62, 17</value>
   </data>
   <data name="checkBoxXsdTagless.Text" xml:space="preserve">
     <value>タグなし</value>
-  </data>
-  <data name="labelAttributeXsdFormat.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
   </data>
   <data name="labelAttributeXsdFormat.Size" type="System.Drawing.Size, System.Drawing">
     <value>53, 13</value>
@@ -500,17 +470,11 @@
   <data name="comboBoxAttributeXsdFormat.Items4" xml:space="preserve">
     <value>コンテント</value>
   </data>
-  <data name="labelAttributeAggregation.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
   <data name="labelAttributeAggregation.Size" type="System.Drawing.Size, System.Drawing">
     <value>77, 13</value>
   </data>
   <data name="labelAttributeAggregation.Text" xml:space="preserve">
     <value>アグリゲーション</value>
-  </data>
-  <data name="checkBoxAttributeOptional.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
   </data>
   <data name="checkBoxAttributeOptional.Size" type="System.Drawing.Size, System.Drawing">
     <value>80, 17</value>
@@ -518,17 +482,11 @@
   <data name="checkBoxAttributeOptional.Text" xml:space="preserve">
     <value>オプショナル</value>
   </data>
-  <data name="buttonAttributeType.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
   <data name="buttonAttributeType.Text" xml:space="preserve">
     <value>型</value>
   </data>
   <data name="textBoxAttributeType.Location" type="System.Drawing.Point, System.Drawing">
     <value>7, 24</value>
-  </data>
-  <data name="label8.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
   </data>
   <data name="label8.Size" type="System.Drawing.Size, System.Drawing">
     <value>19, 13</value>
@@ -536,11 +494,11 @@
   <data name="label8.Text" xml:space="preserve">
     <value>型</value>
   </data>
-  <data name="tabPageAttribute.Text" xml:space="preserve">
-    <value>属性</value>
-  </data>
   <data name="tabPageExpression.Text" xml:space="preserve">
     <value>表現</value>
+  </data>
+  <data name="tabPageView.Text" xml:space="preserve">
+    <value>ビュー</value>
   </data>
   <data name="columnHeader3.Text" xml:space="preserve">
     <value>実体</value>
@@ -569,9 +527,6 @@
   <data name="comboBoxViewXsd.Items4" xml:space="preserve">
     <value>コンテント</value>
   </data>
-  <data name="checkBoxViewXsdTagless.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
   <data name="checkBoxViewXsdTagless.Location" type="System.Drawing.Point, System.Drawing">
     <value>279, 360</value>
   </data>
@@ -581,20 +536,11 @@
   <data name="checkBoxViewXsdTagless.Text" xml:space="preserve">
     <value>タグなし</value>
   </data>
-  <data name="buttonViewXsdDelete.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
   <data name="buttonViewXsdDelete.Text" xml:space="preserve">
     <value>削る</value>
   </data>
-  <data name="buttonViewXsdAttribute.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
   <data name="buttonViewXsdAttribute.Text" xml:space="preserve">
     <value>ロード</value>
-  </data>
-  <data name="label29.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
   </data>
   <data name="label29.Size" type="System.Drawing.Size, System.Drawing">
     <value>70, 13</value>
@@ -602,14 +548,8 @@
   <data name="label29.Text" xml:space="preserve">
     <value>XSDタグ設定</value>
   </data>
-  <data name="buttonViewBase.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
   <data name="buttonViewBase.Text" xml:space="preserve">
     <value>セレクト</value>
-  </data>
-  <data name="label19.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
   </data>
   <data name="label19.Size" type="System.Drawing.Size, System.Drawing">
     <value>43, 13</value>
@@ -617,11 +557,8 @@
   <data name="label19.Text" xml:space="preserve">
     <value>底面図</value>
   </data>
-  <data name="tabPageView.Text" xml:space="preserve">
-    <value>ビュー</value>
-  </data>
-  <data name="label24.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
+  <data name="tabPageExchange.Text" xml:space="preserve">
+    <value>交換</value>
   </data>
   <data name="label24.Size" type="System.Drawing.Size, System.Drawing">
     <value>101, 13</value>
@@ -947,9 +884,6 @@
   <data name="comboBoxExchangeClassReceiver.Items105" xml:space="preserve">
     <value>34-61 51 31	組合</value>
   </data>
-  <data name="label23.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
   <data name="label23.Size" type="System.Drawing.Size, System.Drawing">
     <value>101, 13</value>
   </data>
@@ -1274,9 +1208,6 @@
   <data name="comboBoxExchangeClassSender.Items105" xml:space="preserve">
     <value>34-61 51 31	組合</value>
   </data>
-  <data name="label22.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
   <data name="label22.Size" type="System.Drawing.Size, System.Drawing">
     <value>78, 13</value>
   </data>
@@ -1310,9 +1241,6 @@
   <data name="comboBoxExchangeClassProcess.Items8" xml:space="preserve">
     <value>31-90 00 00	閉鎖相</value>
   </data>
-  <data name="checkBoxExchangeExport.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
   <data name="checkBoxExchangeExport.Location" type="System.Drawing.Point, System.Drawing">
     <value>83, 26</value>
   </data>
@@ -1322,17 +1250,11 @@
   <data name="checkBoxExchangeExport.Text" xml:space="preserve">
     <value>エクスポート</value>
   </data>
-  <data name="checkBoxExchangeImport.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
   <data name="checkBoxExchangeImport.Size" type="System.Drawing.Size, System.Drawing">
     <value>72, 17</value>
   </data>
   <data name="checkBoxExchangeImport.Text" xml:space="preserve">
     <value>インポート</value>
-  </data>
-  <data name="labelExchangeApplicability.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
   </data>
   <data name="labelExchangeApplicability.Size" type="System.Drawing.Size, System.Drawing">
     <value>43, 13</value>
@@ -1340,41 +1262,8 @@
   <data name="labelExchangeApplicability.Text" xml:space="preserve">
     <value>適用性</value>
   </data>
-  <data name="buttonExchangeIconClear.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="buttonExchangeIconClear.Text" xml:space="preserve">
-    <value>クリア</value>
-  </data>
-  <data name="buttonExchangeIconChange.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="buttonExchangeIconChange.Text" xml:space="preserve">
-    <value>セットアイコン</value>
-  </data>
-  <data name="label2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>274, 13</value>
-  </data>
-  <data name="label2.Text" xml:space="preserve">
-    <value>アイコン （16×16 テーブル内のハイパーリンクに使用される）</value>
-  </data>
-  <data name="tabPageExchange.Text" xml:space="preserve">
-    <value>交換</value>
-  </data>
-  <data name="buttonUsageMigrate.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="buttonUsageMigrate.Text" xml:space="preserve">
-    <value>別のテンプレートに移行</value>
-  </data>
-  <data name="buttonUsageEdit.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="buttonUsageEdit.Text" xml:space="preserve">
-    <value>プロパティ</value>
+  <data name="tabPageUsage.Text" xml:space="preserve">
+    <value>使用</value>
   </data>
   <data name="columnHeaderUsageView.Text" xml:space="preserve">
     <value>モデルビュー</value>
@@ -1382,53 +1271,54 @@
   <data name="columnHeaderUsageEntity.Text" xml:space="preserve">
     <value>実体</value>
   </data>
-  <data name="label21.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
+  <data name="toolStripButtonUsageNavigate.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABfSURBVDhP3YxbEoAgCEVZNstjZxRDCJhjE9pPH0ceFw8A
+        MK9xPohYIgnc6OTDe6Z9GIioYftZJvUbgQZZ0OePAvtsjHKpfxbY3g9fCOLRLJO6V9ATBaNM+2uo0AR1
+        mA8t41zDYGgG2QAAAABJRU5ErkJggg==
+</value>
   </data>
-  <data name="label21.Size" type="System.Drawing.Size, System.Drawing">
-    <value>242, 13</value>
-  </data>
-  <data name="label21.Text" xml:space="preserve">
-    <value>このテンプレートは次のエンティティで使用されている</value>
-  </data>
-  <data name="tabPageUsage.Text" xml:space="preserve">
-    <value>使用</value>
-  </data>
-  <data name="label30.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="label30.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 13</value>
-  </data>
-  <data name="label30.Text" xml:space="preserve">
-    <value>ファイルの内容</value>
-  </data>
-  <data name="label25.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="label25.Size" type="System.Drawing.Size, System.Drawing">
-    <value>76, 13</value>
-  </data>
-  <data name="label25.Text" xml:space="preserve">
-    <value>該当するビュー</value>
-  </data>
-  <data name="buttonExampleClear.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="buttonExampleClear.Text" xml:space="preserve">
-    <value>クリア</value>
-  </data>
-  <data name="buttonExampleLoad.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
-  </data>
-  <data name="buttonExampleLoad.Text" xml:space="preserve">
-    <value>ロード·ファイル</value>
+  <data name="toolStripButtonUsageMigrate.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABhSURBVDhPvcxRCoBACIRhj+3xvJkl24bRKINBD3/Q7uwn
+        Iu7fOj+qOooCunsaqDY0YGYQeQDrBxcAQtb9dZiHXRkZAVF+8z+w9xCoQo9fQNUG0I4Gqg0NoPOIArpu
+        YJ77AU7OZbEmCy7WAAAAAElFTkSuQmCC
+</value>
   </data>
   <data name="tabPageExample.Text" xml:space="preserve">
     <value>実例</value>
   </data>
+  <data name="toolStripButtonExampleLoad.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAJHSURBVDhPxZBdSNNhFMb/F110ZZEVhVBgeeHNICiiuggp
+        olAUyyxI0oSaH1QYC3N+tKnp5ubm1JUua5uuqdNKMwr7kApFItTUkWZqVhSVYmao5Nevvy7UoYR3HXh4
+        4XCe33nOKyy3lAY7l9RWMo0O/raWXxEyo5spVYTNvOGyfIRPfW+ptOkXqaPl6T83hcRmExSdgzAz3NVm
+        YWyoYla/B+1M9JtxWLPpaH22JORIjI6gKAMB0jyEimIdo4OlbuaprwVMOOMovammpDADc34qppwUrmnl
+        5Kni3aFlFg2j3y1z5mnRTJccnNIltQhwq0jFry+mOXNtpWZWDx1Z1NhV3C3JwGFOw25SYjVe5oYhiUKd
+        HKMmwQUrMWUw/CF3NnZvvYKqUh1TvUroS3fXe7HXkwidMngTS2t5KLbregSzMY2f3Wr4qKW6LJvGR1rX
+        0MLor8OhKYTJBn/GHvvxrliCTBrsOqXIoOBHh5K+hmSq7FqmexTQHuUytkaKxuNMNgYyVneA4Qd7GKjc
+        hjLaRzxH7gIU6JIZaEvgtk1D8wsxSWecCDgNzWFMvwxm/PkhRmr3Mli1nW9lvjRdWc0Jf+/5jzRmyWmv
+        S+GOLQu6U6BFjPvqKOP1AYw88WOoZif9DgmfLVtxaj1RSLdwNvrkPCA3M54KqxrnvRia9MKcGrUrqFOt
+        5H7qKsqT1mGO9+Lqhc2ELdw+U/r0i+gVZ8hMiCDx3DHORwZyKnQ/hw/uYt9uCTskPvh6e7Fp41rWr/Fg
+        g6eHO+A/lyD8ARfG3mk9fv1YAAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="toolStripButtonExampleClear.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAB1SURBVDhPrZDRCcAgDAU7SD8dMuO5UGdQUoi81kOp9eNh
+        NJdDclxnKn9yC8xsKSgYCYl9CLzOOaOEel43QQCRN0g9P/EHCtKb8rgDHdAQ2wmiMRsObr+AhiPE7lvi
+        DKSen/gDfRv1vMYd6F1DbCf4kiZYTyoVZHp5fwaxxEAAAAAASUVORK5CYII=
+</value>
+  </data>
   <data name="tabPageOperations.Text" xml:space="preserve">
     <value>操作</value>
+  </data>
+  <data name="tabPageConceptRoot.Text" xml:space="preserve">
+    <value>インヘリタンス</value>
   </data>
   <data name="columnHeaderRootTemplate.Text" xml:space="preserve">
     <value>テンプレート</value>
@@ -1444,7 +1334,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAABy
-        CwAAAk1TRnQBSQFMAgEBBAEAATABAAEwAQABEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
+        CwAAAk1TRnQBSQFMAgEBBAEAATgBAAE4AQABEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
         AwABQAMAASADAAEBAQABCAYAAQgYAAGAAgABgAMAAoABAAGAAwABgAEAAYABAAKAAgADwAEAAcAB3AHA
         AQAB8AHKAaYBAAEzBQABMwEAATMBAAEzAQACMwIAAxYBAAMcAQADIgEAAykBAANVAQADTQEAA0IBAAM5
         AQABgAF8Af8BAAJQAf8BAAGTAQAB1gEAAf8B7AHMAQABxgHWAe8BAAHWAucBAAGQAakBrQIAAf8BMwMA
@@ -1546,7 +1436,201 @@
         GHnNewm/syD8BvfA1J6LMQqMAAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="tabPageConceptRoot.Text" xml:space="preserve">
-    <value>インヘリタンス</value>
+  <data name="tabPageChange.Text" xml:space="preserve">
+    <value>変更</value>
+  </data>
+  <data name="toolStripButtonChangeSPF.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAIDSURBVDhPpZLrS5NhGMb3j4SWh0oRQVExD4gonkDpg4hG
+        YKxG6WBogkMZKgPNCEVJFBGdGETEvgwyO9DJE5syZw3PIlPEE9pgBCLZ5XvdMB8Ew8gXbl54nuf63dd9
+        0OGSnwCahxbPRNPAPMw9Xpg6ZmF46kZZ0xSKzJPIrhpDWsVnpBhGkKx3nAX8Pv7z1zg8OoY/cITdn4fw
+        bf/C0kYAN3Ma/w3gWfZL5kzTKBxjWyK2DftwI9tyMYCZKXbNHaD91bLYJrDXsYbrWfUKwJrPE9M2M1Oc
+        VzOOpHI7Jr376Hi9ogHqFIANO0/MmmmbmSmm9a8ze+I4MrNWAdjtoJgWcx+PSzg166yZZ8xM8XvXDix9
+        c4jIqFYAjoriBV9AhEPv1mH/sonogha0afbZMMZz+yreTGyhpusHwtNNCsA5U1zS4BLxzJIfg299qO32
+        Ir7UJtZfftyATqeT+8o2D8JSjQrAJblrncYL7ZJ2+bfaFnC/1S1NjL3diRat7qrO7wLRP3HjWsojBeCo
+        mDEo5mNjuweFGvjWg2EBhCbpkW78htSHHwRyNdmgAFzPEee2iFkzayy2OLXzT4gr6UdUnlXrullsxxQ+
+        kx0g8BTA3aZlButjSTyjODq/WcQcW/B/Je4OQhLvKQDnzN1mp0nnkvAhR8VuMzNrpm1mpjgkoVwB/v8D
+        TgDQASA1MVpwzwAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="toolStripButtonChangeXML.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAIDSURBVDhPpZLrS5NhGMb3j4SWh0oRQVExD4gonkDpg4hG
+        YKxG6WBogkMZKgPNCEVJFBGdGETEvgwyO9DJE5syZw3PIlPEE9pgBCLZ5XvdMB8Ew8gXbl54nuf63dd9
+        0OGSnwCahxbPRNPAPMw9Xpg6ZmF46kZZ0xSKzJPIrhpDWsVnpBhGkKx3nAX8Pv7z1zg8OoY/cITdn4fw
+        bf/C0kYAN3Ma/w3gWfZL5kzTKBxjWyK2DftwI9tyMYCZKXbNHaD91bLYJrDXsYbrWfUKwJrPE9M2M1Oc
+        VzOOpHI7Jr376Hi9ogHqFIANO0/MmmmbmSmm9a8ze+I4MrNWAdjtoJgWcx+PSzg166yZZ8xM8XvXDix9
+        c4jIqFYAjoriBV9AhEPv1mH/sonogha0afbZMMZz+yreTGyhpusHwtNNCsA5U1zS4BLxzJIfg299qO32
+        Ir7UJtZfftyATqeT+8o2D8JSjQrAJblrncYL7ZJ2+bfaFnC/1S1NjL3diRat7qrO7wLRP3HjWsojBeCo
+        mDEo5mNjuweFGvjWg2EBhCbpkW78htSHHwRyNdmgAFzPEee2iFkzayy2OLXzT4gr6UdUnlXrullsxxQ+
+        kx0g8BTA3aZlButjSTyjODq/WcQcW/B/Je4OQhLvKQDnzN1mp0nnkvAhR8VuMzNrpm1mpjgkoVwB/v8D
+        TgDQASA1MVpwzwAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="tabPageViews.Text" xml:space="preserve">
+    <value>眺望</value>
+  </data>
+  <data name="toolStripButtonViewInsert.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABUSURBVDhP3cxBCgAhCEBRj+3xvJlNBJNNX4iGNi1eUNoX
+        Efd/nkNVt6SBXh/xXjIws8H5QLt0FIgw8P2UuTkQ0adoCkT1jQK0dy5AeA8Gq97APvcCZN1yd7JMcNIA
+        AAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="toolStripButtonViewRemove.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAzSURBVDhPY2Bg+P+fMgwkKioqyMLDzQAIh3iM1YADBw4Q
+        hYezAaRgDAPIwcPJAPLx//8ARLZjI8VMTLsAAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="tabPagePublication.Text" xml:space="preserve">
+    <value>出版</value>
+  </data>
+  <data name="label17.Size" type="System.Drawing.Size, System.Drawing">
+    <value>36, 13</value>
+  </data>
+  <data name="label17.Text" xml:space="preserve">
+    <value>大きさ</value>
+  </data>
+  <data name="tabPageFormats.Text" xml:space="preserve">
+    <value>形式</value>
+  </data>
+  <data name="listViewFormats.Items" mimetype="application/x-microsoft.net.object.binary.base64">
+    <value>
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
+        LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkMAwAAAFFTeXN0
+        ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2Vu
+        PWIwM2Y1ZjdmMTFkNTBhM2EFAQAAACFTeXN0ZW0uV2luZG93cy5Gb3Jtcy5MaXN0Vmlld0l0ZW0JAAAA
+        BFRleHQKSW1hZ2VJbmRleAxTdWJJdGVtQ291bnQIU3ViSXRlbTEJQmFja0NvbG9yB0NoZWNrZWQERm9u
+        dAlGb3JlQ29sb3IXVXNlSXRlbVN0eWxlRm9yU3ViSXRlbXMBAAAEBAAEBAAICDFTeXN0ZW0uV2luZG93
+        cy5Gb3Jtcy5MaXN0Vmlld0l0ZW0rTGlzdFZpZXdTdWJJdGVtAgAAABRTeXN0ZW0uRHJhd2luZy5Db2xv
+        cgMAAAABE1N5c3RlbS5EcmF3aW5nLkZvbnQDAAAAFFN5c3RlbS5EcmF3aW5nLkNvbG9yAwAAAAECAAAA
+        BgQAAAAEU1RFUAAAAAACAAAACQUAAAAF+v///xRTeXN0ZW0uRHJhd2luZy5Db2xvcgQAAAAEbmFtZQV2
+        YWx1ZQprbm93bkNvbG9yBXN0YXRlAQAAAAkHBwMAAAAKAAAAAAAAAAAYAAEAAAkHAAAAAfj////6////
+        CgAAAAAAAAAAGgABAAEFBQAAADFTeXN0ZW0uV2luZG93cy5Gb3Jtcy5MaXN0Vmlld0l0ZW0rTGlzdFZp
+        ZXdTdWJJdGVtBAAAAAR0ZXh0BG5hbWUFc3R5bGUIdXNlckRhdGEBAQQCPlN5c3RlbS5XaW5kb3dzLkZv
+        cm1zLkxpc3RWaWV3SXRlbStMaXN0Vmlld1N1Ykl0ZW0rU3ViSXRlbVN0eWxlAgAAAAIAAAAKCgoKBQcA
+        AAATU3lzdGVtLkRyYXdpbmcuRm9udAQAAAAETmFtZQRTaXplBVN0eWxlBFVuaXQBAAQECxhTeXN0ZW0u
+        RHJhd2luZy5Gb250U3R5bGUDAAAAG1N5c3RlbS5EcmF3aW5nLkdyYXBoaWNzVW5pdAMAAAADAAAABgkA
+        AAAUTWljcm9zb2Z0IFNhbnMgU2VyaWYAAARBBfb///8YU3lzdGVtLkRyYXdpbmcuRm9udFN0eWxlAQAA
+        AAd2YWx1ZV9fAAgDAAAAAAAAAAX1////G1N5c3RlbS5EcmF3aW5nLkdyYXBoaWNzVW5pdAEAAAAHdmFs
+        dWVfXwAIAwAAAAMAAAAL
+</value>
+  </data>
+  <data name="listViewFormats.Items1" mimetype="application/x-microsoft.net.object.binary.base64">
+    <value>
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
+        LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkMAwAAAFFTeXN0
+        ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2Vu
+        PWIwM2Y1ZjdmMTFkNTBhM2EFAQAAACFTeXN0ZW0uV2luZG93cy5Gb3Jtcy5MaXN0Vmlld0l0ZW0JAAAA
+        BFRleHQKSW1hZ2VJbmRleAxTdWJJdGVtQ291bnQIU3ViSXRlbTEJQmFja0NvbG9yB0NoZWNrZWQERm9u
+        dAlGb3JlQ29sb3IXVXNlSXRlbVN0eWxlRm9yU3ViSXRlbXMBAAAEBAAEBAAICDFTeXN0ZW0uV2luZG93
+        cy5Gb3Jtcy5MaXN0Vmlld0l0ZW0rTGlzdFZpZXdTdWJJdGVtAgAAABRTeXN0ZW0uRHJhd2luZy5Db2xv
+        cgMAAAABE1N5c3RlbS5EcmF3aW5nLkZvbnQDAAAAFFN5c3RlbS5EcmF3aW5nLkNvbG9yAwAAAAECAAAA
+        BgQAAAADWE1MAAAAAAIAAAAJBQAAAAX6////FFN5c3RlbS5EcmF3aW5nLkNvbG9yBAAAAARuYW1lBXZh
+        bHVlCmtub3duQ29sb3IFc3RhdGUBAAAACQcHAwAAAAoAAAAAAAAAABgAAQAACQcAAAAB+P////r///8K
+        AAAAAAAAAAAaAAEAAQUFAAAAMVN5c3RlbS5XaW5kb3dzLkZvcm1zLkxpc3RWaWV3SXRlbStMaXN0Vmll
+        d1N1Ykl0ZW0EAAAABHRleHQEbmFtZQVzdHlsZQh1c2VyRGF0YQEBBAI+U3lzdGVtLldpbmRvd3MuRm9y
+        bXMuTGlzdFZpZXdJdGVtK0xpc3RWaWV3U3ViSXRlbStTdWJJdGVtU3R5bGUCAAAAAgAAAAoKCgoFBwAA
+        ABNTeXN0ZW0uRHJhd2luZy5Gb250BAAAAAROYW1lBFNpemUFU3R5bGUEVW5pdAEABAQLGFN5c3RlbS5E
+        cmF3aW5nLkZvbnRTdHlsZQMAAAAbU3lzdGVtLkRyYXdpbmcuR3JhcGhpY3NVbml0AwAAAAMAAAAGCQAA
+        ABRNaWNyb3NvZnQgU2FucyBTZXJpZgAABEEF9v///xhTeXN0ZW0uRHJhd2luZy5Gb250U3R5bGUBAAAA
+        B3ZhbHVlX18ACAMAAAAAAAAABfX///8bU3lzdGVtLkRyYXdpbmcuR3JhcGhpY3NVbml0AQAAAAd2YWx1
+        ZV9fAAgDAAAAAwAAAAs=
+</value>
+  </data>
+  <data name="listViewFormats.Items2" mimetype="application/x-microsoft.net.object.binary.base64">
+    <value>
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
+        LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkMAwAAAFFTeXN0
+        ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2Vu
+        PWIwM2Y1ZjdmMTFkNTBhM2EFAQAAACFTeXN0ZW0uV2luZG93cy5Gb3Jtcy5MaXN0Vmlld0l0ZW0JAAAA
+        BFRleHQKSW1hZ2VJbmRleAxTdWJJdGVtQ291bnQIU3ViSXRlbTEJQmFja0NvbG9yB0NoZWNrZWQERm9u
+        dAlGb3JlQ29sb3IXVXNlSXRlbVN0eWxlRm9yU3ViSXRlbXMBAAAEBAAEBAAICDFTeXN0ZW0uV2luZG93
+        cy5Gb3Jtcy5MaXN0Vmlld0l0ZW0rTGlzdFZpZXdTdWJJdGVtAgAAABRTeXN0ZW0uRHJhd2luZy5Db2xv
+        cgMAAAABE1N5c3RlbS5EcmF3aW5nLkZvbnQDAAAAFFN5c3RlbS5EcmF3aW5nLkNvbG9yAwAAAAECAAAA
+        BgQAAAAESlNPTgIAAAACAAAACQUAAAAF+v///xRTeXN0ZW0uRHJhd2luZy5Db2xvcgQAAAAEbmFtZQV2
+        YWx1ZQprbm93bkNvbG9yBXN0YXRlAQAAAAkHBwMAAAAKAAAAAAAAAAAYAAEAAAkHAAAAAfj////6////
+        CgAAAAAAAAAAGgABAAEFBQAAADFTeXN0ZW0uV2luZG93cy5Gb3Jtcy5MaXN0Vmlld0l0ZW0rTGlzdFZp
+        ZXdTdWJJdGVtBAAAAAR0ZXh0BG5hbWUFc3R5bGUIdXNlckRhdGEBAQQCPlN5c3RlbS5XaW5kb3dzLkZv
+        cm1zLkxpc3RWaWV3SXRlbStMaXN0Vmlld1N1Ykl0ZW0rU3ViSXRlbVN0eWxlAgAAAAIAAAAKCgoKBQcA
+        AAATU3lzdGVtLkRyYXdpbmcuRm9udAQAAAAETmFtZQRTaXplBVN0eWxlBFVuaXQBAAQECxhTeXN0ZW0u
+        RHJhd2luZy5Gb250U3R5bGUDAAAAG1N5c3RlbS5EcmF3aW5nLkdyYXBoaWNzVW5pdAMAAAADAAAABgkA
+        AAAUTWljcm9zb2Z0IFNhbnMgU2VyaWYAAARBBfb///8YU3lzdGVtLkRyYXdpbmcuRm9udFN0eWxlAQAA
+        AAd2YWx1ZV9fAAgDAAAAAAAAAAX1////G1N5c3RlbS5EcmF3aW5nLkdyYXBoaWNzVW5pdAEAAAAHdmFs
+        dWVfXwAIAwAAAAMAAAAL
+</value>
+  </data>
+  <data name="listViewFormats.Items3" mimetype="application/x-microsoft.net.object.binary.base64">
+    <value>
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
+        LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkMAwAAAFFTeXN0
+        ZW0uRHJhd2luZywgVmVyc2lvbj00LjAuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2Vu
+        PWIwM2Y1ZjdmMTFkNTBhM2EFAQAAACFTeXN0ZW0uV2luZG93cy5Gb3Jtcy5MaXN0Vmlld0l0ZW0JAAAA
+        BFRleHQKSW1hZ2VJbmRleAxTdWJJdGVtQ291bnQIU3ViSXRlbTEJQmFja0NvbG9yB0NoZWNrZWQERm9u
+        dAlGb3JlQ29sb3IXVXNlSXRlbVN0eWxlRm9yU3ViSXRlbXMBAAAEBAAEBAAICDFTeXN0ZW0uV2luZG93
+        cy5Gb3Jtcy5MaXN0Vmlld0l0ZW0rTGlzdFZpZXdTdWJJdGVtAgAAABRTeXN0ZW0uRHJhd2luZy5Db2xv
+        cgMAAAABE1N5c3RlbS5EcmF3aW5nLkZvbnQDAAAAFFN5c3RlbS5EcmF3aW5nLkNvbG9yAwAAAAECAAAA
+        BgQAAAADUkRGAgAAAAIAAAAJBQAAAAX6////FFN5c3RlbS5EcmF3aW5nLkNvbG9yBAAAAARuYW1lBXZh
+        bHVlCmtub3duQ29sb3IFc3RhdGUBAAAACQcHAwAAAAoAAAAAAAAAABgAAQAACQcAAAAB+P////r///8K
+        AAAAAAAAAAAaAAEAAQUFAAAAMVN5c3RlbS5XaW5kb3dzLkZvcm1zLkxpc3RWaWV3SXRlbStMaXN0Vmll
+        d1N1Ykl0ZW0EAAAABHRleHQEbmFtZQVzdHlsZQh1c2VyRGF0YQEBBAI+U3lzdGVtLldpbmRvd3MuRm9y
+        bXMuTGlzdFZpZXdJdGVtK0xpc3RWaWV3U3ViSXRlbStTdWJJdGVtU3R5bGUCAAAAAgAAAAoKCgoFBwAA
+        ABNTeXN0ZW0uRHJhd2luZy5Gb250BAAAAAROYW1lBFNpemUFU3R5bGUEVW5pdAEABAQLGFN5c3RlbS5E
+        cmF3aW5nLkZvbnRTdHlsZQMAAAAbU3lzdGVtLkRyYXdpbmcuR3JhcGhpY3NVbml0AwAAAAMAAAAGCQAA
+        ABRNaWNyb3NvZnQgU2FucyBTZXJpZgAABEEF9v///xhTeXN0ZW0uRHJhd2luZy5Gb250U3R5bGUBAAAA
+        B3ZhbHVlX18ACAMAAAAAAAAABfX///8bU3lzdGVtLkRyYXdpbmcuR3JhcGhpY3NVbml0AQAAAAd2YWx1
+        ZV9fAAgDAAAAAwAAAAs=
+</value>
+  </data>
+  <data name="toolStripButtonFormatNone.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAJ+SURBVDhPhVNdSFNhGD7gRXe7KeqmHDLYonY2+xlogT9T
+        SGc1Sd2m/RmVq2EK1vqTiDRSqRX9mhWlUkppo6K8sBZUFHSRN0EXhlGJSmv/P0ft5ul9z6bYMnrgge98
+        532e73nf7xxhLkbLdcaxMvGpz6pHsL4YAUcBeD1s1nr681RWKlEQ0+TiVIxXiJcC9nxId1vx620fJh9f
+        RPzOcUTP2xFsKIZvhwHvTepBKs0gLmDNLCYsYnfAUYhpTzemX/VgauAapN7TiF1vQLRtF8KNpQjWGeHd
+        ugZP8lXPSbKcmDDh2P7qbMTvNWHS7YL08CwkWsduOOXTI002hJwmBPbnwF9twIRFD4dmcStJlcQ0gXsO
+        nbAg1nEI8VtHECdh7Go9oq4aRJqrEDq6mU4vgH9PFvzbVuMHGTzKzRgh8QaiQvDSRviUjeI6IT04B+k+
+        JehpQbyLUtxsRPTKQURctQi32BE4YJKH+nWLHiSuk1NMVOgROrwRUy968T9Ife2ywZdSHRtwG1phrJyu
+        zJGDyYHOZNm/MWMwbJYNLhAzhe8Ux7fTgKDTjEjbvgQpbvhMDcLNe6m93bMM1NJ1ksHHkjkGQyVaz7gl
+        E77KVfBVJVlJzzYiFadytEyP9rXpXhInWuhap7J+pkg/aZjzCVL5oUiH/CWKNyRODJGgcOeq3Z826cA3
+        Mp9ohkNFIo6pl30jzWVi4hoJ/G0rO7NUg0PkPkITThXy1F8bRTSol7L4NrGaNUmtDP4sNduVi1o7DBkj
+        L/NEvCsUZdGz9StxckW6N3uhHJtPZrEmqfkDvMGuHI374yHxpJm85j1+xzV/iWfAkbgvLtISM5PkNe+l
+        /M6C8Bt+U9RjWxhloQAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="toolStripButtonFormatSchema.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAFNSURBVDhPY8AF3jy9+f/PFpb/dy/s+A8VIh7ANP8/k/Z/
+        dY0G3IB/L//+v5594z+IhgphB8iaFxQpwhWDNP9f9h9syJ+rf3Ab8m4tD1gziJ6cLoViwDOnJ2BDzsqf
+        xm0AsuaL+2ajGPAnDqIZrwFtbW3/W6OF/p/Y0P7fKyAMrhDkd5hmnAYga4ABmBiI/n34N1gzPAyQQxab
+        ZhjAKYcesi8/vPxv2aT9X69O7b96lRKYj+wCsCZkgB6yIM2Tr3f87zhb9z9zcwrcEKhyTEPQQxak2LhJ
+        53/8+qj/8Suj//vP8f0vUy75/8OH7/+LZz2H4+fPP0MMwhayIEM08tX/ywCjEYRBfJCm6fv+/F944Pf/
+        po2//xuGLfr/5MkniCEYIYsFPHz44b+q79z/SXN//Y9oewjGID5Umjhw+vRTsCYY3r37LmkG0AAwMAAA
+        tqlSvGZSt54AAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="toolStripButtonFormatExamples.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABbSURBVDhPzY5BCgAxCAP9/0d9xhY1ktLDovbSuaRkkEbe
+        4RuA0wCFC1X1t6Xx0xMUKapJdjFe0AWngRWNnzPJIapJrLhe0AWnAQoXjSUERYpqkl2MF3TB6Q0iCwgM
+        HTn+NhLLAAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="toolStripButtonFormatMarkup.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACISURBVDhP3Y9BCsAgDAT9/+P8hejdizdrwmYbUaTQS+mA
+        NGxmxYaf0R8CfQXL43l0QWvNRJYks3l8V1JKuvSMmCWPuFoyEGB9I5nl4gmW8xIrl1IoCSZinHZwe85Z
+        c5a9iFnPJuclr16w/IYXMU+5DgMZWTZijJRqrSr5IxnKdLeodQDaZwjhAnCbSoIhS3CfAAAAAElFTkSu
+        QmCC
+</value>
   </data>
 </root>

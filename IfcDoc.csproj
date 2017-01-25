@@ -152,6 +152,7 @@
     <Compile Include="CtlRules.Designer.cs">
       <DependentUpon>CtlRules.cs</DependentUpon>
     </Compile>
+    <Compile Include="DataDictionary.cs" />
     <Compile Include="DocumentationISO.cs" />
     <Compile Include="DifferenceEngine.cs" />
     <Compile Include="FormatOWL.cs" />
@@ -160,6 +161,12 @@
     <Compile Include="FormatSMF.cs" />
     <Compile Include="FormatSQL.cs" />
     <Compile Include="FormatZIP.cs" />
+    <Compile Include="FormCredentials.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormCredentials.Designer.cs">
+      <DependentUpon>FormCredentials.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormFilterDefinitions.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -197,6 +204,7 @@
     <Compile Include="FormSelectExchange.Designer.cs">
       <DependentUpon>FormSelectExchange.cs</DependentUpon>
     </Compile>
+    <Compile Include="peregrineapi.cs" />
     <Compile Include="SchemaXsd.cs" />
     <Compile Include="ThemedTreeView.cs">
       <SubType>Component</SubType>
@@ -370,10 +378,13 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CtlOperators.resx">
       <DependentUpon>CtlOperators.cs</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="CtlParameters.resx">
       <DependentUpon>CtlParameters.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CtlProperties.ja.resx">
+      <DependentUpon>CtlProperties.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="CtlProperties.resx">
       <DependentUpon>CtlProperties.cs</DependentUpon>
@@ -384,6 +395,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormConstraint.ja.resx">
       <DependentUpon>FormConstraint.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormCredentials.resx">
+      <DependentUpon>FormCredentials.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormEdit.ja-JP.resx">
+      <DependentUpon>FormEdit.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormFilterDefinitions.resx">
       <DependentUpon>FormFilterDefinitions.cs</DependentUpon>
@@ -428,6 +445,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormEdit.ja.resx">
       <DependentUpon>FormEdit.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="FormGenerate.ja.resx">
       <DependentUpon>FormGenerate.cs</DependentUpon>

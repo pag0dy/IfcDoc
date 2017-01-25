@@ -53,6 +53,13 @@ namespace IfcDoc
                 this.comboBoxUsage.SelectedIndex = 2;
             }
 
+            if (rule is DocModelRuleEntity)
+            {
+                this.textBoxPrefix.Enabled = true;
+                this.textBoxPrefix.Text = ((DocModelRuleEntity)rule).Prefix;
+            }
+
+
             if (this.m_rule.CardinalityMin == 0 && this.m_rule.CardinalityMax == 0)
             {
                 this.comboBoxCardinality.SelectedIndex = 0;
@@ -73,15 +80,6 @@ namespace IfcDoc
             {
                 this.comboBoxCardinality.SelectedIndex = 4;
             }
-
-            this.UpdateBehavior();
-        }
-
-        private void textBoxIdentifier_TextChanged(object sender, EventArgs e)
-        {
-            //this.m_rule.Identification = this.textBoxIdentifier.Text;
-
-            //this.m_rule.RenameParameter(this.textBoxIdentifier.Text, this.m_project, this.m_template);
         }
 
         private void comboBoxCardinality_SelectedIndexChanged(object sender, EventArgs e)
@@ -113,8 +111,6 @@ namespace IfcDoc
                     this.m_rule.CardinalityMax = -1;
                     break;
             }
-
-            this.UpdateBehavior();
         }
 
         private void comboBoxUsage_SelectedIndexChanged(object sender, EventArgs e)
@@ -136,48 +132,6 @@ namespace IfcDoc
                     this.m_rule.Description = null;
                     break;
             }
-
-            this.UpdateBehavior();
-        }
-
-        private void UpdateBehavior()
-        {
-            switch (this.comboBoxUsage.SelectedIndex)
-            {
-                case 0:
-                    this.textBoxBehavior.Text = "";
-                    break;
-
-                case 1:
-                    this.textBoxBehavior.Text = "Rules only apply if attribute equals specified value.\r\n";
-                    break;
-
-                case 2:
-                    this.textBoxBehavior.Text = "Attribute must equal specified value if rule applies.\r\n";
-                    break;
-            }
-
-            switch (this.comboBoxCardinality.SelectedIndex)
-            {
-                case 0: // -
-                    break;
-
-                case 1: // [0]
-                    this.textBoxBehavior.Text += "No applicable template items may satisfy all constraints.";
-                    break;
-
-                case 2: // [0:1]
-                    this.textBoxBehavior.Text += "Zero or one template items must satisfy all constraints.";
-                    break;
-
-                case 3: // [1]
-                    this.textBoxBehavior.Text += "Exactly one applicable template item must satisfy all constraints.";
-                    break;
-
-                case 4: // [1:?]
-                    this.textBoxBehavior.Text += "Each applicable template item must satisfy all constraints.";
-                    break;
-            }
         }
 
         private void buttonOK_Click(object sender, EventArgs e)
@@ -186,6 +140,11 @@ namespace IfcDoc
             if (this.m_rule.Identification != this.textBoxIdentifier.Text)
             {
                 this.m_rule.RenameParameter(this.textBoxIdentifier.Text, this.m_project, this.m_template);
+            }
+
+            if(this.m_rule is DocModelRuleEntity)
+            {
+                ((DocModelRuleEntity)this.m_rule).Prefix = this.textBoxPrefix.Text;
             }
 
             this.Close();

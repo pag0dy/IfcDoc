@@ -36,7 +36,8 @@ namespace IfcDoc
             this.m_views = views;
             this.m_exchange = exchange;
 
-            this.m_assembly = AppDomain.CurrentDomain.DefineDynamicAssembly(new AssemblyName("IFC4"), AssemblyBuilderAccess.RunAndSave);
+            string schemaid = project.GetSchemaIdentifier();
+            this.m_assembly = AppDomain.CurrentDomain.DefineDynamicAssembly(new AssemblyName(schemaid), AssemblyBuilderAccess.RunAndSave);
             this.m_module = this.m_assembly.DefineDynamicModule("IFC4.dll", "IFC4.dll");
             this.m_definitions = new Dictionary<string, DocObject>();
             this.m_types = new Dictionary<string, Type>();

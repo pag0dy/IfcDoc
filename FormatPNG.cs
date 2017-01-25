@@ -66,8 +66,8 @@ namespace IfcDoc.Format.PNG
             DocModelView docView, 
             DocModelRuleAttribute ruleAttribute, 
             Dictionary<string, DocObject> map, 
-            int offset, 
-            Dictionary<Rectangle, DocModelRule> layout, 
+            int offset,
+            Dictionary<Rectangle, SEntity> layout, 
             DocProject docProject,
             DocSchema docSchema,
             SEntity instance)
@@ -356,8 +356,8 @@ namespace IfcDoc.Format.PNG
             DocModelView docView,
             DocTemplateDefinition docTemplate, 
             DocModelRuleEntity docRule, 
-            Dictionary<string, DocObject> map, 
-            Dictionary<Rectangle, DocModelRule> layout,
+            Dictionary<string, DocObject> map,
+            Dictionary<Rectangle, SEntity> layout,
             DocProject docProject,
             DocSchema docSchema,
             object instance)
@@ -489,7 +489,14 @@ namespace IfcDoc.Format.PNG
             // record rectangle
             if (layout != null)
             {
-                layout.Add(new Rectangle(x, y, CX - DX, CY + CY * listAttr.Count), docRule);
+                try
+                {
+                    layout.Add(new Rectangle(x, y, CX - DX, CY + CY * listAttr.Count), docRule);
+                }
+                catch
+                {
+                    //...
+                }
             }
 
             SortedList<int, List<DocModelRuleAttribute>> mapAttribute = new SortedList<int, List<DocModelRuleAttribute>>();
@@ -646,6 +653,61 @@ namespace IfcDoc.Format.PNG
 
             int offset = -mapAttribute.Values.Count / 2;
 
+            if(docRule != null)
+            {
+                offset -= docRule.References.Count / 2;
+
+                foreach (DocTemplateDefinition dtdRef in docRule.References)
+                {
+                    int targetY = lanes[lane + 1] + FormatPNG.Border;
+
+                    if (g != null)
+                    {
+                        // draw the template box
+                        g.FillRectangle(Brushes.Blue, x + CX, targetY, CX - DX, CY);
+                        g.DrawRectangle(Pens.Blue, x + CX, targetY, CX - DX, CY);
+                        using (Font font = new Font(FontFamily.GenericSansSerif, 8.0f))
+                        {
+                            g.DrawString(dtdRef.Name, font, Brushes.White, x + CX, targetY);
+                        }
+
+                        // draw the line connecting entity to the template
+                        int dest = FormatPNG.Border;
+                        if (lanes.Count > lane + 1)
+                        {
+                            dest = lanes[lane + 1] + FormatPNG.Border;
+                        }
+
+                        int x0 = x + CX - DX;
+                        int y0 = y + CY / 2;
+                        int x1 = x + CX;
+                        int y1 = dest + CY / 2;
+                        int xM = x0 + DX / 2 - offset * 2;
+
+                        g.DrawLine(Pens.Blue, x0, y0, xM, y0);
+                        g.DrawLine(Pens.Blue, xM, y0, xM, y1);
+                        g.DrawLine(Pens.Blue, xM, y1, x1, y1);
+
+                    }
+                                
+                    // record rectangle
+                    if (layout != null)
+                    {
+                        layout.Add(new Rectangle(x + CX, targetY, CX - DX, CY), dtdRef);
+                    }
+
+                    // increment lane offset for all lanes
+                    int tempminlane = targetY + CY * 2;
+                    int i = lane + 1;
+                    if (lanes[i] < tempminlane)
+                    {
+                        lanes[i] = tempminlane;
+                    }
+
+                    offset++;
+                }
+            }
+
             DocTemplateDefinition lastTemplate = null;
             foreach (List<DocModelRuleAttribute> listSort in mapAttribute.Values)
             {
@@ -721,7 +783,6 @@ namespace IfcDoc.Format.PNG
             {
                 lanes[lane] = minlane;
             }
-            
         }
 
         /// <summary>
@@ -734,7 +795,7 @@ namespace IfcDoc.Format.PNG
         /// <param name="docProject"></param>
         /// <param name="instance"></param>
         /// <returns></returns>
-        internal static Image CreateConceptDiagram(DocEntity docEntity, DocModelView docView, Dictionary<string, DocObject> map, Dictionary<Rectangle, DocModelRule> layout, DocProject docProject, SEntity instance)
+        internal static Image CreateConceptDiagram(DocEntity docEntity, DocModelView docView, Dictionary<string, DocObject> map, Dictionary<Rectangle, SEntity> layout, DocProject docProject, SEntity instance)
         {
             DocSchema docSchema = docProject.GetSchemaOfDefinition(docEntity);
 
@@ -789,7 +850,7 @@ namespace IfcDoc.Format.PNG
         /// </summary>
         /// <param name="docTemplate"></param>
         /// <returns></returns>
-        internal static Image CreateTemplateDiagram(DocTemplateDefinition docTemplate, Dictionary<string, DocObject> map, Dictionary<Rectangle, DocModelRule> layout, DocProject docProject, SEntity instance)
+        internal static Image CreateTemplateDiagram(DocTemplateDefinition docTemplate, Dictionary<string, DocObject> map, Dictionary<Rectangle, SEntity> layout, DocProject docProject, SEntity instance)
         {
             DocObject docTarget = null;
             if (docTemplate.Type == null || !map.TryGetValue(docTemplate.Type, out docTarget) || !(docTarget is DocEntity))
@@ -1208,9 +1269,33 @@ namespace IfcDoc.Format.PNG
                                                 {
                                                     for (int i = 0; i < docTarget.DiagramLine.Count - 1; i++)
                                                     {
-                                                        g.DrawLine(penBlue,
-                                                            new Point((int)(docTarget.DiagramLine[i].X * Factor), (int)(docTarget.DiagramLine[i].Y * Factor)),
-                                                            new Point((int)(docTarget.DiagramLine[i + 1].X * Factor), (int)(docTarget.DiagramLine[i + 1].Y * Factor)));
+                                                        Point ptA = new Point((int)(docTarget.DiagramLine[i].X * Factor), (int)(docTarget.DiagramLine[i].Y * Factor));
+                                                        Point ptB = new Point((int)(docTarget.DiagramLine[i + 1].X * Factor), (int)(docTarget.DiagramLine[i + 1].Y * Factor));
+                                                        int cap = 0;
+                                                        if (i == docTarget.DiagramLine.Count - 2 && format == DiagramFormat.ExpressG)
+                                                        {
+                                                            cap = DrawEndCap(g, ptA, ptB, format);
+                                                            // adjust for cap size
+                                                            if (ptB.X > ptA.X)
+                                                            {
+                                                                ptB.X -= cap;
+                                                            }
+                                                            else if (ptB.X < ptA.X)
+                                                            {
+                                                                ptB.X += cap;
+                                                            }
+                                                            if (ptB.Y > ptA.Y)
+                                                            {
+                                                                ptB.Y -= cap;
+                                                            }
+                                                            else if (ptB.Y < ptA.Y)
+                                                            {
+                                                                ptB.Y += cap;
+                                                            }
+
+                                                        }
+
+                                                        g.DrawLine(penBlue, ptA, ptB);
                                                     }
                                                 }
                                             }
@@ -1430,7 +1515,7 @@ namespace IfcDoc.Format.PNG
                 // filled if composition...
             }
 
-            return rad;
+            return rad * 2;
         }
 
         private static void DrawTree(Graphics g, DocLine docSub, double factor, Point ptLast, DiagramFormat format)
@@ -1441,6 +1526,8 @@ namespace IfcDoc.Format.PNG
                 float penwidth = 0.0f;
                 if(format == DiagramFormat.ExpressG)
                 {
+                    // draw circle at subtype
+
                     penwidth = 3.0f;
                 }
                 else if (format == DiagramFormat.UML)
@@ -1481,6 +1568,11 @@ namespace IfcDoc.Format.PNG
 
                         g.DrawLine(pen, ptA, ptB);
                         g.DrawLine(pen, ptB, ptC);
+
+                        if (docSub.Tree.Count == 0 && i == docSub.DiagramLine.Count - 2 && format == DiagramFormat.ExpressG)
+                        {
+                            DrawEndCap(g, ptB, ptC, format);
+                        }
                     }
                 }
             }

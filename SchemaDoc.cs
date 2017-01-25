@@ -455,7 +455,7 @@ namespace IfcDoc.Schema.DOC
 
         //[DisplayName("TTL")]
         [Description("ifcOWL Web Ontology Language (OWL)")]
-        TTL = 4, // for transition, keep identifier as OWL for now so existing .ifcdoc files still work
+        OWL = 4, // for transition, keep identifier as OWL for now so existing .ifcdoc files still work
 
         //[DisplayName("Java")]
         [Description("Java Programming Language")]
@@ -582,7 +582,7 @@ namespace IfcDoc.Schema.DOC
                     case DocFormatSchemaEnum.SQL:
                         return "sql";
 
-                    case DocFormatSchemaEnum.TTL:
+                    case DocFormatSchemaEnum.OWL:
                         return "owl";
                 }
                 return "txt"; // fallback if unknown
@@ -610,7 +610,7 @@ namespace IfcDoc.Schema.DOC
                     case DocFormatSchemaEnum.SQL:
                         return "csv";
 
-                    case DocFormatSchemaEnum.TTL:
+                    case DocFormatSchemaEnum.OWL:
                         return "ttl";
 
                 }
@@ -626,7 +626,7 @@ namespace IfcDoc.Schema.DOC
     {
         [DataMember(Order = 0)] private List<DocModelView> _Views;
         [DataMember(Order = 1)] private List<DocFormat> _Formats;
-        [DataMember(Order = 2)] private List<string> _Locales;
+        [DataMember(Order = 2)] private List<DocChangeSet> _ChangeSets; // IfcDoc 11.2; was List<string> locales
         [DataMember(Order = 3)] private List<DocAnnotation> _Annotations; // Forward + Introduction
         [DataMember(Order = 4)] private string _Header;
         [DataMember(Order = 5)] private string _Footer;
@@ -635,6 +635,7 @@ namespace IfcDoc.Schema.DOC
         [DataMember(Order = 8)] private bool _UML; // IfcDoc 9.8: UML diagrams instead of Express-G
         [DataMember(Order = 9)] private bool _Comparison; // IfcDoc 9.9: compare mappings between tabular exchanges, e.g. GSA
         [DataMember(Order = 10)] private bool _Exchanges; // IfcDoc 9.9: show exchange tables
+        [DataMember(Order = 11)] private bool _HtmlExamples; // IfcDoc 10.7: include examples with HTML markup
 
         // unserialized
         private List<string> m_errorlog; // list of filenames missing for images
@@ -680,24 +681,12 @@ namespace IfcDoc.Schema.DOC
                 if (this._Formats.Count == 2)
                 {
                     this._Formats.Add(new DocFormat(DocFormatSchemaEnum.SQL, DocFormatOptionEnum.None));
-                    this._Formats.Add(new DocFormat(DocFormatSchemaEnum.TTL, DocFormatOptionEnum.None));
+                    this._Formats.Add(new DocFormat(DocFormatSchemaEnum.OWL, DocFormatOptionEnum.None));
                     this._Formats.Add(new DocFormat(DocFormatSchemaEnum.JSON, DocFormatOptionEnum.None));
                     this._Formats.Add(new DocFormat(DocFormatSchemaEnum.CS, DocFormatOptionEnum.None));
                 }
 
                 return this._Formats;
-            }
-        }
-
-        public List<string> Locales
-        {
-            get
-            {
-                if(this._Locales == null)
-                {
-                    this._Locales = new List<string>();
-                }
-                return this._Locales;
             }
         }
 
@@ -797,6 +786,31 @@ namespace IfcDoc.Schema.DOC
             }
         }
 
+        public bool HtmlExamples
+        {
+            get
+            {
+                return this._HtmlExamples;
+            }
+            set
+            {
+                this._HtmlExamples = value;
+            }
+        }
+
+        public List<DocChangeSet> ChangeSets
+        {
+            get
+            {
+                if(this._ChangeSets == null)
+                {
+                    this._ChangeSets = new List<DocChangeSet>();
+                }
+
+                return this._ChangeSets;
+            }
+        }
+
         public override void Delete()
         {
             foreach(DocAnnotation docAnnotation in this.Annotations)
@@ -819,6 +833,22 @@ namespace IfcDoc.Schema.DOC
 
             return DocFormatOptionEnum.None;
         }
+
+        /// <summary>
+        /// Returns the release identifier, which may be combined with the version identifier
+        /// Example: "ADD1", "RC3"
+        /// </summary>
+        /// <returns></returns>
+        public string GetReleaseIdentifier()
+        {
+            if(!String.IsNullOrEmpty(this.Code))
+            {
+                return this.Code;
+            }
+
+            return "UNSPECIFIEDRELEASE";
+        }
+
     }
 
     /// <summary>
@@ -841,6 +871,50 @@ namespace IfcDoc.Schema.DOC
 
         public DocProject()
         {
+        }
+
+        /// <summary>
+        /// Returns an identifier for the schema and major/minor version, applicable to the overall .ifcdoc file -- which is the same, independent of model view or publication (addendum, release candidate, etc.).
+        /// Certain encodings -- such as EXPRESS -- will use this by itself and force it to uppercase.
+        /// Other encodings -- such as XML or OWL -- will use this along with the release identifier using case as defined.
+        /// Examples: "IFC2x3", "IFC4", "IFC4x1".
+        /// It is stored as the Code of the first Section.
+        /// </summary>
+        /// <returns></returns>
+        public string GetSchemaIdentifier()
+        {
+            if (this.Sections.Count > 0 && !String.IsNullOrEmpty(this.Sections[0].Code))
+            {
+                return this.Sections[0].Code;
+            }
+
+            return "UNSPECIFIEDSCHEMA";
+        }
+
+        /// <summary>
+        /// Returns a URI to the buildingsmart-tech.org website.
+        /// </summary>
+        /// <param name="docPub">Optional publication to qualify; if no publication defined, then uses the first in the list; if none, then uses "FINAL".</param>
+        /// <returns></returns>
+        public string GetSchemaURI(DocPublication docPub)
+        {
+            string release = "FINAL";
+            if(docPub != null)
+            {
+                release = docPub.GetReleaseIdentifier();
+            }
+            else if(this.Publications.Count > 0)
+            {
+                release = this.Publications[0].GetReleaseIdentifier();
+            }
+
+            string draft = "";
+            if (docPub.Status != "Final")
+            {
+                draft = "review/";
+            }
+
+            return "http://www.buildingsmart-tech.org/ifc/" + draft + this.GetSchemaIdentifier() + "/" + release.ToLower();
         }
 
         public List<DocSection> Sections
@@ -1095,6 +1169,55 @@ namespace IfcDoc.Schema.DOC
             return null;
         }
 
+        /// <summary>
+        /// Returns property at highest level (most abstract) of given name. Used for resolving inherited properties (e.g. Pset_ElementCommon.Reference)
+        /// </summary>
+        /// <param name="def">Name of property</param>
+        /// <param name="docApplicableEntity">Entity</param>
+        /// <returns></returns>
+        public DocProperty FindProperty(string def, DocEntity docApplicableEntity)
+        {
+            if(def == null || docApplicableEntity == null)
+                return null;
+
+            // try supertype first
+            if (!String.IsNullOrEmpty(docApplicableEntity.BaseDefinition))
+            {
+                DocEntity docSuper = this.GetDefinition(docApplicableEntity.BaseDefinition) as DocEntity;
+                if (docSuper != null)
+                {
+                    DocProperty docProp = this.FindProperty(def, docSuper);
+                    if (docProp != null)
+                        return docProp;
+                }
+            }
+
+            // find matching property sets
+            foreach (DocSection docSection in this.Sections)
+            {
+                foreach (DocSchema docSchema in docSection.Schemas)
+                {
+                    foreach (DocPropertySet docPset in docSchema.PropertySets)
+                    {
+                        if(docPset.ApplicableType != null && docPset.ApplicableType.Equals(docApplicableEntity.Name))
+                        {
+                            // search properties
+                            foreach(DocProperty docProp in docPset.Properties)
+                            {
+                                if(def.Equals(docProp.Name))
+                                {
+                                    return docProp;
+                                }
+                            }
+                        }
+                    }
+
+                }
+            }
+
+            return null;
+        }
+
         public DocPropertySet FindPropertySet(string def, out DocSchema schema)
         {
             foreach (DocSection docSection in this.Sections)
@@ -1243,6 +1366,11 @@ namespace IfcDoc.Schema.DOC
             return null;
         }
 
+        /// <summary>
+        /// Buidls list of inherited views, in order starting from leaf view to base view
+        /// </summary>
+        /// <param name="docModelView"></param>
+        /// <returns></returns>
         public DocModelView[] GetViewInheritance(DocModelView docModelView)
         {
             // build list of inherited views
@@ -1529,7 +1657,6 @@ namespace IfcDoc.Schema.DOC
         {
             try
             {
-
                 if (included.ContainsKey(entity))
                     return;
 
@@ -1621,6 +1748,16 @@ namespace IfcDoc.Schema.DOC
                 {
                     included[docAttr] = true;
 
+                    DocDefinition docDeclared = this.GetDefinition(docAttr.DefinedType);
+                    if(docDeclared is DocEntity)
+                    {
+                        RegisterEntity(included, (DocEntity)docDeclared);
+                    }
+                    else if(docDeclared is DocSelect)
+                    {
+                        included[docDeclared] = true;
+                    }
+
                     // include inverse attribute if any
                     if (!String.IsNullOrEmpty(docAttr.Inverse))
                     {
@@ -1640,6 +1777,7 @@ namespace IfcDoc.Schema.DOC
                         foreach (DocModelRuleEntity docRuleEntity in docRuleAttr.Rules)
                         {
                             DocDefinition docInner = this.GetDefinition(docRuleEntity.Name);
+
                             if (docInner != null)
                             {
                                 if (docInner is DocEntity)
@@ -1655,6 +1793,8 @@ namespace IfcDoc.Schema.DOC
                                             }
                                         }
                                     }
+
+                                    // if attribute type is different than specified type, also include attribute type
                                 }
                                 else if(docInner is DocDefined)
                                 {
@@ -1685,7 +1825,12 @@ namespace IfcDoc.Schema.DOC
         {
             if(included.ContainsKey(template))
                 return;
-            
+
+            if (template.Name != null && template.Name.Equals("Swept Solid Geometry"))
+            {
+                this.ToString();
+            }
+
             included[template] = true;
 
             if (template.Rules != null)
@@ -1703,7 +1848,7 @@ namespace IfcDoc.Schema.DOC
             }
         }
 
-        private static bool RegisterBaseTemplates(Dictionary<DocObject, bool> included, DocTemplateDefinition basetemplate)
+        private bool RegisterBaseTemplates(Dictionary<DocObject, bool> included, DocTemplateDefinition basetemplate, Dictionary<DocModelRuleAttribute, DocEntity> mapVirtualAttributes)
         {
             //if (included.ContainsKey(basetemplate))
             //    return true;
@@ -1712,10 +1857,11 @@ namespace IfcDoc.Schema.DOC
             {
                 foreach (DocTemplateDefinition docTemplate in basetemplate.Templates)
                 {
-                    bool check = RegisterBaseTemplates(included, docTemplate);
+                    bool check = RegisterBaseTemplates(included, docTemplate, mapVirtualAttributes);
                     if(check)
                     {
-                        included[basetemplate] = true;
+                        RegisterTemplate(included, basetemplate, mapVirtualAttributes);
+                        //included[basetemplate] = true;
                     }
                 }
             }
@@ -1825,7 +1971,7 @@ namespace IfcDoc.Schema.DOC
             // now include any templates that have subtemplate included
             foreach (DocTemplateDefinition docTemplate in this.Templates)
             {
-                RegisterBaseTemplates(included, docTemplate);
+                RegisterBaseTemplates(included, docTemplate, mapVirtualAttributes);
             }
 
             // now include any attributes on subtypes referenced by name (e.g. PredefinedType)
@@ -2299,6 +2445,71 @@ namespace IfcDoc.Schema.DOC
 
             return xsdFormatBase;
         }
+
+        /// <summary>
+        /// Renames an object and updates all dependencies
+        /// </summary>
+        /// <param name="docSchema">The schema containing definition, or to be renamed.</param>
+        /// <param name="docDefinition">Optional definition containing attribute, or to be renamed (if NULL, then schema is renamed)</param>
+        /// <param name="docAttribute">Optional attribute to rename (if NULL, then definition is renamed)</param>
+        /// <param name="newname">New name of object</param>
+        public void Rename(DocSchema docSchema, DocDefinition docDefinition, DocAttribute docAttribute, string newname)
+        {
+            // for now, this assumes definition names are unique globally (not just within schema)
+
+            if (docDefinition != null)
+            {
+                foreach (DocTemplateDefinition docTemplate in this.Templates)
+                {
+                    docTemplate.Rename(docSchema, docDefinition, docAttribute, newname);
+                }
+            }
+
+            foreach(DocSection docSection in this.Sections)
+            {
+                foreach(DocSchema docSectionSchema in docSection.Schemas)
+                {
+                    foreach (DocSchemaRef docSchemaRef in docSectionSchema.SchemaRefs)
+                    {
+                        if (docSchemaRef.Name.Equals(docSchema.Name))
+                        {
+                            if (docDefinition == null)
+                            {
+                                docSchemaRef.Name = newname;
+                                break;
+                            }
+                            else
+                            {
+                                foreach (DocDefinitionRef docDefRef in docSchemaRef.Definitions)
+                                {
+                                    if (docAttribute == null && docDefRef.Name.Equals(docDefinition.Name))
+                                    {
+                                        docDefRef.Name = newname;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
+
+            //... rename schema...
+
+            if (docAttribute != null)
+            {
+                docAttribute.Name = newname;
+            }
+            else if(docDefinition != null)
+            {
+                docDefinition.Name = newname;
+            }
+            else if(docSchema != null)
+            {
+                docSchema.Name = newname;
+            }
+        }
     }
 
     /// <summary>
@@ -2634,6 +2845,17 @@ namespace IfcDoc.Schema.DOC
                         childpath[i].CardinalityMax = objpath[i].CardinalityMax;
                         childpath[i].Description = objpath[i].Description;
                         childpath[i].Identification = objpath[i].Identification;
+
+                        if(childpath[i] is DocModelRuleEntity)
+                        {
+                            DocModelRuleEntity dmeChild = (DocModelRuleEntity)childpath[i];
+                            DocModelRuleEntity dmeObj = (DocModelRuleEntity)objpath[i];
+                            dmeChild.References.Clear();
+                            foreach(DocTemplateDefinition dtdRef in dmeObj.References)
+                            {
+                                dmeChild.References.Add(dtdRef);
+                            }
+                        }
                     }
                 }
 
@@ -2651,6 +2873,19 @@ namespace IfcDoc.Schema.DOC
             }
 
             return false;
+        }
+
+        internal void Rename(DocSchema docSchema, DocDefinition docDefinition, DocAttribute docAttribute, string newname)
+        {
+            foreach (DocModelRule docRule in this.Rules)
+            {
+                docRule.RenameDefinition(docSchema, docDefinition, docAttribute, newname);
+            }
+
+            foreach (DocTemplateDefinition docSub in this.Templates)
+            {
+                docSub.Rename(docSchema, docDefinition, docAttribute, newname);
+            }
         }
     }
 
@@ -3138,6 +3373,8 @@ namespace IfcDoc.Schema.DOC
                 return;
             }
 
+            string oldvalue = this.Identification;
+
             // otherwise renaming or clearing
             foreach(DocModelView docView in docProject.ModelViews)
             {
@@ -3145,15 +3382,31 @@ namespace IfcDoc.Schema.DOC
                 {
                     foreach(DocTemplateUsage docConcept in docRoot.Concepts)
                     {
-                        docConcept.RenameParameter(docTemplateDefinition, this.Identification, identification);
+                        docConcept.RenameParameter(docTemplateDefinition, oldvalue, identification);
+
+                        // also try sub-templates (one-level deep for now)
+                        foreach (DocTemplateDefinition sub in docTemplateDefinition.Templates)
+                        {
+                            docConcept.RenameParameter(sub, oldvalue, identification);
+                        }
                     }
                 }
             }
 
             // now update
             this.Identification = identification;
+
         }
-        
+
+
+        internal virtual void RenameDefinition(DocSchema docSchema, DocDefinition docDefinition, DocAttribute docAttribute, string newname)
+        {
+            // recurse
+            foreach (DocModelRule docRule in this.Rules)
+            {
+                docRule.RenameDefinition(docSchema, docDefinition, docAttribute, newname);
+            }
+        }
     }
 
     public class DocModelRuleAttribute : DocModelRule
@@ -3537,26 +3790,16 @@ namespace IfcDoc.Schema.DOC
 
             return checkcard;
         }
+
+        //internal override void RenameDefinition(DocSchema docSchema, DocDefinition docDefinition, DocAttribute docAttribute, string newname)
+        //{
+        //}
     }
 
     public class DocModelRuleEntity : DocModelRule
     {
         [DataMember(Order = 0)] private List<DocTemplateDefinition> _References; // IfcDoc 6.3: references to chained templates
-
-        public override void BuildParameterList(IList<DocModelRule> list)
-        {
-            // new: allow specifying value parameter (only for base types though)
-
-#if false //-- entity rules are only for referencing by rules, not for parameters
-            // add ourselves if marked as parameter
-            if (!String.IsNullOrEmpty(this.Identification))
-            {
-                list.Add(this);
-            }
-#endif
-
-            base.BuildParameterList(list);
-        }
+        [DataMember(Order = 1)] private string _Prefix;
 
         public List<DocTemplateDefinition> References
         {
@@ -3571,9 +3814,44 @@ namespace IfcDoc.Schema.DOC
             }
         }
 
+        public string Prefix
+        {
+            get
+            {
+                return this._Prefix;
+            }
+            set
+            {
+                this._Prefix = value;
+            }
+        }
+
         public override bool IsTemplateReferenced(DocTemplateDefinition docTemplate)
         {
             return this.References.Contains(docTemplate);
+        }
+
+        internal override void RenameDefinition(DocSchema docSchema, DocDefinition docDefinition, DocAttribute docAttribute, string newname)
+        {
+            if (this.Name.Equals(docDefinition.Name))
+            {
+                if (docAttribute == null)
+                {
+                    this.Name = newname;
+                }
+                else
+                {
+                    foreach (DocModelRule docRule in this.Rules)
+                    {
+                        if (docRule.Name.Equals(docAttribute.Name))
+                        {
+                            docRule.Name = newname;
+                        }
+                    }
+                }
+            }
+
+            base.RenameDefinition(docSchema, docDefinition, docAttribute, newname);
         }
 
         /// <summary>
@@ -3683,7 +3961,7 @@ namespace IfcDoc.Schema.DOC
 
         public override void Delete()
         {
-            if(this.Expression != null)
+            if (this.Expression != null)
             {
                 this.Expression.Delete();
             }
@@ -3705,6 +3983,18 @@ namespace IfcDoc.Schema.DOC
                 generator.Emit(OpCodes.Ldc_I4_0);
                 generator.Emit(OpCodes.Ret);
             }
+        }
+
+        /// <summary>
+        /// Formats expression according to mvdXML syntax.
+        /// </summary>
+        /// <returns></returns>
+        public string FormatExpression()
+        {
+            if (this.Expression == null)
+                return null;
+
+            return this.Expression.ToString();
         }
     }    
 
@@ -3853,6 +4143,7 @@ namespace IfcDoc.Schema.DOC
 
             if (this.Reference != null && this.Value != null)
             {
+                string metricname = "Value";
                 string metrichead = "";
                 string metrictail = "";
                 string suffix = " " + opname + " " + this.Value.ToString(dtd);
@@ -3861,20 +4152,26 @@ namespace IfcDoc.Schema.DOC
                     case DocOpCode.LoadLength:
                         metrichead = "SIZEOF(";
                         metrictail = ")";
+                        metricname = "Length";
                         break;
 
                     case DocOpCode.IsInstance:
                         metrichead = "TYPEOF(";
                         metrictail = ")";
+                        metricname = "Type";
                         break;
 
                     case DocOpCode.IsUnique:
                         metrichead = "UNIQUE(";
                         metrictail = ")";
                         suffix = "";
+                        metricname = "Unique";
                         break;
                 }
-                return metrichead + this.Reference.ToString(dtd) + metrictail + suffix;
+                //return metrichead + this.Reference.ToString(dtd) + metrictail + suffix;
+
+                // new: mvdXML syntax
+                return this.Reference.ToString(dtd) + "[" + metricname + "]" + suffix;
             }
 
             return null;
@@ -4421,6 +4718,14 @@ namespace IfcDoc.Schema.DOC
             return null;
         }
 
+        public override string ToString(DocTemplateDefinition template)
+        {
+            if (this.ExpressionA == null || this.ExpressionB == null)
+                return String.Empty;
+
+            return "(" + this.ExpressionA.ToString() + " " + this.Operation.ToString().ToUpper() + " " + this.ExpressionB.ToString() + ")";
+        }
+        
     }
 
     /// <summary>
@@ -4867,7 +5172,7 @@ namespace IfcDoc.Schema.DOC
             if(String.IsNullOrEmpty(this.Literal))
                 return "NULL";
             
-            return this.Literal;
+            return "'" + this.Literal + "'";
         }
     }
 
@@ -5222,6 +5527,14 @@ namespace IfcDoc.Schema.DOC
             {
                 docSub.RenameParameter(template, oldid, newid);
             }
+
+            foreach(DocTemplateItem docItem in this.Items)
+            {
+                foreach(DocTemplateUsage docUsage in docItem.Concepts)
+                {
+                    docUsage.RenameParameter(template, oldid, newid);
+                }
+            }
         }
 
         public void ResetValidation()
@@ -5427,15 +5740,23 @@ namespace IfcDoc.Schema.DOC
             return sb.ToString();
         }
     }
+
+    // color-coding: 
+    // Color    | Name    | Optional  Key______ Reference_ System___
+    // 0xFF0000 | Red     | ?         T         F          F          // public key for uniquely identifying (separate from any system keys)
+    // 0x       | Orange  | ?         ?         T          F          // required input from constrained list
+    // 0x       | Yellow  | F         F         F          F          // required input
+    // 0x       | Green   | T         F         F          F          // optional input
+    // 0x       | Blue    | T         ?         ?          T          // system calculation (e.g. Energy Analysis)
+    // 0x       | Purple  | F         ?         ?          T          // system mapping     (e.g. GUID)
+
     public class DocTemplateItem : DocObject // now inherits from DocObject
     {
         [DataMember(Order = 0)] private List<DocTemplateUsage> _Concepts;// IfcDoc 6.3: for parameters consisting of lists of objects -- translates to nested concepts in mvdXML
         [DataMember(Order = 1)] private bool _Optional; // IfcDoc 8.7: indicate whether item is optional
-        //[DataMember(Order = 0), Obsolete] private string _PredefinedType; // e.g. 'TOGGLESWITCH'
-        //[DataMember(Order = 1), Obsolete] private string _Field1; // e.g. 'Power'
-        [DataMember(Order = 2), Obsolete] private string _Field2; // e.g. 'The power from the circuit.'
-        [DataMember(Order = 3), Obsolete] private string _Field3; // e.g. 'ELECTRICAL'
-        [DataMember(Order = 4), Obsolete] private string _Field4; // e.g. 'SOURCE'
+        [DataMember(Order = 2)] private bool _Reference; // IfcDoc 11.2 (changed from obsolete string): item is constrained by referenced objects or value list
+        [DataMember(Order = 3)] private bool _Key; // IfcDoc 11.2 (changed from obsolete string): item is used as primary key
+        [DataMember(Order = 4)] private bool _System; // IfcDoc 11.2 (changed from obsolete string): item is managed by system - should not be touched by user
 
         // new in 2.5
         [DataMember(Order = 5)] private string _RuleInstanceID; // id of the entity rule to instantiate for each item
@@ -5467,6 +5788,158 @@ namespace IfcDoc.Schema.DOC
             set
             {
                 this._Optional = value;
+            }
+        }
+
+        public bool Reference
+        {
+            get
+            {
+                return this._Reference;
+            }
+            set
+            {
+                this._Reference = value;
+            }
+        }
+
+        public bool Key
+        {
+            get
+            {
+                return this._Key;
+            }
+            set
+            {
+                this._Key = value;
+            }
+        }
+
+        public bool Calculated
+        {
+            get
+            {
+                return this._System;
+            }
+            set
+            {
+                this._System = value;
+            }
+        }
+
+        public System.Drawing.Color GetColor()
+        {
+            if (this.Calculated)
+            {
+                if (this.Optional)
+                {
+                    return System.Drawing.Color.FromArgb(0xFF, 0xCC, 0xCC, 0xFF); //"Calculated";
+                }
+                else
+                {
+                    return System.Drawing.Color.FromArgb(0xFF, 0xCC, 0x99, 0xFF); //"System";
+                }
+            }
+            else
+            {
+                if (this.Key)
+                {
+                    return System.Drawing.Color.FromArgb(0xFF, 0xFF, 0x00, 0x00); //"Key";
+                }
+                else if (this.Reference)
+                {
+                    return System.Drawing.Color.FromArgb(0xFF, 0xFF, 0xCC, 0x99); //"Reference";
+                }
+                else if (this.Optional)
+                {
+                    return System.Drawing.Color.FromArgb(0xFF, 0xCC, 0xFF, 0xCC); //"Optional";
+                }
+            }
+
+            return System.Drawing.Color.FromArgb(0xFF, 0xFF, 0xFF, 0x99); //"Required";
+        }
+
+        /// <summary>
+        /// Returns usage according to flags using human-readable subset
+        /// </summary>
+        /// <returns></returns>
+        public string GetUsage()
+        {
+            if (this.Calculated)
+            {
+                if (this.Optional)
+                {
+                    return "Calculated";
+                }
+                else
+                {
+                    return "System";
+                }
+            }
+            else
+            {
+                if (this.Key)
+                {
+                    return "Key";
+                }
+                else if (this.Reference)
+                {
+                    return "Reference";
+                }
+                else if (this.Optional)
+                {
+                    return "Optional";
+                }
+            }
+
+            return "Required";
+        }
+
+        public void SetUsage(string usage)
+        {
+            switch(usage)
+            {
+                case "Key":
+                    this.Optional = false;
+                    this.Key = true;
+                    this.Reference = false;
+                    this.Calculated = false;
+                    break;
+
+                case "Reference":
+                    this.Optional = false;
+                    this.Key = false;
+                    this.Reference = true;
+                    this.Calculated = false;
+                    break;
+
+                case "Required":
+                    this.Optional = false;
+                    this.Key = false;
+                    this.Reference = false;
+                    this.Calculated = false;
+                    break;
+
+                case "Optional":
+                    this.Optional = true;
+                    this.Key = false;
+                    this.Reference = false;
+                    this.Calculated = false;
+                    break;
+
+                case "Calculated":
+                    this.Optional = true;
+                    this.Key = false;
+                    this.Reference = false;
+                    this.Calculated = true;
+                    break;
+
+                case "System":
+                    this.Optional = false;
+                    this.Key = false;
+                    this.Reference = false;
+                    this.Calculated = true;
+                    break;
             }
         }
 
@@ -5580,17 +6053,54 @@ namespace IfcDoc.Schema.DOC
         /// Returns mvdXML-formatted expression for all parameters
         /// </summary>
         /// <returns></returns>
-        public string FormatParameterExpressions()
+        public string FormatParameterExpressions(DocTemplateDefinition template, DocProject docProject, Dictionary<string, DocObject> map)
         {
             StringBuilder sb = new StringBuilder();
             DocExpression[] exprs = this.GetParameterExpressions();
             if (exprs == null)
                 return null;
 
-            foreach (DocExpression exp in exprs)
+            string[] parmnames = template.GetParameterNames();
+
+            for (int i = 0; i < exprs.Length; i++)
             {
-                sb.Append(exp.ToString());
-                sb.Append(";");
+                DocExpression exp = exprs[i];
+                for (int j = 0; j < parmnames.Length; j++)
+                {
+                    if (parmnames[j].Equals(exp.Name))
+                    {
+                        if (sb.Length > 0)
+                        {
+                            sb.Append(" AND ");
+                        }
+
+                        DocDefinition docAttrType = template.GetParameterType(exp.Name, map);
+                        if (docAttrType is DocEntity)
+                        {
+                            exp.Metric = DocMetricEnum.Type;
+                        }
+                        /*
+                        DocDefinition docDef = docProject.GetDefinition(template.Type);
+                        if (docDef is DocEntity)
+                        {
+                            DocEntity docEnt = (DocEntity)docDef;
+                            //... get attribute...
+                            DocAttribute docAttr = docEnt.ResolveAttribute(exp., docProject);
+                            if(docAttr  != null)
+                            {
+                                DocDefinition docAttrType = docProject.GetDefinition(docAttr.DefinedType);
+                                if(docAttrType != null)
+                                {
+                                    exp.Metric = DocMetricEnum.Type;
+                                }
+                            }
+                        }*/
+                        // force 
+                        //template.GetParameterType(paramnames[j], )
+
+                        sb.Append(exp.ToString());
+                    }
+                }
             }
             return sb.ToString();
         }
@@ -5717,6 +6227,7 @@ namespace IfcDoc.Schema.DOC
 
             return false;
         }
+
 
 
     }
@@ -6265,28 +6776,34 @@ namespace IfcDoc.Schema.DOC
 
             foreach (DocEntity docEnt in this.Entities)
             {
-                // temp: force update
-                int px = (int)(docEnt.DiagramRectangle.X * CtlExpressG.Factor / CtlExpressG.PageX);
-                int py = (int)(docEnt.DiagramRectangle.Y * CtlExpressG.Factor / CtlExpressG.PageY);
-                int page = 1 + py * this.DiagramPagesHorz + px;
-                docEnt.DiagramNumber = page;
-
-                if (docEnt.DiagramNumber > iLastDiagram)
+                if (docEnt.DiagramRectangle != null) // older files didn't have this, e.g. IFC2x3 baseline
                 {
-                    iLastDiagram = docEnt.DiagramNumber;
+                    // temp: force update
+                    int px = (int)(docEnt.DiagramRectangle.X * CtlExpressG.Factor / CtlExpressG.PageX);
+                    int py = (int)(docEnt.DiagramRectangle.Y * CtlExpressG.Factor / CtlExpressG.PageY);
+                    int page = 1 + py * this.DiagramPagesHorz + px;
+                    docEnt.DiagramNumber = page;
+
+                    if (docEnt.DiagramNumber > iLastDiagram)
+                    {
+                        iLastDiagram = docEnt.DiagramNumber;
+                    }
                 }
             }
             foreach (DocType docType in this.Types)
             {
-                // temp: force update
-                int px = (int)(docType.DiagramRectangle.X * CtlExpressG.Factor / CtlExpressG.PageX);
-                int py = (int)(docType.DiagramRectangle.Y * CtlExpressG.Factor / CtlExpressG.PageY);
-                int page = 1 + py * this.DiagramPagesHorz + px;
-                docType.DiagramNumber = page;
-
-                if (docType.DiagramNumber > iLastDiagram)
+                if (docType.DiagramRectangle != null)
                 {
-                    iLastDiagram = docType.DiagramNumber;
+                    // temp: force update
+                    int px = (int)(docType.DiagramRectangle.X * CtlExpressG.Factor / CtlExpressG.PageX);
+                    int py = (int)(docType.DiagramRectangle.Y * CtlExpressG.Factor / CtlExpressG.PageY);
+                    int page = 1 + py * this.DiagramPagesHorz + px;
+                    docType.DiagramNumber = page;
+
+                    if (docType.DiagramNumber > iLastDiagram)
+                    {
+                        iLastDiagram = docType.DiagramNumber;
+                    }
                 }
             }
 
@@ -6875,6 +7392,30 @@ namespace IfcDoc.Schema.DOC
             return null;
         }
 
+        // new version
+        internal DocAttribute ResolveAttribute(string attrname, DocProject docProject)
+        {
+            foreach (DocAttribute docAttr in this.Attributes)
+            {
+                if (docAttr.Name.Equals(attrname))
+                    return docAttr;
+            }
+
+            // super
+            if (!String.IsNullOrEmpty(this.BaseDefinition))// && map.TryGetValue(this.BaseDefinition, out docObj))
+            {
+                DocDefinition docObj = docProject.GetDefinition(this.BaseDefinition);
+                if (docObj is DocEntity)
+                {
+                    DocEntity docSuper = (DocEntity)docObj;
+                    return docSuper.ResolveAttribute(attrname, docProject);
+                }
+            }
+
+            return null;
+        }
+
+        // old version - deprecate
         internal DocAttribute ResolveAttribute(string attrname, Dictionary<string, DocObject> map)
         {
             foreach (DocAttribute docAttr in this.Attributes)
@@ -7578,6 +8119,22 @@ namespace IfcDoc.Schema.DOC
                 this._ApplicableType = value;
             }
         }
+
+        public DocEntity[] GetApplicableTypeDefinitions(DocProject docProject)
+        {
+            if (this.ApplicableType == null)
+                return null;
+
+            string[] parts = this.ApplicableType.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            DocEntity[] list = new DocEntity[parts.Length];
+            for(int i = 0; i < list.Length; i++)
+            {
+                string[] entry = parts[i].Split('/');
+                list[i] = docProject.GetDefinition(entry[0]) as DocEntity;
+            }
+
+            return list;
+        }
     }
 
     /// <summary>
@@ -7638,7 +8195,26 @@ namespace IfcDoc.Schema.DOC
 
             return null;
         }
+
+        /// <summary>
+        /// Indicates whether property should be shown in documentation, according to its type.
+        /// </summary>
+        /// <returns></returns>
+        public bool IsVisible()
+        {
+            return (this.PropertySetType != "NOTDEFINED");
+        }
     }
+
+    public enum DocStateEnum // matches IfcStateEnum
+    {
+        READWRITE = 0,
+        READONLY = 1,
+        LOCKED = 2,
+        READWRITELOCKED = 3,
+        READONLYLOCKED = 4,
+    }
+    
 
     /// <summary>
     /// Property definition
@@ -7649,6 +8225,7 @@ namespace IfcDoc.Schema.DOC
         [DataMember(Order = 1)] private string _PrimaryDataType;
         [DataMember(Order = 2)] private string _SecondaryDataType;
         [DataMember(Order = 3)] private List<DocProperty> _Elements; // enumerated or complex properties
+        [DataMember(Order = 4)] private DocStateEnum _AccessState; // V10.5
 
         public DocProperty()
         {
@@ -7700,6 +8277,18 @@ namespace IfcDoc.Schema.DOC
             get
             {
                 return this._Elements;
+            }
+        }
+
+        public DocStateEnum AccessState
+        {
+            get
+            {
+                return this._AccessState;
+            }
+            set
+            {
+                this._AccessState = value;
             }
         }
 
@@ -7861,6 +8450,7 @@ namespace IfcDoc.Schema.DOC
     public class DocQuantity : DocObject
     {
         [DataMember(Order = 0)] private DocQuantityTemplateTypeEnum _QuantityType; // IfcQuantityWeight, IfcQuantityLength, etc.
+        [DataMember(Order = 1)] private DocStateEnum _AccessState; // V10.5
 
         [Category("Quantity")]
         public DocQuantityTemplateTypeEnum QuantityType
@@ -7874,6 +8464,19 @@ namespace IfcDoc.Schema.DOC
                 this._QuantityType = value;
             }
         }
+
+        public DocStateEnum AccessState
+        {
+            get
+            {
+                return this._AccessState;
+            }
+            set
+            {
+                this._AccessState = value;
+            }
+        }
+
     }
 
     public enum DocQuantityTemplateTypeEnum
@@ -8194,6 +8797,8 @@ namespace IfcDoc.Schema.DOC
         INSTANTIATION = 3,
         AGGREGATION = 4,
         SCHEMA = 5,
+        XSDFORMAT = 6, // New in IfcDoc V10.6
+        XSDTAGLESS = 7, // New in IfcDoc V10.6
     }
 
     public class DocExample : DocVariableSet // inherited in 4.2 to contain ApplicableType (was DocObject)
@@ -8201,8 +8806,9 @@ namespace IfcDoc.Schema.DOC
         [DataMember(Order = 0)] private List<DocExample> _Examples; // added in 4.3
         [DataMember(Order = 1)] private List<DocTemplateDefinition> _ApplicableTemplates; // added in 4.9
         [DataMember(Order = 2)] private DocModelView _ModelView;// added in 5.3; deprecated in 7.8 (replaced with collection that follows)
-        [DataMember(Order = 3)] private byte[] _File; // added in 7.2 - encoded data of file in IFC format
+        [DataMember(Order = 3)] private byte[] _File; // added in 7.2 - encoded data of file in IFC format -- if stored internally
         [DataMember(Order = 4)] private List<DocModelView> _Views; // added in 7.8
+        [DataMember(Order = 5)] private string _Path; // path to external file which may be IFC or some other format to be converted -- added in V11.2
 
         public DocExample()
         {
@@ -8263,6 +8869,18 @@ namespace IfcDoc.Schema.DOC
             set
             {
                 this._File = value;
+            }
+        }
+
+        public string Path
+        {
+            get
+            {
+                return this._Path;
+            }
+            set
+            {
+                this._Path = value;
             }
         }
 
@@ -8424,6 +9042,6 @@ namespace IfcDoc.Schema.DOC
         /// </summary>
         /// <param name="docProject"></param>
         /// <returns></returns>
-        string FormatDefinitions(DocProject docProject, Dictionary<string, DocObject> map, Dictionary<DocObject, bool> included);
+        string FormatDefinitions(DocProject docProject, DocPublication docPublication, Dictionary<string, DocObject> map, Dictionary<DocObject, bool> included);
     }
 }

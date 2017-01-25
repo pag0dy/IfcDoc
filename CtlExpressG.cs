@@ -380,19 +380,22 @@ namespace IfcDoc
             this.m_mousedown = true;
             this.m_ptDown = e.Location;
 
-            if (!multi)
+            this.Selection = this.Pick(e.Location, out this.m_lineselection, out this.m_handle);
+            if (this.Selection == null && !multi)
             {
                 this.m_multiselect.Clear();
+                this.m_pointmap.Clear();
             }
 
-            this.Selection = this.Pick(e.Location, out this.m_lineselection, out this.m_handle);
             UpdateCursor(this.m_handle);
 
-            m_pointmap.Clear();
             if (this.m_selection is DocDefinition)
             {
                 DocDefinition docDef = (DocDefinition)this.Selection;
-                m_pointmap.Add(docDef, new PointF((float)docDef.DiagramRectangle.X, (float)docDef.DiagramRectangle.Y));
+                if (!m_pointmap.ContainsKey(docDef))
+                {
+                    m_pointmap.Add(docDef, new PointF((float)docDef.DiagramRectangle.X, (float)docDef.DiagramRectangle.Y));
+                }
                 m_selectionsize = new SizeF((float)docDef.DiagramRectangle.Width, (float)docDef.DiagramRectangle.Height);
             }
 
@@ -482,6 +485,11 @@ namespace IfcDoc
             {
                 foreach(DocDefinitionRef docDefRef in docSchemaRef.Definitions)
                 {
+                    if(docDefRef.Name.Equals("IfcRelAssociates"))
+                    {
+                        this.ToString();
+                    }
+
                     foreach (DocLine docLine in docDefRef.Tree)
                     {
                         if (docLine.Definition == selection)
@@ -544,11 +552,6 @@ namespace IfcDoc
                             docAttr.DiagramLabel.Y = docAttr.DiagramLine[0].Y - 20.0;
                         }
                     }
-                }
-
-                if (docEntity.Name.Equals("IfcBooleanResult"))
-                {
-                    this.ToString();
                 }
 
                 foreach(DocLine docLine in docEntity.Tree)
@@ -652,6 +655,64 @@ namespace IfcDoc
             selection.DiagramNumber = page;
         }
 
+        private void MoveObject(DocDefinition docSelection, float dx, float dy)
+        {
+            if (this.m_pointmap.ContainsKey(docSelection))
+            {
+                PointF ptSelection = this.m_pointmap[docSelection];
+
+                if ((this.m_handle & ResizeHandle.North) != 0)
+                {
+                    double yTail = docSelection.DiagramRectangle.Y + docSelection.DiagramRectangle.Height;
+                    docSelection.DiagramRectangle.Y = ptSelection.Y + dy / Factor;
+                    docSelection.DiagramRectangle.Height = yTail - docSelection.DiagramRectangle.Y;
+                }
+                else if ((this.m_handle & ResizeHandle.South) != 0)
+                {
+                    docSelection.DiagramRectangle.Height = m_selectionsize.Height + dy / Factor;
+                }
+
+                if ((this.m_handle & ResizeHandle.West) != 0)
+                {
+                    double xTail = docSelection.DiagramRectangle.X + docSelection.DiagramRectangle.Width;
+                    docSelection.DiagramRectangle.X = ptSelection.X + dx / Factor;
+                    docSelection.DiagramRectangle.Width = xTail - docSelection.DiagramRectangle.X;
+                }
+                else if ((this.m_handle & ResizeHandle.East) != 0)
+                {
+                    docSelection.DiagramRectangle.Width = m_selectionsize.Width + dx / Factor;
+                }
+
+                if (this.m_handle == ResizeHandle.Move)
+                {
+                    docSelection.DiagramRectangle.X = ptSelection.X + dx / Factor;
+                    docSelection.DiagramRectangle.Y = ptSelection.Y + dy / Factor;
+
+                    if(docSelection.DiagramRectangle.X < 0)
+                    {
+                        docSelection.DiagramRectangle.X = 0;
+                    }
+                    if (docSelection.DiagramRectangle.Y < 0)
+                    {
+                        docSelection.DiagramRectangle.Y = 0;
+                    }
+                }
+                else
+                {
+                    if (docSelection.DiagramRectangle.Width < 64)
+                    {
+                        docSelection.DiagramRectangle.Width = 64;
+                    }
+                    if (docSelection.DiagramRectangle.Height < 64)
+                    {
+                        docSelection.DiagramRectangle.Height = 64;
+                    }
+                }
+
+                LayoutDefinition(docSelection);
+            }
+        }
+
         private void CtlExpressG_MouseMove(object sender, MouseEventArgs e)
         {
             this.m_ptMove = e.Location;
@@ -689,57 +750,17 @@ namespace IfcDoc
                     float dx = (float)(ptLocation.X - this.m_ptDown.X);
                     float dy = (float)(ptLocation.Y - this.m_ptDown.Y);
 
+
                     // move or resize the object...
                     DocDefinition docSelection = (DocDefinition)this.m_selection;
-                    if (this.m_pointmap.ContainsKey(docSelection))
+                    MoveObject(docSelection, dx, dy);
+                    foreach(DocDefinition docDef in this.m_multiselect)
                     {
-                        PointF ptSelection = this.m_pointmap[docSelection];
-
-                        if ((this.m_handle & ResizeHandle.North) != 0)
+                        if (docDef != docSelection)
                         {
-                            double yTail = docSelection.DiagramRectangle.Y + docSelection.DiagramRectangle.Height;
-                            docSelection.DiagramRectangle.Y = ptSelection.Y + dy / Factor;
-                            docSelection.DiagramRectangle.Height = yTail - docSelection.DiagramRectangle.Y;
-                        }
-                        else if ((this.m_handle & ResizeHandle.South) != 0)
-                        {
-                            docSelection.DiagramRectangle.Height = m_selectionsize.Height + dy / Factor;
-                        }
-
-                        if ((this.m_handle & ResizeHandle.West) != 0)
-                        {
-                            double xTail = docSelection.DiagramRectangle.X + docSelection.DiagramRectangle.Width;
-                            docSelection.DiagramRectangle.X = ptSelection.X + dx / Factor;
-                            docSelection.DiagramRectangle.Width = xTail - docSelection.DiagramRectangle.X;
-                        }
-                        else if ((this.m_handle & ResizeHandle.East) != 0)
-                        {
-                            docSelection.DiagramRectangle.Width = m_selectionsize.Width + dx / Factor;
-                        }
-
-                        if (this.m_handle == ResizeHandle.Move)
-                        {
-                            docSelection.DiagramRectangle.X = ptSelection.X + dx / Factor;
-                            docSelection.DiagramRectangle.Y = ptSelection.Y + dy / Factor;
-                        }
-                        else
-                        {
-                            if(docSelection.DiagramRectangle.Width < 64)
-                            {
-                                docSelection.DiagramRectangle.Width = 64;
-                            }
-                            if (docSelection.DiagramRectangle.Height < 64)
-                            {
-                                docSelection.DiagramRectangle.Height = 64;
-                            }
-                        }
-
-                        if (this.m_selection is DocDefinition)
-                        {
-                            LayoutDefinition((DocDefinition)this.m_selection);
+                            MoveObject(docDef, dx, dy);
                         }
                     }
-
                     this.Redraw();
                 }
                 else if(this.m_selection == null)
@@ -812,6 +833,10 @@ namespace IfcDoc
             if(rc.IntersectsWith(rcObject))
             {
                 this.m_multiselect.Add(def);
+                if (!this.m_pointmap.ContainsKey(def))
+                {
+                    m_pointmap.Add(def, new PointF((float)def.DiagramRectangle.X, (float)def.DiagramRectangle.Y));
+                }
             }
         }
 
@@ -1099,6 +1124,11 @@ namespace IfcDoc
                 this.Redraw();
             }
 
+            this.m_pointmap.Clear();
+            foreach(DocDefinition docDef in this.m_multiselect)
+            {
+                this.m_pointmap.Add(docDef, new PointF((float)docDef.DiagramRectangle.X, (float)docDef.DiagramRectangle.Y));
+            }
             this.Invalidate();
         }
 
@@ -1165,12 +1195,57 @@ namespace IfcDoc
 
             PointF ptFloat = new PointF(pt.X, pt.Y);
 
-            foreach(DocType docType in this.m_schema.Types)
+            // pick in reverse order
+            for (int iType = this.m_schema.Entities.Count - 1; iType >= 0; iType--)
             {
+                DocEntity docType = this.m_schema.Entities[iType];
+
                 if (HitTest(docType.DiagramRectangle, pt, out handle))
                     return docType;
 
-                if(docType is DocSelect)
+                foreach (DocAttribute docAttr in docType.Attributes)
+                {
+                    if (docAttr.DiagramLine != null)
+                    {
+                        for (int i = 0; i < docAttr.DiagramLine.Count - 1; i++)
+                        {
+                            PointF ptA = new PointF((float)(docAttr.DiagramLine[i].X * Factor), (float)docAttr.DiagramLine[i].Y * Factor);
+                            PointF ptB = new PointF((float)(docAttr.DiagramLine[i + 1].X * Factor), (float)docAttr.DiagramLine[i + 1].Y * Factor);
+
+                            PointF ptClosest = new PointF();
+                            double distance = FindDistanceToSegment(ptFloat, ptA, ptB, out ptClosest);
+                            if (distance < 3.0)
+                            {
+                                return docAttr;
+                            }
+                        }
+                    }
+                }
+
+                foreach (DocLine docLine in docType.Tree)
+                {
+                    if (docLine.DiagramLine.Count > 0)
+                    {
+                        DocPoint docPoint = docLine.DiagramLine[docLine.DiagramLine.Count - 1];
+                        PointF ptA = new PointF((float)(docPoint.X * Factor), (float)docPoint.Y * Factor);
+                        if (Math.Abs(ptFloat.X - ptA.X) < 4 && Math.Abs(ptFloat.Y - ptA.Y) <= 5)
+                        {
+                            line = docLine;
+                            handle = ResizeHandle.Move;
+                            return docType;
+                        }
+                    }
+                }
+            }
+
+            for (int iType = this.m_schema.Types.Count - 1; iType >= 0; iType--)
+            {
+                DocType docType = this.m_schema.Types[iType];
+
+                if (HitTest(docType.DiagramRectangle, pt, out handle))
+                    return docType;
+
+                if (docType is DocSelect)
                 {
                     DocSelect docSel = (DocSelect)docType;
                     foreach (DocLine docLine in docSel.Tree)
@@ -1181,46 +1256,6 @@ namespace IfcDoc
                         {
                             handle = ResizeHandle.Move;
                             line = docLine;
-                            return docType;
-                        }
-                    }
-                }
-            }
-
-            foreach (DocEntity docType in this.m_schema.Entities)
-            {
-                if (HitTest(docType.DiagramRectangle, pt, out handle))
-                    return docType;
-
-                foreach(DocAttribute docAttr in docType.Attributes)
-                {
-                    if (docAttr.DiagramLine != null)
-                    {
-                        for(int i = 0; i < docAttr.DiagramLine.Count-1; i++)
-                        {
-                            PointF ptA = new PointF((float)(docAttr.DiagramLine[i].X * Factor), (float)docAttr.DiagramLine[i].Y * Factor);
-                            PointF ptB = new PointF((float)(docAttr.DiagramLine[i+1].X * Factor), (float)docAttr.DiagramLine[i+1].Y * Factor);
-                            
-                            PointF ptClosest = new PointF();
-                            double distance = FindDistanceToSegment(ptFloat, ptA, ptB, out ptClosest);
-                            if(distance < 3.0)
-                            {
-                                return docAttr;
-                            }
-                        }
-                    }
-                }
-
-                foreach(DocLine docLine in docType.Tree)
-                {
-                    if (docLine.DiagramLine.Count > 0)
-                    {
-                        DocPoint docPoint = docLine.DiagramLine[docLine.DiagramLine.Count - 1];
-                        PointF ptA = new PointF((float)(docPoint.X * Factor), (float)docPoint.Y * Factor);
-                        if (Math.Abs(ptFloat.X - ptA.X) < 4 && Math.Abs(ptFloat.Y - ptA.Y) <= 5)
-                        {
-                            line = docLine;
-                            handle = ResizeHandle.Move;
                             return docType;
                         }
                     }
