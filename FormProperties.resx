@@ -146,11 +146,11 @@
   <data name="&gt;&gt;buttonClose.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Properties</value>
+  </data>
   <data name="&gt;&gt;buttonClose.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="buttonClose.Location" type="System.Drawing.Point, System.Drawing">
-    <value>281, 421</value>
   </data>
   <data name="ctlProperties.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -175,10 +175,10 @@
     <value>Bottom, Right</value>
   </data>
   <data name="&gt;&gt;ctlProperties.Type" xml:space="preserve">
-    <value>IfcDoc.CtlProperties, IfcDoc, Version=8.4.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>IfcDoc.CtlProperties, IfcDoc, Version=11.2.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>Properties</value>
+  <data name="buttonClose.Location" type="System.Drawing.Point, System.Drawing">
+    <value>281, 421</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -616,8 +616,5 @@
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
-  </metadata>
-  <metadata name="$this.Language" type="System.Globalization.CultureInfo, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>ja</value>
   </metadata>
 </root>

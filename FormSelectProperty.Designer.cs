@@ -43,8 +43,11 @@
             // 
             this.treeViewProperty.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
+            this.treeViewProperty.ImageIndex = 0;
+            this.treeViewProperty.ImageList = this.imageList;
             this.treeViewProperty.Location = new System.Drawing.Point(13, 39);
             this.treeViewProperty.Name = "treeViewProperty";
+            this.treeViewProperty.SelectedImageIndex = 0;
             this.treeViewProperty.Size = new System.Drawing.Size(251, 358);
             this.treeViewProperty.TabIndex = 1;
             this.treeViewProperty.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewProperty_AfterSelect);

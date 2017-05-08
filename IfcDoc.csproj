@@ -204,7 +204,6 @@
     <Compile Include="FormSelectExchange.Designer.cs">
       <DependentUpon>FormSelectExchange.cs</DependentUpon>
     </Compile>
-    <Compile Include="peregrineapi.cs" />
     <Compile Include="SchemaXsd.cs" />
     <Compile Include="ThemedTreeView.cs">
       <SubType>Component</SubType>
@@ -407,6 +406,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormMerge.ja.resx">
       <DependentUpon>FormMerge.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormProperties.ja.resx">
+      <DependentUpon>FormProperties.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormPublish.ja.resx">
       <DependentUpon>FormPublish.cs</DependentUpon>

@@ -213,39 +213,64 @@ namespace IfcDoc
             {
                 if(form.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
                 {
-                    string valueprop = "NominalValue";
-                    string datatype = form.SelectedProperty.PrimaryDataType;
-                    switch(form.SelectedProperty.PropertyType)
-                    {
-                        case DocPropertyTemplateTypeEnum.P_BOUNDEDVALUE:
-                            valueprop = "SetPointValue";
-                            break;
-
-                        case DocPropertyTemplateTypeEnum.P_ENUMERATEDVALUE:
-                            valueprop = "EnumerationValues";
-                            break;
-
-                        case DocPropertyTemplateTypeEnum.P_LISTVALUE:
-                            valueprop = "ListValues";
-                            break;
-
-                        case DocPropertyTemplateTypeEnum.P_REFERENCEVALUE:
-                            valueprop = "PropertyReference";
-                            datatype = "IfcIrregularTimeSeries.Values[]\\" + form.SelectedProperty.SecondaryDataType;
-                            break;
-
-                            // other property types are not supported
-                    }
-
                     string portprefix = String.Empty;
                     if (form.SelectedPort != null)
                     {
                         portprefix = @".IsNestedBy[]\IfcRelNests.RelatedObjects['" + form.SelectedPort + @"']\IfcDistributionPort";
                     }
 
-                    string value = @"\" + this.m_base.Name + portprefix + @".IsDefinedBy['" + form.SelectedPropertySet +
-                        @"']\IfcRelDefinesByProperties.RelatingPropertyDefinition\IfcPropertySet.HasProperties['" + form.SelectedProperty +
-                        @"']\" + form.SelectedProperty.GetEntityName() + @"." + valueprop + @"\" + datatype;
+                    string value = @"\" + this.m_base.Name + portprefix;
+
+                    if (form.SelectedProperty != null)
+                    {
+                        string valueprop = "NominalValue";
+                        string datatype = form.SelectedProperty.PrimaryDataType;
+                        switch (form.SelectedProperty.PropertyType)
+                        {
+                            case DocPropertyTemplateTypeEnum.P_BOUNDEDVALUE:
+                                if(form.SelectedQualifier != null)
+                                {
+                                    valueprop = form.SelectedQualifier;
+                                }
+                                else
+                                {
+                                    valueprop = "SetPointValue";
+                                }
+                                break;
+
+                            case DocPropertyTemplateTypeEnum.P_ENUMERATEDVALUE:
+                                valueprop = "EnumerationValues";
+                                break;
+
+                            case DocPropertyTemplateTypeEnum.P_LISTVALUE:
+                                valueprop = "ListValues";
+                                break;
+
+                            case DocPropertyTemplateTypeEnum.P_REFERENCEVALUE:
+                                valueprop = "PropertyReference";
+                                datatype = "IfcIrregularTimeSeries.Values[]\\" + form.SelectedProperty.SecondaryDataType;
+                                break;
+
+                            // other property types are not supported
+                        }
+
+                        value += @".IsDefinedBy['" + form.SelectedPropertySet +
+                            @"']\IfcRelDefinesByProperties.RelatingPropertyDefinition\IfcPropertySet.HasProperties['" + form.SelectedProperty +
+                            @"']\" + form.SelectedProperty.GetEntityName() + @"." + valueprop + @"\" + datatype;
+
+                        // special cases
+                        if (this.m_base.Name.Equals("IfcMaterial"))
+                        {
+                            value =
+                                @"\IfcMaterial.HasProperties['" + form.SelectedPropertySet +
+                                @"']\IfcMaterialProperties.Properties['" + form.SelectedProperty +
+                                @"']\" + form.SelectedProperty.GetEntityName() + @"." + valueprop + @"\" + datatype;
+                        }
+                    }
+                    else
+                    {
+                        value += @".GlobalId\IfcGloballyUniqueId";
+                    }
 
                     CvtValuePath valuepath = CvtValuePath.Parse(value, this.m_map);
                     LoadValuePath(valuepath);

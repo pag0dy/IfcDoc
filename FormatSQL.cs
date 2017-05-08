@@ -191,10 +191,207 @@ namespace IfcDoc
             return sb.ToString();
         }
 
+        public string FormatDataConcept(DocProject docProject, DocPublication docPublication, DocExchangeDefinition docExchange, Dictionary<string, DocObject> map, Dictionary<long, SEntity> instances, SEntity root, bool markup, DocModelView docView, DocConceptRoot docRoot, DocTemplateUsage docConcept)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            string table = docConcept.Items[0].GetParameterValue("Table");
+            string query = docConcept.Items[0].GetParameterValue("Reference");
+
+            sb.AppendLine("<h4>" + docConcept.Name + "</h4>");
+            sb.AppendLine("<table class=\"gridtable\">");
+
+            List<string> colstyles = new List<string>();
+            List<string> colformat = new List<string>();
+            List<CvtValuePath> colmaps = new List<CvtValuePath>();
+
+            // generate header row
+            sb.AppendLine("<tr>");
+            foreach (DocTemplateItem docItem in docConcept.Items)
+            {
+                string name = docItem.GetParameterValue("Name");
+                string disp = "#" + docItem.GetColor().ToArgb().ToString("X8"); //docItem.GetParameterValue("Color");docItem.GetParameterValue("Color");
+                string expr = docItem.GetParameterValue("Reference");
+                string form = docItem.GetParameterValue("Format");
+
+                string style = "";
+                if (!String.IsNullOrEmpty(disp))
+                {
+                    style = " style=\"background-color:" + disp + ";\"";
+                }
+                colstyles.Add(style);
+
+                string format = "";
+                if (!String.IsNullOrEmpty(form))
+                {
+                    format = form;
+                }
+                colformat.Add(format);
+
+                string desc = "";
+                CvtValuePath valpath = CvtValuePath.Parse(expr, map); //todo: move out of loop
+                colmaps.Add(valpath);
+                if (valpath != null)
+                {
+                    desc = /*valpath.GetDescription(map) + "&#10;&#10;" + */valpath.ToString().Replace("\\", "&#10;");
+                }
+
+                sb.Append("<th><a href=\"../../schema/views/" + DocumentationISO.MakeLinkName(docView) + "/" + DocumentationISO.MakeLinkName(docExchange) + ".htm#" + DocumentationISO.MakeLinkName(docConcept) + "\" title=\"" + desc + "\">");
+                sb.Append(name);
+                sb.Append("</a></th>");
+            };
+            sb.AppendLine("</tr>");
+
+            // generate data rows
+            foreach (SEntity e in instances.Values)
+            {
+                string eachname = e.GetType().Name;
+                if (docRoot.ApplicableEntity.IsInstanceOfType(e))
+                {
+                    bool includerow = true;
+                    StringBuilder sbRow = new StringBuilder();
+
+                    sbRow.Append("<tr>");
+                    int iCol = 0;
+                    foreach (DocTemplateItem docItem in docConcept.Items)
+                    {
+                        sbRow.Append("<td" + colstyles[iCol]);
+                        CvtValuePath valpath = colmaps[iCol];
+                        string format = colformat[iCol];
+
+                        iCol++;
+
+                        if (valpath != null)
+                        {
+                            string nn = docItem.GetParameterValue("Name");
+
+                            if (valpath.ToString().Contains("IfcMaterialLayerSetUsage"))
+                            {
+                                this.ToString();
+                            }
+                            if (valpath.ToString().Contains("IfcDistributionPort"))
+                            {
+                                this.ToString();
+                            }
+
+                            object value = valpath.GetValue(e, null);
+
+                            if (value == e)
+                            {
+                                value = e.GetType().Name;
+                            }
+                            else if (value is SEntity)
+                            {
+                                // use name
+                                FieldInfo fieldValue = value.GetType().GetField("Name");
+                                if (fieldValue != null)
+                                {
+                                    value = fieldValue.GetValue(value);
+                                }
+                            }
+                            else if (value is System.Collections.IList)
+                            {
+                                System.Collections.IList list = (System.Collections.IList)value;
+                                StringBuilder sbList = new StringBuilder();
+                                foreach (object elem in list)
+                                {
+                                    FieldInfo fieldName = elem.GetType().GetField("Name");
+                                    if (fieldName != null)
+                                    {
+                                        object elemname = fieldName.GetValue(elem);
+                                        if (elemname != null)
+                                        {
+                                            FieldInfo fieldValue = elemname.GetType().GetField("Value");
+                                            if (fieldValue != null)
+                                            {
+                                                object elemval = fieldValue.GetValue(elemname);
+                                                sbList.Append(elemval.ToString());
+                                            }
+                                        }
+                                    }
+                                    sbList.Append("; <br/>");
+                                }
+                                value = sbList.ToString();
+                            }
+                            else if (value is Type)
+                            {
+                                value = ((Type)value).Name;
+                            }
+
+                            if (!String.IsNullOrEmpty(format))
+                            {
+                                if (format.Equals("Required") && value == null)
+                                {
+                                    includerow = false;
+                                }
+                            }
+
+                            if (value != null)
+                            {
+                                FieldInfo fieldValue = value.GetType().GetField("Value");
+                                if (fieldValue != null)
+                                {
+                                    value = fieldValue.GetValue(value);
+                                }
+
+                                if (format != null && format.Equals("True") && (value == null || !value.ToString().Equals("True")))
+                                {
+                                    includerow = false;
+                                }
+
+                                if (value is Double)
+                                {
+                                    sbRow.Append(" align=\"right\">");
+
+                                    sbRow.Append(((Double)value).ToString("N3"));
+                                }
+                                else if (value is List<Int64>)
+                                {
+                                    sbRow.Append(">");
+
+                                    // latitude or longitude
+                                    List<Int64> intlist = (List<Int64>)value;
+                                    if (intlist.Count >= 3)
+                                    {
+                                        sbRow.Append(intlist[0] + "° " + intlist[1] + "' " + intlist[2] + "\"");
+                                    }
+                                }
+                                else if (value != null)
+                                {
+                                    sbRow.Append(">");
+                                    sbRow.Append(value.ToString()); // todo: html-encode
+                                }
+                            }
+                            else
+                            {
+                                sbRow.Append(">");
+                                sbRow.Append("&nbsp;");
+                            }
+                        }
+                        else
+                        {
+                            sbRow.Append(">");
+                        }
+
+                        sbRow.Append("</td>");
+                    }
+                    sbRow.AppendLine("</tr>");
+
+                    if (includerow)
+                    {
+                        sb.Append(sbRow.ToString());
+                    }
+                }
+            }
+
+            sb.AppendLine("</table>");
+            sb.AppendLine("<br/>");
+
+            return sb.ToString();
+        }
+
         public string FormatData(DocProject docProject, DocPublication docPublication, DocExchangeDefinition docExchange, Dictionary<string, DocObject> map, Dictionary<long, SEntity> instances, SEntity root, bool markup)
         {
-            //Guid guidMapping = Guid.Parse("");//...
-
             StringBuilder sb = new StringBuilder();
 
             foreach (DocModelView docView in docPublication.Views)
@@ -204,7 +401,7 @@ namespace IfcDoc
                     // look for specific concept root dealing with mappings
                     foreach (DocTemplateUsage docConcept in docRoot.Concepts)
                     {
-                        if (docConcept.Definition != null && docConcept.Definition.Name.Equals("External Data Constraints") && docConcept.Items.Count > 0)//...
+                        if (docConcept.Definition != null && docConcept.Definition.Uuid.Equals(DocTemplateDefinition.guidTemplateMapping) && docConcept.Items.Count > 0)//...
                         {
                             bool included = true;
 
@@ -239,188 +436,8 @@ namespace IfcDoc
                                         
                             if (included)
                             {
-                                string table = docConcept.Items[0].GetParameterValue("Table");
-                                string query = docConcept.Items[0].GetParameterValue("Reference");
-
-                                sb.AppendLine("<h4>" + docConcept.Name + "</h4>");
-                                sb.AppendLine("<table class=\"gridtable\">");
-
-                                List<string> colstyles = new List<string>();
-                                List<string> colformat = new List<string>();
-                                List<CvtValuePath> colmaps = new List<CvtValuePath>();
-
-                                // generate header row
-                                sb.AppendLine("<tr>");
-                                foreach (DocTemplateItem docItem in docConcept.Items)
-                                {
-                                    string name = docItem.GetParameterValue("Name");
-                                    string disp = "#" + docItem.GetColor().ToArgb().ToString("X8"); //docItem.GetParameterValue("Color");docItem.GetParameterValue("Color");
-                                    string expr = docItem.GetParameterValue("Reference");
-                                    string form = docItem.GetParameterValue("Format");
-
-                                    string style = "";
-                                    if (!String.IsNullOrEmpty(disp))
-                                    {
-                                        style = " style=\"background-color:" + disp + ";\"";
-                                    }
-                                    colstyles.Add(style);
-
-                                    string format = "";
-                                    if (!String.IsNullOrEmpty(form))
-                                    {
-                                        format = form;
-                                    }
-                                    colformat.Add(format);
-
-                                    string desc = "";
-                                    CvtValuePath valpath = CvtValuePath.Parse(expr, map); //todo: move out of loop
-                                    colmaps.Add(valpath);
-                                    if (valpath != null)
-                                    {
-                                        desc = /*valpath.GetDescription(map) + "&#10;&#10;" + */valpath.ToString().Replace("\\", "&#10;");
-                                    }
-
-                                    sb.Append("<th><a href=\"../../schema/views/" + DocumentationISO.MakeLinkName(docView) + "/" + DocumentationISO.MakeLinkName(docExchange) + ".htm#" + DocumentationISO.MakeLinkName(docConcept) + "\" title=\"" + desc + "\">");
-                                    sb.Append(name);
-                                    sb.Append("</a></th>");
-                                };
-                                sb.AppendLine("</tr>");
-
-                                // generate data rows
-                                foreach (SEntity e in instances.Values)
-                                {
-                                    string eachname = e.GetType().Name;
-                                    if (docRoot.ApplicableEntity.IsInstanceOfType(e))
-                                    {
-                                        bool includerow = true;
-                                        StringBuilder sbRow = new StringBuilder();
-
-                                        sbRow.Append("<tr>");
-                                        int iCol = 0;
-                                        foreach (DocTemplateItem docItem in docConcept.Items)
-                                        {
-                                            sbRow.Append("<td" + colstyles[iCol]);
-                                            CvtValuePath valpath = colmaps[iCol];
-                                            string format = colformat[iCol];
-
-                                            iCol++;
-
-                                            if (valpath != null)
-                                            {
-                                                string nn = docItem.GetParameterValue("Name");
-                   
-                                                object value = valpath.GetValue(e, null);
-
-                                                if (value == e)
-                                                {
-                                                    value = e.GetType().Name;
-                                                }
-                                                else if (value is SEntity)
-                                                {
-                                                    // use name
-                                                    FieldInfo fieldValue = value.GetType().GetField("Name");
-                                                    if (fieldValue != null)
-                                                    {
-                                                        value = fieldValue.GetValue(value);
-                                                    }
-                                                }
-                                                else if (value is System.Collections.IList)
-                                                {
-                                                    System.Collections.IList list = (System.Collections.IList)value;
-                                                    StringBuilder sbList = new StringBuilder();
-                                                    foreach(object elem in list)
-                                                    {
-                                                        FieldInfo fieldName = elem.GetType().GetField("Name");
-                                                        if(fieldName != null)
-                                                        {
-                                                            object elemname = fieldName.GetValue(elem);
-                                                            if(elemname != null)
-                                                            {
-                                                                FieldInfo fieldValue = elemname.GetType().GetField("Value");
-                                                                if (fieldValue != null)
-                                                                {
-                                                                    object elemval = fieldValue.GetValue(elemname);
-                                                                    sbList.Append(elemval.ToString());
-                                                                }
-                                                            }
-                                                        }
-                                                        sbList.Append("; <br/>");
-                                                    }
-                                                    value = sbList.ToString();
-                                                }
-                                                else if (value is Type)
-                                                {
-                                                    value = ((Type)value).Name;
-                                                }
-
-                                                if (!String.IsNullOrEmpty(format))
-                                                {
-                                                    if (format.Equals("Required") && value == null)
-                                                    {
-                                                        includerow = false;
-                                                    }
-                                                }
-
-                                                if (value != null)
-                                                {
-                                                    FieldInfo fieldValue = value.GetType().GetField("Value");
-                                                    if (fieldValue != null)
-                                                    {
-                                                        value = fieldValue.GetValue(value);
-                                                    }
-
-                                                    if (format != null && format.Equals("True") && (value == null || !value.ToString().Equals("True")))
-                                                    {
-                                                        includerow = false;
-                                                    }
-
-                                                    if (value is Double)
-                                                    {
-                                                        sbRow.Append(" align=\"right\">");
-
-                                                        sbRow.Append(((Double)value).ToString("N3"));
-                                                    }
-                                                    else if(value is List<Int64>)
-                                                    {
-                                                        sbRow.Append(">");
-
-                                                        // latitude or longitude
-                                                        List<Int64> intlist = (List<Int64>)value;
-                                                        if(intlist.Count >= 3)
-                                                        {
-                                                            sbRow.Append(intlist[0] + "° " + intlist[1] + "' " + intlist[2] + "\"");
-                                                        }
-                                                    }
-                                                    else if (value != null)
-                                                    {
-                                                        sbRow.Append(">");
-                                                        sbRow.Append(value.ToString()); // todo: html-encode
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    sbRow.Append(">");
-                                                    sbRow.Append("&nbsp;");
-                                                }
-                                            }
-                                            else
-                                            {
-                                                sbRow.Append(">");
-                                            }
-
-                                            sbRow.Append("</td>");
-                                        }
-                                        sbRow.AppendLine("</tr>");
-
-                                        if(includerow)
-                                        {
-                                            sb.Append(sbRow.ToString());
-                                        }
-                                    }
-                                }
-
-                                sb.AppendLine("</table>");
-                                sb.AppendLine("<br/>");
+                                string dataconcept = FormatDataConcept(docProject, docPublication, docExchange, map, instances, root, markup, docView, docRoot, docConcept);
+                                sb.Append(dataconcept);
                             }
                         }
                     }

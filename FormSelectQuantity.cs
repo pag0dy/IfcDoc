@@ -65,6 +65,8 @@ namespace IfcDoc
                             TreeNode tnPset = new TreeNode();
                             tnPset.Tag = docPset;
                             tnPset.Text = docPset.Name;
+                            tnPset.ImageIndex = 0;
+                            tnPset.SelectedImageIndex = 0;
                             this.treeViewProperty.Nodes.Add(tnPset);
 
                             if (!this.treeViewProperty.CheckBoxes)
@@ -74,6 +76,8 @@ namespace IfcDoc
                                     TreeNode tnProp = new TreeNode();
                                     tnProp.Tag = docProp;
                                     tnProp.Text = docProp.Name;
+                                    tnProp.ImageIndex = 1;
+                                    tnProp.SelectedImageIndex = 1;
                                     tnPset.Nodes.Add(tnProp);
                                 }
                             }
@@ -87,6 +91,22 @@ namespace IfcDoc
 
         private void treeViewProperty_AfterSelect(object sender, TreeViewEventArgs e)
         {
+            DocObject docObj = this.treeViewProperty.SelectedNode.Tag as DocObject;
+            if (docObj != null)
+            {
+                if (docObj is DocQuantitySet)
+                {
+                    this.textBoxType.Text = "QSET_OCCURRENCEDRIVEN";
+                }
+                else if (docObj is DocQuantity)
+                {
+                    DocQuantity docProp = (DocQuantity)docObj;
+                    this.textBoxType.Text = docProp.QuantityType.ToString();
+                }
+
+                this.textBoxDescription.Text = docObj.Documentation;
+            }
+
             this.buttonOK.Enabled = (this.treeViewProperty.CheckBoxes || (this.treeViewProperty.SelectedNode != null && this.treeViewProperty.SelectedNode.Tag is DocQuantity));
         }
 

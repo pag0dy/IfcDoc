@@ -38,6 +38,9 @@
             this.toolStripMenuItemContextInsertExchange = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemContextInsertRoot = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemContextInsertLeaf = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemContextInsertConceptPset = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemContextInsertConceptQset = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemContextInsertConceptMapping = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemContextInsertNormative = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemContextInsertTerm = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemContextInsertAbbreviatedTerm = new System.Windows.Forms.ToolStripMenuItem();
@@ -129,7 +132,6 @@
             this.ToolStripMenuItemInsertTerm = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItemInsertAbbreviatedTerm = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem11 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripMenuItem19 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemInsertExample = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemInsertBibliography = new System.Windows.Forms.ToolStripMenuItem();
@@ -174,10 +176,13 @@
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemInsertViewDefinition = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemInsertExchange = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem19 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemInsertConceptRoot = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem21 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemInsertConceptLeaf = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemInsertConceptPset = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemInsertConceptQset = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemInsertConceptMapping = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem20 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemInsertPublication = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemInsertChangeLog = new System.Windows.Forms.ToolStripMenuItem();
@@ -342,6 +347,9 @@
             this.toolStripMenuItemContextInsertExchange,
             this.toolStripMenuItemContextInsertRoot,
             this.toolStripMenuItemContextInsertLeaf,
+            this.toolStripMenuItemContextInsertConceptPset,
+            this.toolStripMenuItemContextInsertConceptQset,
+            this.toolStripMenuItemContextInsertConceptMapping,
             this.toolStripMenuItemContextInsertNormative,
             this.toolStripMenuItemContextInsertTerm,
             this.toolStripMenuItemContextInsertAbbreviatedTerm,
@@ -388,6 +396,24 @@
             resources.ApplyResources(this.toolStripMenuItemContextInsertLeaf, "toolStripMenuItemContextInsertLeaf");
             this.toolStripMenuItemContextInsertLeaf.Name = "toolStripMenuItemContextInsertLeaf";
             this.toolStripMenuItemContextInsertLeaf.Click += new System.EventHandler(this.toolStripMenuItemInsertUseDefinition_Click);
+            // 
+            // toolStripMenuItemContextInsertConceptPset
+            // 
+            resources.ApplyResources(this.toolStripMenuItemContextInsertConceptPset, "toolStripMenuItemContextInsertConceptPset");
+            this.toolStripMenuItemContextInsertConceptPset.Name = "toolStripMenuItemContextInsertConceptPset";
+            this.toolStripMenuItemContextInsertConceptPset.Click += new System.EventHandler(this.toolStripMenuItemInsertConceptPset_Click);
+            // 
+            // toolStripMenuItemContextInsertConceptQset
+            // 
+            resources.ApplyResources(this.toolStripMenuItemContextInsertConceptQset, "toolStripMenuItemContextInsertConceptQset");
+            this.toolStripMenuItemContextInsertConceptQset.Name = "toolStripMenuItemContextInsertConceptQset";
+            this.toolStripMenuItemContextInsertConceptQset.Click += new System.EventHandler(this.toolStripMenuItemInsertConceptQset_Click);
+            // 
+            // toolStripMenuItemContextInsertConceptMapping
+            // 
+            resources.ApplyResources(this.toolStripMenuItemContextInsertConceptMapping, "toolStripMenuItemContextInsertConceptMapping");
+            this.toolStripMenuItemContextInsertConceptMapping.Name = "toolStripMenuItemContextInsertConceptMapping";
+            this.toolStripMenuItemContextInsertConceptMapping.Click += new System.EventHandler(this.toolStripMenuItemInsertConceptMapping_Click);
             // 
             // toolStripMenuItemContextInsertNormative
             // 
@@ -531,7 +557,7 @@
             this.imageListIcon.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListIcon.ImageStream")));
             this.imageListIcon.TransparentColor = System.Drawing.Color.Fuchsia;
             this.imageListIcon.Images.SetKeyName(0, "Folder.bmp");
-            this.imageListIcon.Images.SetKeyName(1, "DocAnnex.bmp");
+            this.imageListIcon.Images.SetKeyName(1, "DocSection.bmp");
             this.imageListIcon.Images.SetKeyName(2, "DocAttribute.bmp");
             this.imageListIcon.Images.SetKeyName(3, "DocConstant.bmp");
             this.imageListIcon.Images.SetKeyName(4, "DocDefinedType.bmp");
@@ -550,7 +576,7 @@
             this.imageListIcon.Images.SetKeyName(17, "DocConceptLeaf.png");
             this.imageListIcon.Images.SetKeyName(18, "DocUniqueRule.bmp");
             this.imageListIcon.Images.SetKeyName(19, "DocWhereRule.bmp");
-            this.imageListIcon.Images.SetKeyName(20, "DocEntity-Format.bmp");
+            this.imageListIcon.Images.SetKeyName(20, "DocAnnex.bmp");
             this.imageListIcon.Images.SetKeyName(21, "DocEnumeration-Format.bmp");
             this.imageListIcon.Images.SetKeyName(22, "DocField-Inverse.bmp");
             this.imageListIcon.Images.SetKeyName(23, "DocTemplateDefinition.png");
@@ -1067,7 +1093,6 @@
             this.ToolStripMenuItemInsertTerm,
             this.ToolStripMenuItemInsertAbbreviatedTerm,
             this.toolStripMenuItem11,
-            this.toolStripMenuItem19,
             this.toolStripMenuItemInsertExample,
             this.toolStripSeparator7,
             this.toolStripMenuItemInsertBibliography});
@@ -1101,11 +1126,6 @@
             // 
             this.toolStripMenuItem11.Name = "toolStripMenuItem11";
             resources.ApplyResources(this.toolStripMenuItem11, "toolStripMenuItem11");
-            // 
-            // toolStripMenuItem19
-            // 
-            this.toolStripMenuItem19.Name = "toolStripMenuItem19";
-            resources.ApplyResources(this.toolStripMenuItem19, "toolStripMenuItem19");
             // 
             // toolStripMenuItemInsertExample
             // 
@@ -1374,10 +1394,13 @@
             this.toolStripMenuItem2,
             this.toolStripMenuItemInsertViewDefinition,
             this.toolStripMenuItemInsertExchange,
+            this.toolStripMenuItem19,
             this.toolStripMenuItemInsertConceptRoot,
+            this.toolStripMenuItem21,
             this.toolStripMenuItemInsertConceptLeaf,
             this.toolStripMenuItemInsertConceptPset,
-            this.toolStripMenuItemInsertConceptQset});
+            this.toolStripMenuItemInsertConceptQset,
+            this.toolStripMenuItemInsertConceptMapping});
             this.modelViewDefinitionToolStripMenuItem.Name = "modelViewDefinitionToolStripMenuItem";
             resources.ApplyResources(this.modelViewDefinitionToolStripMenuItem, "modelViewDefinitionToolStripMenuItem");
             // 
@@ -1404,11 +1427,21 @@
             this.toolStripMenuItemInsertExchange.Name = "toolStripMenuItemInsertExchange";
             this.toolStripMenuItemInsertExchange.Click += new System.EventHandler(this.toolStripMenuItemInsertExchange_Click);
             // 
+            // toolStripMenuItem19
+            // 
+            this.toolStripMenuItem19.Name = "toolStripMenuItem19";
+            resources.ApplyResources(this.toolStripMenuItem19, "toolStripMenuItem19");
+            // 
             // toolStripMenuItemInsertConceptRoot
             // 
             resources.ApplyResources(this.toolStripMenuItemInsertConceptRoot, "toolStripMenuItemInsertConceptRoot");
             this.toolStripMenuItemInsertConceptRoot.Name = "toolStripMenuItemInsertConceptRoot";
             this.toolStripMenuItemInsertConceptRoot.Click += new System.EventHandler(this.toolStripMenuItemInsertConceptRoot_Click);
+            // 
+            // toolStripMenuItem21
+            // 
+            this.toolStripMenuItem21.Name = "toolStripMenuItem21";
+            resources.ApplyResources(this.toolStripMenuItem21, "toolStripMenuItem21");
             // 
             // toolStripMenuItemInsertConceptLeaf
             // 
@@ -1427,6 +1460,12 @@
             resources.ApplyResources(this.toolStripMenuItemInsertConceptQset, "toolStripMenuItemInsertConceptQset");
             this.toolStripMenuItemInsertConceptQset.Name = "toolStripMenuItemInsertConceptQset";
             this.toolStripMenuItemInsertConceptQset.Click += new System.EventHandler(this.toolStripMenuItemInsertConceptQset_Click);
+            // 
+            // toolStripMenuItemInsertConceptMapping
+            // 
+            resources.ApplyResources(this.toolStripMenuItemInsertConceptMapping, "toolStripMenuItemInsertConceptMapping");
+            this.toolStripMenuItemInsertConceptMapping.Name = "toolStripMenuItemInsertConceptMapping";
+            this.toolStripMenuItemInsertConceptMapping.Click += new System.EventHandler(this.toolStripMenuItemInsertConceptMapping_Click);
             // 
             // toolStripMenuItem20
             // 
@@ -2337,7 +2376,6 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemToolsModule;
         private System.Windows.Forms.SaveFileDialog saveFileDialogModule;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
-        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem19;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemEnableDisable;
         private CtlProperties ctlProperties;
         private System.Windows.Forms.SplitContainer splitContainerEdit;
@@ -2384,5 +2422,11 @@
         private System.Windows.Forms.ToolStripButton toolStripButtonViewRequirement;
         private System.Windows.Forms.OpenFileDialog openFileDialogExamples;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemInsertChangeLog;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemInsertConceptMapping;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemContextInsertConceptPset;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemContextInsertConceptQset;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemContextInsertConceptMapping;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem19;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem21;
     }
 }

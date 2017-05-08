@@ -1150,6 +1150,11 @@ namespace IfcDoc
         private void comboBoxIdentityStatus_SelectedIndexChanged(object sender, EventArgs e)
         {
             this.m_target.Status = this.comboBoxIdentityStatus.Text;
+
+            if (this.SchemaChanged != null)
+            {
+                this.SchemaChanged(this, EventArgs.Empty);
+            }
         }
 
         private void comboBoxIdentityStatus_TextChanged(object sender, EventArgs e)

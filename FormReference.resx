@@ -324,6 +324,9 @@
   <data name="&gt;&gt;textBoxReference.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
+  <data name="buttonProperty.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
+  </data>
   <data name="buttonProperty.Location" type="System.Drawing.Point, System.Drawing">
     <value>94, 326</value>
   </data>
@@ -347,6 +350,9 @@
   </data>
   <data name="&gt;&gt;buttonProperty.ZOrder" xml:space="preserve">
     <value>1</value>
+  </data>
+  <data name="buttonQuantity.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
   </data>
   <data name="buttonQuantity.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>

@@ -26,10 +26,34 @@ namespace IfcDoc
         string m_username;
         string m_password; // use SecureString if/when bsDD is secured
         int m_protocol;
+        bool m_download;
 
         public FormPublish()
         {
             InitializeComponent();
+        }
+
+
+        public bool Download
+        {
+            get
+            {
+                return this.m_download;
+            }
+            set
+            {
+                m_download = value;
+                if(m_download)
+                {
+                    this.textBoxComments.Enabled = false;
+                    this.Text = "Download";   
+                }
+                else
+                {
+                    this.textBoxComments.Enabled = true;
+                    this.Text = "Upload";
+                }
+            }
         }
 
         public DocProject Project
@@ -138,7 +162,7 @@ namespace IfcDoc
 
                     case 1:
                     case 2:
-                        DataDictionary.Upload(this.m_project, this.textBoxUrl.Text, this.m_username, this.m_password);
+                        DataDictionary.Upload(this.m_project, this.backgroundWorkerPublish, this.textBoxUrl.Text, this.m_username, this.m_password);
                         break;
                 }
             }

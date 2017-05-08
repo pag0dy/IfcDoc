@@ -15,13 +15,17 @@ namespace IfcDoc
         public FormCredentials()
         {
             InitializeComponent();
+
+            this.checkBoxRemember.Checked = !String.IsNullOrEmpty(Properties.Settings.Default.Username);
+            this.textBoxUsername.Text = Properties.Settings.Default.Username;
+            this.textBoxPassword.Text = Properties.Settings.Default.Password;
         }
 
         public string Username
         {
             get
             {
-                return this.textBox1.Text;
+                return this.textBoxUsername.Text;
             }
         }
 
@@ -30,8 +34,25 @@ namespace IfcDoc
         {
             get
             {
-                return this.textBox2.Text;
+                return this.textBoxPassword.Text;
             }
+        }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            base.OnClosed(e);
+
+            if (this.checkBoxRemember.Checked)
+            {
+                Properties.Settings.Default.Username = this.textBoxUsername.Text;
+                Properties.Settings.Default.Password = this.textBoxPassword.Text;
+            }
+            else
+            {
+                Properties.Settings.Default.Username = String.Empty;
+                Properties.Settings.Default.Password = String.Empty;
+            }
+            Properties.Settings.Default.Save();
         }
     }
 }

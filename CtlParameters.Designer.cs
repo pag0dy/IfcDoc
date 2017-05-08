@@ -44,8 +44,6 @@
             this.toolStripMenuItemModeSuppress = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripButtonConceptTemplate = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButtonItemOptional = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonShowFailures = new System.Windows.Forms.ToolStripButton();
             this.toolStripComboBoxOperator = new System.Windows.Forms.ToolStripComboBox();
             this.dataGridViewConceptRules = new System.Windows.Forms.DataGridView();
@@ -73,8 +71,6 @@
             this.toolStripSplitButtonInheritance,
             this.toolStripButtonConceptTemplate,
             this.toolStripSeparator2,
-            this.toolStripButtonItemOptional,
-            this.toolStripSeparator3,
             this.toolStripButtonShowFailures,
             this.toolStripComboBoxOperator});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
@@ -190,22 +186,6 @@
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
-            // 
-            // toolStripButtonItemOptional
-            // 
-            this.toolStripButtonItemOptional.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButtonItemOptional.Enabled = false;
-            this.toolStripButtonItemOptional.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonItemOptional.Image")));
-            this.toolStripButtonItemOptional.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonItemOptional.Name = "toolStripButtonItemOptional";
-            this.toolStripButtonItemOptional.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButtonItemOptional.Text = "Optional";
-            this.toolStripButtonItemOptional.Click += new System.EventHandler(this.toolStripButtonItemOptional_Click);
-            // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
             // 
             // toolStripButtonShowFailures
             // 
@@ -351,8 +331,6 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemModeSuppress;
         private System.Windows.Forms.ToolStripButton toolStripButtonConceptTemplate;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        private System.Windows.Forms.ToolStripButton toolStripButtonItemOptional;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripButton toolStripButtonShowFailures;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.ListView listView1;

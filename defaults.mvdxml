@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<mvdXML xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" uuid="6f5f1964-1e8e-4ec1-bae0-f70942e911d4" name="" status="sample" xsi:schemaLocation="http://www.buildingsmart-tech.org/mvd/XML/1.1 http://www.buildingsmart-tech.org/mvd/XML/1.1/mvdXML_V1.1_add1.xsd" xmlns="http://www.buildingsmart-tech.org/mvd/XML/1.1">
+<mvdXML xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" uuid="6f5f1964-1e8e-4ec1-bae0-f70942e911d4" name="" status="sample" xsi:schemaLocation="http://www.buildingsmart-tech.org/mvd/XML/1.1 http://www.buildingsmart-tech.org/mvd/XML/1.1/mvdXML_V1.1_add1.xsd" xmlns="http://buildingsmart-tech.org/mvd/XML/1.1">
   <Templates>
     <ConceptTemplate uuid="33e0be15-e301-4858-9f4b-18b2eb5488ba" name="Object Definition" status="sample" applicableSchema="IFC4" applicableEntity="IfcObjectDefinition">
       <Definitions>
@@ -829,6 +829,254 @@
               </EntityRules>
             </AttributeRule>
           </Rules>
+        </ConceptTemplate>
+      </SubTemplates>
+    </ConceptTemplate>
+
+
+    <ConceptTemplate uuid="4b385464-b99a-42bc-a17a-a0a647a1ab5b" name="Association" status="sample" applicableSchema="IFC4" applicableEntity="IfcObjectDefinition">
+      <Definitions>
+        <Definition>
+          <Body><![CDATA[]]></Body>
+        </Definition>
+      </Definitions>
+      <SubTemplates>
+        <ConceptTemplate uuid="4a224609-6578-4c75-afcf-8affa86e5ef2" name="Classification" status="sample" applicableSchema="IFC4" applicableEntity="IfcObjectDefinition">
+          <Definitions>
+            <Definition>
+              <Body>
+                <![CDATA[<p>Objects, type objects, properties, and some resource schema entities can be further described by associating references to external sources of information. 
+The source of information can be:
+</p>
+ 
+<ul>
+        
+<li>a classification system;</li>
+        
+<li>a dictionary server;</li>
+        
+<li>any external catalogue that classifies the object further;</li>
+        
+<li>a service that combine the above features.</li>
+      
+</ul>
+
+
+
+<p>An individual item within the external source of information can be selected. 
+It then applies the inherent meaning of the item to the object or property.</p>]]>
+              </Body>
+            </Definition>
+          </Definitions>
+          <Rules>
+            <AttributeRule AttributeName="HasAssociations">
+              <EntityRules>
+                <EntityRule EntityName="IfcRelAssociatesClassification">
+                  <AttributeRules>
+                    <AttributeRule RuleID="Name" AttributeName="Name">
+                      <EntityRules>
+                        <EntityRule EntityName="IfcLabel" />
+                      </EntityRules>
+                    </AttributeRule>
+                    <AttributeRule AttributeName="RelatingClassification">
+                      <EntityRules>
+                        <EntityRule RuleID="Value" EntityName="IfcClassificationReference">
+                          <AttributeRules>
+                            <AttributeRule AttributeName="ReferencedSource">
+                              <EntityRules>
+                                <EntityRule EntityName="IfcClassification">
+                                  <AttributeRules>
+                                    <AttributeRule RuleID="Source" AttributeName="Source">
+                                      <EntityRules>
+                                        <EntityRule EntityName="IfcLabel" />
+                                      </EntityRules>
+                                    </AttributeRule>
+                                    <AttributeRule RuleID="ClassificationName" AttributeName="Name">
+                                      <EntityRules>
+                                        <EntityRule EntityName="IfcLabel" />
+                                      </EntityRules>
+                                    </AttributeRule>
+                                    <AttributeRule AttributeName="ReferenceTokens">
+                                      <EntityRules>
+                                        <EntityRule EntityName="IfcIdentifier" />
+                                      </EntityRules>
+                                    </AttributeRule>
+                                  </AttributeRules>
+                                </EntityRule>
+                              </EntityRules>
+                            </AttributeRule>
+                            <AttributeRule RuleID="Tokens" AttributeName="Identification">
+                              <EntityRules>
+                                <EntityRule RuleID="Value" Description="*" EntityName="IfcIdentifier" />
+                              </EntityRules>
+                            </AttributeRule>
+                          </AttributeRules>
+                        </EntityRule>
+                      </EntityRules>
+                    </AttributeRule>
+                  </AttributeRules>
+                </EntityRule>
+              </EntityRules>
+            </AttributeRule>
+          </Rules>
+        </ConceptTemplate>
+        <ConceptTemplate uuid="c08b264c-f7c6-479f-af7f-5d645c130ea8" name="Constraint" status="sample" applicableSchema="IFC4" applicableEntity="IfcObjectDefinition">
+          <Definitions>
+            <Definition>
+              <Body>
+                <![CDATA[
+      <p class="std">
+        Any object or property may have associated constraints
+        indicating a qualitative objective or a quantitative metric
+        to be met.
+      </p>
+
+      <p class="std">
+        Constraints based on metrics are measurable, such that the
+        status of a metric being valid is computer-interpretable.
+        Metric constraints are based on simple conditional logic
+        such as greater than a particular value or included within
+        a specified list or table. Constraints may be combine
+        multiple metrics using boolean logic such as AND, OR, XOR,
+        or NOT.
+      </p>]]>
+              </Body>
+            </Definition>
+          </Definitions>
+          <Rules>
+            <AttributeRule AttributeName="HasAssociations">
+              <EntityRules>
+                <EntityRule EntityName="IfcRelAssociatesConstraint">
+                  <AttributeRules>
+                    <AttributeRule AttributeName="Name">
+                      <EntityRules>
+                        <EntityRule EntityName="IfcLabel" />
+                      </EntityRules>
+                    </AttributeRule>
+                    <AttributeRule AttributeName="RelatingConstraint">
+                      <EntityRules>
+                        <EntityRule EntityName="IfcObjective">
+                          <AttributeRules>
+                            <AttributeRule AttributeName="BenchmarkValues">
+                              <EntityRules>
+                                <EntityRule EntityName="IfcMetric">
+                                  <AttributeRules>
+                                    <AttributeRule AttributeName="Benchmark">
+                                      <EntityRules>
+                                        <EntityRule EntityName="IfcBenchmarkEnum" />
+                                      </EntityRules>
+                                    </AttributeRule>
+                                  </AttributeRules>
+                                </EntityRule>
+                              </EntityRules>
+                            </AttributeRule>
+                          </AttributeRules>
+                        </EntityRule>
+                      </EntityRules>
+                    </AttributeRule>
+                  </AttributeRules>
+                </EntityRule>
+              </EntityRules>
+            </AttributeRule>
+          </Rules>
+          <SubTemplates>
+            <ConceptTemplate uuid="daf77f62-7ec3-4ff1-bec2-b3175f51f14b" name="External Data Constraints" status="sample" applicableSchema="IFC4" applicableEntity="IfcObjectDefinition">
+              <Definitions>
+                <Definition>
+                  <Body>
+                    <![CDATA[<p>The constraint model may be used to indicate mappings between data in the IFC model and external documents.  This concept template may also be used by software applications to translate data to/from spreadsheets without necessarily instantiating constraint relationships within an IFC data set.</p>
+
+]]>
+                  </Body>
+                </Definition>
+              </Definitions>
+              <Rules>
+                <AttributeRule AttributeName="HasAssociations">
+                  <EntityRules>
+                    <EntityRule EntityName="IfcRelAssociatesConstraint">
+                      <AttributeRules>
+                        <AttributeRule AttributeName="RelatingConstraint">
+                          <EntityRules>
+                            <EntityRule EntityName="IfcObjective">
+                              <AttributeRules>
+                                <AttributeRule AttributeName="BenchmarkValues">
+                                  <EntityRules>
+                                    <EntityRule EntityName="IfcMetric">
+                                      <AttributeRules>
+                                        <AttributeRule AttributeName="DataValue">
+                                          <EntityRules>
+                                            <EntityRule EntityName="IfcTable">
+                                              <AttributeRules>
+                                                <AttributeRule RuleID="Table" AttributeName="Name">
+                                                  <EntityRules>
+                                                    <EntityRule EntityName="IfcLabel" />
+                                                  </EntityRules>
+                                                </AttributeRule>
+                                                <AttributeRule AttributeName="Columns">
+                                                  <EntityRules>
+                                                    <EntityRule EntityName="IfcTableColumn">
+                                                      <AttributeRules>
+                                                        <AttributeRule RuleID="Name" AttributeName="Name">
+                                                          <EntityRules>
+                                                            <EntityRule EntityName="IfcLabel" />
+                                                          </EntityRules>
+                                                        </AttributeRule>
+                                                        <AttributeRule RuleID="Reference" AttributeName="ReferencePath">
+                                                          <EntityRules>
+                                                            <EntityRule RuleID="Value" EntityName="IfcReference" />
+                                                          </EntityRules>
+                                                        </AttributeRule>
+                                                        <AttributeRule AttributeName="Unit">
+                                                          <EntityRules>
+                                                            <EntityRule EntityName="IfcContextDependentUnit">
+                                                              <AttributeRules>
+                                                                <AttributeRule AttributeName="Name" />
+                                                              </AttributeRules>
+                                                            </EntityRule>
+                                                          </EntityRules>
+                                                        </AttributeRule>
+                                                        <AttributeRule AttributeName="Description">
+                                                          <EntityRules>
+                                                            <EntityRule EntityName="IfcText" />
+                                                          </EntityRules>
+                                                        </AttributeRule>
+                                                      </AttributeRules>
+                                                    </EntityRule>
+                                                  </EntityRules>
+                                                </AttributeRule>
+                                              </AttributeRules>
+                                            </EntityRule>
+                                          </EntityRules>
+                                        </AttributeRule>
+                                      </AttributeRules>
+                                    </EntityRule>
+                                  </EntityRules>
+                                </AttributeRule>
+                                <AttributeRule AttributeName="ObjectiveQualifier">
+                                  <EntityRules>
+                                    <EntityRule EntityName="IfcObjectiveEnum">
+                                      <AttributeRules>
+                                        <AttributeRule Description="Value=EXTERNAL" AttributeName="Value=EXTERNAL" />
+                                      </AttributeRules>
+                                    </EntityRule>
+                                  </EntityRules>
+                                </AttributeRule>
+                              </AttributeRules>
+                            </EntityRule>
+                          </EntityRules>
+                        </AttributeRule>
+                        <AttributeRule AttributeName="Name">
+                          <EntityRules>
+                            <EntityRule EntityName="IfcLabel" />
+                          </EntityRules>
+                        </AttributeRule>
+                      </AttributeRules>
+                    </EntityRule>
+                  </EntityRules>
+                </AttributeRule>
+              </Rules>
+            </ConceptTemplate>
+          </SubTemplates>
         </ConceptTemplate>
       </SubTemplates>
     </ConceptTemplate>

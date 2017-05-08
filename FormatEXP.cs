@@ -80,7 +80,7 @@ namespace IfcDoc.Format.EXP
             if (!this.m_longform)
                 return expression;
 
-            string replace = "'" + schemaidentifier + ".";
+            string replace = "'" + schemaidentifier.ToUpper() + ".";
             foreach (DocSection docSection in this.m_project.Sections)
             {
                 foreach (DocSchema docSchema in docSection.Schemas)

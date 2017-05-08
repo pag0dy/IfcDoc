@@ -193,6 +193,12 @@ namespace IfcDoc
                             {
                                 // existing type
 
+                                if (docType.Status != docTypeBase.Status)
+                                {
+                                    docChangeType.Action = DocChangeActionEnum.MODIFIED;
+                                    docChangeType.Aspects.Add(new DocChangeAspect(DocChangeAspectEnum.STATUS, docType.Status, docTypeBase.Status));
+                                }
+
                                 // if enumeration, check enums
                                 if (docType is DocEnumeration)
                                 {
@@ -321,11 +327,6 @@ namespace IfcDoc
                         // compare entities
                         foreach (DocEntity docEntity in docSchema.Entities)
                         {
-                            if (docEntity.Name.Equals("IfcWindowLiningProperties"))
-                            {
-                                docEntity.ToString();
-                            }
-
                             DocChangeAction docChangeEntity = new DocChangeAction();
                             docChangeSchema.Changes.Add(docChangeEntity);
                             docChangeEntity.Name = docEntity.Name;
@@ -386,6 +387,12 @@ namespace IfcDoc
                                     }
                                 }
 
+                                if(docEntity.Status != docEntityBase.Status)
+                                {
+                                    docChangeEntity.Action = DocChangeActionEnum.MODIFIED;
+                                    docChangeEntity.Aspects.Add(new DocChangeAspect(DocChangeAspectEnum.STATUS, docEntityBase.Status, docEntity.Status));
+                                }
+
                                 // compare attributes by index
 
                                 // only report non-abstract entities; e.g. attributes may be demoted without file impact
@@ -421,6 +428,12 @@ namespace IfcDoc
                                                 docChangeAttribute.Aspects.Add(new DocChangeAspect(DocChangeAspectEnum.NAME, docAttributeBase.Name, docAttribute.Name));
 
                                                 docChangeAttribute.ImpactXML = true; // no impact to SPF though
+                                            }
+
+                                            if (docAttribute.Status != docAttributeBase.Status)
+                                            {
+                                                docChangeAttribute.Action = DocChangeActionEnum.MODIFIED;
+                                                docChangeAttribute.Aspects.Add(new DocChangeAspect(DocChangeAspectEnum.STATUS, docAttributeBase.Status, docAttribute.Status));
                                             }
 
                                             if (!docAttribute.DefinedType.Equals(docAttributeBase.DefinedType))

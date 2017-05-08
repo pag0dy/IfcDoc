@@ -323,7 +323,7 @@ namespace IfcDoc
                 System.Collections.IList list = (System.Collections.IList)this.m_property.GetValue(target, null);
 
                 // if expecting array, then return it.
-                if (this.m_vector || (this.m_identifier == null && this.m_inner == null))
+                if (this.m_vector && (this.m_identifier == null && this.m_inner == null))
                 {
                     return list;
                 }
@@ -631,7 +631,7 @@ namespace IfcDoc
                                     {
                                         foreach (DocTemplateItem docItem in docConcept.Items)
                                         {
-                                            if(docItem.Name.Equals(portname))
+                                            if (docItem.Name != null && docItem.Name.Equals(portname))
                                             {
                                                 desc = docItem.Documentation;
                                                 break;

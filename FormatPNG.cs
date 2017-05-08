@@ -429,6 +429,10 @@ namespace IfcDoc.Format.PNG
                         }
                     }
                 }
+                else if(docEntity.IsDeprecated())
+                {
+                    brush = Brushes.DarkRed;
+                }
                 else if (docEntity.IsAbstract())
                 {
                     brush = Brushes.Gray;
@@ -459,10 +463,17 @@ namespace IfcDoc.Format.PNG
 
                         string display = docAttr.GetAggregationExpression();
                         brush = Brushes.Black;
+                        
+                        if (docAttr.IsDeprecated())
+                        {
+                            brush = Brushes.DarkRed;
+                        }
+
                         if (docAttr.Inverse != null)
                         {
                             brush = Brushes.Gray;
                         }
+
                         if(String.IsNullOrEmpty(display))
                         {
                             if(docAttr.IsOptional)
@@ -1099,7 +1110,15 @@ namespace IfcDoc.Format.PNG
                                             {
                                                 caption = "(ABS)\r\n" + caption;
                                             }
-                                            g.FillRectangle(Brushes.Yellow, rc);
+
+                                            if (docType.IsDeprecated())
+                                            {
+                                                g.FillRectangle(Brushes.DarkRed, rc);
+                                            }
+                                            else
+                                            {
+                                                g.FillRectangle(Brushes.Yellow, rc);
+                                            }
                                             g.DrawRectangle(Pens.Black, rc);
                                             g.DrawString(caption, fontBold, Brushes.Black, rc, sf);
                                         }
@@ -1158,6 +1177,11 @@ namespace IfcDoc.Format.PNG
                                                 if (docAttr.IsOptional)
                                                 {
                                                     pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
+                                                }
+
+                                                if (docAttr.IsDeprecated())
+                                                {
+                                                    pen.Color = Color.DarkRed;
                                                 }
 
                                                 using (pen)
@@ -1728,6 +1752,7 @@ namespace IfcDoc.Format.PNG
             if (g != null)
             {
                 Brush brush = Brushes.Black;
+                
                 if(docEntity.IsAbstract())
                 {
                     brush = Brushes.Gray;
@@ -1736,6 +1761,11 @@ namespace IfcDoc.Format.PNG
                 if(docEntity == docTarget)
                 {
                     brush = Brushes.Blue;
+                }
+
+                if (docEntity.IsDeprecated())
+                {
+                    brush = Brushes.DarkRed;
                 }
 
                 g.FillRectangle(brush, pt.X, pt.Y, rc.Width - CY, CY);

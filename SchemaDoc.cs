@@ -422,7 +422,6 @@ namespace IfcDoc.Schema.DOC
             }
         }
 
-
         public int CompareTo(object obj)
         {
             if (!(obj is DocObject))
@@ -436,6 +435,11 @@ namespace IfcDoc.Schema.DOC
                 return 1;
 
             return this.Name.CompareTo(that.Name);
+        }
+
+        public bool IsDeprecated()
+        {
+            return this.Status != null && this.Status.Equals("Deprecated");
         }
     }
 
@@ -1088,16 +1092,6 @@ namespace IfcDoc.Schema.DOC
                 if (this._Publications == null)
                 {
                     this._Publications = new List<DocPublication>();
-#if false
-                    // initialize default publication
-                    DocPublication docPub = new DocPublication();
-                    docPub.Name = "Default";
-                    docPub.Documentation = "";
-                    this._Publications.Add(docPub);
-
-                    docPub.Annotations.Add(new DocAnnotation("Foreword"));
-                    docPub.Annotations.Add(new DocAnnotation("Introduction"));
-#endif
                 }
 
                 return this._Publications;
@@ -2510,6 +2504,59 @@ namespace IfcDoc.Schema.DOC
                 docSchema.Name = newname;
             }
         }
+
+
+        public void SortTerms()
+        {
+            SortedList<string, DocTerm> sortEntity = new SortedList<string, DocTerm>();
+
+            foreach (DocTerm docType in this.Terms)
+            {
+                sortEntity.Add(docType.Name, docType);
+            }
+
+            this.Terms.Clear();
+            this.Terms.AddRange(sortEntity.Values);
+        }
+
+        public void SortAbbreviations()
+        {
+            SortedList<string, DocAbbreviation> sortEntity = new SortedList<string, DocAbbreviation>();
+
+            foreach (DocAbbreviation docType in this.Abbreviations)
+            {
+                sortEntity.Add(docType.Name, docType);
+            }
+
+            this.Abbreviations.Clear();
+            this.Abbreviations.AddRange(sortEntity.Values);
+        }
+
+        public void SortNormativeReferences()
+        {
+            SortedList<string, DocReference> sortEntity = new SortedList<string, DocReference>();
+
+            foreach (DocReference docType in this.NormativeReferences)
+            {
+                sortEntity.Add(docType.Name, docType);
+            }
+
+            this.NormativeReferences.Clear();
+            this.NormativeReferences.AddRange(sortEntity.Values);
+        }
+
+        public void SortInformativeReferences()
+        {
+            SortedList<string, DocReference> sortEntity = new SortedList<string, DocReference>();
+
+            foreach (DocReference docType in this.InformativeReferences)
+            {
+                sortEntity.Add(docType.Name, docType);
+            }
+
+            this.InformativeReferences.Clear();
+            this.InformativeReferences.AddRange(sortEntity.Values);
+        }
     }
 
     /// <summary>
@@ -2531,6 +2578,22 @@ namespace IfcDoc.Schema.DOC
         [DataMember(Order = 11)] private bool _disabled;
 
         private bool? _validation; // unserialized; null: no applicable instances; false: one or more failures; true: all pass
+
+
+        public static readonly Guid guidTemplateQset = new Guid("6652398e-6579-4460-8cb4-26295acfacc7");
+        public static readonly Guid guidTemplatePsetObject = new Guid("f74255a6-0c0e-4f31-84ad-24981db62461");
+        public static readonly Guid guidTemplatePsetMaterial = new Guid("f3269e50-59bd-4660-a1df-68e93c8ba30f");
+        public static readonly Guid guidTemplatePsetProfile = new Guid("34ff8134-b8da-4670-9839-f24b362d6ecf");
+        public static readonly Guid guidTemplatePropertySingle = new Guid("6655f6d0-29a8-47b8-8f3d-c9fce9c9a620");
+        public static readonly Guid guidTemplatePropertyBounded = new Guid("3d67a2d2-761d-44d9-a09e-b7fbb1fa5632");
+        public static readonly Guid guidTemplatePropertyEnumerated = new Guid("c148a099-c351-43a8-9266-5f3de0b45a95");
+        public static readonly Guid guidTemplatePropertyList = new Guid("8e10b688-9179-4e3a-8db2-6abcaafe952d");
+        public static readonly Guid guidTemplatePropertyTable = new Guid("35c947b0-6abc-4b13-8ec7-696ef2041721");
+        public static readonly Guid guidTemplatePropertyReference = new Guid("e20bc116-889b-46cc-b193-31b3e2376a8e");
+        public static readonly Guid guidTemplateMapping = new Guid("daf77f62-7ec3-4ff1-bec2-b3175f51f14b");
+        public static readonly Guid guidPortNesting = new Guid("bafc93b7-d0e2-42d8-84cf-5da20ee1480a");
+
+
 
         // Note: for file compatibility, above fields must remain
 
@@ -2887,6 +2950,7 @@ namespace IfcDoc.Schema.DOC
                 docSub.Rename(docSchema, docDefinition, docAttribute, newname);
             }
         }
+
     }
 
     // this is kept as single structure (rather than on ConceptRoot) such that all formatting info can be easily accessed in one place, and not comingle usage of concepts
@@ -3034,6 +3098,31 @@ namespace IfcDoc.Schema.DOC
             return null;
         }
 
+
+        /// <summary>
+        /// Sorts concept root list according to alphabetical name
+        /// </summary>
+        public void SortConceptRoots()
+        {
+            SortedList<string, DocConceptRoot> sortEntity = new SortedList<string, DocConceptRoot>();
+
+            try
+            {
+                foreach (DocConceptRoot docType in this.ConceptRoots)
+                {
+                    sortEntity.Add(docType.ToString(), docType);
+                }
+            }
+            catch
+            {
+                // duplicates
+                return;
+            }
+
+            this.ConceptRoots.Clear();
+            this.ConceptRoots.AddRange(sortEntity.Values);
+        }
+
         /// <summary>
         /// Returns filter of objects within model view, caching as necessary
         /// </summary>
@@ -3160,14 +3249,27 @@ namespace IfcDoc.Schema.DOC
             base.Delete();
         }
 
+        /// <summary>
+        /// Returns display name that also captures definition if different.
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
+            string name = this.Name;
             if (this.ApplicableEntity != null)
             {
-                return this.ApplicableEntity.Name;
+                if ((String.IsNullOrEmpty(this.Name) || this.Name.Equals(this.ApplicableEntity.Name)))
+                {
+                    name = this.ApplicableEntity.Name;
+                }
+                else
+                {
+                    //  concept name differs
+                    name = this.Name + " [" + this.ApplicableEntity.Name + "]";
+                }
             }
 
-            return base.ToString();
+            return name;
         }
     }
 
@@ -8799,6 +8901,7 @@ namespace IfcDoc.Schema.DOC
         SCHEMA = 5,
         XSDFORMAT = 6, // New in IfcDoc V10.6
         XSDTAGLESS = 7, // New in IfcDoc V10.6
+        STATUS = 8, // New in IfcDoc V11.4
     }
 
     public class DocExample : DocVariableSet // inherited in 4.2 to contain ApplicableType (was DocObject)

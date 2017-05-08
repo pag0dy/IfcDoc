@@ -402,15 +402,6 @@ namespace IfcDoc
             this.toolStripButtonTemplateRemove.Enabled = (this.dataGridViewConceptRules.SelectedRows.Count == 1 && this.dataGridViewConceptRules.SelectedRows[0].Index < this.dataGridViewConceptRules.Rows.Count - 1);
             this.toolStripButtonMoveDown.Enabled = (this.dataGridViewConceptRules.SelectedRows.Count == 1 && this.dataGridViewConceptRules.SelectedRows[0].Index < this.dataGridViewConceptRules.Rows.Count - 2); // exclude New row
             this.toolStripButtonMoveUp.Enabled = (this.dataGridViewConceptRules.SelectedRows.Count == 1 && this.dataGridViewConceptRules.SelectedRows[0].Index > 0 && this.dataGridViewConceptRules.SelectedRows[0].Index < this.dataGridViewConceptRules.Rows.Count - 1);
-            this.toolStripButtonItemOptional.Enabled = (this.dataGridViewConceptRules.SelectedRows.Count == 1);
-            if (this.dataGridViewConceptRules.SelectedRows.Count > 0 && this.dataGridViewConceptRules.SelectedRows[0].Tag is DocTemplateItem)
-            {
-                this.toolStripButtonItemOptional.Checked = ((DocTemplateItem)this.dataGridViewConceptRules.SelectedRows[0].Tag).Optional;
-            }
-            else
-            {
-                this.toolStripButtonItemOptional.Checked = false;
-            }
         }
 
         private void dataGridViewConceptRules_UserAddedRow(object sender, DataGridViewRowEventArgs e)
@@ -649,6 +640,9 @@ namespace IfcDoc
             listItems.RemoveAt(index + 1);
 
             LoadUsage();
+
+            this.dataGridViewConceptRules.Rows[index - 1].Selected = true;
+
             this.m_editcon = false;
         }
 
@@ -773,22 +767,6 @@ namespace IfcDoc
                     this.LoadUsage();
                     this.LoadInheritance();
                 }
-            }
-        }
-
-        private void toolStripButtonItemOptional_Click(object sender, EventArgs e)
-        {
-            this.toolStripButtonItemOptional.Checked = !this.toolStripButtonItemOptional.Checked;
-
-            DataGridViewRow band = this.dataGridViewConceptRules.SelectedRows[0];
-            ((DocTemplateItem)band.Tag).Optional = this.toolStripButtonItemOptional.Checked;
-            if (this.toolStripButtonItemOptional.Checked)
-            {
-                band.DefaultCellStyle.ForeColor = Color.Gray;
-            }
-            else
-            {
-                band.DefaultCellStyle.ForeColor = Color.Black;
             }
         }
 

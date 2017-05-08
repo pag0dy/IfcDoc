@@ -1990,14 +1990,28 @@ namespace IfcDoc.Format.HTM
                 }
                 else if (chAnnex == 'E')
                 {
-                    // 1 level up
-                    this.WriteLine(
-                        "\r\n" +
-                        "<script type=\"text/javascript\">\r\n" +
-                        "<!--\r\n" +
-                        "    parent.index.location.replace(\"../toc-" + chAnnex.ToString().ToLower() + ".htm#" + iSchema.ToString() + "\");\r\n" +
-                        "//-->\r\n" +
-                        "</script>\r\n");
+                    if (iType > 0)
+                    {
+                        // 2 levels up (tables)
+                        this.WriteLine(
+                            "\r\n" +
+                            "<script type=\"text/javascript\">\r\n" +
+                            "<!--\r\n" +
+                            "    parent.index.location.replace(\"../../toc-" + chAnnex.ToString().ToLower() + ".htm#" + iSchema.ToString() + "\");\r\n" +
+                            "//-->\r\n" +
+                            "</script>\r\n");
+                    }
+                    else
+                    {
+                        // 1 level up
+                        this.WriteLine(
+                            "\r\n" +
+                            "<script type=\"text/javascript\">\r\n" +
+                            "<!--\r\n" +
+                            "    parent.index.location.replace(\"../toc-" + chAnnex.ToString().ToLower() + ".htm#" + iSchema.ToString() + "\");\r\n" +
+                            "//-->\r\n" +
+                            "</script>\r\n");
+                    }
                 }
                 else
                 {
@@ -2511,6 +2525,8 @@ namespace IfcDoc.Format.HTM
 
         internal void WriteLinkTo(string identifier, int levels)
         {
+            return; // ISO
+
             string up = "";
             for (int i = 0; i < levels; i++ )
             {
@@ -3230,9 +3246,15 @@ namespace IfcDoc.Format.HTM
                 }
             }
 
-            if (mapChange.Count > 0)
+            if (mapChange.Count > 0 || entity.IsDeprecated())
             {
                 this.WriteSummaryHeader("Change log", true, docPublication);
+
+                if (entity.IsDeprecated())
+                {
+                    //this.WriteLine("<blockquote class=\"deprecated\">DEPRECATED&nbsp; This definition may be imported, but shall not be exported by applications.</blockquote>");
+                    this.WriteLine("<table class=\"gridtable\"><tr><td style=\"background-color:red;\">DEPRECATED</td><td>This definition may be imported, but shall not be exported by applications.</td></tr></table>");
+                }
 
                 this.WriteLine("<table class=\"gridtable\">");
                 this.WriteLine("<tr>" +

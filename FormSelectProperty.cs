@@ -41,7 +41,6 @@ namespace IfcDoc
                 this.comboBoxPort.Items.Add("(object)");
                 this.comboBoxPort.SelectedIndex = 0;
 
-                Guid guidPortNesting = new Guid("bafc93b7-d0e2-42d8-84cf-5da20ee1480a");
                 foreach (DocModelView docView in docProject.ModelViews)
                 {
                     foreach (DocConceptRoot docRoot in docView.ConceptRoots)
@@ -50,12 +49,12 @@ namespace IfcDoc
                         {
                             foreach (DocTemplateUsage docConcept in docRoot.Concepts)
                             {
-                                if (docConcept.Definition != null && docConcept.Definition.Uuid == guidPortNesting)
+                                if (docConcept.Definition != null && docConcept.Definition.Uuid == DocTemplateDefinition.guidPortNesting)
                                 {
                                     foreach (DocTemplateItem docItem in docConcept.Items)
                                     {
                                         string name = docItem.GetParameterValue("Name");
-                                        if (!this.comboBoxPort.Items.Contains(name))
+                                        if (name != null && !this.comboBoxPort.Items.Contains(name))
                                         {
                                             this.comboBoxPort.Items.Add(name);
                                         }
@@ -113,6 +112,8 @@ namespace IfcDoc
                             TreeNode tnPset = new TreeNode();
                             tnPset.Tag = docPset;
                             tnPset.Text = docPset.Name;
+                            tnPset.ImageIndex = 0;
+                            tnPset.SelectedImageIndex = 0;
                             this.treeViewProperty.Nodes.Add(tnPset);
 
                             if (!this.treeViewProperty.CheckBoxes)
@@ -122,7 +123,16 @@ namespace IfcDoc
                                     TreeNode tnProp = new TreeNode();
                                     tnProp.Tag = docProp;
                                     tnProp.Text = docProp.Name;
+                                    tnProp.ImageIndex = 1;
+                                    tnProp.SelectedImageIndex = 1;
                                     tnPset.Nodes.Add(tnProp);
+
+                                    // also add min/max if bounded
+                                    if (docProp.PropertyType == DocPropertyTemplateTypeEnum.P_BOUNDEDVALUE)
+                                    {
+                                        tnProp.Nodes.Add(new TreeNode("UpperBoundValue", 1, 1));
+                                        tnProp.Nodes.Add(new TreeNode("LowerBoundValue", 1, 1));
+                                    }
                                 }
                             }
                         }
@@ -151,8 +161,14 @@ namespace IfcDoc
 
                 this.textBoxDescription.Text = docObj.Documentation;
             }
+            else if(this.treeViewProperty.SelectedNode.Parent != null && this.treeViewProperty.SelectedNode.Parent.Tag is DocProperty)
+            {
+                DocProperty docProp = (DocProperty)this.treeViewProperty.SelectedNode.Parent.Tag;
+                this.textBoxType.Text = docProp.PropertyType + ": " + docProp.PrimaryDataType + " / " + docProp.SecondaryDataType;
+                this.textBoxDescription.Text = docProp.Documentation;
+            }
 
-            this.buttonOK.Enabled = (this.treeViewProperty.CheckBoxes || (this.treeViewProperty.SelectedNode != null && this.treeViewProperty.SelectedNode.Tag is DocProperty));
+            this.buttonOK.Enabled = (this.treeViewProperty.CheckBoxes || this.SelectedProperty != null);
         }
 
         /// <summary>
@@ -166,6 +182,24 @@ namespace IfcDoc
             }
         }
 
+        /// <summary>
+        /// For bounded values: UpperBoundValue, LowerBoundValue, or null.
+        /// </summary>
+        public string SelectedQualifier
+        {
+            get    
+            {
+                if (this.treeViewProperty.SelectedNode != null && this.treeViewProperty.SelectedNode.Tag == null)
+                {
+                    return this.treeViewProperty.SelectedNode.Text;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+
         public DocProperty SelectedProperty
         {
             get
@@ -174,6 +208,12 @@ namespace IfcDoc
                 {
                     return (DocProperty)this.treeViewProperty.SelectedNode.Tag;
                 }
+                else if (this.treeViewProperty.SelectedNode != null && this.treeViewProperty.SelectedNode.Parent != null && 
+                    this.treeViewProperty.SelectedNode.Parent.Tag is DocProperty)
+                {
+                    return (DocProperty)this.treeViewProperty.SelectedNode.Parent.Tag;
+                }
+
 
                 return null;
             }
@@ -186,6 +226,10 @@ namespace IfcDoc
                 if(this.treeViewProperty.SelectedNode != null && this.treeViewProperty.SelectedNode.Tag is DocProperty)
                 {
                     return (DocPropertySet)this.treeViewProperty.SelectedNode.Parent.Tag;
+                }
+                else if (this.treeViewProperty.SelectedNode != null && this.treeViewProperty.SelectedNode.Parent != null && this.treeViewProperty.SelectedNode.Parent.Tag is DocProperty)
+                {
+                    return (DocPropertySet)this.treeViewProperty.SelectedNode.Parent.Parent.Tag;
                 }
 
                 return null;
