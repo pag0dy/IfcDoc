@@ -162,7 +162,7 @@ namespace IfcDoc
 
                     case 1:
                     case 2:
-                        DataDictionary.Upload(this.m_project, this.backgroundWorkerPublish, this.textBoxUrl.Text, this.m_username, this.m_password);
+                        //DataDictionary.Upload(this.m_project, this.backgroundWorkerPublish, this.textBoxUrl.Text, this.m_username, this.m_password);
                         break;
                 }
             }

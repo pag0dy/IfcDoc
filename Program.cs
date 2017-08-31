@@ -2455,7 +2455,7 @@ namespace IfcDoc
                 {
                     AttributeRule mvdAttr = new AttributeRule();
                     mvdTemplate.Rules.Add(mvdAttr);
-                    ExportMvdRule(mvdAttr, docRule);
+                    ExportMvdRule(mvdAttr, docRule, docTemplateDef);
                 }
             }
 
@@ -2480,7 +2480,7 @@ namespace IfcDoc
             }
         }
 
-        private static void ExportMvdRule(AttributeRule mvdRule, DocModelRule docRule)
+        private static void ExportMvdRule(AttributeRule mvdRule, DocModelRule docRule, DocTemplateDefinition docTemplate)
         {
             if (!String.IsNullOrEmpty(docRule.Identification))
             {
@@ -2520,9 +2520,9 @@ namespace IfcDoc
 
                             AttributeRule mvdRuleAttribute = new AttributeRule();
                             mvdRuleEntity.AttributeRules.Add(mvdRuleAttribute);
-                            ExportMvdRule(mvdRuleAttribute, docRuleAttribute);
+                            ExportMvdRule(mvdRuleAttribute, docRuleAttribute, docTemplate);
                         }
-                        else if (docRuleAttribute is DocModelRuleConstraint && !String.IsNullOrEmpty(docRuleAttribute.Description))
+                        else if (docRuleAttribute is DocModelRuleConstraint) //&& !String.IsNullOrEmpty(docRuleAttribute.Description))
                         {
                             DocModelRuleConstraint mrc = (DocModelRuleConstraint)docRuleAttribute;
 
@@ -2535,7 +2535,7 @@ namespace IfcDoc
                             mvdRuleEntity.Constraints.Add(mvdConstraint);
                             //mvdConstraint.Expression = mrc.FormatExpression();
 
-                            string expr = mrc.FormatExpression();
+                            string expr = mrc.FormatExpression(docTemplate);
                             // replace with attribute name
                             int bracket = expr.IndexOf('[');
                             if (bracket > 0)

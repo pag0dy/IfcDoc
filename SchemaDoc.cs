@@ -4091,12 +4091,12 @@ namespace IfcDoc.Schema.DOC
         /// Formats expression according to mvdXML syntax.
         /// </summary>
         /// <returns></returns>
-        public string FormatExpression()
+        public string FormatExpression(DocTemplateDefinition dtd)
         {
             if (this.Expression == null)
                 return null;
 
-            return this.Expression.ToString();
+            return this.Expression.ToString(dtd);
         }
     }    
 
@@ -4820,7 +4820,7 @@ namespace IfcDoc.Schema.DOC
             return null;
         }
 
-        public override string ToString(DocTemplateDefinition template)
+        public override string ToString()//(DocTemplateDefinition template)
         {
             if (this.ExpressionA == null || this.ExpressionB == null)
                 return String.Empty;
