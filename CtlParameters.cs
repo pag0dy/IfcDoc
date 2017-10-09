@@ -231,6 +231,10 @@ namespace IfcDoc
 
                 this.toolStripComboBoxOperator.SelectedIndex = (int)this.m_conceptleaf.Operator;
             }
+            else if(this.m_conceptroot != null)
+            {
+                this.toolStripComboBoxOperator.SelectedIndex = (int)this.m_conceptroot.ApplicableOperator;
+            }
             else
             {
                 this.toolStripSplitButtonInheritance.Visible = false;
@@ -381,8 +385,7 @@ namespace IfcDoc
 
                 int row = this.dataGridViewConceptRules.Rows.Add(values);
                 this.dataGridViewConceptRules.Rows[row].Tag = item;
-
-                //this.dataGridViewConceptRules.Rows[row].DefaultCellStyle.BackColor = item.GetColor();
+                this.dataGridViewConceptRules.Rows[row].DefaultCellStyle.BackColor = item.GetColor();
             }
 
             if (this.dataGridViewConceptRules.SelectedCells.Count > 0)
@@ -415,7 +418,9 @@ namespace IfcDoc
             {
                 this.m_conceptroot.ApplicableItems.Add(dti);
             }
-            e.Row.Tag = dti;
+
+            this.dataGridViewConceptRules.CurrentRow.Tag = dti;
+            //e.Row.Tag = dti;
         }
 
         private void dataGridViewConceptRules_UserDeletedRow(object sender, DataGridViewRowEventArgs e)
@@ -778,7 +783,14 @@ namespace IfcDoc
 
         private void toolStripComboBoxOperator_SelectedIndexChanged(object sender, EventArgs e)
         {
-            this.m_conceptleaf.Operator = (DocTemplateOperator)this.toolStripComboBoxOperator.SelectedIndex;
+            if (this.m_conceptleaf != null)
+            {
+                this.m_conceptleaf.Operator = (DocTemplateOperator)this.toolStripComboBoxOperator.SelectedIndex;
+            }
+            else if(this.m_conceptroot != null)
+            {
+                this.m_conceptroot.ApplicableOperator = (DocTemplateOperator)this.toolStripComboBoxOperator.SelectedIndex;
+            }
         }
 
         private void dataGridViewConceptRules_CurrentCellDirtyStateChanged(object sender, EventArgs e)

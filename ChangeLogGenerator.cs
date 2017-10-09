@@ -193,11 +193,7 @@ namespace IfcDoc
                             {
                                 // existing type
 
-                                if (docType.Status != docTypeBase.Status)
-                                {
-                                    docChangeType.Action = DocChangeActionEnum.MODIFIED;
-                                    docChangeType.Aspects.Add(new DocChangeAspect(DocChangeAspectEnum.STATUS, docType.Status, docTypeBase.Status));
-                                }
+                                CheckObjectChanges(docChangeType, docTypeBase, docType);
 
                                 // if enumeration, check enums
                                 if (docType is DocEnumeration)
@@ -387,11 +383,7 @@ namespace IfcDoc
                                     }
                                 }
 
-                                if(docEntity.Status != docEntityBase.Status)
-                                {
-                                    docChangeEntity.Action = DocChangeActionEnum.MODIFIED;
-                                    docChangeEntity.Aspects.Add(new DocChangeAspect(DocChangeAspectEnum.STATUS, docEntityBase.Status, docEntity.Status));
-                                }
+                                CheckObjectChanges(docChangeEntity, docEntityBase, docEntity);
 
                                 // compare attributes by index
 
@@ -430,11 +422,7 @@ namespace IfcDoc
                                                 docChangeAttribute.ImpactXML = true; // no impact to SPF though
                                             }
 
-                                            if (docAttribute.Status != docAttributeBase.Status)
-                                            {
-                                                docChangeAttribute.Action = DocChangeActionEnum.MODIFIED;
-                                                docChangeAttribute.Aspects.Add(new DocChangeAspect(DocChangeAspectEnum.STATUS, docAttributeBase.Status, docAttribute.Status));
-                                            }
+                                            CheckObjectChanges(docChangeAttribute, docAttributeBase, docAttribute);
 
                                             if (!docAttribute.DefinedType.Equals(docAttributeBase.DefinedType))
                                             {
@@ -1355,6 +1343,146 @@ namespace IfcDoc
             }
 
 
+            // check changes for model views
+            foreach (DocModelView docView in docProject.ModelViews)
+            {
+                DocChangeAction docChangeView = new DocChangeAction();
+                docChangeView.Name = docView.Name;
+                docChangeSet.ChangesViews.Add(docChangeView);
+
+                // find equivalent schema
+                DocModelView docViewBase = null;
+                foreach (DocModelView docViewEach in projectPrev.ModelViews)
+                {
+                    if (docViewEach.Name.Equals(docView.Name))
+                    {
+                        docViewBase = docViewEach;
+                        break;
+                    }
+                }
+
+                if (docViewBase == null)
+                {
+                    // new schema
+                    docChangeView.Action = DocChangeActionEnum.ADDED;
+                }
+                else
+                {
+                    // existing schema
+
+
+                    // compare types
+                    foreach (DocConceptRoot docType in docView.ConceptRoots)
+                    {
+                        if (docType.ApplicableEntity != null)
+                        {
+                            DocChangeAction docChangeType = new DocChangeAction();
+                            docChangeView.Changes.Add(docChangeType);
+                            docChangeType.Name = docType.ApplicableEntity.Name;
+
+                            // find equivalent type
+                            DocConceptRoot docTypeBase = null;
+                            foreach (DocConceptRoot docTypeEach in docViewBase.ConceptRoots)
+                            {
+                                if (docTypeEach.ApplicableEntity != null &&
+                                    docTypeEach.ApplicableEntity.Name.Equals(docType.ApplicableEntity.Name))
+                                {
+                                    docTypeBase = docTypeEach;
+                                    break;
+                                }
+                            }
+
+                            if (docTypeBase == null)
+                            {
+                                // new type
+                                docChangeType.Action = DocChangeActionEnum.ADDED;
+                            }
+
+                            if (docTypeBase != null)
+                            {
+                                // find concepts added
+                                foreach (DocTemplateUsage docConstant in docType.Concepts)
+                                {
+                                    // find equivalent constant
+                                    DocTemplateUsage docConstantBase = null;
+                                    foreach (DocTemplateUsage docConstantEach in docTypeBase.Concepts)
+                                    {
+                                        if (docConstant.Definition != null &&
+                                            docConstantEach.Definition != null &&
+                                            docConstantEach.Definition.Uuid.Equals(docConstant.Definition.Uuid))
+                                        {
+                                            docConstantBase = docConstantEach;
+                                            break;
+                                        }
+                                    }
+
+                                    // for constants, only generate additions or deletions for brevity
+                                    if (docConstantBase == null)
+                                    {
+                                        // new entity
+                                        DocChangeAction docChangeConstant = new DocChangeAction();
+                                        docChangeType.Changes.Add(docChangeConstant);
+                                        docChangeConstant.Name = docConstant.Definition.Name;
+                                        docChangeConstant.Action = DocChangeActionEnum.ADDED;
+                                    }
+                                }
+
+                                // find constants removed
+                                foreach (DocTemplateUsage docConstantBase in docTypeBase.Concepts)
+                                {
+                                    // find equivalent constant
+                                    DocTemplateUsage docConstant = null;
+                                    foreach (DocTemplateUsage docConstantEach in docType.Concepts)
+                                    {
+                                        if (docConstantBase.Definition != null &&
+                                            docConstantEach.Definition != null &&
+                                            docConstantEach.Definition.Name.Equals(docConstantBase.Definition.Name))
+                                        {
+                                            docConstant = docConstantEach;
+                                            break;
+                                        }
+                                    }
+
+                                    // for constants, only generate additions or deletions for brevity
+                                    if (docConstant == null)
+                                    {
+                                        // deleted
+                                        DocChangeAction docChangeConstant = new DocChangeAction();
+                                        docChangeType.Changes.Add(docChangeConstant);
+                                        docChangeConstant.Name = docConstantBase.Definition.Name;
+                                        docChangeConstant.Action = DocChangeActionEnum.DELETED;
+                                    }
+                                }
+
+                            }
+
+                        }
+                    }
+
+                }
+            }
+        
+
+        }
+
+        private static void CheckObjectChanges(DocChangeAction docChangeType, DocObject source, DocObject target)
+        {
+            bool depSource = source.IsDeprecated();
+            bool depTarget = target.IsDeprecated();
+
+            // only check for deprecation
+            if (depSource != depTarget)
+            {
+                docChangeType.Action = DocChangeActionEnum.MODIFIED;
+                if (depTarget)
+                {
+                    docChangeType.Aspects.Add(new DocChangeAspect(DocChangeAspectEnum.STATUS, String.Empty, target.Status));
+                }
+                else
+                {
+                    docChangeType.Aspects.Add(new DocChangeAspect(DocChangeAspectEnum.STATUS, source.Status, String.Empty));
+                }
+            }
         }
 
         /// <summary>

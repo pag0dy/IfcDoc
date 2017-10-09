@@ -327,7 +327,7 @@ namespace IfcDoc
             return sb.ToString();
         }
 
-        public string FormatEnumeration(DocEnumeration docEnumeration)
+        public string FormatEnumeration(DocEnumeration docEnumeration, Dictionary<string, DocObject> map, Dictionary<DocObject, bool> included)
         {
             return FormatEnumerationFull(docEnumeration, false);
         }
@@ -577,7 +577,7 @@ namespace IfcDoc
             return output;
         }
 
-        public string FormatDefined(DocDefined docDefined)
+        public string FormatDefined(DocDefined docDefined, Dictionary<string, DocObject> map, Dictionary<DocObject, bool> included)
         {
             return FormatDefinedFull(docDefined, false);
         }

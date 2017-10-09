@@ -9,6 +9,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Reflection;
 using System.Reflection.Emit;
 using System.Runtime.Serialization;
@@ -640,6 +641,7 @@ namespace IfcDoc.Schema.DOC
         [DataMember(Order = 9)] private bool _Comparison; // IfcDoc 9.9: compare mappings between tabular exchanges, e.g. GSA
         [DataMember(Order = 10)] private bool _Exchanges; // IfcDoc 9.9: show exchange tables
         [DataMember(Order = 11)] private bool _HtmlExamples; // IfcDoc 10.7: include examples with HTML markup
+        [DataMember(Order = 12)] private bool _ReportIssues; // IfcDoc 11.5: link to Jira database specific to each page
 
         // unserialized
         private List<string> m_errorlog; // list of filenames missing for images
@@ -802,6 +804,18 @@ namespace IfcDoc.Schema.DOC
             }
         }
 
+        public bool ReportIssues
+        {
+            get
+            {
+                return this._ReportIssues;
+            }
+            set
+            {
+                this._ReportIssues = value;
+            }
+        }
+
         public List<DocChangeSet> ChangeSets
         {
             get
@@ -870,8 +884,9 @@ namespace IfcDoc.Schema.DOC
         [DataMember(Order = 7)] private List<DocReference> _InformativeReferences; // new in 4.3
         [DataMember(Order = 8)] private List<DocTerm> _Terms; // new in 4.3
         [DataMember(Order = 9)] private List<DocAbbreviation> _Abbreviations; // new in 4.3
-        [DataMember(Order = 10)] private List<DocAnnotation> _Annotations; // new in 8.7: Cover | Foreword | Introduction
+        [DataMember(Order = 10)] private List<DocAnnotation> _Annotations; // new in 8.7: Cover | Foreword | Introduction; Deprecated in 9.6
         [DataMember(Order = 11)] private List<DocPublication> _Publications; // new in 9.6
+        //...[DataMember(Order = 12)] private List<DocSchema> _Diagrams; // new in 11.6
 
         public DocProject()
         {
@@ -913,7 +928,7 @@ namespace IfcDoc.Schema.DOC
             }
 
             string draft = "";
-            if (docPub.Status != "Final")
+            if (docPub != null && docPub.Status != "Final")
             {
                 draft = "review/";
             }
@@ -1367,6 +1382,9 @@ namespace IfcDoc.Schema.DOC
         /// <returns></returns>
         public DocModelView[] GetViewInheritance(DocModelView docModelView)
         {
+            if (docModelView == null)
+                return null;
+
             // build list of inherited views
             List<DocModelView> inheritviews = new List<DocModelView>();
             inheritviews.Add(docModelView);
@@ -1873,6 +1891,12 @@ namespace IfcDoc.Schema.DOC
                 included[docExample] = true;
             }
 
+            // register example if referenced from any sub-views
+            foreach (DocModelView docSub in docView.ModelViews)
+            {
+                RegisterExample(docSub, included, docExample);
+            }
+
             foreach(DocExample docSub in docExample.Examples)
             {
                 RegisterExample(docView, included, docSub);
@@ -2173,25 +2197,25 @@ namespace IfcDoc.Schema.DOC
                 }
             }
 
-            // for now, also include all functions and rules -- FUTURE: traverse expression to determine what is referenced
+            // for now, also include rules
             foreach(DocSection docSection in this.Sections)
             {
                 foreach(DocSchema docSchema in docSection.Schemas)
                 {
                     if (included.ContainsKey(docSchema))
                     {
-#if false
-                        foreach (DocFunction docFunction in docSchema.Functions)
-                        {
-                            included[docFunction] = true;
-                        }
-#endif
                         foreach (DocGlobalRule docRule in docSchema.GlobalRules)
                         {
                             included[docRule] = true;
                         }
                     }
                 }
+            }
+
+            // register sub-views
+            foreach(DocModelView docSub in docView.ModelViews)
+            {
+                RegisterObjectsInScope(docSub, included);
             }
         }
 
@@ -2556,6 +2580,54 @@ namespace IfcDoc.Schema.DOC
 
             this.InformativeReferences.Clear();
             this.InformativeReferences.AddRange(sortEntity.Values);
+        }
+
+        internal void UpgradeExample(DocExample docExample, Dictionary<DocEntity, DocEntity> migration)
+        {
+            // load example
+
+            if (docExample.File != null)
+            {
+                string source = Encoding.ASCII.GetString(docExample.File);
+                string target = source;
+
+                foreach (DocEntity docSource in migration.Keys)
+                {
+                    DocEntity docTarget = migration[docSource];
+
+                    target = target.Replace(docSource.Name.ToUpper(), docTarget.Name.ToUpper()); // brute force -- this could also falsely impact descriptions (not just definitions), but pragmatic for now, and we want to preserve comments and layout of data the same
+                }
+
+                if (String.Compare(source, target) != 0)
+                {
+                    docExample.File = Encoding.ASCII.GetBytes(target);
+                }
+            }
+
+            // recurse
+            foreach(DocExample sub in docExample.Examples)
+            {
+                UpgradeExample(sub, migration);
+            }
+        }
+
+        public DocSchema GetSchema(string schema)
+        {
+            if (schema == null)
+                return null;
+
+            foreach(DocSection docSection in this.Sections)
+            {
+                foreach(DocSchema docSchema in docSection.Schemas)
+                {
+                    if (docSchema.Name != null && docSchema.Name.Equals(schema, StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        return docSchema;
+                    }
+                }
+            }
+
+            return null;
         }
     }
 
@@ -2968,6 +3040,38 @@ namespace IfcDoc.Schema.DOC
     // custom field types may be IFC Types (defined types, enumerations) to indicate that a *value* should be specified of the particular type.
     // custom field types may be IFC Entities (e.g. IfcElement) to indicate that an entity *type* should be specified deriving from the particular type.    
 
+    public class DocProcess : DocObject
+    {
+        [DataMember(Order = 0)] public List<DocExchangeItem> _Inputs;
+        [DataMember(Order = 1)] public List<DocExchangeItem> _Outputs;
+
+        public List<DocExchangeItem> Inputs
+        {
+            get
+            {
+                if(this._Inputs == null)
+                {
+                    this._Inputs = new List<DocExchangeItem>();
+                }
+
+                return this._Inputs;
+            }
+        }
+
+        public List<DocExchangeItem> Outputs
+        {
+            get
+            {
+                if (this._Outputs == null)
+                {
+                    this._Outputs = new List<DocExchangeItem>();
+                }
+
+                return this._Outputs;
+            }
+        }
+    }
+
     // new in IfcDoc 2.7
     public class DocModelView : DocObject
     {
@@ -2979,6 +3083,8 @@ namespace IfcDoc.Schema.DOC
         [DataMember(Order = 5)] bool _IncludeAllDefinitions; // new in 8.9: if true, then don't filter out unreferenced entities/attributes
         [DataMember(Order = 6)] string _RootEntity; // new in 8.9: indicates root entity of schema, as shown in inheritance diagram
         [DataMember(Order = 7)] public byte[] _Icon; // embedded PNG file of 16x16 icon // added in IfcDoc 9.6
+        [DataMember(Order = 9)] List<DocProcess> _Processes; // new in V11.5
+        [DataMember(Order = 10)] List<DocModelView> _ModelViews; // new in V11.6 -- organize sub-views
 
         private Dictionary<DocObject, bool> m_filtercache; // for performance, remember items within scope of model view; built on demand, cleared whenever there's a change that could impact
 
@@ -2987,6 +3093,19 @@ namespace IfcDoc.Schema.DOC
             this._Exchanges = new List<DocExchangeDefinition>();
             this._ConceptRoots = new List<DocConceptRoot>();
             this._XsdFormats = new List<DocXsdFormat>();
+        }
+
+        public List<DocModelView> ModelViews
+        {
+            get
+            {
+                if(this._ModelViews == null)
+                {
+                    this._ModelViews = new List<DocModelView>();
+                }
+
+                return this._ModelViews;
+            }
         }
 
         public List<DocExchangeDefinition> Exchanges
@@ -3079,6 +3198,19 @@ namespace IfcDoc.Schema.DOC
             set
             {
                 this._Icon = value;
+            }
+        }
+        
+        public List<DocProcess> Processes
+        {
+            get
+            {
+                if(this._Processes == null)
+                {
+                    this._Processes = new List<DocProcess>();
+                }
+
+                return this._Processes;
             }
         }
 
@@ -3684,9 +3816,21 @@ namespace IfcDoc.Schema.DOC
                         {
                             return true;
                         }
-                        else if (match != null && value.GetType().Name.Equals(match))
+                        else if (match != null)// && value.GetType().Name.Equals(match))
                         {
-                            //return true;
+                            // check for type inheritance -- support example filtering such as for COBie instances using ConceptRoot class filtering
+                            Type tcheck = null;
+                            if (typemap.TryGetValue(match.ToUpper(), out tcheck) && tcheck.IsInstanceOfType(value))
+                            {
+                                return true;
+                            }
+                            else
+                            {
+                                return false;
+                            }
+
+                            // this was commented out before; added the above
+                            ////return true;
                         }
                         else
                         {
@@ -3805,8 +3949,6 @@ namespace IfcDoc.Schema.DOC
 
             // (2) extract the value
             object value = fieldinfo.GetValue(target); // may be null
-            //if (value == null)
-            //    return null; // nothing there to check; V9.5
 
             if (docItem != null && value == null)
                 return false; // structure required to exist
@@ -3969,7 +4111,7 @@ namespace IfcDoc.Schema.DOC
 
             // checking for matching cast
             Type t = null;
-            if (!typemap.TryGetValue(this.Name.ToUpper(), out t))
+            if (typemap == null || !typemap.TryGetValue(this.Name.ToUpper(), out t))
                 return false;
 
             if (target == null)
@@ -5859,10 +6001,10 @@ namespace IfcDoc.Schema.DOC
         [DataMember(Order = 2)] private bool _Reference; // IfcDoc 11.2 (changed from obsolete string): item is constrained by referenced objects or value list
         [DataMember(Order = 3)] private bool _Key; // IfcDoc 11.2 (changed from obsolete string): item is used as primary key
         [DataMember(Order = 4)] private bool _System; // IfcDoc 11.2 (changed from obsolete string): item is managed by system - should not be touched by user
-
-        // new in 2.5
-        [DataMember(Order = 5)] private string _RuleInstanceID; // id of the entity rule to instantiate for each item
-        [DataMember(Order = 6)] private string _RuleParameters; // parameters and constraints to substitute into the rule
+        [DataMember(Order = 5)] private string _RuleInstanceID; // IfcDoc 2.5: id of the entity rule to instantiate for each item
+        [DataMember(Order = 6)] private string _RuleParameters; // IfcDoc 2.5: parameters and constraints to substitute into the rule
+        [DataMember(Order = 7)] private int _Order; // IfcDoc 11.6
+        [DataMember(Order = 8)] private List<DocExchangeItem> _Exchanges; // IfcDoc 11.6: override requirements for individual item
 
         // new in 8.5
         private Dictionary<object, bool> _validateStructure; // 
@@ -5926,6 +6068,31 @@ namespace IfcDoc.Schema.DOC
             set
             {
                 this._System = value;
+            }
+        }
+
+        public int Order
+        {
+            get
+            {
+                return this._Order;
+            }
+            set
+            {
+                this._Order = value;
+            }
+        }
+
+        public List<DocExchangeItem> Exchanges
+        {
+            get
+            {
+                if(this._Exchanges == null)
+                {
+                    this._Exchanges = new List<DocExchangeItem>();
+                }
+
+                return this._Exchanges;
             }
         }
 
@@ -6528,12 +6695,60 @@ namespace IfcDoc.Schema.DOC
     }
 
     /// <summary>
+    /// Reference to an attribute on a referenced definition -- used for UML diagrams
+    /// </summary>
+    public class DocAttributeRef : DocObject // new in IfcDoc V11.6
+    {
+        [DataMember(Order = 0)] private DocAttribute _Attribute; // originating attribute
+        [DataMember(Order = 1)] private DocDefinitionRef _DefinitionRef; // target definition reference
+        [DataMember(Order = 2)] private List<DocPoint> _DiagramLine; // line connecting target definition reference
+
+        public DocAttribute Attribute
+        {
+            get
+            {
+                return this._Attribute;
+            }
+            set
+            {
+                this._Attribute = value;
+            }
+        }
+
+        public DocDefinitionRef DefinitionRef
+        {
+            get
+            {
+                return this._DefinitionRef;
+            }
+            set
+            {
+                this._DefinitionRef = value;
+            }
+        }
+
+        public List<DocPoint> DiagramLine
+        {
+            get
+            {
+                if (this._DiagramLine == null)
+                {
+                    this._DiagramLine = new List<DocPoint>();
+                }
+
+                return this._DiagramLine;
+            }
+        }
+    }
+
+    /// <summary>
     /// Reference to a definition within another schema.
     /// </summary>
     public class DocDefinitionRef : DocDefinition, // new in v4.9
         IDocTreeHost
     {
-        [DataMember(Order = 0)] private List<DocLine> _Tree; // new in 5.8 
+        [DataMember(Order = 0)] private List<DocLine> _Tree; // new in 5.8 -- tree for subclasses
+        [DataMember(Order = 1)] private List<DocAttributeRef> _AttributeRefs; // new in V11.6: attribute on referenced entity
 
         public List<DocLine> Tree
         {
@@ -6545,6 +6760,19 @@ namespace IfcDoc.Schema.DOC
                 }
 
                 return this._Tree;
+            }
+        }
+
+        public List<DocAttributeRef> AttributeRefs
+        {
+            get
+            {
+                if (this._AttributeRefs == null)
+                {
+                    this._AttributeRefs = new List<DocAttributeRef>();
+                }
+
+                return this._AttributeRefs;
             }
         }
     }
@@ -8447,6 +8675,10 @@ namespace IfcDoc.Schema.DOC
                 case DocPropertyTemplateTypeEnum.P_REFERENCEVALUE:
                     propclass = "IfcPropertyReferenceValue";
                     break;
+
+                case DocPropertyTemplateTypeEnum.COMPLEX:
+                    propclass = "IfcComplexProperty";
+                    break;
             }
 
             return propclass;
@@ -8598,12 +8830,14 @@ namespace IfcDoc.Schema.DOC
         [DataMember(Order = 2)] private string _VersionBaseline; // identifer of the baseline (takes on file name of compared ifcdoc file)
         [DataMember(Order = 3)] private List<DocChangeAction> _ChangesProperties; // IFCDOC v5.2
         [DataMember(Order = 4)] private List<DocChangeAction> _ChangesQuantities; // IFCDOC v5.2
+        [DataMember(Order = 5)] private List<DocChangeAction> _ChangesViews; // IFCDOC V11.5
 
         public DocChangeSet()
         {
             this._ChangesEntities = new List<DocChangeAction>();
             this._ChangesProperties = new List<DocChangeAction>();
             this._ChangesQuantities = new List<DocChangeAction>();
+            this._ChangesViews = new List<DocChangeAction>();
         }
 
         public List<DocChangeAction> ChangesEntities
@@ -8659,7 +8893,21 @@ namespace IfcDoc.Schema.DOC
                 {
                     this._ChangesQuantities = new List<DocChangeAction>();
                 }
+
                 return this._ChangesQuantities;
+            }
+        }
+
+        public List<DocChangeAction> ChangesViews
+        {
+            get
+            {
+                if (this._ChangesViews == null)
+                {
+                    this._ChangesViews = new List<DocChangeAction>();
+                }
+
+                return this._ChangesViews;
             }
         }
 
@@ -8676,6 +8924,11 @@ namespace IfcDoc.Schema.DOC
             }
 
             foreach(DocChangeAction docChange in this.ChangesQuantities)
+            {
+                docChange.Delete();
+            }
+
+            foreach(DocChangeAction docChange in this.ChangesViews)
             {
                 docChange.Delete();
             }
@@ -9096,21 +9349,23 @@ namespace IfcDoc.Schema.DOC
     /// </summary>
     interface IFormatData
     {
+
         /// <summary>
         /// Formats instance data for a data population.
         /// </summary>
+        /// <param name="stream">Stream to write</param> // TWC: changed to stream to support large files that exceed .NET memory allocation limit (2 GB)
         /// <param name="docPublication">The publication, which determines applicable model view(s).</param>
         /// <param name="map">Maps object type names to backing schema definitions.</param>
         /// <param name="instance">The root object instance (IfcProject).</param>
         /// <param name="markup">If true, generate HTML markup with output</param>
         /// <returns></returns>
-        string FormatData(DocProject docProject, DocPublication docPublication, DocExchangeDefinition docExchange, Dictionary<string, DocObject> map, Dictionary<long, SEntity> instances, SEntity root, bool markup);
+        void FormatData(Stream stream, DocProject docProject, DocPublication docPublication, DocExchangeDefinition docExchange, Dictionary<string, DocObject> map, Dictionary<string, Type> typemap, Dictionary<long, SEntity> instances, SEntity root, bool markup);
     }
 
     /// <summary>
     /// Formats schema information
     /// </summary>
-    interface IFormatExtension
+    public interface IFormatExtension
     {
         /// <summary>
         /// Formats an entity data type.
@@ -9124,7 +9379,7 @@ namespace IfcDoc.Schema.DOC
         /// </summary>
         /// <param name="docEnumeration"></param>
         /// <returns></returns>
-        string FormatEnumeration(DocEnumeration docEnumeration);
+        string FormatEnumeration(DocEnumeration docEnumeration, Dictionary<string, DocObject> map, Dictionary<DocObject, bool> included);
 
         /// <summary>
         /// Formats a select data type
@@ -9138,7 +9393,7 @@ namespace IfcDoc.Schema.DOC
         /// </summary>
         /// <param name="docDefined"></param>
         /// <returns></returns>
-        string FormatDefined(DocDefined docDefined);
+        string FormatDefined(DocDefined docDefined, Dictionary<string, DocObject> map, Dictionary<DocObject, bool> included);
 
         /// <summary>
         /// Formats all schema definitions within project

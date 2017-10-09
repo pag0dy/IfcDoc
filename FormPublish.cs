@@ -162,7 +162,14 @@ namespace IfcDoc
 
                     case 1:
                     case 2:
-                        DataDictionary.Upload(this.m_project, this.backgroundWorkerPublish, this.textBoxUrl.Text, this.m_username, this.m_password);
+                        if (this.m_download)
+                        {
+                            DataDictionary.Download(this.m_project, this.backgroundWorkerPublish, this.textBoxUrl.Text, this.m_username, this.m_password);
+
+                        }
+                        else
+                        {
+                        }
                         break;
                 }
             }
@@ -214,7 +221,7 @@ namespace IfcDoc
 
         private void FormPublish_Load(object sender, EventArgs e)
         {
-            this.comboBoxProtocol.SelectedIndex = 1;
+            this.comboBoxProtocol.SelectedIndex = 2;
         }
     }
 }

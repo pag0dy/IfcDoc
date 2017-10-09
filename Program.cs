@@ -1562,7 +1562,107 @@ namespace IfcDoc
 
         }
 
-        public static void ImportPsdPropertyTemplate(PropertyDef def, DocProperty docprop)
+        public static DocPropertySet ImportPsd(PropertySetDef psd, DocProject docProject)
+        {
+            DocSchema docSchema = null;
+            string schema = null;
+            if (psd.Versions != null && psd.Versions.Count > 0)
+            {
+                schema = psd.Versions[0].schema;
+                docSchema = docProject.GetSchema(schema);
+            }
+
+            if (String.IsNullOrEmpty(schema))
+            {
+                // guess the schema according to applicable type value
+                if (psd.ApplicableTypeValue != null)
+                {
+                    string[] parts = psd.ApplicableTypeValue.Split(new char[] { '/', '[' });
+                    string ent = parts[0];
+                    DocEntity docEntity = docProject.GetDefinition(ent) as DocEntity;
+                    if (docEntity != null)
+                    {
+                        docSchema = docProject.GetSchemaOfDefinition(docEntity);
+                        schema = docSchema.Name;
+                    }
+                }
+            }
+
+            if (schema == null)
+            {
+                schema = "IfcKernel";//fallback
+                docSchema = docProject.GetSchema(schema);
+
+                if(docSchema == null)
+                {
+                    // create default schema
+                    docSchema = new DocSchema();
+                    docSchema.Name = schema;
+                    docProject.Sections[4].Schemas.Add(docSchema);
+                }
+            }
+
+            // find existing pset if applicable
+            DocPropertySet pset = docSchema.RegisterPset(psd.Name);
+
+            // use hashed guid
+            if (pset.Uuid == Guid.Empty)
+            {
+                System.Security.Cryptography.MD5 md5 = System.Security.Cryptography.MD5.Create();
+                byte[] hash = md5.ComputeHash(Encoding.Default.GetBytes(pset.Name));
+                pset.Uuid = new Guid(hash);
+            }
+
+            pset.Name = psd.Name;
+            if (psd.Definition != null)
+            {
+                pset.Documentation = psd.Definition.Trim();
+            }
+            if (psd.ApplicableTypeValue != null)
+            {
+                pset.ApplicableType = psd.ApplicableTypeValue.Replace("Type", "").Replace("[PerformanceHistory]", ""); // organize at occurrences; use pset type to determine type applicability
+            }
+
+            // for now, rely on naming convention (better to capture in pset schema eventually)
+            if (psd.Name.Contains("PHistory")) // special naming convention
+            {
+                pset.PropertySetType = "PSET_PERFORMANCEDRIVEN";
+            }
+            else if (psd.Name.Contains("Occurrence"))
+            {
+                pset.PropertySetType = "PSET_OCCURRENCEDRIVEN";
+            }
+            else
+            {
+                pset.PropertySetType = "PSET_TYPEDRIVENOVERRIDE";
+            }
+
+            // import localized definitions
+            if (psd.PsetDefinitionAliases != null)
+            {
+                foreach (PsetDefinitionAlias pl in psd.PsetDefinitionAliases)
+                {
+                    pset.RegisterLocalization(pl.lang, null, pl.Value);
+                }
+            }
+
+            foreach (PropertyDef subdef in psd.PropertyDefs)
+            {
+                DocProperty docprop = pset.RegisterProperty(subdef.Name);
+                Program.ImportPsdPropertyTemplate(subdef, docprop, docProject, docSchema);
+            }
+
+            return pset;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="def">The PSD property definition to import.</param>
+        /// <param name="docprop">Property to fill</param>
+        /// <param name="docProject">Project, if needed to retrieve or create enumeration</param>
+        /// <param name="docSchema">Schema, if needed to create enumeration</param>
+        public static void ImportPsdPropertyTemplate(PropertyDef def, DocProperty docprop, DocProject docProject, DocSchema docSchema)
         {
             DocPropertyTemplateTypeEnum proptype = DocPropertyTemplateTypeEnum.P_SINGLEVALUE;
             string datatype = String.Empty;
@@ -1572,16 +1672,30 @@ namespace IfcDoc
             {
                 proptype = DocPropertyTemplateTypeEnum.P_ENUMERATEDVALUE;
                 datatype = "IfcLabel";
-                StringBuilder sbEnum = new StringBuilder();
-                sbEnum.Append(def.PropertyType.TypePropertyEnumeratedValue.EnumList.name);
-                sbEnum.Append(":");
-                foreach (EnumItem item in def.PropertyType.TypePropertyEnumeratedValue.EnumList.Items)
+                //StringBuilder sbEnum = new StringBuilder();
+                //sbEnum.Append(def.PropertyType.TypePropertyEnumeratedValue.EnumList.name);
+                //sbEnum.Append(":");
+
+                DocSchema docEnumSchema = null;
+                DocPropertyEnumeration docEnum = docProject.FindPropertyEnumeration(def.PropertyType.TypePropertyEnumeratedValue.EnumList.name, out docEnumSchema);
+                if (docEnum == null)
                 {
-                    sbEnum.Append(item.Value);
-                    sbEnum.Append(",");
+                    docEnum = new DocPropertyEnumeration();
+                    docEnum.Name = def.PropertyType.TypePropertyEnumeratedValue.EnumList.name;
+                    docSchema.PropertyEnums.Add(docEnum);
+
+                    foreach (EnumItem item in def.PropertyType.TypePropertyEnumeratedValue.EnumList.Items)
+                    {
+                        DocPropertyConstant docConstant = new DocPropertyConstant();
+                        docConstant.Name = item.Value;
+                        docEnum.Constants.Add(docConstant);
+
+                        //sbEnum.Append(item.Value);
+                        //sbEnum.Append(",");
+                    }
                 }
-                sbEnum.Length--; // remove trailing ','
-                elemtype = sbEnum.ToString();
+                //sbEnum.Length--; // remove trailing ','
+                //elemtype = sbEnum.ToString();
             }
             else if (def.PropertyType.TypePropertyReferenceValue != null)
             {
@@ -1605,8 +1719,14 @@ namespace IfcDoc
             else if (def.PropertyType.TypePropertyTableValue != null)
             {
                 proptype = DocPropertyTemplateTypeEnum.P_TABLEVALUE;
-                datatype = def.PropertyType.TypePropertyTableValue.DefiningValue.DataType.type;
-                elemtype = def.PropertyType.TypePropertyTableValue.DefinedValue.DataType.type;
+                if (def.PropertyType.TypePropertyTableValue.DefiningValue != null)
+                {
+                    datatype = def.PropertyType.TypePropertyTableValue.DefiningValue.DataType.type;
+                }
+                if (def.PropertyType.TypePropertyTableValue.DefinedValue != null)
+                {
+                    elemtype = def.PropertyType.TypePropertyTableValue.DefinedValue.DataType.type;
+                }
             }
             else if (def.PropertyType.TypePropertySingleValue != null)
             {
@@ -1659,7 +1779,7 @@ namespace IfcDoc
                 foreach (PropertyDef subdef in def.PropertyType.TypeComplexProperty.PropertyDefs)
                 {
                     DocProperty subprop = docprop.RegisterProperty(subdef.Name);
-                    ImportPsdPropertyTemplate(subdef, subprop);
+                    ImportPsdPropertyTemplate(subdef, subprop, docProject, docSchema);
                 }
             }
         }
@@ -1801,87 +1921,144 @@ namespace IfcDoc
                         docProject.ModelViews.Add(docView);
                     }
 
-                    ImportMvdObject(mvdView, docView);
+                    ImportMvdView(mvdView, docView, docProject, filepath);
+                }
+            }
+        }
 
-                    docView.BaseView = mvdView.BaseView;
-                    docView.Exchanges.Clear();
-                    Dictionary<Guid, ExchangeRequirement> mapExchange = new Dictionary<Guid, ExchangeRequirement>();
-                    foreach (ExchangeRequirement mvdExchange in mvdView.ExchangeRequirements)
+        private static void ImportMvdView(ModelView mvdView, DocModelView docView, DocProject docProject, string filepath)
+        {
+            ImportMvdObject(mvdView, docView);
+
+            docView.BaseView = mvdView.BaseView;
+            docView.Exchanges.Clear();
+            Dictionary<Guid, ExchangeRequirement> mapExchange = new Dictionary<Guid, ExchangeRequirement>();
+            foreach (ExchangeRequirement mvdExchange in mvdView.ExchangeRequirements)
+            {
+                mapExchange.Add(mvdExchange.Uuid, mvdExchange);
+
+                DocExchangeDefinition docExchange = new DocExchangeDefinition();
+                ImportMvdObject(mvdExchange, docExchange);
+                docView.Exchanges.Add(docExchange);
+
+                docExchange.Applicability = (DocExchangeApplicabilityEnum)mvdExchange.Applicability;
+
+                // attempt to find icons if exists -- remove extention
+                try
+                {
+                    string iconpath = filepath.Substring(0, filepath.Length - 7) + @"\mvd-" + docExchange.Name.ToLower().Replace(' ', '-') + ".png";
+                    if (System.IO.File.Exists(iconpath))
                     {
-                        mapExchange.Add(mvdExchange.Uuid, mvdExchange);
+                        docExchange.Icon = System.IO.File.ReadAllBytes(iconpath);
+                    }
+                }
+                catch
+                {
 
-                        DocExchangeDefinition docExchange = new DocExchangeDefinition();
-                        ImportMvdObject(mvdExchange, docExchange);
-                        docView.Exchanges.Add(docExchange);
+                }
+            }
 
-                        docExchange.Applicability = (DocExchangeApplicabilityEnum)mvdExchange.Applicability;
-
-                        // attempt to find icons if exists -- remove extention
-                        try
+            foreach (ConceptRoot mvdRoot in mvdView.Roots)
+            {
+                // find the entity
+                DocEntity docEntity = LookupEntity(docProject, mvdRoot.ApplicableRootEntity);
+                if (docEntity != null)
+                {
+                    DocConceptRoot docConceptRoot = docView.GetConceptRoot(mvdRoot.Uuid);
+                    if (docConceptRoot == null)
+                    {
+                        docConceptRoot = new DocConceptRoot();
+                        if (docView.ConceptRoots == null)
                         {
-                            string iconpath = filepath.Substring(0, filepath.Length - 7) + @"\mvd-" + docExchange.Name.ToLower().Replace(' ', '-') + ".png";
-                            if (System.IO.File.Exists(iconpath))
-                            {
-                                docExchange.Icon = System.IO.File.ReadAllBytes(iconpath);
-                            }
+                            docView.ConceptRoots = new List<DocConceptRoot>();
                         }
-                        catch
-                        {
+                        docView.ConceptRoots.Add(docConceptRoot);
+                    }
 
+                    ImportMvdObject(mvdRoot, docConceptRoot);
+                    docConceptRoot.ApplicableEntity = docEntity;
+
+                    if (mvdRoot.Applicability != null)
+                    {
+                        docConceptRoot.ApplicableTemplate = docProject.GetTemplate(mvdRoot.Applicability.Template.Ref);
+                        if (mvdRoot.Applicability.TemplateRules != null)
+                        {
+                            docConceptRoot.ApplicableOperator = (DocTemplateOperator)Enum.Parse(typeof(TemplateOperator), mvdRoot.Applicability.TemplateRules.Operator.ToString());
+                            foreach (TemplateRule r in mvdRoot.Applicability.TemplateRules.TemplateRule)
+                            {
+                                DocTemplateItem docItem = ImportMvdItem(r, docProject, mapExchange);
+                                docConceptRoot.ApplicableItems.Add(docItem);
+                            }
                         }
                     }
 
-                    foreach (ConceptRoot mvdRoot in mvdView.Roots)
+                    docConceptRoot.Concepts.Clear();
+                    if (mvdRoot.Concepts != null)
                     {
-                        // find the entity
-                        DocEntity docEntity = LookupEntity(docProject, mvdRoot.ApplicableRootEntity);
-                        if (docEntity != null)
+                        foreach (Concept mvdNode in mvdRoot.Concepts)
                         {
-                            DocConceptRoot docConceptRoot = docView.GetConceptRoot(mvdRoot.Uuid);
-                            if (docConceptRoot == null)
-                            {
-                                docConceptRoot = new DocConceptRoot();
-                                if (docView.ConceptRoots == null)
-                                {
-                                    docView.ConceptRoots = new List<DocConceptRoot>();
-                                }
-                                docView.ConceptRoots.Add(docConceptRoot);
-                            }
-
-                            ImportMvdObject(mvdRoot, docConceptRoot);
-                            docConceptRoot.ApplicableEntity = docEntity;
-
-                            if (mvdRoot.Applicability != null)
-                            {
-                                docConceptRoot.ApplicableTemplate = docProject.GetTemplate(mvdRoot.Applicability.Template.Ref);
-                                if(mvdRoot.Applicability.TemplateRules != null)
-                                {
-                                    docConceptRoot.ApplicableOperator = (DocTemplateOperator)Enum.Parse(typeof(TemplateOperator), mvdRoot.Applicability.TemplateRules.Operator.ToString());
-                                    foreach (TemplateRule r in mvdRoot.Applicability.TemplateRules.TemplateRule)
-                                    {
-                                        DocTemplateItem docItem = ImportMvdItem(r, docProject, mapExchange);
-                                        docConceptRoot.ApplicableItems.Add(docItem);
-                                    }
-                                }
-                            }
-
-                            docConceptRoot.Concepts.Clear();
-                            if (mvdRoot.Concepts != null)
-                            {
-                                foreach (Concept mvdNode in mvdRoot.Concepts)
-                                {
-                                    DocTemplateUsage docUse = new DocTemplateUsage();
-                                    docConceptRoot.Concepts.Add(docUse);
-                                    ImportMvdConcept(mvdNode, docUse, docProject, mapExchange);
-                                }
-                            }
-                        }
-                        else
-                        {
-                            //TODO: log error
+                            DocTemplateUsage docUse = new DocTemplateUsage();
+                            docConceptRoot.Concepts.Add(docUse);
+                            ImportMvdConcept(mvdNode, docUse, docProject, mapExchange);
                         }
                     }
                 }
+                else
+                {
+                    //TODO: log error
+                }
+            }
+
+            // subviews
+            if(mvdView.Views != null)
+            {
+                foreach (ModelView mvdSubView in mvdView.Views)
+                {
+                    DocModelView docSubView = new DocModelView();
+                    docView.ModelViews.Add(docView);
+                    ImportMvdView(mvdSubView, docSubView, docProject, filepath);
+                }
+            }
+        }
+
+        private static void ImportMvdRequirement(ConceptRequirement mvdReq, DocExchangeItem docReq, DocProject docProject)
+        {
+            // TODO: support inner views!!!
+            foreach (DocModelView docModel in docProject.ModelViews)
+            {
+                foreach (DocExchangeDefinition docAnno in docModel.Exchanges)
+                {
+                    if (docAnno.Uuid.Equals(mvdReq.ExchangeRequirement))
+                    {
+                        docReq.Exchange = docAnno;
+                        break;
+                    }
+                }
+            }
+
+            docReq.Applicability = (DocExchangeApplicabilityEnum)mvdReq.Applicability;
+
+            switch (mvdReq.Requirement)
+            {
+                case RequirementEnum.Mandatory:
+                    docReq.Requirement = DocExchangeRequirementEnum.Mandatory;
+                    break;
+
+                case RequirementEnum.Recommended:
+                    docReq.Requirement = DocExchangeRequirementEnum.Optional;
+                    break;
+
+                case RequirementEnum.NotRelevant:
+                    docReq.Requirement = DocExchangeRequirementEnum.NotRelevant;
+                    break;
+
+                case RequirementEnum.NotRecommended:
+                    docReq.Requirement = DocExchangeRequirementEnum.NotRecommended;
+                    break;
+
+                case RequirementEnum.Excluded:
+                    docReq.Requirement = DocExchangeRequirementEnum.Excluded;
+                    break;
             }
         }
 
@@ -1908,43 +2085,7 @@ namespace IfcDoc
                 {
                     DocExchangeItem docReq = new DocExchangeItem();
                     docUse.Exchanges.Add(docReq);
-
-                    foreach (DocModelView docModel in docProject.ModelViews)
-                    {
-                        foreach (DocExchangeDefinition docAnno in docModel.Exchanges)
-                        {
-                            if (docAnno.Uuid.Equals(mvdReq.ExchangeRequirement))
-                            {
-                                docReq.Exchange = docAnno;
-                                break;
-                            }
-                        }
-                    }
-
-                    docReq.Applicability = (DocExchangeApplicabilityEnum)mvdReq.Applicability;
-
-                    switch (mvdReq.Requirement)
-                    {
-                        case RequirementEnum.Mandatory:
-                            docReq.Requirement = DocExchangeRequirementEnum.Mandatory;
-                            break;
-
-                        case RequirementEnum.Recommended:
-                            docReq.Requirement = DocExchangeRequirementEnum.Optional;
-                            break;
-
-                        case RequirementEnum.NotRelevant:
-                            docReq.Requirement = DocExchangeRequirementEnum.NotRelevant;
-                            break;
-
-                        case RequirementEnum.NotRecommended:
-                            docReq.Requirement = DocExchangeRequirementEnum.NotRecommended;
-                            break;
-
-                        case RequirementEnum.Excluded:
-                            docReq.Requirement = DocExchangeRequirementEnum.Excluded;
-                            break;
-                    }
+                    ImportMvdRequirement(mvdReq, docReq, docProject);
                 }
             }
 
@@ -1967,6 +2108,21 @@ namespace IfcDoc
             docItem.RuleInstanceID = rule.RuleID;
             docItem.ParseParameterExpressions(rule.Parameters); // convert from mvdXML
 
+            // V11.6
+            if (rule.Requirements != null)
+            {
+                foreach (ConceptRequirement mvdReq in rule.Requirements)
+                {
+                    ExchangeRequirement mvdExchange = null;
+                    if (mapExchange.TryGetValue(mvdReq.ExchangeRequirement, out mvdExchange))
+                    {
+                        DocExchangeItem docReq = new DocExchangeItem();
+                        docItem.Exchanges.Add(docReq);
+                        ImportMvdRequirement(mvdReq, docReq, docProject);
+                    }
+                }
+            }
+
             if (rule.References != null)
             {
                 foreach (Concept con in rule.References)
@@ -1975,6 +2131,35 @@ namespace IfcDoc
                     docItem.Concepts.Add(docInner);
                     ImportMvdConcept(con, docInner, docProject, mapExchange);
                 }
+            }
+
+            docItem.Order = rule.Order;
+            switch (rule.Usage)
+            {
+                case TemplateRuleUsage.System:
+                    docItem.Calculated = true;
+                    break;
+
+                case TemplateRuleUsage.Calculation:
+                    docItem.Calculated = true;
+                    docItem.Optional = true;
+                    break;
+
+                case TemplateRuleUsage.Reference:
+                    docItem.Reference = true;
+                    break;
+
+                case TemplateRuleUsage.Key:
+                    docItem.Key = true;
+                    break;
+
+                case TemplateRuleUsage.Optional:
+                    docItem.Optional = true;
+                    break;
+
+                case TemplateRuleUsage.Required:
+                    // default
+                    break;
             }
 
             return docItem;
@@ -2140,6 +2325,45 @@ namespace IfcDoc
             }
         }
 
+        internal static void ExportMvdRequirement(ConceptRequirement mvdRequirement, DocExchangeItem docExchangeRef)
+        {
+            switch (docExchangeRef.Applicability)
+            {
+                case DocExchangeApplicabilityEnum.Export:
+                    mvdRequirement.Applicability = ApplicabilityEnum.Export;
+                    break;
+
+                case DocExchangeApplicabilityEnum.Import:
+                    mvdRequirement.Applicability = ApplicabilityEnum.Import;
+                    break;
+            }
+
+            switch (docExchangeRef.Requirement)
+            {
+                case DocExchangeRequirementEnum.Excluded:
+                    mvdRequirement.Requirement = RequirementEnum.Excluded;
+                    break;
+
+                case DocExchangeRequirementEnum.Mandatory:
+                    mvdRequirement.Requirement = RequirementEnum.Mandatory;
+                    break;
+
+                case DocExchangeRequirementEnum.NotRelevant:
+                    mvdRequirement.Requirement = RequirementEnum.NotRelevant;
+                    break;
+
+                case DocExchangeRequirementEnum.Optional:
+                    mvdRequirement.Requirement = RequirementEnum.Recommended;
+                    break;
+
+                default:
+                    mvdRequirement.Requirement = RequirementEnum.NotRelevant;
+                    break;
+            }
+
+            mvdRequirement.ExchangeRequirement = docExchangeRef.Exchange.Uuid;
+        }
+
         internal static void ExportMvdConcept(Concept mvdConceptLeaf, DocTemplateUsage docTemplateUsage, DocProject docProject, Dictionary<string, DocObject> map, bool documentation)
         {
             ExportMvdObject(mvdConceptLeaf, docTemplateUsage, documentation);
@@ -2169,41 +2393,7 @@ namespace IfcDoc
                         mvdConceptLeaf.Requirements = new List<ConceptRequirement>();
                     }
                     mvdConceptLeaf.Requirements.Add(mvdRequirement);
-                    switch (docExchangeRef.Applicability)
-                    {
-                        case DocExchangeApplicabilityEnum.Export:
-                            mvdRequirement.Applicability = ApplicabilityEnum.Export;
-                            break;
-
-                        case DocExchangeApplicabilityEnum.Import:
-                            mvdRequirement.Applicability = ApplicabilityEnum.Import;
-                            break;
-                    }
-
-                    switch (docExchangeRef.Requirement)
-                    {
-                        case DocExchangeRequirementEnum.Excluded:
-                            mvdRequirement.Requirement = RequirementEnum.Excluded;
-                            break;
-
-                        case DocExchangeRequirementEnum.Mandatory:
-                            mvdRequirement.Requirement = RequirementEnum.Mandatory;
-                            break;
-
-                        case DocExchangeRequirementEnum.NotRelevant:
-                            mvdRequirement.Requirement = RequirementEnum.NotRelevant;
-                            break;
-
-                        case DocExchangeRequirementEnum.Optional:
-                            mvdRequirement.Requirement = RequirementEnum.Recommended;
-                            break;
-
-                        default:
-                            mvdRequirement.Requirement = RequirementEnum.NotRelevant;
-                            break;
-                    }
-
-                    mvdRequirement.ExchangeRequirement = docExchangeRef.Exchange.Uuid;
+                    ExportMvdRequirement(mvdRequirement, docExchangeRef);
                 }
             }
 
@@ -2217,17 +2407,29 @@ namespace IfcDoc
                     TemplateRule mvdTemplateRule = ExportMvdItem(docRule, docTemplateUsage.Definition, docProject, map);
                     mvdConceptLeaf.TemplateRules.TemplateRule.Add(mvdTemplateRule);
 
-                    // using proposed mvdXML schema
-                    if (false) // was removed from mvdXML final schema, so no longer possible to capture inner templates such as valid property names and values /// docRule.Concepts.Count > 0)
+                    // V11.6: requirements
+                    foreach (DocExchangeItem docExchangeRef in docTemplateUsage.Exchanges)
                     {
-                        mvdConceptLeaf.SubConcepts = new List<Concept>();
-                        mvdTemplateRule.References = new List<Concept>();
-                        foreach (DocTemplateUsage docInner in docRule.Concepts)
+                        if (docExchangeRef.Exchange != null)
                         {
-                            Concept mvdInner = new Concept();
-                            mvdTemplateRule.References.Add(mvdInner);
-                            ExportMvdConcept(mvdInner, docInner, docProject, map, documentation);
+                            ConceptRequirement mvdRequirement = new ConceptRequirement();
+
+                            if (mvdTemplateRule.Requirements == null)
+                            {
+                                mvdTemplateRule.Requirements = new List<ConceptRequirement>();
+                            }
+                            mvdTemplateRule.Requirements.Add(mvdRequirement);
+                            ExportMvdRequirement(mvdRequirement, docExchangeRef);
                         }
+                    }
+
+                    // using proposed mvdXML schema
+                    mvdTemplateRule.References = new List<Concept>();
+                    foreach (DocTemplateUsage docInner in docRule.Concepts)
+                    {
+                        Concept mvdInner = new Concept();
+                        mvdTemplateRule.References.Add(mvdInner);
+                        ExportMvdConcept(mvdInner, docInner, docProject, map, documentation);
                     }
                 }
             }
@@ -2236,19 +2438,46 @@ namespace IfcDoc
         internal static TemplateRule ExportMvdItem(DocTemplateItem docRule, DocTemplateDefinition docTemplate, DocProject docProject, Dictionary<string, DocObject> map)
         {
             TemplateRule mvdTemplateRule = new TemplateRule();
-
-#if false // template rules don't have IDs
-            if (!String.IsNullOrEmpty(docRule.RuleInstanceID))
-            {
-                mvdTemplateRule.RuleID = docRule.RuleInstanceID;
-            }
-#endif
-
             mvdTemplateRule.Description = docRule.Documentation;
+            if (docRule.Calculated)
+            {
+                if (docRule.Optional)
+                {
+                    mvdTemplateRule.Usage = TemplateRuleUsage.Calculation;
+                }
+                else
+                {
+                    mvdTemplateRule.Usage = TemplateRuleUsage.System;
+                }
+            }
+            else if(docRule.Key)
+            {
+                mvdTemplateRule.Usage = TemplateRuleUsage.Key;
+            }
+            else if(docRule.Reference)
+            {
+                mvdTemplateRule.Usage = TemplateRuleUsage.Reference;
+            }
+            else if(docRule.Optional)
+            {
+                mvdTemplateRule.Usage = TemplateRuleUsage.Optional;
+            }
+
+            mvdTemplateRule.Order = docRule.Order;
 
             // new: use special mvdXML 1.1 syntax
             mvdTemplateRule.Parameters = docRule.FormatParameterExpressions(docTemplate, docProject, map); // was RuleParameters;
             
+            // requirements -- not yet captured in user interface
+            if(docRule.Exchanges.Count > 0)
+            {
+                mvdTemplateRule.Requirements = new List<ConceptRequirement>();
+                foreach(DocExchangeItem docExchangeItem in docRule.Exchanges)
+                {
+                    ConceptRequirement er = new ConceptRequirement();
+                }
+            }
+
             return mvdTemplateRule;
         }
 
@@ -2278,40 +2507,53 @@ namespace IfcDoc
                 {
                     ModelView mvdModelView = new ModelView();
                     mvd.Views.Add(mvdModelView);
-                    ExportMvdObject(mvdModelView, docModelView, true);
-                    mvdModelView.ApplicableSchema = docProject.GetSchemaIdentifier();
-                    mvdModelView.BaseView = docModelView.BaseView;
-
-                    foreach (DocExchangeDefinition docExchangeDef in docModelView.Exchanges)
-                    {
-                        ExchangeRequirement mvdExchangeDef = new ExchangeRequirement();
-                        mvdModelView.ExchangeRequirements.Add(mvdExchangeDef);
-                        ExportMvdObject(mvdExchangeDef, docExchangeDef, true);
-                        switch (docExchangeDef.Applicability)
-                        {
-                            case DocExchangeApplicabilityEnum.Export:
-                                mvdExchangeDef.Applicability = ApplicabilityEnum.Export;
-                                break;
-
-                            case DocExchangeApplicabilityEnum.Import:
-                                mvdExchangeDef.Applicability = ApplicabilityEnum.Import;
-                                break;
-                        }
-                    }
-
-                    // export template usages for model view
-                    foreach (DocConceptRoot docRoot in docModelView.ConceptRoots)
-                    {
-                        if (docRoot.ApplicableEntity != null)
-                        {
-                            // check if entity contains any concept roots
-                            ConceptRoot mvdConceptRoot = new ConceptRoot();
-                            mvdModelView.Roots.Add(mvdConceptRoot);
-
-                            Program.ExportMvdConceptRoot(mvdConceptRoot, docRoot, docProject, map, true);
-                        }
-                    }
+                    ExportMvdView(mvdModelView, docModelView, docProject, map, included);
                 }
+            }
+        }
+
+        internal static void ExportMvdView(ModelView mvdModelView, DocModelView docModelView, DocProject docProject, Dictionary<string, DocObject> map, Dictionary<DocObject, bool> included)
+        {
+            ExportMvdObject(mvdModelView, docModelView, true);
+            mvdModelView.ApplicableSchema = docProject.GetSchemaIdentifier();
+            mvdModelView.BaseView = docModelView.BaseView;
+
+            foreach (DocExchangeDefinition docExchangeDef in docModelView.Exchanges)
+            {
+                ExchangeRequirement mvdExchangeDef = new ExchangeRequirement();
+                mvdModelView.ExchangeRequirements.Add(mvdExchangeDef);
+                ExportMvdObject(mvdExchangeDef, docExchangeDef, true);
+                switch (docExchangeDef.Applicability)
+                {
+                    case DocExchangeApplicabilityEnum.Export:
+                        mvdExchangeDef.Applicability = ApplicabilityEnum.Export;
+                        break;
+
+                    case DocExchangeApplicabilityEnum.Import:
+                        mvdExchangeDef.Applicability = ApplicabilityEnum.Import;
+                        break;
+                }
+            }
+
+            // export template usages for model view
+            foreach (DocConceptRoot docRoot in docModelView.ConceptRoots)
+            {
+                if (docRoot.ApplicableEntity != null)
+                {
+                    // check if entity contains any concept roots
+                    ConceptRoot mvdConceptRoot = new ConceptRoot();
+                    mvdModelView.Roots.Add(mvdConceptRoot);
+
+                    Program.ExportMvdConceptRoot(mvdConceptRoot, docRoot, docProject, map, true);
+                }
+            }
+
+            // export nested model views
+            foreach(DocModelView docSubView in docModelView.ModelViews)
+            {
+                ModelView mvdSubView = new ModelView();
+                mvdModelView.Views.Add(mvdSubView);
+                Program.ExportMvdView(mvdSubView, docSubView, docProject, map, included);
             }
         }
 
@@ -2522,7 +2764,7 @@ namespace IfcDoc
                             mvdRuleEntity.AttributeRules.Add(mvdRuleAttribute);
                             ExportMvdRule(mvdRuleAttribute, docRuleAttribute);
                         }
-                        else if (docRuleAttribute is DocModelRuleConstraint && !String.IsNullOrEmpty(docRuleAttribute.Description))
+                        else if (docRuleAttribute is DocModelRuleConstraint)// && !String.IsNullOrEmpty(docRuleAttribute.Description))
                         {
                             DocModelRuleConstraint mrc = (DocModelRuleConstraint)docRuleAttribute;
 
@@ -2537,12 +2779,19 @@ namespace IfcDoc
 
                             string expr = mrc.FormatExpression();
                             // replace with attribute name
-                            int bracket = expr.IndexOf('[');
-                            if (bracket > 0)
+                            if (expr != null)
                             {
-                                mvdConstraint.Expression = docRule.Identification + expr.Substring(bracket);
-                                //System.Diagnostics.Debug.WriteLine(mvdConstraint.Expression);
+                                int bracket = expr.IndexOf('[');
+                                if (bracket > 0)
+                                {
+                                    mvdConstraint.Expression = docRule.Identification + expr.Substring(bracket);
+                                    //System.Diagnostics.Debug.WriteLine(mvdConstraint.Expression);
+                                }
                             }
+                        }
+                        else
+                        {
+                            docRuleAttribute.ToString();
                         }
                     }
 
@@ -2604,10 +2853,13 @@ namespace IfcDoc
 
             if (!String.IsNullOrEmpty(docAttr.Inverse))
             {
-                IfcDoc.Schema.CNF.inverse inv = new Schema.CNF.inverse();
-                inv.select = docAttr.Name;
-                inv.exp_attribute = exp;
-                ent.inverse.Add(inv);
+                if (keep)
+                {
+                    IfcDoc.Schema.CNF.inverse inv = new Schema.CNF.inverse();
+                    inv.select = docAttr.Name;
+                    inv.exp_attribute = exp;
+                    ent.inverse.Add(inv);
+                }
             }
             else
             {
@@ -2672,7 +2924,7 @@ namespace IfcDoc
             cnf.schema.Add(sch);
 
             IfcDoc.Schema.CNF.uosElement uos = new Schema.CNF.uosElement();
-            uos.name = "ifcXML";
+            uos.name = "ifc:ifcXML"; // added ifc: prefix for config fix
             cnf.uosElement.Add(uos);
 
             IfcDoc.Schema.CNF.type typeNumber = new Schema.CNF.type();
@@ -2701,6 +2953,11 @@ namespace IfcDoc
                     {
                         foreach(DocEntity docEntity in docSchema.Entities)
                         {
+                            if(docEntity.Name.Equals("IfcObjectDefinition"))
+                            {
+                                docEntity.ToString();
+                            }
+
                             bool include = true; //... check if included in graph?
                             if (included != null && !included.ContainsKey(docEntity))
                             {
@@ -2731,33 +2988,36 @@ namespace IfcDoc
             }
 
             // export view-specific configuration
-            foreach (DocModelView docView in docViews)
+            if (docViews != null)
             {
-                foreach (DocXsdFormat format in docView.XsdFormats)
+                foreach (DocModelView docView in docViews)
                 {
-                    DocEntity docEntity = docProject.GetDefinition(format.Entity) as DocEntity;
-                    if (docEntity != null)
+                    foreach (DocXsdFormat format in docView.XsdFormats)
                     {
-                        DocAttribute docAttr = null;
-                        foreach (DocAttribute docEachAttr in docEntity.Attributes)
+                        DocEntity docEntity = docProject.GetDefinition(format.Entity) as DocEntity;
+                        if (docEntity != null)
                         {
-                            if (docEachAttr.Name != null && docEachAttr.Name.Equals(format.Attribute))
+                            DocAttribute docAttr = null;
+                            foreach (DocAttribute docEachAttr in docEntity.Attributes)
                             {
-                                docAttr = docEachAttr;
-                                break;
-                            }
-                        }
-
-                        if (docAttr != null)
-                        {
-                            IfcDoc.Schema.CNF.entity ent = null;
-                            if (!mapEntity.TryGetValue(docEntity.Name, out ent))
-                            {
-                                ent = new Schema.CNF.entity();
-                                mapEntity.Add(docEntity.Name, ent);
+                                if (docEachAttr.Name != null && docEachAttr.Name.Equals(format.Attribute))
+                                {
+                                    docAttr = docEachAttr;
+                                    break;
+                                }
                             }
 
-                            ExportCnfAttribute(ent, docAttr, format.XsdFormat, format.XsdTagless);
+                            if (docAttr != null)
+                            {
+                                IfcDoc.Schema.CNF.entity ent = null;
+                                if (!mapEntity.TryGetValue(docEntity.Name, out ent))
+                                {
+                                    ent = new Schema.CNF.entity();
+                                    mapEntity.Add(docEntity.Name, ent);
+                                }
+
+                                ExportCnfAttribute(ent, docAttr, format.XsdFormat, format.XsdTagless);
+                            }
                         }
                     }
                 }

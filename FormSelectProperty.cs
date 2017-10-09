@@ -41,22 +41,25 @@ namespace IfcDoc
                 this.comboBoxPort.Items.Add("(object)");
                 this.comboBoxPort.SelectedIndex = 0;
 
-                foreach (DocModelView docView in docProject.ModelViews)
+                if (docEntity != null)
                 {
-                    foreach (DocConceptRoot docRoot in docView.ConceptRoots)
+                    foreach (DocModelView docView in docProject.ModelViews)
                     {
-                        if (docRoot.ApplicableEntity == docEntity)
+                        foreach (DocConceptRoot docRoot in docView.ConceptRoots)
                         {
-                            foreach (DocTemplateUsage docConcept in docRoot.Concepts)
+                            if (docRoot.ApplicableEntity == docEntity)
                             {
-                                if (docConcept.Definition != null && docConcept.Definition.Uuid == DocTemplateDefinition.guidPortNesting)
+                                foreach (DocTemplateUsage docConcept in docRoot.Concepts)
                                 {
-                                    foreach (DocTemplateItem docItem in docConcept.Items)
+                                    if (docConcept.Definition != null && docConcept.Definition.Uuid == DocTemplateDefinition.guidPortNesting)
                                     {
-                                        string name = docItem.GetParameterValue("Name");
-                                        if (name != null && !this.comboBoxPort.Items.Contains(name))
+                                        foreach (DocTemplateItem docItem in docConcept.Items)
                                         {
-                                            this.comboBoxPort.Items.Add(name);
+                                            string name = docItem.GetParameterValue("Name");
+                                            if (name != null && !this.comboBoxPort.Items.Contains(name))
+                                            {
+                                                this.comboBoxPort.Items.Add(name);
+                                            }
                                         }
                                     }
                                 }
@@ -78,8 +81,8 @@ namespace IfcDoc
             {
                 docEntity = this.m_project.GetDefinition("IfcDistributionPort") as DocEntity;
             }
-            if (docEntity == null)
-                return;
+            //if (docEntity == null)
+            //    return;
 
             foreach (DocSection docSection in this.m_project.Sections)
             {
@@ -88,7 +91,7 @@ namespace IfcDoc
                     foreach (DocPropertySet docPset in docSchema.PropertySets)
                     {
                         bool include = false;
-                        if (docPset.ApplicableType != null)
+                        if (docEntity != null && docPset.ApplicableType != null)
                         {
                             string[] parts = docPset.ApplicableType.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
                             foreach (string part in parts)
@@ -116,7 +119,8 @@ namespace IfcDoc
                             tnPset.SelectedImageIndex = 0;
                             this.treeViewProperty.Nodes.Add(tnPset);
 
-                            if (!this.treeViewProperty.CheckBoxes)
+                            // only select psets if no entity defined
+                            if (this.m_entity != null && !this.treeViewProperty.CheckBoxes)
                             {
                                 foreach (DocProperty docProp in docPset.Properties)
                                 {
@@ -168,7 +172,7 @@ namespace IfcDoc
                 this.textBoxDescription.Text = docProp.Documentation;
             }
 
-            this.buttonOK.Enabled = (this.treeViewProperty.CheckBoxes || this.SelectedProperty != null);
+            this.buttonOK.Enabled = (this.treeViewProperty.CheckBoxes || this.SelectedProperty != null || (this.m_entity == null && this.SelectedPropertySet != null));
         }
 
         /// <summary>
@@ -230,6 +234,10 @@ namespace IfcDoc
                 else if (this.treeViewProperty.SelectedNode != null && this.treeViewProperty.SelectedNode.Parent != null && this.treeViewProperty.SelectedNode.Parent.Tag is DocProperty)
                 {
                     return (DocPropertySet)this.treeViewProperty.SelectedNode.Parent.Parent.Tag;
+                }
+                else if(this.m_entity == null && this.treeViewProperty.SelectedNode != null && this.treeViewProperty.SelectedNode.Tag is DocPropertySet)
+                {
+                    return (DocPropertySet)this.treeViewProperty.SelectedNode.Tag;
                 }
 
                 return null;

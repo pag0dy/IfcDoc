@@ -880,7 +880,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAACs
-        kAAAAk1TRnQBSQFMAgEBLwEAAVABBgFQAQYBEAEAARABAAT/ARkBAAj/AUIBTQE2BwABNgMAASgDAAFA
+        kAAAAk1TRnQBSQFMAgEBLwEAAXgBBgF4AQYBEAEAARABAAT/ARkBAAj/AUIBTQE2BwABNgMAASgDAAFA
         AwABwAMAAQEBAAEYBgABkBsAA/4D/AP2A/EG7wPxA/YD/AP+EgAD/gP8A/YD8QbvA/ED9gP8A/4SAAP+
         A/wD9gPxBu8D8QP2A/wD/j8AA/4D9gPiA8UDqwakA6sDxQPiA/YD/gwAA/4D9gPiA8UDqwakA6sDxQPi
         A/YD/gwAA/4D9gPiA8UDqwakA6sDxQPiA/YD/jkAA/4D8wG2AcIBqwFqAaIBPgFQAa8BEAFQAa8BDwFQ
@@ -1516,7 +1516,7 @@
     <value>treeView</value>
   </data>
   <data name="&gt;&gt;treeView.Type" xml:space="preserve">
-    <value>IfcDoc.ThemedTreeView, IfcDoc, Version=11.3.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>IfcDoc.ThemedTreeView, IfcDoc, Version=11.5.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;treeView.Parent" xml:space="preserve">
     <value>splitContainerRoot.Panel1</value>
@@ -1573,7 +1573,7 @@
     <value>ctlConcept</value>
   </data>
   <data name="&gt;&gt;ctlConcept.Type" xml:space="preserve">
-    <value>IfcDoc.CtlConcept, IfcDoc, Version=11.3.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>IfcDoc.CtlConcept, IfcDoc, Version=11.5.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;ctlConcept.Parent" xml:space="preserve">
     <value>splitContainerWorkspace.Panel1</value>
@@ -1609,7 +1609,7 @@
     <value>ctlExpressG</value>
   </data>
   <data name="&gt;&gt;ctlExpressG.Type" xml:space="preserve">
-    <value>IfcDoc.CtlExpressG, IfcDoc, Version=11.3.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>IfcDoc.CtlExpressG, IfcDoc, Version=11.5.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;ctlExpressG.Parent" xml:space="preserve">
     <value>splitContainerWorkspace.Panel1</value>
@@ -1639,7 +1639,7 @@
     <value>ctlInheritance</value>
   </data>
   <data name="&gt;&gt;ctlInheritance.Type" xml:space="preserve">
-    <value>IfcDoc.CtlInheritance, IfcDoc, Version=11.3.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>IfcDoc.CtlInheritance, IfcDoc, Version=11.5.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;ctlInheritance.Parent" xml:space="preserve">
     <value>splitContainerWorkspace.Panel1</value>
@@ -1675,7 +1675,7 @@
     <value>ctlProperties</value>
   </data>
   <data name="&gt;&gt;ctlProperties.Type" xml:space="preserve">
-    <value>IfcDoc.CtlProperties, IfcDoc, Version=11.3.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>IfcDoc.CtlProperties, IfcDoc, Version=11.5.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;ctlProperties.Parent" xml:space="preserve">
     <value>splitContainerWorkspace.Panel2</value>
@@ -1801,7 +1801,7 @@
     <value>ctlCheckGrid</value>
   </data>
   <data name="&gt;&gt;ctlCheckGrid.Type" xml:space="preserve">
-    <value>IfcDoc.CtlCheckGrid, IfcDoc, Version=11.3.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>IfcDoc.CtlCheckGrid, IfcDoc, Version=11.5.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;ctlCheckGrid.Parent" xml:space="preserve">
     <value>panelWorkspace</value>
@@ -1910,7 +1910,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAABy
-        CwAAAk1TRnQBSQFMAgEBBAEAARQBAgEUAQIBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
+        CwAAAk1TRnQBSQFMAgEBBAEAATwBAgE8AQIBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
         AwABQAMAASADAAEBAQABCAYAAQgYAAGAAgABgAMAAoABAAGAAwABgAEAAYABAAKAAgADwAEAAcAB3AHA
         AQAB8AHKAaYBAAEzBQABMwEAATMBAAEzAQACMwIAAxYBAAMcAQADIgEAAykBAANVAQADTQEAA0IBAAM5
         AQABgAF8Af8BAAJQAf8BAAGTAQAB1gEAAf8B7AHMAQABxgHWAe8BAAHWAucBAAGQAakBrQIAAf8BMwMA
@@ -3421,6 +3421,69 @@
   <data name="toolStripMenuItemInsertExchange.ToolTipText" xml:space="preserve">
     <value>Adds an exchange definition to a model view definition for defining a particular data exchange scenario.</value>
   </data>
+  <data name="toolStripMenuItemInsertProcessDefinition.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAE7SURBVDhPnZA/S8NQFMWzNg7J97Afxa1oN6uD/wcp4tSq
+        i3+njLFKdRCMmg6iCGJDiwVx0w9gZ2MtHWxCkpLAMe82JUUwafqDx72c8+59h8cNgzEIRvsEAhm6rlPP
+        KiNCDwmEgTFqDRk2xk6QlGC0DxMSvDyoIX+MUWsIExInOL3WcHz5iBPlCWVVw8XtM84rNZRvqjiSVboU
+        BXdfe6PGsW0YRhee68K2LdLWilJ8krv6uz9gQxRFpNOTZLLjWAaml4ph1P/q1cMrNQxZlslgx7FMZFe2
+        4xOcqXVqJEkio9F4QSrFo9P5RmaxQF4UXEmpotdzIAgCPppNeB7AT/CwfC27usOWRlNSNLRbX3D9z2P8
+        mDY+W210TQuZhUL8gkO5gtn1Xcwsb9Gn5fJ7mN84wFx+H1O5zZgFHPcLyUSD4yvsCLoAAAAASUVORK5C
+        YII=
+</value>
+  </data>
+  <data name="toolStripMenuItemInsertProcessDefinition.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="toolStripMenuItemInsertProcessDefinition.Size" type="System.Drawing.Size, System.Drawing">
+    <value>191, 22</value>
+  </data>
+  <data name="toolStripMenuItemInsertProcessDefinition.Text" xml:space="preserve">
+    <value>P&amp;rocess Definition</value>
+  </data>
+  <data name="toolStripMenuItemInsertProcessInput.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAE7SURBVDhPnZA/S8NQFMWzNg7J97Afxa1oN6uD/wcp4tSq
+        i3+njLFKdRCMmg6iCGJDiwVx0w9gZ2MtHWxCkpLAMe82JUUwafqDx72c8+59h8cNgzEIRvsEAhm6rlPP
+        KiNCDwmEgTFqDRk2xk6QlGC0DxMSvDyoIX+MUWsIExInOL3WcHz5iBPlCWVVw8XtM84rNZRvqjiSVboU
+        BXdfe6PGsW0YRhee68K2LdLWilJ8krv6uz9gQxRFpNOTZLLjWAaml4ph1P/q1cMrNQxZlslgx7FMZFe2
+        4xOcqXVqJEkio9F4QSrFo9P5RmaxQF4UXEmpotdzIAgCPppNeB7AT/CwfC27usOWRlNSNLRbX3D9z2P8
+        mDY+W210TQuZhUL8gkO5gtn1Xcwsb9Gn5fJ7mN84wFx+H1O5zZgFHPcLyUSD4yvsCLoAAAAASUVORK5C
+        YII=
+</value>
+  </data>
+  <data name="toolStripMenuItemInsertProcessInput.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="toolStripMenuItemInsertProcessInput.Size" type="System.Drawing.Size, System.Drawing">
+    <value>191, 22</value>
+  </data>
+  <data name="toolStripMenuItemInsertProcessInput.Text" xml:space="preserve">
+    <value>Process &amp;Input</value>
+  </data>
+  <data name="toolStripMenuItemInsertProcessOutput.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAE7SURBVDhPnZA/S8NQFMWzNg7J97Afxa1oN6uD/wcp4tSq
+        i3+njLFKdRCMmg6iCGJDiwVx0w9gZ2MtHWxCkpLAMe82JUUwafqDx72c8+59h8cNgzEIRvsEAhm6rlPP
+        KiNCDwmEgTFqDRk2xk6QlGC0DxMSvDyoIX+MUWsIExInOL3WcHz5iBPlCWVVw8XtM84rNZRvqjiSVboU
+        BXdfe6PGsW0YRhee68K2LdLWilJ8krv6uz9gQxRFpNOTZLLjWAaml4ph1P/q1cMrNQxZlslgx7FMZFe2
+        4xOcqXVqJEkio9F4QSrFo9P5RmaxQF4UXEmpotdzIAgCPppNeB7AT/CwfC27usOWRlNSNLRbX3D9z2P8
+        mDY+W210TQuZhUL8gkO5gtn1Xcwsb9Gn5fJ7mN84wFx+H1O5zZgFHPcLyUSD4yvsCLoAAAAASUVORK5C
+        YII=
+</value>
+  </data>
+  <data name="toolStripMenuItemInsertProcessOutput.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="toolStripMenuItemInsertProcessOutput.Size" type="System.Drawing.Size, System.Drawing">
+    <value>191, 22</value>
+  </data>
+  <data name="toolStripMenuItemInsertProcessOutput.Text" xml:space="preserve">
+    <value>Process &amp;Output</value>
+  </data>
   <data name="toolStripMenuItem19.Size" type="System.Drawing.Size, System.Drawing">
     <value>188, 6</value>
   </data>
@@ -3911,6 +3974,12 @@
   </data>
   <data name="toolStripMenuItemToolsConvert.Text" xml:space="preserve">
     <value>&amp;Convert File...</value>
+  </data>
+  <data name="toolStripMenuItemToolsMigrateExamples.Size" type="System.Drawing.Size, System.Drawing">
+    <value>235, 22</value>
+  </data>
+  <data name="toolStripMenuItemToolsMigrateExamples.Text" xml:space="preserve">
+    <value>&amp;Upgrade Examples...</value>
   </data>
   <data name="toolStripMenuItem8.Size" type="System.Drawing.Size, System.Drawing">
     <value>232, 6</value>
@@ -4735,7 +4804,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAABO
-        CwAAAk1TRnQBSQFMAgEBBQEAAbQBBAG0AQQBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
+        CwAAAk1TRnQBSQFMAgEBBQEAAdwBBAHcAQQBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
         AwABQAMAASADAAEBAQABCAYAAQgYAAGAAgABgAMAAoABAAGAAwABgAEAAYABAAKAAgADwAEAAcAB3AHA
         AQAB8AHKAaYBAAEzBQABMwEAATMBAAEzAQACMwIAAxYBAAMcAQADIgEAAykBAANVAQADTQEAA0IBAAM5
         AQABgAF8Af8BAAJQAf8BAAGTAQAB1gEAAf8B7AHMAQABxgHWAe8BAAHWAucBAAGQAakBrQIAAf8BMwMA
@@ -5806,6 +5875,24 @@
   <data name="&gt;&gt;toolStripMenuItemInsertExchange.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;toolStripMenuItemInsertProcessDefinition.Name" xml:space="preserve">
+    <value>toolStripMenuItemInsertProcessDefinition</value>
+  </data>
+  <data name="&gt;&gt;toolStripMenuItemInsertProcessDefinition.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStripMenuItemInsertProcessInput.Name" xml:space="preserve">
+    <value>toolStripMenuItemInsertProcessInput</value>
+  </data>
+  <data name="&gt;&gt;toolStripMenuItemInsertProcessInput.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStripMenuItemInsertProcessOutput.Name" xml:space="preserve">
+    <value>toolStripMenuItemInsertProcessOutput</value>
+  </data>
+  <data name="&gt;&gt;toolStripMenuItemInsertProcessOutput.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;toolStripMenuItem19.Name" xml:space="preserve">
     <value>toolStripMenuItem19</value>
   </data>
@@ -6080,6 +6167,12 @@
     <value>toolStripMenuItemToolsConvert</value>
   </data>
   <data name="&gt;&gt;toolStripMenuItemToolsConvert.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStripMenuItemToolsMigrateExamples.Name" xml:space="preserve">
+    <value>toolStripMenuItemToolsMigrateExamples</value>
+  </data>
+  <data name="&gt;&gt;toolStripMenuItemToolsMigrateExamples.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;toolStripMenuItem8.Name" xml:space="preserve">

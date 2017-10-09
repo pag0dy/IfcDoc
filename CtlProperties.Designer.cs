@@ -67,7 +67,9 @@
             this.textBoxIdentityUuid = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.tabPageTemplate = new System.Windows.Forms.TabPage();
+            this.ctlRules = new IfcDoc.CtlRules();
             this.tabPageConcept = new System.Windows.Forms.TabPage();
+            this.ctlParameters = new IfcDoc.CtlParameters();
             this.tabPageRequirements = new System.Windows.Forms.TabPage();
             this.listViewExchange = new System.Windows.Forms.ListView();
             this.columnHeaderExchangeName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -185,6 +187,7 @@
             this.toolStripButtonExampleLink = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonExampleClear = new System.Windows.Forms.ToolStripButton();
             this.tabPageOperations = new System.Windows.Forms.TabPage();
+            this.ctlOperators = new IfcDoc.CtlOperators();
             this.tabPageConceptRoot = new System.Windows.Forms.TabPage();
             this.listViewConceptRoot = new System.Windows.Forms.ListView();
             this.columnHeaderRootTemplate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -211,6 +214,7 @@
             this.toolStripButtonViewInsert = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonViewRemove = new System.Windows.Forms.ToolStripButton();
             this.tabPagePublication = new System.Windows.Forms.TabPage();
+            this.textBoxPublicationNote = new System.Windows.Forms.TextBox();
             this.checkBoxPublishHtmlExamples = new System.Windows.Forms.CheckBox();
             this.checkBoxPublishExchangeTables = new System.Windows.Forms.CheckBox();
             this.checkBoxPublishUML = new System.Windows.Forms.CheckBox();
@@ -229,13 +233,17 @@
             this.toolStripButtonFormatSchema = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonFormatExamples = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonFormatMarkup = new System.Windows.Forms.ToolStripButton();
+            this.tabPageProcess = new System.Windows.Forms.TabPage();
+            this.label25 = new System.Windows.Forms.Label();
+            this.comboBoxProcessOutput = new System.Windows.Forms.ComboBox();
+            this.label26 = new System.Windows.Forms.Label();
+            this.comboBoxProcessInput = new System.Windows.Forms.ComboBox();
+            this.label30 = new System.Windows.Forms.Label();
+            this.comboBoxProcessClassification = new System.Windows.Forms.ComboBox();
             this.imageListRules = new System.Windows.Forms.ImageList(this.components);
             this.openFileDialogIcon = new System.Windows.Forms.OpenFileDialog();
             this.openFileDialogExample = new System.Windows.Forms.OpenFileDialog();
-            this.ctlRules = new IfcDoc.CtlRules();
-            this.ctlParameters = new IfcDoc.CtlParameters();
-            this.ctlOperators = new IfcDoc.CtlOperators();
-            this.textBoxPublicationNote = new System.Windows.Forms.TextBox();
+            this.checkBoxPublishBSI = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerTranslation)).BeginInit();
             this.splitContainerTranslation.Panel1.SuspendLayout();
             this.splitContainerTranslation.Panel2.SuspendLayout();
@@ -271,6 +279,7 @@
             this.tabPagePublication.SuspendLayout();
             this.tabPageFormats.SuspendLayout();
             this.toolStrip5.SuspendLayout();
+            this.tabPageProcess.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainerTranslation
@@ -348,6 +357,7 @@
             this.tabControl.Controls.Add(this.tabPageViews);
             this.tabControl.Controls.Add(this.tabPagePublication);
             this.tabControl.Controls.Add(this.tabPageFormats);
+            this.tabControl.Controls.Add(this.tabPageProcess);
             resources.ApplyResources(this.tabControl, "tabControl");
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
@@ -567,12 +577,35 @@
             this.tabPageTemplate.Name = "tabPageTemplate";
             this.tabPageTemplate.UseVisualStyleBackColor = true;
             // 
+            // ctlRules
+            // 
+            this.ctlRules.Attribute = null;
+            this.ctlRules.BaseTemplate = null;
+            this.ctlRules.CurrentInstance = null;
+            resources.ApplyResources(this.ctlRules, "ctlRules");
+            this.ctlRules.Name = "ctlRules";
+            this.ctlRules.Project = null;
+            this.ctlRules.Selection = null;
+            this.ctlRules.Template = null;
+            this.ctlRules.SelectionChanged += new System.EventHandler(this.ctlRules_SelectionChanged);
+            this.ctlRules.ContentChanged += new System.EventHandler(this.ctlRules_ContentChanged);
+            // 
             // tabPageConcept
             // 
             this.tabPageConcept.Controls.Add(this.ctlParameters);
             resources.ApplyResources(this.tabPageConcept, "tabPageConcept");
             this.tabPageConcept.Name = "tabPageConcept";
             this.tabPageConcept.UseVisualStyleBackColor = true;
+            // 
+            // ctlParameters
+            // 
+            this.ctlParameters.ConceptItem = null;
+            this.ctlParameters.ConceptLeaf = null;
+            this.ctlParameters.ConceptRoot = null;
+            this.ctlParameters.CurrentInstance = null;
+            resources.ApplyResources(this.ctlParameters, "ctlParameters");
+            this.ctlParameters.Name = "ctlParameters";
+            this.ctlParameters.Project = null;
             // 
             // tabPageRequirements
             // 
@@ -1705,6 +1738,16 @@
             this.tabPageOperations.Name = "tabPageOperations";
             this.tabPageOperations.UseVisualStyleBackColor = true;
             // 
+            // ctlOperators
+            // 
+            this.ctlOperators.CurrentInstance = null;
+            this.ctlOperators.CurrentPopulation = null;
+            resources.ApplyResources(this.ctlOperators, "ctlOperators");
+            this.ctlOperators.Name = "ctlOperators";
+            this.ctlOperators.Project = null;
+            this.ctlOperators.Rule = null;
+            this.ctlOperators.Template = null;
+            // 
             // tabPageConceptRoot
             // 
             this.tabPageConceptRoot.Controls.Add(this.listViewConceptRoot);
@@ -1891,6 +1934,7 @@
             // 
             // tabPagePublication
             // 
+            this.tabPagePublication.Controls.Add(this.checkBoxPublishBSI);
             this.tabPagePublication.Controls.Add(this.textBoxPublicationNote);
             this.tabPagePublication.Controls.Add(this.checkBoxPublishHtmlExamples);
             this.tabPagePublication.Controls.Add(this.checkBoxPublishExchangeTables);
@@ -1904,6 +1948,14 @@
             resources.ApplyResources(this.tabPagePublication, "tabPagePublication");
             this.tabPagePublication.Name = "tabPagePublication";
             this.tabPagePublication.UseVisualStyleBackColor = true;
+            // 
+            // textBoxPublicationNote
+            // 
+            resources.ApplyResources(this.textBoxPublicationNote, "textBoxPublicationNote");
+            this.textBoxPublicationNote.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.textBoxPublicationNote.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBoxPublicationNote.Name = "textBoxPublicationNote";
+            this.textBoxPublicationNote.ReadOnly = true;
             // 
             // checkBoxPublishHtmlExamples
             // 
@@ -2032,6 +2084,278 @@
             this.toolStripButtonFormatMarkup.Name = "toolStripButtonFormatMarkup";
             this.toolStripButtonFormatMarkup.Click += new System.EventHandler(this.toolStripButtonFormatMarkup_Click);
             // 
+            // tabPageProcess
+            // 
+            this.tabPageProcess.Controls.Add(this.label25);
+            this.tabPageProcess.Controls.Add(this.comboBoxProcessOutput);
+            this.tabPageProcess.Controls.Add(this.label26);
+            this.tabPageProcess.Controls.Add(this.comboBoxProcessInput);
+            this.tabPageProcess.Controls.Add(this.label30);
+            this.tabPageProcess.Controls.Add(this.comboBoxProcessClassification);
+            resources.ApplyResources(this.tabPageProcess, "tabPageProcess");
+            this.tabPageProcess.Name = "tabPageProcess";
+            this.tabPageProcess.UseVisualStyleBackColor = true;
+            // 
+            // label25
+            // 
+            resources.ApplyResources(this.label25, "label25");
+            this.label25.Name = "label25";
+            // 
+            // comboBoxProcessOutput
+            // 
+            resources.ApplyResources(this.comboBoxProcessOutput, "comboBoxProcessOutput");
+            this.comboBoxProcessOutput.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxProcessOutput.FormattingEnabled = true;
+            this.comboBoxProcessOutput.Items.AddRange(new object[] {
+            resources.GetString("comboBoxProcessOutput.Items"),
+            resources.GetString("comboBoxProcessOutput.Items1"),
+            resources.GetString("comboBoxProcessOutput.Items2"),
+            resources.GetString("comboBoxProcessOutput.Items3"),
+            resources.GetString("comboBoxProcessOutput.Items4"),
+            resources.GetString("comboBoxProcessOutput.Items5"),
+            resources.GetString("comboBoxProcessOutput.Items6"),
+            resources.GetString("comboBoxProcessOutput.Items7"),
+            resources.GetString("comboBoxProcessOutput.Items8"),
+            resources.GetString("comboBoxProcessOutput.Items9"),
+            resources.GetString("comboBoxProcessOutput.Items10"),
+            resources.GetString("comboBoxProcessOutput.Items11"),
+            resources.GetString("comboBoxProcessOutput.Items12"),
+            resources.GetString("comboBoxProcessOutput.Items13"),
+            resources.GetString("comboBoxProcessOutput.Items14"),
+            resources.GetString("comboBoxProcessOutput.Items15"),
+            resources.GetString("comboBoxProcessOutput.Items16"),
+            resources.GetString("comboBoxProcessOutput.Items17"),
+            resources.GetString("comboBoxProcessOutput.Items18"),
+            resources.GetString("comboBoxProcessOutput.Items19"),
+            resources.GetString("comboBoxProcessOutput.Items20"),
+            resources.GetString("comboBoxProcessOutput.Items21"),
+            resources.GetString("comboBoxProcessOutput.Items22"),
+            resources.GetString("comboBoxProcessOutput.Items23"),
+            resources.GetString("comboBoxProcessOutput.Items24"),
+            resources.GetString("comboBoxProcessOutput.Items25"),
+            resources.GetString("comboBoxProcessOutput.Items26"),
+            resources.GetString("comboBoxProcessOutput.Items27"),
+            resources.GetString("comboBoxProcessOutput.Items28"),
+            resources.GetString("comboBoxProcessOutput.Items29"),
+            resources.GetString("comboBoxProcessOutput.Items30"),
+            resources.GetString("comboBoxProcessOutput.Items31"),
+            resources.GetString("comboBoxProcessOutput.Items32"),
+            resources.GetString("comboBoxProcessOutput.Items33"),
+            resources.GetString("comboBoxProcessOutput.Items34"),
+            resources.GetString("comboBoxProcessOutput.Items35"),
+            resources.GetString("comboBoxProcessOutput.Items36"),
+            resources.GetString("comboBoxProcessOutput.Items37"),
+            resources.GetString("comboBoxProcessOutput.Items38"),
+            resources.GetString("comboBoxProcessOutput.Items39"),
+            resources.GetString("comboBoxProcessOutput.Items40"),
+            resources.GetString("comboBoxProcessOutput.Items41"),
+            resources.GetString("comboBoxProcessOutput.Items42"),
+            resources.GetString("comboBoxProcessOutput.Items43"),
+            resources.GetString("comboBoxProcessOutput.Items44"),
+            resources.GetString("comboBoxProcessOutput.Items45"),
+            resources.GetString("comboBoxProcessOutput.Items46"),
+            resources.GetString("comboBoxProcessOutput.Items47"),
+            resources.GetString("comboBoxProcessOutput.Items48"),
+            resources.GetString("comboBoxProcessOutput.Items49"),
+            resources.GetString("comboBoxProcessOutput.Items50"),
+            resources.GetString("comboBoxProcessOutput.Items51"),
+            resources.GetString("comboBoxProcessOutput.Items52"),
+            resources.GetString("comboBoxProcessOutput.Items53"),
+            resources.GetString("comboBoxProcessOutput.Items54"),
+            resources.GetString("comboBoxProcessOutput.Items55"),
+            resources.GetString("comboBoxProcessOutput.Items56"),
+            resources.GetString("comboBoxProcessOutput.Items57"),
+            resources.GetString("comboBoxProcessOutput.Items58"),
+            resources.GetString("comboBoxProcessOutput.Items59"),
+            resources.GetString("comboBoxProcessOutput.Items60"),
+            resources.GetString("comboBoxProcessOutput.Items61"),
+            resources.GetString("comboBoxProcessOutput.Items62"),
+            resources.GetString("comboBoxProcessOutput.Items63"),
+            resources.GetString("comboBoxProcessOutput.Items64"),
+            resources.GetString("comboBoxProcessOutput.Items65"),
+            resources.GetString("comboBoxProcessOutput.Items66"),
+            resources.GetString("comboBoxProcessOutput.Items67"),
+            resources.GetString("comboBoxProcessOutput.Items68"),
+            resources.GetString("comboBoxProcessOutput.Items69"),
+            resources.GetString("comboBoxProcessOutput.Items70"),
+            resources.GetString("comboBoxProcessOutput.Items71"),
+            resources.GetString("comboBoxProcessOutput.Items72"),
+            resources.GetString("comboBoxProcessOutput.Items73"),
+            resources.GetString("comboBoxProcessOutput.Items74"),
+            resources.GetString("comboBoxProcessOutput.Items75"),
+            resources.GetString("comboBoxProcessOutput.Items76"),
+            resources.GetString("comboBoxProcessOutput.Items77"),
+            resources.GetString("comboBoxProcessOutput.Items78"),
+            resources.GetString("comboBoxProcessOutput.Items79"),
+            resources.GetString("comboBoxProcessOutput.Items80"),
+            resources.GetString("comboBoxProcessOutput.Items81"),
+            resources.GetString("comboBoxProcessOutput.Items82"),
+            resources.GetString("comboBoxProcessOutput.Items83"),
+            resources.GetString("comboBoxProcessOutput.Items84"),
+            resources.GetString("comboBoxProcessOutput.Items85"),
+            resources.GetString("comboBoxProcessOutput.Items86"),
+            resources.GetString("comboBoxProcessOutput.Items87"),
+            resources.GetString("comboBoxProcessOutput.Items88"),
+            resources.GetString("comboBoxProcessOutput.Items89"),
+            resources.GetString("comboBoxProcessOutput.Items90"),
+            resources.GetString("comboBoxProcessOutput.Items91"),
+            resources.GetString("comboBoxProcessOutput.Items92"),
+            resources.GetString("comboBoxProcessOutput.Items93"),
+            resources.GetString("comboBoxProcessOutput.Items94"),
+            resources.GetString("comboBoxProcessOutput.Items95"),
+            resources.GetString("comboBoxProcessOutput.Items96"),
+            resources.GetString("comboBoxProcessOutput.Items97"),
+            resources.GetString("comboBoxProcessOutput.Items98"),
+            resources.GetString("comboBoxProcessOutput.Items99"),
+            resources.GetString("comboBoxProcessOutput.Items100"),
+            resources.GetString("comboBoxProcessOutput.Items101"),
+            resources.GetString("comboBoxProcessOutput.Items102"),
+            resources.GetString("comboBoxProcessOutput.Items103"),
+            resources.GetString("comboBoxProcessOutput.Items104"),
+            resources.GetString("comboBoxProcessOutput.Items105")});
+            this.comboBoxProcessOutput.Name = "comboBoxProcessOutput";
+            // 
+            // label26
+            // 
+            resources.ApplyResources(this.label26, "label26");
+            this.label26.Name = "label26";
+            // 
+            // comboBoxProcessInput
+            // 
+            resources.ApplyResources(this.comboBoxProcessInput, "comboBoxProcessInput");
+            this.comboBoxProcessInput.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxProcessInput.FormattingEnabled = true;
+            this.comboBoxProcessInput.Items.AddRange(new object[] {
+            resources.GetString("comboBoxProcessInput.Items"),
+            resources.GetString("comboBoxProcessInput.Items1"),
+            resources.GetString("comboBoxProcessInput.Items2"),
+            resources.GetString("comboBoxProcessInput.Items3"),
+            resources.GetString("comboBoxProcessInput.Items4"),
+            resources.GetString("comboBoxProcessInput.Items5"),
+            resources.GetString("comboBoxProcessInput.Items6"),
+            resources.GetString("comboBoxProcessInput.Items7"),
+            resources.GetString("comboBoxProcessInput.Items8"),
+            resources.GetString("comboBoxProcessInput.Items9"),
+            resources.GetString("comboBoxProcessInput.Items10"),
+            resources.GetString("comboBoxProcessInput.Items11"),
+            resources.GetString("comboBoxProcessInput.Items12"),
+            resources.GetString("comboBoxProcessInput.Items13"),
+            resources.GetString("comboBoxProcessInput.Items14"),
+            resources.GetString("comboBoxProcessInput.Items15"),
+            resources.GetString("comboBoxProcessInput.Items16"),
+            resources.GetString("comboBoxProcessInput.Items17"),
+            resources.GetString("comboBoxProcessInput.Items18"),
+            resources.GetString("comboBoxProcessInput.Items19"),
+            resources.GetString("comboBoxProcessInput.Items20"),
+            resources.GetString("comboBoxProcessInput.Items21"),
+            resources.GetString("comboBoxProcessInput.Items22"),
+            resources.GetString("comboBoxProcessInput.Items23"),
+            resources.GetString("comboBoxProcessInput.Items24"),
+            resources.GetString("comboBoxProcessInput.Items25"),
+            resources.GetString("comboBoxProcessInput.Items26"),
+            resources.GetString("comboBoxProcessInput.Items27"),
+            resources.GetString("comboBoxProcessInput.Items28"),
+            resources.GetString("comboBoxProcessInput.Items29"),
+            resources.GetString("comboBoxProcessInput.Items30"),
+            resources.GetString("comboBoxProcessInput.Items31"),
+            resources.GetString("comboBoxProcessInput.Items32"),
+            resources.GetString("comboBoxProcessInput.Items33"),
+            resources.GetString("comboBoxProcessInput.Items34"),
+            resources.GetString("comboBoxProcessInput.Items35"),
+            resources.GetString("comboBoxProcessInput.Items36"),
+            resources.GetString("comboBoxProcessInput.Items37"),
+            resources.GetString("comboBoxProcessInput.Items38"),
+            resources.GetString("comboBoxProcessInput.Items39"),
+            resources.GetString("comboBoxProcessInput.Items40"),
+            resources.GetString("comboBoxProcessInput.Items41"),
+            resources.GetString("comboBoxProcessInput.Items42"),
+            resources.GetString("comboBoxProcessInput.Items43"),
+            resources.GetString("comboBoxProcessInput.Items44"),
+            resources.GetString("comboBoxProcessInput.Items45"),
+            resources.GetString("comboBoxProcessInput.Items46"),
+            resources.GetString("comboBoxProcessInput.Items47"),
+            resources.GetString("comboBoxProcessInput.Items48"),
+            resources.GetString("comboBoxProcessInput.Items49"),
+            resources.GetString("comboBoxProcessInput.Items50"),
+            resources.GetString("comboBoxProcessInput.Items51"),
+            resources.GetString("comboBoxProcessInput.Items52"),
+            resources.GetString("comboBoxProcessInput.Items53"),
+            resources.GetString("comboBoxProcessInput.Items54"),
+            resources.GetString("comboBoxProcessInput.Items55"),
+            resources.GetString("comboBoxProcessInput.Items56"),
+            resources.GetString("comboBoxProcessInput.Items57"),
+            resources.GetString("comboBoxProcessInput.Items58"),
+            resources.GetString("comboBoxProcessInput.Items59"),
+            resources.GetString("comboBoxProcessInput.Items60"),
+            resources.GetString("comboBoxProcessInput.Items61"),
+            resources.GetString("comboBoxProcessInput.Items62"),
+            resources.GetString("comboBoxProcessInput.Items63"),
+            resources.GetString("comboBoxProcessInput.Items64"),
+            resources.GetString("comboBoxProcessInput.Items65"),
+            resources.GetString("comboBoxProcessInput.Items66"),
+            resources.GetString("comboBoxProcessInput.Items67"),
+            resources.GetString("comboBoxProcessInput.Items68"),
+            resources.GetString("comboBoxProcessInput.Items69"),
+            resources.GetString("comboBoxProcessInput.Items70"),
+            resources.GetString("comboBoxProcessInput.Items71"),
+            resources.GetString("comboBoxProcessInput.Items72"),
+            resources.GetString("comboBoxProcessInput.Items73"),
+            resources.GetString("comboBoxProcessInput.Items74"),
+            resources.GetString("comboBoxProcessInput.Items75"),
+            resources.GetString("comboBoxProcessInput.Items76"),
+            resources.GetString("comboBoxProcessInput.Items77"),
+            resources.GetString("comboBoxProcessInput.Items78"),
+            resources.GetString("comboBoxProcessInput.Items79"),
+            resources.GetString("comboBoxProcessInput.Items80"),
+            resources.GetString("comboBoxProcessInput.Items81"),
+            resources.GetString("comboBoxProcessInput.Items82"),
+            resources.GetString("comboBoxProcessInput.Items83"),
+            resources.GetString("comboBoxProcessInput.Items84"),
+            resources.GetString("comboBoxProcessInput.Items85"),
+            resources.GetString("comboBoxProcessInput.Items86"),
+            resources.GetString("comboBoxProcessInput.Items87"),
+            resources.GetString("comboBoxProcessInput.Items88"),
+            resources.GetString("comboBoxProcessInput.Items89"),
+            resources.GetString("comboBoxProcessInput.Items90"),
+            resources.GetString("comboBoxProcessInput.Items91"),
+            resources.GetString("comboBoxProcessInput.Items92"),
+            resources.GetString("comboBoxProcessInput.Items93"),
+            resources.GetString("comboBoxProcessInput.Items94"),
+            resources.GetString("comboBoxProcessInput.Items95"),
+            resources.GetString("comboBoxProcessInput.Items96"),
+            resources.GetString("comboBoxProcessInput.Items97"),
+            resources.GetString("comboBoxProcessInput.Items98"),
+            resources.GetString("comboBoxProcessInput.Items99"),
+            resources.GetString("comboBoxProcessInput.Items100"),
+            resources.GetString("comboBoxProcessInput.Items101"),
+            resources.GetString("comboBoxProcessInput.Items102"),
+            resources.GetString("comboBoxProcessInput.Items103"),
+            resources.GetString("comboBoxProcessInput.Items104"),
+            resources.GetString("comboBoxProcessInput.Items105")});
+            this.comboBoxProcessInput.Name = "comboBoxProcessInput";
+            // 
+            // label30
+            // 
+            resources.ApplyResources(this.label30, "label30");
+            this.label30.Name = "label30";
+            // 
+            // comboBoxProcessClassification
+            // 
+            resources.ApplyResources(this.comboBoxProcessClassification, "comboBoxProcessClassification");
+            this.comboBoxProcessClassification.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxProcessClassification.FormattingEnabled = true;
+            this.comboBoxProcessClassification.Items.AddRange(new object[] {
+            resources.GetString("comboBoxProcessClassification.Items"),
+            resources.GetString("comboBoxProcessClassification.Items1"),
+            resources.GetString("comboBoxProcessClassification.Items2"),
+            resources.GetString("comboBoxProcessClassification.Items3"),
+            resources.GetString("comboBoxProcessClassification.Items4"),
+            resources.GetString("comboBoxProcessClassification.Items5"),
+            resources.GetString("comboBoxProcessClassification.Items6"),
+            resources.GetString("comboBoxProcessClassification.Items7"),
+            resources.GetString("comboBoxProcessClassification.Items8")});
+            this.comboBoxProcessClassification.Name = "comboBoxProcessClassification";
+            // 
             // imageListRules
             // 
             this.imageListRules.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
@@ -2047,46 +2371,12 @@
             this.openFileDialogExample.DefaultExt = "ifc";
             resources.ApplyResources(this.openFileDialogExample, "openFileDialogExample");
             // 
-            // ctlRules
+            // checkBoxPublishBSI
             // 
-            this.ctlRules.Attribute = null;
-            this.ctlRules.BaseTemplate = null;
-            this.ctlRules.CurrentInstance = null;
-            resources.ApplyResources(this.ctlRules, "ctlRules");
-            this.ctlRules.Name = "ctlRules";
-            this.ctlRules.Project = null;
-            this.ctlRules.Selection = null;
-            this.ctlRules.Template = null;
-            this.ctlRules.SelectionChanged += new System.EventHandler(this.ctlRules_SelectionChanged);
-            this.ctlRules.ContentChanged += new System.EventHandler(this.ctlRules_ContentChanged);
-            // 
-            // ctlParameters
-            // 
-            this.ctlParameters.ConceptItem = null;
-            this.ctlParameters.ConceptLeaf = null;
-            this.ctlParameters.ConceptRoot = null;
-            this.ctlParameters.CurrentInstance = null;
-            resources.ApplyResources(this.ctlParameters, "ctlParameters");
-            this.ctlParameters.Name = "ctlParameters";
-            this.ctlParameters.Project = null;
-            // 
-            // ctlOperators
-            // 
-            this.ctlOperators.CurrentInstance = null;
-            this.ctlOperators.CurrentPopulation = null;
-            resources.ApplyResources(this.ctlOperators, "ctlOperators");
-            this.ctlOperators.Name = "ctlOperators";
-            this.ctlOperators.Project = null;
-            this.ctlOperators.Rule = null;
-            this.ctlOperators.Template = null;
-            // 
-            // textBoxPublicationNote
-            // 
-            resources.ApplyResources(this.textBoxPublicationNote, "textBoxPublicationNote");
-            this.textBoxPublicationNote.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.textBoxPublicationNote.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBoxPublicationNote.Name = "textBoxPublicationNote";
-            this.textBoxPublicationNote.ReadOnly = true;
+            resources.ApplyResources(this.checkBoxPublishBSI, "checkBoxPublishBSI");
+            this.checkBoxPublishBSI.Name = "checkBoxPublishBSI";
+            this.checkBoxPublishBSI.UseVisualStyleBackColor = true;
+            this.checkBoxPublishBSI.CheckedChanged += new System.EventHandler(this.checkBoxPublishBSI_CheckedChanged);
             // 
             // CtlProperties
             // 
@@ -2157,6 +2447,8 @@
             this.tabPageFormats.PerformLayout();
             this.toolStrip5.ResumeLayout(false);
             this.toolStrip5.PerformLayout();
+            this.tabPageProcess.ResumeLayout(false);
+            this.tabPageProcess.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -2369,5 +2661,13 @@
         private System.Windows.Forms.CheckBox checkBoxPublishHtmlExamples;
         private System.Windows.Forms.ToolStripButton toolStripButtonExampleLink;
         private System.Windows.Forms.TextBox textBoxPublicationNote;
+        private System.Windows.Forms.TabPage tabPageProcess;
+        private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.ComboBox comboBoxProcessOutput;
+        private System.Windows.Forms.Label label26;
+        private System.Windows.Forms.ComboBox comboBoxProcessInput;
+        private System.Windows.Forms.Label label30;
+        private System.Windows.Forms.ComboBox comboBoxProcessClassification;
+        private System.Windows.Forms.CheckBox checkBoxPublishBSI;
     }
 }

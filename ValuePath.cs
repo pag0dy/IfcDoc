@@ -482,6 +482,12 @@ namespace IfcDoc
                 value = this.m_property.GetValue(target, null);
                 if (value is SEntity)
                 {
+                    // hack for GSA
+                    if(value.GetType().Name.Equals("IfcIrregularTimeSeries"))
+                    {
+                        return value;
+                    }
+
                     value = this.m_inner.GetValue((SEntity)value, parameters);
 
                     if (this.m_identifier != null && value != null)
@@ -544,6 +550,11 @@ namespace IfcDoc
                     if (docProp != null)
                     {
                         desc = docProp.Documentation;// localize??
+
+                        if (String.IsNullOrEmpty(docProp.Documentation))
+                        {
+                            this.ToString();
+                        }
                     }
                 }
                 else if (docPset is DocQuantitySet)
@@ -552,8 +563,40 @@ namespace IfcDoc
                     if (docProp != null)
                     {
                         desc = docProp.Documentation;// localize??
+
+                        if(String.IsNullOrEmpty(docProp.Documentation))
+                        {
+                            this.ToString();
+                        }
                     }
                 }
+            }
+            else if (valpath != null &&
+                valpath.Property != null &&
+                valpath.Property.Name.Equals("HasAssignments") &&
+                valpath.InnerPath != null && valpath.InnerPath.Type.Name.Equals("IfcRelAssignsToControl") &&
+                valpath.InnerPath.InnerPath != null && valpath.InnerPath.InnerPath.Type.Name.Equals("IfcPerformanceHistory"))
+            {
+                DocObject docPset = null;
+                if(mapEntity.TryGetValue(valpath.InnerPath.InnerPath.Identifier, out docPset))
+                {
+                    DocProperty docProp = ((DocPropertySet)docPset).GetProperty(valpath.InnerPath.InnerPath.InnerPath.InnerPath.Identifier);
+                    if (docProp != null)
+                    {
+                        desc = docProp.Documentation;// localize??
+
+                        if(docProp.Documentation == null)
+                        {
+                            DocLocalization docLoc = docProp.GetLocalization(null);
+                            if(docLoc != null)
+                            {
+                                desc = docLoc.Documentation;
+                            }
+                        }
+                    }
+                }
+
+                this.ToString();
             }
             else if (valpath != null &&
                 valpath.Property != null &&
@@ -569,6 +612,11 @@ namespace IfcDoc
                     if (docProp != null)
                     {
                         desc = docProp.Documentation;// localize??
+
+                        if(String.IsNullOrEmpty(docProp.Documentation))
+                        {
+                            this.ToString();
+                        }
                     }
                 }
             }
@@ -585,6 +633,23 @@ namespace IfcDoc
                 {
                     DocProperty docProp = ((DocPropertySet)docPset).GetProperty(valpath.InnerPath.InnerPath.Identifier);
                     if(docProp != null)
+                    {
+                        desc = docProp.Documentation;
+                    }
+                }
+            }
+            else if (valpath != null &&
+                valpath.Property != null &&
+                valpath.Property.Name.Equals("HasProperties") &&
+                valpath.InnerPath != null && valpath.InnerPath.Type.Name.Equals("IfcMaterialProperties"))
+            {
+                DocObject docPset = null;
+                mapEntity.TryGetValue(valpath.Identifier, out docPset);
+
+                if (docPset is DocPropertySet)
+                {
+                    DocProperty docProp = ((DocPropertySet)docPset).GetProperty(valpath.InnerPath.Identifier);
+                    if (docProp != null)
                     {
                         desc = docProp.Documentation;
                     }
@@ -621,20 +686,23 @@ namespace IfcDoc
 
                         // lookup description of port
                         Guid guidPortNesting = new Guid("bafc93b7-d0e2-42d8-84cf-5da20ee1480a");
-                        foreach (DocConceptRoot docRoot in docView.ConceptRoots)
+                        if (docView != null)
                         {
-                            if (docRoot.ApplicableEntity == valpath.Type)
+                            foreach (DocConceptRoot docRoot in docView.ConceptRoots)
                             {
-                                foreach(DocTemplateUsage docConcept in docRoot.Concepts)
+                                if (docRoot.ApplicableEntity == valpath.Type)
                                 {
-                                    if(docConcept.Definition != null && docConcept.Definition.Uuid == guidPortNesting)
+                                    foreach (DocTemplateUsage docConcept in docRoot.Concepts)
                                     {
-                                        foreach (DocTemplateItem docItem in docConcept.Items)
+                                        if (docConcept.Definition != null && docConcept.Definition.Uuid == guidPortNesting)
                                         {
-                                            if (docItem.Name != null && docItem.Name.Equals(portname))
+                                            foreach (DocTemplateItem docItem in docConcept.Items)
                                             {
-                                                desc = docItem.Documentation;
-                                                break;
+                                                if (docItem.Name != null && docItem.Name.Equals(portname))
+                                                {
+                                                    desc = docItem.Documentation;
+                                                    break;
+                                                }
                                             }
                                         }
                                     }
@@ -659,6 +727,13 @@ namespace IfcDoc
                 {
                     desc = "The IFC class identifier indicating the subtype of object.";
                 }
+            }
+
+            // clear out any notes
+            int block = desc.IndexOf("<blockquote");
+            if(block != -1)
+            {
+                desc = desc.Substring(0, block);
             }
 
             return desc;

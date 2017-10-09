@@ -219,6 +219,11 @@ namespace IfcDoc
                         portprefix = @".IsNestedBy[]\IfcRelNests.RelatedObjects['" + form.SelectedPort + @"']\IfcDistributionPort";
                     }
 
+                    if (form.SelectedPropertySet != null && form.SelectedPropertySet.PropertySetType == "PSET_PERFORMANCEDRIVEN")
+                    {
+                        portprefix += @".HasAssignments[]\IfcRelAssignsToControl.RelatingControl\IfcPerformanceHistory";
+                    }
+
                     string value = @"\" + this.m_base.Name + portprefix;
 
                     if (form.SelectedProperty != null)
@@ -248,15 +253,24 @@ namespace IfcDoc
 
                             case DocPropertyTemplateTypeEnum.P_REFERENCEVALUE:
                                 valueprop = "PropertyReference";
-                                datatype = "IfcIrregularTimeSeries.Values[]\\" + form.SelectedProperty.SecondaryDataType;
+                                datatype = "IfcIrregularTimeSeries.Values[]\\IfcIrregularTimeSeriesValue.ListValues[]\\" + form.SelectedProperty.SecondaryDataType;
                                 break;
 
                             // other property types are not supported
                         }
 
-                        value += @".IsDefinedBy['" + form.SelectedPropertySet +
-                            @"']\IfcRelDefinesByProperties.RelatingPropertyDefinition\IfcPropertySet.HasProperties['" + form.SelectedProperty +
-                            @"']\" + form.SelectedProperty.GetEntityName() + @"." + valueprop + @"\" + datatype;
+                        if (form.SelectedProperty.PropertyType == DocPropertyTemplateTypeEnum.COMPLEX)
+                        {
+                            value += @".IsDefinedBy['" + form.SelectedPropertySet +
+                                @"']\IfcRelDefinesByProperties.RelatingPropertyDefinition\IfcPropertySet.HasProperties['" + form.SelectedProperty +
+                                @"']\" + form.SelectedProperty.GetEntityName();
+                        }
+                        else
+                        {
+                            value += @".IsDefinedBy['" + form.SelectedPropertySet +
+                                @"']\IfcRelDefinesByProperties.RelatingPropertyDefinition\IfcPropertySet.HasProperties['" + form.SelectedProperty +
+                                @"']\" + form.SelectedProperty.GetEntityName() + @"." + valueprop + @"\" + datatype;
+                        }
 
                         // special cases
                         if (this.m_base.Name.Equals("IfcMaterial"))

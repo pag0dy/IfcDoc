@@ -461,7 +461,7 @@ namespace IfcDoc.Format.JAV
             return sb.ToString();
         }
 
-        public string FormatEnumeration(DocEnumeration docEnumeration)
+        public string FormatEnumeration(DocEnumeration docEnumeration, Dictionary<string, DocObject> map, Dictionary<DocObject, bool> included)
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("public enum " + docEnumeration.Name);
@@ -479,7 +479,7 @@ namespace IfcDoc.Format.JAV
             return "public interface " + docSelect.Name + "\r\n{\r\n}\r\n";
         }
 
-        public string FormatDefined(DocDefined docDefined)
+        public string FormatDefined(DocDefined docDefined, Dictionary<string, DocObject> map, Dictionary<DocObject, bool> included)
         {
             // nothing -- java does not support structures
             return "/* " + docDefined.Name + " : " + docDefined.DefinedType + " (Java does not support structures, so usage of defined types are inline for efficiency.) */\r\n";
@@ -494,26 +494,31 @@ namespace IfcDoc.Format.JAV
                 {
                     foreach (DocType docType in docSchema.Types)
                     {
-                        bool use = false;
-                        included.TryGetValue(docType, out use);
+                        bool use = true;
+                        if (included != null)
+                        {
+                            use = false;
+                            included.TryGetValue(docType, out use);
+                        }
+
                         if (use)
                         {
                             if (docType is DocDefined)
                             {
                                 DocDefined docDefined = (DocDefined)docType;
-                                string text = this.Indent(this.FormatDefined(docDefined), 1);
+                                string text = this.Indent(this.FormatDefined(docDefined, map, included), 1);
                                 sb.AppendLine(text);
                             }
                             else if (docType is DocSelect)
                             {
                                 DocSelect docSelect = (DocSelect)docType;
-                                string text = this.Indent(this.FormatSelect(docSelect, null, null), 1);
+                                string text = this.Indent(this.FormatSelect(docSelect, map, included), 1);
                                 sb.AppendLine(text);
                             }
                             else if (docType is DocEnumeration)
                             {
                                 DocEnumeration docEnumeration = (DocEnumeration)docType;
-                                string text = this.Indent(this.FormatEnumeration(docEnumeration), 1);
+                                string text = this.Indent(this.FormatEnumeration(docEnumeration, map, included), 1);
                                 sb.AppendLine(text);
                             }
                             sb.AppendLine();
@@ -522,8 +527,12 @@ namespace IfcDoc.Format.JAV
 
                     foreach (DocEntity docEntity in docSchema.Entities)
                     {
-                        bool use = false;
-                        included.TryGetValue(docEntity, out use);
+                        bool use = true;
+                        if (included != null)
+                        {
+                            use = false;
+                            included.TryGetValue(docEntity, out use);
+                        }
                         if (use)
                         {
                             string text = this.Indent(this.FormatEntity(docEntity, map, included), 1);

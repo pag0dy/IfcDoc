@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
@@ -123,7 +123,7 @@ namespace IfcDoc
             return sb.ToString();
         }
 
-        public string FormatEnumeration(DocEnumeration docEnumeration)
+        public string FormatEnumeration(DocEnumeration docEnumeration, Dictionary<string, DocObject> map, Dictionary<DocObject, bool> included)
         {
             return null; // nothing to define
         }
@@ -133,7 +133,7 @@ namespace IfcDoc
             return null; // nothing to define
         }
 
-        public string FormatDefined(DocDefined docDefined)
+        public string FormatDefined(DocDefined docDefined, Dictionary<string, DocObject> map, Dictionary<DocObject, bool> included)
         {
             return null; // nothing to define
         }
@@ -147,27 +147,31 @@ namespace IfcDoc
                 {
                     foreach (DocType docType in docSchema.Types)
                     {
-                        bool use = false;
-                        included.TryGetValue(docType, out use);
+                        bool use = true;
+                        if (included != null)
+                        {
+                            use = false;
+                            included.TryGetValue(docType, out use);
+                        }
 
                         if (use)
                         {
                             if (docType is DocDefined)
                             {
                                 DocDefined docDefined = (DocDefined)docType;
-                                string text = this.FormatDefined(docDefined);
+                                string text = this.FormatDefined(docDefined, map, included);
                                 sb.AppendLine(text);
                             }
                             else if (docType is DocSelect)
                             {
                                 DocSelect docSelect = (DocSelect)docType;
-                                string text = this.FormatSelect(docSelect, null, null);
+                                string text = this.FormatSelect(docSelect, map, included);
                                 sb.AppendLine(text);
                             }
                             else if (docType is DocEnumeration)
                             {
                                 DocEnumeration docEnumeration = (DocEnumeration)docType;
-                                string text = this.FormatEnumeration(docEnumeration);
+                                string text = this.FormatEnumeration(docEnumeration, map, included);
                                 sb.AppendLine(text);
                             }
                         }
@@ -175,8 +179,12 @@ namespace IfcDoc
 
                     foreach (DocEntity docEntity in docSchema.Entities)
                     {
-                        bool use = false;
-                        included.TryGetValue(docEntity, out use);
+                        bool use = true;
+                        if (included != null)
+                        {
+                            use = false;
+                            included.TryGetValue(docEntity, out use);
+                        }
 
                         if (use)
                         {
@@ -191,7 +199,7 @@ namespace IfcDoc
             return sb.ToString();
         }
 
-        public string FormatDataConcept(DocProject docProject, DocPublication docPublication, DocExchangeDefinition docExchange, Dictionary<string, DocObject> map, Dictionary<long, SEntity> instances, SEntity root, bool markup, DocModelView docView, DocConceptRoot docRoot, DocTemplateUsage docConcept)
+        public string FormatDataConcept(DocProject docProject, DocPublication docPublication, DocExchangeDefinition docExchange, Dictionary<string, DocObject> map, Dictionary<string, Type> typemap, Dictionary<long, SEntity> instances, SEntity root, bool markup, DocModelView docView, DocConceptRoot docRoot, DocTemplateUsage docConcept)
         {
             StringBuilder sb = new StringBuilder();
 
@@ -243,143 +251,174 @@ namespace IfcDoc
             sb.AppendLine("</tr>");
 
             // generate data rows
+            List<DocModelRule> trace = new List<DocModelRule>();
+
             foreach (SEntity e in instances.Values)
             {
                 string eachname = e.GetType().Name;
                 if (docRoot.ApplicableEntity.IsInstanceOfType(e))
                 {
                     bool includerow = true;
-                    StringBuilder sbRow = new StringBuilder();
 
-                    sbRow.Append("<tr>");
-                    int iCol = 0;
-                    foreach (DocTemplateItem docItem in docConcept.Items)
+                    // if root has more complex rules, check them
+                    if (docRoot.ApplicableTemplate != null && docRoot.ApplicableItems.Count > 0)
                     {
-                        sbRow.Append("<td" + colstyles[iCol]);
-                        CvtValuePath valpath = colmaps[iCol];
-                        string format = colformat[iCol];
+                        includerow = false;
 
-                        iCol++;
-
-                        if (valpath != null)
+                        // must check1
+                        foreach (DocTemplateItem docItem in docRoot.ApplicableItems)
                         {
-                            string nn = docItem.GetParameterValue("Name");
-
-                            if (valpath.ToString().Contains("IfcMaterialLayerSetUsage"))
+                            foreach (DocModelRule rule in docRoot.ApplicableTemplate.Rules)
                             {
-                                this.ToString();
-                            }
-                            if (valpath.ToString().Contains("IfcDistributionPort"))
-                            {
-                                this.ToString();
-                            }
-
-                            object value = valpath.GetValue(e, null);
-
-                            if (value == e)
-                            {
-                                value = e.GetType().Name;
-                            }
-                            else if (value is SEntity)
-                            {
-                                // use name
-                                FieldInfo fieldValue = value.GetType().GetField("Name");
-                                if (fieldValue != null)
+                                try
                                 {
-                                    value = fieldValue.GetValue(value);
+                                    trace.Clear();
+                                    bool? result = rule.Validate(e, docItem, typemap, trace, e, null, null);
+                                    if (result == true && docRoot.ApplicableOperator == DocTemplateOperator.Or)
+                                    {
+                                        includerow = true;
+                                        break;
+                                    }
+                                }
+                                catch
+                                {
+                                    docRoot.ToString();
                                 }
                             }
-                            else if (value is System.Collections.IList)
+
+                            // don't yet support AND or other operators
+
+                            if (includerow)
+                                break;
+                        }
+                    }
+
+
+                    if (includerow)
+                    {
+                        StringBuilder sbRow = new StringBuilder();
+
+                        sbRow.Append("<tr>");
+                        int iCol = 0;
+                        foreach (DocTemplateItem docItem in docConcept.Items)
+                        {
+                            sbRow.Append("<td" + colstyles[iCol]);
+                            CvtValuePath valpath = colmaps[iCol];
+                            string format = colformat[iCol];
+
+                            iCol++;
+
+                            if (valpath != null)
                             {
-                                System.Collections.IList list = (System.Collections.IList)value;
-                                StringBuilder sbList = new StringBuilder();
-                                foreach (object elem in list)
+                                string nn = docItem.GetParameterValue("Name");
+
+                                object value = valpath.GetValue(e, null);
+
+                                if (value == e)
                                 {
-                                    FieldInfo fieldName = elem.GetType().GetField("Name");
-                                    if (fieldName != null)
+                                    value = e.GetType().Name;
+                                }
+                                else if (value is SEntity)
+                                {
+                                    // use name
+                                    FieldInfo fieldValue = value.GetType().GetField("Name");
+                                    if (fieldValue != null)
                                     {
-                                        object elemname = fieldName.GetValue(elem);
-                                        if (elemname != null)
+                                        value = fieldValue.GetValue(value);
+                                    }
+                                }
+                                else if (value is System.Collections.IList)
+                                {
+                                    System.Collections.IList list = (System.Collections.IList)value;
+                                    StringBuilder sbList = new StringBuilder();
+                                    foreach (object elem in list)
+                                    {
+                                        FieldInfo fieldName = elem.GetType().GetField("Name");
+                                        if (fieldName != null)
                                         {
-                                            FieldInfo fieldValue = elemname.GetType().GetField("Value");
-                                            if (fieldValue != null)
+                                            object elemname = fieldName.GetValue(elem);
+                                            if (elemname != null)
                                             {
-                                                object elemval = fieldValue.GetValue(elemname);
-                                                sbList.Append(elemval.ToString());
+                                                FieldInfo fieldValue = elemname.GetType().GetField("Value");
+                                                if (fieldValue != null)
+                                                {
+                                                    object elemval = fieldValue.GetValue(elemname);
+                                                    sbList.Append(elemval.ToString());
+                                                }
                                             }
                                         }
+                                        sbList.Append("; <br/>");
                                     }
-                                    sbList.Append("; <br/>");
+                                    value = sbList.ToString();
                                 }
-                                value = sbList.ToString();
-                            }
-                            else if (value is Type)
-                            {
-                                value = ((Type)value).Name;
-                            }
-
-                            if (!String.IsNullOrEmpty(format))
-                            {
-                                if (format.Equals("Required") && value == null)
+                                else if (value is Type)
                                 {
-                                    includerow = false;
-                                }
-                            }
-
-                            if (value != null)
-                            {
-                                FieldInfo fieldValue = value.GetType().GetField("Value");
-                                if (fieldValue != null)
-                                {
-                                    value = fieldValue.GetValue(value);
+                                    value = ((Type)value).Name;
                                 }
 
-                                if (format != null && format.Equals("True") && (value == null || !value.ToString().Equals("True")))
+                                if (!String.IsNullOrEmpty(format))
                                 {
-                                    includerow = false;
-                                }
-
-                                if (value is Double)
-                                {
-                                    sbRow.Append(" align=\"right\">");
-
-                                    sbRow.Append(((Double)value).ToString("N3"));
-                                }
-                                else if (value is List<Int64>)
-                                {
-                                    sbRow.Append(">");
-
-                                    // latitude or longitude
-                                    List<Int64> intlist = (List<Int64>)value;
-                                    if (intlist.Count >= 3)
+                                    if (format.Equals("Required") && value == null)
                                     {
-                                        sbRow.Append(intlist[0] + "° " + intlist[1] + "' " + intlist[2] + "\"");
+                                        includerow = false;
                                     }
                                 }
-                                else if (value != null)
+
+                                if (value != null)
+                                {
+                                    FieldInfo fieldValue = value.GetType().GetField("Value");
+                                    if (fieldValue != null)
+                                    {
+                                        value = fieldValue.GetValue(value);
+                                    }
+
+                                    if (format != null && format.Equals("True") && (value == null || !value.ToString().Equals("True")))
+                                    {
+                                        includerow = false;
+                                    }
+
+                                    if (value is Double)
+                                    {
+                                        sbRow.Append(" align=\"right\">");
+
+                                        sbRow.Append(((Double)value).ToString("N3"));
+                                    }
+                                    else if (value is List<Int64>)
+                                    {
+                                        sbRow.Append(">");
+
+                                        // latitude or longitude
+                                        List<Int64> intlist = (List<Int64>)value;
+                                        if (intlist.Count >= 3)
+                                        {
+                                            sbRow.Append(intlist[0] + "° " + intlist[1] + "' " + intlist[2] + "\"");
+                                        }
+                                    }
+                                    else if (value != null)
+                                    {
+                                        sbRow.Append(">");
+                                        sbRow.Append(value.ToString()); // todo: html-encode
+                                    }
+                                }
+                                else
                                 {
                                     sbRow.Append(">");
-                                    sbRow.Append(value.ToString()); // todo: html-encode
+                                    sbRow.Append("&nbsp;");
                                 }
                             }
                             else
                             {
                                 sbRow.Append(">");
-                                sbRow.Append("&nbsp;");
                             }
+
+                            sbRow.Append("</td>");
                         }
-                        else
+                        sbRow.AppendLine("</tr>");
+
+                        if (includerow)
                         {
-                            sbRow.Append(">");
+                            sb.Append(sbRow.ToString());
                         }
-
-                        sbRow.Append("</td>");
-                    }
-                    sbRow.AppendLine("</tr>");
-
-                    if (includerow)
-                    {
-                        sb.Append(sbRow.ToString());
                     }
                 }
             }
@@ -390,7 +429,7 @@ namespace IfcDoc
             return sb.ToString();
         }
 
-        public string FormatData(DocProject docProject, DocPublication docPublication, DocExchangeDefinition docExchange, Dictionary<string, DocObject> map, Dictionary<long, SEntity> instances, SEntity root, bool markup)
+        public void FormatData(Stream stream, DocProject docProject, DocPublication docPublication, DocExchangeDefinition docExchange, Dictionary<string, DocObject> map, Dictionary<string, Type> typemap, Dictionary<long, SEntity> instances, SEntity root, bool markup)
         {
             StringBuilder sb = new StringBuilder();
 
@@ -436,15 +475,13 @@ namespace IfcDoc
                                         
                             if (included)
                             {
-                                string dataconcept = FormatDataConcept(docProject, docPublication, docExchange, map, instances, root, markup, docView, docRoot, docConcept);
+                                string dataconcept = FormatDataConcept(docProject, docPublication, docExchange, map, typemap, instances, root, markup, docView, docRoot, docConcept);
                                 sb.Append(dataconcept);
                             }
                         }
                     }
                 }
             }
-
-            return sb.ToString();
         }
     }
 }

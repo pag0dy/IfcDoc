@@ -76,7 +76,8 @@ namespace IfcDoc.Schema.MVD
         [DataMember(Order = 1)] public List<ModelView> Views = new List<ModelView>();
 
         [XmlAttribute("schemaLocation", Namespace="http://www.w3.org/2001/XMLSchema-instance")]
-        public string schemaLocation = "http://www.buildingsmart-tech.org/mvd/XML/1.1 http://www.buildingsmart-tech.org/mvd/XML/1.1/mvdXML_V1.1_add1.xsd";
+        //public string schemaLocation = "http://www.buildingsmart-tech.org/mvd/XML/1.1 http://www.buildingsmart-tech.org/mvd/XML/1.1/mvdXML_V1.1_add1.xsd";
+        public string schemaLocation = "http://www.buildingsmart-tech.org/mvd/XML/1.1 http://www.buildingsmart-tech.org/mvd/XML/1.2/mvdXML_V1.2.xsd";
 
         // namespaces in order of attempts to load
         public static readonly string[] Namespaces = new string[]
@@ -88,7 +89,7 @@ namespace IfcDoc.Schema.MVD
             "http://buildingsmart-tech.org/mvd/XML/1.1"
         };
 
-        public const string DefaultNamespace = "http://buildingsmart-tech.org/mvd/XML/1.1";
+        public const string DefaultNamespace = "http://buildingsmart-tech.org/mvd/XML/1.2";
     }
 
     [XmlType("ConceptTemplate")]
@@ -118,7 +119,6 @@ namespace IfcDoc.Schema.MVD
     {
         [DataMember(Order = 0)] public TemplateRef Template; // links to ConceptTemplate
         [DataMember(Order = 1)] public List<ConceptRequirement> Requirements;
-        //[DataMember(Order = 2)] public List<TemplateRule> Rules = new List<TemplateRule>();
         [DataMember(Order = 2)] public TemplateRules TemplateRules;
         [DataMember(Order = 3)] public List<Concept> SubConcepts; // added v3.8
         [DataMember(Order = 4), XmlAttribute("override")] public bool Override; // added in v5.6
@@ -129,8 +129,7 @@ namespace IfcDoc.Schema.MVD
     [XmlType("Concept")]
     public class ConceptRef : SEntity
     {
-        [DataMember(Order = 0), XmlAttribute("ref")]
-        public Guid Ref;
+        [DataMember(Order = 0), XmlAttribute("ref")] public Guid Ref;
     }
 
     [XmlType("Requirement")]
@@ -160,10 +159,11 @@ namespace IfcDoc.Schema.MVD
     [XmlType("ModelView")]
     public class ModelView : Element
     {
-        [DataMember(Order = 0), XmlAttribute("applicableSchema")] public string ApplicableSchema;
+        [DataMember(Order = 0)] public String BaseView;
         [DataMember(Order = 1)] public List<ExchangeRequirement> ExchangeRequirements = new List<ExchangeRequirement>();
         [DataMember(Order = 2)] public List<ConceptRoot> Roots = new List<ConceptRoot>();
-        [DataMember(Order = 3)] public String BaseView;
+        [DataMember(Order = 3)] public List<ModelView> Views;
+        [DataMember(Order = 4), XmlAttribute("applicableSchema")] public string ApplicableSchema;
     }
 
     [XmlType("Definition")]
@@ -171,54 +171,8 @@ namespace IfcDoc.Schema.MVD
     {
         [DataMember(Order = 0), XmlElement("Body")] public List<Body> Body;
         [DataMember(Order = 1), XmlElement("Link")] public List<Link> Links;
-        //[DataMember(Order = 2), XmlAttribute("lang")] public string Lang;
         [DataMember(Order = 2), XmlAttribute("tags")] public string Tags;
     }
-
-#if false
-    public class CDATA : IXmlSerializable
-    {
-        private string text;
-
-        public CDATA()
-        { 
-        }
-
-        public CDATA(string text)
-        {
-            this.text = text;
-        }
-
-        public string Text
-        {
-            get { return text; }
-        }
-
-        /// <summary>
-        /// Interface implementation not used here.
-        /// </summary>
-        System.Xml.Schema.XmlSchema IXmlSerializable.GetSchema()
-        {
-            return null;
-        }
-
-        /// <summary>
-        /// Interface implementation, which reads the content of the CDATA tag
-        /// </summary>
-        void IXmlSerializable.ReadXml(System.Xml.XmlReader reader)
-        {
-            this.text = reader.ReadElementString();
-        }
-
-        /// <summary>
-        /// Interface implementation, which writes the CDATA tag to the xml
-        /// </summary>
-        void IXmlSerializable.WriteXml(System.Xml.XmlWriter writer)
-        {
-            writer.WriteCData(this.text);
-        }
-    }
-#endif
 
     public class Body : SEntity,
         IXmlSerializable
@@ -253,50 +207,13 @@ namespace IfcDoc.Schema.MVD
         #endregion
     }
 
-    //[XmlType("Link")]
     public class Link : SEntity
-//        IXmlSerializable
     {
         [DataMember(Order = 0), XmlAttribute("lang")] public string Lang;
         [DataMember(Order = 1), XmlAttribute("category")] public CategoryEnum Category;
         [DataMember(Order = 2), XmlAttribute("title")] public string Title;
         [DataMember(Order = 3), XmlAttribute("href")] public string Href;
         [DataMember(Order = 4), XmlIgnore] public string Content;
-
-#if false
-        #region IXmlSerializable Members
-
-        public System.Xml.Schema.XmlSchema GetSchema()
-        {
-            return null;
-        }
-
-        public void ReadXml(System.Xml.XmlReader reader)
-        {
-            //... read attributes...
-
-            reader.ReadStartElement();
-            //this.Content = reader.ReadString();
-            reader.ReadEndElement();
-        }
-
-        public void WriteXml(System.Xml.XmlWriter writer)
-        {
-            if (!String.IsNullOrEmpty(this.Lang))
-            {
-                writer.WriteAttributeString("lang", this.Lang);
-            }
-            writer.WriteAttributeString("category", this.Category.ToString());
-            if (!String.IsNullOrEmpty(this.Title))
-            {
-                writer.WriteAttributeString("title", this.Title);
-            }
-            writer.WriteAttributeString("href", this.Href);
-            //writer.WriteCData(this.Content);
-        }
-
-        #endregion
-#endif
     }
 
     public enum CategoryEnum
@@ -350,7 +267,6 @@ namespace IfcDoc.Schema.MVD
         [DataMember(Order = 0), XmlAttribute("EntityName")] public string EntityName;
         [DataMember(Order = 1)] public List<AttributeRule> AttributeRules;
         [DataMember(Order = 2)] public List<Constraint> Constraints;
-        //[DataMember(Order = 3)] public List<TemplateRef> References; // MVDXML 1.1 -- links to concept templates defined on referenced entity
         [DataMember(Order = 3)] public References References;
     }
 
@@ -371,7 +287,20 @@ namespace IfcDoc.Schema.MVD
     public class TemplateRule : AbstractRule
     {
         [DataMember(Order = 0), XmlAttribute("Parameters")] public string Parameters;
-        [DataMember(Order = 1)] public List<Concept> References; // proposed for mvdxml 1.1 -- not yet approved
+        [DataMember(Order = 1), XmlAttribute("Order")] public int Order;
+        [DataMember(Order = 1), XmlAttribute("Usage")] public TemplateRuleUsage Usage; // mvdxml 1.2
+        [DataMember(Order = 2)] public List<ConceptRequirement> Requirements; // proposed for mvdxml 1.2
+        [DataMember(Order = 3)] public List<Concept> References; // proposed for mvdxml 1.2
+    }
+
+    public enum TemplateRuleUsage
+    {
+        [XmlEnum("required")] Required = 0,       // COBie: yellow
+        [XmlEnum("optional")] Optional = 1,       // COBie: green
+        [XmlEnum("key")] Key = 2,                 // COBie: red
+        [XmlEnum("reference")] Reference = 3,     // COBie: orange
+        [XmlEnum("calculation")] Calculation = 4, // COBie: blue
+        [XmlEnum("system")] System = 5,           // COBie: purple
     }
 
     [XmlType("TemplateRules")] // added in mvdXML 1.1d

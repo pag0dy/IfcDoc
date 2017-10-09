@@ -233,18 +233,13 @@ namespace IfcDoc.Format.JSN
             this.m_writer.WriteLine("]");
         }
 
-        public string FormatData(DocProject docProject, DocPublication docPublication, DocExchangeDefinition docExchange, Dictionary<string, DocObject> map, Dictionary<long, SEntity> instances, SEntity root, bool markup)
+        public void FormatData(Stream stream, DocProject docProject, DocPublication docPublication, DocExchangeDefinition docExchange, Dictionary<string, DocObject> map, Dictionary<string, Type> typemap, Dictionary<long, SEntity> instances, SEntity root, bool markup)
         {
             this.m_indent = 0;
-            this.m_stream = new System.IO.MemoryStream();
+            this.m_stream = stream;
             this.Instance = root;
             this.Markup = markup;
             this.Save();
-
-            this.m_stream.Position = 0;
-            StreamReader reader = new StreamReader(this.m_stream);
-            string content = reader.ReadToEnd();
-            return content;
         }
     }
 }
