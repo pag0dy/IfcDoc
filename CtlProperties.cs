@@ -266,20 +266,9 @@ namespace IfcDoc
                     this.ctlParameters.ConceptLeaf = null;
 
 
-                    //DocEntity docEntity = (DocEntity)this.m_parent;
-
                     DocEntity docEntity = docRoot.ApplicableEntity;
 
-                    DocModelView docView = null;
-                    foreach (DocModelView docViewEach in this.m_project.ModelViews)
-                    {
-                        if (docViewEach.ConceptRoots.Contains(docRoot))
-                        {
-                            docView = docViewEach;
-                            break;
-                        }
-                    }
-
+                    DocModelView docView = path[path.Length-2] as DocModelView;   
                     DocModelView[] listViews = docProject.GetViewInheritance(docView); ;
 
 
@@ -352,11 +341,51 @@ namespace IfcDoc
                     DocTemplateUsage docUsage = (DocTemplateUsage)docObject;
 
                     this.ctlParameters.Project = this.m_project;
-                    this.ctlParameters.ConceptRoot = this.m_path[2] as DocConceptRoot;// this.m_path[3] as DocConceptRoot;
+                    this.ctlParameters.ConceptRoot = this.m_path[this.m_path.Length - 2] as DocConceptRoot;
                     this.ctlParameters.ConceptItem = this.ctlParameters.ConceptRoot;
                     this.ctlParameters.ConceptLeaf = docUsage;
 
-                    this.LoadModelView();
+                    this.listViewExchange.Items.Clear();
+
+                    if (this.m_path.Length < 3)
+                        return; // should not occur -- View | Root | Concept; potentially multiple views nested
+
+                    // find the view
+                    DocModelView docView = (DocModelView)this.m_path[this.m_path.Length - 3];
+                    DocConceptRoot docRoot = (DocConceptRoot)this.m_path[this.m_path.Length - 2];
+                    if (docView == null)
+                        return;
+
+                    foreach (DocExchangeDefinition docExchange in docView.Exchanges)
+                    {
+                        DocExchangeRequirementEnum reqImport = DocExchangeRequirementEnum.NotRelevant;
+                        DocExchangeRequirementEnum reqExport = DocExchangeRequirementEnum.NotRelevant;
+
+                        // determine import/export support
+                        foreach (DocExchangeItem docExchangeItem in docUsage.Exchanges)
+                        {
+                            if (docExchangeItem.Exchange == docExchange)
+                            {
+                                if (docExchangeItem.Applicability == DocExchangeApplicabilityEnum.Import)
+                                {
+                                    reqImport = docExchangeItem.Requirement;
+                                }
+                                else if (docExchangeItem.Applicability == DocExchangeApplicabilityEnum.Export)
+                                {
+                                    reqExport = docExchangeItem.Requirement;
+                                }
+                            }
+                        }
+
+                        ListViewItem lvi = new ListViewItem();
+                        lvi.Tag = docExchange;
+                        lvi.Text = docExchange.Name;
+                        lvi.SubItems.Add(reqImport.ToString());
+                        lvi.SubItems.Add(reqExport.ToString());
+                        this.listViewExchange.Items.Add(lvi);
+                    }
+
+                    this.InitExchangeRequirements();
                 }
                 else if (docObject is DocSchema)
                 {
@@ -488,7 +517,7 @@ namespace IfcDoc
                         this.textBoxExample.ReadOnly = false;
                         this.textBoxExample.Focus();
                     }
-                    else if(docExample.Path != null)
+                    else if (docExample.Path != null)
                     {
                         this.textBoxExample.Text = docExample.Path;
                         this.toolStripButtonExampleClear.Enabled = true;
@@ -518,7 +547,7 @@ namespace IfcDoc
                     this.checkBoxPublishHideHistory.Checked = docPublication.HideHistory;
                     this.checkBoxPublishISO.Checked = docPublication.ISO;
                     this.checkBoxPublishUML.Checked = docPublication.UML;
-                    //this.checkBoxPublishComparison.Checked = docPublication.Comparison;
+                    this.checkBoxPublishBSI.Checked = docPublication.ReportIssues;
                     this.checkBoxPublishExchangeTables.Checked = docPublication.Exchanges;
                     this.checkBoxPublishHtmlExamples.Checked = docPublication.HtmlExamples;
 
@@ -695,59 +724,6 @@ namespace IfcDoc
                         this.listViewPsetApplicability.Items.Add(lvi);
                     }
                 }
-            }
-        }
-
-        private void LoadModelView()
-        {            
-            this.listViewExchange.Items.Clear();
-
-            // find the view
-            DocModelView docView = (DocModelView)this.m_path[1];//null;
-            DocConceptRoot docRoot = (DocConceptRoot)this.m_path[2];// this.m_path[3];
-
-#if false
-            foreach (DocModelView eachView in this.m_project.ModelViews)
-            {
-                if (eachView.ConceptRoots.Contains(docRoot))
-                {
-                    docView = eachView;
-                    break;
-                }
-            }
-#endif
-            if (docView == null)
-                return;
-
-            DocTemplateUsage docUsage = (DocTemplateUsage)this.m_target;
-
-            foreach (DocExchangeDefinition docExchange in docView.Exchanges)
-            {
-                DocExchangeRequirementEnum reqImport = DocExchangeRequirementEnum.NotRelevant;
-                DocExchangeRequirementEnum reqExport = DocExchangeRequirementEnum.NotRelevant;
-
-                // determine import/export support
-                foreach (DocExchangeItem docExchangeItem in docUsage.Exchanges)
-                {
-                    if (docExchangeItem.Exchange == docExchange)
-                    {
-                        if (docExchangeItem.Applicability == DocExchangeApplicabilityEnum.Import)
-                        {
-                            reqImport = docExchangeItem.Requirement;
-                        }
-                        else if (docExchangeItem.Applicability == DocExchangeApplicabilityEnum.Export)
-                        {
-                            reqExport = docExchangeItem.Requirement;
-                        }
-                    }
-                }
-                
-                ListViewItem lvi = new ListViewItem();
-                lvi.Tag = docExchange;
-                lvi.Text = docExchange.Name;
-                lvi.SubItems.Add(reqImport.ToString());
-                lvi.SubItems.Add(reqExport.ToString());
-                this.listViewExchange.Items.Add(lvi);
             }
         }
 
@@ -971,7 +947,7 @@ namespace IfcDoc
 
                 case DocPropertyTemplateTypeEnum.COMPLEX:
                     this.buttonPropertyDataPrimary.Enabled = false;
-                    this.buttonPropertyDataSecondary.Enabled = false;
+                    this.buttonPropertyDataSecondary.Enabled = true;
                     break;
             }
         }
@@ -1104,6 +1080,34 @@ namespace IfcDoc
                         }
                         this.textBoxPropertyDataPrimary.Text = docTemplate.PrimaryDataType;
                         this.textBoxPropertyDataSecondary.Text = docTemplate.SecondaryDataType;
+                    }
+                }
+                return;
+            }
+            else if(docTemplate.PropertyType == DocPropertyTemplateTypeEnum.COMPLEX)
+            {
+                using(FormSelectProperty form = new FormSelectProperty(null, this.m_project, false))
+                {
+                    if (form.ShowDialog(this) == DialogResult.OK)
+                    {
+                        foreach(DocProperty docExistProp in docTemplate.Elements)
+                        {
+                            docExistProp.Delete();
+                        }
+                        docTemplate.Elements.Clear();
+                        docTemplate.SecondaryDataType = null;
+                        if (form.SelectedPropertySet != null)
+                        {
+                            docTemplate.SecondaryDataType = form.SelectedPropertySet.Name;
+                            this.textBoxPropertyDataSecondary.Text = docTemplate.SecondaryDataType;
+                            foreach (DocProperty docProp in form.SelectedPropertySet.Properties)
+                            {
+                                DocProperty docPropClone = (DocProperty)docProp.Clone();
+                                docPropClone.Uuid = Guid.NewGuid();
+                                docTemplate.Elements.Add(docPropClone);
+                            }
+                            //... reload tree...
+                        }
                     }
                 }
                 return;
@@ -2525,6 +2529,11 @@ namespace IfcDoc
 
         private void listViewExchange_SelectedIndexChanged(object sender, EventArgs e)
         {
+            this.InitExchangeRequirements();
+        }
+
+        private void InitExchangeRequirements()
+        {
             if (this.listViewExchange.SelectedItems.Count == 0)
             {
                 // disable all
@@ -2825,12 +2834,6 @@ namespace IfcDoc
             docPub.Footer = textBoxFooter.Text;
         }
 
-        private void checkBoxPublishComparison_CheckedChanged(object sender, EventArgs e)
-        {
-            DocPublication docPub = (DocPublication)this.m_target;
-            //docPub.Comparison = checkBoxPublishComparison.Checked;
-        }
-
         private void checkBoxPublishExchangeTables_CheckedChanged(object sender, EventArgs e)
         {
             DocPublication docPub = (DocPublication)this.m_target;
@@ -2878,6 +2881,12 @@ namespace IfcDoc
                 docExample.Path = this.openFileDialogExample.FileName;
                 docExample.File = null;
             }
+        }
+
+        private void checkBoxPublishBSI_CheckedChanged(object sender, EventArgs e)
+        {
+            DocPublication docPub = (DocPublication)this.m_target;
+            docPub.ReportIssues = this.checkBoxPublishBSI.Checked;
         }
 
     }

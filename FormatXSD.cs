@@ -840,7 +840,7 @@ namespace IfcDoc.Format.XSD
             return sb.ToString();
         }
 
-        public string FormatEnumeration(DocEnumeration docEnum)
+        public string FormatEnumeration(DocEnumeration docEnum, Dictionary<string, DocObject> map, Dictionary<DocObject, bool> included)
         {
             StringBuilder sb = new StringBuilder();
 
@@ -946,7 +946,7 @@ namespace IfcDoc.Format.XSD
             return sb.ToString();
         }
 
-        public string FormatDefined(DocDefined docDefined)
+        public string FormatDefined(DocDefined docDefined, Dictionary<string, DocObject> map, Dictionary<DocObject, bool> included)
         {
             string defined = ToXsdType(docDefined.DefinedType);
 
@@ -1273,14 +1273,14 @@ namespace IfcDoc.Format.XSD
                 writer.WriteLine("\t<!-- enumeration type declarations (for ENUMERATION data type definitions) -->");
                 foreach (DocEnumeration docEnum in mapEnum.Values)
                 {
-                    writer.Write(FormatEnumeration(docEnum));
+                    writer.Write(FormatEnumeration(docEnum, map, this.m_included));
                 }
 
                 // Defined Types
                 writer.WriteLine("\t<!-- simple type declarations (for TYPE defined data type definitions) -->");
                 foreach (DocDefined docDefined in mapDefined.Values)
                 {
-                    writer.Write(FormatDefined(docDefined));
+                    writer.Write(FormatDefined(docDefined, map, this.m_included));
                 }
 
                 WriteResource(writer, "IfcDoc.xsd2.txt");

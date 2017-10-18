@@ -33,10 +33,8 @@
             this.labelDescription = new System.Windows.Forms.Label();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.buttonOK = new System.Windows.Forms.Button();
-            this.listView = new System.Windows.Forms.ListView();
-            this.columnHeaderName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeaderType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.imageList = new System.Windows.Forms.ImageList(this.components);
+            this.treeView = new System.Windows.Forms.TreeView();
             this.SuspendLayout();
             // 
             // labelDescription
@@ -58,33 +56,16 @@
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.UseVisualStyleBackColor = true;
             // 
-            // listView
-            // 
-            resources.ApplyResources(this.listView, "listView");
-            this.listView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeaderName,
-            this.columnHeaderType});
-            this.listView.FullRowSelect = true;
-            this.listView.MultiSelect = false;
-            this.listView.Name = "listView";
-            this.listView.SmallImageList = this.imageList;
-            this.listView.UseCompatibleStateImageBehavior = false;
-            this.listView.View = System.Windows.Forms.View.Details;
-            this.listView.ItemActivate += new System.EventHandler(this.listView_ItemActivate);
-            // 
-            // columnHeaderName
-            // 
-            resources.ApplyResources(this.columnHeaderName, "columnHeaderName");
-            // 
-            // columnHeaderType
-            // 
-            resources.ApplyResources(this.columnHeaderType, "columnHeaderType");
-            // 
             // imageList
             // 
             this.imageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList.ImageStream")));
             this.imageList.TransparentColor = System.Drawing.Color.Fuchsia;
             this.imageList.Images.SetKeyName(0, "DocModelView.bmp");
+            // 
+            // treeView
+            // 
+            resources.ApplyResources(this.treeView, "treeView");
+            this.treeView.Name = "treeView";
             // 
             // FormSelectView
             // 
@@ -92,10 +73,10 @@
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
+            this.Controls.Add(this.treeView);
             this.Controls.Add(this.labelDescription);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonOK);
-            this.Controls.Add(this.listView);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FormSelectView";
@@ -110,9 +91,7 @@
         private System.Windows.Forms.Label labelDescription;
         private System.Windows.Forms.Button buttonCancel;
         private System.Windows.Forms.Button buttonOK;
-        private System.Windows.Forms.ListView listView;
-        private System.Windows.Forms.ColumnHeader columnHeaderName;
-        private System.Windows.Forms.ColumnHeader columnHeaderType;
         private System.Windows.Forms.ImageList imageList;
+        private System.Windows.Forms.TreeView treeView;
     }
 }

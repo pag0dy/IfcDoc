@@ -44,6 +44,14 @@ namespace IfcDoc.Format.HTM
             this.m_included = included;
         }
 
+        public Stream Stream
+        {
+            get
+            {
+                return this.m_stream;
+            }
+        }
+
         public bool UseAnchors
         {
             get
@@ -1292,7 +1300,7 @@ namespace IfcDoc.Format.HTM
             }
 
             string linkid = locale.Substring(0,2) + "-alphabeticalorder-" + caption.ToLower().Replace(' ', '-');
-            this.WriteLinkTo(linkid, 3);
+            this.WriteLinkTo(docPublication, linkid, 3);
 
 
             this.WriteFooter(docPublication.Footer);
@@ -1358,7 +1366,7 @@ namespace IfcDoc.Format.HTM
             this.WriteLine("</ul>");
 
             string linkid = "alphabeticalorder-" + caption.ToLower().Replace(' ', '-');
-            this.WriteLinkTo(linkid, 2);
+            this.WriteLinkTo(docPublication, linkid, 2);
             this.WriteFooter(docPublication.Footer);
 
             using (FormatHTM htmLink = new FormatHTM(path + "/link/" + linkid + ".htm", this.m_mapEntity, this.m_mapSchema, this.m_included))
@@ -1544,7 +1552,7 @@ namespace IfcDoc.Format.HTM
             this.WriteLine("</ul>");
 
             string linkid = "inheritance-" + DocumentationISO.MakeLinkName(docView) + "-" + caption.ToLower();
-            this.WriteLinkTo(linkid, 3);
+            this.WriteLinkTo(docPublication, linkid, 3);
             this.WriteFooter(docPublication.Footer);
 
             using (FormatHTM htmLink = new FormatHTM(path + "/link/" + linkid + ".htm", this.m_mapEntity, this.m_mapSchema, this.m_included))
@@ -2164,7 +2172,8 @@ namespace IfcDoc.Format.HTM
                 }
                 else
                 {
-                    return;
+                    sb.Append(docChange.Name);
+                    ////return;
                 }
 
                 sb.Append("</td>");
@@ -2512,7 +2521,7 @@ namespace IfcDoc.Format.HTM
            
         }
 
-        internal void WriteLinkTo(DocObject type)
+        internal void WriteLinkTo(DocProject docProject, DocPublication docPublication, DocObject type)
         {
             int levels = 3;
             if (type is DocExample || type is DocTemplateDefinition || type is DocSchema)
@@ -2520,21 +2529,151 @@ namespace IfcDoc.Format.HTM
                 levels = 2;
             }
 
-            this.WriteLinkTo(DocumentationISO.MakeLinkName(type), levels);
-        }
-
-        internal void WriteLinkTo(string identifier, int levels)
-        {
-            return; // ISO
-
             string up = "";
             for (int i = 0; i < levels; i++ )
             {
                 up += "../";
             }
 
-            // jira issue... make configurable
-            this.WriteLine("<p><a href=\"http://jira.buildingsmart.org/issues/?jql=project%20%3D%20IFR%20AND%20text%20~%20%22" + identifier + "%22\" target=\"_blank\" ><img src=\"" + up + "img/external.png\" style=\"border: 0px\" title=\"Report issue\" alt=\"Report issue\"/>&nbsp; Report an issue</a></p>");
+            // write references
+            List<DocObject> listReferences = new List<DocObject>();
+            foreach (DocSection docSection in docProject.Sections)
+            {
+                foreach (DocSchema docSchema in docSection.Schemas)
+                {
+                    if (type is DocPropertyEnumeration)
+                    {
+                        foreach (DocPropertySet docPset in docSchema.PropertySets)
+                        {
+                            foreach (DocProperty docProp in docPset.Properties)
+                            {
+                                if (docProp.PropertyType == DocPropertyTemplateTypeEnum.P_ENUMERATEDVALUE &&
+                                    docProp.SecondaryDataType != null && 
+                                    docProp.SecondaryDataType.StartsWith(type.Name))
+                                {
+                                    listReferences.Add(docPset);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    else if (type is DocEntity || type is DocType)
+                    {
+                        foreach (DocEntity docEntity in docSchema.Entities)
+                        {
+                            foreach (DocAttribute docAttr in docEntity.Attributes)
+                            {
+                                if (docAttr.DefinedType.Equals(type.Name) || 
+                                    (docAttr.AggregationAttribute != null &&
+                                    docAttr.AggregationAttribute.DefinedType != null && 
+                                    docAttr.AggregationAttribute.DefinedType.Equals(type.Name)))
+                                {
+                                    listReferences.Add(docEntity);
+                                    break;
+                                }
+                            }
+                        }
+
+                        foreach(DocType docType in docSchema.Types)
+                        {
+                            if (docType is DocSelect)
+                            {
+                                DocSelect docSelect = (DocSelect)docType;
+                                foreach(DocSelectItem docItem in docSelect.Selects)
+                                {
+                                    if(docItem.Name.Equals(type.Name))
+                                    {
+                                        listReferences.Add(docType);
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else if (type is DocFunction)
+                    {
+                        foreach (DocEntity docEntity in docSchema.Entities)
+                        {
+                            foreach (DocWhereRule docRule in docEntity.WhereRules)
+                            {
+                                if (docRule.Expression.Contains(type.Name)) // todo: refine to bound it in case of sub-string match
+                                {
+                                    listReferences.Add(docEntity);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (type is DocTemplateDefinition)
+            {
+#if false
+                foreach (DocModelView docView in docProject.ModelViews)
+                {
+                    foreach(DocConceptRoot docRoot in docView.ConceptRoots)
+                    {
+                        foreach(DocTemplateUsage docUsage in docRoot.Concepts)
+                        {
+                            if(docUsage.Definition == type)
+                            {
+                                listReferences.Add(doc);
+                                break;
+                            }
+                        }
+                    }
+                }
+#endif
+
+                // find partial template references
+                foreach (DocTemplateDefinition docTemplate in docProject.Templates)
+                {
+                    //...
+                }
+            }
+
+            // scrub anything out of scope
+            for (int i = listReferences.Count - 1; i >= 0;i-- )
+            {
+                DocObject docObj = listReferences[i];
+                if(this.m_included != null && !this.m_included.ContainsKey(docObj))
+                {
+                    listReferences.RemoveAt(i);
+                }
+            }
+
+            if (listReferences.Count > 0)
+            {
+                this.Write("<p><img src=\"" + up + "img/external.png\" style=\"border: 0px\" title=\"References\" alt=\"References\"/>&nbsp; References: ");
+                foreach (DocObject docObj in listReferences)
+                {
+#if false
+                    if (docObj != listReferences[0])
+                    {
+                        this.Write(", ");
+                    }
+#endif
+                    this.WriteDefinition(docObj.Name); // link...
+                }
+            }
+            this.WriteLine("</p>");
+
+            this.WriteLinkTo(docPublication, DocumentationISO.MakeLinkName(type), levels);
+        }
+
+        internal void WriteLinkTo(DocPublication docPublication, string identifier, int levels)
+        {
+            string up = "";
+            for (int i = 0; i < levels; i++ )
+            {
+                up += "../";
+            }
+
+            if (docPublication.ReportIssues)
+            {
+                this.WriteLine("<p><a href=\"http://jira.buildingsmart.org/issues/?jql=project%20%3D%20IFR%20AND%20text%20~%20%22" + identifier + "%22\" target=\"_blank\" ><img src=\"" + up + "img/external.png\" style=\"border: 0px\" title=\"Report issue\" alt=\"Report issue\"/>&nbsp; Report an issue</a></p>");
+            }
 
             this.WriteLine("<p><a href=\"" + up + "link/" + identifier + ".htm\" target=\"_top\" ><img src=\"" + up + "img/permlink.png\" style=\"border: 0px\" title=\"Link to this page\" alt=\"Link to this page\"/>&nbsp; Link to this page</a></p>");
         }
@@ -2598,30 +2737,37 @@ namespace IfcDoc.Format.HTM
 
         }
 
-        internal void WriteComputerListing(string name, string code, int iCodeView, DocPublication docPublication)
+        internal void WriteComputerListing(string name, string code, int[] indexpath, DocPublication docPublication)
         {
             int iAnnex = -1;
 
             string linkprefix = code;
-            if (iCodeView == 0)
+
+            string indexer = "";
+            foreach (int part in indexpath)
             {
-                linkprefix = "annex-a/default/" + linkprefix;
+                if (indexer.Length != 0)
+                {
+                    indexer += ".";
+                }
+                indexer += part.ToString();
             }
 
-            if (iCodeView > 0)
+
+            this.WriteHeader(name, iAnnex, indexpath[0], 0, 0, docPublication.Header);
+            this.WriteScript(iAnnex, indexpath[0], 0, 0);
+            this.WriteLine("<h3 class=\"std\">A." + indexer + " " + name + "</h3>");
+
+            if (!String.IsNullOrEmpty(code))
             {
-                this.WriteHeader(name, iAnnex, iCodeView, 0, 0, docPublication.Header);
-                this.WriteScript(iAnnex, iCodeView, 0, 0);
-                this.WriteLine("<h3 class=\"std\">A." + iCodeView.ToString() + " " + name + "</h3>");
-            }
+                this.WriteLine("<p>Schema files are provided that are filtered according to this view definition. " +
+                    "Data exported by conforming applications shall conform to this schema subset (i.e. not include any definitions excluded from this schema subset). " +
+                    "Applications importing data for this model view shall be able to read all data conforming to the full schema (i.e. allow for definitions outside of this schema subset without processing them).</p>");
 
+                string key1 = "";// "A." + iCodeView + ".1";
+                string key2 = "";// "A." + iCodeView + ".2";
+                string key3 = "";// "A." + iCodeView + ".3";
 
-            string key1 = "";// "A." + iCodeView + ".1";
-            string key2 = "";// "A." + iCodeView + ".2";
-            string key3 = "";// "A." + iCodeView + ".3";
-
-            if (iCodeView > 0)
-            {
                 // write table linking formatted listings
                 this.Write(
                     "<h4 class=\"annex\"><a>" + key1 + " Schema definitions</a></h4>" +
@@ -2679,13 +2825,13 @@ namespace IfcDoc.Format.HTM
                     "<th>ASCII file</td>" +
                     "<th>HTML file</td>" +
                     "</tr>" +
-                    
+
                     "<tr>" +
                     "<td>IFC-SPF property and quantity templates</td>" +
                     "<td><a href=\"" + linkprefix + ".ifc\">" + code + ".ifc</a></td>" +
                     "<td>&nbsp;</td>" +
                     "</tr>");
-                    
+
 #if false
                     "<tr>" +
                     "<td>IFC-XML property and quantity templates</td>" +
@@ -2694,7 +2840,7 @@ namespace IfcDoc.Format.HTM
                     "</tr>"
 #endif
 
-                if(!docPublication.ISO)
+                if (!docPublication.ISO)
                 {
                     this.Write("<tr>" +
                         "<td>PSD-XML property templates in ZIP file</td>" +
@@ -2710,38 +2856,38 @@ namespace IfcDoc.Format.HTM
                 }
 
                 this.Write("</table>");
+
+
+                if (!docPublication.ISO) // don't provide mvdXML for ISO
+                {
+                    this.Write(
+        "<h4 class=\"annex\"><a>" + key3 + " Model view definition</a></h4>" +
+        "<p>Model view definitions are defined according to formats as follows.</p>" +
+        "<table class=\"gridtable\" summary=\"listings\" width=\"80%\">" +
+        "<col width=\"60%\">" +
+        "<col width=\"20%\">" +
+        "<col width=\"20%\">" +
+        "<tr style=\"border: 1px grey solid;\">" +
+        "<th>Description</td>" +
+        "<th>ASCII file</td>" +
+        "<th>HTML file</td>" +
+        "</tr>" +
+        "<tr>" +
+        "<td>MVD-XML model view definitions</td>" +
+        "<td><a href=\"" + linkprefix + ".mvdxml\" target=\"_blank\">" + code + ".mvdxml</a></td>" +
+        "<td>&nbsp;</td>" +
+        "</tr>" +
+        "<tr>" +
+        "<td>EXPRESS XSD configuration</td>" +
+        "<td><a href=\"" + linkprefix + ".xml\" target=\"_blank\">" + code + ".xml</a></td>" +
+        "<td>&nbsp;</td>" +
+        "</tr>" +
+        "</table>");
+                }
             }
 
-            if (iCodeView > 0 && !docPublication.ISO) // don't provide mvdXML for ISO
-            {
-                this.Write(
-    "<h4 class=\"annex\"><a>" + key3 + " Model view definition</a></h4>" +
-    "<p>Model view definitions are defined according to formats as follows.</p>" +
-    "<table class=\"gridtable\" summary=\"listings\" width=\"80%\">" +
-    "<col width=\"60%\">" +
-    "<col width=\"20%\">" +
-    "<col width=\"20%\">" +
-    "<tr style=\"border: 1px grey solid;\">" +
-    "<th>Description</td>" +
-    "<th>ASCII file</td>" +
-    "<th>HTML file</td>" +
-    "</tr>" +
-    "<tr>" +
-    "<td>MVD-XML model view definitions</td>" +
-    "<td><a href=\"" + linkprefix + ".mvdxml\" target=\"_blank\">" + code + ".mvdxml</a></td>" +
-    "<td>&nbsp;</td>" +
-    "</tr>" +
-    "<tr>" +
-    "<td>EXPRESS XSD configuration</td>" +
-    "<td><a href=\"" + linkprefix + ".xml\" target=\"_blank\">" + code + ".xml</a></td>" +
-    "<td>&nbsp;</td>" +
-    "</tr>" +
-    "</table>");
-            }
-
-            this.WriteLinkTo("listing-" + code.ToLower(), 3);
+            this.WriteLinkTo(docPublication, "listing-" + code.ToLower(), 3);
             this.WriteFooter(docPublication.Footer);
-
         }
 
         /// <summary>

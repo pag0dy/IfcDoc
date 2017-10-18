@@ -431,6 +431,9 @@
     <EmbeddedResource Include="FormSelectQuantity.resx">
       <DependentUpon>FormSelectQuantity.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormSelectView.ja.resx">
+      <DependentUpon>FormSelectView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormValidate.resx">
       <DependentUpon>FormValidate.cs</DependentUpon>
     </EmbeddedResource>

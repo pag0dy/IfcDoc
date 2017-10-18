@@ -1,4 +1,4 @@
-<!-- created with IFCDOC 11.2 at buildingsmart-tech.org -->
+<!-- created with IFCDOC 11.5 at buildingsmart-tech.org -->
 
 <!--
 Copyright by:

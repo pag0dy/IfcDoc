@@ -45,6 +45,7 @@ namespace IfcDoc
 
         public event EventHandler SelectionChanged;
         public event EventHandler LinkOperation;
+        public event EventHandler ExpandOperation; // user-double-clicks on selection to auto-expand attributes and subtypes
 
         public CtlExpressG()
         {
@@ -185,6 +186,10 @@ namespace IfcDoc
             get
             {
                 return this.m_ptDown;
+            }
+            set
+            {
+                this.m_ptDown = value;
             }
         }
 
@@ -447,6 +452,28 @@ namespace IfcDoc
             else if (selection is DocDefinitionRef)
             {
                 DocDefinitionRef docRef = (DocDefinitionRef)selection;
+
+                foreach (DocAttributeRef docAttr in docRef.AttributeRefs)
+                {
+                    LayoutLine(docRef, docAttr.DefinitionRef, docAttr.DiagramLine);
+
+#if fals3
+                    if (docAttr.DiagramLabel != null)
+                    {
+                        if (docAttr.DiagramLine[2].Y > docAttr.DiagramLine[0].Y)
+                        {
+                            docAttr.DiagramLabel.X = docAttr.DiagramLine[0].X;
+                            docAttr.DiagramLabel.Y = docAttr.DiagramLine[0].Y + 20.0;
+                        }
+                        else
+                        {
+                            docAttr.DiagramLabel.X = docAttr.DiagramLine[0].X;
+                            docAttr.DiagramLabel.Y = docAttr.DiagramLine[0].Y - 20.0;
+                        }
+                    }
+#endif
+                }
+
                 foreach (DocLine docLine in docRef.Tree)
                 {
                     LayoutTree(docRef, docLine);
@@ -485,11 +512,6 @@ namespace IfcDoc
             {
                 foreach(DocDefinitionRef docDefRef in docSchemaRef.Definitions)
                 {
-                    if(docDefRef.Name.Equals("IfcRelAssociates"))
-                    {
-                        this.ToString();
-                    }
-
                     foreach (DocLine docLine in docDefRef.Tree)
                     {
                         if (docLine.Definition == selection)
@@ -507,7 +529,16 @@ namespace IfcDoc
                             }
                         }
                     }
+    
+                    foreach (DocAttributeRef docAttRef in docDefRef.AttributeRefs)
+                    {
+                        if (docAttRef.DefinitionRef == selection)
+                        {
+                            LayoutLine(docDefRef, docAttRef.DefinitionRef, docAttRef.DiagramLine);
+                        }
+                    }
                 }
+
             }
 
             foreach (DocEntity docEntity in this.m_schema.Entities)
@@ -1417,6 +1448,19 @@ namespace IfcDoc
             }
 
         }
+
+        private void CtlExpressG_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            // auto-expand all attributes and subclasses
+            if(this.Selection is DocDefinitionRef)
+            {
+                if (this.ExpandOperation != null)
+                {
+                    this.ExpandOperation(this, EventArgs.Empty);
+                }
+            }
+        }
+
     }
 
     [Flags]

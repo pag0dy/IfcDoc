@@ -571,7 +571,7 @@
     <value>ctlRules</value>
   </data>
   <data name="&gt;&gt;ctlRules.Type" xml:space="preserve">
-    <value>IfcDoc.CtlRules, IfcDoc, Version=11.1.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>IfcDoc.CtlRules, IfcDoc, Version=11.4.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;ctlRules.Parent" xml:space="preserve">
     <value>tabPageTemplate</value>
@@ -610,7 +610,7 @@
     <value>ctlParameters</value>
   </data>
   <data name="&gt;&gt;ctlParameters.Type" xml:space="preserve">
-    <value>IfcDoc.CtlParameters, IfcDoc, Version=11.1.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>IfcDoc.CtlParameters, IfcDoc, Version=11.4.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;ctlParameters.Parent" xml:space="preserve">
     <value>tabPageConcept</value>
@@ -1891,7 +1891,7 @@
     <value>ctlOperators</value>
   </data>
   <data name="&gt;&gt;ctlOperators.Type" xml:space="preserve">
-    <value>IfcDoc.CtlOperators, IfcDoc, Version=11.1.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>IfcDoc.CtlOperators, IfcDoc, Version=11.4.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;ctlOperators.Parent" xml:space="preserve">
     <value>tabPageOperations</value>
@@ -2088,17 +2088,47 @@
   <data name="&gt;&gt;tabPageViews.ZOrder" xml:space="preserve">
     <value>18</value>
   </data>
+  <data name="checkBoxPublishBSI.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="checkBoxPublishBSI.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="checkBoxPublishBSI.Location" type="System.Drawing.Point, System.Drawing">
+    <value>6, 218</value>
+  </data>
+  <data name="checkBoxPublishBSI.Size" type="System.Drawing.Size, System.Drawing">
+    <value>270, 17</value>
+  </data>
+  <data name="checkBoxPublishBSI.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="checkBoxPublishBSI.Text" xml:space="preserve">
+    <value>Provide links to www.buildingsmart-tech.org website</value>
+  </data>
+  <data name="&gt;&gt;checkBoxPublishBSI.Name" xml:space="preserve">
+    <value>checkBoxPublishBSI</value>
+  </data>
+  <data name="&gt;&gt;checkBoxPublishBSI.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;checkBoxPublishBSI.Parent" xml:space="preserve">
+    <value>tabPagePublication</value>
+  </data>
+  <data name="&gt;&gt;checkBoxPublishBSI.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
   <data name="textBoxPublicationNote.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Bottom, Left, Right</value>
   </data>
   <data name="textBoxPublicationNote.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 242</value>
+    <value>6, 251</value>
   </data>
   <data name="textBoxPublicationNote.Multiline" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="textBoxPublicationNote.Size" type="System.Drawing.Size, System.Drawing">
-    <value>340, 146</value>
+    <value>340, 137</value>
   </data>
   <data name="textBoxPublicationNote.TabIndex" type="System.Int32, mscorlib">
     <value>10</value>
@@ -2122,7 +2152,7 @@ The EXPRESS schema identifier is defined at the first node in the tree.</value>
     <value>tabPagePublication</value>
   </data>
   <data name="&gt;&gt;textBoxPublicationNote.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
   </data>
   <data name="checkBoxPublishHtmlExamples.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2131,7 +2161,7 @@ The EXPRESS schema identifier is defined at the first node in the tree.</value>
     <value>NoControl</value>
   </data>
   <data name="checkBoxPublishHtmlExamples.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 211</value>
+    <value>6, 195</value>
   </data>
   <data name="checkBoxPublishHtmlExamples.Size" type="System.Drawing.Size, System.Drawing">
     <value>331, 17</value>
@@ -2152,7 +2182,7 @@ The EXPRESS schema identifier is defined at the first node in the tree.</value>
     <value>tabPagePublication</value>
   </data>
   <data name="&gt;&gt;checkBoxPublishHtmlExamples.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="checkBoxPublishExchangeTables.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2161,7 +2191,7 @@ The EXPRESS schema identifier is defined at the first node in the tree.</value>
     <value>NoControl</value>
   </data>
   <data name="checkBoxPublishExchangeTables.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 188</value>
+    <value>6, 172</value>
   </data>
   <data name="checkBoxPublishExchangeTables.Size" type="System.Drawing.Size, System.Drawing">
     <value>261, 17</value>
@@ -2182,7 +2212,7 @@ The EXPRESS schema identifier is defined at the first node in the tree.</value>
     <value>tabPagePublication</value>
   </data>
   <data name="&gt;&gt;checkBoxPublishExchangeTables.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="checkBoxPublishUML.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2191,7 +2221,7 @@ The EXPRESS schema identifier is defined at the first node in the tree.</value>
     <value>NoControl</value>
   </data>
   <data name="checkBoxPublishUML.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 165</value>
+    <value>6, 149</value>
   </data>
   <data name="checkBoxPublishUML.Size" type="System.Drawing.Size, System.Drawing">
     <value>213, 17</value>
@@ -2212,13 +2242,13 @@ The EXPRESS schema identifier is defined at the first node in the tree.</value>
     <value>tabPagePublication</value>
   </data>
   <data name="&gt;&gt;checkBoxPublishUML.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="textBoxFooter.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
   </data>
   <data name="textBoxFooter.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 77</value>
+    <value>6, 69</value>
   </data>
   <data name="textBoxFooter.Size" type="System.Drawing.Size, System.Drawing">
     <value>340, 20</value>
@@ -2236,7 +2266,7 @@ The EXPRESS schema identifier is defined at the first node in the tree.</value>
     <value>tabPagePublication</value>
   </data>
   <data name="&gt;&gt;textBoxFooter.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="textBoxHeader.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -2260,7 +2290,7 @@ The EXPRESS schema identifier is defined at the first node in the tree.</value>
     <value>tabPagePublication</value>
   </data>
   <data name="&gt;&gt;textBoxHeader.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>6</value>
   </data>
   <data name="label17.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2269,7 +2299,7 @@ The EXPRESS schema identifier is defined at the first node in the tree.</value>
     <value>NoControl</value>
   </data>
   <data name="label17.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 61</value>
+    <value>3, 53</value>
   </data>
   <data name="label17.Size" type="System.Drawing.Size, System.Drawing">
     <value>68, 13</value>
@@ -2290,7 +2320,7 @@ The EXPRESS schema identifier is defined at the first node in the tree.</value>
     <value>tabPagePublication</value>
   </data>
   <data name="&gt;&gt;label17.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>7</value>
   </data>
   <data name="label5.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2320,7 +2350,7 @@ The EXPRESS schema identifier is defined at the first node in the tree.</value>
     <value>tabPagePublication</value>
   </data>
   <data name="&gt;&gt;label5.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>8</value>
   </data>
   <data name="checkBoxPublishISO.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2329,7 +2359,7 @@ The EXPRESS schema identifier is defined at the first node in the tree.</value>
     <value>NoControl</value>
   </data>
   <data name="checkBoxPublishISO.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 142</value>
+    <value>6, 126</value>
   </data>
   <data name="checkBoxPublishISO.Size" type="System.Drawing.Size, System.Drawing">
     <value>307, 17</value>
@@ -2350,7 +2380,7 @@ The EXPRESS schema identifier is defined at the first node in the tree.</value>
     <value>tabPagePublication</value>
   </data>
   <data name="&gt;&gt;checkBoxPublishISO.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>9</value>
   </data>
   <data name="checkBoxPublishHideHistory.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -2359,7 +2389,7 @@ The EXPRESS schema identifier is defined at the first node in the tree.</value>
     <value>NoControl</value>
   </data>
   <data name="checkBoxPublishHideHistory.Location" type="System.Drawing.Point, System.Drawing">
-    <value>6, 119</value>
+    <value>6, 103</value>
   </data>
   <data name="checkBoxPublishHideHistory.Size" type="System.Drawing.Size, System.Drawing">
     <value>120, 17</value>
@@ -2380,7 +2410,7 @@ The EXPRESS schema identifier is defined at the first node in the tree.</value>
     <value>tabPagePublication</value>
   </data>
   <data name="&gt;&gt;checkBoxPublishHideHistory.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>10</value>
   </data>
   <data name="tabPagePublication.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 22</value>
@@ -2462,6 +2492,105 @@ The EXPRESS schema identifier is defined at the first node in the tree.</value>
   </data>
   <data name="&gt;&gt;tabPageFormats.ZOrder" xml:space="preserve">
     <value>20</value>
+  </data>
+  <data name="&gt;&gt;label25.Name" xml:space="preserve">
+    <value>label25</value>
+  </data>
+  <data name="&gt;&gt;label25.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label25.Parent" xml:space="preserve">
+    <value>tabPageProcess</value>
+  </data>
+  <data name="&gt;&gt;label25.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;comboBoxProcessOutput.Name" xml:space="preserve">
+    <value>comboBoxProcessOutput</value>
+  </data>
+  <data name="&gt;&gt;comboBoxProcessOutput.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;comboBoxProcessOutput.Parent" xml:space="preserve">
+    <value>tabPageProcess</value>
+  </data>
+  <data name="&gt;&gt;comboBoxProcessOutput.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;label26.Name" xml:space="preserve">
+    <value>label26</value>
+  </data>
+  <data name="&gt;&gt;label26.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label26.Parent" xml:space="preserve">
+    <value>tabPageProcess</value>
+  </data>
+  <data name="&gt;&gt;label26.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;comboBoxProcessInput.Name" xml:space="preserve">
+    <value>comboBoxProcessInput</value>
+  </data>
+  <data name="&gt;&gt;comboBoxProcessInput.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;comboBoxProcessInput.Parent" xml:space="preserve">
+    <value>tabPageProcess</value>
+  </data>
+  <data name="&gt;&gt;comboBoxProcessInput.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;label30.Name" xml:space="preserve">
+    <value>label30</value>
+  </data>
+  <data name="&gt;&gt;label30.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label30.Parent" xml:space="preserve">
+    <value>tabPageProcess</value>
+  </data>
+  <data name="&gt;&gt;label30.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;comboBoxProcessClassification.Name" xml:space="preserve">
+    <value>comboBoxProcessClassification</value>
+  </data>
+  <data name="&gt;&gt;comboBoxProcessClassification.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;comboBoxProcessClassification.Parent" xml:space="preserve">
+    <value>tabPageProcess</value>
+  </data>
+  <data name="&gt;&gt;comboBoxProcessClassification.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="tabPageProcess.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 22</value>
+  </data>
+  <data name="tabPageProcess.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="tabPageProcess.Size" type="System.Drawing.Size, System.Drawing">
+    <value>352, 394</value>
+  </data>
+  <data name="tabPageProcess.TabIndex" type="System.Int32, mscorlib">
+    <value>23</value>
+  </data>
+  <data name="tabPageProcess.Text" xml:space="preserve">
+    <value>Process</value>
+  </data>
+  <data name="&gt;&gt;tabPageProcess.Name" xml:space="preserve">
+    <value>tabPageProcess</value>
+  </data>
+  <data name="&gt;&gt;tabPageProcess.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tabPageProcess.Parent" xml:space="preserve">
+    <value>tabControl</value>
+  </data>
+  <data name="&gt;&gt;tabPageProcess.ZOrder" xml:space="preserve">
+    <value>21</value>
   </data>
   <data name="tabControl.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
@@ -3252,6 +3381,54 @@ The EXPRESS schema identifier is defined at the first node in the tree.</value>
   <data name="&gt;&gt;label7.ZOrder" xml:space="preserve">
     <value>14</value>
   </data>
+  <data name="ctlRules.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="ctlRules.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="ctlRules.Size" type="System.Drawing.Size, System.Drawing">
+    <value>346, 388</value>
+  </data>
+  <data name="ctlRules.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;ctlRules.Name" xml:space="preserve">
+    <value>ctlRules</value>
+  </data>
+  <data name="&gt;&gt;ctlRules.Type" xml:space="preserve">
+    <value>IfcDoc.CtlRules, IfcDoc, Version=11.4.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;ctlRules.Parent" xml:space="preserve">
+    <value>tabPageTemplate</value>
+  </data>
+  <data name="&gt;&gt;ctlRules.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="ctlParameters.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="ctlParameters.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="ctlParameters.Size" type="System.Drawing.Size, System.Drawing">
+    <value>346, 388</value>
+  </data>
+  <data name="ctlParameters.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="&gt;&gt;ctlParameters.Name" xml:space="preserve">
+    <value>ctlParameters</value>
+  </data>
+  <data name="&gt;&gt;ctlParameters.Type" xml:space="preserve">
+    <value>IfcDoc.CtlParameters, IfcDoc, Version=11.4.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;ctlParameters.Parent" xml:space="preserve">
+    <value>tabPageConcept</value>
+  </data>
+  <data name="&gt;&gt;ctlParameters.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
   <data name="listViewExchange.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
@@ -3356,16 +3533,16 @@ The EXPRESS schema identifier is defined at the first node in the tree.</value>
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
         YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAJVSURBVDhPfZNdSJNRGMdPcxVe2EVFOIoIKooIVoEQBUGB
-        Ua0uoi4KKsiKoC8KCkZhRNCFRZpmlNHXZnNpy5x9aKkxE5aF1dANV7kPt+nebc3NaSzo4t/zvCta42Uv
-        /HnOefn//uc5h3OEqs5VpjF4kodsEvTvojjVE8HhrjD2toWw3RrARosfa8xeLDcOQXPnCwoqP6bEiXq9
-        EGI2SS00Bmfy5bcJ9EtpuGM/4QinYfNNwuIax82+MVzsieFoh4Qdz0ex8kkQMxp8EBW9aYJ1cojuWQhW
-        dwpdnkl0+36g0zOBlsEUHjgSuNobx1lbFAfaJehaR7DUEkCh2Q9xwwWCy0lLxLbWIO5/TsA8kESTc1yu
-        9z4lcO19HBfexnC8I4JdL0ax7mkIc5sCUJsooNbJAZUkrShtDuCyPY5qAmo/jMm1wv4d57tjONkZwb62
-        MDZbR7DMEkSReRhTHtIWrg9wQBVphVjb6MeZN1Gcs8VQThDX0zQ/8lrCHoK3UuuraO9zGodRwKtzQE1W
-        gNbkpRMPy/s8+EpCWXtYBnfSoZW2hKAluJjgqX9hVnX/v4AFhiFsIOMmanMLrcZ1Pc1LmoNY/DiAmY9y
-        4NyAortfMZ8OZxGZGVhImkfzWQQWNvihyoVzA1S33fLJTiPzdBJXnqtMOVC2sgNEnVvZlE//BdwaVDbl
-        U5UjK+BKX0oYvcpGJRk9EPvrfxGcuUjimEEvLtnTclt8QWqo8lhJvDLDq3c7CM5cZfr4VfHD4B+cyq3l
-        E3vYm3lM9Kn/DDiNWuJ95RV72EuMUP8GmW0mrYDKLnIAAAAASUVORK5CYII=
+        Ua0uoi4K+gArgr4oKBiFEUEXFmmaUUYfbjWXtszZh5YaM2FZWA3dcJX78N1077bm5jQWdPHved4VrTH2
+        wp/nnJf/73+eczhHqOpcZRqDJ3HIJkP/LoJTPWEc7gphb1sQ260SNlr8WGP2YrlxCJo7X1BQ+TEpTjzQ
+        CyFmk9RCY3AmXn6bQL+cgjv6E45QCjbfJCyucdzsG8PFniiOdsjY8XwUK58EMKPBB1HRmyJYp4TongVh
+        dSfR5ZlEt+8HOj0TaBlMot4Rx9XeGM7aIjjQLkPXOoKlFgmFZj/EDRcILictEdtaA7j/OQ7zQAJNznGl
+        3vsUx7X3MVx4G8XxjjB2vRjFuqdBzG2SoDZRQK2TAypJWlHaLOGyPYZqAmo/jCm1wv4d57ujONkZxr62
+        EDZbR7DMEkCReRhTHtIWrg9wQBVphVjb6MeZNxGcs0VRThDX0zQ/8lrGHoK3UuuraO9zGodRwKtzQE1G
+        gNbkpRMPKfs8+EpGWXtIAXfSoZW2BKEluJjgqX9hVnX/v4AFhiFsIOMmanMLrcZ1Pc1LmgNY/FjCzEdZ
+        cHZA0d2vmE+Hs4jMDCwkzaP5LAILG/xQZcPZAarbbuVkp5F5Ookrz1WmLChTmQGizp3blE//BdwazG3K
+        pypHRsCVvqQwenMbc8nogdhf/4vg9EUSxwx6ccmeUtriC1JDlce5xCszvHq3g+D0VaaPXxU/DP7Bqdxa
+        PrGHvenHRJ/6z4DTqCXeV16xh73ECPVvkpgmo6xn9kAAAAAASUVORK5CYII=
 </value>
   </data>
   <data name="toolStripButtonReqImportRecommended.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
@@ -3410,19 +3587,19 @@ The EXPRESS schema identifier is defined at the first node in the tree.</value>
   <data name="toolStripButtonReqImportExcluded.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAKnSURBVDhPhZPZS1RhGMbPhX9BdBtCCF05Z9wqXHMhN0bN
-        bZx01NEcd9NymaZGy9TMSitayBZJjAoiugrCi/oDoiSCIDKQMpqaM2ebccGLp/c9J5mJoA48MAzf73ne
-        5fuEr1WWplVnmqJNuqFfaIc20Qx11AnVZ4fiKYfSb4PcWwC5KwfBlnSs1CRoi3lxHkEQdpJiBIY3Xy5g
-        89UCNl7MYv3ZDNYejSM8dxKhm33QZ1rJtB7qcAWUgSIyysZqqbhOcLFhop1txObiXWw8v2HCjycQnvch
-        NDuA0NUu6FNN0EYdULxlUI7lQ+7IQqA+GQT7SHsEbayRwGmsPZnC2sMxhO8TfHsQoWvd0C+1UDq1M1wJ
-        ZbAY8tFcBNvS8bMuiQ2mSaKgjjgQfjBKqcMI3/MidKvfhKfd0M5R6aeroZwoMdM7syAd2Q//4UQ2mCFZ
-        BcVbifCdIRO83ovQlQ7oFymZ4TM0SC79eCHk7mwE3WmQGlPw3W6NGMgDJWavl9upZNrElAvaeB3UEUr2
-        ltIWCO4xS5ea9kKqS8RqlRgxkHoLoZ93QZ9sMECNUlUfTdxjo2RaXw+try0DUvM+SPVJCNRY8aUiyiDQ
-        mWv0yYNST9HeuV9al9J30FiZkbwNO6wI2EWslEcZ/HBnQhmiNJoyl2uA3Tm0rkzqORWSi8p2RmDW57Io
-        A78rldaTZ5Qqdx2A3J5hgpzakGz0zGVvw6xPpZaIwbfaFARb00yIVmQMikEngY6EP8BtfbBFGSyXixrf
-        LInFpdYySIk1f4Msf7WI+ZzYLYLNi/Q0K87z1ha/vnyISqPePpZYjIT3xRa8K7JgqTAebwpMvc6Px9zu
-        2C37rh1LBJtXmT5+Vfww+A925dL+JT7DZ83HRF/M7x/sJpKs/xGf4bPECDG/ADG6FxsSsBFXAAAAAElF
-        TkSuQmCC
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAKmSURBVDhPhZPZS1RhGMbPhX9BdBveCF05Z9wqXHMhN2bG
+        3MZJRx3NcTctl2lqtEzNrLSihWyRwqggoqsgvKg/IEoiCCIDKSNrzpxtxgUvnt73nGQmgjrwwDB8v+d5
+        l+8TvlZZmlbcGYo26YV+vh3aRDPUUTfUgBOKrxxKvw1ybxHkrjyEWjKxXJOkLRQk+ARB2EmKExjefDmP
+        zVfz2Hgxi/VnM1h7NI7I3AmEb/RBn2kl03qowxVQBkrIKBcrDnGd4FLDRDvTiM2FO9h4ft2EH08gcj+A
+        8OwAwle6oE81QRt1QfGXQTlaCLkjB8H6VBAcIO0WtLFGAqex9mQKaw/HELlH8K1BhK92Q7/YQunUznAl
+        lMFSyEfyEWrLxM+6FDaYJomCOuJC5MEopQ4jcteP8M1+E572QjtLpZ+qhnLcbqZ35kA6vA+rh5LZYIZk
+        FRR/JSK3h0zwWi/ClzugX6Bkhk/TILn0Y8WQu3MR8mZAakzDd6c1aiAP2M1eL7VTybSJKQ+08TqoI5Ts
+        d9AWCO4xS5ea9kCqS8ZKlRg1kHqLoZ/zQJ9sMECNUtUATdxno2RaXw+try0LUvNeSPUpCNZY8aUixiDY
+        mW/0yYNST9LeuV9al9J3wFiZkbwNu6wIOkUsl8cY/PBmQxmiNJoyl2uA3Xm0rmzqOR2Sh8p2R2HW57IY
+        g1VPOq2nwChV7toPuT3LBDm1IdXomcvehlmfHJaowbfaNIRaM0yIVmQMikE3ga6kP8BtfbDFGCyVixrf
+        LInFpdYySIk1f4Os1WoRc3nxWwSbF+lpToLvrS1xfekglUa9fbRbjIT3pRa8K7FgsTgRb4pMvS5MxFx8
+        /JZz145Fgs2rTB+/Kn4Y/Ae7cmn/Ep/hs+Zjoi/u9w92E0nW/4jP8FlihLhfLZoXFUtBDBkAAAAASUVO
+        RK5CYII=
 </value>
   </data>
   <data name="toolStripButtonReqImportExcluded.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
@@ -6631,6 +6808,30 @@ The EXPRESS schema identifier is defined at the first node in the tree.</value>
   <data name="toolStripButtonExampleClear.Text" xml:space="preserve">
     <value>He&amp;lp</value>
   </data>
+  <data name="ctlOperators.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="ctlOperators.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="ctlOperators.Size" type="System.Drawing.Size, System.Drawing">
+    <value>346, 388</value>
+  </data>
+  <data name="ctlOperators.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;ctlOperators.Name" xml:space="preserve">
+    <value>ctlOperators</value>
+  </data>
+  <data name="&gt;&gt;ctlOperators.Type" xml:space="preserve">
+    <value>IfcDoc.CtlOperators, IfcDoc, Version=11.4.0.0, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;ctlOperators.Parent" xml:space="preserve">
+    <value>tabPageOperations</value>
+  </data>
+  <data name="&gt;&gt;ctlOperators.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
   <data name="columnHeaderRootTemplate.Text" xml:space="preserve">
     <value>Template</value>
   </data>
@@ -6666,7 +6867,7 @@ The EXPRESS schema identifier is defined at the first node in the tree.</value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAABy
-        CwAAAk1TRnQBSQFMAgEBBAEAAYwBAQGMAQEBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
+        CwAAAk1TRnQBSQFMAgEBBAEAAaQBAQGkAQEBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
         AwABQAMAASADAAEBAQABCAYAAQgYAAGAAgABgAMAAoABAAGAAwABgAEAAYABAAKAAgADwAEAAcAB3AHA
         AQAB8AHKAaYBAAEzBQABMwEAATMBAAEzAQACMwIAAxYBAAMcAQADIgEAAykBAANVAQADTQEAA0IBAAM5
         AQABgAF8Af8BAAJQAf8BAAGTAQAB1gEAAf8B7AHMAQABxgHWAe8BAAHWAucBAAGQAakBrQIAAf8BMwMA
@@ -7313,6 +7514,831 @@ The EXPRESS schema identifier is defined at the first node in the tree.</value>
   <data name="toolStripButtonFormatMarkup.Visible" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
+  <data name="label25.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label25.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label25.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 101</value>
+  </data>
+  <data name="label25.Size" type="System.Drawing.Size, System.Drawing">
+    <value>93, 13</value>
+  </data>
+  <data name="label25.TabIndex" type="System.Int32, mscorlib">
+    <value>21</value>
+  </data>
+  <data name="label25.Text" xml:space="preserve">
+    <value>Output Exchange:</value>
+  </data>
+  <data name="&gt;&gt;label25.Name" xml:space="preserve">
+    <value>label25</value>
+  </data>
+  <data name="&gt;&gt;label25.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label25.Parent" xml:space="preserve">
+    <value>tabPageProcess</value>
+  </data>
+  <data name="&gt;&gt;label25.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="comboBoxProcessOutput.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items" xml:space="preserve">
+    <value>34-10 00 00	Entrepreneurial Roles</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items1" xml:space="preserve">
+    <value>34-10 11 00	Owner</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items2" xml:space="preserve">
+    <value>34-10 11 11	Developer</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items3" xml:space="preserve">
+    <value>34-10 11 14	Corporate Entity</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items4" xml:space="preserve">
+    <value>34-10 11 17	Public Entity</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items5" xml:space="preserve">
+    <value>34-10 21 00	Partner</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items6" xml:space="preserve">
+    <value>34-11 00 00	Management Roles</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items7" xml:space="preserve">
+    <value>34-11 10 00	Strategic Management Roles</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items8" xml:space="preserve">
+    <value>34-11 10 11	President</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items9" xml:space="preserve">
+    <value>34-11 10 11 11	Vice President</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items10" xml:space="preserve">
+    <value>34-11 10 14	Chairperson</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items11" xml:space="preserve">
+    <value>34-11 10 17	Board Member</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items12" xml:space="preserve">
+    <value>34-11 20 00	Operational Management Roles</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items13" xml:space="preserve">
+    <value>34-11 20 11	Executive</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items14" xml:space="preserve">
+    <value>34-11 20 14	Officer</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items15" xml:space="preserve">
+    <value>34-11 20 17	Director</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items16" xml:space="preserve">
+    <value>34-11 20 21	Manager</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items17" xml:space="preserve">
+    <value>34-11 20 24	Supervisor</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items18" xml:space="preserve">
+    <value>34-11 20 27	Coordinator</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items19" xml:space="preserve">
+    <value>34-11 20 31	Scheduler</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items20" xml:space="preserve">
+    <value>34-11 20 34	Project Lead</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items21" xml:space="preserve">
+    <value>34-20 00 00	Development Roles</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items22" xml:space="preserve">
+    <value>34-20 11 00	Design Roles</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items23" xml:space="preserve">
+    <value>34-20 11 11	Architect</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items24" xml:space="preserve">
+    <value>34-20 11 21	Engineer</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items25" xml:space="preserve">
+    <value>34-20 11 31	Designer</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items26" xml:space="preserve">
+    <value>34-20 11 41	Specifier</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items27" xml:space="preserve">
+    <value>34-20 21 00	Planning Roles</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items28" xml:space="preserve">
+    <value>34-20 21 11	Planner</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items29" xml:space="preserve">
+    <value>34-20 21 14	Cost Estimator</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items30" xml:space="preserve">
+    <value>34-20 21 17	Scheduler</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items31" xml:space="preserve">
+    <value>34-20 31 00	Surveyor</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items32" xml:space="preserve">
+    <value>34-20 41 00	Contract Administrator</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items33" xml:space="preserve">
+    <value>34-20 51 00	Observational Roles</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items34" xml:space="preserve">
+    <value>34-20 51 11	Reviewer</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items35" xml:space="preserve">
+    <value>34-20 51 14	Review Board</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items36" xml:space="preserve">
+    <value>34-20 51 17	Inspector</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items37" xml:space="preserve">
+    <value>34-20 51 21	Observer</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items38" xml:space="preserve">
+    <value>34-35 00 00	Execution Roles</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items39" xml:space="preserve">
+    <value>34-35 10 00	Procurement Roles</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items40" xml:space="preserve">
+    <value>34-35 10 11	Manufacturer</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items41" xml:space="preserve">
+    <value>34-35 10 14	Fabricator</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items42" xml:space="preserve">
+    <value>34-35 10 17	Distributor</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items43" xml:space="preserve">
+    <value>34-35 10 21	Supplier</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items44" xml:space="preserve">
+    <value>34-35 10 21 11	Product Representative</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items45" xml:space="preserve">
+    <value>34-35 10 24	Buyer</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items46" xml:space="preserve">
+    <value>34-35 15 00	Construction Roles</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items47" xml:space="preserve">
+    <value>34-35 15 11	Contractor</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items48" xml:space="preserve">
+    <value>34-35 15 14	Sub Contractor</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items49" xml:space="preserve">
+    <value>34-35 15 17	Project Engineer</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items50" xml:space="preserve">
+    <value>34-35 15 21	Tradesperson</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items51" xml:space="preserve">
+    <value>34-35 15 21 11	Craftsperson</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items52" xml:space="preserve">
+    <value>34-35 15 21 14	Journeyman</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items53" xml:space="preserve">
+    <value>34-35 15 21 17	Apprentice</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items54" xml:space="preserve">
+    <value>34-35 15 24	Laborer</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items55" xml:space="preserve">
+    <value>34-35 15 24 11	Skilled Laborer</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items56" xml:space="preserve">
+    <value>34-35 15 24 14	Unskilled Laborer</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items57" xml:space="preserve">
+    <value>34-35 15 27	Installer</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items58" xml:space="preserve">
+    <value>34-35 15 31	Operator</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items59" xml:space="preserve">
+    <value>34-41 00 00	Utilization Roles</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items60" xml:space="preserve">
+    <value>34-41 14 00	Facility Use Roles</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items61" xml:space="preserve">
+    <value>34-41 14 11	Facility Manager</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items62" xml:space="preserve">
+    <value>34-41 14 14	Facility Maintenance</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items63" xml:space="preserve">
+    <value>34-41 14 17	Facility Engineer</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items64" xml:space="preserve">
+    <value>34-41 31 00	Facility Service Roles</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items65" xml:space="preserve">
+    <value>34-41 31 11	Custodian</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items66" xml:space="preserve">
+    <value>34-55 00 00	Support Roles</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items67" xml:space="preserve">
+    <value>34-55 11 00	Administrative Service Roles</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items68" xml:space="preserve">
+    <value>34-55 11 11	Administrative Assistant</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items69" xml:space="preserve">
+    <value>34-55 11 14	Receptionist</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items70" xml:space="preserve">
+    <value>34-55 11 17	Records Manager</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items71" xml:space="preserve">
+    <value>34-55 11 21	Intern</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items72" xml:space="preserve">
+    <value>34-55 11 24	Assistant</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items73" xml:space="preserve">
+    <value>34-55 11 27	Trainer</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items74" xml:space="preserve">
+    <value>34-55 14 00	Professional Service Roles</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items75" xml:space="preserve">
+    <value>34-55 14 11	Consultant</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items76" xml:space="preserve">
+    <value>34-55 14 14	Librarian</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items77" xml:space="preserve">
+    <value>34-55 14 17	Draftsperson</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items78" xml:space="preserve">
+    <value>34-55 14 19	Marketing Roles</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items79" xml:space="preserve">
+    <value>34-55 14 19 11	Salesperson</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items80" xml:space="preserve">
+    <value>34-55 14 22	Financial Roles</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items81" xml:space="preserve">
+    <value>34-55 14 22 11	Accountant</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items82" xml:space="preserve">
+    <value>34-55 14 22 14	Banker</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items83" xml:space="preserve">
+    <value>34-55 14 22 17	Record Keeper</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items84" xml:space="preserve">
+    <value>34-55 14 22 21	Bookkeeper</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items85" xml:space="preserve">
+    <value>34-55 14 24	Lawyer</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items86" xml:space="preserve">
+    <value>34-55 14 27	Agent</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items87" xml:space="preserve">
+    <value>34-55 14 31	Specialist</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items88" xml:space="preserve">
+    <value>34-61 00 00	Group Roles</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items89" xml:space="preserve">
+    <value>34-61 11 00	Teams</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items90" xml:space="preserve">
+    <value>34-61 11 11	Task Team</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items91" xml:space="preserve">
+    <value>34-61 11 21	Task Force</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items92" xml:space="preserve">
+    <value>34-61 21 00	Boards</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items93" xml:space="preserve">
+    <value>34-61 21 11	Board of Directors</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items94" xml:space="preserve">
+    <value>34-61 31 00	Committees</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items95" xml:space="preserve">
+    <value>34-61 31 21	Ad Hoc Committee</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items96" xml:space="preserve">
+    <value>34-61 41 00	Business Organizations</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items97" xml:space="preserve">
+    <value>34-61 41 11	Corporation</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items98" xml:space="preserve">
+    <value>34-61 41 21	Partnership</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items99" xml:space="preserve">
+    <value>34-61 41 31	Sole Proprietorship</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items100" xml:space="preserve">
+    <value>34-61 41 41	Joint Venture</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items101" xml:space="preserve">
+    <value>34-61 41 51	Single Purpose Entity</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items102" xml:space="preserve">
+    <value>34-61 51 00	Nonprofit Organizations</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items103" xml:space="preserve">
+    <value>34-61 51 11	Association</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items104" xml:space="preserve">
+    <value>34-61 51 21	Foundation</value>
+  </data>
+  <data name="comboBoxProcessOutput.Items105" xml:space="preserve">
+    <value>34-61 51 31	Union</value>
+  </data>
+  <data name="comboBoxProcessOutput.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 118</value>
+  </data>
+  <data name="comboBoxProcessOutput.Size" type="System.Drawing.Size, System.Drawing">
+    <value>329, 21</value>
+  </data>
+  <data name="comboBoxProcessOutput.TabIndex" type="System.Int32, mscorlib">
+    <value>20</value>
+  </data>
+  <data name="&gt;&gt;comboBoxProcessOutput.Name" xml:space="preserve">
+    <value>comboBoxProcessOutput</value>
+  </data>
+  <data name="&gt;&gt;comboBoxProcessOutput.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;comboBoxProcessOutput.Parent" xml:space="preserve">
+    <value>tabPageProcess</value>
+  </data>
+  <data name="&gt;&gt;comboBoxProcessOutput.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="label26.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label26.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label26.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 56</value>
+  </data>
+  <data name="label26.Size" type="System.Drawing.Size, System.Drawing">
+    <value>85, 13</value>
+  </data>
+  <data name="label26.TabIndex" type="System.Int32, mscorlib">
+    <value>19</value>
+  </data>
+  <data name="label26.Text" xml:space="preserve">
+    <value>Input Exchange:</value>
+  </data>
+  <data name="&gt;&gt;label26.Name" xml:space="preserve">
+    <value>label26</value>
+  </data>
+  <data name="&gt;&gt;label26.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label26.Parent" xml:space="preserve">
+    <value>tabPageProcess</value>
+  </data>
+  <data name="&gt;&gt;label26.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="comboBoxProcessInput.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="comboBoxProcessInput.Items" xml:space="preserve">
+    <value>34-10 00 00	Entrepreneurial Roles</value>
+  </data>
+  <data name="comboBoxProcessInput.Items1" xml:space="preserve">
+    <value>34-10 11 00	Owner</value>
+  </data>
+  <data name="comboBoxProcessInput.Items2" xml:space="preserve">
+    <value>34-10 11 11	Developer</value>
+  </data>
+  <data name="comboBoxProcessInput.Items3" xml:space="preserve">
+    <value>34-10 11 14	Corporate Entity</value>
+  </data>
+  <data name="comboBoxProcessInput.Items4" xml:space="preserve">
+    <value>34-10 11 17	Public Entity</value>
+  </data>
+  <data name="comboBoxProcessInput.Items5" xml:space="preserve">
+    <value>34-10 21 00	Partner</value>
+  </data>
+  <data name="comboBoxProcessInput.Items6" xml:space="preserve">
+    <value>34-11 00 00	Management Roles</value>
+  </data>
+  <data name="comboBoxProcessInput.Items7" xml:space="preserve">
+    <value>34-11 10 00	Strategic Management Roles</value>
+  </data>
+  <data name="comboBoxProcessInput.Items8" xml:space="preserve">
+    <value>34-11 10 11	President</value>
+  </data>
+  <data name="comboBoxProcessInput.Items9" xml:space="preserve">
+    <value>34-11 10 11 11	Vice President</value>
+  </data>
+  <data name="comboBoxProcessInput.Items10" xml:space="preserve">
+    <value>34-11 10 14	Chairperson</value>
+  </data>
+  <data name="comboBoxProcessInput.Items11" xml:space="preserve">
+    <value>34-11 10 17	Board Member</value>
+  </data>
+  <data name="comboBoxProcessInput.Items12" xml:space="preserve">
+    <value>34-11 20 00	Operational Management Roles</value>
+  </data>
+  <data name="comboBoxProcessInput.Items13" xml:space="preserve">
+    <value>34-11 20 11	Executive</value>
+  </data>
+  <data name="comboBoxProcessInput.Items14" xml:space="preserve">
+    <value>34-11 20 14	Officer</value>
+  </data>
+  <data name="comboBoxProcessInput.Items15" xml:space="preserve">
+    <value>34-11 20 17	Director</value>
+  </data>
+  <data name="comboBoxProcessInput.Items16" xml:space="preserve">
+    <value>34-11 20 21	Manager</value>
+  </data>
+  <data name="comboBoxProcessInput.Items17" xml:space="preserve">
+    <value>34-11 20 24	Supervisor</value>
+  </data>
+  <data name="comboBoxProcessInput.Items18" xml:space="preserve">
+    <value>34-11 20 27	Coordinator</value>
+  </data>
+  <data name="comboBoxProcessInput.Items19" xml:space="preserve">
+    <value>34-11 20 31	Scheduler</value>
+  </data>
+  <data name="comboBoxProcessInput.Items20" xml:space="preserve">
+    <value>34-11 20 34	Project Lead</value>
+  </data>
+  <data name="comboBoxProcessInput.Items21" xml:space="preserve">
+    <value>34-20 00 00	Development Roles</value>
+  </data>
+  <data name="comboBoxProcessInput.Items22" xml:space="preserve">
+    <value>34-20 11 00	Design Roles</value>
+  </data>
+  <data name="comboBoxProcessInput.Items23" xml:space="preserve">
+    <value>34-20 11 11	Architect</value>
+  </data>
+  <data name="comboBoxProcessInput.Items24" xml:space="preserve">
+    <value>34-20 11 21	Engineer</value>
+  </data>
+  <data name="comboBoxProcessInput.Items25" xml:space="preserve">
+    <value>34-20 11 31	Designer</value>
+  </data>
+  <data name="comboBoxProcessInput.Items26" xml:space="preserve">
+    <value>34-20 11 41	Specifier</value>
+  </data>
+  <data name="comboBoxProcessInput.Items27" xml:space="preserve">
+    <value>34-20 21 00	Planning Roles</value>
+  </data>
+  <data name="comboBoxProcessInput.Items28" xml:space="preserve">
+    <value>34-20 21 11	Planner</value>
+  </data>
+  <data name="comboBoxProcessInput.Items29" xml:space="preserve">
+    <value>34-20 21 14	Cost Estimator</value>
+  </data>
+  <data name="comboBoxProcessInput.Items30" xml:space="preserve">
+    <value>34-20 21 17	Scheduler</value>
+  </data>
+  <data name="comboBoxProcessInput.Items31" xml:space="preserve">
+    <value>34-20 31 00	Surveyor</value>
+  </data>
+  <data name="comboBoxProcessInput.Items32" xml:space="preserve">
+    <value>34-20 41 00	Contract Administrator</value>
+  </data>
+  <data name="comboBoxProcessInput.Items33" xml:space="preserve">
+    <value>34-20 51 00	Observational Roles</value>
+  </data>
+  <data name="comboBoxProcessInput.Items34" xml:space="preserve">
+    <value>34-20 51 11	Reviewer</value>
+  </data>
+  <data name="comboBoxProcessInput.Items35" xml:space="preserve">
+    <value>34-20 51 14	Review Board</value>
+  </data>
+  <data name="comboBoxProcessInput.Items36" xml:space="preserve">
+    <value>34-20 51 17	Inspector</value>
+  </data>
+  <data name="comboBoxProcessInput.Items37" xml:space="preserve">
+    <value>34-20 51 21	Observer</value>
+  </data>
+  <data name="comboBoxProcessInput.Items38" xml:space="preserve">
+    <value>34-35 00 00	Execution Roles</value>
+  </data>
+  <data name="comboBoxProcessInput.Items39" xml:space="preserve">
+    <value>34-35 10 00	Procurement Roles</value>
+  </data>
+  <data name="comboBoxProcessInput.Items40" xml:space="preserve">
+    <value>34-35 10 11	Manufacturer</value>
+  </data>
+  <data name="comboBoxProcessInput.Items41" xml:space="preserve">
+    <value>34-35 10 14	Fabricator</value>
+  </data>
+  <data name="comboBoxProcessInput.Items42" xml:space="preserve">
+    <value>34-35 10 17	Distributor</value>
+  </data>
+  <data name="comboBoxProcessInput.Items43" xml:space="preserve">
+    <value>34-35 10 21	Supplier</value>
+  </data>
+  <data name="comboBoxProcessInput.Items44" xml:space="preserve">
+    <value>34-35 10 21 11	Product Representative</value>
+  </data>
+  <data name="comboBoxProcessInput.Items45" xml:space="preserve">
+    <value>34-35 10 24	Buyer</value>
+  </data>
+  <data name="comboBoxProcessInput.Items46" xml:space="preserve">
+    <value>34-35 15 00	Construction Roles</value>
+  </data>
+  <data name="comboBoxProcessInput.Items47" xml:space="preserve">
+    <value>34-35 15 11	Contractor</value>
+  </data>
+  <data name="comboBoxProcessInput.Items48" xml:space="preserve">
+    <value>34-35 15 14	Sub Contractor</value>
+  </data>
+  <data name="comboBoxProcessInput.Items49" xml:space="preserve">
+    <value>34-35 15 17	Project Engineer</value>
+  </data>
+  <data name="comboBoxProcessInput.Items50" xml:space="preserve">
+    <value>34-35 15 21	Tradesperson</value>
+  </data>
+  <data name="comboBoxProcessInput.Items51" xml:space="preserve">
+    <value>34-35 15 21 11	Craftsperson</value>
+  </data>
+  <data name="comboBoxProcessInput.Items52" xml:space="preserve">
+    <value>34-35 15 21 14	Journeyman</value>
+  </data>
+  <data name="comboBoxProcessInput.Items53" xml:space="preserve">
+    <value>34-35 15 21 17	Apprentice</value>
+  </data>
+  <data name="comboBoxProcessInput.Items54" xml:space="preserve">
+    <value>34-35 15 24	Laborer</value>
+  </data>
+  <data name="comboBoxProcessInput.Items55" xml:space="preserve">
+    <value>34-35 15 24 11	Skilled Laborer</value>
+  </data>
+  <data name="comboBoxProcessInput.Items56" xml:space="preserve">
+    <value>34-35 15 24 14	Unskilled Laborer</value>
+  </data>
+  <data name="comboBoxProcessInput.Items57" xml:space="preserve">
+    <value>34-35 15 27	Installer</value>
+  </data>
+  <data name="comboBoxProcessInput.Items58" xml:space="preserve">
+    <value>34-35 15 31	Operator</value>
+  </data>
+  <data name="comboBoxProcessInput.Items59" xml:space="preserve">
+    <value>34-41 00 00	Utilization Roles</value>
+  </data>
+  <data name="comboBoxProcessInput.Items60" xml:space="preserve">
+    <value>34-41 14 00	Facility Use Roles</value>
+  </data>
+  <data name="comboBoxProcessInput.Items61" xml:space="preserve">
+    <value>34-41 14 11	Facility Manager</value>
+  </data>
+  <data name="comboBoxProcessInput.Items62" xml:space="preserve">
+    <value>34-41 14 14	Facility Maintenance</value>
+  </data>
+  <data name="comboBoxProcessInput.Items63" xml:space="preserve">
+    <value>34-41 14 17	Facility Engineer</value>
+  </data>
+  <data name="comboBoxProcessInput.Items64" xml:space="preserve">
+    <value>34-41 31 00	Facility Service Roles</value>
+  </data>
+  <data name="comboBoxProcessInput.Items65" xml:space="preserve">
+    <value>34-41 31 11	Custodian</value>
+  </data>
+  <data name="comboBoxProcessInput.Items66" xml:space="preserve">
+    <value>34-55 00 00	Support Roles</value>
+  </data>
+  <data name="comboBoxProcessInput.Items67" xml:space="preserve">
+    <value>34-55 11 00	Administrative Service Roles</value>
+  </data>
+  <data name="comboBoxProcessInput.Items68" xml:space="preserve">
+    <value>34-55 11 11	Administrative Assistant</value>
+  </data>
+  <data name="comboBoxProcessInput.Items69" xml:space="preserve">
+    <value>34-55 11 14	Receptionist</value>
+  </data>
+  <data name="comboBoxProcessInput.Items70" xml:space="preserve">
+    <value>34-55 11 17	Records Manager</value>
+  </data>
+  <data name="comboBoxProcessInput.Items71" xml:space="preserve">
+    <value>34-55 11 21	Intern</value>
+  </data>
+  <data name="comboBoxProcessInput.Items72" xml:space="preserve">
+    <value>34-55 11 24	Assistant</value>
+  </data>
+  <data name="comboBoxProcessInput.Items73" xml:space="preserve">
+    <value>34-55 11 27	Trainer</value>
+  </data>
+  <data name="comboBoxProcessInput.Items74" xml:space="preserve">
+    <value>34-55 14 00	Professional Service Roles</value>
+  </data>
+  <data name="comboBoxProcessInput.Items75" xml:space="preserve">
+    <value>34-55 14 11	Consultant</value>
+  </data>
+  <data name="comboBoxProcessInput.Items76" xml:space="preserve">
+    <value>34-55 14 14	Librarian</value>
+  </data>
+  <data name="comboBoxProcessInput.Items77" xml:space="preserve">
+    <value>34-55 14 17	Draftsperson</value>
+  </data>
+  <data name="comboBoxProcessInput.Items78" xml:space="preserve">
+    <value>34-55 14 19	Marketing Roles</value>
+  </data>
+  <data name="comboBoxProcessInput.Items79" xml:space="preserve">
+    <value>34-55 14 19 11	Salesperson</value>
+  </data>
+  <data name="comboBoxProcessInput.Items80" xml:space="preserve">
+    <value>34-55 14 22	Financial Roles</value>
+  </data>
+  <data name="comboBoxProcessInput.Items81" xml:space="preserve">
+    <value>34-55 14 22 11	Accountant</value>
+  </data>
+  <data name="comboBoxProcessInput.Items82" xml:space="preserve">
+    <value>34-55 14 22 14	Banker</value>
+  </data>
+  <data name="comboBoxProcessInput.Items83" xml:space="preserve">
+    <value>34-55 14 22 17	Record Keeper</value>
+  </data>
+  <data name="comboBoxProcessInput.Items84" xml:space="preserve">
+    <value>34-55 14 22 21	Bookkeeper</value>
+  </data>
+  <data name="comboBoxProcessInput.Items85" xml:space="preserve">
+    <value>34-55 14 24	Lawyer</value>
+  </data>
+  <data name="comboBoxProcessInput.Items86" xml:space="preserve">
+    <value>34-55 14 27	Agent</value>
+  </data>
+  <data name="comboBoxProcessInput.Items87" xml:space="preserve">
+    <value>34-55 14 31	Specialist</value>
+  </data>
+  <data name="comboBoxProcessInput.Items88" xml:space="preserve">
+    <value>34-61 00 00	Group Roles</value>
+  </data>
+  <data name="comboBoxProcessInput.Items89" xml:space="preserve">
+    <value>34-61 11 00	Teams</value>
+  </data>
+  <data name="comboBoxProcessInput.Items90" xml:space="preserve">
+    <value>34-61 11 11	Task Team</value>
+  </data>
+  <data name="comboBoxProcessInput.Items91" xml:space="preserve">
+    <value>34-61 11 21	Task Force</value>
+  </data>
+  <data name="comboBoxProcessInput.Items92" xml:space="preserve">
+    <value>34-61 21 00	Boards</value>
+  </data>
+  <data name="comboBoxProcessInput.Items93" xml:space="preserve">
+    <value>34-61 21 11	Board of Directors</value>
+  </data>
+  <data name="comboBoxProcessInput.Items94" xml:space="preserve">
+    <value>34-61 31 00	Committees</value>
+  </data>
+  <data name="comboBoxProcessInput.Items95" xml:space="preserve">
+    <value>34-61 31 21	Ad Hoc Committee</value>
+  </data>
+  <data name="comboBoxProcessInput.Items96" xml:space="preserve">
+    <value>34-61 41 00	Business Organizations</value>
+  </data>
+  <data name="comboBoxProcessInput.Items97" xml:space="preserve">
+    <value>34-61 41 11	Corporation</value>
+  </data>
+  <data name="comboBoxProcessInput.Items98" xml:space="preserve">
+    <value>34-61 41 21	Partnership</value>
+  </data>
+  <data name="comboBoxProcessInput.Items99" xml:space="preserve">
+    <value>34-61 41 31	Sole Proprietorship</value>
+  </data>
+  <data name="comboBoxProcessInput.Items100" xml:space="preserve">
+    <value>34-61 41 41	Joint Venture</value>
+  </data>
+  <data name="comboBoxProcessInput.Items101" xml:space="preserve">
+    <value>34-61 41 51	Single Purpose Entity</value>
+  </data>
+  <data name="comboBoxProcessInput.Items102" xml:space="preserve">
+    <value>34-61 51 00	Nonprofit Organizations</value>
+  </data>
+  <data name="comboBoxProcessInput.Items103" xml:space="preserve">
+    <value>34-61 51 11	Association</value>
+  </data>
+  <data name="comboBoxProcessInput.Items104" xml:space="preserve">
+    <value>34-61 51 21	Foundation</value>
+  </data>
+  <data name="comboBoxProcessInput.Items105" xml:space="preserve">
+    <value>34-61 51 31	Union</value>
+  </data>
+  <data name="comboBoxProcessInput.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 73</value>
+  </data>
+  <data name="comboBoxProcessInput.Size" type="System.Drawing.Size, System.Drawing">
+    <value>329, 21</value>
+  </data>
+  <data name="comboBoxProcessInput.TabIndex" type="System.Int32, mscorlib">
+    <value>18</value>
+  </data>
+  <data name="&gt;&gt;comboBoxProcessInput.Name" xml:space="preserve">
+    <value>comboBoxProcessInput</value>
+  </data>
+  <data name="&gt;&gt;comboBoxProcessInput.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;comboBoxProcessInput.Parent" xml:space="preserve">
+    <value>tabPageProcess</value>
+  </data>
+  <data name="&gt;&gt;comboBoxProcessInput.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="label30.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label30.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label30.Location" type="System.Drawing.Point, System.Drawing">
+    <value>9, 10</value>
+  </data>
+  <data name="label30.Size" type="System.Drawing.Size, System.Drawing">
+    <value>112, 13</value>
+  </data>
+  <data name="label30.TabIndex" type="System.Int32, mscorlib">
+    <value>17</value>
+  </data>
+  <data name="label30.Text" xml:space="preserve">
+    <value>Process Classification:</value>
+  </data>
+  <data name="&gt;&gt;label30.Name" xml:space="preserve">
+    <value>label30</value>
+  </data>
+  <data name="&gt;&gt;label30.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label30.Parent" xml:space="preserve">
+    <value>tabPageProcess</value>
+  </data>
+  <data name="&gt;&gt;label30.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="comboBoxProcessClassification.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="comboBoxProcessClassification.Items" xml:space="preserve">
+    <value>31-10 00 00	Inception Phase</value>
+  </data>
+  <data name="comboBoxProcessClassification.Items1" xml:space="preserve">
+    <value>31-20 00 00	Conceptualization Phase</value>
+  </data>
+  <data name="comboBoxProcessClassification.Items2" xml:space="preserve">
+    <value>31-30 00 00	Criteria Definition Phase</value>
+  </data>
+  <data name="comboBoxProcessClassification.Items3" xml:space="preserve">
+    <value>31-40 00 00	Design Phase</value>
+  </data>
+  <data name="comboBoxProcessClassification.Items4" xml:space="preserve">
+    <value>31-50 00 00	Coordination Phase</value>
+  </data>
+  <data name="comboBoxProcessClassification.Items5" xml:space="preserve">
+    <value>31-60 00 00	Implementation Phase</value>
+  </data>
+  <data name="comboBoxProcessClassification.Items6" xml:space="preserve">
+    <value>31-70 00 00	Handover Phase</value>
+  </data>
+  <data name="comboBoxProcessClassification.Items7" xml:space="preserve">
+    <value>31-80 00 00	Operations Phase</value>
+  </data>
+  <data name="comboBoxProcessClassification.Items8" xml:space="preserve">
+    <value>31-90 00 00	Closure Phase</value>
+  </data>
+  <data name="comboBoxProcessClassification.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 27</value>
+  </data>
+  <data name="comboBoxProcessClassification.Size" type="System.Drawing.Size, System.Drawing">
+    <value>329, 21</value>
+  </data>
+  <data name="comboBoxProcessClassification.TabIndex" type="System.Int32, mscorlib">
+    <value>16</value>
+  </data>
+  <data name="&gt;&gt;comboBoxProcessClassification.Name" xml:space="preserve">
+    <value>comboBoxProcessClassification</value>
+  </data>
+  <data name="&gt;&gt;comboBoxProcessClassification.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;comboBoxProcessClassification.Parent" xml:space="preserve">
+    <value>tabPageProcess</value>
+  </data>
+  <data name="&gt;&gt;comboBoxProcessClassification.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
   <metadata name="imageListRules.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
@@ -7336,78 +8362,6 @@ The EXPRESS schema identifier is defined at the first node in the tree.</value>
   </data>
   <data name="openFileDialogExample.Title" xml:space="preserve">
     <value>Load IFC Example</value>
-  </data>
-  <data name="ctlRules.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="ctlRules.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 3</value>
-  </data>
-  <data name="ctlRules.Size" type="System.Drawing.Size, System.Drawing">
-    <value>346, 388</value>
-  </data>
-  <data name="ctlRules.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;ctlRules.Name" xml:space="preserve">
-    <value>ctlRules</value>
-  </data>
-  <data name="&gt;&gt;ctlRules.Type" xml:space="preserve">
-    <value>IfcDoc.CtlRules, IfcDoc, Version=11.1.0.0, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;ctlRules.Parent" xml:space="preserve">
-    <value>tabPageTemplate</value>
-  </data>
-  <data name="&gt;&gt;ctlRules.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="ctlParameters.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="ctlParameters.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 3</value>
-  </data>
-  <data name="ctlParameters.Size" type="System.Drawing.Size, System.Drawing">
-    <value>346, 388</value>
-  </data>
-  <data name="ctlParameters.TabIndex" type="System.Int32, mscorlib">
-    <value>9</value>
-  </data>
-  <data name="&gt;&gt;ctlParameters.Name" xml:space="preserve">
-    <value>ctlParameters</value>
-  </data>
-  <data name="&gt;&gt;ctlParameters.Type" xml:space="preserve">
-    <value>IfcDoc.CtlParameters, IfcDoc, Version=11.1.0.0, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;ctlParameters.Parent" xml:space="preserve">
-    <value>tabPageConcept</value>
-  </data>
-  <data name="&gt;&gt;ctlParameters.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="ctlOperators.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="ctlOperators.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 3</value>
-  </data>
-  <data name="ctlOperators.Size" type="System.Drawing.Size, System.Drawing">
-    <value>346, 388</value>
-  </data>
-  <data name="ctlOperators.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;ctlOperators.Name" xml:space="preserve">
-    <value>ctlOperators</value>
-  </data>
-  <data name="&gt;&gt;ctlOperators.Type" xml:space="preserve">
-    <value>IfcDoc.CtlOperators, IfcDoc, Version=11.1.0.0, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;ctlOperators.Parent" xml:space="preserve">
-    <value>tabPageOperations</value>
-  </data>
-  <data name="&gt;&gt;ctlOperators.ZOrder" xml:space="preserve">
-    <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>

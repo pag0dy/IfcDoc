@@ -601,7 +601,12 @@ namespace IfcDoc
 
         public int GetColumnCount()
         {
-            return this.m_view.Exchanges.Count;
+            if (this.m_view != null)
+            {
+                return this.m_view.Exchanges.Count;
+            }
+
+            return 0;
         }
 
         public int GetRowCount()

@@ -42,12 +42,32 @@ namespace IfcDoc
 
             foreach (DocModelView docView in this.m_project.ModelViews)
             {
-                ListViewItem lvi = new ListViewItem();
-                lvi.Tag = docView;
-                lvi.Text = docView.Name;
-                lvi.ImageIndex = 0;
-                lvi.SubItems.Add(docView.Version);
-                this.listView.Items.Add(lvi);
+                FillTree(null, docView);
+            }
+
+            this.treeView.ExpandAll();
+        }
+
+        private void FillTree(TreeNode tnParent, DocModelView docView)
+        {
+            TreeNode tn = new TreeNode();
+            tn.Tag = docView;
+            tn.Text = docView.Name;
+            tn.ImageIndex = 0;
+
+            if (tnParent != null)
+            {
+                tnParent.Nodes.Add(tn);
+            }
+            else
+            {
+                this.treeView.Nodes.Add(tn);
+            }
+
+            // recurse
+            foreach (DocModelView docSub in docView.ModelViews)
+            {
+                FillTree(tn, docSub);
             }
         }
 
@@ -56,41 +76,18 @@ namespace IfcDoc
             get
             {
                 DocModelView[] sel = null;
-                if (this.listView.SelectedItems.Count > 0)
+                if (this.treeView.SelectedNode != null)
                 {
-                    sel = new DocModelView [this.listView.SelectedItems.Count];
-                    for(int i = 0; i < this.listView.SelectedItems.Count; i++)
-                    {
-                        sel[i] = this.listView.SelectedItems[i].Tag as DocModelView;
-                    }
+                    sel = new DocModelView [1];
+                    sel[0] = (DocModelView)this.treeView.SelectedNode.Tag;
                 }
 
                 return sel;
             }
             set
             {
-                this.listView.SelectedItems.Clear();
-                if(value == null)
-                    return;
-
-                foreach (DocModelView view in value)
-                {
-                    foreach (ListViewItem lvi in this.listView.Items)
-                    {
-                        if (lvi.Tag == view)
-                        {
-                            lvi.Selected = true;
-                            return;
-                        }
-                    }
-                }
+                //...
             }
-        }
-
-        private void listView_ItemActivate(object sender, EventArgs e)
-        {
-            this.DialogResult = DialogResult.OK;
-            this.Close();
         }
     }
 }

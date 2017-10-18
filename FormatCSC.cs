@@ -117,7 +117,7 @@ namespace IfcDoc.Format.CSC
         public void Save()
         {
             string dirpath = System.IO.Path.GetDirectoryName(this.m_filename);
-            if (!System.IO.Directory.Exists(this.m_filename))
+            if (!System.IO.Directory.Exists(dirpath))
             {
                 System.IO.Directory.CreateDirectory(dirpath);
             }
@@ -125,10 +125,12 @@ namespace IfcDoc.Format.CSC
             using (System.IO.StreamWriter writer = new System.IO.StreamWriter(this.m_filename))
             {
                 writer.WriteLine("// This file was automatically generated from IFCDOC at www.buildingsmart-tech.org.");
-                writer.WriteLine("// IFC content is copyright (C) 1996-2013 BuildingSMART International Ltd.");
+                writer.WriteLine("// IFC content is copyright (C) 1996-2017 BuildingSMART International Ltd.");
                 writer.WriteLine();
 
                 writer.WriteLine("using System;");
+                writer.WriteLine("using System.Collections.Generic;");
+                writer.WriteLine("using System.Runtime.Serialization;");
                 writer.WriteLine();
 
                 if (this.m_definition != null)
@@ -139,7 +141,7 @@ namespace IfcDoc.Format.CSC
                     if (this.m_definition is DocDefined)
                     {
                         DocDefined docDefined = (DocDefined)this.m_definition;
-                        string text = this.Indent(this.FormatDefined(docDefined), 1);
+                        string text = this.Indent(this.FormatDefined(docDefined, this.m_map, null), 1);
                         writer.WriteLine(text);
                     }
                     else if (this.m_definition is DocSelect)
@@ -151,14 +153,14 @@ namespace IfcDoc.Format.CSC
                     else if (this.m_definition is DocEnumeration)
                     {
                         DocEnumeration docEnumeration = (DocEnumeration)this.m_definition;
-                        string text = this.Indent(this.FormatEnumeration(docEnumeration), 1);
+                        string text = this.Indent(this.FormatEnumeration(docEnumeration, this.m_map, null), 1);
                         writer.WriteLine(text);
                     }
                     else if (this.m_definition is DocEntity)
                     {
                         DocEntity docEntity = (DocEntity)this.m_definition;
                         string text = this.Indent(this.FormatEntity(docEntity, this.m_map, null), 1);
-                        writer.WriteLine(docEntity);
+                        writer.WriteLine(text);
                     }
 
                     writer.WriteLine("}");
@@ -358,6 +360,8 @@ namespace IfcDoc.Format.CSC
                         }
                     }
                 }
+
+                writer.Flush();
             }
         }
 
@@ -386,22 +390,70 @@ namespace IfcDoc.Format.CSC
             return text;
         }
 
+        /// <summary>
+        /// Builds syntax for referencing select
+        /// </summary>
+        /// <param name="sb"></param>
+        /// <param name="docEntity"></param>
+        /// <param name="map"></param>
+        /// <param name="included"></param>
+        /// <param name="hasentry">Whether entries already listed; if not, then colon is added</param>
+        private void BuildSelectEntries(StringBuilder sb, DocDefinition docEntity, Dictionary<string, DocObject> map, Dictionary<DocObject, bool> included, bool hasentry)
+        {
+            SortedList<string, DocSelect> listSelects = new SortedList<string, DocSelect>();
+            foreach (DocObject obj in map.Values)
+            {
+                if (obj is DocSelect)
+                {
+                    DocSelect docSelect = (DocSelect)obj;
+                    foreach (DocSelectItem docItem in docSelect.Selects)
+                    {
+                        if (docItem.Name != null && docItem.Name.Equals(docEntity.Name) && !listSelects.ContainsKey(docSelect.Name))
+                        {
+                            // found it; add it
+                            listSelects.Add(docSelect.Name, docSelect);
+                        }
+                    }
+                }
+            }
+
+            foreach (DocSelect docSelect in listSelects.Values)
+            {
+                if (docSelect == listSelects.Values[0] && !hasentry)
+                {
+                    sb.Append(" : ");
+                }
+                else
+                {
+                    sb.Append(", ");
+                }
+                sb.Append(docSelect.Name);
+            }
+        }
+
         public string FormatEntity(DocEntity docEntity, Dictionary<string, DocObject> map, Dictionary<DocObject, bool> included)
         {
             StringBuilder sb = new StringBuilder();
-
-            string basedef = docEntity.BaseDefinition;
-            if (String.IsNullOrEmpty(basedef))
-            {
-                basedef = "IfcBase";
-            }
 
             sb.Append("public partial ");
             if(docEntity.IsAbstract())
             {
                 sb.Append("abstract ");
             }
-            sb.AppendLine("class " + docEntity.Name + " : " + basedef);
+            sb.Append("class " + docEntity.Name);
+
+            bool hasentry = false;
+            if(!String.IsNullOrEmpty(docEntity.BaseDefinition))
+            {
+                sb.Append(" : ");
+                sb.Append(docEntity.BaseDefinition);
+                hasentry = true;
+            }
+
+            // implement any selects
+            BuildSelectEntries(sb, docEntity, map, included, hasentry);
+
+            sb.AppendLine();
             sb.AppendLine("{");
 
             // fields
@@ -543,7 +595,7 @@ namespace IfcDoc.Format.CSC
             return sb.ToString();
         }
 
-        public string FormatEnumeration(DocEnumeration docEnumeration)
+        public string FormatEnumeration(DocEnumeration docEnumeration, Dictionary<string, DocObject> map, Dictionary<DocObject, bool> included)
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("public enum " + docEnumeration.Name);
@@ -575,19 +627,32 @@ namespace IfcDoc.Format.CSC
 
         public string FormatSelect(DocSelect docSelect, Dictionary<string, DocObject> map, Dictionary<DocObject, bool> included)
         {
-            return 
-                "public interface " + docSelect.Name + "\r\n" +
-                "{\r\n"+ 
-                "}";
+            StringBuilder sb = new StringBuilder();
+            sb.Append("public interface " + docSelect.Name);
+                
+            BuildSelectEntries(sb, docSelect, map, included, false);
+
+            sb.AppendLine();
+            sb.AppendLine("{"); 
+            sb.AppendLine("}");
+        
+            return sb.ToString();
         }
 
-        public string FormatDefined(DocDefined docDefined)
+        public string FormatDefined(DocDefined docDefined, Dictionary<string, DocObject> map, Dictionary<DocObject, bool> included)
         {
-            return 
-                "public struct " + docDefined.Name + "\r\n" + 
-                "{\r\n" +
-                "\t" + docDefined.DefinedType + " Value;\r\n" +
-                "}";
+            StringBuilder sb = new StringBuilder();
+            sb.Append("public struct " + docDefined.Name);
+
+            // implement any selects
+            BuildSelectEntries(sb, docDefined, map, included, false);
+
+            sb.AppendLine();
+            sb.AppendLine("{");
+            sb.AppendLine("\t" + docDefined.DefinedType + " Value;");
+            sb.AppendLine("}");
+
+            return sb.ToString();
         }
 
         public string FormatDefinitions(DocProject docProject, DocPublication docPublication, Dictionary<string, DocObject> map, Dictionary<DocObject, bool> included)
@@ -599,26 +664,30 @@ namespace IfcDoc.Format.CSC
                 {
                     foreach (DocType docType in docSchema.Types)
                     {
-                        bool use = false;
-                        included.TryGetValue(docType, out use);
+                        bool use = true;
+                        if (included != null)
+                        {
+                            use = false;
+                            included.TryGetValue(docType, out use);
+                        }
                         if (use)
                         {
                             if (docType is DocDefined)
                             {
                                 DocDefined docDefined = (DocDefined)docType;
-                                string text = this.Indent(this.FormatDefined(docDefined), 1);
+                                string text = this.Indent(this.FormatDefined(docDefined, map, included), 1);
                                 sb.AppendLine(text);
                             }
                             else if (docType is DocSelect)
                             {
                                 DocSelect docSelect = (DocSelect)docType;
-                                string text = this.Indent(this.FormatSelect(docSelect, null, null), 1);
+                                string text = this.Indent(this.FormatSelect(docSelect, map, included), 1);
                                 sb.AppendLine(text);
                             }
                             else if (docType is DocEnumeration)
                             {
                                 DocEnumeration docEnumeration = (DocEnumeration)docType;
-                                string text = this.Indent(this.FormatEnumeration(docEnumeration), 1);
+                                string text = this.Indent(this.FormatEnumeration(docEnumeration, map, included), 1);
                                 sb.AppendLine(text);
                             }
                         }
@@ -626,8 +695,12 @@ namespace IfcDoc.Format.CSC
 
                     foreach (DocEntity docEntity in docSchema.Entities)
                     {
-                        bool use = false;
-                        included.TryGetValue(docEntity, out use);
+                        bool use = true;
+                        if(included != null)
+                        {
+                            use = false;
+                            included.TryGetValue(docEntity, out use);
+                        }
                         if (use)
                         {
                             string text = this.Indent(this.FormatEntity(docEntity, map, included), 1);

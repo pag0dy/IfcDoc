@@ -185,6 +185,9 @@ namespace IfcDoc.Schema.CNF
 
         [XmlElement("namespace")]
         public _namespace _namespace;
+
+        [XmlElement("include")]
+        public include include;
     }
 
     public class _namespace
@@ -194,6 +197,15 @@ namespace IfcDoc.Schema.CNF
 
         [XmlAttribute]
         public string alias;
+    }
+
+    public class include
+    {
+        [XmlAttribute]
+        public string urn;
+
+        [XmlAttribute("schema-location")]
+        public string schema_location;
     }
 
     public class type
