@@ -558,6 +558,12 @@
     <EmbeddedResource Include="xsd1.txt" />
     <EmbeddedResource Include="xsd2.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="csproj1.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="csproj2.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

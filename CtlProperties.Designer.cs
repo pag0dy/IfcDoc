@@ -214,6 +214,7 @@
             this.toolStripButtonViewInsert = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonViewRemove = new System.Windows.Forms.ToolStripButton();
             this.tabPagePublication = new System.Windows.Forms.TabPage();
+            this.checkBoxPublishBSI = new System.Windows.Forms.CheckBox();
             this.textBoxPublicationNote = new System.Windows.Forms.TextBox();
             this.checkBoxPublishHtmlExamples = new System.Windows.Forms.CheckBox();
             this.checkBoxPublishExchangeTables = new System.Windows.Forms.CheckBox();
@@ -243,7 +244,8 @@
             this.imageListRules = new System.Windows.Forms.ImageList(this.components);
             this.openFileDialogIcon = new System.Windows.Forms.OpenFileDialog();
             this.openFileDialogExample = new System.Windows.Forms.OpenFileDialog();
-            this.checkBoxPublishBSI = new System.Windows.Forms.CheckBox();
+            this.toolStripButtonRootEntity = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerTranslation)).BeginInit();
             this.splitContainerTranslation.Panel1.SuspendLayout();
             this.splitContainerTranslation.Panel2.SuspendLayout();
@@ -1794,6 +1796,8 @@
             // 
             this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripButtonRootEntity,
+            this.toolStripSeparator1,
             this.toolStripMenuItemModeInherit,
             this.toolStripMenuItemModeOverride,
             this.toolStripMenuItemModeSuppress});
@@ -1948,6 +1952,13 @@
             resources.ApplyResources(this.tabPagePublication, "tabPagePublication");
             this.tabPagePublication.Name = "tabPagePublication";
             this.tabPagePublication.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxPublishBSI
+            // 
+            resources.ApplyResources(this.checkBoxPublishBSI, "checkBoxPublishBSI");
+            this.checkBoxPublishBSI.Name = "checkBoxPublishBSI";
+            this.checkBoxPublishBSI.UseVisualStyleBackColor = true;
+            this.checkBoxPublishBSI.CheckedChanged += new System.EventHandler(this.checkBoxPublishBSI_CheckedChanged);
             // 
             // textBoxPublicationNote
             // 
@@ -2371,12 +2382,17 @@
             this.openFileDialogExample.DefaultExt = "ifc";
             resources.ApplyResources(this.openFileDialogExample, "openFileDialogExample");
             // 
-            // checkBoxPublishBSI
+            // toolStripButtonRootEntity
             // 
-            resources.ApplyResources(this.checkBoxPublishBSI, "checkBoxPublishBSI");
-            this.checkBoxPublishBSI.Name = "checkBoxPublishBSI";
-            this.checkBoxPublishBSI.UseVisualStyleBackColor = true;
-            this.checkBoxPublishBSI.CheckedChanged += new System.EventHandler(this.checkBoxPublishBSI_CheckedChanged);
+            this.toolStripButtonRootEntity.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            resources.ApplyResources(this.toolStripButtonRootEntity, "toolStripButtonRootEntity");
+            this.toolStripButtonRootEntity.Name = "toolStripButtonRootEntity";
+            this.toolStripButtonRootEntity.Click += new System.EventHandler(this.toolStripButtonRootEntity_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            resources.ApplyResources(this.toolStripSeparator1, "toolStripSeparator1");
             // 
             // CtlProperties
             // 
@@ -2669,5 +2685,7 @@
         private System.Windows.Forms.Label label30;
         private System.Windows.Forms.ComboBox comboBoxProcessClassification;
         private System.Windows.Forms.CheckBox checkBoxPublishBSI;
+        private System.Windows.Forms.ToolStripButton toolStripButtonRootEntity;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
     }
 }

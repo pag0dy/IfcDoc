@@ -2549,6 +2549,10 @@ namespace IfcDoc
             }
 
             // export nested model views
+            if(docModelView.ModelViews.Count > 0)
+            {
+                mvdModelView.Views = new List<ModelView>();
+            }
             foreach(DocModelView docSubView in docModelView.ModelViews)
             {
                 ModelView mvdSubView = new ModelView();
@@ -2697,7 +2701,7 @@ namespace IfcDoc
                 {
                     AttributeRule mvdAttr = new AttributeRule();
                     mvdTemplate.Rules.Add(mvdAttr);
-                    ExportMvdRule(mvdAttr, docRule);
+                    ExportMvdRule(mvdAttr, docRule, docTemplateDef);
                 }
             }
 
@@ -2722,7 +2726,7 @@ namespace IfcDoc
             }
         }
 
-        private static void ExportMvdRule(AttributeRule mvdRule, DocModelRule docRule)
+        private static void ExportMvdRule(AttributeRule mvdRule, DocModelRule docRule, DocTemplateDefinition docTemplate)
         {
             if (!String.IsNullOrEmpty(docRule.Identification))
             {
@@ -2730,7 +2734,6 @@ namespace IfcDoc
             }
             mvdRule.Description = docRule.Description;
             mvdRule.AttributeName = docRule.Name;
-            //mvdRule.Cardinality = ExportCardinalityType(docRule);
 
             foreach (DocModelRule docRuleEntity in docRule.Rules)
             {
@@ -2749,7 +2752,6 @@ namespace IfcDoc
                     }
                     mvdRuleEntity.Description = docRuleEntity.Description;
                     mvdRuleEntity.EntityName = docRuleEntity.Name;
-                    //mvdRuleEntity.Cardinality = ExportCardinalityType(docRuleEntity);
 
                     foreach (DocModelRule docRuleAttribute in docRuleEntity.Rules)
                     {
@@ -2762,9 +2764,9 @@ namespace IfcDoc
 
                             AttributeRule mvdRuleAttribute = new AttributeRule();
                             mvdRuleEntity.AttributeRules.Add(mvdRuleAttribute);
-                            ExportMvdRule(mvdRuleAttribute, docRuleAttribute);
+                            ExportMvdRule(mvdRuleAttribute, docRuleAttribute, docTemplate);
                         }
-                        else if (docRuleAttribute is DocModelRuleConstraint)// && !String.IsNullOrEmpty(docRuleAttribute.Description))
+                        else if (docRuleAttribute is DocModelRuleConstraint)
                         {
                             DocModelRuleConstraint mrc = (DocModelRuleConstraint)docRuleAttribute;
 
@@ -2775,9 +2777,8 @@ namespace IfcDoc
 
                             Constraint mvdConstraint = new Constraint();
                             mvdRuleEntity.Constraints.Add(mvdConstraint);
-                            //mvdConstraint.Expression = mrc.FormatExpression();
 
-                            string expr = mrc.FormatExpression();
+                            string expr = mrc.FormatExpression(docTemplate);
                             // replace with attribute name
                             if (expr != null)
                             {
@@ -2785,7 +2786,6 @@ namespace IfcDoc
                                 if (bracket > 0)
                                 {
                                     mvdConstraint.Expression = docRule.Identification + expr.Substring(bracket);
-                                    //System.Diagnostics.Debug.WriteLine(mvdConstraint.Expression);
                                 }
                             }
                         }

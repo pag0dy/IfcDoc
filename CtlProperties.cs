@@ -2889,5 +2889,22 @@ namespace IfcDoc
             docPub.ReportIssues = this.checkBoxPublishBSI.Checked;
         }
 
+        private void toolStripButtonRootEntity_Click(object sender, EventArgs e)
+        {
+            DocConceptRoot docConceptRoot = (DocConceptRoot)this.m_target;
+            using (FormSelectEntity form = new FormSelectEntity(null, docConceptRoot.ApplicableEntity, this.m_project, SelectDefinitionOptions.Entity))
+            {
+                if (form.ShowDialog(this) == DialogResult.OK && form.SelectedEntity != null)
+                {
+                    docConceptRoot.ApplicableEntity = form.SelectedEntity as DocEntity;
+
+                    if (this.SchemaChanged != null)
+                    {
+                        this.SchemaChanged(this, EventArgs.Empty);
+                    }
+                }
+            }
+        }
+
     }
 }
