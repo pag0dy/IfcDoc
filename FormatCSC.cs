@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.IO;
 
 using IfcDoc.Schema;
 using IfcDoc.Schema.DOC;
@@ -22,46 +23,125 @@ namespace IfcDoc.Format.CSC
         DocDefinition m_definition;
         Dictionary<string, DocObject> m_map;
 
+        private static void WriteResource(System.IO.StreamWriter writer, string resourcename)
+        {
+            using (System.IO.Stream stm = System.Reflection.Assembly.GetEntryAssembly().GetManifestResourceStream(resourcename))
+            {
+                using (System.IO.StreamReader reader = new System.IO.StreamReader(stm))
+                {
+                    string block = reader.ReadToEnd();
+                    writer.Write(block);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Returns the native .NET type to use for a given EXPRESS type.
+        /// </summary>
+        /// <param name="expresstype"></param>
+        /// <returns></returns>
+        private static Type GetNativeType(string expresstype)
+        {
+            switch(expresstype)
+            {
+                case "STRING":
+                    return typeof(string);
+
+                case "INTEGER":
+                    return typeof(long);
+
+                case "REAL":
+                    return typeof(double);
+
+                case "NUMBER":
+                    return typeof(decimal);
+
+                case "LOGICAL":
+                    return typeof(bool?);
+
+                case "BOOLEAN":
+                    return typeof(bool);
+
+                case "BINARY":
+                    return typeof(byte[]);
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Converts any native types into .NET types
+        /// </summary>
+        /// <param name="identifier"></param>
+        /// <returns></returns>
+        private static string FormatIdentifier(string identifier)
+        {
+            Type typeNative = GetNativeType(identifier);
+            if (typeNative != null)
+            {
+                if (typeNative.IsGenericType && typeNative.GetGenericTypeDefinition() == typeof(Nullable<>)) 
+                {
+                    return typeNative.GetGenericArguments()[0].Name + "?";
+                }
+                
+                return typeNative.Name;
+            }
+
+            return identifier;
+        }
+
         /// <summary>
         /// Generates folder of definitions
         /// </summary>
         /// <param name="path"></param>
         public static void GenerateCode(DocProject project, string path, Dictionary<string, DocObject> map)
         {
-            foreach (DocSection docSection in project.Sections)
+            using (StreamWriter writerProj = new StreamWriter(path + @"\ifc.csproj", false))
             {
-                foreach(DocSchema docSchema in docSection.Schemas)
+                WriteResource(writerProj, "IfcDoc.csproj1.txt");
+                foreach (DocSection docSection in project.Sections)
                 {
-                    foreach(DocType docType in docSchema.Types)
+                    foreach (DocSchema docSchema in docSection.Schemas)
                     {
-                        using (FormatCSC format = new FormatCSC(path + @"\" + docSchema.Name + @"\" + docType.Name + ".cs"))
+                        foreach (DocType docType in docSchema.Types)
                         {
-                            format.Instance = project;
-                            format.Definition = docType;
-                            format.Map = map;
-                            format.Save();
-                        }
-                    }
+                            string file = docSchema.Name + @"\" + docType.Name + ".cs";
+                            using (FormatCSC format = new FormatCSC(path + @"\" + file))
+                            {
+                                format.Instance = project;
+                                format.Definition = docType;
+                                format.Map = map;
+                                format.Save();
 
-                    foreach (DocEntity docType in docSchema.Entities)
-                    {
-                        using (FormatCSC format = new FormatCSC(path + @"\" + docSchema.Name + @"\" + docType.Name + ".cs"))
+                                writerProj.WriteLine("    <Compile Include=\"" + file + "\" />");
+                            }
+                        }
+
+                        foreach (DocEntity docType in docSchema.Entities)
                         {
-                            format.Instance = project;
-                            format.Definition = docType;
-                            format.Map = map;
-                            format.Save();
+                            string file = docSchema.Name + @"\" + docType.Name + ".cs";
+                            using (FormatCSC format = new FormatCSC(path + @"\" + file))
+                            {
+                                format.Instance = project;
+                                format.Definition = docType;
+                                format.Map = map;
+                                format.Save();
+
+                                writerProj.WriteLine("    <Compile Include=\"" + file + "\" />");
+                            }
                         }
                     }
                 }
-            }
 
-            // save properties
-            using(FormatCSC format = new FormatCSC(path + @"\pset.cs"))
-            {
-                format.Instance = project;
-                format.Map = map;
-                format.Save();
+                // save properties
+                using (FormatCSC format = new FormatCSC(path + @"\pset.cs"))
+                {
+                    format.Instance = project;
+                    format.Map = map;
+                    format.Save();
+                }
+
+                WriteResource(writerProj, "IfcDoc.csproj2.txt");
             }
         }
 
@@ -130,6 +210,7 @@ namespace IfcDoc.Format.CSC
 
                 writer.WriteLine("using System;");
                 writer.WriteLine("using System.Collections.Generic;");
+                writer.WriteLine("using System.ComponentModel.DataAnnotations.Schema;");
                 writer.WriteLine("using System.Runtime.Serialization;");
                 writer.WriteLine();
 
@@ -171,8 +252,6 @@ namespace IfcDoc.Format.CSC
                     writer.WriteLine("namespace BuildingSmart.IFC.Properties");
                     writer.WriteLine("{");
                     writer.WriteLine();
-
-                    Dictionary<string, string[]> mapEnums = new Dictionary<string, string[]>();
 
                     foreach (DocSection docSection in this.m_project.Sections)
                     {
@@ -300,63 +379,6 @@ namespace IfcDoc.Format.CSC
                                 writer.WriteLine("    }");
                                 writer.WriteLine();
                             }
-
-                            //writer.WriteLine("}");                        
-
-
-
-
-#if false
-                    // enums
-                    foreach (string strEnum in mapEnums.Keys)
-                    {
-                        string[] enums = mapEnums[strEnum];
-
-                        writer.WriteLine("    /// <summary>");
-                        writer.WriteLine("    /// </summary>");
-                        writer.WriteLine("    public enum " + strEnum);
-                        writer.WriteLine("    {");
-
-                        int counter = 0;
-                        foreach (string val in enums)
-                        {
-                            int num = 0;
-                            string id = val.ToUpper().Trim('.').Replace('-', '_');
-                            switch (id)
-                            {
-                                case "OTHER":
-                                    num = -1;
-                                    break;
-
-                                case "NOTKNOWN":
-                                    num = -2;
-                                    break;
-
-                                case "UNSET":
-                                    num = 0;
-                                    break;
-
-                                default:
-                                    counter++;
-                                    num = counter;
-                                    break;
-                            }
-
-                            if (id[0] >= '0' && id[0] <= '9')
-                            {
-                                id = "_" + id; // avoid numbers
-                            }
-
-                            writer.WriteLine("        /// <summary></summary>");
-                            writer.WriteLine("        " + id + " = " + num + ",");
-                        }
-
-                        writer.WriteLine("    }");
-                        writer.WriteLine();
-                    }
-
-                    writer.WriteLine("}");
-#endif
                         }
                     }
                 }
@@ -435,12 +457,12 @@ namespace IfcDoc.Format.CSC
         {
             StringBuilder sb = new StringBuilder();
 
-            sb.Append("public partial ");
+            sb.Append("public ");
             if(docEntity.IsAbstract())
             {
                 sb.Append("abstract ");
             }
-            sb.Append("class " + docEntity.Name);
+            sb.Append("partial class " + docEntity.Name);
 
             bool hasentry = false;
             if(!String.IsNullOrEmpty(docEntity.BaseDefinition))
@@ -455,6 +477,10 @@ namespace IfcDoc.Format.CSC
 
             sb.AppendLine();
             sb.AppendLine("{");
+
+            sb.AppendLine();
+            //sb.AppendLine("// Schema properties");
+            //sb.AppendLine();
 
             // fields
             int order = 0;
@@ -473,13 +499,18 @@ namespace IfcDoc.Format.CSC
 
                 if(docAttribute.Inverse == null)
                 {
-                    sb.Append("\t[DataMember(Order=" + order + ")] ");
+                    // System.Runtime.Serialization -- used by Windows Communication Foundation formatters to indicate data serialization inclusion and order
+                    sb.AppendLine("\t[DataMember(Order=" + order + ")] ");
                     order++;
                 }
                 else if(inscope)
                 {
-                    sb.Append("\t[DataLookup(\"" + docAttribute.Inverse + "\")] ");
+                    // System.ComponentModel.DataAnnotations for capturing inverse properties -- EntityFramework navigation properties
+                    sb.AppendLine("\t[InverseProperty(\"" + docAttribute.Inverse + "\")] ");
                 }
+
+                // documentation -- need to escape content...
+                ////sb.AppendLine("\t[Description(\"" + docAttribute.Documentation + "\")]");
 
                 if (docAttribute.Inverse == null || inscope)
                 {
@@ -497,16 +528,107 @@ namespace IfcDoc.Format.CSC
                     switch (docAttribute.GetAggregation())
                     {
                         case DocAggregationEnum.SET:
-                            sb.AppendLine("ISet<" + docAttribute.DefinedType + "> _" + docAttribute.Name + ";");
+                            sb.AppendLine("\tpublic ISet<" + FormatIdentifier(docAttribute.DefinedType) + "> " + docAttribute.Name + " {get; set;}");
                             break;
 
                         case DocAggregationEnum.LIST:
-                            sb.AppendLine("IList<" + docAttribute.DefinedType + "> _" + docAttribute.Name + ";");
+                            sb.AppendLine("\tpublic IList<" + FormatIdentifier(docAttribute.DefinedType) + "> " + docAttribute.Name + " {get; set;}");
                             break;
 
                         default:
-                            sb.AppendLine(docAttribute.DefinedType + optional + " _" + docAttribute.Name + ";");
+                            sb.AppendLine("\tpublic " + FormatIdentifier(docAttribute.DefinedType) + optional + " " + docAttribute.Name + " {get; set;}");
                             break;
+                    }
+                }
+
+                sb.AppendLine();
+            }
+
+           // sb.AppendLine();
+
+            //sb.AppendLine("// Exchange properties");
+
+            // then, model views within scope
+            foreach(DocModelView docView in this.m_project.ModelViews)
+            {
+                if (included == null || included.ContainsKey(docView)) // todo: make option when generating to indicate which views...
+                {
+                    foreach(DocConceptRoot docRoot in docView.ConceptRoots)
+                    {
+                        if (docRoot.ApplicableEntity == docEntity)
+                        {
+                            foreach(DocTemplateUsage docConcept in docRoot.Concepts)
+                            {
+                                // sub-templates: traverse through
+
+                                if (docConcept.Items.Count > 0)
+                                {
+                                    string template = docConcept.Definition.Name.Replace(" ", "_");
+
+                                    // no sub-templates: use direct (e.g. ports)
+                                    foreach (DocTemplateItem docItem in docConcept.Items)
+                                    {
+                                        string name = docItem.GetParameterValue("Name");
+
+                                        if (docItem.Concepts.Count > 0)
+                                        {
+                                            // drill into each concept
+                                            foreach (DocTemplateUsage docInner in docItem.Concepts)
+                                            {
+                                                foreach (DocTemplateItem docInnerItem in docInner.Items)
+                                                {
+                                                    string attr = docInnerItem.GetParameterValue("PropertyName"); // temphack
+                                                    string type = docInnerItem.GetParameterValue("Value");
+
+                                                    if (attr != null && type != null && attr.Length > 1)
+                                                    {
+                                                        sb.AppendLine("\tpublic " + type + " " + attr);
+                                                        sb.AppendLine("\t{");
+                                                        sb.AppendLine("\t\tget");
+                                                        sb.AppendLine("\t\t{");
+                                                        sb.AppendLine("\t\t\treturn Template." + template + ".GetValue(this, \"" + name + "\", \"" + attr + "\") as " + type + ";");
+                                                        sb.AppendLine("\t\t}");
+                                                        sb.AppendLine("\t\tset");
+                                                        sb.AppendLine("\t\t{");
+                                                        sb.AppendLine("\t\t\tTemplate." + template + ".SetValue(this, \"" + name +"\", \"" + attr + "\", value);");
+                                                        sb.AppendLine("\t\t}");
+                                                        sb.AppendLine("\t}"); 
+                                                        sb.AppendLine();
+                                                    }
+
+                                                }
+                                                
+                                            }
+                                        }
+                                        else
+                                        {
+                                            string type = docItem.GetParameterValue("Value");
+                                            if (type == null)
+                                            {
+                                                // find type according to template
+                                                //docConcept.Definition.
+                                            }
+
+                                            if (name != null && type != null)
+                                            {
+                                                sb.AppendLine("\tpublic " + type + " " + name);
+                                                sb.AppendLine("\t{");
+                                                sb.AppendLine("\t\tget");
+                                                sb.AppendLine("\t\t{");
+                                                sb.AppendLine("\t\t\treturn Template." + template + ".GetValue(this, \"" + name + "\") as " + type + ";");
+                                                sb.AppendLine("\t\t}");
+                                                sb.AppendLine("\t\tset");
+                                                sb.AppendLine("\t\t{");
+                                                sb.AppendLine("\t\t\tTemplate." + template + ".SetValue(this, \"" + name + "\", value);");
+                                                sb.AppendLine("\t\t}");
+                                                sb.AppendLine("\t}"); 
+                                                sb.AppendLine();
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -649,7 +771,7 @@ namespace IfcDoc.Format.CSC
 
             sb.AppendLine();
             sb.AppendLine("{");
-            sb.AppendLine("\t" + docDefined.DefinedType + " Value;");
+            sb.AppendLine("\t" + FormatIdentifier(docDefined.DefinedType) + " Value;");
             sb.AppendLine("}");
 
             return sb.ToString();

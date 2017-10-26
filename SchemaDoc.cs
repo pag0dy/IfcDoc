@@ -928,12 +928,15 @@ namespace IfcDoc.Schema.DOC
             }
 
             string draft = "";
-            if (docPub != null && docPub.Status != "Final")
+            if (docPub != null && docPub.Status != "Official")
             {
                 draft = "review/";
             }
 
-            return "http://www.buildingsmart-tech.org/ifc/" + draft + this.GetSchemaIdentifier() + "/" + release.ToLower();
+            //return "http://www.buildingsmart-tech.org/ifc/" + draft + this.GetSchemaIdentifier() + "/" + release.ToLower();
+
+            // for now...temp hack...
+            return "http://www.buildingsmart-tech.org/ifc/IFC4/Add2TC1";
         }
 
         public List<DocSection> Sections
@@ -4233,12 +4236,12 @@ namespace IfcDoc.Schema.DOC
         /// Formats expression according to mvdXML syntax.
         /// </summary>
         /// <returns></returns>
-        public string FormatExpression(DocTemplateDefinition dtd)
+        public string FormatExpression(DocTemplateDefinition template)
         {
             if (this.Expression == null)
                 return null;
 
-            return this.Expression.ToString(dtd);
+            return this.Expression.ToString(template);
         }
     }    
 
@@ -4962,7 +4965,7 @@ namespace IfcDoc.Schema.DOC
             return null;
         }
 
-        public override string ToString()//(DocTemplateDefinition template)
+        public override string ToString(DocTemplateDefinition template)
         {
             if (this.ExpressionA == null || this.ExpressionB == null)
                 return String.Empty;

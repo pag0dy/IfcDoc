@@ -4594,10 +4594,13 @@ namespace IfcDoc
 
                             if (iSection == 1)
                             {
-                                htmSection.Write("<table class=\"gridtable\">");
-                                htmSection.Write("<tr><th>Format</th><th>Description</th></tr>");
-                                htmSection.Write("<tr><td>Tab-delimited</th><td><a href=\"..\\infobase.csv\">infobase.csv</a></td></tr>");
-                                htmSection.Write("</table>");
+                                if (docPublication.Exchanges)
+                                {
+                                    htmSection.Write("<table class=\"gridtable\">");
+                                    htmSection.Write("<tr><th>Format</th><th>Description</th></tr>");
+                                    htmSection.Write("<tr><td>Tab-delimited</th><td><a href=\"..\\infobase.csv\">infobase.csv</a></td></tr>");
+                                    htmSection.Write("</table>");
+                                }
 
                                 string delim = ",";
                                 StringBuilder sb = new StringBuilder();

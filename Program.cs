@@ -2549,6 +2549,10 @@ namespace IfcDoc
             }
 
             // export nested model views
+            if(docModelView.ModelViews.Count > 0)
+            {
+                mvdModelView.Views = new List<ModelView>();
+            }
             foreach(DocModelView docSubView in docModelView.ModelViews)
             {
                 ModelView mvdSubView = new ModelView();
@@ -2730,7 +2734,6 @@ namespace IfcDoc
             }
             mvdRule.Description = docRule.Description;
             mvdRule.AttributeName = docRule.Name;
-            //mvdRule.Cardinality = ExportCardinalityType(docRule);
 
             foreach (DocModelRule docRuleEntity in docRule.Rules)
             {
@@ -2749,7 +2752,6 @@ namespace IfcDoc
                     }
                     mvdRuleEntity.Description = docRuleEntity.Description;
                     mvdRuleEntity.EntityName = docRuleEntity.Name;
-                    //mvdRuleEntity.Cardinality = ExportCardinalityType(docRuleEntity);
 
                     foreach (DocModelRule docRuleAttribute in docRuleEntity.Rules)
                     {
@@ -2764,7 +2766,7 @@ namespace IfcDoc
                             mvdRuleEntity.AttributeRules.Add(mvdRuleAttribute);
                             ExportMvdRule(mvdRuleAttribute, docRuleAttribute, docTemplate);
                         }
-                        else if (docRuleAttribute is DocModelRuleConstraint)// && !String.IsNullOrEmpty(docRuleAttribute.Description))
+                        else if (docRuleAttribute is DocModelRuleConstraint)
                         {
                             DocModelRuleConstraint mrc = (DocModelRuleConstraint)docRuleAttribute;
 
@@ -2775,7 +2777,6 @@ namespace IfcDoc
 
                             Constraint mvdConstraint = new Constraint();
                             mvdRuleEntity.Constraints.Add(mvdConstraint);
-                            //mvdConstraint.Expression = mrc.FormatExpression();
 
                             string expr = mrc.FormatExpression(docTemplate);
                             // replace with attribute name
@@ -2785,7 +2786,6 @@ namespace IfcDoc
                                 if (bracket > 0)
                                 {
                                     mvdConstraint.Expression = docRule.Identification + expr.Substring(bracket);
-                                    //System.Diagnostics.Debug.WriteLine(mvdConstraint.Expression);
                                 }
                             }
                         }

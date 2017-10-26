@@ -1791,6 +1791,17 @@ namespace IfcDoc
                 UpdateTreeDeletion();
                 this.ctlExpressG.Redraw();
             }
+            else if (this.treeView.SelectedNode.Tag is DocAttributeRef)
+            {
+                DocAttributeRef docAttrRef = (DocAttributeRef)this.treeView.SelectedNode.Tag;
+                DocDefinitionRef docDefRef = (DocDefinitionRef)this.treeView.SelectedNode.Parent.Tag;
+
+                docDefRef.AttributeRefs.Remove(docAttrRef);
+                this.treeView.SelectedNode.Remove();
+                docAttrRef.Delete();
+
+                this.ctlExpressG.Redraw();
+            }
             else if(this.treeView.SelectedNode.Tag is DocPublication)
             {
                 DocPublication docPublication = (DocPublication)this.treeView.SelectedNode.Tag;
@@ -1880,6 +1891,19 @@ namespace IfcDoc
                         }
                     }
 
+
+                    // delete any attribute references
+                    for (int iAttr = docDefRef.AttributeRefs.Count-1; iAttr >=0; iAttr--)
+                    {
+                        DocAttributeRef docAttr = docDefRef.AttributeRefs[iAttr];
+
+                        if(docAttr.DefinitionRef == docDef)
+                        {
+                            docDefRef.AttributeRefs.Remove(docAttr);
+                            docAttr.Delete();
+                        }
+
+                    }
                 }
             }
 
@@ -2514,32 +2538,6 @@ namespace IfcDoc
                 {
                     LoadNode(tnType, ur, ur.Name, false);
                 }
-
-#if false
-                // new style templates
-                foreach (DocModelView docModelView in this.m_project.ModelViews)
-                {
-                    if (docModelView.ConceptRoots != null)
-                    {
-                        foreach (DocConceptRoot docConceptRoot in docModelView.ConceptRoots)
-                        {
-                            if (docConceptRoot.ApplicableEntity == type)
-                            {
-                                string rootname = docConceptRoot.Name;
-                                if(String.IsNullOrEmpty(rootname))
-                                {
-                                    rootname = docModelView.Name;
-                                }
-                                TreeNode tnConceptRoot = LoadNode(tnType, docConceptRoot, rootname, false);
-                                foreach (DocTemplateUsage docConcept in docConceptRoot.Concepts)
-                                {
-                                    LoadNodeConcept(tnConceptRoot, docConcept);
-                                }
-                            }
-                        }
-                    }
-                }
-#endif
             }
 
             TreeNode tnGlobHeader = LoadNode(tnSchema, typeof(DocGlobalRule), "Global Rules", false);
@@ -2605,7 +2603,12 @@ namespace IfcDoc
                 TreeNode tnTarget = LoadNode(tnGraphicsHeader, docItem, docItem.Name, false);
                 foreach (DocDefinitionRef docSource in docItem.Definitions)
                 {
-                    LoadNode(tnTarget, docSource, docSource.Name, false);
+                    TreeNode tnRef = LoadNode(tnTarget, docSource, docSource.Name, false);
+
+                    foreach(DocAttributeRef docAttr in docSource.AttributeRefs)
+                    {
+                        LoadNode(tnRef, docAttr, docAttr.Attribute.Name, false);
+                    }
                 }
             }
             tnGraphicsHeader = LoadNode(tnSchema, typeof(DocPageTarget), "Page References", false);
@@ -3397,6 +3400,10 @@ namespace IfcDoc
                         this.toolStripMenuItemEditMoveDown.Enabled = true;
                     }
                 }
+                else if(obj is DocAttributeRef)
+                {
+                    this.toolStripMenuItemEditDelete.Enabled = true;
+                }
                 else if (obj is DocWhereRule)
                 {
                     this.toolStripMenuItemEditDelete.Enabled = true;
@@ -3935,7 +3942,7 @@ namespace IfcDoc
 
                 this.ctlCheckGrid.CheckGridSource = null;
             }
-            else if (obj is DocAttribute || obj is DocWhereRule || obj is DocUniqueRule || obj is DocConstant || obj is DocSchemaRef || obj is DocSelectItem)
+            else if (obj is DocAttribute || obj is DocWhereRule || obj is DocUniqueRule || obj is DocConstant || obj is DocSchemaRef || obj is DocSelectItem || obj is DocAttributeRef)
             {
                 // determine schema from parent node
                 TreeNode tn = this.treeView.SelectedNode;
@@ -9650,6 +9657,12 @@ namespace IfcDoc
             // update icon of selected object potentially
             this.UpdateTreeNodeIcon(this.treeView.SelectedNode);
 
+            DocObject docObj = this.treeView.SelectedNode.Tag as DocObject;
+            if (docObj != null)
+            {
+                this.treeView.SelectedNode.Text = docObj.ToString();
+            }
+
             this.ctlExpressG.Redraw();
         }
 
@@ -9804,6 +9817,9 @@ namespace IfcDoc
                             docAttributeRef.DiagramLine.Add(new DocPoint());
 
                             docRef.AttributeRefs.Add(docAttributeRef);
+
+                            // update tree
+                            LoadNode(tnParent, docAttributeRef, docAttributeRef.Attribute.Name, false);
                         }
                     }
 
