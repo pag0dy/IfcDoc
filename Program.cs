@@ -2785,7 +2785,15 @@ namespace IfcDoc
                                 int bracket = expr.IndexOf('[');
                                 if (bracket > 0)
                                 {
-                                    mvdConstraint.Expression = docRule.Identification + expr.Substring(bracket);
+                                    if (expr.StartsWith("("))
+                                    {
+                                        string toDelete = expr.Substring(1, (bracket - 1));
+                                        mvdConstraint.Expression = docRule.Identification + expr.Substring(1).Replace(toDelete, "");
+                                    } else
+                                    {
+                                        //string toDelete = expr.Substring(0, bracket);
+                                        mvdConstraint.Expression = docRule.Identification + expr.Substring(bracket); //expr.Replace(toDelete, "");
+                                    }
                                 }
                             }
                         }
