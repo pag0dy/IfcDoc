@@ -4970,7 +4970,8 @@ namespace IfcDoc.Schema.DOC
             if (this.ExpressionA == null || this.ExpressionB == null)
                 return String.Empty;
 
-            return "(" + this.ExpressionA.ToString() + " " + this.Operation.ToString().ToUpper() + " " + this.ExpressionB.ToString() + ")";
+            return "(" + this.ExpressionA.ToString(template) + " " + this.Operation.ToString().ToUpper() + " " + this.ExpressionB.ToString(template) + ")";
+            //return "(" + this.ExpressionA.ToString() + " " + this.Operation.ToString().ToUpper() + " " + this.ExpressionB.ToString() + ")";
         }
         
     }
