@@ -2788,8 +2788,10 @@ namespace IfcDoc
                                     if (expr.StartsWith("("))
                                     {
                                         string toDelete = expr.Substring(1, (bracket - 1));
-                                        mvdConstraint.Expression = docRule.Identification + expr.Substring(1).Replace(toDelete, "");
-                                    } else
+                                        expr = expr.Substring(1).Replace(toDelete, "");
+                                        mvdConstraint.Expression = docRule.Identification + expr.Remove(expr.Length - 1);
+                                    }
+                                    else
                                     {
                                         //string toDelete = expr.Substring(0, bracket);
                                         mvdConstraint.Expression = docRule.Identification + expr.Substring(bracket); //expr.Replace(toDelete, "");
