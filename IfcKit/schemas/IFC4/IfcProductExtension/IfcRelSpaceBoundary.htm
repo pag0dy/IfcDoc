@@ -29,16 +29,16 @@
  <td><img src="../../../figures/ifcrelspaceboundary_2ndlevel.png" alt="2nd level"></td>
 </tr>
 <tr>
- <td><p class="figure">Figure 9 &mdash; Space boundary at first level</p></td>
- <td><p class="figure">Figure 10 &mdash; Space boundary at second level</p></td>
+ <td><p class="figure">Figure 171 &mdash; Space boundary at first level</p></td>
+ <td><p class="figure">Figure 172 &mdash; Space boundary at second level</p></td>
 </tr>
 <tr>
  <td><img src="../../../figures/ifcrelspaceboundary_2ndlevel_typea.png" alt="2nd level type a"></td>
  <td><img src="../../../figures/ifcrelspaceboundary_2ndlevel_typeb.png" alt="2nd level type b"></td>
 </tr>
 <tr>
- <td><p class="figure">Figure 11 &mdash; Space boundary at second level type A</p></td>
- <td><p class="figure">Figure 12 &mdash; Space boundary at second level type B</p></td>
+ <td><p class="figure">Figure 173 &mdash; Space boundary at second level type A</p></td>
+ <td><p class="figure">Figure 174 &mdash; Space boundary at second level type B</p></td>
 </tr>
 </table>
 
@@ -47,21 +47,21 @@
 <li><b>1<sup><small>st</small></sup> level:</b><br> SELF\IfcRoot.Name = "1stLevel"<br> SELF\IfcRootDescription = NIL</li>
 <li><b>2<sup><small>nd</small></sup> level:</b><br> SELF\IfcRoot.Name = "2ndLevel"<br> SELF\IfcRootDescription = "2a", or "2b"</li>
 </ul>
-<p>Differentiation between physical and virtual space boundary is illustrated in Figure 9 and Figure 42.</p>
+<p>Differentiation between physical and virtual space boundary is illustrated in Figure 171 and Figure 42.</p>
 
 <p>As shown in Figure 41, if the <em>IfcRelSpaceBoundary</em> is used to express a virtual boundary, the attribute <em>PhysicalOrVirtualBoundary</em> has to be set to VIRTUAL. The attribute <em>RelatedBuildingElement</em> shall point to an instance of <em>IfcVirtualElement</em>. If the correct location is of interest, the attribute <em>ConnectionGeometry</em> is required.</p>
 <blockquote class="note">NOTE&nbsp; The connection geometry, either by a 2D curve or a 3D surface, is used to describe the portion of the "virtual wall" that separates the two spaces. All instances of <em>IfcRelSpaceBoundary</em> given at the adjacent spaces share the same instance of <em>IfcVirtualElement</em>. Each instance of <em>IfcRelSpaceBoundary</em> provides in addition the <em>ConnectionGeometry</em> given within the local placement of each space.</blockquote>
 
 <table summary="virtual">
 <tr><td><img src="../../../figures/ifcrelspaceboundary_virtual.png"  alt="IfcRelSpaceBoundary_virtual (35K)"height="500" width="600"></td></tr>
-<tr><td><p class="figure">Figure 13 &mdash; Space boundary of virtual element</p></td></tr>
+<tr><td><p class="figure">Figure 175 &mdash; Space boundary of virtual element</p></td></tr>
 </table>
 
 <p>As shown in Figure 42, if the <em>IfcRelSpaceBoundary</em> is used to express a physical boundary between two spaces, the attribute <em>PhysicalOrVirtualBoundary</em> has to be set to PHYSICAL. The attribute <em>RelatedBuildingElement</em> has to be given and points to the element providing the space boundary. The attribute <em>ConnectionGeometry</em> may be inserted, in this case it describes the physical space boundary geometically, or it may be omited, in that case it describes a physical space boundary logically.</p>
 
 <table summary="physical">
 <tr><td><img src="../../../figures/ifcrelspaceboundary_physical.png"  alt="IfcRelSpaceBoundary_physical (35K)" height="500" width="600"></td></tr>
-<tr><td><p class="figure">Figure 14 &mdash; Space boundary of physical element</p></td></tr>
+<tr><td><p class="figure">Figure 176 &mdash; Space boundary of physical element</p></td></tr>
 </table>
 
 <p>The <em>IfcRelSpaceBoundary</em> may have geometry attached. If geometry is not attached, the relationship between space and building element is handled only on a logical level. If geometry is attached, it is given within the local coordinate systems of the space.</p>
