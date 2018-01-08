@@ -1,0 +1,1060 @@
+<?xml version="1.0"?>
+<svg xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="1.1" width="3000" height="1776" xmlns="http://www.w3.org/2000/svg">
+  <g id="IfcArbitraryClosedProfileDef" fill="yellow">
+    <rect x="115.10001375" y="1264.45935" width="203.74999875" height="37.5" stroke="black" />
+    <polyline points="318.85003875,1283.20935 420.51251625,1283.20935 " fill="none" stroke="black" stroke-width="3" />
+    <text x="216.975013125" y="1283.20935" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcArbitraryClosedProfileDef</text>
+    <g id="OuterCurve">
+      <polyline points="217.06082625,1264.45935 217.06082625,1214.45625 " fill="none" stroke="black" />
+      <text x="249.245207625" y="1246.6437375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">OuterCurve</text>
+    </g>
+  </g>
+  <g id="IfcArbitraryOpenProfileDef" fill="yellow">
+    <rect x="115.10625" y="953.3625" width="203.7375" height="37.5" stroke="black" />
+    <polyline points="216.975,990.8625 216.975,1009.540624875 216.943750000125,1009.540624875 216.943750000125,1028.21874975 " fill="none" stroke="black" stroke-width="3" />
+    <text x="216.975" y="972.1125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcArbitraryOpenProfileDef</text>
+    <g id="Curve">
+      <polyline points="318.84375,972.1125 420.487485,972.1125 " fill="none" stroke="black" />
+      <text x="365.9156175" y="968.3625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">Curve</text>
+    </g>
+  </g>
+  <g id="IfcArbitraryProfileDefWithVoids" fill="yellow">
+    <rect x="420.51255" y="1262.274975" width="131.475" height="41.8749975" stroke="black" />
+    <text x="486.25005" y="1283.21247375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcArbitraryProfileDefWithVoids</text>
+    <g id="InnerCurves">
+      <polyline points="486.396075,1262.274975 486.396075,1180.7062275 318.84998625,1180.7062275 " fill="none" stroke="black" />
+      <text x="428.30163075" y="1136.4749781375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">InnerCurves S[1:?]</text>
+    </g>
+  </g>
+  <g id="IfcAsymmetricIShapeProfileDef" fill="yellow">
+    <rect x="1294.5714" y="307.54959375" width="125.12397375" height="168.12069375" stroke="black" />
+    <text x="1357.133386875" y="391.609940625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcAsymmetricIShapeProfileDef</text>
+    <g id="TopFlangeWidth">
+      <polyline points="1419.6953625,329.33330625 1601.50779,329.33330625 " fill="none" stroke="black" />
+      <text x="1519.10031975" y="329.605077375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">TopFlangeWidth</text>
+    </g>
+    <g id="TopFlangeThickness">
+      <polyline points="1419.6953625,372.22227 1601.4749025,372.22227 " fill="none" stroke="black" stroke-dasharray="1,1" />
+      <text x="1525.012858125" y="372.292984875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">TopFlangeThickness</text>
+    </g>
+    <g id="TopFlangeFilletRadius">
+      <polyline points="1419.6953625,415.487925 1601.48664,415.487925 " fill="none" stroke="black" stroke-dasharray="1,1" />
+      <text x="1524.336697125" y="411.98026275" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">TopFlangeFilletRadius</text>
+    </g>
+    <g id="CentreOfGravityInY">
+      <polyline points="1419.6953625,459.1179 1601.4960525,459.1179 " fill="none" stroke="black" stroke-dasharray="1,1" />
+      <text x="1525.00557225" y="454.43971575" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">CentreOfGravityInY</text>
+    </g>
+  </g>
+  <g id="IfcCenterLineProfileDef" fill="yellow">
+    <rect x="115.07500125" y="1028.2187625" width="203.7375" height="37.5" stroke="black" />
+    <text x="216.94375125" y="1046.9687625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcCenterLineProfileDef</text>
+    <g id="Thickness">
+      <polyline points="318.81250125,1046.9687625 421.2875025,1046.9687625 " fill="none" stroke="black" />
+      <text x="370.050001875" y="1043.2187625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">Thickness</text>
+    </g>
+  </g>
+  <g id="IfcCircleHollowProfileDef" fill="yellow">
+    <rect x="694.0986375" y="207.009765" width="158.4375" height="37.5" stroke="black" />
+    <text x="773.3173875" y="225.759765" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcCircleHollowProfileDef</text>
+    <g id="WallThickness">
+      <polyline points="724.5673875,207.009765 724.5673875,158.61604125 " fill="none" stroke="black" />
+      <text x="761.876061" y="182.1787107375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">WallThickness</text>
+    </g>
+  </g>
+  <g id="IfcCircleProfileDef" fill="yellow">
+    <rect x="695.3751375" y="336.50623875" width="140.07499875" height="37.5" stroke="black" />
+    <polyline points="727.9126125,336.50623875 727.9126125,244.509765 " fill="none" stroke="black" stroke-width="3" />
+    <text x="765.412636875" y="355.25623875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcCircleProfileDef</text>
+    <g id="Radius">
+      <polyline points="825.4126125,374.00623875 825.4126125,467.06857875 " fill="none" stroke="black" />
+      <text x="847.9126125" y="415.537408875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">Radius</text>
+    </g>
+  </g>
+  <g id="IfcCompositeProfileDef" fill="yellow">
+    <rect x="115.0937625" y="1418.5312125" width="203.74999875" height="63.75" stroke="black" />
+    <text x="216.968761875" y="1450.4062125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcCompositeProfileDef</text>
+    <g id="Profiles">
+      <polyline points="318.84376125,1435.4062125 460.59376125,1435.4062125 " fill="none" stroke="black" />
+      <text x="389.71876125" y="1432.9062124875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">Profiles S[2:?]</text>
+    </g>
+    <g id="Label">
+      <polyline points="318.84376125,1465.4062125 460.21873875,1465.4062125 " fill="none" stroke="black" stroke-dasharray="1,1" />
+      <text x="389.53125" y="1465.4062125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">Label</text>
+    </g>
+  </g>
+  <g id="IfcCraneRailAShapeProfileDef" fill="yellow">
+    <rect x="726.014925" y="1294.4101125" width="120" height="440.3125125" stroke="black" />
+    <text x="786.014925" y="1514.56636875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcCraneRailAShapeProfileDef</text>
+    <g id="OverallHeight">
+      <polyline points="846.014925,1307.26365 999.87741375,1307.26365 " fill="none" stroke="black" />
+      <text x="922.380537525" y="1307.26365" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">OverallHeight</text>
+    </g>
+    <g id="BaseWidth2">
+      <polyline points="846.014925,1347.092775 999.87741375,1347.092775 " fill="none" stroke="black" />
+      <text x="922.63053762375" y="1347.092775" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">BaseWidth2</text>
+    </g>
+    <g id="Radius">
+      <polyline points="846.014925,1379.0971875 999.86492625,1379.0971875 " fill="none" stroke="black" stroke-dasharray="1,1" />
+      <text x="922.939925625" y="1379.0971875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">Radius</text>
+    </g>
+    <g id="HeadWidth">
+      <polyline points="846.014925,1415.8981875 999.86492625,1415.8981875 " fill="none" stroke="black" />
+      <text x="922.939925625" y="1415.8981875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">HeadWidth</text>
+    </g>
+    <g id="HeadDepth2">
+      <polyline points="846.014925,1456.766325 999.86492625,1456.766325 " fill="none" stroke="black" />
+      <text x="921.38055" y="1455.5163250125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">HeadDepth2</text>
+    </g>
+    <g id="HeadDepth3">
+      <polyline points="846.014925,1494.334425 999.86492625,1494.334425 " fill="none" stroke="black" />
+      <text x="921.3805498875" y="1492.6344248625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">HeadDepth3</text>
+    </g>
+    <g id="WebThickness">
+      <polyline points="846.014925,1529.2584375 999.88990125,1529.2584375 " fill="none" stroke="black" />
+      <text x="922.952413125" y="1529.2584375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">WebThickness</text>
+    </g>
+    <g id="BaseWidth4">
+      <polyline points="846.014925,1565.077275 999.88990125,1565.077275 " fill="none" stroke="black" />
+      <text x="921.70241325" y="1566.327274875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">BaseWidth4</text>
+    </g>
+    <g id="BaseDepth1">
+      <polyline points="846.014925,1600.0497375 999.86492625,1600.0497375 " fill="none" stroke="black" />
+      <text x="922.939925625" y="1600.0497375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">BaseDepth1</text>
+    </g>
+    <g id="BaseDepth2">
+      <polyline points="846.014925,1634.1616875 999.8649,1634.1616875 " fill="none" stroke="black" />
+      <text x="922.9399125" y="1634.1616875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">BaseDepth2</text>
+    </g>
+    <g id="BaseDepth3">
+      <polyline points="846.014925,1670.0936625 999.86492625,1670.0936625 " fill="none" stroke="black" />
+      <text x="922.939925625" y="1670.0936625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">BaseDepth3</text>
+    </g>
+    <g id="CentreOfGravityInY">
+      <polyline points="846.014925,1703.130525 999.88990125,1703.130525 " fill="none" stroke="black" stroke-dasharray="1,1" />
+      <text x="922.952413125" y="1703.130525" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">CentreOfGravityInY</text>
+    </g>
+  </g>
+  <g id="IfcCraneRailFShapeProfileDef" fill="yellow">
+    <rect x="725.8620375" y="933.2266125" width="119.97499875" height="338.85001125" stroke="black" />
+    <text x="785.849536875" y="1102.651618125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcCraneRailFShapeProfileDef</text>
+    <g id="OverallHeight">
+      <polyline points="845.837025,952.972575 1001.46201375,952.972575 " fill="none" stroke="black" />
+      <text x="923.649519375" y="952.972575" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">OverallHeight</text>
+    </g>
+    <g id="HeadWidth">
+      <polyline points="845.837025,987.7615875 1001.46202875,987.7615875 " fill="none" stroke="black" />
+      <text x="923.649526875" y="987.7615875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">HeadWidth</text>
+    </g>
+    <g id="Radius">
+      <polyline points="845.837025,1025.2624875 1001.46204,1025.2624875 " fill="none" stroke="black" stroke-dasharray="1,1" />
+      <text x="923.6495325" y="1025.2624875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">Radius</text>
+    </g>
+    <g id="HeadDepth2">
+      <polyline points="845.837025,1061.8453875 1001.46204,1061.8453875 " fill="none" stroke="black" />
+      <text x="924.6495325125" y="1061.8453875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">HeadDepth2</text>
+    </g>
+    <g id="HeadDepth3">
+      <polyline points="845.837025,1098.834225 1001.4370275,1098.834225 " fill="none" stroke="black" />
+      <text x="923.63702625" y="1098.834225" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">HeadDepth3</text>
+    </g>
+    <g id="WebThickness">
+      <polyline points="845.837025,1135.16145 1001.46204,1135.16145 " fill="none" stroke="black" />
+      <text x="923.6495325" y="1135.16145" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">WebThickness</text>
+    </g>
+    <g id="BaseDepth1">
+      <polyline points="845.837025,1173.9069 1001.4370275,1173.9069 " fill="none" stroke="black" />
+      <text x="923.63702625" y="1173.9069" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">BaseDepth1</text>
+    </g>
+    <g id="BaseDepth2">
+      <polyline points="845.837025,1209.76545 1001.4370275,1209.76545 " fill="none" stroke="black" />
+      <text x="923.63702625" y="1209.76545" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">BaseDepth2</text>
+    </g>
+    <g id="CentreOfGravityInY">
+      <polyline points="845.837025,1247.6203125 1001.4995025,1247.6203125 " fill="none" stroke="black" stroke-dasharray="1,1" />
+      <text x="931.362013875" y="1245.1203124875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">CentreOfGravityInY</text>
+    </g>
+  </g>
+  <g id="IfcCShapeProfileDef" fill="yellow">
+    <rect x="2492.5408125" y="70.750695" width="149.54643" height="302.71978875" stroke="black" />
+    <text x="2567.3140275" y="222.110589375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcCShapeProfileDef</text>
+    <g id="Depth">
+      <polyline points="2642.08725,143.74956375 2784.66042375,143.74956375 " fill="none" stroke="black" />
+      <text x="2711.27503425" y="138.83879025" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">Depth</text>
+    </g>
+    <g id="Width">
+      <polyline points="2642.08725,184.3993575 2784.64793625,184.3993575 " fill="none" stroke="black" />
+      <text x="2712.89861025" y="182.704663875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">Width</text>
+    </g>
+    <g id="WallThickness">
+      <polyline points="2642.08725,226.97848875 2784.64793625,226.97848875 " fill="none" stroke="black" />
+      <text x="2720.241314625" y="222.67610475" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">WallThickness</text>
+    </g>
+    <g id="Girth">
+      <polyline points="2642.08725,271.207515 2784.69567375,271.207515 " fill="none" stroke="black" />
+      <text x="2716.6649205" y="270.007515" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">Girth</text>
+    </g>
+    <g id="InternalFilletRadius">
+      <polyline points="2642.08725,314.896095 2784.64793625,314.896095 " fill="none" stroke="black" stroke-dasharray="1,1" />
+      <text x="2715.86446125" y="310.874708625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">InternalFilletRadius</text>
+    </g>
+    <g id="CentreOfGravityInX">
+      <polyline points="2642.08725,356.5743375 2784.68506125,356.5743375 " fill="none" stroke="black" stroke-dasharray="1,1" />
+      <text x="2718.53536575" y="353.302007625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">CentreOfGravityInX</text>
+    </g>
+  </g>
+  <g id="IfcDerivedProfileDef" fill="yellow">
+    <rect x="115.1374875" y="1524.7265625" width="163.725" height="64.99999875" stroke="black" />
+    <text x="196.9999875" y="1557.226561875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcDerivedProfileDef</text>
+    <g id="ParentProfile">
+      <polyline points="278.8624875,1543.4765625 401.874975,1543.4765625 " fill="none" stroke="black" />
+      <text x="340.36873125" y="1542.2265625125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">ParentProfile</text>
+    </g>
+    <g id="Operator">
+      <polyline points="196.9999875,1589.7265875 196.9999875,1628.6187525 " fill="none" stroke="black" />
+      <text x="223.2499875" y="1591.601588625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">Operator</text>
+    </g>
+    <g id="Label">
+      <polyline points="278.8624875,1575.976575 401.91015,1575.976575 " fill="none" stroke="black" stroke-dasharray="1,1" />
+      <text x="340.38631875" y="1575.976575" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">Label</text>
+    </g>
+  </g>
+  <g id="IfcEllipseProfileDef" fill="yellow">
+    <rect x="846.4562625" y="336.51186375" width="133.75000125" height="37.5" stroke="black" />
+    <text x="913.331263125" y="355.26186375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcEllipseProfileDef</text>
+    <g id="SemiAxis1">
+      <polyline points="892.0812375,374.01186375 892.0812375,467.06857875 " fill="none" stroke="black" />
+      <text x="920.831237625" y="416.79022125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">SemiAxis1</text>
+    </g>
+    <g id="SemiAxis2">
+      <polyline points="949.5812625,374.01186375 949.5812625,467.06857875 " fill="none" stroke="black" />
+      <text x="977.081262375" y="441.790221375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">SemiAxis2</text>
+    </g>
+  </g>
+  <g id="IfcIShapeProfileDef" fill="yellow">
+    <rect x="1294.5711" y="70.7211075" width="130.75000125" height="174.0624975" stroke="black" />
+    <polyline points="1359.9460875,244.783605 1359.9460875,307.54959375 " fill="none" stroke="black" stroke-width="3" />
+    <text x="1359.946100625" y="157.75235625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcIShapeProfileDef</text>
+    <g id="OverallWidth">
+      <polyline points="1425.3211125,74.0023575 1601.508585,74.0023575 " fill="none" stroke="black" />
+      <text x="1513.41484875" y="74.0023575" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">OverallWidth</text>
+    </g>
+    <g id="OverallDepth">
+      <polyline points="1425.3211125,119.0023575 1601.5210875,119.0023575 " fill="none" stroke="black" />
+      <text x="1512.4210999875" y="119.0023575" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">OverallDepth</text>
+    </g>
+    <g id="WebThickness">
+      <polyline points="1425.3211125,159.002355 1601.5210875,159.002355 " fill="none" stroke="black" />
+      <text x="1513.4211" y="159.002355" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">WebThickness</text>
+    </g>
+    <g id="FlangeThickness">
+      <polyline points="1425.3211125,201.5023575 1601.53358625,201.5023575 " fill="none" stroke="black" />
+      <text x="1513.427349375" y="201.5023575" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">FlangeThickness</text>
+    </g>
+    <g id="FilletRadius">
+      <polyline points="1425.3211125,239.0023575 1601.508585,239.0023575 " fill="none" stroke="black" stroke-dasharray="1,1" />
+      <text x="1513.41484875" y="239.0023575" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">FilletRadius</text>
+    </g>
+  </g>
+  <g id="IfcLShapeProfileDef" fill="yellow">
+    <rect x="1294.589775" y="537.0220875" width="147.45" height="302.743905" stroke="black" />
+    <text x="1368.314775" y="688.39404" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcLShapeProfileDef</text>
+    <g id="Depth">
+      <polyline points="1442.039775,564.6864 1601.53363875,564.6864 " fill="none" stroke="black" />
+      <text x="1514.520756375" y="562.7473330125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">Depth</text>
+    </g>
+    <g id="Width">
+      <polyline points="1442.039775,599.2993125 1601.50866375,599.2993125 " fill="none" stroke="black" stroke-dasharray="1,1" />
+      <text x="1513.005916125" y="598.2860464875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">Width</text>
+    </g>
+    <g id="Thickness">
+      <polyline points="1442.039775,634.7863125 1601.50866375,634.7863125 " fill="none" stroke="black" />
+      <text x="1523.4992832375" y="634.195104" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">Thickness</text>
+    </g>
+    <g id="FilletRadius">
+      <polyline points="1442.039775,672.510975 1601.52115125,672.510975 " fill="none" stroke="black" stroke-dasharray="1,1" />
+      <text x="1523.0016297375" y="670.355001" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">FilletRadius</text>
+    </g>
+    <g id="EdgeRadius">
+      <polyline points="1442.039775,707.852025 1601.52115125,707.852025 " fill="none" stroke="black" stroke-dasharray="1,1" />
+      <text x="1526.014895625" y="706.7270678625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">EdgeRadius</text>
+    </g>
+    <g id="LegSlope">
+      <polyline points="1442.039775,743.3940375 1601.52726375,743.3940375 " fill="none" stroke="black" stroke-dasharray="1,1" />
+      <text x="1521.783519375" y="743.3940375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">LegSlope</text>
+    </g>
+    <g id="CentreOfGravityInX">
+      <polyline points="1442.039775,781.8045 1601.51890125,781.8045 " fill="none" stroke="black" stroke-dasharray="1,1" />
+      <text x="1529.47464375" y="779.3655345" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">CentreOfGravityInX</text>
+    </g>
+    <g id="CentreOfGravityInY">
+      <polyline points="1442.039775,817.8432 1601.51890125,817.8432 " fill="none" stroke="black" stroke-dasharray="1,1" />
+      <text x="1528.0062765" y="814.823301" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">CentreOfGravityInY</text>
+    </g>
+  </g>
+  <g id="IfcParameterizedProfileDef" fill="yellow">
+    <rect x="23.625" y="149.27875125" width="105" height="51.2499975" stroke="black" />
+    <polyline points="37.125,200.52874875 37.125,558.15375 " fill="none" stroke="black" stroke-width="3" />
+    <polyline points="37.125,558.15375 285.30316125,558.15375 285.30316125,528.1787625 " fill="none" stroke="black" stroke-width="3" />
+    <polyline points="37.125,558.15375 284.773335,558.15375 284.773335,588.90375 " fill="none" stroke="black" stroke-width="3" />
+    <polyline points="37.125,558.15375 232.9658325,558.15375 232.9658325,629.40375 " fill="none" stroke="black" stroke-width="3" />
+    <polyline points="37.125,558.15375 178.5640125,558.15375 178.5640125,670.65375 " fill="none" stroke="black" stroke-width="3" />
+    <polyline points="37.125,558.15375 126.27059625,558.15375 126.27059625,711.90375 " fill="none" stroke="black" stroke-width="3" />
+    <polyline points="37.125,558.15375 76.2959475,558.15375 76.2959475,750.6537375 " fill="none" stroke="black" stroke-width="3" />
+    <polyline points="37.125,558.15375 476.162025,558.15375 476.162025,750.6912375 " fill="none" stroke="black" stroke-width="3" />
+    <polyline points="37.125,558.15375 434.921175,558.15375 434.921175,711.92875125 " fill="none" stroke="black" stroke-width="3" />
+    <polyline points="37.125,558.15375 126.662625,558.15375 126.662625,408.15375 " fill="none" stroke="black" stroke-width="3" />
+    <polyline points="37.125,558.15375 179.5812525,558.15375 179.5812525,448.14124875 " fill="none" stroke="black" stroke-width="3" />
+    <polyline points="37.125,558.15375 232.00012875,558.15375 232.00012875,488.15374875 " fill="none" stroke="black" stroke-width="3" />
+    <polyline points="37.125,558.15375 75.6968775,558.15375 75.6968775,368.15374875 " fill="none" stroke="black" stroke-width="3" />
+    <text x="76.125" y="174.90375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcParameterizedProfileDef</text>
+    <g id="Position">
+      <polyline points="128.625,174.90375 195.18624,174.90375 " fill="none" stroke="black" />
+      <text x="159.4056199875" y="171.15375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">Position</text>
+    </g>
+  </g>
+  <g id="IfcProfileDef" fill="yellow">
+    <rect x="217.84999875" y="32.875000125" width="118.75000125" height="70.00000125" stroke="black" />
+    <polyline points="277.22500125,102.87499875 277.22500125,126.076873875 " fill="none" stroke="black" stroke-width="3" />
+    <polyline points="277.22500125,126.076873875 76.125,126.076875 76.125,149.278750125 " fill="none" stroke="black" stroke-width="3" />
+    <polyline points="277.22500125,126.076873875 448.96875,126.076875 448.96875,324.826875 " fill="none" stroke="black" stroke-width="3" />
+    <polyline points="277.22500125,126.076873875 403.2375,126.076875 403.2375,286.07687625 " fill="none" stroke="black" stroke-width="3" />
+    <polyline points="277.22500125,126.076873875 496.96875,126.076875 496.96875,363.601875 " fill="none" stroke="black" stroke-width="3" />
+    <polyline points="277.22500125,126.076873875 544.5,126.076875 544.5,402.38937375 " fill="none" stroke="black" stroke-width="3" />
+    <text x="277.224999375" y="67.87500075" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcProfileDef</text>
+    <g id="ProfileType">
+      <polyline points="336.6,46.00000125 453.31450125,46.00000125 " fill="none" stroke="black" />
+      <text x="394.957250625" y="46.00000125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">ProfileType</text>
+    </g>
+    <g id="ProfileName">
+      <polyline points="336.6,83.9166675 479.237625,83.9166675 " fill="none" stroke="black" stroke-dasharray="1,1" />
+      <text x="407.9188125" y="83.9166675" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">ProfileName</text>
+    </g>
+  </g>
+  <g id="IfcRectangleHollowProfileDef" fill="yellow">
+    <rect x="941.5934625" y="207.01398" width="207.17500125" height="37.5" stroke="black" />
+    <text x="1045.180963125" y="225.76398" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcRectangleHollowProfileDef</text>
+    <g id="WallThickness">
+      <polyline points="963.9309375,207.01398 963.9309375,158.59918875 " fill="none" stroke="black" />
+      <text x="1002.09694125" y="181.011698625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">WallThickness</text>
+    </g>
+    <g id="InnerFilletRadius">
+      <polyline points="1122.6809625,207.01398 1122.6809625,68.02009125 " fill="none" stroke="black" stroke-dasharray="1,1" />
+      <text x="1161.864945" y="110.990503875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">InnerFilletRadius</text>
+    </g>
+    <g id="OuterFilletRadius">
+      <polyline points="1045.18095,207.01398 1045.18095,113.26398 " fill="none" stroke="black" stroke-dasharray="1,1" />
+      <text x="1086.43095" y="157.6389799875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">OuterFilletRadius</text>
+    </g>
+  </g>
+  <g id="IfcRectangleProfileDef" fill="yellow">
+    <rect x="996.5001375" y="336.51872625" width="153.49999875" height="37.5" stroke="black" />
+    <polyline points="1121.200125,336.51872625 1121.200125,290.51635125 " fill="none" stroke="black" stroke-width="3" />
+    <polyline points="1121.200125,290.51635125 1121.430975,290.516355 1121.430975,244.51398 " fill="none" stroke="black" stroke-width="3" />
+    <polyline points="1121.200125,290.51635125 1166.26875,290.516355 1166.26875,640.69627875 1144.67500125,640.69627875 " fill="none" stroke="black" stroke-width="3" />
+    <text x="1073.250136875" y="355.26872625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcRectangleProfileDef</text>
+    <g id="XDim">
+      <polyline points="1045.99845,374.01872625 1045.99845,467.06857875 " fill="none" stroke="black" />
+      <text x="1062.248449875" y="421.7936524875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">XDim</text>
+    </g>
+    <g id="YDim">
+      <polyline points="1107.2484375,374.01872625 1107.2484375,467.06857875 " fill="none" stroke="black" />
+      <text x="1123.498437375" y="420.5436525" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">YDim</text>
+    </g>
+  </g>
+  <g id="IfcRoundedRectangleProfileDef" fill="yellow">
+    <rect x="940.3624875" y="621.946275" width="204.3125025" height="37.5" stroke="black" />
+    <text x="1042.51873875" y="640.696275" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcRoundedRectangleProfileDef</text>
+    <g id="RoundingRadius">
+      <polyline points="1042.51875,621.946275 1042.51875,513.31858875 " fill="none" stroke="black" />
+      <text x="1083.76875" y="586.382431875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">RoundingRadius</text>
+    </g>
+  </g>
+  <g id="IfcTrapeziumProfileDef" fill="yellow">
+    <rect x="723.5843625" y="621.9468375" width="163.75000125" height="37.5" stroke="black" />
+    <text x="805.459363125" y="640.6968375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcTrapeziumProfileDef</text>
+    <g id="BottomXDim">
+      <polyline points="786.7093875,621.9468375 786.7093875,513.31856625 " fill="none" stroke="black" />
+      <text x="817.959387375" y="562.632702" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">BottomXDim</text>
+    </g>
+    <g id="TopXDim">
+      <polyline points="757.959375,621.9468375 757.959375,513.31856625 " fill="none" stroke="black" />
+      <text x="732.959374875" y="563.882701875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">TopXDim</text>
+    </g>
+    <g id="YDim">
+      <polyline points="871.7093625,621.9468375 871.7093625,513.31856625 " fill="none" stroke="black" />
+      <text x="889.209362625" y="587.63270175" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">YDim</text>
+    </g>
+    <g id="TopXOffset">
+      <polyline points="805.45935,659.4468375 805.45935,703.19683875 " fill="none" stroke="black" />
+      <text x="835.45935" y="683.8218381375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">TopXOffset</text>
+    </g>
+  </g>
+  <g id="IfcTShapeProfileDef" fill="yellow">
+    <rect x="1903.9709625" y="393.456675" width="146.2125" height="429.5796" stroke="black" />
+    <text x="1977.0772125" y="608.246475" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcTShapeProfileDef</text>
+    <g id="Depth">
+      <polyline points="2050.1834625,427.0051875 2192.22165,427.0051875 " fill="none" stroke="black" />
+      <text x="2118.7582065" y="424.3693015125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">Depth</text>
+    </g>
+    <g id="FlangeWidth">
+      <polyline points="2050.1834625,473.04585 2192.209125,473.04585 " fill="none" stroke="black" />
+      <text x="2125.459125" y="471.50070225" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">FlangeWidth</text>
+    </g>
+    <g id="WebThickness">
+      <polyline points="2050.1834625,517.120875 2192.22165,517.120875 " fill="none" stroke="black" />
+      <text x="2125.4529" y="514.3249348875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">WebThickness</text>
+    </g>
+    <g id="FlangeThickness">
+      <polyline points="2050.1834625,560.605125 2192.22165,560.605125 " fill="none" stroke="black" />
+      <text x="2129.22165" y="557.8836921375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">FlangeThickness</text>
+    </g>
+    <g id="FilletRadius">
+      <polyline points="2050.1834625,600.1006125 2192.2106625,600.1006125 " fill="none" stroke="black" stroke-dasharray="1,1" />
+      <text x="2127.960662625" y="597.4599977625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">FilletRadius</text>
+    </g>
+    <g id="FlangeEdgeRadius">
+      <polyline points="2050.1834625,639.0653625 2192.198175,639.0653625 " fill="none" stroke="black" stroke-dasharray="1,1" />
+      <text x="2132.1428685" y="637.681254" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">FlangeEdgeRadius</text>
+    </g>
+    <g id="WebEdgeRadius">
+      <polyline points="2050.1834625,677.356725 2192.22315,677.356725 " fill="none" stroke="black" stroke-dasharray="1,1" />
+      <text x="2131.362537375" y="673.374669" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">WebEdgeRadius</text>
+    </g>
+    <g id="WebSlope">
+      <polyline points="2050.1834625,756.9964875 2192.20846125,756.9964875 " fill="none" stroke="black" stroke-dasharray="1,1" />
+      <text x="2121.195961875" y="756.9964875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">WebSlope</text>
+    </g>
+    <g id="FlangeSlope">
+      <polyline points="2050.1834625,715.7464875 2192.22094875,715.7464875 " fill="none" stroke="black" stroke-dasharray="1,1" />
+      <text x="2121.202205625" y="715.7464875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">FlangeSlope</text>
+    </g>
+    <g id="CentreOfGravityInY">
+      <polyline points="2050.1834625,800.91945 2192.209125,800.91945 " fill="none" stroke="black" stroke-dasharray="1,1" />
+      <text x="2121.19629375" y="800.91945" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">CentreOfGravityInY</text>
+    </g>
+  </g>
+  <g id="IfcUShapeProfileDef" fill="yellow">
+    <rect x="1902.0123375" y="57.01997625" width="148.2507675" height="284.44818" stroke="black" />
+    <text x="1976.13772125" y="199.24406625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcUShapeProfileDef</text>
+    <g id="Depth">
+      <polyline points="2050.2631125,68.40958875 2192.18914875,68.40958875 " fill="none" stroke="black" />
+      <text x="2126.420403" y="67.69798725" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">Depth</text>
+    </g>
+    <g id="FlangeWidth">
+      <polyline points="2050.2631125,102.52150125 2192.16413625,102.52150125 " fill="none" stroke="black" />
+      <text x="2133.407890875" y="99.8397223875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">FlangeWidth</text>
+    </g>
+    <g id="WebThickness">
+      <polyline points="2050.2631125,139.41962625 2192.18914875,139.41962625 " fill="none" stroke="black" />
+      <text x="2134.057137375" y="137.950942125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">WebThickness</text>
+    </g>
+    <g id="FlangeThickness">
+      <polyline points="2050.2631125,177.86413875 2192.17662375,177.86413875 " fill="none" stroke="black" />
+      <text x="2136.051628125" y="177.1008728625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">FlangeThickness</text>
+    </g>
+    <g id="FilletRadius">
+      <polyline points="2050.2631125,215.024775 2192.16413625,215.024775 " fill="none" stroke="black" stroke-dasharray="1,1" />
+      <text x="2134.811015625" y="213.25487625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">FilletRadius</text>
+    </g>
+    <g id="EdgeRadius">
+      <polyline points="2050.2631125,250.8986625 2192.16413625,250.8986625 " fill="none" stroke="black" stroke-dasharray="1,1" />
+      <text x="2133.561015375" y="248.6420293875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">EdgeRadius</text>
+    </g>
+    <g id="FlangeSlope">
+      <polyline points="2050.2631125,286.74407625 2192.19983625,286.74407625 " fill="none" stroke="black" stroke-dasharray="1,1" />
+      <text x="2132.481474375" y="284.2440762375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">FlangeSlope</text>
+    </g>
+    <g id="CentreOfGravityInX">
+      <polyline points="2050.2631125,327.93516375 2192.17662375,327.93516375 " fill="none" stroke="black" stroke-dasharray="1,1" />
+      <text x="2136.07662825" y="324.9152650125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">CentreOfGravityInX</text>
+    </g>
+  </g>
+  <g id="IfcZShapeProfileDef" fill="yellow">
+    <rect x="2495.0643375" y="516.0173625" width="147.4125" height="284.46936375" stroke="black" />
+    <text x="2568.7705875" y="658.252044375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcZShapeProfileDef</text>
+    <g id="Depth">
+      <polyline points="2642.4768375,573.77595 2787.7765125,573.77595 " fill="none" stroke="black" />
+      <text x="2718.3726362625" y="570.03674025" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">Depth</text>
+    </g>
+    <g id="FlangeWidth">
+      <polyline points="2642.4768375,614.6091375 2787.7890375,614.6091375 " fill="none" stroke="black" />
+      <text x="2718.4869212625" y="611.0735584875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">FlangeWidth</text>
+    </g>
+    <g id="WebThickness">
+      <polyline points="2642.4768375,656.2072875 2787.764025,656.2072875 " fill="none" stroke="black" />
+      <text x="2717.4958287375" y="652.6082142375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">WebThickness</text>
+    </g>
+    <g id="FlangeThickness">
+      <polyline points="2642.4768375,699.5404875 2787.7765125,699.5404875 " fill="none" stroke="black" />
+      <text x="2718.3475427625" y="696.0744075" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">FlangeThickness</text>
+    </g>
+    <g id="FilletRadius">
+      <polyline points="2642.4768375,740.53575 2787.7890375,740.53575 " fill="none" stroke="black" stroke-dasharray="1,1" />
+      <text x="2716.910228625" y="735.00564825" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">FilletRadius</text>
+    </g>
+    <g id="EdgeRadius">
+      <polyline points="2642.4768375,781.4989875 2787.7890375,781.4989875 " fill="none" stroke="black" stroke-dasharray="1,1" />
+      <text x="2716.55476125" y="776.8557015" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">EdgeRadius</text>
+    </g>
+  </g>
+  <g id="IfcProfileTypeEnum" fill="green">
+    <rect x="453.3145125" y="31.7900025" width="111.93750375" height="27.499999875" stroke="black" />
+    <text x="509.283264375" y="45.5400024375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcProfileTypeEnum</text>
+  </g>
+  <g id="IFCMEASURERESOURCE">
+    <g id="IfcLengthMeasure" fill="grey">
+      <rect x="1330.7749875" y="1066.74375" width="160.725" height="85.3125" stroke="black" />
+      <text x="1411.1374875" y="1109.4" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCMEASURERESOURCE
+IfcLengthMeasure</text>
+    </g>
+    <g id="IfcLabel" fill="grey">
+      <rect x="1533.6828" y="942.631275" width="167.9750025" height="83.12500125" stroke="black" />
+      <text x="1617.67030125" y="984.193775625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCMEASURERESOURCE
+IfcLabel</text>
+    </g>
+    <g id="IfcPositiveLengthMeasure" fill="grey">
+      <rect x="755.1172125" y="467.068575" width="393.6124875" height="46.24999875" stroke="black" />
+      <text x="951.92345625" y="490.193574375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCMEASURERESOURCE
+IfcPositiveLengthMeasure</text>
+    </g>
+    <g id="IfcPlaneAngleMeasure" fill="grey">
+      <rect x="1330.7557875" y="941.5944375" width="174.8625" height="85.2566325" stroke="black" />
+      <text x="1418.1870375" y="984.22275375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCMEASURERESOURCE
+IfcPlaneAngleMeasure</text>
+    </g>
+  </g>
+  <g id="IFCGEOMETRYRESOURCE">
+    <g id="IfcAxis2Placement2D" fill="grey">
+      <rect x="195.18624" y="149.2643625" width="164.05249875" height="85.275" stroke="black" />
+      <text x="277.212489375" y="191.9018625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCGEOMETRYRESOURCE
+IfcAxis2Placement2D</text>
+    </g>
+    <g id="IfcPolyline" />
+    <g id="IfcLine" />
+    <g id="IfcVectorSum" />
+    <g id="IfcTrimmedCurve" />
+    <g id="IfcAxis2Placement" />
+    <g id="IfcCurve" fill="grey">
+      <rect x="115.09997625" y="1146.95625" width="203.74999875" height="67.5" stroke="black" />
+      <text x="216.974975625" y="1180.70625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCGEOMETRYRESOURCE
+IfcCurve</text>
+    </g>
+    <g id="IfcConic" />
+    <g id="IfcCircle" />
+    <g id="IfcEllipse" />
+    <g id="IfcCartesianTransformationOperator2D" fill="grey">
+      <rect x="115.0702875" y="1628.6187375" width="203.0000025" height="86.25" stroke="black" />
+      <text x="216.57028875" y="1671.7437375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCGEOMETRYRESOURCE
+IfcCartesianTransformationOperator2D</text>
+    </g>
+    <g id="Ifc2DCompositeCurve" />
+    <g id="IfcCompositeCurve" />
+    <g id="IfcBoundedCurve" fill="grey">
+      <rect x="420.4875" y="931.48125" width="164.93749875" height="85.6875" stroke="black" />
+      <text x="502.956249375" y="974.325" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCGEOMETRYRESOURCE
+IfcBoundedCurve</text>
+    </g>
+    <g id="IfcBezierCurve" />
+  </g>
+  <g id="IFCPRESENTATIONAPPEARANCERESOURCE">
+    <g id="IfcNullStyle" />
+  </g>
+  <g id="8,1 IfcLengthMeasure" fill="blue">
+    <rect x="1261.8499875" y="1094.11875" width="45" height="31.875" rx="10" ry="10" stroke="black" />
+    <polyline points="1306.8499875,1110.05625 1330.7749875,1110.05625 " fill="none" stroke="black" />
+    <text x="1284.3499875" y="1110.05625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">8,1 IfcLengthMeasure</text>
+    <g id="8,1 IfcLengthMeasure" fill="silver">
+      <rect x="749.7593625" y="703.19685" width="115.5" height="30" rx="10" ry="10" stroke="black" />
+      <text x="807.5093625" y="718.19685" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">8,1 IfcLengthMeasure</text>
+    </g>
+  </g>
+  <g id="8,2 IfcLabel" fill="blue">
+    <rect x="1722.095325" y="968.2687875" width="50.625" height="31.86249975" rx="10" ry="10" stroke="black" />
+    <polyline points="1722.095325,984.200025 1701.657827625,984.200025 " fill="none" stroke="black" />
+    <text x="1747.407825" y="984.200037375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">8,2 IfcLabel</text>
+    <g id="8,2 IfcLabel" fill="silver">
+      <rect x="479.237625" y="66.97812375" width="85.125" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="521.800125" y="83.85312375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">8,2 IfcLabel</text>
+    </g>
+    <g id="8,2 IfcLabel" fill="silver">
+      <rect x="401.91015" y="1561.2890625" width="73.5" height="30" rx="10" ry="10" stroke="black" />
+      <text x="438.66015" y="1576.2890625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">8,2 IfcLabel</text>
+    </g>
+    <g id="8,2 IfcLabel" fill="silver">
+      <rect x="460.21875" y="1454.781225" width="73.5" height="30" rx="10" ry="10" stroke="black" />
+      <text x="496.96875" y="1469.781225" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">8,2 IfcLabel</text>
+    </g>
+  </g>
+  <g id="2,1 IfcPositiveLengthMeasure" fill="blue">
+    <rect x="628.8435375" y="426.2594625" width="174.8625" height="31.849999875" rx="10" ry="10" stroke="black" />
+    <polyline points="716.2747875,458.10945 716.2747875,490.19355 755.1172125,490.19355 " fill="none" stroke="black" />
+    <text x="716.2747875" y="442.1844624375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcPositiveLengthMeasure</text>
+    <g id="2,1 IfcPositiveLengthMeasure" fill="silver">
+      <rect x="821.9677875" y="124.84918875" width="170.85" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="907.3927875" y="141.72418875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcPositiveLengthMeasure</text>
+    </g>
+    <g id="2,1 IfcPositiveLengthMeasure" fill="silver">
+      <rect x="976.9744125" y="34.270089375" width="170.85" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="1062.3994125" y="51.145089375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcPositiveLengthMeasure</text>
+    </g>
+    <g id="2,1 IfcPositiveLengthMeasure" fill="silver">
+      <rect x="618.231975" y="124.86604125" width="170.85" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="703.656975" y="141.74104125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcPositiveLengthMeasure</text>
+    </g>
+    <g id="2,1 IfcPositiveLengthMeasure" fill="silver">
+      <rect x="908.1809625" y="79.51398" width="159" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="987.6809625" y="96.38898" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcPositiveLengthMeasure</text>
+    </g>
+    <g id="2,1 IfcPositiveLengthMeasure" fill="silver">
+      <rect x="1601.5078125" y="315.66680625" width="176.3625" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="1689.6890625" y="332.54180625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcPositiveLengthMeasure</text>
+    </g>
+    <g id="2,1 IfcPositiveLengthMeasure" fill="silver">
+      <rect x="1601.4866625" y="402.2571375" width="176.3625" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="1689.6679125" y="419.1321375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcPositiveLengthMeasure</text>
+    </g>
+    <g id="2,1 IfcPositiveLengthMeasure" fill="silver">
+      <rect x="1601.496075" y="445.5681" width="176.3625" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="1689.677325" y="462.4431" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcPositiveLengthMeasure</text>
+    </g>
+    <g id="2,1 IfcPositiveLengthMeasure" fill="silver">
+      <rect x="1601.474925" y="358.9578825" width="176.3625" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="1689.656175" y="375.8328825" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcPositiveLengthMeasure</text>
+    </g>
+    <g id="2,1 IfcPositiveLengthMeasure" fill="silver">
+      <rect x="1601.5086" y="219.3523575" width="159" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="1681.0086" y="236.2273575" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcPositiveLengthMeasure</text>
+    </g>
+    <g id="2,1 IfcPositiveLengthMeasure" fill="silver">
+      <rect x="1601.5336125" y="179.3398575" width="159" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="1681.0336125" y="196.2148575" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcPositiveLengthMeasure</text>
+    </g>
+    <g id="2,1 IfcPositiveLengthMeasure" fill="silver">
+      <rect x="1601.5210875" y="139.33985625" width="159" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="1681.0210875" y="156.21485625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcPositiveLengthMeasure</text>
+    </g>
+    <g id="2,1 IfcPositiveLengthMeasure" fill="silver">
+      <rect x="1601.5210875" y="99.3148575" width="159" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="1681.0210875" y="116.1898575" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcPositiveLengthMeasure</text>
+    </g>
+    <g id="2,1 IfcPositiveLengthMeasure" fill="silver">
+      <rect x="1601.5086" y="59.31485625" width="159" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="1681.0086" y="76.18985625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcPositiveLengthMeasure</text>
+    </g>
+    <g id="2,1 IfcPositiveLengthMeasure" fill="silver">
+      <rect x="1601.5336125" y="550.89915" width="176.3625" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="1689.7148625" y="567.77415" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcPositiveLengthMeasure</text>
+    </g>
+    <g id="2,1 IfcPositiveLengthMeasure" fill="silver">
+      <rect x="1601.5086375" y="587.099175" width="176.3625" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="1689.6898875" y="603.974175" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcPositiveLengthMeasure</text>
+    </g>
+    <g id="2,1 IfcPositiveLengthMeasure" fill="silver">
+      <rect x="1601.5086375" y="623.286675" width="176.3625" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="1689.6898875" y="640.161675" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcPositiveLengthMeasure</text>
+    </g>
+    <g id="2,1 IfcPositiveLengthMeasure" fill="silver">
+      <rect x="1601.521125" y="659.4866625" width="176.3625" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="1689.702375" y="676.3616625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcPositiveLengthMeasure</text>
+    </g>
+    <g id="2,1 IfcPositiveLengthMeasure" fill="silver">
+      <rect x="1601.521125" y="695.699175" width="176.3625" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="1689.702375" y="712.574175" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcPositiveLengthMeasure</text>
+    </g>
+    <g id="2,1 IfcPositiveLengthMeasure" fill="silver">
+      <rect x="1601.518875" y="768.131775" width="176.3625" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="1689.700125" y="785.006775" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcPositiveLengthMeasure</text>
+    </g>
+    <g id="2,1 IfcPositiveLengthMeasure" fill="silver">
+      <rect x="1601.518875" y="804.323625" width="176.3625" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="1689.700125" y="821.198625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcPositiveLengthMeasure</text>
+    </g>
+    <g id="2,1 IfcPositiveLengthMeasure" fill="silver">
+      <rect x="2192.164125" y="198.31333875" width="176.3625" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="2280.345375" y="215.18833875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcPositiveLengthMeasure</text>
+    </g>
+    <g id="2,1 IfcPositiveLengthMeasure" fill="silver">
+      <rect x="2192.1766125" y="161.10081375" width="176.3625" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="2280.3578625" y="177.97581375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcPositiveLengthMeasure</text>
+    </g>
+    <g id="2,1 IfcPositiveLengthMeasure" fill="silver">
+      <rect x="2192.164125" y="235.53831375" width="176.3625" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="2280.345375" y="252.41331375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcPositiveLengthMeasure</text>
+    </g>
+    <g id="2,1 IfcPositiveLengthMeasure" fill="silver">
+      <rect x="2192.1891375" y="49.50085125" width="176.37499875" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="2280.376636875" y="66.37585125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcPositiveLengthMeasure</text>
+    </g>
+    <g id="2,1 IfcPositiveLengthMeasure" fill="silver">
+      <rect x="2192.1891375" y="123.90085125" width="176.3625" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="2280.3703875" y="140.77585125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcPositiveLengthMeasure</text>
+    </g>
+    <g id="2,1 IfcPositiveLengthMeasure" fill="silver">
+      <rect x="2192.164125" y="86.68832625" width="176.3625" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="2280.345375" y="103.56332625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcPositiveLengthMeasure</text>
+    </g>
+    <g id="2,1 IfcPositiveLengthMeasure" fill="silver">
+      <rect x="2192.1766125" y="309.95083875" width="176.3625" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="2280.3578625" y="326.82583875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcPositiveLengthMeasure</text>
+    </g>
+    <g id="2,1 IfcPositiveLengthMeasure" fill="silver">
+      <rect x="2192.22165" y="407.4401625" width="170.85" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="2277.64665" y="424.3151625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcPositiveLengthMeasure</text>
+    </g>
+    <g id="2,1 IfcPositiveLengthMeasure" fill="silver">
+      <rect x="2192.209125" y="448.6776375" width="170.85" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="2277.634125" y="465.5526375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcPositiveLengthMeasure</text>
+    </g>
+    <g id="2,1 IfcPositiveLengthMeasure" fill="silver">
+      <rect x="2192.22165" y="489.9276375" width="170.85" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="2277.64665" y="506.8026375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcPositiveLengthMeasure</text>
+    </g>
+    <g id="2,1 IfcPositiveLengthMeasure" fill="silver">
+      <rect x="2192.22165" y="531.16515" width="170.85" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="2277.64665" y="548.04015" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcPositiveLengthMeasure</text>
+    </g>
+    <g id="2,1 IfcPositiveLengthMeasure" fill="silver">
+      <rect x="2192.209125" y="778.6026375" width="170.85" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="2277.634125" y="795.4776375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcPositiveLengthMeasure</text>
+    </g>
+    <g id="2,1 IfcPositiveLengthMeasure" fill="silver">
+      <rect x="2192.2106625" y="572.37825" width="170.85" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="2277.6356625" y="589.25325" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcPositiveLengthMeasure</text>
+    </g>
+    <g id="2,1 IfcPositiveLengthMeasure" fill="silver">
+      <rect x="2192.198175" y="613.6157625" width="170.85" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="2277.623175" y="630.4907625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcPositiveLengthMeasure</text>
+    </g>
+    <g id="2,1 IfcPositiveLengthMeasure" fill="silver">
+      <rect x="2192.22315" y="654.8657625" width="170.85" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="2277.64815" y="671.7407625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcPositiveLengthMeasure</text>
+    </g>
+    <g id="2,1 IfcPositiveLengthMeasure" fill="silver">
+      <rect x="2784.6604125" y="128.832855" width="172.125" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="2870.7229125" y="145.707855" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcPositiveLengthMeasure</text>
+    </g>
+    <g id="2,1 IfcPositiveLengthMeasure" fill="silver">
+      <rect x="2784.647925" y="171.020355" width="172.125" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="2870.710425" y="187.895355" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcPositiveLengthMeasure</text>
+    </g>
+    <g id="2,1 IfcPositiveLengthMeasure" fill="silver">
+      <rect x="2784.647925" y="213.2203575" width="172.125" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="2870.710425" y="230.0953575" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcPositiveLengthMeasure</text>
+    </g>
+    <g id="2,1 IfcPositiveLengthMeasure" fill="silver">
+      <rect x="2784.647925" y="297.5703525" width="172.125" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="2870.710425" y="314.4453525" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcPositiveLengthMeasure</text>
+    </g>
+    <g id="2,1 IfcPositiveLengthMeasure" fill="silver">
+      <rect x="2784.6956625" y="255.384255" width="172.125" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="2870.7581625" y="272.259255" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcPositiveLengthMeasure</text>
+    </g>
+    <g id="2,1 IfcPositiveLengthMeasure" fill="silver">
+      <rect x="2784.68505" y="339.77893875" width="172.125" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="2870.74755" y="356.65393875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcPositiveLengthMeasure</text>
+    </g>
+    <g id="2,1 IfcPositiveLengthMeasure" fill="silver">
+      <rect x="2787.7765125" y="553.738875" width="170.85" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="2873.2015125" y="570.613875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcPositiveLengthMeasure</text>
+    </g>
+    <g id="2,1 IfcPositiveLengthMeasure" fill="silver">
+      <rect x="2787.7890375" y="596.92635" width="170.85" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="2873.2140375" y="613.80135" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcPositiveLengthMeasure</text>
+    </g>
+    <g id="2,1 IfcPositiveLengthMeasure" fill="silver">
+      <rect x="2787.764025" y="640.12635" width="170.85" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="2873.189025" y="657.00135" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcPositiveLengthMeasure</text>
+    </g>
+    <g id="2,1 IfcPositiveLengthMeasure" fill="silver">
+      <rect x="2787.7765125" y="683.301375" width="170.85" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="2873.2015125" y="700.176375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcPositiveLengthMeasure</text>
+    </g>
+    <g id="2,1 IfcPositiveLengthMeasure" fill="silver">
+      <rect x="2787.7890375" y="726.501375" width="170.85" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="2873.2140375" y="743.376375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcPositiveLengthMeasure</text>
+    </g>
+    <g id="2,1 IfcPositiveLengthMeasure" fill="silver">
+      <rect x="2787.7890375" y="769.701375" width="170.85" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="2873.2140375" y="786.576375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcPositiveLengthMeasure</text>
+    </g>
+    <g id="2,1 IfcPositiveLengthMeasure" fill="silver">
+      <rect x="421.2874875" y="1034.4687375" width="147.375" height="30" rx="10" ry="10" stroke="black" />
+      <text x="494.9749875" y="1049.4687375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcPositiveLengthMeasure</text>
+    </g>
+    <g id="2,1 IfcPositiveLengthMeasure" fill="silver">
+      <rect x="1001.462025" y="936.0391875" width="170.85" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="1086.887025" y="952.9141875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcPositiveLengthMeasure</text>
+    </g>
+    <g id="2,1 IfcPositiveLengthMeasure" fill="silver">
+      <rect x="1001.462025" y="972.86415" width="170.85" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="1086.887025" y="989.73915" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcPositiveLengthMeasure</text>
+    </g>
+    <g id="2,1 IfcPositiveLengthMeasure" fill="silver">
+      <rect x="1001.462025" y="1046.451675" width="170.85" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="1086.887025" y="1063.326675" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcPositiveLengthMeasure</text>
+    </g>
+    <g id="2,1 IfcPositiveLengthMeasure" fill="silver">
+      <rect x="1001.4370125" y="1083.239175" width="170.85" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="1086.8620125" y="1100.114175" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcPositiveLengthMeasure</text>
+    </g>
+    <g id="2,1 IfcPositiveLengthMeasure" fill="silver">
+      <rect x="1001.462025" y="1120.0391625" width="170.85" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="1086.887025" y="1136.9141625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcPositiveLengthMeasure</text>
+    </g>
+    <g id="2,1 IfcPositiveLengthMeasure" fill="silver">
+      <rect x="1001.4370125" y="1156.8266625" width="170.85" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="1086.8620125" y="1173.7016625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcPositiveLengthMeasure</text>
+    </g>
+    <g id="2,1 IfcPositiveLengthMeasure" fill="silver">
+      <rect x="1001.4370125" y="1193.6141625" width="170.85" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="1086.8620125" y="1210.4891625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcPositiveLengthMeasure</text>
+    </g>
+    <g id="2,1 IfcPositiveLengthMeasure" fill="silver">
+      <rect x="1001.4994875" y="1230.4016625" width="170.85" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="1086.9244875" y="1247.2766625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcPositiveLengthMeasure</text>
+    </g>
+    <g id="2,1 IfcPositiveLengthMeasure" fill="silver">
+      <rect x="1001.462025" y="1009.6516875" width="170.85" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="1086.887025" y="1026.5266875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcPositiveLengthMeasure</text>
+    </g>
+    <g id="2,1 IfcPositiveLengthMeasure" fill="silver">
+      <rect x="999.8773875" y="1293.4726125" width="170.85" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="1085.3023875" y="1310.3476125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcPositiveLengthMeasure</text>
+    </g>
+    <g id="2,1 IfcPositiveLengthMeasure" fill="silver">
+      <rect x="999.8773875" y="1330.0726125" width="170.85" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="1085.3023875" y="1346.9476125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcPositiveLengthMeasure</text>
+    </g>
+    <g id="2,1 IfcPositiveLengthMeasure" fill="silver">
+      <rect x="999.8649" y="1439.9350875" width="170.85" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="1085.2899" y="1456.8100875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcPositiveLengthMeasure</text>
+    </g>
+    <g id="2,1 IfcPositiveLengthMeasure" fill="silver">
+      <rect x="999.8649" y="1476.5476125" width="170.85" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="1085.2899" y="1493.4226125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcPositiveLengthMeasure</text>
+    </g>
+    <g id="2,1 IfcPositiveLengthMeasure" fill="silver">
+      <rect x="999.889875" y="1513.1851125" width="170.85" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="1085.314875" y="1530.0601125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcPositiveLengthMeasure</text>
+    </g>
+    <g id="2,1 IfcPositiveLengthMeasure" fill="silver">
+      <rect x="999.889875" y="1549.8226125" width="170.85" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="1085.314875" y="1566.6976125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcPositiveLengthMeasure</text>
+    </g>
+    <g id="2,1 IfcPositiveLengthMeasure" fill="silver">
+      <rect x="999.8649" y="1586.4475875" width="170.85" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="1085.2899" y="1603.3225875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcPositiveLengthMeasure</text>
+    </g>
+    <g id="2,1 IfcPositiveLengthMeasure" fill="silver">
+      <rect x="999.8649" y="1621.510125" width="170.85" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="1085.2899" y="1638.385125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcPositiveLengthMeasure</text>
+    </g>
+    <g id="2,1 IfcPositiveLengthMeasure" fill="silver">
+      <rect x="999.8649" y="1659.6850875" width="170.85" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="1085.2899" y="1676.5600875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcPositiveLengthMeasure</text>
+    </g>
+    <g id="2,1 IfcPositiveLengthMeasure" fill="silver">
+      <rect x="999.889875" y="1696.3101" width="170.85" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="1085.314875" y="1713.1851" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcPositiveLengthMeasure</text>
+    </g>
+    <g id="2,1 IfcPositiveLengthMeasure" fill="silver">
+      <rect x="999.8649" y="1366.6851" width="170.85" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="1085.2899" y="1383.5601" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcPositiveLengthMeasure</text>
+    </g>
+    <g id="2,1 IfcPositiveLengthMeasure" fill="silver">
+      <rect x="999.8649" y="1403.3101125" width="170.85" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="1085.2899" y="1420.1851125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcPositiveLengthMeasure</text>
+    </g>
+  </g>
+  <g id="8,3 IfcPlaneAngleMeasure" fill="blue">
+    <rect x="1243.0370625" y="968.2944375" width="66.35390625" height="31.849999875" rx="10" ry="10" stroke="black" />
+    <polyline points="1309.39095,984.21945 1330.7557935,984.21945 " fill="none" stroke="black" />
+    <text x="1276.214015625" y="984.2194374375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">8,3 IfcPlaneAngleMeasure</text>
+    <g id="8,3 IfcPlaneAngleMeasure" fill="silver">
+      <rect x="1601.5272375" y="729.95655" width="176.3625" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="1689.7084875" y="746.83155" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">8,3 IfcPlaneAngleMeasure</text>
+    </g>
+    <g id="8,3 IfcPlaneAngleMeasure" fill="silver">
+      <rect x="2192.199825" y="272.36905125" width="176.3625" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="2280.381075" y="289.24405125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">8,3 IfcPlaneAngleMeasure</text>
+    </g>
+    <g id="8,3 IfcPlaneAngleMeasure" fill="silver">
+      <rect x="2192.2209375" y="696.108975" width="170.85" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="2277.6459375" y="712.983975" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">8,3 IfcPlaneAngleMeasure</text>
+    </g>
+    <g id="8,3 IfcPlaneAngleMeasure" fill="silver">
+      <rect x="2192.20845" y="737.3464875" width="170.85" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="2277.63345" y="754.2214875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">8,3 IfcPlaneAngleMeasure</text>
+    </g>
+  </g>
+  <g id="6,1 IfcArbitraryOpenProfileDef" fill="blue">
+    <rect x="31.03125" y="956.3625" width="50.87500125" height="31.849999875" rx="10" ry="10" stroke="black" />
+    <polyline points="81.90625125,972.2875125 115.10625,972.2875125 " fill="none" stroke="black" />
+    <text x="56.468750625" y="972.2874999375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">6,1 IfcArbitraryOpenProfileDef</text>
+    <g id="6,1 IfcArbitraryOpenProfileDef" fill="silver">
+      <rect x="326.40625125" y="324.826875" width="160.125" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="406.46875125" y="341.701875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">6,1 IfcArbitraryOpenProfileDef</text>
+    </g>
+  </g>
+  <g id="6,2 IfcArbitraryClosedProfileDef" fill="blue">
+    <rect x="26.062512" y="1267.45935" width="50.625" height="31.849999875" rx="10" ry="10" stroke="black" />
+    <polyline points="76.687515,1283.3843625 115.10001375,1283.3843625 " fill="none" stroke="black" />
+    <text x="51.375012" y="1283.3843499375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">6,2 IfcArbitraryClosedProfileDef</text>
+    <g id="6,2 IfcArbitraryClosedProfileDef" fill="silver">
+      <rect x="277.6750125" y="286.07687625" width="166.125" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="360.7375125" y="302.95187625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">6,2 IfcArbitraryClosedProfileDef</text>
+    </g>
+  </g>
+  <g id="6,3 IfcCompositeProfileDef" fill="blue">
+    <rect x="31.05626175" y="1425.2812125" width="50.625" height="31.849999875" rx="10" ry="10" stroke="black" />
+    <polyline points="81.6812625,1441.206225 115.0937625,1441.206225 " fill="none" stroke="black" />
+    <text x="56.36876175" y="1441.2062124375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">6,3 IfcCompositeProfileDef</text>
+    <g id="6,3 IfcCompositeProfileDef" fill="silver">
+      <rect x="378.46875" y="363.601875" width="147" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="451.96875" y="380.476875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">6,3 IfcCompositeProfileDef</text>
+    </g>
+  </g>
+  <g id="6,4 IfcDerivedProfileDef" fill="blue">
+    <rect x="31.049987625" y="1530.226575" width="50.625" height="31.849999875" rx="10" ry="10" stroke="black" />
+    <polyline points="81.67498875,1546.1515875 115.1374875,1546.1515875 " fill="none" stroke="black" />
+    <text x="56.362487625" y="1546.1515749375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">6,4 IfcDerivedProfileDef</text>
+    <g id="6,4 IfcDerivedProfileDef" fill="silver">
+      <rect x="438.437475" y="402.3893625" width="134.625" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="505.749975" y="419.2643625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">6,4 IfcDerivedProfileDef</text>
+    </g>
+  </g>
+  <g id="1,1 IfcProfileDef" fill="blue">
+    <rect x="141.66250125" y="22.374998625" width="50.625" height="31.849999875" rx="10" ry="10" stroke="black" />
+    <polyline points="192.28750125,38.29999875 217.84999875,38.29999875 " fill="none" stroke="black" />
+    <text x="166.97500125" y="38.2999985625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">1,1 IfcProfileDef</text>
+    <g id="1,1 IfcProfileDef" fill="silver">
+      <rect x="401.874975" y="1523.476575" width="102.75" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="453.249975" y="1540.351575" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">1,1 IfcProfileDef</text>
+    </g>
+    <g id="1,1 IfcProfileDef" fill="silver">
+      <rect x="460.59375" y="1416.0312375" width="102.75" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="511.96875" y="1432.9062375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">1,1 IfcProfileDef</text>
+    </g>
+  </g>
+  <g id="3,1 IfcIShapeProfileDef" fill="blue">
+    <rect x="1226.7586125" y="72.18360375" width="50.625" height="31.849999875" rx="10" ry="10" stroke="black" />
+    <polyline points="1277.3836125,88.108605 1294.5711,88.108605 " fill="none" stroke="black" />
+    <text x="1252.0711125" y="88.1086036875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">3,1 IfcIShapeProfileDef</text>
+    <g id="3,1 IfcIShapeProfileDef" fill="silver">
+      <rect x="264.12969" y="494.4287625" width="132.34999875" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="330.304689375" y="511.3037625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">3,1 IfcIShapeProfileDef</text>
+    </g>
+  </g>
+  <g id="3,2 IfcLShapeProfileDef" fill="blue">
+    <rect x="1226.7272625" y="549.147075" width="50.625" height="31.849999875" rx="10" ry="10" stroke="black" />
+    <polyline points="1277.3522625,565.0720875 1294.589762625,565.0720875 " fill="none" stroke="black" />
+    <text x="1252.0397625" y="565.0720749375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">3,2 IfcLShapeProfileDef</text>
+    <g id="3,2 IfcLShapeProfileDef" fill="silver">
+      <rect x="265.273335" y="588.90375" width="135" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="332.773335" y="605.77875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">3,2 IfcLShapeProfileDef</text>
+    </g>
+  </g>
+  <g id="4,1 IfcUShapeProfileDef" fill="blue">
+    <rect x="1818.3252" y="70.01998875" width="50.625" height="31.849999875" rx="10" ry="10" stroke="black" />
+    <polyline points="1868.9502,87.64932375 1902.012316125,87.64932375 " fill="none" stroke="black" />
+    <text x="1843.6377" y="85.9449886875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">4,1 IfcUShapeProfileDef</text>
+    <g id="4,1 IfcUShapeProfileDef" fill="silver">
+      <rect x="220.9658325" y="629.40375" width="136.5" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="289.2158325" y="646.27875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">4,1 IfcUShapeProfileDef</text>
+    </g>
+  </g>
+  <g id="5,1 IfcCShapeProfileDef" fill="blue">
+    <rect x="2419.2671625" y="81.250695" width="50.625" height="31.849999875" rx="10" ry="10" stroke="black" />
+    <polyline points="2469.8921625,97.17569625 2492.540800125,97.17569625 " fill="none" stroke="black" />
+    <text x="2444.5796625" y="97.1756949375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">5,1 IfcCShapeProfileDef</text>
+    <g id="5,1 IfcCShapeProfileDef" fill="silver">
+      <rect x="170.3140125" y="670.65375" width="136.5" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="238.5640125" y="687.52875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">5,1 IfcCShapeProfileDef</text>
+    </g>
+  </g>
+  <g id="5,2 IfcZShapeProfileDef" fill="blue">
+    <rect x="2424.4737375" y="530.2673625" width="50.625" height="31.849999875" rx="10" ry="10" stroke="black" />
+    <polyline points="2475.0987375,546.192375 2495.0643375,546.192375 " fill="none" stroke="black" />
+    <text x="2449.7862375" y="546.1923624375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">5,2 IfcZShapeProfileDef</text>
+    <g id="5,2 IfcZShapeProfileDef" fill="silver">
+      <rect x="117.3330975" y="711.90375" width="135.375" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="185.0205975" y="728.77875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">5,2 IfcZShapeProfileDef</text>
+    </g>
+  </g>
+  <g id="4,2 IfcTShapeProfileDef" fill="blue">
+    <rect x="1818.3303375" y="397.0035375" width="50.625" height="31.849999875" rx="10" ry="10" stroke="black" />
+    <polyline points="1868.9553375,412.92855 1903.9709625,412.92855 " fill="none" stroke="black" />
+    <text x="1843.6428375" y="412.9285374375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">4,2 IfcTShapeProfileDef</text>
+    <g id="4,2 IfcTShapeProfileDef" fill="silver">
+      <rect x="52.35844875" y="750.6537375" width="135.375" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="120.04594875" y="767.5287375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">4,2 IfcTShapeProfileDef</text>
+    </g>
+  </g>
+  <g id="7,1 IfcCraneRailFShapeProfileDef" fill="blue">
+    <rect x="648.0370125" y="932.4766125" width="50.625" height="31.849999875" rx="10" ry="10" stroke="black" />
+    <polyline points="698.6620125,948.401625 725.862012375,948.401625 " fill="none" stroke="black" />
+    <text x="673.3495125" y="948.4016124375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">7,1 IfcCraneRailFShapeProfileDef</text>
+    <g id="7,1 IfcCraneRailFShapeProfileDef" fill="silver">
+      <rect x="317.8495125" y="750.6912375" width="176.625" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="406.1620125" y="767.5662375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">7,1 IfcCraneRailFShapeProfileDef</text>
+    </g>
+  </g>
+  <g id="7,2 IfcCraneRailAShapeProfileDef" fill="blue">
+    <rect x="654.4524375" y="1296.160125" width="50.625" height="31.849999875" rx="10" ry="10" stroke="black" />
+    <polyline points="705.0774375,1312.0851375 726.014925,1312.0851375 " fill="none" stroke="black" />
+    <text x="679.7649375" y="1312.0851249375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">7,2 IfcCraneRailAShapeProfileDef</text>
+    <g id="7,2 IfcCraneRailAShapeProfileDef" fill="silver">
+      <rect x="283.92117375" y="711.9287625" width="177" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="372.42117375" y="728.8037625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">7,2 IfcCraneRailAShapeProfileDef</text>
+    </g>
+  </g>
+  <g id="2,2 IfcCircleProfileDef" fill="blue">
+    <rect x="785.1001125" y="285.75623625" width="50.625" height="31.849999875" rx="10" ry="10" stroke="black" />
+    <polyline points="810.4126125,317.606235 810.4126125,336.506235 " fill="none" stroke="black" />
+    <text x="810.4126125" y="301.6812361875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,2 IfcCircleProfileDef</text>
+    <g id="2,2 IfcCircleProfileDef" fill="silver">
+      <rect x="112.412625" y="374.40375" width="126" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="175.412625" y="391.27875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,2 IfcCircleProfileDef</text>
+    </g>
+  </g>
+  <g id="2,3 IfcEllipseProfileDef" fill="blue">
+    <rect x="889.2687375" y="285.77436375" width="50.625" height="31.849999875" rx="10" ry="10" stroke="black" />
+    <polyline points="914.5812375,317.6243625 914.5812375,336.511862625 " fill="none" stroke="black" />
+    <text x="914.5812375" y="301.6993636875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,3 IfcEllipseProfileDef</text>
+    <g id="2,3 IfcEllipseProfileDef" fill="silver">
+      <rect x="161.14375125" y="414.3912375" width="129.375" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="225.83125125" y="431.2662375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,3 IfcEllipseProfileDef</text>
+    </g>
+  </g>
+  <g id="2,4 IfcRectangleProfileDef" fill="blue">
+    <rect x="996.6876375" y="285.76872375" width="50.625" height="31.849999875" rx="10" ry="10" stroke="black" />
+    <polyline points="1022.0001375,317.6187225 1022.0001375,336.5187225 " fill="none" stroke="black" />
+    <text x="1022.0001375" y="301.6937236875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,4 IfcRectangleProfileDef</text>
+    <g id="2,4 IfcRectangleProfileDef" fill="silver">
+      <rect x="214.62512625" y="454.4037375" width="144.75" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="287.00012625" y="471.2787375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,4 IfcRectangleProfileDef</text>
+    </g>
+  </g>
+  <g id="2,5 IfcTrapeziumProfileDef" fill="blue">
+    <rect x="648.8968875" y="624.9468375" width="50.625" height="31.849999875" rx="10" ry="10" stroke="black" />
+    <polyline points="699.5218875,640.87185 723.5843625,640.87185 " fill="none" stroke="black" />
+    <text x="674.2093875" y="640.8718374375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,5 IfcTrapeziumProfileDef</text>
+    <g id="2,5 IfcTrapeziumProfileDef" fill="silver">
+      <rect x="63.5843775" y="334.40374875" width="146.25" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="136.7093775" y="351.27874875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,5 IfcTrapeziumProfileDef</text>
+    </g>
+  </g>
+  <g>
+    <rect x="0" y="0" width="600" height="888" fill="none" stroke="lime" />
+    <rect x="600" y="0" width="600" height="888" fill="none" stroke="lime" />
+    <rect x="1200" y="0" width="600" height="888" fill="none" stroke="lime" />
+    <rect x="1800" y="0" width="600" height="888" fill="none" stroke="lime" />
+    <rect x="2400" y="0" width="600" height="888" fill="none" stroke="lime" />
+    <rect x="0" y="888" width="600" height="888" fill="none" stroke="lime" />
+    <rect x="600" y="888" width="600" height="888" fill="none" stroke="lime" />
+    <rect x="1200" y="888" width="600" height="888" fill="none" stroke="lime" />
+    <rect x="1800" y="888" width="600" height="888" fill="none" stroke="lime" />
+    <rect x="2400" y="888" width="600" height="888" fill="none" stroke="lime" />
+  </g>
+</svg>
