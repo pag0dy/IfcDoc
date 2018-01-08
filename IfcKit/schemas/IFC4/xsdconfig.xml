@@ -143,6 +143,10 @@
   <cnf:entity select="IfcEdgeCurve">
     <cnf:attribute select="EdgeGeometry" exp-attribute="attribute-tag" />
   </cnf:entity>
+  <cnf:entity select="IfcElement">
+    <cnf:inverse select="HasProjections" exp-attribute="attribute-tag" />
+    <cnf:inverse select="HasOpenings" exp-attribute="attribute-tag" />
+  </cnf:entity>
   <cnf:entity select="IfcElementarySurface">
     <cnf:attribute select="Position" exp-attribute="attribute-tag" />
   </cnf:entity>
@@ -193,11 +197,14 @@
   </cnf:entity>
   <cnf:entity select="IfcIndexedColourMap">
     <cnf:attribute select="MappedTo" keep="false" />
-    <cnf:attribute select="Opacity" exp-attribute="attribute-tag" />
+    <cnf:attribute select="Opacity" exp-attribute="attribute-content" />
     <cnf:attribute select="Colours" exp-attribute="attribute-tag" />
   </cnf:entity>
   <cnf:entity select="IfcIndexedPolyCurve">
     <cnf:attribute select="Points" exp-attribute="attribute-tag" />
+  </cnf:entity>
+  <cnf:entity select="IfcIndexedPolygonalFaceWithVoids">
+    <cnf:attribute select="InnerCoordIndices" exp-attribute="attribute-tag" />
   </cnf:entity>
   <cnf:entity select="IfcIndexedTextureMap">
     <cnf:attribute select="MappedTo" keep="false" />
@@ -290,6 +297,8 @@
     <cnf:attribute select="Dimensions" exp-attribute="attribute-tag" />
   </cnf:entity>
   <cnf:entity select="IfcObject">
+    <cnf:inverse select="IsDeclaredBy" exp-attribute="attribute-tag" />
+    <cnf:inverse select="IsTypedBy" exp-attribute="attribute-tag" />
     <cnf:inverse select="IsDefinedBy" exp-attribute="double-tag" />
   </cnf:entity>
   <cnf:entity select="IfcObjectDefinition">
@@ -302,6 +311,9 @@
   <cnf:entity select="IfcOffsetCurve3D">
     <cnf:attribute select="BasisCurve" exp-attribute="attribute-tag" />
     <cnf:attribute select="RefDirection" exp-attribute="attribute-tag" />
+  </cnf:entity>
+  <cnf:entity select="IfcOpeningElement">
+    <cnf:inverse select="HasFillings" exp-attribute="attribute-tag" />
   </cnf:entity>
   <cnf:entity select="IfcOrganizationRelationship">
     <cnf:attribute select="RelatingOrganization" exp-attribute="attribute-tag" />
@@ -450,7 +462,7 @@
     <cnf:attribute select="RelatingContext" keep="false" />
   </cnf:entity>
   <cnf:entity select="IfcRelDefinesByObject">
-    <cnf:attribute select="RelatingObject" exp-attribute="attribute-tag" />
+    <cnf:attribute select="RelatingObject" keep="false" />
   </cnf:entity>
   <cnf:entity select="IfcRelDefinesByProperties">
     <cnf:attribute select="RelatedObjects" keep="false" />
@@ -459,10 +471,11 @@
     <cnf:attribute select="RelatingTemplate" exp-attribute="attribute-tag" />
   </cnf:entity>
   <cnf:entity select="IfcRelDefinesByType">
+    <cnf:attribute select="RelatedObjects" keep="false" />
     <cnf:attribute select="RelatingType" exp-attribute="attribute-tag" />
   </cnf:entity>
   <cnf:entity select="IfcRelFillsElement">
-    <cnf:attribute select="RelatingOpeningElement" exp-attribute="attribute-tag" />
+    <cnf:attribute select="RelatingOpeningElement" keep="false" />
     <cnf:attribute select="RelatedBuildingElement" exp-attribute="attribute-tag" />
   </cnf:entity>
   <cnf:entity select="IfcRelFlowControlElements">
@@ -477,11 +490,11 @@
     <cnf:attribute select="RelatingObject" keep="false" />
   </cnf:entity>
   <cnf:entity select="IfcRelProjectsElement">
-    <cnf:attribute select="RelatingElement" exp-attribute="attribute-tag" />
+    <cnf:attribute select="RelatingElement" keep="false" />
     <cnf:attribute select="RelatedFeatureElement" exp-attribute="attribute-tag" />
   </cnf:entity>
   <cnf:entity select="IfcRelReferencedInSpatialStructure">
-    <cnf:attribute select="RelatingStructure" exp-attribute="attribute-tag" />
+    <cnf:attribute select="RelatingStructure" keep="false" />
   </cnf:entity>
   <cnf:entity select="IfcRelSequence">
     <cnf:attribute select="RelatingProcess" exp-attribute="attribute-tag" />
@@ -502,7 +515,7 @@
     <cnf:attribute select="CorrespondingBoundary" exp-attribute="attribute-tag" />
   </cnf:entity>
   <cnf:entity select="IfcRelVoidsElement">
-    <cnf:attribute select="RelatingBuildingElement" exp-attribute="attribute-tag" />
+    <cnf:attribute select="RelatingBuildingElement" keep="false" />
     <cnf:attribute select="RelatedOpeningElement" exp-attribute="attribute-tag" />
   </cnf:entity>
   <cnf:entity select="IfcRepresentation">
@@ -550,6 +563,7 @@
   </cnf:entity>
   <cnf:entity select="IfcSpatialElement">
     <cnf:inverse select="ContainsElements" exp-attribute="double-tag" />
+    <cnf:inverse select="ReferencesElements" exp-attribute="double-tag" />
   </cnf:entity>
   <cnf:entity select="IfcStructuralActivity">
     <cnf:attribute select="AppliedLoad" exp-attribute="attribute-tag" />
@@ -633,7 +647,6 @@
   </cnf:entity>
   <cnf:entity select="IfcTessellatedFaceSet">
     <cnf:attribute select="Coordinates" exp-attribute="attribute-tag" />
-    <cnf:attribute select="Normals" exp-attribute="attribute-content" tagless="true" />
     <cnf:inverse select="HasColours" exp-attribute="attribute-tag" />
     <cnf:inverse select="HasTextures" exp-attribute="double-tag" />
   </cnf:entity>
@@ -655,7 +668,7 @@
   </cnf:entity>
   <cnf:entity select="IfcTriangulatedFaceSet">
     <cnf:attribute select="CoordIndex" exp-attribute="attribute-content" tagless="true" />
-    <cnf:attribute select="NormalIndex" exp-attribute="attribute-content" tagless="true" />
+    <cnf:attribute select="PnIndex" exp-attribute="attribute-content" tagless="true" />
   </cnf:entity>
   <cnf:entity select="IfcTrimmedCurve">
     <cnf:attribute select="BasisCurve" exp-attribute="attribute-tag" />

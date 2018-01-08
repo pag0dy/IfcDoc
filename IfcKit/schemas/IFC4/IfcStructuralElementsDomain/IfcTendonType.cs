@@ -36,7 +36,7 @@ namespace BuildingSmart.IFC.IfcStructuralElementsDomain
 	
 		[DataMember(Order=3)] 
 		[XmlAttribute]
-		IfcPositiveLengthMeasure? _SheethDiameter;
+		IfcPositiveLengthMeasure? _SheathDiameter;
 	
 	
 		[Description("Subtype of tendon.")]
@@ -51,7 +51,7 @@ namespace BuildingSmart.IFC.IfcStructuralElementsDomain
 	
 		[Description("Diameter of the sheeth (duct) around the tendon, if there is one with this type o" +
 	    "f tendon.")]
-		public IfcPositiveLengthMeasure? SheethDiameter { get { return this._SheethDiameter; } set { this._SheethDiameter = value;} }
+		public IfcPositiveLengthMeasure? SheathDiameter { get { return this._SheathDiameter; } set { this._SheathDiameter = value;} }
 	
 	
 	}

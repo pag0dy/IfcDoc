@@ -33,6 +33,9 @@ namespace BuildingSmart.IFC.IfcSharedBldgElements
 		IfcBuildingElementProxyTypeEnum? _PredefinedType;
 	
 	
+		[Description(@"Predefined generic type for a building element proxy that is specified in an enumeration. There may be a property set given specificly for the predefined types.
+	<blockquote class=""note"">NOTE&nbsp; The <em>PredefinedType</em> shall only be used, if no <em>IfcBuildingElementProxyType</em> is assigned, providing its own <em>IfcBuildingElementProxyType.PredefinedType</em>.</blockquote>
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The attribute <em>CompositionType</em> has been replaced by <em>PredefinedType</em>, being a superset of the enumerators.</blockquote>")]
 		public IfcBuildingElementProxyTypeEnum? PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	

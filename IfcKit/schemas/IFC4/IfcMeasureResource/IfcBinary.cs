@@ -16,7 +16,8 @@ using BuildingSmart.IFC.IfcExternalReferenceResource;
 namespace BuildingSmart.IFC.IfcMeasureResource
 {
 	[Guid("49732fd6-d5d7-4faf-a19b-eb2525e3c427")]
-	public partial struct IfcBinary
+	public partial struct IfcBinary :
+		BuildingSmart.IFC.IfcMeasureResource.IfcSimpleValue
 	{
 		[XmlText]
 		public Byte[] Value;

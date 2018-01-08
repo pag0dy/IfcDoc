@@ -51,12 +51,14 @@ namespace BuildingSmart.IFC.IfcProductExtension
 		ISet<IfcRelInterferesElements> _InterferesElements = new HashSet<IfcRelInterferesElements>();
 	
 		[InverseProperty("RelatingElement")] 
+		[XmlElement("IfcRelProjectsElement")]
 		ISet<IfcRelProjectsElement> _HasProjections = new HashSet<IfcRelProjectsElement>();
 	
 		[InverseProperty("RelatedElements")] 
 		ISet<IfcRelReferencedInSpatialStructure> _ReferencedInStructures = new HashSet<IfcRelReferencedInSpatialStructure>();
 	
 		[InverseProperty("RelatingBuildingElement")] 
+		[XmlElement("IfcRelVoidsElement")]
 		ISet<IfcRelVoidsElement> _HasOpenings = new HashSet<IfcRelVoidsElement>();
 	
 		[InverseProperty("RealizingElements")] 

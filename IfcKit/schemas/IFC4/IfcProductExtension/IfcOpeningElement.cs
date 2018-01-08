@@ -38,6 +38,7 @@ namespace BuildingSmart.IFC.IfcProductExtension
 		IfcOpeningElementTypeEnum? _PredefinedType;
 	
 		[InverseProperty("RelatingOpeningElement")] 
+		[XmlElement("IfcRelFillsElement")]
 		ISet<IfcRelFillsElement> _HasFillings = new HashSet<IfcRelFillsElement>();
 	
 	

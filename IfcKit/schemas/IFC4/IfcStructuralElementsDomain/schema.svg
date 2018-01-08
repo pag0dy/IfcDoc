@@ -289,9 +289,9 @@
       <polyline points="1422.461175,776.6003625 1607.081355,776.6003625 " fill="none" stroke="black" stroke-dasharray="1,1" />
       <text x="1513.814463" y="773.7299565375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">CrossSectionArea</text>
     </g>
-    <g id="SheethDiameter">
+    <g id="SheathDiameter">
       <polyline points="1422.461175,808.368075 1607.08246125,808.368075 " fill="none" stroke="black" stroke-dasharray="1,1" />
-      <text x="1514.771818125" y="808.368075" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">SheethDiameter</text>
+      <text x="1514.771818125" y="808.368075" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">SheathDiameter</text>
     </g>
   </g>
   <g id="IfcVoidingFeature" fill="yellow">

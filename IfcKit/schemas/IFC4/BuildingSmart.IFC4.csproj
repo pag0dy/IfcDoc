@@ -749,8 +749,11 @@
     <Compile Include="IfcGeometricModelResource\IfcGeometricCurveSet.cs" />
     <Compile Include="IfcGeometricModelResource\IfcGeometricSet.cs" />
     <Compile Include="IfcGeometricModelResource\IfcHalfSpaceSolid.cs" />
+    <Compile Include="IfcGeometricModelResource\IfcIndexedPolygonalFace.cs" />
+    <Compile Include="IfcGeometricModelResource\IfcIndexedPolygonalFaceWithVoids.cs" />
     <Compile Include="IfcGeometricModelResource\IfcManifoldSolidBrep.cs" />
     <Compile Include="IfcGeometricModelResource\IfcPolygonalBoundedHalfSpace.cs" />
+    <Compile Include="IfcGeometricModelResource\IfcPolygonalFaceSet.cs" />
     <Compile Include="IfcGeometricModelResource\IfcRectangularPyramid.cs" />
     <Compile Include="IfcGeometricModelResource\IfcRevolvedAreaSolid.cs" />
     <Compile Include="IfcGeometricModelResource\IfcRevolvedAreaSolidTapered.cs" />
@@ -773,6 +776,7 @@
     <Compile Include="IfcGeometryResource\IfcBSplineCurveForm.cs" />
     <Compile Include="IfcGeometryResource\IfcBSplineSurfaceForm.cs" />
     <Compile Include="IfcGeometryResource\IfcKnotType.cs" />
+    <Compile Include="IfcGeometryResource\IfcPreferredSurfaceCurveRepresentation.cs" />
     <Compile Include="IfcGeometryResource\IfcTransitionCode.cs" />
     <Compile Include="IfcGeometryResource\IfcTrimmingPreference.cs" />
     <Compile Include="IfcGeometryResource\IfcAxis2Placement.cs" />
@@ -810,6 +814,7 @@
     <Compile Include="IfcGeometryResource\IfcEllipse.cs" />
     <Compile Include="IfcGeometryResource\IfcGeometricRepresentationItem.cs" />
     <Compile Include="IfcGeometryResource\IfcIndexedPolyCurve.cs" />
+    <Compile Include="IfcGeometryResource\IfcIntersectionCurve.cs" />
     <Compile Include="IfcGeometryResource\IfcLine.cs" />
     <Compile Include="IfcGeometryResource\IfcMappedItem.cs" />
     <Compile Include="IfcGeometryResource\IfcOffsetCurve2D.cs" />
@@ -828,10 +833,14 @@
     <Compile Include="IfcGeometryResource\IfcReparametrisedCompositeCurveSegment.cs" />
     <Compile Include="IfcGeometryResource\IfcRepresentationItem.cs" />
     <Compile Include="IfcGeometryResource\IfcRepresentationMap.cs" />
+    <Compile Include="IfcGeometryResource\IfcSeamCurve.cs" />
+    <Compile Include="IfcGeometryResource\IfcSphericalSurface.cs" />
     <Compile Include="IfcGeometryResource\IfcSurface.cs" />
+    <Compile Include="IfcGeometryResource\IfcSurfaceCurve.cs" />
     <Compile Include="IfcGeometryResource\IfcSurfaceOfLinearExtrusion.cs" />
     <Compile Include="IfcGeometryResource\IfcSurfaceOfRevolution.cs" />
     <Compile Include="IfcGeometryResource\IfcSweptSurface.cs" />
+    <Compile Include="IfcGeometryResource\IfcToroidalSurface.cs" />
     <Compile Include="IfcGeometryResource\IfcTrimmedCurve.cs" />
     <Compile Include="IfcGeometryResource\IfcVector.cs" />
     <Compile Include="IfcMaterialResource\IfcCardinalPointReference.cs" />

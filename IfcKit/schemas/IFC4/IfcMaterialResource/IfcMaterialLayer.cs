@@ -70,9 +70,9 @@ namespace BuildingSmart.IFC.IfcMaterialResource
 	
 		[Description(@"Indication of whether the material layer represents an air layer (or cavity). 
 	<ul>
-	  <li>set to TRUE if the material layer is an air gap and provides air exchange from the layer to the outside air.</li>
-	  <li>set to UNKNOWN if the material layer is an air gap and does not provide air exchange (or when this information about air exchange of the air gap is not available).</li>
-	  <li>set to FALSE if the material layer is a solid material layer (the default).</li> 
+	  <li class=""small"">set to TRUE if the material layer is an air gap and provides air exchange from the layer to the outside air.</li>
+	  <li class=""small"">set to UNKNOWN if the material layer is an air gap and does not provide air exchange (or when this information about air exchange of the air gap is not available).</li>
+	  <li class=""small"">set to FALSE if the material layer is a solid material layer (the default).</li> 
 	</ul>")]
 		public IfcLogical? IsVentilated { get { return this._IsVentilated; } set { this._IsVentilated = value;} }
 	
@@ -85,10 +85,9 @@ namespace BuildingSmart.IFC.IfcMaterialResource
 	
 		[Description(@"Category of the material layer, e.g. the role it has in the layer set it belongs to (such as 'load bearing', 'thermal insulation' etc.). The list of keywords might be extended by model view definitions, however the following keywords shall apply in general:
 	<ul>
-	 <li>'Load Bearing' &mdash; for all material layers having a load bearing function.</li>
-	 <li>'Insulation' &mdash; for all material layers having an insolating function. </li>
-	 <li>'Inner finish' &mdash; for the material layer being the inner finish.</li>
-	 <li>'Outer finish' &mdash; for the material layer being the outer finish.</li>
+	 <li class=""small"">'LoadBearing' &mdash; for all material layers having a load bearing function.</li>
+	 <li class=""small"">'Insulation' &mdash; for all material layers having an insolating function. </li>
+	 <li class=""small"">'Finish' &mdash; for the material layer being the inner or outer finish.</li>
 	</ul>")]
 		public IfcLabel? Category { get { return this._Category; } set { this._Category = value;} }
 	

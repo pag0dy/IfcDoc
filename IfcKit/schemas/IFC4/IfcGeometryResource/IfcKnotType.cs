@@ -29,7 +29,7 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		[Description("The form of knots appropriate for a quasi-uniform B-spline curve.")]
 		QUASI_UNIFORM_KNOTS = 2,
 	
-		[Description("The form of knots appropriate for a piecewise B&#65533;?&copy;zier curve.")]
+		[Description("The form of knots appropriate for a piecewise Bezier curve.")]
 		PIECEWISE_BEZIER_KNOTS = 3,
 	
 		[Description("The type of knots is not specified. This includes the case of non uniform knots.")]

@@ -41,6 +41,10 @@ namespace BuildingSmart.IFC.IfcSharedBldgElements
 	    "yet).")]
 		PROVISIONFORVOID = 4,
 	
+		[Description("The proxy denotes a provision for space (e.g. the space allocated as a provision " +
+	    "for mechanical equipment or furniture).")]
+		PROVISIONFORSPACE = 5,
+	
 		[Description("User-defined building element proxy.")]
 		USERDEFINED = -1,
 	

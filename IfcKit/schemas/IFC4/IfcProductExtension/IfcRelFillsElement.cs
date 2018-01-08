@@ -34,7 +34,7 @@ namespace BuildingSmart.IFC.IfcProductExtension
 	public partial class IfcRelFillsElement : IfcRelConnects
 	{
 		[DataMember(Order=0)] 
-		[XmlElement("IfcOpeningElement")]
+		[XmlIgnore]
 		[Required()]
 		IfcOpeningElement _RelatingOpeningElement;
 	

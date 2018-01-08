@@ -28,6 +28,7 @@ namespace BuildingSmart.IFC.IfcKernel
 	public partial class IfcRelDefinesByType : IfcRelDefines
 	{
 		[DataMember(Order=0)] 
+		[XmlIgnore]
 		[Required()]
 		ISet<IfcObject> _RelatedObjects = new HashSet<IfcObject>();
 	

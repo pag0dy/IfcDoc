@@ -34,7 +34,7 @@ namespace BuildingSmart.IFC.IfcProductExtension
 	public partial class IfcRelVoidsElement : IfcRelDecomposes
 	{
 		[DataMember(Order=0)] 
-		[XmlElement("IfcElement")]
+		[XmlIgnore]
 		[Required()]
 		IfcElement _RelatingBuildingElement;
 	

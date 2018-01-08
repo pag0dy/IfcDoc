@@ -193,16 +193,16 @@
       <text x="2539.81091308594" y="1682.26498535156" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">MappedTo</text>
     </g>
     <g id="Opacity">
-      <polyline points="2614.72351125,1505.19 2614.72351125,1523.94 2624.1235125,1523.94 " fill="none" stroke="black" stroke-dasharray="1,1" />
-      <text x="2619.423511875" y="1525.815" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">Opacity</text>
+      <polyline points="2614.72351125,1489.94000244141 2614.72351125,1489.94000244141 2739.12341308594,1489.94000244141 " fill="none" stroke="black" stroke-dasharray="1,1" />
+      <text x="2676.92346216797" y="1482.44000244141" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">Opacity</text>
     </g>
     <g id="Colours">
       <polyline points="2614.72351125,1505.19 2614.72351125,1565.88006591797 2740.9375,1565.88006591797 " fill="none" stroke="black" />
       <text x="2677.830505625" y="1588.72509887695" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">Colours</text>
     </g>
     <g id="ColourIndex">
-      <polyline points="2614.72351125,1439.03997802734 2614.72351125,1439.03997802734 2740.12347412109,1439.03997802734 " fill="none" stroke="black" />
-      <text x="2677.42349268555" y="1431.53997802734" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">ColourIndex L[1:?]</text>
+      <polyline points="2614.72351125,1449.04000854492 2614.72351125,1449.04000854492 2740.12353515625,1449.04000854492 " fill="none" stroke="black" />
+      <text x="2677.42352320313" y="1441.54000854492" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">ColourIndex L[1:?]</text>
     </g>
   </g>
   <g id="IfcIndexedTextureMap" fill="yellow">
@@ -1508,8 +1508,8 @@ IfcTessellatedFaceSet</text>
     <polyline points="450.269973754883,2542.48254394531 450.269973754883,2599.98248291016 450.269973754883,2599.98248291016 " fill="none" stroke="black" />
     <text x="450.269973754882" y="2523.73254394531" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">13,13 IfcPositiveInteger</text>
     <g id="13,13 IfcPositiveInteger" fill="silver">
-      <rect x="2740.12347412109" y="1426.28997802734" width="150" height="25.5" rx="10" ry="10" stroke="black" />
-      <text x="2815.12347412109" y="1439.03997802734" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">13,13 IfcPositiveInteger</text>
+      <rect x="2740.12353515625" y="1436.29000854492" width="150" height="25.5" rx="10" ry="10" stroke="black" />
+      <text x="2815.12353515625" y="1449.04000854492" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">13,13 IfcPositiveInteger</text>
     </g>
     <g id="13,13 IfcPositiveInteger" fill="silver">
       <rect x="2186.27008056641" y="1144.16998291015" width="150" height="37.5" rx="10" ry="10" stroke="black" />
@@ -1537,8 +1537,8 @@ IfcTessellatedFaceSet</text>
       <text x="2806.93743896484" y="1642.38006591797" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">13,14 IfcNormalisedRatioMeasure</text>
     </g>
     <g id="13,14 IfcNormalisedRatioMeasure" fill="silver">
-      <rect x="2624.1235125" y="1505.19" width="150" height="37.5" rx="10" ry="10" stroke="black" />
-      <text x="2699.1235125" y="1523.94" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">13,14 IfcNormalisedRatioMeasure</text>
+      <rect x="2739.12341308594" y="1476.18997192383" width="150" height="27.5000610351563" rx="10" ry="10" stroke="black" />
+      <text x="2814.12341308594" y="1489.94000244141" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">13,14 IfcNormalisedRatioMeasure</text>
     </g>
     <g id="13,14 IfcNormalisedRatioMeasure" fill="silver">
       <rect x="842.39749145508" y="1015.98003959656" width="150" height="37.5" rx="10" ry="10" stroke="black" />

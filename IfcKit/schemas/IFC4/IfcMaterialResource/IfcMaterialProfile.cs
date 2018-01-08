@@ -71,9 +71,9 @@ namespace BuildingSmart.IFC.IfcMaterialResource
 	
 		[Description(@"Category of the material profile, e.g. the role it has in the profile set it belongs to. The list of keywords might be extended by model view definitions, however the following keywords shall apply in general:
 	<ul>
-	 <li>'Load Bearing' &mdash; the material profile having a load bearing function.</li>
-	 <li>'Insulation' &mdash; the material profile having an insolating function.</li>
-	 <li>'Finish' &mdash; the material profile being the finish.</li>
+	 <li class=""small"">'LoadBearing' &mdash; the material profile having a load bearing function.</li>
+	 <li class=""small"">'Insulation' &mdash; the material profile having an insolating function.</li>
+	 <li class=""small"">'Finish' &mdash; the material profile being the finish.</li>
 	</ul>")]
 		public IfcLabel? Category { get { return this._Category; } set { this._Category = value;} }
 	

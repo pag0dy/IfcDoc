@@ -38,7 +38,7 @@ namespace BuildingSmart.IFC.IfcProductExtension
 		ISet<IfcProduct> _RelatedElements = new HashSet<IfcProduct>();
 	
 		[DataMember(Order=1)] 
-		[XmlElement("IfcSpatialElement")]
+		[XmlIgnore]
 		[Required()]
 		IfcSpatialElement _RelatingStructure;
 	

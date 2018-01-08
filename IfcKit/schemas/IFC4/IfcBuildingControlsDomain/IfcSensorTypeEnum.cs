@@ -17,75 +17,78 @@ namespace BuildingSmart.IFC.IfcBuildingControlsDomain
 	[Guid("b9a69a8b-176b-4d10-897a-13281718f60f")]
 	public enum IfcSensorTypeEnum
 	{
+		[Description("A device that senses or detects carbon monoxide.")]
+		COSENSOR = 1,
+	
 		[Description("A device that senses or detects carbon dioxide.")]
-		CO2SENSOR = 1,
+		CO2SENSOR = 2,
 	
 		[Description("A device that senses or detects electrical conductance.")]
-		CONDUCTANCESENSOR = 2,
+		CONDUCTANCESENSOR = 3,
 	
 		[Description("A device that senses or detects contact, such as for detecting if a door is close" +
 	    "d.")]
-		CONTACTSENSOR = 3,
+		CONTACTSENSOR = 4,
 	
 		[Description("A device that senses or detects fire")]
-		FIRESENSOR = 4,
+		FIRESENSOR = 5,
 	
 		[Description("A device that senses or detects flow in a fluid.")]
-		FLOWSENSOR = 5,
+		FLOWSENSOR = 6,
 	
 		[Description("A device that senses or detects frost on a window.")]
-		FROSTSENSOR = 6,
+		FROSTSENSOR = 7,
 	
 		[Description("A device that senses or detects gas concentration (other than CO2)")]
-		GASSENSOR = 7,
+		GASSENSOR = 8,
 	
 		[Description("A device that senses or detects heat.")]
-		HEATSENSOR = 8,
+		HEATSENSOR = 9,
 	
 		[Description("A device that senses or detects humidity.")]
-		HUMIDITYSENSOR = 9,
+		HUMIDITYSENSOR = 10,
 	
 		[Description("A device that reads a tag, such as for gaining access to a door or elevator")]
-		IDENTIFIERSENSOR = 10,
+		IDENTIFIERSENSOR = 11,
 	
 		[Description("A device that senses or detects ion concentration, such as for water hardness.")]
-		IONCONCENTRATIONSENSOR = 11,
+		IONCONCENTRATIONSENSOR = 12,
 	
 		[Description("A device that senses or detects fill level, such as for a tank.")]
-		LEVELSENSOR = 12,
+		LEVELSENSOR = 13,
 	
 		[Description("A device that senses or detects light.")]
-		LIGHTSENSOR = 13,
+		LIGHTSENSOR = 14,
 	
 		[Description("A device that senses or detects moisture.")]
-		MOISTURESENSOR = 14,
+		MOISTURESENSOR = 15,
 	
 		[Description("A device that senses or detects movement.")]
-		MOVEMENTSENSOR = 15,
+		MOVEMENTSENSOR = 16,
 	
 		[Description("A device that senses or detects acidity.")]
-		PHSENSOR = 16,
+		PHSENSOR = 17,
 	
 		[Description("A device that senses or detects pressure.")]
-		PRESSURESENSOR = 17,
+		PRESSURESENSOR = 18,
 	
 		[Description("A device that senses or detects pressure.")]
-		RADIATIONSENSOR = 18,
+		RADIATIONSENSOR = 19,
 	
 		[Description("A device that senses or detects atomic decay.")]
-		RADIOACTIVITYSENSOR = 19,
+		RADIOACTIVITYSENSOR = 20,
 	
 		[Description("A device that senses or detects smoke.")]
-		SMOKESENSOR = 20,
+		SMOKESENSOR = 21,
 	
 		[Description("A device that senses or detects sound.")]
-		SOUNDSENSOR = 21,
+		SOUNDSENSOR = 22,
 	
 		[Description("A device that senses or detects temperature.")]
-		TEMPERATURESENSOR = 22,
+		TEMPERATURESENSOR = 23,
 	
 		[Description("A device that senses or detects airflow speed and direction.")]
-		WINDSENSOR = 23,
+		WINDSENSOR = 24,
 	
 		[Description("User-defined type.")]
 		USERDEFINED = -1,

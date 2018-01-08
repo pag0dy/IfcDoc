@@ -51,20 +51,22 @@ namespace BuildingSmart.IFC.IfcSharedBldgElements
 	
 		[Description("Number of the risers included in the stair flight\r\n<blockquote class=\"change-ifc2" +
 	    "x4\">IFC4 CHANGE  The attribute has been deprecated it shall only be exposed with" +
-	    " a NIL value. Use Pset_StairFlightCommon.NumberOfRisers instead.</blockquote>")]
+	    " a NIL value. Use <em>Pset_StairFlightCommon.NumberOfRisers</em> instead.</block" +
+	    "quote>")]
 		public IfcInteger? NumberOfRisers { get { return this._NumberOfRisers; } set { this._NumberOfRisers = value;} }
 	
 		[Description("Number of treads included in the stair flight.\r\n<blockquote class=\"change-ifc2x4\"" +
 	    ">IFC4 CHANGE  The attribute has been deprecated it shall only be exposed with a " +
-	    "NIL value. Use Pset_StairFlightCommon.NumberOfTreads instead.</blockquote>")]
+	    "NIL value. Use <em>Pset_StairFlightCommon.NumberOfTreads</em> instead.</blockquo" +
+	    "te>")]
 		public IfcInteger? NumberOfTreads { get { return this._NumberOfTreads; } set { this._NumberOfTreads = value;} }
 	
 		[Description(@"Vertical distance from tread to tread. The riser height is supposed to be equal for all stairs in a stair flight.
-	  <blockquote class=""change-ifc2x4"">IFC4 CHANGE  The attribute has been deprecated it shall only be exposed with a NIL value. Use Pset_StairFlightCommon.RiserHeight instead.</blockquote>")]
+	  <blockquote class=""change-ifc2x4"">IFC4 CHANGE  The attribute has been deprecated it shall only be exposed with a NIL value. Use <em>Pset_StairFlightCommon.RiserHeight</em> instead.</blockquote>")]
 		public IfcPositiveLengthMeasure? RiserHeight { get { return this._RiserHeight; } set { this._RiserHeight = value;} }
 	
 		[Description(@"Horizontal distance from the front to the back of the tread. The tread length is supposed to be equal for all steps of the stair flight.
-	  <blockquote class=""change-ifc2x4"">IFC4 CHANGE  The attribute has been deprecated it shall only be exposed with a NIL value. Use Pset_StairFlightCommon.TreadLength instead.</blockquote>")]
+	  <blockquote class=""change-ifc2x4"">IFC4 CHANGE  The attribute has been deprecated it shall only be exposed with a NIL value. Use <em>Pset_StairFlightCommon.TreadLength</em> instead.</blockquote>")]
 		public IfcPositiveLengthMeasure? TreadLength { get { return this._TreadLength; } set { this._TreadLength = value;} }
 	
 		[Description(@"Predefined generic type for a stair flight that is specified in an enumeration. There may be a property set given specificly for the predefined types.

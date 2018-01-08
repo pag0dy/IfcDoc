@@ -47,7 +47,7 @@ namespace BuildingSmart.IFC.IfcProductExtension
 	
 		USERDEFINED = -1,
 	
-		NOTDEFIEND = 5,
+		NOTDEFINED = 0,
 	
 	}
 }

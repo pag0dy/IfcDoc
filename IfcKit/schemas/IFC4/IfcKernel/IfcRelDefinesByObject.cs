@@ -32,7 +32,7 @@ namespace BuildingSmart.IFC.IfcKernel
 		ISet<IfcObject> _RelatedObjects = new HashSet<IfcObject>();
 	
 		[DataMember(Order=1)] 
-		[XmlElement("IfcObject")]
+		[XmlIgnore]
 		[Required()]
 		IfcObject _RelatingObject;
 	

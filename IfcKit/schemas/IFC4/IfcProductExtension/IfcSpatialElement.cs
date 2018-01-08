@@ -45,6 +45,7 @@ namespace BuildingSmart.IFC.IfcProductExtension
 		ISet<IfcRelServicesBuildings> _ServicedBySystems = new HashSet<IfcRelServicesBuildings>();
 	
 		[InverseProperty("RelatingStructure")] 
+		[XmlElement]
 		ISet<IfcRelReferencedInSpatialStructure> _ReferencesElements = new HashSet<IfcRelReferencedInSpatialStructure>();
 	
 	

@@ -32,12 +32,14 @@ namespace BuildingSmart.IFC.IfcKernel
 		IfcLabel? _ObjectType;
 	
 		[InverseProperty("RelatedObjects")] 
+		[XmlElement("IfcRelDefinesByObject")]
 		ISet<IfcRelDefinesByObject> _IsDeclaredBy = new HashSet<IfcRelDefinesByObject>();
 	
 		[InverseProperty("RelatingObject")] 
 		ISet<IfcRelDefinesByObject> _Declares = new HashSet<IfcRelDefinesByObject>();
 	
 		[InverseProperty("RelatedObjects")] 
+		[XmlElement("IfcRelDefinesByType")]
 		ISet<IfcRelDefinesByType> _IsTypedBy = new HashSet<IfcRelDefinesByType>();
 	
 		[InverseProperty("RelatedObjects")] 
