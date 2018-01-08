@@ -33,8 +33,10 @@ namespace BuildingSmart.IFC.IfcProductExtension
 	[Guid("908714b5-1c75-4036-9849-81c2cced2ed8")]
 	public enum IfcProjectionElementTypeEnum
 	{
+		[Description("User-defined projection element.")]
 		USERDEFINED = -1,
 	
+		[Description("Undefined projection element.")]
 		NOTDEFINED = 0,
 	
 	}

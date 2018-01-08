@@ -50,10 +50,9 @@ namespace BuildingSmart.IFC.IfcActorResource
 		[Description("A textual description relating the nature of the role played by an actor.")]
 		public IfcText? Description { get { return this._Description; } set { this._Description = value;} }
 	
-		[Description("<EPM-HTML>\r\nReference to external information, e.g. library, classification, or d" +
-	    "ocument information, which is associated with the actor role.\r\n<blockquote class" +
-	    "=\"change-ifc2x4\">IFC4 CHANGE&nbsp; New inverse attribute.</blockquote>\r\n</EPM-HT" +
-	    "ML>")]
+		[Description("Reference to external information, e.g. library, classification, or document info" +
+	    "rmation, which is associated with the actor role.\r\n<blockquote class=\"change-ifc" +
+	    "2x4\">IFC4 CHANGE&nbsp; New inverse attribute.</blockquote>")]
 		public ISet<IfcExternalReferenceRelationship> HasExternalReference { get { return this._HasExternalReference; } }
 	
 	

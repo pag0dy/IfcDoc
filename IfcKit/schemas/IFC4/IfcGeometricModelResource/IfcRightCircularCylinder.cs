@@ -32,11 +32,10 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 		IfcPositiveLengthMeasure _Radius;
 	
 	
-		[Description("<EPM-HTML>\r\nThe distance between the planar circular faces of the cylinder.\r\n</EP" +
-	    "M-HTML>")]
+		[Description("The distance between the planar circular faces of the cylinder.")]
 		public IfcPositiveLengthMeasure Height { get { return this._Height; } set { this._Height = value;} }
 	
-		[Description("<EPM-HTML>\r\nThe radius of the cylinder.\r\n</EPM-HTML>")]
+		[Description("The radius of the cylinder.")]
 		public IfcPositiveLengthMeasure Radius { get { return this._Radius; } set { this._Radius = value;} }
 	
 	

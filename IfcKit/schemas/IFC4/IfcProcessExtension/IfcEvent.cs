@@ -41,20 +41,19 @@ namespace BuildingSmart.IFC.IfcProcessExtension
 		IfcEventTime _EventOccurenceTime;
 	
 	
-		[Description("<EPM-HTML>\r\n    Identifies the predefined types of an event from which \r\n    the " +
-	    "type required may be set.\r\n</EPM-HTML>")]
+		[Description("    Identifies the predefined types of an event from which \r\n    the type require" +
+	    "d may be set.")]
 		public IfcEventTypeEnum? PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
-		[Description("<EPM-HTML>\r\n    Identifies the predefined types of event trigger from which \r\n   " +
-	    " the type required may be set.\r\n</EPM-HTML>")]
+		[Description("    Identifies the predefined types of event trigger from which \r\n    the type re" +
+	    "quired may be set.")]
 		public IfcEventTriggerTypeEnum? EventTriggerType { get { return this._EventTriggerType; } set { this._EventTriggerType = value;} }
 	
-		[Description("<EPM-HTML>\r\n    A user defined event trigger type, the value of which is \r\n    as" +
-	    "serted when the value of an event trigger type is declared \r\n    as USERDEFINED." +
-	    "\r\n</EPM-HTML>")]
+		[Description("    A user defined event trigger type, the value of which is \r\n    asserted when " +
+	    "the value of an event trigger type is declared \r\n    as USERDEFINED.")]
 		public IfcLabel? UserDefinedEventTriggerType { get { return this._UserDefinedEventTriggerType; } set { this._UserDefinedEventTriggerType = value;} }
 	
-		[Description("<EPM-HTML>\r\n    The date and/or time at which an event occurs.\r\n</EPM-HTML>")]
+		[Description("    The date and/or time at which an event occurs.")]
 		public IfcEventTime EventOccurenceTime { get { return this._EventOccurenceTime; } set { this._EventOccurenceTime = value;} }
 	
 	

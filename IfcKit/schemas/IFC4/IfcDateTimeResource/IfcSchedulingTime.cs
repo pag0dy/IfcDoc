@@ -31,12 +31,11 @@ namespace BuildingSmart.IFC.IfcDateTimeResource
 		IfcLabel? _UserDefinedDataOrigin;
 	
 	
-		[Description("<EPM-HTML>\r\n    Optional name for the time definition. \r\n</EPM-HTML>")]
+		[Description("    Optional name for the time definition. ")]
 		public IfcLabel? Name { get { return this._Name; } set { this._Name = value;} }
 	
-		[Description("<EPM-HTML>\r\n    Specifies the origin of the scheduling time entity. It currently\r" +
-	    "\n    differentiates between predicted, simulated, measured, and user defined val" +
-	    "ues.\r\n</EPM-HTML>")]
+		[Description("    Specifies the origin of the scheduling time entity. It currently\r\n    differe" +
+	    "ntiates between predicted, simulated, measured, and user defined values.")]
 		public IfcDataOriginEnum? DataOrigin { get { return this._DataOrigin; } set { this._DataOrigin = value;} }
 	
 		[Description("Value of the data origin if DataOrigin attribute is USERDEFINED.")]

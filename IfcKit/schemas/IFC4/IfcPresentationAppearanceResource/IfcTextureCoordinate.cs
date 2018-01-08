@@ -27,10 +27,9 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 		IList<IfcSurfaceTexture> _Maps = new List<IfcSurfaceTexture>();
 	
 	
-		[Description("<EPM-HTML>\r\nReference to the one (or many in case of multi textures with identity" +
-	    " transformation to geometric surfaces) subtype(s) of <em>IfcSurfaceTexture</em> " +
-	    "that are mapped to a geometric surface by the texture coordinate transformation." +
-	    "\r\n</EPM-HTML>")]
+		[Description("Reference to the one (or many in case of multi textures with identity transformat" +
+	    "ion to geometric surfaces) subtype(s) of <em>IfcSurfaceTexture</em> that are map" +
+	    "ped to a geometric surface by the texture coordinate transformation.")]
 		public IList<IfcSurfaceTexture> Maps { get { return this._Maps; } }
 	
 	

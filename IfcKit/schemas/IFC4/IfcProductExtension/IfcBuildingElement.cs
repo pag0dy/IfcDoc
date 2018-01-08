@@ -33,14 +33,6 @@ namespace BuildingSmart.IFC.IfcProductExtension
 	[Guid("a00e8863-dd67-4f4b-8e83-2c3ee0290740")]
 	public abstract partial class IfcBuildingElement : IfcElement
 	{
-		[InverseProperty("RelatingBuildingElement")] 
-		ISet<IfcRelCoversBldgElements> _HasCoverings = new HashSet<IfcRelCoversBldgElements>();
-	
-	
-		[Description("<EPM-HTML>\r\nReference to <em>IfcCovering</em> by virtue of the objectified relati" +
-	    "onship <em>IfcRelCoversBldgElement</em>. It defines the concept of a building el" +
-	    "ement having coverings associated.\r\n</EPM-HTML>")]
-		public ISet<IfcRelCoversBldgElements> HasCoverings { get { return this._HasCoverings; } }
 	
 	
 	}

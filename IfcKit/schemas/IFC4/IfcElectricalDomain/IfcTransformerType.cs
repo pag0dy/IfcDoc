@@ -24,8 +24,8 @@ namespace BuildingSmart.IFC.IfcElectricalDomain
 		IfcTransformerTypeEnum _PredefinedType;
 	
 	
-		[Description("<EPM-HTML><p>Identifies the predefined types of transformer from which the type r" +
-	    "equired may be set.</p></EPM-HTML>")]
+		[Description("<p>Identifies the predefined types of transformer from which the type required ma" +
+	    "y be set.</p>")]
 		public IfcTransformerTypeEnum PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	

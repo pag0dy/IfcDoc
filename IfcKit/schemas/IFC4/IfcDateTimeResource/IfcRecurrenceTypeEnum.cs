@@ -18,20 +18,28 @@ namespace BuildingSmart.IFC.IfcDateTimeResource
 	[Guid("e1785355-bfe9-45c1-9315-21500359980b")]
 	public enum IfcRecurrenceTypeEnum
 	{
+		[Description("Interval, Occurrences")]
 		DAILY = 1,
 	
+		[Description("WeekdayComponent, Interval, Occurrences")]
 		WEEKLY = 2,
 	
+		[Description("DayComponent, Interval, Occurrences")]
 		MONTHLY_BY_DAY_OF_MONTH = 3,
 	
+		[Description("WeekdayComponent, Position, Interval, Occurrences")]
 		MONTHLY_BY_POSITION = 4,
 	
+		[Description("nterval, Occurrences")]
 		BY_DAY_COUNT = 5,
 	
+		[Description("WeekdayComponent, Interval, Occurrences")]
 		BY_WEEKDAY_COUNT = 6,
 	
+		[Description("DayComponent, MonthComponent, Interval, Occurrences")]
 		YEARLY_BY_DAY_OF_MONTH = 7,
 	
+		[Description("WeekdayComponent, MonthComponent, Position, Interval, Occurrences")]
 		YEARLY_BY_POSITION = 8,
 	
 	}

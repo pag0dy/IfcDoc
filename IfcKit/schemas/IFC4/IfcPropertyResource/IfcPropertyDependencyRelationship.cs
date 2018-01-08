@@ -11,6 +11,7 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
+using BuildingSmart.IFC.IfcApprovalResource;
 using BuildingSmart.IFC.IfcConstraintResource;
 using BuildingSmart.IFC.IfcCostResource;
 using BuildingSmart.IFC.IfcDateTimeResource;
@@ -40,10 +41,10 @@ namespace BuildingSmart.IFC.IfcPropertyResource
 		IfcText? _Expression;
 	
 	
-		[Description("<EPM-HTML>\r\nThe property on which the relationship depends.\r\n</EPM-HTML>")]
+		[Description("The property on which the relationship depends.")]
 		public IfcProperty DependingProperty { get { return this._DependingProperty; } set { this._DependingProperty = value;} }
 	
-		[Description("<EPM-HTML>\r\nThe dependant property.\r\n</EPM-HTML>")]
+		[Description("The dependant property.")]
 		public IfcProperty DependantProperty { get { return this._DependantProperty; } set { this._DependantProperty = value;} }
 	
 		[Description("Expression that further describes the nature of the dependency relation.")]

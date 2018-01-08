@@ -82,26 +82,20 @@ namespace BuildingSmart.IFC.IfcArchitectureDomain
 	    "plane).")]
 		public IfcPositiveLengthMeasure? LiningDepth { get { return this._LiningDepth; } set { this._LiningDepth = value;} }
 	
-		[Description(@"<EPM-HTML>
-	Thickness of the window lining as explained in the figure above. If <em>LiningThickness</em> value is 0. (zero) it denotes a window without a lining (all other lining parameters shall be set to NIL in this case). If the <em>LiningThickness</em> is NIL it denotes that the value is not available.
+		[Description(@"Thickness of the window lining as explained in the figure above. If <em>LiningThickness</em> value is 0. (zero) it denotes a window without a lining (all other lining parameters shall be set to NIL in this case). If the <em>LiningThickness</em> is NIL it denotes that the value is not available.
 	<blockquote class=""change-ifc2x4"">
 	IFC4 CHANGE&nbsp; Data type modified to be <em>IfcNonNegativeLengthMeasure</em>.
-	</blockquote>
-	</EPM-HTML>")]
+	</blockquote>")]
 		public IfcNonNegativeLengthMeasure? LiningThickness { get { return this._LiningThickness; } set { this._LiningThickness = value;} }
 	
-		[Description(@"<EPM-HTML>
-	Thickness of the transom (horizontal separator of window panels within a window), measured parallel to the window elevation plane. The transom is part of the lining and the transom depth is assumed to be identical to the lining depth.
+		[Description(@"Thickness of the transom (horizontal separator of window panels within a window), measured parallel to the window elevation plane. The transom is part of the lining and the transom depth is assumed to be identical to the lining depth.
 	If the <em>TransomThickness</em> is set to zero (and the <em>TransomOffset</em> set to a positive length), then the window is divided vertically without a physical divider.
-	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; Data type changed to <em>IfcNonNegativeLengthMeasure</em>.</blockquote>
-	</EPM-HTML>")]
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; Data type changed to <em>IfcNonNegativeLengthMeasure</em>.</blockquote>")]
 		public IfcNonNegativeLengthMeasure? TransomThickness { get { return this._TransomThickness; } set { this._TransomThickness = value;} }
 	
-		[Description(@"<EPM-HTML>
-	Thickness of the mullion (vertical separator of window panels within a window), measured parallel to the window elevation plane. The mullion is part of the lining and the mullion depth is assumed to be identical to the lining depth. 
+		[Description(@"Thickness of the mullion (vertical separator of window panels within a window), measured parallel to the window elevation plane. The mullion is part of the lining and the mullion depth is assumed to be identical to the lining depth. 
 	If the <em>MullionThickness</em> is set to zero (and the <em>MullionOffset</em> set to a positive length), then the window is divided horizontally without a physical divider.
-	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; Data type changed to <em>IfcNonNegativeLengthMeasure</em>.</blockquote>
-	</EPM-HTML>")]
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; Data type changed to <em>IfcNonNegativeLengthMeasure</em>.</blockquote>")]
 		public IfcNonNegativeLengthMeasure? MullionThickness { get { return this._MullionThickness; } set { this._MullionThickness = value;} }
 	
 		[Description("Offset of the transom centerline, measured along the z-axis of the window placeme" +
@@ -124,28 +118,20 @@ namespace BuildingSmart.IFC.IfcArchitectureDomain
 	    "that the second mullion is positioned at two/third of the window. ")]
 		public IfcNormalisedRatioMeasure? SecondMullionOffset { get { return this._SecondMullionOffset; } set { this._SecondMullionOffset = value;} }
 	
-		[Description(@"<EPM-HTML>
-	Optional link to a shape aspect definition, which points to the part of the geometric representation of the window style, which is used to represent the lining.
-	<blockquote class=""change-ifc2x4"">IFC4 CHANGE The attribute is deprecated and shall no longer be used, i.e. the value shall be NIL ($).</blockquote>
-	</EPM-HTML>")]
+		[Description(@"Optional link to a shape aspect definition, which points to the part of the geometric representation of the window style, which is used to represent the lining.
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE The attribute is deprecated and shall no longer be used, i.e. the value shall be NIL ($).</blockquote>")]
 		public IfcShapeAspect ShapeAspectStyle { get { return this._ShapeAspectStyle; } set { this._ShapeAspectStyle = value;} }
 	
-		[Description(@"<EPM-HTML>
-	Offset of the window lining. The offset is given as distance along the y axis of the local placement (perpendicular to the window plane).
-	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; New attribute added at the end of the entity definition.</blockquote>
-	</EPM-HTML>")]
+		[Description(@"Offset of the window lining. The offset is given as distance along the y axis of the local placement (perpendicular to the window plane).
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; New attribute added at the end of the entity definition.</blockquote>")]
 		public IfcLengthMeasure? LiningOffset { get { return this._LiningOffset; } set { this._LiningOffset = value;} }
 	
-		[Description(@"<EPM-HTML>
-	Offset between the lining and the window panel measured along the x-axis of the local placement. Should be smaller or equal to the <em>LiningThickness</em>.
-	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; New attribute added at the end of the entity definition.</blockquote>
-	</EPM-HTML>")]
+		[Description(@"Offset between the lining and the window panel measured along the x-axis of the local placement. Should be smaller or equal to the <em>LiningThickness</em>.
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; New attribute added at the end of the entity definition.</blockquote>")]
 		public IfcLengthMeasure? LiningToPanelOffsetX { get { return this._LiningToPanelOffsetX; } set { this._LiningToPanelOffsetX = value;} }
 	
-		[Description(@"<EPM-HTML>
-	Offset between the lining and the window panel measured along the y-axis of the local placement. Should be smaller or equal to the <em>IfcWindowPanelProperties.PanelThickness</em>.
-	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; New attribute added at the end of the entity definition.</blockquote>
-	</EPM-HTML>")]
+		[Description(@"Offset between the lining and the window panel measured along the y-axis of the local placement. Should be smaller or equal to the <em>IfcWindowPanelProperties.PanelThickness</em>.
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; New attribute added at the end of the entity definition.</blockquote>")]
 		public IfcLengthMeasure? LiningToPanelOffsetY { get { return this._LiningToPanelOffsetY; } set { this._LiningToPanelOffsetY = value;} }
 	
 	

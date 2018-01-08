@@ -33,8 +33,9 @@ namespace BuildingSmart.IFC.IfcStructuralAnalysisDomain
 		IfcStructuralLoadGroup _ResultForLoadGroup;
 	
 		[DataMember(Order=2)] 
+		[XmlAttribute]
 		[Required()]
-		Boolean _IsLinear;
+		IfcBoolean _IsLinear;
 	
 		[InverseProperty("HasResults")] 
 		ISet<IfcStructuralAnalysisModel> _ResultGroupFor = new HashSet<IfcStructuralAnalysisModel>();
@@ -49,7 +50,7 @@ namespace BuildingSmart.IFC.IfcStructuralAnalysisDomain
 	
 		[Description("This value allows to easily recognize whether a linear analysis has been applied " +
 	    "(allowing the superposition of analysis results).")]
-		public Boolean IsLinear { get { return this._IsLinear; } set { this._IsLinear = value;} }
+		public IfcBoolean IsLinear { get { return this._IsLinear; } set { this._IsLinear = value;} }
 	
 		[Description("Reference to an instance of IfcStructuralAnalysisModel for which this instance ca" +
 	    "ptures a result.")]

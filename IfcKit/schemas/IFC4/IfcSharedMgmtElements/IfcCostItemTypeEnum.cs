@@ -22,8 +22,10 @@ namespace BuildingSmart.IFC.IfcSharedMgmtElements
 	[Guid("b25db63a-6b7b-4da9-9408-1795e941000a")]
 	public enum IfcCostItemTypeEnum
 	{
+		[Description("User-defined type.")]
 		USERDEFINED = -1,
 	
+		[Description("Undefined type.")]
 		NOTDEFINED = 0,
 	
 	}

@@ -35,19 +35,17 @@ namespace BuildingSmart.IFC.IfcProcessExtension
 		IfcWorkCalendarTypeEnum? _PredefinedType;
 	
 	
-		[Description("<EPM-HTML>\r\n    Set of times periods that are regarded as an initial set-up\r\n    " +
-	    "of working times. Exception times can then further restrict\r\n    these working t" +
-	    "imes.\r\n</EPM-HTML>\r\n ")]
+		[Description("    Set of times periods that are regarded as an initial set-up\r\n    of working t" +
+	    "imes. Exception times can then further restrict\r\n    these working times.\r\n ")]
 		public ISet<IfcWorkTime> WorkingTimes { get { return this._WorkingTimes; } }
 	
-		[Description("<EPM-HTML>\r\n    Set of times periods that define exceptions (non-working\r\n    tim" +
-	    "es) for the given working times including the base\r\n    calendar, if provided.\r\n" +
-	    "</EPM-HTML>")]
+		[Description("    Set of times periods that define exceptions (non-working\r\n    times) for the " +
+	    "given working times including the base\r\n    calendar, if provided.")]
 		public ISet<IfcWorkTime> ExceptionTimes { get { return this._ExceptionTimes; } }
 	
-		[Description("<EPM-HTML>\r\n    Identifies the predefined types of a work calendar from which \r\n " +
-	    "   the type required may be set.\r\n    <blockquote class=\"change-ifc2x4\">IFC4 CHA" +
-	    "NGE  Attribute added</blockquote>\r\n</EPM-HTML>")]
+		[Description("    Identifies the predefined types of a work calendar from which \r\n    the type " +
+	    "required may be set.\r\n    <blockquote class=\"change-ifc2x4\">IFC4 CHANGE  Attribu" +
+	    "te added</blockquote>")]
 		public IfcWorkCalendarTypeEnum? PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	

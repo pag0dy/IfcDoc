@@ -32,9 +32,9 @@ namespace BuildingSmart.IFC.IfcKernel
 		IfcResourceSelect _RelatingResource;
 	
 	
-		[Description("<EPM-HTML>\r\nReference to the resource to which the objects are assigned to.\r\n<blo" +
-	    "ckquote class=\"change-ifc2x4\">IFC4 CHANGE Datatype expanded to include <em>IfcRe" +
-	    "source</em> and <em>IfcTypeResource</em>.</blockquote>\r\n</EPM-HTML>")]
+		[Description("Reference to the resource to which the objects are assigned to.\r\n<blockquote clas" +
+	    "s=\"change-ifc2x4\">IFC4 CHANGE Datatype expanded to include <em>IfcResource</em> " +
+	    "and <em>IfcTypeResource</em>.</blockquote>")]
 		public IfcResourceSelect RelatingResource { get { return this._RelatingResource; } set { this._RelatingResource = value;} }
 	
 	

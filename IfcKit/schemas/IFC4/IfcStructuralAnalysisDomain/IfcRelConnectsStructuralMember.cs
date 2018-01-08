@@ -70,11 +70,7 @@ namespace BuildingSmart.IFC.IfcStructuralAnalysisDomain
 	    "etail. ")]
 		public IfcLengthMeasure? SupportedLength { get { return this._SupportedLength; } set { this._SupportedLength = value;} }
 	
-		[Description(@"<EPM-HTML>
-	
-	Defines a coordinate system used for the description of the connection properties in <em>ConnectionCondition</em> relative to the local coordinate system of <em>RelatingStructuralMember</em>.  If left unspecified, the placement <em>IfcAxis2Placement3D</em>((x,y,z), ?, ?) is implied with x,y,z being the local member coordinates where the connection is made and the default axes directions being in parallel with the local axes of <em>RelatingStructuralMember</em>.
-	
-	</EPM-HTML>")]
+		[Description(@"Defines a coordinate system used for the description of the connection properties in <em>ConnectionCondition</em> relative to the local coordinate system of <em>RelatingStructuralMember</em>.  If left unspecified, the placement <em>IfcAxis2Placement3D</em>((x,y,z), ?, ?) is implied with x,y,z being the local member coordinates where the connection is made and the default axes directions being in parallel with the local axes of <em>RelatingStructuralMember</em>.")]
 		public IfcAxis2Placement3D ConditionCoordinateSystem { get { return this._ConditionCoordinateSystem; } set { this._ConditionCoordinateSystem = value;} }
 	
 	

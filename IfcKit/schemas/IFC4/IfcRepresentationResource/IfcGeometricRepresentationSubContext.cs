@@ -47,8 +47,7 @@ namespace BuildingSmart.IFC.IfcRepresentationResource
 	    "ecision, space coordinate dimension and true north.")]
 		public IfcGeometricRepresentationContext ParentContext { get { return this._ParentContext; } set { this._ParentContext = value;} }
 	
-		[Description(@"<EPM-HTML>
-	The target <font color=""#ff0000"">plot</font> scale of the representation 
+		[Description(@"The target <font color=""#ff0000"">plot</font> scale of the representation 
 	to which this representation context applies.
 	<blockquote class=""note"">NOTE&nbsp; Scale indicates the target plot scale for
 	the representation sub context, all annotation styles are given in plot
@@ -58,8 +57,7 @@ namespace BuildingSmart.IFC.IfcRepresentationResource
 	applies up to the next smaller scale, or up to unlimited small scale.</blockquote>
 	
 	<blockquote class=""note"">NOTE&nbsp; Scale 1:100 (given as 0.01 within <em>TargetScale</em>)
-	is bigger then 1:200 (given as 0.005 within <em>TargetScale</em>).</blockquote>
-	</EPM-HTML>")]
+	is bigger then 1:200 (given as 0.005 within <em>TargetScale</em>).</blockquote>")]
 		public IfcPositiveRatioMeasure? TargetScale { get { return this._TargetScale; } set { this._TargetScale = value;} }
 	
 		[Description("Target view of the representation to which this representation context applies.")]

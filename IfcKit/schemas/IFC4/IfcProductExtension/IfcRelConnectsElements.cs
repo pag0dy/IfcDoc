@@ -48,18 +48,17 @@ namespace BuildingSmart.IFC.IfcProductExtension
 		IfcElement _RelatedElement;
 	
 	
-		[Description(@"<EPM-HTML>
-	The geometric shape representation of the connection geometry that is provided in the object coordinate system of the <em>RelatingElement</em> (mandatory) and in the object coordinate system of the <em>RelatedElement</em> (optionally).
-	</EPM-HTML>")]
+		[Description("The geometric shape representation of the connection geometry that is provided in" +
+	    " the object coordinate system of the <em>RelatingElement</em> (mandatory) and in" +
+	    " the object coordinate system of the <em>RelatedElement</em> (optionally).")]
 		public IfcConnectionGeometry ConnectionGeometry { get { return this._ConnectionGeometry; } set { this._ConnectionGeometry = value;} }
 	
-		[Description("<EPM-HTML>\r\nReference to a subtype of <em>IfcElement</em> that is connected by th" +
-	    "e connection relationship in the role of <em>RelatingElement</em>.\r\n</EPM-HTML>\r" +
-	    "\n")]
+		[Description("Reference to a subtype of <em>IfcElement</em> that is connected by the connection" +
+	    " relationship in the role of <em>RelatingElement</em>.\r\n")]
 		public IfcElement RelatingElement { get { return this._RelatingElement; } set { this._RelatingElement = value;} }
 	
-		[Description("<EPM-HTML>\r\nReference to a subtype of <em>IfcElement</em> that is connected by th" +
-	    "e connection relationship in the role of <em>RelatedElement</em>.\r\n</EPM-HTML>")]
+		[Description("Reference to a subtype of <em>IfcElement</em> that is connected by the connection" +
+	    " relationship in the role of <em>RelatedElement</em>.")]
 		public IfcElement RelatedElement { get { return this._RelatedElement; } set { this._RelatedElement = value;} }
 	
 	

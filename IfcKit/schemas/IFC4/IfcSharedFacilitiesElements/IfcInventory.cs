@@ -45,27 +45,26 @@ namespace BuildingSmart.IFC.IfcSharedFacilitiesElements
 		IfcCostValue _OriginalValue;
 	
 	
-		[Description("<EPM-HTML>A list of the types of inventories from which that required may be sele" +
-	    "cted.\r\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE Attribute made optional.</b" +
-	    "lockquote> \r\n</EPM-HTML>\r\n")]
+		[Description("A list of the types of inventories from which that required may be selected.\r\n<bl" +
+	    "ockquote class=\"change-ifc2x4\">IFC4 CHANGE Attribute made optional.</blockquote>" +
+	    " \r\n")]
 		public IfcInventoryTypeEnum? PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
-		[Description("<EPM-HTML>The organizational unit to which the inventory is applicable.</EPM-HTML" +
-	    ">")]
+		[Description("The organizational unit to which the inventory is applicable.")]
 		public IfcActorSelect Jurisdiction { get { return this._Jurisdiction; } set { this._Jurisdiction = value;} }
 	
-		[Description("<EPM-HTML>Persons who are responsible for the inventory.</EPM-HTML>")]
+		[Description("Persons who are responsible for the inventory.")]
 		public ISet<IfcPerson> ResponsiblePersons { get { return this._ResponsiblePersons; } }
 	
-		[Description("<EPM-HTML> \r\n<p>The date on which the last update of the inventory was carried ou" +
-	    "t.</p>\r\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE Type changed from IfcDateT" +
-	    "imeSelect.</blockquote> \r\n</EPM-HTML> \r\n")]
+		[Description("<p>The date on which the last update of the inventory was carried out.</p>\r\n<bloc" +
+	    "kquote class=\"change-ifc2x4\">IFC4 CHANGE Type changed from IfcDateTimeSelect.</b" +
+	    "lockquote>  \r\n")]
 		public IfcDate? LastUpdateDate { get { return this._LastUpdateDate; } set { this._LastUpdateDate = value;} }
 	
-		[Description("<EPM-HTML>An estimate of the current cost value of the inventory.</EPM-HTML>")]
+		[Description("An estimate of the current cost value of the inventory.")]
 		public IfcCostValue CurrentValue { get { return this._CurrentValue; } set { this._CurrentValue = value;} }
 	
-		[Description("<EPM-HTML>An estimate of the original cost value of the inventory.</EPM-HTML>")]
+		[Description("An estimate of the original cost value of the inventory.")]
 		public IfcCostValue OriginalValue { get { return this._OriginalValue; } set { this._OriginalValue = value;} }
 	
 	

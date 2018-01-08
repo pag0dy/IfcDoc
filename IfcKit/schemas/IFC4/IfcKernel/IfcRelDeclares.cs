@@ -28,7 +28,7 @@ namespace BuildingSmart.IFC.IfcKernel
 	public partial class IfcRelDeclares : IfcRelationship
 	{
 		[DataMember(Order=0)] 
-		[XmlElement("IfcContext")]
+		[XmlIgnore]
 		[Required()]
 		IfcContext _RelatingContext;
 	
@@ -37,13 +37,12 @@ namespace BuildingSmart.IFC.IfcKernel
 		ISet<IfcDefinitionSelect> _RelatedDefinitions = new HashSet<IfcDefinitionSelect>();
 	
 	
-		[Description("<EPM-HTML>\r\nReference to the <em>IfcProject</em> to which additional information " +
-	    "is assigned.\r\n</EPM-HTML>")]
+		[Description("Reference to the <em>IfcProject</em> to which additional information is assigned." +
+	    "")]
 		public IfcContext RelatingContext { get { return this._RelatingContext; } set { this._RelatingContext = value;} }
 	
-		[Description("<EPM-HTML>\r\nSet of object or property definitions that are assigned to a context " +
-	    "and to which the unit and representation context definitions of that context app" +
-	    "ly.\r\n</EPM-HTML>")]
+		[Description("Set of object or property definitions that are assigned to a context and to which" +
+	    " the unit and representation context definitions of that context apply.")]
 		public ISet<IfcDefinitionSelect> RelatedDefinitions { get { return this._RelatedDefinitions; } }
 	
 	

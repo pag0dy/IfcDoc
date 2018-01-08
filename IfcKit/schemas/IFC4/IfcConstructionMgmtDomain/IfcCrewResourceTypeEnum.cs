@@ -21,12 +21,16 @@ namespace BuildingSmart.IFC.IfcConstructionMgmtDomain
 	[Guid("82f996fd-ed1f-4a14-8078-908d8fc3e27c")]
 	public enum IfcCrewResourceTypeEnum
 	{
+		[Description("A composition of resources performing administration work in an office.")]
 		OFFICE = 1,
 	
+		[Description("A composition of resources performing production work on a construction site.")]
 		SITE = 2,
 	
+		[Description("User-defined resource.")]
 		USERDEFINED = -1,
 	
+		[Description("Undefined resource.")]
 		NOTDEFINED = 0,
 	
 	}

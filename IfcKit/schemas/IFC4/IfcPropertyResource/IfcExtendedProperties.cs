@@ -11,6 +11,7 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
+using BuildingSmart.IFC.IfcApprovalResource;
 using BuildingSmart.IFC.IfcConstraintResource;
 using BuildingSmart.IFC.IfcCostResource;
 using BuildingSmart.IFC.IfcDateTimeResource;
@@ -38,14 +39,13 @@ namespace BuildingSmart.IFC.IfcPropertyResource
 		ISet<IfcProperty> _Properties = new HashSet<IfcProperty>();
 	
 	
-		[Description("<EPM-HTML>\r\nThe name given to the set of properties. \r\n</EPM-HTML>")]
+		[Description("The name given to the set of properties. ")]
 		public IfcIdentifier? Name { get { return this._Name; } set { this._Name = value;} }
 	
-		[Description("<EPM-HTML>\r\nDescription for the set of properties.\r\n</EPM-HTML>")]
+		[Description("Description for the set of properties.")]
 		public IfcText? Description { get { return this._Description; } set { this._Description = value;} }
 	
-		[Description("<EPM-HTML>\r\nThe set of properties provided for this extended property collection." +
-	    "\r\n</EPM-HTML>")]
+		[Description("The set of properties provided for this extended property collection.")]
 		public ISet<IfcProperty> Properties { get { return this._Properties; } }
 	
 	

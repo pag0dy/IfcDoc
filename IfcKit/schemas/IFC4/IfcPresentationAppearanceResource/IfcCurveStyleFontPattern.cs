@@ -33,11 +33,9 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 		IfcPositiveLengthMeasure _InvisibleSegmentLength;
 	
 	
-		[Description(@"<EPM-HTML>
-	The length of the visible segment in the pattern definition.
+		[Description(@"The length of the visible segment in the pattern definition.
 	<blockquote class=""note"">NOTE&nbsp; For a visible segment representing a point, the value 0. should be assigned.</blockquote>
-	<blockquote class=""change-ifc2x3"">IFC2x3 CHANGE&nbsp; The datatype has been changed to IfcLengthMeasure with upward compatibility for file-based exchange.</blockquote>
-	</EPM-HTML>")]
+	<blockquote class=""change-ifc2x3"">IFC2x3 CHANGE&nbsp; The datatype has been changed to IfcLengthMeasure with upward compatibility for file-based exchange.</blockquote>")]
 		public IfcLengthMeasure VisibleSegmentLength { get { return this._VisibleSegmentLength; } set { this._VisibleSegmentLength = value;} }
 	
 		[Description("The length of the invisible segment in the pattern definition.")]

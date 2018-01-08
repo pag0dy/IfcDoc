@@ -33,11 +33,9 @@ namespace BuildingSmart.IFC.IfcSharedBldgElements
 		IfcShadingDeviceTypeEnum? _PredefinedType;
 	
 	
-		[Description(@"<EPM-HTML>
-	Predefined generic type for a shading device that is specified in an enumeration. There may be a property set given specificly for the predefined types.
+		[Description(@"Predefined generic type for a shading device that is specified in an enumeration. There may be a property set given specificly for the predefined types.
 	<blockquote class=""note"">NOTE&nbsp; The <em>PredefinedType</em> shall only be used, if no <em>IfcShadingDeviceType</em> is assigned, providing its own <em>IfcShadingDeviceType.PredefinedType</em>.
-	</blockquote>
-	</EPM-HTML> ")]
+	</blockquote> ")]
 		public IfcShadingDeviceTypeEnum? PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	

@@ -56,28 +56,22 @@ namespace BuildingSmart.IFC.IfcProductExtension
 		Boolean? _ImpliedOrder;
 	
 	
-		[Description(@"<EPM-HTML>
-	Reference to a subtype of <em>IfcElement</> that is the <em>RelatingElement</em> in the interference relationship. Depending on the value of <em>ImpliedOrder</em> the <em>RelatingElement</em> may carry the notion to be the element from which the interference geometry should be subtracted.
-	</EPM-HTML>")]
+		[Description(@"Reference to a subtype of <em>IfcElement</> that is the <em>RelatingElement</em> in the interference relationship. Depending on the value of <em>ImpliedOrder</em> the <em>RelatingElement</em> may carry the notion to be the element from which the interference geometry should be subtracted.")]
 		public IfcElement RelatingElement { get { return this._RelatingElement; } set { this._RelatingElement = value;} }
 	
-		[Description(@"<EPM-HTML>
-	Reference to a subtype of <em>IfcElement</> that is the <em>RelatedElement</em> in the interference relationship. Depending on the value of <em>ImpliedOrder</em> the <em>RelatedElement</em> may carry the notion to be the element from which the interference geometry should not be subtracted.
-	</EPM-HTML>")]
+		[Description(@"Reference to a subtype of <em>IfcElement</> that is the <em>RelatedElement</em> in the interference relationship. Depending on the value of <em>ImpliedOrder</em> the <em>RelatedElement</em> may carry the notion to be the element from which the interference geometry should not be subtracted.")]
 		public IfcElement RelatedElement { get { return this._RelatedElement; } set { this._RelatedElement = value;} }
 	
-		[Description(@"<EPM-HTML>
-	The geometric shape representation of the interference geometry that is provided in the object coordinate system of the <em>RelatingElement</em> (mandatory) and in the object coordinate system of the <em>RelatedElement</em> (optionally).
-	</EPM-HTML>")]
+		[Description("The geometric shape representation of the interference geometry that is provided " +
+	    "in the object coordinate system of the <em>RelatingElement</em> (mandatory) and " +
+	    "in the object coordinate system of the <em>RelatedElement</em> (optionally).")]
 		public IfcConnectionGeometry InterferenceGeometry { get { return this._InterferenceGeometry; } set { this._InterferenceGeometry = value;} }
 	
-		[Description("<EPM-HTML>\r\nOptional identifier that describes the nature of the interference. Ex" +
-	    "amples could include \'Clash\', \'ProvisionForVoid\', etc.\r\n</EPM-HTML>")]
+		[Description("Optional identifier that describes the nature of the interference. Examples could" +
+	    " include \'Clash\', \'ProvisionForVoid\', etc.")]
 		public IfcIdentifier? InterferenceType { get { return this._InterferenceType; } set { this._InterferenceType = value;} }
 	
-		[Description(@"<EPM-HTML>
-	Logical value indicating whether the interference geometry should be subtracted from the <em>RelatingElement</em> (if TRUE), or whether it should be either subtracted from the <em>RelatingElement</em> or the <em>RelatedElement</em> (if FALSE), or whether no indication can be provided (if UNKNOWN).
-	</EPM-HTML>")]
+		[Description(@"Logical value indicating whether the interference geometry should be subtracted from the <em>RelatingElement</em> (if TRUE), or whether it should be either subtracted from the <em>RelatingElement</em> or the <em>RelatedElement</em> (if FALSE), or whether no indication can be provided (if UNKNOWN).")]
 		public Boolean? ImpliedOrder { get { return this._ImpliedOrder; } set { this._ImpliedOrder = value;} }
 	
 	

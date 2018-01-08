@@ -48,12 +48,10 @@ namespace BuildingSmart.IFC.IfcKernel
 		[Description("Assignment of a globally unique identifier within the entire software world.\r\n")]
 		public IfcGloballyUniqueId GlobalId { get { return this._GlobalId; } set { this._GlobalId = value;} }
 	
-		[Description(@"<EPM-HTML>
-	Assignment of the information about the current ownership of that object, including owning actor, application, local identification and information captured about the recent changes of the object, 
+		[Description(@"Assignment of the information about the current ownership of that object, including owning actor, application, local identification and information captured about the recent changes of the object, 
 	
 	<blockquote class=""note"">NOTE&nbsp; only the last modification in stored - either as addition, deletion or modification.</blockquote>
-	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The attribute has been changed to be OPTIONAL.</blockquote>
-	</EPM-HTML>")]
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The attribute has been changed to be OPTIONAL.</blockquote>")]
 		public IfcOwnerHistory OwnerHistory { get { return this._OwnerHistory; } set { this._OwnerHistory = value;} }
 	
 		[Description("Optional name for use by the participating software systems or users. For some su" +

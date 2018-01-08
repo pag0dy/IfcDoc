@@ -29,7 +29,7 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		IfcPositiveLengthMeasure _Radius;
 	
 	
-		[Description("<EPM-HTML>\r\nThe radius of the cylindrical surface.\r\n</EPM-HTML>")]
+		[Description("The radius of the cylindrical surface.")]
 		public IfcPositiveLengthMeasure Radius { get { return this._Radius; } set { this._Radius = value;} }
 	
 	

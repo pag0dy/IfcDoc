@@ -28,19 +28,18 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 		IfcIdentifier _RasterFormat;
 	
 		[DataMember(Order=1)] 
-		[XmlElement("BINARY")]
+		[XmlAttribute]
 		[Required()]
-		Byte[] _RasterCode;
+		IfcBinary _RasterCode;
 	
 	
-		[Description("<EPM-HTML>\r\nThe format of the <em>RasterCode</em> often using a compression.\r\n</E" +
-	    "PM-HTML>")]
+		[Description("The format of the <em>RasterCode</em> often using a compression.")]
 		public IfcIdentifier RasterFormat { get { return this._RasterFormat; } set { this._RasterFormat = value;} }
 	
-		[Description("<EPM-HTML>\r\nBlob, given as a single binary, to capture the texture within one pop" +
-	    "ular file (compression) format. The file format is provided by the <em>RasterFor" +
-	    "mat</em> attribute.\r\n</EPM-HTML>")]
-		public Byte[] RasterCode { get { return this._RasterCode; } set { this._RasterCode = value;} }
+		[Description("Blob, given as a single binary, to capture the texture within one popular file (c" +
+	    "ompression) format. The file format is provided by the <em>RasterFormat</em> att" +
+	    "ribute.")]
+		public IfcBinary RasterCode { get { return this._RasterCode; } set { this._RasterCode = value;} }
 	
 	
 	}

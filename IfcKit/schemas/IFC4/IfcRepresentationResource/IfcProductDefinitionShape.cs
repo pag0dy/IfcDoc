@@ -33,15 +33,13 @@ namespace BuildingSmart.IFC.IfcRepresentationResource
 		ISet<IfcShapeAspect> _HasShapeAspects = new HashSet<IfcShapeAspect>();
 	
 	
-		[Description(@"<EPM-HTML>
-	The <em>IfcProductDefinitionShape</em> shall be used to provide a representation for a single instance of <em>IfcProduct</em>.
+		[Description(@"The <em>IfcProductDefinitionShape</em> shall be used to provide a representation for a single instance of <em>IfcProduct</em>.
 	<blockquote class=""change-ifc2x3"">IFC2x3 CHANGE New inverse attribute.</blockquote>
-	<blockquote class=""change-ifc2x4"">IFC4 CHANGE Inverse relationship cardinality relaxed to be 1:N.</blockquote>
-	</EPM-HTML>")]
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE Inverse relationship cardinality relaxed to be 1:N.</blockquote>")]
 		public ISet<IfcProduct> ShapeOfProduct { get { return this._ShapeOfProduct; } }
 	
-		[Description("<EPM-HTML>\r\nReference to the shape aspect that represents part of the shape or it" +
-	    "s feature distinctively.\r\n</EPM-HTML>")]
+		[Description("Reference to the shape aspect that represents part of the shape or its feature di" +
+	    "stinctively.")]
 		public ISet<IfcShapeAspect> HasShapeAspects { get { return this._HasShapeAspects; } }
 	
 	

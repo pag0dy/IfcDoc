@@ -34,8 +34,8 @@ namespace BuildingSmart.IFC.IfcSharedBldgElements
 		IfcStairTypeEnum _PredefinedType;
 	
 	
-		[Description("<EPM-HTML>\r\nIdentifies the predefined types of a stair element from which the typ" +
-	    "e required may be set.\r\n</EPM-HTML>")]
+		[Description("Identifies the predefined types of a stair element from which the type required m" +
+	    "ay be set.")]
 		public IfcStairTypeEnum PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	

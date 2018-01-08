@@ -29,8 +29,9 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		IfcTransitionCode _Transition;
 	
 		[DataMember(Order=1)] 
+		[XmlAttribute]
 		[Required()]
-		Boolean _SameSense;
+		IfcBoolean _SameSense;
 	
 		[DataMember(Order=2)] 
 		[XmlElement("IfcCurve")]
@@ -45,11 +46,9 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 	    "egment to the first point of the next segment) in a composite curve.")]
 		public IfcTransitionCode Transition { get { return this._Transition; } set { this._Transition = value;} }
 	
-		[Description(@"<EPM-HTML>
-	An indicator of whether or not the sense of the segment agrees with, or opposes, that of the parent curve. If <em>SameSense</em> is false, the point with highest parameter value is taken as the first point of the segment.
-	<blockquote class=""note"">NOTE&nbsp; If the datatype of <em>ParentCurve</em> is <em>IfcTrimmedCurve</em>, the value of <em>SameSense</em> overrides the value of <em>IfcTrimmedCurve.SenseAgreement</em></blockquote>
-	</EPM-HTML>")]
-		public Boolean SameSense { get { return this._SameSense; } set { this._SameSense = value;} }
+		[Description(@"An indicator of whether or not the sense of the segment agrees with, or opposes, that of the parent curve. If <em>SameSense</em> is false, the point with highest parameter value is taken as the first point of the segment.
+	<blockquote class=""note"">NOTE&nbsp; If the datatype of <em>ParentCurve</em> is <em>IfcTrimmedCurve</em>, the value of <em>SameSense</em> overrides the value of <em>IfcTrimmedCurve.SenseAgreement</em></blockquote>")]
+		public IfcBoolean SameSense { get { return this._SameSense; } set { this._SameSense = value;} }
 	
 		[Description("The bounded curve which defines the geometry of the segment.")]
 		public IfcCurve ParentCurve { get { return this._ParentCurve; } set { this._ParentCurve = value;} }

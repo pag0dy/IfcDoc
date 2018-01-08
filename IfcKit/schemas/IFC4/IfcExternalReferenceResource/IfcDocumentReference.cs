@@ -40,17 +40,16 @@ namespace BuildingSmart.IFC.IfcExternalReferenceResource
 		ISet<IfcRelAssociatesDocument> _DocumentRefForObjects = new HashSet<IfcRelAssociatesDocument>();
 	
 	
-		[Description("<EPM-HTML>\r\nDescription of the document reference for informational purposes.\r\n<b" +
-	    "lockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; New attribute added at the end" +
-	    " of the attribute list.</blockquote>\r\n</EPM-HTML>")]
+		[Description("Description of the document reference for informational purposes.\r\n<blockquote cl" +
+	    "ass=\"change-ifc2x4\">IFC4 CHANGE&nbsp; New attribute added at the end of the attr" +
+	    "ibute list.</blockquote>")]
 		public IfcText? Description { get { return this._Description; } set { this._Description = value;} }
 	
-		[Description("<EPM-HTML>The document that is referenced.</EPM-HTML>")]
+		[Description("The document that is referenced.")]
 		public IfcDocumentInformation ReferencedDocument { get { return this._ReferencedDocument; } set { this._ReferencedDocument = value;} }
 	
-		[Description("<EPM-HTML>\r\nThe document reference with which objects are associated.\r\n<blockquot" +
-	    "e class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; New inverse attribute.</blockquote>\r\n<" +
-	    "/EPM-HTML>")]
+		[Description("The document reference with which objects are associated.\r\n<blockquote class=\"cha" +
+	    "nge-ifc2x4\">IFC4 CHANGE&nbsp; New inverse attribute.</blockquote>")]
 		public ISet<IfcRelAssociatesDocument> DocumentRefForObjects { get { return this._DocumentRefForObjects; } }
 	
 	

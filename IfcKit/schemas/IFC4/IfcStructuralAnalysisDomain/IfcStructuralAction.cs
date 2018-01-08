@@ -24,12 +24,13 @@ namespace BuildingSmart.IFC.IfcStructuralAnalysisDomain
 	public abstract partial class IfcStructuralAction : IfcStructuralActivity
 	{
 		[DataMember(Order=0)] 
-		Boolean? _DestabilizingLoad;
+		[XmlAttribute]
+		IfcBoolean? _DestabilizingLoad;
 	
 	
 		[Description("Indicates if this action may cause a stability problem. If it is \'FALSE\', no furt" +
 	    "her investigations regarding stability problems are necessary. ")]
-		public Boolean? DestabilizingLoad { get { return this._DestabilizingLoad; } set { this._DestabilizingLoad = value;} }
+		public IfcBoolean? DestabilizingLoad { get { return this._DestabilizingLoad; } set { this._DestabilizingLoad = value;} }
 	
 	
 	}

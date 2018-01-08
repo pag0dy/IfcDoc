@@ -38,24 +38,24 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 		IfcInteger _ColourComponents;
 	
 		[DataMember(Order=3)] 
+		[XmlAttribute]
 		[Required()]
-		IList<BINARY (32)> _Pixel = new List<BINARY (32)>();
+		IList<IfcBinary> _Pixel = new List<IfcBinary>();
 	
 	
-		[Description("<EPM-HTML>\r\nThe number of pixels in width (S) direction.\r\n</EPM-HTML>")]
+		[Description("The number of pixels in width (S) direction.")]
 		public IfcInteger Width { get { return this._Width; } set { this._Width = value;} }
 	
-		[Description("<EPM-HTML>\r\nThe number of pixels in height (T) direction.\r\n</EPM-HTML>")]
+		[Description("The number of pixels in height (T) direction.")]
 		public IfcInteger Height { get { return this._Height; } set { this._Height = value;} }
 	
-		[Description("<EPM-HTML>Indication whether the pixel values contain a 1, 2, 3, or 4 colour comp" +
-	    "onent.\r\n</EPM-HTML>")]
+		[Description("Indication whether the pixel values contain a 1, 2, 3, or 4 colour component.")]
 		public IfcInteger ColourComponents { get { return this._ColourComponents; } set { this._ColourComponents = value;} }
 	
-		[Description("<EPM-HTML>\r\nFlat list of hexadecimal values, each describing one pixel by 1, 2, 3" +
-	    ", or 4 components.\r\n<blockquote class=\"change-ifc2x3\">IFC2x3 CHANGE&nbsp; The da" +
-	    "ta type has been changed from STRING to BINARY.</blockquote>\r\n</EPM-HTML>")]
-		public IList<BINARY (32)> Pixel { get { return this._Pixel; } }
+		[Description("Flat list of hexadecimal values, each describing one pixel by 1, 2, 3, or 4 compo" +
+	    "nents.\r\n<blockquote class=\"change-ifc2x3\">IFC2x3 CHANGE&nbsp; The data type has " +
+	    "been changed from STRING to BINARY.</blockquote>")]
+		public IList<IfcBinary> Pixel { get { return this._Pixel; } }
 	
 	
 	}

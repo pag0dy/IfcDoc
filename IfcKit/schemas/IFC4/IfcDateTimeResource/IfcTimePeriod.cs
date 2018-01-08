@@ -29,10 +29,10 @@ namespace BuildingSmart.IFC.IfcDateTimeResource
 		IfcTime _EndTime;
 	
 	
-		[Description("<EPM-HTML>\r\n    Start time of the time period.\r\n</EPM-HTML>")]
+		[Description("    Start time of the time period.")]
 		public IfcTime StartTime { get { return this._StartTime; } set { this._StartTime = value;} }
 	
-		[Description("<EPM-HTML>\r\n    End time of the time period.\r\n</EPM-HTML>")]
+		[Description("    End time of the time period.")]
 		public IfcTime EndTime { get { return this._EndTime; } set { this._EndTime = value;} }
 	
 	

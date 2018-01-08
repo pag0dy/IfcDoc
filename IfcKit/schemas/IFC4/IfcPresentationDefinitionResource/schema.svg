@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<svg xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="1.1" width="0" height="0" xmlns="http://www.w3.org/2000/svg">
+<svg xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="1.1" width="1200" height="888" xmlns="http://www.w3.org/2000/svg">
   <g id="IfcAnnotationFillArea" fill="yellow">
     <rect x="42.2625" y="312.580005" width="136.24999875" height="37.5" stroke="black" />
     <text x="110.387499375" y="331.330005" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcAnnotationFillArea</text>
@@ -22,6 +22,7 @@
   </g>
   <g id="IfcPlanarExtent" fill="yellow">
     <rect x="730.681275" y="489.2374875" width="111.25000125" height="86.83750125" stroke="black" />
+    <polyline points="786.3063,576.075 786.3063,623.34842625 " fill="none" stroke="black" stroke-width="3" />
     <text x="786.306275625" y="532.656238125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcPlanarExtent</text>
     <g id="SizeInX">
       <polyline points="841.93125,510.156225 959.862525,510.156225 " fill="none" stroke="black" />
@@ -38,6 +39,7 @@
   </g>
   <g id="IfcTextLiteral" fill="yellow">
     <rect x="747.8487375" y="119.0625" width="76.99999875" height="116.25" stroke="black" />
+    <polyline points="786.34875,235.3125 786.34875,269.93748375 786.361276875,269.93748375 786.361276875,304.5624675 " fill="none" stroke="black" stroke-width="3" />
     <text x="786.348736875" y="177.1875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcTextLiteral</text>
     <g id="Literal">
       <polyline points="824.848725,209.9937525 872.30500125,209.9937525 " fill="none" stroke="black" />
@@ -75,6 +77,10 @@
   <g id="IFCGEOMETRYRESOURCE">
     <g id="IfcGeometricRepresentationItem" fill="grey">
       <rect x="42.21876375" y="136.81249875" width="168.98749875" height="85.62499875" stroke="black" />
+      <polyline points="112.3893975,222.4374975 112.3893975,244.78755825 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="112.3893975,244.78755825 354.39752625,244.7874975 354.39752625,312.615 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="112.3893975,244.78755825 112.38751125,244.7874975 112.38751125,312.5799975 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="112.3893975,244.78755825 488.706225,244.7875575 488.706225,312.5950575 " fill="none" stroke="black" stroke-width="3" />
       <text x="126.712513125" y="179.624998125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCGEOMETRYRESOURCE
 IfcGeometricRepresentationItem</text>
     </g>
@@ -119,23 +125,26 @@ IfcPresentableText</text>
   <g id="IFCEXTERNALREFERENCERESOURCE" />
   <g id="IFCTOPOLOGYRESOURCE" />
   <g id="IFCREPRESENTATIONRESOURCE" />
-  <g fill="blue">
+  <g id="2,1 IfcPlanarExtent" fill="blue">
     <rect x="659.806275" y="489.362475" width="45" height="31.875" rx="10" ry="10" stroke="black" />
     <polyline points="704.806275,505.299975 730.68127425,505.299975 " fill="none" stroke="black" />
-    <text x="682.306275" y="505.299975" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle" />
-    <g id="IfcPlanarExtent" fill="silver">
+    <text x="682.306275" y="505.299975" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcPlanarExtent</text>
+    <g id="2,1 IfcPlanarExtent" fill="silver">
       <rect x="436.956225" y="312.5950575" width="103.5" height="30" rx="10" ry="10" stroke="black" />
-      <text x="488.706225" y="327.5950575" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcPlanarExtent</text>
+      <text x="488.706225" y="327.5950575" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcPlanarExtent</text>
     </g>
   </g>
-  <g fill="blue">
+  <g id="2,2 IfcTextLiteral" fill="blue">
     <rect x="760.0112625" y="57.31249875" width="50.65000125" height="31.849999875" rx="10" ry="10" stroke="black" />
     <polyline points="786.3222375,89.16250125 786.3222375,119.062502625 " fill="none" stroke="black" />
-    <text x="785.336263125" y="73.2374986875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle" />
-    <g id="IfcTextLiteral" fill="silver">
+    <text x="785.336263125" y="73.2374986875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,2 IfcTextLiteral</text>
+    <g id="2,2 IfcTextLiteral" fill="silver">
       <rect x="302.35628625" y="312.615" width="105.36250125" height="30" rx="10" ry="10" stroke="black" />
-      <text x="355.037536875" y="327.615" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcTextLiteral</text>
+      <text x="355.037536875" y="327.615" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,2 IfcTextLiteral</text>
     </g>
   </g>
-  <g />
+  <g>
+    <rect x="0" y="0" width="600" height="888" fill="none" stroke="lime" />
+    <rect x="600" y="0" width="600" height="888" fill="none" stroke="lime" />
+  </g>
 </svg>

@@ -27,9 +27,8 @@ namespace BuildingSmart.IFC.IfcSharedFacilitiesElements
 		IfcOccupantTypeEnum? _PredefinedType;
 	
 	
-		[Description("<EPM-HTML>Predefined occupant types from which that required may be set.\r\n\r\n<bloc" +
-	    "kquote class=\"change-ifc2x4\">IFC4 CHANGE Attribute made optional.</blockquote> \r" +
-	    "\n\r\n</EPM-HTML>")]
+		[Description("Predefined occupant types from which that required may be set.\r\n\r\n<blockquote cla" +
+	    "ss=\"change-ifc2x4\">IFC4 CHANGE Attribute made optional.</blockquote> ")]
 		public IfcOccupantTypeEnum? PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	

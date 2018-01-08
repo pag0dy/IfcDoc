@@ -34,8 +34,8 @@ namespace BuildingSmart.IFC.IfcSharedBldgElements
 		IfcCurtainWallTypeEnum _PredefinedType;
 	
 	
-		[Description("<EPM-HTML>\r\nIdentifies the predefined types of a curtain wall element from which " +
-	    "the type required may be set.\r\n</EPM-HTML>")]
+		[Description("Identifies the predefined types of a curtain wall element from which the type req" +
+	    "uired may be set.")]
 		public IfcCurtainWallTypeEnum PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	

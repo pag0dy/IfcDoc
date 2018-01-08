@@ -31,26 +31,16 @@ namespace BuildingSmart.IFC.IfcSharedComponentElements
 		IfcMechanicalFastenerTypeEnum? _PredefinedType;
 	
 	
-		[Description(@"<EPM-HTML>
-	
-	The nominal diameter describing the cross-section size of the fastener type.
-	
-	<blockquote class=""change-ifc2x4"">
-	IFC4 CHANGE&nbsp; Deprecated; the respective attribute of <em>IfcMechanicalFastenerType</em> should be used instead.
-	</blockquote>
-	
-	</EPM-HTML>")]
+		[Description("The nominal diameter describing the cross-section size of the fastener type.\r\n\r\n<" +
+	    "blockquote class=\"change-ifc2x4\">\r\nIFC4 CHANGE&nbsp; Deprecated; the respective " +
+	    "attribute of <em>IfcMechanicalFastenerType</em> should be used instead.\r\n</block" +
+	    "quote>")]
 		public IfcPositiveLengthMeasure? NominalDiameter { get { return this._NominalDiameter; } set { this._NominalDiameter = value;} }
 	
-		[Description(@"<EPM-HTML>
-	
-	The nominal length describing the longitudinal dimensions of the fastener type.
-	
-	<blockquote class=""change-ifc2x4"">
-	IFC4 CHANGE&nbsp; Deprecated; the respective attribute of <em>IfcMechanicalFastenerType</em> should be used instead.
-	</blockquote>
-	
-	</EPM-HTML>")]
+		[Description("The nominal length describing the longitudinal dimensions of the fastener type.\r\n" +
+	    "\r\n<blockquote class=\"change-ifc2x4\">\r\nIFC4 CHANGE&nbsp; Deprecated; the respecti" +
+	    "ve attribute of <em>IfcMechanicalFastenerType</em> should be used instead.\r\n</bl" +
+	    "ockquote>")]
 		public IfcPositiveLengthMeasure? NominalLength { get { return this._NominalLength; } set { this._NominalLength = value;} }
 	
 		[Description("Subtype of mechanical fastener")]

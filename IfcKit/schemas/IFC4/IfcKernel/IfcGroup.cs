@@ -31,10 +31,8 @@ namespace BuildingSmart.IFC.IfcKernel
 		ISet<IfcRelAssignsToGroup> _IsGroupedBy = new HashSet<IfcRelAssignsToGroup>();
 	
 	
-		[Description(@"<EPM-HTML>
-	Reference to the relationship <em>IfcRelAssignsToGroup</em> that assigns the one to many group members to the <em>IfcGroup</em> object.
-	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The cardinality has been changed from 1..1 to 0..? in order to allow the exchange of a group concept without having already group members assigned. It now also allows the use of many instances of <em>IfcRelAssignsToGroup</em> to assign the group members. The change has been done with upward compatibility for file based exchange.</blockquote>
-	</EPM-HTML>")]
+		[Description(@"Reference to the relationship <em>IfcRelAssignsToGroup</em> that assigns the one to many group members to the <em>IfcGroup</em> object.
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The cardinality has been changed from 1..1 to 0..? in order to allow the exchange of a group concept without having already group members assigned. It now also allows the use of many instances of <em>IfcRelAssignsToGroup</em> to assign the group members. The change has been done with upward compatibility for file based exchange.</blockquote>")]
 		public ISet<IfcRelAssignsToGroup> IsGroupedBy { get { return this._IsGroupedBy; } }
 	
 	

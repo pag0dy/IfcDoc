@@ -38,13 +38,12 @@ namespace BuildingSmart.IFC.IfcSharedBldgElements
 		ISet<IfcCovering> _RelatedCoverings = new HashSet<IfcCovering>();
 	
 	
-		[Description("<EPM-HTML>\r\nRelationship to the element that is covered. It includes building ele" +
-	    "ments for coverings such as flooring or cladding, or distribution elements for c" +
-	    "overings such as sleeving or wrapping.\r\n</EPM-HTML>")]
+		[Description("Relationship to the element that is covered. It includes building elements for co" +
+	    "verings such as flooring or cladding, or distribution elements for coverings suc" +
+	    "h as sleeving or wrapping.")]
 		public IfcElement RelatingBuildingElement { get { return this._RelatingBuildingElement; } set { this._RelatingBuildingElement = value;} }
 	
-		[Description("<EPM-HTML>\r\nRelationship to the set of coverings that are assigned to this elemen" +
-	    "t.\r\n</EPM-HTML>\r\n")]
+		[Description("Relationship to the set of coverings that are assigned to this element.\r\n")]
 		public ISet<IfcCovering> RelatedCoverings { get { return this._RelatedCoverings; } }
 	
 	

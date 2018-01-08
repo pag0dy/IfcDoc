@@ -32,14 +32,12 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 		IfcBoundedCurve _PolygonalBoundary;
 	
 	
-		[Description("<EPM-HTML>\r\n<p>Definition of the position coordinate system for the bounding poly" +
-	    "line <STRIKE>and the base surface</STRIKE>.</p>\r\n</EPM-HTML>")]
+		[Description("<p>Definition of the position coordinate system for the bounding polyline <STRIKE" +
+	    ">and the base surface</STRIKE>.</p>")]
 		public IfcAxis2Placement3D Position { get { return this._Position; } set { this._Position = value;} }
 	
-		[Description(@"<EPM-HTML>
-	Two-dimensional <strike>polyline</strike> bounded curve, defined in the xy plane of the position coordinate system.
-	<blockquote class=""change-ifc2x3"">IFC2x3 CHANGE&nbsp; The attribute type has been changed from <em>IfcPolyline</em> to its supertype <em>IfcBoundedCurve</em> with upward compatibility for file based exchange.</blockquote>
-	</EPM-HTML>")]
+		[Description(@"Two-dimensional <strike>polyline</strike> bounded curve, defined in the xy plane of the position coordinate system.
+	<blockquote class=""change-ifc2x3"">IFC2x3 CHANGE&nbsp; The attribute type has been changed from <em>IfcPolyline</em> to its supertype <em>IfcBoundedCurve</em> with upward compatibility for file based exchange.</blockquote>")]
 		public IfcBoundedCurve PolygonalBoundary { get { return this._PolygonalBoundary; } set { this._PolygonalBoundary = value;} }
 	
 	

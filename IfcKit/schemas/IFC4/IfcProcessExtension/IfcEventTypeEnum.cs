@@ -24,10 +24,13 @@ namespace BuildingSmart.IFC.IfcProcessExtension
 	[Guid("409fe4c3-0850-4659-a3ff-dd6c71e4b917")]
 	public enum IfcEventTypeEnum
 	{
+		[Description("An initiating event of a process.")]
 		STARTEVENT = 1,
 	
+		[Description("A terminating event of a process.")]
 		ENDEVENT = 2,
 	
+		[Description("An event that occurs at an intermediate stage of a process.")]
 		INTERMEDIATEEVENT = 3,
 	
 		USERDEFINED = -1,

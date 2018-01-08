@@ -28,8 +28,8 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 		IfcLabel _Name;
 	
 	
-		[Description("<EPM-HTML>\r\nThe string by which the pre defined item is identified. Allowable val" +
-	    "ues for the string are declared at the level of subtypes.\r\n</EPM-HTML>")]
+		[Description("The string by which the pre defined item is identified. Allowable values for the " +
+	    "string are declared at the level of subtypes.")]
 		public IfcLabel Name { get { return this._Name; } set { this._Name = value;} }
 	
 	

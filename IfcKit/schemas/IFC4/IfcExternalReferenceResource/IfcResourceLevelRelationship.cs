@@ -36,11 +36,10 @@ namespace BuildingSmart.IFC.IfcExternalReferenceResource
 		IfcText? _Description;
 	
 	
-		[Description("<EPM-HTML>\r\nA name used to identify or qualify the relationship.\r\n</EPM-HTML>")]
+		[Description("A name used to identify or qualify the relationship.")]
 		public IfcLabel? Name { get { return this._Name; } set { this._Name = value;} }
 	
-		[Description("<EPM-HTML>\r\nA description that may apply additional information about the relatio" +
-	    "nship.\r\n</EPM-HTML>")]
+		[Description("A description that may apply additional information about the relationship.")]
 		public IfcText? Description { get { return this._Description; } set { this._Description = value;} }
 	
 	

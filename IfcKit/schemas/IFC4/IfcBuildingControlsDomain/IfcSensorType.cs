@@ -23,8 +23,8 @@ namespace BuildingSmart.IFC.IfcBuildingControlsDomain
 		IfcSensorTypeEnum _PredefinedType;
 	
 	
-		[Description("<EPM-HTML><p>Identifies the predefined types of sensor from which the type requir" +
-	    "ed may be set.</p></EPM-HTML>")]
+		[Description("<p>Identifies the predefined types of sensor from which the type required may be " +
+	    "set.</p>")]
 		public IfcSensorTypeEnum PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	

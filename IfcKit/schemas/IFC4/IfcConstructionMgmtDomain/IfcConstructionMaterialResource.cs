@@ -26,8 +26,8 @@ namespace BuildingSmart.IFC.IfcConstructionMgmtDomain
 		IfcConstructionMaterialResourceTypeEnum? _PredefinedType;
 	
 	
-		[Description("<EPM-HTML>\r\nDefines types of construction material resources.\r\n<blockquote class=" +
-	    "\"change-ifc2x4\">IFC4 New attribute.</blockquote>\r\n</EPM-HTML>")]
+		[Description("Defines types of construction material resources.\r\n<blockquote class=\"change-ifc2" +
+	    "x4\">IFC4 New attribute.</blockquote>")]
 		public IfcConstructionMaterialResourceTypeEnum? PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	

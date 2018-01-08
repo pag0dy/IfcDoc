@@ -18,5 +18,5 @@ using System.Runtime.InteropServices;
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 [assembly: Guid("CB1818B2-236E-4A6B-97F5-265F73DC1356")]
 [assembly: AssemblyTitle("BuildingSmart.IFC4")]
-[assembly: AssemblyVersion("4.0.0.5")]
-[assembly: AssemblyFileVersion("4.0.0.5")]
+[assembly: AssemblyVersion("4.0.1.0")]
+[assembly: AssemblyFileVersion("4.0.1.0")]

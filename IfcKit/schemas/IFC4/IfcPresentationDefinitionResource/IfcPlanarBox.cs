@@ -27,10 +27,8 @@ namespace BuildingSmart.IFC.IfcPresentationDefinitionResource
 		IfcAxis2Placement _Placement;
 	
 	
-		[Description(@"<EPM-HTML>
-	The <em>IfcAxis2Placement</em> positions a local coordinate system for the definition of the rectangle. The origin of this local coordinate system serves as the lower left corner of the rectangular box.
-	  <blockquote class=""note"">NOTE&nbsp; In case of a 3D placement by <em>IfcAxisPlacement3D the <em>IfcPlanarBox</em> is defined within the xy plane of the definition coordinate system.</blockquote>
-	</EPM-HTML>")]
+		[Description(@"The <em>IfcAxis2Placement</em> positions a local coordinate system for the definition of the rectangle. The origin of this local coordinate system serves as the lower left corner of the rectangular box.
+	  <blockquote class=""note"">NOTE&nbsp; In case of a 3D placement by <em>IfcAxisPlacement3D the <em>IfcPlanarBox</em> is defined within the xy plane of the definition coordinate system.</blockquote>")]
 		public IfcAxis2Placement Placement { get { return this._Placement; } set { this._Placement = value;} }
 	
 	

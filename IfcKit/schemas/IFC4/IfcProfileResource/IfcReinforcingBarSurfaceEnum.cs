@@ -20,8 +20,10 @@ namespace BuildingSmart.IFC.IfcProfileResource
 	[Guid("cba54420-425b-4ce1-816f-69c2cc56da94")]
 	public enum IfcReinforcingBarSurfaceEnum
 	{
+		[Description("The reinforcing bar surface is plain.")]
 		PLAIN = 1,
 	
+		[Description("The reinforcing bar surface is textured (ribbed).")]
 		TEXTURED = 2,
 	
 	}

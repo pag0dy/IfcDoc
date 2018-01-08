@@ -27,7 +27,7 @@ namespace BuildingSmart.IFC.IfcConstructionMgmtDomain
 		IfcCrewResourceTypeEnum _PredefinedType;
 	
 	
-		[Description("<EPM-HTML>\r\nDefines types of crew resources.\r\n<p></p>\r\n</EPM-HTML>")]
+		[Description("Defines types of crew resources.\r\n<p></p>")]
 		public IfcCrewResourceTypeEnum PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	

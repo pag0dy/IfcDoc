@@ -28,16 +28,23 @@ namespace BuildingSmart.IFC.IfcSharedBldgElements
 	[Guid("285d2b07-b180-4d18-ba6a-69a51dd78d58")]
 	public enum IfcBuildingElementProxyTypeEnum
 	{
+		[Description("Not used - kept for upward compatibility.")]
 		COMPLEX = 1,
 	
+		[Description("Not used - kept for upward compatibility.")]
 		ELEMENT = 2,
 	
+		[Description("Not used - kept for upward compatibility.")]
 		PARTIAL = 3,
 	
+		[Description("The proxy denotes a provision for voids (an proposed opening not applied as void " +
+	    "yet).")]
 		PROVISIONFORVOID = 4,
 	
+		[Description("User-defined building element proxy.")]
 		USERDEFINED = -1,
 	
+		[Description("Undefined building element proxy.")]
 		NOTDEFINED = 0,
 	
 	}

@@ -37,9 +37,7 @@ namespace BuildingSmart.IFC.IfcProductExtension
 		IfcRelProjectsElement _ProjectsElements;
 	
 	
-		[Description(@"<EPM-HTML>
-	Reference to the <em>IfcRelProjectsElement</em> relationship that uses this <em>IfcFeatureElementAddition</em> to create a volume addition at an element. The <em>IfcFeatureElementAddition</em> can only be used to create a single addition at a single element using Boolean addition operation.
-	</EPM-HTML>")]
+		[Description(@"Reference to the <em>IfcRelProjectsElement</em> relationship that uses this <em>IfcFeatureElementAddition</em> to create a volume addition at an element. The <em>IfcFeatureElementAddition</em> can only be used to create a single addition at a single element using Boolean addition operation.")]
 		public IfcRelProjectsElement ProjectsElements { get { return this._ProjectsElements; } set { this._ProjectsElements = value;} }
 	
 	

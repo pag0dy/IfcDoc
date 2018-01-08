@@ -18,10 +18,13 @@ namespace BuildingSmart.IFC.IfcHvacDomain
 	[Guid("da914699-aa20-4a68-b767-58a09fbd06ed")]
 	public enum IfcTubeBundleTypeEnum
 	{
+		[Description("Finned tube bundle type.")]
 		FINNED = 1,
 	
+		[Description("User-defined tube bundle type.")]
 		USERDEFINED = -1,
 	
+		[Description("Undefined tube bundle type.")]
 		NOTDEFINED = 0,
 	
 	}

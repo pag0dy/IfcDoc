@@ -18,12 +18,16 @@ namespace BuildingSmart.IFC.IfcHvacDomain
 	[Guid("4fc89d41-9c93-4113-bbab-dc8fa2378347")]
 	public enum IfcEngineTypeEnum
 	{
+		[Description("Combustion is external.")]
 		EXTERNALCOMBUSTION = 1,
 	
+		[Description("Combustion is internal.")]
 		INTERNALCOMBUSTION = 2,
 	
+		[Description("User-defined engine type.")]
 		USERDEFINED = -1,
 	
+		[Description("Undefined engine type.")]
 		NOTDEFINED = 0,
 	
 	}

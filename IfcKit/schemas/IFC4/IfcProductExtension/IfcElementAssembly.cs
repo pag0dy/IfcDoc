@@ -46,10 +46,8 @@ namespace BuildingSmart.IFC.IfcProductExtension
 	    "")]
 		public IfcAssemblyPlaceEnum? AssemblyPlace { get { return this._AssemblyPlace; } set { this._AssemblyPlace = value;} }
 	
-		[Description(@"<EPM-HTML>
-	Predefined generic types for a element assembly that are specified in an enumeration. There might be property sets defined specifically for each predefined type.
-	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The attribute has been changed to be optional.</blockquote>
-	</EPM-HTML>")]
+		[Description(@"Predefined generic types for a element assembly that are specified in an enumeration. There might be property sets defined specifically for each predefined type.
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The attribute has been changed to be optional.</blockquote>")]
 		public IfcElementAssemblyTypeEnum? PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	

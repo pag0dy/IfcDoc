@@ -42,14 +42,14 @@ namespace BuildingSmart.IFC.IfcProductExtension
 		ISet<IfcRelSpaceBoundary> _BoundedBy = new HashSet<IfcRelSpaceBoundary>();
 	
 	
-		[Description("<EPM-HTML>\r\nPredefined generic types for an external spatial element that are spe" +
-	    "cified in an enumeration. There might be property sets defined specifically for " +
-	    "each predefined type.\r\n</EPM-HTML>")]
+		[Description("Predefined generic types for an external spatial element that are specified in an" +
+	    " enumeration. There might be property sets defined specifically for each predefi" +
+	    "ned type.")]
 		public IfcExternalSpatialElementTypeEnum? PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
-		[Description("<EPM-HTML>\r\nReference to a set of <em>IfcRelSpaceBoundary</em>\'s that defines the" +
-	    " physical or virtual delimitation of that external spacial element against physi" +
-	    "cal or virtual boundaries.\r\n</EPM-HTML>")]
+		[Description("Reference to a set of <em>IfcRelSpaceBoundary</em>\'s that defines the physical or" +
+	    " virtual delimitation of that external spacial element against physical or virtu" +
+	    "al boundaries.")]
 		public ISet<IfcRelSpaceBoundary> BoundedBy { get { return this._BoundedBy; } }
 	
 	

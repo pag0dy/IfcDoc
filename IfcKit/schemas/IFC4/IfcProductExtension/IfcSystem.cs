@@ -37,9 +37,9 @@ namespace BuildingSmart.IFC.IfcProductExtension
 		ISet<IfcRelServicesBuildings> _ServicesBuildings = new HashSet<IfcRelServicesBuildings>();
 	
 	
-		[Description("<EPM-HTML>Reference to the <strike>building</strike> spatial structure via the ob" +
-	    "jectified relationship <em>IfcRelServicesBuildings</em>, which is serviced by th" +
-	    "e system.\r\n</EPM-HTML>\r\n")]
+		[Description("Reference to the <strike>building</strike> spatial structure via the objectified " +
+	    "relationship <em>IfcRelServicesBuildings</em>, which is serviced by the system.\r" +
+	    "\n")]
 		public ISet<IfcRelServicesBuildings> ServicesBuildings { get { return this._ServicesBuildings; } }
 	
 	

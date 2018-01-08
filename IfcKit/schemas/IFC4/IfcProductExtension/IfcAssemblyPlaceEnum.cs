@@ -33,8 +33,10 @@ namespace BuildingSmart.IFC.IfcProductExtension
 	[Guid("7c8250e0-2413-4beb-a000-a3832f4c8248")]
 	public enum IfcAssemblyPlaceEnum
 	{
+		[Description("This assembly is assembled at site.")]
 		SITE = 1,
 	
+		[Description("This assembly is assembled in a factory.")]
 		FACTORY = 2,
 	
 		NOTDEFINED = 0,

@@ -26,12 +26,11 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		[DataMember(Order=0)] 
 		[XmlElement]
 		[Required()]
-		IList<Double> _WeightsData = new List<Double>();
+		IList<IfcReal> _WeightsData = new List<IfcReal>();
 	
 	
-		[Description("<EPM-HTML>\r\nThe weights associated with the control points in the rational case.\r" +
-	    "\n</EPM-HTML>")]
-		public IList<Double> WeightsData { get { return this._WeightsData; } }
+		[Description("The weights associated with the control points in the rational case.")]
+		public IList<IfcReal> WeightsData { get { return this._WeightsData; } }
 	
 	
 	}

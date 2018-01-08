@@ -35,21 +35,18 @@ namespace BuildingSmart.IFC.IfcDateTimeResource
 		IfcDateTime? _ScheduleDate;
 	
 	
-		[Description("<EPM-HTML>\r\n     The date on which an event actually occurs. It is a measured val" +
-	    "ue.\r\n</EPM-HTML>\r\n")]
+		[Description("     The date on which an event actually occurs. It is a measured value.\r\n")]
 		public IfcDateTime? ActualDate { get { return this._ActualDate; } set { this._ActualDate = value;} }
 	
-		[Description("<EPM-HTML>\r\n     The earliest date on which an event can occur. It is a calculate" +
-	    "d value.\r\n</EPM-HTML>")]
+		[Description("     The earliest date on which an event can occur. It is a calculated value.")]
 		public IfcDateTime? EarlyDate { get { return this._EarlyDate; } set { this._EarlyDate = value;} }
 	
-		[Description("<EPM-HTML>\r\n     The latest date on which an event can occur. It is a calculated " +
-	    "value.\r\n</EPM-HTML>")]
+		[Description("     The latest date on which an event can occur. It is a calculated value.")]
 		public IfcDateTime? LateDate { get { return this._LateDate; } set { this._LateDate = value;} }
 	
-		[Description("<EPM-HTML>\r\n    The date on which an event is scheduled to occur. \r\n    The value" +
-	    " might be measured or somehow calculated, which is defined by\r\n    <em>ScheduleD" +
-	    "ataOrigin</em>.\r\n\r\n</EPM-HTML>")]
+		[Description("    The date on which an event is scheduled to occur. \r\n    The value might be me" +
+	    "asured or somehow calculated, which is defined by\r\n    <em>ScheduleDataOrigin</e" +
+	    "m>.")]
 		public IfcDateTime? ScheduleDate { get { return this._ScheduleDate; } set { this._ScheduleDate = value;} }
 	
 	

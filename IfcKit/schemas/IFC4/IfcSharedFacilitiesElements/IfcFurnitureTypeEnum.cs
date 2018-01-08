@@ -22,22 +22,31 @@ namespace BuildingSmart.IFC.IfcSharedFacilitiesElements
 	[Guid("b0721a11-753e-44ee-b595-bc550b79b1c3")]
 	public enum IfcFurnitureTypeEnum
 	{
+		[Description("Furniture for seating a single person.")]
 		CHAIR = 1,
 	
+		[Description("Furniture with a countertop for multiple people.")]
 		TABLE = 2,
 	
+		[Description("Furniture with a countertop and optional drawers for a single person.")]
 		DESK = 3,
 	
+		[Description("Furniture for sleeping.")]
 		BED = 4,
 	
+		[Description("Furniture with sliding drawers for storing files.")]
 		FILECABINET = 5,
 	
+		[Description("Furniture for storing books or other items.")]
 		SHELF = 6,
 	
+		[Description("Furniture for seating multiple people.")]
 		SOFA = 7,
 	
+		[Description("User-defined type.")]
 		USERDEFINED = -1,
 	
+		[Description("Undefined type.")]
 		NOTDEFINED = 0,
 	
 	}

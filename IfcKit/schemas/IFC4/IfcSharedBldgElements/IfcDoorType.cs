@@ -39,28 +39,27 @@ namespace BuildingSmart.IFC.IfcSharedBldgElements
 		IfcDoorTypeOperationEnum _OperationType;
 	
 		[DataMember(Order=2)] 
-		Boolean? _ParameterTakesPrecedence;
+		[XmlAttribute]
+		IfcBoolean? _ParameterTakesPrecedence;
 	
 		[DataMember(Order=3)] 
 		[XmlAttribute]
 		IfcLabel? _UserDefinedOperationType;
 	
 	
-		[Description("<EPM-HTML>\r\nIdentifies the predefined types of a door element from which the type" +
-	    " required may be set.\r\n</EPM-HTML>")]
+		[Description("Identifies the predefined types of a door element from which the type required ma" +
+	    "y be set.")]
 		public IfcDoorTypeEnum PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
-		[Description("<EPM-HTML>\r\nType defining the general layout and operation of the door type in te" +
-	    "rms of the partitioning of panels and panel operations. \r\n</EPM-HTML>")]
+		[Description("Type defining the general layout and operation of the door type in terms of the p" +
+	    "artitioning of panels and panel operations. ")]
 		public IfcDoorTypeOperationEnum OperationType { get { return this._OperationType; } set { this._OperationType = value;} }
 	
-		[Description(@"<EPM-HTML>
-	The Boolean value reflects, whether the parameter given in the attached lining and panel properties exactly define the geometry (TRUE), or whether the attached style shape take precedence (FALSE). In the last case the parameter have only informative value. If not provided, no such information can be infered.
-	</EPM-HTML>")]
-		public Boolean? ParameterTakesPrecedence { get { return this._ParameterTakesPrecedence; } set { this._ParameterTakesPrecedence = value;} }
+		[Description(@"The Boolean value reflects, whether the parameter given in the attached lining and panel properties exactly define the geometry (TRUE), or whether the attached style shape take precedence (FALSE). In the last case the parameter have only informative value. If not provided, no such information can be infered.")]
+		public IfcBoolean? ParameterTakesPrecedence { get { return this._ParameterTakesPrecedence; } set { this._ParameterTakesPrecedence = value;} }
 	
-		[Description("<EPM-HTML>\r\nDesignator for the user defined operation type, shall only be provide" +
-	    "d, if the value of <em>OperationType</em> is set to USERDEFINED.\r\n</EPM-HTML>")]
+		[Description("Designator for the user defined operation type, shall only be provided, if the va" +
+	    "lue of <em>OperationType</em> is set to USERDEFINED.")]
 		public IfcLabel? UserDefinedOperationType { get { return this._UserDefinedOperationType; } set { this._UserDefinedOperationType = value;} }
 	
 	

@@ -44,17 +44,13 @@ namespace BuildingSmart.IFC.IfcProductExtension
 		IfcFeatureElementSubtraction _RelatedOpeningElement;
 	
 	
-		[Description(@"<EPM-HTML>
-	Reference to element in which a void is created by associated feature subtraction element.
+		[Description(@"Reference to element in which a void is created by associated feature subtraction element.
 	<blockquote class=""change-ifc2x"">IFC2x CHANGE&nbsp; The data type has been changed from <em>IfcBuildingElement</em> to <em>IfcElement</em> with upward compatibility for file based exchange.</blockquote>
-	</EPM-HTML>
 	")]
 		public IfcElement RelatingBuildingElement { get { return this._RelatingBuildingElement; } set { this._RelatingBuildingElement = value;} }
 	
-		[Description(@"<EPM-HTML>
-	Reference to the feature subtraction element which defines a void in the associated element.
-	<blockquote class=""change-ifc2x"">IFC2x CHANGE&nbsp; The data type has been changed from <em>IfcOpeningElement</em> to <em>IfcFeatureElementSubtraction</em> with upward compatibility for file based exchange.</blockquote>
-	</EPM-HTML>")]
+		[Description(@"Reference to the feature subtraction element which defines a void in the associated element.
+	<blockquote class=""change-ifc2x"">IFC2x CHANGE&nbsp; The data type has been changed from <em>IfcOpeningElement</em> to <em>IfcFeatureElementSubtraction</em> with upward compatibility for file based exchange.</blockquote>")]
 		public IfcFeatureElementSubtraction RelatedOpeningElement { get { return this._RelatedOpeningElement; } set { this._RelatedOpeningElement = value;} }
 	
 	

@@ -21,12 +21,17 @@ namespace BuildingSmart.IFC.IfcConstructionMgmtDomain
 	[Guid("1baf7bed-344f-415d-acf4-6b9e539721b9")]
 	public enum IfcConstructionProductResourceTypeEnum
 	{
+		[Description("Construction of assemblies for use as input to the building model or other assemb" +
+	    "lies.")]
 		ASSEMBLY = 1,
 	
+		[Description("Construction or placement of forms for placing materials such as concrete.")]
 		FORMWORK = 2,
 	
+		[Description("User-defined resource.")]
 		USERDEFINED = -1,
 	
+		[Description("Undefined resource.")]
 		NOTDEFINED = 0,
 	
 	}

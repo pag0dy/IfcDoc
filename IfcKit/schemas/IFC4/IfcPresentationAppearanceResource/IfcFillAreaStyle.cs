@@ -28,17 +28,18 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 		ISet<IfcFillStyleSelect> _FillStyles = new HashSet<IfcFillStyleSelect>();
 	
 		[DataMember(Order=1)] 
-		Boolean? _ModelorDraughting;
+		[XmlAttribute]
+		IfcBoolean? _ModelorDraughting;
 	
 	
 		[Description("The set of fill area styles to use in presenting visible curve segments, annotati" +
 	    "on fill areas or surfaces.")]
 		public ISet<IfcFillStyleSelect> FillStyles { get { return this._FillStyles; } }
 	
-		[Description("<EPM-HTML>\r\nIndication whether the length measures provided for the presentation " +
-	    "style are model based, or draughting based.\r\n<blockquote class=\"change-ifc2x4\">I" +
-	    "FC4 CHANGE&nbsp; New attribute.\r\n</blockquote>\r\n</EPM-HTML>")]
-		public Boolean? ModelorDraughting { get { return this._ModelorDraughting; } set { this._ModelorDraughting = value;} }
+		[Description("Indication whether the length measures provided for the presentation style are mo" +
+	    "del based, or draughting based.\r\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE&n" +
+	    "bsp; New attribute.\r\n</blockquote>")]
+		public IfcBoolean? ModelorDraughting { get { return this._ModelorDraughting; } set { this._ModelorDraughting = value;} }
 	
 	
 	}

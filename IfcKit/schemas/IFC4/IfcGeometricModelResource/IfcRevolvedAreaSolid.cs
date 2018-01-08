@@ -32,12 +32,12 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 		IfcPlaneAngleMeasure _Angle;
 	
 	
-		[Description("<EPM-HTML>\r\nAxis about which revolution will take place.\r\n</EPM-HTML>")]
+		[Description("Axis about which revolution will take place.")]
 		public IfcAxis1Placement Axis { get { return this._Axis; } set { this._Axis = value;} }
 	
-		[Description("<EPM-HTML>\r\nThe angle through which the sweep will be made. This angle is measure" +
-	    "d from the plane of the swept area provided by the XY plane of the position coor" +
-	    "dinate system.\r\n</EPM-HTML>")]
+		[Description("The angle through which the sweep will be made. This angle is measured from the p" +
+	    "lane of the swept area provided by the XY plane of the position coordinate syste" +
+	    "m.")]
 		public IfcPlaneAngleMeasure Angle { get { return this._Angle; } set { this._Angle = value;} }
 	
 	

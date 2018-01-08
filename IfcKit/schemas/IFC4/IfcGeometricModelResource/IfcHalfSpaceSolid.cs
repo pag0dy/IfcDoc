@@ -28,8 +28,9 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 		IfcSurface _BaseSurface;
 	
 		[DataMember(Order=1)] 
+		[XmlAttribute]
 		[Required()]
-		Boolean _AgreementFlag;
+		IfcBoolean _AgreementFlag;
 	
 	
 		[Description("Surface defining side of half space.")]
@@ -37,7 +38,7 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 	
 		[Description("The agreement flag is TRUE if the normal to the BaseSurface points away from the " +
 	    "material of the IfcHalfSpaceSolid. Otherwise it is FALSE.")]
-		public Boolean AgreementFlag { get { return this._AgreementFlag; } set { this._AgreementFlag = value;} }
+		public IfcBoolean AgreementFlag { get { return this._AgreementFlag; } set { this._AgreementFlag = value;} }
 	
 	
 	}

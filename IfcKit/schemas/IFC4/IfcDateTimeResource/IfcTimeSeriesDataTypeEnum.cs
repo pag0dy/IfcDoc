@@ -18,18 +18,25 @@ namespace BuildingSmart.IFC.IfcDateTimeResource
 	[Guid("41d3bfdc-e5ba-454b-82b3-ec15b57c3007")]
 	public enum IfcTimeSeriesDataTypeEnum
 	{
+		[Description("The time series data is continuous.")]
 		CONTINUOUS = 1,
 	
+		[Description("The time series data is discrete.")]
 		DISCRETE = 2,
 	
+		[Description("The time series data is discrete binary.")]
 		DISCRETEBINARY = 3,
 	
+		[Description("The time series data is piecewise binary.")]
 		PIECEWISEBINARY = 4,
 	
+		[Description("The time series data is piecewise constant.")]
 		PIECEWISECONSTANT = 5,
 	
+		[Description("The time series data is piecewise continuous.")]
 		PIECEWISECONTINUOUS = 6,
 	
+		[Description("The time series data is not defined.")]
 		NOTDEFINED = 0,
 	
 	}

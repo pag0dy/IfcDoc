@@ -38,9 +38,9 @@ namespace BuildingSmart.IFC.IfcProductExtension
 		IfcLengthMeasure? _Elevation;
 	
 	
-		[Description("Elevation of the base of this storey, relative to the 0,00 internal reference hei" +
-	    "ght of the building. The 0.00 level is given by the absolute above sea level hei" +
-	    "ght by the ElevationOfRefHeight attribute given at IfcBuilding.")]
+		[Description(@"<p>Elevation of the base of this storey, relative to the 0,00 internal reference height of the building. The 0.00 level is given by the absolute above sea level height by the <i>ElevationOfRefHeight</i> attribute given at <i>IfcBuilding</i>.</p>
+	
+	<blockquote class=""note"">NOTE&nbsp; If the geometric data is provided (<i>ObjectPlacement</i> is specified), the <i>Elevation</i> value shall either not be included, or be equal to the local placement Z value.</blockquote>")]
 		public IfcLengthMeasure? Elevation { get { return this._Elevation; } set { this._Elevation = value;} }
 	
 	

@@ -21,12 +21,16 @@ namespace BuildingSmart.IFC.IfcConstructionMgmtDomain
 	[Guid("22f952bf-6027-4b1c-bdbb-b3100d672b19")]
 	public enum IfcSubContractResourceTypeEnum
 	{
+		[Description("Furnishing or supplying products.")]
 		PURCHASE = 1,
 	
+		[Description("Performing work onsite.")]
 		WORK = 2,
 	
+		[Description("User-defined resource.")]
 		USERDEFINED = -1,
 	
+		[Description("Undefined resource.")]
 		NOTDEFINED = 0,
 	
 	}

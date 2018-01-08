@@ -122,6 +122,7 @@ namespace BuildingSmart.IFC.IfcMeasureResource
 	
 		WARPINGMOMENTUNIT = 52,
 	
+		[Description("User defined derived unit.")]
 		USERDEFINED = -1,
 	
 	}

@@ -26,9 +26,9 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 		ISet<IfcGeometricSetSelect> _Elements = new HashSet<IfcGeometricSetSelect>();
 	
 	
-		[Description("<EPM-HTML>\r\nThe geometric elements which make up the geometric set, these may be " +
-	    "points, curves or surfaces; but are required to be of the same coordinate space " +
-	    "dimensionality.\r\n</EPM-HTML>")]
+		[Description("The geometric elements which make up the geometric set, these may be points, curv" +
+	    "es or surfaces; but are required to be of the same coordinate space dimensionali" +
+	    "ty.")]
 		public ISet<IfcGeometricSetSelect> Elements { get { return this._Elements; } }
 	
 	

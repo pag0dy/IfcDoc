@@ -34,8 +34,8 @@ namespace BuildingSmart.IFC.IfcSharedBldgElements
 		IfcColumnTypeEnum _PredefinedType;
 	
 	
-		[Description("<EPM-HTML>\r\nIdentifies the predefined types of a column element from which the ty" +
-	    "pe required may be set.\r\n</EPM-HTML>")]
+		[Description("Identifies the predefined types of a column element from which the type required " +
+	    "may be set.")]
 		public IfcColumnTypeEnum PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	

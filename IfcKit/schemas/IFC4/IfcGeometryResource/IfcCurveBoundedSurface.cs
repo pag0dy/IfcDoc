@@ -33,17 +33,18 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		ISet<IfcBoundaryCurve> _Boundaries = new HashSet<IfcBoundaryCurve>();
 	
 		[DataMember(Order=2)] 
+		[XmlAttribute]
 		[Required()]
-		Boolean _ImplicitOuter;
+		IfcBoolean _ImplicitOuter;
 	
 	
-		[Description("<EPM-HTML>\r\nThe surface to be bounded.\r\n</EPM-HTML>")]
+		[Description("The surface to be bounded.")]
 		public IfcSurface BasisSurface { get { return this._BasisSurface; } set { this._BasisSurface = value;} }
 	
-		[Description("<EPM-HTML>\r\nThe outer boundary of the surface.\r\n</EPM-HTML>")]
+		[Description("The outer boundary of the surface.")]
 		public ISet<IfcBoundaryCurve> Boundaries { get { return this._Boundaries; } }
 	
-		public Boolean ImplicitOuter { get { return this._ImplicitOuter; } set { this._ImplicitOuter = value;} }
+		public IfcBoolean ImplicitOuter { get { return this._ImplicitOuter; } set { this._ImplicitOuter = value;} }
 	
 	
 	}

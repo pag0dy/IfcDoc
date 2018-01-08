@@ -40,12 +40,14 @@ namespace BuildingSmart.IFC.IfcArchitectureDomain
 		IfcWindowStyleOperationEnum _OperationType;
 	
 		[DataMember(Order=2)] 
+		[XmlAttribute]
 		[Required()]
-		Boolean _ParameterTakesPrecedence;
+		IfcBoolean _ParameterTakesPrecedence;
 	
 		[DataMember(Order=3)] 
+		[XmlAttribute]
 		[Required()]
-		Boolean _Sizeable;
+		IfcBoolean _Sizeable;
 	
 	
 		[Description("Type defining the basic construction and material type of the window.")]
@@ -55,12 +57,12 @@ namespace BuildingSmart.IFC.IfcArchitectureDomain
 		public IfcWindowStyleOperationEnum OperationType { get { return this._OperationType; } set { this._OperationType = value;} }
 	
 		[Description(@"The Boolean value reflects, whether the parameter given in the attached lining and panel properties exactly define the geometry (TRUE), or whether the attached style shape take precedence (FALSE). In the last case the parameter have only informative value.")]
-		public Boolean ParameterTakesPrecedence { get { return this._ParameterTakesPrecedence; } set { this._ParameterTakesPrecedence = value;} }
+		public IfcBoolean ParameterTakesPrecedence { get { return this._ParameterTakesPrecedence; } set { this._ParameterTakesPrecedence = value;} }
 	
 		[Description("The Boolean indicates, whether the attached ShapeStyle can be sized (using scale " +
 	    "factor of transformation), or not (FALSE). If not, the ShapeStyle should be inse" +
 	    "rted by the IfcWindow (using IfcMappedItem) with the scale factor = 1.")]
-		public Boolean Sizeable { get { return this._Sizeable; } set { this._Sizeable = value;} }
+		public IfcBoolean Sizeable { get { return this._Sizeable; } set { this._Sizeable = value;} }
 	
 	
 	}

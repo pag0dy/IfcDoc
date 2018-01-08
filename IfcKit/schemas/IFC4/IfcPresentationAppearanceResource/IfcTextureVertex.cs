@@ -28,8 +28,8 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 		IList<IfcParameterValue> _Coordinates = new List<IfcParameterValue>();
 	
 	
-		[Description("<EPM-HTML>\r\nThe first Coordinate[1] is the S, the second Coordinate[2] is the T p" +
-	    "arameter value.\r\n</EPM-HTML>")]
+		[Description("The first Coordinate[1] is the S, the second Coordinate[2] is the T parameter val" +
+	    "ue.")]
 		public IList<IfcParameterValue> Coordinates { get { return this._Coordinates; } }
 	
 	

@@ -62,15 +62,13 @@ namespace BuildingSmart.IFC.IfcProductExtension
 	    "se of a triangular grid.")]
 		public IList<IfcGridAxis> WAxes { get { return this._WAxes; } }
 	
-		[Description("<EPM-HTML>\r\nPredefined types to define the particular type of the grid.\r\n<blockqu" +
-	    "ote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; New attribute.\r\n</blockquote>\r\n</EPM" +
-	    "-HTML>")]
+		[Description("Predefined types to define the particular type of the grid.\r\n<blockquote class=\"c" +
+	    "hange-ifc2x4\">IFC4 CHANGE&nbsp; New attribute.\r\n</blockquote>")]
 		public IfcGridTypeEnum? PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
-		[Description(@"<EPM-HTML>
-	Relationship to a spatial structure element, to which the grid is primarily associated.
-	<blockquote class=""change-ifc2x"">IFC2x CHANGE&nbsp; The inverse relationship has been added to <em>IfcGrid</em> with upward compatibility</blockquote>
-	</EPM-HTML>")]
+		[Description("Relationship to a spatial structure element, to which the grid is primarily assoc" +
+	    "iated.\r\n<blockquote class=\"change-ifc2x\">IFC2x CHANGE&nbsp; The inverse relation" +
+	    "ship has been added to <em>IfcGrid</em> with upward compatibility</blockquote>")]
 		public ISet<IfcRelContainedInSpatialStructure> ContainedInStructure { get { return this._ContainedInStructure; } }
 	
 	

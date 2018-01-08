@@ -24,8 +24,8 @@ namespace BuildingSmart.IFC.IfcElectricalDomain
 		IfcElectricFlowStorageDeviceTypeEnum _PredefinedType;
 	
 	
-		[Description("<EPM-HTML><p>Identifies the predefined types of electric flow storage devices fro" +
-	    "m which the type required may be set.</p></EPM-HTML>")]
+		[Description("<p>Identifies the predefined types of electric flow storage devices from which th" +
+	    "e type required may be set.</p>")]
 		public IfcElectricFlowStorageDeviceTypeEnum PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	

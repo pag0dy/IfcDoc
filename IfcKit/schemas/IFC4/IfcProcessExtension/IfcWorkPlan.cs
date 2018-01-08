@@ -29,8 +29,8 @@ namespace BuildingSmart.IFC.IfcProcessExtension
 		IfcWorkPlanTypeEnum? _PredefinedType;
 	
 	
-		[Description("<EPM-HTML>\r\n    Identifies the predefined types of a work plan from which \r\n    t" +
-	    "he type required may be set.\r\n</EPM-HTML>")]
+		[Description("    Identifies the predefined types of a work plan from which \r\n    the type requ" +
+	    "ired may be set.")]
 		public IfcWorkPlanTypeEnum? PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	

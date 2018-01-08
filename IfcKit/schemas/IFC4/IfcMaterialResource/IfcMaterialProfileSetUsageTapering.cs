@@ -34,13 +34,10 @@ namespace BuildingSmart.IFC.IfcMaterialResource
 		IfcCardinalPointReference? _CardinalEndPoint;
 	
 	
-		[Description("<EPM-HTML>\r\nThe second <em>IfcMaterialProfileSet</em> set to which the usage is a" +
-	    "pplied.\r\n</EPM-HTML>")]
+		[Description("The second <em>IfcMaterialProfileSet</em> set to which the usage is applied.")]
 		public IfcMaterialProfileSet ForProfileEndSet { get { return this._ForProfileEndSet; } set { this._ForProfileEndSet = value;} }
 	
-		[Description(@"<EPM-HTML>
-	Index reference to a significant point in the second section profile. Describes how this section is aligned relative to the axis of the member it is associated with. This parametric specification of profile alignment can be provided redundantly to the explicit alignment defined by ForProfileSet.MaterialProfiles[*].Profile.
-	</EPM-HTML>")]
+		[Description(@"Index reference to a significant point in the second section profile. Describes how this section is aligned relative to the axis of the member it is associated with. This parametric specification of profile alignment can be provided redundantly to the explicit alignment defined by ForProfileSet.MaterialProfiles[*].Profile.")]
 		public IfcCardinalPointReference? CardinalEndPoint { get { return this._CardinalEndPoint; } set { this._CardinalEndPoint = value;} }
 	
 	

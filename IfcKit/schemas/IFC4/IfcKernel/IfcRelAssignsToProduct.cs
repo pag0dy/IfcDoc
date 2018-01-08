@@ -32,10 +32,9 @@ namespace BuildingSmart.IFC.IfcKernel
 		IfcProductSelect _RelatingProduct;
 	
 	
-		[Description("<EPM-HTML>\r\nReference to the product or product type to which the objects are ass" +
-	    "igned to.\r\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE Datatype expanded to in" +
-	    "clude <em>IfcProduct</em> and <em>IfcTypeProduct</em>.</blockquote>\r\n</EPM-HTML>" +
-	    "")]
+		[Description("Reference to the product or product type to which the objects are assigned to.\r\n<" +
+	    "blockquote class=\"change-ifc2x4\">IFC4 CHANGE Datatype expanded to include <em>If" +
+	    "cProduct</em> and <em>IfcTypeProduct</em>.</blockquote>")]
 		public IfcProductSelect RelatingProduct { get { return this._RelatingProduct; } set { this._RelatingProduct = value;} }
 	
 	

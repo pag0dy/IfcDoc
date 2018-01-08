@@ -38,10 +38,8 @@ namespace BuildingSmart.IFC.IfcProductExtension
 		IfcTransportElementTypeEnum? _PredefinedType;
 	
 	
-		[Description(@"<EPM-HTML>
-	Predefined generic types for a transportation element that are specified in an enumeration. There might be property sets defined specifically for each predefined type.
-	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The attribute has been changed to be optional.</blockquote>
-	</EPM-HTML>")]
+		[Description(@"Predefined generic types for a transportation element that are specified in an enumeration. There might be property sets defined specifically for each predefined type.
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The attribute has been changed to be optional.</blockquote>")]
 		public IfcTransportElementTypeEnum? PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	

@@ -19,12 +19,17 @@ namespace BuildingSmart.IFC.IfcSharedBldgServiceElements
 	[Guid("042c8e67-4a73-45dd-ab61-63babc988fcf")]
 	public enum IfcFlowDirectionEnum
 	{
+		[Description("A flow source, where a substance flows out of the connection.")]
 		SOURCE = 1,
 	
+		[Description("A flow sink, where a substance flows into the connection.")]
 		SINK = 2,
 	
+		[Description("Both a source and sink, where a substance flows both into and out of the connecti" +
+	    "on simultaneously.")]
 		SOURCEANDSINK = 3,
 	
+		[Description("Undefined flow direction.")]
 		NOTDEFINED = 0,
 	
 	}

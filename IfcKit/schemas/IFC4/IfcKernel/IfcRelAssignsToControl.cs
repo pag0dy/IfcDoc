@@ -33,8 +33,7 @@ namespace BuildingSmart.IFC.IfcKernel
 		IfcControl _RelatingControl;
 	
 	
-		[Description("<EPM-HTML>\r\nReference to the <em>IfcControl</em> that applies a control upon obje" +
-	    "cts.\r\n</EPM-HTML>")]
+		[Description("Reference to the <em>IfcControl</em> that applies a control upon objects.")]
 		public IfcControl RelatingControl { get { return this._RelatingControl; } set { this._RelatingControl = value;} }
 	
 	

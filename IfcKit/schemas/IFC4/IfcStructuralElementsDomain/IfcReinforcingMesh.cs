@@ -58,44 +58,44 @@ namespace BuildingSmart.IFC.IfcStructuralElementsDomain
 		IfcReinforcingMeshTypeEnum? _PredefinedType;
 	
 	
-		[Description("<EPM-HTML>\r\n\r\nDeprecated.\r\n\r\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; " +
-	    "Attribute deprecated.  Use respective attribute at <em>IfcReinforcingMeshType</e" +
-	    "m> instead.</blockquote>\r\n\r\n</EPM-HTML>")]
+		[Description("Deprecated.\r\n\r\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; Attribute depr" +
+	    "ecated.  Use respective attribute at <em>IfcReinforcingMeshType</em> instead.</b" +
+	    "lockquote>")]
 		public IfcPositiveLengthMeasure? MeshLength { get { return this._MeshLength; } set { this._MeshLength = value;} }
 	
-		[Description("<EPM-HTML>\r\n\r\nDeprecated.\r\n\r\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; " +
-	    "Attribute deprecated.  Use respective attribute at <em>IfcReinforcingMeshType</e" +
-	    "m> instead.</blockquote>\r\n\r\n</EPM-HTML>")]
+		[Description("Deprecated.\r\n\r\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; Attribute depr" +
+	    "ecated.  Use respective attribute at <em>IfcReinforcingMeshType</em> instead.</b" +
+	    "lockquote>")]
 		public IfcPositiveLengthMeasure? MeshWidth { get { return this._MeshWidth; } set { this._MeshWidth = value;} }
 	
-		[Description("<EPM-HTML>\r\n\r\nDeprecated.\r\n\r\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; " +
-	    "Attribute made optional and deprecated.  Use respective attribute at <em>IfcRein" +
-	    "forcingMeshType</em> instead.</blockquote>\r\n\r\n</EPM-HTML>")]
+		[Description("Deprecated.\r\n\r\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; Attribute made" +
+	    " optional and deprecated.  Use respective attribute at <em>IfcReinforcingMeshTyp" +
+	    "e</em> instead.</blockquote>")]
 		public IfcPositiveLengthMeasure? LongitudinalBarNominalDiameter { get { return this._LongitudinalBarNominalDiameter; } set { this._LongitudinalBarNominalDiameter = value;} }
 	
-		[Description("<EPM-HTML>\r\n\r\nDeprecated.\r\n\r\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; " +
-	    "Attribute made optional and deprecated.  Use respective attribute at <em>IfcRein" +
-	    "forcingMeshType</em> instead.</blockquote>\r\n\r\n</EPM-HTML>")]
+		[Description("Deprecated.\r\n\r\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; Attribute made" +
+	    " optional and deprecated.  Use respective attribute at <em>IfcReinforcingMeshTyp" +
+	    "e</em> instead.</blockquote>")]
 		public IfcPositiveLengthMeasure? TransverseBarNominalDiameter { get { return this._TransverseBarNominalDiameter; } set { this._TransverseBarNominalDiameter = value;} }
 	
-		[Description("<EPM-HTML>\r\n\r\nDeprecated.\r\n\r\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; " +
-	    "Attribute made optional and deprecated.  Use respective attribute at <em>IfcRein" +
-	    "forcingMeshType</em> instead.</blockquote>\r\n\r\n</EPM-HTML>")]
+		[Description("Deprecated.\r\n\r\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; Attribute made" +
+	    " optional and deprecated.  Use respective attribute at <em>IfcReinforcingMeshTyp" +
+	    "e</em> instead.</blockquote>")]
 		public IfcAreaMeasure? LongitudinalBarCrossSectionArea { get { return this._LongitudinalBarCrossSectionArea; } set { this._LongitudinalBarCrossSectionArea = value;} }
 	
-		[Description("<EPM-HTML>\r\n\r\nDeprecated.\r\n\r\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; " +
-	    "Attribute made optional and deprecated.  Use respective attribute at <em>IfcRein" +
-	    "forcingMeshType</em> instead.</blockquote>\r\n\r\n</EPM-HTML>")]
+		[Description("Deprecated.\r\n\r\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; Attribute made" +
+	    " optional and deprecated.  Use respective attribute at <em>IfcReinforcingMeshTyp" +
+	    "e</em> instead.</blockquote>")]
 		public IfcAreaMeasure? TransverseBarCrossSectionArea { get { return this._TransverseBarCrossSectionArea; } set { this._TransverseBarCrossSectionArea = value;} }
 	
-		[Description("<EPM-HTML>\r\n\r\nDeprecated.\r\n\r\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; " +
-	    "Attribute made optional and deprecated.  Use respective attribute at <em>IfcRein" +
-	    "forcingMeshType</em> instead.</blockquote>\r\n\r\n</EPM-HTML>")]
+		[Description("Deprecated.\r\n\r\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; Attribute made" +
+	    " optional and deprecated.  Use respective attribute at <em>IfcReinforcingMeshTyp" +
+	    "e</em> instead.</blockquote>")]
 		public IfcPositiveLengthMeasure? LongitudinalBarSpacing { get { return this._LongitudinalBarSpacing; } set { this._LongitudinalBarSpacing = value;} }
 	
-		[Description("<EPM-HTML>\r\n\r\nDeprecated.\r\n\r\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; " +
-	    "Attribute made optional and deprecated.  Use respective attribute at <em>IfcRein" +
-	    "forcingMeshType</em> instead.</blockquote>\r\n\r\n</EPM-HTML>")]
+		[Description("Deprecated.\r\n\r\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; Attribute made" +
+	    " optional and deprecated.  Use respective attribute at <em>IfcReinforcingMeshTyp" +
+	    "e</em> instead.</blockquote>")]
 		public IfcPositiveLengthMeasure? TransverseBarSpacing { get { return this._TransverseBarSpacing; } set { this._TransverseBarSpacing = value;} }
 	
 		[Description("Kind of mesh.")]

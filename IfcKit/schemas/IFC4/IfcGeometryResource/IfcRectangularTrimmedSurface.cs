@@ -49,12 +49,14 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		IfcParameterValue _V2;
 	
 		[DataMember(Order=5)] 
+		[XmlAttribute]
 		[Required()]
-		Boolean _Usense;
+		IfcBoolean _Usense;
 	
 		[DataMember(Order=6)] 
+		[XmlAttribute]
 		[Required()]
-		Boolean _Vsense;
+		IfcBoolean _Vsense;
 	
 	
 		[Description("Surface being trimmed.")]
@@ -74,11 +76,11 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 	
 		[Description("Flag to indicate whether the direction of the first parameter of the trimmed surf" +
 	    "ace agrees with or opposes the sense of u in the basis surface.")]
-		public Boolean Usense { get { return this._Usense; } set { this._Usense = value;} }
+		public IfcBoolean Usense { get { return this._Usense; } set { this._Usense = value;} }
 	
 		[Description("Flag to indicate whether the direction of the second parameter of the trimmed sur" +
 	    "face agrees with or opposes the sense of v in the basis surface.")]
-		public Boolean Vsense { get { return this._Vsense; } set { this._Vsense = value;} }
+		public IfcBoolean Vsense { get { return this._Vsense; } set { this._Vsense = value;} }
 	
 	
 	}

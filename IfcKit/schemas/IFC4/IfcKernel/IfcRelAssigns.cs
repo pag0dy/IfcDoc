@@ -40,10 +40,8 @@ namespace BuildingSmart.IFC.IfcKernel
 	    "r relating) object is defined in the subtypes of IfcRelAssigns.")]
 		public ISet<IfcObjectDefinition> RelatedObjects { get { return this._RelatedObjects; } }
 	
-		[Description(@"<EPM-HTML>
-	Particular type of the assignment relationship. It can constrain the applicable object types, used within the role of <em>RelatedObjects</em>.
-	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The attribute is deprecated and shall no longer be used. A NIL value should always be assigned.</blockquote>
-	</EPM-HTML>")]
+		[Description(@"Particular type of the assignment relationship. It can constrain the applicable object types, used within the role of <em>RelatedObjects</em>.
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The attribute is deprecated and shall no longer be used. A NIL value should always be assigned.</blockquote>")]
 		public IfcObjectTypeEnum? RelatedObjectsType { get { return this._RelatedObjectsType; } set { this._RelatedObjectsType = value;} }
 	
 	

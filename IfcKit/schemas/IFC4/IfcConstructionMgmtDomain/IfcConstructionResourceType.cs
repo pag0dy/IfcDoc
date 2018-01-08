@@ -29,18 +29,14 @@ namespace BuildingSmart.IFC.IfcConstructionMgmtDomain
 		IfcPhysicalQuantity _BaseQuantity;
 	
 	
-		[Description(@"<EPM-HTML>
-	Indicates the unit costs and environmental impacts for which accrued amounts should be calculated.  Such unit costs may be split into <em>Name</em> designations (e.g. 'Standard', 'Overtime'), and may contain a hierarchy of cost values that apply at different dates (using <em>IfcCostValue.ApplicableDate</em> and <em>IfcCostValue.FixedUntilDate</em>).
+		[Description(@"Indicates the unit costs and environmental impacts for which accrued amounts should be calculated.  Such unit costs may be split into <em>Name</em> designations (e.g. 'Standard', 'Overtime'), and may contain a hierarchy of cost values that apply at different dates (using <em>IfcCostValue.ApplicableDate</em> and <em>IfcCostValue.FixedUntilDate</em>).
 	
-	<p></p>
-	</EPM-HTML>")]
+	<p></p>")]
 		public IList<IfcAppliedValue> BaseCosts { get { return this._BaseCosts; } }
 	
-		[Description(@"<EPM-HTML>
-	Identifies the quantity for which the <em>BaseQuantityProduced</em> applies.  The <em>Name</em> of the <em>IfcPhysicalQuantity</em> identifies the quantity definition being measured, e.g. ""GrossVolume"".  For production-based resources (e.g. carpentry labor), this value refers to quantities on <em>IfcProduct</em>(s) to which the assigned <em>IfcTask</em> is assigned.  For duration-based resources (e.g. safety inspector, fuel for equipment), this value refers to quantities that may be assigned to occurrences of the assigned <em>IfcTaskType</em>.
+		[Description(@"Identifies the quantity for which the <em>BaseQuantityProduced</em> applies.  The <em>Name</em> of the <em>IfcPhysicalQuantity</em> identifies the quantity definition being measured, e.g. ""GrossVolume"".  For production-based resources (e.g. carpentry labor), this value refers to quantities on <em>IfcProduct</em>(s) to which the assigned <em>IfcTask</em> is assigned.  For duration-based resources (e.g. safety inspector, fuel for equipment), this value refers to quantities that may be assigned to occurrences of the assigned <em>IfcTaskType</em>.
 	
-	<p></p>
-	</EPM-HTML>")]
+	<p></p>")]
 		public IfcPhysicalQuantity BaseQuantity { get { return this._BaseQuantity; } set { this._BaseQuantity = value;} }
 	
 	

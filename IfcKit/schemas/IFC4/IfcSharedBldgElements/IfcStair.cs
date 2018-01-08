@@ -33,11 +33,9 @@ namespace BuildingSmart.IFC.IfcSharedBldgElements
 		IfcStairTypeEnum? _PredefinedType;
 	
 	
-		[Description(@"<EPM-HTML>
-	Predefined generic type for a stair that is specified in an enumeration. There may be a property set given specifically for the predefined types.
+		[Description(@"Predefined generic type for a stair that is specified in an enumeration. There may be a property set given specifically for the predefined types.
 	<blockquote class=""note"">NOTE&nbsp; The <em>PredefinedType</em> shall only be used, if no <em>IfcStairType</em> is assigned, providing its own <em>IfcStairType.PredefinedType</em>.</blockquote>
-	<blockquote class=""change-ifc2x4"">IFC4 CHANGE  The attribute has been renamed from <em>ShapeType</em> and changed to be OPTIONAL with upward compatibility for file based exchange.</blockquote>
-	</EPM-HTML>")]
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE  The attribute has been renamed from <em>ShapeType</em> and changed to be OPTIONAL with upward compatibility for file based exchange.</blockquote>")]
 		public IfcStairTypeEnum? PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	

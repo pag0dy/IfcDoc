@@ -24,12 +24,17 @@ namespace BuildingSmart.IFC.IfcProcessExtension
 	[Guid("124151ad-f32d-49c7-a2d4-857740425699")]
 	public enum IfcEventTriggerTypeEnum
 	{
+		[Description("An event trigger that is a rule or constraint.")]
 		EVENTRULE = 1,
 	
+		[Description("An event trigger that is a message or set of information.")]
 		EVENTMESSAGE = 2,
 	
+		[Description("An event trigger that is at, or occurs after, a particular point in or period of " +
+	    "time.")]
 		EVENTTIME = 3,
 	
+		[Description("An event trigger that is a complex combination of things.")]
 		EVENTCOMPLEX = 4,
 	
 		USERDEFINED = -1,

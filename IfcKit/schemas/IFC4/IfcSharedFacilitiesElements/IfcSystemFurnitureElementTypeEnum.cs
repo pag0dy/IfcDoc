@@ -22,12 +22,16 @@ namespace BuildingSmart.IFC.IfcSharedFacilitiesElements
 	[Guid("a6f535ba-a833-411b-bdf0-64c5772af3b1")]
 	public enum IfcSystemFurnitureElementTypeEnum
 	{
+		[Description("Vertical panel used to divide work spaces.")]
 		PANEL = 1,
 	
+		[Description("Workstation countertop.")]
 		WORKSURFACE = 2,
 	
+		[Description("User-defined type.")]
 		USERDEFINED = -1,
 	
+		[Description("Undefined type.")]
 		NOTDEFINED = 0,
 	
 	}

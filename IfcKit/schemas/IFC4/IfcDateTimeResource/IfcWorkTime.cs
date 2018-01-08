@@ -31,17 +31,17 @@ namespace BuildingSmart.IFC.IfcDateTimeResource
 		IfcDate? _Finish;
 	
 	
-		[Description("<EPM-HTML>\r\n    Recurrence pattern that defines a time period, which, if given, i" +
-	    "s\r\n    valid within the time period defined by\r\n    <em>IfcWorkTime.Start</em> a" +
-	    "nd <em>IfcWorkTime.Finish</em>.\r\n</EPM-HTML>")]
+		[Description("    Recurrence pattern that defines a time period, which, if given, is\r\n    valid" +
+	    " within the time period defined by\r\n    <em>IfcWorkTime.Start</em> and <em>IfcWo" +
+	    "rkTime.Finish</em>.")]
 		public IfcRecurrencePattern RecurrencePattern { get { return this._RecurrencePattern; } set { this._RecurrencePattern = value;} }
 	
-		[Description("<EPM-HTML>\r\n    Start date of the work time (0:00), that might be further\r\n    re" +
-	    "stricted by a recurrence pattern.\r\n</EPM-HTML>")]
+		[Description("    Start date of the work time (0:00), that might be further\r\n    restricted by " +
+	    "a recurrence pattern.")]
 		public IfcDate? Start { get { return this._Start; } set { this._Start = value;} }
 	
-		[Description("<EPM-HTML>\r\n    End date of the work time (24:00), that might be further\r\n    res" +
-	    "tricted by a recurrence pattern.\r\n</EPM-HTML>")]
+		[Description("    End date of the work time (24:00), that might be further\r\n    restricted by a" +
+	    " recurrence pattern.")]
 		public IfcDate? Finish { get { return this._Finish; } set { this._Finish = value;} }
 	
 	

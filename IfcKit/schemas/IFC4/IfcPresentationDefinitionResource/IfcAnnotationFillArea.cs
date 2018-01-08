@@ -31,16 +31,12 @@ namespace BuildingSmart.IFC.IfcPresentationDefinitionResource
 		ISet<IfcCurve> _InnerBoundaries = new HashSet<IfcCurve>();
 	
 	
-		[Description(@"<EPM-HTML>
-	A closed curve that defines the outer boundary of the fill area. The areas defined by the outer boundary (minus potentially defined inner boundaries) is filled by the fill area style.
-	<blockquote class=""change-ifc2x3"">IFC2x3 CHANGE&nbsp; The two new attributes <em>OuterBoundary</em> and <em>InnerBoundaries</em> replace the old single attribute Boundaries.</blockquote>
-	</EPM-HTML>")]
+		[Description(@"A closed curve that defines the outer boundary of the fill area. The areas defined by the outer boundary (minus potentially defined inner boundaries) is filled by the fill area style.
+	<blockquote class=""change-ifc2x3"">IFC2x3 CHANGE&nbsp; The two new attributes <em>OuterBoundary</em> and <em>InnerBoundaries</em> replace the old single attribute Boundaries.</blockquote>")]
 		public IfcCurve OuterBoundary { get { return this._OuterBoundary; } set { this._OuterBoundary = value;} }
 	
-		[Description(@"<EPM-HTML>
-	A set of inner curves that define the inner boundaries of the fill area. The areas defined by the inner boundaries are excluded from applying the fill area style.
-	<blockquote class=""note"">IFC2x3 CHANGE&nbsp; The two new attributes <em>OuterBoundary</em> and <em>InnerBoundaries</em> replace the old single attribute Boundaries.</blockquote>
-	</EPM-HTML>")]
+		[Description(@"A set of inner curves that define the inner boundaries of the fill area. The areas defined by the inner boundaries are excluded from applying the fill area style.
+	<blockquote class=""note"">IFC2x3 CHANGE&nbsp; The two new attributes <em>OuterBoundary</em> and <em>InnerBoundaries</em> replace the old single attribute Boundaries.</blockquote>")]
 		public ISet<IfcCurve> InnerBoundaries { get { return this._InnerBoundaries; } }
 	
 	

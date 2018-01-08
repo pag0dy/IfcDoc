@@ -46,17 +46,14 @@ namespace BuildingSmart.IFC.IfcExternalReferenceResource
 		ISet<IfcExternalReferenceRelationship> _ExternalReferenceForResources = new HashSet<IfcExternalReferenceRelationship>();
 	
 	
-		[Description(@"<EPM-HTML>
-	Location, where the external source (classification, document or library) can be accessed by electronic means. The electronic location is provided as an URI, and would normally be given as an URL location string.
+		[Description(@"Location, where the external source (classification, document or library) can be accessed by electronic means. The electronic location is provided as an URI, and would normally be given as an URL location string.
 	<blockquote class=""change-ifc2x4"">
 	IFC4 CHANGE&nbsp; The data type has been changed from <em>IfcLabel</em> to <em>IfcURIReference</em><br>.
 	</blockquote>
-	<EPM-HTML>
 	")]
 		public IfcURIReference? Location { get { return this._Location; } set { this._Location = value;} }
 	
-		[Description(@"<EPM-HTML>
-	The <em>Identification</em> provides a unique identifier of the referenced item within the external source (classification, document or library). It may be provided as 
+		[Description(@"The <em>Identification</em> provides a unique identifier of the referenced item within the external source (classification, document or library). It may be provided as 
 	<ul>
 	 <li>a key, e.g. a classification notation, like NF2.3</li>
 	 <li>a handle</li>
@@ -65,21 +62,18 @@ namespace BuildingSmart.IFC.IfcExternalReferenceResource
 	It may be human readable (such as a key) or not (such as a handle or uuid) depending on the context of its usage (which has to be determined by local agreement).
 	<blockquote class=""change-ifc2x4"">
 	IFC4 CHANGE  Attribute renamed from <em>ItemReference</em> for consistency.<br>
-	</blockquote>
-	</EPM-HTML>")]
+	</blockquote>")]
 		public IfcIdentifier? Identification { get { return this._Identification; } set { this._Identification = value;} }
 	
-		[Description("<EPM-HTML>Optional name to further specify the reference. It can provide a human " +
-	    "readable identifier (which does not necessarily need to have a counterpart in th" +
-	    "e internal structure of the document).<EPM-HTML>")]
+		[Description("Optional name to further specify the reference. It can provide a human readable i" +
+	    "dentifier (which does not necessarily need to have a counterpart in the internal" +
+	    " structure of the document).")]
 		public IfcLabel? Name { get { return this._Name; } set { this._Name = value;} }
 	
-		[Description(@"<EPM-HTML>
-	Reference to all associations between this external reference and objects within the <em>IfcResourceObjectSelect</em> that are tagged by the external reference.
+		[Description(@"Reference to all associations between this external reference and objects within the <em>IfcResourceObjectSelect</em> that are tagged by the external reference.
 	<blockquote class=""change-ifc2x4"">
 	IFC4 CHANGE&nbsp; New inverse attribute added with upward compatibility.<br>
-	</blockquote>
-	</EPM-HTML>")]
+	</blockquote>")]
 		public ISet<IfcExternalReferenceRelationship> ExternalReferenceForResources { get { return this._ExternalReferenceForResources; } }
 	
 	

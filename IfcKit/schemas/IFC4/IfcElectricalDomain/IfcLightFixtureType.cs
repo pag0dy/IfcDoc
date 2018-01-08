@@ -24,8 +24,8 @@ namespace BuildingSmart.IFC.IfcElectricalDomain
 		IfcLightFixtureTypeEnum _PredefinedType;
 	
 	
-		[Description("<EPM-HTML><p>Identifies the predefined types of light fixture from which the type" +
-	    " required may be set.</p></EPM-HTML>")]
+		[Description("<p>Identifies the predefined types of light fixture from which the type required " +
+	    "may be set.</p>")]
 		public IfcLightFixtureTypeEnum PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	

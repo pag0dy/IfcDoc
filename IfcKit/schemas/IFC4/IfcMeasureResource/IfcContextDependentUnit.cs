@@ -31,10 +31,9 @@ namespace BuildingSmart.IFC.IfcMeasureResource
 		[Description("The word, or group of words, by which the context dependent unit is referred to.")]
 		public IfcLabel Name { get { return this._Name; } set { this._Name = value;} }
 	
-		[Description("<EPM-HTML>\r\nReference to external information, e.g. library, classification, or d" +
-	    "ocument information, which is associated with the context dependent unit.\r\n<bloc" +
-	    "kquote class=\"change-ifc2x4\">IFC4 CHANGE New inverse attribute</blockquote>\r\n</E" +
-	    "PM-HTML>")]
+		[Description("Reference to external information, e.g. library, classification, or document info" +
+	    "rmation, which is associated with the context dependent unit.\r\n<blockquote class" +
+	    "=\"change-ifc2x4\">IFC4 CHANGE New inverse attribute</blockquote>")]
 		public ISet<IfcExternalReferenceRelationship> HasExternalReference { get { return this._HasExternalReference; } }
 	
 	

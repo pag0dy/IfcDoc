@@ -24,10 +24,8 @@ namespace BuildingSmart.IFC.IfcUtilityResource
 		IList<IfcValue> _RowCells = new List<IfcValue>();
 	
 		[DataMember(Order=1)] 
-		Boolean? _IsHeading;
-	
-		[InverseProperty("Rows")] 
-		IfcTable _OfTable;
+		[XmlAttribute]
+		IfcBoolean? _IsHeading;
 	
 	
 		[Description("The data value of the table cell..")]
@@ -36,10 +34,7 @@ namespace BuildingSmart.IFC.IfcUtilityResource
 		[Description("Flag which identifies if the row is a heading row or a row which contains row val" +
 	    "ues. <blockquote class=\"note\">NOTE - If the row is a heading, the flag takes the" +
 	    " value = TRUE.</blockquote>")]
-		public Boolean? IsHeading { get { return this._IsHeading; } set { this._IsHeading = value;} }
-	
-		[Description("Reference to the IfcTable, in which the IfcTableRow is defined (or contained).")]
-		public IfcTable OfTable { get { return this._OfTable; } set { this._OfTable = value;} }
+		public IfcBoolean? IsHeading { get { return this._IsHeading; } set { this._IsHeading = value;} }
 	
 	
 	}

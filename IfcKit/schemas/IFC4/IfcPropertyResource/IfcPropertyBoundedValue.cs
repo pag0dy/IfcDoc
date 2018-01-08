@@ -11,6 +11,7 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
+using BuildingSmart.IFC.IfcApprovalResource;
 using BuildingSmart.IFC.IfcConstraintResource;
 using BuildingSmart.IFC.IfcCostResource;
 using BuildingSmart.IFC.IfcDateTimeResource;
@@ -38,24 +39,22 @@ namespace BuildingSmart.IFC.IfcPropertyResource
 		IfcValue _SetPointValue;
 	
 	
-		[Description("<EPM-HTML>\r\nUpper bound value for the interval defining the property value. If th" +
-	    "e value is not given, it indicates an open bound (all values to be greater than " +
-	    "or equal to <em>LowerBoundValue</em>).\r\n</EPM-HTML>")]
+		[Description("Upper bound value for the interval defining the property value. If the value is n" +
+	    "ot given, it indicates an open bound (all values to be greater than or equal to " +
+	    "<em>LowerBoundValue</em>).")]
 		public IfcValue UpperBoundValue { get { return this._UpperBoundValue; } set { this._UpperBoundValue = value;} }
 	
-		[Description("<EPM-HTML>\r\nLower bound value for the interval defining the property value. If th" +
-	    "e value is not given, it indicates an open bound (all values to be lower than or" +
-	    " equal to <em>UpperBoundValue</em>).\r\n</EPM-HTML>")]
+		[Description("Lower bound value for the interval defining the property value. If the value is n" +
+	    "ot given, it indicates an open bound (all values to be lower than or equal to <e" +
+	    "m>UpperBoundValue</em>).")]
 		public IfcValue LowerBoundValue { get { return this._LowerBoundValue; } set { this._LowerBoundValue = value;} }
 	
-		[Description(@"<EPM-HTML>
-	Unit for the upper and lower bound values, if not given, the default value for the measure type is used as defined by the global unit assignment at <em>IfcProject.UnitInContext</em>. The applicable unit is then selected by the underlying TYPE of the <em>UpperBoundValue</em>, <em>LowerBoundValue</em>, and <em>SetPointValue</em>)
-	</EPM-HTML>")]
+		[Description(@"Unit for the upper and lower bound values, if not given, the default value for the measure type is used as defined by the global unit assignment at <em>IfcProject.UnitInContext</em>. The applicable unit is then selected by the underlying TYPE of the <em>UpperBoundValue</em>, <em>LowerBoundValue</em>, and <em>SetPointValue</em>)")]
 		public IfcUnit Unit { get { return this._Unit; } set { this._Unit = value;} }
 	
-		[Description("<EPM-HTML>\r\nSet point value as typically used for operational value setting.\r\n<bl" +
-	    "ockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; The attribute has been added at" +
-	    " the end of the attribute list.</blockquote>\r\n</EPM-HTML>")]
+		[Description("Set point value as typically used for operational value setting.\r\n<blockquote cla" +
+	    "ss=\"change-ifc2x4\">IFC4 CHANGE&nbsp; The attribute has been added at the end of " +
+	    "the attribute list.</blockquote>")]
 		public IfcValue SetPointValue { get { return this._SetPointValue; } set { this._SetPointValue = value;} }
 	
 	

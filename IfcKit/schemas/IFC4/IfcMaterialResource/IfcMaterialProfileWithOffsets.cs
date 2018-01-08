@@ -30,9 +30,7 @@ namespace BuildingSmart.IFC.IfcMaterialResource
 		IfcLengthMeasure _OffsetValues;
 	
 	
-		[Description(@"<EPM-HTML>
-	The numerical value of profile offset, in the direction of the axis direction - always AXIS1 that is, the axis along the extrusion path. The <em>OffsetValues[1]</em> identifies the offset from the lower position along the axis direction (normally the start of the standard extrusion), the <em>OffsetValues[2]</em> identifies the offset from the upper position along the axis direction (normally the end of the standard extrusion).
-	</EPM-HTML>")]
+		[Description(@"The numerical value of profile offset, in the direction of the axis direction - always AXIS1 that is, the axis along the extrusion path. The <em>OffsetValues[1]</em> identifies the offset from the lower position along the axis direction (normally the start of the standard extrusion), the <em>OffsetValues[2]</em> identifies the offset from the upper position along the axis direction (normally the end of the standard extrusion).")]
 		public IfcLengthMeasure OffsetValues { get { return this._OffsetValues; } set { this._OffsetValues = value;} }
 	
 	

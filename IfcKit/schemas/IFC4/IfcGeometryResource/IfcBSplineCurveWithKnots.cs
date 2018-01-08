@@ -24,8 +24,9 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 	public partial class IfcBSplineCurveWithKnots : IfcBSplineCurve
 	{
 		[DataMember(Order=0)] 
+		[XmlAttribute]
 		[Required()]
-		IList<Int64> _KnotMultiplicities = new List<Int64>();
+		IList<IfcInteger> _KnotMultiplicities = new List<IfcInteger>();
 	
 		[DataMember(Order=1)] 
 		[XmlAttribute]
@@ -38,17 +39,14 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		IfcKnotType _KnotSpec;
 	
 	
-		[Description("<EPM-HTML>\r\nThe multiplicities of the knots. This list defines the number of time" +
-	    "s each knot in the knots list is to be repeated in constructing the knot array.\r" +
-	    "\n</EPM-HTML>")]
-		public IList<Int64> KnotMultiplicities { get { return this._KnotMultiplicities; } }
+		[Description("The multiplicities of the knots. This list defines the number of times each knot " +
+	    "in the knots list is to be repeated in constructing the knot array.")]
+		public IList<IfcInteger> KnotMultiplicities { get { return this._KnotMultiplicities; } }
 	
-		[Description("<EPM-HTML>\r\nThe list of distinct knots used to define the B-spline basis function" +
-	    "s.\r\n</EPM-HTML>")]
+		[Description("The list of distinct knots used to define the B-spline basis functions.")]
 		public IList<IfcParameterValue> Knots { get { return this._Knots; } }
 	
-		[Description("<EPM-HTML>\r\nThe description of the knot type. This is for information only.\r\n</EP" +
-	    "M-HTML>")]
+		[Description("The description of the knot type. This is for information only.")]
 		public IfcKnotType KnotSpec { get { return this._KnotSpec; } set { this._KnotSpec = value;} }
 	
 	

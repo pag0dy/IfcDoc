@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<svg xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="1.1" width="0" height="0" xmlns="http://www.w3.org/2000/svg">
+<svg xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="1.1" width="600" height="888" xmlns="http://www.w3.org/2000/svg">
   <g id="IfcPerformanceHistory" fill="yellow">
     <rect x="42.98749875" y="149.05000125" width="153.75" height="41.50000125" stroke="black" />
     <text x="119.86249875" y="169.800001875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcPerformanceHistory</text>
@@ -39,11 +39,15 @@
   <g id="IFCKERNEL">
     <g id="IfcControl" fill="grey">
       <rect x="42.98749875" y="48.9999975" width="130.5" height="51.75" stroke="black" />
+      <polyline points="79.2375,100.7499975 79.2375,149.0499975 " fill="none" stroke="black" stroke-width="3" />
       <text x="108.23749875" y="74.8749975" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCKERNEL
 IfcControl</text>
     </g>
     <g id="IfcRelAssociates" fill="grey">
       <rect x="356.97499875" y="512.6500125" width="157.875" height="46.75000125" stroke="black" />
+      <polyline points="435.9124875,559.400025 435.9124875,588.200025375 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="435.9124875,588.200025375 436.4937375,588.1999875 436.4937375,633.97498875 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="435.9124875,588.200025375 237.75000375,588.1999875 237.75000375,632.99998875 " fill="none" stroke="black" stroke-width="3" />
       <text x="435.91249875" y="536.025013125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCKERNEL
 IfcRelAssociates</text>
     </g>
@@ -72,5 +76,7 @@ IfcConstraint</text>
   <g id="IFCDATETIMERESOURCE" />
   <g id="IFCGEOMETRYRESOURCE" />
   <g id="IFCPRODUCTEXTENSION" />
-  <g />
+  <g>
+    <rect x="0" y="0" width="600" height="888" fill="none" stroke="lime" />
+  </g>
 </svg>

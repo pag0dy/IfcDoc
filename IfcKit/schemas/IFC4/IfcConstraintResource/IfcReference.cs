@@ -38,7 +38,8 @@ namespace BuildingSmart.IFC.IfcConstraintResource
 		IfcLabel? _InstanceName;
 	
 		[DataMember(Order=3)] 
-		IList<Int64> _ListPositions = new List<Int64>();
+		[XmlAttribute]
+		IList<IfcInteger> _ListPositions = new List<IfcInteger>();
 	
 		[DataMember(Order=4)] 
 		[XmlElement("IfcReference")]
@@ -63,15 +64,14 @@ namespace BuildingSmart.IFC.IfcConstraintResource
 		public IfcLabel? InstanceName { get { return this._InstanceName; } set { this._InstanceName = value;} }
 	
 		[Description(@"Optionally identifies an instance within a collection according to position starting at 1.  For referencing single-level collections, this attribute contains a single member; for referencing multi-level collections, then this LIST attribute contains multiple members starting from the outer-most index.")]
-		public IList<Int64> ListPositions { get { return this._ListPositions; } }
+		public IList<IfcInteger> ListPositions { get { return this._ListPositions; } }
 	
-		[Description(@"<p>Optional reference to an inner value for ENTITY, SELECT, SET, or LIST attributes.
+		[Description(@"Optional reference to an inner value for ENTITY, SELECT, SET, or LIST attributes.
 	A path may be formed by linking <i>IfcReference</i> instances together.
-	<p>
 	<blockquote class=""example"">EXAMPLE&nbsp; A material layer thickness may be referenced using several instances: 
-	#1=IFCREFERENCE('IfcSlab','HasAssociations',$,$,#2); 
-	#2=IFCREFERENCE('IfcMaterialLayerSet','MaterialLayers',$,(1),#3); 
-	#3=IFCREFERENCE('IfcMaterialLayer','LayerThickness',$); 
+	#1=IFCREFERENCE($,'IfcSlab','HasAssociations',#2); 
+	#2=IFCREFERENCE($,'IfcMaterialLayerSet','MaterialLayers',#3); 
+	#3=IFCREFERENCE('Core','IfcMaterialLayer','LayerThickness',$); 
 	</blockquote>")]
 		public IfcReference InnerReference { get { return this._InnerReference; } set { this._InnerReference = value;} }
 	

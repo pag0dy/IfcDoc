@@ -47,10 +47,8 @@ namespace BuildingSmart.IFC.IfcProductExtension
 		[Description("Opening Element being filled by virtue of this relationship.\r\n")]
 		public IfcOpeningElement RelatingOpeningElement { get { return this._RelatingOpeningElement; } set { this._RelatingOpeningElement = value;} }
 	
-		[Description(@"<EPM-HTML>
-	Reference to <strike>building</strike> element that occupies fully or partially the associated opening.
-	<blockquote class=""change-ifc2x"">IFC2x CHANGE&nbsp; The data type has been changed from <em>IfcBuildingElement</em> to <em>IfcElement</em> with upward compatibility for file based exchange.</blockquote>
-	</EPM-HTML>")]
+		[Description(@"Reference to <strike>building</strike> element that occupies fully or partially the associated opening.
+	<blockquote class=""change-ifc2x"">IFC2x CHANGE&nbsp; The data type has been changed from <em>IfcBuildingElement</em> to <em>IfcElement</em> with upward compatibility for file based exchange.</blockquote>")]
 		public IfcElement RelatedBuildingElement { get { return this._RelatedBuildingElement; } set { this._RelatedBuildingElement = value;} }
 	
 	

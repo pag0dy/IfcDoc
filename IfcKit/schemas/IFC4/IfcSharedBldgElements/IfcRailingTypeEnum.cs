@@ -28,14 +28,26 @@ namespace BuildingSmart.IFC.IfcSharedBldgElements
 	[Guid("11980763-c96e-4a3e-b5fd-fb1d8b8e37c1")]
 	public enum IfcRailingTypeEnum
 	{
+		[Description("A type of railing designed to serve as an optional structural support for loads a" +
+	    "pplied by human occupants (at hand height). Generally located adjacent to ramps " +
+	    "and stairs. Generally floor or wall mounted.")]
 		HANDRAIL = 1,
 	
+		[Description("A type of railing designed to guard human occupants from falling off a stair, ram" +
+	    "p or landing where there is a vertical drop at the edge of such floors/landings." +
+	    "")]
 		GUARDRAIL = 2,
 	
+		[Description("Similar to the definitions of a guardrail except the location is at the edge of a" +
+	    " floor, rather then a stair or ramp. Examples are balustrates at roof-tops or ba" +
+	    "lconies.")]
 		BALUSTRADE = 3,
 	
+		[Description("User-defined railing element, a term to identify the user type is given by the at" +
+	    "tribute <em>IfcRailing.ObjectType.</em>")]
 		USERDEFINED = -1,
 	
+		[Description("Undefined railing element, no type information available.")]
 		NOTDEFINED = 0,
 	
 	}

@@ -34,9 +34,9 @@ namespace BuildingSmart.IFC.IfcSharedBldgElements
 		IfcBuildingElementProxyTypeEnum _PredefinedType;
 	
 	
-		[Description("<EPM-HTML>\r\nPredefined types to define the particular type of an building element" +
-	    " proxy. There may be property set definitions available for each predefined or u" +
-	    "ser defined type.\r\n</EPM-HTML>")]
+		[Description("Predefined types to define the particular type of an building element proxy. Ther" +
+	    "e may be property set definitions available for each predefined or user defined " +
+	    "type.")]
 		public IfcBuildingElementProxyTypeEnum PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	

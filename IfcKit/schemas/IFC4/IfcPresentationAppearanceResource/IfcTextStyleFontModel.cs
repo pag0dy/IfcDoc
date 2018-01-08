@@ -44,32 +44,27 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 		IfcSizeSelect _FontSize;
 	
 	
-		[Description(@"<EPM-HTML>
-	The value is a prioritized list of font family names and/or generic family names. The first list entry has the highest priority, if this font fails, the next list item shall be used. The last list item should (if possible) be a generic family.
+		[Description(@"The value is a prioritized list of font family names and/or generic family names. The first list entry has the highest priority, if this font fails, the next list item shall be used. The last list item should (if possible) be a generic family.
 	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; Attribute changed to being mandatory.
-	</blockquote>
-	</EPM-HTML>")]
+	</blockquote>")]
 		public IList<IfcTextFontName> FontFamily { get { return this._FontFamily; } }
 	
-		[Description("<EPM-HTML>\r\nThe font style property selects between normal (sometimes referred to" +
-	    " as \"roman\" or \"upright\"), italic and oblique faces within a font family.<br>\r\n<" +
-	    "/EPM-HTML>")]
+		[Description("The font style property selects between normal (sometimes referred to as \"roman\" " +
+	    "or \"upright\"), italic and oblique faces within a font family.<br>")]
 		public IfcFontStyle? FontStyle { get { return this._FontStyle; } set { this._FontStyle = value;} }
 	
-		[Description("<EPM-HTML>\r\nThe font variant property selects between normal and small-caps.\r\n  <" +
-	    "blockquote class=\"note\">NOTE&nbsp; It has been introduced for later compliance t" +
-	    "o full CSS1 support.</blockquote>\r\n</EPM-HTML>")]
+		[Description("The font variant property selects between normal and small-caps.\r\n  <blockquote c" +
+	    "lass=\"note\">NOTE&nbsp; It has been introduced for later compliance to full CSS1 " +
+	    "support.</blockquote>")]
 		public IfcFontVariant? FontVariant { get { return this._FontVariant; } set { this._FontVariant = value;} }
 	
-		[Description("<EPM-HTML>\r\nThe font weight property selects the weight of the font.\r\n  <blockquo" +
-	    "te class=\"note\">NOTE&nbsp; Values other then \'normal\' and \'bold\' have been intro" +
-	    "duced for later compliance to full CSS1 support.</blockquote>\r\n</EPM-HTML>")]
+		[Description("The font weight property selects the weight of the font.\r\n  <blockquote class=\"no" +
+	    "te\">NOTE&nbsp; Values other then \'normal\' and \'bold\' have been introduced for la" +
+	    "ter compliance to full CSS1 support.</blockquote>")]
 		public IfcFontWeight? FontWeight { get { return this._FontWeight; } set { this._FontWeight = value;} }
 	
-		[Description(@"<EPM-HTML>
-	The font size provides the size or height of the text font.
-	  <blockquote class=""note"">NOTE&nbsp; The following values are allowed, <<em>IfcLengthMeasure<em>, with positive values, the length unit is globally defined at <em>IfcUnitAssignment</em>.</blockquote>
-	</EPM-HTML>")]
+		[Description(@"The font size provides the size or height of the text font.
+	  <blockquote class=""note"">NOTE&nbsp; The following values are allowed, <<em>IfcLengthMeasure<em>, with positive values, the length unit is globally defined at <em>IfcUnitAssignment</em>.</blockquote>")]
 		public IfcSizeSelect FontSize { get { return this._FontSize; } set { this._FontSize = value;} }
 	
 	

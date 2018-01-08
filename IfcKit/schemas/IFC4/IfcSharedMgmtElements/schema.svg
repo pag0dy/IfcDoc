@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<svg xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="1.1" width="0" height="0" xmlns="http://www.w3.org/2000/svg">
+<svg xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="1.1" width="600" height="888" xmlns="http://www.w3.org/2000/svg">
   <g id="IfcActionRequest" fill="yellow">
     <rect x="77.81520375" y="363.68909625" width="114.75" height="116.27428875" stroke="black" />
     <text x="135.19020375" y="421.826240625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcActionRequest</text>
@@ -126,6 +126,12 @@ IfcText</text>
   <g id="IFCKERNEL">
     <g id="IfcControl" fill="grey">
       <rect x="15.10166025" y="13.6557885" width="137.625" height="52.33477875" stroke="black" />
+      <polyline points="60.16056,65.99056875 60.1605601875,65.99056875 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="60.1605601875,65.99056875 60.1597275,691.1088375 78.892409625,691.1088375 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="60.1605601875,65.99056875 60.1595925,147.76188375 78.869099625,147.76188375 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="60.1605601875,65.99056875 60.15976125,816.1871625 78.86223675,816.1871625 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="60.1605601875,65.99056875 60.16024875,283.63107 77.8585905,283.63107 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="60.1605601875,65.99056875 60.16024875,421.82625 77.815204875,421.82625 " fill="none" stroke="black" stroke-width="3" />
       <text x="83.91416025" y="39.823177875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCKERNEL
 IfcControl</text>
     </g>
@@ -145,5 +151,7 @@ IfcPhysicalQuantity</text>
     </g>
   </g>
   <g id="IFCACTORRESOURCE" />
-  <g />
+  <g>
+    <rect x="0" y="0" width="600" height="888" fill="none" stroke="lime" />
+  </g>
 </svg>

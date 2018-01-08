@@ -35,16 +35,13 @@ namespace BuildingSmart.IFC.IfcSharedMgmtElements
 		IfcText? _LongDescription;
 	
 	
-		[Description(@"<EPM-HTML>
-	Predefined generic type for a project order that is specified in an enumeration. There may be a property set given specificly for the predefined types.
-	
-	<blockquote class=""change-ifc2x4"">IFC4 CHANGE  The attribute has been made optional.</blockquote>
-	
-	</EPM-HTML>
-	")]
+		[Description("Predefined generic type for a project order that is specified in an enumeration. " +
+	    "There may be a property set given specificly for the predefined types.\r\n\r\n<block" +
+	    "quote class=\"change-ifc2x4\">IFC4 CHANGE  The attribute has been made optional.</" +
+	    "blockquote>\r\n")]
 		public IfcProjectOrderTypeEnum? PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
-		[Description(@"<EPM-HTML>The current status of a project order.Examples of status values that might be used for a project order status include:
+		[Description(@"The current status of a project order.Examples of status values that might be used for a project order status include:
 	<ul>
 	<li>PLANNED</li>
 	<li>REQUESTED</li>
@@ -53,12 +50,10 @@ namespace BuildingSmart.IFC.IfcSharedMgmtElements
 	<li>STARTED</li>
 	<li>DELAYED</li>
 	<li>DONE</li>
-	</ul>
-	</EPM-HTML>")]
+	</ul>")]
 		public IfcLabel? Status { get { return this._Status; } set { this._Status = value;} }
 	
-		[Description("<EPM-HTML>\r\nA detailed description of the project order describing the work to be" +
-	    " completed.\r\n</EPM-HTML>")]
+		[Description("A detailed description of the project order describing the work to be completed.")]
 		public IfcText? LongDescription { get { return this._LongDescription; } set { this._LongDescription = value;} }
 	
 	

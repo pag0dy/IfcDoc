@@ -18,8 +18,10 @@ namespace BuildingSmart.IFC.IfcHvacDomain
 	[Guid("ee185750-07b0-422a-914c-5934a989bbb0")]
 	public enum IfcBurnerTypeEnum
 	{
+		[Description("User-defined burner type.")]
 		USERDEFINED = -1,
 	
+		[Description("Undefined burner type.")]
 		NOTDEFINED = 0,
 	
 	}

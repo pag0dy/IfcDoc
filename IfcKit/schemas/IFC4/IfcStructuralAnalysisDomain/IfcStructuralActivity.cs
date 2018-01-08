@@ -37,18 +37,12 @@ namespace BuildingSmart.IFC.IfcStructuralAnalysisDomain
 		ISet<IfcRelConnectsStructuralActivity> _AssignedToStructuralItem = new HashSet<IfcRelConnectsStructuralActivity>();
 	
 	
-		[Description(@"<EPM-HTML>
+		[Description(@"Load or result resource object which defines the load type, direction, and load values.
 	
-	Load or result resource object which defines the load type, direction, and load values.
-	
-	<p>In case of activities which are variably distributed over curves or surfaces, <em>IfcStructuralLoadConfiguration</em> is used which provides a list of load samples and their locations within the load distribution, measured in local coordinates of the curve or surface on which this activity acts.  The contents of this load or result distribution may be further restricted by definitions at subtypes of <em>IfcStructuralActivity</em>.</p>
-	
-	</EPM-HTML>")]
+	<p>In case of activities which are variably distributed over curves or surfaces, <em>IfcStructuralLoadConfiguration</em> is used which provides a list of load samples and their locations within the load distribution, measured in local coordinates of the curve or surface on which this activity acts.  The contents of this load or result distribution may be further restricted by definitions at subtypes of <em>IfcStructuralActivity</em>.</p>")]
 		public IfcStructuralLoad AppliedLoad { get { return this._AppliedLoad; } set { this._AppliedLoad = value;} }
 	
-		[Description(@"<EPM-HTML>
-	
-	Indicates whether the load directions refer to the global coordinate system (global to
+		[Description(@"Indicates whether the load directions refer to the global coordinate system (global to
 	the analysis model, i.e. as established by <em>IfcStructuralAnalysisModel.SharedPlacement</em>)
 	or to the local coordinate system (local to the activity or connected item, as established by
 	an explicit or implied representation and its parameter space).
@@ -64,13 +58,11 @@ namespace BuildingSmart.IFC.IfcStructuralAnalysisDomain
 	the meaning of GLOBAL_COORDS is therefore not to be taken as world coordinate system
 	but as the analysis model specific shared coordinate system.  In contrast, LOCAL_COORDS
 	is to be taken as coordinates which are local to individual structural items and activities,
-	as established by subclass-specific geometry use definitions.</blockquote>
-	
-	</EPM-HTML>")]
+	as established by subclass-specific geometry use definitions.</blockquote>")]
 		public IfcGlobalOrLocalEnum GlobalOrLocal { get { return this._GlobalOrLocal; } set { this._GlobalOrLocal = value;} }
 	
-		[Description("<EPM-HTML>\r\n\r\nReference to the <em>IfcRelConnectsStructuralActivity</em> relation" +
-	    "ship by which activities are connected with structural items.\r\n\r\n</EPM-HTML>")]
+		[Description("Reference to the <em>IfcRelConnectsStructuralActivity</em> relationship by which " +
+	    "activities are connected with structural items.")]
 		public ISet<IfcRelConnectsStructuralActivity> AssignedToStructuralItem { get { return this._AssignedToStructuralItem; } }
 	
 	

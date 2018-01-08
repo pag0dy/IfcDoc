@@ -33,10 +33,13 @@ namespace BuildingSmart.IFC.IfcProductExtension
 	[Guid("4ad31f65-4cec-4f7d-823e-bf7f9f3f99e9")]
 	public enum IfcElementCompositionEnum
 	{
+		[Description("A group or aggregation of similar elements.")]
 		COMPLEX = 1,
 	
+		[Description("An (undivided) element itself.")]
 		ELEMENT = 2,
 	
+		[Description("A subelement or part.")]
 		PARTIAL = 3,
 	
 	}

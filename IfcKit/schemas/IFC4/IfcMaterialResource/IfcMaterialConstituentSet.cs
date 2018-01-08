@@ -36,15 +36,14 @@ namespace BuildingSmart.IFC.IfcMaterialResource
 		ISet<IfcMaterialConstituent> _MaterialConstituents = new HashSet<IfcMaterialConstituent>();
 	
 	
-		[Description("<EPM-HTML>\r\nThe name by which the constituent set is known.\r\n</EPM-HTML>")]
+		[Description("The name by which the constituent set is known.")]
 		public IfcLabel? Name { get { return this._Name; } set { this._Name = value;} }
 	
-		[Description("<EPM-HTML>\r\nDefinition of the material constituent set in descriptive terms.\r\n</E" +
-	    "PM-HTML>")]
+		[Description("Definition of the material constituent set in descriptive terms.")]
 		public IfcText? Description { get { return this._Description; } set { this._Description = value;} }
 	
-		[Description("<EPM-HTML>\r\nIdentification of the constituents from which the material constituen" +
-	    "t set is composed.\r\n</EPM-HTML>")]
+		[Description("Identification of the constituents from which the material constituent set is com" +
+	    "posed.")]
 		public ISet<IfcMaterialConstituent> MaterialConstituents { get { return this._MaterialConstituents; } }
 	
 	

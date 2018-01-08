@@ -28,7 +28,7 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 		IfcLabel? _Name;
 	
 	
-		[Description("<EPM-HTML>\r\nName of the presentation style.\r\n</EPM-HTML>")]
+		[Description("Name of the presentation style.")]
 		public IfcLabel? Name { get { return this._Name; } set { this._Name = value;} }
 	
 	

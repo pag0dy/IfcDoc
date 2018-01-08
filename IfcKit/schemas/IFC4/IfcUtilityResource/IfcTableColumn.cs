@@ -40,19 +40,27 @@ namespace BuildingSmart.IFC.IfcUtilityResource
 		IfcReference _ReferencePath;
 	
 	
-		[Description("Table column identifier.")]
+		[Description("The <i>Identifier</i> identifies the column within the table. If provided, it mus" +
+	    "t be unique within the table. Columns may be cross-referenced across multiple ta" +
+	    "bles by sharing the same column identifier.")]
 		public IfcIdentifier? Identifier { get { return this._Identifier; } set { this._Identifier = value;} }
 	
-		[Description("The table column display name.")]
+		[Description("The <i>Name</i> is a human-readable caption for the table column. It is not neces" +
+	    "sarilly unique.")]
 		public IfcLabel? Name { get { return this._Name; } set { this._Name = value;} }
 	
-		[Description("Descriptive text for the table column.")]
+		[Description("The <i>Description</i> provides human-readable text describing the table column.")]
 		public IfcText? Description { get { return this._Description; } set { this._Description = value;} }
 	
-		[Description("The unit of measure to be used for this column\'s data.")]
+		[Description("The <i>Unit</i> indicates the unit of measure to be used for this column\'s data. " +
+	    "If not provided, then project default units are assumed. If <i>ReferencePath</i>" +
+	    " is provided, the the unit must be of the same measure as the referenced attribu" +
+	    "te.")]
 		public IfcUnit Unit { get { return this._Unit; } set { this._Unit = value;} }
 	
-		[Description("Optional path to the object and attribute for which this column applies.")]
+		[Description(@"The <i>ReferencePath</i> indicates a relative path to the object and attribute for which data within this column is to be applied. 
+	
+	For constraints, such path is relative to the <i>IfcObjectDefinition</i> associated by <i>IfcRelAssociatesConstraint</i>.RelatedObjects. For a constraint to be satisified, exactly one row of the table must match the referenced object for all columns where the <i>ReferencePath</i> attribute is set.")]
 		public IfcReference ReferencePath { get { return this._ReferencePath; } set { this._ReferencePath = value;} }
 	
 	

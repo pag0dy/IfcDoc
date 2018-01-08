@@ -38,22 +38,18 @@ namespace BuildingSmart.IFC.IfcProductExtension
 		ISet<IfcProduct> _RelatedElements = new HashSet<IfcProduct>();
 	
 		[DataMember(Order=1)] 
-		[XmlElement("IfcSpatialElement")]
+		[XmlIgnore]
 		[Required()]
 		IfcSpatialElement _RelatingStructure;
 	
 	
-		[Description(@"<EPM-HTML>
-	Set of products, which are contained within this level of the spatial structure hierarchy.
+		[Description(@"Set of products, which are contained within this level of the spatial structure hierarchy.
 	<blockquote class=""change-ifc2x"">IFC2x CHANGE&nbsp; The data type has been changed from <em>IfcElement</em> to <em>IfcProduct</em> with upward compatibility</blockquote>
-	</EPM-HTML>
 	")]
 		public ISet<IfcProduct> RelatedElements { get { return this._RelatedElements; } }
 	
-		[Description(@"<EPM-HTML>
-	Spatial structure element, within which the element is contained. Any element can only be contained within one element of the project spatial structure.
-	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The attribute <em>RelatingStructure</em> as been promoted to the new supertype <em>IfcSpatialElement</em> with upward compatibility for file based exchange.</blockquote>
-	</EPM-HTML>")]
+		[Description(@"Spatial structure element, within which the element is contained. Any element can only be contained within one element of the project spatial structure.
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The attribute <em>RelatingStructure</em> as been promoted to the new supertype <em>IfcSpatialElement</em> with upward compatibility for file based exchange.</blockquote>")]
 		public IfcSpatialElement RelatingStructure { get { return this._RelatingStructure; } set { this._RelatingStructure = value;} }
 	
 	

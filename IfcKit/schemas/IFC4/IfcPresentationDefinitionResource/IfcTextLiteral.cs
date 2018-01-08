@@ -37,14 +37,14 @@ namespace BuildingSmart.IFC.IfcPresentationDefinitionResource
 		IfcTextPath _Path;
 	
 	
-		[Description("<EPM-HTML>\r\nThe text literal to be presented.\r\n</EPM-HTML>")]
+		[Description("The text literal to be presented.")]
 		public IfcPresentableText Literal { get { return this._Literal; } set { this._Literal = value;} }
 	
-		[Description("<EPM-HTML>\r\nAn <em>IfcAxis2Placement</em> that determines the placement and orien" +
-	    "tation of the presented string.\r\n</EPM-HTML>")]
+		[Description("An <em>IfcAxis2Placement</em> that determines the placement and orientation of th" +
+	    "e presented string.")]
 		public IfcAxis2Placement Placement { get { return this._Placement; } set { this._Placement = value;} }
 	
-		[Description("<EPM-HTML>\r\nThe writing direction of the text literal.\r\n</EPM-HTML>")]
+		[Description("The writing direction of the text literal.")]
 		public IfcTextPath Path { get { return this._Path; } set { this._Path = value;} }
 	
 	

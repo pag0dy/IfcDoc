@@ -54,17 +54,13 @@ namespace BuildingSmart.IFC.IfcProductExtension
 		IfcPostalAddress _SiteAddress;
 	
 	
-		[Description(@"<EPM-HTML>
-	World Latitude at reference point (most likely defined in legal description). Defined as integer values for degrees, minutes, seconds, and, optionally, millionths of seconds with respect to the world geodetic system WGS84.
-	<blockquote class=""note"">NOTE&nbsp; Latitudes are measured relative to the geodetic equator, north of the equator by positive values - from 0 till +90,   south of the equator by negative values - from 0 till  -90.</blockquote>
-	</EPM-HTML>")]
+		[Description(@"World Latitude at reference point (most likely defined in legal description). Defined as integer values for degrees, minutes, seconds, and, optionally, millionths of seconds with respect to the world geodetic system WGS84.
+	<blockquote class=""note"">NOTE&nbsp; Latitudes are measured relative to the geodetic equator, north of the equator by positive values - from 0 till +90,   south of the equator by negative values - from 0 till  -90.</blockquote>")]
 		public IfcCompoundPlaneAngleMeasure? RefLatitude { get { return this._RefLatitude; } set { this._RefLatitude = value;} }
 	
-		[Description(@"<EPM-HTML>
-	World Longitude at reference point (most likely defined in legal description). Defined as integer values for degrees, minutes, seconds, and, optionally, millionths of seconds with respect to the world geodetic system WGS84.
+		[Description(@"World Longitude at reference point (most likely defined in legal description). Defined as integer values for degrees, minutes, seconds, and, optionally, millionths of seconds with respect to the world geodetic system WGS84.
 	<blockquote class=""note"">NOTE&nbsp; Longitudes are measured relative to the geodetic zero meridian, nominally the same as the Greenwich prime meridian: longitudes west of the zero meridian have negative values - from 0 till -180, longitudes east of the zero meridian have positive values - from 0 till -180.</blockquote>
-	<blockquote class=""example"">EXAMPLE&nbsp; Chicago Harbor Light has according to WGS84 a longitude -87.35.40 (or 87.35.40W) and a latitude 41.53.30 (or 41.53.30N).</blockquote>
-	</EPM-HTML>")]
+	<blockquote class=""example"">EXAMPLE&nbsp; Chicago Harbor Light has according to WGS84 a longitude -87.35.40 (or 87.35.40W) and a latitude 41.53.30 (or 41.53.30N).</blockquote>")]
 		public IfcCompoundPlaneAngleMeasure? RefLongitude { get { return this._RefLongitude; } set { this._RefLongitude = value;} }
 	
 		[Description("Datum elevation relative to sea level.\r\n")]

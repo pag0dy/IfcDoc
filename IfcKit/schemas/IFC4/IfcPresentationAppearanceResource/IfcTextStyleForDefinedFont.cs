@@ -30,11 +30,11 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 		IfcColour _BackgroundColour;
 	
 	
-		[Description("<EPM-HTML>\r\nThis property describes the text color of an element (often referred " +
-	    "to as the foreground color).\r\n</EPM-HTML>")]
+		[Description("This property describes the text color of an element (often referred to as the fo" +
+	    "reground color).")]
 		public IfcColour Colour { get { return this._Colour; } set { this._Colour = value;} }
 	
-		[Description("<EPM-HTML>\r\nThis property sets the background color of an element.\r\n</EPM-HTML>")]
+		[Description("This property sets the background color of an element.")]
 		public IfcColour BackgroundColour { get { return this._BackgroundColour; } set { this._BackgroundColour = value;} }
 	
 	

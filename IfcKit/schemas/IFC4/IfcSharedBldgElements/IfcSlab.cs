@@ -33,11 +33,9 @@ namespace BuildingSmart.IFC.IfcSharedBldgElements
 		IfcSlabTypeEnum? _PredefinedType;
 	
 	
-		[Description(@"<EPM-HTML>
-	Predefined generic type for a slab that is specified in an enumeration. There may be a property set given specifically for the predefined types.
+		[Description(@"Predefined generic type for a slab that is specified in an enumeration. There may be a property set given specifically for the predefined types.
 	<blockquote class=""note"">NOTE&nbsp; The <em>PredefinedType</em> shall only be used, if no <em>IfcSlabType</em> is assigned, providing its own <em>IfcSlabType.PredefinedType</em>.</blockquote>
-	<blockquote  class=""change-ifc2x"">IFC2x CHANGE The attribute has been changed into an OPTIONAL attribute.</blockquote>
-	</EPM-HTML> ")]
+	<blockquote  class=""change-ifc2x"">IFC2x CHANGE The attribute has been changed into an OPTIONAL attribute.</blockquote> ")]
 		public IfcSlabTypeEnum? PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	

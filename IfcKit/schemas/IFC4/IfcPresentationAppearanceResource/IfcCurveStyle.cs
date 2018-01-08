@@ -33,7 +33,8 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 		IfcColour _CurveColour;
 	
 		[DataMember(Order=3)] 
-		Boolean? _ModelOrDraughting;
+		[XmlAttribute]
+		IfcBoolean? _ModelOrDraughting;
 	
 	
 		[Description(@"A curve style font which is used to present a curve. It can either be a predefined curve font, or an explicitly defined curve font. Both may be scaled. If not given, then the curve font should be taken from the layer assignment with style, if that is not given either, then the default curve font applies.")]
@@ -49,10 +50,10 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 	    "n the default colour applies.")]
 		public IfcColour CurveColour { get { return this._CurveColour; } set { this._CurveColour = value;} }
 	
-		[Description("<EPM-HTML>\r\nIndication whether the length measures provided for the presentation " +
-	    "style are model based, or draughting based.\r\n<blockquote class=\"change-ifc2x4\">I" +
-	    "FC4 CHANGE&nbsp; New attribute.\r\n</blockquote>\r\n</EPM-HTML>")]
-		public Boolean? ModelOrDraughting { get { return this._ModelOrDraughting; } set { this._ModelOrDraughting = value;} }
+		[Description("Indication whether the length measures provided for the presentation style are mo" +
+	    "del based, or draughting based.\r\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE&n" +
+	    "bsp; New attribute.\r\n</blockquote>")]
+		public IfcBoolean? ModelOrDraughting { get { return this._ModelOrDraughting; } set { this._ModelOrDraughting = value;} }
 	
 	
 	}

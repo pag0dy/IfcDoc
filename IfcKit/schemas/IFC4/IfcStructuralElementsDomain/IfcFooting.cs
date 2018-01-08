@@ -26,13 +26,9 @@ namespace BuildingSmart.IFC.IfcStructuralElementsDomain
 		IfcFootingTypeEnum? _PredefinedType;
 	
 	
-		[Description(@"<EPM-HTML>
-	
-	The generic type of the footing.
-	
-	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; Attribute made optional.  Type information can be provided by <em>IfcRelDefinesByType</em> and <em>IfcFootingType</em>.</font></blockquote>
-	
-	</EPM-HTML>")]
+		[Description("The generic type of the footing.\r\n\r\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE" +
+	    "&nbsp; Attribute made optional.  Type information can be provided by <em>IfcRelD" +
+	    "efinesByType</em> and <em>IfcFootingType</em>.</font></blockquote>")]
 		public IfcFootingTypeEnum? PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	

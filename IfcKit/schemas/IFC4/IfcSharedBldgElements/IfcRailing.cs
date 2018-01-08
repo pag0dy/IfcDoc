@@ -33,11 +33,9 @@ namespace BuildingSmart.IFC.IfcSharedBldgElements
 		IfcRailingTypeEnum? _PredefinedType;
 	
 	
-		[Description(@"<EPM-HTML>
-	Predefined generic types for a railing that are specified in an enumeration. There may be a property set given for the predefined types.
+		[Description(@"Predefined generic types for a railing that are specified in an enumeration. There may be a property set given for the predefined types.
 	<blockquote class=""note"">NOTE&nbsp; The <em>PredefinedType</em> shall only be used, if no <em>IfcRailingType</em> is assigned, providing its own <em>IfcRailingType.PredefinedType</em>.</blockquote>
-	<blockquote class=""change-ifc2x"">IFC2x CHANGE&nbsp; The attribute has been changed into an OPTIONAL attribute.</blockquote>
-	</EPM-HTML> ")]
+	<blockquote class=""change-ifc2x"">IFC2x CHANGE&nbsp; The attribute has been changed into an OPTIONAL attribute.</blockquote> ")]
 		public IfcRailingTypeEnum? PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	

@@ -23,8 +23,8 @@ namespace BuildingSmart.IFC.IfcPlumbingFireProtectionDomain
 		IfcFireSuppressionTerminalTypeEnum _PredefinedType;
 	
 	
-		[Description("<EPM-HTML><p>Identifies the predefined types of fire suppression terminal from wh" +
-	    "ich the type required may be set.</p></EPM-HTML>")]
+		[Description("<p>Identifies the predefined types of fire suppression terminal from which the ty" +
+	    "pe required may be set.</p>")]
 		public IfcFireSuppressionTerminalTypeEnum PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	

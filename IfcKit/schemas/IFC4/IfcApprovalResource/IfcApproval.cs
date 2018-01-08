@@ -85,10 +85,8 @@ namespace BuildingSmart.IFC.IfcApprovalResource
 	    "proved for. \r\n")]
 		public IfcText? Description { get { return this._Description; } set { this._Description = value;} }
 	
-		[Description(@"<EPM-HTML>
-	Date and time when the result of the approval process is produced.
-	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; Attribute data type changed to <em>IfcDateTime</em> using ISO 8601 representation, renamed from ApprovalDateTime and made OPTIONAL.</blockquote>
-	</EPM-HTML>")]
+		[Description(@"Date and time when the result of the approval process is produced.
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; Attribute data type changed to <em>IfcDateTime</em> using ISO 8601 representation, renamed from ApprovalDateTime and made OPTIONAL.</blockquote>")]
 		public IfcDateTime? TimeOfApproval { get { return this._TimeOfApproval; } set { this._TimeOfApproval = value;} }
 	
 		[Description("The result or current status of the approval, e.g. Requested, Processed, Approved" +
@@ -101,25 +99,21 @@ namespace BuildingSmart.IFC.IfcApprovalResource
 		[Description("Textual description of special constraints or conditions for the approval.")]
 		public IfcText? Qualifier { get { return this._Qualifier; } set { this._Qualifier = value;} }
 	
-		[Description(@"<EPM-HTML>
-	The actor that is acting in the role specified at <em>IfcOrganization</em> or individually at <em>IfcPerson</em> and requesting an approval.
-	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; New attribute for approval request replacing IfcApprovalActorRelationship (being deleted).</blockquote>
-	</EPM-HTML>")]
+		[Description(@"The actor that is acting in the role specified at <em>IfcOrganization</em> or individually at <em>IfcPerson</em> and requesting an approval.
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; New attribute for approval request replacing IfcApprovalActorRelationship (being deleted).</blockquote>")]
 		public IfcActorSelect RequestingApproval { get { return this._RequestingApproval; } set { this._RequestingApproval = value;} }
 	
-		[Description(@"<EPM-HTML>
-	The actor that is acting in the role specified at <em>IfcOrganization</em> or individually at <em>IfcPerson</em> and giving an approval.
-	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; New attribute for approval provision replacing IfcApprovalActorRelationship (being deleted).</blockquote>
-	</EPM-HTML>")]
+		[Description(@"The actor that is acting in the role specified at <em>IfcOrganization</em> or individually at <em>IfcPerson</em> and giving an approval.
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; New attribute for approval provision replacing IfcApprovalActorRelationship (being deleted).</blockquote>")]
 		public IfcActorSelect GivingApproval { get { return this._GivingApproval; } set { this._GivingApproval = value;} }
 	
-		[Description("<EPM-HTML>\r\nReference to external references, e.g. library, classification, or do" +
-	    "cument information, that are associated to the Approval.\r\n<blockquote class=\"cha" +
-	    "nge-ifc2x4\">IFC4 CHANGE&nbsp; New inverse attribute.</blockquote>\r\n</EPM-HTML> ")]
+		[Description("Reference to external references, e.g. library, classification, or document infor" +
+	    "mation, that are associated to the Approval.\r\n<blockquote class=\"change-ifc2x4\">" +
+	    "IFC4 CHANGE&nbsp; New inverse attribute.</blockquote> ")]
 		public ISet<IfcExternalReferenceRelationship> HasExternalReferences { get { return this._HasExternalReferences; } }
 	
 		[Description("Reference to the <em>IfcRelAssociatesApproval</em> instances associating this app" +
-	    "roval to objects.")]
+	    "roval to objects (subtypes of <em>IfcRoot</em>")]
 		public ISet<IfcRelAssociatesApproval> ApprovedObjects { get { return this._ApprovedObjects; } }
 	
 		[Description("The set of relationships by which resource objects that are are approved by this " +

@@ -11,6 +11,7 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
+using BuildingSmart.IFC.IfcApprovalResource;
 using BuildingSmart.IFC.IfcConstraintResource;
 using BuildingSmart.IFC.IfcCostResource;
 using BuildingSmart.IFC.IfcDateTimeResource;
@@ -46,18 +47,22 @@ namespace BuildingSmart.IFC.IfcPropertyResource
 		[InverseProperty("HasProperties")] 
 		ISet<IfcComplexProperty> _PartOfComplex = new HashSet<IfcComplexProperty>();
 	
+		[InverseProperty("RelatedResourceObjects")] 
+		ISet<IfcResourceConstraintRelationship> _HasConstraints = new HashSet<IfcResourceConstraintRelationship>();
 	
-		[Description("<EPM-HTML>\r\nName for this property. This label is the significant name string tha" +
-	    "t defines the semantic meaning for the property.\r\n</EPM-HTML>")]
+		[InverseProperty("RelatedResourceObjects")] 
+		ISet<IfcResourceApprovalRelationship> _HasApprovals = new HashSet<IfcResourceApprovalRelationship>();
+	
+	
+		[Description("Name for this property. This label is the significant name string that defines th" +
+	    "e semantic meaning for the property.")]
 		public IfcIdentifier Name { get { return this._Name; } set { this._Name = value;} }
 	
-		[Description("<EPM-HTML>\r\nInformative text to explain the property.\r\n</EPM-HTML>")]
+		[Description("Informative text to explain the property.")]
 		public IfcText? Description { get { return this._Description; } set { this._Description = value;} }
 	
-		[Description(@"<EPM-HTML>
-	Reference to the <em>IfcPropertySet</em> by which the <em>IfcProperty</em> is referenced.
-	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; New inverse attribute to navigate from <em>IfcProperty</em> to <em>IfcPropertySet</em> with upward compatibility for file based exchange.</blockquote>
-	</EPM-HTML>")]
+		[Description(@"Reference to the <em>IfcPropertySet</em> by which the <em>IfcProperty</em> is referenced.
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; New inverse attribute to navigate from <em>IfcProperty</em> to <em>IfcPropertySet</em> with upward compatibility for file based exchange.</blockquote>")]
 		public ISet<IfcPropertySet> PartOfPset { get { return this._PartOfPset; } }
 	
 		[Description("The property on whose value that of another property depends.")]
@@ -66,11 +71,15 @@ namespace BuildingSmart.IFC.IfcPropertyResource
 		[Description("The relating property on which the value of the property depends.")]
 		public ISet<IfcPropertyDependencyRelationship> PropertyDependsOn { get { return this._PropertyDependsOn; } }
 	
-		[Description(@"<EPM-HTML>
-	Reference to the <em>IfcComplexProperty</em> in which the <em>IfcProperty</em> is contained.
-	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The cardinality has changed to 0..n to allow reuse of instances of <em>IfcProperty</em> in several <em>IfcComplexProperty</em> with upward compatibility for file based exchange.</blockquote>
-	</EPM-HTML>")]
+		[Description(@"Reference to the <em>IfcComplexProperty</em> in which the <em>IfcProperty</em> is contained.
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The cardinality has changed to 0..n to allow reuse of instances of <em>IfcProperty</em> in several <em>IfcComplexProperty</em> with upward compatibility for file based exchange.</blockquote>")]
 		public ISet<IfcComplexProperty> PartOfComplex { get { return this._PartOfComplex; } }
+	
+		[Description("User-defined constraints for the property.")]
+		public ISet<IfcResourceConstraintRelationship> HasConstraints { get { return this._HasConstraints; } }
+	
+		[Description("User-defined approvals for the property.")]
+		public ISet<IfcResourceApprovalRelationship> HasApprovals { get { return this._HasApprovals; } }
 	
 	
 	}

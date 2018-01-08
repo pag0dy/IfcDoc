@@ -24,8 +24,8 @@ namespace BuildingSmart.IFC.IfcMeasureResource
 		IfcReal _ConversionOffset;
 	
 	
-		[Description("<EPM-HTML>\r\n\r\nA positive or negative offset to add after the inherited <em>Conver" +
-	    "sionFactor</em> was applied.\r\n\r\n</EPM-HTML>\r\n")]
+		[Description("A positive or negative offset to add after the inherited <em>ConversionFactor</em" +
+	    "> was applied.\r\n")]
 		public IfcReal ConversionOffset { get { return this._ConversionOffset; } set { this._ConversionOffset = value;} }
 	
 	

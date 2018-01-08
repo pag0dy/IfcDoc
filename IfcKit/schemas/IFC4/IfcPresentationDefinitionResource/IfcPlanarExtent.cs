@@ -33,10 +33,10 @@ namespace BuildingSmart.IFC.IfcPresentationDefinitionResource
 		IfcLengthMeasure _SizeInY;
 	
 	
-		[Description("<EPM-HTML>\r\nThe extent in the direction of the x-axis.\r\n</EPM-HTML>")]
+		[Description("The extent in the direction of the x-axis.")]
 		public IfcLengthMeasure SizeInX { get { return this._SizeInX; } set { this._SizeInX = value;} }
 	
-		[Description("<EPM-HTML>\r\nThe extent in the direction of the y-axis.\r\n</EPM-HTML>")]
+		[Description("The extent in the direction of the y-axis.")]
 		public IfcLengthMeasure SizeInY { get { return this._SizeInY; } set { this._SizeInY = value;} }
 	
 	

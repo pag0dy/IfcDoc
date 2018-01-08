@@ -38,22 +38,16 @@ namespace BuildingSmart.IFC.IfcMaterialResource
 		IfcPositiveLengthMeasure? _ReferenceExtent;
 	
 	
-		[Description("<EPM-HTML>\r\nThe <em>IfcMaterialProfileSet</em> set to which the usage is applied." +
-	    "\r\n</EPM-HTML>")]
+		[Description("The <em>IfcMaterialProfileSet</em> set to which the usage is applied.")]
 		public IfcMaterialProfileSet ForProfileSet { get { return this._ForProfileSet; } set { this._ForProfileSet = value;} }
 	
-		[Description(@"<EPM-HTML>
-	Index reference to a significant point in the section profile. Describes how the section is aligned relative to the (longitudinal) axis of the member it is associated with. This parametric specification of profile alignment can be provided redundantly to the explicit alignment defined by ForProfileSet.MaterialProfiles[*].Profile.
-	</EPM-HTML>")]
+		[Description(@"Index reference to a significant point in the section profile. Describes how the section is aligned relative to the (longitudinal) axis of the member it is associated with. This parametric specification of profile alignment can be provided redundantly to the explicit alignment defined by ForProfileSet.MaterialProfiles[*].Profile.")]
 		public IfcCardinalPointReference? CardinalPoint { get { return this._CardinalPoint; } set { this._CardinalPoint = value;} }
 	
-		[Description(@"<EPM-HTML>
-	Extent of the extrusion of the elements body shape representation to which the <em>IfcMaterialProfileSetUsage</em> applies. It is used as the reference value for the upper <em>OffsetValues[2]</em> provided by the <em>IfcMaterialProfileSetWithOffsets</em> subtype for included material profiles.
+		[Description(@"Extent of the extrusion of the elements body shape representation to which the <em>IfcMaterialProfileSetUsage</em> applies. It is used as the reference value for the upper <em>OffsetValues[2]</em> provided by the <em>IfcMaterialProfileSetWithOffsets</em> subtype for included material profiles.
 	
 	<blockquote class=""note"">NOTE&nbsp; The attribute <em>ReferenceExtent</em> shall be asserted if an <em>IfcMaterialProfileSetWithOffsets</em> is included in the <em>ForProfileSet.MaterialProfiles</em> list of material layers.</blockquote>
-	<blockquote class=""note"">NOTE&nbsp; The <em>ReferenceExtent</em> for <em>IfcBeamStandardCase</em>, <em>IfcColumnStandardCase</em>, and <em>IfcMemberStandardCase</em> is the reference length starting at z=0 being the XY plane of the object coordinate system.</blockquote>
-	
-	</EPM-HTML>")]
+	<blockquote class=""note"">NOTE&nbsp; The <em>ReferenceExtent</em> for <em>IfcBeamStandardCase</em>, <em>IfcColumnStandardCase</em>, and <em>IfcMemberStandardCase</em> is the reference length starting at z=0 being the XY plane of the object coordinate system.</blockquote>")]
 		public IfcPositiveLengthMeasure? ReferenceExtent { get { return this._ReferenceExtent; } set { this._ReferenceExtent = value;} }
 	
 	

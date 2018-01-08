@@ -33,31 +33,25 @@ namespace BuildingSmart.IFC.IfcSharedMgmtElements
 		IList<IfcPhysicalQuantity> _CostQuantities = new List<IfcPhysicalQuantity>();
 	
 	
-		[Description(@"<EPM-HTML>
-	Predefined generic type for a cost item that is specified in an enumeration. There may be a property set given specificly for the predefined types.
-	
-	<blockquote class=""change-ifc2x4"">IFC4 CHANGE  The attribute has been added.</blockquote>
-	
-	</EPM-HTML>
-	")]
+		[Description("Predefined generic type for a cost item that is specified in an enumeration. Ther" +
+	    "e may be a property set given specificly for the predefined types.\r\n\r\n<blockquot" +
+	    "e class=\"change-ifc2x4\">IFC4 CHANGE  The attribute has been added.</blockquote>\r" +
+	    "\n")]
 		public IfcCostItemTypeEnum? PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
-		[Description(@"<EPM-HTML>
-	Component costs for which the total cost for the cost item is calculated, and then multiplied by the total <em>CostQuantities</em> if provided.  
+		[Description(@"Component costs for which the total cost for the cost item is calculated, and then multiplied by the total <em>CostQuantities</em> if provided.  
 	
 	If <em>CostQuantities</em> is provided then values indicate unit costs, otherwise values indicate total costs.
 	
 	For calculation purposes, the cost values may be directly added unless they have qualifications.  Cost values with qualifications (e.g. <em>IfcCostValue.ApplicableDate</em>, <em>IfcCostValue.FixedUntilDate</em>) should be excluded from such calculation if they do not apply.
 	
 	<blockquote class=""change-ifc2x4"">IFC4 CHANGE  The attribute has been added.</blockquote>
-	
-	</EPM-HTML>
 	")]
 		public IList<IfcCostValue> CostValues { get { return this._CostValues; } }
 	
-		[Description("<EPM-HTML>\r\nComponent quantities of the same type for which the total quantity fo" +
-	    "r the cost item is calculated as the sum.\r\n<blockquote class=\"change-ifc2x4\">IFC" +
-	    "4 CHANGE  The attribute has been added.</blockquote>\r\n</EPM-HTML>\r\n\r\n\r\n\r\n")]
+		[Description("Component quantities of the same type for which the total quantity for the cost i" +
+	    "tem is calculated as the sum.\r\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE  Th" +
+	    "e attribute has been added.</blockquote>\r\n\r\n\r\n\r\n")]
 		public IList<IfcPhysicalQuantity> CostQuantities { get { return this._CostQuantities; } }
 	
 	

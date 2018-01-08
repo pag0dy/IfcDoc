@@ -39,20 +39,17 @@ namespace BuildingSmart.IFC.IfcSharedBldgElements
 		ISet<IfcRelCoversBldgElements> _CoversElements = new HashSet<IfcRelCoversBldgElements>();
 	
 	
-		[Description(@"<EPM-HTML>
-	Predefined types to define the particular type of the covering. There may be property set definitions available for each predefined type.
-	<blockquote class=""note"">NOTE&nbsp; The <em>PredefinedType</em> shall only be used, if no <em>IfcCoveringType</em> is assigned, providing its own <em>IfcCoveringType.PredefinedType</em>.</blockquote>
-	</EPM-HTML>")]
+		[Description(@"Predefined types to define the particular type of the covering. There may be property set definitions available for each predefined type.
+	<blockquote class=""note"">NOTE&nbsp; The <em>PredefinedType</em> shall only be used, if no <em>IfcCoveringType</em> is assigned, providing its own <em>IfcCoveringType.PredefinedType</em>.</blockquote>")]
 		public IfcCoveringTypeEnum? PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
-		[Description("<EPM-HTML>\r\nReference to the objectified relationship that handles the relationsh" +
-	    "ip of the covering to the covered space.\r\n</EPM-HTML>")]
+		[Description("Reference to the objectified relationship that handles the relationship of the co" +
+	    "vering to the covered space.")]
 		public ISet<IfcRelCoversSpaces> CoversSpaces { get { return this._CoversSpaces; } }
 	
-		[Description("<EPM-HTML>\r\nReference to the objectified relationship that handles the relationsh" +
-	    "ip of the covering to the covered element.\r\n<blockquote class=\"change-ifc2x4\">IF" +
-	    "C4 CHANGE  Renamed into <em>CoversElements</em> for consistency.\r\n</blockquote>\r" +
-	    "\n</EPM-HTML>\r\n")]
+		[Description("Reference to the objectified relationship that handles the relationship of the co" +
+	    "vering to the covered element.\r\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE  R" +
+	    "enamed into <em>CoversElements</em> for consistency.\r\n</blockquote>\r\n")]
 		public ISet<IfcRelCoversBldgElements> CoversElements { get { return this._CoversElements; } }
 	
 	

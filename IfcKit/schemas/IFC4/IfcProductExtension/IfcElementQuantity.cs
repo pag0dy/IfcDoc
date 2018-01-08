@@ -42,10 +42,9 @@ namespace BuildingSmart.IFC.IfcProductExtension
 		ISet<IfcPhysicalQuantity> _Quantities = new HashSet<IfcPhysicalQuantity>();
 	
 	
-		[Description(@"<EPM-HTML>Name of the method of measurement used to calculate the element quantity. The method of measurement attribute has to be made recognizable by further agreements.
+		[Description(@"Name of the method of measurement used to calculate the element quantity. The method of measurement attribute has to be made recognizable by further agreements.
 	
-	<blockquote class=""change-ifc2x2"">IFC2x2 Addendum 1 change: The attribute has been changed to be optional </blockquote>
-	</EPM-HTML>")]
+	<blockquote class=""change-ifc2x2"">IFC2x2 Addendum 1 change: The attribute has been changed to be optional </blockquote>")]
 		public IfcLabel? MethodOfMeasurement { get { return this._MethodOfMeasurement; } set { this._MethodOfMeasurement = value;} }
 	
 		[Description("The individual quantities for the element, can be a set of length, area, volume, " +

@@ -35,13 +35,11 @@ namespace BuildingSmart.IFC.IfcMaterialResource
 		IfcLengthMeasure _OffsetValues;
 	
 	
-		[Description("<EPM-HTML>\r\nOrientation of the offset; shall be perpendicular to the parent layer" +
-	    " set direction.\r\n</EPM-HTML>\r\n")]
+		[Description("Orientation of the offset; shall be perpendicular to the parent layer set directi" +
+	    "on.\r\n")]
 		public IfcLayerSetDirectionEnum OffsetDirection { get { return this._OffsetDirection; } set { this._OffsetDirection = value;} }
 	
-		[Description(@"<EPM-HTML>
-	The numerical value of layer offset, in the direction of the axis assigned by the attribute <em>OffsetDirection</em>. The <em>OffsetValues[1]</em> identifies the offset from the lower position along the axis direction (normally the start of the standard extrusion), the <em>OffsetValues[2]</em> identifies the offset from the upper position along the axis direction (normally the end of the standard extrusion).
-	</EPM-HTML>")]
+		[Description(@"The numerical value of layer offset, in the direction of the axis assigned by the attribute <em>OffsetDirection</em>. The <em>OffsetValues[1]</em> identifies the offset from the lower position along the axis direction (normally the start of the standard extrusion), the <em>OffsetValues[2]</em> identifies the offset from the upper position along the axis direction (normally the end of the standard extrusion).")]
 		public IfcLengthMeasure OffsetValues { get { return this._OffsetValues; } set { this._OffsetValues = value;} }
 	
 	

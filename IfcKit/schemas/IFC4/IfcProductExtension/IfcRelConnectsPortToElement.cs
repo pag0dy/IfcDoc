@@ -47,9 +47,9 @@ namespace BuildingSmart.IFC.IfcProductExtension
 		[Description("Reference to an Port that is connected by the objectified relationship.")]
 		public IfcPort RelatingPort { get { return this._RelatingPort; } set { this._RelatingPort = value;} }
 	
-		[Description("<EPM-HTML>\r\nReference to an <em>IfcDistributionElement</em> that has ports assign" +
-	    "ed.\r\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE  Data type restricted to <em>" +
-	    "IfcDistributionElement</em>.</blockquote>\r\n</EPM-HTML>")]
+		[Description("Reference to an <em>IfcDistributionElement</em> that has ports assigned.\r\n<blockq" +
+	    "uote class=\"change-ifc2x4\">IFC4 CHANGE  Data type restricted to <em>IfcDistribut" +
+	    "ionElement</em>.</blockquote>")]
 		public IfcDistributionElement RelatedElement { get { return this._RelatedElement; } set { this._RelatedElement = value;} }
 	
 	

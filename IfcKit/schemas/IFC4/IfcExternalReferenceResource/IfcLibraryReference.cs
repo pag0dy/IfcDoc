@@ -44,22 +44,21 @@ namespace BuildingSmart.IFC.IfcExternalReferenceResource
 		ISet<IfcRelAssociatesLibrary> _LibraryRefForObjects = new HashSet<IfcRelAssociatesLibrary>();
 	
 	
-		[Description("<EPM-HTML>\r\nAdditional description provided for the library reference.\r\n<blockquo" +
-	    "te class=\"change-ifc2x4\">\r\n  IFC4 CHANGE&nbsp; New attribute added at the end of" +
-	    " the attribute list.\r\n</blockquote>\r\n</EPM-HTML>")]
+		[Description("Additional description provided for the library reference.\r\n<blockquote class=\"ch" +
+	    "ange-ifc2x4\">\r\n  IFC4 CHANGE&nbsp; New attribute added at the end of the attribu" +
+	    "te list.\r\n</blockquote>")]
 		public IfcText? Description { get { return this._Description; } set { this._Description = value;} }
 	
-		[Description("<EPM-HTML>The language in which a library reference is expressed.\r\n<blockquote cl" +
-	    "ass=\"change-ifc2x4\">\r\n  IFC4 CHANGE&nbsp; New attribute added at the end of the " +
-	    "attribute list.\r\n</blockquote>\r\n</EPM-HTML>")]
+		[Description("The language in which a library reference is expressed.\r\n<blockquote class=\"chang" +
+	    "e-ifc2x4\">\r\n  IFC4 CHANGE&nbsp; New attribute added at the end of the attribute " +
+	    "list.\r\n</blockquote>")]
 		public IfcLanguageId? Language { get { return this._Language; } set { this._Language = value;} }
 	
-		[Description("<EPM-HTML>The library information that is being referenced.</EPM-HTML>")]
+		[Description("The library information that is being referenced.")]
 		public IfcLibraryInformation ReferencedLibrary { get { return this._ReferencedLibrary; } set { this._ReferencedLibrary = value;} }
 	
-		[Description("<EPM-HTML>\r\nThe library reference with which objects are associated.\r\n<blockquote" +
-	    " class=\"change-ifc2x4\">\r\n  IFC4 CHANGE&nbsp; New inverse attribute.\r\n</blockquot" +
-	    "e>\r\n</EPM-HTML>")]
+		[Description("The library reference with which objects are associated.\r\n<blockquote class=\"chan" +
+	    "ge-ifc2x4\">\r\n  IFC4 CHANGE&nbsp; New inverse attribute.\r\n</blockquote>")]
 		public ISet<IfcRelAssociatesLibrary> LibraryRefForObjects { get { return this._LibraryRefForObjects; } }
 	
 	

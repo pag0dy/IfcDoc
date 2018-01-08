@@ -28,9 +28,9 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 		IList<IfcSurfaceTexture> _Textures = new List<IfcSurfaceTexture>();
 	
 	
-		[Description("<EPM-HTML>\r\nThe textures applied to the surface. In case of more than one surface" +
-	    " texture is included, the <em>IfcSurfaceStyleWithTexture</em> defines a multi te" +
-	    "xture.\r\n</EMP-HTML>")]
+		[Description("The textures applied to the surface. In case of more than one surface texture is " +
+	    "included, the <em>IfcSurfaceStyleWithTexture</em> defines a multi texture.\r\n</EM" +
+	    "P-HTML>")]
 		public IList<IfcSurfaceTexture> Textures { get { return this._Textures; } }
 	
 	

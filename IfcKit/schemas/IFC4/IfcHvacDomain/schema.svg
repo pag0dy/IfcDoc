@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<svg xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="1.1" width="0" height="0" xmlns="http://www.w3.org/2000/svg">
+<svg xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="1.1" width="2400" height="888" xmlns="http://www.w3.org/2000/svg">
   <g id="IfcAirTerminal" fill="yellow">
     <rect x="1663.313625" y="564.90855" width="120.825" height="37.5" stroke="black" />
     <text x="1723.726125" y="583.65855" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcAirTerminal</text>
@@ -663,81 +663,159 @@
   <g id="IFCSHAREDBLDGSERVICEELEMENTS">
     <g id="IfcEnergyConversionDeviceType" fill="grey">
       <rect x="8.433043875" y="9.05580225" width="228.4904475" height="85.06340625" stroke="black" />
+      <polyline points="118.65173625,94.11921 118.65173625,133.12477875 12.06958875,133.12477875 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="12.06958875,133.12477875 12.069589125,169.18986375 26.17633275,169.18986375 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="12.06958875,133.12477875 12.069589125,214.95706875 26.1811065,214.95706875 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="12.06958875,133.12477875 12.069589125,260.33980125 26.169744,260.33980125 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="12.06958875,133.12477875 12.069589125,306.0951075 26.20907775,306.0951075 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="12.06958875,133.12477875 12.069589125,352.23319875 26.1935265,352.23319875 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="12.06958875,133.12477875 12.069589125,398.390475 26.20990275,398.390475 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="12.06958875,133.12477875 12.069589125,444.53055 26.19736275,444.53055 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="12.06958875,133.12477875 12.069589125,490.6746 26.18168025,490.6746 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="12.06958875,133.12477875 12.069589125,536.8007625 26.20461525,536.8007625 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="12.06958875,133.12477875 12.069589125,582.9280125 26.15962275,582.9280125 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="12.06958875,133.12477875 12.069589125,629.189625 26.18462025,629.189625 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="12.06958875,133.12477875 12.069589125,675.5170125 26.1864165,675.5170125 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="12.06958875,133.12477875 12.069589125,721.8643125 26.15761275,721.8643125 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="12.06958875,133.12477875 12.069589125,768.1940625 26.144964,768.1940625 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="12.06958875,133.12477875 12.06959025,814.0557375 26.172289125,814.0557375 " fill="none" stroke="black" stroke-width="3" />
       <text x="122.678267625" y="51.587505375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCSHAREDBLDGSERVICEELEMENTS
 IfcEnergyConversionDeviceType</text>
     </g>
     <g id="IfcFlowMovingDeviceType" fill="grey">
       <rect x="1210.889625" y="12.7137075" width="229.49745375" height="86.11340625" stroke="black" />
+      <polyline points="1317.5497875,98.82711375 1317.5497875,128.90078025 1209.02144625,128.90078025 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="1209.02144625,128.90078025 1209.02145,228.35112 1222.968663,228.35112 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="1209.02144625,128.90078025 1209.02145,169.73601375 1222.9644705,169.73601375 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="1209.02144625,128.90078025 1209.02145,287.27193375 1222.934058,287.27193375 " fill="none" stroke="black" stroke-width="3" />
       <text x="1325.638351875" y="55.770410625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCSHAREDBLDGSERVICEELEMENTS
 IfcFlowMovingDeviceType</text>
     </g>
     <g id="IfcFlowControllerType" fill="grey">
       <rect x="1809.7713" y="13.5916455" width="203.46889125" height="85.06340625" stroke="black" />
+      <polyline points="1911.505725,98.6550525 1911.505725,127.960662 1807.84911,127.960662 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="1807.84911,127.960662 1807.849125,228.579795 1817.850282,228.579795 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="1807.84911,127.960662 1807.849125,171.1037325 1817.8503945,171.1037325 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="1807.84911,127.960662 1807.849125,345.3630975 1817.825082,345.3630975 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="1807.84911,127.960662 1807.849125,288.04729875 1817.827932,288.04729875 " fill="none" stroke="black" stroke-width="3" />
       <text x="1911.505745625" y="56.123348625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCSHAREDBLDGSERVICEELEMENTS
 IfcFlowControllerType</text>
     </g>
     <g id="IfcFlowFittingType" fill="grey">
       <rect x="608.007975" y="11.627550375" width="203.2851975" height="86.10754125" stroke="black" />
+      <polyline points="709.6506,97.73509125 709.6506,132.545292375 609.4776225,132.545292375 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="609.4776225,132.545292375 609.4776375,223.64008125 627.150088875,223.64008125 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="609.4776225,132.545292375 609.4776375,170.06709375 627.153276375,170.06709375 " fill="none" stroke="black" stroke-width="3" />
       <text x="709.65057375" y="54.681321" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCSHAREDBLDGSERVICEELEMENTS
 IfcFlowFittingType</text>
     </g>
     <g id="IfcFlowStorageDeviceType" fill="grey">
       <rect x="1811.7656625" y="451.3565625" width="204.7271775" height="87.831645" stroke="black" />
+      <polyline points="1914.129225,539.1882 1914.129225,555.26357775 1805.3996775,555.26357775 1805.3996775,584.754326625 1815.8452305,584.754326625 " fill="none" stroke="black" stroke-width="3" />
       <text x="1914.12925125" y="495.272385" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCSHAREDBLDGSERVICEELEMENTS
 IfcFlowStorageDeviceType</text>
     </g>
     <g id="IfcFlowTerminalType" fill="grey">
       <rect x="1212.8889" y="449.1825" width="203.62207875" height="85.56672375" stroke="black" />
+      <polyline points="1304.571,534.7492125 1304.571,550.023805875 1209.2058675,550.023805875 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="1209.2058675,550.023805875 1209.2058375,583.796775 1222.95907725,583.796775 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="1209.2058675,550.023805875 1209.2058375,641.628825 1222.94257725,641.628825 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="1209.2058675,550.023805875 1209.205875,694.106325 1223.173407375,694.106325 " fill="none" stroke="black" stroke-width="3" />
       <text x="1314.699939375" y="491.965861875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCSHAREDBLDGSERVICEELEMENTS
 IfcFlowTerminalType</text>
     </g>
     <g id="IfcFlowTreatmentDeviceType" fill="grey">
       <rect x="609.0555" y="598.2944625" width="203.3275425" height="85.30511625" stroke="black" />
+      <polyline points="710.719275,683.599575 710.719275,700.8556875 614.00093625,700.8556875 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="614.00093625,700.8556875 614.0009625,805.312875 627.166169625,805.312875 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="614.00093625,700.8556875 614.0009625,751.961325 627.166169625,751.961325 " fill="none" stroke="black" stroke-width="3" />
       <text x="710.71927125" y="640.947020625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCSHAREDBLDGSERVICEELEMENTS
 IfcFlowTreatmentDeviceType</text>
     </g>
     <g id="IfcFlowSegmentType" fill="grey">
       <rect x="609.0303" y="310.7529225" width="202.9247475" height="85.8820275" stroke="black" />
+      <polyline points="710.4926625,396.63495 710.4926625,417.111813375 611.5227,417.111813375 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="611.5227,417.111813375 611.5227375,469.451025 627.1659345,469.451025 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="611.5227,417.111813375 611.5227375,518.52435 627.1659345,518.52435 " fill="none" stroke="black" stroke-width="3" />
       <text x="710.49267375" y="353.69393625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCSHAREDBLDGSERVICEELEMENTS
 IfcFlowSegmentType</text>
     </g>
     <g id="IfcFlowFitting" fill="grey">
       <rect x="989.0201625" y="12.036960375" width="203.311995" height="86.13368625" stroke="black" />
+      <polyline points="1090.1728125,98.17065 1090.1728125,129.337382625 1189.8597975,129.337382625 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="1189.8597975,129.337382625 1189.859775,170.04638625 1174.336821375,170.04638625 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="1189.8597975,129.337382625 1189.859775,223.64972625 1174.335171375,223.64972625 " fill="none" stroke="black" stroke-width="3" />
       <text x="1090.67616" y="55.1038035" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCSHAREDBLDGSERVICEELEMENTS
 IfcFlowFitting</text>
     </g>
     <g id="IfcFlowSegment" fill="grey">
       <rect x="987.983175" y="312.0423375" width="203.942355" height="86.13368625" stroke="black" />
+      <polyline points="1089.9543375,398.17605 1089.9543375,418.614130875 1189.19952375,418.614130875 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="1189.19952375,418.614130875 1189.1995125,469.45005 1174.340395125,469.45005 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="1189.19952375,418.614130875 1189.1995125,518.51715 1174.353666375,518.51715 " fill="none" stroke="black" stroke-width="3" />
       <text x="1089.9543525" y="355.109180625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCSHAREDBLDGSERVICEELEMENTS
 IfcFlowSegment</text>
     </g>
     <g id="IfcFlowTreatmentDevice" fill="grey">
       <rect x="984.6228375" y="600.8048625" width="207.354075" height="85.30511625" stroke="black" />
+      <polyline points="1088.299875,686.109975 1088.299875,709.390729875 1188.37868625,709.390729875 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="1188.37868625,709.390729875 1188.378675,751.978125 1174.349597625,751.978125 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="1188.37868625,709.390729875 1188.378675,808.3314 1174.342952625,808.3314 " fill="none" stroke="black" stroke-width="3" />
       <text x="1088.299875" y="643.457420625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCSHAREDBLDGSERVICEELEMENTS
 IfcFlowTreatmentDevice</text>
     </g>
     <g id="IfcFlowMovingDevice" fill="grey">
       <rect x="1587.791625" y="12.230329125" width="203.428065" height="86.13368625" stroke="black" />
+      <polyline points="1690.5122625,98.364015 1690.5122625,128.17197075 1792.74402,128.17197075 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="1792.74402,128.17197075 1792.7440125,169.932405 1785.161797875,169.932405 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="1792.74402,128.17197075 1792.7440125,228.31711875 1784.155165125,228.31711875 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="1792.74402,128.17197075 1792.7440125,286.7018325 1783.148532,286.7018325 " fill="none" stroke="black" stroke-width="3" />
       <text x="1689.5056575" y="55.29717225" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCSHAREDBLDGSERVICEELEMENTS
 IfcFlowMovingDevice</text>
     </g>
     <g id="IfcFlowTerminal" fill="grey">
       <rect x="1582.7666625" y="451.12245" width="203.44899" height="86.13368625" stroke="black" />
+      <polyline points="1684.49115,537.2561625 1684.49115,551.082372 1791.17051625,551.082372 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="1791.17051625,551.082372 1791.1705125,583.65855 1784.1386025,583.65855 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="1791.17051625,551.082372 1791.1705125,642.043275 1783.131969375,642.043275 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="1791.17051625,551.082372 1791.1705125,692.0930625 1782.9074445,692.0930625 " fill="none" stroke="black" stroke-width="3" />
       <text x="1684.4911575" y="494.189293125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCSHAREDBLDGSERVICEELEMENTS
 IfcFlowTerminal</text>
     </g>
     <g id="IfcFlowController" fill="grey">
       <rect x="2187.6214125" y="10.2483045" width="203.9224575" height="86.13368625" stroke="black" />
+      <polyline points="2289.5826375,96.38199 2289.5826375,126.799354875 2391.00635625,126.799354875 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="2391.00635625,126.799354875 2391.006375,173.1339375 2379.94226625,173.1339375 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="2391.00635625,126.799354875 2391.006375,228.56558625 2378.9481495,228.56558625 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="2391.00635625,126.799354875 2391.006375,288.04596375 2377.985128125,288.04596375 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="2391.00635625,126.799354875 2391.006375,345.38297625 2377.945330125,345.38297625 " fill="none" stroke="black" stroke-width="3" />
       <text x="2289.58264125" y="53.315147625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCSHAREDBLDGSERVICEELEMENTS
 IfcFlowController</text>
     </g>
     <g id="IfcFlowStorageDevice" fill="grey">
       <rect x="2184.1125" y="451.125" width="203.40816375" height="86.13368625" stroke="black" />
+      <polyline points="2289.8431125,537.258675 2289.8431125,555.082542375 2391.38154375,555.082542375 2391.38154375,584.665184625 2379.9782355,584.665184625 " fill="none" stroke="black" stroke-width="3" />
       <text x="2285.816581875" y="494.191843125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCSHAREDBLDGSERVICEELEMENTS
 IfcFlowStorageDevice</text>
     </g>
     <g id="IfcEnergyConversionDevice" fill="grey">
       <rect x="388.1688375" y="10.237206375" width="204.2556075" height="86.13368625" stroke="black" />
+      <polyline points="488.283375,96.37089375 488.283375,132.828056625 592.2678375,132.828056625 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="592.2678375,132.828056625 592.2678375,169.167225 582.9290175,169.167225 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="592.2678375,132.828056625 592.2678375,214.95768375 582.923175,214.95768375 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="592.2678375,132.828056625 592.2678375,261.05310375 582.923144625,261.05310375 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="592.2678375,132.828056625 592.2678375,304.66179 582.923144625,304.66179 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="592.2678375,132.828056625 592.2678375,350.85797625 582.923144625,350.85797625 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="592.2678375,132.828056625 592.2678375,397.0166625 582.899676375,397.0166625 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="592.2678375,132.828056625 592.2678375,443.1753375 582.923144625,443.1753375 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="592.2678375,132.828056625 592.2678375,489.37155 582.923144625,489.37155 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="592.2678375,132.828056625 592.2678375,535.530225 582.923144625,535.530225 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="592.2678375,132.828056625 592.2678375,581.6827875 582.94812825,581.6827875 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="592.2678375,132.828056625 592.2678375,627.898875 582.926469,627.898875 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="592.2678375,132.828056625 592.2678375,674.26395 582.922117875,674.26395 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="592.2678375,132.828056625 592.2678375,720.6415125 582.9137085,720.6415125 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="592.2678375,132.828056625 592.2678375,767.057625 582.937176375,767.057625 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="592.2678375,132.828056625 592.2678375,813.9057375 583.161989625,813.9057375 " fill="none" stroke="black" stroke-width="3" />
       <text x="490.29664125" y="53.3040495" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCSHAREDBLDGSERVICEELEMENTS
 IfcEnergyConversionDevice</text>
     </g>
@@ -745,14 +823,21 @@ IfcEnergyConversionDevice</text>
   <g id="IFCSHAREDCOMPONENTELEMENTS">
     <g id="IfcElementComponentType" fill="grey">
       <rect x="1810.7679" y="671.5003875" width="204.69806625" height="85.8820275" stroke="black" />
+      <polyline points="1909.090425,757.3824375 1909.090425,784.66942275 1811.31231375,784.66942275 1811.31231375,830.7064065 1820.84486775,830.7064065 " fill="none" stroke="black" stroke-width="3" />
       <text x="1913.116933125" y="714.44140125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCSHAREDCOMPONENTELEMENTS
 IfcElementComponentType</text>
     </g>
     <g id="IfcElementComponent" fill="grey">
       <rect x="2189.59815" y="671.537475" width="197.9015325" height="86.13368625" stroke="black" />
+      <polyline points="2288.5489125,757.6711875 2288.5489125,785.23220175 2392.59799125,785.23220175 2392.59799125,831.29029425 2380.976692125,831.29029425 " fill="none" stroke="black" stroke-width="3" />
       <text x="2288.54891625" y="714.604318125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCSHAREDCOMPONENTELEMENTS
 IfcElementComponent</text>
     </g>
   </g>
-  <g />
+  <g>
+    <rect x="0" y="0" width="600" height="888" fill="none" stroke="lime" />
+    <rect x="600" y="0" width="600" height="888" fill="none" stroke="lime" />
+    <rect x="1200" y="0" width="600" height="888" fill="none" stroke="lime" />
+    <rect x="1800" y="0" width="600" height="888" fill="none" stroke="lime" />
+  </g>
 </svg>

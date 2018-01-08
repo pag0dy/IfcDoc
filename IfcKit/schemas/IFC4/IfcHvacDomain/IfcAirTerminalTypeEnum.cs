@@ -18,16 +18,22 @@ namespace BuildingSmart.IFC.IfcHvacDomain
 	[Guid("2a1d1a8d-13ee-429e-b316-c186dd2f7bfe")]
 	public enum IfcAirTerminalTypeEnum
 	{
+		[Description("An outlet discharging supply air in various directions and planes.")]
 		DIFFUSER = 1,
 	
+		[Description("A covering for any area through which air passes.")]
 		GRILLE = 2,
 	
+		[Description("A rectilinear louvre.")]
 		LOUVRE = 3,
 	
+		[Description("A grille typically equipped with a damper or control valve.")]
 		REGISTER = 4,
 	
+		[Description("User-defined air terminal type.")]
 		USERDEFINED = -1,
 	
+		[Description("Undefined air terminal type.")]
 		NOTDEFINED = 0,
 	
 	}

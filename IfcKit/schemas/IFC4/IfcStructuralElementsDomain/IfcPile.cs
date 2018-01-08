@@ -30,22 +30,15 @@ namespace BuildingSmart.IFC.IfcStructuralElementsDomain
 		IfcPileConstructionEnum? _ConstructionType;
 	
 	
-		[Description(@"<EPM-HTML>
-	
-	The predefined generic type of the pile according to function.
-	
-	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; Attribute made optional.  Type information can be provided by <em>IfcRelDefinesByType</em> and <em>IfcPileType</em>.</blockquote>
-	
-	</EPM-HTML>")]
+		[Description("The predefined generic type of the pile according to function.\r\n\r\n<blockquote cla" +
+	    "ss=\"change-ifc2x4\">IFC4 CHANGE&nbsp; Attribute made optional.  Type information " +
+	    "can be provided by <em>IfcRelDefinesByType</em> and <em>IfcPileType</em>.</block" +
+	    "quote>")]
 		public IfcPileTypeEnum? PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
-		[Description(@"<EPM-HTML>
+		[Description(@"Deprecated.
 	
-	Deprecated.
-	
-	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; Material profile association capability by means of <em>IfcRelAssociatesMaterial</em> has been added.  The attribute <em>ConstructionType</em> should not be used whenever its information can be provided by a material profile set, either associated with the <em>IfcPile</em> object or, if present, with a corresponding instance of <em>IfcPileType</em>.</blockquote>
-	
-	</EPM-HTML>")]
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; Material profile association capability by means of <em>IfcRelAssociatesMaterial</em> has been added.  The attribute <em>ConstructionType</em> should not be used whenever its information can be provided by a material profile set, either associated with the <em>IfcPile</em> object or, if present, with a corresponding instance of <em>IfcPileType</em>.</blockquote>")]
 		public IfcPileConstructionEnum? ConstructionType { get { return this._ConstructionType; } set { this._ConstructionType = value;} }
 	
 	

@@ -29,9 +29,9 @@ namespace BuildingSmart.IFC.IfcMaterialResource
 		ISet<IfcRelAssociatesMaterial> _AssociatedTo = new HashSet<IfcRelAssociatesMaterial>();
 	
 	
-		[Description("<EPM-HTML>\r\nUse of the <em>IfcMaterialUsageDefinition</em> subtypes within the ma" +
-	    "terial association of an element occurrence. The association is established by t" +
-	    "he <em>IfcRelAssociatesMaterial</em> relationship.\r\n</EPM-HTML>")]
+		[Description("Use of the <em>IfcMaterialUsageDefinition</em> subtypes within the material assoc" +
+	    "iation of an element occurrence. The association is established by the <em>IfcRe" +
+	    "lAssociatesMaterial</em> relationship.")]
 		public ISet<IfcRelAssociatesMaterial> AssociatedTo { get { return this._AssociatedTo; } }
 	
 	

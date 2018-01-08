@@ -24,12 +24,14 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 	public partial class IfcBSplineSurfaceWithKnots : IfcBSplineSurface
 	{
 		[DataMember(Order=0)] 
+		[XmlAttribute]
 		[Required()]
-		IList<Int64> _UMultiplicities = new List<Int64>();
+		IList<IfcInteger> _UMultiplicities = new List<IfcInteger>();
 	
 		[DataMember(Order=1)] 
+		[XmlAttribute]
 		[Required()]
-		IList<Int64> _VMultiplicities = new List<Int64>();
+		IList<IfcInteger> _VMultiplicities = new List<IfcInteger>();
 	
 		[DataMember(Order=2)] 
 		[XmlAttribute]
@@ -47,23 +49,19 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		IfcKnotType _KnotSpec;
 	
 	
-		[Description("<EPM-HTML>\r\nThe multiplicities of the knots in the <em>u</em> parameter direction" +
-	    ".\r\n</EPM-HTML>")]
-		public IList<Int64> UMultiplicities { get { return this._UMultiplicities; } }
+		[Description("The multiplicities of the knots in the <em>u</em> parameter direction.")]
+		public IList<IfcInteger> UMultiplicities { get { return this._UMultiplicities; } }
 	
-		[Description("<EPM-HTML>\r\nThe multiplicities of the knots in the <em>v</em> parameter direction" +
-	    ".\r\n</EPM-HTML>")]
-		public IList<Int64> VMultiplicities { get { return this._VMultiplicities; } }
+		[Description("The multiplicities of the knots in the <em>v</em> parameter direction.")]
+		public IList<IfcInteger> VMultiplicities { get { return this._VMultiplicities; } }
 	
-		[Description("<EPM-HTML>\r\nThe list of the distinct knots in the <em>u</em> parameter direction." +
-	    "\r\n</EPM-HTML>")]
+		[Description("The list of the distinct knots in the <em>u</em> parameter direction.")]
 		public IList<IfcParameterValue> UKnots { get { return this._UKnots; } }
 	
-		[Description("<EPM-HTML>\r\nThe list of the distinct knots in the <em>v</em> parameter direction." +
-	    "\r\n</EPM-HTML>")]
+		[Description("The list of the distinct knots in the <em>v</em> parameter direction.")]
 		public IList<IfcParameterValue> VKnots { get { return this._VKnots; } }
 	
-		[Description("<EPM-HTML>\r\nThe description of the knot type.\r\n</EPM-HTML>")]
+		[Description("The description of the knot type.")]
 		public IfcKnotType KnotSpec { get { return this._KnotSpec; } set { this._KnotSpec = value;} }
 	
 	

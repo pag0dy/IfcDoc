@@ -24,12 +24,13 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 	public partial class IfcRationalBSplineCurveWithKnots : IfcBSplineCurveWithKnots
 	{
 		[DataMember(Order=0)] 
+		[XmlAttribute]
 		[Required()]
-		IList<Double> _WeightsData = new List<Double>();
+		IList<IfcReal> _WeightsData = new List<IfcReal>();
 	
 	
-		[Description("<EPM-HTML>\r\nThe supplied values of the weights.\r\n</EPM-HTML>")]
-		public IList<Double> WeightsData { get { return this._WeightsData; } }
+		[Description("The supplied values of the weights.")]
+		public IList<IfcReal> WeightsData { get { return this._WeightsData; } }
 	
 	
 	}

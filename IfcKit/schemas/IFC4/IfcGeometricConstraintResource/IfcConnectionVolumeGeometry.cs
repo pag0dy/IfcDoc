@@ -32,12 +32,12 @@ namespace BuildingSmart.IFC.IfcGeometricConstraintResource
 		IfcSolidOrShell _VolumeOnRelatedElement;
 	
 	
-		[Description("<EPM-HTML>\r\nVolume at which related object overlaps with the relating element, gi" +
-	    "ven in the LCS of the relating element.\r\n</EPM-HTML>")]
+		[Description("Volume at which related object overlaps with the relating element, given in the L" +
+	    "CS of the relating element.")]
 		public IfcSolidOrShell VolumeOnRelatingElement { get { return this._VolumeOnRelatingElement; } set { this._VolumeOnRelatingElement = value;} }
 	
-		[Description("<EPM-HTML>\r\nVolume at which related object overlaps with the relating element, gi" +
-	    "ven in the LCS of the related element.\r\n</EPM-HTML>")]
+		[Description("Volume at which related object overlaps with the relating element, given in the L" +
+	    "CS of the related element.")]
 		public IfcSolidOrShell VolumeOnRelatedElement { get { return this._VolumeOnRelatedElement; } set { this._VolumeOnRelatedElement = value;} }
 	
 	

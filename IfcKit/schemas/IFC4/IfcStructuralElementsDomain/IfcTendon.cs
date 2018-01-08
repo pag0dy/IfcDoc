@@ -54,23 +54,18 @@ namespace BuildingSmart.IFC.IfcStructuralElementsDomain
 		IfcPositiveLengthMeasure? _MinCurvatureRadius;
 	
 	
-		[Description("<EPM-HTML>\r\n\r\nPredefined generic types for a tendon.\r\n\r\n<blockquote class=\"change" +
-	    "-ifc2x4\">IFC4 CHANGE&nbsp; Attribute made optional.</blockquote>\r\n\r\n</EPM-HTML>")]
+		[Description("Predefined generic types for a tendon.\r\n\r\n<blockquote class=\"change-ifc2x4\">IFC4 " +
+	    "CHANGE&nbsp; Attribute made optional.</blockquote>")]
 		public IfcTendonTypeEnum? PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
-		[Description(@"<EPM-HTML>
-	
-	The nominal diameter defining the cross-section size of the tendon.
-	
-	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; Attribute made optional and deprecated.  Use respective attribute at <em>IfcTendonType</em> instead.</blockquote>
-	
-	</EPM-HTML>")]
+		[Description("The nominal diameter defining the cross-section size of the tendon.\r\n\r\n<blockquot" +
+	    "e class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; Attribute made optional and deprecated" +
+	    ".  Use respective attribute at <em>IfcTendonType</em> instead.</blockquote>")]
 		public IfcPositiveLengthMeasure? NominalDiameter { get { return this._NominalDiameter; } set { this._NominalDiameter = value;} }
 	
-		[Description("<EPM-HTML>\r\n\r\nThe effective cross-section area of the tendon.\r\n\r\n<blockquote clas" +
-	    "s=\"change-ifc2x4\">IFC4 CHANGE&nbsp; Attribute made optional and deprecated.  Use" +
-	    " respective attribute at <em>IfcTendonType</em> instead.</blockquote>\r\n\r\n</EPM-H" +
-	    "TML>")]
+		[Description("The effective cross-section area of the tendon.\r\n\r\n<blockquote class=\"change-ifc2" +
+	    "x4\">IFC4 CHANGE&nbsp; Attribute made optional and deprecated.  Use respective at" +
+	    "tribute at <em>IfcTendonType</em> instead.</blockquote>")]
 		public IfcAreaMeasure? CrossSectionArea { get { return this._CrossSectionArea; } set { this._CrossSectionArea = value;} }
 	
 		[Description("The maximum allowed tension force that can be applied on the tendon.")]

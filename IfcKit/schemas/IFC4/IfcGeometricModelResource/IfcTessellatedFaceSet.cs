@@ -30,7 +30,8 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 		IList<IfcParameterValue> _Normals = new List<IfcParameterValue>();
 	
 		[DataMember(Order=2)] 
-		Boolean? _Closed;
+		[XmlAttribute]
+		IfcBoolean? _Closed;
 	
 		[InverseProperty("MappedTo")] 
 		[XmlElement("IfcIndexedColourMap")]
@@ -41,27 +42,26 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 		ISet<IfcIndexedTextureMap> _HasTextures = new HashSet<IfcIndexedTextureMap>();
 	
 	
-		[Description("<EPM-HTML>\r\nAn ordered list of Cartesian points used by the coordinate index defi" +
-	    "ned at the subtypes of <em>IfcTessellatedFaceSet</em>.\r\n</EPM-HTML>")]
+		[Description("An ordered list of Cartesian points used by the coordinate index defined at the s" +
+	    "ubtypes of <em>IfcTessellatedFaceSet</em>.")]
 		public IfcCartesianPointList3D Coordinates { get { return this._Coordinates; } set { this._Coordinates = value;} }
 	
-		[Description("<EPM-HTML>\r\nAn ordered list of directions used by the normal index defined at the" +
-	    " subtypes of <em>IfcTessellatedFaceSet</em>. It is a two-dimensional list of dir" +
-	    "ections provided by three parameter values.\r\n</EPM-HTML>")]
+		[Description("An ordered list of directions used by the normal index defined at the subtypes of" +
+	    " <em>IfcTessellatedFaceSet</em>. It is a two-dimensional list of directions prov" +
+	    "ided by three parameter values.")]
 		public IList<IfcParameterValue> Normals { get { return this._Normals; } }
 	
-		[Description("<EPM-HTML>\r\nIndication whether the <em>IfcTessellatedFaceSet</em> is a closed she" +
-	    "ll or not. If omited no such information can be provided.\r\n</EPM-HTML>")]
-		public Boolean? Closed { get { return this._Closed; } set { this._Closed = value;} }
+		[Description("Indication whether the <em>IfcTessellatedFaceSet</em> is a closed shell or not. I" +
+	    "f omited no such information can be provided.")]
+		public IfcBoolean? Closed { get { return this._Closed; } set { this._Closed = value;} }
 	
-		[Description("<EPM-HTML>\r\nReference to the indexed colour map providing the corresponding colou" +
-	    "r RGB values to the faces of the subtypes of <em>IfcTessellatedFaceSet</em>.\r\n</" +
-	    "EPM-HTML>")]
+		[Description("Reference to the indexed colour map providing the corresponding colour RGB values" +
+	    " to the faces of the subtypes of <em>IfcTessellatedFaceSet</em>.")]
 		public ISet<IfcIndexedColourMap> HasColours { get { return this._HasColours; } }
 	
-		[Description("<EPM-HTML>\r\nReference to the indexed texture map providing the corresponding text" +
-	    "ure coordinates to the vertices bounding the faces of the subtypes of <em>IfcTes" +
-	    "sellatedFaceSet</em>.\r\n</EPM-HTML>")]
+		[Description("Reference to the indexed texture map providing the corresponding texture coordina" +
+	    "tes to the vertices bounding the faces of the subtypes of <em>IfcTessellatedFace" +
+	    "Set</em>.")]
 		public ISet<IfcIndexedTextureMap> HasTextures { get { return this._HasTextures; } }
 	
 	

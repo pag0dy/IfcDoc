@@ -23,12 +23,12 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 	public partial class IfcIndexedTriangleTextureMap : IfcIndexedTextureMap
 	{
 		[DataMember(Order=0)] 
-		IList<Int64> _TexCoordIndex = new List<Int64>();
+		IList<IfcPositiveInteger> _TexCoordIndex = new List<IfcPositiveInteger>();
 	
 	
-		[Description("<EPM-HTML>\r\nIndex into the <em>IfcTextureVertexList</em> for each vertex of the t" +
-	    "riangles representing the <em>IfcTriangulatedFaceSet</em>.\r\n</EPM-HTML>")]
-		public IList<Int64> TexCoordIndex { get { return this._TexCoordIndex; } }
+		[Description("Index into the <em>IfcTextureVertexList</em> for each vertex of the triangles rep" +
+	    "resenting the <em>IfcTriangulatedFaceSet</em>.")]
+		public IList<IfcPositiveInteger> TexCoordIndex { get { return this._TexCoordIndex; } }
 	
 	
 	}

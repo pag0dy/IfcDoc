@@ -736,6 +736,7 @@
     <Compile Include="IfcGeometricModelResource\IfcBoundingBox.cs" />
     <Compile Include="IfcGeometricModelResource\IfcBoxedHalfSpace.cs" />
     <Compile Include="IfcGeometricModelResource\IfcCartesianPointList.cs" />
+    <Compile Include="IfcGeometricModelResource\IfcCartesianPointList2D.cs" />
     <Compile Include="IfcGeometricModelResource\IfcCartesianPointList3D.cs" />
     <Compile Include="IfcGeometricModelResource\IfcCsgPrimitive3D.cs" />
     <Compile Include="IfcGeometricModelResource\IfcCsgSolid.cs" />
@@ -766,7 +767,9 @@
     <Compile Include="IfcGeometricModelResource\IfcTessellatedFaceSet.cs" />
     <Compile Include="IfcGeometricModelResource\IfcTessellatedItem.cs" />
     <Compile Include="IfcGeometricModelResource\IfcTriangulatedFaceSet.cs" />
+    <Compile Include="IfcGeometryResource\IfcArcIndex.cs" />
     <Compile Include="IfcGeometryResource\IfcDimensionCount.cs" />
+    <Compile Include="IfcGeometryResource\IfcLineIndex.cs" />
     <Compile Include="IfcGeometryResource\IfcBSplineCurveForm.cs" />
     <Compile Include="IfcGeometryResource\IfcBSplineSurfaceForm.cs" />
     <Compile Include="IfcGeometryResource\IfcKnotType.cs" />
@@ -774,6 +777,7 @@
     <Compile Include="IfcGeometryResource\IfcTrimmingPreference.cs" />
     <Compile Include="IfcGeometryResource\IfcAxis2Placement.cs" />
     <Compile Include="IfcGeometryResource\IfcCurveOnSurface.cs" />
+    <Compile Include="IfcGeometryResource\IfcSegmentIndexSelect.cs" />
     <Compile Include="IfcGeometryResource\IfcTrimmingSelect.cs" />
     <Compile Include="IfcGeometryResource\IfcVectorOrDirection.cs" />
     <Compile Include="IfcGeometryResource\IfcAxis1Placement.cs" />
@@ -805,6 +809,7 @@
     <Compile Include="IfcGeometryResource\IfcElementarySurface.cs" />
     <Compile Include="IfcGeometryResource\IfcEllipse.cs" />
     <Compile Include="IfcGeometryResource\IfcGeometricRepresentationItem.cs" />
+    <Compile Include="IfcGeometryResource\IfcIndexedPolyCurve.cs" />
     <Compile Include="IfcGeometryResource\IfcLine.cs" />
     <Compile Include="IfcGeometryResource\IfcMappedItem.cs" />
     <Compile Include="IfcGeometryResource\IfcOffsetCurve2D.cs" />
@@ -857,6 +862,7 @@
     <Compile Include="IfcMeasureResource\IfcAngularVelocityMeasure.cs" />
     <Compile Include="IfcMeasureResource\IfcAreaDensityMeasure.cs" />
     <Compile Include="IfcMeasureResource\IfcAreaMeasure.cs" />
+    <Compile Include="IfcMeasureResource\IfcBinary.cs" />
     <Compile Include="IfcMeasureResource\IfcBoolean.cs" />
     <Compile Include="IfcMeasureResource\IfcComplexNumber.cs" />
     <Compile Include="IfcMeasureResource\IfcCompoundPlaneAngleMeasure.cs" />
@@ -916,6 +922,7 @@
     <Compile Include="IfcMeasureResource\IfcPHMeasure.cs" />
     <Compile Include="IfcMeasureResource\IfcPlanarForceMeasure.cs" />
     <Compile Include="IfcMeasureResource\IfcPlaneAngleMeasure.cs" />
+    <Compile Include="IfcMeasureResource\IfcPositiveInteger.cs" />
     <Compile Include="IfcMeasureResource\IfcPositiveLengthMeasure.cs" />
     <Compile Include="IfcMeasureResource\IfcPositivePlaneAngleMeasure.cs" />
     <Compile Include="IfcMeasureResource\IfcPositiveRatioMeasure.cs" />

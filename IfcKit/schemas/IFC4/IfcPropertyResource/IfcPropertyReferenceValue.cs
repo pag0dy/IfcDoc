@@ -11,6 +11,7 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
+using BuildingSmart.IFC.IfcApprovalResource;
 using BuildingSmart.IFC.IfcConstraintResource;
 using BuildingSmart.IFC.IfcCostResource;
 using BuildingSmart.IFC.IfcDateTimeResource;
@@ -33,15 +34,12 @@ namespace BuildingSmart.IFC.IfcPropertyResource
 		IfcObjectReferenceSelect _PropertyReference;
 	
 	
-		[Description("<EPM-HTML>\r\nDescription of the use of the referenced value within the property. I" +
-	    "t is a descriptive text that may hold an expression or other additional informat" +
-	    "ion.\r\n</EPM-HTML>")]
+		[Description("Description of the use of the referenced value within the property. It is a descr" +
+	    "iptive text that may hold an expression or other additional information.")]
 		public IfcText? UsageName { get { return this._UsageName; } set { this._UsageName = value;} }
 	
-		[Description(@"<EPM-HTML>
-	Reference to another property entity through one of the select types in the <em>IfcObjectReferenceSelect</em>.
-	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The attribute has been made optional with upward compatibility for file based exchange.</blockquote>
-	</EPM-HTML>")]
+		[Description(@"Reference to another property entity through one of the select types in the <em>IfcObjectReferenceSelect</em>.
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The attribute has been made optional with upward compatibility for file based exchange.</blockquote>")]
 		public IfcObjectReferenceSelect PropertyReference { get { return this._PropertyReference; } set { this._PropertyReference = value;} }
 	
 	

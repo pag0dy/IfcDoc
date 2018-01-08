@@ -20,8 +20,10 @@ namespace BuildingSmart.IFC.IfcProfileResource
 	[Guid("5e0f50ac-3073-4ca6-879b-0a92c83a3275")]
 	public enum IfcSectionTypeEnum
 	{
+		[Description("The section is uniform in longitudinal direction.")]
 		UNIFORM = 1,
 	
+		[Description("The section is tapered in longitudinal direction.")]
 		TAPERED = 2,
 	
 	}

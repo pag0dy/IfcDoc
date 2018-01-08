@@ -24,8 +24,10 @@ namespace BuildingSmart.IFC.IfcMaterialResource
 	[Guid("1bfd2924-8614-44a9-866a-0cc346993d4a")]
 	public enum IfcDirectionSenseEnum
 	{
+		[Description("Direction defined to be positive.")]
 		POSITIVE = 1,
 	
+		[Description("Direction defined to be negative.")]
 		NEGATIVE = 2,
 	
 	}

@@ -37,17 +37,15 @@ namespace BuildingSmart.IFC.IfcExternalReferenceResource
 		ISet<IfcResourceObjectSelect> _RelatedResourceObjects = new HashSet<IfcResourceObjectSelect>();
 	
 	
-		[Description(@"<EPM-HTML>
-	An external reference that can be used to tag an object within the range of <em>IfcResourceObjectSelect</em>.
+		[Description(@"An external reference that can be used to tag an object within the range of <em>IfcResourceObjectSelect</em>.
 	<blockquote class=""note"">
 	NOTE&nbsp; External references can be a library reference (for example a dictionary or a catalogue reference), a classification reference, or a documentation reference.<br>
-	</blockquote>
-	</EPM-HTML>")]
+	</blockquote>")]
 		public IfcExternalReference RelatingReference { get { return this._RelatingReference; } set { this._RelatingReference = value;} }
 	
-		[Description("<EPM-HTML>Objects within the list of <em>IfcResourceObjectSelect</em> that can be" +
-	    " tagged by an external reference to a dictionary, library, catalogue, classifica" +
-	    "tion or documentation.</EPM-HTML>")]
+		[Description("Objects within the list of <em>IfcResourceObjectSelect</em> that can be tagged by" +
+	    " an external reference to a dictionary, library, catalogue, classification or do" +
+	    "cumentation.")]
 		public ISet<IfcResourceObjectSelect> RelatedResourceObjects { get { return this._RelatedResourceObjects; } }
 	
 	

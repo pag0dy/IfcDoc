@@ -61,24 +61,24 @@ namespace BuildingSmart.IFC.IfcGeometricConstraintResource
 	    "the context of the grid axis.")]
 		public IfcBoolean SameSense { get { return this._SameSense; } set { this._SameSense = value;} }
 	
-		[Description("<EPM-HTML>\r\nIf provided, the <em>IfcGridAxis</em> is part of the <em>WAxes</em> o" +
-	    "f <em>IfcGrid</em>.\r\n<blockquote class=\"change-ifc2x3\">IFC2x3 CHANGE&nbsp; New i" +
-	    "nverse attribute.</blockquote>\r\n</EPM-HTML>")]
+		[Description("If provided, the <em>IfcGridAxis</em> is part of the <em>WAxes</em> of <em>IfcGri" +
+	    "d</em>.\r\n<blockquote class=\"change-ifc2x3\">IFC2x3 CHANGE&nbsp; New inverse attri" +
+	    "bute.</blockquote>")]
 		public ISet<IfcGrid> PartOfW { get { return this._PartOfW; } }
 	
-		[Description("<EPM-HTML>\r\nIf provided, the <em>IfcGridAxis</em> is part of the <em>VAxes</em> o" +
-	    "f <em>IfcGrid</em>.\r\n<blockquote class=\"change-ifc2x3\">IFC2x3 CHANGE&nbsp; New i" +
-	    "nverse attribute.</blockquote>\r\n</EPM-HTML>")]
+		[Description("If provided, the <em>IfcGridAxis</em> is part of the <em>VAxes</em> of <em>IfcGri" +
+	    "d</em>.\r\n<blockquote class=\"change-ifc2x3\">IFC2x3 CHANGE&nbsp; New inverse attri" +
+	    "bute.</blockquote>")]
 		public ISet<IfcGrid> PartOfV { get { return this._PartOfV; } }
 	
-		[Description("<EPM-HTML>\r\nIf provided, the <em>IfcGridAxis</em> is part of the <em>UAxes</em> o" +
-	    "f <em>IfcGrid</em>.\r\n<blockquote class=\"change-ifc2x3\">IFC2x3 CHANGE&nbsp; New i" +
-	    "nverse attribute.</blockquote>\r\n</EPM-HTML>")]
+		[Description("If provided, the <em>IfcGridAxis</em> is part of the <em>UAxes</em> of <em>IfcGri" +
+	    "d</em>.\r\n<blockquote class=\"change-ifc2x3\">IFC2x3 CHANGE&nbsp; New inverse attri" +
+	    "bute.</blockquote>")]
 		public ISet<IfcGrid> PartOfU { get { return this._PartOfU; } }
 	
-		[Description("<EPM-HTML>\r\nThe reference to a set of <IfcVirtualGridIntersection</em>\'s, that co" +
-	    "nnect other grid axes to this grid axis.\r\n<blockquote class=\"change-ifc2x3\">IFC2" +
-	    "x3 CHANGE&nbsp; New inverse attribute.</blockquote>\r\n</EPM-HTML>")]
+		[Description("The reference to a set of <IfcVirtualGridIntersection</em>\'s, that connect other " +
+	    "grid axes to this grid axis.\r\n<blockquote class=\"change-ifc2x3\">IFC2x3 CHANGE&nb" +
+	    "sp; New inverse attribute.</blockquote>")]
 		public ISet<IfcVirtualGridIntersection> HasIntersections { get { return this._HasIntersections; } }
 	
 	

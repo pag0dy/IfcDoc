@@ -32,8 +32,8 @@ namespace BuildingSmart.IFC.IfcSharedFacilitiesElements
 		IfcFurnitureTypeEnum? _PredefinedType;
 	
 	
-		[Description("<EPM-HTML><p>A designation of where the assembly is intended to take place. A sel" +
-	    "ection of alternatives s provided in an enumerated list.</p></EPM-HTML>")]
+		[Description("<p>A designation of where the assembly is intended to take place. A selection of " +
+	    "alternatives s provided in an enumerated list.</p>")]
 		public IfcAssemblyPlaceEnum AssemblyPlace { get { return this._AssemblyPlace; } set { this._AssemblyPlace = value;} }
 	
 		public IfcFurnitureTypeEnum? PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }

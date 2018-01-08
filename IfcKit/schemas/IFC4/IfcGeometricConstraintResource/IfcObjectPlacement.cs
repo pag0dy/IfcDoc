@@ -31,8 +31,7 @@ namespace BuildingSmart.IFC.IfcGeometricConstraintResource
 		ISet<IfcLocalPlacement> _ReferencedByPlacements = new HashSet<IfcLocalPlacement>();
 	
 	
-		[Description(@"<EPM-HTML>
-	The <em>IfcObjectPlacement</em> shall be used to provide a placement and 
+		[Description(@"The <em>IfcObjectPlacement</em> shall be used to provide a placement and 
 	an object coordinate system for instances of <em>IfcProduct</em>. 
 	<blockquote class=""note"">
 	   If an <em>IfcObjectPlacement</em> is shared by many instances of <em>IfcProduct</em> 
@@ -47,8 +46,7 @@ namespace BuildingSmart.IFC.IfcGeometricConstraintResource
 	   IFC4 CHANGE&nbsp; The cardinality has changed to 0..n to allow reuse of instances of 
 	   <em>IfcObjectPlacement</em> as placement object in one to many products. It takes also
 	   into account that it can act as a placement for <em>IfcStructuralAnalysisModel</em>.
-	</blockquote>
-	</EPM-HTML>")]
+	</blockquote>")]
 		public ISet<IfcProduct> PlacesObject { get { return this._PlacesObject; } }
 	
 		[Description("Placements that are given relative to this placement of an object.")]

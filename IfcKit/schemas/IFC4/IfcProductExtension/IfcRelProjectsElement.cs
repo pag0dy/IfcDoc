@@ -44,13 +44,13 @@ namespace BuildingSmart.IFC.IfcProductExtension
 		IfcFeatureElementAddition _RelatedFeatureElement;
 	
 	
-		[Description("<EPM-HTML>\r\nElement at which a projection is created by the associated <em>IfcPro" +
-	    "jectionElement</em>.\r\n</EPM-HTML>")]
+		[Description("Element at which a projection is created by the associated <em>IfcProjectionEleme" +
+	    "nt</em>.")]
 		public IfcElement RelatingElement { get { return this._RelatingElement; } set { this._RelatingElement = value;} }
 	
-		[Description("<EPM-HTML>\r\nReference to the <em>IfcFeatureElementAddition</em> that defines an a" +
-	    "ddition to the volume of the element, by using a Boolean addition operation. An " +
-	    "example is a projection at the associated element.\r\n</EPM-HTML>")]
+		[Description("Reference to the <em>IfcFeatureElementAddition</em> that defines an addition to t" +
+	    "he volume of the element, by using a Boolean addition operation. An example is a" +
+	    " projection at the associated element.")]
 		public IfcFeatureElementAddition RelatedFeatureElement { get { return this._RelatedFeatureElement; } set { this._RelatedFeatureElement = value;} }
 	
 	

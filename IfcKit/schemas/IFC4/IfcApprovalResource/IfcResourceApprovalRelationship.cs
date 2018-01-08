@@ -34,7 +34,7 @@ namespace BuildingSmart.IFC.IfcApprovalResource
 		IfcApproval _RelatingApproval;
 	
 	
-		[Description("<EPM-HTML>\r\nResource objects that are approved.\r\n</EPM-HTML>")]
+		[Description("Resource objects that are approved.")]
 		public ISet<IfcResourceObjectSelect> RelatedResourceObjects { get { return this._RelatedResourceObjects; } }
 	
 		[Description("The approval for the resource objects selected.")]

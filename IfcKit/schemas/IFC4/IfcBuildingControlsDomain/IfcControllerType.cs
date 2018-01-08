@@ -23,8 +23,8 @@ namespace BuildingSmart.IFC.IfcBuildingControlsDomain
 		IfcControllerTypeEnum _PredefinedType;
 	
 	
-		[Description("<EPM-HTML><p>Identifies the predefined types of controller from which the type re" +
-	    "quired may be set.</p></EPM-HTML>")]
+		[Description("<p>Identifies the predefined types of controller from which the type required may" +
+	    " be set.</p>")]
 		public IfcControllerTypeEnum PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	

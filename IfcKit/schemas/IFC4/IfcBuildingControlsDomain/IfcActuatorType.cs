@@ -23,8 +23,8 @@ namespace BuildingSmart.IFC.IfcBuildingControlsDomain
 		IfcActuatorTypeEnum _PredefinedType;
 	
 	
-		[Description("<EPM-HTML><p>Identifies the predefined types of actuator from which the type requ" +
-	    "ired may be set.</p></EPM-HTML>")]
+		[Description("<p>Identifies the predefined types of actuator from which the type required may b" +
+	    "e set.</p>")]
 		public IfcActuatorTypeEnum PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	

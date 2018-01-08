@@ -39,17 +39,16 @@ namespace BuildingSmart.IFC.IfcProcessExtension
 		IfcLabel? _UserDefinedEventTriggerType;
 	
 	
-		[Description("<EPM-HTML>\r\n    Identifies the predefined types of an event from which \r\n    the " +
-	    "type required may be set.\r\n</EPM-HTML>")]
+		[Description("    Identifies the predefined types of an event from which \r\n    the type require" +
+	    "d may be set.")]
 		public IfcEventTypeEnum PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
-		[Description("<EPM-HTML>\r\n    Identifies the predefined types of event trigger from which \r\n   " +
-	    " the type required may be set.\r\n</EPM-HTML>")]
+		[Description("    Identifies the predefined types of event trigger from which \r\n    the type re" +
+	    "quired may be set.")]
 		public IfcEventTriggerTypeEnum EventTriggerType { get { return this._EventTriggerType; } set { this._EventTriggerType = value;} }
 	
-		[Description("<EPM-HTML>\r\n    A user defined event trigger type, the value of which \r\n    is as" +
-	    "serted when the value of an event trigger type is \r\n    declared as USERDEFINED." +
-	    "\r\n</EPM-HTML>")]
+		[Description("    A user defined event trigger type, the value of which \r\n    is asserted when " +
+	    "the value of an event trigger type is \r\n    declared as USERDEFINED.")]
 		public IfcLabel? UserDefinedEventTriggerType { get { return this._UserDefinedEventTriggerType; } set { this._UserDefinedEventTriggerType = value;} }
 	
 	

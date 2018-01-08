@@ -11,6 +11,7 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcGeometryResource;
+using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 
 namespace BuildingSmart.IFC.IfcTopologyResource
@@ -25,8 +26,9 @@ namespace BuildingSmart.IFC.IfcTopologyResource
 		IfcCurve _EdgeGeometry;
 	
 		[DataMember(Order=1)] 
+		[XmlAttribute]
 		[Required()]
-		Boolean _SameSense;
+		IfcBoolean _SameSense;
 	
 	
 		[Description("The curve which defines the shape and spatial location of the edge. This curve ma" +
@@ -35,7 +37,7 @@ namespace BuildingSmart.IFC.IfcTopologyResource
 		public IfcCurve EdgeGeometry { get { return this._EdgeGeometry; } set { this._EdgeGeometry = value;} }
 	
 		[Description(@"This logical flag indicates whether (TRUE), or not (FALSE) the senses of the edge and the curve defining the edge geometry are the same. The sense of an edge is from the edge start vertex to the edge end vertex; the sense of a curve is in the direction of increasing parameter. ")]
-		public Boolean SameSense { get { return this._SameSense; } set { this._SameSense = value;} }
+		public IfcBoolean SameSense { get { return this._SameSense; } set { this._SameSense = value;} }
 	
 	
 	}

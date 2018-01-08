@@ -57,23 +57,21 @@ namespace BuildingSmart.IFC.IfcConstraintResource
 		ISet<IfcExternalReferenceRelationship> _HasExternalReferences = new HashSet<IfcExternalReferenceRelationship>();
 	
 		[InverseProperty("RelatingConstraint")] 
-		ISet<IfcResourceConstraintRelationship> _ConstrainedResources = new HashSet<IfcResourceConstraintRelationship>();
-	
-		[InverseProperty("RelatingConstraint")] 
-		ISet<IfcRelAssociatesConstraint> _ConstrainedObjects = new HashSet<IfcRelAssociatesConstraint>();
+		ISet<IfcResourceConstraintRelationship> _PropertiesForConstraint = new HashSet<IfcResourceConstraintRelationship>();
 	
 	
-		[Description("A name to be used for the constraint (e.g., ChillerCoefficientOfPerformance).")]
+		[Description("A human-readable name to be used for the constraint.")]
 		public IfcLabel Name { get { return this._Name; } set { this._Name = value;} }
 	
-		[Description("A description that may apply additional information about a constraint.")]
+		[Description("A human-readable description that may apply additional information about a constr" +
+	    "aint.")]
 		public IfcText? Description { get { return this._Description; } set { this._Description = value;} }
 	
 		[Description("Enumeration that qualifies the type of constraint.")]
 		public IfcConstraintEnum ConstraintGrade { get { return this._ConstraintGrade; } set { this._ConstraintGrade = value;} }
 	
 		[Description("Any source material, such as a code or standard, from which the constraint origin" +
-	    "ated.")]
+	    "ated. ")]
 		public IfcLabel? ConstraintSource { get { return this._ConstraintSource; } set { this._ConstraintSource = value;} }
 	
 		[Description("Person and/or organization that has created the constraint.")]
@@ -86,18 +84,13 @@ namespace BuildingSmart.IFC.IfcConstraintResource
 	When a value is provided for attribute UserDefinedGrade in parallel the attribute ConstraintGrade shall have enumeration value USERDEFINED.")]
 		public IfcLabel? UserDefinedGrade { get { return this._UserDefinedGrade; } set { this._UserDefinedGrade = value;} }
 	
-		[Description("<EPM-HTML>\r\nReference to an external references, e.g. library, classification, or" +
-	    " document information, that are associated to the constraint.\r\n<blockquote class" +
-	    "=\"change-ifc2x4\">IFC4 CHANGE New inverse attribute.</blockquote>\r\n</EPM-HTML> ")]
+		[Description("Reference to an external references, e.g. library, classification, or document in" +
+	    "formation, that are associated to the constraint.\r\n<blockquote class=\"change-ifc" +
+	    "2x4\">IFC4 CHANGE New inverse attribute.</blockquote> ")]
 		public ISet<IfcExternalReferenceRelationship> HasExternalReferences { get { return this._HasExternalReferences; } }
 	
-		[Description("The set of relationships by which resource objects that are are constrained by th" +
-	    "is constraint are known.")]
-		public ISet<IfcResourceConstraintRelationship> ConstrainedResources { get { return this._ConstrainedResources; } }
-	
-		[Description("Reference to the <em>IfcRelAssociatesConstraint</em> instances associating this a" +
-	    "pproval to objects.")]
-		public ISet<IfcRelAssociatesConstraint> ConstrainedObjects { get { return this._ConstrainedObjects; } }
+		[Description("Reference to the properties to which the constraint is applied.")]
+		public ISet<IfcResourceConstraintRelationship> PropertiesForConstraint { get { return this._PropertiesForConstraint; } }
 	
 	
 	}

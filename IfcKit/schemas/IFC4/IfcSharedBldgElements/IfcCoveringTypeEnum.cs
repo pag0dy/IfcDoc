@@ -28,28 +28,45 @@ namespace BuildingSmart.IFC.IfcSharedBldgElements
 	[Guid("205a810c-493e-43c1-8a82-b1d8b32367a9")]
 	public enum IfcCoveringTypeEnum
 	{
+		[Description("The covering is used torepresent a ceiling.")]
 		CEILING = 1,
 	
+		[Description("The covering is used to represent a flooring.")]
 		FLOORING = 2,
 	
+		[Description("The covering is used to represent a cladding.")]
 		CLADDING = 3,
 	
+		[Description("The covering is used to represent a roof covering.")]
 		ROOFING = 4,
 	
+		[Description("The covering is used to represent a molding being a strip of material to cover th" +
+	    "e transition of surfaces (often between wall cladding and ceiling).")]
 		MOLDING = 5,
 	
+		[Description("The covering is used to represent a skirting board being a strip of material to c" +
+	    "over the transition between the wall cladding and the flooring.")]
 		SKIRTINGBOARD = 6,
 	
+		[Description("The covering is used to insulate an element for thermal or acoustic purposes.")]
 		INSULATION = 7,
 	
+		[Description("An impervious layer that could be used for e.g. roof covering (below tiling - tha" +
+	    "t may be known as sarking etc.) or as a damp proof course membrane.")]
 		MEMBRANE = 8,
 	
+		[Description("The covering is used to isolate a distribution element from a space in which it i" +
+	    "s contained.")]
 		SLEEVING = 9,
 	
+		[Description("The covering is used for wrapping particularly of distribution elements using tap" +
+	    "e.")]
 		WRAPPING = 10,
 	
+		[Description("User defined type of covering.")]
 		USERDEFINED = -1,
 	
+		[Description("Undefined type of covering.")]
 		NOTDEFINED = 0,
 	
 	}

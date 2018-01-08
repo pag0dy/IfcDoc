@@ -47,50 +47,45 @@ namespace BuildingSmart.IFC.IfcKernel
 		IfcUnitAssignment _UnitsInContext;
 	
 		[InverseProperty("RelatedObjects")] 
+		[XmlElement]
 		ISet<IfcRelDefinesByProperties> _IsDefinedBy = new HashSet<IfcRelDefinesByProperties>();
 	
 		[InverseProperty("RelatingContext")] 
+		[XmlElement]
 		ISet<IfcRelDeclares> _Declares = new HashSet<IfcRelDeclares>();
 	
 	
-		[Description("<EPM-HTML>\r\nThe type denotes a particular type that indicates the object further." +
-	    " The use has to be established at the level of instantiable subtypes. \r\n</EPM-HT" +
-	    "ML>")]
+		[Description(@"The object type denotes a particular type that indicates the object further. The use has to be established at the level of instantiable subtypes. 
+	<blockquote class=""note"">
+	NOTE&nbsp; Subtypes of <em>IfcContext</em> do not introduce a <em>PredefinedType</em> attribute, therefore the usage of <em>ObjectType</em> is not bound to the selection of USERDEFINED within the <em>PredefinedType</em> enumaration.
+	</blockquote>")]
 		public IfcLabel? ObjectType { get { return this._ObjectType; } set { this._ObjectType = value;} }
 	
-		[Description("<EPM-HTML>\r\nLong name for the context as used for reference purposes.\r\n</EPM-HTML" +
-	    ">")]
+		[Description("Long name for the context as used for reference purposes.")]
 		public IfcLabel? LongName { get { return this._LongName; } set { this._LongName = value;} }
 	
-		[Description("<EPM-HTML>\r\nCurrent project phase, or life-cycle phase of this project. Applicabl" +
-	    "e values have to be agreed upon by view definitions or implementer agreements.\r\n" +
-	    "</EPM-HTML> \r\n")]
+		[Description("Current project phase, or life-cycle phase of this project. Applicable values hav" +
+	    "e to be agreed upon by view definitions or implementer agreements. \r\n")]
 		public IfcLabel? Phase { get { return this._Phase; } set { this._Phase = value;} }
 	
-		[Description(@"<EPM-HTML>
-	Context of the representations used within the context. When the context is a project and it includes shape representations for its components, one or several geometric representation contexts need to be included that define e.g. the world coordinate system, the coordinate space dimensions, and/or the precision factor.
-	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The attribute has been changed to be optional. Change made with upward compatibility for file based exchange.</blockquote>
-	</EPM-HTML>")]
+		[Description(@"Context of the representations used within the context. When the context is a project and it includes shape representations for its components, one or several geometric representation contexts need to be included that define e.g. the world coordinate system, the coordinate space dimensions, and/or the precision factor.
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The attribute has been changed to be optional. Change made with upward compatibility for file based exchange.</blockquote>")]
 		public ISet<IfcRepresentationContext> RepresentationContexts { get { return this._RepresentationContexts; } }
 	
-		[Description(@"<EPM-HTML>
-	Units globally assigned to measure types used within the context.
-	<blockquote class=""note"">IFC4 CHANGE&nbsp; The attribute has been changed to be optional. Change made with upward compatibility for file based exchange.</blockquote>
-	</EPM-HTML>")]
+		[Description("Units globally assigned to measure types used within the context.\r\n<blockquote cl" +
+	    "ass=\"change-ifc2x4\">IFC4 CHANGE&nbsp; The attribute has been changed to be optio" +
+	    "nal. Change made with upward compatibility for file based exchange.</blockquote>" +
+	    "")]
 		public IfcUnitAssignment UnitsInContext { get { return this._UnitsInContext; } set { this._UnitsInContext = value;} }
 	
-		[Description(@"<EPM-HTML>
-	Set of relationships to property set definitions attached to this context. Those statically or dynamically defined properties contain alphanumeric information content that further defines the context. 
+		[Description(@"Set of relationships to property set definitions attached to this context. Those statically or dynamically defined properties contain alphanumeric information content that further defines the context. 
 	<blockquote class=""change-ifc2x4"">
 	IFC4 CHANGE&nbsp; The data type has been changed from <em>IfcRelDefines</em> to <em>IfcRelDefinesByProperties</em> with upward compatibility for file based exchange.
-	</blockquote>
-	</EPM-HTML>")]
+	</blockquote>")]
 		public ISet<IfcRelDefinesByProperties> IsDefinedBy { get { return this._IsDefinedBy; } }
 	
-		[Description(@"<EPM-HTML>
-	Reference to the <em>IfcRelDeclares</em> relationship that assigns the uppermost entities of includes hierarchies to this context instance.
-	<blockquote class=""note"">NOTE&nbsp; The spatial hiearchy is assigned to <em>IfcProject</em> using the <em>IfcRelAggregates</em> relationship. This is a single exception due to compatibility reasons with earlier releases.</blockquote>
-	</EPM-HTML>")]
+		[Description(@"Reference to the <em>IfcRelDeclares</em> relationship that assigns the uppermost entities of includes hierarchies to this context instance.
+	<blockquote class=""note"">NOTE&nbsp; The spatial hiearchy is assigned to <em>IfcProject</em> using the <em>IfcRelAggregates</em> relationship. This is a single exception due to compatibility reasons with earlier releases.</blockquote>")]
 		public ISet<IfcRelDeclares> Declares { get { return this._Declares; } }
 	
 	

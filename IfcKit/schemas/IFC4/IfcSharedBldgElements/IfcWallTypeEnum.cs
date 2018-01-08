@@ -28,26 +28,53 @@ namespace BuildingSmart.IFC.IfcSharedBldgElements
 	[Guid("b384b8f0-f9c1-4eb0-a556-e484db5ea995")]
 	public enum IfcWallTypeEnum
 	{
+		[Description("A movable wall that is either movable, such as folding wall or a sliding wall, or" +
+	    " can be easily removed as a removable partitioning or mounting wall. Movable wal" +
+	    "ls do normally not define space boundaries and often belong to the furnishing sy" +
+	    "stem.")]
 		MOVABLE = 1,
 	
+		[Description("A wall-like barrier to protect human occupants from falling, or to prevent the sp" +
+	    "read of fires. Often designed at the edge of balconies, terraces or roofs.")]
 		PARAPET = 2,
 	
+		[Description("A wall designed to partition spaces that often has a light-weight, sandwich-like " +
+	    "construction (e.g. using gypsum board). Partitioning walls are normally non load" +
+	    " bearing.")]
 		PARTITIONING = 3,
 	
+		[Description("A pier, or enclosure, or encasement, normally used to enclose plumbing in sanitar" +
+	    "y rooms. Such walls often do not extent to the ceiling.")]
 		PLUMBINGWALL = 4,
 	
+		[Description("A wall designed to withstand shear loads. Such shear walls are often designed hav" +
+	    "ing a non-rectangular cross section along the wall path. Also called retaining w" +
+	    "alls or supporting walls they are used to protect against soil layers behind.")]
 		SHEAR = 5,
 	
+		[Description("A massive wall construction for the wall core being the single layer or having mu" +
+	    "ltiple layers attached. Such walls are often masonry or concrete walls (both cas" +
+	    "t in-situ or precast) that are load bearing and fire protecting.")]
 		SOLIDWALL = 6,
 	
+		[Description("A standard wall, extruded vertically with a constant thickness along the wall pat" +
+	    "h. <blockquote class=\"deprecated\">The value is deprecated, it is expressed by ch" +
+	    "oosing the subtype <em>IfcWallStandardCase</em>.")]
 		STANDARD = 7,
 	
+		[Description("A polygonal wall, extruded vertically, where the wall thickness varies along the " +
+	    "wall path.")]
 		POLYGONAL = 8,
 	
+		[Description("A stud wall framed with studs and faced with sheetings, sidings, wallboard, or pl" +
+	    "asterwork. <blockquote class=\"deprecated\">The value is deprecated, it is\r\nexpres" +
+	    "sed by choosing the subtype <em>IfcWallElementedCase</em>.")]
 		ELEMENTEDWALL = 9,
 	
+		[Description("User-defined wall element.")]
 		USERDEFINED = -1,
 	
+		[Description("Undefined wall element.")]
 		NOTDEFINED = 0,
 	
 	}

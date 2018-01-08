@@ -40,33 +40,29 @@ namespace BuildingSmart.IFC.IfcArchitectureDomain
 		IfcDoorStyleConstructionEnum _ConstructionType;
 	
 		[DataMember(Order=2)] 
+		[XmlAttribute]
 		[Required()]
-		Boolean _ParameterTakesPrecedence;
+		IfcBoolean _ParameterTakesPrecedence;
 	
 		[DataMember(Order=3)] 
+		[XmlAttribute]
 		[Required()]
-		Boolean _Sizeable;
+		IfcBoolean _Sizeable;
 	
 	
-		[Description("<EPM-HTML>\r\nType defining the general layout and operation of the door style.\r\n<b" +
-	    "r>\r\n</EPM-HTML>")]
+		[Description("Type defining the general layout and operation of the door style.\r\n<br>")]
 		public IfcDoorStyleOperationEnum OperationType { get { return this._OperationType; } set { this._OperationType = value;} }
 	
-		[Description("<EPM-HTML>\r\nType defining the basic construction and material type of the door.\r\n" +
-	    "<br>\r\n</EPM-HTML>")]
+		[Description("Type defining the basic construction and material type of the door.\r\n<br>")]
 		public IfcDoorStyleConstructionEnum ConstructionType { get { return this._ConstructionType; } set { this._ConstructionType = value;} }
 	
-		[Description(@"<EPM-HTML>
-	The Boolean value reflects, whether the parameter given in the attached lining and panel properties exactly define the geometry (TRUE), or whether the attached style shape take precedence (FALSE). In the last case the parameter have only informative value.
-	<br>
-	</EPM-HTML>")]
-		public Boolean ParameterTakesPrecedence { get { return this._ParameterTakesPrecedence; } set { this._ParameterTakesPrecedence = value;} }
+		[Description(@"The Boolean value reflects, whether the parameter given in the attached lining and panel properties exactly define the geometry (TRUE), or whether the attached style shape take precedence (FALSE). In the last case the parameter have only informative value.
+	<br>")]
+		public IfcBoolean ParameterTakesPrecedence { get { return this._ParameterTakesPrecedence; } set { this._ParameterTakesPrecedence = value;} }
 	
-		[Description(@"<EPM-HTML>
-	The Boolean indicates, whether the attached <em>IfcMappedRepresentation</em> (if given) can be sized (using scale factor of transformation), or not (FALSE). If not, the <em>IfcMappedRepresentation</em> should be <em>IfcShapeRepresentation</em> of the <em>IfcDoor</em> (using <em>IfcMappedItem</em> as the <em>Item</em>) with the scale factor = 1.
-	<br>
-	</EPM-HTML>")]
-		public Boolean Sizeable { get { return this._Sizeable; } set { this._Sizeable = value;} }
+		[Description(@"The Boolean indicates, whether the attached <em>IfcMappedRepresentation</em> (if given) can be sized (using scale factor of transformation), or not (FALSE). If not, the <em>IfcMappedRepresentation</em> should be <em>IfcShapeRepresentation</em> of the <em>IfcDoor</em> (using <em>IfcMappedItem</em> as the <em>Item</em>) with the scale factor = 1.
+	<br>")]
+		public IfcBoolean Sizeable { get { return this._Sizeable; } set { this._Sizeable = value;} }
 	
 	
 	}

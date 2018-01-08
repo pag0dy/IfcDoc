@@ -37,15 +37,13 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 		IfcBooleanOperand _SecondOperand;
 	
 	
-		[Description("<EPM-HTML>\r\nThe Boolean operator used in the operation to create the result.\r\n</E" +
-	    "PM-HTML>")]
+		[Description("The Boolean operator used in the operation to create the result.")]
 		public IfcBooleanOperator Operator { get { return this._Operator; } set { this._Operator = value;} }
 	
-		[Description("<EPM-HTML>\r\nThe first operand to be operated upon by the Boolean operation.\r\n</EP" +
-	    "M-HTML>")]
+		[Description("The first operand to be operated upon by the Boolean operation.")]
 		public IfcBooleanOperand FirstOperand { get { return this._FirstOperand; } set { this._FirstOperand = value;} }
 	
-		[Description("<EPM-HTML>\r\nThe second operand specified for the operation.\r\n</EPM-HTML>")]
+		[Description("The second operand specified for the operation.")]
 		public IfcBooleanOperand SecondOperand { get { return this._SecondOperand; } set { this._SecondOperand = value;} }
 	
 	

@@ -21,8 +21,10 @@ namespace BuildingSmart.IFC.IfcStructuralElementsDomain
 	[Guid("f852081d-0a35-4b2a-a5ad-7a009805dc00")]
 	public enum IfcReinforcingMeshTypeEnum
 	{
+		[Description("The type of mesh is user defined.")]
 		USERDEFINED = -1,
 	
+		[Description("The type of mesh is not defined.")]
 		NOTDEFINED = 0,
 	
 	}

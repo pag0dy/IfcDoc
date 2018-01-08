@@ -21,10 +21,10 @@ namespace BuildingSmart.IFC.IfcDateTimeResource
 		[DataMember(Order=0)] 
 		[XmlElement("IfcRecurrencePattern")]
 		[Required()]
-		IfcRecurrencePattern _Recurrance;
+		IfcRecurrencePattern _Recurrence;
 	
 	
-		public IfcRecurrencePattern Recurrance { get { return this._Recurrance; } set { this._Recurrance = value;} }
+		public IfcRecurrencePattern Recurrence { get { return this._Recurrence; } set { this._Recurrence = value;} }
 	
 	
 	}

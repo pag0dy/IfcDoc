@@ -34,8 +34,9 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		IfcLengthMeasure _Distance;
 	
 		[DataMember(Order=2)] 
+		[XmlAttribute]
 		[Required()]
-		Boolean? _SelfIntersect;
+		IfcLogical _SelfIntersect;
 	
 		[DataMember(Order=3)] 
 		[XmlElement("IfcDirection")]
@@ -52,7 +53,7 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 	
 		[Description("An indication of whether the offset curve self-intersects, this is for informatio" +
 	    "n only.")]
-		public Boolean? SelfIntersect { get { return this._SelfIntersect; } set { this._SelfIntersect = value;} }
+		public IfcLogical SelfIntersect { get { return this._SelfIntersect; } set { this._SelfIntersect = value;} }
 	
 		[Description("The direction used to define the direction of the offset curve 3d from the basis " +
 	    "curve.")]

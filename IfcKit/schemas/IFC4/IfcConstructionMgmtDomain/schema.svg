@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<svg xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="1.1" width="0" height="0" xmlns="http://www.w3.org/2000/svg">
+<svg xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="1.1" width="600" height="888" xmlns="http://www.w3.org/2000/svg">
   <g id="IfcConstructionEquipmentResource" fill="yellow">
     <rect x="35.775" y="746.7625125" width="246.83749875" height="37.5" stroke="black" />
     <text x="159.193749375" y="765.5125125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcConstructionEquipmentResource</text>
@@ -50,6 +50,13 @@
   </g>
   <g id="IfcConstructionResource" fill="yellow">
     <rect x="11.490000375" y="82.00000125" width="96" height="332.50000125" stroke="black" />
+    <polyline points="20.589126375,414.4999875 20.5891265625,414.4999875 " fill="none" stroke="black" stroke-width="3" />
+    <polyline points="20.5891265625,414.4999875 20.588751375,765.5125125 35.775,765.5125125 " fill="none" stroke="black" stroke-width="3" />
+    <polyline points="20.5891265625,414.4999875 20.588751375,557.000025 35.775,557.000025 " fill="none" stroke="black" stroke-width="3" />
+    <polyline points="20.5891265625,414.4999875 20.588751375,488.50005 35.81249625,488.50005 " fill="none" stroke="black" stroke-width="3" />
+    <polyline points="20.5891265625,414.4999875 20.588751375,626.499975 35.7949725,626.499975 " fill="none" stroke="black" stroke-width="3" />
+    <polyline points="20.5891265625,414.4999875 20.588751375,835.0124625 35.787512625,835.0124625 " fill="none" stroke="black" stroke-width="3" />
+    <polyline points="20.5891265625,414.4999875 20.588751375,696.012525 35.805001125,696.012525 " fill="none" stroke="black" stroke-width="3" />
     <text x="59.490000375" y="248.250001875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcConstructionResource</text>
     <g id="Usage">
       <polyline points="107.49,104.24998875 152.5637475,104.24998875 152.5637475,103.95000124875 197.637495,103.95000124875 " fill="none" stroke="black" stroke-dasharray="1,1" />
@@ -66,6 +73,13 @@
   </g>
   <g id="IfcConstructionResourceType" fill="yellow">
     <rect x="496.08" y="82.03000125" width="91.99999875" height="332.50000125" stroke="black" />
+    <polyline points="578.0800125,414.5299875 578.0800125,475.62997125 578.3687625,475.62997125 " fill="none" stroke="black" stroke-width="3" />
+    <polyline points="578.3687625,475.62997125 578.3687625,488.4799875 562.3375125,488.4799875 " fill="none" stroke="black" stroke-width="3" />
+    <polyline points="578.3687625,475.62997125 578.3687625,557.4799875 561.3625125,557.4799875 " fill="none" stroke="black" stroke-width="3" />
+    <polyline points="578.3687625,475.62997125 578.3687625,626.505 561.375012375,626.505 " fill="none" stroke="black" stroke-width="3" />
+    <polyline points="578.3687625,475.62997125 578.3687625,695.9800125 561.3625125,695.9800125 " fill="none" stroke="black" stroke-width="3" />
+    <polyline points="578.3687625,475.62997125 578.3687625,765.5050125 561.3625125,765.5050125 " fill="none" stroke="black" stroke-width="3" />
+    <polyline points="578.3687625,475.62997125 578.3687625,834.9799875 561.3625125,834.9799875 " fill="none" stroke="black" stroke-width="3" />
     <text x="542.079999375" y="248.280001875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcConstructionResourceType</text>
     <g id="BaseCosts">
       <polyline points="496.08,197.28 454.35875625,197.28 454.35875625,198.2250012375 412.6375125,198.2250012375 " fill="none" stroke="black" stroke-dasharray="1,1" />
@@ -151,11 +165,13 @@
   <g id="IFCKERNEL">
     <g id="IfcResource" fill="grey">
       <rect x="9.8125005" y="11.7500025" width="150" height="45.75" stroke="black" />
+      <polyline points="57.81250125,57.5000025 57.81250125,82.00000125 " fill="none" stroke="black" stroke-width="3" />
       <text x="84.8125005" y="34.6250025" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCKERNEL
 IfcResource</text>
     </g>
     <g id="IfcTypeResource" fill="grey">
       <rect x="441.0625125" y="11.725000125" width="146.50000125" height="46.875" stroke="black" />
+      <polyline points="542.3125125,58.60000125 542.3125125,70.31500125 542.0800125,70.31500125 542.0800125,82.03000125 " fill="none" stroke="black" stroke-width="3" />
       <text x="514.312513125" y="35.162500125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCKERNEL
 IfcTypeResource</text>
     </g>
@@ -182,5 +198,7 @@ IfcPhysicalQuantity</text>
     </g>
   </g>
   <g id="IFCMEASURERESOURCE" />
-  <g />
+  <g>
+    <rect x="0" y="0" width="600" height="888" fill="none" stroke="lime" />
+  </g>
 </svg>

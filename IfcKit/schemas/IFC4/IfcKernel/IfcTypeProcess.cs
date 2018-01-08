@@ -44,23 +44,20 @@ namespace BuildingSmart.IFC.IfcKernel
 		ISet<IfcRelAssignsToProcess> _OperatesOn = new HashSet<IfcRelAssignsToProcess>();
 	
 	
-		[Description("<EPM-HTML>\r\nAn identifying designation given to a process type.\r\n</EPM-HTML>")]
+		[Description("An identifying designation given to a process type.")]
 		public IfcIdentifier? Identification { get { return this._Identification; } set { this._Identification = value;} }
 	
-		[Description("<EPM-HTML>\r\nAn long description, or text, describing the activity in detail.\r\n<bl" +
-	    "ockquote class=\"note\">NOTE&nbsp; The inherited <em>SELF\\IfcRoot.Description</em>" +
-	    " attribute is used as the short description.</blockquote>\r\n</EPM-HTML>")]
+		[Description("An long description, or text, describing the activity in detail.\r\n<blockquote cla" +
+	    "ss=\"note\">NOTE&nbsp; The inherited <em>SELF\\IfcRoot.Description</em> attribute i" +
+	    "s used as the short description.</blockquote>")]
 		public IfcText? LongDescription { get { return this._LongDescription; } set { this._LongDescription = value;} }
 	
-		[Description(@"<EPM-HTML>
-	The type denotes a particular type that indicates the process further. The use has to be established at the level of instantiable subtypes. In particular it holds the user defined type, if the enumeration of the attribute 'PredefinedType' is set to USERDEFINED. 
-	</EPM-HTML>")]
+		[Description(@"The type denotes a particular type that indicates the process further. The use has to be established at the level of instantiable subtypes. In particular it holds the user defined type, if the enumeration of the attribute 'PredefinedType' is set to USERDEFINED. ")]
 		public IfcLabel? ProcessType { get { return this._ProcessType; } set { this._ProcessType = value;} }
 	
-		[Description("<EPM-HTML>\r\nSet of relationships to other objects, e.g. products, processes, cont" +
-	    "rols, resources or actors that are operated on by the process type.\r\n<blockquote" +
-	    " class=\"history\">HISTORY  New inverse relationship in IFC4.</blockquote>\r\n</EPM-" +
-	    "HTML>")]
+		[Description("Set of relationships to other objects, e.g. products, processes, controls, resour" +
+	    "ces or actors that are operated on by the process type.\r\n<blockquote class=\"hist" +
+	    "ory\">HISTORY  New inverse relationship in IFC4.</blockquote>")]
 		public ISet<IfcRelAssignsToProcess> OperatesOn { get { return this._OperatesOn; } }
 	
 	

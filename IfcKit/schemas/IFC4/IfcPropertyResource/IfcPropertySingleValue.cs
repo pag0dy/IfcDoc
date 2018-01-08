@@ -11,6 +11,7 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
+using BuildingSmart.IFC.IfcApprovalResource;
 using BuildingSmart.IFC.IfcConstraintResource;
 using BuildingSmart.IFC.IfcCostResource;
 using BuildingSmart.IFC.IfcDateTimeResource;
@@ -32,11 +33,9 @@ namespace BuildingSmart.IFC.IfcPropertyResource
 		IfcUnit _Unit;
 	
 	
-		[Description(@"<EPM-HTML>
-	Value and measure type of this property. 
+		[Description(@"Value and measure type of this property. 
 	<blockquote class=""note"">NOTE&nbsp; By virtue of the defined data type, that is selected from the SELECT <em>IfcValue</em>, the appropriate unit can be found within the <em>IfcUnitAssignment</em>, defined for the project if no value for the unit attribute is given.</blockquote>
-	<blockquote class=""note"">IFC2x3 CHANGE&nbsp; The attribute has been made optional with upward compatibility for file based exchange.</blockquote>
-	</EPM-HTML>")]
+	<blockquote class=""note"">IFC2x3 CHANGE&nbsp; The attribute has been made optional with upward compatibility for file based exchange.</blockquote>")]
 		public IfcValue NominalValue { get { return this._NominalValue; } set { this._NominalValue = value;} }
 	
 		[Description("Unit for the nominal value, if not given, the default value for the measure type " +

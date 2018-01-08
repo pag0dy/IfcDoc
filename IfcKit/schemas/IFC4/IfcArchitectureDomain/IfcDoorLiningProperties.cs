@@ -85,30 +85,24 @@ namespace BuildingSmart.IFC.IfcArchitectureDomain
 		[Description(@"Depth of the door lining, measured perpendicular to the plane of the door lining. If omitted (and with a given value to lining thickness) it indicates an adjustable depth (i.e. a depth that adjusts to the thickness of the wall into which the occurrence of this door style is inserted).")]
 		public IfcPositiveLengthMeasure? LiningDepth { get { return this._LiningDepth; } set { this._LiningDepth = value;} }
 	
-		[Description(@"<EPM-HTML>
-	Thickness of the door lining as explained in the figure above. If <em>LiningThickness</em> value is 0. (zero) it denotes a door without a lining (all other lining parameters shall be set to NIL in this case). If the <em>LiningThickness</em> is NIL it denotes that the value is not available.
+		[Description(@"Thickness of the door lining as explained in the figure above. If <em>LiningThickness</em> value is 0. (zero) it denotes a door without a lining (all other lining parameters shall be set to NIL in this case). If the <em>LiningThickness</em> is NIL it denotes that the value is not available.
 	<blockquote class=""change-ifc2x4"">
 	IFC4 CHANGE&nbsp; Data type modified to be <em>IfcNonNegativeLengthMeasure</em>.
-	</blockquote>
-	</EPM-HTML>")]
+	</blockquote>")]
 		public IfcNonNegativeLengthMeasure? LiningThickness { get { return this._LiningThickness; } set { this._LiningThickness = value;} }
 	
 		[Description(@"Depth (dimension in plane perpendicular to door leaf) of the door threshold. Only given if the door lining includes a threshold. If omitted (and with a given value to threshold thickness) it indicates an adjustable depth (i.e. a depth that adjusts to the thickness of the wall into which the occurrence of this door style is inserted).")]
 		public IfcPositiveLengthMeasure? ThresholdDepth { get { return this._ThresholdDepth; } set { this._ThresholdDepth = value;} }
 	
-		[Description(@"<EPM-HTML>
-	Thickness of the door threshold as explained in the figure above. If <em>ThresholdThickness</em> value is 0. (zero) it denotes a door without a threshold (<em>ThresholdDepth</em> shall be set to NIL in this case). If the <em>ThresholdThickness</em> is NIL it denotes that the information about a threshold is not available.
+		[Description(@"Thickness of the door threshold as explained in the figure above. If <em>ThresholdThickness</em> value is 0. (zero) it denotes a door without a threshold (<em>ThresholdDepth</em> shall be set to NIL in this case). If the <em>ThresholdThickness</em> is NIL it denotes that the information about a threshold is not available.
 	<blockquote class=""change-ifc2x4"">
 	IFC4 CHANGE&nbsp; Data type modified to be <em>IfcNonNegativeLengthMeasure</em>.
-	</blockquote>
-	</EPM-HTML>")]
+	</blockquote>")]
 		public IfcNonNegativeLengthMeasure? ThresholdThickness { get { return this._ThresholdThickness; } set { this._ThresholdThickness = value;} }
 	
-		[Description(@"<EPM-HTML>
-	Thickness (width in plane parallel to door leaf) of the transom (if provided - that is, if the <em>TransomOffset</em> attribute is set), which divides the door leaf from a glazing (or window) above.
+		[Description(@"Thickness (width in plane parallel to door leaf) of the transom (if provided - that is, if the <em>TransomOffset</em> attribute is set), which divides the door leaf from a glazing (or window) above.
 	If the <em>TransomThickness</em> is set to zero (and the <em>TransomOffset</em> set to a positive length), then the door is divided vertically into a leaf and transom window area without a physical frame.
-	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; Data type changed to <em>IfcNonNegativeLengthMeasure</em>.</blockquote>
-	</EPM-HTML>")]
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; Data type changed to <em>IfcNonNegativeLengthMeasure</em>.</blockquote>")]
 		public IfcNonNegativeLengthMeasure? TransomThickness { get { return this._TransomThickness; } set { this._TransomThickness = value;} }
 	
 		[Description("Offset of the transom (if given) which divides the door leaf from a glazing (or w" +
@@ -132,22 +126,18 @@ namespace BuildingSmart.IFC.IfcArchitectureDomain
 	    "is applied equally to all four sides of the adjacent wall.")]
 		public IfcPositiveLengthMeasure? CasingDepth { get { return this._CasingDepth; } set { this._CasingDepth = value;} }
 	
-		[Description(@"<EPM-HTML>
-	Pointer to the shape aspect, if given. The shape aspect reflects the part of the door shape, which represents the door lining.
-	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The attribute is deprecated and shall no longer be used, i.e. the value shall be NIL ($).</blockquote>
-	</EPM-HTML>")]
+		[Description(@"Pointer to the shape aspect, if given. The shape aspect reflects the part of the door shape, which represents the door lining.
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The attribute is deprecated and shall no longer be used, i.e. the value shall be NIL ($).</blockquote>")]
 		public IfcShapeAspect ShapeAspectStyle { get { return this._ShapeAspectStyle; } set { this._ShapeAspectStyle = value;} }
 	
-		[Description("<EPM-HTML>\r\nOffset between the lining and the window panel measured along the x-a" +
-	    "xis of the local placement.\r\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp;" +
-	    " New attribute added at the end of the entity definition.</blockquote>\r\n</EPM-HT" +
-	    "ML>")]
+		[Description("Offset between the lining and the window panel measured along the x-axis of the l" +
+	    "ocal placement.\r\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; New attribu" +
+	    "te added at the end of the entity definition.</blockquote>")]
 		public IfcLengthMeasure? LiningToPanelOffsetX { get { return this._LiningToPanelOffsetX; } set { this._LiningToPanelOffsetX = value;} }
 	
-		[Description("<EPM-HTML>\r\nOffset between the lining and the door panel measured along the y-axi" +
-	    "s of the local placement.\r\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; N" +
-	    "ew attribute added at the end of the entity definition.</blockquote>\r\n</EPM-HTML" +
-	    ">")]
+		[Description("Offset between the lining and the door panel measured along the y-axis of the loc" +
+	    "al placement.\r\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; New attribute" +
+	    " added at the end of the entity definition.</blockquote>")]
 		public IfcLengthMeasure? LiningToPanelOffsetY { get { return this._LiningToPanelOffsetY; } set { this._LiningToPanelOffsetY = value;} }
 	
 	

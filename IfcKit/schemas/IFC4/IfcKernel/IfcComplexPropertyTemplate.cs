@@ -43,8 +43,8 @@ namespace BuildingSmart.IFC.IfcKernel
 	
 		public IfcComplexPropertyTemplateTypeEnum? TemplateType { get { return this._TemplateType; } set { this._TemplateType = value;} }
 	
-		[Description("<EPM-HTML>\r\nReference to a set of property templates. It should only be provided," +
-	    " if the <em>PropertyType</em> is set to <small>COMPLEX</small>.\r\n</EPM-HTML>")]
+		[Description("Reference to a set of property templates. It should only be provided, if the <em>" +
+	    "PropertyType</em> is set to <small>COMPLEX</small>.")]
 		public ISet<IfcPropertyTemplate> HasPropertyTemplates { get { return this._HasPropertyTemplates; } }
 	
 	

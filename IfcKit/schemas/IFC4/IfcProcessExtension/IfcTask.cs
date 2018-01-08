@@ -33,11 +33,13 @@ namespace BuildingSmart.IFC.IfcProcessExtension
 		IfcLabel? _WorkMethod;
 	
 		[DataMember(Order=2)] 
+		[XmlAttribute]
 		[Required()]
-		Boolean _IsMilestone;
+		IfcBoolean _IsMilestone;
 	
 		[DataMember(Order=3)] 
-		Int64? _Priority;
+		[XmlAttribute]
+		IfcInteger? _Priority;
 	
 		[DataMember(Order=4)] 
 		[XmlElement("IfcTaskTime")]
@@ -48,42 +50,37 @@ namespace BuildingSmart.IFC.IfcProcessExtension
 		IfcTaskTypeEnum? _PredefinedType;
 	
 	
-		[Description(@"<EPM-HTML>
-	    Current status of the task.
+		[Description(@"    Current status of the task.
 	    <blockquote class=""note"">NOTE&nbsp; Particular values for status are not
 	      specified, these should be determined and agreed by local
 	      usage. Examples of possible status values include 'Not Yet
 	      Started', 'Started', 'Completed'.</blockquote>
-	</EPM-HTML>
 	")]
 		public IfcLabel? Status { get { return this._Status; } set { this._Status = value;} }
 	
-		[Description("<EPM-HTML>\r\n    The method of work used in carrying out a task.\r\n    <blockquote " +
-	    "class=\"note\">NOTE&nbsp; This attribute should\r\n      not be used if the work met" +
-	    "hod is specified for the\r\n      <em>IfcTaskType</em>   </blockquote>\r\n</EPM-HTML" +
-	    ">")]
+		[Description("    The method of work used in carrying out a task.\r\n    <blockquote class=\"note\"" +
+	    ">NOTE&nbsp; This attribute should\r\n      not be used if the work method is speci" +
+	    "fied for the\r\n      <em>IfcTaskType</em>   </blockquote>")]
 		public IfcLabel? WorkMethod { get { return this._WorkMethod; } set { this._WorkMethod = value;} }
 	
-		[Description(@"<EPM-HTML>
-	    Identifies whether a task is a milestone task (=TRUE) or not
+		[Description(@"    Identifies whether a task is a milestone task (=TRUE) or not
 	    (= FALSE).
 	    <blockquote class=""note"">NOTE&nbsp; In small project planning applications,
 	      a milestone task may be understood to be a task having no
-	      duration. As such, it represents a singular point in time.</blockquote>
-	</EPM-HTML>")]
-		public Boolean IsMilestone { get { return this._IsMilestone; } set { this._IsMilestone = value;} }
+	      duration. As such, it represents a singular point in time.</blockquote>")]
+		public IfcBoolean IsMilestone { get { return this._IsMilestone; } set { this._IsMilestone = value;} }
 	
-		[Description("<EPM-HTML>\r\n    A value that indicates the relative priority of the task (in\r\n   " +
-	    " comparison to the priorities of other tasks).\r\n</EPM-HTML>")]
-		public Int64? Priority { get { return this._Priority; } set { this._Priority = value;} }
+		[Description("    A value that indicates the relative priority of the task (in\r\n    comparison " +
+	    "to the priorities of other tasks).")]
+		public IfcInteger? Priority { get { return this._Priority; } set { this._Priority = value;} }
 	
-		[Description("<EPM-HTML>\r\n    Time related information for the task.\r\n    <blockquote class=\"ch" +
-	    "ange-ifc2x4\">IFC4 CHANGE Attribute added</blockquote>\r\n</EPM-HTML>")]
+		[Description("    Time related information for the task.\r\n    <blockquote class=\"change-ifc2x4\"" +
+	    ">IFC4 CHANGE Attribute added</blockquote>")]
 		public IfcTaskTime TaskTime { get { return this._TaskTime; } set { this._TaskTime = value;} }
 	
-		[Description("<EPM-HTML>\r\n    Identifies the predefined types of a task from which \r\n    the ty" +
-	    "pe required may be set.\r\n    <blockquote class=\"change-ifc2x4\">IFC4 CHANGE  Attr" +
-	    "ibute added</blockquote>\r\n</EPM-HTML>")]
+		[Description("    Identifies the predefined types of a task from which \r\n    the type required " +
+	    "may be set.\r\n    <blockquote class=\"change-ifc2x4\">IFC4 CHANGE  Attribute added<" +
+	    "/blockquote>")]
 		public IfcTaskTypeEnum? PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	

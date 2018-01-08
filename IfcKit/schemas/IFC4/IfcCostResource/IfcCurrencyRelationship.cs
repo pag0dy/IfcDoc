@@ -55,9 +55,9 @@ namespace BuildingSmart.IFC.IfcCostResource
 		[Description(@"The currently agreed ratio of the amount of a related monetary unit that is equivalent to a unit amount of the relating monetary unit in a currency relationship. For instance, in the case of a conversion from GBP to USD, the value of the exchange rate may be 1.486 (USD) : 1 (GBP).")]
 		public IfcPositiveRatioMeasure ExchangeRate { get { return this._ExchangeRate; } set { this._ExchangeRate = value;} }
 	
-		[Description("<EPM-HTML> \r\nThe date and time at which an exchange rate applies.\r\n<blockquote cl" +
-	    "ass=\"change-ifc2x4\">IFC4 CHANGE Type changed from IfcDateTimeSelect. Attribute m" +
-	    "ade optional.</blockquote> \r\n</EPM-HTML> \r\n")]
+		[Description("The date and time at which an exchange rate applies.\r\n<blockquote class=\"change-i" +
+	    "fc2x4\">IFC4 CHANGE Type changed from IfcDateTimeSelect. Attribute made optional." +
+	    "</blockquote>  \r\n")]
 		public IfcDateTime? RateDateTime { get { return this._RateDateTime; } set { this._RateDateTime = value;} }
 	
 		[Description("The source from which an exchange rate is obtained.")]

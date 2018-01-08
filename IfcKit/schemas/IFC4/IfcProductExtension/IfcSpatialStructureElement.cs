@@ -38,10 +38,8 @@ namespace BuildingSmart.IFC.IfcProductExtension
 		IfcElementCompositionEnum? _CompositionType;
 	
 	
-		[Description(@"<EPM-HTML>
-	Denotes, whether the predefined spatial structure element represents itself, or an aggregate (complex) or a part (part). The interpretation is given separately for each subtype of spatial structure element. If no <em>CompositionType</em> is asserted, the dafault value 'ELEMENT' applies.
-	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; Attribute made optional.</blockquote>
-	</EPM-HTML>")]
+		[Description(@"Denotes, whether the predefined spatial structure element represents itself, or an aggregate (complex) or a part (part). The interpretation is given separately for each subtype of spatial structure element. If no <em>CompositionType</em> is asserted, the dafault value 'ELEMENT' applies.
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; Attribute made optional.</blockquote>")]
 		public IfcElementCompositionEnum? CompositionType { get { return this._CompositionType; } set { this._CompositionType = value;} }
 	
 	

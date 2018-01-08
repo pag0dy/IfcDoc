@@ -28,7 +28,7 @@ namespace BuildingSmart.IFC.IfcKernel
 	public partial class IfcRelAggregates : IfcRelDecomposes
 	{
 		[DataMember(Order=0)] 
-		[XmlElement("IfcObjectDefinition")]
+		[XmlIgnore]
 		[Required()]
 		IfcObjectDefinition _RelatingObject;
 	
@@ -37,20 +37,14 @@ namespace BuildingSmart.IFC.IfcKernel
 		ISet<IfcObjectDefinition> _RelatedObjects = new HashSet<IfcObjectDefinition>();
 	
 	
-		[Description(@"<EPM-HTML>
-	The object definition, either an object type or an object occurrence, that represents the aggregation. It is the whole within the whole/part relationship.
+		[Description(@"The object definition, either an object type or an object occurrence, that represents the aggregation. It is the whole within the whole/part relationship.
 	
-	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The attribute has been demoted from the supertype <em>IfcRelDecomposes</em> and defines the non-ordered aggregation relationship.</blockquote>
-	
-	</EPM-HTML>")]
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The attribute has been demoted from the supertype <em>IfcRelDecomposes</em> and defines the non-ordered aggregation relationship.</blockquote>")]
 		public IfcObjectDefinition RelatingObject { get { return this._RelatingObject; } set { this._RelatingObject = value;} }
 	
-		[Description(@"<EPM-HTML>
-	The object definitions, either object occurrences or object types, that are being aggregated. They are defined as the parts in the whole/part relationship. No order is implied between the parts.
+		[Description(@"The object definitions, either object occurrences or object types, that are being aggregated. They are defined as the parts in the whole/part relationship. No order is implied between the parts.
 	
 	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The attribute has been demoted from the supertype <em>IfcRelDecomposes</em> and defines the non-ordered set of parts within the aggregation.</blockquote>
-	
-	</EPM-HTML>
 	")]
 		public ISet<IfcObjectDefinition> RelatedObjects { get { return this._RelatedObjects; } }
 	

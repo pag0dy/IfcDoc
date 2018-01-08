@@ -37,7 +37,8 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		IfcCartesianPoint _LocalOrigin;
 	
 		[DataMember(Order=3)] 
-		Double? _Scale;
+		[XmlAttribute]
+		IfcReal? _Scale;
 	
 	
 		[Description("The direction used to determine U[1], the derived X axis direction.")]
@@ -52,7 +53,7 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		public IfcCartesianPoint LocalOrigin { get { return this._LocalOrigin; } set { this._LocalOrigin = value;} }
 	
 		[Description("The scaling value specified for the transformation.")]
-		public Double? Scale { get { return this._Scale; } set { this._Scale = value;} }
+		public IfcReal? Scale { get { return this._Scale; } set { this._Scale = value;} }
 	
 	
 	}

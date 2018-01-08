@@ -39,9 +39,8 @@ namespace BuildingSmart.IFC.IfcProductExtension
 		IfcGeographicElementTypeEnum _PredefinedType;
 	
 	
-		[Description("<EPM-HTML>\r\nPredefined types to define the particular type of the geographic elem" +
-	    "ent. There may be property set definitions available for each predefined type.\r\n" +
-	    "</EPM-HTML>")]
+		[Description("Predefined types to define the particular type of the geographic element. There m" +
+	    "ay be property set definitions available for each predefined type.")]
 		public IfcGeographicElementTypeEnum PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	

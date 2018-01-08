@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<svg xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="1.1" width="0" height="0" xmlns="http://www.w3.org/2000/svg">
+<svg xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="1.1" width="600" height="888" xmlns="http://www.w3.org/2000/svg">
   <g id="IfcBuildingElementPart" fill="yellow">
     <rect x="55.38705" y="156.94283625" width="164.39464125" height="37.5" stroke="black" />
     <text x="137.584370625" y="175.69283625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcBuildingElementPart</text>
@@ -34,10 +34,20 @@
   </g>
   <g id="IfcElementComponent" fill="yellow">
     <rect x="17.45633925" y="94.26603" width="164.3959875" height="49.90056" stroke="black" />
+    <polyline points="36.31966575,144.16659 36.3196659375,144.16659 " fill="none" stroke="black" stroke-width="3" />
+    <polyline points="36.3196659375,144.16659 36.319537125,284.04583125 56.3991585,284.04583125 " fill="none" stroke="black" stroke-width="3" />
+    <polyline points="36.3196659375,144.16659 36.319537125,229.863675 55.35433425,229.863675 " fill="none" stroke="black" stroke-width="3" />
+    <polyline points="36.3196659375,144.16659 36.319537125,175.69283625 55.38704925,175.69283625 " fill="none" stroke="black" stroke-width="3" />
+    <polyline points="36.3196659375,144.16659 36.319578375,356.5499475 57.416255625,356.5499475 " fill="none" stroke="black" stroke-width="3" />
     <text x="99.654333" y="119.21631" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcElementComponent</text>
   </g>
   <g id="IfcElementComponentType" fill="yellow">
     <rect x="14.091373875" y="541.6129875" width="164.41350375" height="50.29282875" stroke="black" />
+    <polyline points="33.36478125,591.9058125 33.36478125,624.899624625 33.334281125625,624.899624625 " fill="none" stroke="black" stroke-width="3" />
+    <polyline points="33.334281125625,624.899624625 33.334281375,630.7322625 54.375227625,630.7322625 " fill="none" stroke="black" stroke-width="3" />
+    <polyline points="33.334281125625,624.899624625 33.334281375,687.112275 54.369021375,687.112275 " fill="none" stroke="black" stroke-width="3" />
+    <polyline points="33.334281125625,624.899624625 33.334281375,743.481 55.401876,743.481 " fill="none" stroke="black" stroke-width="3" />
+    <polyline points="33.334281125625,624.899624625 33.334281375,825.3127125 55.3947285,825.3127125 " fill="none" stroke="black" stroke-width="3" />
     <text x="96.29812575" y="566.759401875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcElementComponentType</text>
   </g>
   <g id="IfcFastener" fill="yellow">
@@ -107,11 +117,13 @@
   <g id="IFCPRODUCTEXTENSION">
     <g id="IfcElement" fill="grey">
       <rect x="18.449443125" y="14.463909" width="186.91402125" height="57.23972625" stroke="black" />
+      <polyline points="104.2535325,71.70363375 104.2535325,94.2660285 " fill="none" stroke="black" stroke-width="3" />
       <text x="111.90645375" y="43.083772125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCPRODUCTEXTENSION
 IfcElement</text>
     </g>
     <g id="IfcElementType" fill="grey">
       <rect x="14.5532265" y="469.4261625" width="206.85112125" height="46.42840875" stroke="black" />
+      <polyline points="100.12197,515.854575 100.12197,541.612990875 " fill="none" stroke="black" stroke-width="3" />
       <text x="117.978787125" y="492.640366875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCPRODUCTEXTENSION
 IfcElementType</text>
     </g>
@@ -124,5 +136,7 @@ IfcPositiveLengthMeasure</text>
     </g>
   </g>
   <g id="IFCPRODUCTEXTENSION" />
-  <g />
+  <g>
+    <rect x="0" y="0" width="600" height="888" fill="none" stroke="lime" />
+  </g>
 </svg>

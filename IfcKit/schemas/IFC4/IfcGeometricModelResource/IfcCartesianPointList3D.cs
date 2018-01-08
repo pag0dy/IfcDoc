@@ -26,8 +26,7 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 		IList<IfcLengthMeasure> _CoordList = new List<IfcLengthMeasure>();
 	
 	
-		[Description("<EPM-HTML>\r\nTwo-dimensional list of Cartesian points provided by three coordinate" +
-	    "s.\r\n</EPM-HTML>")]
+		[Description("Two-dimensional list of Cartesian points provided by three coordinates.")]
 		public IList<IfcLengthMeasure> CoordList { get { return this._CoordList; } }
 	
 	

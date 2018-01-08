@@ -27,7 +27,7 @@ namespace BuildingSmart.IFC.IfcConstructionMgmtDomain
 		IfcLaborResourceTypeEnum _PredefinedType;
 	
 	
-		[Description("<EPM-HTML>\r\nDefines types of labour resources.\r\n<p></p>\r\n</EPM-HTML>")]
+		[Description("Defines types of labour resources.\r\n<p></p>")]
 		public IfcLaborResourceTypeEnum PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	

@@ -40,22 +40,17 @@ namespace BuildingSmart.IFC.IfcKernel
 		ISet<IfcRelAssignsToResource> _ResourceOf = new HashSet<IfcRelAssignsToResource>();
 	
 	
-		[Description(@"<EPM-HTML>
-	    An identifying designation given to a resource.
-	    It is the identifier at the occurrence level. 
-	    <blockquote class=""change-ifc2x4"">IFC4 CHANGE  Attribute promoted from subtype <em>IfcConstructionResource</em>.</blockquote>
-	</EPM-HTML>")]
+		[Description("    An identifying designation given to a resource.\r\n    It is the identifier at " +
+	    "the occurrence level. \r\n    <blockquote class=\"change-ifc2x4\">IFC4 CHANGE  Attri" +
+	    "bute promoted from subtype <em>IfcConstructionResource</em>.</blockquote>")]
 		public IfcIdentifier? Identification { get { return this._Identification; } set { this._Identification = value;} }
 	
-		[Description(@"<EPM-HTML>
-	A detailed description of the resource (e.g. the skillset for a labor resource).  
-	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The attribute <em>LongDescription</em> is added replacing the <em>ResourceGroup</em> attribute at subtype <em>IfcConstructionResource</em>.</blockquote>
-	</EPM-HTML>")]
+		[Description(@"A detailed description of the resource (e.g. the skillset for a labor resource).  
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The attribute <em>LongDescription</em> is added replacing the <em>ResourceGroup</em> attribute at subtype <em>IfcConstructionResource</em>.</blockquote>")]
 		public IfcText? LongDescription { get { return this._LongDescription; } set { this._LongDescription = value;} }
 	
-		[Description("<EPM-HTML>\r\nSet of relationships to other objects, e.g. products, processes, cont" +
-	    "rols, resources or actors, for which this resource object is a resource.\r\n</EPM-" +
-	    "HTML>")]
+		[Description("Set of relationships to other objects, e.g. products, processes, controls, resour" +
+	    "ces or actors, for which this resource object is a resource.")]
 		public ISet<IfcRelAssignsToResource> ResourceOf { get { return this._ResourceOf; } }
 	
 	

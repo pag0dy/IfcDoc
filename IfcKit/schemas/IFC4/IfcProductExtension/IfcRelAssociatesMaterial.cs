@@ -38,8 +38,7 @@ namespace BuildingSmart.IFC.IfcProductExtension
 		IfcMaterialSelect _RelatingMaterial;
 	
 	
-		[Description("<EPM-HTML>\r\nMaterial definition assigned to the elements or element types. \r\n</EP" +
-	    "M-HTML>")]
+		[Description("Material definition assigned to the elements or element types. ")]
 		public IfcMaterialSelect RelatingMaterial { get { return this._RelatingMaterial; } set { this._RelatingMaterial = value;} }
 	
 	

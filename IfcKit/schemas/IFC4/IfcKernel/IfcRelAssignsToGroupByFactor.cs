@@ -33,8 +33,8 @@ namespace BuildingSmart.IFC.IfcKernel
 		IfcRatioMeasure _Factor;
 	
 	
-		[Description("<EPM-HTML>\r\nFactor provided as a ratio measure that identifies the fraction or we" +
-	    "ighted factor that applies to the group assignment.\r\n</EPM-HTML>")]
+		[Description("Factor provided as a ratio measure that identifies the fraction or weighted facto" +
+	    "r that applies to the group assignment.")]
 		public IfcRatioMeasure Factor { get { return this._Factor; } set { this._Factor = value;} }
 	
 	

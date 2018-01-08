@@ -24,10 +24,13 @@ namespace BuildingSmart.IFC.IfcProcessExtension
 	[Guid("18081646-220a-42c0-a4f6-b045160da49d")]
 	public enum IfcWorkCalendarTypeEnum
 	{
+		[Description("Belongs to the first shift.")]
 		FIRSTSHIFT = 1,
 	
+		[Description("Belongs to the second shift.")]
 		SECONDSHIFT = 2,
 	
+		[Description("Belongs to the third shift.")]
 		THIRDSHIFT = 3,
 	
 		USERDEFINED = -1,

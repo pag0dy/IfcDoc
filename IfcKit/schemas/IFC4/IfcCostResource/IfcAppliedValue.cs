@@ -82,14 +82,12 @@ namespace BuildingSmart.IFC.IfcCostResource
 	")]
 		public IfcMeasureWithUnit UnitBasis { get { return this._UnitBasis; } set { this._UnitBasis = value;} }
 	
-		[Description("<EPM-HTML> \r\nThe date on or from which an applied value is applicable.\r\n<blockquo" +
-	    "te class=\"change-ifc2x4\">IFC4 CHANGE Type changed from IfcDateTimeSelect.</block" +
-	    "quote> \r\n</EPM-HTML> \r\n")]
+		[Description("The date on or from which an applied value is applicable.\r\n<blockquote class=\"cha" +
+	    "nge-ifc2x4\">IFC4 CHANGE Type changed from IfcDateTimeSelect.</blockquote>  \r\n")]
 		public IfcDate? ApplicableDate { get { return this._ApplicableDate; } set { this._ApplicableDate = value;} }
 	
-		[Description("<EPM-HTML> \r\nThe date until which applied value is applicable.\r\n<blockquote class" +
-	    "=\"change-ifc2x4\">IFC4 CHANGE Type changed from IfcDateTimeSelect.</blockquote> \r" +
-	    "\n</EPM-HTML> \r\n")]
+		[Description("The date until which applied value is applicable.\r\n<blockquote class=\"change-ifc2" +
+	    "x4\">IFC4 CHANGE Type changed from IfcDateTimeSelect.</blockquote>  \r\n")]
 		public IfcDate? FixedUntilDate { get { return this._FixedUntilDate; } set { this._FixedUntilDate = value;} }
 	
 		[Description(@"Specification of the type of cost used.
@@ -111,10 +109,9 @@ namespace BuildingSmart.IFC.IfcCostResource
 		[Description("Optional component values from which <i>AppliedValue</i> is calculated.")]
 		public IList<IfcAppliedValue> Components { get { return this._Components; } }
 	
-		[Description("<EPM-HTML> \r\nReference to an external reference, e.g. library, classification, or" +
-	    " document information, that is associated to the IfcAppliedValue. \r\n<blockquote " +
-	    "class=\"change-ifc2x4\">IFC4 CHANGE New inverse attribute.</blockquote> \r\n</EPM-HT" +
-	    "ML> \r\n")]
+		[Description("Reference to an external reference, e.g. library, classification, or document inf" +
+	    "ormation, that is associated to the IfcAppliedValue. \r\n<blockquote class=\"change" +
+	    "-ifc2x4\">IFC4 CHANGE New inverse attribute.</blockquote>  \r\n")]
 		public ISet<IfcExternalReferenceRelationship> HasExternalReference { get { return this._HasExternalReference; } }
 	
 	

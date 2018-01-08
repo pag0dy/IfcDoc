@@ -62,9 +62,8 @@ namespace BuildingSmart.IFC.IfcActorResource
 		[Description("Roles played by the organization.")]
 		public IList<IfcActorRole> Roles { get { return this._Roles; } }
 	
-		[Description("<EPM-HTML>\r\nPostal and telecom addresses of an organization.\r\n<blockquote class=\"" +
-	    "note\">NOTE&nbsp; There may be several addresses related to an organization.</blo" +
-	    "ckquote>\r\n</EPM-HTML>")]
+		[Description("Postal and telecom addresses of an organization.\r\n<blockquote class=\"note\">NOTE&n" +
+	    "bsp; There may be several addresses related to an organization.</blockquote>")]
 		public IList<IfcAddress> Addresses { get { return this._Addresses; } }
 	
 		[Description("The inverse relationship for relationship RelatedOrganizations of IfcOrganization" +

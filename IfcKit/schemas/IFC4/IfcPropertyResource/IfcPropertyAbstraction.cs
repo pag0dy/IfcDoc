@@ -11,6 +11,7 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
+using BuildingSmart.IFC.IfcApprovalResource;
 using BuildingSmart.IFC.IfcConstraintResource;
 using BuildingSmart.IFC.IfcCostResource;
 using BuildingSmart.IFC.IfcDateTimeResource;
@@ -30,10 +31,9 @@ namespace BuildingSmart.IFC.IfcPropertyResource
 		ISet<IfcExternalReferenceRelationship> _HasExternalReferences = new HashSet<IfcExternalReferenceRelationship>();
 	
 	
-		[Description("<EPM-HTML>\r\nReference to an external reference, e.g. library, classification, or " +
-	    "document information, that is associated to the property definition.\r\n<blockquot" +
-	    "e class=\"change-ifc2x4\">IFC4 CHANGE New inverse attribute.</blockquote>\r\n</EPM-H" +
-	    "TML>")]
+		[Description("Reference to an external reference, e.g. library, classification, or document inf" +
+	    "ormation, that is associated to the property definition.\r\n<blockquote class=\"cha" +
+	    "nge-ifc2x4\">IFC4 CHANGE New inverse attribute.</blockquote>")]
 		public ISet<IfcExternalReferenceRelationship> HasExternalReferences { get { return this._HasExternalReferences; } }
 	
 	

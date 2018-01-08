@@ -36,13 +36,12 @@ namespace BuildingSmart.IFC.IfcKernel
 		IfcMeasureWithUnit _QuantityInProcess;
 	
 	
-		[Description("<EPM-HTML>\r\nReference to the process to which the objects are assigned to.\r\n<bloc" +
-	    "kquote class=\"change-ifc2x4\">IFC4 CHANGE Datatype expanded to include <em>IfcPro" +
-	    "cess</em> and <em>IfcTypeProcess</em>.</blockquote>\r\n</EPM-HTML>")]
+		[Description("Reference to the process to which the objects are assigned to.\r\n<blockquote class" +
+	    "=\"change-ifc2x4\">IFC4 CHANGE Datatype expanded to include <em>IfcProcess</em> an" +
+	    "d <em>IfcTypeProcess</em>.</blockquote>")]
 		public IfcProcessSelect RelatingProcess { get { return this._RelatingProcess; } set { this._RelatingProcess = value;} }
 	
-		[Description("<EPM-HTML>\r\nQuantity of the object specific for the operation by this process.\r\n<" +
-	    "/EPM-HTML>")]
+		[Description("Quantity of the object specific for the operation by this process.")]
 		public IfcMeasureWithUnit QuantityInProcess { get { return this._QuantityInProcess; } set { this._QuantityInProcess = value;} }
 	
 	

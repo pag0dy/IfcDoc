@@ -33,7 +33,6 @@ namespace BuildingSmart.IFC.IfcConstraintResource
 		IfcLabel? _ValueSource;
 	
 		[DataMember(Order=2)] 
-		[Required()]
 		IfcMetricValueSelect _DataValue;
 	
 		[DataMember(Order=3)] 
@@ -44,13 +43,14 @@ namespace BuildingSmart.IFC.IfcConstraintResource
 		[Description("Enumeration that identifies the type of benchmark data.\r\n")]
 		public IfcBenchmarkEnum Benchmark { get { return this._Benchmark; } set { this._Benchmark = value;} }
 	
-		[Description("Reference source for data values. If <i>DataValue</i> refers to an <i>IfcTable</i" +
-	    ">, this attribute identifies the relevent column identified by <i>IfcTableColumn" +
-	    "</i>.<i>Name</i>.\r\n")]
+		[Description("Reference source for data values. \r\n\r\nIf <i>DataValue</i> refers to an <i>IfcTabl" +
+	    "e</i>, this attribute identifies the relevent column identified by <i>IfcTableCo" +
+	    "lumn</i>.<i>Identifier</i>.\r\n")]
 		public IfcLabel? ValueSource { get { return this._ValueSource; } set { this._ValueSource = value;} }
 	
-		[Description("The value to be compared on associated objects. A null value may be indicated via" +
-	    " <i>IfcReference</i> having all attributes set to null.\r\n")]
+		[Description("The value to be compared on associated objects. A null value indicates comparison" +
+	    " to null.\r\n<blockquote class=\"change-ifc4\">IFC4 ADD1 CHANGE&nbsp;  This attribut" +
+	    "e is now optional.</blockquote>\r\n")]
 		public IfcMetricValueSelect DataValue { get { return this._DataValue; } set { this._DataValue = value;} }
 	
 		[Description(@"Optional path to an attribute to be constrained on associated objects.

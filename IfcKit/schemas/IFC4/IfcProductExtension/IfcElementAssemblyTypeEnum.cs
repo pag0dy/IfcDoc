@@ -33,26 +33,37 @@ namespace BuildingSmart.IFC.IfcProductExtension
 	[Guid("a00b596c-80eb-4d5b-9525-c7e5e53e6ba5")]
 	public enum IfcElementAssemblyTypeEnum
 	{
+		[Description("Assembled accessories or components.")]
 		ACCESSORY_ASSEMBLY = 1,
 	
+		[Description("A curved structure.")]
 		ARCH = 2,
 	
+		[Description("Interconnected beams, located in one (typically horizontal) plane.")]
 		BEAM_GRID = 3,
 	
+		[Description("A rigid frame with additional bracing members.")]
 		BRACED_FRAME = 4,
 	
+		[Description("A beam-like superstructure.")]
 		GIRDER = 5,
 	
+		[Description("Assembled reinforcement elements.")]
 		REINFORCEMENT_UNIT = 6,
 	
+		[Description("A structure built up of beams, columns, etc. with moment-resisting joints.")]
 		RIGID_FRAME = 7,
 	
+		[Description("Slabs, laid out in one plane.")]
 		SLAB_FIELD = 8,
 	
+		[Description("A structure built up of members with (quasi) pinned joint.")]
 		TRUSS = 9,
 	
+		[Description("User-defined element assembly.")]
 		USERDEFINED = -1,
 	
+		[Description("Undefined element assembly.")]
 		NOTDEFINED = 0,
 	
 	}

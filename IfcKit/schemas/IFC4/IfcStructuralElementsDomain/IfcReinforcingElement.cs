@@ -26,9 +26,9 @@ namespace BuildingSmart.IFC.IfcStructuralElementsDomain
 		IfcLabel? _SteelGrade;
 	
 	
-		[Description("<EPM-HTML>\r\n\r\nDeprecated.\r\n\r\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; " +
-	    "Attribute deprecated.\r\nUse material association at <em>IfcReinforcingElementType" +
-	    "</em> instead.</blockquote>\r\n\r\n</EPM-HTML>")]
+		[Description("Deprecated.\r\n\r\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; Attribute depr" +
+	    "ecated.\r\nUse material association at <em>IfcReinforcingElementType</em> instead." +
+	    "</blockquote>")]
 		public IfcLabel? SteelGrade { get { return this._SteelGrade; } set { this._SteelGrade = value;} }
 	
 	

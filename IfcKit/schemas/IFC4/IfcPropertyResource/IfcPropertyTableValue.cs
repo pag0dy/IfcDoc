@@ -11,6 +11,7 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
+using BuildingSmart.IFC.IfcApprovalResource;
 using BuildingSmart.IFC.IfcConstraintResource;
 using BuildingSmart.IFC.IfcCostResource;
 using BuildingSmart.IFC.IfcDateTimeResource;
@@ -46,16 +47,15 @@ namespace BuildingSmart.IFC.IfcPropertyResource
 		IfcCurveInterpolationEnum? _CurveInterpolation;
 	
 	
-		[Description(@"<EPM-HTML>
-	List of defining values, which determine the defined values. This list shall have unique values only.
-	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The attribute has been made optional with upward compatibility for file based exchange.</blockquote>
-	</EPM-HTML>")]
+		[Description("List of defining values, which determine the defined values. This list shall have" +
+	    " unique values only.\r\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; The at" +
+	    "tribute has been made optional with upward compatibility for file based exchange" +
+	    ".</blockquote>")]
 		public IList<IfcValue> DefiningValues { get { return this._DefiningValues; } }
 	
-		[Description(@"<EPM-HTML>
-	Defined values which are applicable for the scope as defined by the defining values.
-	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The attribute has been made optional with upward compatibility for file based exchange.</blockquote>
-	</EPM-HTML>")]
+		[Description("Defined values which are applicable for the scope as defined by the defining valu" +
+	    "es.\r\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; The attribute has been " +
+	    "made optional with upward compatibility for file based exchange.</blockquote>")]
 		public IList<IfcValue> DefinedValues { get { return this._DefinedValues; } }
 	
 		[Description("Expression for the derivation of defined values from the defining values, the exp" +
@@ -73,10 +73,8 @@ namespace BuildingSmart.IFC.IfcPropertyResource
 	    " assignment at IfcProject.")]
 		public IfcUnit DefinedUnit { get { return this._DefinedUnit; } set { this._DefinedUnit = value;} }
 	
-		[Description(@"<EPM-HTML>
-	Interpolation of the curve between two defining and defined values that are provided. if not provided a linear interpolation is assumed.
-	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The attribute has been added at the end of the attribute list.</blockquote>
-	</EPM-HTML>")]
+		[Description(@"Interpolation of the curve between two defining and defined values that are provided. if not provided a linear interpolation is assumed.
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The attribute has been added at the end of the attribute list.</blockquote>")]
 		public IfcCurveInterpolationEnum? CurveInterpolation { get { return this._CurveInterpolation; } set { this._CurveInterpolation = value;} }
 	
 	

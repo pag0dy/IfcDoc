@@ -28,8 +28,8 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 		IfcTessellatedFaceSet _MappedTo;
 	
 		[DataMember(Order=1)] 
-		[XmlElement("IfcSurfaceStyleShading")]
-		IfcSurfaceStyleShading _Overrides;
+		[XmlAttribute]
+		IfcNormalisedRatioMeasure? _Opacity;
 	
 		[DataMember(Order=2)] 
 		[XmlElement("IfcColourRgbList")]
@@ -37,26 +37,26 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 		IfcColourRgbList _Colours;
 	
 		[DataMember(Order=3)] 
+		[XmlAttribute]
 		[Required()]
-		IList<Int64> _ColourIndex = new List<Int64>();
+		IList<IfcPositiveInteger> _ColourIndex = new List<IfcPositiveInteger>();
 	
 	
-		[Description("<EPM-HTML>\r\nReference to the <em>IfcTessellatedFaceSet</em> to which it applies t" +
-	    "he colours.\r\n</EPM-HTML>")]
+		[Description("Reference to the <em>IfcTessellatedFaceSet</em> to which it applies the colours a" +
+	    "nd alpha channel.")]
 		public IfcTessellatedFaceSet MappedTo { get { return this._MappedTo; } set { this._MappedTo = value;} }
 	
-		[Description("<EPM-HTML>\r\nIndication that the <em>IfcIndexedColourMap</em> overrides the surfac" +
-	    "e colour information that might be assigned as an <em>IfcStyledItem</em> to the " +
-	    "<em>IfcTessellatedFaceSet</em>.\r\n</EPM-HTML>")]
-		public IfcSurfaceStyleShading Overrides { get { return this._Overrides; } set { this._Overrides = value;} }
+		[Description(@"The the opacity value, that applies equaly to all faces of the tessellated face set. 1.0 means opaque, and 0.0 completely transparent. If not provided, 1.0 is assumed (all colours are opque).
 	
-		[Description("<EPM-HTML>\r\nIndexable list of RGB colours.\r\n</EPM-HTML>")]
+	<blockquote class=""note"">NOTE&nbsp; The definition of the alpha channel component for opacity follows the new definitions in image processing, where 0.0 means full transparency and 1.0 (or 2<sup>bit depths</sup> -1) means fully opaque. This is contrary to the definition of transparency in <i>IfcSurfaceStyleShading</i>.</blockquote>")]
+		public IfcNormalisedRatioMeasure? Opacity { get { return this._Opacity; } set { this._Opacity = value;} }
+	
+		[Description("Indexable list of lists of quadruples, representing RGB colours. ")]
 		public IfcColourRgbList Colours { get { return this._Colours; } set { this._Colours = value;} }
 	
-		[Description("<EPM-HTML>\r\nIndex into the <em>IfcColourRgbList</em> for each face of the <em>Ifc" +
-	    "TriangulatedFaceSet</em>. The colour is applied uniformly to the face.\r\n</EPM-HT" +
-	    "ML>")]
-		public IList<Int64> ColourIndex { get { return this._ColourIndex; } }
+		[Description("Index into the <em>IfcColourRgbList</em> for each face of the <em>IfcTriangulated" +
+	    "FaceSet</em>. The colour is applied uniformly to the indexed face.")]
+		public IList<IfcPositiveInteger> ColourIndex { get { return this._ColourIndex; } }
 	
 	
 	}

@@ -67,10 +67,8 @@ namespace BuildingSmart.IFC.IfcArchitectureDomain
 	    "nel (at lining), i.e. parallel to the window (elevation) plane.")]
 		public IfcPositiveLengthMeasure? FrameThickness { get { return this._FrameThickness; } set { this._FrameThickness = value;} }
 	
-		[Description(@"<EPM-HTML>
-	Optional link to a shape aspect definition, which points to the part of the geometric representation of the window style, which is used to represent the panel.
-	<blockquote class=""deprecated"">DEPRECATION&nbsp; The attribute is deprecated and shall no longer be used, i.e. the value shall be NIL ($).</blockquote>
-	</EPM-HTML>")]
+		[Description(@"Optional link to a shape aspect definition, which points to the part of the geometric representation of the window style, which is used to represent the panel.
+	<blockquote class=""deprecated"">DEPRECATION&nbsp; The attribute is deprecated and shall no longer be used, i.e. the value shall be NIL ($).</blockquote>")]
 		public IfcShapeAspect ShapeAspectStyle { get { return this._ShapeAspectStyle; } set { this._ShapeAspectStyle = value;} }
 	
 	

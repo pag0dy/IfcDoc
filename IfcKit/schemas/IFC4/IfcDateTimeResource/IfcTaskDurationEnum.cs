@@ -18,10 +18,14 @@ namespace BuildingSmart.IFC.IfcDateTimeResource
 	[Guid("81f1198b-4504-4aff-8721-848f9700ba32")]
 	public enum IfcTaskDurationEnum
 	{
+		[Description("The time duration is based on elapsed time (24 hours per day, independent of cale" +
+	    "ndar).")]
 		ELAPSEDTIME = 1,
 	
+		[Description("The time duration is based on work time (calendar-dependent).")]
 		WORKTIME = 2,
 	
+		[Description("The time duration is undefined.")]
 		NOTDEFINED = 0,
 	
 	}

@@ -39,9 +39,8 @@ namespace BuildingSmart.IFC.IfcProductExtension
 		IfcElementAssemblyTypeEnum _PredefinedType;
 	
 	
-		[Description("<EPM-HTML>\r\nPredefined types to define the particular type of the transport eleme" +
-	    "nt. There may be property set definitions available for each predefined type.\r\n<" +
-	    "/EPM-HTML>")]
+		[Description("Predefined types to define the particular type of the transport element. There ma" +
+	    "y be property set definitions available for each predefined type.")]
 		public IfcElementAssemblyTypeEnum PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	

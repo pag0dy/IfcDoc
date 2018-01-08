@@ -41,20 +41,18 @@ namespace BuildingSmart.IFC.IfcProfileResource
 		[Description(@"Defines the type of geometry into which this profile definition shall be resolved, either a curve or a surface area. In case of curve the profile should be referenced by a swept surface, in case of area the profile should be referenced by a swept area solid.")]
 		public IfcProfileTypeEnum ProfileType { get { return this._ProfileType; } set { this._ProfileType = value;} }
 	
-		[Description("<EPM-HTML>\r\n\r\nHuman-readable name of the profile, for example according to a stan" +
-	    "dard profile table. As noted above, machine-readable standardized profile design" +
-	    "ations should be provided in <em>IfcExternalReference.ItemReference</em>.\r\n\r\n</E" +
-	    "PM-HTML>\r\n")]
+		[Description("Human-readable name of the profile, for example according to a standard profile t" +
+	    "able. As noted above, machine-readable standardized profile designations should " +
+	    "be provided in <em>IfcExternalReference.ItemReference</em>.\r\n")]
 		public IfcLabel? ProfileName { get { return this._ProfileName; } set { this._ProfileName = value;} }
 	
-		[Description("<EPM-HTML>\r\nReference to external information, e.g. library, classification, or d" +
-	    "ocument information, which is associated with the profile.\r\n<blockquote class=\"c" +
-	    "hange-ifc2x4\">IFC4 CHANGE New inverse attribute</blockquote>\r\n</EPM-HTML>")]
+		[Description("Reference to external information, e.g. library, classification, or document info" +
+	    "rmation, which is associated with the profile.\r\n<blockquote class=\"change-ifc2x4" +
+	    "\">IFC4 CHANGE New inverse attribute</blockquote>")]
 		public ISet<IfcExternalReferenceRelationship> HasExternalReference { get { return this._HasExternalReference; } }
 	
-		[Description("<EPM-HTML>\r\nAdditional properties of the profile, for example mechanical properti" +
-	    "es.\r\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE New inverse attribute</blockq" +
-	    "uote>\r\n</EPM-HTML>")]
+		[Description("Additional properties of the profile, for example mechanical properties.\r\n<blockq" +
+	    "uote class=\"change-ifc2x4\">IFC4 CHANGE New inverse attribute</blockquote>")]
 		public ISet<IfcProfileProperties> HasProperties { get { return this._HasProperties; } }
 	
 	

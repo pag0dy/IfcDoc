@@ -26,7 +26,7 @@ namespace BuildingSmart.IFC.IfcProfileResource
 		IfcPositiveLengthMeasure _Thickness;
 	
 	
-		[Description("<EPM-HTML>\r\nConstant thickness applied along the center line.\r\n</EPM-HTML>")]
+		[Description("Constant thickness applied along the center line.")]
 		public IfcPositiveLengthMeasure Thickness { get { return this._Thickness; } set { this._Thickness = value;} }
 	
 	

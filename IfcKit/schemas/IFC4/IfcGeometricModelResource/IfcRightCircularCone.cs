@@ -32,10 +32,10 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 		IfcPositiveLengthMeasure _BottomRadius;
 	
 	
-		[Description("<EPM-HTML>\r\nThe distance between the base of the cone and the apex.\r\n</EPM-HTML>")]
+		[Description("The distance between the base of the cone and the apex.")]
 		public IfcPositiveLengthMeasure Height { get { return this._Height; } set { this._Height = value;} }
 	
-		[Description("<EPM-HTML>\r\nThe radius of the cone at the base.\r\n</EPM-HTML>")]
+		[Description("The radius of the cone at the base.")]
 		public IfcPositiveLengthMeasure BottomRadius { get { return this._BottomRadius; } set { this._BottomRadius = value;} }
 	
 	

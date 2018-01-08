@@ -24,8 +24,8 @@ namespace BuildingSmart.IFC.IfcElectricalDomain
 		IfcElectricApplianceTypeEnum _PredefinedType;
 	
 	
-		[Description("<EPM-HTML><p>Identifies the predefined types of electrical appliance from which t" +
-	    "he type required may be set.</p></EPM-HTML>")]
+		[Description("<p>Identifies the predefined types of electrical appliance from which the type re" +
+	    "quired may be set.</p>")]
 		public IfcElectricApplianceTypeEnum PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	

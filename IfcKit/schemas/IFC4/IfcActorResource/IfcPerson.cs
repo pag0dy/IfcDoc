@@ -58,26 +58,21 @@ namespace BuildingSmart.IFC.IfcActorResource
 		[Description("Identification of the person.")]
 		public IfcIdentifier? Identification { get { return this._Identification; } set { this._Identification = value;} }
 	
-		[Description(@"<EPM-HTML>
-	The name by which the family identity of the person may be recognized.
-	<blockquote class=""note"">NOTE&nbsp; Depending on geographical location and culture, family name may appear either as the first or last component of a name.</blockquote>
-	</EPM-HTML>
-	")]
+		[Description("The name by which the family identity of the person may be recognized.\r\n<blockquo" +
+	    "te class=\"note\">NOTE&nbsp; Depending on geographical location and culture, famil" +
+	    "y name may appear either as the first or last component of a name.</blockquote>\r" +
+	    "\n")]
 		public IfcLabel? FamilyName { get { return this._FamilyName; } set { this._FamilyName = value;} }
 	
-		[Description(@"<EPM-HTML>
-	The name by which a person is known within a family and by which he or she may be familiarly recognized.
+		[Description(@"The name by which a person is known within a family and by which he or she may be familiarly recognized.
 	<blockquote class=""note"">NOTE&nbsp; Depending on geographical location and culture, given name may appear either as the first or last component of a name.</blockquote>
-	</EPM-HTML>
 	")]
 		public IfcLabel? GivenName { get { return this._GivenName; } set { this._GivenName = value;} }
 	
-		[Description(@"<EPM-HTML>
-	Additional names given to a person that enable their identification apart from others who may have the same or similar family and given names.
+		[Description(@"Additional names given to a person that enable their identification apart from others who may have the same or similar family and given names.
 	<blockquote class=""note"">NOTE&nbsp; Middle names are not normally used in familiar communication but may be asserted to provide additional 
 	identification of a particular person if necessary. They may be particularly useful in situations where the person concerned has a 
 	family name that occurs commonly in the geographical region.</blockquote>
-	</EPM-HTML>
 	")]
 		public IList<IfcLabel> MiddleNames { get { return this._MiddleNames; } }
 	
@@ -92,9 +87,8 @@ namespace BuildingSmart.IFC.IfcActorResource
 		[Description("Roles played by the person.")]
 		public IList<IfcActorRole> Roles { get { return this._Roles; } }
 	
-		[Description("<EPM-HTML>\r\nPostal and telecommunication addresses of a person.\r\n<blockquote clas" +
-	    "s=\"note\">NOTE&nbsp; A person may have several addresses.</small></blockquote>\r\n<" +
-	    "/EPM-HTML>\r\n")]
+		[Description("Postal and telecommunication addresses of a person.\r\n<blockquote class=\"note\">NOT" +
+	    "E&nbsp; A person may have several addresses.</small></blockquote>\r\n")]
 		public IList<IfcAddress> Addresses { get { return this._Addresses; } }
 	
 		[Description("The inverse relationship to IfcPersonAndOrganization relationships in which IfcPe" +

@@ -11,6 +11,7 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
+using BuildingSmart.IFC.IfcApprovalResource;
 using BuildingSmart.IFC.IfcConstraintResource;
 using BuildingSmart.IFC.IfcCostResource;
 using BuildingSmart.IFC.IfcDateTimeResource;
@@ -32,9 +33,9 @@ namespace BuildingSmart.IFC.IfcPropertyResource
 		IfcUnit _Unit;
 	
 	
-		[Description("<EPM-HTML>\r\nList of property values.\r\n<blockquote class=\"change-ifc2x4\">IFC4 CHAN" +
-	    "GE&nbsp; The attribute has been made optional with upward compatibility for file" +
-	    " based exchange.</blockquote>\r\n</EPM-HTML>")]
+		[Description("List of property values.\r\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; The" +
+	    " attribute has been made optional with upward compatibility for file based excha" +
+	    "nge.</blockquote>")]
 		public IList<IfcValue> ListValues { get { return this._ListValues; } }
 	
 		[Description("Unit for the list values, if not given, the default value for the measure type (g" +

@@ -41,17 +41,17 @@ namespace BuildingSmart.IFC.IfcExternalReferenceResource
 		IfcLabel? _RelationshipType;
 	
 	
-		[Description("<EPM-HTML>The document that acts as the parent, referencing or original document " +
-	    "in a relationship.</EPM-HTML>")]
+		[Description("The document that acts as the parent, referencing or original document in a relat" +
+	    "ionship.")]
 		public IfcDocumentInformation RelatingDocument { get { return this._RelatingDocument; } set { this._RelatingDocument = value;} }
 	
-		[Description("<EPM-HTML>The document that acts as the child, referenced or replacing document i" +
-	    "n a relationship.</EPM-HTML>")]
+		[Description("The document that acts as the child, referenced or replacing document in a relati" +
+	    "onship.")]
 		public ISet<IfcDocumentInformation> RelatedDocuments { get { return this._RelatedDocuments; } }
 	
-		[Description("<EPM-HTML>Describes the type of relationship between documents. This could be sub" +
-	    "-document, replacement etc. The interpretation has to be established in an appli" +
-	    "cation context.</EPM-HTML>")]
+		[Description("Describes the type of relationship between documents. This could be sub-document," +
+	    " replacement etc. The interpretation has to be established in an application con" +
+	    "text.")]
 		public IfcLabel? RelationshipType { get { return this._RelationshipType; } set { this._RelationshipType = value;} }
 	
 	

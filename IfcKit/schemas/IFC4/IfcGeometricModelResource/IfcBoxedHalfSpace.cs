@@ -27,8 +27,8 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 		IfcBoundingBox _Enclosure;
 	
 	
-		[Description("<EPM-HTML>\r\nThe box which bounds the resulting solid of the Boolean operation inv" +
-	    "olving the half space solid for computational purposes only.\r\n</EPM-HTML>\r\n")]
+		[Description("The box which bounds the resulting solid of the Boolean operation involving the h" +
+	    "alf space solid for computational purposes only.\r\n")]
 		public IfcBoundingBox Enclosure { get { return this._Enclosure; } set { this._Enclosure = value;} }
 	
 	

@@ -34,11 +34,11 @@ namespace BuildingSmart.IFC.IfcProcessExtension
 		IfcLabel? _WorkMethod;
 	
 	
-		[Description("<EPM-HTML>\r\n    Identifies the predefined types of a task type from which \r\n    t" +
-	    "he type required may be set.\r\n</EPM-HTML>")]
+		[Description("    Identifies the predefined types of a task type from which \r\n    the type requ" +
+	    "ired may be set.")]
 		public IfcTaskTypeEnum PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
-		[Description("<EPM-HTML>\r\n    The method of work used in carrying out a task.\r\n</EPM-HTML>")]
+		[Description("    The method of work used in carrying out a task.")]
 		public IfcLabel? WorkMethod { get { return this._WorkMethod; } set { this._WorkMethod = value;} }
 	
 	

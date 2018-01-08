@@ -38,9 +38,8 @@ namespace BuildingSmart.IFC.IfcProductExtension
 		IfcSpatialZoneTypeEnum? _PredefinedType;
 	
 	
-		[Description("<EPM-HTML>\r\nPredefined types to define the particular type of the spatial zone. T" +
-	    "here may be property set definitions available for each predefined type.\r\n</EPM-" +
-	    "HTML>")]
+		[Description("Predefined types to define the particular type of the spatial zone. There may be " +
+	    "property set definitions available for each predefined type.")]
 		public IfcSpatialZoneTypeEnum? PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	

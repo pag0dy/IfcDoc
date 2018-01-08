@@ -20,14 +20,21 @@ namespace BuildingSmart.IFC.IfcUtilityResource
 	[Guid("5d948a69-63db-4931-ad1a-2ba2aa984abf")]
 	public enum IfcStateEnum
 	{
+		[Description("Object is in a Read-Write state. It may be modified by an application.")]
 		READWRITE = 1,
 	
+		[Description("Object is in a Read-Only state. It may be viewed but not modified by an applicati" +
+	    "on.")]
 		READONLY = 2,
 	
+		[Description("Object is in a Locked state. It may not be accessed by an application.")]
 		LOCKED = 3,
 	
+		[Description("Object is in a Read-Write-Locked state. It may not be accessed by an application." +
+	    "")]
 		READWRITELOCKED = 4,
 	
+		[Description("Object is in a Read-Only-Locked state. It may not be accessed by an application.")]
 		READONLYLOCKED = 5,
 	
 	}

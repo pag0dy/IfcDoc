@@ -30,31 +30,19 @@ namespace BuildingSmart.IFC.IfcStructuralLoadResource
 		IfcThermodynamicTemperatureMeasure? _DeltaTZ;
 	
 	
-		[Description(@"<EPM-HTML>
+		[Description(@"Temperature change which affects the complete section of the structural member, or the uniform portion of a non-uniform temperature change.
 	
-	Temperature change which affects the complete section of the structural member, or the uniform portion of a non-uniform temperature change.
-	
-	<blockquote class=""note"">NOTE&nbsp; A positive value describes an increase in temperature.  I.e. a positive constant temperature change causes elongation of a member, or compression in the member if there are respective restraints.</blockquote>
-	
-	</EPM-HTML>")]
+	<blockquote class=""note"">NOTE&nbsp; A positive value describes an increase in temperature.  I.e. a positive constant temperature change causes elongation of a member, or compression in the member if there are respective restraints.</blockquote>")]
 		public IfcThermodynamicTemperatureMeasure? DeltaTConstant { get { return this._DeltaTConstant; } set { this._DeltaTConstant = value;} }
 	
-		[Description(@"<EPM-HTML>
+		[Description(@"Non-uniform temperature change, specified as the difference of the temperature change at the outer fibre of the positive y direction minus the temperature change at the outer fibre of the negative y direction of the analysis member.
 	
-	Non-uniform temperature change, specified as the difference of the temperature change at the outer fibre of the positive y direction minus the temperature change at the outer fibre of the negative y direction of the analysis member.
-	
-	<blockquote class=""note"">NOTE&nbsp; A positive non-uniform temperature change in y induces a negative curvature of the member about z, or a positive bending moment about z if there are respective restraints.  y and z are local member axes.</blockquote>
-	
-	</EPM-HTML>")]
+	<blockquote class=""note"">NOTE&nbsp; A positive non-uniform temperature change in y induces a negative curvature of the member about z, or a positive bending moment about z if there are respective restraints.  y and z are local member axes.</blockquote>")]
 		public IfcThermodynamicTemperatureMeasure? DeltaTY { get { return this._DeltaTY; } set { this._DeltaTY = value;} }
 	
-		[Description(@"<EPM-HTML>
+		[Description(@"Non-uniform temperature change, specified as the difference of the temperature change at the outer fibre of the positive z direction minus the temperature change at the outer fibre of the negative z direction of the analysis member.
 	
-	Non-uniform temperature change, specified as the difference of the temperature change at the outer fibre of the positive z direction minus the temperature change at the outer fibre of the negative z direction of the analysis member.
-	
-	<blockquote class=""note"">NOTE&nbsp; A positive non-uniform temperature change in z induces a positive curvature of the member about y, or a negative bending moment about y if there are respective restraints.  y and z are local member axes.</small></blockquote>
-	
-	</EPM-HTML>")]
+	<blockquote class=""note"">NOTE&nbsp; A positive non-uniform temperature change in z induces a positive curvature of the member about y, or a negative bending moment about y if there are respective restraints.  y and z are local member axes.</small></blockquote>")]
 		public IfcThermodynamicTemperatureMeasure? DeltaTZ { get { return this._DeltaTZ; } set { this._DeltaTZ = value;} }
 	
 	

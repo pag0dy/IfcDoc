@@ -18,12 +18,16 @@ namespace BuildingSmart.IFC.IfcHvacDomain
 	[Guid("557f51df-66ec-4809-83a0-a4e67ea8beac")]
 	public enum IfcVibrationIsolatorTypeEnum
 	{
+		[Description("Compression type vibration isolator.")]
 		COMPRESSION = 1,
 	
+		[Description("Spring type vibration isolator.")]
 		SPRING = 2,
 	
+		[Description("User-defined vibration isolator type.")]
 		USERDEFINED = -1,
 	
+		[Description("Undefined vibration isolator type.")]
 		NOTDEFINED = 0,
 	
 	}

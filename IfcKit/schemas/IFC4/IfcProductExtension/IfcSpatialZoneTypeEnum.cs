@@ -33,24 +33,36 @@ namespace BuildingSmart.IFC.IfcProductExtension
 	[Guid("fc0dac05-25d9-47f7-b430-9ed240490643")]
 	public enum IfcSpatialZoneTypeEnum
 	{
+		[Description("The spatial zone is used to represent a construction zone for the production proc" +
+	    "ess.")]
 		CONSTRUCTION = 1,
 	
+		[Description("The spatial zone is used to represent a fire safety zone, or fire compartment.")]
 		FIRESAFETY = 2,
 	
+		[Description("The spatial zone is used to represent a lighting zone; a daylight zone, or an art" +
+	    "ificial lighting zone.")]
 		LIGHTING = 3,
 	
+		[Description("The spatial zone is used to represent a zone of particular occupancy.")]
 		OCCUPANCY = 4,
 	
+		[Description("The spatial zone is used to represent a zone for security planning and maintainan" +
+	    "ce work.")]
 		SECURITY = 5,
 	
+		[Description("The spatial zone is used to represent a thermal zone.")]
 		THERMAL = 6,
 	
 		TRANSPORT = 7,
 	
+		[Description("The spatial zone is used to represent a ventilation zone.")]
 		VENTILATION = 8,
 	
+		[Description("User defined type spatial zone.")]
 		USERDEFINED = -1,
 	
+		[Description("Undefined type spatial zone.")]
 		NOTDEFINED = 0,
 	
 	}

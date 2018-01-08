@@ -28,10 +28,13 @@ namespace BuildingSmart.IFC.IfcSharedBldgElements
 	[Guid("270e75a0-5dc4-4280-8750-8388a3a1a27d")]
 	public enum IfcConnectionTypeEnum
 	{
+		[Description("Connection along the path of the connected element.")]
 		ATPATH = 1,
 	
+		[Description("Connection at the start of the connected element.")]
 		ATSTART = 2,
 	
+		[Description("Connection at the end of the connected element.")]
 		ATEND = 3,
 	
 		NOTDEFINED = 0,

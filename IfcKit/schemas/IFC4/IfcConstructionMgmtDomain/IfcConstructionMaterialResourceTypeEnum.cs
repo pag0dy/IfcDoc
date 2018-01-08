@@ -21,26 +21,37 @@ namespace BuildingSmart.IFC.IfcConstructionMgmtDomain
 	[Guid("f2d6a87c-e040-4422-9a95-caf75bfbb6bc")]
 	public enum IfcConstructionMaterialResourceTypeEnum
 	{
+		[Description("Construction aggregate including sand, gravel, and crushed stone.")]
 		AGGREGATES = 1,
 	
+		[Description("Cast-in-place concrete.")]
 		CONCRETE = 2,
 	
+		[Description("Wall board, including gypsum board.")]
 		DRYWALL = 3,
 	
+		[Description("Fuel for running equipment.")]
 		FUEL = 4,
 	
+		[Description("Any gypsum material.")]
 		GYPSUM = 5,
 	
+		[Description("Masonry including brick, stone, concrete block, glass block, and tile.")]
 		MASONRY = 6,
 	
+		[Description("Any metallic material.")]
 		METAL = 7,
 	
+		[Description("Any plastic material.")]
 		PLASTIC = 8,
 	
+		[Description("Any wood material.")]
 		WOOD = 9,
 	
+		[Description("Undefined resource.")]
 		NOTDEFINED = 0,
 	
+		[Description("User-defined resource.")]
 		USERDEFINED = -1,
 	
 	}

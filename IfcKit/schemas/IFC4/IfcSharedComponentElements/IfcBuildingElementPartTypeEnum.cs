@@ -18,12 +18,18 @@ namespace BuildingSmart.IFC.IfcSharedComponentElements
 	[Guid("f28c4b99-9bf9-4934-befa-a179ed76232f")]
 	public enum IfcBuildingElementPartTypeEnum
 	{
+		[Description("The part provides thermal insulation, for example as insulation layer between wal" +
+	    "l panels in sandwich walls or as infill in stud walls.")]
 		INSULATION = 1,
 	
+		[Description("The part is a precast panel, usually as an internal or external layer in a sandwi" +
+	    "ch wall panel.")]
 		PRECASTPANEL = 2,
 	
+		[Description("User-defined accessory.")]
 		USERDEFINED = -1,
 	
+		[Description("Undefined accessory.")]
 		NOTDEFINED = 0,
 	
 	}

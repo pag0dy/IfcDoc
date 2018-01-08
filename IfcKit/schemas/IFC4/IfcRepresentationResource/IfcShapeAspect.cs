@@ -37,17 +37,17 @@ namespace BuildingSmart.IFC.IfcRepresentationResource
 		IfcText? _Description;
 	
 		[DataMember(Order=3)] 
+		[XmlAttribute]
 		[Required()]
-		Boolean? _ProductDefinitional;
+		IfcLogical _ProductDefinitional;
 	
 		[DataMember(Order=4)] 
 		[XmlIgnore]
 		IfcProductRepresentationSelect _PartOfProductDefinitionShape;
 	
 	
-		[Description(@"<EPM-HTML>List of <strike>shape</strike> representations. Each member defines a valid representation of a particular type within a particular representation context as being an aspect (or part) of a product definition.
-	<blockquote class=""change-ifc2x3"">IFC2x3 CHANGE&nbsp; The data type has been changed from <em>IfcShapeRepresentation</em> to <em>IfcShapeModel</em> with upward compatibility </blockquote>
-	</EPM-HTML>")]
+		[Description(@"List of <strike>shape</strike> representations. Each member defines a valid representation of a particular type within a particular representation context as being an aspect (or part) of a product definition.
+	<blockquote class=""change-ifc2x3"">IFC2x3 CHANGE&nbsp; The data type has been changed from <em>IfcShapeRepresentation</em> to <em>IfcShapeModel</em> with upward compatibility </blockquote>")]
 		public IList<IfcShapeModel> ShapeRepresentations { get { return this._ShapeRepresentations; } }
 	
 		[Description(@"The word or group of words by which the shape aspect is known. It is a tag to indicate the particular semantic of a component within the product definition shape, used to provide meaning. Example: use the tag ""Glazing"" to define which component of a window shape defines the glazing area.")]
@@ -61,14 +61,12 @@ namespace BuildingSmart.IFC.IfcRepresentationResource
 	---
 	EXAMPLE: Would be FALSE for a center line, identified as shape aspect; would be TRUE for a cantilever.
 	---")]
-		public Boolean? ProductDefinitional { get { return this._ProductDefinitional; } set { this._ProductDefinitional = value;} }
+		public IfcLogical ProductDefinitional { get { return this._ProductDefinitional; } set { this._ProductDefinitional = value;} }
 	
-		[Description(@"<EPM-HTML>
-	Reference to the <em>IfcProductDefinitionShape</em> or the <em>IfcRepresentationMap</em> of which this shape is an aspect.
+		[Description(@"Reference to the <em>IfcProductDefinitionShape</em> or the <em>IfcRepresentationMap</em> of which this shape is an aspect.
 	<blockquote class=""change-ifc2x4"">
 	IFC4 CHANGE&nbsp; Data type modified to be <em>IfcProductRepresentationSelect</em> allowing the assignment also to <em>IfcRepresentationMap</em>.
-	</blockquote>
-	</EPM-HTML>")]
+	</blockquote>")]
 		public IfcProductRepresentationSelect PartOfProductDefinitionShape { get { return this._PartOfProductDefinitionShape; } set { this._PartOfProductDefinitionShape = value;} }
 	
 	

@@ -95,9 +95,7 @@ namespace BuildingSmart.IFC.IfcStructuralElementsDomain
 	    "resumed; other cases are handled by classification or property sets.")]
 		public IfcPositiveLengthMeasure? TransverseBarSpacing { get { return this._TransverseBarSpacing; } set { this._TransverseBarSpacing = value;} }
 	
-		[Description(@"<EPM-HTML>
-	If this mesh type is bent rather than planar, this attribute provides a shape code per a standard like ACI 315, ISO 3766, or a similar standard.  It is presumed that a single standard for defining the mesh bending is used throughout the project and that this standard is referenced from the <em>IfcProject</em> object through the <em>IfcDocumentReference</em> mechanism.
-	</EPM-HTML>")]
+		[Description(@"If this mesh type is bent rather than planar, this attribute provides a shape code per a standard like ACI 315, ISO 3766, or a similar standard.  It is presumed that a single standard for defining the mesh bending is used throughout the project and that this standard is referenced from the <em>IfcProject</em> object through the <em>IfcDocumentReference</em> mechanism.")]
 		public IfcLabel? BendingShapeCode { get { return this._BendingShapeCode; } set { this._BendingShapeCode = value;} }
 	
 		[Description("If this mesh type is bent rather than planar, this attribute provides bending sha" +

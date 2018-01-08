@@ -53,9 +53,8 @@ namespace BuildingSmart.IFC.IfcConstraintResource
 		[Description("Enumeration that qualifies the type of objective constraint.\r\n")]
 		public IfcObjectiveEnum ObjectiveQualifier { get { return this._ObjectiveQualifier; } set { this._ObjectiveQualifier = value;} }
 	
-		[Description("<EPM-HTML>A user defined value that qualifies the type of objective constraint wh" +
-	    "en ObjectiveQualifier attribute of type <em>IfcObjectiveEnum</em> has value USER" +
-	    "DEFINED.</EPM-HTML>")]
+		[Description("A user defined value that qualifies the type of objective constraint when Objecti" +
+	    "veQualifier attribute of type <em>IfcObjectiveEnum</em> has value USERDEFINED.")]
 		public IfcLabel? UserDefinedQualifier { get { return this._UserDefinedQualifier; } set { this._UserDefinedQualifier = value;} }
 	
 	

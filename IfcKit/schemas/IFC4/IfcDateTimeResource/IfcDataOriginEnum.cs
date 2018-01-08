@@ -18,14 +18,18 @@ namespace BuildingSmart.IFC.IfcDateTimeResource
 	[Guid("988de9e9-4dd8-4fe0-b3f5-3ca2446bb192")]
 	public enum IfcDataOriginEnum
 	{
+		[Description("The origin of the time data is a measurement device.")]
 		MEASURED = 1,
 	
+		[Description("The time data are a prediction.")]
 		PREDICTED = 2,
 	
+		[Description("The origin of the time data is a simulation.")]
 		SIMULATED = 3,
 	
 		USERDEFINED = -1,
 	
+		[Description("The origin of the time data is undefined.")]
 		NOTDEFINED = 0,
 	
 	}

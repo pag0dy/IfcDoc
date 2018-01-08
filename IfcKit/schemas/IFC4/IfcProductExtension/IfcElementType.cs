@@ -38,9 +38,7 @@ namespace BuildingSmart.IFC.IfcProductExtension
 		IfcLabel? _ElementType;
 	
 	
-		[Description(@"<EPM-HTML>
-	The type denotes a particular type that indicates the object further. The use has to be established at the level of instantiable subtypes. In particular it holds the user defined type, if the enumeration of the attribute 'PredefinedType' is set to USERDEFINED. 
-	</EPM-HTML>")]
+		[Description(@"The type denotes a particular type that indicates the object further. The use has to be established at the level of instantiable subtypes. In particular it holds the user defined type, if the enumeration of the attribute 'PredefinedType' is set to USERDEFINED. ")]
 		public IfcLabel? ElementType { get { return this._ElementType; } set { this._ElementType = value;} }
 	
 	

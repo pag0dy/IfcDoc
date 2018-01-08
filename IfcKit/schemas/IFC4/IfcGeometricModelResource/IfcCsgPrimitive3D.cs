@@ -29,8 +29,8 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 		IfcAxis2Placement3D _Position;
 	
 	
-		[Description("<EPM-HTML>\r\nThe placement coordinate system to which the parameters of each indiv" +
-	    "idual CSG primitive apply.\r\n</EPM-HTML>")]
+		[Description("The placement coordinate system to which the parameters of each individual CSG pr" +
+	    "imitive apply.")]
 		public IfcAxis2Placement3D Position { get { return this._Position; } set { this._Position = value;} }
 	
 	

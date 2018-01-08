@@ -27,8 +27,7 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 		IList<IfcParameterValue> _TexCoordsList = new List<IfcParameterValue>();
 	
 	
-		[Description("<EPM-HTML>\r\nList of texture vertices defined by S-coordinate and T-coordinate.\r\n<" +
-	    "/EPM-HTML>")]
+		[Description("List of texture vertices defined by S-coordinate and T-coordinate.")]
 		public IList<IfcParameterValue> TexCoordsList { get { return this._TexCoordsList; } }
 	
 	

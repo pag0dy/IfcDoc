@@ -47,9 +47,9 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		[Description("A representation that is mapped to at least one mapped item.")]
 		public IfcRepresentation MappedRepresentation { get { return this._MappedRepresentation; } set { this._MappedRepresentation = value;} }
 	
-		[Description("<EPM-HTML>\r\nReference to the shape aspect that represents part of the shape or it" +
-	    "s feature distinctively.\r\n<blockquote class=\"change-ifc2x4\">\r\nIFC4 CHANGE&nbsp; " +
-	    "Inverse attribute added.\r\n</blockquote>\r\n</EPM-HTML>")]
+		[Description("Reference to the shape aspect that represents part of the shape or its feature di" +
+	    "stinctively.\r\n<blockquote class=\"change-ifc2x4\">\r\nIFC4 CHANGE&nbsp; Inverse attr" +
+	    "ibute added.\r\n</blockquote>")]
 		public ISet<IfcShapeAspect> HasShapeAspects { get { return this._HasShapeAspects; } }
 	
 		public ISet<IfcMappedItem> MapUsage { get { return this._MapUsage; } }

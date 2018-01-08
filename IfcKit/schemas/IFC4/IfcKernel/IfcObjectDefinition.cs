@@ -32,18 +32,22 @@ namespace BuildingSmart.IFC.IfcKernel
 		ISet<IfcRelAssigns> _HasAssignments = new HashSet<IfcRelAssigns>();
 	
 		[InverseProperty("RelatedObjects")] 
+		[XmlIgnore]
 		ISet<IfcRelNests> _Nests = new HashSet<IfcRelNests>();
 	
 		[InverseProperty("RelatingObject")] 
+		[XmlElement]
 		ISet<IfcRelNests> _IsNestedBy = new HashSet<IfcRelNests>();
 	
 		[InverseProperty("RelatedDefinitions")] 
 		ISet<IfcRelDeclares> _HasContext = new HashSet<IfcRelDeclares>();
 	
 		[InverseProperty("RelatingObject")] 
+		[XmlElement]
 		ISet<IfcRelAggregates> _IsDecomposedBy = new HashSet<IfcRelAggregates>();
 	
 		[InverseProperty("RelatedObjects")] 
+		[XmlIgnore]
 		ISet<IfcRelAggregates> _Decomposes = new HashSet<IfcRelAggregates>();
 	
 		[InverseProperty("RelatedObjects")] 
@@ -55,47 +59,32 @@ namespace BuildingSmart.IFC.IfcKernel
 	    "tion to products, processes, controls, resources or groups.")]
 		public ISet<IfcRelAssigns> HasAssignments { get { return this._HasAssignments; } }
 	
-		[Description(@"<EPM-HTML>
-	References to the decomposition relationship being a nesting. It determines that this object definition is a part within an ordered whole/part decomposition relationship. An object occurrence or type can only be part of a single decomposition (to allow hierarchical strutures only).
+		[Description(@"References to the decomposition relationship being a nesting. It determines that this object definition is a part within an ordered whole/part decomposition relationship. An object occurrence or type can only be part of a single decomposition (to allow hierarchical strutures only).
 	
 	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The inverse attribute datatype has been added and separated from <em>Decomposes</em> defined at <em>IfcObjectDefinition</em>.</blockquote>
-	
-	</EPM-HTML>
 	")]
 		public ISet<IfcRelNests> Nests { get { return this._Nests; } }
 	
-		[Description(@"<EPM-HTML>
-	References to the decomposition relationship being a nesting. It determines that this object definition is the whole within an ordered whole/part decomposition relationship. An object or object type can be nested by several other objects (occurrences or types).
+		[Description(@"References to the decomposition relationship being a nesting. It determines that this object definition is the whole within an ordered whole/part decomposition relationship. An object or object type can be nested by several other objects (occurrences or types).
 	
 	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The inverse attribute datatype has been added and separated from <em>IsDecomposedBy</em> defined at <em>IfcObjectDefinition</em>.</blockquote>
-	
-	</EPM-HTML>
 	")]
 		public ISet<IfcRelNests> IsNestedBy { get { return this._IsNestedBy; } }
 	
-		[Description(@"<EPM-HTML>
-	References to the context providing context information such as project unit or representation context. It should only be asserted for the uppermost non-spatial object.
+		[Description(@"References to the context providing context information such as project unit or representation context. It should only be asserted for the uppermost non-spatial object.
 	
-	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The inverse attribute datatype has been added.</blockquote>
-	
-	</EPM-HTML>")]
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The inverse attribute datatype has been added.</blockquote>")]
 		public ISet<IfcRelDeclares> HasContext { get { return this._HasContext; } }
 	
-		[Description(@"<EPM-HTML>
-	References to the decomposition relationship being an aggregation. It determines that this object definition is whole within an unordered whole/part decomposition relationship. An object definitions can be aggregated by several other objects (occurrences or parts).
+		[Description(@"References to the decomposition relationship being an aggregation. It determines that this object definition is whole within an unordered whole/part decomposition relationship. An object definitions can be aggregated by several other objects (occurrences or parts).
 	
 	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The inverse attribute datatype has been changed from the supertype <em>IfcRelDecomposes</em> to subtype <em>IfcRelAggregates</em>.</blockquote>
-	
-	</EPM-HTML>
 	")]
 		public ISet<IfcRelAggregates> IsDecomposedBy { get { return this._IsDecomposedBy; } }
 	
-		[Description(@"<EPM-HTML>
-	References to the decomposition relationship being an aggregation. It determines that this object definition is a part within an unordered whole/part decomposition relationship. An object definitions can only be part of a single decomposition (to allow hierarchical strutures only).
+		[Description(@"References to the decomposition relationship being an aggregation. It determines that this object definition is a part within an unordered whole/part decomposition relationship. An object definitions can only be part of a single decomposition (to allow hierarchical strutures only).
 	
 	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The inverse attribute datatype has been changed from the supertype <em>IfcRelDecomposes</em> to subtype <em>IfcRelAggregates</em>.</blockquote>
-	
-	</EPM-HTML>
 	")]
 		public ISet<IfcRelAggregates> Decomposes { get { return this._Decomposes; } }
 	

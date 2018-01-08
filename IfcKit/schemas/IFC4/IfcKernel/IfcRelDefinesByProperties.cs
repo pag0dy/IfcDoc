@@ -28,7 +28,7 @@ namespace BuildingSmart.IFC.IfcKernel
 	public partial class IfcRelDefinesByProperties : IfcRelDefines
 	{
 		[DataMember(Order=0)] 
-		[XmlElement("IfcObjectDefinition")]
+		[XmlIgnore]
 		[Required()]
 		ISet<IfcObjectDefinition> _RelatedObjects = new HashSet<IfcObjectDefinition>();
 	
@@ -37,13 +37,12 @@ namespace BuildingSmart.IFC.IfcKernel
 		IfcPropertySetDefinitionSelect _RelatingPropertyDefinition;
 	
 	
-		[Description("<EPM-HTML>\r\nReference to the objects (or single object) to which the property def" +
-	    "inition applies.\r\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; Data type " +
-	    "promoted from subtype <em>IfcObject</em>.\r\n</blockquote>\r\n</EPM-HTML>")]
+		[Description("Reference to the objects (or single object) to which the property definition appl" +
+	    "ies.\r\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; Data type promoted fro" +
+	    "m subtype <em>IfcObject</em>.\r\n</blockquote>")]
 		public ISet<IfcObjectDefinition> RelatedObjects { get { return this._RelatedObjects; } }
 	
-		[Description("<EPM-HTML>\r\nReference to the property set definition for that object or set of ob" +
-	    "jects.\r\n</EPM-HTML>")]
+		[Description("Reference to the property set definition for that object or set of objects.")]
 		public IfcPropertySetDefinitionSelect RelatingPropertyDefinition { get { return this._RelatingPropertyDefinition; } set { this._RelatingPropertyDefinition = value;} }
 	
 	

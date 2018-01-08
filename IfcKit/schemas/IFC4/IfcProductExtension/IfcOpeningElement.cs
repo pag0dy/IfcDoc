@@ -41,10 +41,8 @@ namespace BuildingSmart.IFC.IfcProductExtension
 		ISet<IfcRelFillsElement> _HasFillings = new HashSet<IfcRelFillsElement>();
 	
 	
-		[Description(@"<EPM-HTML>
-	Predefined generic type for an opening that is specified in an enumeration. There may be a property set given specificly for the predefined types.
-	<blockquote class=""change-ifc2x4"">IFC4 CHANGE  The attribute has been added at the end of the entity definition.</blockquote>
-	</EPM-HTML> ")]
+		[Description(@"Predefined generic type for an opening that is specified in an enumeration. There may be a property set given specificly for the predefined types.
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE  The attribute has been added at the end of the entity definition.</blockquote> ")]
 		public IfcOpeningElementTypeEnum? PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 		[Description("Reference to the Filling Relationship that is used to assign Elements as Fillings" +

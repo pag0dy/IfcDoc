@@ -41,13 +41,12 @@ namespace BuildingSmart.IFC.IfcProductExtension
 		ISet<IfcRelSpaceBoundary1stLevel> _InnerBoundaries = new HashSet<IfcRelSpaceBoundary1stLevel>();
 	
 	
-		[Description("<EPM-HTML>\r\nReference to the host, or parent, space boundary within which this in" +
-	    "ner boundary is defined.\r\n</EPM-HTML>")]
+		[Description("Reference to the host, or parent, space boundary within which this inner boundary" +
+	    " is defined.")]
 		public IfcRelSpaceBoundary1stLevel ParentBoundary { get { return this._ParentBoundary; } set { this._ParentBoundary = value;} }
 	
-		[Description("<EPM-HTML>\r\nReference to the inner boundaries of the space boundary. Inner bounda" +
-	    "ries are defined by the space boundaries of openings, doors and windows.\r\n</EPM-" +
-	    "HTML>")]
+		[Description("Reference to the inner boundaries of the space boundary. Inner boundaries are def" +
+	    "ined by the space boundaries of openings, doors and windows.")]
 		public ISet<IfcRelSpaceBoundary1stLevel> InnerBoundaries { get { return this._InnerBoundaries; } }
 	
 	

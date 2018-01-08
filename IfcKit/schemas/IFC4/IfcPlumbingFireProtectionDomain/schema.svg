@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<svg xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="1.1" width="0" height="0" xmlns="http://www.w3.org/2000/svg">
+<svg xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="1.1" width="600" height="888" xmlns="http://www.w3.org/2000/svg">
   <g id="IfcFireSuppressionTerminal" fill="yellow">
     <rect x="323.58" y="125.8749975" width="243.75" height="41.475" stroke="black" />
     <text x="445.455" y="146.6124975" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcFireSuppressionTerminal</text>
@@ -103,24 +103,38 @@
   <g id="IFCSHAREDBLDGSERVICEELEMENTS">
     <g id="IfcFlowTerminalType" fill="grey">
       <rect x="9.787497375" y="10.637500125" width="233.62500375" height="86.25" stroke="black" />
+      <polyline points="126.59999625,96.88750125 126.59999625,115.38375 8.20999875,115.38375 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="8.20999875,115.38375 8.2100025,458.567475 28.435000125,458.567475 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="8.20999875,115.38375 8.2100025,354.57998625 28.4100015,354.57998625 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="8.20999875,115.38375 8.2100025,250.6174875 28.4100015,250.6174875 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="8.20999875,115.38375 8.2100025,146.62499625 28.447501125,146.62499625 " fill="none" stroke="black" stroke-width="3" />
       <text x="126.59999925" y="53.762500125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCSHAREDBLDGSERVICEELEMENTS
 IfcFlowTerminalType</text>
     </g>
     <g id="IfcFlowTerminal" fill="grey">
       <rect x="386.5999875" y="10.562500125" width="203.25" height="85.62499875" stroke="black" />
+      <polyline points="488.2249875,96.1875 488.2249875,113.374999875 588.46498875,113.374999875 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="588.46498875,113.374999875 588.465,146.6124975 567.33,146.6124975 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="588.46498875,113.374999875 588.465,250.6125 567.36749925,250.6125 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="588.46498875,113.374999875 588.465,354.58750125 567.3424995,354.58750125 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="588.46498875,113.374999875 588.465,458.5750125 567.342501375,458.5750125 " fill="none" stroke="black" stroke-width="3" />
       <text x="488.2249875" y="53.3749995" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCSHAREDBLDGSERVICEELEMENTS
 IfcFlowTerminal</text>
     </g>
     <g id="IfcFlowTreatmentDeviceType" fill="grey">
       <rect x="14.2875" y="582.1249875" width="204.75" height="85.875" stroke="black" />
+      <polyline points="17.6625,667.9999875 17.6625,716.8999875 27.310000125,716.8999875 " fill="none" stroke="black" stroke-width="3" />
       <text x="116.6625" y="625.0624875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCSHAREDBLDGSERVICEELEMENTS
 IfcFlowTreatmentDeviceType</text>
     </g>
     <g id="IfcFlowTreatmentDevice" fill="grey">
       <rect x="384.3" y="579.1125" width="204.12499875" height="85.875" stroke="black" />
+      <polyline points="584.3625,664.9875 584.3625,681.745929375 584.12361312375,681.745929375 584.12361312375,716.899999875 568.30999999875,716.899999875 " fill="none" stroke="black" stroke-width="3" />
       <text x="486.362499375" y="622.05" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCSHAREDBLDGSERVICEELEMENTS
 IfcFlowTreatmentDevice</text>
     </g>
   </g>
-  <g />
+  <g>
+    <rect x="0" y="0" width="600" height="888" fill="none" stroke="lime" />
+  </g>
 </svg>

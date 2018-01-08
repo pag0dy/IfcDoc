@@ -25,6 +25,7 @@ namespace BuildingSmart.IFC.IfcRepresentationResource
 	public abstract partial class IfcCoordinateOperation
 	{
 		[DataMember(Order=0)] 
+		[XmlIgnore]
 		[Required()]
 		IfcCoordinateReferenceSystemSelect _SourceCRS;
 	

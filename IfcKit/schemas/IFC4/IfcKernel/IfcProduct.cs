@@ -46,9 +46,9 @@ namespace BuildingSmart.IFC.IfcKernel
 		[Description(@"Reference to the representations of the product, being either a representation (IfcProductRepresentation) or as a special case a shape representations (IfcProductDefinitionShape). The product definition shape provides for multiple geometric representations of the shape property of the object within the same object coordinate system, defined by the object placement.")]
 		public IfcProductRepresentation Representation { get { return this._Representation; } set { this._Representation = value;} }
 	
-		[Description("<EPM-HTML>\r\nReference to the <em>IfcRelAssignsToProduct</em> relationship, by whi" +
-	    "ch other products, processes, controls, resources or actors (as subtypes of <em>" +
-	    "IfcObjectDefinition</em>) can be related to this product.\r\n</EPM-HTML>")]
+		[Description("Reference to the <em>IfcRelAssignsToProduct</em> relationship, by which other pro" +
+	    "ducts, processes, controls, resources or actors (as subtypes of <em>IfcObjectDef" +
+	    "inition</em>) can be related to this product.")]
 		public ISet<IfcRelAssignsToProduct> ReferencedBy { get { return this._ReferencedBy; } }
 	
 	

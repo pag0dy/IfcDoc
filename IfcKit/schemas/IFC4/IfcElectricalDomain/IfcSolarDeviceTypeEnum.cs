@@ -18,12 +18,17 @@ namespace BuildingSmart.IFC.IfcElectricalDomain
 	[Guid("49277f4f-612d-4a85-9867-b4b6ab0e1750")]
 	public enum IfcSolarDeviceTypeEnum
 	{
+		[Description("A device that converts solar radiation into thermal energy (heating water, etc.)." +
+	    "")]
 		SOLARCOLLECTOR = 1,
 	
+		[Description("A device that converts solar radiation into electric current.")]
 		SOLARPANEL = 2,
 	
+		[Description("User-defined type.")]
 		USERDEFINED = -1,
 	
+		[Description("Undefined type.")]
 		NOTDEFINED = 0,
 	
 	}

@@ -44,23 +44,20 @@ namespace BuildingSmart.IFC.IfcKernel
 		ISet<IfcRelAssignsToResource> _ResourceOf = new HashSet<IfcRelAssignsToResource>();
 	
 	
-		[Description("<EPM-HTML>\r\nAn identifying designation given to a resource type.\r\n</EPM-HTML>")]
+		[Description("An identifying designation given to a resource type.")]
 		public IfcIdentifier? Identification { get { return this._Identification; } set { this._Identification = value;} }
 	
-		[Description("<EPM-HTML>\r\nAn long description, or text, describing the resource in detail.\r\n<bl" +
-	    "ockquote class=\"note\">NOTE&nbsp; The inherited <em>SELF\\IfcRoot.Description</em>" +
-	    " attribute is used as the short description.</blockquote>\r\n</EPM-HTML>")]
+		[Description("An long description, or text, describing the resource in detail.\r\n<blockquote cla" +
+	    "ss=\"note\">NOTE&nbsp; The inherited <em>SELF\\IfcRoot.Description</em> attribute i" +
+	    "s used as the short description.</blockquote>")]
 		public IfcText? LongDescription { get { return this._LongDescription; } set { this._LongDescription = value;} }
 	
-		[Description(@"<EPM-HTML>
-	The type denotes a particular type that indicates the resource further. The use has to be established at the level of instantiable subtypes. In particular it holds the user defined type, if the enumeration of the attribute 'PredefinedType' is set to USERDEFINED. 
-	</EPM-HTML>")]
+		[Description(@"The type denotes a particular type that indicates the resource further. The use has to be established at the level of instantiable subtypes. In particular it holds the user defined type, if the enumeration of the attribute 'PredefinedType' is set to USERDEFINED. ")]
 		public IfcLabel? ResourceType { get { return this._ResourceType; } set { this._ResourceType = value;} }
 	
-		[Description("<EPM-HTML>\r\nSet of relationships to other objects, e.g. products, processes, cont" +
-	    "rols, resources or actors to which this resource type is a resource.\r\n<blockquot" +
-	    "e class=\"history\">HISTORY New inverse relationship in IFC4.</blockquote>\r\n</EPM-" +
-	    "HTML>")]
+		[Description("Set of relationships to other objects, e.g. products, processes, controls, resour" +
+	    "ces or actors to which this resource type is a resource.\r\n<blockquote class=\"his" +
+	    "tory\">HISTORY New inverse relationship in IFC4.</blockquote>")]
 		public ISet<IfcRelAssignsToResource> ResourceOf { get { return this._ResourceOf; } }
 	
 	

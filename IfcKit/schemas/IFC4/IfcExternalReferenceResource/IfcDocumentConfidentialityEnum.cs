@@ -27,12 +27,17 @@ namespace BuildingSmart.IFC.IfcExternalReferenceResource
 	[Guid("f90953b1-d6ec-4f78-8d2e-37fd79e54923")]
 	public enum IfcDocumentConfidentialityEnum
 	{
+		[Description("Document is publicly available.")]
 		PUBLIC = 1,
 	
+		[Description("Document availability is restricted.")]
 		RESTRICTED = 2,
 	
+		[Description("Document is confidential and its contents should not be revealed without permissi" +
+	    "on.")]
 		CONFIDENTIAL = 3,
 	
+		[Description("Document is personal to the author.")]
 		PERSONAL = 4,
 	
 		USERDEFINED = -1,

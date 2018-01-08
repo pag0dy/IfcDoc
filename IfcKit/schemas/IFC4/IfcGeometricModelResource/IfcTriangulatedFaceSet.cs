@@ -23,29 +23,25 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 	{
 		[DataMember(Order=0)] 
 		[Required()]
-		IList<Int64> _CoordIndex = new List<Int64>();
+		IList<IfcPositiveInteger> _CoordIndex = new List<IfcPositiveInteger>();
 	
 		[DataMember(Order=1)] 
-		IList<Int64> _NormalIndex = new List<Int64>();
+		IList<IfcPositiveInteger> _NormalIndex = new List<IfcPositiveInteger>();
 	
 	
-		[Description(@"<EPM-HTML>
-	Two-dimensional list, where the first dimension represents the triangles (from 1 to N) and the second dimension the indices to
+		[Description(@"Two-dimensional list, where the first dimension represents the triangles (from 1 to N) and the second dimension the indices to
 	three points defining the vertices (from 1 to 3).
 	<blockquote class=""note"">
 	NOTE&nbsp; The coordinates of the vertices are provided by the indexed list of <em>SELF\IfcTessellatedFaceSet.Coordinates.CoordList</em>.
-	</blockquote>
-	</EPM-HTML>")]
-		public IList<Int64> CoordIndex { get { return this._CoordIndex; } }
+	</blockquote>")]
+		public IList<IfcPositiveInteger> CoordIndex { get { return this._CoordIndex; } }
 	
-		[Description(@"<EPM-HTML>
-	Two-dimensional list, where the first dimension represents the triangle (from 1 to N) and the second dimension the indices to
+		[Description(@"Two-dimensional list, where the first dimension represents the triangle (from 1 to N) and the second dimension the indices to
 	three normals (from 1 to 3) corresponding to the vertices.
 	<blockquote class=""note"">
-	The directions of the normals are provided by the indexed list of <em>SELF\IfcTessellatedFaceSet.Normals.DirectionList</em>.
-	</blockquote>
-	</EPM-HTML>")]
-		public IList<Int64> NormalIndex { get { return this._NormalIndex; } }
+	The directions of the normals are provided by the indexed list of <em>SELF\IfcTessellatedFaceSet.Normals</em>.
+	</blockquote>")]
+		public IList<IfcPositiveInteger> NormalIndex { get { return this._NormalIndex; } }
 	
 	
 	}

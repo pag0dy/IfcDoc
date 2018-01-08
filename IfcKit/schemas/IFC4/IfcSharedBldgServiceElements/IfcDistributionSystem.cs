@@ -28,11 +28,9 @@ namespace BuildingSmart.IFC.IfcSharedBldgServiceElements
 		IfcDistributionSystemEnum? _PredefinedType;
 	
 	
-		[Description(@"<EPM-HTML>
-	Long name for a system, used for informal purposes. It should be used, if available, in conjunction with the inherited <em>Name</em> attribute.
+		[Description(@"Long name for a distribution system, used for informal purposes. It should be used, if available, in conjunction with the inherited <em>Name</em> attribute.
 	<blockquote class=""note"">NOTE&nbsp; In many scenarios the <em>Name</em> attribute refers to the short name or number of a distribution system or branch circuit, and the <em>LongName</em> refers to a descriptive name.
-	</blockquote>
-	</EPM-HTML>")]
+	</blockquote>")]
 		public IfcLabel? LongName { get { return this._LongName; } set { this._LongName = value;} }
 	
 		[Description("Predefined types of distribution systems.")]

@@ -57,43 +57,37 @@ namespace BuildingSmart.IFC.IfcSharedFacilitiesElements
 		IfcCostValue _DepreciatedValue;
 	
 	
-		[Description(@"<EPM-HTML>A unique identification assigned to an asset that enables its differentiation from other assets.
-	<blockquote class=""note"">NOTE&nbsp; The asset identifier is unique within the asset register. It differs from the globally unique id assigned to the instance of an entity populating a database.</blockquote>
-	</EPM-HTML>")]
+		[Description(@"A unique identification assigned to an asset that enables its differentiation from other assets.
+	<blockquote class=""note"">NOTE&nbsp; The asset identifier is unique within the asset register. It differs from the globally unique id assigned to the instance of an entity populating a database.</blockquote>")]
 		public IfcIdentifier? Identification { get { return this._Identification; } set { this._Identification = value;} }
 	
-		[Description("<EPM-HTML>The cost value of the asset at the time of purchase.</EPM-HTML>")]
+		[Description("The cost value of the asset at the time of purchase.")]
 		public IfcCostValue OriginalValue { get { return this._OriginalValue; } set { this._OriginalValue = value;} }
 	
-		[Description("<EPM-HTML>The current cost value of the asset.</EPM-HTML>")]
+		[Description("The current cost value of the asset.")]
 		public IfcCostValue CurrentValue { get { return this._CurrentValue; } set { this._CurrentValue = value;} }
 	
-		[Description("<EPM-HTML>The total cost of replacement of the asset.</EPM-HTML>")]
+		[Description("The total cost of replacement of the asset.")]
 		public IfcCostValue TotalReplacementCost { get { return this._TotalReplacementCost; } set { this._TotalReplacementCost = value;} }
 	
-		[Description("<EPM-HTML>The name of the person or organization that \'owns\' the asset.</EPM-HTML" +
-	    ">")]
+		[Description("The name of the person or organization that \'owns\' the asset.")]
 		public IfcActorSelect Owner { get { return this._Owner; } set { this._Owner = value;} }
 	
-		[Description("<EPM-HTML>The name of the person or organization that \'uses\' the asset.</EPM-HTML" +
-	    ">")]
+		[Description("The name of the person or organization that \'uses\' the asset.")]
 		public IfcActorSelect User { get { return this._User; } set { this._User = value;} }
 	
-		[Description(@"<EPM-HTML>The person designated to be responsible for the asset.
-	<blockquote class=""note"">NOTE&nbsp; In some regulations (for example, UK Health and Safety at Work Act, Electricity at Work Regulations), management of assets must have a person identified as being responsible and to whom regulatory, insurance and other organizations communicate. In places where there is not a legal requirement, the responsible person would be the asset manager but would not have a legal status.</blockquote>
-	</EPM-HTML>")]
+		[Description(@"The person designated to be responsible for the asset.
+	<blockquote class=""note"">NOTE&nbsp; In some regulations (for example, UK Health and Safety at Work Act, Electricity at Work Regulations), management of assets must have a person identified as being responsible and to whom regulatory, insurance and other organizations communicate. In places where there is not a legal requirement, the responsible person would be the asset manager but would not have a legal status.</blockquote>")]
 		public IfcPerson ResponsiblePerson { get { return this._ResponsiblePerson; } set { this._ResponsiblePerson = value;} }
 	
-		[Description(@"<EPM-HTML> 
-	The date on which an asset was incorporated into the works, installed, constructed, erected or completed.
+		[Description(@"The date on which an asset was incorporated into the works, installed, constructed, erected or completed.
 	<blockquote class=""note"">NOTE&nbsp; This is the date on which an asset is considered to start depreciating.</blockquote>
-	<blockquote class=""history"">IFC4 CHANGE&nbsp; Type changed from IfcDateTimeSelect.</blockquote> 
-	</EPM-HTML> 
+	<blockquote class=""history"">IFC4 CHANGE&nbsp; Type changed from IfcDateTimeSelect.</blockquote>  
 	")]
 		public IfcDate? IncorporationDate { get { return this._IncorporationDate; } set { this._IncorporationDate = value;} }
 	
-		[Description("<EPM-HTML>The current value of an asset within the accounting rules and procedure" +
-	    "s of an organization.</EPM-HTML>")]
+		[Description("The current value of an asset within the accounting rules and procedures of an or" +
+	    "ganization.")]
 		public IfcCostValue DepreciatedValue { get { return this._DepreciatedValue; } set { this._DepreciatedValue = value;} }
 	
 	

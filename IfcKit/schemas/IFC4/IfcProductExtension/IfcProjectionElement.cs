@@ -38,10 +38,8 @@ namespace BuildingSmart.IFC.IfcProductExtension
 		IfcProjectionElementTypeEnum? _PredefinedType;
 	
 	
-		[Description(@"<EPM-HTML>
-	Predefined generic type for a projection element that is specified in an enumeration. There may be a property set given specificly for the predefined types.
-	<blockquote class=""change-ifc2x4"">IFC4 CHANGE  The attribute has been added at the end of the entity definition.</blockquote>
-	</EPM-HTML> ")]
+		[Description(@"Predefined generic type for a projection element that is specified in an enumeration. There may be a property set given specificly for the predefined types.
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE  The attribute has been added at the end of the entity definition.</blockquote> ")]
 		public IfcProjectionElementTypeEnum? PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	

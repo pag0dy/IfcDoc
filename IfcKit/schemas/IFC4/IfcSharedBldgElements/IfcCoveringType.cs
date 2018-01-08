@@ -34,9 +34,8 @@ namespace BuildingSmart.IFC.IfcSharedBldgElements
 		IfcCoveringTypeEnum _PredefinedType;
 	
 	
-		[Description("<EPM-HTML>\r\nPredefined types to define the particular type of the covering. There" +
-	    " may be property set definitions available for each predefined type.\r\n</EPM-HTML" +
-	    ">")]
+		[Description("Predefined types to define the particular type of the covering. There may be prop" +
+	    "erty set definitions available for each predefined type.")]
 		public IfcCoveringTypeEnum PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	

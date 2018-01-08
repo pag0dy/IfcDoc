@@ -24,12 +24,14 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 	public abstract partial class IfcBSplineSurface : IfcBoundedSurface
 	{
 		[DataMember(Order=0)] 
+		[XmlAttribute]
 		[Required()]
-		Int64 _UDegree;
+		IfcInteger _UDegree;
 	
 		[DataMember(Order=1)] 
+		[XmlAttribute]
 		[Required()]
-		Int64 _VDegree;
+		IfcInteger _VDegree;
 	
 		[DataMember(Order=2)] 
 		[XmlElement]
@@ -42,41 +44,44 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		IfcBSplineSurfaceForm _SurfaceForm;
 	
 		[DataMember(Order=4)] 
+		[XmlAttribute]
 		[Required()]
-		Boolean? _UClosed;
+		IfcLogical _UClosed;
 	
 		[DataMember(Order=5)] 
+		[XmlAttribute]
 		[Required()]
-		Boolean? _VClosed;
+		IfcLogical _VClosed;
 	
 		[DataMember(Order=6)] 
+		[XmlAttribute]
 		[Required()]
-		Boolean? _SelfIntersect;
+		IfcLogical _SelfIntersect;
 	
 	
-		[Description("<EPM-HTML>\r\nAlgebraic degree of basis functions in <em>u</em>.\r\n</EPM-HTML>")]
-		public Int64 UDegree { get { return this._UDegree; } set { this._UDegree = value;} }
+		[Description("Algebraic degree of basis functions in <em>u</em>.")]
+		public IfcInteger UDegree { get { return this._UDegree; } set { this._UDegree = value;} }
 	
-		[Description("<EPM-HTML>\r\nAlgebraic degree of basis functions in <em>v</em>.\r\n</EPM-HTML>")]
-		public Int64 VDegree { get { return this._VDegree; } set { this._VDegree = value;} }
+		[Description("Algebraic degree of basis functions in <em>v</em>.")]
+		public IfcInteger VDegree { get { return this._VDegree; } set { this._VDegree = value;} }
 	
-		[Description("<EPM-HTML>\r\nThis is a list of lists of control points.\r\n</EPM-HTML>")]
+		[Description("This is a list of lists of control points.")]
 		public IList<IfcCartesianPoint> ControlPointsList { get { return this._ControlPointsList; } }
 	
-		[Description("<EPM-HTML>\r\nIndicator of special surface types.\r\n</EPM-HTML>")]
+		[Description("Indicator of special surface types.")]
 		public IfcBSplineSurfaceForm SurfaceForm { get { return this._SurfaceForm; } set { this._SurfaceForm = value;} }
 	
-		[Description("<EPM-HTML>\r\nIndication of whether the surface is closed in the <em>u</em> directi" +
-	    "on; this is for information only.\r\n</EPM-HTML>")]
-		public Boolean? UClosed { get { return this._UClosed; } set { this._UClosed = value;} }
+		[Description("Indication of whether the surface is closed in the <em>u</em> direction; this is " +
+	    "for information only.")]
+		public IfcLogical UClosed { get { return this._UClosed; } set { this._UClosed = value;} }
 	
-		[Description("<EPM-HTML>\r\nIndication of whether the surface is closed in the <em>v</em> directi" +
-	    "on; this is for information only.\r\n</EPM-HTML>")]
-		public Boolean? VClosed { get { return this._VClosed; } set { this._VClosed = value;} }
+		[Description("Indication of whether the surface is closed in the <em>v</em> direction; this is " +
+	    "for information only.")]
+		public IfcLogical VClosed { get { return this._VClosed; } set { this._VClosed = value;} }
 	
-		[Description("<EPM-HTML>\r\nFlag to indicate whether, or not, surface is self-intersecting; this " +
-	    "is for information only.\r\n</EPM-HTML>")]
-		public Boolean? SelfIntersect { get { return this._SelfIntersect; } set { this._SelfIntersect = value;} }
+		[Description("Flag to indicate whether, or not, surface is self-intersecting; this is for infor" +
+	    "mation only.")]
+		public IfcLogical SelfIntersect { get { return this._SelfIntersect; } set { this._SelfIntersect = value;} }
 	
 	
 	}

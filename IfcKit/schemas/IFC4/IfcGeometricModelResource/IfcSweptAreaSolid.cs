@@ -31,14 +31,12 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 		IfcAxis2Placement3D _Position;
 	
 	
-		[Description("<EPM-HTML>\r\nThe surface defining the area to be swept. It is given as a profile d" +
-	    "efinition within the xy plane of the position coordinate system.\r\n</EPM-HTML>")]
+		[Description("The surface defining the area to be swept. It is given as a profile definition wi" +
+	    "thin the xy plane of the position coordinate system.")]
 		public IfcProfileDef SweptArea { get { return this._SweptArea; } set { this._SweptArea = value;} }
 	
-		[Description(@"<EPM-HTML>
-	Position coordinate system for the resulting swept solid of the sweeping operation. The position coordinate system allows for re-positioning of the swept solid. If not provided, the swept solid remains within the position as determined by the cross section or by the directrix used for the sweeping operation.
-	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The attribute has been changed to OPTIONAL with upward compatibility for file-based exchange.</blockquote>
-	</EPM-HTML>")]
+		[Description(@"Position coordinate system for the resulting swept solid of the sweeping operation. The position coordinate system allows for re-positioning of the swept solid. If not provided, the swept solid remains within the position as determined by the cross section or by the directrix used for the sweeping operation.
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The attribute has been changed to OPTIONAL with upward compatibility for file-based exchange.</blockquote>")]
 		public IfcAxis2Placement3D Position { get { return this._Position; } set { this._Position = value;} }
 	
 	

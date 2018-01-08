@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<svg xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="1.1" width="0" height="0" xmlns="http://www.w3.org/2000/svg">
+<svg xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="1.1" width="3000" height="888" xmlns="http://www.w3.org/2000/svg">
   <g id="IfcContextDependentUnit" fill="yellow">
     <rect x="202.5562575" y="546.1113375" width="145.11034875" height="37.5" stroke="black" />
     <text x="275.111431875" y="564.8613375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcContextDependentUnit</text>
@@ -14,6 +14,7 @@
   </g>
   <g id="IfcConversionBasedUnit" fill="yellow">
     <rect x="380.0601375" y="546.0877125" width="167.50000125" height="37.5" stroke="black" />
+    <polyline points="413.9713125,583.5877125 413.9713125,801.884235 " fill="none" stroke="black" stroke-width="3" />
     <text x="463.810138125" y="564.8377125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcConversionBasedUnit</text>
     <g id="Name">
       <polyline points="463.810125,583.5877125 463.810125,629.4310575 " fill="none" stroke="black" />
@@ -122,6 +123,10 @@
   </g>
   <g id="IfcNamedUnit" fill="yellow">
     <rect x="478.7095875" y="440.392575" width="102.75" height="51.49999875" stroke="black" />
+    <polyline points="530.0845875,491.8926 530.0845875,517.89675225 " fill="none" stroke="black" stroke-width="3" />
+    <polyline points="530.0845875,517.89675225 275.11143375,517.8967125 275.11143375,546.111304875 " fill="none" stroke="black" stroke-width="3" />
+    <polyline points="530.0845875,517.89675225 456.3703875,517.8967125 456.3703875,546.087700875 " fill="none" stroke="black" stroke-width="3" />
+    <polyline points="530.0845875,517.89675225 126.0879975,517.8967125 126.0879975,546.124503 " fill="none" stroke="black" stroke-width="3" />
     <text x="530.0845875" y="466.142574375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcNamedUnit</text>
     <g id="Dimensions">
       <polyline points="492.5251125,440.392575 492.5251125,339.65964 375.9595575,339.65964 " fill="none" stroke="black" />
@@ -179,6 +184,10 @@
   <g id="IfcAreaMeasure" fill="green">
     <rect x="1540.9393875" y="258.80402625" width="152.0625" height="24.75" stroke="black" />
     <text x="1616.9706375" y="271.17902625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcAreaMeasure</text>
+  </g>
+  <g id="IfcBinary" fill="green">
+    <rect x="935.6642625" y="482.000030517577" width="70.12778625" height="20.15712225" stroke="black" />
+    <text x="970.728155625" y="492.078591642577" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcBinary</text>
   </g>
   <g id="IfcBoolean" fill="green">
     <rect x="805.4217375" y="387.2028375" width="64.32499875" height="20.15712225" stroke="black" />
@@ -273,8 +282,8 @@
     <text x="1996.853038125" y="279.8227033125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcInductanceMeasure</text>
   </g>
   <g id="IfcInteger" fill="green">
-    <rect x="805.3994625" y="451.9104375" width="64.33750125" height="20.15712225" stroke="black" />
-    <text x="837.568213125" y="461.988998625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcInteger</text>
+    <rect x="803.000091552735" y="451.000015258789" width="66.9999408721935" height="24.499984741211" stroke="black" />
+    <text x="836.500061988832" y="463.250007629394" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcInteger</text>
   </g>
   <g id="IfcIntegerCountRateMeasure" fill="green">
     <rect x="2124.387675" y="290.8355775" width="171.2625" height="20.596144125" stroke="black" />
@@ -416,6 +425,10 @@
     <rect x="1332.8907" y="547.5080625" width="165.53749875" height="24.75" stroke="black" />
     <text x="1415.659449375" y="559.8830625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcPlaneAngleMeasure</text>
   </g>
+  <g id="IfcPositiveInteger" fill="green">
+    <rect x="729.000045776366" y="504.000030517579" width="95.999969482422" height="24.499984741211" stroke="black" />
+    <text x="777.000030517577" y="516.250022888184" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcPositiveInteger</text>
+  </g>
   <g id="IfcPositiveLengthMeasure" fill="green">
     <rect x="1358.2645875" y="418.9735125" width="139.41912" height="21.765042375" stroke="black" />
     <text x="1427.9741475" y="429.8560336875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcPositiveLengthMeasure</text>
@@ -445,8 +458,8 @@
     <text x="1616.994474375" y="518.712225" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcRatioMeasure</text>
   </g>
   <g id="IfcReal" fill="green">
-    <rect x="805.42605" y="483.7063125" width="64.30879125" height="20.15712225" stroke="black" />
-    <text x="837.580445625" y="493.784873625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcReal</text>
+    <rect x="810.426025390624" y="565.706329345702" width="64.30879125" height="20.15712225" stroke="black" />
+    <text x="842.580421015624" y="575.784890470702" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcReal</text>
   </g>
   <g id="IfcRotationalFrequencyMeasure" fill="green">
     <rect x="1897.60875" y="545.6415375" width="198.46576125" height="20.596144125" stroke="black" />
@@ -578,23 +591,813 @@
   </g>
   <g id="IfcDerivedMeasureValue" fill="green">
     <rect x="1955.8543875" y="19.314382875" width="135.7149375" height="19.912459125" stroke="black" />
+    <polyline points="2091.569325,28.689389625 2109.044133,28.689389625 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.044175,727.281675 2124.399792375,727.281675 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.044175,653.6643 2096.08571925,653.6643 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.044175,679.2662625 2124.449292375,679.2662625 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.044175,654.8997 2124.434742375,654.8997 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.044175,530.3690625 2096.08381425,530.3690625 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.044175,581.7403125 2124.425329875,581.7403125 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.044175,470.86995 2124.438154875,470.86995 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.044175,407.058225 2096.078935125,407.058225 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.044175,355.8698175 2096.09885925,355.8698175 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.044175,348.988755 2124.406879875,348.988755 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.044175,300.55039875 2124.387679875,300.55039875 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.044175,276.16768875 2124.412654875,276.16768875 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.044175,254.57858625 2096.078478,254.57858625 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.044175,229.92214125 2096.10062175,229.92214125 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.044175,227.410065 2124.406617375,227.410065 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.044175,155.9490375 2096.10192675,155.9490375 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.044175,105.57991125 2095.15500375,105.57991125 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.044175,129.9159 2124.416217375,129.9159 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.044175,629.3389875 2096.09499675,629.3389875 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.044175,533.3156625 2124.437404875,533.3156625 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.044175,678.65595 2096.08717125,678.65595 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.044175,456.71265 2096.089473,456.71265 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.044175,299.62090125 2096.98512675,299.62090125 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.044175,604.6780125 2096.07376425,604.6780125 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.0441375,557.3511 2124.456979875,557.3511 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.0441375,446.8374 2124.442767375,446.8374 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.0441375,382.7270625 2096.074773,382.7270625 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.0441375,422.453625 2124.462529875,422.453625 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.0441375,251.80212 2124.399042375,251.80212 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.0441375,279.2394525 2096.07857175,279.2394525 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.0441375,324.94104375 2124.406167375,324.94104375 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.0441375,205.26807375 2096.096194875,205.26807375 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.0441375,203.04594375 2124.423979875,203.04594375 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.0441375,178.666845 2124.416254875,178.666845 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.0441375,154.27873875 2124.395367375,154.27873875 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.0441375,180.60240375 2096.1009705,180.60240375 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.0441375,130.555425 2095.62284325,130.555425 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.0441375,606.4625625 2124.459904875,606.4625625 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.0441375,555.3563625 2096.07454425,555.3563625 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.0441375,703.2564 2124.409579875,703.2564 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.0441375,105.55736625 2124.425104875,105.55736625 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.0441375,328.55606625 2096.095510875,328.55606625 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.0441375,398.0703 2124.446142375,398.0703 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.0441375,502.4850375 2124.428629875,502.4850375 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.0441375,432.0411375 2096.07809925,432.0411375 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.0441375,481.3893 2096.0740005,481.3893 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.0441375,506.0630625 2096.0912955,506.0630625 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.0441375,630.854925 2124.450454875,630.854925 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.0441375,580.02585 2096.098458,580.02585 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.0441375,373.71047625 2124.418654875,373.71047625 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.044175,28.606288125 2450.84376,28.606288125 2450.84376,499.589375625 2595.416925,499.589375625 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.044175,28.883266125 2550.0600375,28.883266125 2550.0600375,193.711534875 2595.44548875,193.711534875 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.044175,28.861444125 2540.6262,28.861444125 2540.6262,221.524192875 2595.421035,221.524192875 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.044175,29.08423125 2467.91881125,29.08423125 2467.91881125,443.98370625 2595.4114875,443.98370625 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.044175,29.106093375 2459.09317875,29.106093375 2459.09317875,470.389705875 2595.4114875,470.389705875 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.044175,28.844841375 2530.91835,28.844841375 2530.91835,248.167048875 2595.43522125,248.167048875 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.044175,28.8767565 2521.409475,28.8767565 2521.409475,277.137234 2595.43405875,277.137234 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.044175,28.904896875 2511.9657375,28.904896875 2511.9657375,304.936265625 2595.42216,304.936265625 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.044175,29.101649625 2502.7258875,29.101649625 2502.7258875,332.729560875 2595.4227525,332.729560875 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.044175,28.969683 2476.57402875,28.969683 2476.57402875,416.1791955 2595.4359375,416.1791955 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.044175,28.979638875 2493.6548625,28.979638875 2493.6548625,360.554597625 2595.42711375,360.554597625 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.044175,28.984816875 2484.5788125,28.984816875 2484.5788125,388.364139375 2595.41463,388.364139375 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.044175,28.90517175 2442.4623225,28.90517175 2442.4623225,527.39788425 2595.423525,527.39788425 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.0441375,28.842691875 2434.45951875,28.842691875 2434.45951875,555.212154375 2595.4278375,555.212154375 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.0441375,28.836761625 2426.76327,28.836761625 2426.76327,583.054999125 2595.42963,583.054999125 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.0441375,28.89978375 2419.85169,28.89978375 2419.85169,610.87368375 2595.4383375,610.87368375 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.0441375,28.643646375 2412.58446375,28.643646375 2412.58446375,638.692033875 2595.4380375,638.692033875 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.0441375,28.8408435 2559.5613375,28.8408435 2559.5613375,151.83134475 2595.430020375,151.83134475 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.0441375,28.947415875 2568.0322125,28.947415875 2568.0322125,123.200077125 2595.412540125,123.200077125 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.0441375,28.96308 2582.7087,28.96308 2582.7087,65.864186625 2595.448083,65.864186625 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.0441375,29.0642445 2576.13555,29.0642445 2576.13555,94.5339495 2595.41972475,94.5339495 " fill="none" stroke="black" />
     <text x="2023.71185625" y="29.2706124375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcDerivedMeasureValue</text>
   </g>
   <g id="IfcMeasureValue" fill="green">
     <rect x="1354.378875" y="195.065895" width="108" height="24.75" stroke="black" />
+    <polyline points="1462.378875,207.440895 1517.55628125,207.440895 " fill="none" stroke="black" />
+    <polyline points="1517.55628125,207.440895 1517.5563375,693.443475 1540.93967775,693.443475 " fill="none" stroke="black" />
+    <polyline points="1517.55628125,207.440895 1517.5563375,640.3509375 1498.42127775,640.3509375 " fill="none" stroke="black" />
+    <polyline points="1517.55628125,207.440895 1517.5563375,684.815325 1497.50146275,684.815325 " fill="none" stroke="black" />
+    <polyline points="1517.55628125,207.440895 1517.5563375,650.1929625 1540.94170275,650.1929625 " fill="none" stroke="black" />
+    <polyline points="1517.55628125,207.440895 1517.5563375,574.2654 1540.96656525,574.2654 " fill="none" stroke="black" />
+    <polyline points="1517.55628125,207.440895 1517.5563375,518.712225 1540.97571525,518.712225 " fill="none" stroke="black" />
+    <polyline points="1517.55628125,207.440895 1517.5563375,602.37585 1498.4269365,602.37585 " fill="none" stroke="black" />
+    <polyline points="1517.55628125,207.440895 1517.5563375,559.8830625 1498.428189,559.8830625 " fill="none" stroke="black" />
+    <polyline points="1517.55628125,207.440895 1517.5563375,479.1625125 1540.94579025,479.1625125 " fill="none" stroke="black" />
+    <polyline points="1517.55628125,207.440895 1517.5563375,523.35015 1498.43337525,523.35015 " fill="none" stroke="black" />
+    <polyline points="1517.55628125,207.440895 1517.5563375,441.9012375 1540.97560275,441.9012375 " fill="none" stroke="black" />
+    <polyline points="1517.55628125,207.440895 1517.5563375,429.8560125 1497.68369775,429.8560125 " fill="none" stroke="black" />
+    <polyline points="1517.55628125,207.440895 1517.5563375,384.7429125 1497.705264,384.7429125 " fill="none" stroke="black" />
+    <polyline points="1517.55628125,207.440895 1517.5563375,357.6865725 1540.96502775,357.6865725 " fill="none" stroke="black" />
+    <polyline points="1517.55628125,207.440895 1517.5563375,348.203835 1497.71009775,348.203835 " fill="none" stroke="black" />
+    <polyline points="1517.55628125,207.440895 1517.5563375,312.330915 1540.96262775,312.330915 " fill="none" stroke="black" />
+    <polyline points="1517.55628125,207.440895 1517.5563375,310.2738225 1497.65957775,310.2738225 " fill="none" stroke="black" />
+    <polyline points="1517.55628125,207.440895 1517.5563375,271.17903 1540.93937775,271.17903 " fill="none" stroke="black" />
+    <polyline points="1517.55628125,207.440895 1517.5563375,269.76180375 1497.68762025,269.76180375 " fill="none" stroke="black" />
+    <polyline points="1517.55628125,207.440895 1517.5562625,402.5307 1540.92276525,402.5307 " fill="none" stroke="black" />
+    <polyline points="1517.55628125,207.440895 1517.5562625,612.694125 1561.19494875,612.694125 " fill="none" stroke="black" />
+    <polyline points="1517.55628125,207.440895 1517.5562625,730.55445 1498.44155025,730.55445 " fill="none" stroke="black" />
+    <polyline points="1517.55628125,207.440895 1517.5563,468.69945 1498.771230375,468.69945 " fill="none" stroke="black" />
     <text x="1408.378875" y="207.440895" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcMeasureValue</text>
   </g>
   <g id="IfcSimpleValue" fill="green">
     <rect x="778.57995" y="325.665405" width="91.19065125" height="21.988129875" stroke="black" />
+    <polyline points="869.7706125,336.6594675 899.7529635,336.6594675 " fill="none" stroke="black" />
+    <polyline points="899.7529635,336.6594675 899.7529635,336.6594675 899.7529635,463.250007629392 870.000032424926,463.250007629392 " fill="none" stroke="black" />
+    <polyline points="899.7529635,336.6594675 899.7529635,336.6594675 899.7529635,575.784890470703 874.734816640624,575.784890470703 " fill="none" stroke="black" />
+    <polyline points="899.7529635,336.6594675 899.7529635,336.6594675 899.7529635,397.281398625 869.74673625,397.281398625 " fill="none" stroke="black" />
+    <polyline points="899.7529635,336.6594675 899.752875,429.1433625 936.11015175,429.1433625 " fill="none" stroke="black" />
+    <polyline points="899.7529635,336.6594675 899.7529635,336.6594675 899.7529635,462.873211125 935.6642625,462.873211125 " fill="none" stroke="black" />
+    <polyline points="899.7529635,336.6594675 899.752875,397.53795 936.836543625,397.53795 " fill="none" stroke="black" />
+    <polyline points="899.7529635,336.6594675 899.75295,429.0941625 869.75876025,429.0941625 " fill="none" stroke="black" />
+    <polyline points="899.7529635,336.6594675 899.7529875,545.7348 935.6331735,545.7348 " fill="none" stroke="black" />
+    <polyline points="899.7529635,336.6594675 899.7529875,603.3018 935.6333625,603.3018 " fill="none" stroke="black" />
+    <polyline points="899.7529635,336.6594675 899.7529875,660.902625 935.6361,660.902625 " fill="none" stroke="black" />
+    <polyline points="899.7529635,336.6594675 899.7529875,718.4959875 935.66235,718.4959875 " fill="none" stroke="black" />
+    <polyline points="899.7529635,336.6594675 899.75295,777.4125 935.66938875,777.4125 " fill="none" stroke="black" />
+    <polyline points="778.57995,347.653534875 777.000030517579,347.653534875 777.000030517579,504.000030517579 " fill="none" stroke="black" />
     <text x="824.175275625" y="336.6594699375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcSimpleValue</text>
   </g>
   <g id="IfcUnit" fill="green">
     <rect x="461.8509" y="22.79308125" width="56.25" height="27.314845875" stroke="black" />
+    <polyline points="489.9759,50.1079275 489.9759,74.85578025 " fill="none" stroke="black" />
+    <polyline points="489.9759,74.85578025 97.1961975,74.85577875 97.1961975,96.630917625 " fill="none" stroke="black" />
+    <polyline points="489.9759,74.85578025 570.6097125,74.85577875 570.6097125,440.39258625 " fill="none" stroke="black" />
+    <polyline points="489.9759,74.85578025 460.143825,74.85577875 460.143825,101.490048375 " fill="none" stroke="black" />
     <text x="489.9759" y="36.4505041875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcUnit</text>
   </g>
   <g id="IfcValue" fill="green">
     <rect x="1217.64195" y="89.80721625" width="61.23794625" height="37.103241" stroke="black" />
+    <polyline points="1278.8799,108.35884125 1320.20476125,108.35884125 " fill="none" stroke="black" />
+    <polyline points="1320.20476125,108.35884125 1320.2047875,207.440895 1354.378871625,207.440895 " fill="none" stroke="black" />
+    <polyline points="1320.20476125,108.35884125 1320.20475,160.269795 1356.69150225,160.269795 " fill="none" stroke="black" />
+    <polyline points="1320.20476125,108.35884125 1320.20475,108.7449 1353.197945625,108.7449 " fill="none" stroke="black" />
     <text x="1248.260923125" y="108.35883675" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcValue</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1212.032925" y="260.55227625" width="70.8409575" height="20.15712225" stroke="black" />
+    <text x="1247.45340375" y="270.630837375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.259575" y="121.21270125" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.384575" y="131.291262375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1721.8790625" y="261.71342625" width="70.875" height="20.15712225" stroke="black" />
+    <text x="1757.3165625" y="271.791987375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="BOOLEAN" fill="grey">
+    <rect x="676.8034875" y="387.97725" width="76.125" height="20.15712225" stroke="black" />
+    <text x="714.8659875" y="398.055811125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">BOOLEAN</text>
+  </g>
+  <g id="INTEGER" fill="grey">
+    <rect x="1807.2247125" y="95.50697625" width="64.1749125" height="20.15712225" stroke="black" />
+    <text x="1839.31216875" y="105.585537375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">INTEGER</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1212.0224625" y="300.78469875" width="70.8409575" height="20.15712225" stroke="black" />
+    <text x="1247.44294125" y="310.863259875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="NUMBER" fill="grey">
+    <rect x="1721.8596" y="303.58444125" width="70.875" height="20.15712225" stroke="black" />
+    <text x="1757.2971" y="313.663002375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">NUMBER</text>
+  </g>
+  <g id="STRING" fill="grey">
+    <rect x="1212.0316125" y="341.02567875" width="70.875" height="20.15712225" stroke="black" />
+    <text x="1247.4691125" y="351.104239875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">STRING</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1808.0049" y="145.4917725" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.1299" y="155.570333625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1721.901075" y="345.1380075" width="70.875" height="20.15712225" stroke="black" />
+    <text x="1757.338575" y="355.216568625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.2398125" y="218.77998" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.3648125" y="228.858541125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1807.9747125" y="220.46852625" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.0997125" y="230.547087375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1807.97415" y="245.45538" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.09915" y="255.533941125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.2326125" y="267.56089125" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.3576125" y="277.639452375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="INTEGER" fill="grey">
+    <rect x="676.8199875" y="452.3071875" width="76.125" height="20.15712225" stroke="black" />
+    <text x="714.8824875" y="462.385748625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">INTEGER</text>
+  </g>
+  <g id="INTEGER" fill="grey">
+    <rect x="2322.994875" y="291.96633375" width="70.5" height="20.15712225" stroke="black" />
+    <text x="2358.244875" y="302.044894875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">INTEGER</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.2292375" y="340.79283" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.3542375" y="350.871391125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1211.9994375" y="376.3965" width="70.8409575" height="20.15712225" stroke="black" />
+    <text x="1247.41991625" y="386.475061125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1807.99485" y="345.40980375" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.11985" y="355.488364875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1721.8596" y="390.8082375" width="70.875" height="20.15712225" stroke="black" />
+    <text x="1757.2971" y="400.886798625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1807.9879125" y="395.4040875" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.1129125" y="405.482648625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.227925" y="462.8024625" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.352925" y="472.881023625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1721.85915" y="431.1751125" width="70.875" height="20.15712225" stroke="black" />
+    <text x="1757.29665" y="441.253673625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.2329875" y="542.7632625" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.3579875" y="552.841823625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="NUMBER" fill="grey">
+    <rect x="1212.77655" y="513.8051625" width="70.875" height="20.15712225" stroke="black" />
+    <text x="1248.21405" y="523.883723625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">NUMBER</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1721.866125" y="467.572725" width="70.875" height="20.15712225" stroke="black" />
+    <text x="1757.303625" y="477.651286125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1212.7473375" y="550.3938" width="70.8409575" height="20.15712225" stroke="black" />
+    <text x="1248.16781625" y="560.472361125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1721.8901625" y="508.2379125" width="70.875" height="20.15712225" stroke="black" />
+    <text x="1757.3276625" y="518.316473625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.25425" y="567.152475" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.37925" y="577.231036125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1808.0049375" y="520.3428" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.1299375" y="530.421361125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1721.897625" y="642.460125" width="57.36663" height="20.15712225" stroke="black" />
+    <text x="1750.58094" y="652.538686125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="STRING" fill="grey">
+    <rect x="1073.4405" y="418.4459625" width="63.375" height="20.15712225" stroke="black" />
+    <text x="1105.128" y="428.524523625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">STRING</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.24" y="640.3552875" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.365" y="650.433848625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.24225" y="664.75275" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.36725" y="674.831311125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1807.9942875" y="645.2878875" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.1192875" y="655.366448625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1212.7632" y="673.851075" width="70.8409575" height="20.15712225" stroke="black" />
+    <text x="1248.18367875" y="683.929636125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1212.7924875" y="626.0202375" width="70.8409575" height="20.15712225" stroke="black" />
+    <text x="1248.21296625" y="636.098798625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1721.88675" y="685.5694875" width="57.36663" height="20.15712225" stroke="black" />
+    <text x="1750.570065" y="695.648048625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.239325" y="712.8807375" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.364325" y="722.959298625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="STRING" fill="grey">
+    <rect x="1074.2380875" y="386.342325" width="63.375" height="20.15712225" stroke="black" />
+    <text x="1105.9255875" y="396.420886125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">STRING</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1212.8038125" y="720.62475" width="70.875" height="20.625" stroke="black" />
+    <text x="1248.2413125" y="730.93725" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="STRING" fill="grey">
+    <rect x="1073.0860875" y="451.5381375" width="63.375" height="20.460090375" stroke="black" />
+    <text x="1104.7735875" y="461.7681826875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">STRING</text>
+  </g>
+  <g id="LOGICAL" fill="grey">
+    <rect x="676.8052125" y="420.5652375" width="76.125" height="20.15712225" stroke="black" />
+    <text x="714.8677125" y="430.643798625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">LOGICAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1807.9750875" y="620.2836" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.1000875" y="630.362161125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.2349" y="518.34555" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.3599" y="528.424111125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1807.9814625" y="670.2839625" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.1064625" y="680.362523625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1807.9988625" y="445.3955625" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.1238625" y="455.474123625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1808.0044125" y="295.45069125" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.1294125" y="305.529252375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1807.9857" y="595.30185" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.1107" y="605.380411125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.2607375" y="438.39345" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.3857375" y="448.472011125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1807.974075" y="370.39736625" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.099075" y="380.475927375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.236325" y="413.972925" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.361325" y="424.051486125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.241125" y="243.16915875" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.366125" y="253.247719875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1807.977825" y="270.45165" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.102825" y="280.530211125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.2031" y="316.38637125" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.3281" y="326.464932375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1807.9825875" y="195.47089125" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.1075875" y="205.549452375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.241575" y="194.391555" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.366575" y="204.470116125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.2262375" y="169.9955625" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.3512375" y="180.074123625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.2328" y="145.59929625" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.3578" y="155.677857375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1807.972575" y="170.4690375" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.097575" y="180.547598625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1807.4933625" y="119.94436125" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1835.6183625" y="130.022922375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.2478375" y="591.5694" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.3728375" y="601.647961125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1807.9974" y="545.3173875" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.1224" y="555.395948625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.2565" y="690.7192875" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.3815" y="700.797848625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.2255625" y="96.82905" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.3505625" y="106.907611125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1808.003325" y="320.42719125" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.128325" y="330.505752375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.24285" y="389.579025" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.36785" y="399.657586125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2338.36725" y="492.8320875" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2366.49225" y="502.910648625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1808.003325" y="420.390225" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.128325" y="430.468786125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1807.9831125" y="470.3694375" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.1081125" y="480.447998625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1808.003325" y="495.3466875" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.128325" y="505.425248625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.250725" y="615.96735" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.375725" y="626.045911125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1807.9932375" y="570.3076125" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.1182375" y="580.386173625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.2544" y="365.177415" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.3794" y="375.255976125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2923.0585875" y="49.99019625" width="60.91626" height="598.9913625" stroke="black" />
+    <text x="2953.5167175" y="349.4858775" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="INTEGER" fill="grey">
+    <rect x="21.21629625" y="259.3897425" width="70.5" height="20.15712225" stroke="black" />
+    <text x="56.46629625" y="269.468303625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">INTEGER</text>
+  </g>
+  <g id="INTEGER" fill="grey">
+    <rect x="21.191296125" y="282.798075" width="70.5" height="20.15712225" stroke="black" />
+    <text x="56.441296125" y="292.876636125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">INTEGER</text>
+  </g>
+  <g id="INTEGER" fill="grey">
+    <rect x="21.203796375" y="306.22307625" width="70.5" height="20.15712225" stroke="black" />
+    <text x="56.453796375" y="316.301637375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">INTEGER</text>
+  </g>
+  <g id="INTEGER" fill="grey">
+    <rect x="21.203796375" y="329.64807375" width="70.5" height="20.15712225" stroke="black" />
+    <text x="56.453796375" y="339.726634875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">INTEGER</text>
+  </g>
+  <g id="INTEGER" fill="grey">
+    <rect x="21.203796375" y="353.073075" width="70.5" height="20.15712225" stroke="black" />
+    <text x="56.453796375" y="363.151636125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">INTEGER</text>
+  </g>
+  <g id="INTEGER" fill="grey">
+    <rect x="21.21629625" y="376.510575" width="70.5" height="20.15712225" stroke="black" />
+    <text x="56.46629625" y="386.589136125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">INTEGER</text>
+  </g>
+  <g id="INTEGER" fill="grey">
+    <rect x="21.21629625" y="399.948075" width="70.5" height="20.15712225" stroke="black" />
+    <text x="56.46629625" y="410.026636125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">INTEGER</text>
+  </g>
+  <g id="INTEGER" fill="grey">
+    <rect x="307.42804875" y="178.99541625" width="70.5" height="20.15712225" stroke="black" />
+    <text x="342.67804875" y="189.073977375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">INTEGER</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1212.032925" y="260.55227625" width="70.8409575" height="20.15712225" stroke="black" />
+    <text x="1247.45340375" y="270.630837375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.259575" y="121.21270125" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.384575" y="131.291262375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1721.8790625" y="261.71342625" width="70.875" height="20.15712225" stroke="black" />
+    <text x="1757.3165625" y="271.791987375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="BOOLEAN" fill="grey">
+    <rect x="676.8034875" y="387.97725" width="76.125" height="20.15712225" stroke="black" />
+    <text x="714.8659875" y="398.055811125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">BOOLEAN</text>
+  </g>
+  <g id="INTEGER" fill="grey">
+    <rect x="1807.2247125" y="95.50697625" width="64.1749125" height="20.15712225" stroke="black" />
+    <text x="1839.31216875" y="105.585537375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">INTEGER</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1212.0224625" y="300.78469875" width="70.8409575" height="20.15712225" stroke="black" />
+    <text x="1247.44294125" y="310.863259875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="NUMBER" fill="grey">
+    <rect x="1721.8596" y="303.58444125" width="70.875" height="20.15712225" stroke="black" />
+    <text x="1757.2971" y="313.663002375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">NUMBER</text>
+  </g>
+  <g id="STRING" fill="grey">
+    <rect x="1212.0316125" y="341.02567875" width="70.875" height="20.15712225" stroke="black" />
+    <text x="1247.4691125" y="351.104239875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">STRING</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1808.0049" y="145.4917725" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.1299" y="155.570333625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1721.901075" y="345.1380075" width="70.875" height="20.15712225" stroke="black" />
+    <text x="1757.338575" y="355.216568625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.2398125" y="218.77998" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.3648125" y="228.858541125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1807.9747125" y="220.46852625" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.0997125" y="230.547087375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1807.97415" y="245.45538" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.09915" y="255.533941125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.2326125" y="267.56089125" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.3576125" y="277.639452375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="INTEGER" fill="grey">
+    <rect x="676.8199875" y="452.3071875" width="76.125" height="20.15712225" stroke="black" />
+    <text x="714.8824875" y="462.385748625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">INTEGER</text>
+  </g>
+  <g id="INTEGER" fill="grey">
+    <rect x="2322.994875" y="291.96633375" width="70.5" height="20.15712225" stroke="black" />
+    <text x="2358.244875" y="302.044894875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">INTEGER</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.2292375" y="340.79283" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.3542375" y="350.871391125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1211.9994375" y="376.3965" width="70.8409575" height="20.15712225" stroke="black" />
+    <text x="1247.41991625" y="386.475061125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1807.99485" y="345.40980375" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.11985" y="355.488364875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1721.8596" y="390.8082375" width="70.875" height="20.15712225" stroke="black" />
+    <text x="1757.2971" y="400.886798625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1807.9879125" y="395.4040875" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.1129125" y="405.482648625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.227925" y="462.8024625" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.352925" y="472.881023625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1721.85915" y="431.1751125" width="70.875" height="20.15712225" stroke="black" />
+    <text x="1757.29665" y="441.253673625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.2329875" y="542.7632625" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.3579875" y="552.841823625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="NUMBER" fill="grey">
+    <rect x="1212.77655" y="513.8051625" width="70.875" height="20.15712225" stroke="black" />
+    <text x="1248.21405" y="523.883723625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">NUMBER</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1721.866125" y="467.572725" width="70.875" height="20.15712225" stroke="black" />
+    <text x="1757.303625" y="477.651286125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1212.7473375" y="550.3938" width="70.8409575" height="20.15712225" stroke="black" />
+    <text x="1248.16781625" y="560.472361125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1721.8901625" y="508.2379125" width="70.875" height="20.15712225" stroke="black" />
+    <text x="1757.3276625" y="518.316473625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.25425" y="567.152475" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.37925" y="577.231036125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1808.0049375" y="520.3428" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.1299375" y="530.421361125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="674.81951904297" y="562.545639038085" width="76.125" height="20.15712225" stroke="black" />
+    <text x="712.88201904297" y="572.624200163085" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1721.897625" y="642.460125" width="57.36663" height="20.15712225" stroke="black" />
+    <text x="1750.58094" y="652.538686125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="STRING" fill="grey">
+    <rect x="1073.4405" y="418.4459625" width="63.375" height="20.15712225" stroke="black" />
+    <text x="1105.128" y="428.524523625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">STRING</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.24" y="640.3552875" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.365" y="650.433848625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.24225" y="664.75275" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.36725" y="674.831311125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1807.9942875" y="645.2878875" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.1192875" y="655.366448625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1212.7632" y="673.851075" width="70.8409575" height="20.15712225" stroke="black" />
+    <text x="1248.18367875" y="683.929636125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1212.7924875" y="626.0202375" width="70.8409575" height="20.15712225" stroke="black" />
+    <text x="1248.21296625" y="636.098798625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1721.88675" y="685.5694875" width="57.36663" height="20.15712225" stroke="black" />
+    <text x="1750.570065" y="695.648048625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.239325" y="712.8807375" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.364325" y="722.959298625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="STRING" fill="grey">
+    <rect x="1074.2380875" y="386.342325" width="63.375" height="20.15712225" stroke="black" />
+    <text x="1105.9255875" y="396.420886125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">STRING</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1212.8038125" y="720.62475" width="70.875" height="20.625" stroke="black" />
+    <text x="1248.2413125" y="730.93725" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="STRING" fill="grey">
+    <rect x="1073.0860875" y="451.5381375" width="63.375" height="20.460090375" stroke="black" />
+    <text x="1104.7735875" y="461.7681826875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">STRING</text>
+  </g>
+  <g id="LOGICAL" fill="grey">
+    <rect x="676.8052125" y="420.5652375" width="76.125" height="20.15712225" stroke="black" />
+    <text x="714.8677125" y="430.643798625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">LOGICAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1807.9750875" y="620.2836" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.1000875" y="630.362161125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.2349" y="518.34555" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.3599" y="528.424111125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1807.9814625" y="670.2839625" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.1064625" y="680.362523625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1807.9988625" y="445.3955625" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.1238625" y="455.474123625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1808.0044125" y="295.45069125" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.1294125" y="305.529252375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1807.9857" y="595.30185" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.1107" y="605.380411125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.2607375" y="438.39345" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.3857375" y="448.472011125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1807.974075" y="370.39736625" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.099075" y="380.475927375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.236325" y="413.972925" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.361325" y="424.051486125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.241125" y="243.16915875" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.366125" y="253.247719875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1807.977825" y="270.45165" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.102825" y="280.530211125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.2031" y="316.38637125" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.3281" y="326.464932375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1807.9825875" y="195.47089125" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.1075875" y="205.549452375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.241575" y="194.391555" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.366575" y="204.470116125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.2262375" y="169.9955625" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.3512375" y="180.074123625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.2328" y="145.59929625" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.3578" y="155.677857375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1807.972575" y="170.4690375" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.097575" y="180.547598625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1807.4933625" y="119.94436125" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1835.6183625" y="130.022922375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.2478375" y="591.5694" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.3728375" y="601.647961125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1807.9974" y="545.3173875" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.1224" y="555.395948625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.2565" y="690.7192875" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.3815" y="700.797848625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.2255625" y="96.82905" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.3505625" y="106.907611125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1808.003325" y="320.42719125" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.128325" y="330.505752375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.24285" y="389.579025" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.36785" y="399.657586125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2338.36725" y="492.8320875" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2366.49225" y="502.910648625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1808.003325" y="420.390225" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.128325" y="430.468786125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1807.9831125" y="470.3694375" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.1081125" y="480.447998625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1808.003325" y="495.3466875" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.128325" y="505.425248625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.250725" y="615.96735" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.375725" y="626.045911125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1807.9932375" y="570.3076125" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.1182375" y="580.386173625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.2544" y="365.177415" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.3794" y="375.255976125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2923.0585875" y="49.99019625" width="60.91626" height="598.9913625" stroke="black" />
+    <text x="2953.5167175" y="349.4858775" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="INTEGER" fill="grey">
+    <rect x="21.21629625" y="259.3897425" width="70.5" height="20.15712225" stroke="black" />
+    <text x="56.46629625" y="269.468303625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">INTEGER</text>
+  </g>
+  <g id="INTEGER" fill="grey">
+    <rect x="21.191296125" y="282.798075" width="70.5" height="20.15712225" stroke="black" />
+    <text x="56.441296125" y="292.876636125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">INTEGER</text>
+  </g>
+  <g id="INTEGER" fill="grey">
+    <rect x="21.203796375" y="306.22307625" width="70.5" height="20.15712225" stroke="black" />
+    <text x="56.453796375" y="316.301637375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">INTEGER</text>
+  </g>
+  <g id="INTEGER" fill="grey">
+    <rect x="21.203796375" y="329.64807375" width="70.5" height="20.15712225" stroke="black" />
+    <text x="56.453796375" y="339.726634875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">INTEGER</text>
+  </g>
+  <g id="INTEGER" fill="grey">
+    <rect x="21.203796375" y="353.073075" width="70.5" height="20.15712225" stroke="black" />
+    <text x="56.453796375" y="363.151636125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">INTEGER</text>
+  </g>
+  <g id="INTEGER" fill="grey">
+    <rect x="21.21629625" y="376.510575" width="70.5" height="20.15712225" stroke="black" />
+    <text x="56.46629625" y="386.589136125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">INTEGER</text>
+  </g>
+  <g id="INTEGER" fill="grey">
+    <rect x="21.21629625" y="399.948075" width="70.5" height="20.15712225" stroke="black" />
+    <text x="56.46629625" y="410.026636125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">INTEGER</text>
+  </g>
+  <g id="INTEGER" fill="grey">
+    <rect x="307.42804875" y="178.99541625" width="70.5" height="20.15712225" stroke="black" />
+    <text x="342.67804875" y="189.073977375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">INTEGER</text>
+  </g>
+  <g id="BINARY" fill="grey">
+    <rect x="1073.80349731445" y="481.697062392578" width="63.375" height="20.460090375" stroke="black" />
+    <text x="1105.49099731445" y="491.927107580078" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">BINARY</text>
   </g>
   <g id="IFCEXTERNALREFERENCERESOURCE">
     <g id="IfcExternalReferenceRelationship" fill="grey">
@@ -630,80 +1433,86 @@ IfcDuration</text>
 IfcTimeStamp</text>
     </g>
   </g>
-  <g fill="blue">
-    <rect x="817.12035" y="516.8980875" width="45" height="31.875" rx="10" ry="10" stroke="black" />
-    <polyline points="839.62035,516.8980875 839.62035,503.86343625 " fill="none" stroke="black" />
-    <text x="839.62035" y="532.8355875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle" />
-    <g id="IfcReal" fill="silver">
+  <g id="2,1 IfcReal" fill="blue">
+    <rect x="818.120330810546" y="613.89808654785" width="45" height="31.875" rx="10" ry="10" stroke="black" />
+    <polyline points="840.620330810546,613.89808654785 840.620330810546,585.863451595702 840.620330810546,585.863451595702 " fill="none" stroke="black" />
+    <text x="840.620330810546" y="629.83558654785" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcReal</text>
+    <g id="2,1 IfcReal" fill="silver">
       <rect x="140.150805" y="810.68475" width="78.1197075" height="30" rx="10" ry="10" stroke="black" />
-      <text x="179.21065875" y="825.68475" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcReal</text>
+      <text x="179.21065875" y="825.68475" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcReal</text>
     </g>
   </g>
-  <g fill="blue">
+  <g id="2,2 IfcLabel" fill="blue">
     <rect x="949.413525" y="328.584375" width="45" height="31.875" rx="10" ry="10" stroke="black" />
     <polyline points="971.913525,360.459375 971.913525,373.959375 971.913525,373.959375 971.913525,387.459375 " fill="none" stroke="black" />
-    <text x="971.913525" y="344.521875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle" />
-    <g id="IfcLabel" fill="silver">
+    <text x="971.913525" y="344.521875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,2 IfcLabel</text>
+    <g id="2,2 IfcLabel" fill="silver">
       <rect x="201.84595875" y="106.38091875" width="82.79967375" height="30" rx="10" ry="10" stroke="black" />
-      <text x="243.245795625" y="121.38091875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcLabel</text>
+      <text x="243.245795625" y="121.38091875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,2 IfcLabel</text>
     </g>
-    <g id="IfcLabel" fill="silver">
+    <g id="2,2 IfcLabel" fill="silver">
       <rect x="457.0190625" y="629.43105" width="82.79967375" height="30" rx="10" ry="10" stroke="black" />
-      <text x="498.418899375" y="644.43105" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcLabel</text>
+      <text x="498.418899375" y="644.43105" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,2 IfcLabel</text>
     </g>
-    <g id="IfcLabel" fill="silver">
+    <g id="2,2 IfcLabel" fill="silver">
       <rect x="224.78390625" y="629.4324375" width="82.79967375" height="30" rx="10" ry="10" stroke="black" />
-      <text x="266.183743125" y="644.4324375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcLabel</text>
+      <text x="266.183743125" y="644.4324375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,2 IfcLabel</text>
     </g>
-    <g id="IfcLabel" fill="silver">
+    <g id="2,2 IfcLabel" fill="silver">
       <rect x="424.4369625" y="167.75625375" width="82.79967375" height="30" rx="10" ry="10" stroke="black" />
-      <text x="465.836799375" y="182.75625375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcLabel</text>
+      <text x="465.836799375" y="182.75625375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,2 IfcLabel</text>
     </g>
   </g>
-  <g fill="blue">
+  <g id="2,3 IfcSimpleValue" fill="blue">
     <rect x="674.2697625" y="318.171105" width="45" height="31.875" rx="10" ry="10" stroke="black" />
     <polyline points="719.2697625,334.108605 778.5799425,334.108605 " fill="none" stroke="black" />
-    <text x="696.7697625" y="334.108605" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle" />
-    <g id="IfcSimpleValue" fill="silver">
+    <text x="696.7697625" y="334.108605" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,3 IfcSimpleValue</text>
+    <g id="2,3 IfcSimpleValue" fill="silver">
       <rect x="1356.6915375" y="145.269795" width="117.809445" height="30" rx="10" ry="10" stroke="black" />
-      <text x="1415.59626" y="160.269795" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcSimpleValue</text>
+      <text x="1415.59626" y="160.269795" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,3 IfcSimpleValue</text>
     </g>
   </g>
-  <g fill="blue">
+  <g id="4,1 IfcDerivedMeasureValue" fill="blue">
     <rect x="1869.68715" y="13.9272285" width="45" height="31.875" rx="10" ry="10" stroke="black" />
     <polyline points="1914.68715,29.8647285 1955.85437625,29.8647285 " fill="none" stroke="black" />
-    <text x="1892.18715" y="29.8647285" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle" />
-    <g id="IfcDerivedMeasureValue" fill="silver">
+    <text x="1892.18715" y="29.8647285" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">4,1 IfcDerivedMeasureValue</text>
+    <g id="4,1 IfcDerivedMeasureValue" fill="silver">
       <rect x="1353.1979625" y="93.74115375" width="143.05496625" height="30.00749175" rx="10" ry="10" stroke="black" />
-      <text x="1424.725445625" y="108.744899625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcDerivedMeasureValue</text>
+      <text x="1424.725445625" y="108.744899625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">4,1 IfcDerivedMeasureValue</text>
     </g>
   </g>
-  <g fill="blue">
+  <g id="3,1 IfcValue" fill="blue">
     <rect x="1225.760925" y="30.932217" width="45" height="31.875" rx="10" ry="10" stroke="black" />
     <polyline points="1248.260925,62.80721625 1248.260925,76.30721625 1248.260925,76.30721625 1248.260925,89.80721625 " fill="none" stroke="black" />
-    <text x="1248.260925" y="46.869717" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle" />
-    <g id="IfcValue" fill="silver">
+    <text x="1248.260925" y="46.869717" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">3,1 IfcValue</text>
+    <g id="3,1 IfcValue" fill="silver">
       <rect x="936.0325125" y="138.384135" width="83.54967375" height="30" rx="10" ry="10" stroke="black" />
-      <text x="977.807349375" y="153.384135" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcValue</text>
+      <text x="977.807349375" y="153.384135" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">3,1 IfcValue</text>
     </g>
   </g>
-  <g fill="blue">
+  <g id="2,4 IfcMeasureWithUnit" fill="blue">
     <rect x="721.685475" y="86.28225375" width="45" height="31.875" rx="10" ry="10" stroke="black" />
     <polyline points="744.185475,118.15725375 744.185475,131.65725375 744.185475,131.65725375 744.185475,145.15725375 " fill="none" stroke="black" />
-    <text x="744.185475" y="102.21975375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle" />
-    <g id="IfcMeasureWithUnit" fill="silver">
+    <text x="744.185475" y="102.21975375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,4 IfcMeasureWithUnit</text>
+    <g id="2,4 IfcMeasureWithUnit" fill="silver">
       <rect x="427.2214125" y="696.8715375" width="121.5" height="30.00749175" rx="10" ry="10" stroke="black" />
-      <text x="487.9714125" y="711.875283375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcMeasureWithUnit</text>
+      <text x="487.9714125" y="711.875283375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,4 IfcMeasureWithUnit</text>
     </g>
   </g>
-  <g fill="blue">
+  <g id="1,1 IfcUnit" fill="blue">
     <rect x="540.71085" y="20.878585125" width="45" height="31.875" rx="10" ry="10" stroke="black" />
     <polyline points="540.71085,36.816085125 518.1009165,36.816085125 " fill="none" stroke="black" />
-    <text x="563.21085" y="36.816085125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle" />
-    <g id="IfcUnit" fill="silver">
+    <text x="563.21085" y="36.816085125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">1,1 IfcUnit</text>
+    <g id="1,1 IfcUnit" fill="silver">
       <rect x="936.0005625" y="172.75497375" width="75.4947075" height="30" rx="10" ry="10" stroke="black" />
-      <text x="973.74791625" y="187.75497375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcUnit</text>
+      <text x="973.74791625" y="187.75497375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">1,1 IfcUnit</text>
     </g>
   </g>
-  <g />
+  <g>
+    <rect x="0" y="0" width="600" height="888" fill="none" stroke="lime" />
+    <rect x="600" y="0" width="600" height="888" fill="none" stroke="lime" />
+    <rect x="1200" y="0" width="600" height="888" fill="none" stroke="lime" />
+    <rect x="1800" y="0" width="600" height="888" fill="none" stroke="lime" />
+    <rect x="2400" y="0" width="600" height="888" fill="none" stroke="lime" />
+  </g>
 </svg>

@@ -11,6 +11,7 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
+using BuildingSmart.IFC.IfcApprovalResource;
 using BuildingSmart.IFC.IfcConstraintResource;
 using BuildingSmart.IFC.IfcCostResource;
 using BuildingSmart.IFC.IfcDateTimeResource;
@@ -33,10 +34,8 @@ namespace BuildingSmart.IFC.IfcPropertyResource
 		IfcPropertyEnumeration _EnumerationReference;
 	
 	
-		[Description(@"<EPM-HTML>
-	Enumeration values, which shall be listed in the referenced <em>IfcPropertyEnumeration</em>, if such a reference is provided.
-	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The attribute has been made optional with upward compatibility for file based exchange.</blockquote>
-	</EPM-HTML>")]
+		[Description(@"Enumeration values, which shall be listed in the referenced <em>IfcPropertyEnumeration</em>, if such a reference is provided.
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The attribute has been made optional with upward compatibility for file based exchange.</blockquote>")]
 		public IList<IfcValue> EnumerationValues { get { return this._EnumerationValues; } }
 	
 		[Description("Enumeration from which a enumeration value has been selected. The referenced enum" +

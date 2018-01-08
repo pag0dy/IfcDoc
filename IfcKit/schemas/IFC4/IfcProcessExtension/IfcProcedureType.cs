@@ -30,8 +30,8 @@ namespace BuildingSmart.IFC.IfcProcessExtension
 		IfcProcedureTypeEnum _PredefinedType;
 	
 	
-		[Description("<EPM-HTML>\r\n    Identifies the predefined types of a procedure from which \r\n    t" +
-	    "he type required may be set.\r\n</EPM-HTML>")]
+		[Description("    Identifies the predefined types of a procedure from which \r\n    the type requ" +
+	    "ired may be set.")]
 		public IfcProcedureTypeEnum PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	

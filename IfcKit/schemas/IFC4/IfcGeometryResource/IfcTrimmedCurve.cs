@@ -37,8 +37,9 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		ISet<IfcTrimmingSelect> _Trim2 = new HashSet<IfcTrimmingSelect>();
 	
 		[DataMember(Order=3)] 
+		[XmlAttribute]
 		[Required()]
-		Boolean _SenseAgreement;
+		IfcBoolean _SenseAgreement;
 	
 		[DataMember(Order=4)] 
 		[XmlAttribute]
@@ -61,7 +62,7 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 	
 		[Description("Flag to indicate whether the direction of the trimmed curve agrees with or is opp" +
 	    "osed to the direction of the basis curve.")]
-		public Boolean SenseAgreement { get { return this._SenseAgreement; } set { this._SenseAgreement = value;} }
+		public IfcBoolean SenseAgreement { get { return this._SenseAgreement; } set { this._SenseAgreement = value;} }
 	
 		[Description("Where both parameter and point are present at either end of the curve this indica" +
 	    "tes the preferred form.")]

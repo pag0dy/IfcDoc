@@ -30,10 +30,9 @@ namespace BuildingSmart.IFC.IfcMaterialResource
 		IfcMaterialDefinition _Material;
 	
 	
-		[Description("<EPM-HTML>\r\nReference to the material definition to which the set of properties i" +
-	    "s assigned.\r\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE  The datatype has bee" +
-	    "n changed to supertype <em>IfcMaterialDefinition</em>.</blockquote>\r\n</EPM-HTML>" +
-	    "")]
+		[Description("Reference to the material definition to which the set of properties is assigned.\r" +
+	    "\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE  The datatype has been changed to" +
+	    " supertype <em>IfcMaterialDefinition</em>.</blockquote>")]
 		public IfcMaterialDefinition Material { get { return this._Material; } set { this._Material = value;} }
 	
 	

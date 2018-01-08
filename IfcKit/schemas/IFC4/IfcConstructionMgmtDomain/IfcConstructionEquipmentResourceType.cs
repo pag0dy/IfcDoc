@@ -27,8 +27,7 @@ namespace BuildingSmart.IFC.IfcConstructionMgmtDomain
 		IfcConstructionEquipmentResourceTypeEnum _PredefinedType;
 	
 	
-		[Description("<EPM-HTML>\r\nDefines types of construction equipment resources.\r\n<p></p>\r\n</EPM-HT" +
-	    "ML>")]
+		[Description("Defines types of construction equipment resources.\r\n<p></p>")]
 		public IfcConstructionEquipmentResourceTypeEnum PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	

@@ -49,31 +49,25 @@ namespace BuildingSmart.IFC.IfcProductExtension
 		ISet<IfcRelSpaceBoundary> _BoundedBy = new HashSet<IfcRelSpaceBoundary>();
 	
 	
-		[Description(@"<EPM-HTML>
-	Predefined generic types for a space that are specified in an enumeration. There might be property sets defined specifically for each predefined type.
+		[Description(@"Predefined generic types for a space that are specified in an enumeration. There might be property sets defined specifically for each predefined type.
 	
 	<blockquote class=""note"">NOTE&nbsp; Previous use had been to indicates whether the <em>IfcSpace</em> is an interior space by value INTERNAL, or an exterior space by value EXTERNAL. This use is now deprecated, the property 'IsExternal' at 'Pset_SpaceCommon' should be used instead.</blockquote>
 	
-	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The attribute has been renamed from <em>ExteriorOrInteriorSpace</em> with upward compatibility for file based exchange.</blockquote>
-	</EPM-HTML>")]
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The attribute has been renamed from <em>ExteriorOrInteriorSpace</em> with upward compatibility for file based exchange.</blockquote>")]
 		public IfcSpaceTypeEnum? PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 		[Description("Level of flooring of this space; the average shall be taken, if the space ground " +
 	    "surface is sloping or if there are level differences within this space. ")]
 		public IfcLengthMeasure? ElevationWithFlooring { get { return this._ElevationWithFlooring; } set { this._ElevationWithFlooring = value;} }
 	
-		[Description(@"<EPM-HTML>
-	Reference to <em>IfcCovering</em> by virtue of the objectified relationship <em>IfcRelCoversSpaces</em>. It defines the concept of a space having coverings assigned. Those coverings may represent different flooring, or tiling areas.
+		[Description(@"Reference to <em>IfcCovering</em> by virtue of the objectified relationship <em>IfcRelCoversSpaces</em>. It defines the concept of a space having coverings assigned. Those coverings may represent different flooring, or tiling areas.
 	
 	<blockquote class=""note"">NOTE&nbsp; Coverings are often managed by the space, and not by the building element, which they cover.</blockquote>
-	<blockquote class=""change-ifc2x3"">IFC2x Edition3 CHANGE&nbsp; New inverse relationship. Upward compatibility for file based exchange is guaranteed.</blockquote>
-	
-	</EPM-HTML>")]
+	<blockquote class=""change-ifc2x3"">IFC2x Edition3 CHANGE&nbsp; New inverse relationship. Upward compatibility for file based exchange is guaranteed.</blockquote>")]
 		public ISet<IfcRelCoversSpaces> HasCoverings { get { return this._HasCoverings; } }
 	
-		[Description("<EPM-HTML>\r\nReference to a set of <em>IfcRelSpaceBoundary</em>\'s that defines the" +
-	    " physical or virtual delimitation of that space against physical or virtual boun" +
-	    "daries.\r\n</EPM-HTML>")]
+		[Description("Reference to a set of <em>IfcRelSpaceBoundary</em>\'s that defines the physical or" +
+	    " virtual delimitation of that space against physical or virtual boundaries.")]
 		public ISet<IfcRelSpaceBoundary> BoundedBy { get { return this._BoundedBy; } }
 	
 	

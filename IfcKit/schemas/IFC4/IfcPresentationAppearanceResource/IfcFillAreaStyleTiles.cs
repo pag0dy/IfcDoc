@@ -37,17 +37,14 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 		IfcPositiveRatioMeasure _TilingScale;
 	
 	
-		[Description(@"<EPM-HTML>
-	A two direction repeat factor defining the shape and relative positioning of the tiles.
-	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The attribute type has changed to directly reference two <em>IfcVector</em>'s.</blockquote>
-	</EPM-HTML>")]
+		[Description("A two direction repeat factor defining the shape and relative positioning of the " +
+	    "tiles.\r\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; The attribute type h" +
+	    "as changed to directly reference two <em>IfcVector</em>\'s.</blockquote>")]
 		public IList<IfcVector> TilingPattern { get { return this._TilingPattern; } }
 	
-		[Description(@"<EPM-HTML>
-	A set of constituents of the tile being a styled item that is used as the annotation symbol for tiling the filled area.
+		[Description(@"A set of constituents of the tile being a styled item that is used as the annotation symbol for tiling the filled area.
 	<blockquote class=""change-ifc2x4"">IFC4 CHANGE  The data type has been changed to <em>IfcStyledItem</em>.</blockquote>
-	<blockquote class=""note"">NOTE&nbsp; Only <em>IfcStyleItem</em>'s that refer to a compatible geometric representation item and presentation style shall be used.</blockquote>
-	</EPM-HTML>")]
+	<blockquote class=""note"">NOTE&nbsp; Only <em>IfcStyleItem</em>'s that refer to a compatible geometric representation item and presentation style shall be used.</blockquote>")]
 		public ISet<IfcStyledItem> Tiles { get { return this._Tiles; } }
 	
 		[Description("The scale factor applied to each tile as it is placed in the annotation fill area" +

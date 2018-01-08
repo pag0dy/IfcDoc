@@ -38,13 +38,11 @@ namespace BuildingSmart.IFC.IfcProductExtension
 		IfcLabel? _LongName;
 	
 	
-		[Description(@"<EPM-HTML>
-	Long name for a zone, used for informal purposes. It should be used, if available, in conjunction with the inherited <em>Name</em> attribute.
+		[Description(@"Long name for a zone, used for informal purposes. It should be used, if available, in conjunction with the inherited <em>Name</em> attribute.
 	<blockquote class=""note"">NOTE&nbsp; In many scenarios the <em>Name</em> attribute refers to the short name or number of a zone, and the <em>LongName</em> refers to the full name.
 	  </blockquote>
 	</br>
-	  <blockquote class=""change-ifc2x4"">IFC4 CHANGE The attribute has been added at the end of the entity definition.</blockquote>
-	</EPM-HTML>")]
+	  <blockquote class=""change-ifc2x4"">IFC4 CHANGE The attribute has been added at the end of the entity definition.</blockquote>")]
 		public IfcLabel? LongName { get { return this._LongName; } set { this._LongName = value;} }
 	
 	

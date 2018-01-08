@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<svg xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="1.1" width="0" height="0" xmlns="http://www.w3.org/2000/svg">
+<svg xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="1.1" width="1200" height="888" xmlns="http://www.w3.org/2000/svg">
   <g id="IfcAsset" fill="yellow">
     <rect x="671.2053375" y="145.93081125" width="110.0798625" height="232.3385925" stroke="black" />
     <text x="726.24526875" y="262.1001075" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcAsset</text>
@@ -157,11 +157,15 @@ IfcIdentifier</text>
   <g id="IFCKERNEL">
     <g id="IfcGroup" fill="grey">
       <rect x="615.8982375" y="36.34568475" width="154.8807225" height="46.83135" stroke="black" />
+      <polyline points="652.254675,83.17703625 652.2546751875,83.17703625 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="652.2546751875,83.17703625 652.254075,262.09996125 671.205324,262.09996125 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="652.2546751875,83.17703625 652.254075,576.9263625 674.685567375,576.9263625 " fill="none" stroke="black" stroke-width="3" />
       <text x="693.33859875" y="59.76135975" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCKERNEL
 IfcGroup</text>
     </g>
     <g id="IfcActor" fill="grey">
       <rect x="18.210378" y="542.67045" width="148.9875" height="46.5" stroke="black" />
+      <polyline points="92.70412875,589.17045 92.70412875,614.285449875 " fill="none" stroke="black" stroke-width="3" />
       <text x="92.704128" y="565.92045" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCKERNEL
 IfcActor</text>
     </g>
@@ -181,14 +185,23 @@ IfcAssemblyPlaceEnum</text>
     </g>
     <g id="IfcFurnishingElementType" fill="grey">
       <rect x="12.41381175" y="30.92478225" width="279.20713125" height="58.032465" stroke="black" />
+      <polyline points="28.6170015,88.95724875 28.6170015,167.37144375 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="28.6170015,167.37144375 28.25539575,167.37142875 28.25539575,167.26379759625 48.898069125,167.26379759625 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="28.6170015,167.37144375 28.191475125,167.37142875 28.191475125,291.1723275 48.54885375,291.1723275 " fill="none" stroke="black" stroke-width="3" />
       <text x="152.017377375" y="59.94101475" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCPRODUCTEXTENSION
 IfcFurnishingElementType</text>
     </g>
     <g id="IfcFurnishingElement" fill="grey">
       <rect x="313.16865" y="30.969393375" width="278.98215375" height="57.37276875" stroke="black" />
+      <polyline points="584.3717625,88.3421625 584.3717625,166.63059 584.7958643625,166.63059 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="584.7958643625,166.63059 584.79585,166.38641625 561.985652625,166.38641625 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="584.7958643625,166.63059 584.79585,288.8603925 561.985663875,288.8603925 " fill="none" stroke="black" stroke-width="3" />
       <text x="452.659726875" y="59.65577775" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCPRODUCTEXTENSION
 IfcFurnishingElement</text>
     </g>
   </g>
-  <g />
+  <g>
+    <rect x="0" y="0" width="600" height="888" fill="none" stroke="lime" />
+    <rect x="600" y="0" width="600" height="888" fill="none" stroke="lime" />
+  </g>
 </svg>

@@ -28,12 +28,12 @@ namespace BuildingSmart.IFC.IfcDateTimeResource
 		IfcTaskDurationEnum _DurationType;
 	
 	
-		[Description("<EPM-HTML>\r\n    Value of the time lag selected as being either a ratio or a\r\n    " +
-	    "time measure.\r\n</EPM-HTML>")]
+		[Description("    Value of the time lag selected as being either a ratio or a\r\n    time measure" +
+	    ".")]
 		public IfcTimeOrRatioSelect LagValue { get { return this._LagValue; } set { this._LagValue = value;} }
 	
-		[Description("<EPM-HTML>\r\n    The allowed types of task duration that specify the lag time\r\n   " +
-	    " measurement (work time or elapsed time).\r\n</EPM-HTML>")]
+		[Description("    The allowed types of task duration that specify the lag time\r\n    measurement" +
+	    " (work time or elapsed time).")]
 		public IfcTaskDurationEnum DurationType { get { return this._DurationType; } set { this._DurationType = value;} }
 	
 	

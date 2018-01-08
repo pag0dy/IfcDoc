@@ -28,8 +28,9 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		IList<IfcCompositeCurveSegment> _Segments = new List<IfcCompositeCurveSegment>();
 	
 		[DataMember(Order=1)] 
+		[XmlAttribute]
 		[Required()]
-		Boolean? _SelfIntersect;
+		IfcLogical _SelfIntersect;
 	
 	
 		[Description(@"The component bounded curves, their transitions and senses. The transition attribute for the last segment defines the transition between the end of the last segment and the start of the first; this transition attribute may take the value discontinuous, which indicates an open curve. ")]
@@ -37,7 +38,7 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 	
 		[Description("Indication of whether the curve intersects itself or not; this is for information" +
 	    " only.\r\n")]
-		public Boolean? SelfIntersect { get { return this._SelfIntersect; } set { this._SelfIntersect = value;} }
+		public IfcLogical SelfIntersect { get { return this._SelfIntersect; } set { this._SelfIntersect = value;} }
 	
 	
 	}

@@ -43,16 +43,12 @@ namespace BuildingSmart.IFC.IfcProductExtension
 		IfcSpatialElement _RelatingStructure;
 	
 	
-		[Description(@"<EPM-HTML>
-	Set of products, which are referenced within this level of the spatial structure hierarchy.
-	<blockquote class=""note"">NOTE&nbsp; Referenced elements are contained elsewhere within the spatial structure, they are referenced additionally by this spatial structure element, e.g., because they span several stories.</blockquote>
-	</EPM-HTML>")]
+		[Description(@"Set of products, which are referenced within this level of the spatial structure hierarchy.
+	<blockquote class=""note"">NOTE&nbsp; Referenced elements are contained elsewhere within the spatial structure, they are referenced additionally by this spatial structure element, e.g., because they span several stories.</blockquote>")]
 		public ISet<IfcProduct> RelatedElements { get { return this._RelatedElements; } }
 	
-		[Description(@"<EPM-HTML>
-	Spatial structure element, within which the element is referenced. Any element can be contained within zero, one or many elements of the project spatial and zoning structure.
-	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The attribute <em>RelatingStructure</em> as been promoted to the new supertype <em>IfcSpatialElement</em> with upward compatibility for file based exchange.</blockquote>
-	</EPM-HTML>")]
+		[Description(@"Spatial structure element, within which the element is referenced. Any element can be contained within zero, one or many elements of the project spatial and zoning structure.
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The attribute <em>RelatingStructure</em> as been promoted to the new supertype <em>IfcSpatialElement</em> with upward compatibility for file based exchange.</blockquote>")]
 		public IfcSpatialElement RelatingStructure { get { return this._RelatingStructure; } set { this._RelatingStructure = value;} }
 	
 	

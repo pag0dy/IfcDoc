@@ -23,8 +23,8 @@ namespace BuildingSmart.IFC.IfcBuildingControlsDomain
 		IfcUnitaryControlElementTypeEnum _PredefinedType;
 	
 	
-		[Description("<EPM-HTML><p>Identifies the predefined types of unitary control element from whic" +
-	    "h the type required may be set.</p></EPM-HTML>")]
+		[Description("<p>Identifies the predefined types of unitary control element from which the type" +
+	    " required may be set.</p>")]
 		public IfcUnitaryControlElementTypeEnum PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	

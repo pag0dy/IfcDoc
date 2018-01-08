@@ -48,43 +48,35 @@ namespace BuildingSmart.IFC.IfcMaterialResource
 		ISet<IfcMaterialRelationship> _RelatesTo = new HashSet<IfcMaterialRelationship>();
 	
 	
-		[Description(@"<EPM-HTML>
-	Name of the material. 
+		[Description(@"Name of the material. 
 	<blockquote class=""example"">EXAMPLE A view definition may require <em>Material.Name</em> to uniquely specify e.g. concrete or steel grade, in which case the attribute Material.Category could take the value 'Concrete' or 'Steel'. </blockquote>
 	  <blockquote class=""note"">
 	NOTE&nbsp; Material grade may have different meaning in different view definitions, e.g. strength grade for structural design and analysis, or visible appearance grade in architectural application. Also, more elaborate material grade definition may be associated as classification via inverse attribute <em>HasExternalReferences</em>.
-	</blockquote>
-	</EPM-HTML>")]
+	</blockquote>")]
 		public IfcLabel Name { get { return this._Name; } set { this._Name = value;} }
 	
-		[Description(@"<EPM-HTML>
-	Definition of the material in more descriptive terms than given by attributes <em>Name</em> or <em>Category</em>.
-	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The attribute has been added at the end of attribute list.</blockquote>
-	</EPM-HTML>")]
+		[Description("Definition of the material in more descriptive terms than given by attributes <em" +
+	    ">Name</em> or <em>Category</em>.\r\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE&" +
+	    "nbsp; The attribute has been added at the end of attribute list.</blockquote>")]
 		public IfcText? Description { get { return this._Description; } set { this._Description = value;} }
 	
-		[Description(@"<EPM-HTML>
-	Definition of the category (group or type) of material, in more general terms than given by attribute <em>Name</em>.  
+		[Description(@"Definition of the category (group or type) of material, in more general terms than given by attribute <em>Name</em>.  
 	<blockquote class=""example"">EXAMPLE A view definition may require each <em>Material.Name</em> to be unique, e.g. for each concrete or steel grade used in a project, in which case <em>Material.Category</em> could take the values 'Concrete' or 'Steel'.</blockquote>
-	  <blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The attribute has been added at the end of attribute list.</blockquote>
-	</EPM-HTML>")]
+	  <blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The attribute has been added at the end of attribute list.</blockquote>")]
 		public IfcLabel? Category { get { return this._Category; } set { this._Category = value;} }
 	
-		[Description(@"<EPM-HTML>
-	Reference to the <em>IfcMaterialDefinitionRepresentation</em> that provides presentation information to a representation common to this material in style definitions.
-	  <blockquote class=""change-ifc2x3"">IFC2x3 CHANGE&nbsp; The inverse attribute <em>HasRepresentation</em> has been added.</blockquote>
-	</EPM-HTML>")]
+		[Description(@"Reference to the <em>IfcMaterialDefinitionRepresentation</em> that provides presentation information to a representation common to this material in style definitions.
+	  <blockquote class=""change-ifc2x3"">IFC2x3 CHANGE&nbsp; The inverse attribute <em>HasRepresentation</em> has been added.</blockquote>")]
 		public ISet<IfcMaterialDefinitionRepresentation> HasRepresentation { get { return this._HasRepresentation; } }
 	
-		[Description("<EPM-HTML>\r\nReference to a material relationship indicating that this material is" +
-	    " a part (or constituent) in a material composite.\r\n<blockquote class=\"change-ifc" +
-	    "2x4\">IFC4 CHANGE&nbsp; The inverse attribute has been added.</blockquote>\r\n</EPM" +
-	    "-HTML>")]
+		[Description("Reference to a material relationship indicating that this material is a part (or " +
+	    "constituent) in a material composite.\r\n<blockquote class=\"change-ifc2x4\">IFC4 CH" +
+	    "ANGE&nbsp; The inverse attribute has been added.</blockquote>")]
 		public ISet<IfcMaterialRelationship> IsRelatedWith { get { return this._IsRelatedWith; } }
 	
-		[Description("<EPM-HTML>\r\nReference to a material relationship indicating that this material co" +
-	    "mposite has parts (or constituents).\r\n<blockquote class=\"change-ifc2x4\">IFC4 CHA" +
-	    "NGE&nbsp; The inverse attribute has been added.</blockquote>\r\n</EPM-HTML>")]
+		[Description("Reference to a material relationship indicating that this material composite has " +
+	    "parts (or constituents).\r\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; Th" +
+	    "e inverse attribute has been added.</blockquote>")]
 		public ISet<IfcMaterialRelationship> RelatesTo { get { return this._RelatesTo; } }
 	
 	

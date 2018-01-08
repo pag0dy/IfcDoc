@@ -23,14 +23,23 @@ namespace BuildingSmart.IFC.IfcConstraintResource
 	[Guid("2748cd36-46fe-4341-ae53-402b2961c867")]
 	public enum IfcConstraintEnum
 	{
+		[Description("Qualifies a constraint such that it must be followed rigidly within or at the val" +
+	    "ues set.")]
 		HARD = 1,
 	
+		[Description("Qualifies a constraint such that it should be followed within or at the values se" +
+	    "t.")]
 		SOFT = 2,
 	
+		[Description("Qualifies a constraint such that it is advised that it is followed within or at t" +
+	    "he values set.")]
 		ADVISORY = 3,
 	
+		[Description("A user-defined grade indicated by a separate attribute at the referencing entity." +
+	    "")]
 		USERDEFINED = -1,
 	
+		[Description("Grade has not been specified.")]
 		NOTDEFINED = 0,
 	
 	}

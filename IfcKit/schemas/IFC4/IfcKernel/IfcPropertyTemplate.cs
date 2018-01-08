@@ -34,14 +34,14 @@ namespace BuildingSmart.IFC.IfcKernel
 		ISet<IfcPropertySetTemplate> _PartOfPsetTemplate = new HashSet<IfcPropertySetTemplate>();
 	
 	
-		[Description("<EPM-HTML>\r\nReference to a complex property templates. It should only be provided" +
-	    ", if the <em>PropertyType</em> of the referenced complex property template is se" +
-	    "t to <small>COMPLEX</small>.\r\n</EPM-HTML>")]
+		[Description("Reference to a complex property templates. It should only be provided, if the <em" +
+	    ">PropertyType</em> of the referenced complex property template is set to <small>" +
+	    "COMPLEX</small>.")]
 		public ISet<IfcComplexPropertyTemplate> PartOfComplexTemplate { get { return this._PartOfComplexTemplate; } }
 	
-		[Description(@"<EPM-HTML>
-	Reference to the <em>IfcPropertySetTemplate</em> that defines the scope for the <em>IfcPropertyTemplate</em>. A single <em>IfcPropertyTemplate</em> can be defined within the scope of zero, one or many <em>IfcPropertySetTemplate</em>'.
-	</EPM-HTML>")]
+		[Description("Reference to the <em>IfcPropertySetTemplate</em> that defines the scope for the <" +
+	    "em>IfcPropertyTemplate</em>. A single <em>IfcPropertyTemplate</em> can be define" +
+	    "d within the scope of zero, one or many <em>IfcPropertySetTemplate</em>\'.")]
 		public ISet<IfcPropertySetTemplate> PartOfPsetTemplate { get { return this._PartOfPsetTemplate; } }
 	
 	

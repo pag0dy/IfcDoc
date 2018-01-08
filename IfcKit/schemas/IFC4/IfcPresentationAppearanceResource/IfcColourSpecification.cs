@@ -28,11 +28,9 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 		IfcLabel? _Name;
 	
 	
-		[Description(@"<EPM-HTML>
-	Optional name given to a particular colour specification in addition to the colour components (like the RGB values).
+		[Description(@"Optional name given to a particular colour specification in addition to the colour components (like the RGB values).
 	<blockquote class=""example"">EXAMPLE&nbsp; Names of a industry colour classification, such as RAL.</blockquote>
-	<blockquote class=""change-ifc2x3"">IFC2x3 CHANGE&nbsp; Attribute added.</blockquote>
-	</EPM-HTML>")]
+	<blockquote class=""change-ifc2x3"">IFC2x3 CHANGE&nbsp; Attribute added.</blockquote>")]
 		public IfcLabel? Name { get { return this._Name; } set { this._Name = value;} }
 	
 	

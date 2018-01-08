@@ -37,21 +37,24 @@ namespace BuildingSmart.IFC.IfcRepresentationResource
 		IfcNamedUnit _MapUnit;
 	
 	
-		[Description("<EPM-HTML>Name by which the map projection is identified.\r\n<ul>\r\n  <li>UTM</li>\r\n" +
-	    "  <li>Gaus-Krueger</li>\r\n</ul>\r\n</EPM-HTML>")]
+		[Description("Name by which the map projection is identified.\r\n\r\n<blockquote class=\"examples\">E" +
+	    "XAMPLE&nbsp; map projects include:\r\n<ul class=\"note\">\r\n  <li class=\"note\">UTM</l" +
+	    "i>\r\n  <li class=\"note\">Gaus-Krueger</li>\r\n</ul>")]
 		public IfcIdentifier? MapProjection { get { return this._MapProjection; } set { this._MapProjection = value;} }
 	
-		[Description(@"<EPM-HTML>Name by which the map zone, relating to the <em>MapProjection</em>, is identified. Examples are
-	<ul>
-	  <li>for UTM, the zone number, like 32 for UTM32</li>
-	  <li>for Gaus-Krueger, the zones of longitudinal width, like 3'</li>
+		[Description(@"Name by which the map zone, relating to the <em>MapProjection</em>, is identified. 
+	
+	<blockquote class=""examples"">EXAMPLE&nbsp;
+	<ul class=""note"">
+	  <li class=""note"">for UTM, the zone number, like 32 for UTM32</li>
+	  <li class=""note"">for Gaus-Krueger, the zones of longitudinal width, like 3'</li>
 	</ul>
-	</EPM-HTML>")]
+	</blockquote>")]
 		public IfcIdentifier? MapZone { get { return this._MapZone; } set { this._MapZone = value;} }
 	
-		[Description(@"<EPM-HTML>Unit of the coordinate axes composing the map coordinate system.
-	<blockquote class=""note"">NOTE&nbsp; Only length measures are in scope and all two or three axes of the map coordinate system shall have the same length unit.</blockquote>
-	</EPM-HTML>")]
+		[Description("Unit of the coordinate axes composing the map coordinate system.\r\n<blockquote cla" +
+	    "ss=\"note\">NOTE&nbsp; Only length measures are in scope and all two or three axes" +
+	    " of the map coordinate system shall have the same length unit.</blockquote>")]
 		public IfcNamedUnit MapUnit { get { return this._MapUnit; } set { this._MapUnit = value;} }
 	
 	

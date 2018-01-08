@@ -42,9 +42,9 @@ namespace BuildingSmart.IFC.IfcQuantityResource
 		[Description("Further explanation that might be given to the quantity.")]
 		public IfcText? Description { get { return this._Description; } set { this._Description = value;} }
 	
-		[Description("<EPM-HTML>\r\nReference to an external reference, e.g. library, classification, or " +
-	    "document information, that is associated to the quantity.\r\n<blockquote class=\"ch" +
-	    "ange-ifc2x4\">IFC4 CHANGE New inverse attribute.</blockquote>\r\n</EPM-HTML>")]
+		[Description("Reference to an external reference, e.g. library, classification, or document inf" +
+	    "ormation, that is associated to the quantity.\r\n<blockquote class=\"change-ifc2x4\"" +
+	    ">IFC4 CHANGE New inverse attribute.</blockquote>")]
 		public ISet<IfcExternalReferenceRelationship> HasExternalReferences { get { return this._HasExternalReferences; } }
 	
 		[Description("Reference to a physical complex quantity in which the physical quantity may be co" +

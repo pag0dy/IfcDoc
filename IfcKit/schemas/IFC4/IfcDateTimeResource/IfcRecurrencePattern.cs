@@ -51,45 +51,40 @@ namespace BuildingSmart.IFC.IfcDateTimeResource
 		IList<IfcTimePeriod> _TimePeriods = new List<IfcTimePeriod>();
 	
 	
-		[Description("<EPM-HTML>\r\n    Defines the recurrence type that gives meaning to the used\r\n    a" +
-	    "ttributes and decides about possible attribute\r\n    combinations, i.e. what attr" +
-	    "ibutes are needed to fully\r\n    describe the pattern type.\r\n</EPM-HTML>")]
+		[Description("    Defines the recurrence type that gives meaning to the used\r\n    attributes an" +
+	    "d decides about possible attribute\r\n    combinations, i.e. what attributes are n" +
+	    "eeded to fully\r\n    describe the pattern type.")]
 		public IfcRecurrenceTypeEnum RecurrenceType { get { return this._RecurrenceType; } set { this._RecurrenceType = value;} }
 	
-		[Description("<EPM-HTML>\r\n    The position of the specified day in a month.\r\n</EPM-HTML>\r\n")]
+		[Description("    The position of the specified day in a month.\r\n")]
 		public ISet<IfcDayInMonthNumber> DayComponent { get { return this._DayComponent; } }
 	
-		[Description("<EPM-HTML>\r\n    The weekday name of the specified day in a week.\r\n</EPM-HTML>")]
+		[Description("    The weekday name of the specified day in a week.")]
 		public ISet<IfcDayInWeekNumber> WeekdayComponent { get { return this._WeekdayComponent; } }
 	
-		[Description("<EPM-HTML>\r\n    The position of the specified month in a year.\r\n</EPM-HTML>\r\n")]
+		[Description("    The position of the specified month in a year.\r\n")]
 		public ISet<IfcMonthInYearNumber> MonthComponent { get { return this._MonthComponent; } }
 	
-		[Description(@"<EPM-HTML>
-	    The position of the specified component, e.g. the 3rd
-	    (position=3) Tuesday (weekday component) in a month. A
-	    negative position value is used to define the last position 
-	    of the component (-1), the next to last position (-2) etc.
-	</EPM-HTML>
-	")]
+		[Description("    The position of the specified component, e.g. the 3rd\r\n    (position=3) Tuesd" +
+	    "ay (weekday component) in a month. A\r\n    negative position value is used to def" +
+	    "ine the last position \r\n    of the component (-1), the next to last position (-2" +
+	    ") etc.\r\n")]
 		public IfcInteger? Position { get { return this._Position; } set { this._Position = value;} }
 	
-		[Description(@"<EPM-HTML>
-	    An interval can be given according to the pattern type. An
+		[Description(@"    An interval can be given according to the pattern type. An
 	    interval value of 2 can for instance every two days, weeks,
 	    months, years. An empty interval value is regarded as 1. The
 	    used interval values should be in a reasonable range, e.g.
-	    not 0 or &lt;0.
-	</EPM-HTML>")]
+	    not 0 or &lt;0.")]
 		public IfcInteger? Interval { get { return this._Interval; } set { this._Interval = value;} }
 	
-		[Description("<EPM-HTML>\r\n    Defines the number of occurrences of this pattern, e.g. a weekly " +
-	    "\r\n    event might be defined to occur 5 times before it stops.\r\n</EPM-HTML>")]
+		[Description("    Defines the number of occurrences of this pattern, e.g. a weekly \r\n    event " +
+	    "might be defined to occur 5 times before it stops.")]
 		public IfcInteger? Occurrences { get { return this._Occurrences; } set { this._Occurrences = value;} }
 	
-		[Description("<EPM-HTML>\r\n    List of time periods that are defined by a start and end time\r\n  " +
-	    "  of the recurring element (day). The order of the list should\r\n    reflect the " +
-	    "sequence of the time periods.\r\n</EPM-HTML>")]
+		[Description("    List of time periods that are defined by a start and end time\r\n    of the rec" +
+	    "urring element (day). The order of the list should\r\n    reflect the sequence of " +
+	    "the time periods.")]
 		public IList<IfcTimePeriod> TimePeriods { get { return this._TimePeriods; } }
 	
 	

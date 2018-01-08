@@ -24,12 +24,13 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 	public partial class IfcCartesianTransformationOperator2DnonUniform : IfcCartesianTransformationOperator2D
 	{
 		[DataMember(Order=0)] 
-		Double? _Scale2;
+		[XmlAttribute]
+		IfcReal? _Scale2;
 	
 	
 		[Description("The scaling value specified for the transformation along the axis 2. This is norm" +
 	    "ally the y scale factor.")]
-		public Double? Scale2 { get { return this._Scale2; } set { this._Scale2 = value;} }
+		public IfcReal? Scale2 { get { return this._Scale2; } set { this._Scale2 = value;} }
 	
 	
 	}

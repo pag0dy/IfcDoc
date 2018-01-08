@@ -33,10 +33,8 @@ namespace BuildingSmart.IFC.IfcSharedBldgElements
 		IfcChimneyTypeEnum? _PredefinedType;
 	
 	
-		[Description(@"<EPM-HTML>
-	Predefined generic type for a chimney that is specified in an enumeration. There may be a property set given specificly for the predefined types.
-	<blockquote class=""note"">NOTE&nbsp; The <em>PredefinedType</em> shall only be used, if no <em>IfcChimneyType</em> is assigned, providing its own <em>IfcChimneyType.PredefinedType</em>.</blockquote>
-	</EPM-HTML> ")]
+		[Description(@"Predefined generic type for a chimney that is specified in an enumeration. There may be a property set given specificly for the predefined types.
+	<blockquote class=""note"">NOTE&nbsp; The <em>PredefinedType</em> shall only be used, if no <em>IfcChimneyType</em> is assigned, providing its own <em>IfcChimneyType.PredefinedType</em>.</blockquote> ")]
 		public IfcChimneyTypeEnum? PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	

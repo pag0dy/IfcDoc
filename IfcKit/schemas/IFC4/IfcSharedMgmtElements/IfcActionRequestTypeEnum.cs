@@ -22,18 +22,25 @@ namespace BuildingSmart.IFC.IfcSharedMgmtElements
 	[Guid("d6386726-999b-42e9-ae2c-8456d390163a")]
 	public enum IfcActionRequestTypeEnum
 	{
+		[Description("Request was made through email.")]
 		EMAIL = 1,
 	
+		[Description("Request was made through facsimile.")]
 		FAX = 2,
 	
+		[Description("Request was made verbally over a telephone.")]
 		PHONE = 3,
 	
+		[Description("Request was made through postal mail.")]
 		POST = 4,
 	
+		[Description("Request was made verbally in person.")]
 		VERBAL = 5,
 	
+		[Description("User-defined type.")]
 		USERDEFINED = -1,
 	
+		[Description("Undefined type.")]
 		NOTDEFINED = 0,
 	
 	}

@@ -28,8 +28,8 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 		IfcURIReference _URLReference;
 	
 	
-		[Description("<EPM-HTML>\r\nLocation, provided as an URI, at which the image texture is electroni" +
-	    "cally published.\r\n</EPM-HTML>")]
+		[Description("Location, provided as an URI, at which the image texture is electronically publis" +
+	    "hed.")]
 		public IfcURIReference URLReference { get { return this._URLReference; } set { this._URLReference = value;} }
 	
 	

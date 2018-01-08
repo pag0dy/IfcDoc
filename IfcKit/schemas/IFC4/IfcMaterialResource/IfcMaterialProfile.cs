@@ -43,7 +43,7 @@ namespace BuildingSmart.IFC.IfcMaterialResource
 	
 		[DataMember(Order=4)] 
 		[XmlAttribute]
-		IfcNormalisedRatioMeasure? _Priority;
+		IfcInteger? _Priority;
 	
 		[DataMember(Order=5)] 
 		[XmlAttribute]
@@ -66,13 +66,15 @@ namespace BuildingSmart.IFC.IfcMaterialResource
 	    "rial.")]
 		public IfcProfileDef Profile { get { return this._Profile; } set { this._Profile = value;} }
 	
-		[Description(@"<EPM-HTML>
-	The relative priority of the profile, expressed as ratio measure, normalised to 0..1. Controls how profiles intersect in connections and corners of building elements: A profile from one element protrudes into (i.e. displaces) a profile from another element in a joint of these elements if the former element's profile has higher priority than the latter. The priority value for a material profile in an element has to be set and maintained by software applications in relation to the material profiles in connected elements.
-	</EPM-HTML>")]
-		public IfcNormalisedRatioMeasure? Priority { get { return this._Priority; } set { this._Priority = value;} }
+		[Description(@"The relative priority of the profile, expressed as normalised integer range [0..100]. Controls how profiles intersect in connections and corners of building elements: A profile from one element protrudes into (i.e. displaces) a profile from another element in a joint of these elements if the former element's profile has higher priority than the latter. The priority value for a material profile in an element has to be set and maintained by software applications in relation to the material profiles in connected elements.")]
+		public IfcInteger? Priority { get { return this._Priority; } set { this._Priority = value;} }
 	
-		[Description("Category of the material profile, e.g. the role it has in the profile set it belo" +
-	    "ngs to.")]
+		[Description(@"Category of the material profile, e.g. the role it has in the profile set it belongs to. The list of keywords might be extended by model view definitions, however the following keywords shall apply in general:
+	<ul>
+	 <li>'Load Bearing' &mdash; the material profile having a load bearing function.</li>
+	 <li>'Insulation' &mdash; the material profile having an insolating function.</li>
+	 <li>'Finish' &mdash; the material profile being the finish.</li>
+	</ul>")]
 		public IfcLabel? Category { get { return this._Category; } set { this._Category = value;} }
 	
 		[Description("Material profile set in which this material profile is included.")]

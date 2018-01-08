@@ -38,21 +38,18 @@ namespace BuildingSmart.IFC.IfcMaterialResource
 		ISet<IfcMaterialProperties> _HasProperties = new HashSet<IfcMaterialProperties>();
 	
 	
-		[Description(@"<EPM-HTML>
-	Use of the <em>IfcMaterialDefinition</em> subtypes within the material association of an element occurrence or element type. The association is established by the <em>IfcRelAssociatesMaterial</em> relationship.
-	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The inverse attribute has been added.</blockquote>
-	</EPM-HTML>")]
+		[Description(@"Use of the <em>IfcMaterialDefinition</em> subtypes within the material association of an element occurrence or element type. The association is established by the <em>IfcRelAssociatesMaterial</em> relationship.
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The inverse attribute has been added.</blockquote>")]
 		public ISet<IfcRelAssociatesMaterial> AssociatedTo { get { return this._AssociatedTo; } }
 	
-		[Description("<EPM-HTML>\r\nReference to external references, e.g. library, classification, or do" +
-	    "cument information, that are associated to the material.\r\n<blockquote class=\"cha" +
-	    "nge-ifc2x4\">IFC4 CHANGE&nbsp; The inverse attribute has been added.</blockquote>" +
-	    "\r\n</EPM-HTML> ")]
+		[Description("Reference to external references, e.g. library, classification, or document infor" +
+	    "mation, that are associated to the material.\r\n<blockquote class=\"change-ifc2x4\">" +
+	    "IFC4 CHANGE&nbsp; The inverse attribute has been added.</blockquote> ")]
 		public ISet<IfcExternalReferenceRelationship> HasExternalReferences { get { return this._HasExternalReferences; } }
 	
-		[Description("<EPM-HTML>\r\nMaterial properties assigned to instances of subtypes of <em>IfcMater" +
-	    "ialDefinition</em>.\r\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; The inv" +
-	    "erse attribute has been added.</blockquote>\r\n</EPM-HTML>")]
+		[Description("Material properties assigned to instances of subtypes of <em>IfcMaterialDefinitio" +
+	    "n</em>.\r\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; The inverse attribu" +
+	    "te has been added.</blockquote>")]
 		public ISet<IfcMaterialProperties> HasProperties { get { return this._HasProperties; } }
 	
 	

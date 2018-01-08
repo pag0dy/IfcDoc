@@ -32,14 +32,12 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 		IfcFace _MappedTo;
 	
 	
-		[Description("<EPM-HTML>\r\nList of texture coordinate vertices that are applied to the correspon" +
-	    "ding points of the polyloop defining a face bound.\r\n</EPM-HTML>")]
+		[Description("List of texture coordinate vertices that are applied to the corresponding points " +
+	    "of the polyloop defining a face bound.")]
 		public IList<IfcTextureVertex> Vertices { get { return this._Vertices; } }
 	
-		[Description(@"<EPM-HTML>
-	The face that defines the corresponding list of points along the bounding poly loop of the face outer bound.
-	<blockquote class=""note"">NOTE&nbsp; The face may have additional inner loops. The <em>IfcTextureMap</em> and its <em>Vertices</em> only correspond with the coordinates of the <em>IfcPolyloop</em> representing the outer bound.</blockquote>
-	</EPM-HTML>")]
+		[Description(@"The face that defines the corresponding list of points along the bounding poly loop of the face outer bound.
+	<blockquote class=""note"">NOTE&nbsp; The face may have additional inner loops. The <em>IfcTextureMap</em> and its <em>Vertices</em> only correspond with the coordinates of the <em>IfcPolyloop</em> representing the outer bound.</blockquote>")]
 		public IfcFace MappedTo { get { return this._MappedTo; } set { this._MappedTo = value;} }
 	
 	

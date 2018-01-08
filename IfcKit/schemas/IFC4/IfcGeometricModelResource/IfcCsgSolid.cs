@@ -26,8 +26,7 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 		IfcCsgSelect _TreeRootExpression;
 	
 	
-		[Description(@"<EPM-HTML>
-	Boolean expression of primitives and regularized operators describing the solid. The root of the tree of Boolean expressions is given explicitly as an <em>IfcBooleanResult</em> entitiy or as a primitive (subtypes of <em>IfcCsgPrimitive3D</em>).
+		[Description(@"Boolean expression of primitives and regularized operators describing the solid. The root of the tree of Boolean expressions is given explicitly as an <em>IfcBooleanResult</em> entitiy or as a primitive (subtypes of <em>IfcCsgPrimitive3D</em>).
 	</EPM-HMTL>")]
 		public IfcCsgSelect TreeRootExpression { get { return this._TreeRootExpression; } set { this._TreeRootExpression = value;} }
 	

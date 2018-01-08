@@ -23,9 +23,7 @@ namespace BuildingSmart.IFC.IfcSharedComponentElements
 		IfcDiscreteAccessoryTypeEnum? _PredefinedType;
 	
 	
-		[Description(@"<EPM-HTML>
-	Subtype of discrete accessory.  If USERDEFINED, the type is further qualified by means of the inherited attribute <em>ObjectType</em>.  Refer to <em>IfcDiscreteAccessoryType</em> for a non-exclusive list of userdefined type designations which are applicable to <em>IfcDiscreteAccessory</em> as well.
-	</EPM-HTML>
+		[Description(@"Subtype of discrete accessory.  If USERDEFINED, the type is further qualified by means of the inherited attribute <em>ObjectType</em>.  Refer to <em>IfcDiscreteAccessoryType</em> for a non-exclusive list of userdefined type designations which are applicable to <em>IfcDiscreteAccessory</em> as well.
 	")]
 		public IfcDiscreteAccessoryTypeEnum? PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	

@@ -38,13 +38,9 @@ namespace BuildingSmart.IFC.IfcStructuralAnalysisDomain
 	    "zation.")]
 		public IfcStructuralCurveMemberTypeEnum PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
-		[Description(@"<EPM-HTML>
+		[Description(@"Direction which is used in the definition of the local z axis.  <em>Axis</em> is specified relative to the so-called global coordinate system, i.e. the <em>SELF\IfcProduct.ObjectPlacement</em>.
 	
-	Direction which is used in the definition of the local z axis.  <em>Axis</em> is specified relative to the so-called global coordinate system, i.e. the <em>SELF\IfcProduct.ObjectPlacement</em>.
-	
-	<blockquote class=""note"">NOTE&nbsp; It is desirable and usually possible that many instances of <em>IfcStructuralCurveConnection</em> and <em>IfcStructuralCurveMember</em> share a common instance of <em>IfcDirection</em> as their <em>Axis</em> attribute.</blockquote>
-	
-	</EPM-HTML>")]
+	<blockquote class=""note"">NOTE&nbsp; It is desirable and usually possible that many instances of <em>IfcStructuralCurveConnection</em> and <em>IfcStructuralCurveMember</em> share a common instance of <em>IfcDirection</em> as their <em>Axis</em> attribute.</blockquote>")]
 		public IfcDirection Axis { get { return this._Axis; } set { this._Axis = value;} }
 	
 	

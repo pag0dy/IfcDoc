@@ -23,14 +23,20 @@ namespace BuildingSmart.IFC.IfcStructuralAnalysisDomain
 	[Guid("54716e87-ed17-4599-bbc8-5541af1d53c0")]
 	public enum IfcStructuralSurfaceMemberTypeEnum
 	{
+		[Description("A member with capacity to carry out-of-plane loads, i.e. a plate.")]
 		BENDING_ELEMENT = 1,
 	
+		[Description("A member with capacity to carry in-plane loads, for example a shear wall.")]
 		MEMBRANE_ELEMENT = 2,
 	
+		[Description("A member with capacity to carry in-plane and out-of-plane loads, i.e. a combinati" +
+	    "on of bending element and membrane element.")]
 		SHELL = 3,
 	
+		[Description("A specially defined member.")]
 		USERDEFINED = -1,
 	
+		[Description("A member without further categorization.")]
 		NOTDEFINED = 0,
 	
 	}

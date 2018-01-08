@@ -37,12 +37,12 @@ namespace BuildingSmart.IFC.IfcKernel
 		IfcPropertySetTemplate _RelatingTemplate;
 	
 	
-		[Description("<EPM-HTML>\r\nOne or many property sets or quantity sets that obtain their definiti" +
-	    "ons from the single property set template.\r\n</EPM-HTML>")]
+		[Description("One or many property sets or quantity sets that obtain their definitions from the" +
+	    " single property set template.")]
 		public ISet<IfcPropertySetDefinition> RelatedPropertySets { get { return this._RelatedPropertySets; } }
 	
-		[Description("<EPM-HTML>\r\nProperty set template that provides the common definition of related " +
-	    "property sets. \r\n</EPM-HTML>")]
+		[Description("Property set template that provides the common definition of related property set" +
+	    "s. ")]
 		public IfcPropertySetTemplate RelatingTemplate { get { return this._RelatingTemplate; } set { this._RelatingTemplate = value;} }
 	
 	

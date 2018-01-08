@@ -58,14 +58,11 @@ namespace BuildingSmart.IFC.IfcKernel
 		IfcStateEnum? _AccessState;
 	
 	
-		[Description(@"<EPM-HTML>
-	Property type defining whether the property template defines a property with a single value, a bounded value, a list value, a table value, an enumerated value, or a reference value. Or the quantity type defining whether the template defines a quantity with a length, area, volume, weight or time value.
-	<blockquote class=""note"">NOTE&nbsp; the value of this property determines the correct use of the <em>PrimaryUnit</em>, <em>SecondaryUnit</em>, <em>PrimaryDataType</em>, <em>SecondaryDataType</em>, and <em>Expression</em> attributes.</blockquote>
-	</EPM-HTML>")]
+		[Description(@"Property type defining whether the property template defines a property with a single value, a bounded value, a list value, a table value, an enumerated value, or a reference value. Or the quantity type defining whether the template defines a quantity with a length, area, volume, weight or time value.
+	<blockquote class=""note"">NOTE&nbsp; the value of this property determines the correct use of the <em>PrimaryUnit</em>, <em>SecondaryUnit</em>, <em>PrimaryDataType</em>, <em>SecondaryDataType</em>, and <em>Expression</em> attributes.</blockquote>")]
 		public IfcSimplePropertyTemplateTypeEnum? TemplateType { get { return this._TemplateType; } set { this._TemplateType = value;} }
 	
-		[Description(@"<EPM-HTML>
-	Primary measure type assigned to the definition of the property. It should be provided, if the <em>PropertyType</em> is set to:
+		[Description(@"Primary measure type assigned to the definition of the property. It should be provided, if the <em>PropertyType</em> is set to:
 	<ul>
 	<li><small>P_SINGLEVALUE</small>: determining the measure type of <em>IfcPropertySingleValue.NominalValue</em></li>
 	<li><small>P_ENUMERATEDVALUE</small>: determining the measure type of <em>IfcPropertyEnumeratedValue.EnumerationValues</em></li>
@@ -73,12 +70,10 @@ namespace BuildingSmart.IFC.IfcKernel
 	<li><small>P_LISTVALUE</small>: determining the measure type of <em>IfcPropertyListValue.ListValues</em></li>
 	<li><small>P_TABLEVALUE</small>: determining the measure type of <em>IfcPropertyTableValue.DefiningValues</em></li>
 	<li><small>P_REFERENCEVALUE</small>: determining the measure type of <em>IfcPropertyTableValue.PropertyReference</em></li></ul>
-	<blockquote class=""note"">NOTE&nbsp; The value range of the measure type is within the select type <em>IfcValue</em> for all <em>PropertyType</em>'s with the exeption of <small>P_REFERENCEVALUE</small>. Here it is within the select type <em>IfcObjectReferenceSelect</em>.</blockquote>
-	</EPM-HTML>")]
+	<blockquote class=""note"">NOTE&nbsp; The value range of the measure type is within the select type <em>IfcValue</em> for all <em>PropertyType</em>'s with the exeption of <small>P_REFERENCEVALUE</small>. Here it is within the select type <em>IfcObjectReferenceSelect</em>.</blockquote>")]
 		public IfcLabel? PrimaryMeasureType { get { return this._PrimaryMeasureType; } set { this._PrimaryMeasureType = value;} }
 	
-		[Description(@"<EPM-HTML>
-	Secondary measure type assigned to the definition of the property. It should be provided, if the <em>PropertyType</em> is set to:
+		[Description(@"Secondary measure type assigned to the definition of the property. It should be provided, if the <em>PropertyType</em> is set to:
 	<ul>
 	<li><small>P_BOUNDEDVALUE</small>: determining the measure type of <em>IfcPropertyBoundedValue.UpperBoundValue</em></li>
 	<li><small>P_TABLEVALUE</small>: determining the measure type of <em>IfcPropertyTableValue.DefinedValues</em></li>
@@ -86,51 +81,40 @@ namespace BuildingSmart.IFC.IfcKernel
 	The value range of the measure type is within the select type <em>IfcValue</em>  for all <em>PropertyType</em>'s with the exeption of <small>P_ENUMERATEDVALUE</small>. Here it is the comma delimited list of enumerators.
 	<blockquote class=""note"">
 	    NOTE&nbsp; The measure type of <em>IfcPropertyEnumeration.EnumerationValues</em> is provided as <em>PrimaryDataType</em>.
-	</blockquote>
-	</EPM-HTML>")]
+	</blockquote>")]
 		public IfcLabel? SecondaryMeasureType { get { return this._SecondaryMeasureType; } set { this._SecondaryMeasureType = value;} }
 	
-		[Description(@"<EPM-HTML>
-	Name of the property enumeration, and list of all valid enumerators being selectable values, assigned to the definition of the property. 
+		[Description(@"Name of the property enumeration, and list of all valid enumerators being selectable values, assigned to the definition of the property. 
 	This attribute shall only be provided, if the <em>PropertyType</em> is set to:
 	<ul>
 	<li><small>P_ENUMERATEDVALUE</small></li>
-	</ul>
-	</EPM-HTML>")]
+	</ul>")]
 		public IfcPropertyEnumeration Enumerators { get { return this._Enumerators; } set { this._Enumerators = value;} }
 	
-		[Description(@"<EPM-HTML>
-	Primary unit assigned to the definition of the property. It should be provided, if the <em>PropertyType</em> is set to:
+		[Description(@"Primary unit assigned to the definition of the property. It should be provided, if the <em>PropertyType</em> is set to:
 	<ul>
 	<li><small>P_SINGLEVALUE</small>: determining the <em>IfcPropertySingleValue.Unit</em></li>
 	<li><small>P_ENUMERATEDVALUE</small>: determining the <em>IfcPropertyEnumeration.Unit</em></li>
 	<li><small>P_BOUNDEDVALUE</small>: determining the <em>IfcPropertyBoundedValue.Unit</em></li>
 	<li><small>P_LISTVALUE</small>: determining the <em>IfcPropertyListValue.Unit</em></li>
 	<li><small>P_TABLEVALUE</small>: determining the <em>IfcPropertyTableValue.DefiningUnit</em></li>
-	</ul>
-	</EPM-HTML>")]
+	</ul>")]
 		public IfcUnit PrimaryUnit { get { return this._PrimaryUnit; } set { this._PrimaryUnit = value;} }
 	
-		[Description(@"<EPM-HTML>
-	Secondary unit assigned to the definition of the property. It should be provided, if the <em>PropertyType</em> is set to:
-	<ul>
-	<li><small>P_TABLEVALUE</small>: determining the <em>IfcPropertyTableValue.DefinedUnit</em></li>
-	</ul>
-	</EPM-HTML>")]
+		[Description("Secondary unit assigned to the definition of the property. It should be provided," +
+	    " if the <em>PropertyType</em> is set to:\r\n<ul>\r\n<li><small>P_TABLEVALUE</small>:" +
+	    " determining the <em>IfcPropertyTableValue.DefinedUnit</em></li>\r\n</ul>")]
 		public IfcUnit SecondaryUnit { get { return this._SecondaryUnit; } set { this._SecondaryUnit = value;} }
 	
-		[Description(@"<EPM-HTML>
-	The expression used to store additional information for the property template depending on the <em>PropertyType</em>. It should the following definitions, if the <em>PropertyType</em> is set to:
+		[Description(@"The expression used to store additional information for the property template depending on the <em>PropertyType</em>. It should the following definitions, if the <em>PropertyType</em> is set to:
 	<ul>
 	<li><small>P_TABLEVALUE</small>: the expression that could be evaluated to define the correlation between the defining values and the defined values.</li>
 	<li><small>Q_LENGTH, Q_AREA, Q_VOLUME, Q_COUNT, Q_WEIGTH, Q_TIME</small>: the formula to be used to calculate the quantity</li>
 	</ul>
-	<blockquote class=""note"">NOTE&nbsp; No value shall be asserted if the <em>PropertyType</em> is not listed above.</blockquote>
-	</EPM-HTML>")]
+	<blockquote class=""note"">NOTE&nbsp; No value shall be asserted if the <em>PropertyType</em> is not listed above.</blockquote>")]
 		public IfcLabel? Expression { get { return this._Expression; } set { this._Expression = value;} }
 	
-		[Description(@"<EPM-HTML>
-	Information about the access state of the property. It determines whether a property be viewed and/or modified by any receiving application without specific knowledge of it. <br><br>
+		[Description(@"Information about the access state of the property. It determines whether a property be viewed and/or modified by any receiving application without specific knowledge of it. <br><br>
 	<b>Attribute use definition for <em>IfcStateEnum</em></b>
 	
 	<ul>
@@ -144,8 +128,7 @@ namespace BuildingSmart.IFC.IfcKernel
 	
 	<li>READONLYLOCKED: Properties of this template are locked and read-only. They may only be accessed by the owning application. </li>
 	
-	</ul>
-	</EPM-HTML>")]
+	</ul>")]
 		public IfcStateEnum? AccessState { get { return this._AccessState; } set { this._AccessState = value;} }
 	
 	

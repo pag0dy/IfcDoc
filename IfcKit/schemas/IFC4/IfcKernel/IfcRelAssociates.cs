@@ -32,10 +32,8 @@ namespace BuildingSmart.IFC.IfcKernel
 		ISet<IfcDefinitionSelect> _RelatedObjects = new HashSet<IfcDefinitionSelect>();
 	
 	
-		[Description(@"<EPM-HTML>
-	Set of object or property definitions to which the external references or information is associated. It includes object and type objects, property set templates, property templates and property sets and contexts.
-	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The attribute datatype has been changed from <em>IfcRoot</em> to <em>IfcDefinitionSelect</em>.</blockquote>
-	</EPM-HTML>")]
+		[Description(@"Set of object or property definitions to which the external references or information is associated. It includes object and type objects, property set templates, property templates and property sets and contexts.
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The attribute datatype has been changed from <em>IfcRoot</em> to <em>IfcDefinitionSelect</em>.</blockquote>")]
 		public ISet<IfcDefinitionSelect> RelatedObjects { get { return this._RelatedObjects; } }
 	
 	

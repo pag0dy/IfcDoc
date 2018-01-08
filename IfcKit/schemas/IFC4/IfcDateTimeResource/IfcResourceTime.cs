@@ -43,7 +43,8 @@ namespace BuildingSmart.IFC.IfcDateTimeResource
 		IfcDuration? _LevelingDelay;
 	
 		[DataMember(Order=6)] 
-		Boolean? _IsOverAllocated;
+		[XmlAttribute]
+		IfcBoolean? _IsOverAllocated;
 	
 		[DataMember(Order=7)] 
 		[XmlAttribute]
@@ -98,7 +99,7 @@ namespace BuildingSmart.IFC.IfcDateTimeResource
 		public IfcDuration? LevelingDelay { get { return this._LevelingDelay; } set { this._LevelingDelay = value;} }
 	
 		[Description("Indicates that the resource is scheduled in excess of its capacity.")]
-		public Boolean? IsOverAllocated { get { return this._IsOverAllocated; } set { this._IsOverAllocated = value;} }
+		public IfcBoolean? IsOverAllocated { get { return this._IsOverAllocated; } set { this._IsOverAllocated = value;} }
 	
 		[Description(@"Indicates the date and time for which status values are applicable; particularly completion, actual, and remaining values.  If values are time-phased (the referencing IfcConstructionResource has associated time series values for attributes), then the status values may be determined from such time-phased data as of the StatusTime.")]
 		public IfcDateTime? StatusTime { get { return this._StatusTime; } set { this._StatusTime = value;} }

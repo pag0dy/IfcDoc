@@ -35,11 +35,10 @@ namespace BuildingSmart.IFC.IfcKernel
 		ISet<IfcRelAssignsToControl> _Controls = new HashSet<IfcRelAssignsToControl>();
 	
 	
-		[Description(@"<EPM-HTML>
-	    An identifying designation given to a control
-	    It is the identifier at the occurrence level. 
-	    <blockquote class=""change-ifc2x4"">IFC4 CHANGE  Attribute unified by promoting from various subtypes of <em>IfcControl</em>.   </blockquote>
-	</EPM-HTML>")]
+		[Description("    An identifying designation given to a control\r\n    It is the identifier at th" +
+	    "e occurrence level. \r\n    <blockquote class=\"change-ifc2x4\">IFC4 CHANGE  Attribu" +
+	    "te unified by promoting from various subtypes of <em>IfcControl</em>.   </blockq" +
+	    "uote>")]
 		public IfcIdentifier? Identification { get { return this._Identification; } set { this._Identification = value;} }
 	
 		[Description("Reference to the relationship that associates the control to the object(s) being " +

@@ -26,10 +26,9 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 		IfcPositiveLengthMeasure? _FilletRadius;
 	
 	
-		[Description("<EPM-HTML>\r\nThe fillet that is equally applied to all transitions between the seg" +
-	    "ments of the <em>IfcPolyline</em>, providing the geometric representation for <e" +
-	    "m>the Directrix</em>. If omited, no fillet is applied to the segments. \r\n</EPM-H" +
-	    "TML>")]
+		[Description("The fillet that is equally applied to all transitions between the segments of the" +
+	    " <em>IfcPolyline</em>, providing the geometric representation for <em>the Direct" +
+	    "rix</em>. If omited, no fillet is applied to the segments. ")]
 		public IfcPositiveLengthMeasure? FilletRadius { get { return this._FilletRadius; } set { this._FilletRadius = value;} }
 	
 	

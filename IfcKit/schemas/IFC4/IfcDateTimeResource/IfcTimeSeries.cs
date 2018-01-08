@@ -82,15 +82,14 @@ namespace BuildingSmart.IFC.IfcDateTimeResource
 		[Description("Value of the data origin if DataOrigin attribute is USERDEFINED.")]
 		public IfcLabel? UserDefinedDataOrigin { get { return this._UserDefinedDataOrigin; } set { this._UserDefinedDataOrigin = value;} }
 	
-		[Description(@"<EPM-HTML>
-	The unit to be assigned to all values within the time series. Note that mixing units is not allowed. If the value is not given, the global unit for the type of <em>IfcValue</em>, as defined at <em>IfcProject.UnitsInContext</em> is used.
-	</EPM-HTML>")]
+		[Description("The unit to be assigned to all values within the time series. Note that mixing un" +
+	    "its is not allowed. If the value is not given, the global unit for the type of <" +
+	    "em>IfcValue</em>, as defined at <em>IfcProject.UnitsInContext</em> is used.")]
 		public IfcUnit Unit { get { return this._Unit; } set { this._Unit = value;} }
 	
-		[Description("<EPM-HTML> \r\nReference to an external reference, e.g. library, classification, or" +
-	    " document information, that is associated to the IfcTimeSeries. \r\n<blockquote cl" +
-	    "ass=\"change-ifc2x4\">IFC4 CHANGE New inverse attribute.</blockquote> \r\n</EPM-HTML" +
-	    "> \r\n")]
+		[Description("Reference to an external reference, e.g. library, classification, or document inf" +
+	    "ormation, that is associated to the IfcTimeSeries. \r\n<blockquote class=\"change-i" +
+	    "fc2x4\">IFC4 CHANGE New inverse attribute.</blockquote>  \r\n")]
 		public ISet<IfcExternalReferenceRelationship> HasExternalReference { get { return this._HasExternalReference; } }
 	
 	

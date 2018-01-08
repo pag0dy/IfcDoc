@@ -21,14 +21,19 @@ namespace BuildingSmart.IFC.IfcStructuralElementsDomain
 	[Guid("fcdc099e-17dd-4a15-aa70-6c6f0cc7831e")]
 	public enum IfcTendonAnchorTypeEnum
 	{
+		[Description("The anchor is an intermediate device which connects two tendons.")]
 		COUPLER = 1,
 	
+		[Description("The anchor fixes the end of a tendon.")]
 		FIXED_END = 2,
 	
+		[Description("The anchor is used or can be used to prestress the tendon.")]
 		TENSIONING_END = 3,
 	
+		[Description("The type of tendon anchor is user defined.")]
 		USERDEFINED = -1,
 	
+		[Description("The type of tendon anchor is not defined.")]
 		NOTDEFINED = 0,
 	
 	}

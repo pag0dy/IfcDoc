@@ -41,9 +41,9 @@ namespace BuildingSmart.IFC.IfcActorResource
 		[Description("The organization to which the person is related.")]
 		public IfcOrganization TheOrganization { get { return this._TheOrganization; } set { this._TheOrganization = value;} }
 	
-		[Description("<EPM-HTML>\r\n\r\nRoles played by the person within the context of an organization.  " +
-	    "These may differ from the roles in <em>ThePerson.Roles</em> which may be asserte" +
-	    "d without organizational context.\r\n\r\n</EPM-HTML>\r\n")]
+		[Description("Roles played by the person within the context of an organization.  These may diff" +
+	    "er from the roles in <em>ThePerson.Roles</em> which may be asserted without orga" +
+	    "nizational context.\r\n")]
 		public IList<IfcActorRole> Roles { get { return this._Roles; } }
 	
 	

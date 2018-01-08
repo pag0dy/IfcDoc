@@ -34,11 +34,11 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		IfcVector _Dir;
 	
 	
-		[Description("<EPM-HTML>\r\nThe location of the <em>IfcLine</em>.\r\n</EPM-HTML>")]
+		[Description("The location of the <em>IfcLine</em>.")]
 		public IfcCartesianPoint Pnt { get { return this._Pnt; } set { this._Pnt = value;} }
 	
-		[Description("<EPM-HTML>\r\nThe direction of the <em>IfcLine</em>, the magnitude and units of <em" +
-	    ">Dir</em> affect the parameterization of the line.\r\n</EPM-HTML>")]
+		[Description("The direction of the <em>IfcLine</em>, the magnitude and units of <em>Dir</em> af" +
+	    "fect the parameterization of the line.")]
 		public IfcVector Dir { get { return this._Dir; } set { this._Dir = value;} }
 	
 	

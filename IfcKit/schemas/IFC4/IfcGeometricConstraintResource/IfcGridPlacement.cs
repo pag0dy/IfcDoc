@@ -33,14 +33,14 @@ namespace BuildingSmart.IFC.IfcGeometricConstraintResource
 		IfcGridPlacementDirectionSelect _PlacementRefDirection;
 	
 	
-		[Description("<EPM-HTML>\r\nPlacement of the object coordinate system defined by the intersection" +
-	    " of two grid axes.\r\n</EPM-HTML>\r\n")]
+		[Description("Placement of the object coordinate system defined by the intersection of two grid" +
+	    " axes.\r\n")]
 		public IfcVirtualGridIntersection PlacementLocation { get { return this._PlacementLocation; } set { this._PlacementLocation = value;} }
 	
-		[Description(@"<EPM-HTML>
-	Reference to either an explicit direction, or a second grid axis intersection, which defines the orientation of the grid placement.
-	<blockquote class=""change-ifc2x4"">IFC4 CHANGE  The select of an explict direction has been added.</blockquote>
-	</EPM-HTML>")]
+		[Description("Reference to either an explicit direction, or a second grid axis intersection, wh" +
+	    "ich defines the orientation of the grid placement.\r\n<blockquote class=\"change-if" +
+	    "c2x4\">IFC4 CHANGE  The select of an explict direction has been added.</blockquot" +
+	    "e>")]
 		public IfcGridPlacementDirectionSelect PlacementRefDirection { get { return this._PlacementRefDirection; } set { this._PlacementRefDirection = value;} }
 	
 	

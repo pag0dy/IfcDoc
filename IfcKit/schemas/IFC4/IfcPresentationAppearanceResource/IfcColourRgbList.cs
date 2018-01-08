@@ -27,8 +27,7 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 		IList<IfcNormalisedRatioMeasure> _ColourList = new List<IfcNormalisedRatioMeasure>();
 	
 	
-		[Description("<EPM-HTML>\r\nList of colours defined by the red, green and blue component.\r\n</EPM-" +
-	    "HTML>")]
+		[Description(@"List of colours defined by the red, green, blue components. All values are provided as a ratio of 0.0 &le; <i>value</i> &le; 1.0. When using 8bit for each colour channel, a value of 0.0 equals 0, a value of 1.0 equals 255, and values between are interpolated.")]
 		public IList<IfcNormalisedRatioMeasure> ColourList { get { return this._ColourList; } }
 	
 	

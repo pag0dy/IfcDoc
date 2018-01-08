@@ -50,25 +50,20 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 	    " origin of each hatch line. ")]
 		public IfcCurveStyle HatchLineAppearance { get { return this._HatchLineAppearance; } set { this._HatchLineAppearance = value;} }
 	
-		[Description(@"<EPM-HTML>A repetition factor that determines the distance between adjacent hatch lines. The factor can either be defined by a parallel offset, or by a repeat factor provided by <em>IfcVector</em>.
+		[Description(@"A repetition factor that determines the distance between adjacent hatch lines. The factor can either be defined by a parallel offset, or by a repeat factor provided by <em>IfcVector</em>.
 	  <blockquote class=""change-ifc2x3"">IFC2x3 CHANGE&nbsp; The attribute type of <em>StartOfNextHatchLine</em> has changed to a SELECT of <em>IfcPositiveLengthMeasure</em> (new) and <em>IfcOneDirectionRepeatFactor</em>.</blockquote>
 	  <blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The attribute type of <em>StartOfNextHatchLine</em> has changed to a SELECT of <em>IfcPositiveLengthMeasure</em> (new) and <em>IfcVector</em>.</blockquote>
-	</EPM-HTML>
 	")]
 		public IfcHatchLineDistanceSelect StartOfNextHatchLine { get { return this._StartOfNextHatchLine; } set { this._StartOfNextHatchLine = value;} }
 	
-		[Description(@"<EPM-HTML>
-	A Cartesian point which defines the offset of the reference hatch line from the origin of the (virtual) hatching coordinate system. The origin is used for mapping the fill area style hatching onto an annotation fill area or surface. The reference hatch line would then appear with this offset from the fill style target point.<br>
+		[Description(@"A Cartesian point which defines the offset of the reference hatch line from the origin of the (virtual) hatching coordinate system. The origin is used for mapping the fill area style hatching onto an annotation fill area or surface. The reference hatch line would then appear with this offset from the fill style target point.<br>
 	If not given the reference hatch lines goes through the origin of the (virtual) hatching coordinate system.
-	  <blockquote class=""change-ifc2x3"">IFC2x3 CHANGE&nbsp; The usage of the attribute <em>PointOfReferenceHatchLine</em> has changed to not provide the Cartesian point which is the origin for mapping, but to provide an offset to the origin for the mapping. The attribute has been made OPTIONAL.</blockquote>
-	</EPM-HTML> ")]
+	  <blockquote class=""change-ifc2x3"">IFC2x3 CHANGE&nbsp; The usage of the attribute <em>PointOfReferenceHatchLine</em> has changed to not provide the Cartesian point which is the origin for mapping, but to provide an offset to the origin for the mapping. The attribute has been made OPTIONAL.</blockquote> ")]
 		public IfcCartesianPoint PointOfReferenceHatchLine { get { return this._PointOfReferenceHatchLine; } set { this._PointOfReferenceHatchLine = value;} }
 	
-		[Description(@"<EPM-HTML>
-	A distance along the reference hatch line which is the start point for the curve style font pattern of the reference hatch line.<br>
+		[Description(@"A distance along the reference hatch line which is the start point for the curve style font pattern of the reference hatch line.<br>
 	If not given, the start point of the curve style font pattern is at the (virtual) hatching coordinate system.
-	  <blockquote class=""change-ifc2x2"">IFC2x2 Add2 CHANGE The attribute <em>PatternStart</em> has been made OPTIONAL.</blockquote>
-	</EPM-HTML>")]
+	  <blockquote class=""change-ifc2x2"">IFC2x2 Add2 CHANGE The attribute <em>PatternStart</em> has been made OPTIONAL.</blockquote>")]
 		public IfcCartesianPoint PatternStart { get { return this._PatternStart; } set { this._PatternStart = value;} }
 	
 		[Description("A plane angle measure determining the direction of the parallel hatching lines.")]

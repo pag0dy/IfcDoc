@@ -34,8 +34,8 @@ namespace BuildingSmart.IFC.IfcSharedBldgElements
 		IfcRampTypeEnum _PredefinedType;
 	
 	
-		[Description("<EPM-HTML>\r\nIdentifies the predefined types of a ramp element from which the type" +
-	    " required may be set.\r\n</EPM-HTML>")]
+		[Description("Identifies the predefined types of a ramp element from which the type required ma" +
+	    "y be set.")]
 		public IfcRampTypeEnum PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	

@@ -21,24 +21,34 @@ namespace BuildingSmart.IFC.IfcConstructionMgmtDomain
 	[Guid("d4f88d5d-627e-4f34-99fa-00dafdbebdb6")]
 	public enum IfcConstructionEquipmentResourceTypeEnum
 	{
+		[Description("Removal or destruction of building elements.")]
 		DEMOLISHING = 1,
 	
+		[Description("Excavating, filling, or contouring earth.")]
 		EARTHMOVING = 2,
 	
+		[Description("Lifting, positioning, and placing elements.")]
 		ERECTING = 3,
 	
+		[Description("Temporary heat to support construction.")]
 		HEATING = 4,
 	
+		[Description("Temporary lighting to support construction.")]
 		LIGHTING = 5,
 	
+		[Description("Roads or walkways such as asphalt or concrete.")]
 		PAVING = 6,
 	
+		[Description("Installing materials through pumps.")]
 		PUMPING = 7,
 	
+		[Description("Transporting products or materials.")]
 		TRANSPORTING = 8,
 	
+		[Description("User-defined resource.")]
 		USERDEFINED = -1,
 	
+		[Description("Undefined resource.")]
 		NOTDEFINED = 0,
 	
 	}

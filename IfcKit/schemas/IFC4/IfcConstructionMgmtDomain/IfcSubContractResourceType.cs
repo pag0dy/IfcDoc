@@ -27,7 +27,7 @@ namespace BuildingSmart.IFC.IfcConstructionMgmtDomain
 		IfcSubContractResourceTypeEnum _PredefinedType;
 	
 	
-		[Description("<EPM-HTML>\r\nDefines types of subcontract resources.\r\n<p></p>\r\n</EPM-HTML>")]
+		[Description("Defines types of subcontract resources.\r\n<p></p>")]
 		public IfcSubContractResourceTypeEnum PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	

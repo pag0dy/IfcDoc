@@ -33,8 +33,7 @@ namespace BuildingSmart.IFC.IfcKernel
 		IfcGroup _RelatingGroup;
 	
 	
-		[Description("<EPM-HTML>\r\nReference to group that contains all assigned group members.\r\n</EPM-H" +
-	    "TML>\r\n")]
+		[Description("Reference to group that contains all assigned group members.\r\n")]
 		public IfcGroup RelatingGroup { get { return this._RelatingGroup; } set { this._RelatingGroup = value;} }
 	
 	

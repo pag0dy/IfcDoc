@@ -21,24 +21,34 @@ namespace BuildingSmart.IFC.IfcStructuralElementsDomain
 	[Guid("1656cf81-cd34-42bf-86b0-74dffe040064")]
 	public enum IfcReinforcingBarTypeEnum
 	{
+		[Description("Anchoring reinforcement.")]
 		ANCHORING = 1,
 	
+		[Description("Edge reinforcement.")]
 		EDGE = 2,
 	
+		[Description("The reinforcing bar is a ligature (link, stirrup).")]
 		LIGATURE = 3,
 	
+		[Description("The reinforcing bar is a main bar.")]
 		MAIN = 4,
 	
+		[Description("Punching reinforcement.")]
 		PUNCHING = 5,
 	
+		[Description("Ring reinforcement.")]
 		RING = 6,
 	
+		[Description("The reinforcing bar is a shear bar.")]
 		SHEAR = 7,
 	
+		[Description("The reinforcing bar is a stud.")]
 		STUD = 8,
 	
+		[Description("The type of reinforcement is user defined.")]
 		USERDEFINED = -1,
 	
+		[Description("The type of reinforcement is not defined.")]
 		NOTDEFINED = 0,
 	
 	}

@@ -1,7 +1,8 @@
 <?xml version="1.0"?>
-<svg xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="1.1" width="0" height="0" xmlns="http://www.w3.org/2000/svg">
+<svg xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="1.1" width="1200" height="888" xmlns="http://www.w3.org/2000/svg">
   <g id="IfcAppliedValue" fill="yellow">
     <rect x="17.7375" y="161.1624975" width="141.45" height="476.85" stroke="black" />
+    <polyline points="42.80941125,638.0125125 42.80941125,702.7562625 " fill="none" stroke="black" stroke-width="3" />
     <text x="88.4625" y="399.5874975" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcAppliedValue</text>
     <g id="Name">
       <polyline points="159.1875,189.29750625 409.1609625,189.29750625 " fill="none" stroke="black" stroke-dasharray="1,1" />
@@ -82,6 +83,10 @@
   </g>
   <g id="IfcAppliedValueSelect" fill="green">
     <rect x="280.37499" y="271.56998625" width="163.24999875" height="23.125000125" stroke="black" />
+    <polyline points="331.11391125,294.6949875 331.1139114375,294.6949875 " fill="none" stroke="black" />
+    <polyline points="331.1139114375,294.6949875 331.11372375,417.7000125 357.148450125,417.7000125 " fill="none" stroke="black" />
+    <polyline points="331.1139114375,294.6949875 331.11362625,325.903035 357.150001125,325.903035 " fill="none" stroke="black" />
+    <polyline points="331.1139114375,294.6949875 331.113885,378.8374875 357.149999625,378.8374875 " fill="none" stroke="black" />
     <text x="361.999989375" y="283.1324863125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcAppliedValueSelect</text>
   </g>
   <g id="IFCMEASURERESOURCE">
@@ -148,9 +153,13 @@ IfcExternalReferenceRelationship</text>
     </g>
     <g id="IfcResourceLevelRelationship" fill="grey">
       <rect x="617.55" y="35.7" width="208.5" height="85.62499875" stroke="black" />
+      <polyline points="709.299975,121.32499875 709.299975,156.937505625 709.333450000125,156.937505625 709.333450000125,192.5500125 " fill="none" stroke="black" stroke-width="3" />
       <text x="721.8" y="78.512499375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCEXTERNALREFERENCERESOURCE
 IfcResourceLevelRelationship</text>
     </g>
   </g>
-  <g />
+  <g>
+    <rect x="0" y="0" width="600" height="888" fill="none" stroke="lime" />
+    <rect x="600" y="0" width="600" height="888" fill="none" stroke="lime" />
+  </g>
 </svg>

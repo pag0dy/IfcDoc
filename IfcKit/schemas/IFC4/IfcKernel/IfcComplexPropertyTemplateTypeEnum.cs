@@ -27,6 +27,8 @@ namespace BuildingSmart.IFC.IfcKernel
 	[Guid("c6013788-6808-45fc-afc9-6f69b6ef902e")]
 	public enum IfcComplexPropertyTemplateTypeEnum
 	{
+		[Description("the properties defined by this <em>IfcComplexPropertyTemplate</em> are of type <e" +
+	    "m>IfcComplexProperty</em>.")]
 		P_COMPLEX = 1,
 	
 		Q_COMPLEX = 2,

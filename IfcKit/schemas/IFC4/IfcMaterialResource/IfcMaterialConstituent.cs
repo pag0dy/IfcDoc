@@ -49,28 +49,25 @@ namespace BuildingSmart.IFC.IfcMaterialResource
 		IfcMaterialConstituentSet _ToMaterialConstituentSet;
 	
 	
-		[Description("<EPM-HTML>\r\nThe name by which the material constituent is known.\r\n</EPM-HTML>")]
+		[Description("The name by which the material constituent is known.")]
 		public IfcLabel? Name { get { return this._Name; } set { this._Name = value;} }
 	
-		[Description("<EPM-HTML>\r\nDefinition of the material constituent in descriptive terms.\r\n</EPM-H" +
-	    "TML>")]
+		[Description("Definition of the material constituent in descriptive terms.")]
 		public IfcText? Description { get { return this._Description; } set { this._Description = value;} }
 	
-		[Description("<EPM-HTML>\r\nReference to the material from which the constituent is constructed.\r" +
-	    "\n</EPM-HTML>")]
+		[Description("Reference to the material from which the constituent is constructed.")]
 		public IfcMaterial Material { get { return this._Material; } set { this._Material = value;} }
 	
-		[Description("<EPM-HTML>\r\nOptional provision of a fraction of the total amount (volume or weigh" +
-	    "t) that applies to the <em>IfcMaterialConstituentSet</em> that is contributed by" +
-	    " this <em>IfcMaterialConstituent</em>.\r\n</EPM-HTML>")]
+		[Description("Optional provision of a fraction of the total amount (volume or weight) that appl" +
+	    "ies to the <em>IfcMaterialConstituentSet</em> that is contributed by this <em>If" +
+	    "cMaterialConstituent</em>.")]
 		public IfcNormalisedRatioMeasure? Fraction { get { return this._Fraction; } set { this._Fraction = value;} }
 	
-		[Description("<EPM-HTML>\r\nCategory of the material constituent, e.g. the role it has in the con" +
-	    "stituent set it belongs to.\r\n</EPM-HTML>")]
+		[Description("Category of the material constituent, e.g. the role it has in the constituent set" +
+	    " it belongs to.")]
 		public IfcLabel? Category { get { return this._Category; } set { this._Category = value;} }
 	
-		[Description("<EPM-HTML>\r\nMaterial constituent set in which this material constituent is includ" +
-	    "ed.\r\n</EPM-HTML>")]
+		[Description("Material constituent set in which this material constituent is included.")]
 		public IfcMaterialConstituentSet ToMaterialConstituentSet { get { return this._ToMaterialConstituentSet; } set { this._ToMaterialConstituentSet = value;} }
 	
 	

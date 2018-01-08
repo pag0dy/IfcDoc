@@ -28,14 +28,22 @@ namespace BuildingSmart.IFC.IfcSharedBldgElements
 	[Guid("06a1121d-2dcf-4d2c-bb52-4a6efb451358")]
 	public enum IfcDoorTypeEnum
 	{
+		[Description("A standard door usually within a wall opening, as a door panel in a curtain wall," +
+	    " or as a \"free standing\" door.")]
 		DOOR = 1,
 	
+		[Description("A gate is a point of entry to a property usually within an opening in a fence. Or" +
+	    " as a \"free standing\" gate.")]
 		GATE = 2,
 	
+		[Description("A special door that lies horizonally in a slab opening. Often used for accessing " +
+	    "cellar or attic.")]
 		TRAPDOOR = 3,
 	
+		[Description("User-defined linear beam element.")]
 		USERDEFINED = -1,
 	
+		[Description("Undefined linear beam element.")]
 		NOTDEFINED = 0,
 	
 	}

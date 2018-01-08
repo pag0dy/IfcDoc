@@ -41,37 +41,28 @@ namespace BuildingSmart.IFC.IfcKernel
 		ISet<IfcRelDefinesByType> _IsTypedBy = new HashSet<IfcRelDefinesByType>();
 	
 		[InverseProperty("RelatedObjects")] 
+		[XmlElement]
 		ISet<IfcRelDefinesByProperties> _IsDefinedBy = new HashSet<IfcRelDefinesByProperties>();
 	
 	
-		[Description(@"<EPM-HTML>
-	The type denotes a particular type that indicates the object further. The use has to be established at the level of instantiable subtypes. In particular it holds the user defined type, if the enumeration of the attribute <em>PredefinedType</em> is set to USERDEFINED. 
-	<br>
-	</EPM-HTML>")]
+		[Description(@"The type denotes a particular type that indicates the object further. The use has to be established at the level of instantiable subtypes. In particular it holds the user defined type, if the enumeration of the attribute <em>PredefinedType</em> is set to USERDEFINED. 
+	<br>")]
 		public IfcLabel? ObjectType { get { return this._ObjectType; } set { this._ObjectType = value;} }
 	
-		[Description(@"<EPM-HTML>
-	Link to the relationship object pointing to the declaring object that provides the object definitions for this object occurrence. The declaring object has to be part of an object type decomposition. The associated <em>IfcObject</em>, or its subtypes, contains the specific information (as part of a type, or style, definition), that is common to all reflected instances of the declaring <em>IfcObject</em>, or its subtypes. 
-	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; New inverse relationship, change made with upward compatibility for file based exchange.</blockquote>
-	</EPM-HTML>")]
+		[Description(@"Link to the relationship object pointing to the declaring object that provides the object definitions for this object occurrence. The declaring object has to be part of an object type decomposition. The associated <em>IfcObject</em>, or its subtypes, contains the specific information (as part of a type, or style, definition), that is common to all reflected instances of the declaring <em>IfcObject</em>, or its subtypes. 
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; New inverse relationship, change made with upward compatibility for file based exchange.</blockquote>")]
 		public ISet<IfcRelDefinesByObject> IsDeclaredBy { get { return this._IsDeclaredBy; } }
 	
-		[Description(@"<EPM-HTML>
-	Link to the relationship object pointing to the reflected object(s) that receives the object definitions. The reflected object has to be part of an object occurrence decomposition. The associated <em>IfcObject</em>, or its subtypes, provides the specific information (as part of a type, or style, definition), that is common to all reflected instances of the declaring <em>IfcObject</em>, or its subtypes. 
-	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; New inverse relationship, change made with upward compatibility for file based exchange.</blockquote>
-	</EPM-HTML>")]
+		[Description(@"Link to the relationship object pointing to the reflected object(s) that receives the object definitions. The reflected object has to be part of an object occurrence decomposition. The associated <em>IfcObject</em>, or its subtypes, provides the specific information (as part of a type, or style, definition), that is common to all reflected instances of the declaring <em>IfcObject</em>, or its subtypes. 
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; New inverse relationship, change made with upward compatibility for file based exchange.</blockquote>")]
 		public ISet<IfcRelDefinesByObject> Declares { get { return this._Declares; } }
 	
-		[Description(@"<EPM-HTML>
-	Set of relationships to the object type that provides the type definitions for this object occurrence. The then associated <em>IfcTypeObject</em>, or its subtypes, contains the specific information (or type, or style), that is common to all instances of <em>IfcObject</em>, or its subtypes, referring to the same type. 
-	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; New inverse relationship, the link to <em>IfcRelDefinesByType</em> had previously be included in the inverse relationship <em>IfcRelDefines</em>. Change made with upward compatibility for file based exchange.</blockquote>
-	</EPM-HTML>")]
+		[Description(@"Set of relationships to the object type that provides the type definitions for this object occurrence. The then associated <em>IfcTypeObject</em>, or its subtypes, contains the specific information (or type, or style), that is common to all instances of <em>IfcObject</em>, or its subtypes, referring to the same type. 
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; New inverse relationship, the link to <em>IfcRelDefinesByType</em> had previously be included in the inverse relationship <em>IfcRelDefines</em>. Change made with upward compatibility for file based exchange.</blockquote>")]
 		public ISet<IfcRelDefinesByType> IsTypedBy { get { return this._IsTypedBy; } }
 	
-		[Description(@"<EPM-HTML>
-	Set of relationships to property set definitions attached to this object. Those statically or dynamically defined properties contain alphanumeric information content that further defines the object. 
-	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The data type has been changed from <em>IfcRelDefines</em> to <em>IfcRelDefinesByProperties</em> with upward compatibility for file based exchange.</blockquote>
-	</EPM-HTML>")]
+		[Description(@"Set of relationships to property set definitions attached to this object. Those statically or dynamically defined properties contain alphanumeric information content that further defines the object. 
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The data type has been changed from <em>IfcRelDefines</em> to <em>IfcRelDefinesByProperties</em> with upward compatibility for file based exchange.</blockquote>")]
 		public ISet<IfcRelDefinesByProperties> IsDefinedBy { get { return this._IsDefinedBy; } }
 	
 	

@@ -50,14 +50,12 @@ namespace BuildingSmart.IFC.IfcActorResource
 		[Description("An organization defined address for internal mail delivery.")]
 		public IfcLabel? InternalLocation { get { return this._InternalLocation; } set { this._InternalLocation = value;} }
 	
-		[Description(@"<EPM-HTML>
-	The postal address.
+		[Description(@"The postal address.
 	<blockquote class=""note"">NOTE&nbsp; A postal address may occupy several lines (or elements) when recorded. 
 	It is expected that normal usage will incorporate relevant elements of the following address concepts: 
 	A location within a building (e.g. 3rd Floor) Building name (e.g. Interoperability House) Street number 
 	(e.g. 6400) Street name (e.g. Alliance Boulevard). Typical content of address lines may vary in different 
 	countries.</blockquote>
-	</EPM-HTML>
 	")]
 		public IList<IfcLabel> AddressLines { get { return this._AddressLines; } }
 	
@@ -67,9 +65,9 @@ namespace BuildingSmart.IFC.IfcActorResource
 		[Description("The name of a town.")]
 		public IfcLabel? Town { get { return this._Town; } set { this._Town = value;} }
 	
-		[Description("<EPM-HTML>\r\nThe name of a region.\r\n<blockquote class=\"note\">NOTE&nbsp; The counti" +
-	    "es of the United Kingdom and the states of North America are examples of regions" +
-	    ".</blockquote>\r\n</EPM-HTML>\r\n")]
+		[Description("The name of a region.\r\n<blockquote class=\"note\">NOTE&nbsp; The counties of the Un" +
+	    "ited Kingdom and the states of North America are examples of regions.</blockquot" +
+	    "e>\r\n")]
 		public IfcLabel? Region { get { return this._Region; } set { this._Region = value;} }
 	
 		[Description("The code that is used by the country\'s postal service.")]

@@ -29,8 +29,8 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		IfcDirection _RefDirection;
 	
 	
-		[Description("<EPM-HTML>\r\nThe direction used to determine the direction of the local X axis. If" +
-	    " a value is omited that it defaults to [1.0, 0.0.].\r\n</HTML>")]
+		[Description("The direction used to determine the direction of the local X axis. If a value is " +
+	    "omited that it defaults to [1.0, 0.0.].\r\n</HTML>")]
 		public IfcDirection RefDirection { get { return this._RefDirection; } set { this._RefDirection = value;} }
 	
 	

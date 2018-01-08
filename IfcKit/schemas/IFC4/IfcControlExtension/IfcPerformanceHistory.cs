@@ -38,9 +38,9 @@ namespace BuildingSmart.IFC.IfcControlExtension
 	    ", COMMISSIONING, OPERATION, etc. ")]
 		public IfcLabel LifeCyclePhase { get { return this._LifeCyclePhase; } set { this._LifeCyclePhase = value;} }
 	
-		[Description("<EPM-HTML>\r\nPredefined generic type for a performace history that is specified in" +
-	    " an enumeration.\r\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE  The attribute h" +
-	    "as been added at the end of the entity definition.</blockquote>\r\n</EPM-HTML> ")]
+		[Description("Predefined generic type for a performace history that is specified in an enumerat" +
+	    "ion.\r\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE  The attribute has been adde" +
+	    "d at the end of the entity definition.</blockquote> ")]
 		public IfcPerformanceHistoryTypeEnum? PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	

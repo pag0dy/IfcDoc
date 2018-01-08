@@ -33,22 +33,17 @@ namespace BuildingSmart.IFC.IfcConstructionMgmtDomain
 		IfcPhysicalQuantity _BaseQuantity;
 	
 	
-		[Description(@"<EPM-HTML>
-	Indicates the work, usage, and times scheduled and completed.  Some attributes on this object may have associated constraints or time series; see documentation of <em>IfcResourceTime</em> for specific usage.  If the resource is nested, then certain values may be calculated based on the component resources as indicated at <em>IfcResourceTime</em>.
+		[Description(@"Indicates the work, usage, and times scheduled and completed.  Some attributes on this object may have associated constraints or time series; see documentation of <em>IfcResourceTime</em> for specific usage.  If the resource is nested, then certain values may be calculated based on the component resources as indicated at <em>IfcResourceTime</em>.
 	
-	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; New attribute.</blockquote>
-	</EPM-HTML>")]
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; New attribute.</blockquote>")]
 		public IfcResourceTime Usage { get { return this._Usage; } set { this._Usage = value;} }
 	
-		[Description(@"<EPM-HTML>
-	Indicates the unit costs and environmental impacts for which accrued amounts should be calculated.  Such unit costs may be split into <em>Name</em> designations (for example, 'Standard', 'Overtime'), and may contain a hierarchy of cost values that apply at different dates (using <em>IfcCostValue.ApplicableDate</em> and <em>IfcCostValue.FixedUntilDate</em>).
+		[Description(@"Indicates the unit costs for which accrued amounts should be calculated.  Such unit costs may be split into <em>Name</em> designations (for example, 'Standard', 'Overtime'), and may contain a hierarchy of cost values that apply at different dates (using <em>IfcCostValue.ApplicableDate</em> and <em>IfcCostValue.FixedUntilDate</em>).
 	
-	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; New attribute.</blockquote>
-	</EPM-HTML>")]
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; New attribute.</blockquote>")]
 		public IList<IfcAppliedValue> BaseCosts { get { return this._BaseCosts; } }
 	
-		[Description(@"<EPM-HTML>
-	Identifies the base quantity consumed of the resource relative to assignments.  
+		[Description(@"Identifies the base quantity consumed of the resource relative to assignments.  
 	
 	For crew, labour, subcontract, and equipment resources, this refers to <i>IfcQuantityTime</i>.
 	
@@ -56,8 +51,7 @@ namespace BuildingSmart.IFC.IfcConstructionMgmtDomain
 	
 	For product resources, this refers to <i>IfcQuantityCount</i>.
 	
-	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; New attribute.</blockquote>
-	</EPM-HTML>")]
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; New attribute.</blockquote>")]
 		public IfcPhysicalQuantity BaseQuantity { get { return this._BaseQuantity; } set { this._BaseQuantity = value;} }
 	
 	

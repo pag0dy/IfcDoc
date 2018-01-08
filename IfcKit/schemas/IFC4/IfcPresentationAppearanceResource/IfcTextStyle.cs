@@ -36,33 +36,30 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 		IfcTextFontSelect _TextFontStyle;
 	
 		[DataMember(Order=3)] 
-		Boolean? _ModelOrDraughting;
+		[XmlAttribute]
+		IfcBoolean? _ModelOrDraughting;
 	
 	
-		[Description("<EPM-HTML>\r\nA character style to be used for presented text.\r\n<blockquote class=\"" +
-	    "change-ifc2x4\">IFC4 CHANGE&nbsp; Superfluous select type IfcCharacterStyleSelect" +
-	    " has been removed.\r\n</blockquote>\r\n</EPM-HTML>")]
+		[Description("A character style to be used for presented text.\r\n<blockquote class=\"change-ifc2x" +
+	    "4\">IFC4 CHANGE&nbsp; Superfluous select type IfcCharacterStyleSelect has been re" +
+	    "moved.\r\n</blockquote>")]
 		public IfcTextStyleForDefinedFont TextCharacterAppearance { get { return this._TextCharacterAppearance; } set { this._TextCharacterAppearance = value;} }
 	
-		[Description(@"<EPM-HTML>
-	The style applied to the text block for its visual appearance.
+		[Description(@"The style applied to the text block for its visual appearance.
 	<blockquote class=""change-ifc2x3"">IFC2x3 CHANGE&nbsp; The attribute <em>TextBlockStyle</em> has been changed from SET[1:?] to a non-aggregated optional and renamed into <em>TextStyles</em>.</blockquote>
 	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The IfcTextStyleWithBoxCharacteristics and the now superfluous select type IfcTextStyleSelect have been removed.
-	</blockquote>
-	</EPM-HTML>")]
+	</blockquote>")]
 		public IfcTextStyleTextModel TextStyle { get { return this._TextStyle; } set { this._TextStyle = value;} }
 	
-		[Description(@"<EPM-HTML>
-	The style applied to the text font for its visual appearance. It defines the font family, font style, weight and size.
+		[Description(@"The style applied to the text font for its visual appearance. It defines the font family, font style, weight and size.
 	  <blockquote class=""change-ifc2x2"">IFC2x2 Add2 CHANGE The attribute <em>TextFontStyle</em> is a new attribute attached to <em>IfcTextStyle</em>.
-	  </blockquote>
-	</EPM-HTML>")]
+	  </blockquote>")]
 		public IfcTextFontSelect TextFontStyle { get { return this._TextFontStyle; } set { this._TextFontStyle = value;} }
 	
-		[Description("<EPM-HTML>\r\nIndication whether the length measures provided for the presentation " +
-	    "style are model based, or draughting based.\r\n<blockquote class=\"change-ifc2x4\">I" +
-	    "FC4 CHANGE&nbsp; New attribute.\r\n</blockquote>\r\n</EPM-HTML>")]
-		public Boolean? ModelOrDraughting { get { return this._ModelOrDraughting; } set { this._ModelOrDraughting = value;} }
+		[Description("Indication whether the length measures provided for the presentation style are mo" +
+	    "del based, or draughting based.\r\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE&n" +
+	    "bsp; New attribute.\r\n</blockquote>")]
+		public IfcBoolean? ModelOrDraughting { get { return this._ModelOrDraughting; } set { this._ModelOrDraughting = value;} }
 	
 	
 	}

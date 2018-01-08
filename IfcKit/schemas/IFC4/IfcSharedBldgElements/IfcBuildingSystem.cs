@@ -32,9 +32,18 @@ namespace BuildingSmart.IFC.IfcSharedBldgElements
 		[XmlAttribute]
 		IfcBuildingSystemTypeEnum? _PredefinedType;
 	
+		[DataMember(Order=1)] 
+		[XmlAttribute]
+		IfcLabel? _LongName;
 	
-		[Description("<EPM-HTML>\r\nPredefined types of distribution systems.\r\n</EPM-HTML>")]
+	
+		[Description("Predefined types of distribution systems.")]
 		public IfcBuildingSystemTypeEnum? PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
+	
+		[Description(@"Long name for a building system, used for informal purposes. It should be used, if available, in conjunction with the inherited <em>Name</em> attribute.
+	<blockquote class=""note"">NOTE&nbsp; In many scenarios the <em>Name</em> attribute refers to the short name or number of a building system, and the <em>LongName</em> refers to a descriptive name.
+	</blockquote>")]
+		public IfcLabel? LongName { get { return this._LongName; } set { this._LongName = value;} }
 	
 	
 	}

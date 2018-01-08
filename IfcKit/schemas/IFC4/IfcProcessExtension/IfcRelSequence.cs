@@ -47,32 +47,27 @@ namespace BuildingSmart.IFC.IfcProcessExtension
 		IfcLabel? _UserDefinedSequenceType;
 	
 	
-		[Description("<EPM-HTML>\r\n    Reference to the process, that is the predecessor.\r\n</EPM-HTML>\r\n" +
-	    "")]
+		[Description("    Reference to the process, that is the predecessor.\r\n")]
 		public IfcProcess RelatingProcess { get { return this._RelatingProcess; } set { this._RelatingProcess = value;} }
 	
-		[Description("<EPM-HTML>\r\n   Reference to the process, that is the successor.\r\n</EPM-HTML>\r\n")]
+		[Description("   Reference to the process, that is the successor.\r\n")]
 		public IfcProcess RelatedProcess { get { return this._RelatedProcess; } set { this._RelatedProcess = value;} }
 	
-		[Description("<EPM-HTML>\r\n    Time duration of the sequence, it is the time lag between the\r\n  " +
-	    "  predecessor and the successor as specified by the\r\n    SequenceType.\r\n</EPM-HT" +
-	    "ML>\r\n")]
+		[Description("    Time duration of the sequence, it is the time lag between the\r\n    predecesso" +
+	    "r and the successor as specified by the\r\n    SequenceType.\r\n")]
 		public IfcLagTime TimeLag { get { return this._TimeLag; } set { this._TimeLag = value;} }
 	
-		[Description("<EPM-HTML>\r\n     The way in which the time lag applies to the sequence.\r\n</EPM-HT" +
-	    "ML>\r\n")]
+		[Description("     The way in which the time lag applies to the sequence.\r\n")]
 		public IfcSequenceEnum? SequenceType { get { return this._SequenceType; } set { this._SequenceType = value;} }
 	
-		[Description(@"<EPM-HTML>
-	    Allows for specification of user defined type of the sequence
+		[Description(@"    Allows for specification of user defined type of the sequence
 	    beyond the enumeration values (START_START, START_FINISH,
 	    FINISH_START, FINISH_FINISH) provided by <em>SequenceType</em>
 	    attribute of type <em>IfcSequenceEnum</em>. When a value is
 	    provided for attribute <em>UserDefinedSequenceType</em> in
 	    parallel the attribute <em>SequenceType</em> shall have
 	    enumeration value USERDEFINED.
-	    <blockquote class=""change-ifc2x4"">IFC4 CHANGE  Attribute added</blockquote>
-	</EPM-HTML>")]
+	    <blockquote class=""change-ifc2x4"">IFC4 CHANGE  Attribute added</blockquote>")]
 		public IfcLabel? UserDefinedSequenceType { get { return this._UserDefinedSequenceType; } set { this._UserDefinedSequenceType = value;} }
 	
 	

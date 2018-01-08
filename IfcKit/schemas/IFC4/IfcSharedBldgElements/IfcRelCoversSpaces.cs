@@ -38,14 +38,14 @@ namespace BuildingSmart.IFC.IfcSharedBldgElements
 		ISet<IfcCovering> _RelatedCoverings = new HashSet<IfcCovering>();
 	
 	
-		[Description(@"<EPM-HTML>
-	Relationship to the space object that is covered.
-	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The attribute name has been changed from <em>RelatedSpace</em> to <em>RelatingSpace</em> with upward compatibility for file based exchange.</blockquote>
-	</EPM-HTML>")]
+		[Description("Relationship to the space object that is covered.\r\n<blockquote class=\"change-ifc2" +
+	    "x4\">IFC4 CHANGE&nbsp; The attribute name has been changed from <em>RelatedSpace<" +
+	    "/em> to <em>RelatingSpace</em> with upward compatibility for file based exchange" +
+	    ".</blockquote>")]
 		public IfcSpace RelatingSpace { get { return this._RelatingSpace; } set { this._RelatingSpace = value;} }
 	
-		[Description("<EPM-HTML>\r\nRelationship to the set of coverings covering that cover surfaces of " +
-	    "this space.\r\n<EPM-HTML>\r\n")]
+		[Description("Relationship to the set of coverings covering that cover surfaces of this space.\r" +
+	    "\n")]
 		public ISet<IfcCovering> RelatedCoverings { get { return this._RelatedCoverings; } }
 	
 	

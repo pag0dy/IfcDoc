@@ -35,18 +35,16 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 		IfcLabel? _Name;
 	
 	
-		[Description(@"<EPM-HTML>
-	A geometric representation item to which the style is assigned.
-	  <blockquote class=""change-ifc2x2"">IFC2x2 Add2 CHANGE The attribute <em>Item</em> has been made optional. Upward compatibility for file based exchange is guaranteed.</blockquote>
-	</EPM-HTML>")]
+		[Description("A geometric representation item to which the style is assigned.\r\n  <blockquote cl" +
+	    "ass=\"change-ifc2x2\">IFC2x2 Add2 CHANGE The attribute <em>Item</em> has been made" +
+	    " optional. Upward compatibility for file based exchange is guaranteed.</blockquo" +
+	    "te>")]
 		public IfcRepresentationItem Item { get { return this._Item; } set { this._Item = value;} }
 	
-		[Description(@"<EPM-HTML>
-	Representation styles which are assigned, either to an geometric representation item, or to a material definition.
+		[Description(@"Representation styles which are assigned, either to an geometric representation item, or to a material definition.
 	<blockquote class=""change-ifc2x4"">IFC4 CHANGE  The data type has been changed to <em>IfcStyleAssignmentSelect</em> with upward compatibility 
 	for file based exchange.</blockquote>
-	  <blockquote class=""note"">NOTE&nbsp; Only the select item <em>IfcPresentationStyle</em> shall be used from IFC4 onwards, the <em>IfcPresentationStyleAssignment</em> has been deprecated.</blockquote>
-	</EPM-HTML> ")]
+	  <blockquote class=""note"">NOTE&nbsp; Only the select item <em>IfcPresentationStyle</em> shall be used from IFC4 onwards, the <em>IfcPresentationStyleAssignment</em> has been deprecated.</blockquote> ")]
 		public ISet<IfcStyleAssignmentSelect> Styles { get { return this._Styles; } }
 	
 		[Description("The word, or group of words, by which the styled item is referred to.")]

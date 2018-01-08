@@ -41,12 +41,10 @@ namespace BuildingSmart.IFC.IfcPresentationOrganizationResource
 	    " chosen).")]
 		public IfcPlaneAngleMeasure MainPlaneAngle { get { return this._MainPlaneAngle; } set { this._MainPlaneAngle = value;} }
 	
-		[Description(@"<EPM-HTML>
-	<p>The list of secondary plane angles (the &#945;, &#946; or &#947; angles) according to the light distribution curve chosen.
+		[Description(@"<p>The list of secondary plane angles (the &#945;, &#946; or &#947; angles) according to the light distribution curve chosen.
 	</p>
 	<blockquote class=""note"">NOTE&nbsp; The <em>SecondaryPlaneAngle</em> and <em>LuminousIntensity</em> lists are corresponding lists.
-	</blockquote>
-	</EPM-HTML>")]
+	</blockquote>")]
 		public IList<IfcPlaneAngleMeasure> SecondaryPlaneAngle { get { return this._SecondaryPlaneAngle; } }
 	
 		[Description("The luminous intensity distribution measure for this pair of main and secondary p" +

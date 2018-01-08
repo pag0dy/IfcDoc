@@ -37,12 +37,12 @@ namespace BuildingSmart.IFC.IfcKernel
 		IfcObject _RelatingObject;
 	
 	
-		[Description("<EPM-HTML>\r\nObjects being part of an object occurrence decomposition, acting as t" +
-	    "he \"reflecting parts\" in the relationship.\r\n</EPM-HTML>")]
+		[Description("Objects being part of an object occurrence decomposition, acting as the \"reflecti" +
+	    "ng parts\" in the relationship.")]
 		public ISet<IfcObject> RelatedObjects { get { return this._RelatedObjects; } }
 	
-		[Description("<EPM-HTML>\r\nObject being part of an object type decomposition, acting as the \"dec" +
-	    "laring part\" in the relationship.\r\n</EPM-HTML>")]
+		[Description("Object being part of an object type decomposition, acting as the \"declaring part\"" +
+	    " in the relationship.")]
 		public IfcObject RelatingObject { get { return this._RelatingObject; } set { this._RelatingObject = value;} }
 	
 	

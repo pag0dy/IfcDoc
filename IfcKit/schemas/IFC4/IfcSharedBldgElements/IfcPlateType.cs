@@ -34,8 +34,8 @@ namespace BuildingSmart.IFC.IfcSharedBldgElements
 		IfcPlateTypeEnum _PredefinedType;
 	
 	
-		[Description("<EPM-HTML>\r\nIdentifies the predefined types of a planar member element from which" +
-	    " the type required may be set.\r\n</EPM-HTML>")]
+		[Description("Identifies the predefined types of a planar member element from which the type re" +
+	    "quired may be set.")]
 		public IfcPlateTypeEnum PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	

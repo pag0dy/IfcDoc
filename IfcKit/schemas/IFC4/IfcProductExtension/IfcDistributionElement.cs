@@ -37,14 +37,11 @@ namespace BuildingSmart.IFC.IfcProductExtension
 		ISet<IfcRelConnectsPortToElement> _HasPorts = new HashSet<IfcRelConnectsPortToElement>();
 	
 	
-		[Description(@"<EPM-HTML>
-	Reference to the element to port connection relationship. The relationship then refers to the port which is contained in this element.
+		[Description(@"Reference to the element to port connection relationship. The relationship then refers to the port which is contained in this element.
 	
 	<blockquote class=""change-ifc2x4"">
 	IFC4 CHANGE&nbsp; The inverse attribute is deprecated. Relationship to ports, contained within the <em>IfcDistributionElement</em> is now realized by the inverse relationship <em>NestedBy</em> referencing <em>IfcRelNests</em>.
-	</blockquote>
-	
-	</EPM-HTML>")]
+	</blockquote>")]
 		public ISet<IfcRelConnectsPortToElement> HasPorts { get { return this._HasPorts; } }
 	
 	

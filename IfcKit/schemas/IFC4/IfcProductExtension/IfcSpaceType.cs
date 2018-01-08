@@ -43,19 +43,17 @@ namespace BuildingSmart.IFC.IfcProductExtension
 		IfcLabel? _LongName;
 	
 	
-		[Description("<EPM-HTML>\r\nPredefined types to define the particular type of space. There may be" +
-	    " property set definitions available for each predefined type.\r\n</EPM-HTML>")]
+		[Description("Predefined types to define the particular type of space. There may be property se" +
+	    "t definitions available for each predefined type.")]
 		public IfcSpaceTypeEnum PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
-		[Description(@"<EPM-HTML>
-	Long name for a space type, used for informal purposes. It should be used, if available, in conjunction with the inherited <em>Name</em> attribute.
+		[Description(@"Long name for a space type, used for informal purposes. It should be used, if available, in conjunction with the inherited <em>Name</em> attribute.
 	<blockquote class=""note"">
 	  NOTE&nbsp; In many scenarios the <em>Name</em> attribute refers to the short name or number of a space type, and the <em>LongName</em> refers to the full descriptive name.
 	</blockquote>
 	<blockquote class=""change-ifc2x4"">
 	  IFC4 CHANGE&nbsp; New attribute added at the end of entity definition.
-	</blockquote>
-	</EPM-HTML>")]
+	</blockquote>")]
 		public IfcLabel? LongName { get { return this._LongName; } set { this._LongName = value;} }
 	
 	

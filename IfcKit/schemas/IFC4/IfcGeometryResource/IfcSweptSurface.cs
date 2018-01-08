@@ -37,10 +37,8 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 	    "within the position coordinate system.")]
 		public IfcProfileDef SweptCurve { get { return this._SweptCurve; } set { this._SweptCurve = value;} }
 	
-		[Description(@"<EPM-HTML>
-	Position coordinate system for the swept surface, provided by a profile definition within the XY plane of the <em>Position</em> coordinates. If not provided, the position of the profile being swept is determined by the object coordinate system. In this case, the swept surface is not repositioned.
-	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The attribute has been changed to OPTIONAL with upward compatibility for file-based exchange.</blockquote>
-	</EPM-HTML> ")]
+		[Description(@"Position coordinate system for the swept surface, provided by a profile definition within the XY plane of the <em>Position</em> coordinates. If not provided, the position of the profile being swept is determined by the object coordinate system. In this case, the swept surface is not repositioned.
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The attribute has been changed to OPTIONAL with upward compatibility for file-based exchange.</blockquote> ")]
 		public IfcAxis2Placement3D Position { get { return this._Position; } set { this._Position = value;} }
 	
 	

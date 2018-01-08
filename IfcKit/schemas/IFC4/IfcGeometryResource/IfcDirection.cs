@@ -26,13 +26,14 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		BuildingSmart.IFC.IfcGeometryResource.IfcVectorOrDirection
 	{
 		[DataMember(Order=0)] 
+		[XmlAttribute]
 		[Required()]
-		IList<Double> _DirectionRatios = new List<Double>();
+		IList<IfcReal> _DirectionRatios = new List<IfcReal>();
 	
 	
 		[Description("The components in the direction of X axis (DirectionRatios[1]), of Y axis (Direct" +
 	    "ionRatios[2]), and of Z axis (DirectionRatios[3]) \r\n")]
-		public IList<Double> DirectionRatios { get { return this._DirectionRatios; } }
+		public IList<IfcReal> DirectionRatios { get { return this._DirectionRatios; } }
 	
 	
 	}

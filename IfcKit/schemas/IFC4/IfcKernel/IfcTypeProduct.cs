@@ -48,10 +48,8 @@ namespace BuildingSmart.IFC.IfcKernel
 	    "le number (like the EAN). It is the identifier at the specific level.")]
 		public IfcLabel? Tag { get { return this._Tag; } set { this._Tag = value;} }
 	
-		[Description(@"<EPM-HTML>
-	Reference to the <em>IfcRelAssignsToProduct</em> relationship, by which other products, processes, controls, resources or actors (as subtypes of <em>IfcObjectDefinition</em>) can be related to this product type.
-	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp;  New inverse relationship.</blockquote>
-	</EPM-HTML>")]
+		[Description(@"Reference to the <em>IfcRelAssignsToProduct</em> relationship, by which other products, processes, controls, resources or actors (as subtypes of <em>IfcObjectDefinition</em>) can be related to this product type.
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp;  New inverse relationship.</blockquote>")]
 		public ISet<IfcRelAssignsToProduct> ReferencedBy { get { return this._ReferencedBy; } }
 	
 	

@@ -62,6 +62,7 @@ namespace BuildingSmart.IFC.IfcActorResource
 	
 		RESELLER = 22,
 	
+		[Description("User defined value to be provided.")]
 		USERDEFINED = -1,
 	
 	}

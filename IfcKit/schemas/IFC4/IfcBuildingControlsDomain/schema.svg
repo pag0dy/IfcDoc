@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<svg xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="1.1" width="0" height="0" xmlns="http://www.w3.org/2000/svg">
+<svg xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="1.1" width="600" height="888" xmlns="http://www.w3.org/2000/svg">
   <g id="IfcActuator" fill="yellow">
     <rect x="324.62500125" y="190.23250125" width="252.975" height="40.5" stroke="black" />
     <text x="451.11250125" y="210.48250125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcActuator</text>
@@ -123,14 +123,30 @@
   <g id="IFCSHAREDBLDGSERVICEELEMENTS">
     <g id="IfcDistributionControlElementType" fill="grey">
       <rect x="7.087502625" y="8.649998625" width="202.99999875" height="85.5" stroke="black" />
+      <polyline points="8.40702225,94.1499975 8.40702225,156.74374875 8.40124256025,156.74374875 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="8.40124256025,156.74374875 8.4012375,370.71248625 29.069986125,370.71248625 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="8.40124256025,156.74374875 8.4012375,291.08746125 29.057498625,291.08746125 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="8.40124256025,156.74374875 8.4012375,211.462485 29.070012375,211.462485 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="8.40124256025,156.74374875 8.4012375,131.81248875 29.064998625,131.81248875 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="8.40124256025,156.74374875 8.4012375,450.3499875 29.079998625,450.3499875 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="8.40124256025,156.74374875 8.4012375,529.974975 29.075001375,529.974975 " fill="none" stroke="black" stroke-width="3" />
       <text x="108.587502" y="51.399998625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCSHAREDBLDGSERVICEELEMENTS
 IfcDistributionControlElementType</text>
     </g>
     <g id="IfcDistributionControlElement" fill="grey">
       <rect x="386.1250125" y="9.1875" width="204" height="85.875" stroke="black" />
+      <polyline points="590.1250125,95.0625 590.1250125,158.12500125 590.36251287375,158.12500125 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="590.36251287375,158.12500125 590.3625,130.92 576.587500125,130.92 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="590.36251287375,158.12500125 590.3625,210.48250125 577.600000125,210.48250125 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="590.36251287375,158.12500125 590.3625,290.04499875 577.600000125,290.04499875 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="590.36251287375,158.12500125 590.3625,369.6075 577.587499875,369.6075 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="590.36251287375,158.12500125 590.3625,449.1574875 577.600000125,449.1574875 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="590.36251287375,158.12500125 590.3625,528.72 577.600000125,528.72 " fill="none" stroke="black" stroke-width="3" />
       <text x="488.1250125" y="52.125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCSHAREDBLDGSERVICEELEMENTS
 IfcDistributionControlElement</text>
     </g>
   </g>
-  <g />
+  <g>
+    <rect x="0" y="0" width="600" height="888" fill="none" stroke="lime" />
+  </g>
 </svg>

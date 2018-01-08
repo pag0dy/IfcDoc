@@ -54,25 +54,25 @@ namespace BuildingSmart.IFC.IfcProcessExtension
 		IfcDateTime? _FinishTime;
 	
 	
-		[Description("<EPM-HTML>\r\n    The date that the plan is created.\r\n</EPM-HTML>")]
+		[Description("    The date that the plan is created.")]
 		public IfcDateTime CreationDate { get { return this._CreationDate; } set { this._CreationDate = value;} }
 	
-		[Description("<EPM-HTML>\r\n    The authors of the work plan.\r\n</EPM-HTML>")]
+		[Description("    The authors of the work plan.")]
 		public ISet<IfcPerson> Creators { get { return this._Creators; } }
 	
-		[Description("<EPM-HTML>\r\n    A description of the purpose of the work schedule.\r\n</EPM-HTML>")]
+		[Description("    A description of the purpose of the work schedule.")]
 		public IfcLabel? Purpose { get { return this._Purpose; } set { this._Purpose = value;} }
 	
-		[Description("<EPM-HTML>\r\n    The total duration of the entire work schedule.\r\n</EPM-HTML>")]
+		[Description("    The total duration of the entire work schedule.")]
 		public IfcDuration? Duration { get { return this._Duration; } set { this._Duration = value;} }
 	
-		[Description("<EPM-HTML>\r\n    The total time float of the entire work schedule.\r\n</EPM-HTML>")]
+		[Description("    The total time float of the entire work schedule.")]
 		public IfcDuration? TotalFloat { get { return this._TotalFloat; } set { this._TotalFloat = value;} }
 	
-		[Description("<EPM-HTML>\r\n    The start time of the schedule.\r\n</EPM-HTML>")]
+		[Description("    The start time of the schedule.")]
 		public IfcDateTime StartTime { get { return this._StartTime; } set { this._StartTime = value;} }
 	
-		[Description("<EPM-HTML>\r\n    The finish time of the schedule.\r\n</EPM-HTML>")]
+		[Description("    The finish time of the schedule.")]
 		public IfcDateTime? FinishTime { get { return this._FinishTime; } set { this._FinishTime = value;} }
 	
 	

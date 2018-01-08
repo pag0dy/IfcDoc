@@ -35,25 +35,22 @@ namespace BuildingSmart.IFC.IfcSharedMgmtElements
 		IfcText? _LongDescription;
 	
 	
-		[Description("<EPM-HTML>\r\nIdentifies the predefined type of sources through which a request can" +
-	    " be made.\r\n\r\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE  The attribute has be" +
-	    "en added.</blockquote>\r\n\r\n</EPM-HTML>")]
+		[Description("Identifies the predefined type of sources through which a request can be made.\r\n\r" +
+	    "\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE  The attribute has been added.</b" +
+	    "lockquote>")]
 		public IfcActionRequestTypeEnum? PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
-		[Description(@"<EPM-HTML>
-	The status currently assigned to the request.  Possible values include:<br/>
+		[Description(@"The status currently assigned to the request.  Possible values include:<br/>
 	Hold: wait to see if further requests are received before deciding on action<br/>
 	NoAction: no action is required on this request<br/>
 	Schedule: plan action to take place as part of maintenance or other task planning/scheduling<br/>
 	Urgent: take action immediately<br/>
 	
-	<blockquote class=""change-ifc2x4"">IFC4 CHANGE  The attribute has been added.</blockquote>
-	
-	</EPM-HTML>")]
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE  The attribute has been added.</blockquote>")]
 		public IfcLabel? Status { get { return this._Status; } set { this._Status = value;} }
 	
-		[Description("<EPM-HTML>\r\nDetailed description of the permit.\r\n\r\n<blockquote class=\"change-ifc2" +
-	    "x4\">IFC4 CHANGE  The attribute has been added.</blockquote>\r\n\r\n</EPM-HTML>")]
+		[Description("Detailed description of the permit.\r\n\r\n<blockquote class=\"change-ifc2x4\">IFC4 CHA" +
+	    "NGE  The attribute has been added.</blockquote>")]
 		public IfcText? LongDescription { get { return this._LongDescription; } set { this._LongDescription = value;} }
 	
 	

@@ -41,14 +41,12 @@ namespace BuildingSmart.IFC.IfcProductExtension
 		ISet<IfcRelSpaceBoundary2ndLevel> _Corresponds = new HashSet<IfcRelSpaceBoundary2ndLevel>();
 	
 	
-		[Description("<EPM-HTML>\r\nReference to the other space boundary of the pair of two space bounda" +
-	    "ries on either side of a space separating thermal boundary element.\r\n</EPM-HTML>" +
-	    "")]
+		[Description("Reference to the other space boundary of the pair of two space boundaries on eith" +
+	    "er side of a space separating thermal boundary element.")]
 		public IfcRelSpaceBoundary2ndLevel CorrespondingBoundary { get { return this._CorrespondingBoundary; } set { this._CorrespondingBoundary = value;} }
 	
-		[Description("<EPM-HTML>\r\nReference to the other space boundary of the pair of two space bounda" +
-	    "ries on either side of a space separating thermal boundary element.\r\n</EPM-HTML>" +
-	    "")]
+		[Description("Reference to the other space boundary of the pair of two space boundaries on eith" +
+	    "er side of a space separating thermal boundary element.")]
 		public ISet<IfcRelSpaceBoundary2ndLevel> Corresponds { get { return this._Corresponds; } }
 	
 	

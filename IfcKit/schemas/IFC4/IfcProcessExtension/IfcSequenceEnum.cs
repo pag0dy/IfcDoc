@@ -24,12 +24,16 @@ namespace BuildingSmart.IFC.IfcProcessExtension
 	[Guid("5a70a8e7-c2dd-4375-9afe-3b5280d28811")]
 	public enum IfcSequenceEnum
 	{
+		[Description("The predecessor task must start before the successor task may start.")]
 		START_START = 1,
 	
+		[Description("The predecessor task must start before the successor task may finish.")]
 		START_FINISH = 2,
 	
+		[Description("The predecessor task must finish before the successor task may start.")]
 		FINISH_START = 3,
 	
+		[Description("The predecessor task must finish before the successor task may finish.")]
 		FINISH_FINISH = 4,
 	
 		USERDEFINED = -1,

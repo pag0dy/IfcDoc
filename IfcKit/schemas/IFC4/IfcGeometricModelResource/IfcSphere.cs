@@ -27,7 +27,7 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 		IfcPositiveLengthMeasure _Radius;
 	
 	
-		[Description("<EPM-HTML>\r\nThe radius of the sphere.\r\n</EPM-HTML>")]
+		[Description("The radius of the sphere.")]
 		public IfcPositiveLengthMeasure Radius { get { return this._Radius; } set { this._Radius = value;} }
 	
 	

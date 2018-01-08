@@ -39,29 +39,27 @@ namespace BuildingSmart.IFC.IfcSharedBldgElements
 		IfcWindowTypePartitioningEnum _PartitioningType;
 	
 		[DataMember(Order=2)] 
-		Boolean? _ParameterTakesPrecedence;
+		[XmlAttribute]
+		IfcBoolean? _ParameterTakesPrecedence;
 	
 		[DataMember(Order=3)] 
 		[XmlAttribute]
 		IfcLabel? _UserDefinedPartitioningType;
 	
 	
-		[Description("<EPM-HTML>\r\nIdentifies the predefined types of a window element from which the ty" +
-	    "pe required may be set.\r\n</EPM-HTML>")]
+		[Description("Identifies the predefined types of a window element from which the type required " +
+	    "may be set.")]
 		public IfcWindowTypeEnum PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
-		[Description("<EPM-HTML>\r\nType defining the general layout of the window type in terms of the p" +
-	    "artitioning of panels. \r\n</EPM-HTML>")]
+		[Description("Type defining the general layout of the window type in terms of the partitioning " +
+	    "of panels. ")]
 		public IfcWindowTypePartitioningEnum PartitioningType { get { return this._PartitioningType; } set { this._PartitioningType = value;} }
 	
-		[Description(@"<EPM-HTML>
-	The Boolean value reflects, whether the parameter given in the attached lining and panel properties exactly define the geometry (TRUE), or whether the attached style shape take precedence (FALSE). In the last case the parameter have only informative value. If not provided, no such information can be infered.
-	</EPM-HTML>")]
-		public Boolean? ParameterTakesPrecedence { get { return this._ParameterTakesPrecedence; } set { this._ParameterTakesPrecedence = value;} }
+		[Description(@"The Boolean value reflects, whether the parameter given in the attached lining and panel properties exactly define the geometry (TRUE), or whether the attached style shape take precedence (FALSE). In the last case the parameter have only informative value. If not provided, no such information can be infered.")]
+		public IfcBoolean? ParameterTakesPrecedence { get { return this._ParameterTakesPrecedence; } set { this._ParameterTakesPrecedence = value;} }
 	
-		[Description("<EPM-HTML>\r\nDesignator for the user defined partitioning type, shall only be prov" +
-	    "ided, if the value of <em>PartitioningType</em> is set to USERDEFINED.\r\n</EPM-HT" +
-	    "ML>")]
+		[Description("Designator for the user defined partitioning type, shall only be provided, if the" +
+	    " value of <em>PartitioningType</em> is set to USERDEFINED.")]
 		public IfcLabel? UserDefinedPartitioningType { get { return this._UserDefinedPartitioningType; } set { this._UserDefinedPartitioningType = value;} }
 	
 	

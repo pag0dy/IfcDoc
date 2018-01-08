@@ -28,11 +28,7 @@ namespace BuildingSmart.IFC.IfcStructuralAnalysisDomain
 		IfcAxis2Placement3D _ConditionCoordinateSystem;
 	
 	
-		[Description(@"<EPM-HTML>
-	
-	Defines a coordinate system used for the description of the support condition properties in <em>SELF\IfcStructuralConnection.SupportCondition</em>, specified relative to the global coordinate system (global to the structural analysis model) established by <em>SELF.\IfcProduct.ObjectPlacement</em>.  If left unspecified, the placement <em>IfcAxis2Placement3D</em>((x,y,z), ?, ?) is implied with x,y,z being the coordinates of the reference point of this <em>IfcStructuralPointConnection</em> and the default axes directions being in parallel with the global axes.
-	
-	</EPM-HTML>")]
+		[Description(@"Defines a coordinate system used for the description of the support condition properties in <em>SELF\IfcStructuralConnection.SupportCondition</em>, specified relative to the global coordinate system (global to the structural analysis model) established by <em>SELF.\IfcProduct.ObjectPlacement</em>.  If left unspecified, the placement <em>IfcAxis2Placement3D</em>((x,y,z), ?, ?) is implied with x,y,z being the coordinates of the reference point of this <em>IfcStructuralPointConnection</em> and the default axes directions being in parallel with the global axes.")]
 		public IfcAxis2Placement3D ConditionCoordinateSystem { get { return this._ConditionCoordinateSystem; } set { this._ConditionCoordinateSystem = value;} }
 	
 	

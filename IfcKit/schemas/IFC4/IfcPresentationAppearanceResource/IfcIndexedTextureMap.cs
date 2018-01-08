@@ -33,11 +33,11 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 		IfcTextureVertexList _TexCoords;
 	
 	
-		[Description("<EPM-HTML>\r\nReference to the <em>IfcTessellatedFaceSet</em> to which it applies t" +
-	    "he texture map.\r\n</EPM-HTML>")]
+		[Description("Reference to the <em>IfcTessellatedFaceSet</em> to which it applies the texture m" +
+	    "ap.")]
 		public IfcTessellatedFaceSet MappedTo { get { return this._MappedTo; } set { this._MappedTo = value;} }
 	
-		[Description("<EPM-HTML>\r\nIndexable list of texture vertices.\r\n</EPM-HTML>")]
+		[Description("Indexable list of texture vertices.")]
 		public IfcTextureVertexList TexCoords { get { return this._TexCoords; } set { this._TexCoords = value;} }
 	
 	

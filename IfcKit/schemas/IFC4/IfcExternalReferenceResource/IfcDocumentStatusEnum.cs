@@ -27,12 +27,16 @@ namespace BuildingSmart.IFC.IfcExternalReferenceResource
 	[Guid("5da7ac6c-0494-4c97-9373-49698ac9372f")]
 	public enum IfcDocumentStatusEnum
 	{
+		[Description("Document is a draft.")]
 		DRAFT = 1,
 	
+		[Description("Document is a final draft.")]
 		FINALDRAFT = 2,
 	
+		[Description("Document is final.")]
 		FINAL = 3,
 	
+		[Description("Document has undergone revision.")]
 		REVISION = 4,
 	
 		NOTDEFINED = 0,

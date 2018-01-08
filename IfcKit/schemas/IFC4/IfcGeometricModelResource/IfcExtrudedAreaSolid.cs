@@ -32,12 +32,11 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 		IfcPositiveLengthMeasure _Depth;
 	
 	
-		[Description("<EPM-HTML>\r\nThe direction in which the surface, provided by <em>SweptArea</em> is" +
-	    " to be swept.\r\n</EPM-HTML>")]
+		[Description("The direction in which the surface, provided by <em>SweptArea</em> is to be swept" +
+	    ".")]
 		public IfcDirection ExtrudedDirection { get { return this._ExtrudedDirection; } set { this._ExtrudedDirection = value;} }
 	
-		[Description("<EPM-HTML>\r\nThe distance the surface is to be swept along the <em>ExtrudedDirecti" +
-	    "on</em>\r\n</EPM-HTML>.")]
+		[Description("The distance the surface is to be swept along the <em>ExtrudedDirection</em>.")]
 		public IfcPositiveLengthMeasure Depth { get { return this._Depth; } set { this._Depth = value;} }
 	
 	

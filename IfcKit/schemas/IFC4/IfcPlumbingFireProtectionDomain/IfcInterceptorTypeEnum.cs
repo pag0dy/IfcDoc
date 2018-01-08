@@ -17,16 +17,26 @@ namespace BuildingSmart.IFC.IfcPlumbingFireProtectionDomain
 	[Guid("5eee1402-5291-4e7b-b4e4-a5863186d3b3")]
 	public enum IfcInterceptorTypeEnum
 	{
+		[Description("Removes larger liquid drops or larger solid particles.")]
 		CYCLONIC = 1,
 	
+		[Description("Chamber, on the line of a drain or discharge pipe, that prevents grease passing i" +
+	    "nto a drainage system.")]
 		GREASE = 2,
 	
+		[Description("One or more chambers arranged to prevent the ingress of oil to a drain or sewer t" +
+	    "hat retains the oil for later removal.")]
 		OIL = 3,
 	
+		[Description("Two or more chambers with inlet and outlet pipes arranged to allow petrol/gasolin" +
+	    "e collected on the surface of water drained into them to evaporate through venti" +
+	    "lating pipes.")]
 		PETROL = 4,
 	
+		[Description("User-defined type.")]
 		USERDEFINED = -1,
 	
+		[Description("Undefined type.")]
 		NOTDEFINED = 0,
 	
 	}

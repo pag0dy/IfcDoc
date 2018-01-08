@@ -46,15 +46,13 @@ namespace BuildingSmart.IFC.IfcProductExtension
 		[Description("System that services the Buildings. \r\n")]
 		public IfcSystem RelatingSystem { get { return this._RelatingSystem; } set { this._RelatingSystem = value;} }
 	
-		[Description(@"<EPM-HTML>
-	Spatial structure elements (including site, building, storeys) that are serviced by the system.
+		[Description(@"Spatial structure elements (including site, building, storeys) that are serviced by the system.
 	<blockquote class=""change-ifc2x"">
 	  IFC2x CHANGE&nbsp; The data type has been changed from <em>IfcBuilding</em> to <em>IfcSpatialStructureElement</em> with upward compatibility for file based exchange.
 	</blockquote>
 	<blockquote class=""change-ifc2x4"">
 	  IFC4 CHANGE&nbsp; The data type has been changed from <em>IfcSpatialStructureElement</em> to <em>IfcSpatialElement</em> with upward compatibility for file based exchange.
-	</blockquote>
-	</EPM-HTML>")]
+	</blockquote>")]
 		public ISet<IfcSpatialElement> RelatedBuildings { get { return this._RelatedBuildings; } }
 	
 	

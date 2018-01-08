@@ -41,23 +41,19 @@ namespace BuildingSmart.IFC.IfcMaterialResource
 		IfcCompositeProfileDef _CompositeProfile;
 	
 	
-		[Description("<EPM-HTML>\r\nThe name by which the material profile set is known.\r\n</EPM-HTML>")]
+		[Description("The name by which the material profile set is known.")]
 		public IfcLabel? Name { get { return this._Name; } set { this._Name = value;} }
 	
 		[Description("Definition of the material profile set in descriptive terms.")]
 		public IfcText? Description { get { return this._Description; } set { this._Description = value;} }
 	
-		[Description("<EPM-HTML>\r\nIdentification of the profiles from which the material profile set is" +
-	    " composed.\r\n</EPM-HTML>")]
+		[Description("Identification of the profiles from which the material profile set is composed.")]
 		public IList<IfcMaterialProfile> MaterialProfiles { get { return this._MaterialProfiles; } }
 	
-		[Description(@"<EPM-HTML>
-	Reference to the composite profile definition for which this material profile set associates material to each of its individual profiles. If only a single material profile is used (the most typical case) then no <em>CompositeProfile</em> is asserted.
+		[Description(@"Reference to the composite profile definition for which this material profile set associates material to each of its individual profiles. If only a single material profile is used (the most typical case) then no <em>CompositeProfile</em> is asserted.
 	
 	<blockquote class=""note"">NOTE&nbsp; The referenced <em>IfcCompositeProfileDef</em> instance shall be composed of all of the <em>IfcProfileDef</em> instances which are used via the MaterialProfiles list in the current <em>IfcMaterialProfileSet</em>.
-	</blockquote>
-	
-	</EPM-HTML>")]
+	</blockquote>")]
 		public IfcCompositeProfileDef CompositeProfile { get { return this._CompositeProfile; } set { this._CompositeProfile = value;} }
 	
 	

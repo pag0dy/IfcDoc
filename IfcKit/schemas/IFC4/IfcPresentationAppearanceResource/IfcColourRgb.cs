@@ -39,19 +39,19 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 		IfcNormalisedRatioMeasure _Blue;
 	
 	
-		[Description("<EPM-HTML>\r\nThe intensity of the red colour component.\r\n<blockquote class=\"note\">" +
-	    "NOTE&nbsp; The colour component value is given within the range of 0..1, and not" +
-	    " within the range of 0..255 as otherwise usual.</blockquote>\r\n</EPM-HTML>")]
+		[Description("The intensity of the red colour component.\r\n<blockquote class=\"note\">NOTE&nbsp; T" +
+	    "he colour component value is given within the range of 0..1, and not within the " +
+	    "range of 0..255 as otherwise usual.</blockquote>")]
 		public IfcNormalisedRatioMeasure Red { get { return this._Red; } set { this._Red = value;} }
 	
-		[Description("<EPM-HTML>\r\nThe intensity of the green colour component.\r\n<blockquote class=\"note" +
-	    "\">NOTE&nbsp; The colour component value is given within the range of 0..1, and n" +
-	    "ot within the range of 0..255 as otherwise usual.</blockquote>\r\n</EPM-HTML>")]
+		[Description("The intensity of the green colour component.\r\n<blockquote class=\"note\">NOTE&nbsp;" +
+	    " The colour component value is given within the range of 0..1, and not within th" +
+	    "e range of 0..255 as otherwise usual.</blockquote>")]
 		public IfcNormalisedRatioMeasure Green { get { return this._Green; } set { this._Green = value;} }
 	
-		[Description("<EPM-HTML>\r\nThe intensity of the blue colour component.\r\n<blockquote class=\"note\"" +
-	    ">NOTE&nbsp; The colour component value is given within the range of 0..1, and no" +
-	    "t within the range of 0..255 as otherwise usual.</blockquote>\r\n</EPM-HTML>")]
+		[Description("The intensity of the blue colour component.\r\n<blockquote class=\"note\">NOTE&nbsp; " +
+	    "The colour component value is given within the range of 0..1, and not within the" +
+	    " range of 0..255 as otherwise usual.</blockquote>")]
 		public IfcNormalisedRatioMeasure Blue { get { return this._Blue; } set { this._Blue = value;} }
 	
 	

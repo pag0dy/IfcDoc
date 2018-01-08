@@ -28,14 +28,20 @@ namespace BuildingSmart.IFC.IfcSharedBldgElements
 	[Guid("c7355be1-dea2-45e4-a9eb-2d5e95b82f5f")]
 	public enum IfcWindowTypeEnum
 	{
+		[Description("A standard window usually within a wall opening, as a window panel in a curtain w" +
+	    "all, or as a \"free standing\" window.")]
 		WINDOW = 1,
 	
+		[Description("A window within a sloped building element, usually a roof slab.")]
 		SKYLIGHT = 2,
 	
+		[Description("A special window that lies horizonally in a roof slab opening.")]
 		LIGHTDOME = 3,
 	
+		[Description("User-defined window element.")]
 		USERDEFINED = -1,
 	
+		[Description("Undefined window element.")]
 		NOTDEFINED = 0,
 	
 	}

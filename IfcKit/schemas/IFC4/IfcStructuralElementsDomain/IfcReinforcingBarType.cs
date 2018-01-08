@@ -66,9 +66,7 @@ namespace BuildingSmart.IFC.IfcStructuralElementsDomain
 		[Description("Indicator for whether the bar surface is plain or textured.\r\n")]
 		public IfcReinforcingBarSurfaceEnum? BarSurface { get { return this._BarSurface; } set { this._BarSurface = value;} }
 	
-		[Description(@"<EPM-HTML>
-	Shape code per a standard like ACI 315, ISO 3766, or a similar standard.  It is presumed that a single standard for defining the bar bending is used throughout the project and that this standard is referenced from the <em>IfcProject</em> object through the <em>IfcDocumentReference</em> mechanism.
-	</EPM-HTML>")]
+		[Description(@"Shape code per a standard like ACI 315, ISO 3766, or a similar standard.  It is presumed that a single standard for defining the bar bending is used throughout the project and that this standard is referenced from the <em>IfcProject</em> object through the <em>IfcDocumentReference</em> mechanism.")]
 		public IfcLabel? BendingShapeCode { get { return this._BendingShapeCode; } set { this._BendingShapeCode = value;} }
 	
 		[Description("Bending shape parameters.  Their meaning is defined by the bending shape code and" +

@@ -60,18 +60,14 @@ namespace BuildingSmart.IFC.IfcProductExtension
 		[Description("Reference to one spaces that is delimited by this boundary.")]
 		public IfcSpaceBoundarySelect RelatingSpace { get { return this._RelatingSpace; } set { this._RelatingSpace = value;} }
 	
-		[Description(@"<EPM-HTML>
-	Reference to <strike>Building</strike> Element, that defines the Space Boundaries.
+		[Description(@"Reference to <strike>Building</strike> Element, that defines the Space Boundaries.
 	<blockquote class=""change-ifc2x"">IFC2x CHANGE&nbsp; The data type has been changed from <em>IfcBuildingElement</em> to <em>IfcElement</em> with upward compatibility for file based exchange. </blockquote>
 	  <blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The attribute has been changed to be mandatory.</blockquote>
-	</EPM-HTML>
 	")]
 		public IfcElement RelatedBuildingElement { get { return this._RelatedBuildingElement; } set { this._RelatedBuildingElement = value;} }
 	
-		[Description(@"<EPM-HTML>
-	Physical representation of the space boundary. Provided as a <u>curve or</u> surface given within the LCS of the space.
+		[Description(@"Physical representation of the space boundary. Provided as a <u>curve or</u> surface given within the LCS of the space.
 	<blockquote class=""change-ifc2x"">IFC2x CHANGE&nbsp; The data type has been changed from <em>IfcConnectionSurfaceGeometry</em> to <em>IfcConnectionGeometry</em> with upward compatibility for file based exchange.</blockquote>
-	</EPM-HTML>
 	")]
 		public IfcConnectionGeometry ConnectionGeometry { get { return this._ConnectionGeometry; } set { this._ConnectionGeometry = value;} }
 	
