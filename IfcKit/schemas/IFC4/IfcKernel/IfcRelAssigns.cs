@@ -11,20 +11,20 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcConstraintResource;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometricModelResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
+using BuildingSmart.IFC.IfcProcessExtension;
 using BuildingSmart.IFC.IfcPropertyResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
 using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcKernel
 {
-	[Guid("ebe9bf08-62e1-4ce5-8869-861d49604fdf")]
+	[Guid("458cc135-db13-40d6-ab1b-64ba222632fe")]
 	public abstract partial class IfcRelAssigns : IfcRelationship
 	{
 		[DataMember(Order=0)] 
@@ -40,8 +40,10 @@ namespace BuildingSmart.IFC.IfcKernel
 	    "r relating) object is defined in the subtypes of IfcRelAssigns.")]
 		public ISet<IfcObjectDefinition> RelatedObjects { get { return this._RelatedObjects; } }
 	
-		[Description("Particular type of the assignment relationship. It can constrain the applicable o" +
-	    "bject types, used within the role of RelatedObjects.\r\n")]
+		[Description(@"<EPM-HTML>
+	Particular type of the assignment relationship. It can constrain the applicable object types, used within the role of <em>RelatedObjects</em>.
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The attribute is deprecated and shall no longer be used. A NIL value should always be assigned.</blockquote>
+	</EPM-HTML>")]
 		public IfcObjectTypeEnum? RelatedObjectsType { get { return this._RelatedObjectsType; } set { this._RelatedObjectsType = value;} }
 	
 	

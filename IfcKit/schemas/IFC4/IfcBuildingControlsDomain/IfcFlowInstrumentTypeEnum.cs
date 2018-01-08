@@ -10,13 +10,11 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
 
 namespace BuildingSmart.IFC.IfcBuildingControlsDomain
 {
-	[Guid("119d2f63-15fb-4e59-8d93-9bb1051a61f9")]
+	[Guid("f3b815e8-347a-412e-9786-5c5986236e01")]
 	public enum IfcFlowInstrumentTypeEnum
 	{
 		PRESSUREGAUGE = 1,

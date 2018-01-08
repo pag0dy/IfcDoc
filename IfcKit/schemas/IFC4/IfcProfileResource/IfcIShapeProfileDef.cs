@@ -10,13 +10,14 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
+using BuildingSmart.IFC.IfcPropertyResource;
 
 namespace BuildingSmart.IFC.IfcProfileResource
 {
-	[Guid("78f8dd59-9152-46ea-a81c-33962e1055c3")]
+	[Guid("254749ac-db77-4f69-a8a0-b4cc5d5e66fa")]
 	public partial class IfcIShapeProfileDef : IfcParameterizedProfileDef
 	{
 		[DataMember(Order=0)] 
@@ -41,7 +42,15 @@ namespace BuildingSmart.IFC.IfcProfileResource
 	
 		[DataMember(Order=4)] 
 		[XmlAttribute]
-		IfcPositiveLengthMeasure? _FilletRadius;
+		IfcNonNegativeLengthMeasure? _FilletRadius;
+	
+		[DataMember(Order=5)] 
+		[XmlAttribute]
+		IfcNonNegativeLengthMeasure? _FlangeEdgeRadius;
+	
+		[DataMember(Order=6)] 
+		[XmlAttribute]
+		IfcPlaneAngleMeasure? _FlangeSlope;
 	
 	
 		[Description("Total extent of the width, defined parallel to the x axis of the position coordin" +
@@ -61,8 +70,18 @@ namespace BuildingSmart.IFC.IfcProfileResource
 	    "em.")]
 		public IfcPositiveLengthMeasure FlangeThickness { get { return this._FlangeThickness; } set { this._FlangeThickness = value;} }
 	
-		[Description("The fillet between the web and the flange, if not given, zero is assumed.")]
-		public IfcPositiveLengthMeasure? FilletRadius { get { return this._FilletRadius; } set { this._FilletRadius = value;} }
+		[Description("The fillet between the web and the flange.  0 if sharp-edged, omitted if unknown." +
+	    "")]
+		public IfcNonNegativeLengthMeasure? FilletRadius { get { return this._FilletRadius; } set { this._FilletRadius = value;} }
+	
+		[Description("Radius of the lower edges of the top flange and the upper edges of the bottom fla" +
+	    "nge.  0 if sharp-edged, omitted if unknown.")]
+		public IfcNonNegativeLengthMeasure? FlangeEdgeRadius { get { return this._FlangeEdgeRadius; } set { this._FlangeEdgeRadius = value;} }
+	
+		[Description("Slope of the lower faces of the top flange and of the upper faces of the bottom f" +
+	    "lange.  Non-zero in case of tapered flanges, 0 in case of parallel flanges, omit" +
+	    "ted if unknown.")]
+		public IfcPlaneAngleMeasure? FlangeSlope { get { return this._FlangeSlope; } set { this._FlangeSlope = value;} }
 	
 	
 	}

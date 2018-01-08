@@ -21,7 +21,7 @@ using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcRepresentationResource
 {
-	[Guid("e010e022-29f6-49b5-9da8-d0e33e9c4046")]
+	[Guid("d0b09671-0848-4353-9710-4312d56ffea7")]
 	public partial class IfcShapeAspect
 	{
 		[DataMember(Order=0)] 
@@ -41,12 +41,12 @@ namespace BuildingSmart.IFC.IfcRepresentationResource
 		Boolean? _ProductDefinitional;
 	
 		[DataMember(Order=4)] 
-		[Required()]
-		IfcProductDefinitionShape _PartOfProductDefinitionShape;
+		[XmlIgnore]
+		IfcProductRepresentationSelect _PartOfProductDefinitionShape;
 	
 	
 		[Description(@"<EPM-HTML>List of <strike>shape</strike> representations. Each member defines a valid representation of a particular type within a particular representation context as being an aspect (or part) of a product definition.
-	<blockquote><small><font color=""#FF0000"">IFC2x Edition 3 CHANGE&nbsp; The data type has been changed from <i>IfcShapeRepresentation</i> to <i>IfcShapeModel</i> with upward compatibility </font></small></blockquote>
+	<blockquote class=""change-ifc2x3"">IFC2x3 CHANGE&nbsp; The data type has been changed from <em>IfcShapeRepresentation</em> to <em>IfcShapeModel</em> with upward compatibility </blockquote>
 	</EPM-HTML>")]
 		public IList<IfcShapeModel> ShapeRepresentations { get { return this._ShapeRepresentations; } }
 	
@@ -63,8 +63,13 @@ namespace BuildingSmart.IFC.IfcRepresentationResource
 	---")]
 		public Boolean? ProductDefinitional { get { return this._ProductDefinitional; } set { this._ProductDefinitional = value;} }
 	
-		[Description("Reference to the product definition shape of which this class is an aspect.")]
-		public IfcProductDefinitionShape PartOfProductDefinitionShape { get { return this._PartOfProductDefinitionShape; } set { this._PartOfProductDefinitionShape = value;} }
+		[Description(@"<EPM-HTML>
+	Reference to the <em>IfcProductDefinitionShape</em> or the <em>IfcRepresentationMap</em> of which this shape is an aspect.
+	<blockquote class=""change-ifc2x4"">
+	IFC4 CHANGE&nbsp; Data type modified to be <em>IfcProductRepresentationSelect</em> allowing the assignment also to <em>IfcRepresentationMap</em>.
+	</blockquote>
+	</EPM-HTML>")]
+		public IfcProductRepresentationSelect PartOfProductDefinitionShape { get { return this._PartOfProductDefinitionShape; } set { this._PartOfProductDefinitionShape = value;} }
 	
 	
 	}

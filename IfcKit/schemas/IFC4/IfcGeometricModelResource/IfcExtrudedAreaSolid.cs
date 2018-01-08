@@ -18,10 +18,11 @@ using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometricModelResource
 {
-	[Guid("1d63be08-0548-4ede-bf7c-c2246ea77676")]
+	[Guid("f65777d3-6cb6-48f6-8a26-d79b570cdfb2")]
 	public partial class IfcExtrudedAreaSolid : IfcSweptAreaSolid
 	{
 		[DataMember(Order=0)] 
+		[XmlElement("IfcDirection")]
 		[Required()]
 		IfcDirection _ExtrudedDirection;
 	
@@ -31,10 +32,12 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 		IfcPositiveLengthMeasure _Depth;
 	
 	
-		[Description("The direction in which the surface is to be swept.")]
+		[Description("<EPM-HTML>\r\nThe direction in which the surface, provided by <em>SweptArea</em> is" +
+	    " to be swept.\r\n</EPM-HTML>")]
 		public IfcDirection ExtrudedDirection { get { return this._ExtrudedDirection; } set { this._ExtrudedDirection = value;} }
 	
-		[Description("The distance the surface is to be swept.")]
+		[Description("<EPM-HTML>\r\nThe distance the surface is to be swept along the <em>ExtrudedDirecti" +
+	    "on</em>\r\n</EPM-HTML>.")]
 		public IfcPositiveLengthMeasure Depth { get { return this._Depth; } set { this._Depth = value;} }
 	
 	

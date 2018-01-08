@@ -25,10 +25,12 @@ using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcSharedBldgElements
 {
-	[Guid("209d5262-7c5f-4fb0-a893-859ea56de4d8")]
+	[Guid("86108d1f-8018-48ab-b37d-4bbe593c1cfe")]
 	public enum IfcColumnTypeEnum
 	{
 		COLUMN = 1,
+	
+		PILASTER = 2,
 	
 		USERDEFINED = -1,
 	

@@ -10,26 +10,22 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
 
 namespace BuildingSmart.IFC.IfcBuildingControlsDomain
 {
-	[Guid("306ed67f-7492-4acd-9bd1-8fae78d81860")]
+	[Guid("d4f441f7-4968-44b1-a3ee-e6471db32b55")]
 	public enum IfcControllerTypeEnum
 	{
 		FLOATING = 1,
 	
-		PROPORTIONAL = 2,
+		PROGRAMMABLE = 2,
 	
-		PROPORTIONALINTEGRAL = 3,
+		PROPORTIONAL = 3,
 	
-		PROPORTIONALINTEGRALDERIVATIVE = 4,
+		MULTIPOSITION = 4,
 	
-		TIMEDTWOPOSITION = 5,
-	
-		TWOPOSITION = 6,
+		TWOPOSITION = 5,
 	
 		USERDEFINED = -1,
 	

@@ -14,7 +14,7 @@ using BuildingSmart.IFC.IfcSharedBldgServiceElements;
 
 namespace BuildingSmart.IFC.IfcPlumbingFireProtectionDomain
 {
-	[Guid("b995b43e-8b4f-435d-839b-152e1b8fbeee")]
+	[Guid("a41c4b68-c443-4fc5-a984-4eae4fc24095")]
 	public partial class IfcWasteTerminalType : IfcFlowTerminalType
 	{
 		[DataMember(Order=0)] 
@@ -23,8 +23,8 @@ namespace BuildingSmart.IFC.IfcPlumbingFireProtectionDomain
 		IfcWasteTerminalTypeEnum _PredefinedType;
 	
 	
-		[Description("Identifies the predefined types of waste terminal from which the type required ma" +
-	    "y be set.")]
+		[Description("<EPM-HTML><p>Identifies the predefined types of waste terminal from which the typ" +
+	    "e required may be set.</p></EPM-HTML>")]
 		public IfcWasteTerminalTypeEnum PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	

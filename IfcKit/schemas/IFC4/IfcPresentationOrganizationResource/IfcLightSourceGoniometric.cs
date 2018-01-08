@@ -14,19 +14,20 @@ using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcPresentationResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcPresentationOrganizationResource
 {
-	[Guid("9a8a77f8-29db-492c-93d4-68dff5ec8aa6")]
+	[Guid("50d32070-67dc-40a9-8ba3-9cf188f08490")]
 	public partial class IfcLightSourceGoniometric : IfcLightSource
 	{
 		[DataMember(Order=0)] 
+		[XmlElement("IfcAxis2Placement3D")]
 		[Required()]
 		IfcAxis2Placement3D _Position;
 	
 		[DataMember(Order=1)] 
+		[XmlElement("IfcColourRgb")]
 		IfcColourRgb _ColourAppearance;
 	
 		[DataMember(Order=2)] 

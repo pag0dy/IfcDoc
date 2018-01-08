@@ -10,17 +10,12 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
 
 namespace BuildingSmart.IFC.IfcElectricalDomain
 {
-	[Guid("17ee14f4-7e67-43ec-be56-10db55263226")]
+	[Guid("c73600ec-1ac8-4862-9271-cd7396feb1e0")]
 	public partial class IfcLampType : IfcFlowTerminalType
 	{
 		[DataMember(Order=0)] 
@@ -29,7 +24,8 @@ namespace BuildingSmart.IFC.IfcElectricalDomain
 		IfcLampTypeEnum _PredefinedType;
 	
 	
-		[Description("Identifies the predefined types of lamp from which the type required may be set.")]
+		[Description("<EPM-HTML><p>Identifies the predefined types of lamp from which the type required" +
+	    " may be set.</p></EPM-HTML>")]
 		public IfcLampTypeEnum PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	

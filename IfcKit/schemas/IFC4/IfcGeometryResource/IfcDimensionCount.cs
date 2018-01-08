@@ -20,7 +20,7 @@ using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
-	[Guid("9526e110-3cad-45d5-aab9-c5529255e5b9")]
+	[Guid("0cf1ac2b-005f-4736-9aa1-29c4ea65294a")]
 	public partial struct IfcDimensionCount
 	{
 		[XmlText]

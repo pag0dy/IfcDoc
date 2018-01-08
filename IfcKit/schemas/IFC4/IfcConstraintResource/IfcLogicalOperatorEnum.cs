@@ -16,17 +16,22 @@ using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcTimeSeriesResource;
 using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcConstraintResource
 {
-	[Guid("efb909b3-4e8a-49c2-8ddf-8b4c86406a57")]
+	[Guid("10c233d4-a4a6-42d1-b42d-fb4d8af541e0")]
 	public enum IfcLogicalOperatorEnum
 	{
 		LOGICALAND = 1,
 	
 		LOGICALOR = 2,
+	
+		LOGICALXOR = 3,
+	
+		LOGICALNOTAND = 4,
+	
+		LOGICALNOTOR = 5,
 	
 	}
 }

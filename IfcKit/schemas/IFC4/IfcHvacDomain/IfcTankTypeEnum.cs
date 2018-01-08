@@ -10,31 +10,27 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialResource;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcPropertyResource;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
 using BuildingSmart.IFC.IfcSharedComponentElements;
 
 namespace BuildingSmart.IFC.IfcHvacDomain
 {
-	[Guid("274920cc-310d-4c1b-89c2-239a1d3a4d8f")]
+	[Guid("68cae513-6485-4ad3-82b0-e6660bbf2285")]
 	public enum IfcTankTypeEnum
 	{
-		PREFORMED = 1,
+		BASIN = 1,
 	
-		SECTIONAL = 2,
+		BREAKPRESSURE = 2,
 	
 		EXPANSION = 3,
 	
-		PRESSUREVESSEL = 4,
+		FEEDANDEXPANSION = 4,
+	
+		PRESSUREVESSEL = 5,
+	
+		STORAGE = 6,
+	
+		VESSEL = 7,
 	
 		USERDEFINED = -1,
 	

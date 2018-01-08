@@ -14,26 +14,24 @@ using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfilePropertyResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
 using BuildingSmart.IFC.IfcStructuralLoadResource;
 
 namespace BuildingSmart.IFC.IfcStructuralAnalysisDomain
 {
-	[Guid("d51c7f76-137f-4445-9406-c987d9f4cf65")]
+	[Guid("d4640db1-7b55-4f79-8ba6-05b016369801")]
 	public abstract partial class IfcStructuralConnection : IfcStructuralItem
 	{
 		[DataMember(Order=0)] 
+		[XmlElement("IfcBoundaryCondition")]
 		IfcBoundaryCondition _AppliedCondition;
 	
 		[InverseProperty("RelatedStructuralConnection")] 
 		ISet<IfcRelConnectsStructuralMember> _ConnectsStructuralMembers = new HashSet<IfcRelConnectsStructuralMember>();
 	
 	
-		[Description("Optional reference to an instance of IfcBoundaryCondition which defines the suppo" +
-	    "rt condition of this \'connection\'.")]
+		[Description(@"Optional boundary conditions which define support conditions of this connection object, given in local coordinate directions of the connection object.  If left unspecified, the connection object is assumed to have no supports besides being connected with members.")]
 		public IfcBoundaryCondition AppliedCondition { get { return this._AppliedCondition; } set { this._AppliedCondition = value;} }
 	
 		[Description("References to the IfcRelConnectsStructuralMembers relationship by which structura" +

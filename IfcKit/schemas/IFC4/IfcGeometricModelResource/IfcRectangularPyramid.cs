@@ -18,7 +18,7 @@ using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometricModelResource
 {
-	[Guid("ea72903a-e218-4de1-961b-c00824a4625c")]
+	[Guid("1ad16494-b844-40aa-bd8c-42b28ea6cf30")]
 	public partial class IfcRectangularPyramid : IfcCsgPrimitive3D
 	{
 		[DataMember(Order=0)] 
@@ -38,18 +38,18 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 	
 	
 		[Description("<EPM-HTML>\r\nThe length of the base measured along the placement X axis. It is pro" +
-	    "vided by the inherited axis placement through <i>SELF\\IfcCsgPrimitive3D.Position" +
-	    ".P[1]</i>.\r\n</EPM-HTML>")]
+	    "vided by the inherited axis placement through <em>SELF\\IfcCsgPrimitive3D.Positio" +
+	    "n.P[1]</em>.\r\n</EPM-HTML>")]
 		public IfcPositiveLengthMeasure XLength { get { return this._XLength; } set { this._XLength = value;} }
 	
 		[Description("<EPM-HTML>\r\nThe length of the base measured along the placement Y axis. It is pro" +
-	    "vided by the inherited axis placement through <i>SELF\\IfcCsgPrimitive3D.Position" +
-	    ".P[2]</i>.\r\n</EPM-HTML>")]
+	    "vided by the inherited axis placement through <em>SELF\\IfcCsgPrimitive3D.Positio" +
+	    "n.P[2]</em>.\r\n</EPM-HTML>")]
 		public IfcPositiveLengthMeasure YLength { get { return this._YLength; } set { this._YLength = value;} }
 	
 		[Description("<EPM-HTML>\r\nThe height of the apex above the plane of the base, measured in the d" +
-	    "irection of the placement Z axis, the <i>SELF\\IfcCsgPrimitive3D.Position.P[2]</i" +
-	    ">.\r\n</EPM-HTML>")]
+	    "irection of the placement Z axis, the <em>SELF\\IfcCsgPrimitive3D.Position.P[2]</" +
+	    "em>.\r\n</EPM-HTML>")]
 		public IfcPositiveLengthMeasure Height { get { return this._Height; } set { this._Height = value;} }
 	
 	

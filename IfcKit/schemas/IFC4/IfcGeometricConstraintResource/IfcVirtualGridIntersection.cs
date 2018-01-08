@@ -21,8 +21,9 @@ using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometricConstraintResource
 {
-	[Guid("ed00857d-0af6-48ff-a71e-f00c81e1589d")]
-	public partial class IfcVirtualGridIntersection
+	[Guid("f63d89d0-3786-4462-861e-92b27070fde7")]
+	public partial class IfcVirtualGridIntersection :
+		BuildingSmart.IFC.IfcGeometricConstraintResource.IfcGridPlacementDirectionSelect
 	{
 		[DataMember(Order=0)] 
 		[Required()]

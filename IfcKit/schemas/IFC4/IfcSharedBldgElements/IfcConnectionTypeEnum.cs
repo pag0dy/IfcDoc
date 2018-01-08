@@ -25,7 +25,7 @@ using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcSharedBldgElements
 {
-	[Guid("93a1fe00-0daf-4412-8001-b4e2d065ef5a")]
+	[Guid("270e75a0-5dc4-4280-8750-8388a3a1a27d")]
 	public enum IfcConnectionTypeEnum
 	{
 		ATPATH = 1,

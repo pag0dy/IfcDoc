@@ -11,29 +11,32 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcConstraintResource;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometricModelResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
+using BuildingSmart.IFC.IfcProcessExtension;
 using BuildingSmart.IFC.IfcPropertyResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
 using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcKernel
 {
-	[Guid("55319343-8365-4a00-a7de-4cf13f760e2b")]
+	[Guid("72eec376-bbab-40d5-9342-93108c172713")]
 	public partial class IfcRelAssignsToProduct : IfcRelAssigns
 	{
 		[DataMember(Order=0)] 
 		[Required()]
-		IfcProduct _RelatingProduct;
+		IfcProductSelect _RelatingProduct;
 	
 	
-		[Description("Reference to the Product to which the objects are assigned to.\r\n")]
-		public IfcProduct RelatingProduct { get { return this._RelatingProduct; } set { this._RelatingProduct = value;} }
+		[Description("<EPM-HTML>\r\nReference to the product or product type to which the objects are ass" +
+	    "igned to.\r\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE Datatype expanded to in" +
+	    "clude <em>IfcProduct</em> and <em>IfcTypeProduct</em>.</blockquote>\r\n</EPM-HTML>" +
+	    "")]
+		public IfcProductSelect RelatingProduct { get { return this._RelatingProduct; } set { this._RelatingProduct = value;} }
 	
 	
 	}

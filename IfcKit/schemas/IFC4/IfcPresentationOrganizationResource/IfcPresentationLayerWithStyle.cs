@@ -14,12 +14,11 @@ using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcPresentationResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcPresentationOrganizationResource
 {
-	[Guid("f5035d0f-eddb-4069-b0c6-f085cd5fec1f")]
+	[Guid("d58d8ae7-e309-454d-b3f1-2b58ce4d583d")]
 	public partial class IfcPresentationLayerWithStyle : IfcPresentationLayerAssignment
 	{
 		[DataMember(Order=0)] 
@@ -36,7 +35,7 @@ namespace BuildingSmart.IFC.IfcPresentationOrganizationResource
 	
 		[DataMember(Order=3)] 
 		[Required()]
-		ISet<IfcPresentationStyleSelect> _LayerStyles = new HashSet<IfcPresentationStyleSelect>();
+		ISet<IfcPresentationStyle> _LayerStyles = new HashSet<IfcPresentationStyle>();
 	
 	
 		[Description("A logical setting, TRUE indicates that the layer is set to \'On\', FALSE that the l" +
@@ -55,11 +54,13 @@ namespace BuildingSmart.IFC.IfcPresentationOrganizationResource
 	
 		[Description(@"<EPM-HTML>
 	Assignment of presentation styles to the layer to provide a default style for representation items.
-	<blockquote><small>
-	NOTE&nbsp; In most cases the assignment of styles to a layer is restricted to an <i>IfcCurveStyle</i> representing the layer curve colour, layer curve thickness, and layer curve type.
-	</small></blockquote>
+	<blockquote class=""note"">NOTE&nbsp; In most cases the assignment of styles to a layer is restricted to an <em>IfcCurveStyle</em> representing the layer curve colour, layer curve thickness, and layer curve type.
+	  </blockquote>
+	  <blockquote class=""change-ifc2x4"">
+	IFC4 CHANGE&nbsp; The data type has been changed from <em>IfcPresentationStyleSelect</em> (now deprecated) to <em>IfcPresentationStyle</em>.
+	</blockquote>
 	</EPM-HTML>")]
-		public ISet<IfcPresentationStyleSelect> LayerStyles { get { return this._LayerStyles; } }
+		public ISet<IfcPresentationStyle> LayerStyles { get { return this._LayerStyles; } }
 	
 	
 	}

@@ -10,17 +10,12 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
 
 namespace BuildingSmart.IFC.IfcElectricalDomain
 {
-	[Guid("0fa61e63-6d67-4f35-8a1c-0d0f40e72556")]
+	[Guid("5b0765d7-22a3-4ba4-a259-32523ca4082c")]
 	public partial class IfcJunctionBoxType : IfcFlowFittingType
 	{
 		[DataMember(Order=0)] 
@@ -29,8 +24,8 @@ namespace BuildingSmart.IFC.IfcElectricalDomain
 		IfcJunctionBoxTypeEnum _PredefinedType;
 	
 	
-		[Description("Identifies the predefined types of junction boxes from which the type required ma" +
-	    "y be set.")]
+		[Description("<EPM-HTML><p>Identifies the predefined types of junction boxes from which the typ" +
+	    "e required may be set.</p></EPM-HTML>")]
 		public IfcJunctionBoxTypeEnum PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	

@@ -14,57 +14,51 @@ using BuildingSmart.IFC.IfcMeasureResource;
 
 namespace BuildingSmart.IFC.IfcStructuralLoadResource
 {
-	[Guid("1386f6f9-f668-4418-9168-55d106724177")]
+	[Guid("0454a0f4-fdfb-4856-bad8-c1a1202137d1")]
 	public partial class IfcBoundaryNodeCondition : IfcBoundaryCondition
 	{
 		[DataMember(Order=0)] 
-		[XmlAttribute]
-		IfcLinearStiffnessMeasure? _LinearStiffnessX;
+		IfcTranslationalStiffnessSelect _TranslationalStiffnessX;
 	
 		[DataMember(Order=1)] 
-		[XmlAttribute]
-		IfcLinearStiffnessMeasure? _LinearStiffnessY;
+		IfcTranslationalStiffnessSelect _TranslationalStiffnessY;
 	
 		[DataMember(Order=2)] 
-		[XmlAttribute]
-		IfcLinearStiffnessMeasure? _LinearStiffnessZ;
+		IfcTranslationalStiffnessSelect _TranslationalStiffnessZ;
 	
 		[DataMember(Order=3)] 
-		[XmlAttribute]
-		IfcRotationalStiffnessMeasure? _RotationalStiffnessX;
+		IfcRotationalStiffnessSelect _RotationalStiffnessX;
 	
 		[DataMember(Order=4)] 
-		[XmlAttribute]
-		IfcRotationalStiffnessMeasure? _RotationalStiffnessY;
+		IfcRotationalStiffnessSelect _RotationalStiffnessY;
 	
 		[DataMember(Order=5)] 
-		[XmlAttribute]
-		IfcRotationalStiffnessMeasure? _RotationalStiffnessZ;
+		IfcRotationalStiffnessSelect _RotationalStiffnessZ;
 	
 	
-		[Description("Linear stiffness value in x-direction of the coordinate system defined by the ins" +
-	    "tance which uses this resource object. ")]
-		public IfcLinearStiffnessMeasure? LinearStiffnessX { get { return this._LinearStiffnessX; } set { this._LinearStiffnessX = value;} }
+		[Description("Translational stiffness value in x-direction of the coordinate system defined by " +
+	    "the instance which uses this resource object.")]
+		public IfcTranslationalStiffnessSelect TranslationalStiffnessX { get { return this._TranslationalStiffnessX; } set { this._TranslationalStiffnessX = value;} }
 	
-		[Description("Linear stiffness value in y-direction of the coordinate system defined by the ins" +
-	    "tance which uses this resource object.")]
-		public IfcLinearStiffnessMeasure? LinearStiffnessY { get { return this._LinearStiffnessY; } set { this._LinearStiffnessY = value;} }
+		[Description("Translational stiffness value in y-direction of the coordinate system defined by " +
+	    "the instance which uses this resource object.")]
+		public IfcTranslationalStiffnessSelect TranslationalStiffnessY { get { return this._TranslationalStiffnessY; } set { this._TranslationalStiffnessY = value;} }
 	
-		[Description("Linear stiffness value in z-direction of the coordinate system defined by the ins" +
-	    "tance which uses this resource object.")]
-		public IfcLinearStiffnessMeasure? LinearStiffnessZ { get { return this._LinearStiffnessZ; } set { this._LinearStiffnessZ = value;} }
+		[Description("Translational stiffness value in z-direction of the coordinate system defined by " +
+	    "the instance which uses this resource object.")]
+		public IfcTranslationalStiffnessSelect TranslationalStiffnessZ { get { return this._TranslationalStiffnessZ; } set { this._TranslationalStiffnessZ = value;} }
 	
 		[Description("Rotational stiffness value about the x-axis of the coordinate system defined by t" +
 	    "he instance which uses this resource object.")]
-		public IfcRotationalStiffnessMeasure? RotationalStiffnessX { get { return this._RotationalStiffnessX; } set { this._RotationalStiffnessX = value;} }
+		public IfcRotationalStiffnessSelect RotationalStiffnessX { get { return this._RotationalStiffnessX; } set { this._RotationalStiffnessX = value;} }
 	
 		[Description("Rotational stiffness value about the y-axis of the coordinate system defined by t" +
 	    "he instance which uses this resource object.")]
-		public IfcRotationalStiffnessMeasure? RotationalStiffnessY { get { return this._RotationalStiffnessY; } set { this._RotationalStiffnessY = value;} }
+		public IfcRotationalStiffnessSelect RotationalStiffnessY { get { return this._RotationalStiffnessY; } set { this._RotationalStiffnessY = value;} }
 	
 		[Description("Rotational stiffness value about the z-axis of the coordinate system defined by t" +
 	    "he instance which uses this resource object.")]
-		public IfcRotationalStiffnessMeasure? RotationalStiffnessZ { get { return this._RotationalStiffnessZ; } set { this._RotationalStiffnessZ = value;} }
+		public IfcRotationalStiffnessSelect RotationalStiffnessZ { get { return this._RotationalStiffnessZ; } set { this._RotationalStiffnessZ = value;} }
 	
 	
 	}

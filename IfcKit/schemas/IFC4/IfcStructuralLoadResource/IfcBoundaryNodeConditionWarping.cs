@@ -14,16 +14,15 @@ using BuildingSmart.IFC.IfcMeasureResource;
 
 namespace BuildingSmart.IFC.IfcStructuralLoadResource
 {
-	[Guid("7649986d-ba44-4647-bd9e-d64469541f91")]
+	[Guid("276b65b6-ad1b-4f76-9a7e-2ed708c3c554")]
 	public partial class IfcBoundaryNodeConditionWarping : IfcBoundaryNodeCondition
 	{
 		[DataMember(Order=0)] 
-		[XmlAttribute]
-		IfcWarpingMomentMeasure? _WarpingStiffness;
+		IfcWarpingStiffnessSelect _WarpingStiffness;
 	
 	
 		[Description("Defines the warping stiffness value.")]
-		public IfcWarpingMomentMeasure? WarpingStiffness { get { return this._WarpingStiffness; } set { this._WarpingStiffness = value;} }
+		public IfcWarpingStiffnessSelect WarpingStiffness { get { return this._WarpingStiffness; } set { this._WarpingStiffness = value;} }
 	
 	
 	}

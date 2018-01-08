@@ -20,7 +20,7 @@ using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
-	[Guid("1fb4f722-0898-4227-bc26-9b911b160b12")]
+	[Guid("d3bb1eed-bb7b-4d0f-835a-70ad22becf57")]
 	public enum IfcBSplineCurveForm
 	{
 		POLYLINE_FORM = 1,

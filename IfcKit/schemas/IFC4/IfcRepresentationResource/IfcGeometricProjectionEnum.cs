@@ -21,7 +21,7 @@ using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcRepresentationResource
 {
-	[Guid("b5db521c-9f41-4767-ae85-dd778e4aa9ce")]
+	[Guid("32a77a31-87a4-4a61-8043-df1ff5a038e2")]
 	public enum IfcGeometricProjectionEnum
 	{
 		GRAPH_VIEW = 1,

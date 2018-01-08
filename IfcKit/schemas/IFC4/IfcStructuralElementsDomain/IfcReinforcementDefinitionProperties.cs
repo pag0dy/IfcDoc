@@ -10,18 +10,16 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfilePropertyResource;
+using BuildingSmart.IFC.IfcProfileResource;
+using BuildingSmart.IFC.IfcSharedComponentElements;
 
 namespace BuildingSmart.IFC.IfcStructuralElementsDomain
 {
-	[Guid("5208d1af-f12c-4c88-b45d-f93eeab15baf")]
-	public partial class IfcReinforcementDefinitionProperties : IfcPropertySetDefinition
+	[Guid("1e012790-9138-46ab-b075-8f853dffbdf8")]
+	public partial class IfcReinforcementDefinitionProperties : IfcPreDefinedPropertySet
 	{
 		[DataMember(Order=0)] 
 		[XmlAttribute]

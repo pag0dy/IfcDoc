@@ -11,21 +11,47 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
+using BuildingSmart.IFC.IfcApprovalResource;
+using BuildingSmart.IFC.IfcConstraintResource;
+using BuildingSmart.IFC.IfcCostResource;
 using BuildingSmart.IFC.IfcDateTimeResource;
+using BuildingSmart.IFC.IfcKernel;
+using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
+using BuildingSmart.IFC.IfcProfileResource;
+using BuildingSmart.IFC.IfcPropertyResource;
+using BuildingSmart.IFC.IfcQuantityResource;
 
 namespace BuildingSmart.IFC.IfcExternalReferenceResource
 {
-	[Guid("87a907a8-1351-4dd9-8a18-58f13ee5a2e0")]
+	[Guid("d5b0d04f-2b00-489b-a200-4b5b96eaec68")]
 	public partial class IfcDocumentReference : IfcExternalReference,
 		BuildingSmart.IFC.IfcExternalReferenceResource.IfcDocumentSelect
 	{
-		[InverseProperty("DocumentReferences")] 
-		ISet<IfcDocumentInformation> _ReferenceToDocument = new HashSet<IfcDocumentInformation>();
+		[DataMember(Order=0)] 
+		[XmlAttribute]
+		IfcText? _Description;
+	
+		[DataMember(Order=1)] 
+		[XmlElement("IfcDocumentInformation")]
+		IfcDocumentInformation _ReferencedDocument;
+	
+		[InverseProperty("RelatingDocument")] 
+		ISet<IfcRelAssociatesDocument> _DocumentRefForObjects = new HashSet<IfcRelAssociatesDocument>();
 	
 	
-		[Description("The document information that is being referenced.")]
-		public ISet<IfcDocumentInformation> ReferenceToDocument { get { return this._ReferenceToDocument; } }
+		[Description("<EPM-HTML>\r\nDescription of the document reference for informational purposes.\r\n<b" +
+	    "lockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; New attribute added at the end" +
+	    " of the attribute list.</blockquote>\r\n</EPM-HTML>")]
+		public IfcText? Description { get { return this._Description; } set { this._Description = value;} }
+	
+		[Description("<EPM-HTML>The document that is referenced.</EPM-HTML>")]
+		public IfcDocumentInformation ReferencedDocument { get { return this._ReferencedDocument; } set { this._ReferencedDocument = value;} }
+	
+		[Description("<EPM-HTML>\r\nThe document reference with which objects are associated.\r\n<blockquot" +
+	    "e class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; New inverse attribute.</blockquote>\r\n<" +
+	    "/EPM-HTML>")]
+		public ISet<IfcRelAssociatesDocument> DocumentRefForObjects { get { return this._DocumentRefForObjects; } }
 	
 	
 	}

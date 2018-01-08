@@ -10,40 +10,52 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
 
 namespace BuildingSmart.IFC.IfcBuildingControlsDomain
 {
-	[Guid("b796e1b3-29e0-4106-90ff-86c8b585926e")]
+	[Guid("b9a69a8b-176b-4d10-897a-13281718f60f")]
 	public enum IfcSensorTypeEnum
 	{
-		CO2SENSOR = 1,
+		CONDUCTANCESENSOR = 1,
 	
-		FIRESENSOR = 2,
+		CONTACTSENSOR = 2,
 	
-		FLOWSENSOR = 3,
+		FIRESENSOR = 3,
 	
-		GASSENSOR = 4,
+		FLOWSENSOR = 4,
 	
-		HEATSENSOR = 5,
+		GASSENSOR = 5,
 	
-		HUMIDITYSENSOR = 6,
+		HEATSENSOR = 6,
 	
-		LIGHTSENSOR = 7,
+		HUMIDITYSENSOR = 7,
 	
-		MOISTURESENSOR = 8,
+		IONCONCENTRATIONSENSOR = 8,
 	
-		MOVEMENTSENSOR = 9,
+		LEVELSENSOR = 9,
 	
-		PRESSURESENSOR = 10,
+		LIGHTSENSOR = 10,
 	
-		SMOKESENSOR = 11,
+		MOISTURESENSOR = 11,
 	
-		SOUNDSENSOR = 12,
+		MOVEMENTSENSOR = 12,
 	
-		TEMPERATURESENSOR = 13,
+		PHSENSOR = 13,
+	
+		PRESSURESENSOR = 14,
+	
+		RADIATIONSENSOR = 15,
+	
+		RADIOACTIVITYSENSOR = 16,
+	
+		SMOKESENSOR = 17,
+	
+		SOUNDSENSOR = 18,
+	
+		TEMPERATURESENSOR = 19,
+	
+		WINDSENSOR = 20,
 	
 		USERDEFINED = -1,
 	

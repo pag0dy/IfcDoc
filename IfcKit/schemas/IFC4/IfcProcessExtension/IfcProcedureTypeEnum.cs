@@ -21,7 +21,7 @@ using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 
 namespace BuildingSmart.IFC.IfcProcessExtension
 {
-	[Guid("cf0db333-66c2-4eb0-a7ee-08b9517e085f")]
+	[Guid("6debef98-a603-4e6c-b03c-d90cfbb326e8")]
 	public enum IfcProcedureTypeEnum
 	{
 		ADVICE_CAUTION = 1,

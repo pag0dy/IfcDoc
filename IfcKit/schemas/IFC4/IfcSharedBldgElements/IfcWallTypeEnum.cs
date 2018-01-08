@@ -25,18 +25,26 @@ using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcSharedBldgElements
 {
-	[Guid("75332a41-b820-49f7-ab27-5448d18986f0")]
+	[Guid("b384b8f0-f9c1-4eb0-a556-e484db5ea995")]
 	public enum IfcWallTypeEnum
 	{
-		STANDARD = 1,
+		MOVABLE = 1,
 	
-		POLYGONAL = 2,
+		PARAPET = 2,
 	
-		SHEAR = 3,
+		PARTITIONING = 3,
 	
-		ELEMENTEDWALL = 4,
+		PLUMBINGWALL = 4,
 	
-		PLUMBINGWALL = 5,
+		SHEAR = 5,
+	
+		SOLIDWALL = 6,
+	
+		STANDARD = 7,
+	
+		POLYGONAL = 8,
+	
+		ELEMENTEDWALL = 9,
 	
 		USERDEFINED = -1,
 	

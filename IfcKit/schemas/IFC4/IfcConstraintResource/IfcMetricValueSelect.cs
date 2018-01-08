@@ -16,12 +16,11 @@ using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcTimeSeriesResource;
 using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcConstraintResource
 {
-	[Guid("e467ad2b-e094-4581-ae6c-f0f320258597")]
+	[Guid("811ac9ba-e590-4255-9d68-1c9b72181e07")]
 	public interface IfcMetricValueSelect
 	{
 	}

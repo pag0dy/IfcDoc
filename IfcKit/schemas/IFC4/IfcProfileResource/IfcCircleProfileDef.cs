@@ -10,13 +10,14 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
+using BuildingSmart.IFC.IfcPropertyResource;
 
 namespace BuildingSmart.IFC.IfcProfileResource
 {
-	[Guid("a4e8726c-0d47-4d13-bf40-bdc1d4df481a")]
+	[Guid("0f127537-4dfb-420f-bcea-6637237ef8e4")]
 	public partial class IfcCircleProfileDef : IfcParameterizedProfileDef
 	{
 		[DataMember(Order=0)] 

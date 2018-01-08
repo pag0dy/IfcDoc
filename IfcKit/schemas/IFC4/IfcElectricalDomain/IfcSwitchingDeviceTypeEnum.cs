@@ -10,28 +10,31 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
 
 namespace BuildingSmart.IFC.IfcElectricalDomain
 {
-	[Guid("61fd2886-beef-4d12-816b-7bede5274866")]
+	[Guid("3bdad866-1d6c-4f61-8060-69525238e808")]
 	public enum IfcSwitchingDeviceTypeEnum
 	{
 		CONTACTOR = 1,
 	
-		EMERGENCYSTOP = 2,
+		DIMMERSWITCH = 2,
 	
-		STARTER = 3,
+		EMERGENCYSTOP = 3,
 	
-		SWITCHDISCONNECTOR = 4,
+		KEYPAD = 4,
 	
-		TOGGLESWITCH = 5,
+		MOMENTARYSWITCH = 5,
+	
+		SELECTORSWITCH = 6,
+	
+		STARTER = 7,
+	
+		SWITCHDISCONNECTOR = 8,
+	
+		TOGGLESWITCH = 9,
 	
 		USERDEFINED = -1,
 	

@@ -15,7 +15,7 @@ using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 
 namespace BuildingSmart.IFC.IfcTopologyResource
 {
-	[Guid("e7265542-cf8c-4ea7-a252-f933c35ac742")]
+	[Guid("af2d8d71-bff9-43d6-8831-2a74e2889cd0")]
 	public partial class IfcLoop : IfcTopologicalRepresentationItem
 	{
 	

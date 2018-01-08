@@ -15,13 +15,14 @@ using BuildingSmart.IFC.IfcConstraintResource;
 using BuildingSmart.IFC.IfcCostResource;
 using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
+using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcTimeSeriesResource;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcPropertyResource
 {
-	[Guid("a8b92b43-6cd2-4e8e-866a-66d4d70df55b")]
+	[Guid("d27db37d-229f-4d7e-8f8d-6f135a6cc6e5")]
 	public interface IfcObjectReferenceSelect
 	{
 	}

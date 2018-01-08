@@ -26,7 +26,7 @@ using BuildingSmart.IFC.IfcSharedBldgElements;
 
 namespace BuildingSmart.IFC.IfcArchitectureDomain
 {
-	[Guid("91bf1f15-b589-40dc-84f0-db41d0e0652c")]
+	[Guid("9ba90fa0-a44e-4cad-aa35-3e34cd35f1da")]
 	public enum IfcPermeableCoveringOperationEnum
 	{
 		GRILL = 1,

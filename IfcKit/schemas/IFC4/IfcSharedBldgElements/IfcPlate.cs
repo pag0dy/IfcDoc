@@ -25,9 +25,20 @@ using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcSharedBldgElements
 {
-	[Guid("afbfbd18-27bb-48ae-af7d-d4062d156b24")]
+	[Guid("2b32e8c1-898b-46b1-a578-df08e1db3c6b")]
 	public partial class IfcPlate : IfcBuildingElement
 	{
+		[DataMember(Order=0)] 
+		[XmlAttribute]
+		IfcPlateTypeEnum? _PredefinedType;
+	
+	
+		[Description(@"<EPM-HTML>
+	Predefined generic type for a plate that is specified in an enumeration. There may be a property set given specificly for the predefined types.
+	<blockquote class=""note"">NOTE&nbsp; The <em>PredefinedType</em> shall only be used, if no <em>IfcPlateType</em> is assigned, providing its own <em>IfcPlateType.PredefinedType</em>.</blockquote>
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE  The attribute has been added at the end of the entity definition.</blockquote>
+	</EPM-HTML> ")]
+		public IfcPlateTypeEnum? PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	
 	}

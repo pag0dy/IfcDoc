@@ -18,7 +18,7 @@ using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometricModelResource
 {
-	[Guid("74240fb6-d850-4b9a-83b8-7d82871d703f")]
+	[Guid("d78312f8-1bcd-4504-890e-d6fcdaab653c")]
 	public partial class IfcBooleanResult : IfcGeometricRepresentationItem,
 		BuildingSmart.IFC.IfcGeometricModelResource.IfcBooleanOperand,
 		BuildingSmart.IFC.IfcGeometricModelResource.IfcCsgSelect
@@ -37,13 +37,15 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 		IfcBooleanOperand _SecondOperand;
 	
 	
-		[Description("The Boolean operator used in the operation to create the result.")]
+		[Description("<EPM-HTML>\r\nThe Boolean operator used in the operation to create the result.\r\n</E" +
+	    "PM-HTML>")]
 		public IfcBooleanOperator Operator { get { return this._Operator; } set { this._Operator = value;} }
 	
-		[Description("The first operand to be operated upon by the Boolean operation.")]
+		[Description("<EPM-HTML>\r\nThe first operand to be operated upon by the Boolean operation.\r\n</EP" +
+	    "M-HTML>")]
 		public IfcBooleanOperand FirstOperand { get { return this._FirstOperand; } set { this._FirstOperand = value;} }
 	
-		[Description("The second operand specified for the operation.")]
+		[Description("<EPM-HTML>\r\nThe second operand specified for the operation.\r\n</EPM-HTML>")]
 		public IfcBooleanOperand SecondOperand { get { return this._SecondOperand; } set { this._SecondOperand = value;} }
 	
 	

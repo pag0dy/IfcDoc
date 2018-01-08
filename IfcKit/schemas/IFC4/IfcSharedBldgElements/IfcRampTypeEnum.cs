@@ -25,7 +25,7 @@ using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcSharedBldgElements
 {
-	[Guid("ccc1ae50-be69-4745-b834-a18f7737b7f1")]
+	[Guid("4b5ed5c2-face-4475-8fa7-a0c300d57c37")]
 	public enum IfcRampTypeEnum
 	{
 		STRAIGHT_RUN_RAMP = 1,

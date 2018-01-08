@@ -10,17 +10,12 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
 
 namespace BuildingSmart.IFC.IfcElectricalDomain
 {
-	[Guid("36231551-863d-412e-9977-03a196cf6537")]
+	[Guid("9022a034-602f-4405-bb14-2e18d8a865db")]
 	public partial class IfcElectricFlowStorageDeviceType : IfcFlowStorageDeviceType
 	{
 		[DataMember(Order=0)] 
@@ -29,6 +24,8 @@ namespace BuildingSmart.IFC.IfcElectricalDomain
 		IfcElectricFlowStorageDeviceTypeEnum _PredefinedType;
 	
 	
+		[Description("<EPM-HTML><p>Identifies the predefined types of electric flow storage devices fro" +
+	    "m which the type required may be set.</p></EPM-HTML>")]
 		public IfcElectricFlowStorageDeviceTypeEnum PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	

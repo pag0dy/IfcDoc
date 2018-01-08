@@ -15,14 +15,15 @@ using BuildingSmart.IFC.IfcConstraintResource;
 using BuildingSmart.IFC.IfcCostResource;
 using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
+using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcTimeSeriesResource;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcPropertyResource
 {
-	[Guid("f331e745-a4d0-4fa4-90fb-3b8200920cd6")]
-	public abstract partial class IfcProperty
+	[Guid("911b51d0-e3e7-45db-a881-520360ded638")]
+	public abstract partial class IfcProperty : IfcPropertyAbstraction
 	{
 		[DataMember(Order=0)] 
 		[XmlAttribute]
@@ -32,6 +33,9 @@ namespace BuildingSmart.IFC.IfcPropertyResource
 		[DataMember(Order=1)] 
 		[XmlAttribute]
 		IfcText? _Description;
+	
+		[InverseProperty("HasProperties")] 
+		ISet<IfcPropertySet> _PartOfPset = new HashSet<IfcPropertySet>();
 	
 		[InverseProperty("DependingProperty")] 
 		ISet<IfcPropertyDependencyRelationship> _PropertyForDependance = new HashSet<IfcPropertyDependencyRelationship>();
@@ -43,12 +47,18 @@ namespace BuildingSmart.IFC.IfcPropertyResource
 		ISet<IfcComplexProperty> _PartOfComplex = new HashSet<IfcComplexProperty>();
 	
 	
-		[Description("Name for this property. This label is the significant name string that defines th" +
-	    "e semantic meaning for the property.")]
+		[Description("<EPM-HTML>\r\nName for this property. This label is the significant name string tha" +
+	    "t defines the semantic meaning for the property.\r\n</EPM-HTML>")]
 		public IfcIdentifier Name { get { return this._Name; } set { this._Name = value;} }
 	
-		[Description("Informative text to explain the property.")]
+		[Description("<EPM-HTML>\r\nInformative text to explain the property.\r\n</EPM-HTML>")]
 		public IfcText? Description { get { return this._Description; } set { this._Description = value;} }
+	
+		[Description(@"<EPM-HTML>
+	Reference to the <em>IfcPropertySet</em> by which the <em>IfcProperty</em> is referenced.
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; New inverse attribute to navigate from <em>IfcProperty</em> to <em>IfcPropertySet</em> with upward compatibility for file based exchange.</blockquote>
+	</EPM-HTML>")]
+		public ISet<IfcPropertySet> PartOfPset { get { return this._PartOfPset; } }
 	
 		[Description("The property on whose value that of another property depends.")]
 		public ISet<IfcPropertyDependencyRelationship> PropertyForDependance { get { return this._PropertyForDependance; } }
@@ -56,7 +66,10 @@ namespace BuildingSmart.IFC.IfcPropertyResource
 		[Description("The relating property on which the value of the property depends.")]
 		public ISet<IfcPropertyDependencyRelationship> PropertyDependsOn { get { return this._PropertyDependsOn; } }
 	
-		[Description("Reference to the IfcComplexProperty in which the IfcProperty is contained.")]
+		[Description(@"<EPM-HTML>
+	Reference to the <em>IfcComplexProperty</em> in which the <em>IfcProperty</em> is contained.
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The cardinality has changed to 0..n to allow reuse of instances of <em>IfcProperty</em> in several <em>IfcComplexProperty</em> with upward compatibility for file based exchange.</blockquote>
+	</EPM-HTML>")]
 		public ISet<IfcComplexProperty> PartOfComplex { get { return this._PartOfComplex; } }
 	
 	

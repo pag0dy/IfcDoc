@@ -10,35 +10,27 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialResource;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcPropertyResource;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
 using BuildingSmart.IFC.IfcSharedComponentElements;
 
 namespace BuildingSmart.IFC.IfcHvacDomain
 {
-	[Guid("570846fb-0d79-4289-a95b-dd7e45a802d9")]
+	[Guid("bdc6c4e2-1bc4-4f7b-935f-2ff8a71a6ab9")]
 	public enum IfcCondenserTypeEnum
 	{
-		WATERCOOLEDSHELLTUBE = 1,
+		AIRCOOLED = 1,
 	
-		WATERCOOLEDSHELLCOIL = 2,
+		EVAPORATIVECOOLED = 2,
 	
-		WATERCOOLEDTUBEINTUBE = 3,
+		WATERCOOLED = 3,
 	
 		WATERCOOLEDBRAZEDPLATE = 4,
 	
-		AIRCOOLED = 5,
+		WATERCOOLEDSHELLCOIL = 5,
 	
-		EVAPORATIVECOOLED = 6,
+		WATERCOOLEDSHELLTUBE = 6,
+	
+		WATERCOOLEDTUBEINTUBE = 7,
 	
 		USERDEFINED = -1,
 	

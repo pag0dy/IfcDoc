@@ -14,15 +14,13 @@ using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfilePropertyResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
 using BuildingSmart.IFC.IfcStructuralLoadResource;
 
 namespace BuildingSmart.IFC.IfcStructuralAnalysisDomain
 {
-	[Guid("f788d9ab-8d24-4c35-8520-678d52de6938")]
+	[Guid("d755201f-41e5-41f3-b37c-30c473853a22")]
 	public partial class IfcRelConnectsStructuralActivity : IfcRelConnects
 	{
 		[DataMember(Order=0)] 
@@ -30,17 +28,17 @@ namespace BuildingSmart.IFC.IfcStructuralAnalysisDomain
 		IfcStructuralActivityAssignmentSelect _RelatingElement;
 	
 		[DataMember(Order=1)] 
+		[XmlElement("IfcStructuralActivity")]
 		[Required()]
 		IfcStructuralActivity _RelatedStructuralActivity;
 	
 	
-		[Description("Reference to an instance of IfcStructuralItem or IfcBuildingElement (or its subcl" +
-	    "asses) to which the specified action is applied.")]
+		[Description("Reference to a structural item or element to which the specified activity is appl" +
+	    "ied.")]
 		public IfcStructuralActivityAssignmentSelect RelatingElement { get { return this._RelatingElement; } set { this._RelatingElement = value;} }
 	
-		[Description("Reference to an instance of IfcStructuralActivity (or its subclasses) which is ac" +
-	    "ting upon the specified structural element (represented by a respective structur" +
-	    "al representation entity). ")]
+		[Description("Reference to a structural activity which is acting upon the specified structural " +
+	    "item or element.")]
 		public IfcStructuralActivity RelatedStructuralActivity { get { return this._RelatedStructuralActivity; } set { this._RelatedStructuralActivity = value;} }
 	
 	

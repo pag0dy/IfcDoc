@@ -14,12 +14,11 @@ using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcPresentationResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcPresentationOrganizationResource
 {
-	[Guid("3b705245-20db-4ec6-9d25-c59a79898392")]
+	[Guid("71827db2-742f-4dc0-bf75-f01994ba5b74")]
 	public abstract partial class IfcLightSource : IfcGeometricRepresentationItem
 	{
 		[DataMember(Order=0)] 
@@ -27,6 +26,7 @@ namespace BuildingSmart.IFC.IfcPresentationOrganizationResource
 		IfcLabel? _Name;
 	
 		[DataMember(Order=1)] 
+		[XmlElement("IfcColourRgb")]
 		[Required()]
 		IfcColourRgb _LightColour;
 	

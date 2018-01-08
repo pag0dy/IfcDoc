@@ -14,7 +14,7 @@ using BuildingSmart.IFC.IfcMeasureResource;
 
 namespace BuildingSmart.IFC.IfcStructuralLoadResource
 {
-	[Guid("9189056f-f8cf-48d3-b5d7-a24b64c69c3b")]
+	[Guid("eea1aab8-29e8-4975-b676-396ce73e5468")]
 	public partial class IfcStructuralLoadSingleDisplacementDistortion : IfcStructuralLoadSingleDisplacement
 	{
 		[DataMember(Order=0)] 
@@ -22,7 +22,8 @@ namespace BuildingSmart.IFC.IfcStructuralLoadResource
 		IfcCurvatureMeasure? _Distortion;
 	
 	
-		[Description("The distortion curvature given to the displacement load.")]
+		[Description("The distortion curvature (warping, i.e. a cross-sectional deplanation) given to t" +
+	    "he displacement load.")]
 		public IfcCurvatureMeasure? Distortion { get { return this._Distortion; } set { this._Distortion = value;} }
 	
 	

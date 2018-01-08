@@ -15,10 +15,11 @@ using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 
 namespace BuildingSmart.IFC.IfcTopologyResource
 {
-	[Guid("a5aff9ec-1a7c-4fad-98f6-8993b3c19b0c")]
+	[Guid("57c11bcb-98a6-432c-af6d-cb98d7020755")]
 	public partial class IfcFaceBound : IfcTopologicalRepresentationItem
 	{
 		[DataMember(Order=0)] 
+		[XmlElement("IfcLoop")]
 		[Required()]
 		IfcLoop _Bound;
 	

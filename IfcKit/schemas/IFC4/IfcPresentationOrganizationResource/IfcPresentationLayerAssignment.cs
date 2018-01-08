@@ -14,12 +14,11 @@ using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcPresentationResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcPresentationOrganizationResource
 {
-	[Guid("0ff83e6c-fe39-4dda-8358-567127e601d7")]
+	[Guid("1021fba4-3bfe-4e0a-b0b5-662a3498c052")]
 	public partial class IfcPresentationLayerAssignment
 	{
 		[DataMember(Order=0)] 

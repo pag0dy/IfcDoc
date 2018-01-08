@@ -10,24 +10,23 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
 
 namespace BuildingSmart.IFC.IfcElectricalDomain
 {
-	[Guid("c245600d-f689-496d-a566-553d705ab15e")]
+	[Guid("88a91c6a-1986-40f1-8551-6a855b5424f5")]
 	public enum IfcTransformerTypeEnum
 	{
 		CURRENT = 1,
 	
 		FREQUENCY = 2,
 	
-		VOLTAGE = 3,
+		INVERTER = 3,
+	
+		RECTIFIER = 4,
+	
+		VOLTAGE = 5,
 	
 		USERDEFINED = -1,
 	

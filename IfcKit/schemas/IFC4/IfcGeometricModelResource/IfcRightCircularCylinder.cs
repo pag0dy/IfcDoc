@@ -18,7 +18,7 @@ using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometricModelResource
 {
-	[Guid("1acc0179-b420-416d-95e1-71185b188860")]
+	[Guid("1daf3ba6-e5cf-4741-8896-c9448b95f83a")]
 	public partial class IfcRightCircularCylinder : IfcCsgPrimitive3D
 	{
 		[DataMember(Order=0)] 
@@ -32,10 +32,11 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 		IfcPositiveLengthMeasure _Radius;
 	
 	
-		[Description("<EPM-HTML>\r\n</EPM-HTML>")]
+		[Description("<EPM-HTML>\r\nThe distance between the planar circular faces of the cylinder.\r\n</EP" +
+	    "M-HTML>")]
 		public IfcPositiveLengthMeasure Height { get { return this._Height; } set { this._Height = value;} }
 	
-		[Description("<EPM-HTML>\r\n</EPM-HTML>")]
+		[Description("<EPM-HTML>\r\nThe radius of the cylinder.\r\n</EPM-HTML>")]
 		public IfcPositiveLengthMeasure Radius { get { return this._Radius; } set { this._Radius = value;} }
 	
 	

@@ -11,42 +11,65 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcExternalReferenceResource;
+using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
+using BuildingSmart.IFC.IfcProductExtension;
+using BuildingSmart.IFC.IfcProfileResource;
 using BuildingSmart.IFC.IfcPropertyResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcMaterialResource
 {
-	[Guid("7fdcceda-cca1-4604-8876-51db2b6c8548")]
-	public partial class IfcMaterialLayer :
-		BuildingSmart.IFC.IfcMaterialResource.IfcMaterialSelect,
-		BuildingSmart.IFC.IfcPropertyResource.IfcObjectReferenceSelect
+	[Guid("1550d694-6c4a-46c4-9661-12b1956f035d")]
+	public partial class IfcMaterialLayer : IfcMaterialDefinition
 	{
 		[DataMember(Order=0)] 
+		[XmlElement("IfcMaterial")]
 		IfcMaterial _Material;
 	
 		[DataMember(Order=1)] 
 		[XmlAttribute]
 		[Required()]
-		IfcPositiveLengthMeasure _LayerThickness;
+		IfcNonNegativeLengthMeasure _LayerThickness;
 	
 		[DataMember(Order=2)] 
 		[XmlAttribute]
 		IfcLogical? _IsVentilated;
 	
+		[DataMember(Order=3)] 
+		[XmlAttribute]
+		IfcLabel? _Name;
+	
+		[DataMember(Order=4)] 
+		[XmlAttribute]
+		IfcText? _Description;
+	
+		[DataMember(Order=5)] 
+		[XmlAttribute]
+		IfcLabel? _Category;
+	
+		[DataMember(Order=6)] 
+		[XmlAttribute]
+		IfcNormalisedRatioMeasure? _Priority;
+	
 		[InverseProperty("MaterialLayers")] 
 		IfcMaterialLayerSet _ToMaterialLayerSet;
 	
 	
-		[Description("Optional reference to the material from which the layer is constructed. Note, tha" +
-	    "t if this value is not given, it does not denote a layer with no material (an ai" +
-	    "r gap), it only means that the material is not specified at that point.")]
+		[Description("Optional reference to the material from which the layer is constructed. Note that" +
+	    " if this value is not given, it does not denote a layer with no material (an air" +
+	    " gap), it only means that the material is not specified at that point.")]
 		public IfcMaterial Material { get { return this._Material; } set { this._Material = value;} }
 	
-		[Description("The thickness of the layer (dimension measured along the local x-axis of Mls LCS," +
-	    " in positive direction).")]
-		public IfcPositiveLengthMeasure LayerThickness { get { return this._LayerThickness; } set { this._LayerThickness = value;} }
+		[Description(@"<EPM-HTML>
+	The thickness of the material layer. The meaning of ""thickness"" depends on its usage. In case of building elements elements utilizing <em>IfcMaterialLayerSetUsage</em>, the dimension is measured along the positive <em>LayerSetDirection</em> as specified in <em>IfcMaterialLayerSetUsage</em>.
+	
+	<blockquote class=""note"">NOTE&nbsp; The attribute value can be 0. for material thicknesses very close to zero, such as for a membrane. Material layers with thickess 0. may not be rendered in the geometric representation.</blockquote>
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The attribute datatype has been changed to <em>IfcNonNegativeLengthMeasure</em> allowing for 0. as thickness.</blockquote>
+	
+	</EPM-HTML>")]
+		public IfcNonNegativeLengthMeasure LayerThickness { get { return this._LayerThickness; } set { this._LayerThickness = value;} }
 	
 		[Description(@"<EPM-HTML>
 	Indication of whether the material layer represents an air layer (or cavity). 
@@ -58,7 +81,24 @@ namespace BuildingSmart.IFC.IfcMaterialResource
 	</EPM-HTML>")]
 		public IfcLogical? IsVentilated { get { return this._IsVentilated; } set { this._IsVentilated = value;} }
 	
-		[Description("Reference to the material layer set, in which the material layer is included.")]
+		[Description("The name by which the material layer is known.")]
+		public IfcLabel? Name { get { return this._Name; } set { this._Name = value;} }
+	
+		[Description("Definition of the material layer in more descriptive terms than given by attribut" +
+	    "es Name or Category.")]
+		public IfcText? Description { get { return this._Description; } set { this._Description = value;} }
+	
+		[Description("Category of the material layer, e.g. the role it has in the layer set it belongs " +
+	    "to (such as \'load bearing\', \'thermal insulation\' etc.).")]
+		public IfcLabel? Category { get { return this._Category; } set { this._Category = value;} }
+	
+		[Description(@"<EPM-HTML>
+	The relative priority of the layer, expressed as ratio measure, normalised to 0..1. Controls how layers intersect in connections and corners of building elements: a layer from one element protrudes into (i.e. displaces) a layer from another element in a joint of these elements if the former element's layer has higher priority than the latter. The priority value for a material layer in an element has to be set and maintained by software applications in relation to the material layers in connected elements.
+	</EPM-HTML>")]
+		public IfcNormalisedRatioMeasure? Priority { get { return this._Priority; } set { this._Priority = value;} }
+	
+		[Description("<EPM-HTML>\r\nReference to the <em>IfcMaterialLayerSet</em> in which the material l" +
+	    "ayer is included.\r\n</EPM-HTML>")]
 		public IfcMaterialLayerSet ToMaterialLayerSet { get { return this._ToMaterialLayerSet; } set { this._ToMaterialLayerSet = value;} }
 	
 	

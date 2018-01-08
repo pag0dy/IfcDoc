@@ -11,28 +11,31 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcConstraintResource;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometricModelResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
+using BuildingSmart.IFC.IfcProcessExtension;
 using BuildingSmart.IFC.IfcPropertyResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
 using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcKernel
 {
-	[Guid("69a0af4c-7e8d-4eef-9640-5013d87c6c55")]
+	[Guid("e991a118-741e-4598-a023-d9ad58f0f717")]
 	public partial class IfcGroup : IfcObject
 	{
 		[InverseProperty("RelatingGroup")] 
-		IfcRelAssignsToGroup _IsGroupedBy;
+		ISet<IfcRelAssignsToGroup> _IsGroupedBy = new HashSet<IfcRelAssignsToGroup>();
 	
 	
-		[Description("Contains the relationship that assigns the group members to the group object.\r\n")]
-		public IfcRelAssignsToGroup IsGroupedBy { get { return this._IsGroupedBy; } set { this._IsGroupedBy = value;} }
+		[Description(@"<EPM-HTML>
+	Reference to the relationship <em>IfcRelAssignsToGroup</em> that assigns the one to many group members to the <em>IfcGroup</em> object.
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The cardinality has been changed from 1..1 to 0..? in order to allow the exchange of a group concept without having already group members assigned. It now also allows the use of many instances of <em>IfcRelAssignsToGroup</em> to assign the group members. The change has been done with upward compatibility for file based exchange.</blockquote>
+	</EPM-HTML>")]
+		public ISet<IfcRelAssignsToGroup> IsGroupedBy { get { return this._IsGroupedBy; } }
 	
 	
 	}

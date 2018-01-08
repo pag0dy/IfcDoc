@@ -25,17 +25,20 @@ using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcSharedBldgElements
 {
-	[Guid("76c3b2d8-410b-4108-aaf7-b5147dad4278")]
+	[Guid("d974f360-0afb-4b3f-a222-03b0b82cf2e3")]
 	public partial class IfcStair : IfcBuildingElement
 	{
 		[DataMember(Order=0)] 
 		[XmlAttribute]
-		[Required()]
-		IfcStairTypeEnum _ShapeType;
+		IfcStairTypeEnum? _PredefinedType;
 	
 	
-		[Description("Predefined shape types for a stair that are specified in an Enum.")]
-		public IfcStairTypeEnum ShapeType { get { return this._ShapeType; } set { this._ShapeType = value;} }
+		[Description(@"<EPM-HTML>
+	Predefined generic type for a stair that is specified in an enumeration. There may be a property set given specifically for the predefined types.
+	<blockquote class=""note"">NOTE&nbsp; The <em>PredefinedType</em> shall only be used, if no <em>IfcStairType</em> is assigned, providing its own <em>IfcStairType.PredefinedType</em>.</blockquote>
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE  The attribute has been renamed from <em>ShapeType</em> and changed to be OPTIONAL with upward compatibility for file based exchange.</blockquote>
+	</EPM-HTML>")]
+		public IfcStairTypeEnum? PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	
 	}

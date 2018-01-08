@@ -10,21 +10,23 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
+using BuildingSmart.IFC.IfcPropertyResource;
 
 namespace BuildingSmart.IFC.IfcProfileResource
 {
-	[Guid("5f2b33b3-4a09-48ad-858a-b13264839494")]
+	[Guid("eddbf896-fef4-49ba-b5c8-5315a44af82c")]
 	public abstract partial class IfcParameterizedProfileDef : IfcProfileDef
 	{
 		[DataMember(Order=0)] 
-		[Required()]
+		[XmlElement("IfcAxis2Placement2D")]
 		IfcAxis2Placement2D _Position;
 	
 	
-		[Description("Position coordinate system of the parameterized profile definition.")]
+		[Description("Position coordinate system of the parameterized profile definition. If unspecifie" +
+	    "d, no translation and no rotation is applied.\r\n")]
 		public IfcAxis2Placement2D Position { get { return this._Position; } set { this._Position = value;} }
 	
 	

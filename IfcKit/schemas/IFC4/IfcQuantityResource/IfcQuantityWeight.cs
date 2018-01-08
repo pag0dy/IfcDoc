@@ -10,11 +10,12 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 
 namespace BuildingSmart.IFC.IfcQuantityResource
 {
-	[Guid("3112a0f9-e07b-4712-abad-9576ad39a1e2")]
+	[Guid("b2c313f2-5299-4b30-b6d0-a7ea6fbf1b83")]
 	public partial class IfcQuantityWeight : IfcPhysicalSimpleQuantity
 	{
 		[DataMember(Order=0)] 
@@ -22,9 +23,19 @@ namespace BuildingSmart.IFC.IfcQuantityResource
 		[Required()]
 		IfcMassMeasure _WeightValue;
 	
+		[DataMember(Order=1)] 
+		[XmlAttribute]
+		IfcLabel? _Formula;
+	
 	
 		[Description("Mass measure value of this quantity.")]
 		public IfcMassMeasure WeightValue { get { return this._WeightValue; } set { this._WeightValue = value;} }
+	
+		[Description(@"<EPM-HTML>
+	A formula by which the quantity has been calculated. It can be assigned in addition to the actual value of the quantity. Formulas could be mathematic calculations (like width x height), database links, or a combination. The formula is for informational purposes only.
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE  Attribute added to the end of the attribute list.</blockquote>
+	</EPM-HTML>")]
+		public IfcLabel? Formula { get { return this._Formula; } set { this._Formula = value;} }
 	
 	
 	}

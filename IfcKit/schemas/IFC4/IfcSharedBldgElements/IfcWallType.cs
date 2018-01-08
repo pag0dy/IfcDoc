@@ -25,7 +25,7 @@ using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcSharedBldgElements
 {
-	[Guid("7a9d1d5a-1f3f-4774-ae27-e470755a043c")]
+	[Guid("598d0f96-6b0f-45f5-90f4-96758e77d64f")]
 	public partial class IfcWallType : IfcBuildingElementType
 	{
 		[DataMember(Order=0)] 
@@ -34,8 +34,8 @@ namespace BuildingSmart.IFC.IfcSharedBldgElements
 		IfcWallTypeEnum _PredefinedType;
 	
 	
-		[Description("Identifies the predefined types of a wall element from which the type required ma" +
-	    "y be set.")]
+		[Description("<EPM-HTML>\r\nIdentifies the predefined types of a wall element from which the type" +
+	    " required may be set.\r\n</EPM-HTML>")]
 		public IfcWallTypeEnum PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	

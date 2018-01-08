@@ -18,9 +18,10 @@ using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometricModelResource
 {
-	[Guid("8a2b232a-e59e-41c9-bc59-6e1d05e12b55")]
+	[Guid("6a71ad06-e92c-4e8d-bb08-441d03da182e")]
 	public abstract partial class IfcSolidModel : IfcGeometricRepresentationItem,
-		BuildingSmart.IFC.IfcGeometricModelResource.IfcBooleanOperand
+		BuildingSmart.IFC.IfcGeometricModelResource.IfcBooleanOperand,
+		BuildingSmart.IFC.IfcGeometricConstraintResource.IfcSolidOrShell
 	{
 	
 	

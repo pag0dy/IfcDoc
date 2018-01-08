@@ -10,52 +10,117 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
+using BuildingSmart.IFC.IfcPropertyResource;
 
 namespace BuildingSmart.IFC.IfcProfileResource
 {
-	[Guid("05390904-1128-43d6-81a1-6662199f18e4")]
-	public partial class IfcAsymmetricIShapeProfileDef : IfcIShapeProfileDef
+	[Guid("a97ad274-6a1b-4db7-b4a9-46725be04471")]
+	public partial class IfcAsymmetricIShapeProfileDef : IfcParameterizedProfileDef
 	{
 		[DataMember(Order=0)] 
 		[XmlAttribute]
 		[Required()]
-		IfcPositiveLengthMeasure _TopFlangeWidth;
+		IfcPositiveLengthMeasure _BottomFlangeWidth;
 	
 		[DataMember(Order=1)] 
 		[XmlAttribute]
-		IfcPositiveLengthMeasure? _TopFlangeThickness;
+		[Required()]
+		IfcPositiveLengthMeasure _OverallDepth;
 	
 		[DataMember(Order=2)] 
 		[XmlAttribute]
-		IfcPositiveLengthMeasure? _TopFlangeFilletRadius;
+		[Required()]
+		IfcPositiveLengthMeasure _WebThickness;
 	
 		[DataMember(Order=3)] 
 		[XmlAttribute]
-		IfcPositiveLengthMeasure? _CentreOfGravityInY;
+		[Required()]
+		IfcPositiveLengthMeasure _BottomFlangeThickness;
 	
+		[DataMember(Order=4)] 
+		[XmlAttribute]
+		IfcNonNegativeLengthMeasure? _BottomFlangeFilletRadius;
+	
+		[DataMember(Order=5)] 
+		[XmlAttribute]
+		[Required()]
+		IfcPositiveLengthMeasure _TopFlangeWidth;
+	
+		[DataMember(Order=6)] 
+		[XmlAttribute]
+		IfcPositiveLengthMeasure? _TopFlangeThickness;
+	
+		[DataMember(Order=7)] 
+		[XmlAttribute]
+		IfcNonNegativeLengthMeasure? _TopFlangeFilletRadius;
+	
+		[DataMember(Order=8)] 
+		[XmlAttribute]
+		IfcNonNegativeLengthMeasure? _BottomFlangeEdgeRadius;
+	
+		[DataMember(Order=9)] 
+		[XmlAttribute]
+		IfcPlaneAngleMeasure? _BottomFlangeSlope;
+	
+		[DataMember(Order=10)] 
+		[XmlAttribute]
+		IfcNonNegativeLengthMeasure? _TopFlangeEdgeRadius;
+	
+		[DataMember(Order=11)] 
+		[XmlAttribute]
+		IfcPlaneAngleMeasure? _TopFlangeSlope;
+	
+	
+		[Description("Extent of the bottom flange, defined parallel to the x axis of the position coord" +
+	    "inate system.")]
+		public IfcPositiveLengthMeasure BottomFlangeWidth { get { return this._BottomFlangeWidth; } set { this._BottomFlangeWidth = value;} }
+	
+		[Description("Total extent of the depth, defined parallel to the y axis of the position coordin" +
+	    "ate system.")]
+		public IfcPositiveLengthMeasure OverallDepth { get { return this._OverallDepth; } set { this._OverallDepth = value;} }
+	
+		[Description("Thickness of the web of the I-shape. The web is centred on the x-axis and the y-a" +
+	    "xis of the position coordinate system.")]
+		public IfcPositiveLengthMeasure WebThickness { get { return this._WebThickness; } set { this._WebThickness = value;} }
+	
+		[Description("Flange thickness of the bottom flange.")]
+		public IfcPositiveLengthMeasure BottomFlangeThickness { get { return this._BottomFlangeThickness; } set { this._BottomFlangeThickness = value;} }
+	
+		[Description("The fillet between the web and the bottom flange.  0 if sharp-edged, omitted if u" +
+	    "nknown.")]
+		public IfcNonNegativeLengthMeasure? BottomFlangeFilletRadius { get { return this._BottomFlangeFilletRadius; } set { this._BottomFlangeFilletRadius = value;} }
 	
 		[Description("Extent of the top flange, defined parallel to the x axis of the position coordina" +
 	    "te system.")]
 		public IfcPositiveLengthMeasure TopFlangeWidth { get { return this._TopFlangeWidth; } set { this._TopFlangeWidth = value;} }
 	
-		[Description("Flange thickness of the top flange of the I-shape. If given, the upper and the lo" +
-	    "wer flanges can have different thicknesses. If not given, the value of the inher" +
-	    "ited FlangeThickness attribute applies to both, the top and bottom flange thickn" +
-	    "ess.")]
+		[Description("Flange thickness of the top flange. This attribute is formally optional for histo" +
+	    "ric reasons only. Whenever the flange thickness is known, it shall be provided b" +
+	    "y value.")]
 		public IfcPositiveLengthMeasure? TopFlangeThickness { get { return this._TopFlangeThickness; } set { this._TopFlangeThickness = value;} }
 	
-		[Description(@"The fillet between the web and the top flange of the I-shape. If given, the fillet between upper and the lower flanges and the web can be different. If not given, the value of the inherited FilletRadius attribute applies to both, the top and bottom fillet. If the inherited FilletRadius is not given either, no filler is applied.")]
-		public IfcPositiveLengthMeasure? TopFlangeFilletRadius { get { return this._TopFlangeFilletRadius; } set { this._TopFlangeFilletRadius = value;} }
+		[Description("The fillet between the web and the top flange.  0 if sharp-edged, omitted if unkn" +
+	    "own.")]
+		public IfcNonNegativeLengthMeasure? TopFlangeFilletRadius { get { return this._TopFlangeFilletRadius; } set { this._TopFlangeFilletRadius = value;} }
 	
-		[Description(@"<EPM-HTML> Location of centre of gravity along the y axis measured from the center of the bounding box. 
-	  <blockquote> <small><font color=""#ff0000"">
-	IFC2x Edition 2 Addendum 2 CHANGE The attribute <i>CentreOfGravityInY</i> has been made optional. Upward compatibility for file based exchange is guaranteed.
-	  </font></small></blockquote>
-	</EPM-HTML>")]
-		public IfcPositiveLengthMeasure? CentreOfGravityInY { get { return this._CentreOfGravityInY; } set { this._CentreOfGravityInY = value;} }
+		[Description("Radius of the upper edges of the bottom flange.  0 if sharp-edged, omitted if unk" +
+	    "nown.")]
+		public IfcNonNegativeLengthMeasure? BottomFlangeEdgeRadius { get { return this._BottomFlangeEdgeRadius; } set { this._BottomFlangeEdgeRadius = value;} }
+	
+		[Description("Slope of the upper faces of the bottom flange.  Non-zero in case of of tapered bo" +
+	    "ttom flange, 0 in case of parallel bottom flange, omitted if unknown.")]
+		public IfcPlaneAngleMeasure? BottomFlangeSlope { get { return this._BottomFlangeSlope; } set { this._BottomFlangeSlope = value;} }
+	
+		[Description("Radius of the lower edges of the top flange.  0 if sharp-edged, omitted if unknow" +
+	    "n.")]
+		public IfcNonNegativeLengthMeasure? TopFlangeEdgeRadius { get { return this._TopFlangeEdgeRadius; } set { this._TopFlangeEdgeRadius = value;} }
+	
+		[Description("Slope of the lower faces of the top flange.  Non-zero in case of of tapered top f" +
+	    "lange, 0 in case of parallel top flange, omitted if unknown.")]
+		public IfcPlaneAngleMeasure? TopFlangeSlope { get { return this._TopFlangeSlope; } set { this._TopFlangeSlope = value;} }
 	
 	
 	}

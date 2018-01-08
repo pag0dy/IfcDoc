@@ -11,24 +11,26 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcExternalReferenceResource;
+using BuildingSmart.IFC.IfcGeometricModelResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationDefinitionResource;
-using BuildingSmart.IFC.IfcPresentationResource;
 using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 {
-	[Guid("15e29732-f8d2-4bce-882e-1173c7f66d31")]
+	[Guid("e7a73b70-71af-407a-a632-68e2de126223")]
 	public partial class IfcImageTexture : IfcSurfaceTexture
 	{
 		[DataMember(Order=0)] 
 		[XmlAttribute]
 		[Required()]
-		IfcIdentifier _UrlReference;
+		IfcURIReference _URLReference;
 	
 	
-		public IfcIdentifier UrlReference { get { return this._UrlReference; } set { this._UrlReference = value;} }
+		[Description("<EPM-HTML>\r\nLocation, provided as an URI, at which the image texture is electroni" +
+	    "cally published.\r\n</EPM-HTML>")]
+		public IfcURIReference URLReference { get { return this._URLReference; } set { this._URLReference = value;} }
 	
 	
 	}

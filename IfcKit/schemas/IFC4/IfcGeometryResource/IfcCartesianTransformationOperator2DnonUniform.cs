@@ -20,7 +20,7 @@ using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
-	[Guid("6b283852-794e-461c-8a05-2d7e9a211c85")]
+	[Guid("f45b9882-e0fb-41eb-9b0a-805615a37351")]
 	public partial class IfcCartesianTransformationOperator2DnonUniform : IfcCartesianTransformationOperator2D
 	{
 		[DataMember(Order=0)] 

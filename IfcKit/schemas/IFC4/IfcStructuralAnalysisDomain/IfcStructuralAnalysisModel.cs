@@ -14,15 +14,13 @@ using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfilePropertyResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
 using BuildingSmart.IFC.IfcStructuralLoadResource;
 
 namespace BuildingSmart.IFC.IfcStructuralAnalysisDomain
 {
-	[Guid("b796d1f5-5fcb-4c3a-8308-76c88bd1f02e")]
+	[Guid("2e087fc5-d46f-48f2-82c1-7c7b5162f4c3")]
 	public partial class IfcStructuralAnalysisModel : IfcSystem
 	{
 		[DataMember(Order=0)] 
@@ -31,6 +29,7 @@ namespace BuildingSmart.IFC.IfcStructuralAnalysisDomain
 		IfcAnalysisModelTypeEnum _PredefinedType;
 	
 		[DataMember(Order=1)] 
+		[XmlElement("IfcAxis2Placement3D")]
 		IfcAxis2Placement3D _OrientationOf2DPlane;
 	
 		[DataMember(Order=2)] 
@@ -39,11 +38,30 @@ namespace BuildingSmart.IFC.IfcStructuralAnalysisDomain
 		[DataMember(Order=3)] 
 		ISet<IfcStructuralResultGroup> _HasResults = new HashSet<IfcStructuralResultGroup>();
 	
+		[DataMember(Order=4)] 
+		[XmlElement("IfcObjectPlacement")]
+		IfcObjectPlacement _SharedPlacement;
+	
 	
 		[Description("Defines the type of the structural analysis model. ")]
 		public IfcAnalysisModelTypeEnum PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
-		[Description(@"If the selected model type (PredefinedType) describes a 2D system the orientation is needed to define the upright direction to the focused plane (z-axes). This is needed because all data for the structural analysis model (structural members, structural activities) are defined by using 3-D space. The orientation is given in relation to the coordinate system of the project. By 3D systems this value is not asserted.")]
+		[Description(@"<EPM-HTML>
+	
+	If the selected model type (<em>PredefinedType</em>) describes a 2D system, the orientation defines
+	the analysis plane (P[1], P[2]) and the normal to the analysis plane (P[3]).  This is needed because
+	structural items and activities are always defined in three-dimensional space even if they are
+	meant to be analysed in a two-dimensional manner.
+	
+	<ul>
+	<li>In case of predefined type IN_PLANE_LOADING_2D, the analysis is to be performed within the
+	projection into the P[1], P[2] plane.</li>
+	<li>In case of predefined type OUT_PLANE_LOADING_2D, only the P[3] component of loads and their
+	effects is meant to be analyzed.  This is used for beam grids and for typical slab analyses.</li>
+	<li>In case of predefined type LOADING_3D, <em>OrientationOf2DPlane</em> shall be omitted.</li>
+	</ul>
+	
+	</EPM-HTML>")]
 		public IfcAxis2Placement3D OrientationOf2DPlane { get { return this._OrientationOf2DPlane; } set { this._OrientationOf2DPlane = value;} }
 	
 		[Description("References to all load groups to be analyzed.")]
@@ -51,6 +69,17 @@ namespace BuildingSmart.IFC.IfcStructuralAnalysisDomain
 	
 		[Description("References to all result groups available for this structural analysis model.")]
 		public ISet<IfcStructuralResultGroup> HasResults { get { return this._HasResults; } }
+	
+		[Description(@"<EPM-HTML>
+	
+	Object placement which shall be common to all items and activities which are grouped into this instance of <em>IfcStructuralAnalysisModel</em>.  This placement establishes a coordinate system which is referred to as 'global coordinate system' in use definitions of various classes of structural items and activities.
+	
+	<blockquote class=""note"">NOTE&nbsp; Most commonly, but not necessarily, the <em>SharedPlacement</em> is an <em>IfcLocalPlacement</em> whose z axis is parallel with the z axis of the <em>IfcProject</em>'s world coordinate system and directed like the WCS z axis (i.e. pointing &quot;upwards&quot;) or directed against the WCS z axis (i.e. points &quot;downwards&quot;).</blockquote>
+	
+	<blockquote class=""note"">NOTE&nbsp; Per informal proposition, this attribute is <b>not optional</b> as soon as at least one <em>IfcStructuralItem</em> is grouped into the instance of <em>IfcStructuralAnalysisModel</em>.</blockquote>
+	
+	</EPM-HTML>")]
+		public IfcObjectPlacement SharedPlacement { get { return this._SharedPlacement; } set { this._SharedPlacement = value;} }
 	
 	
 	}

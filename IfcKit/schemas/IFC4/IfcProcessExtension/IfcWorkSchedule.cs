@@ -21,9 +21,17 @@ using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 
 namespace BuildingSmart.IFC.IfcProcessExtension
 {
-	[Guid("0a7f7d22-a0d6-4988-b9ca-edacae24cc2a")]
+	[Guid("863af35b-d9f7-458e-816e-351ab24b707b")]
 	public partial class IfcWorkSchedule : IfcWorkControl
 	{
+		[DataMember(Order=0)] 
+		[XmlAttribute]
+		IfcWorkScheduleTypeEnum? _PredefinedType;
+	
+	
+		[Description("<EPM-HTML>\r\n    Identifies the predefined types of a work schedule from which \r\n " +
+	    "   the type required may be set.\r\n</EPM-HTML>")]
+		public IfcWorkScheduleTypeEnum? PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	
 	}

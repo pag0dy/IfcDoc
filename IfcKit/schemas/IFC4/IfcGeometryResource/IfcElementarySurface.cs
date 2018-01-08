@@ -20,10 +20,11 @@ using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
-	[Guid("149afe59-0f09-4d70-8dd0-34fecd2c9dfe")]
+	[Guid("dab568ba-aad6-4d74-963d-d3f397cfcea1")]
 	public abstract partial class IfcElementarySurface : IfcSurface
 	{
 		[DataMember(Order=0)] 
+		[XmlElement("IfcAxis2Placement3D")]
 		[Required()]
 		IfcAxis2Placement3D _Position;
 	

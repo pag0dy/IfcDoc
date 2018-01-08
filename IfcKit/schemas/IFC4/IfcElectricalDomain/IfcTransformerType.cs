@@ -10,17 +10,12 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
 
 namespace BuildingSmart.IFC.IfcElectricalDomain
 {
-	[Guid("b5a429ce-e245-4f12-bf73-a345969cdcc0")]
+	[Guid("de3e3892-9754-4be7-babc-a9101067d69a")]
 	public partial class IfcTransformerType : IfcEnergyConversionDeviceType
 	{
 		[DataMember(Order=0)] 
@@ -29,8 +24,8 @@ namespace BuildingSmart.IFC.IfcElectricalDomain
 		IfcTransformerTypeEnum _PredefinedType;
 	
 	
-		[Description("Identifies the predefined types of transformer from which the type required may b" +
-	    "e set.")]
+		[Description("<EPM-HTML><p>Identifies the predefined types of transformer from which the type r" +
+	    "equired may be set.</p></EPM-HTML>")]
 		public IfcTransformerTypeEnum PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	

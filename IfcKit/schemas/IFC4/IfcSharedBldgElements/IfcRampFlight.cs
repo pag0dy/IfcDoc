@@ -25,9 +25,20 @@ using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcSharedBldgElements
 {
-	[Guid("1cbc4857-9535-4bd3-83bc-4c14b915517b")]
+	[Guid("b22a442d-98eb-4579-80cf-dc1054cbb509")]
 	public partial class IfcRampFlight : IfcBuildingElement
 	{
+		[DataMember(Order=0)] 
+		[XmlAttribute]
+		IfcRampFlightTypeEnum? _PredefinedType;
+	
+	
+		[Description(@"<EPM-HTML>
+	Predefined generic type for a ramp flight that is specified in an enumeration. There may be a property set given specificly for the predefined types.
+	<blockquote class=""note"">NOTE&nbsp; The <em>PredefinedType</em> shall only be used, if no <em>IfcRampFlightType</em> is assigned, providing its own <em>IfcRampFlightType.PredefinedType</em>.</blockquote>
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE  The attribute has been added at the end of the entity definition.</blockquote>
+	</EPM-HTML> ")]
+		public IfcRampFlightTypeEnum? PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	
 	}

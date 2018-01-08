@@ -14,29 +14,31 @@ using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfilePropertyResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
 using BuildingSmart.IFC.IfcStructuralLoadResource;
 
 namespace BuildingSmart.IFC.IfcStructuralAnalysisDomain
 {
-	[Guid("7709f951-4bb1-47aa-be0f-22476df3f870")]
+	[Guid("a3f65142-e263-40a0-a199-116ed79dd647")]
 	public partial class IfcRelConnectsStructuralMember : IfcRelConnects
 	{
 		[DataMember(Order=0)] 
+		[XmlElement("IfcStructuralMember")]
 		[Required()]
 		IfcStructuralMember _RelatingStructuralMember;
 	
 		[DataMember(Order=1)] 
+		[XmlElement("IfcStructuralConnection")]
 		[Required()]
 		IfcStructuralConnection _RelatedStructuralConnection;
 	
 		[DataMember(Order=2)] 
+		[XmlElement("IfcBoundaryCondition")]
 		IfcBoundaryCondition _AppliedCondition;
 	
 		[DataMember(Order=3)] 
+		[XmlElement("IfcStructuralConnectionCondition")]
 		IfcStructuralConnectionCondition _AdditionalConditions;
 	
 		[DataMember(Order=4)] 
@@ -44,6 +46,7 @@ namespace BuildingSmart.IFC.IfcStructuralAnalysisDomain
 		IfcLengthMeasure? _SupportedLength;
 	
 		[DataMember(Order=5)] 
+		[XmlElement("IfcAxis2Placement3D")]
 		IfcAxis2Placement3D _ConditionCoordinateSystem;
 	
 	
@@ -55,22 +58,23 @@ namespace BuildingSmart.IFC.IfcStructuralAnalysisDomain
 	    "connected to the specified structural member.")]
 		public IfcStructuralConnection RelatedStructuralConnection { get { return this._RelatedStructuralConnection; } set { this._RelatedStructuralConnection = value;} }
 	
-		[Description(@"<EPM-HTML>Reference to an instance of <i>IfcBoundaryCondition</i> which is used to define the connections properties.
-	  <blockquote> <font size=""-1"">
-	NOTE&nbsp; The boundary condition applied to a member-connection-relationship is also called ""release""</font></blockquote>
-	</EPM-HTML>")]
+		[Description("Conditions which define the connections properties.  Connection conditions are of" +
+	    "ten called &quot;release&quot; but are not only used to define mechanisms like h" +
+	    "inges but also rigid, elastic, and other conditions.")]
 		public IfcBoundaryCondition AppliedCondition { get { return this._AppliedCondition; } set { this._AppliedCondition = value;} }
 	
-		[Description("Reference to instances describing additional connection properties.")]
+		[Description("Describes additional connection properties.")]
 		public IfcStructuralConnectionCondition AdditionalConditions { get { return this._AdditionalConditions; } set { this._AdditionalConditions = value;} }
 	
 		[Description("Defines the \'supported length\' of this structural connection. See Fig. for more d" +
 	    "etail. ")]
 		public IfcLengthMeasure? SupportedLength { get { return this._SupportedLength; } set { this._SupportedLength = value;} }
 	
-		[Description("Defines a new coordinate system used for the description of the connection proper" +
-	    "ties. The usage of this coordinate system is described more detailed in the defi" +
-	    "nition of the subtypes of this entity definition.")]
+		[Description(@"<EPM-HTML>
+	
+	Defines a coordinate system used for the description of the connection properties in <em>ConnectionCondition</em> relative to the local coordinate system of <em>RelatingStructuralMember</em>.  If left unspecified, the placement <em>IfcAxis2Placement3D</em>((x,y,z), ?, ?) is implied with x,y,z being the local member coordinates where the connection is made and the default axes directions being in parallel with the local axes of <em>RelatingStructuralMember</em>.
+	
+	</EPM-HTML>")]
 		public IfcAxis2Placement3D ConditionCoordinateSystem { get { return this._ConditionCoordinateSystem; } set { this._ConditionCoordinateSystem = value;} }
 	
 	

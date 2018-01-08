@@ -10,15 +10,18 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcConstraintResource;
 using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 
 namespace BuildingSmart.IFC.IfcCostResource
 {
-	[Guid("f52c72c0-c3b8-4b71-bc7a-c1557f744b01")]
-	public abstract partial class IfcAppliedValue :
-		BuildingSmart.IFC.IfcPropertyResource.IfcObjectReferenceSelect
+	[Guid("878e7c12-556c-42e6-a62a-feef9a77b4f9")]
+	public partial class IfcAppliedValue :
+		BuildingSmart.IFC.IfcConstraintResource.IfcMetricValueSelect,
+		BuildingSmart.IFC.IfcPropertyResource.IfcObjectReferenceSelect,
+		BuildingSmart.IFC.IfcExternalReferenceResource.IfcResourceObjectSelect
 	{
 		[DataMember(Order=0)] 
 		[XmlAttribute]
@@ -32,30 +35,40 @@ namespace BuildingSmart.IFC.IfcCostResource
 		IfcAppliedValueSelect _AppliedValue;
 	
 		[DataMember(Order=3)] 
+		[XmlElement("IfcMeasureWithUnit")]
 		IfcMeasureWithUnit _UnitBasis;
 	
 		[DataMember(Order=4)] 
-		IfcDateTimeSelect _ApplicableDate;
+		[XmlAttribute]
+		IfcDate? _ApplicableDate;
 	
 		[DataMember(Order=5)] 
-		IfcDateTimeSelect _FixedUntilDate;
+		[XmlAttribute]
+		IfcDate? _FixedUntilDate;
 	
-		[InverseProperty("ReferencingValues")] 
-		ISet<IfcReferencesValueDocument> _ValuesReferenced = new HashSet<IfcReferencesValueDocument>();
+		[DataMember(Order=6)] 
+		[XmlAttribute]
+		IfcLabel? _Category;
 	
-		[InverseProperty("ComponentOfTotal")] 
-		ISet<IfcAppliedValueRelationship> _ValueOfComponents = new HashSet<IfcAppliedValueRelationship>();
+		[DataMember(Order=7)] 
+		[XmlAttribute]
+		IfcLabel? _Condition;
 	
-		[InverseProperty("Components")] 
-		ISet<IfcAppliedValueRelationship> _IsComponentIn = new HashSet<IfcAppliedValueRelationship>();
+		[DataMember(Order=8)] 
+		[XmlAttribute]
+		IfcArithmeticOperatorEnum? _ArithmeticOperator;
+	
+		[DataMember(Order=9)] 
+		IList<IfcAppliedValue> _Components = new List<IfcAppliedValue>();
+	
+		[InverseProperty("RelatedResourceObjects")] 
+		ISet<IfcExternalReferenceRelationship> _HasExternalReference = new HashSet<IfcExternalReferenceRelationship>();
 	
 	
-		[Description("A name or additional clarification given to a cost (or impact) value.")]
+		[Description("A name or additional clarification given to a cost value.")]
 		public IfcLabel? Name { get { return this._Name; } set { this._Name = value;} }
 	
-		[Description("The description that may apply additional information about a cost (or impact) va" +
-	    "lue. The description may be from purpose generated text, specification libraries" +
-	    ", standards etc.")]
+		[Description("The description that may apply additional information about a cost value.")]
 		public IfcText? Description { get { return this._Description; } set { this._Description = value;} }
 	
 		[Description("The extent or quantity or amount of an applied value.")]
@@ -69,23 +82,40 @@ namespace BuildingSmart.IFC.IfcCostResource
 	")]
 		public IfcMeasureWithUnit UnitBasis { get { return this._UnitBasis; } set { this._UnitBasis = value;} }
 	
-		[Description("The date on or from which an applied value is applicable.")]
-		public IfcDateTimeSelect ApplicableDate { get { return this._ApplicableDate; } set { this._ApplicableDate = value;} }
+		[Description("<EPM-HTML> \r\nThe date on or from which an applied value is applicable.\r\n<blockquo" +
+	    "te class=\"change-ifc2x4\">IFC4 CHANGE Type changed from IfcDateTimeSelect.</block" +
+	    "quote> \r\n</EPM-HTML> \r\n")]
+		public IfcDate? ApplicableDate { get { return this._ApplicableDate; } set { this._ApplicableDate = value;} }
 	
-		[Description("The date until which applied value is applicable.")]
-		public IfcDateTimeSelect FixedUntilDate { get { return this._FixedUntilDate; } set { this._FixedUntilDate = value;} }
+		[Description("<EPM-HTML> \r\nThe date until which applied value is applicable.\r\n<blockquote class" +
+	    "=\"change-ifc2x4\">IFC4 CHANGE Type changed from IfcDateTimeSelect.</blockquote> \r" +
+	    "\n</EPM-HTML> \r\n")]
+		public IfcDate? FixedUntilDate { get { return this._FixedUntilDate; } set { this._FixedUntilDate = value;} }
 	
-		[Description("Pointer to the IfcReferencesCostDocument relationship, which refer to a document " +
-	    "from which the cost value is referenced.")]
-		public ISet<IfcReferencesValueDocument> ValuesReferenced { get { return this._ValuesReferenced; } }
+		[Description(@"Specification of the type of cost used.
 	
-		[Description("The total (or subtotal) value of the components within the applied value relation" +
-	    "ship expressed as a single applied value.")]
-		public ISet<IfcAppliedValueRelationship> ValueOfComponents { get { return this._ValueOfComponents; } }
+	<blockquote class=""note"">NOTE&nbsp; There are many possible types of cost value that may be identified. Whilst there is a broad understanding of the meaning of names that may be assigned to different types of costs, there is no general standard for naming cost types nor are there any broadly defined classifications. To allow for any type of cost value, the <i>IfcLabel</i> datatype is assigned.</blockquote>
+	 
+	In the absence of any well defined standard, it is recommended that local agreements should be made to define allowable and understandable cost value types within a project or region.
+	")]
+		public IfcLabel? Category { get { return this._Category; } set { this._Category = value;} }
 	
-		[Description("The value of the single applied value which is used by the applied value relation" +
-	    "ship to express a complex applied value.")]
-		public ISet<IfcAppliedValueRelationship> IsComponentIn { get { return this._IsComponentIn; } }
+		[Description("The condition under which a cost value applies.  \r\n\r\nFor example, within the cont" +
+	    "ext of a bid submission, this may refer to an option that may or may not be elec" +
+	    "ted.")]
+		public IfcLabel? Condition { get { return this._Condition; } set { this._Condition = value;} }
+	
+		[Description("The arithmetic operator applied to component values.")]
+		public IfcArithmeticOperatorEnum? ArithmeticOperator { get { return this._ArithmeticOperator; } set { this._ArithmeticOperator = value;} }
+	
+		[Description("Optional component values from which <i>AppliedValue</i> is calculated.")]
+		public IList<IfcAppliedValue> Components { get { return this._Components; } }
+	
+		[Description("<EPM-HTML> \r\nReference to an external reference, e.g. library, classification, or" +
+	    " document information, that is associated to the IfcAppliedValue. \r\n<blockquote " +
+	    "class=\"change-ifc2x4\">IFC4 CHANGE New inverse attribute.</blockquote> \r\n</EPM-HT" +
+	    "ML> \r\n")]
+		public ISet<IfcExternalReferenceRelationship> HasExternalReference { get { return this._HasExternalReference; } }
 	
 	
 	}

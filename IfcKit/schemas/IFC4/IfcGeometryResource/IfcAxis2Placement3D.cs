@@ -20,14 +20,16 @@ using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
-	[Guid("610bae35-1be6-4a90-ad4e-102a28b67208")]
+	[Guid("26b1240c-4ac9-469d-8fd3-861653fa5f75")]
 	public partial class IfcAxis2Placement3D : IfcPlacement,
 		BuildingSmart.IFC.IfcGeometryResource.IfcAxis2Placement
 	{
 		[DataMember(Order=0)] 
+		[XmlElement("IfcDirection")]
 		IfcDirection _Axis;
 	
 		[DataMember(Order=1)] 
+		[XmlElement("IfcDirection")]
 		IfcDirection _RefDirection;
 	
 	

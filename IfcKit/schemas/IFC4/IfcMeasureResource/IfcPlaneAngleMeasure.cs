@@ -10,13 +10,15 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcDateTimeResource;
+using BuildingSmart.IFC.IfcExternalReferenceResource;
 
 namespace BuildingSmart.IFC.IfcMeasureResource
 {
-	[Guid("2a0a31c3-599a-4a77-a001-daa5b627e73f")]
+	[Guid("d81e9c4a-ace7-4741-8aca-d40d3fca27b2")]
 	public partial struct IfcPlaneAngleMeasure :
-		BuildingSmart.IFC.IfcMeasureResource.IfcMeasureValue,
-		BuildingSmart.IFC.IfcStructuralAnalysisDomain.IfcOrientationSelect
+		BuildingSmart.IFC.IfcStructuralElementsDomain.IfcBendingParameterSelect,
+		BuildingSmart.IFC.IfcMeasureResource.IfcMeasureValue
 	{
 		[XmlText]
 		public Double Value;

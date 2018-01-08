@@ -10,17 +10,12 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
 
 namespace BuildingSmart.IFC.IfcElectricalDomain
 {
-	[Guid("a2f267ae-c9b1-489c-917e-8543e41422d6")]
+	[Guid("6ed8eee1-4ef5-4084-99db-457ee2e6431a")]
 	public partial class IfcCableSegmentType : IfcFlowSegmentType
 	{
 		[DataMember(Order=0)] 
@@ -29,8 +24,8 @@ namespace BuildingSmart.IFC.IfcElectricalDomain
 		IfcCableSegmentTypeEnum _PredefinedType;
 	
 	
-		[Description("Identifies the predefined types of cable segment from which the type required may" +
-	    " be set.")]
+		[Description("<EPM-HTML><p>Identifies the predefined types of cable segment from which the type" +
+	    " required may be set.</p></EPM-HTML>")]
 		public IfcCableSegmentTypeEnum PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	

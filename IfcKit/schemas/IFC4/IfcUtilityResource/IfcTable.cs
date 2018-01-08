@@ -11,28 +11,35 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
+using BuildingSmart.IFC.IfcConstraintResource;
+using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 
 namespace BuildingSmart.IFC.IfcUtilityResource
 {
-	[Guid("6568e6cb-93db-4698-822f-33bbc35a1144")]
+	[Guid("a998a201-457f-4f17-9337-b5f2acb084d8")]
 	public partial class IfcTable :
-		BuildingSmart.IFC.IfcConstraintResource.IfcMetricValueSelect
+		BuildingSmart.IFC.IfcConstraintResource.IfcMetricValueSelect,
+		BuildingSmart.IFC.IfcPropertyResource.IfcObjectReferenceSelect
 	{
 		[DataMember(Order=0)] 
-		[Required()]
-		String _Name;
+		[XmlAttribute]
+		IfcLabel? _Name;
 	
 		[DataMember(Order=1)] 
-		[Required()]
 		IList<IfcTableRow> _Rows = new List<IfcTableRow>();
 	
+		[DataMember(Order=2)] 
+		IList<IfcTableColumn> _Columns = new List<IfcTableColumn>();
 	
-		[Description("A unique name which is intended to describe the usage of the Table.")]
-		public String Name { get { return this._Name; } set { this._Name = value;} }
+	
+		public IfcLabel? Name { get { return this._Name; } set { this._Name = value;} }
 	
 		[Description("Reference to information content of rows.")]
 		public IList<IfcTableRow> Rows { get { return this._Rows; } }
+	
+		[Description("The column information associated with this table. ")]
+		public IList<IfcTableColumn> Columns { get { return this._Columns; } }
 	
 	
 	}

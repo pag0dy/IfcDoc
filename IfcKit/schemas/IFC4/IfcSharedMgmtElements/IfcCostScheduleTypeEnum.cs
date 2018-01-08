@@ -15,10 +15,11 @@ using BuildingSmart.IFC.IfcCostResource;
 using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
+using BuildingSmart.IFC.IfcQuantityResource;
 
 namespace BuildingSmart.IFC.IfcSharedMgmtElements
 {
-	[Guid("0fa62e78-ff06-4166-8248-de91902a2313")]
+	[Guid("413b67e5-61ba-4464-823e-cf1bb6e9411c")]
 	public enum IfcCostScheduleTypeEnum
 	{
 		BUDGET = 1,

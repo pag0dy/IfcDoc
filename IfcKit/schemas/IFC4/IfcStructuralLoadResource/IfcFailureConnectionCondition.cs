@@ -14,7 +14,7 @@ using BuildingSmart.IFC.IfcMeasureResource;
 
 namespace BuildingSmart.IFC.IfcStructuralLoadResource
 {
-	[Guid("f837e270-6077-456e-a6dc-44c6af18a0a6")]
+	[Guid("73b41ca6-4101-4683-b783-ffbc11578bb0")]
 	public partial class IfcFailureConnectionCondition : IfcStructuralConnectionCondition
 	{
 		[DataMember(Order=0)] 

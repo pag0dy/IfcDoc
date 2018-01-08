@@ -10,11 +10,12 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 
 namespace BuildingSmart.IFC.IfcActorResource
 {
-	[Guid("4b889c23-c366-4065-914b-131accb4da76")]
+	[Guid("72a03b09-9278-4eea-95b0-a9cdb0a96904")]
 	public interface IfcActorSelect
 	{
 	}

@@ -16,19 +16,19 @@ using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcTimeSeriesResource;
 using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcConstraintResource
 {
-	[Guid("b0794e67-9191-4c55-a93f-70f1d753d31e")]
+	[Guid("2a23c0f9-203b-4e38-9564-91c5cb3f651d")]
 	public partial class IfcObjective : IfcConstraint
 	{
 		[DataMember(Order=0)] 
-		IfcMetric _BenchmarkValues;
+		IList<IfcConstraint> _BenchmarkValues = new List<IfcConstraint>();
 	
 		[DataMember(Order=1)] 
-		IfcMetric _ResultValues;
+		[XmlAttribute]
+		IfcLogicalOperatorEnum? _LogicalAggregator;
 	
 		[DataMember(Order=2)] 
 		[XmlAttribute]
@@ -40,18 +40,22 @@ namespace BuildingSmart.IFC.IfcConstraintResource
 		IfcLabel? _UserDefinedQualifier;
 	
 	
-		[Description("A list of any benchmark values used for comparison purposes.")]
-		public IfcMetric BenchmarkValues { get { return this._BenchmarkValues; } set { this._BenchmarkValues = value;} }
+		[Description("A list of nested constraints.\r\n\r\n<blockquote class=\"change-ifc2x4\">IFC2X4 CHANGE&" +
+	    "nbsp; Modified to be a LIST of nested constraints, which replaces the former <i>" +
+	    "IfcConstraintAggregationRelationship</i>.</blockquote>")]
+		public IList<IfcConstraint> BenchmarkValues { get { return this._BenchmarkValues; } }
 	
-		[Description("A list of any resultant values used for comparison purposes.")]
-		public IfcMetric ResultValues { get { return this._ResultValues; } set { this._ResultValues = value;} }
+		[Description(@"Enumeration that identifies the logical type of aggregation for the benchmark metrics.
+	
+	<blockquote class=""change-ifc2x4"">IFC2X4 CHANGE&nbsp; This attribute replaces replaces the former <i>ResultValues</i> attribute and indicates the aggregation behavior formerly defined at <i>IfcConstraintAggregationRelationship</i>.</blockquote>")]
+		public IfcLogicalOperatorEnum? LogicalAggregator { get { return this._LogicalAggregator; } set { this._LogicalAggregator = value;} }
 	
 		[Description("Enumeration that qualifies the type of objective constraint.\r\n")]
 		public IfcObjectiveEnum ObjectiveQualifier { get { return this._ObjectiveQualifier; } set { this._ObjectiveQualifier = value;} }
 	
 		[Description("<EPM-HTML>A user defined value that qualifies the type of objective constraint wh" +
-	    "en ObjectiveQualifier attribute of type <I>IfcObjectiveEnum</I> has value USERDE" +
-	    "FINED.</EPM-HTML>")]
+	    "en ObjectiveQualifier attribute of type <em>IfcObjectiveEnum</em> has value USER" +
+	    "DEFINED.</EPM-HTML>")]
 		public IfcLabel? UserDefinedQualifier { get { return this._UserDefinedQualifier; } set { this._UserDefinedQualifier = value;} }
 	
 	

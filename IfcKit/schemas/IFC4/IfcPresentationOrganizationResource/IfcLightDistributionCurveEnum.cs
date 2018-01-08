@@ -14,12 +14,11 @@ using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcPresentationResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcPresentationOrganizationResource
 {
-	[Guid("5c7674d2-a573-488e-909d-b36615386d74")]
+	[Guid("f7566be0-4aac-48b7-a9c6-0cbdd6f389d6")]
 	public enum IfcLightDistributionCurveEnum
 	{
 		TYPE_A = 1,

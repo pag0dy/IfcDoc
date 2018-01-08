@@ -10,17 +10,12 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
 
 namespace BuildingSmart.IFC.IfcElectricalDomain
 {
-	[Guid("7504a47a-34f2-4c30-89ee-7270af77e015")]
+	[Guid("0d350c33-a406-4c89-86b7-c018e44de7d6")]
 	public enum IfcOutletTypeEnum
 	{
 		AUDIOVISUALOUTLET = 1,
@@ -28,6 +23,10 @@ namespace BuildingSmart.IFC.IfcElectricalDomain
 		COMMUNICATIONSOUTLET = 2,
 	
 		POWEROUTLET = 3,
+	
+		DATAOUTLET = 4,
+	
+		TELEPHONEOUTLET = 5,
 	
 		USERDEFINED = -1,
 	

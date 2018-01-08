@@ -25,7 +25,7 @@ using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcSharedBldgElements
 {
-	[Guid("dfc338cc-1769-4c80-ad45-773732a8c501")]
+	[Guid("e7804d3d-8e37-477c-b7e4-047c043f705e")]
 	public enum IfcStairTypeEnum
 	{
 		STRAIGHT_RUN_STAIR = 1,

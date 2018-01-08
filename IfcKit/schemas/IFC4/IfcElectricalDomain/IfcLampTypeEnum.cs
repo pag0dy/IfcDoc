@@ -10,30 +10,31 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
 
 namespace BuildingSmart.IFC.IfcElectricalDomain
 {
-	[Guid("d969ec1c-c15b-412b-af1a-e2379ef9d997")]
+	[Guid("74a79a6d-e1ea-413e-b278-186e7ec00258")]
 	public enum IfcLampTypeEnum
 	{
 		COMPACTFLUORESCENT = 1,
 	
 		FLUORESCENT = 2,
 	
-		HIGHPRESSUREMERCURY = 3,
+		HALOGEN = 3,
 	
-		HIGHPRESSURESODIUM = 4,
+		HIGHPRESSUREMERCURY = 4,
 	
-		METALHALIDE = 5,
+		HIGHPRESSURESODIUM = 5,
 	
-		TUNGSTENFILAMENT = 6,
+		LED = 6,
+	
+		METALHALIDE = 7,
+	
+		OLED = 8,
+	
+		TUNGSTENFILAMENT = 9,
 	
 		USERDEFINED = -1,
 	

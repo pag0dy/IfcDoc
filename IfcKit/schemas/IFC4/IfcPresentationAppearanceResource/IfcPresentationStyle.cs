@@ -11,16 +11,17 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcExternalReferenceResource;
+using BuildingSmart.IFC.IfcGeometricModelResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationDefinitionResource;
-using BuildingSmart.IFC.IfcPresentationResource;
 using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 {
-	[Guid("13062bbe-3eb5-4570-80f9-3b50915a6fea")]
-	public abstract partial class IfcPresentationStyle
+	[Guid("ab926025-a25c-40a8-9608-000b0b34210c")]
+	public abstract partial class IfcPresentationStyle :
+		BuildingSmart.IFC.IfcPresentationAppearanceResource.IfcStyleAssignmentSelect
 	{
 		[DataMember(Order=0)] 
 		[XmlAttribute]

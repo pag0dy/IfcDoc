@@ -14,12 +14,11 @@ using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcPresentationResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcPresentationOrganizationResource
 {
-	[Guid("4ac4c177-7e04-43cd-a011-14392fb9d2ba")]
+	[Guid("bb394b9d-6446-4af5-b07e-add47d8c8b54")]
 	public partial class IfcLightIntensityDistribution :
 		BuildingSmart.IFC.IfcPresentationOrganizationResource.IfcLightDistributionDataSourceSelect
 	{
@@ -38,8 +37,8 @@ namespace BuildingSmart.IFC.IfcPresentationOrganizationResource
 		public IfcLightDistributionCurveEnum LightDistributionCurve { get { return this._LightDistributionCurve; } set { this._LightDistributionCurve = value;} }
 	
 		[Description(@"<EPM-HTML>
-	<P>Light distribution data applied to the light source. It is defined by a list of main plane angles (B or C according to the light distribution curve chosen) that includes (for each B or C angle) a second list of secondary plane angles (the &#946; or &#947; angles) and the according luminous intensity distribution measures.
-	</P>
+	<p>Light distribution data applied to the light source. It is defined by a list of main plane angles (B or C according to the light distribution curve chosen) that includes (for each B or C angle) a second list of secondary plane angles (the &#946; or &#947; angles) and the according luminous intensity distribution measures.
+	</p>
 	</EPM-HTML>")]
 		public IList<IfcLightDistributionData> DistributionData { get { return this._DistributionData; } }
 	

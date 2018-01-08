@@ -11,11 +11,13 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
+using BuildingSmart.IFC.IfcConstraintResource;
+using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 
 namespace BuildingSmart.IFC.IfcUtilityResource
 {
-	[Guid("7a6b5dd4-44b4-460f-b13b-9143be66fe7f")]
+	[Guid("5d948a69-63db-4931-ad1a-2ba2aa984abf")]
 	public enum IfcStateEnum
 	{
 		READWRITE = 1,

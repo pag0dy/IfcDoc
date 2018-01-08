@@ -20,30 +20,28 @@ using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
-	[Guid("b1f3ba6a-d5a7-4a2b-9718-3deb4fbf8a02")]
+	[Guid("e783d84d-d19b-4cf7-a863-f851642523f8")]
 	public abstract partial class IfcRepresentationItem :
 		BuildingSmart.IFC.IfcPresentationOrganizationResource.IfcLayeredItem
 	{
 		[InverseProperty("AssignedItems")] 
-		ISet<IfcPresentationLayerAssignment> _LayerAssignments = new HashSet<IfcPresentationLayerAssignment>();
+		ISet<IfcPresentationLayerAssignment> _LayerAssignment = new HashSet<IfcPresentationLayerAssignment>();
 	
 		[InverseProperty("Item")] 
+		[XmlElement("IfcStyledItem")]
 		ISet<IfcStyledItem> _StyledByItem = new HashSet<IfcStyledItem>();
 	
 	
-		[Description(@"<EPM-HTML>Assignment of the representation item to a single or multiple layer(s). The <i>LayerAssignments</i> can override a <i>LayerAssignments</i> of the <i>IfcRepresentation</i> it is used  within the list of <i>Items</i>.
-	<blockquote>
-	<small>NOTE&nbsp; Implementation agreements can restrict the maximum number of layer assignments to 1.</small><br>
-	<small><font color=""#ff0000"">IFC2x Edition 3 CHANGE&nbsp; The inverse attribute <i>LayerAssignments</i> has been added.</font></small>
-	</blockquote>
+		[Description(@"<EPM-HTML>Assignment of the representation item to a single or multiple layer(s). The <em>LayerAssignments</em> can override a <em>LayerAssignments</em> of the <em>IfcRepresentation</em> it is used  within the list of <em>Items</em>.
+	<blockquote class=""change-ifc2x3"">IFC2x3 CHANGE&nbsp; The inverse attribute <em>LayerAssignments</em> has been added.</blockquote>
+	 <blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The inverse attribute <em>LayerAssignment</em> has
+	been restricted to max 1. Upward compatibility for file based exchange is guaranteed. </blockquote>
 	</EPM-HTML>")]
-		public ISet<IfcPresentationLayerAssignment> LayerAssignments { get { return this._LayerAssignments; } }
+		public ISet<IfcPresentationLayerAssignment> LayerAssignment { get { return this._LayerAssignment; } }
 	
 		[Description(@"<EPM-HTML>
-	Reference to the <i>IfcStyledItem</i> that provides presentation information to the representation, e.g. a curve style, including colour and thickness to a geometric curve.
-	  <blockquote>
-	<small><font color=""#ff0000"">IFC2x Edition 3 CHANGE&nbsp; The inverse attribute <i>StyledByItem</i> has been added.</font></small>
-	</blockquote>
+	Reference to the <em>IfcStyledItem</em> that provides presentation information to the representation, e.g. a curve style, including colour and thickness to a geometric curve.
+	  <blockquote class=""change-ifc2x3"">IFC2x3 CHANGE&nbsp; The inverse attribute <em>StyledByItem</em> has been added.</blockquote>
 	</EPM-HTML>")]
 		public ISet<IfcStyledItem> StyledByItem { get { return this._StyledByItem; } }
 	

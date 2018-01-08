@@ -14,13 +14,12 @@ using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcPresentationResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
 using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcPresentationDefinitionResource
 {
-	[Guid("8c0719d1-4101-44eb-9525-1e4ec84d56d2")]
+	[Guid("df48b7a3-8d4e-44e0-b6d5-1793bcd461c2")]
 	public enum IfcTextPath
 	{
 		LEFT = 1,

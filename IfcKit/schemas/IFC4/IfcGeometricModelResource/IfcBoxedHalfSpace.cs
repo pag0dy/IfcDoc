@@ -18,15 +18,17 @@ using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometricModelResource
 {
-	[Guid("411fdc4b-ec30-4513-b554-f7ce4a481085")]
+	[Guid("6d52ef81-4176-4ab5-a2d3-39b86c31c378")]
 	public partial class IfcBoxedHalfSpace : IfcHalfSpaceSolid
 	{
 		[DataMember(Order=0)] 
+		[XmlElement("IfcBoundingBox")]
 		[Required()]
 		IfcBoundingBox _Enclosure;
 	
 	
-		[Description("The box which bounds the half space for computational purposes only.\r\n")]
+		[Description("<EPM-HTML>\r\nThe box which bounds the resulting solid of the Boolean operation inv" +
+	    "olving the half space solid for computational purposes only.\r\n</EPM-HTML>\r\n")]
 		public IfcBoundingBox Enclosure { get { return this._Enclosure; } set { this._Enclosure = value;} }
 	
 	

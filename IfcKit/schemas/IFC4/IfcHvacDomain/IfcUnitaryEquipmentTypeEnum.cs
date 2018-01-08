@@ -10,31 +10,23 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialResource;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcPropertyResource;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
 using BuildingSmart.IFC.IfcSharedComponentElements;
 
 namespace BuildingSmart.IFC.IfcHvacDomain
 {
-	[Guid("97f64034-cd57-4114-8d94-da076147f694")]
+	[Guid("0a504ed5-8edd-4a12-8260-4384fc0af250")]
 	public enum IfcUnitaryEquipmentTypeEnum
 	{
 		AIRHANDLER = 1,
 	
 		AIRCONDITIONINGUNIT = 2,
 	
-		SPLITSYSTEM = 3,
+		DEHUMIDIFIER = 3,
 	
-		ROOFTOPUNIT = 4,
+		SPLITSYSTEM = 4,
+	
+		ROOFTOPUNIT = 5,
 	
 		USERDEFINED = -1,
 	

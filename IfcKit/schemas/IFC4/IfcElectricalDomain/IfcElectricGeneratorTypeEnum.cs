@@ -10,19 +10,20 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
 
 namespace BuildingSmart.IFC.IfcElectricalDomain
 {
-	[Guid("6f145be8-9516-4774-9455-a83660a166ff")]
+	[Guid("b2535988-9815-4668-9676-4d1f7bbba831")]
 	public enum IfcElectricGeneratorTypeEnum
 	{
+		CHP = 1,
+	
+		ENGINEGENERATOR = 2,
+	
+		STANDALONE = 3,
+	
 		USERDEFINED = -1,
 	
 		NOTDEFINED = 0,

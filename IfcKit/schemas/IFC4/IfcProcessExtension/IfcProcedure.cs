@@ -21,32 +21,17 @@ using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 
 namespace BuildingSmart.IFC.IfcProcessExtension
 {
-	[Guid("0c523651-bc17-41eb-b22e-d09db16fe089")]
+	[Guid("0cce4f12-90b1-4e02-a09b-0dab4f9a731c")]
 	public partial class IfcProcedure : IfcProcess
 	{
 		[DataMember(Order=0)] 
 		[XmlAttribute]
-		[Required()]
-		IfcIdentifier _ProcedureID;
-	
-		[DataMember(Order=1)] 
-		[XmlAttribute]
-		[Required()]
-		IfcProcedureTypeEnum _ProcedureType;
-	
-		[DataMember(Order=2)] 
-		[XmlAttribute]
-		IfcLabel? _UserDefinedProcedureType;
+		IfcProcedureTypeEnum? _PredefinedType;
 	
 	
-		[Description("An identifying designation given to a procedure.")]
-		public IfcIdentifier ProcedureID { get { return this._ProcedureID; } set { this._ProcedureID = value;} }
-	
-		[Description("Predefined procedure types from which that required may be set. ")]
-		public IfcProcedureTypeEnum ProcedureType { get { return this._ProcedureType; } set { this._ProcedureType = value;} }
-	
-		[Description("A user defined procedure type.")]
-		public IfcLabel? UserDefinedProcedureType { get { return this._UserDefinedProcedureType; } set { this._UserDefinedProcedureType = value;} }
+		[Description("<EPM-HTML>\r\n    Identifies the predefined types of a procedure from which \r\n    t" +
+	    "he type required may be set.\r\n</EPM-HTML>")]
+		public IfcProcedureTypeEnum? PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	
 	}

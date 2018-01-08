@@ -20,7 +20,7 @@ using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
-	[Guid("7477f705-8ade-4050-a55f-60869e05b1f6")]
+	[Guid("ebd15e62-e09c-44c3-8e9c-7f8840bebed8")]
 	public partial class IfcCompositeCurve : IfcBoundedCurve
 	{
 		[DataMember(Order=0)] 

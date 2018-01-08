@@ -11,7 +11,6 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometricModelResource;
@@ -20,23 +19,33 @@ using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProfilePropertyResource;
 using BuildingSmart.IFC.IfcPropertyResource;
 using BuildingSmart.IFC.IfcQuantityResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
 using BuildingSmart.IFC.IfcSharedBldgElements;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
-using BuildingSmart.IFC.IfcStructuralAnalysisDomain;
+using BuildingSmart.IFC.IfcSharedComponentElements;
+using BuildingSmart.IFC.IfcSharedFacilitiesElements;
 using BuildingSmart.IFC.IfcStructuralElementsDomain;
 
 namespace BuildingSmart.IFC.IfcProductExtension
 {
-	[Guid("e4a12c42-01f6-46c9-94a3-239cae96bdd5")]
+	[Guid("20f5b3eb-0852-4587-a1e1-bb91ca98bc61")]
 	public partial class IfcOpeningElement : IfcFeatureElementSubtraction
 	{
+		[DataMember(Order=0)] 
+		[XmlAttribute]
+		IfcOpeningElementTypeEnum? _PredefinedType;
+	
 		[InverseProperty("RelatingOpeningElement")] 
 		ISet<IfcRelFillsElement> _HasFillings = new HashSet<IfcRelFillsElement>();
 	
+	
+		[Description(@"<EPM-HTML>
+	Predefined generic type for an opening that is specified in an enumeration. There may be a property set given specificly for the predefined types.
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE  The attribute has been added at the end of the entity definition.</blockquote>
+	</EPM-HTML> ")]
+		public IfcOpeningElementTypeEnum? PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 		[Description("Reference to the Filling Relationship that is used to assign Elements as Fillings" +
 	    " for this Opening Element. The Opening Element can be filled with zero-to-many E" +

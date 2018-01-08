@@ -10,13 +10,14 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
+using BuildingSmart.IFC.IfcPropertyResource;
 
 namespace BuildingSmart.IFC.IfcProfileResource
 {
-	[Guid("9eb1ca9f-610e-42b2-b171-654fb6926722")]
+	[Guid("9e129693-172e-4ea1-b3bb-cb7763385cb0")]
 	public partial class IfcTrapeziumProfileDef : IfcParameterizedProfileDef
 	{
 		[DataMember(Order=0)] 

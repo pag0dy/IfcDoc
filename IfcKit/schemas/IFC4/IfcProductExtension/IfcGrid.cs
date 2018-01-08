@@ -11,7 +11,6 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometricModelResource;
@@ -20,18 +19,18 @@ using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProfilePropertyResource;
 using BuildingSmart.IFC.IfcPropertyResource;
 using BuildingSmart.IFC.IfcQuantityResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
 using BuildingSmart.IFC.IfcSharedBldgElements;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
-using BuildingSmart.IFC.IfcStructuralAnalysisDomain;
+using BuildingSmart.IFC.IfcSharedComponentElements;
+using BuildingSmart.IFC.IfcSharedFacilitiesElements;
 using BuildingSmart.IFC.IfcStructuralElementsDomain;
 
 namespace BuildingSmart.IFC.IfcProductExtension
 {
-	[Guid("7a0321d6-98bb-4c1d-8c3f-197847d7fc5e")]
+	[Guid("dfb6beda-5c7c-4df8-bbc6-b101ce4006f3")]
 	public partial class IfcGrid : IfcProduct
 	{
 		[DataMember(Order=0)] 
@@ -44,6 +43,10 @@ namespace BuildingSmart.IFC.IfcProductExtension
 	
 		[DataMember(Order=2)] 
 		IList<IfcGridAxis> _WAxes = new List<IfcGridAxis>();
+	
+		[DataMember(Order=3)] 
+		[XmlAttribute]
+		IfcGridTypeEnum? _PredefinedType;
 	
 		[InverseProperty("RelatedElements")] 
 		ISet<IfcRelContainedInSpatialStructure> _ContainedInStructure = new HashSet<IfcRelContainedInSpatialStructure>();
@@ -59,10 +62,14 @@ namespace BuildingSmart.IFC.IfcProductExtension
 	    "se of a triangular grid.")]
 		public IList<IfcGridAxis> WAxes { get { return this._WAxes; } }
 	
+		[Description("<EPM-HTML>\r\nPredefined types to define the particular type of the grid.\r\n<blockqu" +
+	    "ote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; New attribute.\r\n</blockquote>\r\n</EPM" +
+	    "-HTML>")]
+		public IfcGridTypeEnum? PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
+	
 		[Description(@"<EPM-HTML>
 	Relationship to a spatial structure element, to which the grid is primarily associated.
-	<blockquote><small><font color=""#FF0000"">IFC2x PLATFORM CHANGE&nbsp; The inverse relationship has been added to <I>IfcGrid</I> with upward compatibility</font>
-	</small></blockquote>
+	<blockquote class=""change-ifc2x"">IFC2x CHANGE&nbsp; The inverse relationship has been added to <em>IfcGrid</em> with upward compatibility</blockquote>
 	</EPM-HTML>")]
 		public ISet<IfcRelContainedInSpatialStructure> ContainedInStructure { get { return this._ContainedInStructure; } }
 	

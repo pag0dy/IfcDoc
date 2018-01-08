@@ -21,7 +21,7 @@ using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometricConstraintResource
 {
-	[Guid("58546e7a-38b4-4ba4-a065-faf5537acab6")]
+	[Guid("6198c9e5-dc6e-47b1-8fe3-b9ea5bef370e")]
 	public partial class IfcConnectionCurveGeometry : IfcConnectionGeometry
 	{
 		[DataMember(Order=0)] 

@@ -11,7 +11,6 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometricModelResource;
@@ -20,18 +19,18 @@ using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProfilePropertyResource;
 using BuildingSmart.IFC.IfcPropertyResource;
 using BuildingSmart.IFC.IfcQuantityResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
 using BuildingSmart.IFC.IfcSharedBldgElements;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
-using BuildingSmart.IFC.IfcStructuralAnalysisDomain;
+using BuildingSmart.IFC.IfcSharedComponentElements;
+using BuildingSmart.IFC.IfcSharedFacilitiesElements;
 using BuildingSmart.IFC.IfcStructuralElementsDomain;
 
 namespace BuildingSmart.IFC.IfcProductExtension
 {
-	[Guid("359b20e1-7b56-41e9-ab43-8a1049127ec0")]
+	[Guid("9ab3f33b-7e80-4290-afe5-1e7a055cd3ac")]
 	public abstract partial class IfcElement : IfcProduct,
 		BuildingSmart.IFC.IfcStructuralAnalysisDomain.IfcStructuralActivityAssignmentSelect
 	{
@@ -39,26 +38,23 @@ namespace BuildingSmart.IFC.IfcProductExtension
 		[XmlAttribute]
 		IfcIdentifier? _Tag;
 	
-		[InverseProperty("RelatingElement")] 
-		ISet<IfcRelConnectsStructuralElement> _HasStructuralMember = new HashSet<IfcRelConnectsStructuralElement>();
-	
 		[InverseProperty("RelatedBuildingElement")] 
 		ISet<IfcRelFillsElement> _FillsVoids = new HashSet<IfcRelFillsElement>();
 	
 		[InverseProperty("RelatingElement")] 
 		ISet<IfcRelConnectsElements> _ConnectedTo = new HashSet<IfcRelConnectsElements>();
 	
-		[InverseProperty("RelatingBuildingElement")] 
-		ISet<IfcRelCoversBldgElements> _HasCoverings = new HashSet<IfcRelCoversBldgElements>();
+		[InverseProperty("RelatedElement")] 
+		ISet<IfcRelInterferesElements> _IsInterferedByElements = new HashSet<IfcRelInterferesElements>();
+	
+		[InverseProperty("RelatingElement")] 
+		ISet<IfcRelInterferesElements> _InterferesElements = new HashSet<IfcRelInterferesElements>();
 	
 		[InverseProperty("RelatingElement")] 
 		ISet<IfcRelProjectsElement> _HasProjections = new HashSet<IfcRelProjectsElement>();
 	
 		[InverseProperty("RelatedElements")] 
 		ISet<IfcRelReferencedInSpatialStructure> _ReferencedInStructures = new HashSet<IfcRelReferencedInSpatialStructure>();
-	
-		[InverseProperty("RelatedElement")] 
-		ISet<IfcRelConnectsPortToElement> _HasPorts = new HashSet<IfcRelConnectsPortToElement>();
 	
 		[InverseProperty("RelatingBuildingElement")] 
 		ISet<IfcRelVoidsElement> _HasOpenings = new HashSet<IfcRelVoidsElement>();
@@ -81,56 +77,63 @@ namespace BuildingSmart.IFC.IfcProductExtension
 	    "el.")]
 		public IfcIdentifier? Tag { get { return this._Tag; } set { this._Tag = value;} }
 	
-		public ISet<IfcRelConnectsStructuralElement> HasStructuralMember { get { return this._HasStructuralMember; } }
-	
-		[Description("Reference to the Fills Relationship that puts the Element into the Opening within" +
-	    " another Element.\r\n")]
+		[Description("<EPM-HTML>\r\nReference to the <em>IfcRelFillsElement</em> Relationship that puts t" +
+	    "he element as a filling into the opening created within another element.\r\n</EPM-" +
+	    "HTML>\r\n\r\n")]
 		public ISet<IfcRelFillsElement> FillsVoids { get { return this._FillsVoids; } }
 	
 		[Description("Reference to the element connection relationship. The relationship then refers to" +
 	    " the other element to which this element is connected to.\r\n")]
 		public ISet<IfcRelConnectsElements> ConnectedTo { get { return this._ConnectedTo; } }
 	
-		[Description("<EPM-HTML>\r\nReference to <i>IfcCovering</i> by virtue of the objectified relation" +
-	    "ship <i>IfcRelCoversBldgElement</i>. It defines the concept of an element having" +
-	    " coverings attached.\r\n</EPM-HTML>\r\n")]
-		public ISet<IfcRelCoversBldgElements> HasCoverings { get { return this._HasCoverings; } }
+		[Description(@"<EPM-HTML>
+	Reference to the interference relationship to indicate the element that is interfered. The relationship, if provided, indicates that this element has an interference with one or many other elements.
+	<blockquote class=""note"">NOTE&nbsp; There is no indication of precedence between <em>IsInterferedByElements</em> and <em>InterferesElements</em>. </blockquote>
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE  New inverse relationship.</blockquote>
+	</EPM-HTML>")]
+		public ISet<IfcRelInterferesElements> IsInterferedByElements { get { return this._IsInterferedByElements; } }
+	
+		[Description(@"<EPM-HTML>
+	Reference to the interference relationship to indicate the element that interferes. The relationship, if provided, indicates that this element has an interference with one or many other elements.
+	<blockquote class=""note"">NOTE&nbsp; There is no indication of precedence between <em>IsInterferedByElements</em> and <em>InterferesElements</em>.</blockquote>
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE  New inverse relationship.</blockquote>
+	</EPM-HTML>")]
+		public ISet<IfcRelInterferesElements> InterferesElements { get { return this._InterferesElements; } }
 	
 		[Description("<EPM-HTML>\r\nProjection relationship that adds a feature (using a Boolean union) t" +
-	    "o the <I>IfcBuildingElement</I>.\r\n</EPM-HTML>")]
+	    "o the <em>IfcBuildingElement</em>.\r\n</EPM-HTML>")]
 		public ISet<IfcRelProjectsElement> HasProjections { get { return this._HasProjections; } }
 	
 		[Description(@"<EPM-HTML>
-	Reference relationship to the spatial structure element, to which the element is additionally associated.
-	<blockquote><font color=""#ff0000""><small>
-	IFC2x Edition 3 CHANGE&nbsp; The inverse attribute has been added with upward compatibility for file based exchange.
-	<small></font></blockquote>
+	Reference relationship to the spatial structure element, to which the element is additionally associated. This relationship may not be hierarchical, an element may be referenced by zero, one or many spatial structure elements.
+	<blockquote class=""change-ifc2x3"">IFC2x3 CHANGE&nbsp; The inverse attribute has been added with upward compatibility for file based exchange.</blockquote>
 	</EPM-HTML>")]
 		public ISet<IfcRelReferencedInSpatialStructure> ReferencedInStructures { get { return this._ReferencedInStructures; } }
 	
-		[Description("Reference to the element to port connection relationship. The relationship then r" +
-	    "efers to the port which is contained in this element.\r\n")]
-		public ISet<IfcRelConnectsPortToElement> HasPorts { get { return this._HasPorts; } }
-	
-		[Description("Reference to the Voids Relationship that creates an opening in an element. An ele" +
-	    "ment can incorporate zero-to-many openings.\r\n")]
+		[Description(@"<EPM-HTML>
+	Reference to the <em>IfcRelVoidsElement</em> relationship that creates an opening in an element. An element can incorporate zero-to-many openings. For each opening, that voids the element, a new relationship <em>IfcRelVoidsElement</em> is generated.
+	</EPM-HTML>
+	")]
 		public ISet<IfcRelVoidsElement> HasOpenings { get { return this._HasOpenings; } }
 	
-		[Description("Reference to the connection relationship with realizing element. The relationship" +
-	    " then refers to the realizing element which provides the physical manifestation " +
-	    "of the connection relationship.\r\n")]
+		[Description(@"<EPM-HTML>
+	Reference to the connection relationship with realizing element. The relationship, if provided, assigns this element as the realizing element to the connection, which provides the physical manifestation of the connection relationship.
+	</EPM-HTML>
+	")]
 		public ISet<IfcRelConnectsWithRealizingElements> IsConnectionRealization { get { return this._IsConnectionRealization; } }
 	
-		[Description("Reference to Space Boundaries by virtue of the objectified relationship IfcRelSep" +
-	    "aratesSpaces. It defines the concept of an Building Element bounding Spaces.\r\n")]
+		[Description("<EPM-HTML>\r\nReference to space boundaries by virtue of the objectified relationsh" +
+	    "ip <em>IfcRelSpaceBoundary</em>. It defines the concept of an element bounding s" +
+	    "paces.\r\n</EPM-HTML>\r\n")]
 		public ISet<IfcRelSpaceBoundary> ProvidesBoundaries { get { return this._ProvidesBoundaries; } }
 	
 		[Description("Reference to the element connection relationship. The relationship then refers to" +
 	    " the other element that is connected to this element.\r\n")]
 		public ISet<IfcRelConnectsElements> ConnectedFrom { get { return this._ConnectedFrom; } }
 	
-		[Description("<EPM-HTML>\r\nContainment relationship to the spatial structure element, to which t" +
-	    "he element is primarily associated.\r\n</EPM-HTML>")]
+		[Description(@"<EPM-HTML>
+	Containment relationship to the spatial structure element, to which the element is primarily associated. This containment relationship has to be hierachical, i.e. an element may only be assigned directly to zero or one spatial structure. 
+	</EPM-HTML>")]
 		public ISet<IfcRelContainedInSpatialStructure> ContainedInStructure { get { return this._ContainedInStructure; } }
 	
 	

@@ -10,10 +10,12 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcExternalReferenceResource;
+using BuildingSmart.IFC.IfcMeasureResource;
 
 namespace BuildingSmart.IFC.IfcDateTimeResource
 {
-	[Guid("645aac37-12b4-454a-a956-53ef3087f755")]
+	[Guid("1445582b-1b87-4b61-9171-bff80196b02a")]
 	public partial struct IfcMonthInYearNumber
 	{
 		[XmlText]

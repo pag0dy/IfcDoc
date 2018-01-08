@@ -10,25 +10,25 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfilePropertyResource;
+using BuildingSmart.IFC.IfcProfileResource;
+using BuildingSmart.IFC.IfcSharedComponentElements;
 
 namespace BuildingSmart.IFC.IfcStructuralElementsDomain
 {
-	[Guid("0bb46add-edf1-4a43-98f9-99b82f3b893a")]
-	public abstract partial class IfcReinforcingElement : IfcBuildingElementComponent
+	[Guid("ca6074f0-a8aa-4b5b-a402-931d20010f8b")]
+	public abstract partial class IfcReinforcingElement : IfcElementComponent
 	{
 		[DataMember(Order=0)] 
 		[XmlAttribute]
 		IfcLabel? _SteelGrade;
 	
 	
-		[Description("The nominal steel grade defined according to local standards.")]
+		[Description("<EPM-HTML>\r\n\r\nDeprecated.\r\n\r\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; " +
+	    "Attribute deprecated.\r\nUse material association at <em>IfcReinforcingElementType" +
+	    "</em> instead.</blockquote>\r\n\r\n</EPM-HTML>")]
 		public IfcLabel? SteelGrade { get { return this._SteelGrade; } set { this._SteelGrade = value;} }
 	
 	

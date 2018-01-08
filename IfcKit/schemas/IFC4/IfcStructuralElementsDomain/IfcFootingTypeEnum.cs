@@ -10,26 +10,26 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfilePropertyResource;
+using BuildingSmart.IFC.IfcProfileResource;
+using BuildingSmart.IFC.IfcSharedComponentElements;
 
 namespace BuildingSmart.IFC.IfcStructuralElementsDomain
 {
-	[Guid("fa4fbfdb-d0ec-4c8a-b0f2-07cac1612e9d")]
+	[Guid("11a8da38-35ac-45e5-8ff5-856be986aa08")]
 	public enum IfcFootingTypeEnum
 	{
-		FOOTING_BEAM = 1,
+		CAISSON_FOUNDATION = 1,
 	
-		PAD_FOOTING = 2,
+		FOOTING_BEAM = 2,
 	
-		PILE_CAP = 3,
+		PAD_FOOTING = 3,
 	
-		STRIP_FOOTING = 4,
+		PILE_CAP = 4,
+	
+		STRIP_FOOTING = 5,
 	
 		USERDEFINED = -1,
 	

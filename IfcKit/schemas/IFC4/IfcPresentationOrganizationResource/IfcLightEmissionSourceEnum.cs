@@ -14,12 +14,11 @@ using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcPresentationResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcPresentationOrganizationResource
 {
-	[Guid("70354832-2319-4599-87a6-30b99691f1e1")]
+	[Guid("2ea11916-360d-4f64-b04b-8ede4aafd2fb")]
 	public enum IfcLightEmissionSourceEnum
 	{
 		COMPACTFLUORESCENT = 1,

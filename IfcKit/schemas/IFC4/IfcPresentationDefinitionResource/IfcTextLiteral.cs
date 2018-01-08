@@ -14,13 +14,12 @@ using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcPresentationResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
 using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcPresentationDefinitionResource
 {
-	[Guid("838aa023-edf8-4ede-9db6-6d86aae12e85")]
+	[Guid("fff1fb35-13c2-4e24-92f4-c2bfd5a9ba17")]
 	public partial class IfcTextLiteral : IfcGeometricRepresentationItem
 	{
 		[DataMember(Order=0)] 
@@ -41,11 +40,8 @@ namespace BuildingSmart.IFC.IfcPresentationDefinitionResource
 		[Description("<EPM-HTML>\r\nThe text literal to be presented.\r\n</EPM-HTML>")]
 		public IfcPresentableText Literal { get { return this._Literal; } set { this._Literal = value;} }
 	
-		[Description(@"<EPM-HTML>
-	An <i>IfcAxis2Placement</i> that determines the placement and orientation of the presented string.
-	<blockquote><small>When used with a text style based on <i>IfcTextStyleWithBoxCharacteristics</i> then the y-axis is taken as the reference direction for the box rotation angle and the box slant angle.
-	</small></blockquote>
-	</EPM-HTML>")]
+		[Description("<EPM-HTML>\r\nAn <em>IfcAxis2Placement</em> that determines the placement and orien" +
+	    "tation of the presented string.\r\n</EPM-HTML>")]
 		public IfcAxis2Placement Placement { get { return this._Placement; } set { this._Placement = value;} }
 	
 		[Description("<EPM-HTML>\r\nThe writing direction of the text literal.\r\n</EPM-HTML>")]

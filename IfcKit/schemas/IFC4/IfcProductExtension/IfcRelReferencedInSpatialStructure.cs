@@ -11,7 +11,6 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometricModelResource;
@@ -20,18 +19,18 @@ using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProfilePropertyResource;
 using BuildingSmart.IFC.IfcPropertyResource;
 using BuildingSmart.IFC.IfcQuantityResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
 using BuildingSmart.IFC.IfcSharedBldgElements;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
-using BuildingSmart.IFC.IfcStructuralAnalysisDomain;
+using BuildingSmart.IFC.IfcSharedComponentElements;
+using BuildingSmart.IFC.IfcSharedFacilitiesElements;
 using BuildingSmart.IFC.IfcStructuralElementsDomain;
 
 namespace BuildingSmart.IFC.IfcProductExtension
 {
-	[Guid("84e20472-51cc-4357-8e9a-6fd9f97f6e03")]
+	[Guid("6efcded0-4fa6-4c52-82e9-d250dbb9bcb0")]
 	public partial class IfcRelReferencedInSpatialStructure : IfcRelConnects
 	{
 		[DataMember(Order=0)] 
@@ -39,21 +38,22 @@ namespace BuildingSmart.IFC.IfcProductExtension
 		ISet<IfcProduct> _RelatedElements = new HashSet<IfcProduct>();
 	
 		[DataMember(Order=1)] 
+		[XmlElement("IfcSpatialElement")]
 		[Required()]
-		IfcSpatialStructureElement _RelatingStructure;
+		IfcSpatialElement _RelatingStructure;
 	
 	
 		[Description(@"<EPM-HTML>
 	Set of products, which are referenced within this level of the spatial structure hierarchy.
-	<blockquote><small>NOTE&nbsp; Referenced elements are contained elsewhere within the spatial structure, they are referenced additionally by this spatial structure element, e.g., because they span several stories.</small>
-	</blockquote>
+	<blockquote class=""note"">NOTE&nbsp; Referenced elements are contained elsewhere within the spatial structure, they are referenced additionally by this spatial structure element, e.g., because they span several stories.</blockquote>
 	</EPM-HTML>")]
 		public ISet<IfcProduct> RelatedElements { get { return this._RelatedElements; } }
 	
-		[Description("<EPM-HTML>\r\nSpatial structure element, within which the element is referenced. An" +
-	    "y element can be contained within zero, one or many elements of the project spat" +
-	    "ial structure.\r\n</EPM-HTML>")]
-		public IfcSpatialStructureElement RelatingStructure { get { return this._RelatingStructure; } set { this._RelatingStructure = value;} }
+		[Description(@"<EPM-HTML>
+	Spatial structure element, within which the element is referenced. Any element can be contained within zero, one or many elements of the project spatial and zoning structure.
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The attribute <em>RelatingStructure</em> as been promoted to the new supertype <em>IfcSpatialElement</em> with upward compatibility for file based exchange.</blockquote>
+	</EPM-HTML>")]
+		public IfcSpatialElement RelatingStructure { get { return this._RelatingStructure; } set { this._RelatingStructure = value;} }
 	
 	
 	}

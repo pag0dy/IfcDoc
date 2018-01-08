@@ -10,17 +10,12 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
 
 namespace BuildingSmart.IFC.IfcElectricalDomain
 {
-	[Guid("4dd2dba6-a8a2-4a7c-b044-6f3840183c58")]
+	[Guid("2bb86abe-9d7d-49e5-8a0e-89e7617eddf6")]
 	public partial class IfcElectricTimeControlType : IfcFlowControllerType
 	{
 		[DataMember(Order=0)] 
@@ -29,8 +24,8 @@ namespace BuildingSmart.IFC.IfcElectricalDomain
 		IfcElectricTimeControlTypeEnum _PredefinedType;
 	
 	
-		[Description("Identifies the predefined types of electrical time control from which the type re" +
-	    "quired may be set.")]
+		[Description("<EPM-HTML><p>Identifies the predefined types of electrical time control from whic" +
+	    "h the type required may be set.</p></EPM-HTML>")]
 		public IfcElectricTimeControlTypeEnum PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	

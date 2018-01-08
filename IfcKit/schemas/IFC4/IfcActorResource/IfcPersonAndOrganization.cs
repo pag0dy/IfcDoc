@@ -10,20 +10,24 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 
 namespace BuildingSmart.IFC.IfcActorResource
 {
-	[Guid("22436df9-b9a1-47b7-872f-e3d35caded50")]
+	[Guid("52b0207c-cc6a-42c8-a632-c3d63a70b2a5")]
 	public partial class IfcPersonAndOrganization :
 		BuildingSmart.IFC.IfcActorResource.IfcActorSelect,
-		BuildingSmart.IFC.IfcPropertyResource.IfcObjectReferenceSelect
+		BuildingSmart.IFC.IfcPropertyResource.IfcObjectReferenceSelect,
+		BuildingSmart.IFC.IfcExternalReferenceResource.IfcResourceObjectSelect
 	{
 		[DataMember(Order=0)] 
+		[XmlElement("IfcPerson")]
 		[Required()]
 		IfcPerson _ThePerson;
 	
 		[DataMember(Order=1)] 
+		[XmlElement("IfcOrganization")]
 		[Required()]
 		IfcOrganization _TheOrganization;
 	
@@ -37,7 +41,9 @@ namespace BuildingSmart.IFC.IfcActorResource
 		[Description("The organization to which the person is related.")]
 		public IfcOrganization TheOrganization { get { return this._TheOrganization; } set { this._TheOrganization = value;} }
 	
-		[Description("Roles played by the person within the context of an organization.")]
+		[Description("<EPM-HTML>\r\n\r\nRoles played by the person within the context of an organization.  " +
+	    "These may differ from the roles in <em>ThePerson.Roles</em> which may be asserte" +
+	    "d without organizational context.\r\n\r\n</EPM-HTML>\r\n")]
 		public IList<IfcActorRole> Roles { get { return this._Roles; } }
 	
 	

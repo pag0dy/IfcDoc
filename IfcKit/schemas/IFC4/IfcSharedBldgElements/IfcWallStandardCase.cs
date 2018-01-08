@@ -25,7 +25,7 @@ using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcSharedBldgElements
 {
-	[Guid("1b6c8d0b-3469-4fd9-9723-f8b6837c1647")]
+	[Guid("10baa357-63e9-4702-b89f-c213d62d63b2")]
 	public partial class IfcWallStandardCase : IfcWall
 	{
 	

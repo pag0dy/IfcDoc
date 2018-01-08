@@ -15,11 +15,12 @@ using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 
 namespace BuildingSmart.IFC.IfcTopologyResource
 {
-	[Guid("660909a7-74a9-4753-a798-8a50e6dfdf84")]
+	[Guid("86ef7edf-f099-47aa-977b-0bc982b8db88")]
 	public partial class IfcEdgeCurve : IfcEdge,
 		BuildingSmart.IFC.IfcGeometricConstraintResource.IfcCurveOrEdgeCurve
 	{
 		[DataMember(Order=0)] 
+		[XmlElement("IfcCurve")]
 		[Required()]
 		IfcCurve _EdgeGeometry;
 	

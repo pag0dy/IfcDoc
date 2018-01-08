@@ -18,7 +18,7 @@ using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometricModelResource
 {
-	[Guid("df38acbf-c70a-45d4-965d-4f328a31a361")]
+	[Guid("211a7b82-6217-476c-8ecd-feaed2e8b2b9")]
 	public partial class IfcRightCircularCone : IfcCsgPrimitive3D
 	{
 		[DataMember(Order=0)] 
@@ -32,10 +32,10 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 		IfcPositiveLengthMeasure _BottomRadius;
 	
 	
-		[Description("<EPM-HTML>\r\n</EPM-HTML>")]
+		[Description("<EPM-HTML>\r\nThe distance between the base of the cone and the apex.\r\n</EPM-HTML>")]
 		public IfcPositiveLengthMeasure Height { get { return this._Height; } set { this._Height = value;} }
 	
-		[Description("<EPM-HTML>\r\n</EPM-HTML>")]
+		[Description("<EPM-HTML>\r\nThe radius of the cone at the base.\r\n</EPM-HTML>")]
 		public IfcPositiveLengthMeasure BottomRadius { get { return this._BottomRadius; } set { this._BottomRadius = value;} }
 	
 	

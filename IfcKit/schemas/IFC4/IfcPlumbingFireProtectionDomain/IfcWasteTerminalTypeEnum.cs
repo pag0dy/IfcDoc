@@ -14,7 +14,7 @@ using BuildingSmart.IFC.IfcSharedBldgServiceElements;
 
 namespace BuildingSmart.IFC.IfcPlumbingFireProtectionDomain
 {
-	[Guid("9f92f6d2-f132-4278-9533-82e4f094f778")]
+	[Guid("0959f181-093f-4f2c-b512-9ee007c665bc")]
 	public enum IfcWasteTerminalTypeEnum
 	{
 		FLOORTRAP = 1,
@@ -25,17 +25,11 @@ namespace BuildingSmart.IFC.IfcPlumbingFireProtectionDomain
 	
 		GULLYTRAP = 4,
 	
-		GREASEINTERCEPTOR = 5,
+		ROOFDRAIN = 5,
 	
-		OILINTERCEPTOR = 6,
+		WASTEDISPOSALUNIT = 6,
 	
-		PETROLINTERCEPTOR = 7,
-	
-		ROOFDRAIN = 8,
-	
-		WASTEDISPOSALUNIT = 9,
-	
-		WASTETRAP = 10,
+		WASTETRAP = 7,
 	
 		USERDEFINED = -1,
 	

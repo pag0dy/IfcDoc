@@ -10,66 +10,45 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
 
 namespace BuildingSmart.IFC.IfcElectricalDomain
 {
-	[Guid("19c3a8b5-2b9c-41b0-b2d2-61877d6eefc6")]
+	[Guid("c0bf6e39-d49b-4f0d-81d1-4fe263f8d8d1")]
 	public enum IfcElectricApplianceTypeEnum
 	{
-		COMPUTER = 1,
+		DISHWASHER = 1,
 	
-		DIRECTWATERHEATER = 2,
+		ELECTRICCOOKER = 2,
 	
-		DISHWASHER = 3,
+		FREESTANDINGELECTRICHEATER = 3,
 	
-		ELECTRICCOOKER = 4,
+		FREESTANDINGFAN = 4,
 	
-		ELECTRICHEATER = 5,
+		FREESTANDINGWATERHEATER = 5,
 	
-		FACSIMILE = 6,
+		FREESTANDINGWATERCOOLER = 6,
 	
-		FREESTANDINGFAN = 7,
+		FREEZER = 7,
 	
-		FREEZER = 8,
+		FRIDGE_FREEZER = 8,
 	
-		FRIDGE_FREEZER = 9,
+		HANDDRYER = 9,
 	
-		HANDDRYER = 10,
+		KITCHENMACHINE = 10,
 	
-		INDIRECTWATERHEATER = 11,
+		MICROWAVE = 11,
 	
-		MICROWAVE = 12,
+		PHOTOCOPIER = 12,
 	
-		PHOTOCOPIER = 13,
+		REFRIGERATOR = 13,
 	
-		PRINTER = 14,
+		TUMBLEDRYER = 14,
 	
-		REFRIGERATOR = 15,
+		VENDINGMACHINE = 15,
 	
-		RADIANTHEATER = 16,
-	
-		SCANNER = 17,
-	
-		TELEPHONE = 18,
-	
-		TUMBLEDRYER = 19,
-	
-		TV = 20,
-	
-		VENDINGMACHINE = 21,
-	
-		WASHINGMACHINE = 22,
-	
-		WATERHEATER = 23,
-	
-		WATERCOOLER = 24,
+		WASHINGMACHINE = 16,
 	
 		USERDEFINED = -1,
 	

@@ -15,10 +15,11 @@ using BuildingSmart.IFC.IfcCostResource;
 using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
+using BuildingSmart.IFC.IfcQuantityResource;
 
 namespace BuildingSmart.IFC.IfcSharedMgmtElements
 {
-	[Guid("502bd445-1292-49e8-a30c-c39d6ab1fd53")]
+	[Guid("46d32b30-b6d4-4c9b-ac6a-a9e54fc306a6")]
 	public enum IfcProjectOrderTypeEnum
 	{
 		CHANGEORDER = 1,

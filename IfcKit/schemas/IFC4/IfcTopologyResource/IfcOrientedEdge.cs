@@ -15,10 +15,11 @@ using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 
 namespace BuildingSmart.IFC.IfcTopologyResource
 {
-	[Guid("6db216a4-6262-452a-968f-fdeb785eeb09")]
+	[Guid("a0cbcd65-91d4-42a9-ba31-58d592875aa7")]
 	public partial class IfcOrientedEdge : IfcEdge
 	{
 		[DataMember(Order=0)] 
+		[XmlElement("IfcEdge")]
 		[Required()]
 		IfcEdge _EdgeElement;
 	

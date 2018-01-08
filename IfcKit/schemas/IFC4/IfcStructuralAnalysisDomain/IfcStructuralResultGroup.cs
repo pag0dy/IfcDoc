@@ -14,15 +14,13 @@ using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfilePropertyResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
 using BuildingSmart.IFC.IfcStructuralLoadResource;
 
 namespace BuildingSmart.IFC.IfcStructuralAnalysisDomain
 {
-	[Guid("3dad840c-ea0d-49bf-a545-52ea60ed4fc7")]
+	[Guid("744fe291-2e62-4a6f-b0a4-1ead956bee5c")]
 	public partial class IfcStructuralResultGroup : IfcGroup
 	{
 		[DataMember(Order=0)] 
@@ -31,6 +29,7 @@ namespace BuildingSmart.IFC.IfcStructuralAnalysisDomain
 		IfcAnalysisTheoryTypeEnum _TheoryType;
 	
 		[DataMember(Order=1)] 
+		[XmlElement("IfcStructuralLoadGroup")]
 		IfcStructuralLoadGroup _ResultForLoadGroup;
 	
 		[DataMember(Order=2)] 
@@ -48,8 +47,8 @@ namespace BuildingSmart.IFC.IfcStructuralAnalysisDomain
 	    "ents the result.")]
 		public IfcStructuralLoadGroup ResultForLoadGroup { get { return this._ResultForLoadGroup; } set { this._ResultForLoadGroup = value;} }
 	
-		[Description("This Boolean value allows to easily recognize if a linear analysis has been appli" +
-	    "ed (allowing the superposition of analysis results), or vice versa.")]
+		[Description("This value allows to easily recognize whether a linear analysis has been applied " +
+	    "(allowing the superposition of analysis results).")]
 		public Boolean IsLinear { get { return this._IsLinear; } set { this._IsLinear = value;} }
 	
 		[Description("Reference to an instance of IfcStructuralAnalysisModel for which this instance ca" +

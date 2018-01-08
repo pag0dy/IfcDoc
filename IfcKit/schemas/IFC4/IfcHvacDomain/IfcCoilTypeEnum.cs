@@ -10,35 +10,27 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialResource;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcPropertyResource;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
 using BuildingSmart.IFC.IfcSharedComponentElements;
 
 namespace BuildingSmart.IFC.IfcHvacDomain
 {
-	[Guid("2cead977-c89d-43cc-ab52-7fda5d90a523")]
+	[Guid("81999189-d657-4185-891f-44500625d310")]
 	public enum IfcCoilTypeEnum
 	{
 		DXCOOLINGCOIL = 1,
 	
-		WATERCOOLINGCOIL = 2,
+		ELECTRICHEATINGCOIL = 2,
 	
-		STEAMHEATINGCOIL = 3,
+		GASHEATINGCOIL = 3,
 	
-		WATERHEATINGCOIL = 4,
+		HYDRONICCOIL = 4,
 	
-		ELECTRICHEATINGCOIL = 5,
+		STEAMHEATINGCOIL = 5,
 	
-		GASHEATINGCOIL = 6,
+		WATERCOOLINGCOIL = 6,
+	
+		WATERHEATINGCOIL = 7,
 	
 		USERDEFINED = -1,
 	

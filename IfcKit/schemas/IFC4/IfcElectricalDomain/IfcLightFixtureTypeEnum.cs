@@ -10,22 +10,19 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
 
 namespace BuildingSmart.IFC.IfcElectricalDomain
 {
-	[Guid("5cfca5f3-147c-46d8-9976-2160e62f9529")]
+	[Guid("2b4e9cba-4762-4b2a-8106-aff6986399aa")]
 	public enum IfcLightFixtureTypeEnum
 	{
 		POINTSOURCE = 1,
 	
 		DIRECTIONSOURCE = 2,
+	
+		SECURITYLIGHTING = 3,
 	
 		USERDEFINED = -1,
 	

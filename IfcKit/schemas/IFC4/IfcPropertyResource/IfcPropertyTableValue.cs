@@ -15,21 +15,20 @@ using BuildingSmart.IFC.IfcConstraintResource;
 using BuildingSmart.IFC.IfcCostResource;
 using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
+using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcTimeSeriesResource;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcPropertyResource
 {
-	[Guid("e2eafe97-cfcc-4816-951d-b06cbb579702")]
+	[Guid("e3c26a8d-a8eb-45a1-ae3b-cf89be51902e")]
 	public partial class IfcPropertyTableValue : IfcSimpleProperty
 	{
 		[DataMember(Order=0)] 
-		[Required()]
 		IList<IfcValue> _DefiningValues = new List<IfcValue>();
 	
 		[DataMember(Order=1)] 
-		[Required()]
 		IList<IfcValue> _DefinedValues = new List<IfcValue>();
 	
 		[DataMember(Order=2)] 
@@ -42,12 +41,21 @@ namespace BuildingSmart.IFC.IfcPropertyResource
 		[DataMember(Order=4)] 
 		IfcUnit _DefinedUnit;
 	
+		[DataMember(Order=5)] 
+		[XmlAttribute]
+		IfcCurveInterpolationEnum? _CurveInterpolation;
 	
-		[Description("List of defining values, which determine the defined values.")]
+	
+		[Description(@"<EPM-HTML>
+	List of defining values, which determine the defined values. This list shall have unique values only.
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The attribute has been made optional with upward compatibility for file based exchange.</blockquote>
+	</EPM-HTML>")]
 		public IList<IfcValue> DefiningValues { get { return this._DefiningValues; } }
 	
-		[Description("Defined values which are applicable for the scope as defined by the defining valu" +
-	    "es.")]
+		[Description(@"<EPM-HTML>
+	Defined values which are applicable for the scope as defined by the defining values.
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The attribute has been made optional with upward compatibility for file based exchange.</blockquote>
+	</EPM-HTML>")]
 		public IList<IfcValue> DefinedValues { get { return this._DefinedValues; } }
 	
 		[Description("Expression for the derivation of defined values from the defining values, the exp" +
@@ -64,6 +72,12 @@ namespace BuildingSmart.IFC.IfcPropertyResource
 	    " (given by the TYPE of the defined values) is used as defined by the global unit" +
 	    " assignment at IfcProject.")]
 		public IfcUnit DefinedUnit { get { return this._DefinedUnit; } set { this._DefinedUnit = value;} }
+	
+		[Description(@"<EPM-HTML>
+	Interpolation of the curve between two defining and defined values that are provided. if not provided a linear interpolation is assumed.
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The attribute has been added at the end of the attribute list.</blockquote>
+	</EPM-HTML>")]
+		public IfcCurveInterpolationEnum? CurveInterpolation { get { return this._CurveInterpolation; } set { this._CurveInterpolation = value;} }
 	
 	
 	}

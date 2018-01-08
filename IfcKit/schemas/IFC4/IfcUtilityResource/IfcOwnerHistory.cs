@@ -11,18 +11,22 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
+using BuildingSmart.IFC.IfcConstraintResource;
+using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 
 namespace BuildingSmart.IFC.IfcUtilityResource
 {
-	[Guid("d0f0db55-cbcd-4b65-b333-71b5c760d498")]
+	[Guid("6ef8f949-8689-4582-bbae-9259e7c2d559")]
 	public partial class IfcOwnerHistory
 	{
 		[DataMember(Order=0)] 
+		[XmlElement("IfcPersonAndOrganization")]
 		[Required()]
 		IfcPersonAndOrganization _OwningUser;
 	
 		[DataMember(Order=1)] 
+		[XmlElement("IfcApplication")]
 		[Required()]
 		IfcApplication _OwningApplication;
 	
@@ -32,17 +36,18 @@ namespace BuildingSmart.IFC.IfcUtilityResource
 	
 		[DataMember(Order=3)] 
 		[XmlAttribute]
-		[Required()]
-		IfcChangeActionEnum _ChangeAction;
+		IfcChangeActionEnum? _ChangeAction;
 	
 		[DataMember(Order=4)] 
 		[XmlAttribute]
 		IfcTimeStamp? _LastModifiedDate;
 	
 		[DataMember(Order=5)] 
+		[XmlElement("IfcPersonAndOrganization")]
 		IfcPersonAndOrganization _LastModifyingUser;
 	
 		[DataMember(Order=6)] 
+		[XmlElement("IfcApplication")]
 		IfcApplication _LastModifyingApplication;
 	
 		[DataMember(Order=7)] 
@@ -56,25 +61,29 @@ namespace BuildingSmart.IFC.IfcUtilityResource
 	    "e distinguishes between the Owning User and Creating User.")]
 		public IfcPersonAndOrganization OwningUser { get { return this._OwningUser; } set { this._OwningUser = value;} }
 	
-		[Description(@"Direct reference to the application which currently ""Owns"" this object on behalf of the owning user, who uses this application. Note that IFC includes the concept of ownership transfer from one app to another and therefore distinguishes between the Owning Application and Creating Application.")]
+		[Description(@"Direct reference to the application which currently ""owns"" this object on behalf of the owning user of the application. Note that IFC includes the concept of ownership transfer from one application to another and therefore distinguishes between the Owning Application and Creating Application.")]
 		public IfcApplication OwningApplication { get { return this._OwningApplication; } set { this._OwningApplication = value;} }
 	
 		[Description("Enumeration that defines the current access state of the object.")]
 		public IfcStateEnum? State { get { return this._State; } set { this._State = value;} }
 	
 		[Description("Enumeration that defines the actions associated with changes made to the object.")]
-		public IfcChangeActionEnum ChangeAction { get { return this._ChangeAction; } set { this._ChangeAction = value;} }
+		public IfcChangeActionEnum? ChangeAction { get { return this._ChangeAction; } set { this._ChangeAction = value;} }
 	
-		[Description("Date and Time at which the last modification occurred.")]
+		[Description("Date and Time expressed in UTC (Universal Time Coordinated, formerly Greenwich Me" +
+	    "an Time or GMT) at which the last modification was made by LastModifyingUser and" +
+	    " LastModifyingApplication.")]
 		public IfcTimeStamp? LastModifiedDate { get { return this._LastModifiedDate; } set { this._LastModifiedDate = value;} }
 	
-		[Description("User who carried out the last modification.")]
+		[Description("User who carried out the last modification using LastModifyingApplication.")]
 		public IfcPersonAndOrganization LastModifyingUser { get { return this._LastModifyingUser; } set { this._LastModifyingUser = value;} }
 	
-		[Description("Application used to carry out the last modification.")]
+		[Description("Application used to make the last modification.")]
 		public IfcApplication LastModifyingApplication { get { return this._LastModifyingApplication; } set { this._LastModifyingApplication = value;} }
 	
-		[Description("Time and date of creation.")]
+		[Description("The date and time expressed in UTC (Universal Time Coordinated, formerly Greenwic" +
+	    "h Mean Time or GMT) when first created by the original OwningApplication. Once d" +
+	    "efined this value remains unchanged through the lifetime of the entity. ")]
 		public IfcTimeStamp CreationDate { get { return this._CreationDate; } set { this._CreationDate = value;} }
 	
 	

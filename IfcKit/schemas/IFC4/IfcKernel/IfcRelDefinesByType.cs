@@ -11,26 +11,33 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcConstraintResource;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometricModelResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
+using BuildingSmart.IFC.IfcProcessExtension;
 using BuildingSmart.IFC.IfcPropertyResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
 using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcKernel
 {
-	[Guid("f48dfb4d-c177-4f88-b654-b0d80b6d1908")]
+	[Guid("92a2c20b-4c2f-4ed2-a2f1-5d0591fa26b2")]
 	public partial class IfcRelDefinesByType : IfcRelDefines
 	{
 		[DataMember(Order=0)] 
 		[Required()]
+		ISet<IfcObject> _RelatedObjects = new HashSet<IfcObject>();
+	
+		[DataMember(Order=1)] 
+		[XmlElement("IfcTypeObject")]
+		[Required()]
 		IfcTypeObject _RelatingType;
 	
+	
+		public ISet<IfcObject> RelatedObjects { get { return this._RelatedObjects; } }
 	
 		[Description("Reference to the type (or style) information for that object or set of objects.")]
 		public IfcTypeObject RelatingType { get { return this._RelatingType; } set { this._RelatingType = value;} }

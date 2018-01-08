@@ -10,17 +10,12 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
 
 namespace BuildingSmart.IFC.IfcElectricalDomain
 {
-	[Guid("be19a872-6f1f-4092-bda3-2eb40ffddb3a")]
+	[Guid("d3f313a8-e9d6-4123-ae8c-91cb74d1eb3a")]
 	public partial class IfcElectricApplianceType : IfcFlowTerminalType
 	{
 		[DataMember(Order=0)] 
@@ -29,8 +24,8 @@ namespace BuildingSmart.IFC.IfcElectricalDomain
 		IfcElectricApplianceTypeEnum _PredefinedType;
 	
 	
-		[Description("Identifies the predefined types of electrical appliance from which the type requi" +
-	    "red may be set.")]
+		[Description("<EPM-HTML><p>Identifies the predefined types of electrical appliance from which t" +
+	    "he type required may be set.</p></EPM-HTML>")]
 		public IfcElectricApplianceTypeEnum PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	

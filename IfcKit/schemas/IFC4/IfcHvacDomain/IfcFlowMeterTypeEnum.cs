@@ -10,35 +10,21 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialResource;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcPropertyResource;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
 using BuildingSmart.IFC.IfcSharedComponentElements;
 
 namespace BuildingSmart.IFC.IfcHvacDomain
 {
-	[Guid("54c86ec7-5ca4-4962-97cb-4600bb10c399")]
+	[Guid("2f69b657-d03a-4095-b2f0-593ecc080ae7")]
 	public enum IfcFlowMeterTypeEnum
 	{
-		ELECTRICMETER = 1,
+		ENERGYMETER = 1,
 	
-		ENERGYMETER = 2,
+		GASMETER = 2,
 	
-		FLOWMETER = 3,
+		OILMETER = 3,
 	
-		GASMETER = 4,
-	
-		OILMETER = 5,
-	
-		WATERMETER = 6,
+		WATERMETER = 4,
 	
 		USERDEFINED = -1,
 	

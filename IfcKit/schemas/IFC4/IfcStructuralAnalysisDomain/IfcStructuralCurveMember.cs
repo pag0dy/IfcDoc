@@ -14,26 +14,38 @@ using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfilePropertyResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
 using BuildingSmart.IFC.IfcStructuralLoadResource;
 
 namespace BuildingSmart.IFC.IfcStructuralAnalysisDomain
 {
-	[Guid("d3ef61f9-4575-4bd3-89df-ede61081533e")]
+	[Guid("b0527d1a-798c-4134-b9f1-056c3d7650af")]
 	public partial class IfcStructuralCurveMember : IfcStructuralMember
 	{
 		[DataMember(Order=0)] 
 		[XmlAttribute]
 		[Required()]
-		IfcStructuralCurveTypeEnum _PredefinedType;
+		IfcStructuralCurveMemberTypeEnum _PredefinedType;
+	
+		[DataMember(Order=1)] 
+		[XmlElement("IfcDirection")]
+		[Required()]
+		IfcDirection _Axis;
 	
 	
-		[Description("Defines the load carrying behavior of the member, as far as it is taken into acco" +
-	    "unt in the analysis.")]
-		public IfcStructuralCurveTypeEnum PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
+		[Description("Type of member with respect to its load carrying behavior in this analysis ideali" +
+	    "zation.")]
+		public IfcStructuralCurveMemberTypeEnum PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
+	
+		[Description(@"<EPM-HTML>
+	
+	Direction which is used in the definition of the local z axis.  <em>Axis</em> is specified relative to the so-called global coordinate system, i.e. the <em>SELF\IfcProduct.ObjectPlacement</em>.
+	
+	<blockquote class=""note"">NOTE&nbsp; It is desirable and usually possible that many instances of <em>IfcStructuralCurveConnection</em> and <em>IfcStructuralCurveMember</em> share a common instance of <em>IfcDirection</em> as their <em>Axis</em> attribute.</blockquote>
+	
+	</EPM-HTML>")]
+		public IfcDirection Axis { get { return this._Axis; } set { this._Axis = value;} }
 	
 	
 	}

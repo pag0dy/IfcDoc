@@ -20,10 +20,11 @@ using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
-	[Guid("00e4c5cb-2428-49bb-90fb-932a2d8c871f")]
+	[Guid("1313c1ee-f455-43d1-99a2-89dea63a0fca")]
 	public abstract partial class IfcPlacement : IfcGeometricRepresentationItem
 	{
 		[DataMember(Order=0)] 
+		[XmlElement("IfcCartesianPoint")]
 		[Required()]
 		IfcCartesianPoint _Location;
 	

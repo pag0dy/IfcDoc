@@ -21,9 +21,17 @@ using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 
 namespace BuildingSmart.IFC.IfcProcessExtension
 {
-	[Guid("c588cec2-bd4d-4fad-95b3-886c02ea6ad1")]
+	[Guid("1802d7e1-8d28-4916-80dd-a5f0a21f588b")]
 	public partial class IfcWorkPlan : IfcWorkControl
 	{
+		[DataMember(Order=0)] 
+		[XmlAttribute]
+		IfcWorkPlanTypeEnum? _PredefinedType;
+	
+	
+		[Description("<EPM-HTML>\r\n    Identifies the predefined types of a work plan from which \r\n    t" +
+	    "he type required may be set.\r\n</EPM-HTML>")]
+		public IfcWorkPlanTypeEnum? PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	
 	}

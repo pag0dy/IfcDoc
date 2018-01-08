@@ -20,10 +20,11 @@ using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
-	[Guid("a15c5ebd-7a08-41d4-ac69-184ee254821c")]
+	[Guid("25bb1436-242e-4954-a716-597d8e9ba615")]
 	public partial class IfcRectangularTrimmedSurface : IfcBoundedSurface
 	{
 		[DataMember(Order=0)] 
+		[XmlElement("IfcSurface")]
 		[Required()]
 		IfcSurface _BasisSurface;
 	

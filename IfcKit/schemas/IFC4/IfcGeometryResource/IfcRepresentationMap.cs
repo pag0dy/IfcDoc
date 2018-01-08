@@ -20,16 +20,21 @@ using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
-	[Guid("380d19f2-c934-472a-9c62-ffcfbdd23698")]
-	public partial class IfcRepresentationMap
+	[Guid("3968ca44-8f3e-43f2-ab19-855d7709487b")]
+	public partial class IfcRepresentationMap :
+		BuildingSmart.IFC.IfcRepresentationResource.IfcProductRepresentationSelect
 	{
 		[DataMember(Order=0)] 
 		[Required()]
 		IfcAxis2Placement _MappingOrigin;
 	
 		[DataMember(Order=1)] 
+		[XmlElement("IfcRepresentation")]
 		[Required()]
 		IfcRepresentation _MappedRepresentation;
+	
+		[InverseProperty("PartOfProductDefinitionShape")] 
+		ISet<IfcShapeAspect> _HasShapeAspects = new HashSet<IfcShapeAspect>();
 	
 		[InverseProperty("MappingSource")] 
 		ISet<IfcMappedItem> _MapUsage = new HashSet<IfcMappedItem>();
@@ -41,6 +46,11 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 	
 		[Description("A representation that is mapped to at least one mapped item.")]
 		public IfcRepresentation MappedRepresentation { get { return this._MappedRepresentation; } set { this._MappedRepresentation = value;} }
+	
+		[Description("<EPM-HTML>\r\nReference to the shape aspect that represents part of the shape or it" +
+	    "s feature distinctively.\r\n<blockquote class=\"change-ifc2x4\">\r\nIFC4 CHANGE&nbsp; " +
+	    "Inverse attribute added.\r\n</blockquote>\r\n</EPM-HTML>")]
+		public ISet<IfcShapeAspect> HasShapeAspects { get { return this._HasShapeAspects; } }
 	
 		public ISet<IfcMappedItem> MapUsage { get { return this._MapUsage; } }
 	

@@ -11,16 +11,16 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcExternalReferenceResource;
+using BuildingSmart.IFC.IfcGeometricModelResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationDefinitionResource;
-using BuildingSmart.IFC.IfcPresentationResource;
 using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 {
-	[Guid("026decc8-92b6-4199-a0d0-600130d2010e")]
-	public partial class IfcSurfaceStyleWithTextures :
+	[Guid("8b1d947d-68b2-4aab-b866-8b1fb6d7e22a")]
+	public partial class IfcSurfaceStyleWithTextures : IfcPresentationItem,
 		BuildingSmart.IFC.IfcPresentationAppearanceResource.IfcSurfaceStyleElementSelect
 	{
 		[DataMember(Order=0)] 
@@ -28,8 +28,9 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 		IList<IfcSurfaceTexture> _Textures = new List<IfcSurfaceTexture>();
 	
 	
-		[Description("The textures applied to the surface. Only one image map with the same image map t" +
-	    "ype shall be applied.")]
+		[Description("<EPM-HTML>\r\nThe textures applied to the surface. In case of more than one surface" +
+	    " texture is included, the <em>IfcSurfaceStyleWithTexture</em> defines a multi te" +
+	    "xture.\r\n</EMP-HTML>")]
 		public IList<IfcSurfaceTexture> Textures { get { return this._Textures; } }
 	
 	

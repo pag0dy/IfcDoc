@@ -25,7 +25,7 @@ using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcSharedBldgElements
 {
-	[Guid("f6311017-a32c-4c66-b90a-ee055978b0d3")]
+	[Guid("8e9a8d3d-90e1-4203-9330-354d34541807")]
 	public enum IfcMemberTypeEnum
 	{
 		BRACE = 1,

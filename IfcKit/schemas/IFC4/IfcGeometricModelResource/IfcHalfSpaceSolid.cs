@@ -18,11 +18,12 @@ using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometricModelResource
 {
-	[Guid("fdc6a245-73d0-49ab-af10-8bcd9e75d397")]
+	[Guid("c9679787-14e8-44ff-b62a-a511bb58005d")]
 	public partial class IfcHalfSpaceSolid : IfcGeometricRepresentationItem,
 		BuildingSmart.IFC.IfcGeometricModelResource.IfcBooleanOperand
 	{
 		[DataMember(Order=0)] 
+		[XmlElement("IfcSurface")]
 		[Required()]
 		IfcSurface _BaseSurface;
 	

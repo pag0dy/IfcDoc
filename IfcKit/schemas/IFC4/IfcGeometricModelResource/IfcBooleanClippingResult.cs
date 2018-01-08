@@ -18,7 +18,7 @@ using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometricModelResource
 {
-	[Guid("c01775c6-92a1-49ef-8434-510b5db59e84")]
+	[Guid("a6eb852d-2266-484e-b385-16dab2770609")]
 	public partial class IfcBooleanClippingResult : IfcBooleanResult
 	{
 	

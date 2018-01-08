@@ -10,30 +10,27 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
 
 namespace BuildingSmart.IFC.IfcElectricalDomain
 {
-	[Guid("46116d76-16c1-4e48-9c71-5a22626083c4")]
+	[Guid("e5e76080-c2b4-461b-80bc-d38dd823c6d6")]
 	public enum IfcProtectiveDeviceTypeEnum
 	{
-		FUSEDISCONNECTOR = 1,
+		CIRCUITBREAKER = 1,
 	
-		CIRCUITBREAKER = 2,
+		EARTHLEAKAGECIRCUITBREAKER = 2,
 	
-		EARTHFAILUREDEVICE = 3,
+		EARTHINGSWITCH = 3,
 	
-		RESIDUALCURRENTCIRCUITBREAKER = 4,
+		FUSEDISCONNECTOR = 4,
 	
-		RESIDUALCURRENTSWITCH = 5,
+		RESIDUALCURRENTCIRCUITBREAKER = 5,
 	
-		VARISTOR = 6,
+		RESIDUALCURRENTSWITCH = 6,
+	
+		VARISTOR = 7,
 	
 		USERDEFINED = -1,
 	

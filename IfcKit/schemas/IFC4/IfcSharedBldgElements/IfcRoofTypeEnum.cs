@@ -25,7 +25,7 @@ using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcSharedBldgElements
 {
-	[Guid("88ef7636-5d32-454e-8ed8-3b587bcdd7a1")]
+	[Guid("a6b68c0e-bad1-48de-be24-615efa2b8d7c")]
 	public enum IfcRoofTypeEnum
 	{
 		FLAT_ROOF = 1,
@@ -53,6 +53,8 @@ namespace BuildingSmart.IFC.IfcSharedBldgElements
 		DOME_ROOF = 12,
 	
 		FREEFORM = 13,
+	
+		USERDEFINED = -1,
 	
 		NOTDEFINED = 0,
 	

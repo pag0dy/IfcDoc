@@ -11,15 +11,15 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcExternalReferenceResource;
+using BuildingSmart.IFC.IfcGeometricModelResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationDefinitionResource;
-using BuildingSmart.IFC.IfcPresentationResource;
 using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 {
-	[Guid("d67c6683-c658-451a-82b2-833d8e0ed253")]
+	[Guid("13c24361-dbc0-44fd-93e3-7772371d47b4")]
 	public partial class IfcPixelTexture : IfcSurfaceTexture
 	{
 		[DataMember(Order=0)] 
@@ -52,12 +52,9 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 	    "onent.\r\n</EPM-HTML>")]
 		public IfcInteger ColourComponents { get { return this._ColourComponents; } set { this._ColourComponents = value;} }
 	
-		[Description(@"<EPM-HTML>
-	Flat list of hexadecimal values, each describing one pixel by 1, 2, 3, or 4 components.
-	<blockquote><small><font color""#ff0000"">
-	IFC2x Edition 3 CHANGE&nbsp; The data type has been changed from STRING to BINARY.
-	</font></small></blockquote>
-	</EPM-HTML>")]
+		[Description("<EPM-HTML>\r\nFlat list of hexadecimal values, each describing one pixel by 1, 2, 3" +
+	    ", or 4 components.\r\n<blockquote class=\"change-ifc2x3\">IFC2x3 CHANGE&nbsp; The da" +
+	    "ta type has been changed from STRING to BINARY.</blockquote>\r\n</EPM-HTML>")]
 		public IList<BINARY (32)> Pixel { get { return this._Pixel; } }
 	
 	

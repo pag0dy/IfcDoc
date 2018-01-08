@@ -10,18 +10,20 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 
 namespace BuildingSmart.IFC.IfcActorResource
 {
-	[Guid("374ac51a-70a0-4e6e-934b-ba7a965eb472")]
+	[Guid("93c06606-4886-4b0b-9ed6-d883d74c46fd")]
 	public partial class IfcOrganization :
 		BuildingSmart.IFC.IfcActorResource.IfcActorSelect,
-		BuildingSmart.IFC.IfcPropertyResource.IfcObjectReferenceSelect
+		BuildingSmart.IFC.IfcPropertyResource.IfcObjectReferenceSelect,
+		BuildingSmart.IFC.IfcExternalReferenceResource.IfcResourceObjectSelect
 	{
 		[DataMember(Order=0)] 
 		[XmlAttribute]
-		IfcIdentifier? _Id;
+		IfcIdentifier? _Identification;
 	
 		[DataMember(Order=1)] 
 		[XmlAttribute]
@@ -49,7 +51,7 @@ namespace BuildingSmart.IFC.IfcActorResource
 	
 	
 		[Description("Identification of the organization.")]
-		public IfcIdentifier? Id { get { return this._Id; } set { this._Id = value;} }
+		public IfcIdentifier? Identification { get { return this._Identification; } set { this._Identification = value;} }
 	
 		[Description("The word, or group of words, by which the organization is referred to.")]
 		public IfcLabel Name { get { return this._Name; } set { this._Name = value;} }
@@ -60,9 +62,9 @@ namespace BuildingSmart.IFC.IfcActorResource
 		[Description("Roles played by the organization.")]
 		public IList<IfcActorRole> Roles { get { return this._Roles; } }
 	
-		[Description("Postal and telecom addresses of an organization.\r\n<EPM-HTML>\r\n<BLOCKQUOTE><FONT S" +
-	    "IZE=\"-1\">NOTE: There may be several addresses related to an organization.\r\n</FON" +
-	    "T></BLOCKQUOTE>\r\n</EPM-HTML>")]
+		[Description("<EPM-HTML>\r\nPostal and telecom addresses of an organization.\r\n<blockquote class=\"" +
+	    "note\">NOTE&nbsp; There may be several addresses related to an organization.</blo" +
+	    "ckquote>\r\n</EPM-HTML>")]
 		public IList<IfcAddress> Addresses { get { return this._Addresses; } }
 	
 		[Description("The inverse relationship for relationship RelatedOrganizations of IfcOrganization" +

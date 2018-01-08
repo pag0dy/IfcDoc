@@ -16,12 +16,11 @@ using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcTimeSeriesResource;
 using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcConstraintResource
 {
-	[Guid("e18a2dc5-ea61-4ee9-87ce-984f6c9058b9")]
+	[Guid("2748cd36-46fe-4341-ae53-402b2961c867")]
 	public enum IfcConstraintEnum
 	{
 		HARD = 1,

@@ -14,7 +14,7 @@ using BuildingSmart.IFC.IfcSharedBldgServiceElements;
 
 namespace BuildingSmart.IFC.IfcPlumbingFireProtectionDomain
 {
-	[Guid("967e8ab8-c881-4099-afbe-4c61bd073e84")]
+	[Guid("61aa9c11-fe11-4bd6-b0d1-5cec357310f0")]
 	public partial class IfcFireSuppressionTerminalType : IfcFlowTerminalType
 	{
 		[DataMember(Order=0)] 
@@ -23,8 +23,8 @@ namespace BuildingSmart.IFC.IfcPlumbingFireProtectionDomain
 		IfcFireSuppressionTerminalTypeEnum _PredefinedType;
 	
 	
-		[Description("Identifies the predefined types of fire suppression terminal from which the type " +
-	    "required may be set.")]
+		[Description("<EPM-HTML><p>Identifies the predefined types of fire suppression terminal from wh" +
+	    "ich the type required may be set.</p></EPM-HTML>")]
 		public IfcFireSuppressionTerminalTypeEnum PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	

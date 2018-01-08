@@ -20,7 +20,7 @@ using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
-	[Guid("0eb47cca-3db3-45f3-aff8-c962eafcacfe")]
+	[Guid("00458893-b54e-41dd-a1ba-6b05ae0b935f")]
 	public enum IfcTransitionCode
 	{
 		DISCONTINUOUS = 1,

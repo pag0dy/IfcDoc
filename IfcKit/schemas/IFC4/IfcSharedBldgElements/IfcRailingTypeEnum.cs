@@ -25,7 +25,7 @@ using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcSharedBldgElements
 {
-	[Guid("ad3908fc-b78b-490b-b190-5cef3e9ab719")]
+	[Guid("11980763-c96e-4a3e-b5fd-fb1d8b8e37c1")]
 	public enum IfcRailingTypeEnum
 	{
 		HANDRAIL = 1,

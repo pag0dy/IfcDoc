@@ -11,7 +11,6 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometricModelResource;
@@ -20,28 +19,31 @@ using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProfilePropertyResource;
 using BuildingSmart.IFC.IfcPropertyResource;
 using BuildingSmart.IFC.IfcQuantityResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
 using BuildingSmart.IFC.IfcSharedBldgElements;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
-using BuildingSmart.IFC.IfcStructuralAnalysisDomain;
+using BuildingSmart.IFC.IfcSharedComponentElements;
+using BuildingSmart.IFC.IfcSharedFacilitiesElements;
 using BuildingSmart.IFC.IfcStructuralElementsDomain;
 
 namespace BuildingSmart.IFC.IfcProductExtension
 {
-	[Guid("91dc4190-4375-406b-be79-8bff1db1cc5f")]
+	[Guid("b5068876-210f-4343-a93a-674f2a9e63ff")]
 	public partial class IfcRelSpaceBoundary : IfcRelConnects
 	{
 		[DataMember(Order=0)] 
 		[Required()]
-		IfcSpace _RelatingSpace;
+		IfcSpaceBoundarySelect _RelatingSpace;
 	
 		[DataMember(Order=1)] 
+		[XmlElement("IfcElement")]
+		[Required()]
 		IfcElement _RelatedBuildingElement;
 	
 		[DataMember(Order=2)] 
+		[XmlElement("IfcConnectionGeometry")]
 		IfcConnectionGeometry _ConnectionGeometry;
 	
 		[DataMember(Order=3)] 
@@ -56,22 +58,19 @@ namespace BuildingSmart.IFC.IfcProductExtension
 	
 	
 		[Description("Reference to one spaces that is delimited by this boundary.")]
-		public IfcSpace RelatingSpace { get { return this._RelatingSpace; } set { this._RelatingSpace = value;} }
+		public IfcSpaceBoundarySelect RelatingSpace { get { return this._RelatingSpace; } set { this._RelatingSpace = value;} }
 	
 		[Description(@"<EPM-HTML>
 	Reference to <strike>Building</strike> Element, that defines the Space Boundaries.
-	<blockquote><small><font color=""#ff0000"">
-	IFC2x PLATFORM CHANGE: The data type has been changed from <i>IfcBuildingElement</i> to <i>IfcElement</i> with upward compatibility for file based exchange.
-	</font></small></blockquote>
+	<blockquote class=""change-ifc2x"">IFC2x CHANGE&nbsp; The data type has been changed from <em>IfcBuildingElement</em> to <em>IfcElement</em> with upward compatibility for file based exchange. </blockquote>
+	  <blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The attribute has been changed to be mandatory.</blockquote>
 	</EPM-HTML>
 	")]
 		public IfcElement RelatedBuildingElement { get { return this._RelatedBuildingElement; } set { this._RelatedBuildingElement = value;} }
 	
 		[Description(@"<EPM-HTML>
 	Physical representation of the space boundary. Provided as a <u>curve or</u> surface given within the LCS of the space.
-	<blockquote><small><font color=""#ff0000"">
-	IFC2x PLATFORM CHANGE&nbsp; The data type has been changed from <i>IfcConnectionSurfaceGeometry</i> to <i>IfcConnectionGeometry</i> with upward compatibility for file based exchange.
-	</font></small></blockquote>
+	<blockquote class=""change-ifc2x"">IFC2x CHANGE&nbsp; The data type has been changed from <em>IfcConnectionSurfaceGeometry</em> to <em>IfcConnectionGeometry</em> with upward compatibility for file based exchange.</blockquote>
 	</EPM-HTML>
 	")]
 		public IfcConnectionGeometry ConnectionGeometry { get { return this._ConnectionGeometry; } set { this._ConnectionGeometry = value;} }

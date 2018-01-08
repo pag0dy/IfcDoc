@@ -21,8 +21,9 @@ using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcRepresentationResource
 {
-	[Guid("7406559b-03a2-47f1-8cf1-320ead0e0fda")]
-	public partial class IfcGeometricRepresentationContext : IfcRepresentationContext
+	[Guid("0eca3f63-ee99-4b79-bd1a-4602d00d24d9")]
+	public partial class IfcGeometricRepresentationContext : IfcRepresentationContext,
+		BuildingSmart.IFC.IfcRepresentationResource.IfcCoordinateReferenceSystemSelect
 	{
 		[DataMember(Order=0)] 
 		[XmlAttribute]
@@ -33,13 +34,16 @@ namespace BuildingSmart.IFC.IfcRepresentationResource
 		Double? _Precision;
 	
 		[DataMember(Order=2)] 
+		[XmlElement]
 		[Required()]
 		IfcAxis2Placement _WorldCoordinateSystem;
 	
 		[DataMember(Order=3)] 
+		[XmlElement("IfcDirection")]
 		IfcDirection _TrueNorth;
 	
 		[InverseProperty("ParentContext")] 
+		[XmlElement]
 		ISet<IfcGeometricRepresentationSubContext> _HasSubContexts = new HashSet<IfcGeometricRepresentationSubContext>();
 	
 	
@@ -53,24 +57,19 @@ namespace BuildingSmart.IFC.IfcRepresentationResource
 	
 		[Description(@"<EPM-HTML>
 	Establishment of the engineering coordinate system (often referred to as the world coordinate system in CAD) for all representation contexts used by the project. 
-	<blockquote><small> 
-	Note&nbsp; it can be used to provide better numeric stability if the placement of the building(s) is far away from the origin. In most cases however it would be set to origin: (0.,0.,0.) and directions x(1.,0.,0.), y(0.,1.,0.), z(0.,0.,1.).
-	</small> </blockquote>
+	<blockquote class=""note"">NOTE&nbsp; It can be used to provide better numeric stability if the placement of the building(s) is far away from the origin. In most cases however it would be set to origin: (0.,0.,0.) and directions x(1.,0.,0.), y(0.,1.,0.), z(0.,0.,1.).</blockquote>
 	</EPM-HTML>")]
 		public IfcAxis2Placement WorldCoordinateSystem { get { return this._WorldCoordinateSystem; } set { this._WorldCoordinateSystem = value;} }
 	
 		[Description(@"<EPM-HTML>
-	Direction of the true north relative to the underlying coordinate system as established by the attribute <i>WorldCoordinateSystem</i>. It is given by a direction within the xy-plane of the underlying coordinate system. If not given, it defaults to the positive direction of the y-axis of the <i>WorldCoordinateSystem</i>.
+	Direction of the true north, or geographic northing direction, relative to the underlying project coordinate system. It is given by a 2 dimensional direction within the xy-plane of the project coordinate system. If not present, it defaults to 0. 1., meaning that the positive Y axis of the project coordinate system equals the geographic northing direction.
 	<br>
 	</EPM-HTML>")]
 		public IfcDirection TrueNorth { get { return this._TrueNorth; } set { this._TrueNorth = value;} }
 	
-		[Description(@"<EPM-HTML>
-	The set of <i>IfcGeometricRepresentationSubContexts</i> that refer to this <i>IfcGeometricRepresentationContext</i>.
-	<blockquote><small>
-	  <font color=""#FF0000"">IFC2x Edition 3 CHANGE&nbsp; New inverse attribute.</font>
-	</small></blockquote>
-	</EPM-HTML>")]
+		[Description("<EPM-HTML>\r\nThe set of <em>IfcGeometricRepresentationSubContexts</em> that refer " +
+	    "to this <em>IfcGeometricRepresentationContext</em>.\r\n<blockquote class=\"change-i" +
+	    "fc2x3\">IFC2x3 CHANGE&nbsp; New inverse attribute</blockquote>\r\n</EPM-HTML>")]
 		public ISet<IfcGeometricRepresentationSubContext> HasSubContexts { get { return this._HasSubContexts; } }
 	
 	

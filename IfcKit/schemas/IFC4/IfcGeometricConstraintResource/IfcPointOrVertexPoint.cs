@@ -21,7 +21,7 @@ using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometricConstraintResource
 {
-	[Guid("cd89f938-533c-4735-9880-9d5c7c04988d")]
+	[Guid("299f7c01-fd85-42b2-bb92-90838a8c75f8")]
 	public interface IfcPointOrVertexPoint
 	{
 	}

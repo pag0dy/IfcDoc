@@ -10,37 +10,17 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialResource;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcPropertyResource;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
 using BuildingSmart.IFC.IfcSharedComponentElements;
 
 namespace BuildingSmart.IFC.IfcHvacDomain
 {
-	[Guid("713522b9-27e1-4403-967c-93bcbeb9e902")]
+	[Guid("c7c48d26-0ead-43f8-ab77-83379d78d75c")]
 	public enum IfcSpaceHeaterTypeEnum
 	{
-		SECTIONALRADIATOR = 1,
+		CONVECTOR = 1,
 	
-		PANELRADIATOR = 2,
-	
-		TUBULARRADIATOR = 3,
-	
-		CONVECTOR = 4,
-	
-		BASEBOARDHEATER = 5,
-	
-		FINNEDTUBEUNIT = 6,
-	
-		UNITHEATER = 7,
+		RADIATOR = 2,
 	
 		USERDEFINED = -1,
 	

@@ -15,13 +15,14 @@ using BuildingSmart.IFC.IfcConstraintResource;
 using BuildingSmart.IFC.IfcCostResource;
 using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
+using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcTimeSeriesResource;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcPropertyResource
 {
-	[Guid("a9e45d96-3e40-4160-b12e-12f62f8f869e")]
+	[Guid("c8722acc-8737-44f1-b24d-0eb804a9a4da")]
 	public partial class IfcComplexProperty : IfcProperty
 	{
 		[DataMember(Order=0)] 
@@ -34,14 +35,14 @@ namespace BuildingSmart.IFC.IfcPropertyResource
 		ISet<IfcProperty> _HasProperties = new HashSet<IfcProperty>();
 	
 	
-		[Description(@"<EPM-HTML>Usage description of the <I>IfcComplexProperty</I> within the property set which references the <I>IfcComplexProperty</I>.
-	<BLOCKQUOTE> <FONT SIZE=""-1"">NOTE: Consider a complex property for glazing properties. The <I>Name</I> attribute of the <I>IfcComplexProperty</I> could be <I>Pset_GlazingProperties</I>, and the UsageName attribute could be <I>OuterGlazingPane</I>.</FONT></BLOCKQUOTE>
+		[Description(@"<EPM-HTML>Usage description of the <em>IfcComplexProperty</em> within the property set which references the <em>IfcComplexProperty</em>.
+	<blockquote class=""note"">NOTE&nbsp; Consider a complex property for glazing properties. The <em>Name</em> attribute of the <em>IfcComplexProperty</em> could be <em>Pset_GlazingProperties</em>, and the UsageName attribute could be <em>OuterGlazingPane</em>.</blockquote>
 	</EPM-HTML>
 	")]
 		public IfcIdentifier UsageName { get { return this._UsageName; } set { this._UsageName = value;} }
 	
-		[Description("Set of properties that can be used within this complex property (may include othe" +
-	    "r complex properties).")]
+		[Description("<EPM-HTML>\r\nSet of properties that can be used within this complex property (may " +
+	    "include other complex properties).\r\n</EPM-HTML>")]
 		public ISet<IfcProperty> HasProperties { get { return this._HasProperties; } }
 	
 	

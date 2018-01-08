@@ -15,7 +15,7 @@ using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 
 namespace BuildingSmart.IFC.IfcTopologyResource
 {
-	[Guid("e82ce556-c7d7-4d71-80e1-f4a2a7af3ec0")]
+	[Guid("1642dee1-9c3d-416b-86a9-db23ccf926ae")]
 	public partial class IfcEdgeLoop : IfcLoop
 	{
 		[DataMember(Order=0)] 

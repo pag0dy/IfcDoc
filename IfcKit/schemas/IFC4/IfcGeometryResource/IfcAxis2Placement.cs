@@ -20,7 +20,7 @@ using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
-	[Guid("8a67a4d0-9ffd-4e6c-b8ee-6716300542e2")]
+	[Guid("929012e2-9ea2-4f90-a265-8c380c75ae9b")]
 	public interface IfcAxis2Placement
 	{
 	}

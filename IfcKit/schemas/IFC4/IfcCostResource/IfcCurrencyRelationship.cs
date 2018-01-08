@@ -10,20 +10,23 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcConstraintResource;
 using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 
 namespace BuildingSmart.IFC.IfcCostResource
 {
-	[Guid("115400f2-418f-418e-a2df-9cf7b052490b")]
-	public partial class IfcCurrencyRelationship
+	[Guid("9369fbbe-c581-4604-aa77-92582aa9453c")]
+	public partial class IfcCurrencyRelationship : IfcResourceLevelRelationship
 	{
 		[DataMember(Order=0)] 
+		[XmlElement("IfcMonetaryUnit")]
 		[Required()]
 		IfcMonetaryUnit _RelatingMonetaryUnit;
 	
 		[DataMember(Order=1)] 
+		[XmlElement("IfcMonetaryUnit")]
 		[Required()]
 		IfcMonetaryUnit _RelatedMonetaryUnit;
 	
@@ -33,10 +36,11 @@ namespace BuildingSmart.IFC.IfcCostResource
 		IfcPositiveRatioMeasure _ExchangeRate;
 	
 		[DataMember(Order=3)] 
-		[Required()]
-		IfcDateAndTime _RateDateTime;
+		[XmlAttribute]
+		IfcDateTime? _RateDateTime;
 	
 		[DataMember(Order=4)] 
+		[XmlElement("IfcLibraryInformation")]
 		IfcLibraryInformation _RateSource;
 	
 	
@@ -51,8 +55,10 @@ namespace BuildingSmart.IFC.IfcCostResource
 		[Description(@"The currently agreed ratio of the amount of a related monetary unit that is equivalent to a unit amount of the relating monetary unit in a currency relationship. For instance, in the case of a conversion from GBP to USD, the value of the exchange rate may be 1.486 (USD) : 1 (GBP).")]
 		public IfcPositiveRatioMeasure ExchangeRate { get { return this._ExchangeRate; } set { this._ExchangeRate = value;} }
 	
-		[Description("The date and time at which an exchange rate applies.")]
-		public IfcDateAndTime RateDateTime { get { return this._RateDateTime; } set { this._RateDateTime = value;} }
+		[Description("<EPM-HTML> \r\nThe date and time at which an exchange rate applies.\r\n<blockquote cl" +
+	    "ass=\"change-ifc2x4\">IFC4 CHANGE Type changed from IfcDateTimeSelect. Attribute m" +
+	    "ade optional.</blockquote> \r\n</EPM-HTML> \r\n")]
+		public IfcDateTime? RateDateTime { get { return this._RateDateTime; } set { this._RateDateTime = value;} }
 	
 		[Description("The source from which an exchange rate is obtained.")]
 		public IfcLibraryInformation RateSource { get { return this._RateSource; } set { this._RateSource = value;} }

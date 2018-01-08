@@ -11,29 +11,40 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcConstraintResource;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometricModelResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
+using BuildingSmart.IFC.IfcProcessExtension;
 using BuildingSmart.IFC.IfcPropertyResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
 using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcKernel
 {
-	[Guid("c0bc28d6-264e-4ba4-b40b-911c7ee80584")]
+	[Guid("349d602e-d775-4785-ac74-0632e4fdd015")]
 	public partial class IfcRelDefinesByProperties : IfcRelDefines
 	{
 		[DataMember(Order=0)] 
+		[XmlElement("IfcObjectDefinition")]
 		[Required()]
-		IfcPropertySetDefinition _RelatingPropertyDefinition;
+		ISet<IfcObjectDefinition> _RelatedObjects = new HashSet<IfcObjectDefinition>();
+	
+		[DataMember(Order=1)] 
+		[Required()]
+		IfcPropertySetDefinitionSelect _RelatingPropertyDefinition;
 	
 	
-		[Description("Reference to the property set definition for that object or set of objects.\r\n")]
-		public IfcPropertySetDefinition RelatingPropertyDefinition { get { return this._RelatingPropertyDefinition; } set { this._RelatingPropertyDefinition = value;} }
+		[Description("<EPM-HTML>\r\nReference to the objects (or single object) to which the property def" +
+	    "inition applies.\r\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; Data type " +
+	    "promoted from subtype <em>IfcObject</em>.\r\n</blockquote>\r\n</EPM-HTML>")]
+		public ISet<IfcObjectDefinition> RelatedObjects { get { return this._RelatedObjects; } }
+	
+		[Description("<EPM-HTML>\r\nReference to the property set definition for that object or set of ob" +
+	    "jects.\r\n</EPM-HTML>")]
+		public IfcPropertySetDefinitionSelect RelatingPropertyDefinition { get { return this._RelatingPropertyDefinition; } set { this._RelatingPropertyDefinition = value;} }
 	
 	
 	}

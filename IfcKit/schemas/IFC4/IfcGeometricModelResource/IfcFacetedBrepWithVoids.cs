@@ -18,8 +18,8 @@ using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometricModelResource
 {
-	[Guid("c5319aaa-961e-4cc6-804c-662e631fb696")]
-	public partial class IfcFacetedBrepWithVoids : IfcManifoldSolidBrep
+	[Guid("f5095cfb-b085-4d65-82d7-98a1958e8fca")]
+	public partial class IfcFacetedBrepWithVoids : IfcFacetedBrep
 	{
 		[DataMember(Order=0)] 
 		[Required()]

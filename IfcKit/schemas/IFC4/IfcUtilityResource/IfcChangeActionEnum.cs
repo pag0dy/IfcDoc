@@ -11,11 +11,13 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
+using BuildingSmart.IFC.IfcConstraintResource;
+using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 
 namespace BuildingSmart.IFC.IfcUtilityResource
 {
-	[Guid("201a3ce5-cdf1-4e0c-832d-8c598f1c16bd")]
+	[Guid("1afa18fb-05b5-4f13-9da6-ba569b706c6b")]
 	public enum IfcChangeActionEnum
 	{
 		NOCHANGE = 1,
@@ -26,9 +28,7 @@ namespace BuildingSmart.IFC.IfcUtilityResource
 	
 		DELETED = 4,
 	
-		MODIFIEDADDED = 5,
-	
-		MODIFIEDDELETED = 6,
+		NOTDEFINED = 0,
 	
 	}
 }

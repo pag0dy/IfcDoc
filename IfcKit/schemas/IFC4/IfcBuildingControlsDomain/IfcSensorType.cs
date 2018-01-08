@@ -10,13 +10,11 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
 
 namespace BuildingSmart.IFC.IfcBuildingControlsDomain
 {
-	[Guid("eb6b454c-8195-4ab0-993e-b5e16ba7d928")]
+	[Guid("a5b36357-2503-452f-8599-ce8a92a3ec72")]
 	public partial class IfcSensorType : IfcDistributionControlElementType
 	{
 		[DataMember(Order=0)] 
@@ -25,8 +23,8 @@ namespace BuildingSmart.IFC.IfcBuildingControlsDomain
 		IfcSensorTypeEnum _PredefinedType;
 	
 	
-		[Description("Identifies the predefined types of sensor from which the type required may be set" +
-	    ".")]
+		[Description("<EPM-HTML><p>Identifies the predefined types of sensor from which the type requir" +
+	    "ed may be set.</p></EPM-HTML>")]
 		public IfcSensorTypeEnum PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	

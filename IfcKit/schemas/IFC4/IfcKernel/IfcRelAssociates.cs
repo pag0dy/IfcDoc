@@ -11,29 +11,32 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcConstraintResource;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometricModelResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
+using BuildingSmart.IFC.IfcProcessExtension;
 using BuildingSmart.IFC.IfcPropertyResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
 using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcKernel
 {
-	[Guid("4e970c36-e5df-4493-be7d-f85befcc73e3")]
-	public partial class IfcRelAssociates : IfcRelationship
+	[Guid("50e72608-2b70-4951-afa7-68d8cf130d15")]
+	public abstract partial class IfcRelAssociates : IfcRelationship
 	{
 		[DataMember(Order=0)] 
 		[Required()]
-		ISet<IfcRoot> _RelatedObjects = new HashSet<IfcRoot>();
+		ISet<IfcDefinitionSelect> _RelatedObjects = new HashSet<IfcDefinitionSelect>();
 	
 	
-		[Description("Objects or Types, to which the external references or information is associated.")]
-		public ISet<IfcRoot> RelatedObjects { get { return this._RelatedObjects; } }
+		[Description(@"<EPM-HTML>
+	Set of object or property definitions to which the external references or information is associated. It includes object and type objects, property set templates, property templates and property sets and contexts.
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The attribute datatype has been changed from <em>IfcRoot</em> to <em>IfcDefinitionSelect</em>.</blockquote>
+	</EPM-HTML>")]
+		public ISet<IfcDefinitionSelect> RelatedObjects { get { return this._RelatedObjects; } }
 	
 	
 	}

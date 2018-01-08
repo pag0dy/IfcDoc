@@ -10,45 +10,35 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialResource;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcPropertyResource;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
 using BuildingSmart.IFC.IfcSharedComponentElements;
 
 namespace BuildingSmart.IFC.IfcHvacDomain
 {
-	[Guid("657f39ba-97c4-4e78-9c8b-e3898314f388")]
+	[Guid("52cb3448-2a96-44d2-8363-e5a4eeca5125")]
 	public enum IfcDamperTypeEnum
 	{
-		CONTROLDAMPER = 1,
+		BACKDRAFTDAMPER = 1,
 	
-		FIREDAMPER = 2,
+		BALANCINGDAMPER = 2,
 	
-		SMOKEDAMPER = 3,
+		BLASTDAMPER = 3,
 	
-		FIRESMOKEDAMPER = 4,
+		CONTROLDAMPER = 4,
 	
-		BACKDRAFTDAMPER = 5,
+		FIREDAMPER = 5,
 	
-		RELIEFDAMPER = 6,
+		FIRESMOKEDAMPER = 6,
 	
-		BLASTDAMPER = 7,
+		FUMEHOODEXHAUST = 7,
 	
 		GRAVITYDAMPER = 8,
 	
 		GRAVITYRELIEFDAMPER = 9,
 	
-		BALANCINGDAMPER = 10,
+		RELIEFDAMPER = 10,
 	
-		FUMEHOODEXHAUST = 11,
+		SMOKEDAMPER = 11,
 	
 		USERDEFINED = -1,
 	

@@ -18,7 +18,7 @@ using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometricModelResource
 {
-	[Guid("08eed2c6-f9ca-46e6-b3bc-8a675bd20d4f")]
+	[Guid("0a5d42f4-d5ec-40b1-9227-3fdb4692e2eb")]
 	public partial class IfcGeometricCurveSet : IfcGeometricSet
 	{
 	

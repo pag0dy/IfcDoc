@@ -20,10 +20,11 @@ using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
-	[Guid("e8f3d058-54a6-4bc9-aeaf-91aca04f5777")]
+	[Guid("f5ea20e7-98db-4aeb-b0f8-03ac3e6d947c")]
 	public partial class IfcOffsetCurve2D : IfcCurve
 	{
 		[DataMember(Order=0)] 
+		[XmlElement("IfcCurve")]
 		[Required()]
 		IfcCurve _BasisCurve;
 	

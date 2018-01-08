@@ -10,13 +10,11 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
 
 namespace BuildingSmart.IFC.IfcBuildingControlsDomain
 {
-	[Guid("c47f0023-e476-4fdf-baab-b58d3a7980fe")]
+	[Guid("082e1f55-cfe3-44d7-a8e2-234118f81fca")]
 	public partial class IfcControllerType : IfcDistributionControlElementType
 	{
 		[DataMember(Order=0)] 
@@ -25,8 +23,8 @@ namespace BuildingSmart.IFC.IfcBuildingControlsDomain
 		IfcControllerTypeEnum _PredefinedType;
 	
 	
-		[Description("Identifies the predefined types of controller from which the type required may be" +
-	    " set.")]
+		[Description("<EPM-HTML><p>Identifies the predefined types of controller from which the type re" +
+	    "quired may be set.</p></EPM-HTML>")]
 		public IfcControllerTypeEnum PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	

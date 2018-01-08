@@ -10,33 +10,25 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialResource;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcPropertyResource;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
 using BuildingSmart.IFC.IfcSharedComponentElements;
 
 namespace BuildingSmart.IFC.IfcHvacDomain
 {
-	[Guid("ff0e20e2-fa00-4223-b337-b4bff645a7cd")]
+	[Guid("78a0b542-081d-4e7c-8545-5b4e05c1adb5")]
 	public enum IfcEvaporatorTypeEnum
 	{
-		DIRECTEXPANSIONSHELLANDTUBE = 1,
+		DIRECTEXPANSION = 1,
 	
-		DIRECTEXPANSIONTUBEINTUBE = 2,
+		DIRECTEXPANSIONSHELLANDTUBE = 2,
 	
-		DIRECTEXPANSIONBRAZEDPLATE = 3,
+		DIRECTEXPANSIONTUBEINTUBE = 3,
 	
-		FLOODEDSHELLANDTUBE = 4,
+		DIRECTEXPANSIONBRAZEDPLATE = 4,
 	
-		SHELLANDCOIL = 5,
+		FLOODEDSHELLANDTUBE = 5,
+	
+		SHELLANDCOIL = 6,
 	
 		USERDEFINED = -1,
 	

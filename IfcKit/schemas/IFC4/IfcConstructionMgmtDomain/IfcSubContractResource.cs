@@ -10,40 +10,25 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcApprovalResource;
 using BuildingSmart.IFC.IfcCostResource;
 using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProcessExtension;
-using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcPropertyResource;
 using BuildingSmart.IFC.IfcQuantityResource;
-using BuildingSmart.IFC.IfcSharedMgmtElements;
 
 namespace BuildingSmart.IFC.IfcConstructionMgmtDomain
 {
-	[Guid("7a371b2d-09e6-44c0-9083-384d74318393")]
+	[Guid("43fbb978-b475-40b1-8fa8-494040d73aa4")]
 	public partial class IfcSubContractResource : IfcConstructionResource
 	{
 		[DataMember(Order=0)] 
-		IfcActorSelect _SubContractor;
-	
-		[DataMember(Order=1)] 
 		[XmlAttribute]
-		IfcText? _JobDescription;
+		IfcSubContractResourceTypeEnum? _PredefinedType;
 	
 	
-		[Description("The actor performing the role of the subcontracted resource.")]
-		public IfcActorSelect SubContractor { get { return this._SubContractor; } set { this._SubContractor = value;} }
-	
-		[Description("The description of the jobs that this subcontract should complete.\r\n")]
-		public IfcText? JobDescription { get { return this._JobDescription; } set { this._JobDescription = value;} }
+		[Description("<EPM-HTML>\r\nDefines types of subcontract resources.\r\n<blockquote class=\"change-if" +
+	    "c2x4\">IFC4 New attribute.</blockquote>\r\n</EPM-HTML>")]
+		public IfcSubContractResourceTypeEnum? PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	
 	}

@@ -25,16 +25,16 @@ using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcSharedBldgElements
 {
-	[Guid("b816352c-9e44-415c-8563-b3e3eafb9357")]
+	[Guid("801d751c-7dbf-4a3c-a799-223323377272")]
 	public partial class IfcRelConnectsPathElements : IfcRelConnectsElements
 	{
 		[DataMember(Order=0)] 
 		[Required()]
-		IList<Int64> _RelatingPriorities = new List<Int64>();
+		IList<Decimal> _RelatingPriorities = new List<Decimal>();
 	
 		[DataMember(Order=1)] 
 		[Required()]
-		IList<Int64> _RelatedPriorities = new List<Int64>();
+		IList<Decimal> _RelatedPriorities = new List<Decimal>();
 	
 		[DataMember(Order=2)] 
 		[XmlAttribute]
@@ -47,11 +47,21 @@ namespace BuildingSmart.IFC.IfcSharedBldgElements
 		IfcConnectionTypeEnum _RelatingConnectionType;
 	
 	
-		[Description("Priorities for connection. It refers to the layers of the RelatingObject.\r\n")]
-		public IList<Int64> RelatingPriorities { get { return this._RelatingPriorities; } }
+		[Description(@"<EPM-HTML>
+	Overriding priorities at this connection. It overrides the standard priority given at the wall layer provided by <em>IfcMaterialLayer</em>.<em>Priority</em>. The list of <em>RelatingProperties</em> corresponds to the list of <em>IfcMaterialLayerSet</em>.<em>MaterialLayers</em> of the element referenced by <em>RelatingObject</em>.
+	<blockquote class=""change-ifc2x4"">
+	IFC4 CHANGE&nbsp; Data type changed to NUMBER and usage to hold a normalized ratio measure [0..1].
+	</blockquote>
+	</EPM-HTML>")]
+		public IList<Decimal> RelatingPriorities { get { return this._RelatingPriorities; } }
 	
-		[Description("Priorities for connection. It refers to the layers of the RelatedObject.\r\n")]
-		public IList<Int64> RelatedPriorities { get { return this._RelatedPriorities; } }
+		[Description(@"<EPM-HTML>
+	Overriding priorities at this connection. It overrides the standard priority given at the wall layer provided by <em>IfcMaterialLayer</em>.<em>Priority</em>. The list of <em>RelatedProperties</em> corresponds to the list of <em>IfcMaterialLayerSet</em>.<em>MaterialLayers</em> of the element referenced by <em>RelatedObject</em>.
+	<blockquote class=""change-ifc2x4"">
+	IFC4 CHANGE&nbsp; Data type changed to NUMBER and usage to hold a normalized ratio measure [0..1].
+	</blockquote>
+	</EPM-HTML>")]
+		public IList<Decimal> RelatedPriorities { get { return this._RelatedPriorities; } }
 	
 		[Description("Indication of the connection type in relation to the path of the RelatingObject.\r" +
 	    "\n")]

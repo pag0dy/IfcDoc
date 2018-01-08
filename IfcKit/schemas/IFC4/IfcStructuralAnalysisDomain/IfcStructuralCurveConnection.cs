@@ -14,17 +14,29 @@ using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfilePropertyResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
 using BuildingSmart.IFC.IfcStructuralLoadResource;
 
 namespace BuildingSmart.IFC.IfcStructuralAnalysisDomain
 {
-	[Guid("e8ad1bc7-f8db-4950-afd7-beb79437c6b2")]
+	[Guid("d75c0a83-a50e-4591-aa6f-d4c2dad98451")]
 	public partial class IfcStructuralCurveConnection : IfcStructuralConnection
 	{
+		[DataMember(Order=0)] 
+		[XmlElement("IfcDirection")]
+		[Required()]
+		IfcDirection _Axis;
+	
+	
+		[Description(@"<EPM-HTML>
+	
+	Direction which is used in the definition of the local z axis.  <em>Axis</em> is specified relative to the so-called global coordinate system, i.e. the <em>SELF\IfcProduct.ObjectPlacement</em>.
+	
+	<blockquote class=""note"">NOTE&nbsp; It is desirable and usually possible that many instances of <em>IfcStructuralCurveConnection</em> and <em>IfcStructuralCurveMember</em> share a common instance of <em>IfcDirection</em> as their <em>Axis</em> attribute.</blockquote>
+	
+	</EPM-HTML>")]
+		public IfcDirection Axis { get { return this._Axis; } set { this._Axis = value;} }
 	
 	
 	}

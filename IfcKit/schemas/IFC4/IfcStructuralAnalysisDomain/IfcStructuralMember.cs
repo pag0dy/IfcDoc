@@ -14,28 +14,18 @@ using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfilePropertyResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
 using BuildingSmart.IFC.IfcStructuralLoadResource;
 
 namespace BuildingSmart.IFC.IfcStructuralAnalysisDomain
 {
-	[Guid("6598c933-b905-44ea-8878-9e20fd96c12d")]
+	[Guid("a37e785d-9c63-4d0c-acff-e17f5fc43811")]
 	public abstract partial class IfcStructuralMember : IfcStructuralItem
 	{
-		[InverseProperty("RelatedStructuralMember")] 
-		ISet<IfcRelConnectsStructuralElement> _ReferencesElement = new HashSet<IfcRelConnectsStructuralElement>();
-	
 		[InverseProperty("RelatingStructuralMember")] 
 		ISet<IfcRelConnectsStructuralMember> _ConnectedBy = new HashSet<IfcRelConnectsStructuralMember>();
 	
-	
-		[Description("<EPM-HTML>\r\nInverse link to the relationship object, that connects a physical ele" +
-	    "ment to this structural member (the element of which this structural member is t" +
-	    "he analytical idealization).\r\n</EPM-HTML>")]
-		public ISet<IfcRelConnectsStructuralElement> ReferencesElement { get { return this._ReferencesElement; } }
 	
 		[Description("Inverse relationship to all structural connections (i.e. to supports or connectin" +
 	    "g elements) which are defined for this structural member.")]

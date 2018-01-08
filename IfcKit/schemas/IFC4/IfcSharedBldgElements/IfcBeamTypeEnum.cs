@@ -25,16 +25,20 @@ using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcSharedBldgElements
 {
-	[Guid("b76b9170-091a-4c6a-afaa-9db93e5ffce9")]
+	[Guid("4b36a65f-cb2a-49b3-8f12-f2392ee13d4b")]
 	public enum IfcBeamTypeEnum
 	{
 		BEAM = 1,
 	
 		JOIST = 2,
 	
-		LINTEL = 3,
+		HOLLOWCORE = 3,
 	
-		T_BEAM = 4,
+		LINTEL = 4,
+	
+		SPANDREL = 5,
+	
+		T_BEAM = 6,
 	
 		USERDEFINED = -1,
 	

@@ -11,27 +11,29 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcConstraintResource;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometricModelResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
+using BuildingSmart.IFC.IfcProcessExtension;
 using BuildingSmart.IFC.IfcPropertyResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
 using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcKernel
 {
-	[Guid("cf235ade-9bdb-4c6d-affb-f537deaad8c1")]
+	[Guid("697bb1a2-488c-4282-8300-a66e028db272")]
 	public partial class IfcRelAssignsToActor : IfcRelAssigns
 	{
 		[DataMember(Order=0)] 
+		[XmlElement("IfcActor")]
 		[Required()]
 		IfcActor _RelatingActor;
 	
 		[DataMember(Order=1)] 
+		[XmlElement("IfcActorRole")]
 		IfcActorRole _ActingRole;
 	
 	

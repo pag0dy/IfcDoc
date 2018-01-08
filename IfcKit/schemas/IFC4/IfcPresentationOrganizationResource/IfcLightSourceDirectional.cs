@@ -14,15 +14,15 @@ using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcPresentationResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcPresentationOrganizationResource
 {
-	[Guid("9b92d734-c9c0-4a8f-85c1-aaff4b5dacbd")]
+	[Guid("584bad5f-0335-4de5-9c7d-f09eb0a94bf0")]
 	public partial class IfcLightSourceDirectional : IfcLightSource
 	{
 		[DataMember(Order=0)] 
+		[XmlElement("IfcDirection")]
 		[Required()]
 		IfcDirection _Orientation;
 	

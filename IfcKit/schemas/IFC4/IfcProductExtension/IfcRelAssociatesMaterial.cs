@@ -11,7 +11,6 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometricModelResource;
@@ -20,18 +19,18 @@ using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProfilePropertyResource;
 using BuildingSmart.IFC.IfcPropertyResource;
 using BuildingSmart.IFC.IfcQuantityResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
 using BuildingSmart.IFC.IfcSharedBldgElements;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
-using BuildingSmart.IFC.IfcStructuralAnalysisDomain;
+using BuildingSmart.IFC.IfcSharedComponentElements;
+using BuildingSmart.IFC.IfcSharedFacilitiesElements;
 using BuildingSmart.IFC.IfcStructuralElementsDomain;
 
 namespace BuildingSmart.IFC.IfcProductExtension
 {
-	[Guid("157a4d8c-92d8-4c73-a181-a3fc355cb7a1")]
+	[Guid("68083c6e-1181-46f4-84da-7cd237846083")]
 	public partial class IfcRelAssociatesMaterial : IfcRelAssociates
 	{
 		[DataMember(Order=0)] 
@@ -39,8 +38,8 @@ namespace BuildingSmart.IFC.IfcProductExtension
 		IfcMaterialSelect _RelatingMaterial;
 	
 	
-		[Description("Material definition (either a single material, a list of materials, or a set of m" +
-	    "aterial layers) assigned to the elements.")]
+		[Description("<EPM-HTML>\r\nMaterial definition assigned to the elements or element types. \r\n</EP" +
+	    "M-HTML>")]
 		public IfcMaterialSelect RelatingMaterial { get { return this._RelatingMaterial; } set { this._RelatingMaterial = value;} }
 	
 	

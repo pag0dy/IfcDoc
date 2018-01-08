@@ -14,7 +14,7 @@ using BuildingSmart.IFC.IfcSharedBldgServiceElements;
 
 namespace BuildingSmart.IFC.IfcPlumbingFireProtectionDomain
 {
-	[Guid("afcb60b6-9e07-45f3-b8f2-1f5d51419092")]
+	[Guid("22261424-e552-4b02-8f83-74abf3d0247f")]
 	public enum IfcSanitaryTerminalTypeEnum
 	{
 		BATH = 1,

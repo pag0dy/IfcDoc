@@ -20,7 +20,7 @@ using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
-	[Guid("a7b35010-4a44-4a36-bb3c-6aa6300f33bf")]
+	[Guid("2ddee6ae-615d-41ff-baa2-ba51d50e78c2")]
 	public partial class IfcCartesianPoint : IfcPoint,
 		BuildingSmart.IFC.IfcGeometryResource.IfcTrimmingSelect
 	{

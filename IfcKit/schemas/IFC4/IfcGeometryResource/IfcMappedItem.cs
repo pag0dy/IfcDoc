@@ -20,14 +20,16 @@ using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
-	[Guid("feda3166-cc81-42b8-92c4-9fa69f91d8af")]
+	[Guid("ffc10785-4b8a-40de-a1a6-87a49ef4ff7f")]
 	public partial class IfcMappedItem : IfcRepresentationItem
 	{
 		[DataMember(Order=0)] 
+		[XmlElement("IfcRepresentationMap")]
 		[Required()]
 		IfcRepresentationMap _MappingSource;
 	
 		[DataMember(Order=1)] 
+		[XmlElement("IfcCartesianTransformationOperator")]
 		[Required()]
 		IfcCartesianTransformationOperator _MappingTarget;
 	

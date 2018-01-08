@@ -18,7 +18,7 @@ using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometricModelResource
 {
-	[Guid("274baa9b-e977-4d41-b4ed-98f3fe7fc3ad")]
+	[Guid("33066633-cf11-455b-af76-a502e5affa9c")]
 	public partial class IfcCsgSolid : IfcSolidModel
 	{
 		[DataMember(Order=0)] 
@@ -26,9 +26,9 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 		IfcCsgSelect _TreeRootExpression;
 	
 	
-		[Description("Boolean expression of regularized operators describing the solid. The root of the" +
-	    " tree of Boolean expressions is given explicitly as an IfcBooleanResult (the onl" +
-	    "y item in the Select IfcCsgSelect).")]
+		[Description(@"<EPM-HTML>
+	Boolean expression of primitives and regularized operators describing the solid. The root of the tree of Boolean expressions is given explicitly as an <em>IfcBooleanResult</em> entitiy or as a primitive (subtypes of <em>IfcCsgPrimitive3D</em>).
+	</EPM-HMTL>")]
 		public IfcCsgSelect TreeRootExpression { get { return this._TreeRootExpression; } set { this._TreeRootExpression = value;} }
 	
 	

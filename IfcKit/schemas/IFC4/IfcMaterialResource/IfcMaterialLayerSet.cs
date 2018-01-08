@@ -11,16 +11,18 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcExternalReferenceResource;
+using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
+using BuildingSmart.IFC.IfcProductExtension;
+using BuildingSmart.IFC.IfcProfileResource;
 using BuildingSmart.IFC.IfcPropertyResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcMaterialResource
 {
-	[Guid("f72fc8ce-1ae3-4ab8-abe6-48c801c4cfbb")]
-	public partial class IfcMaterialLayerSet :
-		BuildingSmart.IFC.IfcMaterialResource.IfcMaterialSelect
+	[Guid("c1a5e8bc-cb6b-4466-8130-d2946ca1f8a0")]
+	public partial class IfcMaterialLayerSet : IfcMaterialDefinition
 	{
 		[DataMember(Order=0)] 
 		[Required()]
@@ -30,12 +32,23 @@ namespace BuildingSmart.IFC.IfcMaterialResource
 		[XmlAttribute]
 		IfcLabel? _LayerSetName;
 	
+		[DataMember(Order=2)] 
+		[XmlAttribute]
+		IfcText? _Description;
 	
-		[Description("Identification of the layers from which the material layer set is composed.")]
+	
+		[Description("<EPM-HTML>\r\nIdentification of the <em>IfcMaterialLayer</em>&rsquo;s from which th" +
+	    "e <em>IfcMaterialLayerSet</em> is composed.\r\n</EPM-HTML>")]
 		public IList<IfcMaterialLayer> MaterialLayers { get { return this._MaterialLayers; } }
 	
-		[Description("The name by which the material layer set is known.")]
+		[Description("<EPM-HTML>\r\nThe name by which the <em>IfcMaterialLayerSet</em> is known.\r\n</EPM-H" +
+	    "TML>\r\n")]
 		public IfcLabel? LayerSetName { get { return this._LayerSetName; } set { this._LayerSetName = value;} }
+	
+		[Description("<EPM-HTML>\r\nDefinition of the <em>IfcMaterialLayerSet</em> in descriptive terms.\r" +
+	    "\n<blockquote class=\"change-ifc2x4\">\r\n  IFC4 CHANGE&nbsp; The attribute has been " +
+	    "added at the end of attribute list.\r\n</blockquote>\r\n</EPM-HTML>\r\n\r\n")]
+		public IfcText? Description { get { return this._Description; } set { this._Description = value;} }
 	
 	
 	}

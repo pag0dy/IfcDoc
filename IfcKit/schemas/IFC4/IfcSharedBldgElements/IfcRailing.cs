@@ -25,7 +25,7 @@ using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcSharedBldgElements
 {
-	[Guid("b68d6dfa-32ba-4dd2-a0b7-2e703624e4b5")]
+	[Guid("39b687ba-1327-4a70-927b-47733d3e370b")]
 	public partial class IfcRailing : IfcBuildingElement
 	{
 		[DataMember(Order=0)] 
@@ -35,8 +35,8 @@ namespace BuildingSmart.IFC.IfcSharedBldgElements
 	
 		[Description(@"<EPM-HTML>
 	Predefined generic types for a railing that are specified in an enumeration. There may be a property set given for the predefined types.
-	<BLOCKQUOTE> <FONT SIZE=""-1"">NOTE: The use of the predefined type directly at the occurrence object level of <I>IfcRailing</I> is only permitted, if no type object <I>IfcRailingType</I> is assigned.</FONT></BLOCKQUOTE>
-	<BLOCKQUOTE> <FONT COLOR=""#FF0000"" SIZE=""-1"">IFC2x PLATFORM CHANGE: The attribute has been changed into an OPTIONAL attribute. </FONT></BLOCKQUOTE>
+	<blockquote class=""note"">NOTE&nbsp; The <em>PredefinedType</em> shall only be used, if no <em>IfcRailingType</em> is assigned, providing its own <em>IfcRailingType.PredefinedType</em>.</blockquote>
+	<blockquote class=""change-ifc2x"">IFC2x CHANGE&nbsp; The attribute has been changed into an OPTIONAL attribute.</blockquote>
 	</EPM-HTML> ")]
 		public IfcRailingTypeEnum? PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	

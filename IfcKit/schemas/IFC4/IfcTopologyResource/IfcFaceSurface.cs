@@ -15,11 +15,12 @@ using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 
 namespace BuildingSmart.IFC.IfcTopologyResource
 {
-	[Guid("33f5691b-7957-46f4-a44c-3b5069f82548")]
+	[Guid("d6ead809-0b4d-450c-af17-45d526239263")]
 	public partial class IfcFaceSurface : IfcFace,
 		BuildingSmart.IFC.IfcGeometricConstraintResource.IfcSurfaceOrFaceSurface
 	{
 		[DataMember(Order=0)] 
+		[XmlElement("IfcSurface")]
 		[Required()]
 		IfcSurface _FaceSurface;
 	

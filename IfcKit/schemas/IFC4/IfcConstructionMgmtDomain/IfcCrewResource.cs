@@ -10,27 +10,25 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcApprovalResource;
 using BuildingSmart.IFC.IfcCostResource;
 using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProcessExtension;
-using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcPropertyResource;
 using BuildingSmart.IFC.IfcQuantityResource;
-using BuildingSmart.IFC.IfcSharedMgmtElements;
 
 namespace BuildingSmart.IFC.IfcConstructionMgmtDomain
 {
-	[Guid("540bf468-f3ed-46dd-81b0-6bb0a8e0d7fc")]
+	[Guid("3770d6cc-7b84-41f9-b413-dd23f8cab584")]
 	public partial class IfcCrewResource : IfcConstructionResource
 	{
+		[DataMember(Order=0)] 
+		[XmlAttribute]
+		IfcCrewResourceTypeEnum? _PredefinedType;
+	
+	
+		[Description("<EPM-HTML>\r\nDefines types of crew resources.\r\n<blockquote class=\"change-ifc2x4\">I" +
+	    "FC4 New attribute.</blockquote>\r\n</EPM-HTML>")]
+		public IfcCrewResourceTypeEnum? PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	
 	}

@@ -10,17 +10,12 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
 
 namespace BuildingSmart.IFC.IfcElectricalDomain
 {
-	[Guid("5c09b341-15c0-4b44-a57d-c5393518736c")]
+	[Guid("42a11802-b62b-451b-b13b-bbbd59194027")]
 	public partial class IfcProtectiveDeviceType : IfcFlowControllerType
 	{
 		[DataMember(Order=0)] 
@@ -29,8 +24,8 @@ namespace BuildingSmart.IFC.IfcElectricalDomain
 		IfcProtectiveDeviceTypeEnum _PredefinedType;
 	
 	
-		[Description("Identifies the predefined types of protective device from which the type required" +
-	    " may be set.")]
+		[Description("<EPM-HTML><p>Identifies the predefined types of protective device from which the " +
+	    "type required may be set.</p></EPM-HTML>")]
 		public IfcProtectiveDeviceTypeEnum PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	

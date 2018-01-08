@@ -20,16 +20,19 @@ using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
-	[Guid("74f28ee8-1bff-4f28-bfde-eaa2ccce9e9d")]
+	[Guid("da40a055-7f34-44ae-85cb-40b20d82ae5a")]
 	public abstract partial class IfcCartesianTransformationOperator : IfcGeometricRepresentationItem
 	{
 		[DataMember(Order=0)] 
+		[XmlElement("IfcDirection")]
 		IfcDirection _Axis1;
 	
 		[DataMember(Order=1)] 
+		[XmlElement("IfcDirection")]
 		IfcDirection _Axis2;
 	
 		[DataMember(Order=2)] 
+		[XmlElement("IfcCartesianPoint")]
 		[Required()]
 		IfcCartesianPoint _LocalOrigin;
 	

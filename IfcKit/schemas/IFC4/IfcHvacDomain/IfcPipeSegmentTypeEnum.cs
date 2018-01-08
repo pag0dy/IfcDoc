@@ -10,31 +10,23 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialResource;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcPropertyResource;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
 using BuildingSmart.IFC.IfcSharedComponentElements;
 
 namespace BuildingSmart.IFC.IfcHvacDomain
 {
-	[Guid("96f67d4c-4570-4494-900b-c6b8eca812b2")]
+	[Guid("567ba75a-1a55-4a9b-bc3d-5f6b6542d9d8")]
 	public enum IfcPipeSegmentTypeEnum
 	{
-		FLEXIBLESEGMENT = 1,
+		CULVERT = 1,
 	
-		RIGIDSEGMENT = 2,
+		FLEXIBLESEGMENT = 2,
 	
-		GUTTER = 3,
+		RIGIDSEGMENT = 3,
 	
-		SPOOL = 4,
+		GUTTER = 4,
+	
+		SPOOL = 5,
 	
 		USERDEFINED = -1,
 	

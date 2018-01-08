@@ -10,28 +10,24 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfilePropertyResource;
+using BuildingSmart.IFC.IfcProfileResource;
+using BuildingSmart.IFC.IfcSharedComponentElements;
 
 namespace BuildingSmart.IFC.IfcStructuralElementsDomain
 {
-	[Guid("cf91911e-b109-410a-bc39-45bb696de10e")]
+	[Guid("32b47fe2-32c4-4ac2-8217-42fe8d2afda9")]
 	public partial class IfcReinforcingBar : IfcReinforcingElement
 	{
 		[DataMember(Order=0)] 
 		[XmlAttribute]
-		[Required()]
-		IfcPositiveLengthMeasure _NominalDiameter;
+		IfcPositiveLengthMeasure? _NominalDiameter;
 	
 		[DataMember(Order=1)] 
 		[XmlAttribute]
-		[Required()]
-		IfcAreaMeasure _CrossSectionArea;
+		IfcAreaMeasure? _CrossSectionArea;
 	
 		[DataMember(Order=2)] 
 		[XmlAttribute]
@@ -39,29 +35,40 @@ namespace BuildingSmart.IFC.IfcStructuralElementsDomain
 	
 		[DataMember(Order=3)] 
 		[XmlAttribute]
-		[Required()]
-		IfcReinforcingBarRoleEnum _BarRole;
+		IfcReinforcingBarTypeEnum? _PredefinedType;
 	
 		[DataMember(Order=4)] 
 		[XmlAttribute]
 		IfcReinforcingBarSurfaceEnum? _BarSurface;
 	
 	
-		[Description("The nominal diameter defining the cross-section size of the reinforcing bar.")]
-		public IfcPositiveLengthMeasure NominalDiameter { get { return this._NominalDiameter; } set { this._NominalDiameter = value;} }
+		[Description("<EPM-HTML>\r\n\r\nDeprecated.\r\n\r\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; " +
+	    "Attribute made optional and deprecated.  Use respective attribute at <em>IfcRein" +
+	    "forcingBarType</em> instead.</blockquote>\r\n\r\n</EPM-HTML>")]
+		public IfcPositiveLengthMeasure? NominalDiameter { get { return this._NominalDiameter; } set { this._NominalDiameter = value;} }
 	
-		[Description("The effective cross-section area of the reinforcing bar.")]
-		public IfcAreaMeasure CrossSectionArea { get { return this._CrossSectionArea; } set { this._CrossSectionArea = value;} }
+		[Description("<EPM-HTML>\r\n\r\nThe effective cross-section area of the reinforcing bar or group of" +
+	    " bars.\r\n\r\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; Attribute made opt" +
+	    "ional.</blockquote>\r\n\r\n</EPM-HTML>")]
+		public IfcAreaMeasure? CrossSectionArea { get { return this._CrossSectionArea; } set { this._CrossSectionArea = value;} }
 	
-		[Description("The total length of the reinforcing bar. The total length of bended bars are calc" +
-	    "ulated according to local standards with corrections for the bends.\r\n")]
+		[Description("<EPM-HTML>\r\n\r\nDeprecated.\r\n\r\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; " +
+	    "Attribute deprecated.  Use respective attribute at <em>IfcReinforcingBarType</em" +
+	    "> instead.</blockquote>\r\n\r\n</EPM-HTML>")]
 		public IfcPositiveLengthMeasure? BarLength { get { return this._BarLength; } set { this._BarLength = value;} }
 	
-		[Description("The role, purpose or usage of the bar, i.e. the kind of loads and stresses it is " +
-	    "intended to carry.\r\n")]
-		public IfcReinforcingBarRoleEnum BarRole { get { return this._BarRole; } set { this._BarRole = value;} }
+		[Description(@"<EPM-HTML>
 	
-		[Description("Indicator for whether the bar surface is plain or textured.\r\n")]
+	The role, purpose or usage of the bar, i.e. the kind of loads and stresses it is intended to carry.
+	
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; Attribute renamed from <em>BarRole</em> to <em>PredefinedType</em> and made optional.  Type changed from <em>IfcReinforcingBarRoleEnum</em> without changes to the range of enumeration items.</blockquote>
+	
+	</EPM-HTML>")]
+		public IfcReinforcingBarTypeEnum? PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
+	
+		[Description("<EPM-HTML>\r\n\r\nDeprecated.\r\n\r\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; " +
+	    "Attribute made optional and deprecated.  Use respective attribute at <em>IfcRein" +
+	    "forcingBarType</em> instead.</blockquote>\r\n\r\n</EPM-HTML>")]
 		public IfcReinforcingBarSurfaceEnum? BarSurface { get { return this._BarSurface; } set { this._BarSurface = value;} }
 	
 	

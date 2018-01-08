@@ -10,13 +10,14 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
+using BuildingSmart.IFC.IfcPropertyResource;
 
 namespace BuildingSmart.IFC.IfcProfileResource
 {
-	[Guid("fcb990fe-fa91-4a91-af10-de5e3824318d")]
+	[Guid("0c3d81f9-c173-4e51-8063-1ab1f071f67a")]
 	public partial class IfcRoundedRectangleProfileDef : IfcRectangleProfileDef
 	{
 		[DataMember(Order=0)] 
@@ -25,8 +26,8 @@ namespace BuildingSmart.IFC.IfcProfileResource
 		IfcPositiveLengthMeasure _RoundingRadius;
 	
 	
-		[Description("Radius of the circular arcs, by which all four corners of the rectangle are equal" +
-	    "ly rounded. If not given, zero (= no rounding arcs) applies.")]
+		[Description("Radius of the circular arcs by which all four corners of the rectangle are equall" +
+	    "y rounded.")]
 		public IfcPositiveLengthMeasure RoundingRadius { get { return this._RoundingRadius; } set { this._RoundingRadius = value;} }
 	
 	

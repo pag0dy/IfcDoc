@@ -10,17 +10,12 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
 
 namespace BuildingSmart.IFC.IfcElectricalDomain
 {
-	[Guid("fcbb55ee-1d22-4aac-a042-1ee232185d0d")]
+	[Guid("1d1df6cf-3322-4902-b83b-0fa2865f7849")]
 	public partial class IfcElectricMotorType : IfcEnergyConversionDeviceType
 	{
 		[DataMember(Order=0)] 
@@ -29,8 +24,8 @@ namespace BuildingSmart.IFC.IfcElectricalDomain
 		IfcElectricMotorTypeEnum _PredefinedType;
 	
 	
-		[Description("Identifies the predefined types of electric motor from which the type required ma" +
-	    "y be set.")]
+		[Description("<EPM-HTML><p>Identifies the predefined types of electric motor from which the typ" +
+	    "e required may be set.</p></EPM-HTML>")]
 		public IfcElectricMotorTypeEnum PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	

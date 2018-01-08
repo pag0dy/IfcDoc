@@ -18,12 +18,13 @@ using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometricModelResource
 {
-	[Guid("d3e186ee-a556-43ee-af1a-e7dcdeba8bf0")]
+	[Guid("538f2550-e0fc-4704-97f7-66d555de1ae4")]
 	public abstract partial class IfcCsgPrimitive3D : IfcGeometricRepresentationItem,
 		BuildingSmart.IFC.IfcGeometricModelResource.IfcBooleanOperand,
 		BuildingSmart.IFC.IfcGeometricModelResource.IfcCsgSelect
 	{
 		[DataMember(Order=0)] 
+		[XmlElement("IfcAxis2Placement3D")]
 		[Required()]
 		IfcAxis2Placement3D _Position;
 	

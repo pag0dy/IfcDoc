@@ -20,23 +20,25 @@ using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
-	[Guid("385df7bd-5ead-42f9-a622-2a0516779bef")]
+	[Guid("28220f1d-2ef9-48f4-9aa6-198f7af996d8")]
 	public partial class IfcLine : IfcCurve
 	{
 		[DataMember(Order=0)] 
+		[XmlElement("IfcCartesianPoint")]
 		[Required()]
 		IfcCartesianPoint _Pnt;
 	
 		[DataMember(Order=1)] 
+		[XmlElement("IfcVector")]
 		[Required()]
 		IfcVector _Dir;
 	
 	
-		[Description("The location of the line.")]
+		[Description("<EPM-HTML>\r\nThe location of the <em>IfcLine</em>.\r\n</EPM-HTML>")]
 		public IfcCartesianPoint Pnt { get { return this._Pnt; } set { this._Pnt = value;} }
 	
-		[Description("The direction of the line, the magnitude and units of Dir affect the parameteriza" +
-	    "tion of the line.")]
+		[Description("<EPM-HTML>\r\nThe direction of the <em>IfcLine</em>, the magnitude and units of <em" +
+	    ">Dir</em> affect the parameterization of the line.\r\n</EPM-HTML>")]
 		public IfcVector Dir { get { return this._Dir; } set { this._Dir = value;} }
 	
 	

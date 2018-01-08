@@ -10,27 +10,25 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcApprovalResource;
 using BuildingSmart.IFC.IfcCostResource;
 using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProcessExtension;
-using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcPropertyResource;
 using BuildingSmart.IFC.IfcQuantityResource;
-using BuildingSmart.IFC.IfcSharedMgmtElements;
 
 namespace BuildingSmart.IFC.IfcConstructionMgmtDomain
 {
-	[Guid("77890ca9-5e99-4f7c-9ebb-4302d7237001")]
+	[Guid("686e69fb-789c-4cef-a1b2-e9bb3345a558")]
 	public partial class IfcConstructionProductResource : IfcConstructionResource
 	{
+		[DataMember(Order=0)] 
+		[XmlAttribute]
+		IfcConstructionProductResourceTypeEnum? _PredefinedType;
+	
+	
+		[Description("<EPM-HTML>\r\nDefines types of construction product resources.\r\n<blockquote class=\"" +
+	    "change-ifc2x4\">IFC4 New attribute.</blockquote>\r\n</EPM-HTML>")]
+		public IfcConstructionProductResourceTypeEnum? PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	
 	}

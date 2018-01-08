@@ -20,15 +20,17 @@ using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
-	[Guid("b776074c-fd25-4516-a5ee-d3d6a692e772")]
+	[Guid("0110d280-1722-46bf-b12c-0b81868564a8")]
 	public partial class IfcAxis2Placement2D : IfcPlacement,
 		BuildingSmart.IFC.IfcGeometryResource.IfcAxis2Placement
 	{
 		[DataMember(Order=0)] 
+		[XmlElement("IfcDirection")]
 		IfcDirection _RefDirection;
 	
 	
-		[Description("The direction used to determine the direction of the local X Axis.")]
+		[Description("<EPM-HTML>\r\nThe direction used to determine the direction of the local X axis. If" +
+	    " a value is omited that it defaults to [1.0, 0.0.].\r\n</HTML>")]
 		public IfcDirection RefDirection { get { return this._RefDirection; } set { this._RefDirection = value;} }
 	
 	

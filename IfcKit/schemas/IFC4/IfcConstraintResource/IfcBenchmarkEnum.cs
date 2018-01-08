@@ -16,12 +16,11 @@ using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcTimeSeriesResource;
 using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcConstraintResource
 {
-	[Guid("32d8aae1-8337-439a-808b-6b4eeca28cd0")]
+	[Guid("94b40d09-01cf-4ea3-be68-29a9e401b125")]
 	public enum IfcBenchmarkEnum
 	{
 		GREATERTHAN = 1,
@@ -35,6 +34,14 @@ namespace BuildingSmart.IFC.IfcConstraintResource
 		EQUALTO = 5,
 	
 		NOTEQUALTO = 6,
+	
+		INCLUDES = 7,
+	
+		NOTINCLUDES = 8,
+	
+		INCLUDEDIN = 9,
+	
+		NOTINCLUDEDIN = 10,
 	
 	}
 }

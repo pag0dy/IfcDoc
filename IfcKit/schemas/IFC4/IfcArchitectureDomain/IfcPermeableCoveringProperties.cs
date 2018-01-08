@@ -26,8 +26,8 @@ using BuildingSmart.IFC.IfcSharedBldgElements;
 
 namespace BuildingSmart.IFC.IfcArchitectureDomain
 {
-	[Guid("03425406-b295-412a-b30a-b2ce3e274218")]
-	public partial class IfcPermeableCoveringProperties : IfcPropertySetDefinition
+	[Guid("86f03acb-40b6-4eb7-a6ab-18cd8f7ffd58")]
+	public partial class IfcPermeableCoveringProperties : IfcPreDefinedPropertySet
 	{
 		[DataMember(Order=0)] 
 		[XmlAttribute]
@@ -48,6 +48,7 @@ namespace BuildingSmart.IFC.IfcArchitectureDomain
 		IfcPositiveLengthMeasure? _FrameThickness;
 	
 		[DataMember(Order=4)] 
+		[XmlElement("IfcShapeAspect")]
 		IfcShapeAspect _ShapeAspectStyle;
 	
 	

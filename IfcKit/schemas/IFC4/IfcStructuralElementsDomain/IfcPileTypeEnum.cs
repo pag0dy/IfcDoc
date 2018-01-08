@@ -10,24 +10,28 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfilePropertyResource;
+using BuildingSmart.IFC.IfcProfileResource;
+using BuildingSmart.IFC.IfcSharedComponentElements;
 
 namespace BuildingSmart.IFC.IfcStructuralElementsDomain
 {
-	[Guid("6e5bb991-8d97-4b64-b3fe-148e2a63a32e")]
+	[Guid("7cb56ae1-a2b6-4aab-9ea7-f330ae1f6145")]
 	public enum IfcPileTypeEnum
 	{
-		COHESION = 1,
+		BORED = 1,
 	
-		FRICTION = 2,
+		DRIVEN = 2,
 	
-		SUPPORT = 3,
+		JETGROUTING = 3,
+	
+		COHESION = 4,
+	
+		FRICTION = 5,
+	
+		SUPPORT = 6,
 	
 		USERDEFINED = -1,
 	

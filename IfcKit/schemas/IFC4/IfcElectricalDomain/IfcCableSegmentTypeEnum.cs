@@ -10,22 +10,21 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
 
 namespace BuildingSmart.IFC.IfcElectricalDomain
 {
-	[Guid("b30ed25c-03b4-495d-a4fe-5e2017a1b50f")]
+	[Guid("f8f977bb-3a31-4420-8a8f-adf03e7ade8b")]
 	public enum IfcCableSegmentTypeEnum
 	{
-		CABLESEGMENT = 1,
+		BUSBARSEGMENT = 1,
 	
-		CONDUCTORSEGMENT = 2,
+		CABLESEGMENT = 2,
+	
+		CONDUCTORSEGMENT = 3,
+	
+		CORESEGMENT = 4,
 	
 		USERDEFINED = -1,
 	

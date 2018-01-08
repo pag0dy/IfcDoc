@@ -20,9 +20,9 @@ using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
-	[Guid("a8de45e1-0833-4281-87fa-629e09b78129")]
+	[Guid("c9a6fe1f-b072-45ab-ba40-8c1f8c01e132")]
 	public partial class IfcDirection : IfcGeometricRepresentationItem,
-		BuildingSmart.IFC.IfcStructuralAnalysisDomain.IfcOrientationSelect,
+		BuildingSmart.IFC.IfcGeometricConstraintResource.IfcGridPlacementDirectionSelect,
 		BuildingSmart.IFC.IfcGeometryResource.IfcVectorOrDirection
 	{
 		[DataMember(Order=0)] 

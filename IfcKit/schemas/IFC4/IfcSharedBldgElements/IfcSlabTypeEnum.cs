@@ -25,7 +25,7 @@ using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcSharedBldgElements
 {
-	[Guid("7c95b3a8-3103-424c-a763-cab8eaaad453")]
+	[Guid("fdddf910-9941-481d-9dac-fce23d260ae1")]
 	public enum IfcSlabTypeEnum
 	{
 		FLOOR = 1,

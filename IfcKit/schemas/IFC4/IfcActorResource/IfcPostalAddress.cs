@@ -10,11 +10,12 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 
 namespace BuildingSmart.IFC.IfcActorResource
 {
-	[Guid("c748bb72-f703-4164-9e21-35cb62e2ae1a")]
+	[Guid("8a2c94a5-2ae6-4e52-b758-77ba7af2a9b1")]
 	public partial class IfcPostalAddress : IfcAddress
 	{
 		[DataMember(Order=0)] 
@@ -49,14 +50,13 @@ namespace BuildingSmart.IFC.IfcActorResource
 		[Description("An organization defined address for internal mail delivery.")]
 		public IfcLabel? InternalLocation { get { return this._InternalLocation; } set { this._InternalLocation = value;} }
 	
-		[Description(@"The postal address.
-	<EPM-HTML>
-	<BLOCKQUOTE><FONT SIZE=""-1"">NOTE: A postal address may occupy several lines (or elements) when recorded. 
+		[Description(@"<EPM-HTML>
+	The postal address.
+	<blockquote class=""note"">NOTE&nbsp; A postal address may occupy several lines (or elements) when recorded. 
 	It is expected that normal usage will incorporate relevant elements of the following address concepts: 
 	A location within a building (e.g. 3rd Floor) Building name (e.g. Interoperability House) Street number 
 	(e.g. 6400) Street name (e.g. Alliance Boulevard). Typical content of address lines may vary in different 
-	countries.
-	</FONT></BLOCKQUOTE>
+	countries.</blockquote>
 	</EPM-HTML>
 	")]
 		public IList<IfcLabel> AddressLines { get { return this._AddressLines; } }
@@ -67,9 +67,9 @@ namespace BuildingSmart.IFC.IfcActorResource
 		[Description("The name of a town.")]
 		public IfcLabel? Town { get { return this._Town; } set { this._Town = value;} }
 	
-		[Description("The name of a region.\r\n<EPM-HTML>\r\n<BLOCKQUOTE><FONT SIZE=\"-1\">NOTE: The counties" +
-	    " of the United Kingdom and the states of North America are examples of regions.\r" +
-	    "\n</FONT></BLOCKQUOTE>\r\n</EPM-HTML>\r\n")]
+		[Description("<EPM-HTML>\r\nThe name of a region.\r\n<blockquote class=\"note\">NOTE&nbsp; The counti" +
+	    "es of the United Kingdom and the states of North America are examples of regions" +
+	    ".</blockquote>\r\n</EPM-HTML>\r\n")]
 		public IfcLabel? Region { get { return this._Region; } set { this._Region = value;} }
 	
 		[Description("The code that is used by the country\'s postal service.")]

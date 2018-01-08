@@ -10,17 +10,12 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
 
 namespace BuildingSmart.IFC.IfcElectricalDomain
 {
-	[Guid("d6b2b7ae-8774-4924-a497-d89ba1dcd218")]
+	[Guid("54734959-8b52-4b23-a9b5-eef44edf8450")]
 	public partial class IfcElectricGeneratorType : IfcEnergyConversionDeviceType
 	{
 		[DataMember(Order=0)] 
@@ -29,8 +24,8 @@ namespace BuildingSmart.IFC.IfcElectricalDomain
 		IfcElectricGeneratorTypeEnum _PredefinedType;
 	
 	
-		[Description("Identifies the predefined types of electric generators from which the type requir" +
-	    "ed may be set.")]
+		[Description("<EPM-HTML><p>Identifies the predefined types of electric generators from which th" +
+	    "e type required may be set.</p></EPM-HTML>")]
 		public IfcElectricGeneratorTypeEnum PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	

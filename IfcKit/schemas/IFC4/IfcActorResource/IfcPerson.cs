@@ -10,18 +10,20 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 
 namespace BuildingSmart.IFC.IfcActorResource
 {
-	[Guid("d66b760f-317a-43ff-a022-4394078ac555")]
+	[Guid("444c7a43-9f92-48d5-9ff4-acdf38ead916")]
 	public partial class IfcPerson :
 		BuildingSmart.IFC.IfcActorResource.IfcActorSelect,
-		BuildingSmart.IFC.IfcPropertyResource.IfcObjectReferenceSelect
+		BuildingSmart.IFC.IfcPropertyResource.IfcObjectReferenceSelect,
+		BuildingSmart.IFC.IfcExternalReferenceResource.IfcResourceObjectSelect
 	{
 		[DataMember(Order=0)] 
 		[XmlAttribute]
-		IfcIdentifier? _Id;
+		IfcIdentifier? _Identification;
 	
 		[DataMember(Order=1)] 
 		[XmlAttribute]
@@ -54,28 +56,27 @@ namespace BuildingSmart.IFC.IfcActorResource
 	
 	
 		[Description("Identification of the person.")]
-		public IfcIdentifier? Id { get { return this._Id; } set { this._Id = value;} }
+		public IfcIdentifier? Identification { get { return this._Identification; } set { this._Identification = value;} }
 	
-		[Description(@"The name by which the family identity of the person may be recognized.
-	<EPM-HTML><BLOCKQUOTE><FONT SIZE=""-1"">NOTE: Depending on geographical location and culture, family name may appear either as the first or last component of a name.</FONT></BLOCKQUOTE>
+		[Description(@"<EPM-HTML>
+	The name by which the family identity of the person may be recognized.
+	<blockquote class=""note"">NOTE&nbsp; Depending on geographical location and culture, family name may appear either as the first or last component of a name.</blockquote>
 	</EPM-HTML>
 	")]
 		public IfcLabel? FamilyName { get { return this._FamilyName; } set { this._FamilyName = value;} }
 	
-		[Description(@"The name by which a person is known within a family and by which he or she may be familiarly recognized.
-	<EPM-HTML>
-	<BLOCKQUOTE><FONT SIZE=""-1"">NOTE: Depending on geographical location and culture, given name may appear either as the first or last component of a name.
-	</FONT></BLOCKQUOTE>
+		[Description(@"<EPM-HTML>
+	The name by which a person is known within a family and by which he or she may be familiarly recognized.
+	<blockquote class=""note"">NOTE&nbsp; Depending on geographical location and culture, given name may appear either as the first or last component of a name.</blockquote>
 	</EPM-HTML>
 	")]
 		public IfcLabel? GivenName { get { return this._GivenName; } set { this._GivenName = value;} }
 	
-		[Description(@"Additional names given to a person that enable their identification apart from others who may have the same or similar family and given names.
-	<EPM-HTML>
-	<BLOCKQUOTE><FONT SIZE=""-1"">NOTE: Middle names are not normally used in familiar communication but may be asserted to provide additional 
+		[Description(@"<EPM-HTML>
+	Additional names given to a person that enable their identification apart from others who may have the same or similar family and given names.
+	<blockquote class=""note"">NOTE&nbsp; Middle names are not normally used in familiar communication but may be asserted to provide additional 
 	identification of a particular person if necessary. They may be particularly useful in situations where the person concerned has a 
-	family name that occurs commonly in the geographical region.
-	</FONT></BLOCKQUOTE>
+	family name that occurs commonly in the geographical region.</blockquote>
 	</EPM-HTML>
 	")]
 		public IList<IfcLabel> MiddleNames { get { return this._MiddleNames; } }
@@ -91,9 +92,9 @@ namespace BuildingSmart.IFC.IfcActorResource
 		[Description("Roles played by the person.")]
 		public IList<IfcActorRole> Roles { get { return this._Roles; } }
 	
-		[Description("<EPM-HTML>Postal and telecommunication addresses of a person.\r\n<BLOCKQUOTE><FONT " +
-	    "SIZE=\"-1\">NOTE - A person may have several addresses.\r\n</FONT></BLOCKQUOTE>\r\n</E" +
-	    "PM-HTML>\r\n")]
+		[Description("<EPM-HTML>\r\nPostal and telecommunication addresses of a person.\r\n<blockquote clas" +
+	    "s=\"note\">NOTE&nbsp; A person may have several addresses.</small></blockquote>\r\n<" +
+	    "/EPM-HTML>\r\n")]
 		public IList<IfcAddress> Addresses { get { return this._Addresses; } }
 	
 		[Description("The inverse relationship to IfcPersonAndOrganization relationships in which IfcPe" +

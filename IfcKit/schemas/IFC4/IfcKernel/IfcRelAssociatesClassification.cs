@@ -11,29 +11,29 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcConstraintResource;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometricModelResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
+using BuildingSmart.IFC.IfcProcessExtension;
 using BuildingSmart.IFC.IfcPropertyResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
 using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcKernel
 {
-	[Guid("b9fd35c3-2f14-479b-b837-b8d959214bef")]
+	[Guid("4bd9bd82-20ff-4504-bb85-feccfdfe7377")]
 	public partial class IfcRelAssociatesClassification : IfcRelAssociates
 	{
 		[DataMember(Order=0)] 
 		[Required()]
-		IfcClassificationNotationSelect _RelatingClassification;
+		IfcClassificationSelect _RelatingClassification;
 	
 	
 		[Description("Classification applied to the objects.")]
-		public IfcClassificationNotationSelect RelatingClassification { get { return this._RelatingClassification; } set { this._RelatingClassification = value;} }
+		public IfcClassificationSelect RelatingClassification { get { return this._RelatingClassification; } set { this._RelatingClassification = value;} }
 	
 	
 	}

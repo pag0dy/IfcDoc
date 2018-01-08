@@ -16,12 +16,11 @@ using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcTimeSeriesResource;
 using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcConstraintResource
 {
-	[Guid("f27d8f9b-d773-45c4-b8cf-20a75a7c28c4")]
+	[Guid("80e1bafe-6a4a-46c1-9f7d-1c432b1ad3f8")]
 	public partial class IfcMetric : IfcConstraint
 	{
 		[DataMember(Order=0)] 
@@ -37,15 +36,26 @@ namespace BuildingSmart.IFC.IfcConstraintResource
 		[Required()]
 		IfcMetricValueSelect _DataValue;
 	
+		[DataMember(Order=3)] 
+		[XmlElement("IfcReference")]
+		IfcReference _ReferencePath;
+	
 	
 		[Description("Enumeration that identifies the type of benchmark data.\r\n")]
 		public IfcBenchmarkEnum Benchmark { get { return this._Benchmark; } set { this._Benchmark = value;} }
 	
-		[Description("Reference source for data values.\r\n")]
+		[Description("Reference source for data values. If <i>DataValue</i> refers to an <i>IfcTable</i" +
+	    ">, this attribute identifies the relevent column identified by <i>IfcTableColumn" +
+	    "</i>.<i>Name</i>.\r\n")]
 		public IfcLabel? ValueSource { get { return this._ValueSource; } set { this._ValueSource = value;} }
 	
-		[Description("Value with data type defined by the DataType enumeration.\r\n")]
+		[Description("The value to be compared on associated objects. A null value may be indicated via" +
+	    " <i>IfcReference</i> having all attributes set to null.\r\n")]
 		public IfcMetricValueSelect DataValue { get { return this._DataValue; } set { this._DataValue = value;} }
+	
+		[Description(@"Optional path to an attribute to be constrained on associated objects.
+	If provided, the metric may be validated by resolving the path to the current value on associated object(s), and comparing such value with <i>DataValue</i> according to the <i>Benchmark</i>.")]
+		public IfcReference ReferencePath { get { return this._ReferencePath; } set { this._ReferencePath = value;} }
 	
 	
 	}

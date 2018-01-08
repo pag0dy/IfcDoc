@@ -11,15 +11,24 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
+using BuildingSmart.IFC.IfcApprovalResource;
+using BuildingSmart.IFC.IfcConstraintResource;
+using BuildingSmart.IFC.IfcCostResource;
 using BuildingSmart.IFC.IfcDateTimeResource;
+using BuildingSmart.IFC.IfcKernel;
+using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
+using BuildingSmart.IFC.IfcProfileResource;
+using BuildingSmart.IFC.IfcPropertyResource;
+using BuildingSmart.IFC.IfcQuantityResource;
 
 namespace BuildingSmart.IFC.IfcExternalReferenceResource
 {
-	[Guid("5eefb261-6d1c-424f-9b49-7f0129a9954c")]
-	public partial class IfcDocumentInformationRelationship
+	[Guid("79f322fe-2390-4be9-ac5e-2c79ccbfc1d5")]
+	public partial class IfcDocumentInformationRelationship : IfcResourceLevelRelationship
 	{
 		[DataMember(Order=0)] 
+		[XmlElement("IfcDocumentInformation")]
 		[Required()]
 		IfcDocumentInformation _RelatingDocument;
 	
@@ -32,17 +41,17 @@ namespace BuildingSmart.IFC.IfcExternalReferenceResource
 		IfcLabel? _RelationshipType;
 	
 	
-		[Description("The document that acts as the parent, referencing or original document in a relat" +
-	    "ionship.")]
+		[Description("<EPM-HTML>The document that acts as the parent, referencing or original document " +
+	    "in a relationship.</EPM-HTML>")]
 		public IfcDocumentInformation RelatingDocument { get { return this._RelatingDocument; } set { this._RelatingDocument = value;} }
 	
-		[Description("The document that acts as the child, referenced or replacing document in a relati" +
-	    "onship.")]
+		[Description("<EPM-HTML>The document that acts as the child, referenced or replacing document i" +
+	    "n a relationship.</EPM-HTML>")]
 		public ISet<IfcDocumentInformation> RelatedDocuments { get { return this._RelatedDocuments; } }
 	
-		[Description("Describes the type of relationship between documents. This could be sub-document," +
-	    " replacement etc. The interpretation has to be established in an application con" +
-	    "text.")]
+		[Description("<EPM-HTML>Describes the type of relationship between documents. This could be sub" +
+	    "-document, replacement etc. The interpretation has to be established in an appli" +
+	    "cation context.</EPM-HTML>")]
 		public IfcLabel? RelationshipType { get { return this._RelationshipType; } set { this._RelationshipType = value;} }
 	
 	

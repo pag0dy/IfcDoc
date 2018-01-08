@@ -10,10 +10,12 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcDateTimeResource;
+using BuildingSmart.IFC.IfcExternalReferenceResource;
 
 namespace BuildingSmart.IFC.IfcMeasureResource
 {
-	[Guid("18b81db8-1d21-43cd-b028-322e743fface")]
+	[Guid("f8d91fbf-99fa-41a0-aee1-6c80bbeaf7d0")]
 	public partial struct IfcParameterValue :
 		BuildingSmart.IFC.IfcMeasureResource.IfcMeasureValue,
 		BuildingSmart.IFC.IfcGeometryResource.IfcTrimmingSelect

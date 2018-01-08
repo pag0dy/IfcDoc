@@ -20,14 +20,16 @@ using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
-	[Guid("e3f2858e-1dfd-4bcb-b2a8-e0c8e64b4e6a")]
+	[Guid("49f23ea3-63e5-4868-bb6d-dc7fe2e9d879")]
 	public partial class IfcCurveBoundedPlane : IfcBoundedSurface
 	{
 		[DataMember(Order=0)] 
+		[XmlElement("IfcPlane")]
 		[Required()]
 		IfcPlane _BasisSurface;
 	
 		[DataMember(Order=1)] 
+		[XmlElement("IfcCurve")]
 		[Required()]
 		IfcCurve _OuterBoundary;
 	

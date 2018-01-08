@@ -20,7 +20,7 @@ using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
-	[Guid("4c81fda4-7e6d-4b93-a27e-18a5f98df55b")]
+	[Guid("825cdcc2-5de6-47c9-8c1b-9643604f1b22")]
 	public interface IfcTrimmingSelect
 	{
 	}

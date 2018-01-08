@@ -20,7 +20,7 @@ using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
-	[Guid("3ad55fe2-21bc-49a7-bdac-b6db8bc84274")]
+	[Guid("40f86a50-abee-4be6-ad4b-26f1f60e8956")]
 	public abstract partial class IfcGeometricRepresentationItem : IfcRepresentationItem
 	{
 	

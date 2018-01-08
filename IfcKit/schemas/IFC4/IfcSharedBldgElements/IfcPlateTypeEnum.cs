@@ -25,7 +25,7 @@ using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcSharedBldgElements
 {
-	[Guid("0f593e3a-0c25-4141-99e5-7b348eb6455b")]
+	[Guid("3b149038-4987-4e19-83ac-2260d7373f6c")]
 	public enum IfcPlateTypeEnum
 	{
 		CURTAIN_PANEL = 1,

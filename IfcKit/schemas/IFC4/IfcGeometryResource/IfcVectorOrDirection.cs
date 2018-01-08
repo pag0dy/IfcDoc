@@ -20,7 +20,7 @@ using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
-	[Guid("d0c8028a-1398-4585-b081-25fbac0da1cf")]
+	[Guid("8cc95dc0-a6d3-4f9b-88ac-0832cf7adbf0")]
 	public interface IfcVectorOrDirection
 	{
 	}

@@ -10,13 +10,11 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
 
 namespace BuildingSmart.IFC.IfcBuildingControlsDomain
 {
-	[Guid("b543d093-1a4b-4f2e-8fb0-b87547ddb7d9")]
+	[Guid("8bfe1a61-e461-402c-9535-70ab60b986db")]
 	public enum IfcAlarmTypeEnum
 	{
 		BELL = 1,

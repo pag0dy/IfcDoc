@@ -11,30 +11,26 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcConstraintResource;
 using BuildingSmart.IFC.IfcCostResource;
 using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcQuantityResource;
 
 namespace BuildingSmart.IFC.IfcSharedFacilitiesElements
 {
-	[Guid("266bce27-12d2-4e1d-b589-b8d2a405ff05")]
+	[Guid("25ccf99a-1eaa-4b97-9f86-66335a753f92")]
 	public partial class IfcOccupant : IfcActor
 	{
 		[DataMember(Order=0)] 
 		[XmlAttribute]
-		[Required()]
-		IfcOccupantTypeEnum _PredefinedType;
+		IfcOccupantTypeEnum? _PredefinedType;
 	
 	
-		[Description("Predefined occupant types from which that required may be set. ")]
-		public IfcOccupantTypeEnum PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
+		[Description("<EPM-HTML>Predefined occupant types from which that required may be set.\r\n\r\n<bloc" +
+	    "kquote class=\"change-ifc2x4\">IFC4 CHANGE Attribute made optional.</blockquote> \r" +
+	    "\n\r\n</EPM-HTML>")]
+		public IfcOccupantTypeEnum? PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	
 	}

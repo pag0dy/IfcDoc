@@ -10,22 +10,12 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialResource;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcPropertyResource;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
 using BuildingSmart.IFC.IfcSharedComponentElements;
 
 namespace BuildingSmart.IFC.IfcHvacDomain
 {
-	[Guid("0eeb3561-60f1-40cf-b6ec-be3dc177cc95")]
+	[Guid("ae7af171-50f2-4170-b358-3a2c6090b0e7")]
 	public enum IfcPumpTypeEnum
 	{
 		CIRCULATOR = 1,
@@ -34,9 +24,13 @@ namespace BuildingSmart.IFC.IfcHvacDomain
 	
 		SPLITCASE = 3,
 	
-		VERTICALINLINE = 4,
+		SUBMERSIBLEPUMP = 4,
 	
-		VERTICALTURBINE = 5,
+		SUMPPUMP = 5,
+	
+		VERTICALINLINE = 6,
+	
+		VERTICALTURBINE = 7,
 	
 		USERDEFINED = -1,
 	

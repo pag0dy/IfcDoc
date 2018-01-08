@@ -10,17 +10,21 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
 
 namespace BuildingSmart.IFC.IfcSharedComponentElements
 {
-	[Guid("8db2f7eb-6866-4c47-bd51-004aa7848caa")]
+	[Guid("f7f5c079-1ef8-4a9e-a64c-86800f526d37")]
 	public partial class IfcFastener : IfcElementComponent
 	{
+		[DataMember(Order=0)] 
+		[XmlAttribute]
+		IfcFastenerTypeEnum? _PredefinedType;
+	
+	
+		[Description("Subtype of fastener")]
+		public IfcFastenerTypeEnum? PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	
 	}

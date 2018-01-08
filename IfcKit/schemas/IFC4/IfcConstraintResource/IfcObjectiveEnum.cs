@@ -16,25 +16,34 @@ using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcTimeSeriesResource;
 using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcConstraintResource
 {
-	[Guid("aa7b75f6-bfef-42ad-be58-1cda52796ca8")]
+	[Guid("20072f21-253d-40a9-9284-990b84bbbf78")]
 	public enum IfcObjectiveEnum
 	{
 		CODECOMPLIANCE = 1,
 	
-		DESIGNINTENT = 2,
+		CODEWAIVER = 2,
 	
-		HEALTHANDSAFETY = 3,
+		DESIGNINTENT = 3,
 	
-		REQUIREMENT = 4,
+		EXTERNAL = 4,
 	
-		SPECIFICATION = 5,
+		HEALTHANDSAFETY = 5,
 	
-		TRIGGERCONDITION = 6,
+		MERGECONFLICT = 6,
+	
+		MODELVIEW = 7,
+	
+		PARAMETER = 8,
+	
+		REQUIREMENT = 9,
+	
+		SPECIFICATION = 10,
+	
+		TRIGGERCONDITION = 11,
 	
 		USERDEFINED = -1,
 	

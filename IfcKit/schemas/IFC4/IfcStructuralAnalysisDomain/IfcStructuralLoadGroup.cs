@@ -14,15 +14,13 @@ using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfilePropertyResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
 using BuildingSmart.IFC.IfcStructuralLoadResource;
 
 namespace BuildingSmart.IFC.IfcStructuralAnalysisDomain
 {
-	[Guid("e3c9c714-198c-4207-bec8-0f12bc40d170")]
+	[Guid("eda81530-0687-4842-bde0-d6567c6ba98b")]
 	public partial class IfcStructuralLoadGroup : IfcGroup
 	{
 		[DataMember(Order=0)] 
@@ -55,13 +53,12 @@ namespace BuildingSmart.IFC.IfcStructuralAnalysisDomain
 		ISet<IfcStructuralAnalysisModel> _LoadGroupFor = new HashSet<IfcStructuralAnalysisModel>();
 	
 	
-		[Description("Selects a predefined type for the load group. It can be differentiated between lo" +
-	    "ad groups, load cases, load combination groups (a necessary construct for the de" +
-	    "scription of load combinations) and load combinations. ")]
+		[Description("Selects a predefined type for the load group.  It can be differentiated between l" +
+	    "oad groups, load cases, load combinations, or userdefined grouping levels.\r\n")]
 		public IfcLoadGroupTypeEnum PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 		[Description("Type of actions in the group. Normally needed if \'PredefinedType\' specifies a LOA" +
-	    "D_COMBINATION_GROUP.")]
+	    "D_CASE.")]
 		public IfcActionTypeEnum ActionType { get { return this._ActionType; } set { this._ActionType = value;} }
 	
 		[Description("Source of actions in the group. Normally needed if \'PredefinedType\' specifies a L" +

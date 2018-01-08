@@ -11,28 +11,30 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcConstraintResource;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometricModelResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
+using BuildingSmart.IFC.IfcProcessExtension;
 using BuildingSmart.IFC.IfcPropertyResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
 using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcKernel
 {
-	[Guid("69a2f5df-0a6f-46a6-b8cd-5a91fed61989")]
+	[Guid("20dee03b-bfd0-4795-923f-4619fc628b6c")]
 	public partial class IfcRelAssignsToGroup : IfcRelAssigns
 	{
 		[DataMember(Order=0)] 
+		[XmlElement("IfcGroup")]
 		[Required()]
 		IfcGroup _RelatingGroup;
 	
 	
-		[Description("Reference to group that finally contains all assigned group members.\r\n")]
+		[Description("<EPM-HTML>\r\nReference to group that contains all assigned group members.\r\n</EPM-H" +
+	    "TML>\r\n")]
 		public IfcGroup RelatingGroup { get { return this._RelatingGroup; } set { this._RelatingGroup = value;} }
 	
 	

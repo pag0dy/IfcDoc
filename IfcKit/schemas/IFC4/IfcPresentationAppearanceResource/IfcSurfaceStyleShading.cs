@@ -11,19 +11,20 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcExternalReferenceResource;
+using BuildingSmart.IFC.IfcGeometricModelResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationDefinitionResource;
-using BuildingSmart.IFC.IfcPresentationResource;
 using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 {
-	[Guid("31f81d9d-1cd5-4de7-852f-142b8bea58de")]
-	public partial class IfcSurfaceStyleShading :
+	[Guid("4d15ed6e-2d9b-4101-a12a-055e03cab045")]
+	public partial class IfcSurfaceStyleShading : IfcPresentationItem,
 		BuildingSmart.IFC.IfcPresentationAppearanceResource.IfcSurfaceStyleElementSelect
 	{
 		[DataMember(Order=0)] 
+		[XmlElement("IfcColourRgb")]
 		[Required()]
 		IfcColourRgb _SurfaceColour;
 	
