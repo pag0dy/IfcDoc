@@ -22,11 +22,21 @@ namespace BuildingSmart.Serialization.Spf
     public class StepSerializer : Serializer
     {
         /// <summary>
-        /// Creates an instance of a STEP Physical Format (SPF) serializer.
+        /// Creates an instance of a STEP Physical Format (SPF) serializer for all types within an assembly.
         /// </summary>
-        /// <param name="type">The type of object to serialize (typically IfcProject)</param>
-        public StepSerializer(Type type)
-            : base(type)
+        /// <param name="roottype">The type of object to serialize (typically IfcProject)</param>
+        public StepSerializer(Type roottype)
+            : base(roottype)
+        {
+        }
+
+        /// <summary>
+        /// Creates an instance of a STEP Physical Format (SPF) serializer for specified types.
+        /// </summary>
+        /// <param name="roottype"></param>
+        /// <param name="loadtypes"></param>
+        public StepSerializer(Type roottype, Type[] loadtypes)
+            : base(roottype, loadtypes)
         {
         }
 
@@ -44,7 +54,19 @@ namespace BuildingSmart.Serialization.Spf
             // pull it into a memory stream so we can make multiple passes (can't assume it's a file; could be web service)
             //...MemoryStream memstream = new MemoryStream();
 
-            Dictionary<long, object> instances = new Dictionary<long, object>();
+            Dictionary<long, object> instances = null;
+            return ReadObject(stream, out instances);
+        }
+
+        /// <summary>
+        /// Reads an object graph and provides access to instance identifiers from file.
+        /// </summary>
+        /// <param name="stream"></param>
+        /// <param name="instances"></param>
+        /// <returns></returns>
+        public object ReadObject(Stream stream, out Dictionary<long, object> instances)
+        {
+            instances = new Dictionary<long, object>();
 
             // first pass: read header to verify schema and model view definitions...
 
@@ -286,9 +308,17 @@ namespace BuildingSmart.Serialization.Spf
             {
                 return ((Int64)o).ToString(CultureInfo.InvariantCulture);
             }
+            else if (t == typeof(Int32))
+            {
+                return ((Int32)o).ToString(CultureInfo.InvariantCulture);
+            }
             else if (t == typeof(Double))
             {
                 return FormatDouble((double)o);
+            }
+            else if (t == typeof(Single))
+            {
+                return FormatDouble((float)o);
             }
             else if (t == typeof(String))
             {
@@ -834,10 +864,18 @@ namespace BuildingSmart.Serialization.Spf
                 // INTEGER
                 value = ParseInteger(strval);
             }
+            else if(typeof(Int32) == type)
+            {
+                value = (Int32)ParseInteger(strval);
+            }
             else if (typeof(Double) == type)
             {
                 // REAL
                 value = ParseReal(strval);
+            }
+            else if (typeof(Single) == type)
+            {
+                value = (Single)ParseReal(strval);
             }
             else if (typeof(Boolean) == type)
             {
@@ -989,9 +1027,10 @@ namespace BuildingSmart.Serialization.Spf
                         //list.Add(value);
                         methodAdd.Invoke(list, new object[] { value }); // perf!!
                     }
-                    catch
+                    catch(Exception e)
                     {
                         // could be type that changed and is no longer compatible with schema -- try to keep going
+                        System.Diagnostics.Debug.WriteLine("StepSerializer: " + e.Message);
                     }
 
                     // reset to next
@@ -1135,9 +1174,10 @@ namespace BuildingSmart.Serialization.Spf
                     x++;
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 // invalid data!
+                System.Diagnostics.Debug.WriteLine("StepSerializer: " + e.Message);
             }       
         }
 
@@ -1160,9 +1200,10 @@ namespace BuildingSmart.Serialization.Spf
             {
                 value = ParseValue(field.FieldType, strval, idmap);
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 // e.g. null value for list
+                System.Diagnostics.Debug.WriteLine("StepSerializer: " + e.Message);
             }
 
             if (value != null && field.FieldType.IsInstanceOfType(value))
@@ -1298,6 +1339,11 @@ namespace BuildingSmart.Serialization.Spf
             {
                 // invalid
                 throw new FormatException("Bad format: command must start with '#'");
+            }
+
+            if(line.Contains("ENTITIES("))
+            {
+                this.ToString();
             }
 
             int iIdTail = line.IndexOf('=');

@@ -105,19 +105,11 @@ namespace BuildingSmart.Serialization.Turtle
             public string setorlist; //ENTITY, SET, LIST, LISTOFLIST, ARRAY || ACTUALLY, ONLY ENTITY, SET, AND LIST are available here (see FormatTTL.FormatData())
         }
 
-        public string BaseURI
-        {
-            get
-            {
-                return this.OwlURI; // todo: check this...
-            }
-        }
-
         public string OwlURI
         {
             get
             {
-                return "http://www.buildingsmart-tech.org/ifcOWL/" + this.Schema + "/" + this.Release;
+                return this.BaseURI;
             }
         }
 
@@ -903,14 +895,6 @@ namespace BuildingSmart.Serialization.Turtle
             writer.Write("rdf:type owl:Ontology;" + newline);
             this.WriteIndent(writer, indent);
             writer.Write("owl:imports <" + this.OwlURI + "> ." + newline + newline);
-        }
-
-        private void WriteIndent(StreamWriter writer, int indent)
-        {
-            for (int i = 0; i < indent; i++)
-            {
-                writer.Write(" ");
-            }
         }
 
         private void WriteStartElement(StreamWriter writer, int indent, string name)

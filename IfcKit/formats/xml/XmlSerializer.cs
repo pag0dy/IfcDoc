@@ -6,6 +6,7 @@
 // License:     http://www.buildingsmart-tech.org/legal
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.IO;
@@ -23,14 +24,6 @@ namespace BuildingSmart.Serialization.Xml
         public XmlSerializer(Type type) : base(type)
         {
             // get the XML namespace
-        }
-
-        public string XsdURI
-        {
-            get
-            {
-                return "http://www.buildingsmart-tech.org/ifcXML/" + this.Schema + "/" + this.Release;
-            }
         }
 
         public override object ReadObject(Stream stream)
@@ -102,10 +95,10 @@ namespace BuildingSmart.Serialization.Xml
         {
             string header = "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
 
-            string schema = "<ifc:ifcXML xsi:schemaLocation=\"" + this.XsdURI + " " + this.Schema + ".xsd\" " +
+            string schema = "<ifc:ifcXML xsi:schemaLocation=\"" + this.BaseURI + " " + this.Schema + ".xsd\" " +
                 "xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" " +
-                "xmlns:ifc=\"" + this.XsdURI + "\" " +
-                "xmlns=\"" + this.XsdURI + "\">";
+                "xmlns:ifc=\"" + this.BaseURI + "\" " +
+                "xmlns=\"" + this.BaseURI + "\">";
 
             writer.WriteLine(header);
             writer.WriteLine(schema);
@@ -265,14 +258,12 @@ namespace BuildingSmart.Serialization.Xml
         { 
         }
 
-        protected void WriteIndent(StreamWriter writer, int indent)
+        private static bool IsValueCollection(Type t)
         {
-            for (int i = 0; i < indent; i++)
-            {
-                writer.Write(" ");
-            }
+            return t.IsGenericType && 
+                typeof(IEnumerable).IsAssignableFrom(t.GetGenericTypeDefinition()) &&
+                t.GetGenericArguments()[0].IsValueType;
         }
-
 
         /// <summary>
         /// Returns true if any elements written (requiring closing tag); or false if not
@@ -282,6 +273,11 @@ namespace BuildingSmart.Serialization.Xml
         private bool WriteEntityAttributes(StreamWriter writer, ref int indent, object o, HashSet<object> saved, Dictionary<object, long> idmap, Queue<object> queue, ref int nextID)
         {
             Type t = o.GetType();
+
+            if(t.Name.Equals("IfcPropertyEnumeration"))
+            {
+                this.ToString();
+            }
 
             long oid = 0;
             if (saved.Contains(o))
@@ -321,12 +317,10 @@ namespace BuildingSmart.Serialization.Xml
 
                     Type ft = f.FieldType;
 
-                    bool isvaluelist = (ft.IsGenericType && ft.GetGenericTypeDefinition() == typeof(List<>) && ft.GetGenericArguments()[0].IsValueType);
-                    bool isvaluelistlist = (ft.IsGenericType && // e.g. IfcTriangulatedFaceSet.Normals
-                        ft.GetGenericTypeDefinition() == typeof(List<>) &&
-                        ft.GetGenericArguments()[0].IsGenericType &&
-                        ft.GetGenericArguments()[0].GetGenericTypeDefinition() == typeof(List<>) &&
-                        ft.GetGenericArguments()[0].GetGenericArguments()[0].IsValueType);
+                    bool isvaluelist = IsValueCollection(ft);
+                    bool isvaluelistlist = ft.IsGenericType && // e.g. IfcTriangulatedFaceSet.Normals
+                        typeof(System.Collections.IEnumerable).IsAssignableFrom(ft.GetGenericTypeDefinition()) &&
+                        IsValueCollection(ft.GetGenericArguments()[0]);
 
                     if (isvaluelistlist || isvaluelist || ft.IsValueType)
                     {
@@ -372,18 +366,20 @@ namespace BuildingSmart.Serialization.Xml
                                 ft = ft.GetGenericArguments()[0];
                                 FieldInfo fieldValue = ft.GetField("Value");
 
-                                System.Collections.IList list = (System.Collections.IList)v;
-                                for (int i = 0; i < list.Count; i++)
+                                IEnumerable list = (IEnumerable)v;
+                                //for (int i = 0; i < list.Count; i++)
+                                int i = 0;
+                                foreach(object e in list)
                                 {
                                     if (i > 0)
                                     {
                                         writer.Write(" ");
                                     }
 
-                                    object elem = list[i];
-                                    if (elem != null) // should never be null, but be safe
+                                    //object elem = list[i];
+                                    if (e != null) // should never be null, but be safe
                                     {
-                                        elem = fieldValue.GetValue(elem);
+                                        object elem = fieldValue.GetValue(e);
                                         if (elem is byte[])
                                         {
                                             // IfcPixelTexture.Pixels
@@ -406,6 +402,8 @@ namespace BuildingSmart.Serialization.Xml
                                             writer.Write(encodedvalue);
                                         }
                                     }
+
+                                    i++;
                                 }
 
                             }
@@ -493,12 +491,10 @@ namespace BuildingSmart.Serialization.Xml
                     if (f.IsDefined(typeof(DataMemberAttribute)) && (format == null || (format != DocXsdFormatEnum.Element && format != DocXsdFormatEnum.Attribute)))
                     {
                         Type ft = f.FieldType;
-                        bool isvaluelist = (ft.IsGenericType && ft.GetGenericTypeDefinition() == typeof(List<>) && ft.GetGenericArguments()[0].IsValueType);
-                        bool isvaluelistlist = (ft.IsGenericType && // e.g. IfcTriangulatedFaceSet.Normals
-                            ft.GetGenericTypeDefinition() == typeof(List<>) &&
-                            ft.GetGenericArguments()[0].IsGenericType &&
-                            ft.GetGenericArguments()[0].GetGenericTypeDefinition() == typeof(List<>) &&
-                            ft.GetGenericArguments()[0].GetGenericArguments()[0].IsValueType);
+                        bool isvaluelist = IsValueCollection(ft);
+                        bool isvaluelistlist = ft.IsGenericType && // e.g. IfcTriangulatedFaceSet.Normals
+                            typeof(IEnumerable).IsAssignableFrom(ft.GetGenericTypeDefinition()) &&
+                            IsValueCollection(ft.GetGenericArguments()[0]);
 
                         // hide fields where inverse attribute used instead
                         if (!f.FieldType.IsValueType && !isvaluelist && !isvaluelistlist &&
@@ -530,10 +526,10 @@ namespace BuildingSmart.Serialization.Xml
                         {
                             // for collection is must be non-zero (e.g. IfcProject.IsNestedBy)
                             bool showit = true; //...check: always include tag if Attribute (even if zero); hide if Element 
-                            if (value is System.Collections.IEnumerable) // what about IfcProject.RepresentationContexts if empty? include???
+                            if (value is IEnumerable) // what about IfcProject.RepresentationContexts if empty? include???
                             {
                                 showit = false;
-                                System.Collections.IEnumerable enumerate = (System.Collections.IEnumerable)value;
+                                IEnumerable enumerate = (IEnumerable)value;
                                 foreach (object check in enumerate)
                                 {
                                     showit = true; // has at least one element
@@ -565,9 +561,9 @@ namespace BuildingSmart.Serialization.Xml
 
                         // inverse
                         // record it for downstream serialization
-                        if (value is System.Collections.IEnumerable)
+                        if (value is IEnumerable)
                         {
-                            System.Collections.IEnumerable invlist = (System.Collections.IEnumerable)value;
+                            IEnumerable invlist = (IEnumerable)value;
                             foreach (object invobj in invlist)
                             {
                                 if (!saved.Contains(invobj))
@@ -871,7 +867,7 @@ namespace BuildingSmart.Serialization.Xml
             if (attrElement == null && field.IsDefined(typeof(InversePropertyAttribute)))
                 return DocXsdFormatEnum.Hidden;
 
-            return DocXsdFormatEnum.Attribute; //?
+            return null; //?
         }
 
         private enum DocXsdFormatEnum

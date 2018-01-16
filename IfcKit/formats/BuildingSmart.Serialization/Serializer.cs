@@ -32,7 +32,20 @@ namespace BuildingSmart.Serialization
 
         protected static char[] HexChars = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
 
-        public Serializer(Type typeProject)
+        /// <summary>
+        /// Creates serializer accepting all types within assembly.
+        /// </summary>
+        /// <param name="typeProject">Type of the root object to load</param>
+        public Serializer(Type typeProject) : this(typeProject, typeProject.Assembly.GetTypes())
+        {
+        }
+
+        /// <summary>
+        /// Creates serializer accepting specific types.
+        /// </summary>
+        /// <param name="typeProject">Type of the root object to load</param>
+        /// <param name="types">Other types that may be loaded, or null for all types within assembly of typeProject.</param>
+        public Serializer(Type typeProject, Type[] types)
         {
             this._projtype = typeProject;
 
@@ -84,7 +97,6 @@ namespace BuildingSmart.Serialization
             this._roottype = typeRoot;
 
             // cache types by name for deserialization
-            Type[] types = typeProject.Assembly.GetTypes();
             foreach (Type t in types)
             {
                 // map fields for quick loading of inverse fields
@@ -107,15 +119,17 @@ namespace BuildingSmart.Serialization
                         }
 
                         FieldInfo fSource = this.GetFieldByName(typeElement, "_" + attrs[0].Property); // dictionary requires reference uniqueness
-
-                        List<FieldInfo> listField = null;
-                        if (!_inversemap.TryGetValue(fSource, out listField))
+                        if (fSource != null)
                         {
-                            listField = new List<FieldInfo>();
-                            _inversemap.Add(fSource, listField);
-                        }
+                            List<FieldInfo> listField = null;
+                            if (!_inversemap.TryGetValue(fSource, out listField))
+                            {
+                                listField = new List<FieldInfo>();
+                                _inversemap.Add(fSource, listField);
+                            }
 
-                        listField.Add(fTarget);
+                            listField.Add(fTarget);
+                        }
                     }
                 }
 
@@ -132,6 +146,23 @@ namespace BuildingSmart.Serialization
 
         public abstract object ReadObject(Stream stream);
         public abstract void WriteObject(Stream stream, object graph);
+
+        /// <summary>
+        /// Writes characters to indent line.
+        /// </summary>
+        /// <param name="writer"></param>
+        /// <param name="indent">The number of levels to indent.</param>
+        protected void WriteIndent(StreamWriter writer, int indent)
+        {
+            // current implementation uses tabs -- could be configurable to use spaces
+            // tabs are used for efficient replacement when generating marked up example with hyperlinks
+
+            for (int i = 0; i < indent; i++)
+            {
+                //writer.Write(" "); // previous setting
+                writer.Write("\t"); 
+            }
+        }
 
         /// <summary>
         /// The schema identifier (e.g "IFC4")
@@ -152,6 +183,14 @@ namespace BuildingSmart.Serialization
             get
             {
                 return this._release;
+            }
+        }
+
+        public string BaseURI
+        {
+            get
+            {
+                return "http://www.buildingsmart-tech.org/ifc/" + this.Schema + "/" + this.Release;
             }
         }
 
@@ -393,6 +432,9 @@ namespace BuildingSmart.Serialization
 
         public void UpdateInverse(object instance, FieldInfo field, object value)
         {
+            if (value is string || value is Byte[])
+                return;
+
             // set inverse link for singular references
             if (value is IEnumerable)
             {
