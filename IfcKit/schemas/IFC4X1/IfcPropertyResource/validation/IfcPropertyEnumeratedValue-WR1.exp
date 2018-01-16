@@ -1,0 +1,4 @@
+﻿NOT(EXISTS(EnumerationReference)) OR 
+   (SIZEOF(QUERY(temp <* EnumerationValues |
+    temp IN EnumerationReference.EnumerationValues))
+    = SIZEOF(EnumerationValues))

@@ -1,0 +1,3 @@
+﻿SIZEOF(QUERY(temp <* SELF\IfcRelAssigns.RelatedObjects |
+  NOT('IFCSHAREDMGMTELEMENTS.IFCCOSTITEM' IN TYPEOF(temp))
+  )) = 0

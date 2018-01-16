@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<svg xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="1.1" width="600" height="888" xmlns="http://www.w3.org/2000/svg">
+  <g id="IfcActuatorType" fill="yellow">
+    <rect x="93.0325125" y="237.21248625" width="146.7375" height="40.5" stroke="black" />
+    <text x="166.4012625" y="257.46248625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcActuatorType</text>
+    <g id="PredefinedType">
+      <polyline points="239.7700125,257.8771125 373.11248625,257.8771125 " fill="none" stroke="black" />
+      <text x="306.441249375" y="257.8771125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">PredefinedType</text>
+    </g>
+  </g>
+  <g id="IfcAlarmType" fill="yellow">
+    <rect x="92.02999875" y="410.2125" width="146.7375" height="37.5" stroke="black" />
+    <text x="165.39874875" y="428.9625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcAlarmType</text>
+    <g id="PredefinedType">
+      <polyline points="238.76749875,428.9625 373.054995,428.9625 " fill="none" stroke="black" />
+      <text x="305.911246875" y="428.9625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">PredefinedType</text>
+    </g>
+  </g>
+  <g id="IfcControllerType" fill="yellow">
+    <rect x="92.04499875" y="296.8874625" width="146.74999875" height="37.5" stroke="black" />
+    <text x="165.419998125" y="315.6374625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcControllerType</text>
+    <g id="PredefinedType">
+      <polyline points="238.7949975,315.6374625 373.0449975,315.6374625 " fill="none" stroke="black" />
+      <text x="305.9199975" y="315.6374625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">PredefinedType</text>
+    </g>
+  </g>
+  <g id="IfcFlowInstrumentType" fill="yellow">
+    <rect x="93.06499875" y="180.56248875" width="146.74999875" height="37.5" stroke="black" />
+    <text x="166.439998125" y="199.31248875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcFlowInstrumentType</text>
+    <g id="PredefinedType">
+      <polyline points="239.8149975,199.31248875 373.08,199.31248875 " fill="none" stroke="black" />
+      <text x="306.44749875" y="199.31248875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">PredefinedType</text>
+    </g>
+  </g>
+  <g id="IfcSensorType" fill="yellow">
+    <rect x="92.05748625" y="353.5624875" width="146.7375" height="37.5" stroke="black" />
+    <text x="165.42623625" y="372.3124875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcSensorType</text>
+    <g id="PredefinedType">
+      <polyline points="238.79498625,372.3124875 373.06252125,372.3124875 " fill="none" stroke="black" />
+      <text x="305.92875375" y="372.3124875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">PredefinedType</text>
+    </g>
+  </g>
+  <g id="IfcActuatorTypeEnum" fill="green">
+    <rect x="373.11248625" y="245.4124725" width="163.6125" height="19.750000125" stroke="black" />
+    <text x="454.91873625" y="255.2874725625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcActuatorTypeEnum</text>
+  </g>
+  <g id="IfcAlarmTypeEnum" fill="green">
+    <rect x="373.054995" y="416.949975" width="163.5875025" height="20.749999875" stroke="black" />
+    <text x="454.84874625" y="427.3249749375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcAlarmTypeEnum</text>
+  </g>
+  <g id="IfcControllerTypeEnum" fill="green">
+    <rect x="373.0449975" y="302.49998625" width="163.6125" height="19.750000125" stroke="black" />
+    <text x="454.8512475" y="312.3749863125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcControllerTypeEnum</text>
+  </g>
+  <g id="IfcFlowInstrumentTypeEnum" fill="green">
+    <rect x="373.08" y="188.33500125" width="163.58749875" height="19.750000125" stroke="black" />
+    <text x="454.873749375" y="198.2100013125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcFlowInstrumentTypeEnum</text>
+  </g>
+  <g id="IfcSensorTypeEnum" fill="green">
+    <rect x="373.06252125" y="359.59996125" width="163.6125" height="20.00000025" stroke="black" />
+    <text x="454.86877125" y="369.599961375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcSensorTypeEnum</text>
+  </g>
+  <g id="IFCSHAREDBLDGSERVICEELEMENTS">
+    <g id="IfcDistributionControlElementType" fill="grey">
+      <rect x="93.0875025" y="54.64999875" width="242.0625" height="86.1875025" stroke="black" />
+      <polyline points="93.0875025,81.74374875 53.4012375,81.74374875 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="53.4012375,81.74374875 53.4012375,372.3124875 92.05748625,372.3124875 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="53.4012375,81.74374875 53.4012375,315.6374625 92.04499875,315.6374625 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="53.4012375,81.74374875 53.4012375,257.46248625 93.0325125,257.46248625 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="53.4012375,81.74374875 53.4012375,199.31248875 93.06499875,199.31248875 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="53.4012375,81.74374875 53.4012375,428.9625 92.02999875,428.9625 " fill="none" stroke="black" stroke-width="3" />
+      <text x="214.1187525" y="97.74375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCSHAREDBLDGSERVICEELEMENTS
+IfcDistributionControlElementType</text>
+    </g>
+  </g>
+  <g id="IFCGEOMETRYRESOURCE">
+    <g id="IfcAxis2Placement3D" />
+  </g>
+  <g id="IFCPRESENTATIONAPPEARANCERESOURCE">
+    <g id="IfcNullStyle" />
+  </g>
+  <g>
+    <rect x="0" y="0" width="600" height="888" fill="none" stroke="lime" />
+  </g>
+</svg>

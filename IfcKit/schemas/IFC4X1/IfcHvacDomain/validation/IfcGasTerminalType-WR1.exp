@@ -1,0 +1,2 @@
+﻿(PredefinedType <> IfcGasTerminalTypeEnum.USERDEFINED) OR
+((PredefinedType = IfcGasTerminalTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcElementType.ElementType))

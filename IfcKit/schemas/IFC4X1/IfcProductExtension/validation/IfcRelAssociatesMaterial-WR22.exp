@@ -1,0 +1,4 @@
+﻿SIZEOF(QUERY(temp <* SELF\IfcRelAssociates.RelatedObjects | 
+(NOT('IFCKERNEL.IFCPRODUCT' IN TYPEOF(temp)) 
+ AND NOT('IFCKERNEL.IFCTYPEPRODUCT' IN TYPEOF(temp)))
+)) = 0

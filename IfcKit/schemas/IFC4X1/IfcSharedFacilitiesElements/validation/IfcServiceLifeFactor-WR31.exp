@@ -1,0 +1,2 @@
+﻿NOT(PredefinedType = IfcServiceLifeFactorTypeEnum.USERDEFINED)
+OR EXISTS(SELF\IfcObject.ObjectType)

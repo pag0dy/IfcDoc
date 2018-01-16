@@ -1,0 +1,1 @@
+﻿SIZEOF(QUERY(Temp <* Points | Temp.Dim <> Points[1].Dim)) = 0

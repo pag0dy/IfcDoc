@@ -1,0 +1,2 @@
+﻿(PredefinedType <> IfcDuctFittingTypeEnum.USERDEFINED) OR
+((PredefinedType = IfcDuctFittingTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcElementType.ElementType))

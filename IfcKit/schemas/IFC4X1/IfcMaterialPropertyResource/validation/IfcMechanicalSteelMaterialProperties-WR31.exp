@@ -1,0 +1,1 @@
+﻿NOT(EXISTS(YieldStress)) OR (YieldStress >= 0.)

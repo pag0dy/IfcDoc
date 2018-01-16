@@ -1,0 +1,2 @@
+﻿(PredefinedType <> IfcBoilerTypeEnum.USERDEFINED) OR
+((PredefinedType = IfcBoilerTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcElementType.ElementType))

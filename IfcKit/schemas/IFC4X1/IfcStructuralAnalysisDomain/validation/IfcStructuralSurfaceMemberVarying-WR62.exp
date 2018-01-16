@@ -1,0 +1,3 @@
+﻿SIZEOF(QUERY(temp <* SELF.VaryingThicknessLocation.ShapeRepresentations |
+  NOT(SIZEOF(temp\IfcRepresentation.Items) = 1)
+  )) = 0

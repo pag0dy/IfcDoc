@@ -1,0 +1,2 @@
+﻿(HIINDEX(SELF\IfcObjectDefinition.IsDecomposedBy) = 0) OR 
+((HIINDEX(SELF\IfcObjectDefinition.IsDecomposedBy) = 1) AND (NOT(EXISTS(SELF\IfcProduct.Representation))))
