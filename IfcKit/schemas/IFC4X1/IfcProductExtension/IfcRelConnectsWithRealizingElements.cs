@@ -11,7 +11,6 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometricModelResource;
@@ -20,18 +19,18 @@ using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProfilePropertyResource;
 using BuildingSmart.IFC.IfcPropertyResource;
 using BuildingSmart.IFC.IfcQuantityResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
 using BuildingSmart.IFC.IfcSharedBldgElements;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
-using BuildingSmart.IFC.IfcStructuralAnalysisDomain;
+using BuildingSmart.IFC.IfcSharedComponentElements;
+using BuildingSmart.IFC.IfcSharedFacilitiesElements;
 using BuildingSmart.IFC.IfcStructuralElementsDomain;
 
 namespace BuildingSmart.IFC.IfcProductExtension
 {
-	[Guid("d323c3ef-322b-43ec-85c2-f5eab3b2ec47")]
+	[Guid("006b5d7c-0365-48b1-85a4-b7cc46bfe68e")]
 	public partial class IfcRelConnectsWithRealizingElements : IfcRelConnectsElements
 	{
 		[DataMember(Order=0)] 

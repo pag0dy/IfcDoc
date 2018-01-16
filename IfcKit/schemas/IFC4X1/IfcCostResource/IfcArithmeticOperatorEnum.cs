@@ -10,13 +10,14 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcConstraintResource;
 using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 
 namespace BuildingSmart.IFC.IfcCostResource
 {
-	[Guid("1001b61b-cd58-4f64-a63d-9befe7770632")]
+	[Guid("cfa7de31-c6b2-47a2-9494-e9e9eea12377")]
 	public enum IfcArithmeticOperatorEnum
 	{
 		ADD = 1,

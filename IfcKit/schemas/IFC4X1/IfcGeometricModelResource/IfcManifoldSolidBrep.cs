@@ -18,10 +18,11 @@ using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometricModelResource
 {
-	[Guid("fe23e954-f7e9-4325-a60f-ca972e1516c4")]
+	[Guid("a50d65b5-c2d5-47ea-a0a6-786fe005e10b")]
 	public abstract partial class IfcManifoldSolidBrep : IfcSolidModel
 	{
 		[DataMember(Order=0)] 
+		[XmlElement]
 		[Required()]
 		IfcClosedShell _Outer;
 	

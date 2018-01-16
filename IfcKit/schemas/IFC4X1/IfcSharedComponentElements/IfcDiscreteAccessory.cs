@@ -10,17 +10,22 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
 
 namespace BuildingSmart.IFC.IfcSharedComponentElements
 {
-	[Guid("42f9c6aa-5b49-4cd4-a52c-d9f2cb92fa55")]
+	[Guid("5ba7cc3f-c0c3-42e3-bfe3-f54531a32ef7")]
 	public partial class IfcDiscreteAccessory : IfcElementComponent
 	{
+		[DataMember(Order=0)] 
+		[XmlAttribute]
+		IfcDiscreteAccessoryTypeEnum? _PredefinedType;
+	
+	
+		[Description(@"Subtype of discrete accessory.  If USERDEFINED, the type is further qualified by means of the inherited attribute <em>ObjectType</em>.  Refer to <em>IfcDiscreteAccessoryType</em> for a non-exclusive list of userdefined type designations which are applicable to <em>IfcDiscreteAccessory</em> as well.
+	")]
+		public IfcDiscreteAccessoryTypeEnum? PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	
 	}

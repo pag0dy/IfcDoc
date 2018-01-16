@@ -11,21 +11,55 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
+using BuildingSmart.IFC.IfcApprovalResource;
+using BuildingSmart.IFC.IfcConstraintResource;
+using BuildingSmart.IFC.IfcCostResource;
 using BuildingSmart.IFC.IfcDateTimeResource;
+using BuildingSmart.IFC.IfcKernel;
+using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
+using BuildingSmart.IFC.IfcProfileResource;
+using BuildingSmart.IFC.IfcPropertyResource;
+using BuildingSmart.IFC.IfcQuantityResource;
 
 namespace BuildingSmart.IFC.IfcExternalReferenceResource
 {
-	[Guid("cfdbc669-8a34-4570-ad57-0939f779948e")]
+	[Guid("739c22f8-9791-4f05-b25d-70ddc3ed443f")]
 	public partial class IfcLibraryReference : IfcExternalReference,
 		BuildingSmart.IFC.IfcExternalReferenceResource.IfcLibrarySelect
 	{
-		[InverseProperty("LibraryReference")] 
-		ISet<IfcLibraryInformation> _ReferenceIntoLibrary = new HashSet<IfcLibraryInformation>();
+		[DataMember(Order=0)] 
+		[XmlAttribute]
+		IfcText? _Description;
 	
+		[DataMember(Order=1)] 
+		[XmlAttribute]
+		IfcLanguageId? _Language;
+	
+		[DataMember(Order=2)] 
+		[XmlElement]
+		IfcLibraryInformation _ReferencedLibrary;
+	
+		[InverseProperty("RelatingLibrary")] 
+		ISet<IfcRelAssociatesLibrary> _LibraryRefForObjects = new HashSet<IfcRelAssociatesLibrary>();
+	
+	
+		[Description("Additional description provided for the library reference.\r\n<blockquote class=\"ch" +
+	    "ange-ifc2x4\">\r\n  IFC4 CHANGE&nbsp; New attribute added at the end of the attribu" +
+	    "te list.\r\n</blockquote>")]
+		public IfcText? Description { get { return this._Description; } set { this._Description = value;} }
+	
+		[Description("The language in which a library reference is expressed.\r\n<blockquote class=\"chang" +
+	    "e-ifc2x4\">\r\n  IFC4 CHANGE&nbsp; New attribute added at the end of the attribute " +
+	    "list.\r\n</blockquote>")]
+		public IfcLanguageId? Language { get { return this._Language; } set { this._Language = value;} }
 	
 		[Description("The library information that is being referenced.")]
-		public ISet<IfcLibraryInformation> ReferenceIntoLibrary { get { return this._ReferenceIntoLibrary; } }
+		public IfcLibraryInformation ReferencedLibrary { get { return this._ReferencedLibrary; } set { this._ReferencedLibrary = value;} }
+	
+		[Description("The library reference with which objects are associated.\r\n<blockquote class=\"chan" +
+	    "ge-ifc2x4\">\r\n  IFC4 CHANGE&nbsp; New inverse attribute.\r\n</blockquote>")]
+		public ISet<IfcRelAssociatesLibrary> LibraryRefForObjects { get { return this._LibraryRefForObjects; } }
 	
 	
 	}

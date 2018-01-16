@@ -18,10 +18,11 @@ using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometricModelResource
 {
-	[Guid("f983e827-d10e-48bb-9fc1-9be6d240852c")]
+	[Guid("d92abdea-e3e3-4799-9cb5-39b1c40f03aa")]
 	public partial class IfcSectionedSpine : IfcGeometricRepresentationItem
 	{
 		[DataMember(Order=0)] 
+		[XmlElement]
 		[Required()]
 		IfcCompositeCurve _SpineCurve;
 	

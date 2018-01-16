@@ -10,13 +10,11 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
 
 namespace BuildingSmart.IFC.IfcBuildingControlsDomain
 {
-	[Guid("b42d336a-f4c7-4dfc-9c57-81a1df4bc608")]
+	[Guid("92253df9-2c74-4a77-9837-72f4f240f459")]
 	public partial class IfcFlowInstrumentType : IfcDistributionControlElementType
 	{
 		[DataMember(Order=0)] 
@@ -25,8 +23,8 @@ namespace BuildingSmart.IFC.IfcBuildingControlsDomain
 		IfcFlowInstrumentTypeEnum _PredefinedType;
 	
 	
-		[Description("Identifies the predefined types of flow instrument from which the type required m" +
-	    "ay be set.")]
+		[Description("<p>Identifies the predefined types of flow instrument from which the type require" +
+	    "d may be set.</p>")]
 		public IfcFlowInstrumentTypeEnum PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	

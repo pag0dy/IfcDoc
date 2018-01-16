@@ -10,11 +10,12 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 
 namespace BuildingSmart.IFC.IfcActorResource
 {
-	[Guid("d2b9ea56-3c75-44bd-819d-dcab6aaa5498")]
+	[Guid("c5ed9493-664e-4798-a4a5-b5f406aad4b1")]
 	public enum IfcRoleEnum
 	{
 		SUPPLIER = 1,
@@ -47,7 +48,7 @@ namespace BuildingSmart.IFC.IfcActorResource
 	
 		CIVILENGINEER = 15,
 	
-		COMISSIONINGENGINEER = 16,
+		COMMISSIONINGENGINEER = 16,
 	
 		ENGINEER = 17,
 	
@@ -61,6 +62,7 @@ namespace BuildingSmart.IFC.IfcActorResource
 	
 		RESELLER = 22,
 	
+		[Description("User defined value to be provided.")]
 		USERDEFINED = -1,
 	
 	}

@@ -10,12 +10,15 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcDateTimeResource;
+using BuildingSmart.IFC.IfcExternalReferenceResource;
 
 namespace BuildingSmart.IFC.IfcMeasureResource
 {
-	[Guid("37c336d3-742e-4f05-a1cd-617c9249a75b")]
+	[Guid("60d0fa03-7b5a-48f1-80a8-a62b1cb46ae0")]
 	public partial struct IfcLinearStiffnessMeasure :
-		BuildingSmart.IFC.IfcMeasureResource.IfcDerivedMeasureValue
+		BuildingSmart.IFC.IfcMeasureResource.IfcDerivedMeasureValue,
+		BuildingSmart.IFC.IfcStructuralLoadResource.IfcTranslationalStiffnessSelect
 	{
 		[XmlText]
 		public Double Value;

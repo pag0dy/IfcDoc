@@ -10,22 +10,12 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialResource;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcPropertyResource;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
 using BuildingSmart.IFC.IfcSharedComponentElements;
 
 namespace BuildingSmart.IFC.IfcHvacDomain
 {
-	[Guid("fe997b31-a301-4995-90cf-ec15348e45e1")]
+	[Guid("8eddad0b-39d9-48df-b854-7ff316225c5a")]
 	public partial class IfcCoilType : IfcEnergyConversionDeviceType
 	{
 		[DataMember(Order=0)] 

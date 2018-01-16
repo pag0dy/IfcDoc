@@ -1,0 +1,42 @@
+﻿<p>The standard door, <em>IfcDoorStandardCase</em>, defines a door
+with certain constraints for the provision of operation types,
+opening directions, frame and lining parameters, and with certain
+constraints for the geometric representation. The
+<em>IfcDoorStandardCase</em> handles all cases of doors, that:</p>
+<ul>
+<li>are inserted into an opening, represented by
+<em>IfcOpeningElement</em>, using the <em>IfcRelFillsElement</em>
+relationship;</li>
+<li>have a local placement relative to this opening, and with the
+y-axis of the placement pointing into the opening direction;</li>
+<li>have a profile geometry, represented by
+<em>IfcShapeRepresentation.RepresentationIdentifier</em>="Profile" as
+a closed curve to which the door parameters apply;</li>
+<li>have a reference to an <em>IfcDoorType</em> to define the opening
+direction and the operation type (swinging, sliding, folding, etc.)
+of the door. The attribute <em>OperationType</em> shall be provided
+and not being UNDEFINED, and the attribute
+<em>ParameterTakesPrecedence</em> shall be "TRUE";</li>
+<li>have an <em>IfcDoorLiningProperties</em> and
+<em>IfcDoorPanelProperties</em> instances included in the set of
+<em>HasPropertySets</em> at <em>IfcDoorType</em>.</li>
+</ul>
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC4.</blockquote>
+
+<p><b><em>Geometric Representations</em></b></p>
+<p>The geometric representation of <em>IfcDoorStandardCase</em> is
+defined using the following multiple shape representations for its
+definition:</p>
+<ul>
+<li><u>Profile</u>: a three-dimensional closed curve within a
+particular shape representation. The profile is used to apply the
+parameter of the parametric door representation. The profile around
+the edges of the opening is used to apply the door lining and door
+panel shape parameter.</li>
+<li><u>MappedRepresentation</u>: A SweptSolid, SurfaceModel, Brep
+or a CSG representation additionally defining the 3D shape of the
+standard door in addition to the parametric representation by
+applying the <em>IfcDoorLiningProperties</em> and an the
+<em>IfcDoorPanelProperties</em> to the 'Profile' representation.</li>
+</ul>

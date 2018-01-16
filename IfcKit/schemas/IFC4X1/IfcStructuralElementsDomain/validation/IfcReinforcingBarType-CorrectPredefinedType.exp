@@ -1,0 +1,2 @@
+﻿(PredefinedType <> IfcReinforcingBarTypeEnum.USERDEFINED) OR
+((PredefinedType = IfcReinforcingBarTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcElementType.ElementType))

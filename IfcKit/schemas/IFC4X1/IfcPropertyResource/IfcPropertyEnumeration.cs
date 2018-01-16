@@ -11,18 +11,20 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
+using BuildingSmart.IFC.IfcApprovalResource;
 using BuildingSmart.IFC.IfcConstraintResource;
 using BuildingSmart.IFC.IfcCostResource;
 using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
+using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcTimeSeriesResource;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcPropertyResource
 {
-	[Guid("b0a8d959-6be7-4b37-8bd8-74c971669777")]
-	public partial class IfcPropertyEnumeration
+	[Guid("95f63d3d-7d92-449b-89e3-626dfacc0648")]
+	public partial class IfcPropertyEnumeration : IfcPropertyAbstraction
 	{
 		[DataMember(Order=0)] 
 		[XmlAttribute]

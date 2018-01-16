@@ -11,7 +11,6 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometricModelResource;
@@ -20,24 +19,27 @@ using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProfilePropertyResource;
 using BuildingSmart.IFC.IfcPropertyResource;
 using BuildingSmart.IFC.IfcQuantityResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
 using BuildingSmart.IFC.IfcSharedBldgElements;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
-using BuildingSmart.IFC.IfcStructuralAnalysisDomain;
+using BuildingSmart.IFC.IfcSharedComponentElements;
+using BuildingSmart.IFC.IfcSharedFacilitiesElements;
 using BuildingSmart.IFC.IfcStructuralElementsDomain;
 
 namespace BuildingSmart.IFC.IfcProductExtension
 {
-	[Guid("d8557f5c-f314-4622-90a9-8a502ac368ae")]
+	[Guid("4ad31f65-4cec-4f7d-823e-bf7f9f3f99e9")]
 	public enum IfcElementCompositionEnum
 	{
+		[Description("A group or aggregation of similar elements.")]
 		COMPLEX = 1,
 	
+		[Description("An (undivided) element itself.")]
 		ELEMENT = 2,
 	
+		[Description("A subelement or part.")]
 		PARTIAL = 3,
 	
 	}

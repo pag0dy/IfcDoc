@@ -18,7 +18,7 @@ using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometricModelResource
 {
-	[Guid("2e1c7174-c57a-4525-90a6-8582724967bc")]
+	[Guid("6868acf7-18b5-4d39-9a9f-70d45e418223")]
 	public partial class IfcSphere : IfcCsgPrimitive3D
 	{
 		[DataMember(Order=0)] 
@@ -27,7 +27,7 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 		IfcPositiveLengthMeasure _Radius;
 	
 	
-		[Description("<EPM-HTML>\r\n</EPM-HTML>")]
+		[Description("The radius of the sphere.")]
 		public IfcPositiveLengthMeasure Radius { get { return this._Radius; } set { this._Radius = value;} }
 	
 	

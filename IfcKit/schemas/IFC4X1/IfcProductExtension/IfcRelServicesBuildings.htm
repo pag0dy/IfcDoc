@@ -1,31 +1,30 @@
-﻿<EPM-HTML> 
-    <p>
-      <u>Definition from IAI</u>: An objectified relationship
-      that defines the relationship between a system and the
-      sites, buildings, storeys or spaces, it serves. Examples of
-      systems are:
+﻿    <p>
+      The <em>IfcRelServicesBuildings</em> is an objectified relationship that defines the relationship between a system
+      and the sites, buildings, storeys, spaces, or spatial zones, it serves. Examples of systems are:
     </p>
     <ul>
-      <li>building service systems (heating, cooling, waste water
-      system) represented by instances of <i>IfcSystem</i>
+      <li>building service systems (heating, cooling, waste water system) represented by instances of
+      <em>IfcDistributionSystem</em>;
       </li>
-      <li>idealized structural analysis systems represented by
-      instances of <i>IfcStructuralAnalysisSystem</i>
+      <li>building systems (fenestration, shading) represented by instances of <em>IfcBuildingSystem</em>;
+      </li>
+      <li>zones as collection of logically grouped spaces represented by instances of <em>IfcZone</em>
+      </li>
+      <li>idealized structural analysis systems represented by instances of <em>IfcStructuralAnalysisModel</em>.
       </li>
     </ul>
-    <blockquote>
-      <p>
-        <small><font color="#0000FF">HISTORY New entity in IFC
-        Release 1.0</font></small>
-      </p>
+    <blockquote class="note">
+      NOTE&nbsp; The name <em>IfcRelServicesBuildings</em> is a known
+      anomaly, as the relationship is not restricted to buildings
+      anymore.
     </blockquote>
-    <blockquote>
-      <small><font color="#FF0000">IFC2x PLATFORM CHANGE  The
-      data type of the attribute<i>RelatedBuildings</i> has been
-      changed from <i>IfcBuilding</i> to its supertype
-      <i>IfcSpatialStructureElement</i> with upward compatibility
-      for file based exchange. The name
-      <i>IfcRelServicesBuildings</i> is a known anomaly, as the
-      relationship is not restricted to buildings anymore.</font></small>
+    <blockquote class="history">
+      HISTORY&nbsp; New entity in IFC1.0.
     </blockquote>
-</EPM-HTML>
+    <blockquote class="change-ifc2x">
+      IFC2x CHANGE&nbsp; The data type of the
+      attribute <em>RelatedBuildings</em> has been changed from
+      <em>IfcBuilding</em> to its supertype
+      <em>IfcSpatialStructureElement</em> with upward compatibility
+      for file based exchange.
+    </blockquote>

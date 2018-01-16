@@ -11,11 +11,12 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcGeometryResource;
+using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 
 namespace BuildingSmart.IFC.IfcTopologyResource
 {
-	[Guid("06f5e6b9-d133-4786-882a-e4a5d65bff7c")]
+	[Guid("312a4348-f82c-4a51-a9e3-f5d3ee786e9b")]
 	public partial class IfcVertex : IfcTopologicalRepresentationItem
 	{
 	

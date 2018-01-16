@@ -10,38 +10,31 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialResource;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcPropertyResource;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
 using BuildingSmart.IFC.IfcSharedComponentElements;
 
 namespace BuildingSmart.IFC.IfcHvacDomain
 {
-	[Guid("54c86ec7-5ca4-4962-97cb-4600bb10c399")]
+	[Guid("2f69b657-d03a-4095-b2f0-593ecc080ae7")]
 	public enum IfcFlowMeterTypeEnum
 	{
-		ELECTRICMETER = 1,
+		[Description("An electric meter or energy meter is a device that measures the amount of electri" +
+	    "cal energy supplied to or produced by a residence, business or machine.")]
+		ENERGYMETER = 1,
 	
-		ENERGYMETER = 2,
+		[Description("A device that measures the quantity of a gas or fuel.")]
+		GASMETER = 2,
 	
-		FLOWMETER = 3,
+		[Description("A device that measures the quantity of oil.")]
+		OILMETER = 3,
 	
-		GASMETER = 4,
+		[Description("A device that measures the quantity of water.")]
+		WATERMETER = 4,
 	
-		OILMETER = 5,
-	
-		WATERMETER = 6,
-	
+		[Description("User-defined meter type")]
 		USERDEFINED = -1,
 	
+		[Description("Undefined meter type")]
 		NOTDEFINED = 0,
 	
 	}

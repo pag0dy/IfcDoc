@@ -20,18 +20,19 @@ using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
-	[Guid("6b283852-794e-461c-8a05-2d7e9a211c85")]
+	[Guid("f45b9882-e0fb-41eb-9b0a-805615a37351")]
 	public partial class IfcCartesianTransformationOperator2DnonUniform : IfcCartesianTransformationOperator2D
 	{
 		[DataMember(Order=0)] 
-		Double? _Scale2;
+		[XmlAttribute]
+		IfcReal? _Scale2;
 	
 	
 		[Description("The scaling value specified for the transformation along the axis 2. This is norm" +
 	    "ally the y scale factor.")]
-		public Double? Scale2 { get { return this._Scale2; } set { this._Scale2 = value;} }
+		public IfcReal? Scale2 { get { return this._Scale2; } set { this._Scale2 = value;} }
 	
-		public new Double Scl2 { get { return null; } }
+		public new IfcReal Scl2 { get { return new IfcReal(); } }
 	
 	
 	}

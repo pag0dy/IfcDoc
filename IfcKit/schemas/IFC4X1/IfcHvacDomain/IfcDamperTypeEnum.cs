@@ -10,48 +10,62 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialResource;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcPropertyResource;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
 using BuildingSmart.IFC.IfcSharedComponentElements;
 
 namespace BuildingSmart.IFC.IfcHvacDomain
 {
-	[Guid("657f39ba-97c4-4e78-9c8b-e3898314f388")]
+	[Guid("52cb3448-2a96-44d2-8363-e5a4eeca5125")]
 	public enum IfcDamperTypeEnum
 	{
-		CONTROLDAMPER = 1,
+		[Description("Damper used for purposes of manually balancing pressure differences.  Commonly op" +
+	    "erated by mechanical adjustment.")]
+		BACKDRAFTDAMPER = 1,
 	
-		FIREDAMPER = 2,
+		[Description("Backdraft damper used to restrict the movement of air in one direction.  Commonly" +
+	    " operated by mechanical spring.")]
+		BALANCINGDAMPER = 2,
 	
-		SMOKEDAMPER = 3,
+		[Description("Blast damper used to prevent protect occupants and equipment against overpressure" +
+	    "s resultant of an explosion.  Commonly operated by mechanical spring.")]
+		BLASTDAMPER = 3,
 	
-		FIRESMOKEDAMPER = 4,
+		[Description("Control damper used to modulate the flow of air by adjusting the position of the " +
+	    "blades.  Commonly operated by an actuator of a building automation system.")]
+		CONTROLDAMPER = 4,
 	
-		BACKDRAFTDAMPER = 5,
+		[Description("Fire damper used to prevent the spread of fire for a specified duration.  Commonl" +
+	    "y operated by fusable link that melts above a certain temperature.")]
+		FIREDAMPER = 5,
 	
-		RELIEFDAMPER = 6,
+		[Description("Combination fire and smoke damper used to preven the spread of fire and smoke.  C" +
+	    "ommonly operated by a fusable link and a smoke detector.")]
+		FIRESMOKEDAMPER = 6,
 	
-		BLASTDAMPER = 7,
+		[Description("Fume hood exhaust damper.  Commonly operated by actuator.")]
+		FUMEHOODEXHAUST = 7,
 	
+		[Description("Gravity damper closes from the force of gravity.  Commonly operated by gravitatio" +
+	    "nal weight.")]
 		GRAVITYDAMPER = 8,
 	
+		[Description("Gravity-relief damper used to allow air to move upon a buildup of enough pressure" +
+	    " to overcome the gravitational force exerted upon the damper blades.  Commonly o" +
+	    "perated by gravitational weight.")]
 		GRAVITYRELIEFDAMPER = 9,
 	
-		BALANCINGDAMPER = 10,
+		[Description("Relief damper used to allow air to move upon a buildup of a specified pressure di" +
+	    "fferential.  Commonly operated by mechanical spring.")]
+		RELIEFDAMPER = 10,
 	
-		FUMEHOODEXHAUST = 11,
+		[Description("Smoke damper used to prevent the spread of smoke.  Commonly operated by a smoke d" +
+	    "etector of a building automation system.")]
+		SMOKEDAMPER = 11,
 	
+		[Description("User-defined damper.")]
 		USERDEFINED = -1,
 	
+		[Description("Undefined damper.")]
 		NOTDEFINED = 0,
 	
 	}

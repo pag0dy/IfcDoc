@@ -10,36 +10,36 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialResource;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcPropertyResource;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
 using BuildingSmart.IFC.IfcSharedComponentElements;
 
 namespace BuildingSmart.IFC.IfcHvacDomain
 {
-	[Guid("9d7a4f56-5000-4bcf-a73b-240fd2bde85e")]
+	[Guid("3392eff3-4ab2-4e44-bc8e-dfa5760fd34d")]
 	public enum IfcFilterTypeEnum
 	{
+		[Description("A filter used to remove particulates from air.")]
 		AIRPARTICLEFILTER = 1,
 	
-		ODORFILTER = 2,
+		[Description("A filter used to remove particulates from compressed air.")]
+		COMPRESSEDAIRFILTER = 2,
 	
-		OILFILTER = 3,
+		[Description("A filter used to remove odors from air.")]
+		ODORFILTER = 3,
 	
-		STRAINER = 4,
+		[Description("A filter used to remove particulates from oil.")]
+		OILFILTER = 4,
 	
-		WATERFILTER = 5,
+		[Description("A filter used to remove particulates from a fluid.")]
+		STRAINER = 5,
 	
+		[Description("A filter used to remove particulates from water.")]
+		WATERFILTER = 6,
+	
+		[Description("User-defined filter type.")]
 		USERDEFINED = -1,
 	
+		[Description("Undefined filter type.")]
 		NOTDEFINED = 0,
 	
 	}

@@ -10,13 +10,14 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
+using BuildingSmart.IFC.IfcPropertyResource;
 
 namespace BuildingSmart.IFC.IfcProfileResource
 {
-	[Guid("e7028a5d-f3f9-4577-8884-c816a99f9e9f")]
+	[Guid("c5e6f97d-9889-46a6-bcbb-63e9cbb0b1c4")]
 	public partial class IfcTShapeProfileDef : IfcParameterizedProfileDef
 	{
 		[DataMember(Order=0)] 
@@ -41,15 +42,15 @@ namespace BuildingSmart.IFC.IfcProfileResource
 	
 		[DataMember(Order=4)] 
 		[XmlAttribute]
-		IfcPositiveLengthMeasure? _FilletRadius;
+		IfcNonNegativeLengthMeasure? _FilletRadius;
 	
 		[DataMember(Order=5)] 
 		[XmlAttribute]
-		IfcPositiveLengthMeasure? _FlangeEdgeRadius;
+		IfcNonNegativeLengthMeasure? _FlangeEdgeRadius;
 	
 		[DataMember(Order=6)] 
 		[XmlAttribute]
-		IfcPositiveLengthMeasure? _WebEdgeRadius;
+		IfcNonNegativeLengthMeasure? _WebEdgeRadius;
 	
 		[DataMember(Order=7)] 
 		[XmlAttribute]
@@ -58,10 +59,6 @@ namespace BuildingSmart.IFC.IfcProfileResource
 		[DataMember(Order=8)] 
 		[XmlAttribute]
 		IfcPlaneAngleMeasure? _FlangeSlope;
-	
-		[DataMember(Order=9)] 
-		[XmlAttribute]
-		IfcPositiveLengthMeasure? _CentreOfGravityInY;
 	
 	
 		[Description("Web lengths, see illustration above (= h).")]
@@ -76,30 +73,20 @@ namespace BuildingSmart.IFC.IfcProfileResource
 		[Description("Constant wall thickness of flange (= tg).")]
 		public IfcPositiveLengthMeasure FlangeThickness { get { return this._FlangeThickness; } set { this._FlangeThickness = value;} }
 	
-		[Description("Fillet radius according the above illustration (= r1). If it is not given, zero i" +
-	    "s assumed.")]
-		public IfcPositiveLengthMeasure? FilletRadius { get { return this._FilletRadius; } set { this._FilletRadius = value;} }
+		[Description("Fillet radius according the above illustration (= r1).")]
+		public IfcNonNegativeLengthMeasure? FilletRadius { get { return this._FilletRadius; } set { this._FilletRadius = value;} }
 	
-		[Description("Edge radius according the above illustration (= r2). If it is not given, zero is " +
-	    "assumed.")]
-		public IfcPositiveLengthMeasure? FlangeEdgeRadius { get { return this._FlangeEdgeRadius; } set { this._FlangeEdgeRadius = value;} }
+		[Description("Edge radius according the above illustration (= r2).")]
+		public IfcNonNegativeLengthMeasure? FlangeEdgeRadius { get { return this._FlangeEdgeRadius; } set { this._FlangeEdgeRadius = value;} }
 	
-		[Description("Edge radius according the above illustration (= r3). If it is not given, zero is " +
-	    "assumed.")]
-		public IfcPositiveLengthMeasure? WebEdgeRadius { get { return this._WebEdgeRadius; } set { this._WebEdgeRadius = value;} }
+		[Description("Edge radius according the above illustration (= r3).")]
+		public IfcNonNegativeLengthMeasure? WebEdgeRadius { get { return this._WebEdgeRadius; } set { this._WebEdgeRadius = value;} }
 	
-		[Description("Slope of flange of the profile. If it is not given, zero is assumed. ")]
+		[Description("Slope of flange of the profile.")]
 		public IfcPlaneAngleMeasure? WebSlope { get { return this._WebSlope; } set { this._WebSlope = value;} }
 	
-		[Description("Slope of web of the profile. If it is not given, zero is assumed. ")]
+		[Description("Slope of web of the profile.")]
 		public IfcPlaneAngleMeasure? FlangeSlope { get { return this._FlangeSlope; } set { this._FlangeSlope = value;} }
-	
-		[Description(@"<EPM-HTML> Location of centre of gravity along the x axis measured from the center of the bounding box. 
-	  <blockquote> <small><font color=""#ff0000"">
-	IFC2x Edition 2 Addendum 2 CHANGE The attribute <i>CentreOfGravityInX</i> has been made optional. Upward compatibility for file based exchange is guaranteed.
-	  </font></small></blockquote>
-	</EPM-HTML>")]
-		public IfcPositiveLengthMeasure? CentreOfGravityInY { get { return this._CentreOfGravityInY; } set { this._CentreOfGravityInY = value;} }
 	
 	
 	}

@@ -14,25 +14,15 @@ using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfilePropertyResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
 using BuildingSmart.IFC.IfcStructuralLoadResource;
 
 namespace BuildingSmart.IFC.IfcStructuralAnalysisDomain
 {
-	[Guid("6430b90a-bc13-49fa-90e0-254576ac9316")]
+	[Guid("f0e940ad-cfed-49d8-a850-023bd268a88a")]
 	public abstract partial class IfcStructuralReaction : IfcStructuralActivity
 	{
-		[InverseProperty("CausedBy")] 
-		ISet<IfcStructuralAction> _Causes = new HashSet<IfcStructuralAction>();
-	
-	
-		[Description("Optional reference to instances of IfcStructuralAction which directly depend on t" +
-	    "his reaction. This reference is only needed if dependencies between structural a" +
-	    "nalysis models must be captured. ")]
-		public ISet<IfcStructuralAction> Causes { get { return this._Causes; } }
 	
 	
 	}

@@ -1,0 +1,3 @@
+﻿NOT(EXISTS(PredefinedType)) OR 
+ (PredefinedType <> IfcUnitaryEquipmentTypeEnum.USERDEFINED) OR 
+ ((PredefinedType = IfcUnitaryEquipmentTypeEnum.USERDEFINED) AND EXISTS (SELF\IfcObject.ObjectType))

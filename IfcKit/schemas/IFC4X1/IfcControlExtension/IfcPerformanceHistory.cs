@@ -13,13 +13,14 @@ using System.Xml.Serialization;
 using BuildingSmart.IFC.IfcApprovalResource;
 using BuildingSmart.IFC.IfcConstraintResource;
 using BuildingSmart.IFC.IfcDateTimeResource;
+using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcTimeSeriesResource;
+using BuildingSmart.IFC.IfcProductExtension;
 
 namespace BuildingSmart.IFC.IfcControlExtension
 {
-	[Guid("be13e443-b031-4314-a1ca-5054984b82c8")]
+	[Guid("e8ca45f2-cf0b-4a93-84ca-ea3c10c7b27e")]
 	public partial class IfcPerformanceHistory : IfcControl
 	{
 		[DataMember(Order=0)] 
@@ -27,11 +28,20 @@ namespace BuildingSmart.IFC.IfcControlExtension
 		[Required()]
 		IfcLabel _LifeCyclePhase;
 	
+		[DataMember(Order=1)] 
+		[XmlAttribute]
+		IfcPerformanceHistoryTypeEnum? _PredefinedType;
+	
 	
 		[Description("Describes the applicable building life-cycle phase. Typical values should be DESI" +
 	    "GNDEVELOPMENT, SCHEMATICDEVELOPMENT, CONSTRUCTIONDOCUMENT, CONSTRUCTION, ASBUILT" +
 	    ", COMMISSIONING, OPERATION, etc. ")]
 		public IfcLabel LifeCyclePhase { get { return this._LifeCyclePhase; } set { this._LifeCyclePhase = value;} }
+	
+		[Description("Predefined generic type for a performace history that is specified in an enumerat" +
+	    "ion.\r\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE  The attribute has been adde" +
+	    "d at the end of the entity definition.</blockquote> ")]
+		public IfcPerformanceHistoryTypeEnum? PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	
 	}

@@ -11,28 +11,29 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcConstraintResource;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometricModelResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
+using BuildingSmart.IFC.IfcProcessExtension;
 using BuildingSmart.IFC.IfcPropertyResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
 using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcKernel
 {
-	[Guid("5b27a097-629c-4e3c-9109-7fea67812949")]
+	[Guid("142af641-3046-4e25-8652-dbf0d05c61da")]
 	public partial class IfcRelAssignsToControl : IfcRelAssigns
 	{
 		[DataMember(Order=0)] 
+		[XmlElement]
 		[Required()]
 		IfcControl _RelatingControl;
 	
 	
-		[Description("Reference to the control that applies an control about objects.\r\n")]
+		[Description("Reference to the <em>IfcControl</em> that applies a control upon objects.")]
 		public IfcControl RelatingControl { get { return this._RelatingControl; } set { this._RelatingControl = value;} }
 	
 	

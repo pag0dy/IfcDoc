@@ -11,7 +11,6 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometricModelResource;
@@ -20,18 +19,18 @@ using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProfilePropertyResource;
 using BuildingSmart.IFC.IfcPropertyResource;
 using BuildingSmart.IFC.IfcQuantityResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
 using BuildingSmart.IFC.IfcSharedBldgElements;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
-using BuildingSmart.IFC.IfcStructuralAnalysisDomain;
+using BuildingSmart.IFC.IfcSharedComponentElements;
+using BuildingSmart.IFC.IfcSharedFacilitiesElements;
 using BuildingSmart.IFC.IfcStructuralElementsDomain;
 
 namespace BuildingSmart.IFC.IfcProductExtension
 {
-	[Guid("c61fb4db-0cf8-48c7-8d8f-aa7dc803cb0c")]
+	[Guid("d85e2968-6220-4d4b-9e5d-3fcf794fea60")]
 	public partial class IfcRelContainedInSpatialStructure : IfcRelConnects
 	{
 		[DataMember(Order=0)] 
@@ -39,23 +38,19 @@ namespace BuildingSmart.IFC.IfcProductExtension
 		ISet<IfcProduct> _RelatedElements = new HashSet<IfcProduct>();
 	
 		[DataMember(Order=1)] 
+		[XmlIgnore]
 		[Required()]
-		IfcSpatialStructureElement _RelatingStructure;
+		IfcSpatialElement _RelatingStructure;
 	
 	
-		[Description(@"<EPM-HTML>
-	Set of <strike>elements</strike> products, which are contained within this level of the spatial structure hierarchy.
-	<blockquote><font color=""#ff0000""><small>
-	IFC2x PLATFORM CHANGE&nbsp; The data type has been changed from <i>IfcElement</i> to <i>IfcProduct</i> with upward compatibility
-	<small></font></blockquote>
-	</EPM-HTML>
+		[Description(@"Set of products, which are contained within this level of the spatial structure hierarchy.
+	<blockquote class=""change-ifc2x"">IFC2x CHANGE&nbsp; The data type has been changed from <em>IfcElement</em> to <em>IfcProduct</em> with upward compatibility</blockquote>
 	")]
 		public ISet<IfcProduct> RelatedElements { get { return this._RelatedElements; } }
 	
-		[Description("<EPM-HTML>\r\nSpatial structure element, within which the element is contained. Any" +
-	    " element can only be contained within one element of the project spatial structu" +
-	    "re.\r\n</EPM-HTML>")]
-		public IfcSpatialStructureElement RelatingStructure { get { return this._RelatingStructure; } set { this._RelatingStructure = value;} }
+		[Description(@"Spatial structure element, within which the element is contained. Any element can only be contained within one element of the project spatial structure.
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The attribute <em>RelatingStructure</em> as been promoted to the new supertype <em>IfcSpatialElement</em> with upward compatibility for file based exchange.</blockquote>")]
+		public IfcSpatialElement RelatingStructure { get { return this._RelatingStructure; } set { this._RelatingStructure = value;} }
 	
 	
 	}

@@ -11,7 +11,6 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometricModelResource;
@@ -20,39 +19,41 @@ using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProfilePropertyResource;
 using BuildingSmart.IFC.IfcPropertyResource;
 using BuildingSmart.IFC.IfcQuantityResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
 using BuildingSmart.IFC.IfcSharedBldgElements;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
-using BuildingSmart.IFC.IfcStructuralAnalysisDomain;
+using BuildingSmart.IFC.IfcSharedComponentElements;
+using BuildingSmart.IFC.IfcSharedFacilitiesElements;
 using BuildingSmart.IFC.IfcStructuralElementsDomain;
 
 namespace BuildingSmart.IFC.IfcProductExtension
 {
-	[Guid("10f0323d-4a18-4ef3-a7ed-de9488cd0b5c")]
+	[Guid("db89d737-4bde-4aef-bb04-156d8b2c8097")]
 	public partial class IfcRelServicesBuildings : IfcRelConnects
 	{
 		[DataMember(Order=0)] 
+		[XmlElement]
 		[Required()]
 		IfcSystem _RelatingSystem;
 	
 		[DataMember(Order=1)] 
 		[Required()]
-		ISet<IfcSpatialStructureElement> _RelatedBuildings = new HashSet<IfcSpatialStructureElement>();
+		ISet<IfcSpatialElement> _RelatedBuildings = new HashSet<IfcSpatialElement>();
 	
 	
 		[Description("System that services the Buildings. \r\n")]
 		public IfcSystem RelatingSystem { get { return this._RelatingSystem; } set { this._RelatingSystem = value;} }
 	
-		[Description(@"<EPM-HTML>
-	Spatial structure elements (including site, building, storeys) that are serviced by the system.
-	<blockquote><small><font color=""#FF0000"">
-	IFC2x PLATFORM CHANGE&nbsp; The data type has been changed from <i>IfcBuilding</i> to <i>IfcSpatialStructureElement</i> with upward compatibility for file based exchange.
-	</font></small></blockquote>
-	</EPM-HTML>")]
-		public ISet<IfcSpatialStructureElement> RelatedBuildings { get { return this._RelatedBuildings; } }
+		[Description(@"Spatial structure elements (including site, building, storeys) that are serviced by the system.
+	<blockquote class=""change-ifc2x"">
+	  IFC2x CHANGE&nbsp; The data type has been changed from <em>IfcBuilding</em> to <em>IfcSpatialStructureElement</em> with upward compatibility for file based exchange.
+	</blockquote>
+	<blockquote class=""change-ifc2x4"">
+	  IFC4 CHANGE&nbsp; The data type has been changed from <em>IfcSpatialStructureElement</em> to <em>IfcSpatialElement</em> with upward compatibility for file based exchange.
+	</blockquote>")]
+		public ISet<IfcSpatialElement> RelatedBuildings { get { return this._RelatedBuildings; } }
 	
 	
 	}

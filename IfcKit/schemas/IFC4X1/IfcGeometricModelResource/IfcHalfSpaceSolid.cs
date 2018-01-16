@@ -18,17 +18,19 @@ using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometricModelResource
 {
-	[Guid("fdc6a245-73d0-49ab-af10-8bcd9e75d397")]
+	[Guid("c9679787-14e8-44ff-b62a-a511bb58005d")]
 	public partial class IfcHalfSpaceSolid : IfcGeometricRepresentationItem,
 		BuildingSmart.IFC.IfcGeometricModelResource.IfcBooleanOperand
 	{
 		[DataMember(Order=0)] 
+		[XmlElement]
 		[Required()]
 		IfcSurface _BaseSurface;
 	
 		[DataMember(Order=1)] 
+		[XmlAttribute]
 		[Required()]
-		Boolean _AgreementFlag;
+		IfcBoolean _AgreementFlag;
 	
 	
 		[Description("Surface defining side of half space.")]
@@ -36,7 +38,7 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 	
 		[Description("The agreement flag is TRUE if the normal to the BaseSurface points away from the " +
 	    "material of the IfcHalfSpaceSolid. Otherwise it is FALSE.")]
-		public Boolean AgreementFlag { get { return this._AgreementFlag; } set { this._AgreementFlag = value;} }
+		public IfcBoolean AgreementFlag { get { return this._AgreementFlag; } set { this._AgreementFlag = value;} }
 	
 		public new IfcDimensionCount Dim { get { return new IfcDimensionCount(); } }
 	

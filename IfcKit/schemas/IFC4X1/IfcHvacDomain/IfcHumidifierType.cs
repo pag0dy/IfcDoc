@@ -10,22 +10,12 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialResource;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcPropertyResource;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
 using BuildingSmart.IFC.IfcSharedComponentElements;
 
 namespace BuildingSmart.IFC.IfcHvacDomain
 {
-	[Guid("ab957511-8aa0-4ba4-8da9-9ffdaf407def")]
+	[Guid("f1983b1d-26af-43f3-ba7a-06e90feb52c8")]
 	public partial class IfcHumidifierType : IfcEnergyConversionDeviceType
 	{
 		[DataMember(Order=0)] 

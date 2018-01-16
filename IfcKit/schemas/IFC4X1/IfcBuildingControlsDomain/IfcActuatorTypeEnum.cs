@@ -10,27 +10,32 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
 
 namespace BuildingSmart.IFC.IfcBuildingControlsDomain
 {
-	[Guid("3912b4e5-15ff-4cb0-b8a9-9b8aeb5c2529")]
+	[Guid("19ec410e-7dd0-43f5-9a7c-3ed6fcd7f858")]
 	public enum IfcActuatorTypeEnum
 	{
+		[Description("A device that electrically actuates a control element.")]
 		ELECTRICACTUATOR = 1,
 	
+		[Description("A device that manually actuates a control element.")]
 		HANDOPERATEDACTUATOR = 2,
 	
+		[Description("A device that electrically actuates a control element.")]
 		HYDRAULICACTUATOR = 3,
 	
+		[Description("A device that pneumatically actuates a control element.")]
 		PNEUMATICACTUATOR = 4,
 	
+		[Description("A device that thermostatically actuates a control element.")]
 		THERMOSTATICACTUATOR = 5,
 	
+		[Description("User-defined type.")]
 		USERDEFINED = -1,
 	
+		[Description("Undefined type.")]
 		NOTDEFINED = 0,
 	
 	}

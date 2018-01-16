@@ -10,12 +10,14 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 
 namespace BuildingSmart.IFC.IfcActorResource
 {
-	[Guid("9adbf974-1f10-42f4-bd17-f909754b6a5e")]
-	public partial class IfcActorRole
+	[Guid("82b7f4e9-c9c0-41a2-a7e4-2b02f8a377c3")]
+	public partial class IfcActorRole :
+		BuildingSmart.IFC.IfcExternalReferenceResource.IfcResourceObjectSelect
 	{
 		[DataMember(Order=0)] 
 		[XmlAttribute]
@@ -29,6 +31,9 @@ namespace BuildingSmart.IFC.IfcActorResource
 		[DataMember(Order=2)] 
 		[XmlAttribute]
 		IfcText? _Description;
+	
+		[InverseProperty("RelatedResourceObjects")] 
+		ISet<IfcExternalReferenceRelationship> _HasExternalReference = new HashSet<IfcExternalReferenceRelationship>();
 	
 	
 		[Description("The name of the role played by an actor. If the Role has value USERDEFINED, then\r" +
@@ -44,6 +49,11 @@ namespace BuildingSmart.IFC.IfcActorResource
 	
 		[Description("A textual description relating the nature of the role played by an actor.")]
 		public IfcText? Description { get { return this._Description; } set { this._Description = value;} }
+	
+		[Description("Reference to external information, e.g. library, classification, or document info" +
+	    "rmation, which is associated with the actor role.\r\n<blockquote class=\"change-ifc" +
+	    "2x4\">IFC4 CHANGE&nbsp; New inverse attribute.</blockquote>")]
+		public ISet<IfcExternalReferenceRelationship> HasExternalReference { get { return this._HasExternalReference; } }
 	
 	
 	}

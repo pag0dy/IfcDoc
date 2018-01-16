@@ -1,0 +1,4 @@
+﻿SIZEOF(QUERY(temp<* Pixel |
+ (BLENGTH(temp) MOD 8 = 0) AND
+ (BLENGTH(temp) = BLENGTH(Pixel[1]))
+)) = SIZEOF(Pixel)

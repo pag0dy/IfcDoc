@@ -1,4 +1,0 @@
-﻿(EXISTS(Representation) AND EXISTS(ObjectPlacement))
-            OR (EXISTS(Representation) AND 
-               (NOT('IFCREPRESENTATIONRESOURCE.IFCPRODUCTDEFINITIONSHAPE' IN TYPEOF(Representation))))
-            OR (NOT(EXISTS(Representation)))

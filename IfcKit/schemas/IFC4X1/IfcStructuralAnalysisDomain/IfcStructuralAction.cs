@@ -14,33 +14,23 @@ using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfilePropertyResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
 using BuildingSmart.IFC.IfcStructuralLoadResource;
 
 namespace BuildingSmart.IFC.IfcStructuralAnalysisDomain
 {
-	[Guid("db0b36c0-b174-4a54-9aee-a0ca2238d6ec")]
+	[Guid("773e5eda-f463-41ec-a0f4-14681750a780")]
 	public abstract partial class IfcStructuralAction : IfcStructuralActivity
 	{
 		[DataMember(Order=0)] 
-		[Required()]
-		Boolean _DestabilizingLoad;
-	
-		[DataMember(Order=1)] 
-		IfcStructuralReaction _CausedBy;
+		[XmlAttribute]
+		IfcBoolean? _DestabilizingLoad;
 	
 	
 		[Description("Indicates if this action may cause a stability problem. If it is \'FALSE\', no furt" +
 	    "her investigations regarding stability problems are necessary. ")]
-		public Boolean DestabilizingLoad { get { return this._DestabilizingLoad; } set { this._DestabilizingLoad = value;} }
-	
-		[Description("Optional reference to an instance of IfcStructuralReaction representing a result " +
-	    "of another structural analysis model which creates this action upon the consider" +
-	    "ed structural analysis model. ")]
-		public IfcStructuralReaction CausedBy { get { return this._CausedBy; } set { this._CausedBy = value;} }
+		public IfcBoolean? DestabilizingLoad { get { return this._DestabilizingLoad; } set { this._DestabilizingLoad = value;} }
 	
 	
 	}

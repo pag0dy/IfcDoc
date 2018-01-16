@@ -25,17 +25,18 @@ using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcSharedBldgElements
 {
-	[Guid("f70fa03b-812a-4bb0-a82d-8113ca7bbddd")]
+	[Guid("54499bfa-3796-45d8-870a-1357fd0e960f")]
 	public partial class IfcRoof : IfcBuildingElement
 	{
 		[DataMember(Order=0)] 
 		[XmlAttribute]
-		[Required()]
-		IfcRoofTypeEnum _ShapeType;
+		IfcRoofTypeEnum? _PredefinedType;
 	
 	
-		[Description("Predefined shape types for a roof that are specified in an enumeration.")]
-		public IfcRoofTypeEnum ShapeType { get { return this._ShapeType; } set { this._ShapeType = value;} }
+		[Description(@"Predefined generic types for a roof that are specified in an enumeration. There may be a property set given for the predefined types.
+	<blockquote class=""note"">NOTE&nbsp; The <em>PredefinedType</em> shall only be used, if no <em>IfcRoofType</em> is assigned, providing its own <em>IfcRoofType.PredefinedType</em>.</blockquote>
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE  The attribute has been renamed from ShapeType and changed to be OPTIONAL with upward compatibility for file based exchange.</blockquote>")]
+		public IfcRoofTypeEnum? PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	
 	}

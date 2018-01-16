@@ -10,25 +10,13 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcControlExtension;
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricConstraintResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialPropertyResource;
-using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcTimeSeriesResource;
 
 namespace BuildingSmart.IFC.IfcSharedBldgServiceElements
 {
-	[Guid("a7702505-0221-48db-9430-b9bde04dcbbd")]
+	[Guid("e471c212-612d-4578-8f9e-e9623be892bf")]
 	public partial class IfcDistributionChamberElementType : IfcDistributionFlowElementType
 	{
 		[DataMember(Order=0)] 

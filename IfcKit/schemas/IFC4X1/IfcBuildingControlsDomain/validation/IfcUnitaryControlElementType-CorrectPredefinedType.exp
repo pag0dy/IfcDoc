@@ -1,0 +1,2 @@
+﻿(PredefinedType <> IfcUnitaryControlElementTypeEnum.USERDEFINED) OR
+((PredefinedType = IfcUnitaryControlElementTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcElementType.ElementType))

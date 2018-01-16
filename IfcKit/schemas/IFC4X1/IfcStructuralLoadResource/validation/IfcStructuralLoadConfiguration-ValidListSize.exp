@@ -1,0 +1,1 @@
+﻿NOT EXISTS(Locations) OR (SIZEOF(Locations) = SIZEOF(Values))

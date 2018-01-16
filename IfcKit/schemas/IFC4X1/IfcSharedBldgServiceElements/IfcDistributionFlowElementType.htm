@@ -1,32 +1,13 @@
-﻿<EPM-HTML>
-	<p><u><b>Definition from IAI</b></u>: 
-    The element type <i>IfcDistributionFlowElementType</i> defines a list of commonly shared property
-	set definitions of an element and an optional set of product representations.
-	It is used to define an element specification (i.e. the specific product
-	information, that is common to all occurrences of that product type).</p> 
-	 
-	<blockquote>
-		<font size="-1">
-		NOTE: The product representations are defined as
-		representation maps (at the level of the supertype <i>IfcTypeProduct</i>, which
-		get assigned by an element occurrence instance through the
-		<i>IfcShapeRepresentation.Item[1]</i> being an
-		<i>IfcMappedItem</i>.
-    	</font>
-    </blockquote>
-    
-    <p>A distribution flow element type is used to define the common properties of a
-	distribution flow element that may be applied to many occurrences of that type.
-	Distribution flow element types (or	the instantiable subtypes) may be exchanged 
-    without being already assigned to occurrences.</p> 
+﻿<p>The element type <em>IfcDistributionFlowElementType</em> defines a list of commonly shared property set definitions of an element and an optional set of product representations.  It is used to define an element specification (the specific product information that is common to all occurrences of that product type).</p> 
+	     
+<p>Distribution flow element types (orthe instantiable subtypes) may be exchanged without being already assigned to occurrences.</p> 
 	
-    <p>The occurrences of the <i>IfcDistributionFlowElementType</i> are represented
-	by instances of <i>IfcDistributionFlowElement</i> or its subtypes.</p> 
+<p>The occurrences of the <em>IfcDistributionFlowElementType</em> are represented	by instances of <em>IfcDistributionFlowElement</em> or its subtypes.</p> 
     
-	<blockquote>
-		<font color="#0000ff" size="-1">
-    	HISTORY: New entity in IFC Release 2x2.<br>
-    	</font>
-    </blockquote>
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC2x2.
+</blockquote>
 
-</EPM-HTML>
+<blockquote class="change-ifc2x4">
+IFC4 CHANGE&nbsp; Ports may now be defined using <em>IfcRelNests</em> to enable definition of ports at type definitions (both forward and backward compatible), provide a logical order, and reduce the number of relationship objects needed.  The relationship <em>IfcRelConnectsPortToElement</em> is still supported on occurrence objects, however is now specific to dynamically connected ports.
+</blockquote>

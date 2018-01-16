@@ -13,16 +13,18 @@ using System.Xml.Serialization;
 using BuildingSmart.IFC.IfcApprovalResource;
 using BuildingSmart.IFC.IfcConstraintResource;
 using BuildingSmart.IFC.IfcDateTimeResource;
+using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcTimeSeriesResource;
+using BuildingSmart.IFC.IfcProductExtension;
 
 namespace BuildingSmart.IFC.IfcControlExtension
 {
-	[Guid("196fb722-ac59-498f-8159-2eb6608566d6")]
+	[Guid("00707e05-63f5-4795-9e7a-2219254df92d")]
 	public partial class IfcRelAssociatesApproval : IfcRelAssociates
 	{
 		[DataMember(Order=0)] 
+		[XmlElement]
 		[Required()]
 		IfcApproval _RelatingApproval;
 	

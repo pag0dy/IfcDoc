@@ -14,15 +14,13 @@ using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfilePropertyResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
 using BuildingSmart.IFC.IfcStructuralLoadResource;
 
 namespace BuildingSmart.IFC.IfcStructuralAnalysisDomain
 {
-	[Guid("40a56bc9-ee1f-4c1c-8b52-cbd53cb62d74")]
+	[Guid("bfb08198-13c2-4fdb-8748-00a8b0d0b5e8")]
 	public enum IfcActionSourceTypeEnum
 	{
 		DEAD_LOAD_G = 1,

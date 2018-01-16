@@ -25,7 +25,7 @@ using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcSharedBldgElements
 {
-	[Guid("ebf3c617-cb2c-48fe-8dc0-d74e9b098b90")]
+	[Guid("70b10571-8732-44f7-a5b2-3fdb229d547b")]
 	public partial class IfcDoor : IfcBuildingElement
 	{
 		[DataMember(Order=0)] 
@@ -36,18 +36,41 @@ namespace BuildingSmart.IFC.IfcSharedBldgElements
 		[XmlAttribute]
 		IfcPositiveLengthMeasure? _OverallWidth;
 	
+		[DataMember(Order=2)] 
+		[XmlAttribute]
+		IfcDoorTypeEnum? _PredefinedType;
 	
-		[Description(@"<EPM-HTML>Overall measure of the height, it reflects the Z Dimension of a bounding box, enclosing the <strike>body of the</strike> door opening. If omitted, the <i>OverallHeight</i> should be taken from the geometric representation of the <i>IfcOpening</i> in which the door is inserted. 
-	  <blockquote><small>
-	NOTE&nbsp; The body of the door might be taller then the door opening (e.g. in cases where the door lining includes a casing). In these cases the <i>OverallHeight</i> shall still be given as the door opening height, and not as the total height of the door lining.</small></blockquote>
-	</EPM-HTML>")]
+		[DataMember(Order=3)] 
+		[XmlAttribute]
+		IfcDoorTypeOperationEnum? _OperationType;
+	
+		[DataMember(Order=4)] 
+		[XmlAttribute]
+		IfcLabel? _UserDefinedOperationType;
+	
+	
+		[Description(@"Overall measure of the height, it reflects the Z Dimension of a bounding box, enclosing the <strike>body of the</strike> door opening. If omitted, the <em>OverallHeight</em> should be taken from the geometric representation of the <em>IfcOpening</em> in which the door is inserted. 
+	  <blockquote class=""note"">NOTE&nbsp; The body of the door might be taller then the door opening (e.g. in cases where the door lining includes a casing). In these cases the <em>OverallHeight</em> shall still be given as the door opening height, and not as the total height of the door lining.</blockquote>")]
 		public IfcPositiveLengthMeasure? OverallHeight { get { return this._OverallHeight; } set { this._OverallHeight = value;} }
 	
-		[Description(@"<EPM-HTML>Overall measure of the width, it reflects the X Dimension of a bounding box, enclosing the <strike>body of the</strike> door opening. If omitted, the <i>OverallWidth</i> should be taken from the geometric representation of the <i>IfcOpening</i> in which the door is inserted. 
-	  <blockquote> <small>
-	NOTE&nbsp; The body of the door might be wider then the door opening (e.g. in cases where the door lining includes a casing). In these cases the <i>OverallWidth</i> shall still be given as the door opening width, and not as the total width of the door lining.</small></blockquote>
-	</EPM-HTML>")]
+		[Description(@"Overall measure of the width, it reflects the X Dimension of a bounding box, enclosing the <strike>body of the</strike> door opening. If omitted, the <em>OverallWidth</em> should be taken from the geometric representation of the <em>IfcOpening</em> in which the door is inserted. 
+	  <blockquote class=""note"">NOTE&nbsp; The body of the door might be wider then the door opening (e.g. in cases where the door lining includes a casing). In these cases the <em>OverallWidth</em> shall still be given as the door opening width, and not as the total width of the door lining.</blockquote>")]
 		public IfcPositiveLengthMeasure? OverallWidth { get { return this._OverallWidth; } set { this._OverallWidth = value;} }
+	
+		[Description(@"Predefined generic type for a door that is specified in an enumeration. There may be a property set given specificly for the predefined types.
+	<blockquote class=""note"">NOTE&nbsp; The <em>PredefinedType</em> shall only be used, if no <em>IfcDoorType</em> is assigned, providing its own <em>IfcDoorType.PredefinedType</em>.</blockquote>
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE  The attribute has been added at the end of the entity definition.</blockquote> ")]
+		public IfcDoorTypeEnum? PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
+	
+		[Description(@"Type defining the general layout and operation of the door type in terms of the partitioning of panels and panel operations. 
+	<blockquote class=""note"">NOTE&nbsp; The <em>OperationType</em> shall only be used, if no type object <em>IfcDoorType</em> is assigned, providing its own <em>IfcDoorType.OperationType</em>.
+	  </blockquote>
+	  <blockquote class=""change-ifc2x4"">IFC4 CHANGE  The attribute has been added at the end of the entity definition.</blockquote> ")]
+		public IfcDoorTypeOperationEnum? OperationType { get { return this._OperationType; } set { this._OperationType = value;} }
+	
+		[Description("Designator for the user defined operation type, shall only be provided, if the va" +
+	    "lue of <em>OperationType</em> is set to USERDEFINED.")]
+		public IfcLabel? UserDefinedOperationType { get { return this._UserDefinedOperationType; } set { this._UserDefinedOperationType = value;} }
 	
 	
 	}

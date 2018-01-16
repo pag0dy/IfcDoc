@@ -14,12 +14,11 @@ using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcPresentationResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcPresentationOrganizationResource
 {
-	[Guid("fa331a24-f876-4715-a223-e547aa215200")]
+	[Guid("78a1fa33-c4d1-4c69-9137-f32a6c56f59e")]
 	public partial class IfcLightSourceAmbient : IfcLightSource
 	{
 	

@@ -11,7 +11,6 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometricModelResource;
@@ -20,34 +19,38 @@ using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProfilePropertyResource;
 using BuildingSmart.IFC.IfcPropertyResource;
 using BuildingSmart.IFC.IfcQuantityResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
 using BuildingSmart.IFC.IfcSharedBldgElements;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
-using BuildingSmart.IFC.IfcStructuralAnalysisDomain;
+using BuildingSmart.IFC.IfcSharedComponentElements;
+using BuildingSmart.IFC.IfcSharedFacilitiesElements;
 using BuildingSmart.IFC.IfcStructuralElementsDomain;
 
 namespace BuildingSmart.IFC.IfcProductExtension
 {
-	[Guid("643ec1cf-e582-48d2-93ed-f5463a3a7f58")]
+	[Guid("ade898d9-502a-402f-b2b5-25e8a097c9e9")]
 	public partial class IfcRelConnectsPortToElement : IfcRelConnects
 	{
 		[DataMember(Order=0)] 
+		[XmlElement]
 		[Required()]
 		IfcPort _RelatingPort;
 	
 		[DataMember(Order=1)] 
+		[XmlElement]
 		[Required()]
-		IfcElement _RelatedElement;
+		IfcDistributionElement _RelatedElement;
 	
 	
 		[Description("Reference to an Port that is connected by the objectified relationship.")]
 		public IfcPort RelatingPort { get { return this._RelatingPort; } set { this._RelatingPort = value;} }
 	
-		[Description("Reference to an Element that is connected by the objectified relationship.")]
-		public IfcElement RelatedElement { get { return this._RelatedElement; } set { this._RelatedElement = value;} }
+		[Description("Reference to an <em>IfcDistributionElement</em> that has ports assigned.\r\n<blockq" +
+	    "uote class=\"change-ifc2x4\">IFC4 CHANGE  Data type restricted to <em>IfcDistribut" +
+	    "ionElement</em>.</blockquote>")]
+		public IfcDistributionElement RelatedElement { get { return this._RelatedElement; } set { this._RelatedElement = value;} }
 	
 	
 	}

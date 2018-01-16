@@ -10,27 +10,35 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
 
 namespace BuildingSmart.IFC.IfcElectricalDomain
 {
-	[Guid("c245600d-f689-496d-a566-553d705ab15e")]
+	[Guid("88a91c6a-1986-40f1-8551-6a855b5424f5")]
 	public enum IfcTransformerTypeEnum
 	{
+		[Description("A transformer that changes the current between circuits.")]
 		CURRENT = 1,
 	
+		[Description("A transformer that changes the frequency between circuits.")]
 		FREQUENCY = 2,
 	
-		VOLTAGE = 3,
+		[Description("A transformer that converts from direct current (DC) to alternating current (AC)." +
+	    "")]
+		INVERTER = 3,
 	
+		[Description("A transformer that converts from alternating current (AC) to direct current (DC)." +
+	    "")]
+		RECTIFIER = 4,
+	
+		[Description("A transformer that changes the voltage between circuits.")]
+		VOLTAGE = 5,
+	
+		[Description("User-defined type.")]
 		USERDEFINED = -1,
 	
+		[Description("Undefined type.")]
 		NOTDEFINED = 0,
 	
 	}

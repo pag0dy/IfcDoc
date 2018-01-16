@@ -10,40 +10,30 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialResource;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcPropertyResource;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
 using BuildingSmart.IFC.IfcSharedComponentElements;
 
 namespace BuildingSmart.IFC.IfcHvacDomain
 {
-	[Guid("d6aa757d-fa12-4515-9af0-92da24590ad6")]
+	[Guid("2a1d1a8d-13ee-429e-b316-c186dd2f7bfe")]
 	public enum IfcAirTerminalTypeEnum
 	{
-		GRILLE = 1,
+		[Description("An outlet discharging supply air in various directions and planes.")]
+		DIFFUSER = 1,
 	
-		REGISTER = 2,
+		[Description("A covering for any area through which air passes.")]
+		GRILLE = 2,
 	
-		DIFFUSER = 3,
+		[Description("A rectilinear louvre.")]
+		LOUVRE = 3,
 	
-		EYEBALL = 4,
+		[Description("A grille typically equipped with a damper or control valve.")]
+		REGISTER = 4,
 	
-		IRIS = 5,
-	
-		LINEARGRILLE = 6,
-	
-		LINEARDIFFUSER = 7,
-	
+		[Description("User-defined air terminal type.")]
 		USERDEFINED = -1,
 	
+		[Description("Undefined air terminal type.")]
 		NOTDEFINED = 0,
 	
 	}

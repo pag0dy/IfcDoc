@@ -11,15 +11,17 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcGeometryResource;
+using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 
 namespace BuildingSmart.IFC.IfcTopologyResource
 {
-	[Guid("4eb98543-6244-4c9d-b40a-05b26a73efe2")]
+	[Guid("77f373d7-e77d-410a-a47e-47b03b73fc39")]
 	public partial class IfcVertexPoint : IfcVertex,
 		BuildingSmart.IFC.IfcGeometricConstraintResource.IfcPointOrVertexPoint
 	{
 		[DataMember(Order=0)] 
+		[XmlElement]
 		[Required()]
 		IfcPoint _VertexGeometry;
 	

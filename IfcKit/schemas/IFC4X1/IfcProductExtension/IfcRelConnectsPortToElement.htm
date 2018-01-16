@@ -1,17 +1,31 @@
-﻿<EPM-HTML>
-    <p>
-      <u>Definition from IAI</u>: An
-      <i>IfcRelConnectsPortToElement</i> defines the relationship
-      that is made between a port and the <i>IfcElement</i> in
-      which it is contained. It is a 1 to 1 relationship.
+﻿    <p>
+      <em>IfcRelConnectsPortToElement</em> is a relationship between a distribution element and dynamically connected 
+      ports where connections are realised to other distribution elements.
     </p>
-		<p>Ports contained in different elements are connected to each
-		other using the <i>IfcRelConnectsPorts</i> relationship. Using
-		both relationships, a topological system can be defined.</p>
-    <blockquote>
-      <p>
-        <small><font color="#0000FF">HISTORY New entity in
-        Release IFC2x Edition 2.</font></small>
-      </p>
+    <p>
+      Ports contained in different elements are connected to each
+      other using the <em>IfcRelConnectsPorts</em> relationship.
+    </p>
+    <blockquote class="note">
+      NOTE&nbsp; See <em>IfcRelNests</em> for its usages to
+      represent an ordered collection of ports that are contained
+      by an element and relevant subtypes of
+      <em>IfcDistributionElement</em> for examples and port use
+      definition sections.
     </blockquote>
-</EPM-HTML>
+    <blockquote class="history">
+      HISTORY&nbsp; New entity in IFC2x2.
+    </blockquote>
+    <blockquote class="change-ifc2x4">
+      IFC4 CHANGE&nbsp; The objectified relation
+      <em>IfcRelConnectsPortToElement</em> is now specialized for use of dynamically connected ports.  For fixed ports, use <em>IfcRelNests</em> instead.
+
+      Previously this objectified relationship
+      <em>IfcRelConnectsPortToElement</em> defined the relationship
+      that is made between a port and the <em>IfcElement</em> in which it is contained. It is a 1
+      to 1 relationship. The <em>IfcRelConnectsPortToElement</em>
+      established a whole part relationship between the element and
+      its port. The port is used as the means to connect to other
+      ports in other elements.  
+
+    </blockquote>

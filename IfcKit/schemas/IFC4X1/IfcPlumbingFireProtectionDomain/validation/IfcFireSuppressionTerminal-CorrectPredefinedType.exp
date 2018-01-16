@@ -1,0 +1,3 @@
+﻿NOT(EXISTS(PredefinedType)) OR 
+ (PredefinedType <> IfcFireSuppressionTerminalTypeEnum.USERDEFINED) OR 
+ ((PredefinedType = IfcFireSuppressionTerminalTypeEnum.USERDEFINED) AND EXISTS (SELF\IfcObject.ObjectType))

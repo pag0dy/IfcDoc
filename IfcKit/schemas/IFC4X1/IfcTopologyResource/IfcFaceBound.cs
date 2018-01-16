@@ -11,20 +11,23 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcGeometryResource;
+using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 
 namespace BuildingSmart.IFC.IfcTopologyResource
 {
-	[Guid("a5aff9ec-1a7c-4fad-98f6-8993b3c19b0c")]
+	[Guid("57c11bcb-98a6-432c-af6d-cb98d7020755")]
 	public partial class IfcFaceBound : IfcTopologicalRepresentationItem
 	{
 		[DataMember(Order=0)] 
+		[XmlElement]
 		[Required()]
 		IfcLoop _Bound;
 	
 		[DataMember(Order=1)] 
+		[XmlAttribute]
 		[Required()]
-		Boolean _Orientation;
+		IfcBoolean _Orientation;
 	
 	
 		[Description("The loop which will be used as a face boundary.\r\n")]
@@ -33,7 +36,7 @@ namespace BuildingSmart.IFC.IfcTopologyResource
 		[Description("This indicated whether (TRUE) or not (FALSE) the loop has the same sense when use" +
 	    "d to bound the face as when first defined. If sense is FALSE the senses of all i" +
 	    "ts component oriented edges are implicitly reversed when used in the face.\r\n")]
-		public Boolean Orientation { get { return this._Orientation; } set { this._Orientation = value;} }
+		public IfcBoolean Orientation { get { return this._Orientation; } set { this._Orientation = value;} }
 	
 	
 	}

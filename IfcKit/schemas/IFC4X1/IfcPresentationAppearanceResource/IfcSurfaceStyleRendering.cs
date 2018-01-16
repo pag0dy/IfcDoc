@@ -11,49 +11,40 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcExternalReferenceResource;
+using BuildingSmart.IFC.IfcGeometricModelResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationDefinitionResource;
-using BuildingSmart.IFC.IfcPresentationResource;
 using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 {
-	[Guid("05b583b4-2801-4362-b5c7-5fbc396b6836")]
+	[Guid("703b6da9-4562-41aa-a762-51f6dad09052")]
 	public partial class IfcSurfaceStyleRendering : IfcSurfaceStyleShading
 	{
 		[DataMember(Order=0)] 
-		[XmlAttribute]
-		IfcNormalisedRatioMeasure? _Transparency;
-	
-		[DataMember(Order=1)] 
 		IfcColourOrFactor _DiffuseColour;
 	
-		[DataMember(Order=2)] 
+		[DataMember(Order=1)] 
 		IfcColourOrFactor _TransmissionColour;
 	
-		[DataMember(Order=3)] 
+		[DataMember(Order=2)] 
 		IfcColourOrFactor _DiffuseTransmissionColour;
 	
-		[DataMember(Order=4)] 
+		[DataMember(Order=3)] 
 		IfcColourOrFactor _ReflectionColour;
 	
-		[DataMember(Order=5)] 
+		[DataMember(Order=4)] 
 		IfcColourOrFactor _SpecularColour;
 	
-		[DataMember(Order=6)] 
+		[DataMember(Order=5)] 
 		IfcSpecularHighlightSelect _SpecularHighlight;
 	
-		[DataMember(Order=7)] 
+		[DataMember(Order=6)] 
 		[XmlAttribute]
 		[Required()]
 		IfcReflectanceMethodEnum _ReflectanceMethod;
 	
-	
-		[Description(@"Definition from ISO/CD 10303-46: The degree of transparency is indicated by the percentage of light traversing the surface.
-	Definition from VRML97 - ISO/IEC 14772-1:1997: The transparency field specifies how ""clear"" an object is, with 1.0 being completely transparent, and 0.0 completely opaque. If not given, the value 0.0 (opaque) is assumed.
-	")]
-		public IfcNormalisedRatioMeasure? Transparency { get { return this._Transparency; } set { this._Transparency = value;} }
 	
 		[Description(@"The diffuse part of the reflectance equation can be given as either a colour or a scalar factor.
 	The diffuse colour field reflects all light sources depending on the angle of the surface with respect to the light source. The more directly the surface faces the light, the more diffuse light reflects.

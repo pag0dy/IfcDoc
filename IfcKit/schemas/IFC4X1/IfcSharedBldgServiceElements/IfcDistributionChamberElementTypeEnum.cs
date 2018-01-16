@@ -10,45 +10,47 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcControlExtension;
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricConstraintResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialPropertyResource;
-using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcTimeSeriesResource;
 
 namespace BuildingSmart.IFC.IfcSharedBldgServiceElements
 {
-	[Guid("8b5e1e45-f156-4992-860c-4a26ef47c217")]
+	[Guid("fb830693-31cc-4449-b54c-055c674e0b8c")]
 	public enum IfcDistributionChamberElementTypeEnum
 	{
+		[Description("Space formed in the ground for the passage of pipes, cables, ducts.")]
 		FORMEDDUCT = 1,
 	
+		[Description("Chamber constructed on a drain, sewer or pipeline with a removable cover that per" +
+	    "mits visble inspection.")]
 		INSPECTIONCHAMBER = 2,
 	
+		[Description("Recess or chamber formed to permit access for inspection of substructure and serv" +
+	    "ices.")]
 		INSPECTIONPIT = 3,
 	
+		[Description("hamber constructed on a drain, sewer or pipeline with a removable cover that perm" +
+	    "its the entry of a person.")]
 		MANHOLE = 4,
 	
+		[Description("Chamber that houses a meter(s).")]
 		METERCHAMBER = 5,
 	
+		[Description("Recessed or small chamber into which liquid is drained to facilitate its collecti" +
+	    "on for removal.")]
 		SUMP = 6,
 	
+		[Description("Excavated chamber, the length of which typically exceeds the width.")]
 		TRENCH = 7,
 	
+		[Description("Chamber that houses a valve(s).")]
 		VALVECHAMBER = 8,
 	
+		[Description("User-defined chamber type.")]
 		USERDEFINED = -1,
 	
+		[Description("Undefined chamber type.")]
 		NOTDEFINED = 0,
 	
 	}

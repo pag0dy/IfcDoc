@@ -11,28 +11,31 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
+using BuildingSmart.IFC.IfcApprovalResource;
 using BuildingSmart.IFC.IfcConstraintResource;
 using BuildingSmart.IFC.IfcCostResource;
 using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
+using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcTimeSeriesResource;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcPropertyResource
 {
-	[Guid("c208d56a-9c19-4967-bdf5-47bb2f46c8f4")]
+	[Guid("166fb09e-156c-46c0-ae3d-c231cb40cd96")]
 	public partial class IfcPropertyListValue : IfcSimpleProperty
 	{
 		[DataMember(Order=0)] 
-		[Required()]
 		IList<IfcValue> _ListValues = new List<IfcValue>();
 	
 		[DataMember(Order=1)] 
 		IfcUnit _Unit;
 	
 	
-		[Description("List of values.")]
+		[Description("List of property values.\r\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; The" +
+	    " attribute has been made optional with upward compatibility for file based excha" +
+	    "nge.</blockquote>")]
 		public IList<IfcValue> ListValues { get { return this._ListValues; } }
 	
 		[Description("Unit for the list values, if not given, the default value for the measure type (g" +

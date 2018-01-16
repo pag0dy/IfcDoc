@@ -1,0 +1,28 @@
+﻿<p>The <em>IfcCurveBoundedSurface</em> is a parametric surface with boundaries defined by p-curves, that is, a curve
+which lies on the basis of a surface and is defined in the parameter space of that surface. The p-curve is a special
+type of a composite curve segment and shall only be used to bound a surface.</p>
+<p>The outer boundary shall be either defined by:</p>
+<ul>
+<li>an <em>IfcOuterBoundaryCurve</em> a closed composite curve on surface for the definition of an outer boundary, in
+this case the attribute <em>ImplicitOuter</em> has to be set to FALSE, or</li>
+<li>an implicit boundary of the bounded surface, e.g. the u1, u2, v1, v2 of <em>IfcRectangularTrimmedSurface</em>, in
+this case the attribute <em>ImplicitOuter</em> has to be set to TRUE.</li>
+</ul>
+<blockquote class="note">NOTE&nbsp; Some surfaces, like <em>IfcCylindricalSurface</em> does not have identifiable
+implicit boundaries.</blockquote>
+<blockquote class="extDef">NOTE&nbsp; Definition according to ISO/CD 10303-42:1992<br>
+The curve bounded surface is a parametric surface with curved boundaries defined by one or more boundary curves. One of
+the boundary curves may be the outer boundary; any number of inner boundaries is permissible. The region of the curve
+bounded surface in the basis surface is defined to be the portion of the basis surface in the direction of
+<b><em>N</em> x <em>T</em></b> from any point on the boundary, where <b>N</b> is the surface normal and <b>T</b> the
+boundary curve tangent vector at this point. The region so defined shall be arcwise connected.</blockquote>
+<blockquote class="note">NOTE&nbsp; Entity adapted from <strong>curve_bounded_surface</strong> defined in ISO
+10303-42.</blockquote>
+<blockquote class="history">HISTORY&nbsp; New entity in IFC4.</blockquote>
+<p class="spec-head">Informal Propositions:</p>
+<ol>
+<li>Each curve in the set of <em>Boundaries</em> shall be closed.</li>
+<li>No two curves in the set of <em>Boundaries</em> shall intersect.</li>
+<li>At most one of the boundary curves may enclose any other boundary curve. If an <em>IfcOuterBoundaryCurve</em> is
+designated, only that curve may enclose any other boundary curve.</li>
+</ol>

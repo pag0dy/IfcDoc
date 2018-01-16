@@ -11,63 +11,55 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcConstraintResource;
 using BuildingSmart.IFC.IfcCostResource;
 using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcQuantityResource;
 
 namespace BuildingSmart.IFC.IfcSharedFacilitiesElements
 {
-	[Guid("96432cf6-3e4e-4f11-9aaa-6876ce228ef2")]
+	[Guid("e1ef998e-9c7f-4969-9371-b17f2cb38f14")]
 	public partial class IfcAsset : IfcGroup
 	{
 		[DataMember(Order=0)] 
 		[XmlAttribute]
-		[Required()]
-		IfcIdentifier _AssetID;
+		IfcIdentifier? _Identification;
 	
 		[DataMember(Order=1)] 
-		[Required()]
+		[XmlElement]
 		IfcCostValue _OriginalValue;
 	
 		[DataMember(Order=2)] 
-		[Required()]
+		[XmlElement]
 		IfcCostValue _CurrentValue;
 	
 		[DataMember(Order=3)] 
-		[Required()]
+		[XmlElement]
 		IfcCostValue _TotalReplacementCost;
 	
 		[DataMember(Order=4)] 
-		[Required()]
 		IfcActorSelect _Owner;
 	
 		[DataMember(Order=5)] 
-		[Required()]
 		IfcActorSelect _User;
 	
 		[DataMember(Order=6)] 
-		[Required()]
+		[XmlElement]
 		IfcPerson _ResponsiblePerson;
 	
 		[DataMember(Order=7)] 
-		[Required()]
-		IfcCalendarDate _IncorporationDate;
+		[XmlAttribute]
+		IfcDate? _IncorporationDate;
 	
 		[DataMember(Order=8)] 
-		[Required()]
+		[XmlElement]
 		IfcCostValue _DepreciatedValue;
 	
 	
 		[Description(@"A unique identification assigned to an asset that enables its differentiation from other assets.
-	NOTE: The asset identifier is unique within the asset register. It differs from the globally unique id assigned to the instance of an entity populating a database")]
-		public IfcIdentifier AssetID { get { return this._AssetID; } set { this._AssetID = value;} }
+	<blockquote class=""note"">NOTE&nbsp; The asset identifier is unique within the asset register. It differs from the globally unique id assigned to the instance of an entity populating a database.</blockquote>")]
+		public IfcIdentifier? Identification { get { return this._Identification; } set { this._Identification = value;} }
 	
 		[Description("The cost value of the asset at the time of purchase.")]
 		public IfcCostValue OriginalValue { get { return this._OriginalValue; } set { this._OriginalValue = value;} }
@@ -85,13 +77,14 @@ namespace BuildingSmart.IFC.IfcSharedFacilitiesElements
 		public IfcActorSelect User { get { return this._User; } set { this._User = value;} }
 	
 		[Description(@"The person designated to be responsible for the asset.
-	NOTE: In (e.g.) UK Law (Health and Safety at Work Act, Electricity at Work Regulations, and others), management of assets must have a person identified as being responsible and to whom regulatory, insurance and other organizations communicate. In places where there is not a legal requirement, the responsible person would be the asset manager but would not have a legal status.")]
+	<blockquote class=""note"">NOTE&nbsp; In some regulations (for example, UK Health and Safety at Work Act, Electricity at Work Regulations), management of assets must have a person identified as being responsible and to whom regulatory, insurance and other organizations communicate. In places where there is not a legal requirement, the responsible person would be the asset manager but would not have a legal status.</blockquote>")]
 		public IfcPerson ResponsiblePerson { get { return this._ResponsiblePerson; } set { this._ResponsiblePerson = value;} }
 	
-		[Description("The date on which an asset was incorporated into the works, installed, constructe" +
-	    "d, erected or completed.\r\nNOTE: This is the date on which an asset is considered" +
-	    " to start depreciating.")]
-		public IfcCalendarDate IncorporationDate { get { return this._IncorporationDate; } set { this._IncorporationDate = value;} }
+		[Description(@"The date on which an asset was incorporated into the works, installed, constructed, erected or completed.
+	<blockquote class=""note"">NOTE&nbsp; This is the date on which an asset is considered to start depreciating.</blockquote>
+	<blockquote class=""history"">IFC4 CHANGE&nbsp; Type changed from IfcDateTimeSelect.</blockquote>  
+	")]
+		public IfcDate? IncorporationDate { get { return this._IncorporationDate; } set { this._IncorporationDate = value;} }
 	
 		[Description("The current value of an asset within the accounting rules and procedures of an or" +
 	    "ganization.")]

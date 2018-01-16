@@ -25,7 +25,7 @@ using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcSharedBldgElements
 {
-	[Guid("b25373d2-9735-46bb-a1e8-dcb20d602e21")]
+	[Guid("67bc5143-2c23-49ee-9fc3-422c27dd5452")]
 	public partial class IfcPlateType : IfcBuildingElementType
 	{
 		[DataMember(Order=0)] 
@@ -34,8 +34,8 @@ namespace BuildingSmart.IFC.IfcSharedBldgElements
 		IfcPlateTypeEnum _PredefinedType;
 	
 	
-		[Description("Identifies the predefined types of a planar structural member element from which " +
-	    "the type required may be set.")]
+		[Description("Identifies the predefined types of a planar member element from which the type re" +
+	    "quired may be set.")]
 		public IfcPlateTypeEnum PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	

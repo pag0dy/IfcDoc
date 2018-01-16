@@ -1,0 +1,3 @@
+﻿NOT(EXISTS(PredefinedType)) OR 
+ (PredefinedType <> IfcAlarmTypeEnum.USERDEFINED) OR 
+ ((PredefinedType = IfcAlarmTypeEnum.USERDEFINED) AND EXISTS (SELF\IfcObject.ObjectType))

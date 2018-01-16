@@ -10,40 +10,43 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialResource;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcPropertyResource;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
 using BuildingSmart.IFC.IfcSharedComponentElements;
 
 namespace BuildingSmart.IFC.IfcHvacDomain
 {
-	[Guid("26fef7e6-1be3-450b-ad35-24e5e2077f41")]
+	[Guid("b16d8c9d-89f0-48cf-aba1-32217ae6e0e5")]
 	public enum IfcFanTypeEnum
 	{
+		[Description("Air flows through the impeller radially using blades that are forward curved.")]
 		CENTRIFUGALFORWARDCURVED = 1,
 	
+		[Description("Air flows through the impeller radially using blades that are uncurved or slightl" +
+	    "y forward curved.")]
 		CENTRIFUGALRADIAL = 2,
 	
+		[Description("Air flows through the impeller radially using blades that are backward curved.")]
 		CENTRIFUGALBACKWARDINCLINEDCURVED = 3,
 	
+		[Description("Air flows through the impeller radially using blades that are airfoil shaped.")]
 		CENTRIFUGALAIRFOIL = 4,
 	
+		[Description("Air flows through the impeller axially with guide vanes and reduced running blade" +
+	    " tip clearance.")]
 		TUBEAXIAL = 5,
 	
+		[Description("Air flows through the impeller axially with guide vanes and reduced running blade" +
+	    " tip clearance.")]
 		VANEAXIAL = 6,
 	
+		[Description("Air flows through the impeller axially and small hub-to-tip ratio impeller mounte" +
+	    "d in an orifice plate or inlet ring.")]
 		PROPELLORAXIAL = 7,
 	
+		[Description("User-defined fan type.")]
 		USERDEFINED = -1,
 	
+		[Description("Undefined fan type.")]
 		NOTDEFINED = 0,
 	
 	}

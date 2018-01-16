@@ -11,15 +11,15 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcExternalReferenceResource;
+using BuildingSmart.IFC.IfcGeometricModelResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationDefinitionResource;
-using BuildingSmart.IFC.IfcPresentationResource;
 using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 {
-	[Guid("fcce73ce-14b9-4404-98f6-eec48a790b92")]
+	[Guid("5cae3a6a-e7a5-4061-8ae2-ff2d5f8df1bc")]
 	public interface IfcColourOrFactor
 	{
 	}

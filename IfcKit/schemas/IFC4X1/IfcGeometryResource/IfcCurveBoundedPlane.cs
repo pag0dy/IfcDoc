@@ -20,14 +20,16 @@ using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
-	[Guid("e3f2858e-1dfd-4bcb-b2a8-e0c8e64b4e6a")]
+	[Guid("49f23ea3-63e5-4868-bb6d-dc7fe2e9d879")]
 	public partial class IfcCurveBoundedPlane : IfcBoundedSurface
 	{
 		[DataMember(Order=0)] 
+		[XmlElement]
 		[Required()]
 		IfcPlane _BasisSurface;
 	
 		[DataMember(Order=1)] 
+		[XmlElement]
 		[Required()]
 		IfcCurve _OuterBoundary;
 	
@@ -45,8 +47,6 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		[Description("An optional set of inner boundaries. They shall not intersect each other or the o" +
 	    "uter boundary.")]
 		public ISet<IfcCurve> InnerBoundaries { get { return this._InnerBoundaries; } }
-	
-		public new IfcDimensionCount Dim { get { return new IfcDimensionCount(); } }
 	
 	
 	}

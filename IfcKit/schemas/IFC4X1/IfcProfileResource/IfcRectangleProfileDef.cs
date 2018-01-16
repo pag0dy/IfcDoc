@@ -10,13 +10,14 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
+using BuildingSmart.IFC.IfcPropertyResource;
 
 namespace BuildingSmart.IFC.IfcProfileResource
 {
-	[Guid("f2c31cff-899c-4273-805a-2c951a82489d")]
+	[Guid("76426990-f6c8-4462-b489-68361df1c390")]
 	public partial class IfcRectangleProfileDef : IfcParameterizedProfileDef
 	{
 		[DataMember(Order=0)] 

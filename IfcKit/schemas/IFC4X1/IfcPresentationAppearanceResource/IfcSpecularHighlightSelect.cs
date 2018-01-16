@@ -11,15 +11,15 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcExternalReferenceResource;
+using BuildingSmart.IFC.IfcGeometricModelResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationDefinitionResource;
-using BuildingSmart.IFC.IfcPresentationResource;
 using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 {
-	[Guid("8ec9062f-81d6-42b6-823f-060fbbca11b9")]
+	[Guid("aff9661b-7950-4765-9ea1-bc32952e6da5")]
 	public interface IfcSpecularHighlightSelect
 	{
 	}

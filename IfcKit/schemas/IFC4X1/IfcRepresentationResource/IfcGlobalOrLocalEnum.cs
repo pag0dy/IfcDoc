@@ -21,11 +21,13 @@ using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcRepresentationResource
 {
-	[Guid("548b385b-f356-4068-880e-58e54df440c7")]
+	[Guid("23a55240-33a4-4c58-a0c2-c1eb60da3c94")]
 	public enum IfcGlobalOrLocalEnum
 	{
+		[Description("The global project coordinate system is used.")]
 		GLOBAL_COORDS = 1,
 	
+		[Description("The local object coordinate system is used.")]
 		LOCAL_COORDS = 2,
 	
 	}

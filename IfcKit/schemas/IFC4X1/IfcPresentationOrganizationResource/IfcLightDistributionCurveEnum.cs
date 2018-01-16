@@ -14,18 +14,26 @@ using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcPresentationResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcPresentationOrganizationResource
 {
-	[Guid("5c7674d2-a573-488e-909d-b36615386d74")]
+	[Guid("f7566be0-4aac-48b7-a9c6-0cbdd6f389d6")]
 	public enum IfcLightDistributionCurveEnum
 	{
+		[Description("Type A is basically not used. For completeness the Type A Photometry equals the T" +
+	    "ype B rotated 90&deg; around the Z-Axis counter clockwise.")]
 		TYPE_A = 1,
 	
+		[Description("Type B is sometimes used for floodlights. The B-Plane System has a horizontal axi" +
+	    "s. B-Angles are valid from -180&deg; to +180&deg; with B 0&deg; at the bottom an" +
+	    "d B180&deg;/B-180&deg; at the top, &#946;-Angles are valid from -90&deg; to +90&" +
+	    "deg;.")]
 		TYPE_B = 2,
 	
+		[Description("Type C is the recommended standard system. The C-Plane system equals a globe with" +
+	    " a vertical axis. C-Angles are valid from 0&deg; to 360&deg;, &#947;-Angles are " +
+	    "valid from 0&deg; (south pole) to 180&deg; (north pole).")]
 		TYPE_C = 3,
 	
 		NOTDEFINED = 0,

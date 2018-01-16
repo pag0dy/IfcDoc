@@ -1,0 +1,2 @@
+﻿(PredefinedType <> IfcLightFixtureTypeEnum.USERDEFINED) OR
+((PredefinedType = IfcLightFixtureTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcElementType.ElementType))

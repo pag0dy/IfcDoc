@@ -1,17 +1,14 @@
-﻿<EPM-HTML>
-	 <P> <U>Definition from IAI:</U> Bars, wires, strands, and other slender
-		members embedded in concrete in such a manner that the reinforcement and the
-		concrete act together in resisting forces. </P> 
-	 <BLOCKQUOTE><FONT COLOR="#0000FF" SIZE="-1"> HISTORY New entity in IFC
-		Release 2x2 </FONT></BLOCKQUOTE> 
-	 <P><B>Geometry Use Definitions:</B></P> 
-	 <P> The geometric representation of <I>IfcReinforcingElement</I> is given
-		by the <I>IfcProductDefinitionShape</I>, allowing multiple geometric
-		representations. Included are: </P> 
-	 <P><U>Local Placement</U><BR> The use of local placement is defined at the
-		supertype <I>IfcBuildingElementComponent</I>. </P> 
-	 <P><U>Standard Geometric Representation</U><BR> The use of Standard
-		Geometric Representations is defined at the supertype
-		<I>IfcBuildingElementComponent</I>. Further constraints on the geometric
-		representation may be defined in subtypes. </P>
-</EPM-HTML>
+﻿<p>A reinforcing element represents bars, wires, strands, meshes, tendons, and other components embedded in concrete in such a manner that the reinforcement and the concrete act together in resisting forces.</p>
+<blockquote class="extDef">NOTE&nbsp; Definition according to
+ISO 6707-1: rod(s), bar(s), fabric, fibres, wires and cable(s) added to give additional strength or
+support to a material or component.</blockquote>
+
+<p>One or several instances of subtypes of <em>IfcReinforcingElement</em> should always be accompanied by a defining instance of a respective subtype of <em>IfcReinforcingElementType</em>.  The type object holds shape and material information.</p>
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC2x2
+</blockquote>
+
+<blockquote class="change-ifc2x4">
+IFC4 CHANGE&nbsp; Attribute <em>SteelGrade</em> deprecated.
+</blockquote>

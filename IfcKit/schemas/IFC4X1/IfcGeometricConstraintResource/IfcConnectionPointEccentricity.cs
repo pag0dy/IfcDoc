@@ -21,7 +21,7 @@ using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometricConstraintResource
 {
-	[Guid("d6a01043-67e3-44ca-af7e-8083992016d5")]
+	[Guid("bdf3901b-3ab4-45b6-805b-4eebca105729")]
 	public partial class IfcConnectionPointEccentricity : IfcConnectionPointGeometry
 	{
 		[DataMember(Order=0)] 
@@ -37,16 +37,16 @@ namespace BuildingSmart.IFC.IfcGeometricConstraintResource
 		IfcLengthMeasure? _EccentricityInZ;
 	
 	
-		[Description("<EPM-HTML>\r\nDistance in x direction between the two points (or vertex points) eng" +
-	    "aged in the point connection.\r\n</EPM-HTML>")]
+		[Description("Distance in x direction between the two points (or vertex points) engaged in the " +
+	    "point connection.")]
 		public IfcLengthMeasure? EccentricityInX { get { return this._EccentricityInX; } set { this._EccentricityInX = value;} }
 	
-		[Description("<EPM-HTML>\r\nDistance in y direction between the two points (or vertex points) eng" +
-	    "aged in the point connection.\r\n</EPM-HTML>")]
+		[Description("Distance in y direction between the two points (or vertex points) engaged in the " +
+	    "point connection.")]
 		public IfcLengthMeasure? EccentricityInY { get { return this._EccentricityInY; } set { this._EccentricityInY = value;} }
 	
-		[Description("<EPM-HTML>\r\nDistance in z direction between the two points (or vertex points) eng" +
-	    "aged in the point connection.\r\n</EPM-HTML>")]
+		[Description("Distance in z direction between the two points (or vertex points) engaged in the " +
+	    "point connection.")]
 		public IfcLengthMeasure? EccentricityInZ { get { return this._EccentricityInZ; } set { this._EccentricityInZ = value;} }
 	
 	

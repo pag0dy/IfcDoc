@@ -25,13 +25,21 @@ using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcSharedBldgElements
 {
-	[Guid("209d5262-7c5f-4fb0-a893-859ea56de4d8")]
+	[Guid("86108d1f-8018-48ab-b37d-4bbe593c1cfe")]
 	public enum IfcColumnTypeEnum
 	{
+		[Description("A standard member usually vertical and requiring resistance to vertical forces by" +
+	    " compression but also sometimes to lateral forces.")]
 		COLUMN = 1,
 	
+		[Description("A column element embedded within a wall that can be required to be load bearing b" +
+	    "ut may also only be used for decorative purposes.")]
+		PILASTER = 2,
+	
+		[Description("User-defined linear element.")]
 		USERDEFINED = -1,
 	
+		[Description("Undefined linear element.")]
 		NOTDEFINED = 0,
 	
 	}

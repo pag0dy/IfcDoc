@@ -11,40 +11,41 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcExternalReferenceResource;
+using BuildingSmart.IFC.IfcGeometricModelResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationDefinitionResource;
-using BuildingSmart.IFC.IfcPresentationResource;
 using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 {
-	[Guid("be4e92f1-7f15-46b5-ba75-b48d48f504bb")]
+	[Guid("03067245-b9da-400b-8de8-c6189fa9b928")]
 	public partial class IfcStyledItem : IfcRepresentationItem
 	{
 		[DataMember(Order=0)] 
+		[XmlIgnore]
 		IfcRepresentationItem _Item;
 	
 		[DataMember(Order=1)] 
 		[Required()]
-		ISet<IfcPresentationStyleAssignment> _Styles = new HashSet<IfcPresentationStyleAssignment>();
+		ISet<IfcStyleAssignmentSelect> _Styles = new HashSet<IfcStyleAssignmentSelect>();
 	
 		[DataMember(Order=2)] 
 		[XmlAttribute]
 		IfcLabel? _Name;
 	
 	
-		[Description(@"<EPM-HTML>
-	A geometric representation item to which the style is assigned.
-	  <blockquote> <font size=""-1"" color=""#0000ff"">
-	IFC2x Edition 2 Addendum 2 CHANGE The attribute <i>Item</i> has been made optional. Upward compatibility for file based exchange is guaranteed.
-	  </font></blockquote>
-	</EPM-HTML>")]
+		[Description("A geometric representation item to which the style is assigned.\r\n  <blockquote cl" +
+	    "ass=\"change-ifc2x2\">IFC2x2 Add2 CHANGE The attribute <em>Item</em> has been made" +
+	    " optional. Upward compatibility for file based exchange is guaranteed.</blockquo" +
+	    "te>")]
 		public IfcRepresentationItem Item { get { return this._Item; } set { this._Item = value;} }
 	
-		[Description("Representation style assignments which are assigned to an item. NOTE: In current " +
-	    "IFC release only one presentation style assignment shall be assigned.")]
-		public ISet<IfcPresentationStyleAssignment> Styles { get { return this._Styles; } }
+		[Description(@"Representation styles which are assigned, either to an geometric representation item, or to a material definition.
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE  The data type has been changed to <em>IfcStyleAssignmentSelect</em> with upward compatibility 
+	for file based exchange.</blockquote>
+	  <blockquote class=""note"">NOTE&nbsp; Only the select item <em>IfcPresentationStyle</em> shall be used from IFC4 onwards, the <em>IfcPresentationStyleAssignment</em> has been deprecated.</blockquote> ")]
+		public ISet<IfcStyleAssignmentSelect> Styles { get { return this._Styles; } }
 	
 		[Description("The word, or group of words, by which the styled item is referred to.")]
 		public IfcLabel? Name { get { return this._Name; } set { this._Name = value;} }

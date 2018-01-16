@@ -1,0 +1,15 @@
+﻿<p>The objectified relationship, <em>IfcRelCoversSpace</em>, relates a space object to one or many coverings, which faces (or is assigned to) the space.</p>
+<blockquote class="note">NOTE&nbsp; Particularly floorings, ceilings and wall coverings, such as claddings or tiling are often considered as space coverings, rather then wall or slab coverings. In some life cycle phases, such as the operation phase, the relationship is always made to the space.</blockquote>
+<p>The IFC specification provides two relationships:</p>
+<ul>
+<li><em>IfcRelCoversBldgElements</em> to assign coverings to elements.
+<blockquote class="note">NOTE&nbsp; This relationship is now deprecated and replaced by <em>IfcRelAggregates</em>.</blockquote>
+</li>
+<li><em>IfcRelCoversSpaces</em> to assign coverings to spaces<br>
+<blockquote class="note">NOTE&nbsp; This relationship is now deprecated and replaced by <em>IfcRelContainedInSpatialStructure</em>.</blockquote>
+</li>
+</ul>
+<p>Whether the relationship between the covering and the space, or between the covering and the element, is regarded as primary, has
+to be determined within the context of a model view definition.</p>
+<blockquote class="history">HISTORY&nbsp; New entity in IFC2x3.</blockquote>
+<blockquote class="deprecated">DEPRECATION&nbsp; The relationship <em>IfcRelCoversSpace</em> shall not be used anymore, use <em>IfcRelContainedInSpatialStructure</em> instead.</blockquote>

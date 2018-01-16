@@ -11,30 +11,22 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcConstraintResource;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometricModelResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
+using BuildingSmart.IFC.IfcProcessExtension;
 using BuildingSmart.IFC.IfcPropertyResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
 using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcKernel
 {
-	[Guid("2127538d-266b-4b8d-a595-3ef8afe2acf0")]
+	[Guid("536d8fc9-61a4-49d3-aa33-691cafdb8f60")]
 	public abstract partial class IfcRelDefines : IfcRelationship
 	{
-		[DataMember(Order=0)] 
-		[Required()]
-		ISet<IfcObject> _RelatedObjects = new HashSet<IfcObject>();
-	
-	
-		[Description("Reference to the objects (or single object) to which the property definition appl" +
-	    "ies.\r\n")]
-		public ISet<IfcObject> RelatedObjects { get { return this._RelatedObjects; } }
 	
 	
 	}

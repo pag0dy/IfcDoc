@@ -1,109 +1,42 @@
-﻿<EPM-HTML>
-	 <P><U>Definition from IAI:</U> Instances of the entity
+﻿<p>This entity defines an action which acts on a point.
+A point action is typically connected with a point connection.
+It may also be connected with a curve member or curve connection,
+or surface member or surface connection.</p>
 
-		<I>IfcStructuralPointAction</I> are used to define point actions. Structural
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC2x2.
+</blockquote>
 
-		loads applicable to point actions are <I>IfcStructuralLoadSingleForce</I> (and
+<blockquote class="change-ifc2x4">
+IFC4 CHANGE&nbsp; Attributes in the supertypes
+<em>IfcStructuralActivity</em> and <em>IfcStructuralAction</em> changed.  Use definitions changed,
+informal propositions added.</blockquote>
 
-		subtype), and <I>IfcStructuralLoadSingleDisplacement</I> (and subtype). </P>
+<p><b><u>Coordinate Systems</u></b>:</p>
 
-	 <P>The structural load, defining the point action is given by the attribute
+<p>See definitions at <em>IfcStructuralActivity</em>.</p>
 
-		<I>AppliedLoad</I> at the supertype <I>IfcStructuralActivity</I>. The
+<p><b><u>Topology Use Definitions</u></b>:</p>
 
-		coordinate system, in which the <I>AppliedLoad</I> is defined is given by the
+<p>Standard Case:<br>
+If connected with a point item, instances of <em>IfcStructuralPointAction</em>
+shall not have an <em>ObjectPlacement</em> nor a <em>Representation</em>.
+It is implied that the placement and representation of the action is the same
+as the structural item.</p>
 
-		attribute <I>ObjectPlacement</I> at the supertype <I>IfcProduct</I>.</P>
+<p>Special Case 1:<br>
+If connected with a curve item or surface item, instances of <em>IfcStructuralPointAction</em>
+shall have an <em>ObjectPlacement</em> and <em>Representation</em>, containing an <em>IfcVertexPoint</em>.
+See <em>IfcStructuralActivity</em> for further definitions.</p>
 
-	 <BLOCKQUOTE>
+<blockquote class="note">NOTE&nbsp; In order to model concentrated actions on a curve or surface item,
+<em>IfcStructuralCurveAction</em> or <em>IfcStructuralSurfaceAction</em> of type DISCRETE is
+preferable since they do not require an extra topology representation in this case.
+An <em>IfcStructuralPointAction</em> should be used for a concentrated action on a curve or surface
+item only when an explicit vertex point representation is actually desired.</blockquote>
 
-		<P><FONT COLOR="#0000FF" SIZE="-1">HISTORY: New entity in Release IFC2x
-
-		  Edition 2. </FONT></P> </BLOCKQUOTE>
-
-	 <P><B><U>Topology Use Definition</U></B></P>
-
-	 <P>Special case:
-	 If applied to building elements, placement and representation of the
-	 structural action are often implied by those of the building elements and
-	 are therefore optional for the actions.</P>
-	 <P>Standard case:
-	 If applied to structural items, instances of
-	 <I>IfcStructuralPointAction</I> shall have a topology
-
-		representation. It includes a placement and a product representation. The
-
-		<I>IfcProductRepresentation</I> shall be given by an item of
-
-		<I>Representations</I> being of type "<I>IfcTopologyRepresentation</I>". </P>
-
-	 <P><B>Placement</B></P>
-
-	 <P>The placement for <I>IfcStructuralPointAction</I> is determined at its
-
-		supertype <I>IfcProduct</I>. It is defined by the optional
-
-		<I>IfcObjectPlacement</I>, referenced by <I>ObjectPlacement</I> at
-
-		<I>IfcProduct</I>, which establishes, if given, the object coordinate system
-
-		that is referenced by the applied load. </P>
-
-	 <UL>
-
-		<LI>If the <I>ObjectPlacement</I> attribute is omitted, then all
-
-		  topological representations are given directly in world coordinates.</LI>
-
-		<LI>If the <I>ObjectPlacement</I> attribute is provided, then it
-
-		  establishes an object coordinate system for all topological representations
-
-		  which are given object coordinates.
-
-		  <UL>
-
-			 <LI>If the <I>PlacementRelTo</I> relationship of
-
-				<I>IfcLocalPlacement</I> is omitted, the object coordinate system is
-
-				established within the world coordinate system.</LI>
-
-			 <LI>If the <I>PlacementRelTo</I> relationship of
-
-				<I>IfcLocalPlacement</I> is given, it shall point to the local placement of the
-
-				same <I>IfcSpatialStructureElement</I>, which is used in the
-
-				<I>ContainedInStructure</I> inverse attribute, or to a spatial structure
-
-				element at a higher level, referenced by that. </LI>
-
-		  </UL> </LI>
-
-	 </UL>
-
-	 <P><B>Topology Representation</B></P>
-
-	 <P>Instances of <I>IfcStructuralPointAction</I> may have a topology
-
-		representation given by a vertex with an optional additional geometric
-
-		representation by a Cartesian point. It can be provided by either</P>
-
-	 <UL>
-
-		<LI><I>IfcVertex</I></LI>
-
-		<LI><I>IfcVertexPoint</I></LI>
-
-	 </UL>
-
-	 <P>which should be the single item of
-
-		<I>IfcTopologyRepresentation.Items</I>. If no topology representation is given,
-
-		the location of the placement is taken as the vertex at which the point actions
-
-		acts upon the structural item.</P>
-</EPM-HTML>
+<p>Special Case 2:<br>
+If not connected with a structural item (which may happen in an incomplete or
+conceptual model), a point action should have an <em>ObjectPlacement</em> and
+<em>Representation</em>, containing an <em>IfcVertexPoint</em>.
+See <em>IfcStructuralActivity</em> for further definitions.</p>

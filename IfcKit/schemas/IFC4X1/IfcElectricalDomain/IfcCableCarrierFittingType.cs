@@ -10,17 +10,12 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
 
 namespace BuildingSmart.IFC.IfcElectricalDomain
 {
-	[Guid("de9a6882-d28b-4968-a8b3-38c95bdf035e")]
+	[Guid("fd9b5bec-e42a-4c5e-bc8a-bd72ae76b43a")]
 	public partial class IfcCableCarrierFittingType : IfcFlowFittingType
 	{
 		[DataMember(Order=0)] 
@@ -29,8 +24,8 @@ namespace BuildingSmart.IFC.IfcElectricalDomain
 		IfcCableCarrierFittingTypeEnum _PredefinedType;
 	
 	
-		[Description("Identifies the predefined types of cable carrier fitting from which the type requ" +
-	    "ired may be set.")]
+		[Description("<p>Identifies the predefined types of cable carrier fitting from which the type r" +
+	    "equired may be set.</p>")]
 		public IfcCableCarrierFittingTypeEnum PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	

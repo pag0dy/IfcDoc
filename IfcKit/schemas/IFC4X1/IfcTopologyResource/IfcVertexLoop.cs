@@ -11,14 +11,16 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcGeometryResource;
+using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 
 namespace BuildingSmart.IFC.IfcTopologyResource
 {
-	[Guid("be13b85b-d93e-42da-9d2d-6b12cb2d3f5a")]
+	[Guid("492ce60a-9294-46dd-85f5-c8937e2f84fe")]
 	public partial class IfcVertexLoop : IfcLoop
 	{
 		[DataMember(Order=0)] 
+		[XmlElement]
 		[Required()]
 		IfcVertex _LoopVertex;
 	

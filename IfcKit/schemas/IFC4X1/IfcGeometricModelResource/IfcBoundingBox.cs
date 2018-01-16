@@ -18,10 +18,11 @@ using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometricModelResource
 {
-	[Guid("509e3acb-9497-4026-8f8e-3c699e3db4b0")]
+	[Guid("b0708265-0f85-4d96-a7f6-caf74b3bb754")]
 	public partial class IfcBoundingBox : IfcGeometricRepresentationItem
 	{
 		[DataMember(Order=0)] 
+		[XmlElement]
 		[Required()]
 		IfcCartesianPoint _Corner;
 	

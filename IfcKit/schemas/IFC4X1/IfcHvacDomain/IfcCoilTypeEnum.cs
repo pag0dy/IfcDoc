@@ -10,38 +10,41 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialResource;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcPropertyResource;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
 using BuildingSmart.IFC.IfcSharedComponentElements;
 
 namespace BuildingSmart.IFC.IfcHvacDomain
 {
-	[Guid("2cead977-c89d-43cc-ab52-7fda5d90a523")]
+	[Guid("81999189-d657-4185-891f-44500625d310")]
 	public enum IfcCoilTypeEnum
 	{
+		[Description("Cooling coil using a refrigerant to cool the air stream directly.")]
 		DXCOOLINGCOIL = 1,
 	
-		WATERCOOLINGCOIL = 2,
+		[Description("Heating coil using electricity as a heating source.")]
+		ELECTRICHEATINGCOIL = 2,
 	
-		STEAMHEATINGCOIL = 3,
+		[Description("Heating coil using gas as a heating source.")]
+		GASHEATINGCOIL = 3,
 	
-		WATERHEATINGCOIL = 4,
+		[Description("Cooling or Heating coil that uses a hydronic fluid as a cooling or heating source" +
+	    ".")]
+		HYDRONICCOIL = 4,
 	
-		ELECTRICHEATINGCOIL = 5,
+		[Description("Heating coil using steam as heating source.")]
+		STEAMHEATINGCOIL = 5,
 	
-		GASHEATINGCOIL = 6,
+		[Description("Cooling coil using chilled water. HYDRONICCOIL supercedes this enumerator.")]
+		WATERCOOLINGCOIL = 6,
 	
+		[Description("Heating coil using hot water as a heating source. HYDRONICCOIL supercedes this en" +
+	    "umerator.")]
+		WATERHEATINGCOIL = 7,
+	
+		[Description("User-defined coil type.")]
 		USERDEFINED = -1,
 	
+		[Description("Undefined coil type.")]
 		NOTDEFINED = 0,
 	
 	}

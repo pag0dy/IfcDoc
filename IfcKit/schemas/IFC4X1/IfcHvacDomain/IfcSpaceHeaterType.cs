@@ -10,23 +10,13 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialResource;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcPropertyResource;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
 using BuildingSmart.IFC.IfcSharedComponentElements;
 
 namespace BuildingSmart.IFC.IfcHvacDomain
 {
-	[Guid("eb109947-7e16-4899-8dda-b79c12c813aa")]
-	public partial class IfcSpaceHeaterType : IfcEnergyConversionDeviceType
+	[Guid("0f52a5c7-5f1e-4406-8e80-801782467a1a")]
+	public partial class IfcSpaceHeaterType : IfcFlowTerminalType
 	{
 		[DataMember(Order=0)] 
 		[XmlAttribute]

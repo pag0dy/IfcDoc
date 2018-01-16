@@ -10,16 +10,13 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
 
 namespace BuildingSmart.IFC.IfcSharedComponentElements
 {
-	[Guid("3fefea79-1b6c-4ab7-9828-baac85f6ac55")]
-	public partial class IfcMechanicalFastener : IfcFastener
+	[Guid("3f389407-9e81-4218-8102-56eb71651146")]
+	public partial class IfcMechanicalFastener : IfcElementComponent
 	{
 		[DataMember(Order=0)] 
 		[XmlAttribute]
@@ -29,12 +26,21 @@ namespace BuildingSmart.IFC.IfcSharedComponentElements
 		[XmlAttribute]
 		IfcPositiveLengthMeasure? _NominalLength;
 	
+		[DataMember(Order=2)] 
+		[XmlAttribute]
+		IfcMechanicalFastenerTypeEnum? _PredefinedType;
 	
-		[Description("The nominal diameter describing the cross-section size of the fastener.")]
+	
+		[Description("The nominal diameter describing the cross-section size of the fastener type.\r\n<bl" +
+	    "ockquote class=\"deprecated\">Deprecated in IFC4</blockquote>")]
 		public IfcPositiveLengthMeasure? NominalDiameter { get { return this._NominalDiameter; } set { this._NominalDiameter = value;} }
 	
-		[Description("The nominal length describing the longitudinal dimensions of the fastener.")]
+		[Description("The nominal length describing the longitudinal dimensions of the fastener type.\r\n" +
+	    "<blockquote class=\"deprecated\">Deprecated in IFC4</blockquote>")]
 		public IfcPositiveLengthMeasure? NominalLength { get { return this._NominalLength; } set { this._NominalLength = value;} }
+	
+		[Description("Subtype of mechanical fastener")]
+		public IfcMechanicalFastenerTypeEnum? PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	
 	}

@@ -10,11 +10,12 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 
 namespace BuildingSmart.IFC.IfcQuantityResource
 {
-	[Guid("f83ba5c9-2e9e-45c0-b512-867a448a5a2b")]
+	[Guid("ee55f63f-35e6-4be8-a374-c3e1d4aa9d1c")]
 	public partial class IfcQuantityCount : IfcPhysicalSimpleQuantity
 	{
 		[DataMember(Order=0)] 
@@ -22,9 +23,17 @@ namespace BuildingSmart.IFC.IfcQuantityResource
 		[Required()]
 		IfcCountMeasure _CountValue;
 	
+		[DataMember(Order=1)] 
+		[XmlAttribute]
+		IfcLabel? _Formula;
+	
 	
 		[Description("Count measure value of this quantity.")]
 		public IfcCountMeasure CountValue { get { return this._CountValue; } set { this._CountValue = value;} }
+	
+		[Description(@"A formula by which the quantity has been calculated. It can be assigned in addition to the actual value of the quantity. Formulas could be mathematic calculations (like width x height), database links, or a combination. The formula is for informational purposes only.
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE  Attribute added to the end of the attribute list.</blockquote>")]
+		public IfcLabel? Formula { get { return this._Formula; } set { this._Formula = value;} }
 	
 	
 	}

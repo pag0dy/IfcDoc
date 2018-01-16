@@ -11,21 +11,26 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcExternalReferenceResource;
+using BuildingSmart.IFC.IfcGeometricModelResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationDefinitionResource;
-using BuildingSmart.IFC.IfcPresentationResource;
 using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 {
-	[Guid("896942a6-a9ce-402c-abf0-83d8b70a4f80")]
+	[Guid("ead0e11b-6c81-40f3-ac8b-50c6867c3ffb")]
 	public enum IfcSurfaceSide
 	{
+		[Description("The side of a surface which is in the same direction as the surface normal derive" +
+	    "d from the mathematical definition.")]
 		POSITIVE = 1,
 	
+		[Description("The side of a surface which is in the opposite direction than the surface normal " +
+	    "derived from the mathematical definition.")]
 		NEGATIVE = 2,
 	
+		[Description("Both, positive and negative side.")]
 		BOTH = 3,
 	
 	}

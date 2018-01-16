@@ -14,12 +14,11 @@ using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcPresentationResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcPresentationOrganizationResource
 {
-	[Guid("6e5eec53-9a7f-489f-8154-fdda55c43978")]
+	[Guid("cffe9f24-4de2-4238-8448-856d95446876")]
 	public partial class IfcLightDistributionData
 	{
 		[DataMember(Order=0)] 
@@ -42,12 +41,10 @@ namespace BuildingSmart.IFC.IfcPresentationOrganizationResource
 	    " chosen).")]
 		public IfcPlaneAngleMeasure MainPlaneAngle { get { return this._MainPlaneAngle; } set { this._MainPlaneAngle = value;} }
 	
-		[Description(@"<EPM-HTML>
-	<P>The list of secondary plane angles (the &#945;, &#946; or &#947; angles) according to the light distribution curve chosen.
-	</P>
-	<BLOCKQUOTE>NOTE: The <I>SecondaryPlaneAngle</I> and <I>LuminousIntensity</I> lists are corresponding lists.
-	</BLOCKQUOTE>
-	</EPM-HTML>")]
+		[Description(@"<p>The list of secondary plane angles (the &#945;, &#946; or &#947; angles) according to the light distribution curve chosen.
+	</p>
+	<blockquote class=""note"">NOTE&nbsp; The <em>SecondaryPlaneAngle</em> and <em>LuminousIntensity</em> lists are corresponding lists.
+	</blockquote>")]
 		public IList<IfcPlaneAngleMeasure> SecondaryPlaneAngle { get { return this._SecondaryPlaneAngle; } }
 	
 		[Description("The luminous intensity distribution measure for this pair of main and secondary p" +

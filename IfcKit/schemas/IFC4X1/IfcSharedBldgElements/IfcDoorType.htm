@@ -1,0 +1,17 @@
+﻿<p>The element type <em>IfcDoorType</em> defines commonly shared information for occurrences of doors. The set of shared information may include:</p>
+<ul>
+<li>common properties within shared property sets</li>
+<li>common material information</li>
+<li>common operation type definitions</li>
+<li>common shape representations</li>
+</ul>
+<p>A door type defines the particular parameter of the lining and one (or several) panels through the <em>IfcDoorLiningProperties</em> and the <em>IfcDoorPanelProperties</em> as predefined property sets applicable to doors only.</p>
+<p>It is used to define a door specification, or door style (i.e. the specific product information that is common to all occurrences of that door type). Door types may be exchanged
+without being already assigned to occurrences.</p>
+
+<blockquote class="note">NOTE&nbsp; The product representations are defined as representation maps (at the level of the supertype <em>IfcTypeProduct</em>, which gets assigned by an element occurrence instance through the <em>IfcShapeRepresentation.Item[1]</em> being an <em>IfcMappedItem</em>.</blockquote>
+
+<p>Occurrences of the <em>IfcDoorType</em> within building models are represented by instances of <em>IfcDoor</em> or <em>IfcDoorStandardCase</em>.</p>
+
+<blockquote class="history">HISTORY&nbsp; New entity in IFC4. The entity <em>IfcDoorType</em> replaces the previous definition <em>IfcDoorStyle</em> (which is deprecated in IFC4).
+</blockquote>

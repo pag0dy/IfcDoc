@@ -11,29 +11,31 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcConstraintResource;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometricModelResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
+using BuildingSmart.IFC.IfcProcessExtension;
 using BuildingSmart.IFC.IfcPropertyResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
 using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcKernel
 {
-	[Guid("7075b401-84d0-4d10-8662-bc5063a63bec")]
+	[Guid("8e3fe369-7b2f-42e1-ba03-10771a673e88")]
 	public partial class IfcRelAssignsToResource : IfcRelAssigns
 	{
 		[DataMember(Order=0)] 
 		[Required()]
-		IfcResource _RelatingResource;
+		IfcResourceSelect _RelatingResource;
 	
 	
-		[Description("Reference to the resource to which the objects are assigned to.\r\n")]
-		public IfcResource RelatingResource { get { return this._RelatingResource; } set { this._RelatingResource = value;} }
+		[Description("Reference to the resource to which the objects are assigned to.\r\n<blockquote clas" +
+	    "s=\"change-ifc2x4\">IFC4 CHANGE Datatype expanded to include <em>IfcResource</em> " +
+	    "and <em>IfcTypeResource</em>.</blockquote>")]
+		public IfcResourceSelect RelatingResource { get { return this._RelatingResource; } set { this._RelatingResource = value;} }
 	
 	
 	}

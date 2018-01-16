@@ -18,28 +18,26 @@ using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometricModelResource
 {
-	[Guid("265c053c-a8de-43da-8a2e-ae2adf80fad6")]
+	[Guid("65e9d30b-d646-47b9-a5b5-e3d5e4d6323c")]
 	public partial class IfcPolygonalBoundedHalfSpace : IfcHalfSpaceSolid
 	{
 		[DataMember(Order=0)] 
+		[XmlElement]
 		[Required()]
 		IfcAxis2Placement3D _Position;
 	
 		[DataMember(Order=1)] 
+		[XmlElement]
 		[Required()]
 		IfcBoundedCurve _PolygonalBoundary;
 	
 	
-		[Description("<EPM-HTML>\r\n<P>Definition of the position coordinate system for the bounding poly" +
-	    "line <STRIKE>and the base surface</STRIKE>.</P>\r\n</EPM-HTML>")]
+		[Description("<p>Definition of the position coordinate system for the bounding polyline <STRIKE" +
+	    ">and the base surface</STRIKE>.</p>")]
 		public IfcAxis2Placement3D Position { get { return this._Position; } set { this._Position = value;} }
 	
-		[Description(@"<EPM-HTML>
-	Two-dimensional <strike>polyline</strike> bounded curve, defined in the xy plane of the position coordinate system.
-	<blockquote><small><font color=""#ff0000"">
-	IFC2x Edition 3 CHANGE&nbsp; The attribute type has been changed from <i>IfcPolyline</i> to its supertype <i>IfcBoundedCurve</i> with upward compatibility for file based exchange.
-	</font></small></blockquote>
-	</EPM-HTML>")]
+		[Description(@"Two-dimensional <strike>polyline</strike> bounded curve, defined in the xy plane of the position coordinate system.
+	<blockquote class=""change-ifc2x3"">IFC2x3 CHANGE&nbsp; The attribute type has been changed from <em>IfcPolyline</em> to its supertype <em>IfcBoundedCurve</em> with upward compatibility for file based exchange.</blockquote>")]
 		public IfcBoundedCurve PolygonalBoundary { get { return this._PolygonalBoundary; } set { this._PolygonalBoundary = value;} }
 	
 	

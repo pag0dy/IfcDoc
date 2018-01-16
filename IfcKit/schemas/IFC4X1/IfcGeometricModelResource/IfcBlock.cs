@@ -18,7 +18,7 @@ using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometricModelResource
 {
-	[Guid("be97cd87-4373-4f2d-ae45-79636757b234")]
+	[Guid("e5472b11-5ad6-482e-a790-fd5b136c2bf4")]
 	public partial class IfcBlock : IfcCsgPrimitive3D
 	{
 		[DataMember(Order=0)] 
@@ -37,19 +37,16 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 		IfcPositiveLengthMeasure _ZLength;
 	
 	
-		[Description("<EPM-HTML>\r\nThe size of the block along the placement X axis. It is provided by t" +
-	    "he inherited axis placement through <i>SELF\\IfcCsgPrimitive3D.Position.P[1]</i>." +
-	    "\r\n</EPM-HTML>")]
+		[Description("The size of the block along the placement X axis. It is provided by the inherited" +
+	    " axis placement through <em>SELF\\IfcCsgPrimitive3D.Position.P[1]</em>.")]
 		public IfcPositiveLengthMeasure XLength { get { return this._XLength; } set { this._XLength = value;} }
 	
-		[Description("<EPM-HTML>\r\nThe size of the block along the placement Y axis. It is provided by t" +
-	    "he inherited axis placement through <i>SELF\\IfcCsgPrimitive3D.Position.P[2]</i>." +
-	    "\r\n</EPM-HTML>")]
+		[Description("The size of the block along the placement Y axis. It is provided by the inherited" +
+	    " axis placement through <em>SELF\\IfcCsgPrimitive3D.Position.P[2]</em>.")]
 		public IfcPositiveLengthMeasure YLength { get { return this._YLength; } set { this._YLength = value;} }
 	
-		[Description("<EPM-HTML>\r\nThe size of the block along the placement Z axis. It is provided by t" +
-	    "he inherited axis placement through <i>SELF\\IfcCsgPrimitive3D.Position.P[3]</i>." +
-	    "\r\n</EPM-HTML>")]
+		[Description("The size of the block along the placement Z axis. It is provided by the inherited" +
+	    " axis placement through <em>SELF\\IfcCsgPrimitive3D.Position.P[3]</em>.")]
 		public IfcPositiveLengthMeasure ZLength { get { return this._ZLength; } set { this._ZLength = value;} }
 	
 	

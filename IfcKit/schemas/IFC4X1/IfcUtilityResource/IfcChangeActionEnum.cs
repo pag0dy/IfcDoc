@@ -11,24 +11,32 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
+using BuildingSmart.IFC.IfcConstraintResource;
+using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 
 namespace BuildingSmart.IFC.IfcUtilityResource
 {
-	[Guid("201a3ce5-cdf1-4e0c-832d-8c598f1c16bd")]
+	[Guid("1afa18fb-05b5-4f13-9da6-ba569b706c6b")]
 	public enum IfcChangeActionEnum
 	{
+		[Description("Object has not been modified.")]
 		NOCHANGE = 1,
 	
+		[Description("A modification to the object has been made by the user and application defined by" +
+	    " the LastModifyingUser and LastModifyingApplication respectively.")]
 		MODIFIED = 2,
 	
+		[Description("The object has been created by the user and application defined by the OwningUser" +
+	    " and OwningApplication respectively.")]
 		ADDED = 3,
 	
+		[Description("The object has been deleted by the user and application defined by the LastModify" +
+	    "ingUser and LastModifyingApplication respectively.")]
 		DELETED = 4,
 	
-		MODIFIEDADDED = 5,
-	
-		MODIFIEDDELETED = 6,
+		[Description("The change action is not known or has not been defined.")]
+		NOTDEFINED = 0,
 	
 	}
 }

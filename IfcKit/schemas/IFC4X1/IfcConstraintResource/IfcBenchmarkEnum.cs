@@ -16,25 +16,48 @@ using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcTimeSeriesResource;
 using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcConstraintResource
 {
-	[Guid("32d8aae1-8337-439a-808b-6b4eeca28cd0")]
+	[Guid("94b40d09-01cf-4ea3-be68-29a9e401b125")]
 	public enum IfcBenchmarkEnum
 	{
+		[Description("Identifies that a value must be greater than that set by the constraint.")]
 		GREATERTHAN = 1,
 	
+		[Description("Identifies that a value must be either greater than or equal to that set by the c" +
+	    "onstraint.")]
 		GREATERTHANOREQUALTO = 2,
 	
+		[Description("Identifies that a value must be less than that set by the constraint.")]
 		LESSTHAN = 3,
 	
+		[Description("Identifies that a value must be either less than or equal to that set by the cons" +
+	    "traint.")]
 		LESSTHANOREQUALTO = 4,
 	
+		[Description("Identifies that a value must be equal to that set by the constraint.")]
 		EQUALTO = 5,
 	
+		[Description("Identifies that a value must be not equal to that set by the constraint.")]
 		NOTEQUALTO = 6,
+	
+		[Description("Identifies that an aggregation (set, list or table) must include the value (indiv" +
+	    "idual item) set by the constraint.")]
+		INCLUDES = 7,
+	
+		[Description("Identifies that an aggregation (set, list or table) must not include the value (i" +
+	    "ndividual item) set by the constraint.")]
+		NOTINCLUDES = 8,
+	
+		[Description("Identifies that a value (individual item) must be included in the aggregation (se" +
+	    "t, list or table) set by the constraint.")]
+		INCLUDEDIN = 9,
+	
+		[Description("Identifies that a value (individual item) must not be included in the aggregation" +
+	    " (set, list or table) set by the constraint.")]
+		NOTINCLUDEDIN = 10,
 	
 	}
 }

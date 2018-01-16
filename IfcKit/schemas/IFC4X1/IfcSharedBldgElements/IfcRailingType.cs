@@ -25,7 +25,7 @@ using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcSharedBldgElements
 {
-	[Guid("efeee47e-fde8-45ad-84dc-7d6f01e9e748")]
+	[Guid("9f5e37e7-709e-46f6-aa16-7ce984b35c92")]
 	public partial class IfcRailingType : IfcBuildingElementType
 	{
 		[DataMember(Order=0)] 

@@ -20,7 +20,7 @@ using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
-	[Guid("7477f705-8ade-4050-a55f-60869e05b1f6")]
+	[Guid("ebd15e62-e09c-44c3-8e9c-7f8840bebed8")]
 	public partial class IfcCompositeCurve : IfcBoundedCurve
 	{
 		[DataMember(Order=0)] 
@@ -28,8 +28,9 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		IList<IfcCompositeCurveSegment> _Segments = new List<IfcCompositeCurveSegment>();
 	
 		[DataMember(Order=1)] 
+		[XmlAttribute]
 		[Required()]
-		Boolean? _SelfIntersect;
+		IfcLogical _SelfIntersect;
 	
 	
 		[Description(@"The component bounded curves, their transitions and senses. The transition attribute for the last segment defines the transition between the end of the last segment and the start of the first; this transition attribute may take the value discontinuous, which indicates an open curve. ")]
@@ -37,11 +38,11 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 	
 		[Description("Indication of whether the curve intersects itself or not; this is for information" +
 	    " only.\r\n")]
-		public Boolean? SelfIntersect { get { return this._SelfIntersect; } set { this._SelfIntersect = value;} }
+		public IfcLogical SelfIntersect { get { return this._SelfIntersect; } set { this._SelfIntersect = value;} }
 	
-		public new Int64 NSegments { get { return null; } }
+		public new IfcInteger NSegments { get { return new IfcInteger(); } }
 	
-		public new Boolean? ClosedCurve { get { return null; } }
+		public new IfcLogical ClosedCurve { get { return new IfcLogical(); } }
 	
 	
 	}

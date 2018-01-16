@@ -11,14 +11,17 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcExternalReferenceResource;
+using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
+using BuildingSmart.IFC.IfcProductExtension;
+using BuildingSmart.IFC.IfcProfileResource;
 using BuildingSmart.IFC.IfcPropertyResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcMaterialResource
 {
-	[Guid("c0d373f6-098b-4ba1-91c0-ed4706dabe8a")]
+	[Guid("a93907b4-ef59-4f01-b47a-6ca30ea1b3df")]
 	public interface IfcMaterialSelect
 	{
 	}

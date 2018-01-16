@@ -10,10 +10,12 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcDateTimeResource;
+using BuildingSmart.IFC.IfcExternalReferenceResource;
 
 namespace BuildingSmart.IFC.IfcMeasureResource
 {
-	[Guid("212925c2-dcff-4931-be6e-d8db052a95d2")]
+	[Guid("caf50987-b923-4702-a6cf-5be6efebf0ef")]
 	public partial struct IfcThermodynamicTemperatureMeasure :
 		BuildingSmart.IFC.IfcMeasureResource.IfcMeasureValue
 	{

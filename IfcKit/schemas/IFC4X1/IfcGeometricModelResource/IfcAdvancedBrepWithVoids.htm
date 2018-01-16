@@ -1,0 +1,12 @@
+﻿<p>The <em>IfcAdvancedBrepWithVoids</em> is a specialization of an advanced B-rep which contains one or more voids in its interior. The voids are represented as closed shells which are defined so that the shell normal point into the void.</p>
+
+<blockquote class="note">NOTE&nbsp; Entity adapted from <strong>advanced_brep_shape_representation</strong> defined in ISO 10303-42.</blockquote>
+<blockquote class="history">HISTORY  New entity in IFC4</blockquote>
+
+<p class="spec-head">Informal Propositions:</p>
+<ol>
+<li>Each void shell shall be disjoint from the outer shell and from every other void shell</li>
+<li>Each void shell shall be enclosed within the outer shell but not within any other void shell. In particular the outer shell is not in the set of void shells</li>
+<li>Each shell in the <em>IfcManifoldSolidBrep</em> shall be referenced only once.</li>
+<li>All the faces of all the shells in the <em>IfcAdvancedBrep</em> and the <em>IfcAdvancedBrepWithVoids.Voids</em> shall be of type <em>IfcAdvancedFace</em>.</li>
+</ol>

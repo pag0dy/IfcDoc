@@ -11,13 +11,15 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcGeometryResource;
+using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 
 namespace BuildingSmart.IFC.IfcTopologyResource
 {
-	[Guid("6b533111-cfa2-48bc-af7c-15b5debf8f5b")]
+	[Guid("01f6c44b-bfef-48bb-9d8e-476e51d90d2a")]
 	public partial class IfcClosedShell : IfcConnectedFaceSet,
-		BuildingSmart.IFC.IfcTopologyResource.IfcShell
+		BuildingSmart.IFC.IfcTopologyResource.IfcShell,
+		BuildingSmart.IFC.IfcGeometricConstraintResource.IfcSolidOrShell
 	{
 	
 	

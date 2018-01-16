@@ -11,11 +11,12 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcGeometryResource;
+using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 
 namespace BuildingSmart.IFC.IfcTopologyResource
 {
-	[Guid("3cb9e451-d59d-49d0-a8a5-84bb1dba0c48")]
+	[Guid("606bfe59-169d-4543-89a1-60d81d609835")]
 	public partial class IfcPolyLoop : IfcLoop
 	{
 		[DataMember(Order=0)] 

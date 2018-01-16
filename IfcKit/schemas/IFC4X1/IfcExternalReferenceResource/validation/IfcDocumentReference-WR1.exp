@@ -1,1 +1,1 @@
-﻿EXISTS(Name) XOR EXISTS(ReferenceToDocument[1])
+﻿EXISTS(Name) XOR EXISTS(ReferencedDocument)

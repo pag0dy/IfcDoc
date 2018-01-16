@@ -11,33 +11,35 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
+using BuildingSmart.IFC.IfcApprovalResource;
 using BuildingSmart.IFC.IfcConstraintResource;
 using BuildingSmart.IFC.IfcCostResource;
 using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
+using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcTimeSeriesResource;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcPropertyResource
 {
-	[Guid("8d16ca24-f432-4e59-ba7a-708ef9aca421")]
+	[Guid("7c1a56a5-26cf-4e5b-932f-55d94501a267")]
 	public partial class IfcPropertyReferenceValue : IfcSimpleProperty
 	{
 		[DataMember(Order=0)] 
 		[XmlAttribute]
-		IfcLabel? _UsageName;
+		IfcText? _UsageName;
 	
 		[DataMember(Order=1)] 
-		[Required()]
 		IfcObjectReferenceSelect _PropertyReference;
 	
 	
-		[Description("Description of the use of the referenced value within the property.")]
-		public IfcLabel? UsageName { get { return this._UsageName; } set { this._UsageName = value;} }
+		[Description("Description of the use of the referenced value within the property. It is a descr" +
+	    "iptive text that may hold an expression or other additional information.")]
+		public IfcText? UsageName { get { return this._UsageName; } set { this._UsageName = value;} }
 	
-		[Description("Reference to another entity through one of the select types in IfcObjectReference" +
-	    "Select.")]
+		[Description(@"Reference to another property entity through one of the select types in the <em>IfcObjectReferenceSelect</em>.
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The attribute has been made optional with upward compatibility for file based exchange.</blockquote>")]
 		public IfcObjectReferenceSelect PropertyReference { get { return this._PropertyReference; } set { this._PropertyReference = value;} }
 	
 	

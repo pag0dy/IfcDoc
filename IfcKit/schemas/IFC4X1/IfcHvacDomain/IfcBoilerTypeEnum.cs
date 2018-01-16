@@ -10,30 +10,24 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialResource;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcPropertyResource;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
 using BuildingSmart.IFC.IfcSharedComponentElements;
 
 namespace BuildingSmart.IFC.IfcHvacDomain
 {
-	[Guid("e71db919-9c50-4b91-98cf-a0b83a7fc4cb")]
+	[Guid("bc84324d-b2cb-4871-bfc8-6deec07459e8")]
 	public enum IfcBoilerTypeEnum
 	{
+		[Description("Water boiler.")]
 		WATER = 1,
 	
+		[Description("Steam boiler.")]
 		STEAM = 2,
 	
+		[Description("User-defined Boiler type.")]
 		USERDEFINED = -1,
 	
+		[Description("Undefined Boiler type.")]
 		NOTDEFINED = 0,
 	
 	}

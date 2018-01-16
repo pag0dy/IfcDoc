@@ -10,36 +10,40 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialResource;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcPropertyResource;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
 using BuildingSmart.IFC.IfcSharedComponentElements;
 
 namespace BuildingSmart.IFC.IfcHvacDomain
 {
-	[Guid("ff0e20e2-fa00-4223-b337-b4bff645a7cd")]
+	[Guid("78a0b542-081d-4e7c-8545-5b4e05c1adb5")]
 	public enum IfcEvaporatorTypeEnum
 	{
-		DIRECTEXPANSIONSHELLANDTUBE = 1,
+		[Description("Direct-expansion evaporator.")]
+		DIRECTEXPANSION = 1,
 	
-		DIRECTEXPANSIONTUBEINTUBE = 2,
+		[Description("Direct-expansion evaporator where a refrigerant evaporates inside a series of baf" +
+	    "fles that channel the fluid throughout the shell side.")]
+		DIRECTEXPANSIONSHELLANDTUBE = 2,
 	
-		DIRECTEXPANSIONBRAZEDPLATE = 3,
+		[Description("Direct-expansion evaporator where a refrigerant evaporates inside one or more pai" +
+	    "rs of coaxial tubes.")]
+		DIRECTEXPANSIONTUBEINTUBE = 3,
 	
-		FLOODEDSHELLANDTUBE = 4,
+		[Description("Direct-expansion evaporator where a refrigerant evaporates inside plates brazed o" +
+	    "r welded together to make up an assembly of separate channels.")]
+		DIRECTEXPANSIONBRAZEDPLATE = 4,
 	
-		SHELLANDCOIL = 5,
+		[Description("Evaporator in which refrigerant evaporates outside tubes.")]
+		FLOODEDSHELLANDTUBE = 5,
 	
+		[Description("Evaporator in which refrigerant evaporates inside a simple coiled tube immersed i" +
+	    "n the fluid to be cooled.")]
+		SHELLANDCOIL = 6,
+	
+		[Description("User-defined evaporator type.")]
 		USERDEFINED = -1,
 	
+		[Description("Undefined evaporator type.")]
 		NOTDEFINED = 0,
 	
 	}

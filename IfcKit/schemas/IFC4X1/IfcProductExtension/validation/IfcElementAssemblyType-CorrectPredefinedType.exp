@@ -1,0 +1,2 @@
+﻿(PredefinedType <> IfcElementAssemblyTypeEnum.USERDEFINED) OR 
+((PredefinedType = IfcElementAssemblyTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcElementType.ElementType))

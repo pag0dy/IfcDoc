@@ -10,31 +10,51 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
 
 namespace BuildingSmart.IFC.IfcElectricalDomain
 {
-	[Guid("61fd2886-beef-4d12-816b-7bede5274866")]
+	[Guid("3bdad866-1d6c-4f61-8060-69525238e808")]
 	public enum IfcSwitchingDeviceTypeEnum
 	{
+		[Description("An electrical device used to control the flow of power in a circuit on or off.")]
 		CONTACTOR = 1,
 	
-		EMERGENCYSTOP = 2,
+		[Description("A dimmer switch has variable positions, and may adjust electrical power or other " +
+	    "setting (according to the switched port type).")]
+		DIMMERSWITCH = 2,
 	
-		STARTER = 3,
+		[Description("An emergency stop device acts to remove as quickly as possible any danger that ma" +
+	    "y have arisen unexpectedly.")]
+		EMERGENCYSTOP = 3,
 	
-		SWITCHDISCONNECTOR = 4,
+		[Description("A set of buttons or switches, each potentially applicable to a different device.")]
+		KEYPAD = 4,
 	
-		TOGGLESWITCH = 5,
+		[Description("A momentary switch has no position, and may trigger some action to occur.")]
+		MOMENTARYSWITCH = 5,
 	
+		[Description("A selector switch has multiple positions, and may change the source or level of p" +
+	    "ower or other setting (according to the switched port type).")]
+		SELECTORSWITCH = 6,
+	
+		[Description("A starter is a switch which in the closed position controls the application of po" +
+	    "wer to an electrical device.")]
+		STARTER = 7,
+	
+		[Description("A switch disconnector is a switch which in the open position satisfies the isolat" +
+	    "ing requirements specified for a disconnector.")]
+		SWITCHDISCONNECTOR = 8,
+	
+		[Description("A toggle switch has two positions, and may enable or isolate electrical power or " +
+	    "other setting (according to the switched port type).")]
+		TOGGLESWITCH = 9,
+	
+		[Description("User-defined type.")]
 		USERDEFINED = -1,
 	
+		[Description("Undefined type.")]
 		NOTDEFINED = 0,
 	
 	}

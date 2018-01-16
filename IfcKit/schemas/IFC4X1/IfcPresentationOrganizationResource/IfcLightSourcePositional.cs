@@ -14,15 +14,15 @@ using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcPresentationResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcPresentationOrganizationResource
 {
-	[Guid("d92a896f-aee3-4a47-96d4-944a079645b4")]
+	[Guid("32a170a7-e0ba-48c0-9f27-f2a1df1265d0")]
 	public partial class IfcLightSourcePositional : IfcLightSource
 	{
 		[DataMember(Order=0)] 
+		[XmlElement]
 		[Required()]
 		IfcCartesianPoint _Position;
 	
@@ -52,9 +52,9 @@ namespace BuildingSmart.IFC.IfcPresentationOrganizationResource
 	    "ht node illuminates geometry within radius of its location.\r\n")]
 		public IfcCartesianPoint Position { get { return this._Position; } set { this._Position = value;} }
 	
-		[Description("Definition from IAI: The maximum distance from the light source for a surface sti" +
-	    "ll to be illuminated.\r\nDefinition from VRML97 - ISO/IEC 14772-1:1997: A Point li" +
-	    "ght node illuminates geometry within radius of its location.\r\n")]
+		[Description("The maximum distance from the light source for a surface still to be illuminated." +
+	    "\r\nDefinition from VRML97 - ISO/IEC 14772-1:1997: A Point light node illuminates " +
+	    "geometry within radius of its location.\r\n")]
 		public IfcPositiveLengthMeasure Radius { get { return this._Radius; } set { this._Radius = value;} }
 	
 		[Description("Definition from ISO/CD 10303-46:1992: This real indicates the value of the attenu" +
@@ -66,9 +66,8 @@ namespace BuildingSmart.IFC.IfcPresentationOrganizationResource
 	    "source.\r\n")]
 		public IfcReal DistanceAttenuation { get { return this._DistanceAttenuation; } set { this._DistanceAttenuation = value;} }
 	
-		[Description("Definition from the IAI: This real indicates the value of the attenuation in the " +
-	    "lighting equation that proportional to the square value of the distance from the" +
-	    " light source.\r\n")]
+		[Description("This real indicates the value of the attenuation in the lighting equation that pr" +
+	    "oportional to the square value of the distance from the light source.\r\n")]
 		public IfcReal QuadricAttenuation { get { return this._QuadricAttenuation; } set { this._QuadricAttenuation = value;} }
 	
 	

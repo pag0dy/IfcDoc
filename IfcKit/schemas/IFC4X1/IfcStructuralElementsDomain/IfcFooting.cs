@@ -10,27 +10,26 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfilePropertyResource;
+using BuildingSmart.IFC.IfcProfileResource;
+using BuildingSmart.IFC.IfcSharedComponentElements;
 
 namespace BuildingSmart.IFC.IfcStructuralElementsDomain
 {
-	[Guid("9614dcf4-032d-4497-84c7-8fe1081fd341")]
+	[Guid("0664744b-65e2-41ea-9b44-6b0a1749f000")]
 	public partial class IfcFooting : IfcBuildingElement
 	{
 		[DataMember(Order=0)] 
 		[XmlAttribute]
-		[Required()]
-		IfcFootingTypeEnum _PredefinedType;
+		IfcFootingTypeEnum? _PredefinedType;
 	
 	
-		[Description("The generic type of the footing.")]
-		public IfcFootingTypeEnum PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
+		[Description("The generic type of the footing.\r\n\r\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE" +
+	    "&nbsp; Attribute made optional.  Type information can be provided by <em>IfcRelD" +
+	    "efinesByType</em> and <em>IfcFootingType</em>.</font></blockquote>")]
+		public IfcFootingTypeEnum? PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	
 	}

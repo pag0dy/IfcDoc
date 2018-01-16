@@ -11,34 +11,30 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
+using BuildingSmart.IFC.IfcConstraintResource;
+using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 
 namespace BuildingSmart.IFC.IfcUtilityResource
 {
-	[Guid("a925bebd-3061-4c03-b8e4-527792999e24")]
+	[Guid("dcf395ca-c227-4340-a8db-8f53ebd905d5")]
 	public partial class IfcTableRow
 	{
 		[DataMember(Order=0)] 
-		[Required()]
 		IList<IfcValue> _RowCells = new List<IfcValue>();
 	
 		[DataMember(Order=1)] 
-		[Required()]
-		Boolean _IsHeading;
-	
-		[InverseProperty("Rows")] 
-		IfcTable _OfTable;
+		[XmlAttribute]
+		IfcBoolean? _IsHeading;
 	
 	
-		[Description(@"The value of information by row and column using the units defined. NOTE - The row value identifies both the actual value and the units in which it is recorded. Each cell (unique row and column) may have a different value AND different units. If the row is a heading row, then the row values are strings defined by the IfcString.")]
+		[Description("The data value of the table cell..")]
 		public IList<IfcValue> RowCells { get { return this._RowCells; } }
 	
 		[Description("Flag which identifies if the row is a heading row or a row which contains row val" +
-	    "ues. NOTE - If the row is a heading, the flag takes the value = TRUE.")]
-		public Boolean IsHeading { get { return this._IsHeading; } set { this._IsHeading = value;} }
-	
-		[Description("Reference to the IfcTable, in which the IfcTableRow is defined (or contained).")]
-		public IfcTable OfTable { get { return this._OfTable; } set { this._OfTable = value;} }
+	    "ues. <blockquote class=\"note\">NOTE - If the row is a heading, the flag takes the" +
+	    " value = TRUE.</blockquote>")]
+		public IfcBoolean? IsHeading { get { return this._IsHeading; } set { this._IsHeading = value;} }
 	
 	
 	}

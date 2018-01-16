@@ -25,9 +25,18 @@ using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcSharedBldgElements
 {
-	[Guid("02dba92d-c44c-4def-ac08-eb243c6a3ab7")]
+	[Guid("3395e66f-bd77-4cce-a82f-4ccb81430e2c")]
 	public partial class IfcCurtainWall : IfcBuildingElement
 	{
+		[DataMember(Order=0)] 
+		[XmlAttribute]
+		IfcCurtainWallTypeEnum? _PredefinedType;
+	
+	
+		[Description(@"Predefined generic type for a curtain wall that is specified in an enumeration. There may be a property set given specificly for the predefined types.
+	<blockquote class=""note"">NOTE&nbsp; The <em>PredefinedType</em> shall only be used, if no <em>IfcCurtainWallType</em> is assigned, providing its own <em>IfcCurtainWallType.PredefinedType</em>.</blockquote>
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE  The attribute has been added at the end of the entity definition.</blockquote> ")]
+		public IfcCurtainWallTypeEnum? PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	
 	}

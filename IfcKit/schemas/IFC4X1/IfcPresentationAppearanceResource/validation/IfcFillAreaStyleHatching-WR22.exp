@@ -1,2 +1,0 @@
-﻿NOT(EXISTS(PatternStart)) 
-OR (PatternStart.Dim = 2)

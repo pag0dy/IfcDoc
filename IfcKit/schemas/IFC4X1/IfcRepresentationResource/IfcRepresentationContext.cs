@@ -21,8 +21,8 @@ using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcRepresentationResource
 {
-	[Guid("01b34d06-5983-40a5-8525-5fa6d569967d")]
-	public partial class IfcRepresentationContext
+	[Guid("38217e82-b534-4baa-87a6-49402ed0a52c")]
+	public abstract partial class IfcRepresentationContext
 	{
 		[DataMember(Order=0)] 
 		[XmlAttribute]

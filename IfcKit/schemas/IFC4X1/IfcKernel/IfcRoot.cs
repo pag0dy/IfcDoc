@@ -11,20 +11,20 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcConstraintResource;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometricModelResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
+using BuildingSmart.IFC.IfcProcessExtension;
 using BuildingSmart.IFC.IfcPropertyResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
 using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcKernel
 {
-	[Guid("573a9f55-5906-4592-af57-a0b4b630765d")]
+	[Guid("f8efd3b8-d3ea-429a-95d6-d19264324999")]
 	public abstract partial class IfcRoot
 	{
 		[DataMember(Order=0)] 
@@ -33,7 +33,7 @@ namespace BuildingSmart.IFC.IfcKernel
 		IfcGloballyUniqueId _GlobalId;
 	
 		[DataMember(Order=1)] 
-		[Required()]
+		[XmlElement]
 		IfcOwnerHistory _OwnerHistory;
 	
 		[DataMember(Order=2)] 
@@ -48,10 +48,10 @@ namespace BuildingSmart.IFC.IfcKernel
 		[Description("Assignment of a globally unique identifier within the entire software world.\r\n")]
 		public IfcGloballyUniqueId GlobalId { get { return this._GlobalId; } set { this._GlobalId = value;} }
 	
-		[Description("Assignment of the information about the current ownership of that object, includi" +
-	    "ng owning actor, application, local identification and information captured abou" +
-	    "t the recent changes of the object, NOTE: only the last modification in stored.\r" +
-	    "\n")]
+		[Description(@"Assignment of the information about the current ownership of that object, including owning actor, application, local identification and information captured about the recent changes of the object, 
+	
+	<blockquote class=""note"">NOTE&nbsp; only the last modification in stored - either as addition, deletion or modification.</blockquote>
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The attribute has been changed to be OPTIONAL.</blockquote>")]
 		public IfcOwnerHistory OwnerHistory { get { return this._OwnerHistory; } set { this._OwnerHistory = value;} }
 	
 		[Description("Optional name for use by the participating software systems or users. For some su" +

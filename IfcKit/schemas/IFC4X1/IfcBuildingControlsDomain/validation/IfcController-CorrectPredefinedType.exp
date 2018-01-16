@@ -1,0 +1,3 @@
+﻿NOT(EXISTS(PredefinedType)) OR 
+ (PredefinedType <> IfcControllerTypeEnum.USERDEFINED) OR 
+ ((PredefinedType = IfcControllerTypeEnum.USERDEFINED) AND EXISTS (SELF\IfcObject.ObjectType))

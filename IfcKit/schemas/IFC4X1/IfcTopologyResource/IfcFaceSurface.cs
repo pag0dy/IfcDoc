@@ -11,21 +11,24 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcGeometryResource;
+using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 
 namespace BuildingSmart.IFC.IfcTopologyResource
 {
-	[Guid("33f5691b-7957-46f4-a44c-3b5069f82548")]
+	[Guid("d6ead809-0b4d-450c-af17-45d526239263")]
 	public partial class IfcFaceSurface : IfcFace,
 		BuildingSmart.IFC.IfcGeometricConstraintResource.IfcSurfaceOrFaceSurface
 	{
 		[DataMember(Order=0)] 
+		[XmlElement]
 		[Required()]
 		IfcSurface _FaceSurface;
 	
 		[DataMember(Order=1)] 
+		[XmlAttribute]
 		[Required()]
-		Boolean _SameSense;
+		IfcBoolean _SameSense;
 	
 	
 		[Description("The surface which defines the internal shape of the face. This surface may be unb" +
@@ -35,7 +38,7 @@ namespace BuildingSmart.IFC.IfcTopologyResource
 	
 		[Description("This flag indicates whether the sense of the surface normal agrees with (TRUE), o" +
 	    "r opposes (FALSE), the sense of the topological normal to the face.")]
-		public Boolean SameSense { get { return this._SameSense; } set { this._SameSense = value;} }
+		public IfcBoolean SameSense { get { return this._SameSense; } set { this._SameSense = value;} }
 	
 	
 	}

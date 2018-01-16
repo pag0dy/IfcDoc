@@ -25,7 +25,7 @@ using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcSharedBldgElements
 {
-	[Guid("82de227f-805b-4ec8-8245-a8f49945bb9f")]
+	[Guid("4a38ac16-6674-455e-aa56-e24fd08b6444")]
 	public partial class IfcRampFlightType : IfcBuildingElementType
 	{
 		[DataMember(Order=0)] 

@@ -10,12 +10,15 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcDateTimeResource;
+using BuildingSmart.IFC.IfcExternalReferenceResource;
 
 namespace BuildingSmart.IFC.IfcMeasureResource
 {
-	[Guid("e0ad2575-9d73-47b1-89ca-9117f41a0a96")]
+	[Guid("a2193f66-ca4e-49a1-8ad6-fcf7f23c5985")]
 	public partial struct IfcModulusOfSubgradeReactionMeasure :
-		BuildingSmart.IFC.IfcMeasureResource.IfcDerivedMeasureValue
+		BuildingSmart.IFC.IfcMeasureResource.IfcDerivedMeasureValue,
+		BuildingSmart.IFC.IfcStructuralLoadResource.IfcModulusOfSubgradeReactionSelect
 	{
 		[XmlText]
 		public Double Value;

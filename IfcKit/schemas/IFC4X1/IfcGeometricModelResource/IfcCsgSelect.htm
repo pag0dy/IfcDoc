@@ -1,15 +1,15 @@
-﻿<EPM-HTML> 
-	 <P><U>Definition from ISO/CD 10303-42:1992</U>: This type identifies the
-		types of entity which may be selected as the root of a CSG tree including a
-		single CSG primitive as a special case (currently not in IFC). </P> 
-	 <P><U>Definition from IAI</U>: In the current IFC Release only Boolean
-		result (<I>IfcBooleanResult</I>) is defined for being a root tree expression
-		(at <I>IfcCsgSolid</I>). CSG primitives are out of scope for the current IFC
-		Release. </P> 
-	 <BLOCKQUOTE> 
-		<P><FONT COLOR="#0000FF" SIZE="-1">NOTE Corresponding STEP type:
-		  csg_select, please refer to ISO/IS 10303-42:1994, p.168 for the final
-		  definition of the formal standard. </FONT></P> 
-		<P><FONT COLOR="#0000FF" SIZE="-1">HISTORY New Type in IFC Release 1.5.1.
-		  </FONT></P></BLOCKQUOTE>
-</EPM-HTML>
+﻿<p>Select type enabling the choice between
+<em>IfcBooleanResult</em> and subtypes of
+<em>IfcCsgPrimitive3D</em> as potential root tree expression at
+<em>IfcCsgSolid</em>.</p>
+
+<blockquote class="extDef">NOTE&nbsp; Definition from ISO
+10303-42:<br>
+This type identifies the types of entity which may be selected as
+the root of a CSG tree including a single CSG primitive as a
+special case.</blockquote>
+
+<blockquote class="note">NOTE&nbsp; Corresponding STEP type
+<strong>csg_select</strong> defined in ISO 10303-42.</blockquote>
+<blockquote class="history">HISTORY&nbsp; New type in
+IFC1.5.1.</blockquote>

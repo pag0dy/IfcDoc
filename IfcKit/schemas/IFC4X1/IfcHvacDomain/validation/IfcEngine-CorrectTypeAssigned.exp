@@ -1,0 +1,2 @@
+﻿(SIZEOF(IsTypedBy) = 0) OR 
+('IFCHVACDOMAIN.IFCENGINETYPE' IN TYPEOF(SELF\IfcObject.IsTypedBy[1].RelatingType))

@@ -1,0 +1,29 @@
+﻿<p>The <em>IfcTessellatedFaceSet</em> is a boundary representation topological model limited to planar faces and straight edges. It may represent an approximation of an analytical surface or solid that may be provided in addition to its tessellation as a separate shape representation. The <em>IfcTessellatedFaceSet</em> provides a compact data representation of an connected face set using indices into ordered lists of vertices, normals, colours, and texture maps.</p>
+
+<blockquote class="note">
+NOTE&nbsp; The compact representation has been chosen to enable small data sets despite potentially large sets of faces, edges and vertices needed to represent tessellations of analyticals surfaces and solids, and despite large sets of colour and texture information to annotate the tessellated faces.</blockquote>
+
+<p>The <em>IfcTessellatedFaceSet</em> is an abstract supertype of tesselated face sets each imposing specific constraints on face generation for tessellation, such as triangulation (with or without strip and fans), or quadrilaterals, or polygonal faces (with or without inner loops).</p>
+
+<blockquote class="note">
+NOTE&nbsp; Not all different constraints on face sets are included as specific subtypes in this release of the specification.</blockquote>
+
+<p>The following attributes apply to all subtypes:</p>
+<ul>
+ <li>The <em>Coordinates</em> are the ordered list of Cartesian points representing the vertices of the tessellated item. An index list, defined at the level of subtypes, uses the points, identified by index position, to construct the polylines that represent the faces.</li>
+ <li>The <em>HasColours</em> inverse relation provides an indexed colour map with an corresponding list of indices providing a colour for each face of the tessellated face set.</li>
+ <li>The <em>HasTextures</em> inverse relation provides an indexed texture map with an corresponding list of indices providing texture coordinates that map to the geometric coordinates of the polylines representing the faces.</li>
+</ul>
+
+<p>Each face of the tessellated face set shall have:</p>
+<ul>
+ <li>at least three non-coincident vertices;</li>
+ <li>vertices that define a planar polygon;</li>
+ <li>vertices that define a non-self-intersecting polygon.</li>
+</ul>
+
+<blockquote class="note">
+NOTE&nbsp; The definition of <em>IfcTessellatedFaceSet</em> is based on the <strong>indexedFaceSet</strong> defined in ISO/IEC 19775-1</blockquote>
+
+<blockquote class="history">HISTORY&nbsp; New entity in IFC4.</blockquote>
+  

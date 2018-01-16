@@ -1,0 +1,3 @@
+﻿NOT(EXISTS(PredefinedType)) OR 
+ (PredefinedType <> IfcPipeSegmentTypeEnum.USERDEFINED) OR 
+ ((PredefinedType = IfcPipeSegmentTypeEnum.USERDEFINED) AND EXISTS (SELF\IfcObject.ObjectType))

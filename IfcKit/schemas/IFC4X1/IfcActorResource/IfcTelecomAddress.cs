@@ -10,11 +10,12 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 
 namespace BuildingSmart.IFC.IfcActorResource
 {
-	[Guid("59fd10bd-08d3-457d-a2c7-4ae58c749ed2")]
+	[Guid("dd829d63-2572-480c-8a2d-ccbe3578cd7e")]
 	public partial class IfcTelecomAddress : IfcAddress
 	{
 		[DataMember(Order=0)] 
@@ -35,7 +36,11 @@ namespace BuildingSmart.IFC.IfcActorResource
 	
 		[DataMember(Order=4)] 
 		[XmlAttribute]
-		IfcLabel? _WWWHomePageURL;
+		IfcURIReference? _WWWHomePageURL;
+	
+		[DataMember(Order=5)] 
+		[XmlAttribute]
+		IList<IfcURIReference> _MessagingIDs = new List<IfcURIReference>();
 	
 	
 		[Description("The list of telephone numbers at which telephone messages may be received.")]
@@ -51,13 +56,16 @@ namespace BuildingSmart.IFC.IfcActorResource
 		public IList<IfcLabel> ElectronicMailAddresses { get { return this._ElectronicMailAddresses; } }
 	
 		[Description(@"The world wide web address at which the preliminary page of information for the person or organization can be located.
-	<EPM-HTML>
-	<BLOCKQUOTE><FONT SIZE=""-1"">NOTE: Information on the world wide web for a person or organization may be separated 
+	<blockquote class=""note"">NOTE&nbsp; Information on the world wide web for a person or organization may be separated 
 	into a number of pages and across a number of host sites, all of which may be linked together. It is assumed that 
-	all such information may be referenced from a single page that is termed the home page for that person or organization.
-	</FONT></BLOCKQUOTE>
-	</EPM-HTML>")]
-		public IfcLabel? WWWHomePageURL { get { return this._WWWHomePageURL; } set { this._WWWHomePageURL = value;} }
+	all such information may be referenced from a single page that is termed the home page for that person or organization.</blockquote>")]
+		public IfcURIReference? WWWHomePageURL { get { return this._WWWHomePageURL; } set { this._WWWHomePageURL = value;} }
+	
+		[Description("IDs or addresses for any other means of telecommunication, for example instant me" +
+	    "ssaging, voice-over-IP, or file transfer protocols. The communication protocol i" +
+	    "s indicated by the URI value with scheme designations such as irc:, sip:, or ftp" +
+	    ":.")]
+		public IList<IfcURIReference> MessagingIDs { get { return this._MessagingIDs; } }
 	
 	
 	}

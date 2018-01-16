@@ -14,25 +14,15 @@ using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfilePropertyResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
 using BuildingSmart.IFC.IfcStructuralLoadResource;
 
 namespace BuildingSmart.IFC.IfcStructuralAnalysisDomain
 {
-	[Guid("ee7c169b-3bec-4eac-b2db-c9c5b0f1c4be")]
-	public partial class IfcStructuralLinearAction : IfcStructuralAction
+	[Guid("8db6f32f-4084-4717-8dfb-ad3400beaf4c")]
+	public partial class IfcStructuralLinearAction : IfcStructuralCurveAction
 	{
-		[DataMember(Order=0)] 
-		[XmlAttribute]
-		[Required()]
-		IfcProjectedOrTrueLengthEnum _ProjectedOrTrue;
-	
-	
-		[Description(@"Defines if the load values are given by using the length of the member on which they act (true length) or by using the projected length resulting from the loaded member and the global project coordinate system. It is only considered if the global project coordinate system is used, and if the action is of type IfcStructuralLinearAction or IfcStructuralPlanarAction. ")]
-		public IfcProjectedOrTrueLengthEnum ProjectedOrTrue { get { return this._ProjectedOrTrue; } set { this._ProjectedOrTrue = value;} }
 	
 	
 	}

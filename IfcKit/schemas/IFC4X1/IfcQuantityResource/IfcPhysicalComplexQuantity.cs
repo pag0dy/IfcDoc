@@ -10,11 +10,12 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 
 namespace BuildingSmart.IFC.IfcQuantityResource
 {
-	[Guid("dbb239c0-e5ac-43ca-b951-fccecbd2f647")]
+	[Guid("b98590b4-3769-4d15-88cf-7716e2c2bada")]
 	public partial class IfcPhysicalComplexQuantity : IfcPhysicalQuantity
 	{
 		[DataMember(Order=0)] 

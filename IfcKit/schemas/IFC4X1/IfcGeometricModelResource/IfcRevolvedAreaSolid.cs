@@ -18,10 +18,11 @@ using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometricModelResource
 {
-	[Guid("7da3601b-9ac2-4100-91e3-d883f16a8be8")]
+	[Guid("81970f2f-c63e-4133-adaf-c74d522cb449")]
 	public partial class IfcRevolvedAreaSolid : IfcSweptAreaSolid
 	{
 		[DataMember(Order=0)] 
+		[XmlElement]
 		[Required()]
 		IfcAxis1Placement _Axis;
 	
@@ -34,8 +35,9 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 		[Description("Axis about which revolution will take place.")]
 		public IfcAxis1Placement Axis { get { return this._Axis; } set { this._Axis = value;} }
 	
-		[Description("Angle through which the sweep will be made. This angle is measured from the plane" +
-	    " of the sweep.")]
+		[Description("The angle through which the sweep will be made. This angle is measured from the p" +
+	    "lane of the swept area provided by the XY plane of the position coordinate syste" +
+	    "m.")]
 		public IfcPlaneAngleMeasure Angle { get { return this._Angle; } set { this._Angle = value;} }
 	
 		public new IfcLine AxisLine { get { return null; } }

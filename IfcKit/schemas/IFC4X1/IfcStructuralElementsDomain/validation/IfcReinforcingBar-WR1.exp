@@ -1,1 +1,0 @@
-﻿(BarRole <> IfcReinforcingBarRoleEnum.USERDEFINED) OR ((BarRole = IfcReinforcingBarRoleEnum.USERDEFINED) AND EXISTS(SELF\IfcObject.ObjectType)) 

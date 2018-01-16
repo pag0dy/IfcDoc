@@ -14,57 +14,51 @@ using BuildingSmart.IFC.IfcMeasureResource;
 
 namespace BuildingSmart.IFC.IfcStructuralLoadResource
 {
-	[Guid("f702e9bf-6873-48a7-b45f-d2ed1a04333d")]
+	[Guid("85e8748b-e47c-4c11-8221-841a47ee4045")]
 	public partial class IfcBoundaryEdgeCondition : IfcBoundaryCondition
 	{
 		[DataMember(Order=0)] 
-		[XmlAttribute]
-		IfcModulusOfLinearSubgradeReactionMeasure? _LinearStiffnessByLengthX;
+		IfcModulusOfTranslationalSubgradeReactionSelect _TranslationalStiffnessByLengthX;
 	
 		[DataMember(Order=1)] 
-		[XmlAttribute]
-		IfcModulusOfLinearSubgradeReactionMeasure? _LinearStiffnessByLengthY;
+		IfcModulusOfTranslationalSubgradeReactionSelect _TranslationalStiffnessByLengthY;
 	
 		[DataMember(Order=2)] 
-		[XmlAttribute]
-		IfcModulusOfLinearSubgradeReactionMeasure? _LinearStiffnessByLengthZ;
+		IfcModulusOfTranslationalSubgradeReactionSelect _TranslationalStiffnessByLengthZ;
 	
 		[DataMember(Order=3)] 
-		[XmlAttribute]
-		IfcModulusOfRotationalSubgradeReactionMeasure? _RotationalStiffnessByLengthX;
+		IfcModulusOfRotationalSubgradeReactionSelect _RotationalStiffnessByLengthX;
 	
 		[DataMember(Order=4)] 
-		[XmlAttribute]
-		IfcModulusOfRotationalSubgradeReactionMeasure? _RotationalStiffnessByLengthY;
+		IfcModulusOfRotationalSubgradeReactionSelect _RotationalStiffnessByLengthY;
 	
 		[DataMember(Order=5)] 
-		[XmlAttribute]
-		IfcModulusOfRotationalSubgradeReactionMeasure? _RotationalStiffnessByLengthZ;
+		IfcModulusOfRotationalSubgradeReactionSelect _RotationalStiffnessByLengthZ;
 	
 	
-		[Description("Linear stiffness value in x-direction of the coordinate system defined by the ins" +
-	    "tance which uses this resource object.")]
-		public IfcModulusOfLinearSubgradeReactionMeasure? LinearStiffnessByLengthX { get { return this._LinearStiffnessByLengthX; } set { this._LinearStiffnessByLengthX = value;} }
+		[Description("Translational stiffness value in x-direction of the coordinate system defined by " +
+	    "the instance which uses this resource object.")]
+		public IfcModulusOfTranslationalSubgradeReactionSelect TranslationalStiffnessByLengthX { get { return this._TranslationalStiffnessByLengthX; } set { this._TranslationalStiffnessByLengthX = value;} }
 	
-		[Description("Linear stiffness value in y-direction of the coordinate system defined by the ins" +
-	    "tance which uses this resource object.")]
-		public IfcModulusOfLinearSubgradeReactionMeasure? LinearStiffnessByLengthY { get { return this._LinearStiffnessByLengthY; } set { this._LinearStiffnessByLengthY = value;} }
+		[Description("Translational stiffness value in y-direction of the coordinate system defined by " +
+	    "the instance which uses this resource object.")]
+		public IfcModulusOfTranslationalSubgradeReactionSelect TranslationalStiffnessByLengthY { get { return this._TranslationalStiffnessByLengthY; } set { this._TranslationalStiffnessByLengthY = value;} }
 	
-		[Description("Linear stiffness value in z-direction of the coordinate system defined by the ins" +
-	    "tance which uses this resource object.")]
-		public IfcModulusOfLinearSubgradeReactionMeasure? LinearStiffnessByLengthZ { get { return this._LinearStiffnessByLengthZ; } set { this._LinearStiffnessByLengthZ = value;} }
+		[Description("Translational stiffness value in z-direction of the coordinate system defined by " +
+	    "the instance which uses this resource object.")]
+		public IfcModulusOfTranslationalSubgradeReactionSelect TranslationalStiffnessByLengthZ { get { return this._TranslationalStiffnessByLengthZ; } set { this._TranslationalStiffnessByLengthZ = value;} }
 	
 		[Description("Rotational stiffness value about the x-axis of the coordinate system defined by t" +
 	    "he instance which uses this resource object.")]
-		public IfcModulusOfRotationalSubgradeReactionMeasure? RotationalStiffnessByLengthX { get { return this._RotationalStiffnessByLengthX; } set { this._RotationalStiffnessByLengthX = value;} }
+		public IfcModulusOfRotationalSubgradeReactionSelect RotationalStiffnessByLengthX { get { return this._RotationalStiffnessByLengthX; } set { this._RotationalStiffnessByLengthX = value;} }
 	
 		[Description("Rotational stiffness value about the y-axis of the coordinate system defined by t" +
 	    "he instance which uses this resource object.")]
-		public IfcModulusOfRotationalSubgradeReactionMeasure? RotationalStiffnessByLengthY { get { return this._RotationalStiffnessByLengthY; } set { this._RotationalStiffnessByLengthY = value;} }
+		public IfcModulusOfRotationalSubgradeReactionSelect RotationalStiffnessByLengthY { get { return this._RotationalStiffnessByLengthY; } set { this._RotationalStiffnessByLengthY = value;} }
 	
 		[Description("Rotational stiffness value about the z-axis of the coordinate system defined by t" +
 	    "he instance which uses this resource object.")]
-		public IfcModulusOfRotationalSubgradeReactionMeasure? RotationalStiffnessByLengthZ { get { return this._RotationalStiffnessByLengthZ; } set { this._RotationalStiffnessByLengthZ = value;} }
+		public IfcModulusOfRotationalSubgradeReactionSelect RotationalStiffnessByLengthZ { get { return this._RotationalStiffnessByLengthZ; } set { this._RotationalStiffnessByLengthZ = value;} }
 	
 	
 	}

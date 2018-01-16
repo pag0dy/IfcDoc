@@ -20,21 +20,25 @@ using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
-	[Guid("74f28ee8-1bff-4f28-bfde-eaa2ccce9e9d")]
+	[Guid("da40a055-7f34-44ae-85cb-40b20d82ae5a")]
 	public abstract partial class IfcCartesianTransformationOperator : IfcGeometricRepresentationItem
 	{
 		[DataMember(Order=0)] 
+		[XmlElement]
 		IfcDirection _Axis1;
 	
 		[DataMember(Order=1)] 
+		[XmlElement]
 		IfcDirection _Axis2;
 	
 		[DataMember(Order=2)] 
+		[XmlElement]
 		[Required()]
 		IfcCartesianPoint _LocalOrigin;
 	
 		[DataMember(Order=3)] 
-		Double? _Scale;
+		[XmlAttribute]
+		IfcReal? _Scale;
 	
 	
 		[Description("The direction used to determine U[1], the derived X axis direction.")]
@@ -49,9 +53,9 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		public IfcCartesianPoint LocalOrigin { get { return this._LocalOrigin; } set { this._LocalOrigin = value;} }
 	
 		[Description("The scaling value specified for the transformation.")]
-		public Double? Scale { get { return this._Scale; } set { this._Scale = value;} }
+		public IfcReal? Scale { get { return this._Scale; } set { this._Scale = value;} }
 	
-		public new Double Scl { get { return null; } }
+		public new IfcReal Scl { get { return new IfcReal(); } }
 	
 		public new IfcDimensionCount Dim { get { return new IfcDimensionCount(); } }
 	

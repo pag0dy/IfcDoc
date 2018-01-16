@@ -1,0 +1,3 @@
+﻿NOT(EXISTS(PredefinedType)) OR
+ (PredefinedType <> IfcSpaceTypeEnum.USERDEFINED) OR
+ ((PredefinedType = IfcSpaceTypeEnum.USERDEFINED) AND EXISTS (SELF\IfcObject.ObjectType))

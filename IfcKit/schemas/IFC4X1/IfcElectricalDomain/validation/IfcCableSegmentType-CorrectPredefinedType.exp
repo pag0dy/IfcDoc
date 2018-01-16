@@ -1,0 +1,2 @@
+﻿(PredefinedType <> IfcCableSegmentTypeEnum.USERDEFINED) OR
+((PredefinedType = IfcCableSegmentTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcElementType.ElementType))

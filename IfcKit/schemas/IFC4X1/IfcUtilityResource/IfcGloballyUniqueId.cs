@@ -11,11 +11,13 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
+using BuildingSmart.IFC.IfcConstraintResource;
+using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 
 namespace BuildingSmart.IFC.IfcUtilityResource
 {
-	[Guid("1a0a242b-d9b0-4745-977e-952dd13c838b")]
+	[Guid("e9b6fb13-a7da-4507-8419-59a1f5ac6441")]
 	public partial struct IfcGloballyUniqueId
 	{
 		[XmlText]

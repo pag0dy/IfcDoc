@@ -18,7 +18,7 @@ using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometricModelResource
 {
-	[Guid("0c4cfc00-0efe-4c96-a196-91b077d40492")]
+	[Guid("284e8880-6f10-4fea-873a-8e1ec3cf8cc0")]
 	public partial class IfcFaceBasedSurfaceModel : IfcGeometricRepresentationItem,
 		BuildingSmart.IFC.IfcGeometricConstraintResource.IfcSurfaceOrFaceSurface
 	{

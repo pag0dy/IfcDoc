@@ -11,14 +11,17 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
+using BuildingSmart.IFC.IfcConstraintResource;
+using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 
 namespace BuildingSmart.IFC.IfcUtilityResource
 {
-	[Guid("a43b33fa-7560-44f0-a028-e14e498b919b")]
+	[Guid("88190cb4-3569-4c42-9b7d-8778145e179e")]
 	public partial class IfcApplication
 	{
 		[DataMember(Order=0)] 
+		[XmlElement]
 		[Required()]
 		IfcOrganization _ApplicationDeveloper;
 	
@@ -38,7 +41,7 @@ namespace BuildingSmart.IFC.IfcUtilityResource
 		IfcIdentifier _ApplicationIdentifier;
 	
 	
-		[Description("Name of the application developer, being requested to be member of the IAI.\r\n")]
+		[Description("Name of the application developer.\r\n")]
 		public IfcOrganization ApplicationDeveloper { get { return this._ApplicationDeveloper; } set { this._ApplicationDeveloper = value;} }
 	
 		[Description("The version number of this software as specified by the developer of the applicat" +

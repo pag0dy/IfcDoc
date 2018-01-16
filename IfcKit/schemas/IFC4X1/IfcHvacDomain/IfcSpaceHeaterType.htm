@@ -1,62 +1,13 @@
-﻿<EPM-HTML>
-	<p><u><b>Definition from IAI</b></u>: 
-    The element type <i>IfcSpaceHeaterType</i> defines a list of commonly shared property
-	set definitions of a space heater and an optional set of product representations.
-	It is used to define a space heater specification (i.e. the specific product
-	information, that is common to all occurrences of that product type).</p> 
-	 
-	<blockquote>
-		<font size="-1">
-    	NOTE: This entity subsumes the entities <i>IfcHydronicHeater</i> and
-        <i>IfcUnitHeater</i> from IFC R2x.
-    	</font>
-    </blockquote>
+﻿<p>The flow terminal type <b>IfcSpaceHeaterType</b> defines commonly shared information for occurrences of space heaters. The set of shared information may include: <ul>
+<li>common properties with shared property sets</li>
+<li>common representations</li>
+<li>common materials</li>
+<li>common composition of elements</li>
+<li>common ports</li>
+</ul><p>It is used to define a space heater type specification indicating the specific product information that is common to all occurrences of that product type. 
+The <b>IfcSpaceHeaterType</b> may be declared within <em>IfcProject</em> or <em>IfcProjectLibrary</em> using <em>IfcRelDeclares</em> and may be exchanged with or without occurrences of the type. Occurrences of <b>IfcSpaceHeaterType</b> are represented by instances of <em>IfcSpaceHeater</em>. 
+Refer to the documentation at <em>IfcSpaceHeater</em> for supported property sets, materials, composition, and ports.</p>
 
-	<blockquote>
-		<font size="-1">
-		NOTE: The product representations are defined as
-		representation maps (at the level of the supertype <i>IfcTypeProduct</i>, which
-		get assigned by an element occurrence instance through the
-		<i>IfcShapeRepresentation.Item[1]</i> being an
-		<i>IfcMappedItem</i>.
-    	</font>
-    </blockquote>
-    
-    <p>A space heater type is used to define the common properties of a
-	space heater device that may be applied to many occurrences of that type.
-    Space heaters utilize a combination of radiation and/or natural convection
-    using a heating source such as steam or hot water. Examples of 
-    space heaters include radiators, convectors, baseboard and finned-tube heaters, etc.
-	Space heater types (or the instantiable subtypes) may be exchanged 
-    without being already assigned to occurrences.</p> 
-	
-    <p>The occurrences of the <i>IfcSpaceHeaterType</i> are represented
-	by instances of <i>IfcEnergyConversionDevice</i> or its subtypes.</p> 
-    
-    <p><u><b>Property Set Use Definition</b></u>:</p> 
-    <p>The property sets relating to this entity are defined by the
-    <i>IfcPropertySet</i> and attached by the <i>IfcRelDefinesByProperties</i>
-    relationship. It is accessible by the inverse <i>IsDefinedBy</i> relationship.
-    The following property set definitions specific to this entity are part
-    of this IFC release:
-    </p> 
-    <ul> 
-       <li><a href="../../psd/IfcHvacDomain/Pset_SpaceHeaterTypeCommon.xml"
-         target="SOURCE">Pset_SpaceHeaterTypeCommon</a>: common property set for all space heater
-         types
-       </li> 
-        <ul> 
-           <li><a href="../../psd/IfcHvacDomain/Pset_SpaceHeaterTypeHydronic.xml"
-             target="SOURCE">Pset_SpaceHeaterTypeHydronic</a>: property set for all hydronic 
-             space heater types
-           </li> 
-        </ul> 
-    </ul> 
-    
-	<blockquote>
-		<font color="#0000ff" size="-1">
-    	HISTORY: New entity in IFC Release 2x2.<br>
-    	</font>
-    </blockquote>
+<blockquote class="change-ifc2x4">IFC4 CHANGE &nbsp;Supertype changed from <i>IfcEnergyConversionDeviceType</i> to <i>IfcFlowTerminalType</i></blockquote>
 
-</EPM-HTML>
+

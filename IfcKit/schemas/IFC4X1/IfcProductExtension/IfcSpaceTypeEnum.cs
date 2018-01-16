@@ -11,7 +11,6 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometricModelResource;
@@ -20,20 +19,36 @@ using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProfilePropertyResource;
 using BuildingSmart.IFC.IfcPropertyResource;
 using BuildingSmart.IFC.IfcQuantityResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
 using BuildingSmart.IFC.IfcSharedBldgElements;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
-using BuildingSmart.IFC.IfcStructuralAnalysisDomain;
+using BuildingSmart.IFC.IfcSharedComponentElements;
+using BuildingSmart.IFC.IfcSharedFacilitiesElements;
 using BuildingSmart.IFC.IfcStructuralElementsDomain;
 
 namespace BuildingSmart.IFC.IfcProductExtension
 {
-	[Guid("fa18880d-90f1-4c1e-97e2-94f2ca2f4017")]
+	[Guid("258540e7-efd8-4560-9430-d5d91dccadab")]
 	public enum IfcSpaceTypeEnum
 	{
+		[Description("Any space not falling into another category.")]
+		SPACE = 1,
+	
+		[Description("A space dedication for use as a parking spot for vehicles, including access, such" +
+	    " as a parking aisle.")]
+		PARKING = 2,
+	
+		[Description("Gross Floor Area - a specific kind of space for each building story that includes" +
+	    " all net area and construction area (also the external envelop). Provision of su" +
+	    "ch a specific space is often required by regulations.")]
+		GFA = 3,
+	
+		INTERNAL = 4,
+	
+		EXTERNAL = 5,
+	
 		USERDEFINED = -1,
 	
 		NOTDEFINED = 0,

@@ -1,2 +1,0 @@
-﻿EXISTS (AppliedValue) OR 
-EXISTS (ValueOfComponents)

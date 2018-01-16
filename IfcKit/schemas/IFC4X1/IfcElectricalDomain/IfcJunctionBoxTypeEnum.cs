@@ -10,21 +10,24 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
 
 namespace BuildingSmart.IFC.IfcElectricalDomain
 {
-	[Guid("8bd69f80-c2ce-42f8-9592-de4a05a83751")]
+	[Guid("cd1735bb-0caa-46b3-8243-be9ba262cbdd")]
 	public enum IfcJunctionBoxTypeEnum
 	{
+		[Description("Contains cables, outlets, and/or switches for communications use.")]
+		DATA = 1,
+	
+		[Description("Contains cables, outlets, and/or switches for electrical power.")]
+		POWER = 2,
+	
+		[Description("User-defined type.")]
 		USERDEFINED = -1,
 	
+		[Description("Undefined type.")]
 		NOTDEFINED = 0,
 	
 	}

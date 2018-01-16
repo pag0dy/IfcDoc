@@ -11,12 +11,20 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
+using BuildingSmart.IFC.IfcApprovalResource;
+using BuildingSmart.IFC.IfcConstraintResource;
+using BuildingSmart.IFC.IfcCostResource;
 using BuildingSmart.IFC.IfcDateTimeResource;
+using BuildingSmart.IFC.IfcKernel;
+using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
+using BuildingSmart.IFC.IfcProfileResource;
+using BuildingSmart.IFC.IfcPropertyResource;
+using BuildingSmart.IFC.IfcQuantityResource;
 
 namespace BuildingSmart.IFC.IfcExternalReferenceResource
 {
-	[Guid("352f3d09-0e53-4ff4-8ff9-26fc123e1110")]
+	[Guid("fb069bb4-1678-4449-818f-48f7ae7dcc5e")]
 	public interface IfcDocumentSelect
 	{
 	}

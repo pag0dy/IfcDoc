@@ -20,10 +20,11 @@ using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
-	[Guid("bca3ce42-f3a2-4965-829c-1a3206e6adb3")]
+	[Guid("89fd5813-f37e-4602-a4ad-8cdb9bf8869c")]
 	public partial class IfcSurfaceOfRevolution : IfcSweptSurface
 	{
 		[DataMember(Order=0)] 
+		[XmlElement]
 		[Required()]
 		IfcAxis1Placement _AxisPosition;
 	

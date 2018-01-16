@@ -10,29 +10,37 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
 
 namespace BuildingSmart.IFC.IfcBuildingControlsDomain
 {
-	[Guid("b543d093-1a4b-4f2e-8fb0-b87547ddb7d9")]
+	[Guid("8bfe1a61-e461-402c-9535-70ab60b986db")]
 	public enum IfcAlarmTypeEnum
 	{
+		[Description("An audible alarm.")]
 		BELL = 1,
 	
+		[Description("An alarm activation mechanism in which a protective glass has to be broken to ena" +
+	    "ble a button to be pressed.")]
 		BREAKGLASSBUTTON = 2,
 	
+		[Description("A visual alarm.")]
 		LIGHT = 3,
 	
+		[Description("An alarm activation mechanism in which activation is achieved by a pulling action" +
+	    ".")]
 		MANUALPULLBOX = 4,
 	
+		[Description("An audible alarm.")]
 		SIREN = 5,
 	
+		[Description("An audible alarm.")]
 		WHISTLE = 6,
 	
+		[Description("User-defined type.")]
 		USERDEFINED = -1,
 	
+		[Description("Undefined type.")]
 		NOTDEFINED = 0,
 	
 	}

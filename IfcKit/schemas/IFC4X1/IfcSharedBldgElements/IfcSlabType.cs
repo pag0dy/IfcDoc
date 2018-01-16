@@ -25,7 +25,7 @@ using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcSharedBldgElements
 {
-	[Guid("c5bd305c-a609-4f45-a996-e7ade1bf936e")]
+	[Guid("c5119b23-0614-4223-839d-d6e3f491a378")]
 	public partial class IfcSlabType : IfcBuildingElementType
 	{
 		[DataMember(Order=0)] 
@@ -34,7 +34,8 @@ namespace BuildingSmart.IFC.IfcSharedBldgElements
 		IfcSlabTypeEnum _PredefinedType;
 	
 	
-		[Description("Type of the slab.")]
+		[Description("Identifies the predefined types of a slab element from which the type required ma" +
+	    "y be set.")]
 		public IfcSlabTypeEnum PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	

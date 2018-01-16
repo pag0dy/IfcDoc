@@ -10,32 +10,27 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialResource;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcPropertyResource;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
 using BuildingSmart.IFC.IfcSharedComponentElements;
 
 namespace BuildingSmart.IFC.IfcHvacDomain
 {
-	[Guid("70c93e6c-2b7b-4f0f-b83b-51483567b748")]
+	[Guid("815842c3-a79d-4d62-b628-39a0f4992a35")]
 	public enum IfcDuctSilencerTypeEnum
 	{
+		[Description("Flat-oval shaped duct silencer type.")]
 		FLATOVAL = 1,
 	
+		[Description("Rectangular shaped duct silencer type.")]
 		RECTANGULAR = 2,
 	
+		[Description("Round duct silencer type.")]
 		ROUND = 3,
 	
+		[Description("User-defined duct silencer type.")]
 		USERDEFINED = -1,
 	
+		[Description("Undefined duct silencer type.")]
 		NOTDEFINED = 0,
 	
 	}

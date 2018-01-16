@@ -11,7 +11,6 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometricModelResource;
@@ -20,36 +19,38 @@ using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProfilePropertyResource;
 using BuildingSmart.IFC.IfcPropertyResource;
 using BuildingSmart.IFC.IfcQuantityResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
 using BuildingSmart.IFC.IfcSharedBldgElements;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
-using BuildingSmart.IFC.IfcStructuralAnalysisDomain;
+using BuildingSmart.IFC.IfcSharedComponentElements;
+using BuildingSmart.IFC.IfcSharedFacilitiesElements;
 using BuildingSmart.IFC.IfcStructuralElementsDomain;
 
 namespace BuildingSmart.IFC.IfcProductExtension
 {
-	[Guid("521ef25f-3a02-4edc-9334-c735fc651c7d")]
-	public partial class IfcRelProjectsElement : IfcRelConnects
+	[Guid("3a589d07-713f-4a7d-90a7-1b9c3b668e2b")]
+	public partial class IfcRelProjectsElement : IfcRelDecomposes
 	{
 		[DataMember(Order=0)] 
+		[XmlIgnore]
 		[Required()]
 		IfcElement _RelatingElement;
 	
 		[DataMember(Order=1)] 
+		[XmlElement]
 		[Required()]
 		IfcFeatureElementAddition _RelatedFeatureElement;
 	
 	
-		[Description("<EPM-HTML>\r\nElement at which a projection is created by the associated <I>IfcProj" +
-	    "ectionElement</I>.\r\n</EPM-HTML>")]
+		[Description("Element at which a projection is created by the associated <em>IfcProjectionEleme" +
+	    "nt</em>.")]
 		public IfcElement RelatingElement { get { return this._RelatingElement; } set { this._RelatingElement = value;} }
 	
-		[Description("<EPM-HTML>\r\nReference to the <I>IfcFeatureElementAddition</I> that defines an add" +
-	    "ition to the volume of the element, by using a Boolean addition operation. An ex" +
-	    "ample is a projection at the associated element.\r\n</EPM-HTML>")]
+		[Description("Reference to the <em>IfcFeatureElementAddition</em> that defines an addition to t" +
+	    "he volume of the element, by using a Boolean addition operation. An example is a" +
+	    " projection at the associated element.")]
 		public IfcFeatureElementAddition RelatedFeatureElement { get { return this._RelatedFeatureElement; } set { this._RelatedFeatureElement = value;} }
 	
 	

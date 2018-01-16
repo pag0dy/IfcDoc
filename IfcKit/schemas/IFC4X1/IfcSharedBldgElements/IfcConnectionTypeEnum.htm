@@ -1,39 +1,53 @@
-﻿<EPM-HTML>
-	 <P><U>Definition from IAI</U>: This enumeration defines the different ways
-		how path based elements (here <I>IfcWallStandardCase</I>) can connect..</P> 
-	 <BLOCKQUOTE> 
-		<P><FONT SIZE="-1" COLOR="#0000FF">HISTORY: New type in IFC Release
-		  2.0</FONT></P></BLOCKQUOTE> 
-	 <TABLE BORDER="1" CELLPADDING="2" CELLSPACING="2"> 
-		<TR> 
-		  <TD WIDTH="260" VALIGN="TOP" ALIGN="LEFT">
-			 <P>L-Shape Connection </P>
-			 <UL> 
-				<LI>RelatingConnectionType: AtStart</LI> 
-				<LI>RelatedConnectionType: AtStart</LI> 
-			 </UL></TD> 
-		  <TD WIDTH="300"><IMG SRC="figures/IfcConnectionTypeEnum-Fig03.gif"
-			 WIDTH="143" HEIGHT="132" BORDER="0"></TD> 
-		</TR> 
-		<TR> 
-		  <TD WIDTH="260" VALIGN="TOP" ALIGN="LEFT">
-			 <P>L-Shape Connection </P>
-			 <UL> 
-				<LI>RelatingConnectionType: AtEnd</LI> 
-				<LI>RelatedConnectionType: AtStart</LI> 
-			 </UL></TD> 
-		  <TD WIDTH="300"><IMG SRC="figures/IfcConnectionTypeEnum-Fig01.gif"
-			 WIDTH="193" HEIGHT="132" BORDER="0"></TD> 
-		</TR> 
-		<TR> 
-		  <TD WIDTH="260" VALIGN="TOP" ALIGN="LEFT">
-			 <P>T-Shape Connection </P>
-			 <UL> 
-				<LI>RelatingConnectionType: AtPath</LI> 
-				<LI>RelatedConnectionType: AtStart</LI> 
-			 </UL></TD> 
-		  <TD WIDTH="300"><IMG SRC="figures/IfcConnectionTypeEnum-Fig02.gif"
-			 WIDTH="145" HEIGHT="133" BORDER="0"></TD> 
-		</TR> 
-	 </TABLE> 
-</EPM-HTML>
+﻿<p>This enumeration defines the different ways how path based elements (such as <em>IfcWallStandardCase</em>) can
+connect, as shown in Figure 188.</p>
+<blockquote class="history">HISTORY&nbsp; New type in IFC2.0</blockquote>
+
+<p>The enumerated items shall be used in the following combinations:</p>
+<table>
+<tr>
+<td>
+<table class="gridtable">
+<tr>
+ <th width="260" valign="top" align="left">Connection type</th>
+ <th width="300" valign="top" align="left">Illustration</th>
+</tr>
+<tr>
+<tr>
+<td width="260" valign="top" align="left">
+<p>L-Shape Connection</p>
+<ul>
+<li>RelatingConnectionType: AtStart</li>
+<li>RelatedConnectionType: AtStart</li>
+</ul>
+</td>
+<td width="300"><img src="../../../figures/IfcConnectionTypeEnum-Fig03.gif" width="143" height="132" border="0"></td>
+</tr>
+<tr>
+<td width="260" valign="top" align="left">
+<p>L-Shape Connection</p>
+<ul>
+<li>RelatingConnectionType: AtEnd</li>
+<li>RelatedConnectionType: AtStart</li>
+</ul>
+</td>
+<td width="300"><img src="../../../figures/IfcConnectionTypeEnum-Fig01.gif" width="193" height="132" border="0"></td>
+</tr>
+<tr>
+<td width="260" valign="top" align="left">
+<p>T-Shape Connection</p>
+<ul>
+<li>RelatingConnectionType: AtPath</li>
+<li>RelatedConnectionType: AtStart</li>
+</ul>
+</td>
+<td width="300"><img src="../../../figures/IfcConnectionTypeEnum-Fig02.gif" width="145" height="133" border="0"></td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td>
+<p class="figure">Figure 188 &mdash; Connection types</p>
+</td>
+</tr>
+</table>

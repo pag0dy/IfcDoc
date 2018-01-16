@@ -25,7 +25,7 @@ using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcSharedBldgElements
 {
-	[Guid("c4bf6c1f-1ed6-4a3a-bf42-db1c1b6c05f2")]
+	[Guid("7116fa64-a466-426e-84ce-c82bc9a1a8c4")]
 	public partial class IfcStairFlightType : IfcBuildingElementType
 	{
 		[DataMember(Order=0)] 

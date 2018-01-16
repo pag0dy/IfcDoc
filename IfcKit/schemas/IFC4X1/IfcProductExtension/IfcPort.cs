@@ -11,7 +11,6 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometricModelResource;
@@ -20,22 +19,22 @@ using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProfilePropertyResource;
 using BuildingSmart.IFC.IfcPropertyResource;
 using BuildingSmart.IFC.IfcQuantityResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
 using BuildingSmart.IFC.IfcSharedBldgElements;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
-using BuildingSmart.IFC.IfcStructuralAnalysisDomain;
+using BuildingSmart.IFC.IfcSharedComponentElements;
+using BuildingSmart.IFC.IfcSharedFacilitiesElements;
 using BuildingSmart.IFC.IfcStructuralElementsDomain;
 
 namespace BuildingSmart.IFC.IfcProductExtension
 {
-	[Guid("6039b15a-9b36-4f5f-9d66-2c80b0c6ccb9")]
+	[Guid("032e8ec4-b702-496b-b1c7-582032fc9a31")]
 	public abstract partial class IfcPort : IfcProduct
 	{
 		[InverseProperty("RelatingPort")] 
-		IfcRelConnectsPortToElement _ContainedIn;
+		ISet<IfcRelConnectsPortToElement> _ContainedIn = new HashSet<IfcRelConnectsPortToElement>();
 	
 		[InverseProperty("RelatedPort")] 
 		ISet<IfcRelConnectsPorts> _ConnectedFrom = new HashSet<IfcRelConnectsPorts>();
@@ -44,9 +43,13 @@ namespace BuildingSmart.IFC.IfcProductExtension
 		ISet<IfcRelConnectsPorts> _ConnectedTo = new HashSet<IfcRelConnectsPorts>();
 	
 	
-		[Description("Reference to the element to port connection relationship. The relationship then r" +
-	    "efers to the element in which this port is contained.\r\n")]
-		public IfcRelConnectsPortToElement ContainedIn { get { return this._ContainedIn; } set { this._ContainedIn = value;} }
+		[Description(@"Reference to the element to port connection relationship. The relationship then refers to the element in which this port is contained.
+	<blockquote class=""change-ifc2x4"">
+	IFC4 CHANGE&nbsp; The cardinality has been changed from 1:1 to 0:1.
+	IFC4 DEPRECATION&nbsp; The inverse relationship is deprecated for fixed ports due to deprecation of <em>IfcRelConnectsPortToElement</em> for this usage. Use inverse relationship <em>Nests</em> instead.
+	</blockquote>
+	")]
+		public ISet<IfcRelConnectsPortToElement> ContainedIn { get { return this._ContainedIn; } }
 	
 		[Description("Reference to a port that is connected by the objectified relationship.")]
 		public ISet<IfcRelConnectsPorts> ConnectedFrom { get { return this._ConnectedFrom; } }

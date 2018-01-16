@@ -10,35 +10,37 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcControlExtension;
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricConstraintResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialPropertyResource;
-using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcTimeSeriesResource;
 
 namespace BuildingSmart.IFC.IfcSharedBldgServiceElements
 {
-	[Guid("1197660a-4be7-41c5-8aa2-7a101656b129")]
+	[Guid("1b957306-e396-43ea-b6ee-e7e28d37f9e9")]
 	public partial class IfcDistributionPort : IfcPort
 	{
 		[DataMember(Order=0)] 
 		[XmlAttribute]
 		IfcFlowDirectionEnum? _FlowDirection;
 	
+		[DataMember(Order=1)] 
+		[XmlAttribute]
+		IfcDistributionPortTypeEnum? _PredefinedType;
+	
+		[DataMember(Order=2)] 
+		[XmlAttribute]
+		IfcDistributionSystemEnum? _SystemType;
+	
 	
 		[Description("Enumeration that identifies if this port is a Sink (inlet), a Source (outlet) or " +
 	    "both a SinkAndSource.\r\n")]
 		public IfcFlowDirectionEnum? FlowDirection { get { return this._FlowDirection; } set { this._FlowDirection = value;} }
+	
+		public IfcDistributionPortTypeEnum? PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
+	
+		[Description("Enumeration that identifies the system type.  If a system type is defined, the po" +
+	    "rt may only be connected to other ports having the same system type.")]
+		public IfcDistributionSystemEnum? SystemType { get { return this._SystemType; } set { this._SystemType = value;} }
 	
 	
 	}

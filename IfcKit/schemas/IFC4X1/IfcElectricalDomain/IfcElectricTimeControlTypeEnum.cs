@@ -10,27 +10,27 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
 
 namespace BuildingSmart.IFC.IfcElectricalDomain
 {
-	[Guid("9316959c-7a76-49f0-8da6-cf8f2ed92df9")]
+	[Guid("e82633f8-fd12-447b-80be-40c7a8f5d9d2")]
 	public enum IfcElectricTimeControlTypeEnum
 	{
+		[Description("A control that causes action to occur at set times.")]
 		TIMECLOCK = 1,
 	
+		[Description("A control that causes action to occur following a set duration.")]
 		TIMEDELAY = 2,
 	
+		[Description("Electromagnetically operated contactor for making or breaking a control circuit.")]
 		RELAY = 3,
 	
+		[Description("User-defined type.")]
 		USERDEFINED = -1,
 	
+		[Description("Undefined type.")]
 		NOTDEFINED = 0,
 	
 	}

@@ -11,17 +11,16 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcExternalReferenceResource;
+using BuildingSmart.IFC.IfcGeometricModelResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationDefinitionResource;
-using BuildingSmart.IFC.IfcPresentationResource;
 using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 {
-	[Guid("81ee382b-1d17-4541-94b0-d12f8d8ad706")]
-	public partial class IfcTextStyleForDefinedFont :
-		BuildingSmart.IFC.IfcPresentationAppearanceResource.IfcCharacterStyleSelect
+	[Guid("33ffc6a1-31d2-441f-99ed-c8775cef5eb5")]
+	public partial class IfcTextStyleForDefinedFont : IfcPresentationItem
 	{
 		[DataMember(Order=0)] 
 		[Required()]
@@ -31,11 +30,11 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 		IfcColour _BackgroundColour;
 	
 	
-		[Description("<EPM-HTML>\r\nThis property describes the text color of an element (often referred " +
-	    "to as the foreground color).\r\n</EPM-HTML>")]
+		[Description("This property describes the text color of an element (often referred to as the fo" +
+	    "reground color).")]
 		public IfcColour Colour { get { return this._Colour; } set { this._Colour = value;} }
 	
-		[Description("<EPM-HTML>\r\nThis property sets the background color of an element.\r\n</EPM-HTML>")]
+		[Description("This property sets the background color of an element.")]
 		public IfcColour BackgroundColour { get { return this._BackgroundColour; } set { this._BackgroundColour = value;} }
 	
 	

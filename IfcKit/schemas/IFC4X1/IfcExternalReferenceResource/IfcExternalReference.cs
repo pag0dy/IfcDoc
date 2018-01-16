@@ -11,42 +11,70 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
+using BuildingSmart.IFC.IfcApprovalResource;
+using BuildingSmart.IFC.IfcConstraintResource;
+using BuildingSmart.IFC.IfcCostResource;
 using BuildingSmart.IFC.IfcDateTimeResource;
+using BuildingSmart.IFC.IfcKernel;
+using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
+using BuildingSmart.IFC.IfcProfileResource;
+using BuildingSmart.IFC.IfcPropertyResource;
+using BuildingSmart.IFC.IfcQuantityResource;
 
 namespace BuildingSmart.IFC.IfcExternalReferenceResource
 {
-	[Guid("dbc80bb9-c76e-4129-8977-ff211bb10350")]
+	[Guid("89de2ef7-7bc1-4682-ac3b-f058ab404fad")]
 	public abstract partial class IfcExternalReference :
 		BuildingSmart.IFC.IfcPresentationOrganizationResource.IfcLightDistributionDataSourceSelect,
-		BuildingSmart.IFC.IfcPropertyResource.IfcObjectReferenceSelect
+		BuildingSmart.IFC.IfcPropertyResource.IfcObjectReferenceSelect,
+		BuildingSmart.IFC.IfcExternalReferenceResource.IfcResourceObjectSelect
 	{
 		[DataMember(Order=0)] 
 		[XmlAttribute]
-		IfcLabel? _Location;
+		IfcURIReference? _Location;
 	
 		[DataMember(Order=1)] 
 		[XmlAttribute]
-		IfcIdentifier? _ItemReference;
+		IfcIdentifier? _Identification;
 	
 		[DataMember(Order=2)] 
 		[XmlAttribute]
 		IfcLabel? _Name;
 	
+		[InverseProperty("RelatingReference")] 
+		ISet<IfcExternalReferenceRelationship> _ExternalReferenceForResources = new HashSet<IfcExternalReferenceRelationship>();
 	
-		[Description(@"Location, where the external source (classification, document or library). This can be either human readable or computer interpretable. For electronic location normally given as an URL location string, however other ways of accessing external references may be established in an application scenario.
+	
+		[Description(@"Location, where the external source (classification, document or library) can be accessed by electronic means. The electronic location is provided as an URI, and would normally be given as an URL location string.
+	<blockquote class=""change-ifc2x4"">
+	IFC4 CHANGE&nbsp; The data type has been changed from <em>IfcLabel</em> to <em>IfcURIReference</em><br>.
+	</blockquote>
 	")]
-		public IfcLabel? Location { get { return this._Location; } set { this._Location = value;} }
+		public IfcURIReference? Location { get { return this._Location; } set { this._Location = value;} }
 	
-		[Description("Identifier for the referenced item in the external source (classification, docume" +
-	    "nt or library). The internal reference can provide a computer interpretable poin" +
-	    "ter into electronic source.")]
-		public IfcIdentifier? ItemReference { get { return this._ItemReference; } set { this._ItemReference = value;} }
+		[Description(@"The <em>Identification</em> provides a unique identifier of the referenced item within the external source (classification, document or library). It may be provided as 
+	<ul>
+	 <li>a key, e.g. a classification notation, like NF2.3</li>
+	 <li>a handle</li>
+	 <li>a uuid or guid</li>
+	</ul>
+	It may be human readable (such as a key) or not (such as a handle or uuid) depending on the context of its usage (which has to be determined by local agreement).
+	<blockquote class=""change-ifc2x4"">
+	IFC4 CHANGE  Attribute renamed from <em>ItemReference</em> for consistency.<br>
+	</blockquote>")]
+		public IfcIdentifier? Identification { get { return this._Identification; } set { this._Identification = value;} }
 	
 		[Description("Optional name to further specify the reference. It can provide a human readable i" +
 	    "dentifier (which does not necessarily need to have a counterpart in the internal" +
 	    " structure of the document).")]
 		public IfcLabel? Name { get { return this._Name; } set { this._Name = value;} }
+	
+		[Description(@"Reference to all associations between this external reference and objects within the <em>IfcResourceObjectSelect</em> that are tagged by the external reference.
+	<blockquote class=""change-ifc2x4"">
+	IFC4 CHANGE&nbsp; New inverse attribute added with upward compatibility.<br>
+	</blockquote>")]
+		public ISet<IfcExternalReferenceRelationship> ExternalReferenceForResources { get { return this._ExternalReferenceForResources; } }
 	
 	
 	}

@@ -20,7 +20,7 @@ using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
-	[Guid("d3860283-bd32-4830-a777-1521522011ac")]
+	[Guid("9f128686-ff25-4c00-9bcc-4b9cc58c4598")]
 	public partial class IfcEllipse : IfcConic
 	{
 		[DataMember(Order=0)] 

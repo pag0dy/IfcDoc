@@ -11,11 +11,12 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcGeometryResource;
+using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 
 namespace BuildingSmart.IFC.IfcTopologyResource
 {
-	[Guid("0fa060dd-f132-4bb8-8a8a-c3ca6b00aae1")]
+	[Guid("b04c081f-98f1-4a81-aa6c-88bad0e295b1")]
 	public partial class IfcFaceOuterBound : IfcFaceBound
 	{
 	

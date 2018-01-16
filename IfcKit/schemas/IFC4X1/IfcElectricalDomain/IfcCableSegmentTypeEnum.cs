@@ -10,25 +10,38 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
 
 namespace BuildingSmart.IFC.IfcElectricalDomain
 {
-	[Guid("b30ed25c-03b4-495d-a4fe-5e2017a1b50f")]
+	[Guid("f8f977bb-3a31-4420-8a8f-adf03e7ade8b")]
 	public enum IfcCableSegmentTypeEnum
 	{
-		CABLESEGMENT = 1,
+		[Description("Electrical conductor that makes a common connection between several electrical ci" +
+	    "rcuits. Properties of a busbar are the same as those of a cable segment and are " +
+	    "captured by the cable segment property set.")]
+		BUSBARSEGMENT = 1,
 	
-		CONDUCTORSEGMENT = 2,
+		[Description("Cable with a specific purpose to lead electric current within a circuit or any ot" +
+	    "her electric construction. Includes all types of electric cables, mainly several" +
+	    " core segments or conductor segments wrapped together.")]
+		CABLESEGMENT = 2,
 	
+		[Description("A single linear element within a cable or an exposed wire (such as for grounding)" +
+	    " with the specific purpose to lead electric current, data, or a telecommunicatio" +
+	    "ns signal.")]
+		CONDUCTORSEGMENT = 3,
+	
+		[Description("A self contained element of a  cable that comprises one or more conductors and sh" +
+	    "eathing.The core of one lead is normally single wired or multiwired which are in" +
+	    "tertwined.")]
+		CORESEGMENT = 4,
+	
+		[Description("User-defined type.")]
 		USERDEFINED = -1,
 	
+		[Description("Undefined type.")]
 		NOTDEFINED = 0,
 	
 	}

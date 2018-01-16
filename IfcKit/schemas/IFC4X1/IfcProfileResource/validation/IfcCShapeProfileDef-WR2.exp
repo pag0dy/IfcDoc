@@ -1,2 +1,0 @@
-﻿NOT(EXISTS(InternalFilletRadius)) OR
-((InternalFilletRadius <= Width/2.) AND (InternalFilletRadius <= Depth/2.))

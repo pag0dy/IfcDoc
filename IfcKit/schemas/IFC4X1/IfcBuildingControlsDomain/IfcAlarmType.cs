@@ -10,13 +10,11 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
 
 namespace BuildingSmart.IFC.IfcBuildingControlsDomain
 {
-	[Guid("5dcb4636-dc63-46bd-9f32-3a22603a8282")]
+	[Guid("1bd3b05c-1d48-478a-9dcd-55c40bef9dd9")]
 	public partial class IfcAlarmType : IfcDistributionControlElementType
 	{
 		[DataMember(Order=0)] 
@@ -25,8 +23,8 @@ namespace BuildingSmart.IFC.IfcBuildingControlsDomain
 		IfcAlarmTypeEnum _PredefinedType;
 	
 	
-		[Description("Identifies the predefined types of alarm from which the type required may be set." +
-	    "")]
+		[Description("<p>Identifies the predefined types of alarm from which the type required may be s" +
+	    "et.</p>")]
 		public IfcAlarmTypeEnum PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	

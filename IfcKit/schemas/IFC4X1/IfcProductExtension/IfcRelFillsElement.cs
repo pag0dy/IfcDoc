@@ -11,7 +11,6 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometricModelResource;
@@ -20,25 +19,27 @@ using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProfilePropertyResource;
 using BuildingSmart.IFC.IfcPropertyResource;
 using BuildingSmart.IFC.IfcQuantityResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
 using BuildingSmart.IFC.IfcSharedBldgElements;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
-using BuildingSmart.IFC.IfcStructuralAnalysisDomain;
+using BuildingSmart.IFC.IfcSharedComponentElements;
+using BuildingSmart.IFC.IfcSharedFacilitiesElements;
 using BuildingSmart.IFC.IfcStructuralElementsDomain;
 
 namespace BuildingSmart.IFC.IfcProductExtension
 {
-	[Guid("9a25a464-da5d-45c5-97ee-51a3a57ba941")]
+	[Guid("38e3c74b-486e-4323-980b-6375977d83ae")]
 	public partial class IfcRelFillsElement : IfcRelConnects
 	{
 		[DataMember(Order=0)] 
+		[XmlIgnore]
 		[Required()]
 		IfcOpeningElement _RelatingOpeningElement;
 	
 		[DataMember(Order=1)] 
+		[XmlElement]
 		[Required()]
 		IfcElement _RelatedBuildingElement;
 	
@@ -46,12 +47,8 @@ namespace BuildingSmart.IFC.IfcProductExtension
 		[Description("Opening Element being filled by virtue of this relationship.\r\n")]
 		public IfcOpeningElement RelatingOpeningElement { get { return this._RelatingOpeningElement; } set { this._RelatingOpeningElement = value;} }
 	
-		[Description(@"<EPM-HTML>
-	Reference to <strike>building</strike> element that occupies fully or partially the associated opening.
-	<blockquote><small><font color=""#ff0000"">
-	IFC2x PLATFORM CHANGE: The data type has been changed from <i>IfcBuildingElement</i> to <i>IfcElement</i> with upward compatibility for file based exchange.
-	</font><small></blockquote>
-	</EPM-HTML>")]
+		[Description(@"Reference to <strike>building</strike> element that occupies fully or partially the associated opening.
+	<blockquote class=""change-ifc2x"">IFC2x CHANGE&nbsp; The data type has been changed from <em>IfcBuildingElement</em> to <em>IfcElement</em> with upward compatibility for file based exchange.</blockquote>")]
 		public IfcElement RelatedBuildingElement { get { return this._RelatedBuildingElement; } set { this._RelatedBuildingElement = value;} }
 	
 	

@@ -11,15 +11,15 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcExternalReferenceResource;
+using BuildingSmart.IFC.IfcGeometricModelResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationDefinitionResource;
-using BuildingSmart.IFC.IfcPresentationResource;
 using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 {
-	[Guid("49a36789-cab6-4f39-a3b3-5c02c31a8513")]
+	[Guid("fe9ed6e7-c95b-4c4b-9f78-e0941123548b")]
 	public partial class IfcCurveStyle : IfcPresentationStyle,
 		BuildingSmart.IFC.IfcPresentationAppearanceResource.IfcPresentationStyleSelect
 	{
@@ -31,6 +31,10 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 	
 		[DataMember(Order=2)] 
 		IfcColour _CurveColour;
+	
+		[DataMember(Order=3)] 
+		[XmlAttribute]
+		IfcBoolean? _ModelOrDraughting;
 	
 	
 		[Description(@"A curve style font which is used to present a curve. It can either be a predefined curve font, or an explicitly defined curve font. Both may be scaled. If not given, then the curve font should be taken from the layer assignment with style, if that is not given either, then the default curve font applies.")]
@@ -45,6 +49,11 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 	    " be taken from the layer assignment with style, if that is not given either, the" +
 	    "n the default colour applies.")]
 		public IfcColour CurveColour { get { return this._CurveColour; } set { this._CurveColour = value;} }
+	
+		[Description("Indication whether the length measures provided for the presentation style are mo" +
+	    "del based, or draughting based.\r\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE&n" +
+	    "bsp; New attribute.\r\n</blockquote>")]
+		public IfcBoolean? ModelOrDraughting { get { return this._ModelOrDraughting; } set { this._ModelOrDraughting = value;} }
 	
 	
 	}

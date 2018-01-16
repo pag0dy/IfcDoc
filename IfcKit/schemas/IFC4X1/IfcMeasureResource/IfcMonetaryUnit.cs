@@ -10,21 +10,23 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcDateTimeResource;
+using BuildingSmart.IFC.IfcExternalReferenceResource;
 
 namespace BuildingSmart.IFC.IfcMeasureResource
 {
-	[Guid("88524ab1-815c-4457-979a-bbc311fb5928")]
+	[Guid("0671cb13-dc5d-4349-956e-d3344b3f2781")]
 	public partial class IfcMonetaryUnit :
 		BuildingSmart.IFC.IfcMeasureResource.IfcUnit
 	{
 		[DataMember(Order=0)] 
 		[XmlAttribute]
 		[Required()]
-		IfcCurrencyEnum _Currency;
+		IfcLabel _Currency;
 	
 	
-		[Description("The international enumeration name of the currency.")]
-		public IfcCurrencyEnum Currency { get { return this._Currency; } set { this._Currency = value;} }
+		[Description(@"Code or name of the currency.  Permissible values are the three-letter alphabetic currency codes as per <a target=""_top"" href=""http://www.iso.org/iso/support/faqs/faqs_widely_used_standards/widely_used_standards_other/currency_codes/currency_codes_list-1.htm"">ISO 4217</a>, for example CNY, EUR, GBP, JPY, USD.")]
+		public IfcLabel Currency { get { return this._Currency; } set { this._Currency = value;} }
 	
 	
 	}

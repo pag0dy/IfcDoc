@@ -1,17 +1,13 @@
-﻿<EPM-HTML>
-	 <P><U>Definition from IAI:</U> Instances of the entity
-		<I>IfcStructuralCurveConnection</I> shall be used to describe 'linear nodes' or
-		'linear supports', i.e. lines where two or more face members (walls, plates)
-		are joined. All values defined by <I>AppliedCondition</I> are given within a
-		coordinate system which is derived from the local coordinate system defined by
-		this instance.</P> 
-	 <BLOCKQUOTE> 
-		<P><FONT SIZE="-1">NOTE: This does not work for each combination of local
-		  coordinate system and curve direction. Therefore such combinations shall be
-		  forbidden. Normally, whenever possible, the defined local coordinate system
-		  should fulfill the constraints outlined above to avoid such a transformation.
-		  </FONT></P> </BLOCKQUOTE> 
-	 <BLOCKQUOTE> 
-		<P><FONT COLOR="#0000FF" SIZE="-1"> HISTORY: New entity in Release IFC2x
-		  Edition 2. </FONT></P> </BLOCKQUOTE>
-</EPM-HTML>
+﻿<p>Instances of <em>IfcStructuralCurveConnection</em> describe edge 'nodes', i.e. edges where two or more surface members are joined, or edge supports.  Edge curves may be straight or curved.</p>
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC2x2.
+</blockquote>
+
+<blockquote class="change-ifc2x4">
+IFC4 CHANGE&nbsp; Attribute <em>Axis</em> added, allowing for skewed supports.  Use definitions added.
+</blockquote>
+
+<p><b><u>Coordinate Systems</u></b>:</p>
+
+<p>See definitions at <em>IfcStructuralItem</em>.  The local coordinate system is established by the reference curve given by topology representation and by the attribute <em>Axis</em>.  The local x axis is parallel with the tangent on the reference curve.  The local z axis is located in the surface which is created by sweeping <em>Axis</em> along the reference curve and is directed according to <em>Axis</em>.  The local y axis is directed such that x,y,z form a right-handed Cartesian coordinate system.</p>

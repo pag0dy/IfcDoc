@@ -1,0 +1,2 @@
+﻿(PredefinedType <> IfcBurnerTypeEnum.USERDEFINED) OR
+((PredefinedType = IfcBurnerTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcElementType.ElementType))

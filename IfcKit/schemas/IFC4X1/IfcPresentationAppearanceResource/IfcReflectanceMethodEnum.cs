@@ -11,33 +11,48 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcExternalReferenceResource;
+using BuildingSmart.IFC.IfcGeometricModelResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationDefinitionResource;
-using BuildingSmart.IFC.IfcPresentationResource;
 using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 {
-	[Guid("036428c1-4bfe-4d05-bad3-3b9c3288d563")]
+	[Guid("f56cf58e-094b-41bd-983e-3a67294a8c4e")]
 	public enum IfcReflectanceMethodEnum
 	{
+		[Description("A reflectance model providing a smooth, slightly shiny appearance.")]
 		BLINN = 1,
 	
+		[Description("A reflectance model providing a constant colour. This model ignores the effect of" +
+	    " all light sources.")]
 		FLAT = 2,
 	
+		[Description("A reflectance model that supports an approximation of glass-like materials that h" +
+	    "ave both reflective and transmissive properties.")]
 		GLASS = 3,
 	
+		[Description("A reflectance model providing a dull matte appearance.")]
 		MATT = 4,
 	
+		[Description("A reflectance model providing a specular metallic appearance.")]
 		METAL = 5,
 	
+		[Description("A reflectance model that supports secondary mirrored views through ray tracing.")]
 		MIRROR = 6,
 	
+		[Description("A reflectance model conforming with the Phong model in which reflections are grea" +
+	    "test in the `mirror\' direction of a surface opposite the viewing direction with " +
+	    "respect to the surface normal.")]
 		PHONG = 7,
 	
+		[Description("A reflectance model providing a specular effect which is similar to the Phong mod" +
+	    "el.")]
 		PLASTIC = 8,
 	
+		[Description("A reflectance model for metallic and non-metallic appearance based on a limited s" +
+	    "et of control parameter.")]
 		STRAUSS = 9,
 	
 		NOTDEFINED = 0,

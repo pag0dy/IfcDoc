@@ -25,15 +25,19 @@ using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcSharedBldgElements
 {
-	[Guid("456ab4c2-e395-4a23-a6a9-05fa2dfed400")]
+	[Guid("83bbf4e9-9816-44a7-9c38-170bf6dfb630")]
 	public enum IfcRampFlightTypeEnum
 	{
+		[Description("A ramp flight with a straight walking line.")]
 		STRAIGHT = 1,
 	
+		[Description("A ramp flight with a circular or elliptic walking line.")]
 		SPIRAL = 2,
 	
+		[Description("User-defined ramp flight.")]
 		USERDEFINED = -1,
 	
+		[Description("Undefined ramp flight.")]
 		NOTDEFINED = 0,
 	
 	}

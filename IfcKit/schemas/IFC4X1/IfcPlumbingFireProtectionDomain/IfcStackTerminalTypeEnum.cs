@@ -14,17 +14,24 @@ using BuildingSmart.IFC.IfcSharedBldgServiceElements;
 
 namespace BuildingSmart.IFC.IfcPlumbingFireProtectionDomain
 {
-	[Guid("17d0bdd2-06ab-4d7f-ae9e-8a16fee5f09c")]
+	[Guid("1d89101b-584e-461e-9cd9-fdfeff188f55")]
 	public enum IfcStackTerminalTypeEnum
 	{
+		[Description("Guard cage, typically wire mesh, at the top of the stack preventing access by bir" +
+	    "ds.")]
 		BIRDCAGE = 1,
 	
+		[Description("A cowling placed at the top of a stack to eliminate downdraft.")]
 		COWL = 2,
 	
+		[Description("A box placed at the top of a rainwater downpipe to catch rainwater from guttering" +
+	    ".")]
 		RAINWATERHOPPER = 3,
 	
+		[Description("User-defined type.")]
 		USERDEFINED = -1,
 	
+		[Description("Undefined type.")]
 		NOTDEFINED = 0,
 	
 	}

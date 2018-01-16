@@ -20,10 +20,11 @@ using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
-	[Guid("e8f3d058-54a6-4bc9-aeaf-91aca04f5777")]
+	[Guid("f5ea20e7-98db-4aeb-b0f8-03ac3e6d947c")]
 	public partial class IfcOffsetCurve2D : IfcCurve
 	{
 		[DataMember(Order=0)] 
+		[XmlElement]
 		[Required()]
 		IfcCurve _BasisCurve;
 	
@@ -33,8 +34,9 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		IfcLengthMeasure _Distance;
 	
 		[DataMember(Order=2)] 
+		[XmlAttribute]
 		[Required()]
-		Boolean? _SelfIntersect;
+		IfcLogical _SelfIntersect;
 	
 	
 		[Description("The curve that is being offset.")]
@@ -45,7 +47,7 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 	
 		[Description("An indication of whether the offset curve self-intersects; this is for informatio" +
 	    "n only.")]
-		public Boolean? SelfIntersect { get { return this._SelfIntersect; } set { this._SelfIntersect = value;} }
+		public IfcLogical SelfIntersect { get { return this._SelfIntersect; } set { this._SelfIntersect = value;} }
 	
 	
 	}

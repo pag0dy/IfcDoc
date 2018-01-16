@@ -1,42 +1,19 @@
-﻿<EPM-HTML> 
-	 <P>The <I>IfcConstructionMgmtDomain</I> schema defines concepts in the
-		construction management (CM) domain. Together with the
-		<I>IfcProcessExtension</I> and <I>IfcSharedMgmtElement</I> schemas it provides a
-		set of models that can be used to exchange information between construction
-		management applications.</P> 
-	 <H2>Scope</H2> 
-	 <P>The <I>IfcConstructionMgmtDomain</I> schema extends the ideas concerning
-		management outlined in the <I>IfcSharedMgmtElements</I> schema. The objective
-		of the <I>IfcConstructionMgmtDomain</I> schema is to capture information that
-		supports specific business processes and resource requirements that are wholly
-		within the domain of interest of the Construction Manager. The aim is to
-		provide support for information exchange and sharing within computer aided
-		management applications. The extent of the model will not support the some of
-		the more detailed ideas found in these applications.</P> 
-	 <P>The following are within the scope of this schema:</P> 
-	 <UL> 
-		<LI>resources used in the construction process including product, labor,
-		  construction equipment, crew, sub-contract and construction material
-		  resources;</LI> 
-		<LI>identification of products that result from processes performed that
-		  are used as resources in future processes.</LI> 
-	 </UL> 
-	 <H2>Process Usage</H2> 
-	 <H3>Resources</H3> 
-	 <P>Resources are considered to be those things that are used within a
-		process to achieve or assist the process of construction. Various types of
-		resource are defined within the model.</P> 
-	 <H3>Product Composition Structure</H3> 
-	 <P>Construction management activities may take place either on a complete
-		product (the whole), on a part of the product or on a set of products acting as
-		a single product entity (complex). The product composition structure enabling
-		parts, whole, and complexes to be identified is achieved using aggregation or
-		nesting subtype of the <I>IfcRelDecomposes</I> relationship class.</P> 
-	 <H3>Products as Resources</H3> 
-	 <P>A product that results from a process may be used as a resource in a
-		subsequent process. </P>
-	 <H2>Quantity Usage</H2>
-	 <P>The quantities of a resource used may be defined therough
-		<I>IfcRelDefinesByProperties</I> using the <I>IfcElementQuantity</I> property
-		set definition</P> 
-</EPM-HTML>
+﻿<p>The <em>IfcConstructionMgmtDomain</em> schema defines resource concepts in the construction management domain. Together with the <em>IfcProcessExtension</em> and <em>IfcSharedMgmtElement</em> schemas it provides a set of models that can be used to exchange information between construction management applications.</p> 
+
+<p>The <em>IfcConstructionMgmtDomain</em> schema extends resources and resource types as applicable to construction.  The objective of the <em>IfcConstructionMgmtDomain</em> schema is to capture information that supports specific business processes and resource requirements that are wholly within the domain of interest of the Construction Manager. The aim is to provide support for information exchange and sharing within computer aided management applications.</p> 
+
+<p>The following are within the scope of this schema:</p> 
+<ul> 
+<li>resources used in the construction process including material, labour, equipment, product, crew, and sub-contract resources;</li> 
+<li>identification of products that result from processes performed that are used as resources in future processes.</li> 
+<li>resource productivity calculation to determine work, usage, and ultimately durations of tasks.</li> 
+<li>resource time information to support allocations and levelling.</li> 
+<li>resource cost information to support earned value calculations.</li> 
+<li>resource quantities to support derived costs within cost schedules.</li>
+<li>time-phased data to indicate scheduled and actual work, usage, and costs at particular periods in time.</li>
+<li>resource type definitions describing shared productivity and cost rates that may be applied to resource occurrences.</li> 
+</ul> 
+
+<p>A resource is the use of any physical or virtual entity of limited availability.  A resource may be fulfilled by tangible objects such as particular people or equipment, however a resource does not represent such objects, but a particular use of such objects such as labour.  Construction resources extend the concept of resources to include the quantities, costs, schedule, and other impacts from use in construction processes.</p> 
+
+<p>Construction management activities may take place either on a complete product (the whole), on a part of the product or on a set of products acting as a single product entity (complex). The product composition structure enabling parts, whole, and complexes to be identified is achieved using aggregation or nesting subtype of the <em>IfcRelDecomposes</em> relationship class.</p> 

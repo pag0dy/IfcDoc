@@ -10,30 +10,24 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialResource;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcPropertyResource;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
 using BuildingSmart.IFC.IfcSharedComponentElements;
 
 namespace BuildingSmart.IFC.IfcHvacDomain
 {
-	[Guid("2d14c51a-8770-4160-9426-a94027534c89")]
+	[Guid("557f51df-66ec-4809-83a0-a4e67ea8beac")]
 	public enum IfcVibrationIsolatorTypeEnum
 	{
+		[Description("Compression type vibration isolator.")]
 		COMPRESSION = 1,
 	
+		[Description("Spring type vibration isolator.")]
 		SPRING = 2,
 	
+		[Description("User-defined vibration isolator type.")]
 		USERDEFINED = -1,
 	
+		[Description("Undefined vibration isolator type.")]
 		NOTDEFINED = 0,
 	
 	}

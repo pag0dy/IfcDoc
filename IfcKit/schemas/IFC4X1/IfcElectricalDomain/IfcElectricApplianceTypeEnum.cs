@@ -10,69 +10,78 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
 
 namespace BuildingSmart.IFC.IfcElectricalDomain
 {
-	[Guid("19c3a8b5-2b9c-41b0-b2d2-61877d6eefc6")]
+	[Guid("c0bf6e39-d49b-4f0d-81d1-4fe263f8d8d1")]
 	public enum IfcElectricApplianceTypeEnum
 	{
-		COMPUTER = 1,
+		[Description("An appliance that has the primary function of washing dishes.")]
+		DISHWASHER = 1,
 	
-		DIRECTWATERHEATER = 2,
+		[Description("An electrical appliance that has the primary function of cooking food (including " +
+	    "oven, hob, grill).")]
+		ELECTRICCOOKER = 2,
 	
-		DISHWASHER = 3,
+		[Description("An electrical appliance that is used occasionally to provide heat. A freestanding" +
+	    " electric heater is a \'plugged\' appliance whose load may be removed from an elec" +
+	    "tric circuit.")]
+		FREESTANDINGELECTRICHEATER = 3,
 	
-		ELECTRICCOOKER = 4,
+		[Description("An electrical appliance that is used occasionally to provide ventilation. A frees" +
+	    "tanding fan is a \'plugged\' appliance whose load may be removed from an electric " +
+	    "circuit.")]
+		FREESTANDINGFAN = 4,
 	
-		ELECTRICHEATER = 5,
+		[Description("A small, local electrical appliance for heating water. A freestanding water heate" +
+	    "r is a \'plugged\' appliance whose load may be removed from an electric circuit.")]
+		FREESTANDINGWATERHEATER = 5,
 	
-		FACSIMILE = 6,
+		[Description("A small, local electrical appliance for cooling water. A freestanding water coole" +
+	    "r is a \'plugged\' appliance whose load may be removed from an electric circuit.")]
+		FREESTANDINGWATERCOOLER = 6,
 	
-		FREESTANDINGFAN = 7,
+		[Description("An electrical appliance that has the primary function of storing food at temperat" +
+	    "ures below the freezing point of water.")]
+		FREEZER = 7,
 	
-		FREEZER = 8,
+		[Description("An electrical appliance that combines the functions of a freezer and a refrigerat" +
+	    "or through the provision of separate compartments.")]
+		FRIDGE_FREEZER = 8,
 	
-		FRIDGE_FREEZER = 9,
+		[Description("An electrical appliance that has the primary function of drying hands.")]
+		HANDDRYER = 9,
 	
-		HANDDRYER = 10,
+		[Description("A specialized appliance used in commercial kitchens such as a mixer.")]
+		KITCHENMACHINE = 10,
 	
-		INDIRECTWATERHEATER = 11,
+		[Description("An electrical appliance that has the primary function of cooking food using micro" +
+	    "waves.")]
+		MICROWAVE = 11,
 	
-		MICROWAVE = 12,
+		[Description("A machine that has the primary function of reproduction of printed matter.")]
+		PHOTOCOPIER = 12,
 	
-		PHOTOCOPIER = 13,
+		[Description("An electrical appliance that has the primary function of storing food at low temp" +
+	    "erature but above the freezing point of water.")]
+		REFRIGERATOR = 13,
 	
-		PRINTER = 14,
+		[Description("An electrical appliance that has the primary function of drying clothes.")]
+		TUMBLEDRYER = 14,
 	
-		REFRIGERATOR = 15,
+		[Description("An appliance that stores and vends goods including food, drink and goods of vario" +
+	    "us types.")]
+		VENDINGMACHINE = 15,
 	
-		RADIANTHEATER = 16,
+		[Description("An appliance that has the primary function of washing clothes.")]
+		WASHINGMACHINE = 16,
 	
-		SCANNER = 17,
-	
-		TELEPHONE = 18,
-	
-		TUMBLEDRYER = 19,
-	
-		TV = 20,
-	
-		VENDINGMACHINE = 21,
-	
-		WASHINGMACHINE = 22,
-	
-		WATERHEATER = 23,
-	
-		WATERCOOLER = 24,
-	
+		[Description("User-defined type.")]
 		USERDEFINED = -1,
 	
+		[Description("Undefined type.")]
 		NOTDEFINED = 0,
 	
 	}

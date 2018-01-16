@@ -1,37 +1,8 @@
-﻿<EPM-HTML> 
-	 <P><U>Definition from IAI:</U>An <I>IfcCostItem</I> describes a cost or
-		financial value together with descriptive information that describes its
-		context in a form that enables it to be used within a cost schedule.</P> 
-	 <BLOCKQUOTE> <FONT COLOR="#0000FF" SIZE="-1">HISTORY: New Entity in IFC
-		Release 2.0. Modified in IFC 2x2.</FONT> </BLOCKQUOTE> 
-	 <P><U>Use Definitions</U></P> 
-	 <P>An <I>IfcCostItem</I> can be used to represent the cost of goods and
-		services, the execution of works by a process, lifecycle cost and much
-		more.</P> 
-	 <P><I>IfcCostItem</I> brings together the value and currency concepts
-		available through the <I>IfcCostResource</I> schema with the identification,
-		naming and descriptive powers that all non-resource entities in the model
-		inherit from <I>IfcRoot</I>.</P> 
-	 <P>Each instance of <I>IfcCostItem</I> may have a name and a description.
-		Depending on the use for which the cost is intended, these values should be
-		asserted on the basis of agreement. For instance, the name attribute could be
-		used to provide a common value that enables distinct instances to be brought
-		together in a nesting arrangement (see below) whilst the description attribute
-		could be used to provide the typical text that would be used for item
-		description in a costing schedule.</P> 
-	 <P>An <I>IfcCostItem</I> can nest other instances of <I>IfcCostItem</I>
-		through its relationships to <I>IfcRelNests</I>. This can be used to enable the
-		development of complex groups of costs as may be found in cost schedules
-		through to pages, sections and complete cost schedules. </P> 
-	 <P>Instances of <I>IfcCostItem</I> can be assigned to an
-		<I>IfcCostSchedule</I> through the <I>IfcRelSchedulesCostItems</I> relationship
-		class.</P> 
-	 <P>Instances of <I>IfcCostItem</I> are used for cost estimates, budgets,
-		etc., where a variety of identification codes are used extensively to identify
-		the meaning of the cost. Examples include project phase codes, CSI codes,
-		takeoff sequence numbers, cost accounts, etc. The IFC model allows for all
-		classes that are ultimately subtypes of <I>IfcObject</I> to inherit the ability
-		to have one or more instances of <I>IfcClassificationNotation</I> to be
-		assigned. Where identification codes are required, the generic IFC
-		classification facility should be used.</P>
-</EPM-HTML>
+﻿<p>An <em>IfcCostItem</em> describes a cost or financial value together with descriptive information that describes its context in a form that enables it to be used within a cost schedule. An <em>IfcCostItem</em> can be used to represent the cost of goods and services, the execution of works by a process, lifecycle cost and more.</p>
+
+<p>Each instance of <em>IfcCostItem</em> may have a name and a description. Depending on the use for which the cost is intended, these values should be asserted on the basis of agreement. For instance, the <em>Name</em> attribute could be used to provide a common value that enables distinct instances to be brought together in a nesting arrangement (see below) while the </em>Description</em> attribute may be used to provide text used for item description in a costing schedule.</p>
+
+<p>An <em>IfcCostItem</em> can link one or many <em>IfcCostValue</em>'s representing a unit cost, total cost, or a unit cost with one or many quantities used to generate the total cost. The quantities can be given as individual quantities, or those quantities are provided as element quantities by one or many building elements.  The <em>IfcCostValue.CostType</em> attribute indicates the category of cost, which may be used to present the value in a particular column.  For nested cost items (having <em>IfcRelNests</em> relationship), <em>IfcCostValue.CostType</em> is significant such that <em>IfcCostValue.AppliedValue</em> is calculated as the sum of all nested costs having the same <em>IfcCostValue.CostType</em> or if set to an asterisk ('*'), then the sum of all nested costs of all cost types. An <em>IfcCostValue</em> may represent an original value or a value derived from formulas using <em>IfcAppliedValueRelationship</em>.  For example, taxes may be calculated as a percentage of a subtotal.</p>
+
+<blockquote class="history">HISTORY&nbsp; New entity in IFC2.0.</blockquote>
+<blockquote class="change-ifc2x4">IFC4 CHANGE&nbsp; Attribute <em>PredefinedType</em>, <em>CostValues</em>, and <em>CostQuantities</em> added.</blockquote>

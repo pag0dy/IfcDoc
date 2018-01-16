@@ -10,15 +10,12 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
 
 namespace BuildingSmart.IFC.IfcSharedComponentElements
 {
-	[Guid("cccfccf6-12e5-4906-9d55-bd6d5a5ba224")]
+	[Guid("7904437f-39fd-4ac3-a04b-cd4158e276b3")]
 	public abstract partial class IfcElementComponentType : IfcElementType
 	{
 	

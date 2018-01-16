@@ -21,7 +21,7 @@ using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometricConstraintResource
 {
-	[Guid("02deb347-62f1-4f86-9a06-f61a278b9f47")]
+	[Guid("d7b307f1-5ef1-47c0-ae0c-e0ef2a8a6bf6")]
 	public abstract partial class IfcObjectPlacement
 	{
 		[InverseProperty("ObjectPlacement")] 
@@ -31,12 +31,22 @@ namespace BuildingSmart.IFC.IfcGeometricConstraintResource
 		ISet<IfcLocalPlacement> _ReferencedByPlacements = new HashSet<IfcLocalPlacement>();
 	
 	
-		[Description(@"<EPM-HTML>
-	The <i>IfcObjectPlacement</i> shall be used to provide a placement and an object coordinate system for a single instance of <i>IfcProduct</i>.
-	<blockquote><small>
-	  <font color=""#FF0000"">IFC2x Edition 3 CHANGE&nbsp; New inverse attribute.</font>
-	</small></blockquote>
-	</EPM-HTML>")]
+		[Description(@"The <em>IfcObjectPlacement</em> shall be used to provide a placement and 
+	an object coordinate system for instances of <em>IfcProduct</em>. 
+	<blockquote class=""note"">
+	   If an <em>IfcObjectPlacement</em> is shared by many instances of <em>IfcProduct</em> 
+	   it does not apply a semantic meaning of being a shared placement that needs to be 
+	   maintained. The same instance of <em>IfcObjectPlacement</em> could simply be used to
+	   reduce exchange file size.
+	</blockquote>
+	<blockquote class=""change-ifc2x3"">
+	   IFC2x3 CHANGE&nbsp; New inverse attribute.
+	</blockquote>
+	<blockquote class=""change-ifc2x4"">
+	   IFC4 CHANGE&nbsp; The cardinality has changed to 0..n to allow reuse of instances of 
+	   <em>IfcObjectPlacement</em> as placement object in one to many products. It takes also
+	   into account that it can act as a placement for <em>IfcStructuralAnalysisModel</em>.
+	</blockquote>")]
 		public ISet<IfcProduct> PlacesObject { get { return this._PlacesObject; } }
 	
 		[Description("Placements that are given relative to this placement of an object.")]

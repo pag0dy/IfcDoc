@@ -15,69 +15,49 @@ using BuildingSmart.IFC.IfcCostResource;
 using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
+using BuildingSmart.IFC.IfcQuantityResource;
 
 namespace BuildingSmart.IFC.IfcSharedMgmtElements
 {
-	[Guid("288d213e-1d98-4845-8a80-52750f1ef316")]
+	[Guid("ff373331-377a-4ddd-8781-060d4b4f0828")]
 	public partial class IfcCostSchedule : IfcControl
 	{
 		[DataMember(Order=0)] 
-		IfcActorSelect _SubmittedBy;
+		[XmlAttribute]
+		IfcCostScheduleTypeEnum? _PredefinedType;
 	
 		[DataMember(Order=1)] 
-		IfcActorSelect _PreparedBy;
-	
-		[DataMember(Order=2)] 
-		IfcDateTimeSelect _SubmittedOn;
-	
-		[DataMember(Order=3)] 
 		[XmlAttribute]
 		IfcLabel? _Status;
 	
-		[DataMember(Order=4)] 
-		ISet<IfcActorSelect> _TargetUsers = new HashSet<IfcActorSelect>();
-	
-		[DataMember(Order=5)] 
-		IfcDateTimeSelect _UpdateDate;
-	
-		[DataMember(Order=6)] 
+		[DataMember(Order=2)] 
 		[XmlAttribute]
-		[Required()]
-		IfcIdentifier _ID;
+		IfcDateTime? _SubmittedOn;
 	
-		[DataMember(Order=7)] 
+		[DataMember(Order=3)] 
 		[XmlAttribute]
-		[Required()]
-		IfcCostScheduleTypeEnum _PredefinedType;
+		IfcDateTime? _UpdateDate;
 	
 	
-		[Description("The identity of the person or organization submitting the cost schedule.")]
-		public IfcActorSelect SubmittedBy { get { return this._SubmittedBy; } set { this._SubmittedBy = value;} }
-	
-		[Description("The identity of the person or organization preparing the cost schedule.")]
-		public IfcActorSelect PreparedBy { get { return this._PreparedBy; } set { this._PreparedBy = value;} }
-	
-		[Description("The date on which the cost schedule was submitted.")]
-		public IfcDateTimeSelect SubmittedOn { get { return this._SubmittedOn; } set { this._SubmittedOn = value;} }
+		[Description("Predefined generic type for a cost schedule that is specified in an enumeration. " +
+	    "There may be a property set given specifically for the predefined types.\r\n\r\n<blo" +
+	    "ckquote class=\"change-ifc2x4\">IFC4 CHANGE  The attribute has been made optional." +
+	    "</blockquote>")]
+		public IfcCostScheduleTypeEnum? PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 		[Description("The current status of a cost schedule. Examples of status values that might be us" +
-	    "ed for a cost schedule status include:\r\n- PLANNED\r\n- APPROVED\r\n- AGREED\r\n- ISSUE" +
-	    "D\r\n- STARTED")]
+	    "ed for a cost schedule status include:\r\n<ul>\r\n<li> PLANNED </li>\r\n<li> APPROVED " +
+	    "</li>\r\n<li> AGREED </li>\r\n<li> ISSUED </li>\r\n<li> STARTED </li>\r\n</ul>")]
 		public IfcLabel? Status { get { return this._Status; } set { this._Status = value;} }
 	
-		[Description("The actors for whom the cost schedule was prepared.")]
-		public ISet<IfcActorSelect> TargetUsers { get { return this._TargetUsers; } }
+		[Description("The date and time on which the cost schedule was submitted.\r\n<blockquote class=\"c" +
+	    "hange-ifc2x4\">IFC4 CHANGE Type changed from IfcDateTimeSelect.</blockquote>  \r\n")]
+		public IfcDateTime? SubmittedOn { get { return this._SubmittedOn; } set { this._SubmittedOn = value;} }
 	
-		[Description("The date that this cost schedule is updated; this allows tracking the schedule hi" +
-	    "story.")]
-		public IfcDateTimeSelect UpdateDate { get { return this._UpdateDate; } set { this._UpdateDate = value;} }
-	
-		[Description("A unique identification assigned to a cost schedule that enables its differentiat" +
-	    "ion from other cost schedules.")]
-		public IfcIdentifier ID { get { return this._ID; } set { this._ID = value;} }
-	
-		[Description("Predefined types of cost schedule from which that required may be selected.")]
-		public IfcCostScheduleTypeEnum PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
+		[Description("The date and time that this cost schedule is updated; this allows tracking the sc" +
+	    "hedule history.\r\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE Type changed from" +
+	    " IfcDateTimeSelect.</blockquote>  \r\n")]
+		public IfcDateTime? UpdateDate { get { return this._UpdateDate; } set { this._UpdateDate = value;} }
 	
 	
 	}

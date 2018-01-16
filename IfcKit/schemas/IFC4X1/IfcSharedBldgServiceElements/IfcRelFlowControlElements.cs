@@ -10,25 +10,13 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcControlExtension;
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricConstraintResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialPropertyResource;
-using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcTimeSeriesResource;
 
 namespace BuildingSmart.IFC.IfcSharedBldgServiceElements
 {
-	[Guid("beedc2df-a5bb-4bb2-830c-6b59b3d3f29f")]
+	[Guid("e5a4f246-e6c4-40b9-85b6-af71acb30b68")]
 	public partial class IfcRelFlowControlElements : IfcRelConnects
 	{
 		[DataMember(Order=0)] 
@@ -36,6 +24,7 @@ namespace BuildingSmart.IFC.IfcSharedBldgServiceElements
 		ISet<IfcDistributionControlElement> _RelatedControlElements = new HashSet<IfcDistributionControlElement>();
 	
 		[DataMember(Order=1)] 
+		[XmlElement]
 		[Required()]
 		IfcDistributionFlowElement _RelatingFlowElement;
 	

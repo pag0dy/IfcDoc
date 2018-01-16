@@ -1,49 +1,70 @@
-﻿<EPM-HTML> 
-	 <P><U>Definition from IAI</U>: An <I>IfcPropertyListValue</I> defines a
-		property that has several (numeric or descriptive) values assigned, these
-		values are given by an ordered list. </P> 
-	 <P>An <I>IfcPropertyListValue</I> is a list of values. The order in which
-		values appear is significant. Each value in the list is unique i.e. no
-		duplicate values are allowed. All list members should be of the same type.</P> 
-	 <P>The unit applicable to all values is handled by the <I>Unit</I>
-		attribute:</P> 
-	 <UL> 
-		<LI>If the <I>Unit</I> attribute is not given, then the unit is already
-		  implied by the type of <I>IfcMeasureValue</I> or <I>IfcDerivedMeasureValue</I>.
-		  The associated unit can be found at the <I>IfcUnitAssignment</I> globally
-		  defined at the project level (<I>IfcProject.UnitsInContext</I>).</LI> 
-		<LI> If the <I>Unit</I> attribute is given, then the unit assigned by the
-		  <I>Unit</I> attribute overrides the globally assigned unit.</LI> 
-	 </UL> 
-	 <P>Example of a property with list value is:</P> 
-	 <TABLE CELLPADDING="2" CELLSPACING="2" BORDER="1" WIDTH="600"> 
-		<TR VALIGN="TOP"> 
-		  <TD VALIGN="TOP" WIDTH="15%"><B>Name</B></TD> 
-		  <TD VALIGN="TOP" WIDTH="30%"><B>ListValues</B></TD> 
-		  <TD VALIGN="TOP" WIDTH="25%"><B>Type <BR></B><FONT SIZE="-1">(through
-			 IfcValue)</FONT></TD> 
-		  <TD VALIGN="TOP" WIDTH="30%"><B>Unit <BR></B></TD> 
-		</TR> 
-		<TR> 
-		  <TD WIDTH="15%">ApplicableSizes</TD> 
-		  <TD WIDTH="30%">1200</TD> 
-		  <TD WIDTH="25%"><I>IfcPositiveLengthMeasure</I></TD> 
-		  <TD WIDTH="30%">-</TD> 
-		</TR> 
-		<TR> 
-		  <TD WIDTH="15%">-</TD> 
-		  <TD WIDTH="30%">1600</TD> 
-		  <TD WIDTH="25%"><I>IfcPositiveLengthMeasure</I></TD> 
-		  <TD WIDTH="30%">-</TD> 
-		</TR> 
-		<TR> 
-		  <TD WIDTH="15%">-</TD> 
-		  <TD WIDTH="30%">2400</TD> 
-		  <TD WIDTH="25%"><I>IfcPositiveLengthMeasure</I></TD> 
-		  <TD WIDTH="30%">-</TD> 
-		</TR> 
-	 </TABLE> 
-	 <BLOCKQUOTE> 
-		<P><FONT COLOR="#0000FF" SIZE="-1">HISTORY: New Entity in Release IFC 2x
-		  Edition 2.</FONT></P></BLOCKQUOTE>
-</EPM-HTML>
+﻿    <p>
+      An <em>IfcPropertyListValue</em> defines a property that has several (numeric or
+      descriptive) values assigned, these values are given by an ordered list. It defines a property - list value
+      combination for which the property <em>Name</em>, an optional <em>Description</em>, the optional <em>ListValues</em> with measure
+      type and optionally an <em>Unit</em> is given.
+      An <em>IfcPropertyListValue</em> is a list of values. The order in which values appear is significant. 
+      All list members shall be of the same type.
+    </p>
+    <p>
+      The unit is handled by the <em>Unit</em> attribute, see Table 679 for an example of a list property:
+    </p>
+    <ul>
+      <li>If the <em>Unit</em> attribute is not given, then the unit is already implied by the type of
+      <em>IfcMeasureValue</em> or <em>IfcDerivedMeasureValue</em>. The associated unit can be found at the
+      <em>IfcUnitAssignment</em> globally defined at the project level (<em>IfcProject.UnitsInContext</em>).
+      </li>
+      <li>If the <em>Unit</em> attribute is given, then the unit assigned by the <em>Unit</em> attribute overrides the
+      globally assigned unit.
+      </li>
+    </ul>
+    <blockquote class="note">
+      NOTE&nbsp; An <em>IfcPropertyListValue</em> may be exchanged with no values assigned yet. In this case the
+      <em>ListValues</em> are set to NIL.
+    </blockquote>
+<p>&nbsp;</p>
+<blockquote>    
+<table>
+ <tr>
+  <td>
+   <table class="gridtable">
+    <tr valign="top">
+     <th width="15%">Name</td>
+     <th width="30%">ListValues</td>
+     <th width="25%">Type<br><span style="font-size:smaller">(through <em>IfcValue</em>)</span></td>
+     <th width="30%">Unit</td>
+    </tr>
+    <tr>
+     <td width="15%">ApplicableSizes</td>
+     <td width="30%">1200</td>
+     <td width="25%"><em>IfcPositiveLengthMeasure</em></td>
+     <td width="30%">-</td>
+    </tr>
+    <tr>
+     <td width="15%">-</td>
+     <td width="30%">1600</td>
+     <td width="25%"><em>IfcPositiveLengthMeasure</em></td>
+     <td width="30%">-</td>
+    </tr>
+    <tr>
+     <td width="15%">-</td>
+     <td width="30%">2400</td>
+     <td width="25%"><em>IfcPositiveLengthMeasure</em></td>
+     <td width="30%">-</td>
+    </tr>
+   </table>
+  </td>
+ </tr>
+ <tr>
+  <td><p class="table">Table 679 &mdash; List property with values, measure types and units</td>
+ </tr>
+</table>
+</blockquote>
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC2x2.
+</blockquote>
+
+<blockquote class="change-ifc2x4">
+IFC4 CHANGE&nbsp; Attribute <em>ListValues</em> has been made OPTIONAL with upward compatibility for file based exchange.
+</blockquote>

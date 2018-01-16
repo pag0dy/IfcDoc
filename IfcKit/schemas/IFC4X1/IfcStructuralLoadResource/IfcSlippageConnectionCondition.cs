@@ -14,7 +14,7 @@ using BuildingSmart.IFC.IfcMeasureResource;
 
 namespace BuildingSmart.IFC.IfcStructuralLoadResource
 {
-	[Guid("eca9e451-2662-4a57-8f8a-2638170a1b97")]
+	[Guid("a431388c-2787-440c-aeb1-229142deaf2a")]
 	public partial class IfcSlippageConnectionCondition : IfcStructuralConnectionCondition
 	{
 		[DataMember(Order=0)] 
@@ -30,16 +30,16 @@ namespace BuildingSmart.IFC.IfcStructuralLoadResource
 		IfcLengthMeasure? _SlippageZ;
 	
 	
-		[Description("Slippage of that connection. Defines the maximum displacement in x-direction with" +
-	    "out any loading applied. \r\n")]
+		[Description("Slippage in x-direction of the coordinate system defined by the instance which us" +
+	    "es this resource object.")]
 		public IfcLengthMeasure? SlippageX { get { return this._SlippageX; } set { this._SlippageX = value;} }
 	
-		[Description("Slippage of that connection. Defines the maximum displacement in y-direction with" +
-	    "out any loading applied. \r\n")]
+		[Description("Slippage in y-direction of the coordinate system defined by the instance which us" +
+	    "es this resource object.")]
 		public IfcLengthMeasure? SlippageY { get { return this._SlippageY; } set { this._SlippageY = value;} }
 	
-		[Description("Slippage of that connection. Defines the maximum displacement in z-direction with" +
-	    "out any loading applied. \r\n")]
+		[Description("Slippage in z-direction of the coordinate system defined by the instance which us" +
+	    "es this resource object.")]
 		public IfcLengthMeasure? SlippageZ { get { return this._SlippageZ; } set { this._SlippageZ = value;} }
 	
 	

@@ -21,23 +21,27 @@ using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometricConstraintResource
 {
-	[Guid("ec46e52c-0df8-4d82-b6fc-beb260d50283")]
+	[Guid("f2e1a6b7-3d7a-4c60-a04a-924b62253b52")]
 	public partial class IfcGridPlacement : IfcObjectPlacement
 	{
 		[DataMember(Order=0)] 
+		[XmlElement]
 		[Required()]
 		IfcVirtualGridIntersection _PlacementLocation;
 	
 		[DataMember(Order=1)] 
-		IfcVirtualGridIntersection _PlacementRefDirection;
+		IfcGridPlacementDirectionSelect _PlacementRefDirection;
 	
 	
-		[Description("A constraint on one or both ends of the path for an ExtrudedSolid.\r\n")]
+		[Description("Placement of the object coordinate system defined by the intersection of two grid" +
+	    " axes.\r\n")]
 		public IfcVirtualGridIntersection PlacementLocation { get { return this._PlacementLocation; } set { this._PlacementLocation = value;} }
 	
-		[Description("Reference to a second grid axis intersection, which defines the orientation of th" +
-	    "e grid placement.")]
-		public IfcVirtualGridIntersection PlacementRefDirection { get { return this._PlacementRefDirection; } set { this._PlacementRefDirection = value;} }
+		[Description("Reference to either an explicit direction, or a second grid axis intersection, wh" +
+	    "ich defines the orientation of the grid placement.\r\n<blockquote class=\"change-if" +
+	    "c2x4\">IFC4 CHANGE  The select of an explict direction has been added.</blockquot" +
+	    "e>")]
+		public IfcGridPlacementDirectionSelect PlacementRefDirection { get { return this._PlacementRefDirection; } set { this._PlacementRefDirection = value;} }
 	
 	
 	}

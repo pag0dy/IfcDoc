@@ -20,11 +20,13 @@ using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
-	[Guid("66413b9e-ccbb-40df-834e-cc1911608f9b")]
+	[Guid("aa519614-ac30-463c-82ff-1733470ef911")]
 	public partial class IfcVector : IfcGeometricRepresentationItem,
+		BuildingSmart.IFC.IfcPresentationAppearanceResource.IfcHatchLineDistanceSelect,
 		BuildingSmart.IFC.IfcGeometryResource.IfcVectorOrDirection
 	{
 		[DataMember(Order=0)] 
+		[XmlElement]
 		[Required()]
 		IfcDirection _Orientation;
 	

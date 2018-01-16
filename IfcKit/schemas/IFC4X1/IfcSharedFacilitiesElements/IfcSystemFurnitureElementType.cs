@@ -11,22 +11,23 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcConstraintResource;
 using BuildingSmart.IFC.IfcCostResource;
 using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcQuantityResource;
 
 namespace BuildingSmart.IFC.IfcSharedFacilitiesElements
 {
-	[Guid("b466fff2-048a-403d-868c-f00cad22db29")]
+	[Guid("c8109093-505d-450a-871d-6a67de192b17")]
 	public partial class IfcSystemFurnitureElementType : IfcFurnishingElementType
 	{
+		[DataMember(Order=0)] 
+		[XmlAttribute]
+		IfcSystemFurnitureElementTypeEnum? _PredefinedType;
+	
+	
+		public IfcSystemFurnitureElementTypeEnum? PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	
 	}

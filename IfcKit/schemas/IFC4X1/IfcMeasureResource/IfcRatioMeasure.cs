@@ -10,14 +10,16 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcDateTimeResource;
+using BuildingSmart.IFC.IfcExternalReferenceResource;
 
 namespace BuildingSmart.IFC.IfcMeasureResource
 {
-	[Guid("40b33d00-3d4e-461b-ac16-d6b46e44d920")]
+	[Guid("bda0f4ee-5054-43de-9687-1cb9f5d258f3")]
 	public partial struct IfcRatioMeasure :
-		BuildingSmart.IFC.IfcCostResource.IfcAppliedValueSelect,
 		BuildingSmart.IFC.IfcMeasureResource.IfcMeasureValue,
-		BuildingSmart.IFC.IfcPresentationAppearanceResource.IfcSizeSelect
+		BuildingSmart.IFC.IfcPresentationAppearanceResource.IfcSizeSelect,
+		BuildingSmart.IFC.IfcDateTimeResource.IfcTimeOrRatioSelect
 	{
 		[XmlText]
 		public Double Value;

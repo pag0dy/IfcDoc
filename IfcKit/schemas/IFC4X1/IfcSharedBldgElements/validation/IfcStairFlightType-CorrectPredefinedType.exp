@@ -1,0 +1,2 @@
+﻿(PredefinedType <> IfcStairFlightTypeEnum.USERDEFINED) OR
+((PredefinedType = IfcStairFlightTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcElementType.ElementType))

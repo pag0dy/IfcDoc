@@ -10,20 +10,23 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
+using BuildingSmart.IFC.IfcPropertyResource;
 
 namespace BuildingSmart.IFC.IfcProfileResource
 {
-	[Guid("e45af9c0-ad58-4513-b830-964881be1b09")]
+	[Guid("bce6c9f4-6d2e-4d7b-8d7e-5174db9b4051")]
 	public partial class IfcDerivedProfileDef : IfcProfileDef
 	{
 		[DataMember(Order=0)] 
+		[XmlElement]
 		[Required()]
 		IfcProfileDef _ParentProfile;
 	
 		[DataMember(Order=1)] 
+		[XmlElement]
 		[Required()]
 		IfcCartesianTransformationOperator2D _Operator;
 	

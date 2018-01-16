@@ -25,7 +25,7 @@ using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcSharedBldgElements
 {
-	[Guid("9250e1e1-1837-49b4-a4e4-c6d65e1505a7")]
+	[Guid("030a0c92-14e1-4656-8d65-6fb50f43e9b3")]
 	public partial class IfcBeamType : IfcBuildingElementType
 	{
 		[DataMember(Order=0)] 

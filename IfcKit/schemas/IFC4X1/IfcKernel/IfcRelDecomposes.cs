@@ -11,36 +11,22 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcConstraintResource;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometricModelResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
+using BuildingSmart.IFC.IfcProcessExtension;
 using BuildingSmart.IFC.IfcPropertyResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
 using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcKernel
 {
-	[Guid("4a3a5141-fc1b-450b-8bdd-ce1d2ce53d85")]
+	[Guid("4ee02ebb-86ec-4872-a4ca-287681002e36")]
 	public abstract partial class IfcRelDecomposes : IfcRelationship
 	{
-		[DataMember(Order=0)] 
-		[Required()]
-		IfcObjectDefinition _RelatingObject;
-	
-		[DataMember(Order=1)] 
-		[Required()]
-		ISet<IfcObjectDefinition> _RelatedObjects = new HashSet<IfcObjectDefinition>();
-	
-	
-		[Description("The object that represents the nest or aggregation.\r\n")]
-		public IfcObjectDefinition RelatingObject { get { return this._RelatingObject; } set { this._RelatingObject = value;} }
-	
-		[Description("The objects being nested or aggregated.\r\n")]
-		public ISet<IfcObjectDefinition> RelatedObjects { get { return this._RelatedObjects; } }
 	
 	
 	}

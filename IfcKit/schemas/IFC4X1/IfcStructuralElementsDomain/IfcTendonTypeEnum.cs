@@ -10,29 +10,33 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfilePropertyResource;
+using BuildingSmart.IFC.IfcProfileResource;
+using BuildingSmart.IFC.IfcSharedComponentElements;
 
 namespace BuildingSmart.IFC.IfcStructuralElementsDomain
 {
-	[Guid("38e2b96a-4a90-4fc9-a3ce-367eaba2cd76")]
+	[Guid("a2a1bae2-820c-42dc-87ce-63af87f8b6a0")]
 	public enum IfcTendonTypeEnum
 	{
-		STRAND = 1,
+		[Description("The tendon is configured as a bar.")]
+		BAR = 1,
 	
-		WIRE = 2,
+		[Description("The tendon is coated.")]
+		COATED = 2,
 	
-		BAR = 3,
+		[Description("The tendon is a strand.")]
+		STRAND = 3,
 	
-		COATED = 4,
+		[Description("The tendon is a wire.")]
+		WIRE = 4,
 	
+		[Description("The type of tendon is user defined.")]
 		USERDEFINED = -1,
 	
+		[Description("The type of tendon is not defined.")]
 		NOTDEFINED = 0,
 	
 	}

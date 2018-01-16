@@ -18,18 +18,19 @@ using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometricModelResource
 {
-	[Guid("d3e186ee-a556-43ee-af1a-e7dcdeba8bf0")]
+	[Guid("538f2550-e0fc-4704-97f7-66d555de1ae4")]
 	public abstract partial class IfcCsgPrimitive3D : IfcGeometricRepresentationItem,
 		BuildingSmart.IFC.IfcGeometricModelResource.IfcBooleanOperand,
 		BuildingSmart.IFC.IfcGeometricModelResource.IfcCsgSelect
 	{
 		[DataMember(Order=0)] 
+		[XmlElement]
 		[Required()]
 		IfcAxis2Placement3D _Position;
 	
 	
-		[Description("<EPM-HTML>\r\nThe placement coordinate system to which the parameters of each indiv" +
-	    "idual CSG primitive apply.\r\n</EPM-HTML>")]
+		[Description("The placement coordinate system to which the parameters of each individual CSG pr" +
+	    "imitive apply.")]
 		public IfcAxis2Placement3D Position { get { return this._Position; } set { this._Position = value;} }
 	
 		public new IfcDimensionCount Dim { get { return new IfcDimensionCount(); } }

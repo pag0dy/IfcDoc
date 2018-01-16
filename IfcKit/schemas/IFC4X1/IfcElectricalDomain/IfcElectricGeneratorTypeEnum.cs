@@ -10,21 +10,31 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
 
 namespace BuildingSmart.IFC.IfcElectricalDomain
 {
-	[Guid("6f145be8-9516-4774-9455-a83660a166ff")]
+	[Guid("b2535988-9815-4668-9676-4d1f7bbba831")]
 	public enum IfcElectricGeneratorTypeEnum
 	{
+		[Description("Combined heat and power supply, used not only as a source of electric energy but " +
+	    "also as a heating source for the building. It may therefore be not only part of " +
+	    "an electrical system but also of a heating system.")]
+		CHP = 1,
+	
+		[Description("Electrical generator with a fuel-driven engine, for example a diesel-driven emerg" +
+	    "ency power supply.")]
+		ENGINEGENERATOR = 2,
+	
+		[Description("Electrical generator which does not include its source of kinetic energy, that is" +
+	    ", a motor, engine, or turbine are all modeled separately.")]
+		STANDALONE = 3,
+	
+		[Description("User-defined type.")]
 		USERDEFINED = -1,
 	
+		[Description("Undefined type.")]
 		NOTDEFINED = 0,
 	
 	}

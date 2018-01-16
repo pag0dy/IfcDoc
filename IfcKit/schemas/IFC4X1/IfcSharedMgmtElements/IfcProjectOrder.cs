@@ -15,38 +15,46 @@ using BuildingSmart.IFC.IfcCostResource;
 using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
+using BuildingSmart.IFC.IfcQuantityResource;
 
 namespace BuildingSmart.IFC.IfcSharedMgmtElements
 {
-	[Guid("50fbbf88-011f-48b4-9b53-17c9d9538558")]
+	[Guid("893d5903-b4b9-47a6-b246-30c5ec310142")]
 	public partial class IfcProjectOrder : IfcControl
 	{
 		[DataMember(Order=0)] 
 		[XmlAttribute]
-		[Required()]
-		IfcIdentifier _ID;
+		IfcProjectOrderTypeEnum? _PredefinedType;
 	
 		[DataMember(Order=1)] 
 		[XmlAttribute]
-		[Required()]
-		IfcProjectOrderTypeEnum _PredefinedType;
+		IfcLabel? _Status;
 	
 		[DataMember(Order=2)] 
 		[XmlAttribute]
-		IfcLabel? _Status;
+		IfcText? _LongDescription;
 	
 	
-		[Description("A unique identification assigned to a project order that enables its differentiat" +
-	    "ion from other project orders.")]
-		public IfcIdentifier ID { get { return this._ID; } set { this._ID = value;} }
+		[Description("Predefined generic type for a project order that is specified in an enumeration. " +
+	    "There may be a property set given specificly for the predefined types.\r\n\r\n<block" +
+	    "quote class=\"change-ifc2x4\">IFC4 CHANGE  The attribute has been made optional.</" +
+	    "blockquote>\r\n")]
+		public IfcProjectOrderTypeEnum? PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
-		[Description("The type of project order.\r\n")]
-		public IfcProjectOrderTypeEnum PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
-	
-		[Description("The current status of a project order.Examples of status values that might be use" +
-	    "d for a project order status include:\r\n- PLANNED\r\n- REQUESTED\r\n- APPROVED\r\n- ISS" +
-	    "UED\r\n- STARTED\r\n- DELAYED\r\n- DONE\r\n\r\n")]
+		[Description(@"The current status of a project order.Examples of status values that might be used for a project order status include:
+	<ul>
+	<li>PLANNED</li>
+	<li>REQUESTED</li>
+	<li>APPROVED</li>
+	<li>ISSUED</li>
+	<li>STARTED</li>
+	<li>DELAYED</li>
+	<li>DONE</li>
+	</ul>")]
 		public IfcLabel? Status { get { return this._Status; } set { this._Status = value;} }
+	
+		[Description("A detailed description of the project order describing the work to be completed.")]
+		public IfcText? LongDescription { get { return this._LongDescription; } set { this._LongDescription = value;} }
 	
 	
 	}

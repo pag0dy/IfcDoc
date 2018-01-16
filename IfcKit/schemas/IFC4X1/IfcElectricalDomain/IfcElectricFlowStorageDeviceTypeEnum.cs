@@ -10,31 +10,36 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
 
 namespace BuildingSmart.IFC.IfcElectricalDomain
 {
-	[Guid("e14ac6b7-eb01-445b-8b46-16fefbc2d27b")]
+	[Guid("2d68fd21-4236-40d5-a724-8b24e7764b32")]
 	public enum IfcElectricFlowStorageDeviceTypeEnum
 	{
+		[Description("A device for storing energy in chemical form so that it can be released as electr" +
+	    "ical energy.")]
 		BATTERY = 1,
 	
+		[Description("A device that stores electrical energy when an external power supply is present u" +
+	    "sing the electrical property of capacitance.")]
 		CAPACITORBANK = 2,
 	
+		[Description("A device that constantly injects currents that precisely correspond to the harmon" +
+	    "ic components drawn by the load.")]
 		HARMONICFILTER = 3,
 	
 		INDUCTORBANK = 4,
 	
+		[Description("A device that provides a time limited alternative source of power supply in the e" +
+	    "vent of failure of the main supply.")]
 		UPS = 5,
 	
+		[Description("User-defined type.")]
 		USERDEFINED = -1,
 	
+		[Description("Undefined type.")]
 		NOTDEFINED = 0,
 	
 	}

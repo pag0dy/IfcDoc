@@ -10,15 +10,17 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcDateTimeResource;
+using BuildingSmart.IFC.IfcExternalReferenceResource;
 
 namespace BuildingSmart.IFC.IfcMeasureResource
 {
-	[Guid("d04cfc70-6990-4fa0-97ee-21ef68d32ca6")]
+	[Guid("6b63cdf3-e884-464a-b95f-0d11f0ec118d")]
 	public partial struct IfcLabel :
-		BuildingSmart.IFC.IfcFacilitiesMgmtDomain.IfcConditionCriterionSelect,
 		BuildingSmart.IFC.IfcMeasureResource.IfcSimpleValue
 	{
 		[XmlText]
+		[MaxLength(255)]
 		public String Value;
 	
 		public IfcLabel(String value)

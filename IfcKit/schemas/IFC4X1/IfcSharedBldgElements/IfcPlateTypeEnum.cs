@@ -25,15 +25,21 @@ using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcSharedBldgElements
 {
-	[Guid("0f593e3a-0c25-4141-99e5-7b348eb6455b")]
+	[Guid("3b149038-4987-4e19-83ac-2260d7373f6c")]
 	public enum IfcPlateTypeEnum
 	{
+		[Description("A planar element within a curtain wall, often consisting of a frame with fixed gl" +
+	    "azing.")]
 		CURTAIN_PANEL = 1,
 	
+		[Description("A planar, flat and thin element, comes usually as metal sheet, and is often used " +
+	    "as an additonal part within an assembly.")]
 		SHEET = 2,
 	
+		[Description("User-defined linear element.")]
 		USERDEFINED = -1,
 	
+		[Description("Undefined linear element.")]
 		NOTDEFINED = 0,
 	
 	}

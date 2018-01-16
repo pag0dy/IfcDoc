@@ -11,20 +11,32 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
+using BuildingSmart.IFC.IfcApprovalResource;
+using BuildingSmart.IFC.IfcConstraintResource;
+using BuildingSmart.IFC.IfcCostResource;
 using BuildingSmart.IFC.IfcDateTimeResource;
+using BuildingSmart.IFC.IfcKernel;
+using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
+using BuildingSmart.IFC.IfcProfileResource;
+using BuildingSmart.IFC.IfcPropertyResource;
+using BuildingSmart.IFC.IfcQuantityResource;
 
 namespace BuildingSmart.IFC.IfcExternalReferenceResource
 {
-	[Guid("b0ff9aaa-eecf-485c-83df-3e92d81e7021")]
+	[Guid("5da7ac6c-0494-4c97-9373-49698ac9372f")]
 	public enum IfcDocumentStatusEnum
 	{
+		[Description("Document is a draft.")]
 		DRAFT = 1,
 	
+		[Description("Document is a final draft.")]
 		FINALDRAFT = 2,
 	
+		[Description("Document is final.")]
 		FINAL = 3,
 	
+		[Description("Document has undergone revision.")]
 		REVISION = 4,
 	
 		NOTDEFINED = 0,

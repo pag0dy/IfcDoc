@@ -1,33 +1,11 @@
-﻿<EPM-HTML>
-<p><u>Definition
-from IAI:</u> The entity <i>IfcBoundaryEdgeCondition</i>
-describes boundary conditions that can be applied to structural edge
-connections, either directly for the connection (e.g. the connecting
-edge) or for the relation between a structural member and the
-connection.</p>
-<p>The following conventions to
-the values of the <i>LinearStiffnessByLength[X,Y,Z]</i>
-and <i>RotationalStiffness</i><i>ByLength</i><i>[X,Y,Z]</i>
-apply:</p>
+﻿<p>Describes linearly elastic support conditions or connection conditions.</p>
+
+<p>Applicability:</p>
 <ul>
-  <li>value (-1.) represents an
-infinitive large value &ndash; or a fixed connectivity with
-infinitive stiffness</li>
-  <li>value zero (0.), represents
-no stiffness or a free connectivity</li>
-  <li>any other value represents a
-finitive stiffness or spring connectivity in that direction or rotation</li>
-  <li>value NIL ($) represents an
-unknown connectivity condition</li>
+  <li>Curve supports and connections.</li>
 </ul>
-<blockquote><font
- size="-1">NOTE: Instances of the entity <i>IfcBoundaryEdgeCondition</i>
-are used e.g., to define the boundary condition for instances of <i>IfcStructuralCurveConnection</i>
-or <i>IfcRelConnectsStructuralMember</i>
-pointing to a structural curve connection.</font></blockquote>
-<blockquote>
-  <p><font
- color="#0000ff" size="-1"> HISTORY: New entity
-in Release IFC2x edition 2. </font></p>
-</blockquote>
-</EPM-HTML>
+
+<blockquote class="history">HISTORY&nbsp; New entity in IFC2x2.<br>
+IFC 2x4 change: Attributes <em>LinearStiffnessX/Y/Z</em> renamed to <em>TranslationalStiffnessX/Y/Z</em>.</font></blockquote>
+
+<blockquote class="change-ifc2x4">IFC4 change All attribute data types changed from numeric to SELECT between Boolean and numeric.  Stiffnesses may now also be negative, for example to capture destabilizing effects in boundary conditions.  The IFC2x3 convention of -1. representing infinite stiffness is no longer valid and must not be used.  Infinite stiffness, i.e. fixed supports, are now modeled by the Boolean value TRUE.</blockquote>

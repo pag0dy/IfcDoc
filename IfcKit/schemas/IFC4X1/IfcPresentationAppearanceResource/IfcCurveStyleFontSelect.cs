@@ -11,15 +11,15 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcExternalReferenceResource;
+using BuildingSmart.IFC.IfcGeometricModelResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationDefinitionResource;
-using BuildingSmart.IFC.IfcPresentationResource;
 using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 {
-	[Guid("bc49992f-d455-43c7-83f0-4dc9615cd4d7")]
+	[Guid("7351b1d2-171f-4faf-b673-5393f170e041")]
 	public interface IfcCurveStyleFontSelect :
 		BuildingSmart.IFC.IfcPresentationAppearanceResource.IfcCurveFontOrScaledCurveFontSelect
 	{

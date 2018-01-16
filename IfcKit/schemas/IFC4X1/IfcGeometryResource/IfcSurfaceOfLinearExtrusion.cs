@@ -20,10 +20,11 @@ using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
-	[Guid("401881db-55c5-4915-badf-e9a6e9d4517c")]
+	[Guid("de606da2-a6cd-4560-a4c7-0e89276bc4ca")]
 	public partial class IfcSurfaceOfLinearExtrusion : IfcSweptSurface
 	{
 		[DataMember(Order=0)] 
+		[XmlElement]
 		[Required()]
 		IfcDirection _ExtrudedDirection;
 	

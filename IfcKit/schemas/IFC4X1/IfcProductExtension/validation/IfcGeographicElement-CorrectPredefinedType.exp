@@ -1,0 +1,3 @@
+﻿NOT(EXISTS(PredefinedType)) OR
+ (PredefinedType <> IfcGeographicElementTypeEnum.USERDEFINED) OR
+ ((PredefinedType = IfcGeographicElementTypeEnum.USERDEFINED) AND EXISTS (SELF\IfcObject.ObjectType))

@@ -25,7 +25,7 @@ using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcSharedBldgElements
 {
-	[Guid("6ff5bdfd-4fd2-4dfb-96f6-cfb5d9a87c9d")]
+	[Guid("e99d4f9c-26f3-48bf-81bc-dcadc07e58a4")]
 	public partial class IfcColumnType : IfcBuildingElementType
 	{
 		[DataMember(Order=0)] 

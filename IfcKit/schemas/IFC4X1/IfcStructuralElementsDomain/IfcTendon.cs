@@ -10,33 +10,28 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfilePropertyResource;
+using BuildingSmart.IFC.IfcProfileResource;
+using BuildingSmart.IFC.IfcSharedComponentElements;
 
 namespace BuildingSmart.IFC.IfcStructuralElementsDomain
 {
-	[Guid("1b518a02-392f-43e1-b4e1-0135ac1adc2b")]
+	[Guid("33cccfc5-2da4-42df-8cac-9c14b6d955a6")]
 	public partial class IfcTendon : IfcReinforcingElement
 	{
 		[DataMember(Order=0)] 
 		[XmlAttribute]
-		[Required()]
-		IfcTendonTypeEnum _PredefinedType;
+		IfcTendonTypeEnum? _PredefinedType;
 	
 		[DataMember(Order=1)] 
 		[XmlAttribute]
-		[Required()]
-		IfcPositiveLengthMeasure _NominalDiameter;
+		IfcPositiveLengthMeasure? _NominalDiameter;
 	
 		[DataMember(Order=2)] 
 		[XmlAttribute]
-		[Required()]
-		IfcAreaMeasure _CrossSectionArea;
+		IfcAreaMeasure? _CrossSectionArea;
 	
 		[DataMember(Order=3)] 
 		[XmlAttribute]
@@ -59,14 +54,19 @@ namespace BuildingSmart.IFC.IfcStructuralElementsDomain
 		IfcPositiveLengthMeasure? _MinCurvatureRadius;
 	
 	
-		[Description("Predefined generic types for a tendon.")]
-		public IfcTendonTypeEnum PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
+		[Description("Predefined generic types for a tendon.\r\n\r\n<blockquote class=\"change-ifc2x4\">IFC4 " +
+	    "CHANGE&nbsp; Attribute made optional.</blockquote>")]
+		public IfcTendonTypeEnum? PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
-		[Description("The nominal diameter defining the cross-section size of the tendon.")]
-		public IfcPositiveLengthMeasure NominalDiameter { get { return this._NominalDiameter; } set { this._NominalDiameter = value;} }
+		[Description("The nominal diameter defining the cross-section size of the tendon.\r\n\r\n<blockquot" +
+	    "e class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; Attribute made optional and deprecated" +
+	    ".  Use respective attribute at <em>IfcTendonType</em> instead.</blockquote>")]
+		public IfcPositiveLengthMeasure? NominalDiameter { get { return this._NominalDiameter; } set { this._NominalDiameter = value;} }
 	
-		[Description("The effective cross-section area of the tendon.")]
-		public IfcAreaMeasure CrossSectionArea { get { return this._CrossSectionArea; } set { this._CrossSectionArea = value;} }
+		[Description("The effective cross-section area of the tendon.\r\n\r\n<blockquote class=\"change-ifc2" +
+	    "x4\">IFC4 CHANGE&nbsp; Attribute made optional and deprecated.  Use respective at" +
+	    "tribute at <em>IfcTendonType</em> instead.</blockquote>")]
+		public IfcAreaMeasure? CrossSectionArea { get { return this._CrossSectionArea; } set { this._CrossSectionArea = value;} }
 	
 		[Description("The maximum allowed tension force that can be applied on the tendon.")]
 		public IfcForceMeasure? TensionForce { get { return this._TensionForce; } set { this._TensionForce = value;} }
@@ -74,8 +74,8 @@ namespace BuildingSmart.IFC.IfcStructuralElementsDomain
 		[Description("The prestress to be applied on the tendon.")]
 		public IfcPressureMeasure? PreStress { get { return this._PreStress; } set { this._PreStress = value;} }
 	
-		[Description("The friction coefficient for the bond between the tendon and the surrounding conc" +
-	    "rete.")]
+		[Description("The friction coefficient between tendon and tendon sheet while the tendon is unbo" +
+	    "nded.")]
 		public IfcNormalisedRatioMeasure? FrictionCoefficient { get { return this._FrictionCoefficient; } set { this._FrictionCoefficient = value;} }
 	
 		[Description("The deformation of an anchor or slippage of tendons when the prestressing device " +
@@ -83,7 +83,7 @@ namespace BuildingSmart.IFC.IfcStructuralElementsDomain
 		public IfcPositiveLengthMeasure? AnchorageSlip { get { return this._AnchorageSlip; } set { this._AnchorageSlip = value;} }
 	
 		[Description("The smallest curvature radius calculated on the whole effective length of the ten" +
-	    "don where the tension properties are still valid. ")]
+	    "don where the tension properties are still valid.")]
 		public IfcPositiveLengthMeasure? MinCurvatureRadius { get { return this._MinCurvatureRadius; } set { this._MinCurvatureRadius = value;} }
 	
 	

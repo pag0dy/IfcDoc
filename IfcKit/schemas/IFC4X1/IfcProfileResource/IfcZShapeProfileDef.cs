@@ -10,13 +10,14 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
+using BuildingSmart.IFC.IfcPropertyResource;
 
 namespace BuildingSmart.IFC.IfcProfileResource
 {
-	[Guid("d0f17bd3-c37e-46e7-b03e-b6c0ae3bff08")]
+	[Guid("e5fddf04-c0a3-4722-a8bf-d4fce6edec7d")]
 	public partial class IfcZShapeProfileDef : IfcParameterizedProfileDef
 	{
 		[DataMember(Order=0)] 
@@ -41,11 +42,11 @@ namespace BuildingSmart.IFC.IfcProfileResource
 	
 		[DataMember(Order=4)] 
 		[XmlAttribute]
-		IfcPositiveLengthMeasure? _FilletRadius;
+		IfcNonNegativeLengthMeasure? _FilletRadius;
 	
 		[DataMember(Order=5)] 
 		[XmlAttribute]
-		IfcPositiveLengthMeasure? _EdgeRadius;
+		IfcNonNegativeLengthMeasure? _EdgeRadius;
 	
 	
 		[Description("Web length, see illustration above (= h). ")]
@@ -60,13 +61,11 @@ namespace BuildingSmart.IFC.IfcProfileResource
 		[Description("Constant wall thickness of flange, see illustration above (= tg). ")]
 		public IfcPositiveLengthMeasure FlangeThickness { get { return this._FlangeThickness; } set { this._FlangeThickness = value;} }
 	
-		[Description("Fillet radius according the above illustration (= r1). If it is not given, zero i" +
-	    "s assumed. ")]
-		public IfcPositiveLengthMeasure? FilletRadius { get { return this._FilletRadius; } set { this._FilletRadius = value;} }
+		[Description("Fillet radius according the above illustration (= r1).")]
+		public IfcNonNegativeLengthMeasure? FilletRadius { get { return this._FilletRadius; } set { this._FilletRadius = value;} }
 	
-		[Description("Edge radius according the above illustration (= r2). If it is not given, zero is " +
-	    "assumed. ")]
-		public IfcPositiveLengthMeasure? EdgeRadius { get { return this._EdgeRadius; } set { this._EdgeRadius = value;} }
+		[Description("Edge radius according the above illustration (= r2).")]
+		public IfcNonNegativeLengthMeasure? EdgeRadius { get { return this._EdgeRadius; } set { this._EdgeRadius = value;} }
 	
 	
 	}

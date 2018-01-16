@@ -25,7 +25,7 @@ using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcSharedBldgElements
 {
-	[Guid("fb749b42-518c-47bb-abb9-b6c3ce73bd0b")]
+	[Guid("af434aa6-8042-4cb1-bda9-c37a920274c8")]
 	public enum IfcCurtainWallTypeEnum
 	{
 		USERDEFINED = -1,

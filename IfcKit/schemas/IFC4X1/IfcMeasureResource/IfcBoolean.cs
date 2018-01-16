@@ -10,12 +10,20 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcDateTimeResource;
+using BuildingSmart.IFC.IfcExternalReferenceResource;
 
 namespace BuildingSmart.IFC.IfcMeasureResource
 {
-	[Guid("a9ff8add-feac-4853-8092-c9d330767399")]
+	[Guid("6f28babb-8b8b-4b31-a6e3-068bfc20ff6c")]
 	public partial struct IfcBoolean :
-		BuildingSmart.IFC.IfcMeasureResource.IfcSimpleValue
+		BuildingSmart.IFC.IfcStructuralLoadResource.IfcModulusOfRotationalSubgradeReactionSelect,
+		BuildingSmart.IFC.IfcStructuralLoadResource.IfcModulusOfSubgradeReactionSelect,
+		BuildingSmart.IFC.IfcStructuralLoadResource.IfcModulusOfTranslationalSubgradeReactionSelect,
+		BuildingSmart.IFC.IfcStructuralLoadResource.IfcRotationalStiffnessSelect,
+		BuildingSmart.IFC.IfcMeasureResource.IfcSimpleValue,
+		BuildingSmart.IFC.IfcStructuralLoadResource.IfcTranslationalStiffnessSelect,
+		BuildingSmart.IFC.IfcStructuralLoadResource.IfcWarpingStiffnessSelect
 	{
 		[XmlText]
 		public Boolean Value;

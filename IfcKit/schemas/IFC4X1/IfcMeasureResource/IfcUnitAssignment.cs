@@ -10,10 +10,12 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcDateTimeResource;
+using BuildingSmart.IFC.IfcExternalReferenceResource;
 
 namespace BuildingSmart.IFC.IfcMeasureResource
 {
-	[Guid("96c563dd-8109-4f17-ba35-277ff9ab904a")]
+	[Guid("cdb8d8f7-b0f6-4fc4-a97e-cc6ff85a83f6")]
 	public partial class IfcUnitAssignment
 	{
 		[DataMember(Order=0)] 

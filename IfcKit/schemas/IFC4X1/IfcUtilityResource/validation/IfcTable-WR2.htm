@@ -1,1 +1,1 @@
-﻿Ensures that each row defines the same number of cells. This restricts the available table styles in IFC Release 1.5. The rule compares whether all other rows of the IfcTable have the same number of cells as the first row. EXPRESS = SIZEOF(QUERY( Temp <* Rows | HIINDEX(Temp.RowCells) <> HIINDEX(Rows[1].RowCells))) = 0
+﻿The rule restricts the allowed number of heading rows to no more than one.

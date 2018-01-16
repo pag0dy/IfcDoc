@@ -21,10 +21,11 @@ using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometricConstraintResource
 {
-	[Guid("3e280a95-bfac-412d-9286-ef85f0043a46")]
+	[Guid("ca6001c7-db80-4168-bd0d-32259a34d423")]
 	public partial class IfcLocalPlacement : IfcObjectPlacement
 	{
 		[DataMember(Order=0)] 
+		[XmlElement]
 		IfcObjectPlacement _PlacementRelTo;
 	
 		[DataMember(Order=1)] 

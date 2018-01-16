@@ -20,7 +20,7 @@ using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
-	[Guid("733b3592-f6df-4afd-9ece-1cd4ef56fd2f")]
+	[Guid("27c04622-ab3d-4d08-9084-d06304e17b81")]
 	public partial class IfcPolyline : IfcBoundedCurve
 	{
 		[DataMember(Order=0)] 

@@ -14,33 +14,30 @@ using BuildingSmart.IFC.IfcMeasureResource;
 
 namespace BuildingSmart.IFC.IfcStructuralLoadResource
 {
-	[Guid("4ba2918e-ce3b-4abc-85e7-561cd722c1c2")]
+	[Guid("fa24f0f1-91ba-46b3-a264-4ec1679a4bce")]
 	public partial class IfcBoundaryFaceCondition : IfcBoundaryCondition
 	{
 		[DataMember(Order=0)] 
-		[XmlAttribute]
-		IfcModulusOfSubgradeReactionMeasure? _LinearStiffnessByAreaX;
+		IfcModulusOfSubgradeReactionSelect _TranslationalStiffnessByAreaX;
 	
 		[DataMember(Order=1)] 
-		[XmlAttribute]
-		IfcModulusOfSubgradeReactionMeasure? _LinearStiffnessByAreaY;
+		IfcModulusOfSubgradeReactionSelect _TranslationalStiffnessByAreaY;
 	
 		[DataMember(Order=2)] 
-		[XmlAttribute]
-		IfcModulusOfSubgradeReactionMeasure? _LinearStiffnessByAreaZ;
+		IfcModulusOfSubgradeReactionSelect _TranslationalStiffnessByAreaZ;
 	
 	
-		[Description("Linear stiffness value in x-direction of the coordinate system defined by the ins" +
-	    "tance which uses this resource object.")]
-		public IfcModulusOfSubgradeReactionMeasure? LinearStiffnessByAreaX { get { return this._LinearStiffnessByAreaX; } set { this._LinearStiffnessByAreaX = value;} }
+		[Description("Translational stiffness value in x-direction of the coordinate system defined by " +
+	    "the instance which uses this resource object.")]
+		public IfcModulusOfSubgradeReactionSelect TranslationalStiffnessByAreaX { get { return this._TranslationalStiffnessByAreaX; } set { this._TranslationalStiffnessByAreaX = value;} }
 	
-		[Description("Linear stiffness value in y-direction of the coordinate system defined by the ins" +
-	    "tance which uses this resource object.")]
-		public IfcModulusOfSubgradeReactionMeasure? LinearStiffnessByAreaY { get { return this._LinearStiffnessByAreaY; } set { this._LinearStiffnessByAreaY = value;} }
+		[Description("Translational stiffness value in y-direction of the coordinate system defined by " +
+	    "the instance which uses this resource object.")]
+		public IfcModulusOfSubgradeReactionSelect TranslationalStiffnessByAreaY { get { return this._TranslationalStiffnessByAreaY; } set { this._TranslationalStiffnessByAreaY = value;} }
 	
-		[Description("Linear stiffness value in z-direction of the coordinate system defined by the ins" +
-	    "tance which uses this resource object.")]
-		public IfcModulusOfSubgradeReactionMeasure? LinearStiffnessByAreaZ { get { return this._LinearStiffnessByAreaZ; } set { this._LinearStiffnessByAreaZ = value;} }
+		[Description("Translational stiffness value in z-direction of the coordinate system defined by " +
+	    "the instance which uses this resource object.")]
+		public IfcModulusOfSubgradeReactionSelect TranslationalStiffnessByAreaZ { get { return this._TranslationalStiffnessByAreaZ; } set { this._TranslationalStiffnessByAreaZ = value;} }
 	
 	
 	}

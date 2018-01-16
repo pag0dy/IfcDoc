@@ -1,5 +1,5 @@
 ﻿FUNCTION IfcDeriveDimensionalExponents
-    (UnitElements : SET [1:?] Of IfcDerivedUnitElement)
+    (UnitElements : SET [1:?] OF IfcDerivedUnitElement)
     : IfcDimensionalExponents;  
     LOCAL
     Result : IfcDimensionalExponents :=

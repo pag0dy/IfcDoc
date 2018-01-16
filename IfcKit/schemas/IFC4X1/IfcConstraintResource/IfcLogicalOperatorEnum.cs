@@ -16,17 +16,32 @@ using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcTimeSeriesResource;
 using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcConstraintResource
 {
-	[Guid("efb909b3-4e8a-49c2-8ddf-8b4c86406a57")]
+	[Guid("10c233d4-a4a6-42d1-b42d-fb4d8af541e0")]
 	public enum IfcLogicalOperatorEnum
 	{
+		[Description("Defines a relationship between operands whereby the result is true if all operand" +
+	    "s are true, and false if at least one operand is false.")]
 		LOGICALAND = 1,
 	
+		[Description("Defines a relationship between operands whereby the result is true if at least on" +
+	    "e operand is true, and false if all operands are false.")]
 		LOGICALOR = 2,
+	
+		[Description("Defines a relationship between operands whereby the result is true if exactly one" +
+	    " operand is true (exclusive or).")]
+		LOGICALXOR = 3,
+	
+		[Description("Defines a relationship between operands whereby the result is true if at least on" +
+	    "e operand is false, and false if all operands are true.")]
+		LOGICALNOTAND = 4,
+	
+		[Description("Defines a relationship between operands whereby the result is true if all operand" +
+	    "s are false, and false if at least one operand is true.")]
+		LOGICALNOTOR = 5,
 	
 	}
 }

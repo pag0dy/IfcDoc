@@ -10,17 +10,15 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfilePropertyResource;
+using BuildingSmart.IFC.IfcProfileResource;
+using BuildingSmart.IFC.IfcSharedComponentElements;
 
 namespace BuildingSmart.IFC.IfcStructuralElementsDomain
 {
-	[Guid("f1b23e5d-c76d-4754-8b04-ea3d52f51a16")]
+	[Guid("60c27225-1396-4914-94fa-e4ace351eb81")]
 	public partial class IfcReinforcingMesh : IfcReinforcingElement
 	{
 		[DataMember(Order=0)] 
@@ -33,60 +31,75 @@ namespace BuildingSmart.IFC.IfcStructuralElementsDomain
 	
 		[DataMember(Order=2)] 
 		[XmlAttribute]
-		[Required()]
-		IfcPositiveLengthMeasure _LongitudinalBarNominalDiameter;
+		IfcPositiveLengthMeasure? _LongitudinalBarNominalDiameter;
 	
 		[DataMember(Order=3)] 
 		[XmlAttribute]
-		[Required()]
-		IfcPositiveLengthMeasure _TransverseBarNominalDiameter;
+		IfcPositiveLengthMeasure? _TransverseBarNominalDiameter;
 	
 		[DataMember(Order=4)] 
 		[XmlAttribute]
-		[Required()]
-		IfcAreaMeasure _LongitudinalBarCrossSectionArea;
+		IfcAreaMeasure? _LongitudinalBarCrossSectionArea;
 	
 		[DataMember(Order=5)] 
 		[XmlAttribute]
-		[Required()]
-		IfcAreaMeasure _TransverseBarCrossSectionArea;
+		IfcAreaMeasure? _TransverseBarCrossSectionArea;
 	
 		[DataMember(Order=6)] 
 		[XmlAttribute]
-		[Required()]
-		IfcPositiveLengthMeasure _LongitudinalBarSpacing;
+		IfcPositiveLengthMeasure? _LongitudinalBarSpacing;
 	
 		[DataMember(Order=7)] 
 		[XmlAttribute]
-		[Required()]
-		IfcPositiveLengthMeasure _TransverseBarSpacing;
+		IfcPositiveLengthMeasure? _TransverseBarSpacing;
+	
+		[DataMember(Order=8)] 
+		[XmlAttribute]
+		IfcReinforcingMeshTypeEnum? _PredefinedType;
 	
 	
-		[Description("The overall length of the mesh measured in its longitudinal direction.")]
+		[Description("Deprecated.\r\n\r\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; Attribute depr" +
+	    "ecated.  Use respective attribute at <em>IfcReinforcingMeshType</em> instead.</b" +
+	    "lockquote>")]
 		public IfcPositiveLengthMeasure? MeshLength { get { return this._MeshLength; } set { this._MeshLength = value;} }
 	
-		[Description("The overall width of the mesh measured in its transversal direction.")]
+		[Description("Deprecated.\r\n\r\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; Attribute depr" +
+	    "ecated.  Use respective attribute at <em>IfcReinforcingMeshType</em> instead.</b" +
+	    "lockquote>")]
 		public IfcPositiveLengthMeasure? MeshWidth { get { return this._MeshWidth; } set { this._MeshWidth = value;} }
 	
-		[Description("The nominal diameter denoting the cross-section size of the longitudinal bars.")]
-		public IfcPositiveLengthMeasure LongitudinalBarNominalDiameter { get { return this._LongitudinalBarNominalDiameter; } set { this._LongitudinalBarNominalDiameter = value;} }
+		[Description("Deprecated.\r\n\r\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; Attribute made" +
+	    " optional and deprecated.  Use respective attribute at <em>IfcReinforcingMeshTyp" +
+	    "e</em> instead.</blockquote>")]
+		public IfcPositiveLengthMeasure? LongitudinalBarNominalDiameter { get { return this._LongitudinalBarNominalDiameter; } set { this._LongitudinalBarNominalDiameter = value;} }
 	
-		[Description("The nominal diameter denoting the cross-section size of the transverse bars.")]
-		public IfcPositiveLengthMeasure TransverseBarNominalDiameter { get { return this._TransverseBarNominalDiameter; } set { this._TransverseBarNominalDiameter = value;} }
+		[Description("Deprecated.\r\n\r\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; Attribute made" +
+	    " optional and deprecated.  Use respective attribute at <em>IfcReinforcingMeshTyp" +
+	    "e</em> instead.</blockquote>")]
+		public IfcPositiveLengthMeasure? TransverseBarNominalDiameter { get { return this._TransverseBarNominalDiameter; } set { this._TransverseBarNominalDiameter = value;} }
 	
-		[Description("The effective cross-section area of the longitudinal bars of the mesh.")]
-		public IfcAreaMeasure LongitudinalBarCrossSectionArea { get { return this._LongitudinalBarCrossSectionArea; } set { this._LongitudinalBarCrossSectionArea = value;} }
+		[Description("Deprecated.\r\n\r\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; Attribute made" +
+	    " optional and deprecated.  Use respective attribute at <em>IfcReinforcingMeshTyp" +
+	    "e</em> instead.</blockquote>")]
+		public IfcAreaMeasure? LongitudinalBarCrossSectionArea { get { return this._LongitudinalBarCrossSectionArea; } set { this._LongitudinalBarCrossSectionArea = value;} }
 	
-		[Description("The effective cross-section area of the transverse bars of the mesh.")]
-		public IfcAreaMeasure TransverseBarCrossSectionArea { get { return this._TransverseBarCrossSectionArea; } set { this._TransverseBarCrossSectionArea = value;} }
+		[Description("Deprecated.\r\n\r\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; Attribute made" +
+	    " optional and deprecated.  Use respective attribute at <em>IfcReinforcingMeshTyp" +
+	    "e</em> instead.</blockquote>")]
+		public IfcAreaMeasure? TransverseBarCrossSectionArea { get { return this._TransverseBarCrossSectionArea; } set { this._TransverseBarCrossSectionArea = value;} }
 	
-		[Description("The spacing between the longitudinal bars. Note: an even distribution of bars is " +
-	    "presumed; other cases are handled by Psets.")]
-		public IfcPositiveLengthMeasure LongitudinalBarSpacing { get { return this._LongitudinalBarSpacing; } set { this._LongitudinalBarSpacing = value;} }
+		[Description("Deprecated.\r\n\r\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; Attribute made" +
+	    " optional and deprecated.  Use respective attribute at <em>IfcReinforcingMeshTyp" +
+	    "e</em> instead.</blockquote>")]
+		public IfcPositiveLengthMeasure? LongitudinalBarSpacing { get { return this._LongitudinalBarSpacing; } set { this._LongitudinalBarSpacing = value;} }
 	
-		[Description("The spacing between the transverse bars. Note: an even distribution of bars is pr" +
-	    "esumed; other cases are handled by Psets.")]
-		public IfcPositiveLengthMeasure TransverseBarSpacing { get { return this._TransverseBarSpacing; } set { this._TransverseBarSpacing = value;} }
+		[Description("Deprecated.\r\n\r\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; Attribute made" +
+	    " optional and deprecated.  Use respective attribute at <em>IfcReinforcingMeshTyp" +
+	    "e</em> instead.</blockquote>")]
+		public IfcPositiveLengthMeasure? TransverseBarSpacing { get { return this._TransverseBarSpacing; } set { this._TransverseBarSpacing = value;} }
+	
+		[Description("Kind of mesh.")]
+		public IfcReinforcingMeshTypeEnum? PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
 	
 	
 	}

@@ -11,49 +11,55 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcExternalReferenceResource;
+using BuildingSmart.IFC.IfcGeometricModelResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationDefinitionResource;
-using BuildingSmart.IFC.IfcPresentationResource;
 using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 {
-	[Guid("5d06ae78-92d1-4cb2-8e64-2698b85168cf")]
+	[Guid("a79b1274-8b81-4827-baa7-03f278dc7a39")]
 	public partial class IfcTextStyle : IfcPresentationStyle,
 		BuildingSmart.IFC.IfcPresentationAppearanceResource.IfcPresentationStyleSelect
 	{
 		[DataMember(Order=0)] 
-		IfcCharacterStyleSelect _TextCharacterAppearance;
+		[XmlElement]
+		IfcTextStyleForDefinedFont _TextCharacterAppearance;
 	
 		[DataMember(Order=1)] 
-		IfcTextStyleSelect _TextStyle;
+		[XmlElement]
+		IfcTextStyleTextModel _TextStyle;
 	
 		[DataMember(Order=2)] 
 		[Required()]
 		IfcTextFontSelect _TextFontStyle;
 	
+		[DataMember(Order=3)] 
+		[XmlAttribute]
+		IfcBoolean? _ModelOrDraughting;
 	
-		[Description("<EPM-HTML>\r\nA character style to be used for presented text.\r\n</EPM-HTML>")]
-		public IfcCharacterStyleSelect TextCharacterAppearance { get { return this._TextCharacterAppearance; } set { this._TextCharacterAppearance = value;} }
 	
-		[Description(@"<EPM-HTML>
-	The style applied to the text block for its visual appearance.</br>
-	It defines the text block characteristics, either for vector based or monospace text fonts (see select item <i>IfcTextStyleWithBoxCharacteristics</i>), or for true type text fonts (see select item <i>IfcTextStyleTextModel</i>.
-	  <blockquote><small><font color=""#0000ff"">
-	IFC2x Edition 3 CHANGE&nbsp; The <i>attribute <i>TextBlockStyle</i> has been changed from SET[1:?] to a non-aggregated optional, it has been renamed from TextStyles.
-	  </font></small></blockquote>
-	</EPM-HTML>")]
-		public IfcTextStyleSelect TextStyle { get { return this._TextStyle; } set { this._TextStyle = value;} }
+		[Description("A character style to be used for presented text.\r\n<blockquote class=\"change-ifc2x" +
+	    "4\">IFC4 CHANGE&nbsp; Superfluous select type IfcCharacterStyleSelect has been re" +
+	    "moved.\r\n</blockquote>")]
+		public IfcTextStyleForDefinedFont TextCharacterAppearance { get { return this._TextCharacterAppearance; } set { this._TextCharacterAppearance = value;} }
 	
-		[Description(@"<EPM-HTML>
-	The style applied to the text font for its visual appearance.</br>
-	It defines the font family, font style, weight and size.
-	  <blockquote><small><font color=""#ff0000"">
-	IFC2x Edition 2 Addendum 2 CHANGE The attribute <i>TextFontStyle</i> is a new attribute attached to <i>IfcTextStyle</i>.
-	  </font></small></blockquote>
-	</EPM-HTML>")]
+		[Description(@"The style applied to the text block for its visual appearance.
+	<blockquote class=""change-ifc2x3"">IFC2x3 CHANGE&nbsp; The attribute <em>TextBlockStyle</em> has been changed from SET[1:?] to a non-aggregated optional and renamed into <em>TextStyles</em>.</blockquote>
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The IfcTextStyleWithBoxCharacteristics and the now superfluous select type IfcTextStyleSelect have been removed.
+	</blockquote>")]
+		public IfcTextStyleTextModel TextStyle { get { return this._TextStyle; } set { this._TextStyle = value;} }
+	
+		[Description(@"The style applied to the text font for its visual appearance. It defines the font family, font style, weight and size.
+	  <blockquote class=""change-ifc2x2"">IFC2x2 Add2 CHANGE The attribute <em>TextFontStyle</em> is a new attribute attached to <em>IfcTextStyle</em>.
+	  </blockquote>")]
 		public IfcTextFontSelect TextFontStyle { get { return this._TextFontStyle; } set { this._TextFontStyle = value;} }
+	
+		[Description("Indication whether the length measures provided for the presentation style are mo" +
+	    "del based, or draughting based.\r\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE&n" +
+	    "bsp; New attribute.\r\n</blockquote>")]
+		public IfcBoolean? ModelOrDraughting { get { return this._ModelOrDraughting; } set { this._ModelOrDraughting = value;} }
 	
 	
 	}
