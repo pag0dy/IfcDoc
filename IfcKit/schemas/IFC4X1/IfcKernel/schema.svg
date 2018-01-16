@@ -180,7 +180,6 @@
   </g>
   <g id="IfcProduct" fill="yellow">
     <rect x="4244.77425" y="132.78468375" width="170.2875" height="49.99999875" stroke="black" />
-    <polyline points="4269.918,132.78468375 4269.918,61.53468375 " fill="none" stroke="black" stroke-width="3" />
     <text x="4329.918" y="157.784683125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcProduct</text>
     <g id="ObjectPlacement">
       <polyline points="4266.417,182.7846825 4266.417,322.06560375 " fill="none" stroke="black" stroke-dasharray="1,1" />
@@ -357,7 +356,6 @@
   </g>
   <g id="IfcRelAssignsToGroup" fill="yellow">
     <rect x="7531.67625" y="119.89647375" width="133.66249875" height="49.96249875" stroke="black" />
-    <polyline points="7598.50725,169.8589725 7598.50725,235.67749875 " fill="none" stroke="black" stroke-width="3" />
     <text x="7598.507499375" y="144.877723125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcRelAssignsToGroup</text>
     <g id="RelatingGroup">
       <polyline points="7531.67625,144.87773625 7348.413375,144.87773625 " fill="none" stroke="black" />

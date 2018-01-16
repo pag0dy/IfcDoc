@@ -1,8 +1,8 @@
 ﻿<p>An <em>IfcCircle</em> is a curve consisting of a set of points having equal distance from the center.</p>
 <blockquote class="note">NOTE&nbsp; A circular arc segment is defined by using the <em>IfcTrimmedCurve</em> with
-<em>BasisCurve</em> being an <em>IfcCircle</em> or alternatively as a circular arc defined by three points within an <em>IfcIndexedPolyCurve</em>.</blockquote>
+<em>BasisCurve</em> being an <em>IfcCircle</em>.</blockquote>
 
-<p>Figure 389 illustrates the definition of <em>IfcCircle</em> within a three-dimensional position
+<p>Figure 365 illustrates the definition of <em>IfcCircle</em> within a three-dimensional position
 coordinate system placed within the object coordinate system of an element.</p>
 
 <table summary="example" cellpadding="2" cellspacing="2">
@@ -11,9 +11,8 @@ coordinate system placed within the object coordinate system of an element.</p>
 <td style="vertical-align:bottom; text-align:left;">
 </td>
 </tr>
-<tr><td><p class="figure">Figure 389 &mdash; Circle layout</p></td></tr>
+<tr><td><p class="figure">Figure 365 &mdash; Circle layout</p></td></tr>
 </table>
-<p>The <em>IfcCircle</em> ia parameterized using numeric values in correspondence to the plane angle unit provided within the <em>IfcUnitAssignment</em>. If the plane angle unit is 'Degree' the parametric range of a circle is 0 &le; <em>u</em> &le; 360, if the plane angle unit is radians, the parametric range is 0 &le; <em>u</em> &le; 2&pi;.</p>
 <p>&nbsp;</p>
 
 <blockquote class="extDef">NOTE Definition according to ISO/CD 10303-42:1992<br>
@@ -26,16 +25,18 @@ z = SELF\IfcConic.Position.P[3]<br>
 R = Radius</code></blockquote>
 <p style="font-size:inherit">and the circle is parameterized as</p>
 <blockquote>
-<blockquote><img src="../../../figures/ifccircle-math1.gif" width="205" height="22" alt="formula"></blockquote>
+<blockquote><img alt="formula" src="../../../figures/ifccircle-math1.gif" width="205" height="22"></blockquote>
 </blockquote>
-<p style="font-size:inherit">The parameterization range is 0 &le; <em>u</em> &le; 360 degree, <em>u</em> is an angular parameter and when a numerical value is specified it shall use the current units for plane angle measure. In the placement coordinate system defined above, the circle is the equation <em>C</em> = 0, where</p>
+<p style="font-size:inherit">The parameterization range is 0 &le; <em>u</em> &le; 2&pi; (0 &le; <em>u</em> &le; 360
+degree).<br>
+In the placement coordinate system defined above, the circle is the equation <em>C</em> = 0, where</p>
 <blockquote>
-<blockquote><img src="../../../figures/ifccircle-math2.gif" width="154" height="24" alt="formula"></blockquote>
+<blockquote><img alt="formula" src="../../../figures/ifccircle-math2.gif" width="154" height="24"></blockquote>
 </blockquote>
 <p style="font-size:inherit">The positive sense of the circle at any point is in the tangent direction, <b>T</b>, to
 the curve at the point, where</p>
 <blockquote>
-<blockquote><img src="../../../figures/ifccircle-math3.gif" width="102" height="25" alt="formula"></blockquote>
+<blockquote><img alt="formula" src="../../../figures/ifccircle-math3.gif" width="102" height="25"></blockquote>
 </blockquote>
 </blockquote>
 <blockquote class="note">NOTE&nbsp; Entity adapted from <strong>circle</strong> defined in ISO

@@ -2,7 +2,6 @@
 <svg xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="1.1" width="2400" height="1776" xmlns="http://www.w3.org/2000/svg">
   <g id="IfcArbitraryClosedProfileDef" fill="yellow">
     <rect x="115.13751375" y="1150.8593625" width="204.27499875" height="37.5" stroke="black" />
-    <polyline points="217.275015,1188.3593625 217.275015,1228.674975 " fill="none" stroke="black" stroke-width="3" />
     <text x="217.275013125" y="1169.6093625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcArbitraryClosedProfileDef</text>
     <g id="OuterCurve">
       <polyline points="319.4125125,1169.6093625 418.9124625,1169.6093625 " fill="none" stroke="black" />
@@ -11,7 +10,6 @@
   </g>
   <g id="IfcArbitraryOpenProfileDef" fill="yellow">
     <rect x="115.10625" y="953.3625" width="204.2625" height="37.5" stroke="black" />
-    <polyline points="217.2375,990.8625 217.2375,1024.4687625 " fill="none" stroke="black" stroke-width="3" />
     <text x="217.2375" y="972.1125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcArbitraryOpenProfileDef</text>
     <g id="Curve">
       <polyline points="319.36875,972.1125 418.88748375,972.1125 " fill="none" stroke="black" />
@@ -96,7 +94,6 @@
   </g>
   <g id="IfcCircleProfileDef" fill="yellow">
     <rect x="711.265125" y="37.333738875" width="170.2125" height="37.5" stroke="black" />
-    <polyline points="750.8031375,74.83374 750.8031375,121.19726625 " fill="none" stroke="black" stroke-width="3" />
     <text x="796.371375" y="56.083738875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcCircleProfileDef</text>
     <g id="Radius">
       <polyline points="881.477625,56.08374 1014.15910125,56.08374 " fill="none" stroke="black" />
@@ -141,7 +138,6 @@
   </g>
   <g id="IfcDerivedProfileDef" fill="yellow">
     <rect x="115.1374875" y="1519.1015625" width="163.725" height="64.99999875" stroke="black" />
-    <polyline points="192.1999875,1584.10155 192.1999875,1670.94999 " fill="none" stroke="black" stroke-width="3" />
     <text x="196.9999875" y="1551.601561875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcDerivedProfileDef</text>
     <g id="ParentProfile">
       <polyline points="278.8624875,1532.251575 418.8749625,1532.251575 " fill="none" stroke="black" />

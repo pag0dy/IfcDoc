@@ -224,8 +224,8 @@
       <text x="2085.86995125" y="343.937498625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">RelatingReference</text>
     </g>
     <g id="RelatedResourceObjects">
-      <polyline points="2173.119975,338.93749875 2173.119975,377.69997375 " fill="none" stroke="black" />
-      <text x="2251.9830975" y="363.943724625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">RelatedResourceObjects S[1:?]</text>
+      <polyline points="2177.84382386719,338.93749875 2177.84382386719,338.93749875 2177.84382386719,377.69995880127 " fill="none" stroke="black" />
+      <text x="2177.84382386719" y="365.818728775635" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">RelatedResourceObjects S[1:?]</text>
     </g>
   </g>
   <g id="IfcLibraryInformation" fill="yellow">
@@ -350,8 +350,8 @@
     <text x="231.375" y="476.6562624375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcLibrarySelect</text>
   </g>
   <g id="IfcResourceObjectSelect" fill="green">
-    <rect x="2096.325" y="377.6999625" width="163.03750125" height="29.987500125" stroke="black" />
-    <polyline points="2175.343725,407.687475 2175.343725,438.0937485 " fill="none" stroke="black" />
+    <rect x="2096.32507324219" y="377.69995880127" width="163.03750125" height="29.987500125" stroke="black" />
+    <polyline points="2175.343725,407.68745892627 2175.343725,407.68745892627 2175.343725,438.0937485 " fill="none" stroke="black" />
     <polyline points="2175.343725,438.0937485 1874.9352,438.0937125 1874.9352,650.44995 " fill="none" stroke="black" />
     <polyline points="2175.343725,438.0937485 1855.2375,438.0937125 1855.2375,703.58746125 " fill="none" stroke="black" />
     <polyline points="2175.343725,438.0937485 1931.476425,438.0937125 1931.476425,491.03746125 " fill="none" stroke="black" />
@@ -368,7 +368,8 @@
     <polyline points="2175.343725,438.0937485 2375.883,438.09375 2375.883,758.4250125 " fill="none" stroke="black" />
     <polyline points="2175.343725,438.0937485 2174.7555,438.09375 2174.7555,453.09375 " fill="none" stroke="black" />
     <polyline points="2175.343725,438.0937485 2036.1250125,438.09375 2036.1250125,453.09375 " fill="none" stroke="black" />
-    <text x="2177.843750625" y="392.6937125625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcResourceObjectSelect</text>
+    <polyline points="2259.36257449219,377.69995880127 2318.99993896484,377.69995880127 2318.99993896484,339.5 " fill="none" stroke="black" />
+    <text x="2177.84382386719" y="392.69370886377" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcResourceObjectSelect</text>
   </g>
   <g id="STRING" fill="grey">
     <rect x="463.86" y="828.684375" width="57.375" height="20.625" stroke="black" />
@@ -544,6 +545,13 @@ IfcMaterialDefinition</text>
       <rect x="2789.3625" y="346.9125" width="149.25" height="85.62499875" stroke="black" />
       <text x="2863.9875" y="389.724999375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCMATERIALRESOURCE
 IfcMaterialRelationship</text>
+    </g>
+  </g>
+  <g id="IFCREPRESENTATIONRESOURCE">
+    <g id="IfcShapeAspect" fill="grey">
+      <rect x="2243.99993896484" y="302" width="150" height="37.5" stroke="black" />
+      <text x="2318.99993896484" y="320.75" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCREPRESENTATIONRESOURCE
+IfcShapeAspect</text>
     </g>
   </g>
   <g id="5,1 IfcIdentifier" fill="blue">

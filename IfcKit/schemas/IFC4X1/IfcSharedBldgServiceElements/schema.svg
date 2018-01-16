@@ -82,7 +82,6 @@
   </g>
   <g id="IfcDistributionSystem" fill="yellow">
     <rect x="1225.803975" y="131.83493625" width="210.74364375" height="89.08993875" stroke="black" />
-    <polyline points="1331.1757875,220.924875 1331.1757875,258.8619225 " fill="none" stroke="black" stroke-width="3" />
     <text x="1331.175796875" y="176.379905625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcDistributionSystem</text>
     <g id="LongName">
       <polyline points="1436.5476375,148.6974975 1531.96155,148.6974975 " fill="none" stroke="black" stroke-dasharray="1,1" />

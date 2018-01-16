@@ -2,7 +2,6 @@
 <svg xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="1.1" width="3600" height="888" xmlns="http://www.w3.org/2000/svg">
   <g id="IfcBeam" fill="yellow">
     <rect x="181.79064" y="135.1606125" width="93.7125" height="85.48750125" stroke="black" />
-    <polyline points="275.50314,155.330775 417.74998875,155.330775 " fill="none" stroke="black" stroke-width="3" />
     <text x="228.64689" y="177.904363125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcBeam</text>
     <g id="PredefinedType">
       <polyline points="275.50314,194.8983075 417.71565,194.8983075 " fill="none" stroke="black" stroke-dasharray="1,1" />
@@ -67,7 +66,6 @@
   </g>
   <g id="IfcColumn" fill="yellow">
     <rect x="181.7905875" y="261.6606375" width="93.7125" height="80.50000125" stroke="black" />
-    <polyline points="275.5030875,279.400155 417.782475,279.400155 " fill="none" stroke="black" stroke-width="3" />
     <text x="228.6468375" y="301.910638125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcColumn</text>
     <g id="PredefinedType">
       <polyline points="275.5030875,323.9106375 417.7780875,323.9106375 " fill="none" stroke="black" stroke-dasharray="1,1" />
@@ -128,7 +126,6 @@
   </g>
   <g id="IfcDoor" fill="yellow">
     <rect x="1811.06872558594" y="59.1137523651124" width="104.97499875" height="279.500003814697" stroke="black" />
-    <polyline points="1886.68122621094,338.613756179809 1886.68122621094,338.613756179809 1886.68122621094,347.66251373291 " fill="none" stroke="black" stroke-width="3" />
     <text x="1863.55622496094" y="198.863754272461" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcDoor</text>
     <g id="OverallHeight">
       <polyline points="1916.04372433594,249.97248840332 1916.04372433594,249.97248840332 2015.7048834375,249.97248840332 " fill="none" stroke="black" stroke-dasharray="1,1" />
@@ -177,7 +174,6 @@
   </g>
   <g id="IfcMember" fill="yellow">
     <rect x="181.75999875" y="388.17" width="93.73750125" height="80.475" stroke="black" />
-    <polyline points="275.4975,404.6575125 417.74998875,404.6575125 " fill="none" stroke="black" stroke-width="3" />
     <text x="228.628749375" y="428.4075" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcMember</text>
     <g id="PredefinedType">
       <polyline points="275.4975,447.4075125 417.7474875,447.4075125 " fill="none" stroke="black" stroke-dasharray="1,1" />
@@ -198,7 +194,6 @@
   </g>
   <g id="IfcPlate" fill="yellow">
     <rect x="181.7609025" y="514.634025" width="93.7125" height="80.475" stroke="black" />
-    <polyline points="275.4734025,531.1215375 417.72499875,531.1215375 " fill="none" stroke="black" stroke-width="3" />
     <text x="228.6171525" y="554.871525" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcPlate</text>
     <g id="PredefinedType">
       <polyline points="275.4734025,572.871525 417.7359,572.871525 " fill="none" stroke="black" stroke-dasharray="1,1" />
@@ -445,7 +440,6 @@
   </g>
   <g id="IfcWindow" fill="yellow">
     <rect x="1811.06872558594" y="482.832519531251" width="104.97499875" height="279.500003814697" stroke="black" />
-    <polyline points="1886.69372496094,762.332523345949 1886.69372496094,762.332523345949 1886.69372496094,768.89991760254 " fill="none" stroke="black" stroke-width="3" />
     <text x="1863.55622496094" y="622.5825214386" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcWindow</text>
     <g id="OverallHeight">
       <polyline points="1916.04372433594,678.95750427246 1916.04372433594,678.95750427246 2018.70494509765,678.95750427246 " fill="none" stroke="black" stroke-dasharray="1,1" />

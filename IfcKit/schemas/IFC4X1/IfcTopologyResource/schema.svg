@@ -61,7 +61,6 @@
   </g>
   <g id="IfcFace" fill="yellow">
     <rect x="714.1336125" y="244.14375" width="106.2375" height="187.499996185303" stroke="black" />
-    <polyline points="820.3711125,262.89375 820.3711125,262.89375 931.83747375,262.89375 " fill="none" stroke="black" stroke-width="3" />
     <text x="767.2523625" y="337.893748092651" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcFace</text>
     <g id="Bounds">
       <polyline points="767.258611875,431.643746185301 767.258611875,431.643746185301 767.258611875,509.293725 " fill="none" stroke="black" />
@@ -74,7 +73,6 @@
   </g>
   <g id="IfcFaceBound" fill="yellow">
     <rect x="714.1336125" y="509.293725" width="106.24999875" height="66.4999999999999" stroke="black" />
-    <polyline points="820.38361125,528.043725 820.38361125,528.043725 932.8585875,528.043725 " fill="none" stroke="black" stroke-width="3" />
     <text x="767.258611875" y="542.543725" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcFaceBound</text>
     <g id="Bound">
       <polyline points="767.2747875,575.793724999999 767.2747875,575.793724999999 767.2747875,594.9319875 " fill="none" stroke="black" />
@@ -91,7 +89,6 @@
   </g>
   <g id="IfcFaceSurface" fill="yellow">
     <rect x="887.837463378908" y="243.181259155273" width="107.76250125" height="113.5" stroke="black" />
-    <polyline points="985.7187375,243.181259155273 985.7187375,243.181259155273 985.7187375,208.363999875 " fill="none" stroke="black" stroke-width="3" />
     <text x="941.718714003908" y="299.931259155274" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcFaceSurface</text>
     <g id="FaceSurface">
       <polyline points="995.599964628908,323.21250295639 995.599964628908,323.21250295639 1058.61254882813,323.21250295639 " fill="none" stroke="black" />
@@ -172,7 +169,6 @@
   </g>
   <g id="IfcVertex" fill="yellow">
     <rect x="40.4843835830689" y="310.881256103516" width="141.25000125" height="56.4999923706056" stroke="black" />
-    <polyline points="110.990007644043,367.381248474121 110.990007644043,367.381248474121 110.990007644043,374.875022888184 " fill="none" stroke="black" stroke-width="3" />
     <text x="111.109384208069" y="339.131252288818" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcVertex</text>
   </g>
   <g id="IfcVertexLoop" fill="yellow">

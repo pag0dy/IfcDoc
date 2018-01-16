@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<cnf:configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="IFC4" xsi:schemaLocation="urn:iso:std:iso:10303:-28:ed-2:tech:XMLschema:configuration_language http://www.buildingsmart-tech.org/ifcXML/IFC4/P28/cnf.xsd" xmlns:cnf="urn:iso:std:iso:10303:-28:ed-2:tech:XMLschema:configuration_language">
+<cnf:configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="IFC4x1" xsi:schemaLocation="urn:iso:std:iso:10303:-28:ed-2:tech:XMLschema:configuration_language http://www.buildingsmart-tech.org/ifcXML/IFC4/P28/cnf.xsd" xmlns:cnf="urn:iso:std:iso:10303:-28:ed-2:tech:XMLschema:configuration_language">
   <cnf:option inheritance="true" concrete-attribute="attribute-content" naming-convention="preserve-case" generate-keys="false" />
   <cnf:schema targetNamespace="http://www.buildingsmart-tech.org/ifcXML/IFC4/final" elementFormDefault="qualified" attributeFormDefault="unqualified" embed-schema-items="true">
     <cnf:namespace prefix="ifc" alias="http://www.buildingsmart-tech.org/ifcXML/IFC4/final" />
@@ -305,11 +305,10 @@
     <cnf:inverse select="IsNestedBy" exp-attribute="double-tag" />
     <cnf:inverse select="IsDecomposedBy" exp-attribute="double-tag" />
   </cnf:entity>
-  <cnf:entity select="IfcOffsetCurve2D">
+  <cnf:entity select="IfcOffsetCurve">
     <cnf:attribute select="BasisCurve" exp-attribute="attribute-tag" />
   </cnf:entity>
   <cnf:entity select="IfcOffsetCurve3D">
-    <cnf:attribute select="BasisCurve" exp-attribute="attribute-tag" />
     <cnf:attribute select="RefDirection" exp-attribute="attribute-tag" />
   </cnf:entity>
   <cnf:entity select="IfcOpeningElement">

@@ -110,7 +110,6 @@
   </g>
   <g id="IfcMaterialLayer" fill="yellow">
     <rect x="679.0605375" y="461.027625" width="108.4182" height="254.58912375" stroke="black" />
-    <polyline points="717.283875,715.6167375 717.283875,781.63552875 " fill="none" stroke="black" stroke-width="3" />
     <text x="733.2696375" y="588.322186875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcMaterialLayer</text>
     <g id="Material">
       <polyline points="787.4787375,474.423075 944.7724125,474.423075 " fill="none" stroke="black" stroke-dasharray="1,1" />
@@ -211,7 +210,6 @@
   </g>
   <g id="IfcMaterialProfile" fill="yellow">
     <rect x="1276.212225" y="481.9132125" width="151.24362375" height="177.8970225" stroke="black" />
-    <polyline points="1351.83405,659.81025 1351.83405,770.48634 " fill="none" stroke="black" stroke-width="3" />
     <text x="1351.834036875" y="570.86172375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcMaterialProfile</text>
     <g id="Name">
       <polyline points="1427.455875,574.554825 1529.53402875,574.554825 " fill="none" stroke="black" stroke-dasharray="1,1" />
@@ -264,7 +262,6 @@
   </g>
   <g id="IfcMaterialProfileSetUsage" fill="yellow">
     <rect x="1278.8596125" y="98.3890875" width="163.0756575" height="66.4372875" stroke="black" />
-    <polyline points="1441.9352625,130.85352375 1499.63608125,130.85352375 " fill="none" stroke="black" stroke-width="3" />
     <text x="1360.39744125" y="131.60773125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcMaterialProfileSetUsage</text>
     <g id="ForProfileSet">
       <polyline points="1351.821075,164.826375 1351.821075,300.53391375 " fill="none" stroke="black" />

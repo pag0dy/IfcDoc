@@ -1,18 +1,28 @@
-﻿<p>An <em>IfcTrimmedCurve</em> is a bounded curve that is trimmed at both ends. The trimming points may be provided by a Cartesian point or by a parameter value, based on the parameterization of the <em>BasisCurve</em>. The <em>SenseAgreement</em> attribute indicates whether the direction of the <em>IfcTrimmedCurve</em> agrees with or is opposed to the direction of the <em>BasisCurve</em>.</p>
-<blockquote class="note">NOTE&nbsp; In case of the <em>BasisCurve</em> being a closed curve, such as an <em>IfcCircle</em> or <em>IfcEllipse</em>, the <em>SenseAgreement</em> affects the geometric shape of the <em>IfcTrimmedCurve</em>.</blockquote>
+﻿<p>An <em>IfcTrimmedCurve</em> is a bounded curve that is trimmed at both ends. The trimming points may be provided by
+a Cartesian point or by a parameter value, based on the parameterization of the <em>BasisCurve</em>. The
+<em>SenseAgreement</em> attribute indicates whether the direction of the <em>IfcTrimmedCurve</em> agrees with or is
+opposed to the direction of the <em>BasisCurve</em>.</p>
+<blockquote class="note">NOTE&nbsp; In case of the <em>BasisCurve</em> being a closed curve, such as an
+<em>IfcCircle</em> or <em>IfcEllipse</em>, the <em>SenseAgreement</em> affects the geometric shape of the
+<em>IfcTrimmedCurve</em>.</blockquote>
 <table summary="illustration">
 <tbody>
- <tr>
-  <td><img src="../../../figures/ifctrimmedcurve_parameterization.png" alt="curve parameterization" border="0" height="500" width="700"></td>
- </tr>
- <tr>
-  <td><p class="figure">Figure 399 &mdash; Trimmed curve parameterization</p></td>
- </tr>
+<tr>
+<td><img src="../../../figures/ifctrimmedcurve_parameterization.png" alt="curve parameterization" border="0" height="500" width=
+"700"></td>
+</tr>
+<tr><td><p class="figure">Figure 379 &mdash; Trimmed curve parameterization</p></td></tr>
 </tbody>
 </table>
 
-<blockquote class="example">EXAMPLE&nbsp; Figure 399 shows the four arcs (dashed blue and green lines with arrow showing different orientations) that can be defined by the same <em>BasisCurve</em> of type <em>IfcCircle</em> and the same trimming points (given by Cartesian points and parameter values) by using different assignments to <em>Trim1</em> and <em>Trim2</em> and <em>SenseAgreement</em>. The trim 1 and trim 2 values for TrimmingPreference=.PARAMETER. are shown as degree values, which applies if the plane area measure is 'Degree', in case of plane area measure 'Radians' those would be &frac12;&pi; and &pi;.</blockquote>
-<blockquote class="note">NOTE&nbsp; Since the <em>BasisCurve</em> is closed (type <em>IfcCircle</em>), the exception of the informal proposition IP3 applies, i.e. the sense flag is not required to be consistent with the parameter values of <em>Trim1</em> and <em>Trim1</em>, so the rule (sense = parameter 1 &lt; parameter 2) may not be fulfilled.</blockquote>
+<p>Figure 379 shows the four arcs (dashed blue and green lines with arrow showing different orientations) that
+can be defined by the same <em>BasisCurve</em> (of type <em>IfcCircle</em>) and the same trimming points (given by
+Cartesian points and parameter values) by using different assignments to <em>Trim1</em> and <em>Trim2</em> and
+<em>SenseAgreement</em>.</p>
+<blockquote class="note">NOTE&nbsp; Since the <em>BasisCurve</em> is closed (type <em>IfcCircle</em>), the exception of
+the informal proposition IP3 applies, i.e. the sense flag is not required to be consistent with the parameter values of
+<em>Trim1</em> and <em>Trim1</em>, so the rule (sense = parameter 1 &lt; parameter 2) may not be
+fulfilled.</blockquote>
 <blockquote class="extDef">
 <p style="font-size:inherit">NOTE Definition according to ISO/CD 10303-42:1992<br>
 A trimmed curve is a bounded curve which is created by taking a selected portion, between two identified points, of the

@@ -58,7 +58,6 @@
   </g>
   <g id="IfcBoundaryNodeCondition" fill="yellow">
     <rect x="1247.0301" y="135.86430375" width="100.99999875" height="155.13837" stroke="black" />
-    <polyline points="1297.530075,291.00266625 1297.530075,328.226113125 " fill="none" stroke="black" stroke-width="3" />
     <text x="1297.530099375" y="213.43348875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcBoundaryNodeCondition</text>
     <g id="TranslationalStiffnessX">
       <polyline points="1348.0300875,148.95032625 1467.61675875,148.95032625 " fill="none" stroke="black" stroke-dasharray="1,1" />
@@ -224,7 +223,6 @@
   </g>
   <g id="IfcStructuralLoadSingleDisplacement" fill="yellow">
     <rect x="688.7722875" y="434.1933375" width="137.059185" height="170.31862125" stroke="black" />
-    <polyline points="757.30185,604.5119625 757.30185,646.32177375 " fill="none" stroke="black" stroke-width="3" />
     <text x="757.30188" y="519.352648125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcStructuralLoadSingleDisplacement</text>
     <g id="DisplacementX">
       <polyline points="825.8314875,446.1397125 1020.729135,446.1397125 " fill="none" stroke="black" stroke-dasharray="1,1" />
@@ -261,7 +259,6 @@
   </g>
   <g id="IfcStructuralLoadSingleForce" fill="yellow">
     <rect x="135.6540375" y="284.19014625" width="107.50000125" height="165.57958875" stroke="black" />
-    <polyline points="189.40404,449.76975 189.40404,473.650226625 " fill="none" stroke="black" stroke-width="3" />
     <text x="189.404038125" y="366.979940625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcStructuralLoadSingleForce</text>
     <g id="ForceX">
       <polyline points="243.15403875,294.45334125 411.8996475,294.45334125 " fill="none" stroke="black" stroke-dasharray="1,1" />

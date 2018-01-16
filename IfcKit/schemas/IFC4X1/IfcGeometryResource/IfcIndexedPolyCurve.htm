@@ -6,24 +6,26 @@
  <li>Segment of type <em>IfcArcIndex</em>: The first index is the start point of the circular arc, the second index is a point on arc, the third index is the end point of the circular arc. The three points shall not be co-linear. In case that this informal proposition is not maintained, the arc segment shall be treated as a polyline segment.</li>
 </ul>
 
-<blockquote class="example">EXAMPLE&nbsp; Figure 393 illustrates a bounded open <i>IfcIndexedPolyCurve</i> having straight and arc segments. In this example, the straight segments only have two points and one edge, however more then two indices into the Cartesian point list can be includes, defining a multi edge polyline segment. The parametric length of the total poly curve is the sum of the parametric length of its segments, the parametric length of the arc segments are shown in radians, which applies, if the plane angle measure of the data set is Radians. In case that the plane angle measure is Degree, the parametric length of the arc segments has degree values with 90. being the parametric length of a quarter circle.</blockquote>
+<blockquote class="example">EXAMPLE&nbsp; Figure 371 illustrates a bounded open <i>IfcIndexedPolyCurve</i> having straight and arc segments. In this example, the straight segments only have two points and one edge, however more then two indices into the Cartesian point list can be includes, defining a multi edge polyline segment.</blockquote>
 <table summary="illustration">
- <tr>
-  <td style="vertical-align:top;"><img src="../../../figures/ifcindexedpolycurve-fig1.png" alt="poly curve with arcs examples"></td>
- </tr>
- <tr>
-  <td><p class="figure">Figure 393 &mdash; Bounded open <em>IfcIndexedPolyCurve</em> with straight and arc segments</p></td>
- </tr>
+<tr>
+<td style="vertical-align:top;"><img src="../../../figures/ifcindexedpolycurve-fig1.png" alt="poly curve with arcs examples"></td>
+</tr>
+<tr>
+<td>
+<p class="figure">Figure 371 &mdash; Bounded open <em>IfcIndexedPolyCurve</em> with straight and arc segments</p>
+</td>
+</tr>
 </table>
 
-<blockquote class="example">EXAMPLE&nbsp; Figure 2 illustrates a bounded open <i>IfcIndexedPolyCurve</i> having only straight segments. In this example, no list of <em>Segments</em> is provided, hence the points are drawn in the order of their appearance in the <em>IfcCartesianPointList</em>. The parametric length of the total poly curve is the sum of the parametric length of its segments, with each line segment having the parametric length of 1.0.</blockquote>
+<blockquote class="example">EXAMPLE&nbsp; Figure 2 illustrates a bounded open <i>IfcIndexedPolyCurve</i> having only straight segments. In this example, no list of <em>Segments</em> is provided, hence the points are drawn in the order of their appearance in the <em>IfcCartesianPointList</em>.</blockquote>
 <table summary="illustration">
 <tr>
 <td style="vertical-align:top;"><img src="../../../figures/ifcindexedpolycurve-fig2.png" alt="poly curve examples"></td>
 </tr>
 <tr>
 <td>
-<p class="figure">Figure 393 &mdash; Bounded open <em>IfcIndexedPolyCurve</em> with only straight segments</p>
+<p class="figure">Figure 371 &mdash; Bounded open <em>IfcIndexedPolyCurve</em> with only straight segments</p>
 </td>
 </tr>
 </table>

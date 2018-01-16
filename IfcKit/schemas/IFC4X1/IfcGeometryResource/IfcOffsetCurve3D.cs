@@ -21,31 +21,23 @@ using BuildingSmart.IFC.IfcTopologyResource;
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
 	[Guid("993ba75f-6b94-4c8c-b4c4-ba41608e3dc4")]
-	public partial class IfcOffsetCurve3D : IfcCurve
+	public partial class IfcOffsetCurve3D : IfcOffsetCurve
 	{
 		[DataMember(Order=0)] 
-		[XmlElement]
-		[Required()]
-		IfcCurve _BasisCurve;
-	
-		[DataMember(Order=1)] 
 		[XmlAttribute]
 		[Required()]
 		IfcLengthMeasure _Distance;
 	
-		[DataMember(Order=2)] 
+		[DataMember(Order=1)] 
 		[XmlAttribute]
 		[Required()]
 		IfcLogical _SelfIntersect;
 	
-		[DataMember(Order=3)] 
+		[DataMember(Order=2)] 
 		[XmlElement]
 		[Required()]
 		IfcDirection _RefDirection;
 	
-	
-		[Description("The curve that is being offset.")]
-		public IfcCurve BasisCurve { get { return this._BasisCurve; } set { this._BasisCurve = value;} }
 	
 		[Description("The distance of the offset curve from the basis curve. The distance may be positi" +
 	    "ve, negative or zero.")]

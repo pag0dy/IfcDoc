@@ -119,7 +119,7 @@ namespace BuildingSmart.IFC.IfcArchitectureDomain
 		public IfcNormalisedRatioMeasure? SecondMullionOffset { get { return this._SecondMullionOffset; } set { this._SecondMullionOffset = value;} }
 	
 		[Description(@"Optional link to a shape aspect definition, which points to the part of the geometric representation of the window style, which is used to represent the lining.
-	<blockquote class=""deprecated"">DEPRECATION&nbsp; The attribute is deprecated and shall no longer be used, i.e. the value shall be NIL ($).</blockquote>")]
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE The attribute is deprecated and shall no longer be used, i.e. the value shall be NIL ($).</blockquote>")]
 		public IfcShapeAspect ShapeAspectStyle { get { return this._ShapeAspectStyle; } set { this._ShapeAspectStyle = value;} }
 	
 		[Description(@"Offset of the window lining. The offset is given as distance along the y axis of the local placement (perpendicular to the window plane).

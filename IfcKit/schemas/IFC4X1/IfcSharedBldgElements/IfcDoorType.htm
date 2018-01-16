@@ -1,17 +1,103 @@
-﻿<p>The element type <em>IfcDoorType</em> defines commonly shared information for occurrences of doors. The set of shared information may include:</p>
+﻿<p>The element type <em>IfcDoorType</em> defines commonly shared information
+for occurrences of doors. The set of shared information may
+include:</p>
 <ul>
 <li>common properties within shared property sets</li>
 <li>common material information</li>
 <li>common operation type definitions</li>
 <li>common shape representations</li>
 </ul>
-<p>A door type defines the particular parameter of the lining and one (or several) panels through the <em>IfcDoorLiningProperties</em> and the <em>IfcDoorPanelProperties</em> as predefined property sets applicable to doors only.</p>
-<p>It is used to define a door specification, or door style (i.e. the specific product information that is common to all occurrences of that door type). Door types may be exchanged
+<p>A door type defines the particular parameter of the lining and
+one (or several) panels through the
+<em>IfcDoorLiningProperties</em> and the
+<em>IfcDoorPanelProperties</em> as predefined property sets
+applicable to doors only.</p>
+<p>It is used to define a door specification, or door style (i.e.
+the specific product information that is common to all
+occurrences of that door type). Door types may be exchanged
 without being already assigned to occurrences.</p>
 
-<blockquote class="note">NOTE&nbsp; The product representations are defined as representation maps (at the level of the supertype <em>IfcTypeProduct</em>, which gets assigned by an element occurrence instance through the <em>IfcShapeRepresentation.Item[1]</em> being an <em>IfcMappedItem</em>.</blockquote>
+<blockquote class="note">
+NOTE&nbsp; The product representations are defined as representation maps (at the level of the supertype <em>IfcTypeProduct</em>, which gets assigned by an element occurrence instance through the <em>IfcShapeRepresentation.Item[1]</em> being an <em>IfcMappedItem</em>.
+</blockquote>
 
 <p>Occurrences of the <em>IfcDoorType</em> within building models are represented by instances of <em>IfcDoor</em> or <em>IfcDoorStandardCase</em>.</p>
 
-<blockquote class="history">HISTORY&nbsp; New entity in IFC4. The entity <em>IfcDoorType</em> replaces the previous definition <em>IfcDoorStyle</em> (which is deprecated in IFC4).
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC4. The entity <em>IfcDoorType</em> replaces the previous definition <em>IfcDoorStyle</em> (which is deprecated in IFC4).
 </blockquote>
+
+<p class="use-head">Operation type use definition</p>
+<p>The <em>IfcDoorTypeOperationEnum</em> defines the general layout
+of the door type and its symbolic presentation. Depending on the
+enumerator, the appropriate instances of
+<em>IfcDoorLiningProperties</em> and <em>IfcDoorPanelProperties</em>
+are attached in the list of <em>HasPropertySets</em>. The
+<em>IfcDoorTypeOperationEnum</em> mainly determines the hinge side
+(left hung, or right hung), the operation (swinging, sliding,
+folding, etc.) and the number of panels.</p>
+<blockquote class="note">NOTE&nbsp; There are different definitions in
+various countries on what a left opening or left hung or left
+swing door is (same for right). Therefore the IFC definition may
+derivate from the local standard and may need to be mapped
+appropriately.</blockquote>
+<p>See geometry use definitions at
+<em>IfcDoorTypeOperationEnum</em> for the correct usage of opening
+symbols for different operation types.</p>
+<p class="use-head">Material Use Definition</p>
+<p>The material of the <em>IfcDoorType</em> is defined by the
+<em>IfcMaterialConstituentSet</em> or as fall back by
+<em>IfcMaterial</em> and attached by the
+<em>IfcRelAssociatesMaterial</em><em>.RelatingMaterial</em>. It is
+accessible by the inverse <em>HasAssociations</em>
+relationship.</p>
+<p>The following keywords for
+<em>IfcMaterialConstituentSet.MaterialConstituents[n].Name</em>
+shall be used:</p>
+<ul>
+<li>'Lining' - to indicate that the material constituent applies
+to to the door lining</li>
+<li>'Framing' - to indicate that the material constituent applies
+to to the door framing, if not provided, the 'Lining' material
+information applied to frams as well</li>
+<li>'Glazing' - to indicate that the material constituent applies
+to to the glazing as well</li>
+</ul>
+<p>If the fall back single <em>IfcMaterial</em> is referenced, it
+applies to the lining and framing of the door.</p>
+
+
+<p class="use-head">Geometry Use Definitions</b></u>:</p>
+<p>The <em>IfcDoorType</em> may define the common shape of door
+occurrences. The common shape can be defined by</p>
+<ul>
+<li>applying shape parameters defined within the associated
+<em>IfcDoorLiningProperties</em> and <em>IfcDoorPanelProperties</em>
+applied to the 'Profile' geometric representation. It is only
+applicable if the <em>IfcDoorType</em> has only occurrences of type
+<em>IfcDoorStandardCase</em> (See geometric use definition of
+<em>IfcDoorStandardCase</em> for further information).</li>
+<li>applying the <em>RepresentationMaps</em> attribute to refer to
+a list of <em>IfcRepresentationMap</em>'s, that allow for multiple
+geometric representations (e.g. with
+<em>IfcShapeRepresentation</em>'s having an
+<em>RepresentationIdentifier</em> 'Box', 'Profile', 'FootPrint', or
+'Body')
+
+<blockquote class="note">
+NOTE&nbsp; The product shape representations are
+defined as <em>RepresentationMaps</em> (attribute of the supertype
+<em>IfcTypeProduct</em>), which get assigned by an element
+occurrence instance through the
+<em>IfcShapeRepresentation.Item[n]</em> being an
+<em>IfcMappedItem</em>. See <em>IfcTypeProduct</em> for further
+information.</small></blockquote>
+<blockquote class="note">NOTE&nbsp; The values of attributes
+<em>RepresentationIdentifier</em> and <em>RepresentationType</em> of
+<em>IfcShapeRepresentation</em> are restricted in the same way as
+those for <em>IfcDoor</em> and
+<em>IfcDoorStandardCase</em>
+</blockquote>
+
+</li>
+</ul>

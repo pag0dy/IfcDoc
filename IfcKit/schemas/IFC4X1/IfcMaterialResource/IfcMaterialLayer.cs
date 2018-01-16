@@ -87,7 +87,8 @@ namespace BuildingSmart.IFC.IfcMaterialResource
 	<ul>
 	 <li class=""small"">'LoadBearing' &mdash; for all material layers having a load bearing function.</li>
 	 <li class=""small"">'Insulation' &mdash; for all material layers having an insolating function. </li>
-	 <li class=""small"">'Finish' &mdash; for the material layer being the inner or outer finish.</li>
+	 <li class=""small"">'Inner finish' &mdash; for the material layer being the inner finish.</li>
+	 <li class=""small"">'Outer finish' &mdash; for the material layer being the outer finish.</li>
 	</ul>")]
 		public IfcLabel? Category { get { return this._Category; } set { this._Category = value;} }
 	

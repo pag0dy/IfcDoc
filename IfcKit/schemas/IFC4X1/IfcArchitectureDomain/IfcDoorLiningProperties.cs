@@ -127,7 +127,7 @@ namespace BuildingSmart.IFC.IfcArchitectureDomain
 		public IfcPositiveLengthMeasure? CasingDepth { get { return this._CasingDepth; } set { this._CasingDepth = value;} }
 	
 		[Description(@"Pointer to the shape aspect, if given. The shape aspect reflects the part of the door shape, which represents the door lining.
-	<blockquote class=""deprecated"">DEPRECATION&nbsp; The attribute is deprecated and shall no longer be used, i.e. the value shall be NIL ($).</blockquote>")]
+	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The attribute is deprecated and shall no longer be used, i.e. the value shall be NIL ($).</blockquote>")]
 		public IfcShapeAspect ShapeAspectStyle { get { return this._ShapeAspectStyle; } set { this._ShapeAspectStyle = value;} }
 	
 		[Description("Offset between the lining and the window panel measured along the x-axis of the l" +

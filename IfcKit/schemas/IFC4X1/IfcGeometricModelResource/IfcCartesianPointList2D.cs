@@ -25,9 +25,18 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 		[Required()]
 		IList<IfcLengthMeasure> _CoordList = new List<IfcLengthMeasure>();
 	
+		[DataMember(Order=1)] 
+		[XmlAttribute]
+		IList<IfcLabel> _TagList = new List<IfcLabel>();
+	
 	
 		[Description("Two-dimensional list of Cartesian points provided by two coordinates.")]
 		public IList<IfcLengthMeasure> CoordList { get { return this._CoordList; } }
+	
+		[Description("List of tags corresponding to each point that may be used to identify a basis cur" +
+	    "ve according to the Tag attribute at <i>IfcOffsetCurveByDistances</i> or <i>IfcA" +
+	    "lignmentCurve</i>.")]
+		public IList<IfcLabel> TagList { get { return this._TagList; } }
 	
 	
 	}

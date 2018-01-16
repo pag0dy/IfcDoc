@@ -30,8 +30,8 @@ using BuildingSmart.IFC.IfcStructuralElementsDomain;
 
 namespace BuildingSmart.IFC.IfcProductExtension
 {
-	[Guid("dfb6beda-5c7c-4df8-bbc6-b101ce4006f3")]
-	public partial class IfcGrid : IfcProduct
+	[Guid("25379845-b692-4288-a06e-0e6782212371")]
+	public partial class IfcGrid : IfcPositioningElement
 	{
 		[DataMember(Order=0)] 
 		[Required()]
@@ -48,9 +48,6 @@ namespace BuildingSmart.IFC.IfcProductExtension
 		[XmlAttribute]
 		IfcGridTypeEnum? _PredefinedType;
 	
-		[InverseProperty("RelatedElements")] 
-		ISet<IfcRelContainedInSpatialStructure> _ContainedInStructure = new HashSet<IfcRelContainedInSpatialStructure>();
-	
 	
 		[Description("List of grid axes defining the first row of grid lines.")]
 		public IList<IfcGridAxis> UAxes { get { return this._UAxes; } }
@@ -62,14 +59,9 @@ namespace BuildingSmart.IFC.IfcProductExtension
 	    "se of a triangular grid.")]
 		public IList<IfcGridAxis> WAxes { get { return this._WAxes; } }
 	
-		[Description("Predefined types to define the particular type of the grid.\r\n<blockquote class=\"c" +
-	    "hange-ifc2x4\">IFC4 CHANGE&nbsp; New attribute.\r\n</blockquote>")]
+		[Description("Predefined types to define the particular type of the grid. \r\n<blockquote class=\"" +
+	    "change-ifc4\">IFC4 Change&nbsp; New attribute.</blockquote>")]
 		public IfcGridTypeEnum? PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }
-	
-		[Description("Relationship to a spatial structure element, to which the grid is primarily assoc" +
-	    "iated.\r\n<blockquote class=\"change-ifc2x\">IFC2x CHANGE&nbsp; The inverse relation" +
-	    "ship has been added to <em>IfcGrid</em> with upward compatibility</blockquote>")]
-		public ISet<IfcRelContainedInSpatialStructure> ContainedInStructure { get { return this._ContainedInStructure; } }
 	
 	
 	}

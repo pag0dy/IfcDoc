@@ -1,0 +1,26 @@
+﻿<p>Individual segment along the <i>IfcAlignment2DHorizontal</i>, being defined in the x/y coordinate space. Each single horizontal alignment segment has an associated curve geometry. The following segment curve types are defined by the <i>CurveGeometry</i>:</p>
+<ul>
+<li>for line segment - <i>IfcLineSegment2D</i></li>
+<li>circular arc segment - <i>IfcCircularArcSegment2D</i></li>
+<li>clothoidal arc segment - <i>IfcClothoidalArcSegment2D</i></li>
+</ul>
+<p>For each horizontal segment, the following non-redundant information is provided:</p>
+<ul>
+<li>the start point (in x/y coordinates)</li>
+<li>the start direction (in radians or degree, with local x (east) being 0, and increasing counter-clock wise)</li>
+<li>the segment length</li>
+<li>the curve parameter needed for circular and clothoidal arc segments</li>
+</ul>
+<p>The following information can be calculated (and is therefore not exchanged explicitly to avoid redundancy and inconsistencies)</p>
+<ul>
+<li>the end point (from start point, direction, segment length and curve parameter)</li>
+<li>the start distance along (from the end distance along of the previous segment, or the start distance along of the horizontal alignment (if it is the first segment)</li>
+<li>the end distance along (from the start distance and the segment length)</li>
+<li>the end direction (from the curve parameter, the start direction and the segment length)</li>
+<li>the point of intersection (from the start direction and the end direction)</li>
+</ul>
+<p>The following checks can be done to validate the correct exchange:</p>
+<ul>
+<li>continuity – does the calculated end point of the previous segment matches with the provided start point of this segment</li>
+<li>tangential continuity – does the calculated end direction of the previous segment matches with the provided start direction of this segment</li>
+</ul>

@@ -2,7 +2,6 @@
 <svg xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="1.1" width="1200" height="888" xmlns="http://www.w3.org/2000/svg">
   <g id="IfcAppliedValue" fill="yellow">
     <rect x="17.7375" y="161.1624975" width="141.45" height="476.85" stroke="black" />
-    <polyline points="42.80941125,638.0125125 42.80941125,702.7562625 " fill="none" stroke="black" stroke-width="3" />
     <text x="88.4625" y="399.5874975" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcAppliedValue</text>
     <g id="Name">
       <polyline points="159.1875,189.29750625 409.1609625,189.29750625 " fill="none" stroke="black" stroke-dasharray="1,1" />

@@ -50,9 +50,7 @@ namespace BuildingSmart.IFC.IfcPlumbingFireProtectionDomain
 		[Description("Waste water appliance for washing the upper parts of the body.")]
 		WASHHANDBASIN = 9,
 	
-		[Description("Hinged seat that fits on the top of a water closet (WC) pan.\r\n<blockquote class=\"" +
-	    "deprecated\">DEPRECATION&nbsp; Enumerator shall not be used in IFC4.</blockquote>" +
-	    "")]
+		[Description("[Deprecated] Hinged seat that fits on the top of a water closet (WC) pan.")]
 		WCSEAT = 10,
 	
 		[Description("User-defined type.")]

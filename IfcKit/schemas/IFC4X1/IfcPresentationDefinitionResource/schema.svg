@@ -22,7 +22,6 @@
   </g>
   <g id="IfcPlanarExtent" fill="yellow">
     <rect x="730.681275" y="489.2374875" width="111.25000125" height="86.83750125" stroke="black" />
-    <polyline points="786.3063,576.075 786.3063,623.34842625 " fill="none" stroke="black" stroke-width="3" />
     <text x="786.306275625" y="532.656238125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcPlanarExtent</text>
     <g id="SizeInX">
       <polyline points="841.93125,510.156225 959.862525,510.156225 " fill="none" stroke="black" />
@@ -39,7 +38,6 @@
   </g>
   <g id="IfcTextLiteral" fill="yellow">
     <rect x="747.8487375" y="119.0625" width="76.99999875" height="116.25" stroke="black" />
-    <polyline points="786.34875,235.3125 786.34875,269.93748375 786.361276875,269.93748375 786.361276875,304.5624675 " fill="none" stroke="black" stroke-width="3" />
     <text x="786.348736875" y="177.1875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcTextLiteral</text>
     <g id="Literal">
       <polyline points="824.848725,209.9937525 872.30500125,209.9937525 " fill="none" stroke="black" />

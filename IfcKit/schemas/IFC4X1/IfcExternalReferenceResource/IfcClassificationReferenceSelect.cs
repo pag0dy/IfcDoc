@@ -21,6 +21,7 @@ using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcProfileResource;
 using BuildingSmart.IFC.IfcPropertyResource;
 using BuildingSmart.IFC.IfcQuantityResource;
+using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcExternalReferenceResource
 {

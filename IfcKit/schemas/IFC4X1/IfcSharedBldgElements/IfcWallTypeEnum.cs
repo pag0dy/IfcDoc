@@ -58,16 +58,17 @@ namespace BuildingSmart.IFC.IfcSharedBldgElements
 		SOLIDWALL = 6,
 	
 		[Description("A standard wall, extruded vertically with a constant thickness along the wall pat" +
-	    "h.")]
+	    "h. <blockquote class=\"deprecated\">The value is deprecated, it is expressed by ch" +
+	    "oosing the subtype <em>IfcWallStandardCase</em>.")]
 		STANDARD = 7,
 	
 		[Description("A polygonal wall, extruded vertically, where the wall thickness varies along the " +
-	    "wall path.\r\n<blockquote class=\"deprecated\">IFC4 DEPRECATION&nbsp; The enumerator" +
-	    " POLYGONAL is deprecated and shall no longer be used.</blockquote>")]
+	    "wall path.")]
 		POLYGONAL = 8,
 	
 		[Description("A stud wall framed with studs and faced with sheetings, sidings, wallboard, or pl" +
-	    "asterwork.")]
+	    "asterwork. <blockquote class=\"deprecated\">The value is deprecated, it is\r\nexpres" +
+	    "sed by choosing the subtype <em>IfcWallElementedCase</em>.")]
 		ELEMENTEDWALL = 9,
 	
 		[Description("User-defined wall element.")]

@@ -22,7 +22,8 @@ using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 namespace BuildingSmart.IFC.IfcRepresentationResource
 {
 	[Guid("d0b09671-0848-4353-9710-4312d56ffea7")]
-	public partial class IfcShapeAspect
+	public partial class IfcShapeAspect :
+		BuildingSmart.IFC.IfcExternalReferenceResource.IfcResourceObjectSelect
 	{
 		[DataMember(Order=0)] 
 		[Required()]
@@ -44,6 +45,9 @@ namespace BuildingSmart.IFC.IfcRepresentationResource
 		[DataMember(Order=4)] 
 		[XmlIgnore]
 		IfcProductRepresentationSelect _PartOfProductDefinitionShape;
+	
+		[InverseProperty("RelatedResourceObjects")] 
+		ISet<IfcExternalReferenceRelationship> _HasExternalReferences = new HashSet<IfcExternalReferenceRelationship>();
 	
 	
 		[Description(@"List of <strike>shape</strike> representations. Each member defines a valid representation of a particular type within a particular representation context as being an aspect (or part) of a product definition.
@@ -68,6 +72,9 @@ namespace BuildingSmart.IFC.IfcRepresentationResource
 	IFC4 CHANGE&nbsp; Data type modified to be <em>IfcProductRepresentationSelect</em> allowing the assignment also to <em>IfcRepresentationMap</em>.
 	</blockquote>")]
 		public IfcProductRepresentationSelect PartOfProductDefinitionShape { get { return this._PartOfProductDefinitionShape; } set { this._PartOfProductDefinitionShape = value;} }
+	
+		[Description("External references (e.g. classification) associated with the shape aspect.")]
+		public ISet<IfcExternalReferenceRelationship> HasExternalReferences { get { return this._HasExternalReferences; } }
 	
 	
 	}

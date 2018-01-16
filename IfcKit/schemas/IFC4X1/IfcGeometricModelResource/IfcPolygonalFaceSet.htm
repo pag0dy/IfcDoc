@@ -10,13 +10,13 @@ The attribute <i>Faces</i> refers to a list of <em>IfcIndexedPolygonalFace</em>'
  <li>the first dimension of the two-dimensional list addresses the list of inner loops;</li>
  <li>the second dimension  of the two-dimensional list provides three or more indices each being a vertex of the planar polygon representing the inner loop.</li>
 </ul>
-<p>Depending on the provision of <i>PnIndex</i> the indices point either directly into the <em>IfcCartesianPointList3D</em> referenced by <i>Coordinates</i> defined at the supertype <em>IfcTessellatedFaceSet</em>, or they point into the <i>PnIndex</i> where the integer values at that position provides the location of the coordinate values within the <em>IfcCartesianPointList3D</em>. See Figure 363 for the handling of point index.</p>
+<p>Depending on the provision of <i>PnIndex</i> the indices point either directly into the <em>IfcCartesianPointList3D</em> referenced by <i>Coordinates</i> defined at the supertype <em>IfcTessellatedFaceSet</em>, or they point into the <i>PnIndex</i> where the integer values at that position provides the location of the coordinate values within the <em>IfcCartesianPointList3D</em>. See Figure 338 for the handling of point index.</p>
 <table summary="tessellation">
  <tr>
   <td style="width: 600px"><img src="../../../figures/ifcpolygonalfaceset_01.png" alt="PnIndex"></td>
  </tr>
  <tr>
-  <td><p class="figure">Figure 363 &mdash; Use of <em>PnIndex</em> </p></td>
+  <td><p class="figure">Figure 338 &mdash; Use of <em>PnIndex</em> </p></td>
  </tr>
 </table>
 
@@ -26,7 +26,7 @@ The attribute <i>Faces</i> refers to a list of <em>IfcIndexedPolygonalFace</em>'
  <tr><td style="width: 280px"><img src="../../../figures/ifcfacetedfaceset_example-01.png" width="275" height="350" alt="IfcFacetedFaceSet_Example-01">
  </td>
  <td>
-  <p>Figure 364 shows an <em>IfcFacetedFaceSet</em> represented by<br /><br /></p>
+  <p>Figure 339 shows an <em>IfcFacetedFaceSet</em> represented by<br /><br /></p>
 <tt class="spf">
 #1 <em>IfcIndexedPolygonalFace</em>: ((1, 2, 3, 4)
 #2 <em>IfcIndexedPolygonalFace</em>: ((6, 2, 3, 7)
@@ -39,7 +39,7 @@ The attribute <i>Faces</i> refers to a list of <em>IfcIndexedPolygonalFace</em>'
   </td>
  </tr>
  <tr>
-  <td><p class="figure">Figure 364 &mdash; Polygonal face set geometry</p></td>
+  <td><p class="figure">Figure 339 &mdash; Polygonal face set geometry</p></td>
   <td>&nbsp;</td>
  </tr>
 </table>

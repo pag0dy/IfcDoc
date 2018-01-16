@@ -8,22 +8,22 @@
  <li>the first dimension of the two-dimensional list addresses the list of triangular faces;</li>
  <li>the second dimension of the two-dimensional list provides exactly three indices. Each index points to a Cartesian point being a vertex of the triangle.</li>
 </ul>
-<p>Depending on the provision of <i>PnIndex</i> the indices point either directly into the <em>IfcCartesianPointList3D</em> referenced by <i>Coordinates</i> defined at the supertype <em>IfcTessellatedFaceSet</em>, or they point into the <i>PnIndex</i> where the integer values at that position provides the location of the coordinate values within the <em>IfcCartesianPointList3D</em>. See Figure 383 for the handling of point index.</p>
+<p>Depending on the provision of <i>PnIndex</i> the indices point either directly into the <em>IfcCartesianPointList3D</em> referenced by <i>Coordinates</i> defined at the supertype <em>IfcTessellatedFaceSet</em>, or they point into the <i>PnIndex</i> where the integer values at that position provides the location of the coordinate values within the <em>IfcCartesianPointList3D</em>. See Figure 359 for the handling of point index.</p>
 <table summary="tessellation">
  <tr>
   <td style="width: 600px"><img src="../../../figures/ifctriangulatedfaceset_03.png" alt="PnIndex"></td>
  </tr>
  <tr>
-  <td><p class="figure">Figure 383 &mdash; Use of <em>PnIndex</em> </p></td>
+  <td><p class="figure">Figure 359 &mdash; Use of <em>PnIndex</em> </p></td>
  </tr>
 </table>
-<p>See Figure 384 for using the <em>IfcTriangulatedFaceSet</em> without (as default) and with using the <em>PnIndex</em>.</p>
+<p>See Figure 360 for using the <em>IfcTriangulatedFaceSet</em> without (as default) and with using the <em>PnIndex</em>.</p>
 <table summary="tessellation">
  <tr>
   <td style="width: 600px"><img src="../../../figures/ifctriangulatedfaceset_01.png" alt="IfcTriangulatedFaceSet_01"></td>
  </tr>
  <tr>
-  <td><p class="figure">Figure 384 &mdash; Triangulated face set</p></td>
+  <td><p class="figure">Figure 360 &mdash; Triangulated face set</p></td>
  </tr>
 </table>
 <p>Optionally normals can be provided. Only normals per vector are supported allowing for visually curved triangles when the three normals of the corresponding three vertices of a triangle are not co-linear to the normal of the triangular face. If they are identical, normals shall be omited.</p>
@@ -35,24 +35,24 @@
 </li>
  <li>the second dimension of the two-dimensional list provides exactly three real values to determine the direction of the normal at this vertex of the triangle.</li>
 </ul>
-<p>The indices in the <i>CoordIndex</i> point into the list of <i>Normals</i>. The indices of <i>CoordIndex</i> are applied to both points, either directly directly, or via the <i>PnIndex</i> and normals. See Figure 385 for handling of normals.</p>
+<p>The indices in the <i>CoordIndex</i> point into the list of <i>Normals</i>. The indices of <i>CoordIndex</i> are applied to both points, either directly directly, or via the <i>PnIndex</i> and normals. See Figure 361 for handling of normals.</p>
 <table summary="tessellation">
  <tr>
   <td style="width: 600px"><img src="../../../figures/ifctriangulatedfaceset_02.png" alt="IfcTriangulatedFaceSet_02"></td>
  </tr>
  <tr>
-  <td><p class="figure">Figure 385 &mdash; Triangulated face set with normals</p></td>
+  <td><p class="figure">Figure 361 &mdash; Triangulated face set with normals</p></td>
  </tr>
 </table>
 <blockquote class="note">NOTE&nbsp; Using corresponding lists of points and normals allows to use only a single list of indices into both at the expense of having non-unique collections of vertices.</blockquote>
 
-<p>Figure 386 shows the use of <i>IfcTriangulatedFaceSet</i> without annotation. The diagram of the <em>IfcTriangulatedFaceSet</em>  represents the indices and the ordered list into which the indices point. The index starts with 1 (indexed as 1 to N), if the greatest index in <em>CoordIndex</em> in N, then the <em>IfcCartesianPointList</em> shall have N lists of 3:3 coordinates.</p>
+<p>Figure 362 shows the use of <i>IfcTriangulatedFaceSet</i> without annotation. The diagram of the <em>IfcTriangulatedFaceSet</em>  represents the indices and the ordered list into which the indices point. The index starts with 1 (indexed as 1 to N), if the greatest index in <em>CoordIndex</em> in N, then the <em>IfcCartesianPointList</em> shall have N lists of 3:3 coordinates.</p>
 <p>&nbsp;</p>
 <table summary="tessellation">
  <tr><td style="width: 280px"><img src="../../../figures/ifctriangulatedfaceset_example-01.png" width="275" height="350" alt="IfcTriangulatedFaceSet_Example-01">
  </td>
  <td>
-  <p>Figure 384 shows an <em>IfcTriangulatedFaceSet</em> represented by<br /><br /></p>
+  <p>Figure 168 shows an <em>IfcTriangulatedFaceSet</em> represented by<br /><br /></p>
 <tt class="spf">
 <em>CoordIndex</em>: ((1,6,5), (1,2,6), (6,2,7), (7,2,3), (7,8,6), (6,8,5), (5,8,1), (1,8,4), (4,2,1), (2,4,3), (4,8,7), (7,3,4))<br />
 <em>IfcCartesianPointList3D</em>: ((0.,0.,0.), (1.,0.,0.), (1.,1.,0.), (0.,1.,0.), (0.,0.,2.), (1.,0.,2.), (1.,1.,2.), (0.,1.,2.))
@@ -60,7 +60,7 @@
   </td>
  </tr>
  <tr>
-  <td><p class="figure">Figure 386 &mdash; Triangulated face set geometry</p></td>
+  <td><p class="figure">Figure 362 &mdash; Triangulated face set geometry</p></td>
   <td>&nbsp;</td>
  </tr>
 </table>
