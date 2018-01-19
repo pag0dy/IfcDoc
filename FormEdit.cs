@@ -9669,10 +9669,10 @@ namespace IfcDoc
                     Dictionary<string, string> mapSchema = new Dictionary<string, string>();
                     BuildMaps(mapEntity, mapSchema);
 
-                    FolderStorage.Save(this.m_project, folderBrowserDialog.SelectedPath, mapEntity, form.Options);
-
                     // sync open folder 
                     this.folderBrowserDialog.SelectedPath = form.SelectedPath;
+
+                    FolderStorage.Save(this.m_project, form.SelectedPath, mapEntity, form.Options);
                 }
             }
 

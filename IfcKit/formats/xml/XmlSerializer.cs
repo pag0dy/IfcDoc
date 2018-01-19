@@ -309,174 +309,177 @@ namespace BuildingSmart.Serialization.Xml
             IList<FieldInfo> fields = this.GetFieldsAll(t);
             foreach (FieldInfo f in fields)
             {
-                DocXsdFormatEnum? xsdformat = this.GetXsdFormat(f);
-
-                if (f.IsDefined(typeof(DataMemberAttribute)) && (xsdformat == null || (xsdformat != DocXsdFormatEnum.Element && xsdformat != DocXsdFormatEnum.Attribute)))
+                if (f != null) // derived fields are null
                 {
-                    // direct field
+                    DocXsdFormatEnum? xsdformat = this.GetXsdFormat(f);
 
-                    Type ft = f.FieldType;
-
-                    bool isvaluelist = IsValueCollection(ft);
-                    bool isvaluelistlist = ft.IsGenericType && // e.g. IfcTriangulatedFaceSet.Normals
-                        typeof(System.Collections.IEnumerable).IsAssignableFrom(ft.GetGenericTypeDefinition()) &&
-                        IsValueCollection(ft.GetGenericArguments()[0]);
-
-                    if (isvaluelistlist || isvaluelist || ft.IsValueType)
+                    if (f.IsDefined(typeof(DataMemberAttribute)) && (xsdformat == null || (xsdformat != DocXsdFormatEnum.Element && xsdformat != DocXsdFormatEnum.Attribute)))
                     {
-                        object v = f.GetValue(o);
-                        if (v != null)
+                        // direct field
+
+                        Type ft = f.FieldType;
+
+                        bool isvaluelist = IsValueCollection(ft);
+                        bool isvaluelistlist = ft.IsGenericType && // e.g. IfcTriangulatedFaceSet.Normals
+                            typeof(System.Collections.IEnumerable).IsAssignableFrom(ft.GetGenericTypeDefinition()) &&
+                            IsValueCollection(ft.GetGenericArguments()[0]);
+
+                        if (isvaluelistlist || isvaluelist || ft.IsValueType)
                         {
-                            if (previousattribute)
+                            object v = f.GetValue(o);
+                            if (v != null)
                             {
-                                this.WriteAttributeDelimiter(writer);
-                            }
-
-                            previousattribute = true;
-                            this.WriteStartAttribute(writer, indent, f.Name.TrimStart('_'));
-
-                            if (isvaluelistlist)
-                            {
-                                ft = ft.GetGenericArguments()[0].GetGenericArguments()[0];
-                                FieldInfo fieldValue = ft.GetField("Value");
-
-                                System.Collections.IList list = (System.Collections.IList)v;
-                                for (int i = 0; i < list.Count; i++)
+                                if (previousattribute)
                                 {
-                                    System.Collections.IList listInner = (System.Collections.IList)list[i];
-                                    for (int j = 0; j < listInner.Count; j++)
-                                    {
-                                        if (i > 0 || j > 0)
-                                        {
-                                            writer.Write(" ");
-                                        }
-
-                                        object elem = listInner[j];
-                                        if (elem != null) // should never be null, but be safe
-                                        {
-                                            elem = fieldValue.GetValue(elem);
-                                            string encodedvalue = System.Security.SecurityElement.Escape(elem.ToString());
-                                            writer.Write(encodedvalue);
-                                        }
-                                    }
-                                }
-                            }
-                            else if (isvaluelist)
-                            {
-                                ft = ft.GetGenericArguments()[0];
-                                FieldInfo fieldValue = ft.GetField("Value");
-
-                                IEnumerable list = (IEnumerable)v;
-                                //for (int i = 0; i < list.Count; i++)
-                                int i = 0;
-                                foreach(object e in list)
-                                {
-                                    if (i > 0)
-                                    {
-                                        writer.Write(" ");
-                                    }
-
-                                    //object elem = list[i];
-                                    if (e != null) // should never be null, but be safe
-                                    {
-                                        object elem = fieldValue.GetValue(e);
-                                        if (elem is byte[])
-                                        {
-                                            // IfcPixelTexture.Pixels
-                                            byte[] bytes = (byte[])elem;
-
-                                            char[] s_hexchar = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
-                                            StringBuilder sb = new StringBuilder(bytes.Length * 2);
-                                            for (int z = 0; z < bytes.Length; z++)
-                                            {
-                                                byte b = bytes[z];
-                                                sb.Append(s_hexchar[b / 0x10]);
-                                                sb.Append(s_hexchar[b % 0x10]);
-                                            }
-                                            v = sb.ToString();
-                                            writer.Write(v);
-                                        }
-                                        else
-                                        {
-                                            string encodedvalue = System.Security.SecurityElement.Escape(elem.ToString());
-                                            writer.Write(encodedvalue);
-                                        }
-                                    }
-
-                                    i++;
+                                    this.WriteAttributeDelimiter(writer);
                                 }
 
-                            }
-                            else
-                            {
-                                if (ft.IsGenericType && ft.GetGenericTypeDefinition() == typeof(Nullable<>))
-                                {
-                                    // special case for Nullable types
-                                    ft = ft.GetGenericArguments()[0];
-                                }
+                                previousattribute = true;
+                                this.WriteStartAttribute(writer, indent, f.Name.TrimStart('_'));
 
-                                Type typewrap = null;
-                                while (ft.IsValueType && !ft.IsPrimitive)
+                                if (isvaluelistlist)
                                 {
+                                    ft = ft.GetGenericArguments()[0].GetGenericArguments()[0];
                                     FieldInfo fieldValue = ft.GetField("Value");
-                                    if (fieldValue != null)
-                                    {
-                                        v = fieldValue.GetValue(v);
-                                        if (typewrap == null)
-                                        {
-                                            typewrap = ft;
-                                        }
-                                        ft = fieldValue.FieldType;
-                                    }
-                                    else
-                                    {
-                                        break;
-                                    }
-                                }
 
-                                if (ft.IsEnum || ft == typeof(bool))
-                                {
-                                    v = v.ToString().ToLowerInvariant();
-                                }
-
-                                if (v is System.Collections.IList)
-                                {
-                                    // IfcCompoundPlaneAngleMeasure
                                     System.Collections.IList list = (System.Collections.IList)v;
                                     for (int i = 0; i < list.Count; i++)
+                                    {
+                                        System.Collections.IList listInner = (System.Collections.IList)list[i];
+                                        for (int j = 0; j < listInner.Count; j++)
+                                        {
+                                            if (i > 0 || j > 0)
+                                            {
+                                                writer.Write(" ");
+                                            }
+
+                                            object elem = listInner[j];
+                                            if (elem != null) // should never be null, but be safe
+                                            {
+                                                elem = fieldValue.GetValue(elem);
+                                                string encodedvalue = System.Security.SecurityElement.Escape(elem.ToString());
+                                                writer.Write(encodedvalue);
+                                            }
+                                        }
+                                    }
+                                }
+                                else if (isvaluelist)
+                                {
+                                    ft = ft.GetGenericArguments()[0];
+                                    FieldInfo fieldValue = ft.GetField("Value");
+
+                                    IEnumerable list = (IEnumerable)v;
+                                    //for (int i = 0; i < list.Count; i++)
+                                    int i = 0;
+                                    foreach (object e in list)
                                     {
                                         if (i > 0)
                                         {
                                             writer.Write(" ");
                                         }
 
-                                        object elem = list[i];
-                                        if (elem != null) // should never be null, but be safe
+                                        //object elem = list[i];
+                                        if (e != null) // should never be null, but be safe
                                         {
-                                            string encodedvalue = System.Security.SecurityElement.Escape(elem.ToString());
-                                            writer.Write(encodedvalue);
+                                            object elem = fieldValue.GetValue(e);
+                                            if (elem is byte[])
+                                            {
+                                                // IfcPixelTexture.Pixels
+                                                byte[] bytes = (byte[])elem;
+
+                                                char[] s_hexchar = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
+                                                StringBuilder sb = new StringBuilder(bytes.Length * 2);
+                                                for (int z = 0; z < bytes.Length; z++)
+                                                {
+                                                    byte b = bytes[z];
+                                                    sb.Append(s_hexchar[b / 0x10]);
+                                                    sb.Append(s_hexchar[b % 0x10]);
+                                                }
+                                                v = sb.ToString();
+                                                writer.Write(v);
+                                            }
+                                            else
+                                            {
+                                                string encodedvalue = System.Security.SecurityElement.Escape(elem.ToString());
+                                                writer.Write(encodedvalue);
+                                            }
+                                        }
+
+                                        i++;
+                                    }
+
+                                }
+                                else
+                                {
+                                    if (ft.IsGenericType && ft.GetGenericTypeDefinition() == typeof(Nullable<>))
+                                    {
+                                        // special case for Nullable types
+                                        ft = ft.GetGenericArguments()[0];
+                                    }
+
+                                    Type typewrap = null;
+                                    while (ft.IsValueType && !ft.IsPrimitive)
+                                    {
+                                        FieldInfo fieldValue = ft.GetField("Value");
+                                        if (fieldValue != null)
+                                        {
+                                            v = fieldValue.GetValue(v);
+                                            if (typewrap == null)
+                                            {
+                                                typewrap = ft;
+                                            }
+                                            ft = fieldValue.FieldType;
+                                        }
+                                        else
+                                        {
+                                            break;
                                         }
                                     }
-                                }
-                                else if (v != null)
-                                {
-                                    string encodedvalue = System.Security.SecurityElement.Escape(v.ToString());
-                                    writer.Write(encodedvalue);
-                                }
-                            }
 
-                            this.WriteEndAttribute(writer);
+                                    if (ft.IsEnum || ft == typeof(bool))
+                                    {
+                                        v = v.ToString().ToLowerInvariant();
+                                    }
+
+                                    if (v is System.Collections.IList)
+                                    {
+                                        // IfcCompoundPlaneAngleMeasure
+                                        System.Collections.IList list = (System.Collections.IList)v;
+                                        for (int i = 0; i < list.Count; i++)
+                                        {
+                                            if (i > 0)
+                                            {
+                                                writer.Write(" ");
+                                            }
+
+                                            object elem = list[i];
+                                            if (elem != null) // should never be null, but be safe
+                                            {
+                                                string encodedvalue = System.Security.SecurityElement.Escape(elem.ToString());
+                                                writer.Write(encodedvalue);
+                                            }
+                                        }
+                                    }
+                                    else if (v != null)
+                                    {
+                                        string encodedvalue = System.Security.SecurityElement.Escape(v.ToString());
+                                        writer.Write(encodedvalue);
+                                    }
+                                }
+
+                                this.WriteEndAttribute(writer);
+                            }
+                        }
+                        else
+                        {
+                            haselements = true;
                         }
                     }
                     else
                     {
+                        // inverse
                         haselements = true;
                     }
-                }
-                else
-                {
-                    // inverse
-                    haselements = true;
                 }
             }
 
@@ -487,88 +490,91 @@ namespace BuildingSmart.Serialization.Xml
                 // write direct object references and lists
                 foreach (FieldInfo f in fields)
                 {
-                    DocXsdFormatEnum? format = GetXsdFormat(f);
-                    if (f.IsDefined(typeof(DataMemberAttribute)) && (format == null || (format != DocXsdFormatEnum.Element && format != DocXsdFormatEnum.Attribute)))
+                    if (f != null) // derived attributes are null
                     {
-                        Type ft = f.FieldType;
-                        bool isvaluelist = IsValueCollection(ft);
-                        bool isvaluelistlist = ft.IsGenericType && // e.g. IfcTriangulatedFaceSet.Normals
-                            typeof(IEnumerable).IsAssignableFrom(ft.GetGenericTypeDefinition()) &&
-                            IsValueCollection(ft.GetGenericArguments()[0]);
+                        DocXsdFormatEnum? format = GetXsdFormat(f);
+                        if (f.IsDefined(typeof(DataMemberAttribute)) && (format == null || (format != DocXsdFormatEnum.Element && format != DocXsdFormatEnum.Attribute)))
+                        {
+                            Type ft = f.FieldType;
+                            bool isvaluelist = IsValueCollection(ft);
+                            bool isvaluelistlist = ft.IsGenericType && // e.g. IfcTriangulatedFaceSet.Normals
+                                typeof(IEnumerable).IsAssignableFrom(ft.GetGenericTypeDefinition()) &&
+                                IsValueCollection(ft.GetGenericArguments()[0]);
 
-                        // hide fields where inverse attribute used instead
-                        if (!f.FieldType.IsValueType && !isvaluelist && !isvaluelistlist &&
-                            (format == null || (format != DocXsdFormatEnum.Hidden)))
+                            // hide fields where inverse attribute used instead
+                            if (!f.FieldType.IsValueType && !isvaluelist && !isvaluelistlist &&
+                                (format == null || (format != DocXsdFormatEnum.Hidden)))
+                            {
+                                object value = f.GetValue(o);
+                                if (value != null)
+                                {
+                                    if (!open)
+                                    {
+                                        WriteOpenElement(writer);
+                                        open = true;
+                                    }
+
+                                    if (previousattribute)
+                                    {
+                                        this.WriteAttributeDelimiter(writer);
+                                    }
+                                    previousattribute = true;
+
+                                    WriteAttribute(writer, ref indent, o, f, saved, idmap, queue, ref nextID);
+                                }
+                            }
+                        }
+                        else if (format != null && (format == DocXsdFormatEnum.Element || format == DocXsdFormatEnum.Attribute))
                         {
                             object value = f.GetValue(o);
                             if (value != null)
                             {
-                                if (!open)
+                                // for collection is must be non-zero (e.g. IfcProject.IsNestedBy)
+                                bool showit = true; //...check: always include tag if Attribute (even if zero); hide if Element 
+                                if (value is IEnumerable) // what about IfcProject.RepresentationContexts if empty? include???
                                 {
-                                    WriteOpenElement(writer);
-                                    open = true;
+                                    showit = false;
+                                    IEnumerable enumerate = (IEnumerable)value;
+                                    foreach (object check in enumerate)
+                                    {
+                                        showit = true; // has at least one element
+                                        break;
+                                    }
                                 }
 
-                                if (previousattribute)
+                                if (showit)
                                 {
-                                    this.WriteAttributeDelimiter(writer);
-                                }
-                                previousattribute = true;
+                                    if (!open)
+                                    {
+                                        WriteOpenElement(writer);
+                                        open = true;
+                                    }
 
-                                WriteAttribute(writer, ref indent, o, f, saved, idmap, queue, ref nextID);
+                                    if (previousattribute)
+                                    {
+                                        this.WriteAttributeDelimiter(writer);
+                                    }
+                                    previousattribute = true;
+
+                                    WriteAttribute(writer, ref indent, o, f, saved, idmap, queue, ref nextID);
+                                }
                             }
                         }
-                    }
-                    else if (format != null && (format == DocXsdFormatEnum.Element || format == DocXsdFormatEnum.Attribute))
-                    {
-                        object value = f.GetValue(o);
-                        if (value != null)
+                        else
                         {
-                            // for collection is must be non-zero (e.g. IfcProject.IsNestedBy)
-                            bool showit = true; //...check: always include tag if Attribute (even if zero); hide if Element 
-                            if (value is IEnumerable) // what about IfcProject.RepresentationContexts if empty? include???
+                            object value = f.GetValue(o);
+
+                            // inverse
+                            // record it for downstream serialization
+                            if (value is IEnumerable)
                             {
-                                showit = false;
-                                IEnumerable enumerate = (IEnumerable)value;
-                                foreach (object check in enumerate)
+                                IEnumerable invlist = (IEnumerable)value;
+                                foreach (object invobj in invlist)
                                 {
-                                    showit = true; // has at least one element
-                                    break;
-                                }
-                            }
-
-                            if (showit)
-                            {
-                                if (!open)
-                                {
-                                    WriteOpenElement(writer);
-                                    open = true;
-                                }
-
-                                if (previousattribute)
-                                {
-                                    this.WriteAttributeDelimiter(writer);
-                                }
-                                previousattribute = true;
-
-                                WriteAttribute(writer, ref indent, o, f, saved, idmap, queue, ref nextID);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        object value = f.GetValue(o);
-
-                        // inverse
-                        // record it for downstream serialization
-                        if (value is IEnumerable)
-                        {
-                            IEnumerable invlist = (IEnumerable)value;
-                            foreach (object invobj in invlist)
-                            {
-                                if (!saved.Contains(invobj))
-                                {
-                                    queue.Enqueue(invobj);
+                                    if (!saved.Contains(invobj))
+                                    {
+                                        queue.Enqueue(invobj);
+                                    }
                                 }
                             }
                         }

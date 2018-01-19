@@ -756,6 +756,7 @@ namespace IfcDoc.Format.CSC
                 StringBuilder sbProperties = new StringBuilder();
                 StringBuilder sbConstructor = new StringBuilder(); // constructor parameters
                 StringBuilder sbAssignment = new StringBuilder(); // constructor assignment of fields
+                StringBuilder sbElemConstructor = new StringBuilder(); // default constructor
                 foreach (DocAttribute docAttribute in docEntity.Attributes)
                 {
                     string type = FormatIdentifier(docAttribute.DefinedType);
@@ -875,7 +876,7 @@ namespace IfcDoc.Format.CSC
                             }
 
                             int upper = 0;
-                            if (Int32.TryParse(docAttribute.AggregationLower, out upper))
+                            if (Int32.TryParse(docAttribute.AggregationUpper, out upper))
                             {
                                 sbFields.AppendLine("\t[MaxLength(" + upper + ")]");
                             }
@@ -889,15 +890,6 @@ namespace IfcDoc.Format.CSC
                                     sbProperties.AppendLine("\tpublic ISet<" + type + "> " + docAttribute.Name + " { get { return this._" + docAttribute.Name + "; } }");
                                     break;
                                 case DocAggregationEnum.LIST:
-
-                                    //... special case if list is fixed (e.g. IfcCartesianPoint.Points) -- expand parameters into components
-                                    if (docAttribute.AggregationLower != null && docAttribute.AggregationUpper != null)
-                                    {
-                                        // multiple constructors for each possible combination??? 
-                                        // IfcCartesianPoint(x, y)
-                                        // IfcCartesianPoint(x, y, z)
-                                    }
-
                                     sbConstructor.Append(type + "[] __" + docAttribute.Name);
                                     sbAssignment.AppendLine("\t\tthis._" + docAttribute.Name + " = new List<" + type + ">(__" + docAttribute.Name + ");");
                                     sbFields.AppendLine("\tIList<" + type + "> _" + docAttribute.Name + " = new List<" + type + ">();");
@@ -910,6 +902,33 @@ namespace IfcDoc.Format.CSC
                                     sbFields.AppendLine("\t" + type + optional + " _" + docAttribute.Name + ";");
                                     sbProperties.AppendLine("\tpublic " + type + optional + " " + docAttribute.Name + " { get { return this._" + docAttribute.Name + "; } set { this._" + docAttribute.Name + " = value;} }");
                                     break;
+                            }
+
+                            // helper constructors for x/y, x/y/z
+                            if (docAttribute.GetAggregation() == DocAggregationEnum.LIST && upper == 3 && docRef is DocDefined)
+                            {
+                                DocDefined docDefined = (DocDefined)docRef;
+                                Type typePrim = GetNativeType(docDefined.DefinedType);
+                                if (typePrim != null)
+                                {
+                                    string primtype = typePrim.Name;
+
+                                    if (lower >= 1 && lower < upper)
+                                    {
+                                        sbElemConstructor.AppendLine("\tpublic " + docEntity.Name + "(" + primtype + " x, " + primtype + " y) : this(new " + type + "[]{ new " + type + "(x), new " + type + "(y)})");
+                                        sbElemConstructor.AppendLine("\t{");
+                                        sbElemConstructor.AppendLine("\t}");
+                                        sbElemConstructor.AppendLine();
+                                    }
+
+                                    if (upper == 3)
+                                    {
+                                        sbElemConstructor.AppendLine("\tpublic " + docEntity.Name + "(" + primtype + " x, " + primtype + " y, " + primtype + " z) : this(new " + type + "[]{ new " + type + "(x), new " + type + "(y), new " + type + "(z)})");
+                                        sbElemConstructor.AppendLine("\t{");
+                                        sbElemConstructor.AppendLine("\t}");
+                                        sbElemConstructor.AppendLine();
+                                    }
+                                }
                             }
 
                             // todo: support special collections and properties that keep inverse properties in sync...
@@ -937,6 +956,12 @@ namespace IfcDoc.Format.CSC
                     sb.AppendLine("\t{");
                     sb.Append(sbAssignment.ToString());
                     sb.AppendLine("\t}");
+                }
+
+                // if only a single list attribute, then expand x, y, z (include IfcCartesianPoint, NOT IfcSurfaceReinforcementArea)
+                if (sbElemConstructor.Length > 0 && order == 1)
+                {
+                    sb.AppendLine(sbElemConstructor.ToString());
                 }
 
                 sb.Append(sbProperties.ToString());

@@ -601,9 +601,9 @@
       <Project>{55cd2497-80a6-49b9-880b-ab0743b7deca}</Project>
       <Name>BuildingSmart.Serialization.Xml</Name>
     </ProjectReference>
-    <ProjectReference Include="IfcKit\schemas\IFC4X1\BuildingSmart.IFC4x1.csproj">
+    <ProjectReference Include="IfcKit\schemas\IFC4x1\BuildingSmart.IFC4X1.csproj">
       <Project>{2ffe04f0-b6c2-405e-92a4-d1f3b6b037bc}</Project>
-      <Name>BuildingSmart.IFC4x1</Name>
+      <Name>BuildingSmart.IFC4X1</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

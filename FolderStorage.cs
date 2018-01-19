@@ -198,7 +198,7 @@ namespace IfcDoc
                         MaxLengthAttribute mxa = (MaxLengthAttribute)field.GetCustomAttribute(typeof(MaxLengthAttribute));
                         if (mxa != null)
                         {
-                            docAttr.AggregationUpper = mla.Length.ToString();
+                            docAttr.AggregationUpper = mxa.Length.ToString();
                         }
 
                         PropertyInfo propinfo = t.GetProperty(docAttr.Name);
@@ -211,10 +211,16 @@ namespace IfcDoc
                             }
                         }
 
-                        DataMemberAttribute dma = (DataMemberAttribute)field.GetCustomAttribute(typeof(DataMemberAttribute));;
+                        DataMemberAttribute dma = (DataMemberAttribute)field.GetCustomAttribute(typeof(DataMemberAttribute));
                         if(dma != null)
                         {
                             attrsDirect.Add(dma.Order, docAttr);
+
+                            RequiredAttribute rqa = (RequiredAttribute)field.GetCustomAttribute(typeof(RequiredAttribute));
+                            if (rqa == null)
+                            {
+                                docAttr.IsOptional = true;
+                            }
                         }
                         else
                         {
@@ -453,45 +459,48 @@ namespace IfcDoc
 
             // examples
             string pathExamples = path + @"\examples";
-            en = System.IO.Directory.EnumerateFiles(pathExamples, "*.htm", SearchOption.TopDirectoryOnly);
-            foreach(string file in en)
+            if (Directory.Exists(pathExamples))
             {
-                DocExample docExample = new DocExample();
-                docExample.Name = Path.GetFileNameWithoutExtension(file);
-                project.Examples.Add(docExample);
-
-                using (StreamReader reader = new StreamReader(file))
+                en = System.IO.Directory.EnumerateFiles(pathExamples, "*.htm", SearchOption.TopDirectoryOnly);
+                foreach (string file in en)
                 {
-                    docExample.Documentation = reader.ReadToEnd();
-                }
+                    DocExample docExample = new DocExample();
+                    docExample.Name = Path.GetFileNameWithoutExtension(file);
+                    project.Examples.Add(docExample);
 
-                string dirpath = file.Substring(0, file.Length - 4);
-                if (Directory.Exists(dirpath))
-                {
-                    IEnumerable<string> suben = System.IO.Directory.EnumerateFiles(dirpath, "*.ifc", SearchOption.TopDirectoryOnly);
-                    foreach (string ex in suben)
+                    using (StreamReader reader = new StreamReader(file))
                     {
-                        DocExample docEx = new DocExample();
-                        docEx.Name = Path.GetFileNameWithoutExtension(ex);
-                        docExample.Examples.Add(docEx);
+                        docExample.Documentation = reader.ReadToEnd();
+                    }
 
-                        // read the content of the file
-                        using (FileStream fs = new FileStream(ex, FileMode.Open, FileAccess.Read))
+                    string dirpath = file.Substring(0, file.Length - 4);
+                    if (Directory.Exists(dirpath))
+                    {
+                        IEnumerable<string> suben = System.IO.Directory.EnumerateFiles(dirpath, "*.ifc", SearchOption.TopDirectoryOnly);
+                        foreach (string ex in suben)
                         {
-                            docEx.File = new byte[fs.Length];
-                            fs.Read(docEx.File, 0, docEx.File.Length);
-                        }
+                            DocExample docEx = new DocExample();
+                            docEx.Name = Path.GetFileNameWithoutExtension(ex);
+                            docExample.Examples.Add(docEx);
 
-                        // read documentation
-                        string exdoc = ex.Substring(0, ex.Length - 4) + ".htm";
-                        if (File.Exists(exdoc))
-                        {
-                            using (StreamReader reader = new StreamReader(exdoc))
+                            // read the content of the file
+                            using (FileStream fs = new FileStream(ex, FileMode.Open, FileAccess.Read))
                             {
-                                docEx.Documentation = reader.ReadToEnd();
+                                docEx.File = new byte[fs.Length];
+                                fs.Read(docEx.File, 0, docEx.File.Length);
                             }
-                        }
 
+                            // read documentation
+                            string exdoc = ex.Substring(0, ex.Length - 4) + ".htm";
+                            if (File.Exists(exdoc))
+                            {
+                                using (StreamReader reader = new StreamReader(exdoc))
+                                {
+                                    docEx.Documentation = reader.ReadToEnd();
+                                }
+                            }
+
+                        }
                     }
                 }
             }
