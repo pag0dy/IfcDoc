@@ -809,10 +809,7 @@ namespace IfcDoc
                 {
                     foreach (DocType docType in docSchema.Types)
                     {
-                        bool use = false;
-                        included.TryGetValue(docType, out use);
-
-                        if (use)
+                        if (included == null || included.ContainsKey(docType))
                         {
                             if (docType is DocDefined)
                             {
@@ -837,10 +834,7 @@ namespace IfcDoc
 
                     foreach (DocEntity docEntity in docSchema.Entities)
                     {
-                        bool use = false;
-                        included.TryGetValue(docEntity, out use);
-
-                        if (use)
+                        if (included == null || included.ContainsKey(docEntity))
                         {
                             string text = this.FormatEntityFull(docEntity, map, included, true);
                             sb.Append(text);

@@ -10,36 +10,28 @@ using System.Collections.Generic;
 using System.Text;
 using System.Runtime.Serialization;
 
-using IfcDoc.Format.SPF;
-
 namespace IfcDoc.Schema.VEX
 {
     // Entities for Visual Express
 
     public static class SchemaVEX
     {
-        static Dictionary<string, Type> s_types;
-
-        public static Dictionary<string, Type> Types
+        public static Type[] Types
         {
             get
             {
-                if (s_types == null)
+                List<Type> listTypes = new List<Type>();
+                Type[] types = typeof(SchemaVEX).Assembly.GetTypes();
+                foreach (Type t in types)
                 {
-                    s_types = new Dictionary<string, Type>();
-
-                    Type[] types = typeof(SchemaVEX).Assembly.GetTypes();
-                    foreach (Type t in types)
+                    if (typeof(SEntity).IsAssignableFrom(t) && !t.IsAbstract && t.Namespace.Equals("IfcDoc.Schema.VEX"))
                     {
-                        if (typeof(SEntity).IsAssignableFrom(t) && !t.IsAbstract && t.Namespace.Equals("IfcDoc.Schema.VEX"))
-                        {
-                            string name = t.Name.ToUpper();
-                            s_types.Add(name, t);
-                        }
+                        string name = t.Name.ToUpper();
+                        listTypes.Add(t);
                     }
                 }
 
-                return s_types;
+                return listTypes.ToArray();
             }
         }
     }
@@ -59,7 +51,7 @@ namespace IfcDoc.Schema.VEX
         [DataMember(Order = 1)] public string is_derived;
         [DataMember(Order = 2)] public int attributeflag;
         [DataMember(Order = 3)] public OBJECT is_inverse;
-        [DataMember(Order = 4)] public List<OBJECT> inversefor;
+        [DataMember(Order = 4)] public IList<OBJECT> inversefor;
         [DataMember(Order = 5)] public OBJECT retyped;
         [DataMember(Order = 6)] public OBJECT the_attribute;        
         [DataMember(Order = 7)] public OBJECT_LINE_LAYOUT layout;
@@ -146,11 +138,11 @@ namespace IfcDoc.Schema.VEX
 
     public class ENTITIES : DEFINITION
     {
-        [DataMember(Order = 0)] public List<SUPERTYPE_DEF> supertypes;
-        [DataMember(Order = 1)] public List<SUBTYPE_DEF> subtypes;
-        [DataMember(Order = 2)] public List<ATTRIBUTE_DEF> attributes;
-        [DataMember(Order = 3)] public List<UNIQUE_RULE> uniquenes;
-        [DataMember(Order = 4)] public List<WHERE_RULE> wheres;
+        [DataMember(Order = 0)] public IList<SUPERTYPE_DEF> supertypes;
+        [DataMember(Order = 1)] public IList<SUBTYPE_DEF> subtypes;
+        [DataMember(Order = 2)] public IList<ATTRIBUTE_DEF> attributes;
+        [DataMember(Order = 3)] public IList<UNIQUE_RULE> uniquenes;
+        [DataMember(Order = 4)] public IList<WHERE_RULE> wheres;
         [DataMember(Order = 5)] public int inglobalrules;
         [DataMember(Order = 6)] public TYPE_LAYOUT layout;
         [DataMember(Order = 7)] public COMMENT comment;
@@ -164,8 +156,8 @@ namespace IfcDoc.Schema.VEX
 
     public class ENUMERATIONS : DEFINITION
     {
-        [DataMember(Order = 0)] public List<string> enums;
-        [DataMember(Order = 1)] public List<WHERE_RULE> wheres;
+        [DataMember(Order = 0)] public IList<string> enums;
+        [DataMember(Order = 1)] public IList<WHERE_RULE> wheres;
         [DataMember(Order = 2)] public TYPE_LAYOUT typelayout;
         [DataMember(Order = 3)] public COMMENT comment;
         [DataMember(Order = 4)] public INTERFACE_TO interfaceto;
@@ -207,8 +199,8 @@ namespace IfcDoc.Schema.VEX
     {
         [DataMember(Order = 0)] public string name;
         [DataMember(Order = 1)] public string rule_context;
-        [DataMember(Order = 2)] public List<OBJECT> for_entities;
-        [DataMember(Order = 3)] public List<WHERE_RULE> where_rule;
+        [DataMember(Order = 2)] public IList<OBJECT> for_entities;
+        [DataMember(Order = 3)] public IList<WHERE_RULE> where_rule;
         [DataMember(Order = 4)] public COMMENT comment;
         [DataMember(Order = 5)] public INTERFACE_TO interfaceto;
     }
@@ -226,7 +218,7 @@ namespace IfcDoc.Schema.VEX
     {
         [DataMember(Order = 0)] public int ref_or_use;
         [DataMember(Order = 1)] public string schema_name;
-        [DataMember(Order = 2)] public List<object> item;
+        [DataMember(Order = 2)] public IList<object> item;
         [DataMember(Order = 3)] public int express_g_model_id;
         [DataMember(Order = 4)] public OBJECT default_item;
     }
@@ -250,7 +242,7 @@ namespace IfcDoc.Schema.VEX
         [DataMember(Order = 1)] public string image;
         [DataMember(Order = 2)] public int dx;
         [DataMember(Order = 3)] public int dy;
-        [DataMember(Order = 4)] public List<IMAGE_MAP_HTML> map;
+        [DataMember(Order = 4)] public IList<IMAGE_MAP_HTML> map;
     }
 
     public abstract class OBJECT : SEntity
@@ -368,8 +360,8 @@ namespace IfcDoc.Schema.VEX
     public class REPORT_HTML : SEntity
     {
         [DataMember(Order = 0)] public string homepage;
-        [DataMember(Order = 1)] public List<FONT_HTML> styletoplevel;
-        [DataMember(Order = 2)] public List<DESCRIPTION_CONTENT_HTML> stylesecondlevel;
+        [DataMember(Order = 1)] public IList<FONT_HTML> styletoplevel;
+        [DataMember(Order = 2)] public IList<DESCRIPTION_CONTENT_HTML> stylesecondlevel;
         [DataMember(Order = 3)] public BACKGROUND_HTML background;
         [DataMember(Order = 4)] public EXPRESS_HTML express;
         [DataMember(Order = 5)] public DIAGRAM_HTML diagram;
@@ -380,8 +372,8 @@ namespace IfcDoc.Schema.VEX
     {
         [DataMember(Order = 0)] public double expgscale;
         [DataMember(Order = 1)] public int _A1;
-        [DataMember(Order = 2)] public List<int> sortlevel;
-        [DataMember(Order = 3)] public List<STYLE_SET> style;
+        [DataMember(Order = 2)] public IList<int> sortlevel;
+        [DataMember(Order = 3)] public IList<STYLE_SET> style;
         [DataMember(Order = 4)] public string headertext;
         [DataMember(Order = 5)] public string footertext;
         [DataMember(Order = 6)] public List<string> specificationname;
@@ -418,12 +410,12 @@ namespace IfcDoc.Schema.VEX
         [DataMember(Order = 8)] public double scale;
         [DataMember(Order = 9)] public double xpos;
         [DataMember(Order = 10)] public double ypos;
-        [DataMember(Order = 11)] public List<object> objects;
-        [DataMember(Order = 12)] public List<GLOBAL_RULE> global_rules;
-        [DataMember(Order = 13)] public List<USER_FUNCTION> user_functions;
+        [DataMember(Order = 11)] public IList<object> objects;
+        [DataMember(Order = 12)] public IList<GLOBAL_RULE> global_rules;
+        [DataMember(Order = 13)] public IList<USER_FUNCTION> user_functions;
         [DataMember(Order = 14)] public COMMENT comment;
         [DataMember(Order = 15)] public int version;
-        [DataMember(Order = 16)] public List<USER_CONSTANT> user_constant;
+        [DataMember(Order = 16)] public IList<USER_CONSTANT> user_constant;
         [DataMember(Order = 17)] public SECTION_LIST section;
         [DataMember(Order = 18)] public int? enabled_express_version;
         [DataMember(Order = 19)] public string language_id;
@@ -434,14 +426,14 @@ namespace IfcDoc.Schema.VEX
     {
         [DataMember(Order = 0)] public int numberofpages; // flag
         [DataMember(Order = 1)] public int _A2;           // number_of_pages
-        [DataMember(Order = 2)] public List<object> section;
+        [DataMember(Order = 2)] public IList<object> section;
     }
 
     public class SELECTS : DEFINITION
     {
         //[DataMember(Order = 0)] public TEXT name;
-        [DataMember(Order = 0)] public List<SELECT_DEF> selects;
-        [DataMember(Order = 1)] public List<WHERE_RULE> wheres;
+        [DataMember(Order = 0)] public IList<SELECT_DEF> selects;
+        [DataMember(Order = 1)] public IList<WHERE_RULE> wheres;
         [DataMember(Order = 2)] public TYPE_LAYOUT typelayout;
         [DataMember(Order = 3)] public COMMENT comment;
         [DataMember(Order = 4)] public INTERFACE_TO interfaceto;
@@ -560,7 +552,7 @@ namespace IfcDoc.Schema.VEX
     public class TREE : OBJECT
     {
         [DataMember(Order = 0)] public int operate;
-        [DataMember(Order = 1)] public List<OBJECT> list;
+        [DataMember(Order = 1)] public IList<OBJECT> list;
     }
 
     public class TYPE_LAYOUT : SEntity
@@ -571,7 +563,7 @@ namespace IfcDoc.Schema.VEX
     public class UNIQUE_RULE : SEntity
     {
         [DataMember(Order = 0)] public string name;
-        [DataMember(Order = 1)] public List<ATTRIBUTE_DEF> for_attribute;
+        [DataMember(Order = 1)] public IList<ATTRIBUTE_DEF> for_attribute;
     }
 
     public class UNRESOLVED_OBJECT : OBJECT
@@ -595,7 +587,7 @@ namespace IfcDoc.Schema.VEX
         [DataMember(Order = 2)] public OBJECT objectpageref;
         [DataMember(Order = 3)] public OBJECT objectpagerefto;
         [DataMember(Order = 4)] public object return_value;
-        [DataMember(Order = 5)] public List<PARAMETER> parameter_list;
+        [DataMember(Order = 5)] public IList<PARAMETER> parameter_list;
         [DataMember(Order = 6)] public COMMENT comment;
         [DataMember(Order = 7)] public INTERFACE_TO interfaceto;
     }
@@ -606,14 +598,14 @@ namespace IfcDoc.Schema.VEX
         [DataMember(Order = 1)] public int flag;
         [DataMember(Order = 2)] public OBJECT objectpageref;
         [DataMember(Order = 3)] public OBJECT objectpagerefto;
-        [DataMember(Order = 5)] public List<PARAMETER> parameter_list;
+        [DataMember(Order = 5)] public IList<PARAMETER> parameter_list;
         [DataMember(Order = 6)] public COMMENT comment;
         [DataMember(Order = 7)] public INTERFACE_TO interfaceto;
     }
 
     public class VISIBLE_SET : SEntity
     {
-        [DataMember(Order = 0)] public List<bool> list;
+        [DataMember(Order = 0)] public IList<bool> list;
     }
 
     public class VLINE : SEntity
@@ -638,7 +630,7 @@ namespace IfcDoc.Schema.VEX
         [DataMember(Order = 0)] public WORLD_POINT startpoint; // position of start, absolute coordinates
         [DataMember(Order = 1)] public int startdirection; // 0 is Y, 1 is X
         [DataMember(Order = 2)] public object radius; // unused
-        [DataMember(Order = 3)] public List<double> rpoint; // list of line lengths in alternating directions (if startdirection is 0, then - is up, + is down)
+        [DataMember(Order = 3)] public IList<double> rpoint; // list of line lengths in alternating directions (if startdirection is 0, then - is up, + is down)
         [DataMember(Order = 4)] public double endlinepos;
         [DataMember(Order = 5)] public double endlinelength;
     }

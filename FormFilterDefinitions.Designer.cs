@@ -41,6 +41,7 @@
             this.checkBoxPEnumConstant = new System.Windows.Forms.CheckBox();
             this.checkBoxQset = new System.Windows.Forms.CheckBox();
             this.checkBoxQsetQuantity = new System.Windows.Forms.CheckBox();
+            this.checkBoxRules = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // buttonOK
@@ -186,6 +187,16 @@
             this.checkBoxQsetQuantity.Text = "Quantities";
             this.checkBoxQsetQuantity.UseVisualStyleBackColor = true;
             // 
+            // checkBoxRules
+            // 
+            this.checkBoxRules.AutoSize = true;
+            this.checkBoxRules.Location = new System.Drawing.Point(16, 157);
+            this.checkBoxRules.Name = "checkBoxRules";
+            this.checkBoxRules.Size = new System.Drawing.Size(88, 17);
+            this.checkBoxRules.TabIndex = 13;
+            this.checkBoxRules.Text = "Where Rules";
+            this.checkBoxRules.UseVisualStyleBackColor = true;
+            // 
             // FormFilterDefinitions
             // 
             this.AcceptButton = this.buttonOK;
@@ -193,6 +204,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
             this.ClientSize = new System.Drawing.Size(284, 241);
+            this.Controls.Add(this.checkBoxRules);
             this.Controls.Add(this.checkBoxQsetQuantity);
             this.Controls.Add(this.checkBoxQset);
             this.Controls.Add(this.checkBoxPEnumConstant);
@@ -231,5 +243,6 @@
         private System.Windows.Forms.CheckBox checkBoxPEnumConstant;
         private System.Windows.Forms.CheckBox checkBoxQset;
         private System.Windows.Forms.CheckBox checkBoxQsetQuantity;
+        private System.Windows.Forms.CheckBox checkBoxRules;
     }
 }

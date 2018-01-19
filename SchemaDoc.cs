@@ -19,28 +19,22 @@ namespace IfcDoc.Schema.DOC
 {
     public static class SchemaDOC
     {
-        static Dictionary<string, Type> s_types;
-
-        public static Dictionary<string, Type> Types
+        public static Type[] Types
         {
             get
             {
-                if (s_types == null)
+                List<Type> listTypes = new List<Type>();
+                Type[] types = typeof(SchemaDOC).Assembly.GetTypes();
+                foreach (Type t in types)
                 {
-                    s_types = new Dictionary<string, Type>();
-
-                    Type[] types = typeof(SchemaDOC).Assembly.GetTypes();
-                    foreach (Type t in types)
+                    if (typeof(SEntity).IsAssignableFrom(t) && !t.IsAbstract && t.Namespace.Equals("IfcDoc.Schema.DOC"))
                     {
-                        if (typeof(SEntity).IsAssignableFrom(t) && !t.IsAbstract && t.Namespace.Equals("IfcDoc.Schema.DOC"))
-                        {
-                            string name = t.Name.ToUpper();
-                            s_types.Add(name, t);
-                        }
+                        string name = t.Name.ToUpper();
+                        listTypes.Add(t);
                     }
                 }
 
-                return s_types;
+                return listTypes.ToArray();
             }
         }
     }
@@ -61,17 +55,17 @@ namespace IfcDoc.Schema.DOC
     }
 
     /// <summary>
-    /// Localization of a definition for a particular language and region [an MVD-XML Definition]
+    /// Localization of a definition for a particular language and region, or an identifier on a remote system (e.g. bsDD)
     /// </summary>
     public class DocLocalization : SEntity,
         IDocumentation,
         IComparable
     {
-        [DataMember(Order = 0)] private string _Locale; // language code, e.g. "en-US", "de-CH"
+        [DataMember(Order = 0)] private string _Locale; // language code, e.g. "en-US", "de-CH"; or blank if system identifier (e.g. bsDD)
         [DataMember(Order = 1)] private DocCategoryEnum _Category;
-        [DataMember(Order = 2)] private string _Name;
+        [DataMember(Order = 2)] private string _Name; // localized name if locale provided, or system identifier (e.g. guid) used for bsDD
         [DataMember(Order = 3)] private string _Documentation;
-        [DataMember(Order = 4)] private string _URL;
+        [DataMember(Order = 4)] private string _URL; // URL of remote system, e.g. http://bsdd.buildingsmart.org or http://test.bsdd.buildingsmart.org
 
         public string Locale
         {
@@ -138,6 +132,9 @@ namespace IfcDoc.Schema.DOC
             if (!(obj is DocLocalization))
                 return -1;
 
+            if (this.Locale == null) // used for bsDD guid mapping
+                return -1;
+
             DocLocalization other = (DocLocalization)obj;
             return this.Locale.CompareTo(other.Locale);
         }
@@ -196,20 +193,7 @@ namespace IfcDoc.Schema.DOC
             return this.Name;
         }
 
-        public override void Delete()
-        {
-            if (this.Localization != null)
-            {
-                foreach (DocLocalization docLocal in this.Localization)
-                {
-                    docLocal.Delete();
-                }
-            }
-
-            base.Delete();            
-        }
-
-
+ 
         internal protected virtual void FindQuery(string query, bool searchtext, List<DocFindResult> results)
         {
             if (!searchtext && this.Name != null && this.Name.ToLower().Contains(query.ToLower()))
@@ -230,12 +214,44 @@ namespace IfcDoc.Schema.DOC
             DocLocalization docLocal = null;
             foreach (DocLocalization docEach in this.Localization)
             {
-                if (docEach.Locale.Equals(locale, StringComparison.OrdinalIgnoreCase))
+                if (docEach.Locale != null && docEach.Locale.Equals(locale, StringComparison.OrdinalIgnoreCase))
                 {
                     docLocal = docEach;
                     break;
                 }
             }
+
+            return docLocal;
+        }
+
+        /// <summary>
+        /// Creates or replaces a dictionary reference.
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="identifier"></param>
+        /// <returns></returns>
+        public DocLocalization RegisterDictionary(string url, string identifier)
+        {
+            // find existing
+            DocLocalization docLocal = null;
+            foreach (DocLocalization docEach in this.Localization)
+            {
+                if (docEach.Locale == null && docEach.URL == url && docEach.Name == identifier)
+                {
+                    docLocal = docEach;
+                    break;
+                }
+            }
+
+            if (docLocal == null)
+            {
+                docLocal = new DocLocalization();
+                docLocal.URL = url;
+                this.Localization.Add(docLocal);
+                this.Localization.Sort();
+            }
+
+            docLocal.Name = identifier;
 
             return docLocal;
         }
@@ -253,7 +269,7 @@ namespace IfcDoc.Schema.DOC
             DocLocalization docLocal = null;
             foreach (DocLocalization docEach in this.Localization)
             {
-                if (docEach.Locale.Equals(locale, StringComparison.OrdinalIgnoreCase))
+                if (docEach.Locale != null && docEach.Locale.Equals(locale, StringComparison.OrdinalIgnoreCase))
                 {
                     docLocal = docEach;
                     break;
@@ -829,16 +845,6 @@ namespace IfcDoc.Schema.DOC
             }
         }
 
-        public override void Delete()
-        {
-            foreach(DocAnnotation docAnnotation in this.Annotations)
-            {
-                docAnnotation.Delete();
-            }
-
-            base.Delete();            
-        }
-
         public DocFormatOptionEnum GetFormatOption(DocFormatSchemaEnum docFormatTypeEnum)
         {
             foreach(DocFormat docFormat in this.Formats)
@@ -908,6 +914,20 @@ namespace IfcDoc.Schema.DOC
             }
 
             return "UNSPECIFIEDSCHEMA";
+        }
+
+        /// <summary>
+        /// Returns the schema version in form Major.Minor.Addendum.Corrigendum
+        /// </summary>
+        /// <returns></returns>
+        public string GetSchemaVersion()
+        {
+            if (this.Sections.Count > 0 && !String.IsNullOrEmpty(this.Sections[0].Version))
+            {
+                return this.Sections[0].Version;
+            }
+
+            return null;
         }
 
         /// <summary>
@@ -1981,11 +2001,14 @@ namespace IfcDoc.Schema.DOC
 
             foreach (DocConceptRoot docRoot in docView.ConceptRoots)
             {
-                RegisterEntity(included, docRoot.ApplicableEntity);
-
-                foreach (DocTemplateUsage docUsage in docRoot.Concepts)
+                if (docRoot.ApplicableEntity != null)
                 {
-                    RegisterConcept(docUsage, included, mapVirtualAttributes);
+                    RegisterEntity(included, docRoot.ApplicableEntity);
+
+                    foreach (DocTemplateUsage docUsage in docRoot.Concepts)
+                    {
+                        RegisterConcept(docUsage, included, mapVirtualAttributes);
+                    }
                 }
             }
 
@@ -2632,6 +2655,95 @@ namespace IfcDoc.Schema.DOC
 
             return null;
         }
+
+        private static void AddGuid(Dictionary<Guid, DocObject> mapGuid, DocObject docObj)
+        {
+            try
+            {
+                mapGuid.Add(docObj.Uuid, docObj);
+            }
+            catch
+            {
+                System.Diagnostics.Debug.WriteLine("Duplicate Guid: " + docObj.Uuid.ToString() + " - " + docObj.GetType().ToString() + " - " + docObj.Name);
+            }
+        }
+
+        public Dictionary<Guid, DocObject> GenerateGuidMap()
+        {
+            Dictionary<Guid, DocObject> map = new Dictionary<Guid, DocObject>();
+            foreach (DocSection docSection in this.Sections)
+            {
+                foreach(DocSchema docSchema in docSection.Schemas)
+                {
+                    AddGuid(map, docSchema);
+                    foreach(DocType docType in docSchema.Types)
+                    {
+                        AddGuid(map, docType);
+                        if(docType is DocEnumeration)
+                        {
+                            DocEnumeration docEnum = (DocEnumeration)docType;
+                            foreach(DocConstant docConst in docEnum.Constants)
+                            {
+                                AddGuid(map, docConst);
+                            }
+                        }
+                    }
+
+                    foreach(DocEntity docEntity in docSchema.Entities)
+                    {
+                        AddGuid(map, docEntity);
+                        foreach(DocAttribute docAttr in docEntity.Attributes)
+                        {
+                            AddGuid(map, docAttr);
+                        }
+
+                        foreach(DocWhereRule docRule in docEntity.WhereRules)
+                        {
+                            AddGuid(map, docRule);
+                        }
+                    }
+
+                    foreach(DocFunction docFunc in docSchema.Functions)
+                    {
+                        AddGuid(map, docFunc);
+                    }
+
+                    foreach(DocGlobalRule docRule in docSchema.GlobalRules)
+                    {
+                        AddGuid(map, docRule);
+                    }
+
+                    foreach(DocPropertySet docPset in docSchema.PropertySets)
+                    {
+                        AddGuid(map, docPset);
+                        foreach(DocProperty docProp in docPset.Properties)
+                        {
+                            AddGuid(map, docProp);
+                        }
+                    }
+
+                    foreach(DocPropertyEnumeration docEnum in docSchema.PropertyEnums)
+                    {
+                        AddGuid(map, docEnum);
+                        foreach(DocPropertyConstant docConst in docEnum.Constants)
+                        {
+                            AddGuid(map, docConst);
+                        }
+                    }
+
+                    foreach(DocQuantitySet docQset in docSchema.QuantitySets)
+                    {
+                        AddGuid(map, docQset);
+                        foreach (DocQuantity docProp in docQset.Quantities)
+                        {
+                            AddGuid(map, docProp);
+                        }
+                    }
+                }
+            }
+
+            return map;
+        }
     }
 
     /// <summary>
@@ -2854,27 +2966,6 @@ namespace IfcDoc.Schema.DOC
             }
 
             return false;
-        }
-
-        public override void Delete()
-        {
-            if (this.Templates != null)
-            {
-                foreach (DocTemplateDefinition docTemplate in this.Templates)
-                {
-                    docTemplate.Delete();
-                }
-            }
-
-            if (this.Rules != null)
-            {
-                foreach (DocModelRule docRule in this.Rules)
-                {
-                    docRule.Delete();
-                }
-            }
-
-            base.Delete();
         }
 
         public DocModelRule[] BuildRulePath(DocModelRule docRule)
@@ -3245,7 +3336,7 @@ namespace IfcDoc.Schema.DOC
             {
                 foreach (DocConceptRoot docType in this.ConceptRoots)
                 {
-                    sortEntity.Add(docType.ToString(), docType);
+                    sortEntity.Add(docType.ToString() + docType.Uuid.ToString(), docType);
                 }
             }
             catch
@@ -3277,28 +3368,6 @@ namespace IfcDoc.Schema.DOC
 
             return this.m_filtercache;
         }
-
-        public override void Delete()
-        {
-            if (this.Exchanges != null)
-            {
-                foreach (DocExchangeDefinition docLocal in this.Exchanges)
-                {
-                    docLocal.Delete();
-                }
-            }
-
-            if (this.ConceptRoots != null)
-            {
-                foreach(DocConceptRoot docRoot in this.ConceptRoots)
-                {
-                    docRoot.Delete();
-                }
-            }
-
-            base.Delete();
-        }
-
     }
 
     // new in IfcDoc 3.5 -- organizes concepts according to MVD
@@ -3369,19 +3438,6 @@ namespace IfcDoc.Schema.DOC
             {
                 this._ApplicableOperator = value;
             }
-        }
-
-        public override void Delete()
-        {
-            if (this.Concepts != null)
-            {
-                foreach (DocTemplateUsage docConcept in this.Concepts)
-                {
-                    docConcept.Delete();
-                }
-            }
-
-            base.Delete();
         }
 
         /// <summary>
@@ -3485,19 +3541,6 @@ namespace IfcDoc.Schema.DOC
             return this.Name;
         }
 
-        public override void Delete()
-        {
-            if (this.Rules != null)
-            {
-                foreach (DocModelRule docRule in this.Rules)
-                {
-                    docRule.Delete();
-                }
-            }
-
-            base.Delete();
-        }
-
         public bool IsCondition()
         {
             // special encoding to indicate rule represents a condition instead of a constraint.
@@ -3536,7 +3579,8 @@ namespace IfcDoc.Schema.DOC
             return " [" + min + ":" + max + "]";
         }
 #endif
-        public abstract bool? Validate(object target, DocTemplateItem docItem, Dictionary<string, Type> typemap, List<DocModelRule> trace, SEntity root, DocTemplateUsage docOuterConcept, Dictionary<DocModelRuleAttribute, bool> conditions);
+        public abstract bool? Validate(object target, DocTemplateItem docItem, Dictionary<string, Type> typemap, List<DocModelRule> trace, 
+            object root, DocTemplateUsage docOuterConcept, Dictionary<DocModelRuleAttribute, bool> conditions);
 
         public virtual bool IsTemplateReferenced(DocTemplateDefinition docTemplate)
         {
@@ -3669,7 +3713,8 @@ namespace IfcDoc.Schema.DOC
         /// <param name="root">The root object, used for recording pass/fail status for nested rules.</param>
         /// <param name="docOuterConcept">Outer concept, used for recording objects that failed.</param>
         /// <returns>True if passing, False if failing, Null if inapplicable.</returns>
-        private bool? ValidateItem(object value, DocTemplateItem docItem, Dictionary<string, Type> typemap, List<DocModelRule> trace, SEntity root, DocTemplateUsage docOuterConcept, Dictionary<DocModelRuleAttribute, bool> conditions)
+        private bool? ValidateItem(object value, DocTemplateItem docItem, Dictionary<string, Type> typemap, List<DocModelRule> trace, 
+            object root, DocTemplateUsage docOuterConcept, Dictionary<DocModelRuleAttribute, bool> conditions)
         {
             // (3) if parameter is defined, check for match
             if (!String.IsNullOrEmpty(this.Identification))
@@ -3697,10 +3742,10 @@ namespace IfcDoc.Schema.DOC
                                 {
                                     if(!innerResult.Value)
                                     {
-                                        if (value is SEntity)
+                                        if (value is object)
                                         {
-                                            List<SEntity> list = docInnerConcept.GetValidationMismatches(root, docOuterConcept);
-                                            list.Add((SEntity)value);
+                                            List<object> list = docInnerConcept.GetValidationMismatches(root, docOuterConcept);
+                                            list.Add((object)value);
                                         }
 
                                         alltrue = false;
@@ -3796,8 +3841,8 @@ namespace IfcDoc.Schema.DOC
 
                     if (docItem != null)
                     {
-                        List<SEntity> listMismatch = docInnerConcept.GetValidationMismatches(root, docItem);
-                        listMismatch.Add((SEntity)value);
+                        List<object> listMismatch = docInnerConcept.GetValidationMismatches(root, docItem);
+                        listMismatch.Add((object)value);
                     }
                     else
                     {
@@ -3823,7 +3868,7 @@ namespace IfcDoc.Schema.DOC
                         {
                             // check for type inheritance -- support example filtering such as for COBie instances using ConceptRoot class filtering
                             Type tcheck = null;
-                            if (typemap.TryGetValue(match.ToUpper(), out tcheck) && tcheck.IsInstanceOfType(value))
+                            if (typemap.TryGetValue(match, out tcheck) && tcheck.IsInstanceOfType(value))
                             {
                                 return true;
                             }
@@ -3857,7 +3902,7 @@ namespace IfcDoc.Schema.DOC
                         }
 
                         Type typeCheck = null;
-                        if (match != null && typemap.TryGetValue(match.ToUpper(), out typeCheck))
+                        if (match != null && typemap.TryGetValue(match, out typeCheck))
                         {
                             // type comparison
                             return typeCheck.IsInstanceOfType(value);
@@ -3876,10 +3921,10 @@ namespace IfcDoc.Schema.DOC
                             }
                             else
                             {
-                                if (value is SEntity)
+                                if (value is object)
                                 {
-                                    List<SEntity> listMismatch = docOuterConcept.GetValidationMismatches(root, docItem);
-                                    listMismatch.Add((SEntity)value);
+                                    List<object> listMismatch = docOuterConcept.GetValidationMismatches(root, docItem);
+                                    listMismatch.Add((object)value);
                                 }
 
                                 // constraint evaluated to false and conditioned applied.
@@ -3938,7 +3983,8 @@ namespace IfcDoc.Schema.DOC
         /// <param name="trace"></param>
         /// <param name="root">Root object used for associating status of rules at referenced templates</param>
         /// <returns></returns>
-        public override bool? Validate(object target, DocTemplateItem docItem, Dictionary<string, Type> typemap, List<DocModelRule> trace, SEntity root, DocTemplateUsage docOuterConcept, Dictionary<DocModelRuleAttribute, bool> conditions)
+        public override bool? Validate(object target, DocTemplateItem docItem, Dictionary<string, Type> typemap, List<DocModelRule> trace, 
+            object root, DocTemplateUsage docOuterConcept, Dictionary<DocModelRuleAttribute, bool> conditions)
         {
             trace.Add(this);
 
@@ -4037,10 +4083,6 @@ namespace IfcDoc.Schema.DOC
 
             return checkcard;
         }
-
-        //internal override void RenameDefinition(DocSchema docSchema, DocDefinition docDefinition, DocAttribute docAttribute, string newname)
-        //{
-        //}
     }
 
     public class DocModelRuleEntity : DocModelRule
@@ -4108,13 +4150,14 @@ namespace IfcDoc.Schema.DOC
         /// <param name="docItem">Template item to validate.</param>
         /// <param name="typemap">Map of type names to type definitions.</param>
         /// <returns>True if passing, False if failing, or null if inapplicable.</returns>
-        public override bool? Validate(object target, DocTemplateItem docItem, Dictionary<string, Type> typemap, List<DocModelRule> trace, SEntity root, DocTemplateUsage docOuterConcept, Dictionary<DocModelRuleAttribute, bool> conditions)
+        public override bool? Validate(object target, DocTemplateItem docItem, Dictionary<string, Type> typemap, List<DocModelRule> trace, 
+            object root, DocTemplateUsage docOuterConcept, Dictionary<DocModelRuleAttribute, bool> conditions)
         {
             trace.Add(this);
 
             // checking for matching cast
             Type t = null;
-            if (typemap == null || !typemap.TryGetValue(this.Name.ToUpper(), out t))
+            if (typemap == null || !typemap.TryGetValue(this.Name, out t))
                 return false;
 
             if (target == null)
@@ -4132,7 +4175,7 @@ namespace IfcDoc.Schema.DOC
                 {
                     if (rule.IsCondition())
                     {
-                        bool? result = rule.Validate((SEntity)target, docItem, typemap, trace, root, docOuterConcept, conditions);
+                        bool? result = rule.Validate(target, docItem, typemap, trace, root, docOuterConcept, conditions);
 
                         // entity rule is inapplicable if any attribute rules are inapplicable
                         if (result == null || !result.Value)
@@ -4157,7 +4200,7 @@ namespace IfcDoc.Schema.DOC
                 {
                     if (!rule.IsCondition())
                     {
-                        bool? result = rule.Validate((SEntity)target, docItem, typemap, trace, root, docOuterConcept, conditions);
+                        bool? result = rule.Validate(target, docItem, typemap, trace, root, docOuterConcept, conditions);
 
                         // entity rule is inapplicable if any attribute rules are inapplicable
                         if (result == null)
@@ -4192,28 +4235,11 @@ namespace IfcDoc.Schema.DOC
     {
         [DataMember(Order = 0)] public DocOpExpression Expression; // new in IfcDoc 6.1
 
-        public override bool? Validate(object target, DocTemplateItem docItem, Dictionary<string, Type> typemap, List<DocModelRule> trace, SEntity root, DocTemplateUsage docOuterConcept, Dictionary<DocModelRuleAttribute, bool> conditions)
+        public override bool? Validate(object target, DocTemplateItem docItem, Dictionary<string, Type> typemap, List<DocModelRule> trace, 
+            object root, DocTemplateUsage docOuterConcept, Dictionary<DocModelRuleAttribute, bool> conditions)
         {
             // constraint validation is now done in compiled code -- indicate pass to keep going
             return true;
-
-#if false
-            // description holds expression -- for now, only equality is supported; future: support comparison expressions
-            if (target != null && target.ToString().Equals(this.Description))
-                return true;            
-
-            return false;
-#endif
-        }
-
-        public override void Delete()
-        {
-            if (this.Expression != null)
-            {
-                this.Expression.Delete();
-            }
-
-            base.Delete();
         }
 
         internal override void EmitInstructions(
@@ -4424,21 +4450,6 @@ namespace IfcDoc.Schema.DOC
             return null;
         }
 
-        public override void Delete()
-        {
-            if(this.Reference != null)
-            {
-                this.Reference.Delete();
-            }
-
-            if(this.Value != null)
-            {
-                this.Value.Delete();
-            }
-
-            base.Delete();
-        }
-
         internal override object Eval(object o, Hashtable population, DocTemplateDefinition template, Type valuetype, List<int> indexpath)
         {
             if (this.Reference.EntityRule == null)
@@ -4637,12 +4648,12 @@ namespace IfcDoc.Schema.DOC
 
                 case DocOpCode.IsUnique: // unique
                     {
-                        string uniquecheck = "_Unique" + this.OID;
+                        string uniquecheck = "_Unique" + this.GetHashCode();
                         Type t = context.Module.GetType(uniquecheck);
                         if (t == null)
                         {
                             // create a type with static field to track uniqueness for the particular rule
-                            TypeBuilder tb = context.Module.DefineType("_Unique" + this.OID); // give it a unique name based on OID corresponding to rule
+                            TypeBuilder tb = context.Module.DefineType("_Unique" + this.GetHashCode()); // give it a unique name based on OID corresponding to rule
                             FieldBuilder fb = tb.DefineField("Hash", typeof(Hashtable), FieldAttributes.Static | FieldAttributes.Public);
                             ConstructorBuilder cb = tb.DefineTypeInitializer();
                             ILGenerator il = cb.GetILGenerator();
@@ -4886,21 +4897,6 @@ namespace IfcDoc.Schema.DOC
             }
         }
 
-        public override void Delete()
-        {
-            if(this.ExpressionA != null)
-            {
-                this.ExpressionA.Delete();
-            }
-
-            if(this.ExpressionB != null)
-            {
-                this.ExpressionB.Delete();
-            }
-
-            base.Delete();
-        }
-
         internal override object Eval(object o, Hashtable population, DocTemplateDefinition template, Type valuetype, List<int> indexpath)
         {
             object valueA = this.ExpressionA.Eval(o, population, template, null, null);
@@ -4971,7 +4967,6 @@ namespace IfcDoc.Schema.DOC
                 return String.Empty;
 
             return "(" + this.ExpressionA.ToString(template) + " " + this.Operation.ToString().ToUpper() + " " + this.ExpressionB.ToString(template) + ")";
-            //return "(" + this.ExpressionA.ToString() + " " + this.Operation.ToString().ToUpper() + " " + this.ExpressionB.ToString() + ")";
         }
         
     }
@@ -5481,7 +5476,7 @@ namespace IfcDoc.Schema.DOC
         private bool? _validation; // unserialized; null: no applicable instances; false: one or more failures; true: all pass
         private Dictionary<object, bool> _validateStructure; // 
         private Dictionary<object, bool> _validateConstraints; // 
-        private Dictionary<SEntity, Dictionary<DocObject, List<SEntity>>> _validateMismatches;
+        private Dictionary<object, Dictionary<DocObject, List<object>>> _validateMismatches;
 
         public DocTemplateUsage()
         {
@@ -5567,27 +5562,27 @@ namespace IfcDoc.Schema.DOC
         /// <param name="o">The root entity being tested</param>
         /// <param name="outer">outer template item or concept root to qualify</param>
         /// <returns></returns>
-        public List<SEntity> GetValidationMismatches(SEntity o, DocObject outer)
+        public List<object> GetValidationMismatches(object o, DocObject outer)
         {
             if (o == null)
                 return null;
 
             if (this._validateMismatches == null)
             {
-                this._validateMismatches = new Dictionary<SEntity, Dictionary<DocObject, List<SEntity>>>();
+                this._validateMismatches = new Dictionary<object, Dictionary<DocObject, List<object>>>();
             }
 
-            Dictionary<DocObject, List<SEntity>> dictionaryItem = null;
+            Dictionary<DocObject, List<object>> dictionaryItem = null;
             if(!this._validateMismatches.TryGetValue(o, out dictionaryItem))
             {
-                dictionaryItem = new Dictionary<DocObject, List<SEntity>>();
+                dictionaryItem = new Dictionary<DocObject, List<object>>();
                 this._validateMismatches.Add(o, dictionaryItem);
             }
 
-            List<SEntity> list = null;
+            List<object> list = null;
             if(!dictionaryItem.TryGetValue(outer, out list))
             {
-                list = new List<SEntity>();
+                list = new List<object>();
                 dictionaryItem.Add(outer, list);
             }
 
@@ -5729,21 +5724,6 @@ namespace IfcDoc.Schema.DOC
 
             docEx.Requirement = requirement;
             docIm.Requirement = requirement;
-        }
-
-        public override void Delete()
-        {
-            foreach(DocTemplateItem docItem in this.Items)
-            {
-                docItem.Delete();
-            }
-
-            foreach(DocExchangeItem docItem in this.Exchanges)
-            {
-                docItem.Delete();
-            }
-
-            base.Delete();
         }
 
         public void RenameParameter(DocTemplateDefinition template, string oldid, string newid)
@@ -6420,16 +6400,6 @@ namespace IfcDoc.Schema.DOC
             return null; // no such parameters
         }
 
-        public override void Delete()
-        {
-            foreach (DocTemplateUsage docSub in this.Concepts)
-            {
-                docSub.Delete();
-            }
-
-            base.Delete();
-        }
-
         public Dictionary<object, bool> ValidationStructure
         {
             get
@@ -6513,11 +6483,31 @@ namespace IfcDoc.Schema.DOC
         [DataMember(Order = 0)] public List<DocAnnotation> Annotations; // v1.8 inserted  TBD - use MVD-XML concept instead
         [DataMember(Order = 1)] public List<DocSchema> Schemas;
 
+        public DocSection()
+        {
+        }
+
         public DocSection(string name)
         {
             this.Name = name;
             this.Annotations = new List<DocAnnotation>();
             this.Schemas = new List<DocSchema>();
+        }
+
+        /// <summary>
+        /// Sorts entity list according to alphabetical name
+        /// </summary>
+        public void SortSchemas()
+        {
+            SortedList<string, DocSchema> sortEntity = new SortedList<string, DocSchema>();
+
+            foreach (DocSchema docType in this.Schemas)
+            {
+                sortEntity.Add(docType.Name, docType);
+            }
+
+            this.Schemas.Clear();
+            this.Schemas.AddRange(sortEntity.Values);
         }
     }
 
@@ -6526,6 +6516,10 @@ namespace IfcDoc.Schema.DOC
     /// </summary>
     public class DocAnnex : DocObject
     {
+        public DocAnnex()
+        {
+        }
+
         public DocAnnex(string name)
         {
             this.Name = name;
@@ -6649,20 +6643,6 @@ namespace IfcDoc.Schema.DOC
             }
         }
 
-        public override void Delete()
-        {
-            base.Delete();
-
-            foreach(DocPoint docPoint in this.DiagramLine)
-            {
-                docPoint.Delete();
-            }
-
-            foreach(DocLine docLine in this.Tree)
-            {
-                docLine.Delete();
-            }
-        }
     }
 
     // new in IfcDoc 3.5 for capturing Express-G diagrams
@@ -7171,48 +7151,26 @@ namespace IfcDoc.Schema.DOC
             {
                 foreach(DocPageTarget docPageTarget in this.PageTargets)
                 {
-                    int px = (int)(docPageTarget.DiagramRectangle.X * CtlExpressG.Factor / CtlExpressG.PageX);
-                    int py = (int)(docPageTarget.DiagramRectangle.Y * CtlExpressG.Factor / CtlExpressG.PageY);
-                    int page = 1 + py * this.DiagramPagesHorz + px;
-                    docPageTarget.DiagramNumber = page;
-
-                    foreach(DocPageSource docPageSource in docPageTarget.Sources)
+                    if (docPageTarget.DiagramRectangle != null)
                     {
-                        px = (int)(docPageSource.DiagramRectangle.X * CtlExpressG.Factor / CtlExpressG.PageX);
-                        py = (int)(docPageSource.DiagramRectangle.Y * CtlExpressG.Factor / CtlExpressG.PageY);
-                        page = 1 + py * this.DiagramPagesHorz + px;
-                        docPageSource.DiagramNumber = page;
+                        int px = (int)(docPageTarget.DiagramRectangle.X * CtlExpressG.Factor / CtlExpressG.PageX);
+                        int py = (int)(docPageTarget.DiagramRectangle.Y * CtlExpressG.Factor / CtlExpressG.PageY);
+                        int page = 1 + py * this.DiagramPagesHorz + px;
+                        docPageTarget.DiagramNumber = page;
+
+                        foreach (DocPageSource docPageSource in docPageTarget.Sources)
+                        {
+                            px = (int)(docPageSource.DiagramRectangle.X * CtlExpressG.Factor / CtlExpressG.PageX);
+                            py = (int)(docPageSource.DiagramRectangle.Y * CtlExpressG.Factor / CtlExpressG.PageY);
+                            page = 1 + py * this.DiagramPagesHorz + px;
+                            docPageSource.DiagramNumber = page;
+                        }
                     }
                 }
             }
 
 
             return iLastDiagram;
-        }
-
-        public override void Delete()
-        {
-            foreach(DocType doctype in this.Types)
-            {
-                doctype.Delete();
-            }
-
-            foreach(DocEntity docent in this.Entities)
-            {
-                docent.Delete();
-            }
-
-            foreach(DocFunction docfunc in this.Functions)
-            {
-                docfunc.Delete();
-            }
-
-            foreach(DocGlobalRule docrule in this.GlobalRules)
-            {
-                docrule.Delete();
-            }
-
-            base.Delete();
         }
 
         /// <summary>
@@ -7375,6 +7333,9 @@ namespace IfcDoc.Schema.DOC
 
         public int GetDefinitionPageNumber(DocDefinition docEntity)
         {
+            if (docEntity.DiagramRectangle == null)
+                return 0;
+
             int px = (int)(docEntity.DiagramRectangle.X * CtlExpressG.Factor / CtlExpressG.PageX);
             int py = (int)(docEntity.DiagramRectangle.Y * CtlExpressG.Factor / CtlExpressG.PageY);
             int page = 1 + py * this.DiagramPagesHorz + px;
@@ -7769,26 +7730,6 @@ namespace IfcDoc.Schema.DOC
             return null;
         }
 
-        public override void Delete()
-        {
-            foreach(DocAttribute docattr in this.Attributes)
-            {
-                docattr.Delete();
-            }
-
-            foreach(DocWhereRule docrule in this.WhereRules)
-            {
-                docrule.Delete();
-            }
-
-            foreach(DocUniqueRule docrule in this.UniqueRules)
-            {
-                docrule.Delete();
-            }
-
-            base.Delete();
-        }
-
         public DocAttribute RegisterAttribute(string name)
         {
             foreach(DocAttribute docExist in this.Attributes)
@@ -8114,16 +8055,6 @@ namespace IfcDoc.Schema.DOC
             return iUpper;
         }
 
-        public override void Delete()
-        {
-            if(this.AggregationAttribute != null)
-            {
-                this.AggregationAttribute.Delete();
-            }
-
-            base.Delete();
-        }
-
         public FieldInfo RuntimeField
         {
             get
@@ -8203,26 +8134,6 @@ namespace IfcDoc.Schema.DOC
         [DataMember(Order = 3)] private int _Length; // e.g. length of string        
         [DataMember(Order = 4)] private DocAttribute _Aggregation; // added V1.8, 2011-02-22
         [DataMember(Order = 5)] private List<DocPoint> _DiagramLine; // added V5.8
-
-        public override void Delete()
-        {
-            foreach(DocWhereRule docWhere in this.WhereRules)
-            {
-                docWhere.Delete();
-            }
-
-            foreach(DocPoint docPoint in this.DiagramLine)
-            {
-                docPoint.Delete();
-            }
-
-            if (this.Aggregation != null)
-            {
-                this.Aggregation.Delete();
-            }
-
-            base.Delete();
-        }
 
         public string DefinedType
         {
@@ -8307,21 +8218,6 @@ namespace IfcDoc.Schema.DOC
         [DataMember(Order = 0)] private List<DocSelectItem> _Selects;
         [DataMember(Order = 1)] private List<DocLine> _Tree; // V5.8, optional tree for EXPRESS-G diagram..... todo: replace this
 
-        public override void Delete()
-        {
-            foreach (DocSelectItem docItem in this.Selects)
-            {
-                docItem.Delete();
-            }
-
-            foreach(DocLine docLine in this.Tree)
-            {
-                docLine.Delete();
-            }
-
-            base.Delete();
-        }
-
         public List<DocSelectItem> Selects
         {
             get
@@ -8372,15 +8268,6 @@ namespace IfcDoc.Schema.DOC
 
                 return this._Constants;
             }
-        }
-
-        public override void Delete()
-        {
-            foreach (DocConstant docconst in this.Constants)
-            {
-                docconst.Delete();
-            }
-            base.Delete();
         }
     }
 
@@ -8914,31 +8801,6 @@ namespace IfcDoc.Schema.DOC
                 return this._ChangesViews;
             }
         }
-
-        public override void Delete()
-        {
-            foreach(DocChangeAction docChange in this.ChangesEntities)
-            {
-                docChange.Delete();
-            }
-
-            foreach(DocChangeAction docChange in this.ChangesProperties)
-            {
-                docChange.Delete();
-            }
-
-            foreach(DocChangeAction docChange in this.ChangesQuantities)
-            {
-                docChange.Delete();
-            }
-
-            foreach(DocChangeAction docChange in this.ChangesViews)
-            {
-                docChange.Delete();
-            }
-
-            base.Delete();
-        }
     }
 
     // Name identifies item
@@ -9084,6 +8946,10 @@ namespace IfcDoc.Schema.DOC
         [DataMember(Order = 0)] private DocChangeAspectEnum _Aspect;
         [DataMember(Order = 1)] private string _OldValue;
         [DataMember(Order = 2)] private string _NewValue;
+
+        public DocChangeAspect()
+        {
+        }
 
         public DocChangeAspect(DocChangeAspectEnum aspect, string oldval, string newval)
         {
@@ -9333,37 +9199,25 @@ namespace IfcDoc.Schema.DOC
 
         Type = 0x10,
         TypeConstant = 0x01,
+
         Entity = 0x20,
         EntityAttribute = 0x02,
 
-        Pset = 0x40,
-        PsetProperty = 0x04,
+        Rule = 0x40,
+        RuleWhere = 0x04,
 
-        PEnum = 0x80,
-        PEnumConstant = 0x88,
+        Pset = 0x1000,
+        PsetProperty = 0x0100,
 
-        Qset = 0x1000,
-        QsetQuantity = 0x0100,
+        PEnum = 0x2000,
+        PEnumConstant = 0x0200,
+
+        Qset = 0x4000,
+        QsetQuantity = 0x0400,
+
+        //... complex property definitions...
 
         Default = 0xFFFF,
-    }
-
-    /// <summary>
-    /// Formats instance data
-    /// </summary>
-    interface IFormatData
-    {
-
-        /// <summary>
-        /// Formats instance data for a data population.
-        /// </summary>
-        /// <param name="stream">Stream to write</param> // TWC: changed to stream to support large files that exceed .NET memory allocation limit (2 GB)
-        /// <param name="docPublication">The publication, which determines applicable model view(s).</param>
-        /// <param name="map">Maps object type names to backing schema definitions.</param>
-        /// <param name="instance">The root object instance (IfcProject).</param>
-        /// <param name="markup">If true, generate HTML markup with output</param>
-        /// <returns></returns>
-        void FormatData(Stream stream, DocProject docProject, DocPublication docPublication, DocExchangeDefinition docExchange, Dictionary<string, DocObject> map, Dictionary<string, Type> typemap, Dictionary<long, SEntity> instances, SEntity root, bool markup);
     }
 
     /// <summary>
@@ -9405,5 +9259,26 @@ namespace IfcDoc.Schema.DOC
         /// <param name="docProject"></param>
         /// <returns></returns>
         string FormatDefinitions(DocProject docProject, DocPublication docPublication, Dictionary<string, DocObject> map, Dictionary<DocObject, bool> included);
+    }
+
+    [Flags]
+    public enum DocCodeEnum
+    {
+        Default = 0,
+
+        Entities = 1,
+        Attributes = 2,
+        Rules = 4,
+        Functions = 8,
+
+        Documentation = 0x10,
+        Localization = 0x20,
+        Diagrams = 0x40,
+
+        Views = 0x100,
+
+        Examples = 0x1000,
+
+        All = 0x7FFFFFFF,
     }
 }

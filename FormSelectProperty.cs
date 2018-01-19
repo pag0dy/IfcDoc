@@ -18,47 +18,58 @@ namespace IfcDoc
         DocProject m_project;
         string m_portname;
 
+        Dictionary<string, DocProperty> m_sharedproperties;
+
         public FormSelectProperty()
         {
             InitializeComponent();
         }
 
-        public FormSelectProperty(DocEntity docEntity, DocProject docProject, bool multiselect) : this()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="docEntity">If entity specified, shows property sets and properties applicable to entity; if null, shows all property sets.</param>
+        /// <param name="docProject">Required project.</param>
+        /// <param name="multiselect">True to select multiple properties; False to select single property; Null to show properties that can be merged.</param>
+        public FormSelectProperty(DocEntity docEntity, DocProject docProject, bool? multiselect) : this()
         {
             this.m_entity = docEntity;
             this.m_project = docProject;
 
-            if (multiselect)
+            if (multiselect != null)
             {
-                this.treeViewProperty.CheckBoxes = true;
-                this.Text = "Include Property Sets";
-
-                this.comboBoxPort.Enabled = false;
-            }
-            else
-            {
-                // find applicable ports
-                this.comboBoxPort.Items.Add("(object)");
-                this.comboBoxPort.SelectedIndex = 0;
-
-                if (docEntity != null)
+                if (multiselect == true)
                 {
-                    foreach (DocModelView docView in docProject.ModelViews)
+                    this.treeViewProperty.CheckBoxes = true;
+                    this.Text = "Include Property Sets";
+
+                    this.comboBoxPort.Enabled = false;
+                }
+                else if (multiselect == false)
+                {
+                    // find applicable ports
+                    this.comboBoxPort.Items.Add("(object)");
+                    this.comboBoxPort.SelectedIndex = 0;
+
+                    if (docEntity != null)
                     {
-                        foreach (DocConceptRoot docRoot in docView.ConceptRoots)
+                        foreach (DocModelView docView in docProject.ModelViews)
                         {
-                            if (docRoot.ApplicableEntity == docEntity)
+                            foreach (DocConceptRoot docRoot in docView.ConceptRoots)
                             {
-                                foreach (DocTemplateUsage docConcept in docRoot.Concepts)
+                                if (docRoot.ApplicableEntity == docEntity)
                                 {
-                                    if (docConcept.Definition != null && docConcept.Definition.Uuid == DocTemplateDefinition.guidPortNesting)
+                                    foreach (DocTemplateUsage docConcept in docRoot.Concepts)
                                     {
-                                        foreach (DocTemplateItem docItem in docConcept.Items)
+                                        if (docConcept.Definition != null && docConcept.Definition.Uuid == DocTemplateDefinition.guidPortNesting)
                                         {
-                                            string name = docItem.GetParameterValue("Name");
-                                            if (name != null && !this.comboBoxPort.Items.Contains(name))
+                                            foreach (DocTemplateItem docItem in docConcept.Items)
                                             {
-                                                this.comboBoxPort.Items.Add(name);
+                                                string name = docItem.GetParameterValue("Name");
+                                                if (name != null && !this.comboBoxPort.Items.Contains(name))
+                                                {
+                                                    this.comboBoxPort.Items.Add(name);
+                                                }
                                             }
                                         }
                                     }
@@ -67,9 +78,93 @@ namespace IfcDoc
                         }
                     }
                 }
+
+
+                this.LoadPropertySets();
+            }
+            else if (multiselect == null)
+            {
+                this.Text = "Merge Duplicate Properties";
+                this.treeViewProperty.CheckBoxes = true;
+                this.comboBoxPort.Enabled = false;
+
+                // build list of shared properties
+
+                //Dictionary<string, DocProperty> duplicateProperties = new Dictionary<string, DocProperty>();
+                this.m_sharedproperties = new Dictionary<string, DocProperty>();
+
+                foreach (DocSection docSection in this.m_project.Sections)
+                {
+                    foreach (DocSchema docSchema in docSection.Schemas)
+                    {
+                        foreach (DocPropertySet docPset in docSchema.PropertySets)
+                        {
+                            // first, capture all unique properties... THEN, only shared properties
+                            if (!docPset.IsVisible())
+                            {
+                                foreach (DocProperty docProp in docPset.Properties)
+                                {
+                                    if (!this.m_sharedproperties.ContainsKey(docProp.Name))
+                                    {
+                                        this.m_sharedproperties.Add(docProp.Name, docProp);
+                                    }
+                                        /*
+                                    else if(!duplicateProperties.ContainsKey(docProp.Name))
+                                    {
+                                        duplicateProperties.Add(docProp.Name, docProp);
+                                    }*/
+                                }
+                            }
+                        }
+                    }
+                }
+                //this.m_sharedproperties = duplicateProperties;
+
+                // find all duplicate properties
+                foreach (DocSection docSection in this.m_project.Sections)
+                {
+                    foreach (DocSchema docSchema in docSection.Schemas)
+                    {
+                        foreach (DocPropertySet docPset in docSchema.PropertySets)
+                        {
+                            if (docPset.IsVisible())
+                            {
+                                TreeNode tnPset = null;
+                                
+                                foreach (DocProperty docProp in docPset.Properties)
+                                {
+                                    DocProperty docExist = null;
+                                    if(this.m_sharedproperties.TryGetValue(docProp.Name, out docExist) && docExist != docProp)
+                                    {
+                                        if (tnPset == null)
+                                        {
+                                            tnPset = new TreeNode();
+                                            tnPset.Tag = docPset;
+                                            tnPset.Text = docPset.Name;
+                                            tnPset.ImageIndex = 0;
+                                            tnPset.SelectedImageIndex = 0;
+                                            tnPset.Checked = true;
+                                            this.treeViewProperty.Nodes.Add(tnPset);
+                                        }
+
+                                        TreeNode tnProp = new TreeNode();
+                                        tnProp.Tag = docProp;
+                                        tnProp.Text = docProp.Name;
+                                        tnProp.ImageIndex = 1;
+                                        tnProp.SelectedImageIndex = 1;
+                                        tnProp.Checked = true;
+                                        tnPset.Nodes.Add(tnProp);
+                                        tnPset.Expand();
+                                    }
+                                    
+                                }
+                            }
+                        }
+                    }
+                }
+
             }
 
-            this.LoadPropertySets();
         }
 
         private void LoadPropertySets()
@@ -81,8 +176,6 @@ namespace IfcDoc
             {
                 docEntity = this.m_project.GetDefinition("IfcDistributionPort") as DocEntity;
             }
-            //if (docEntity == null)
-            //    return;
 
             foreach (DocSection docSection in this.m_project.Sections)
             {
@@ -258,6 +351,37 @@ namespace IfcDoc
                 }
 
                 return list.ToArray();
+            }
+        }
+
+        public IList<DocProperty> IncludedProperties
+        {
+            get
+            {
+                List<DocProperty> list = new List<DocProperty>();
+                foreach (TreeNode tn in this.treeViewProperty.Nodes)
+                {                    
+                    if (tn.Checked)
+                    {
+                        foreach (TreeNode tnSub in tn.Nodes)
+                        {
+                            if (tnSub.Checked)
+                            {
+                                list.Add((DocProperty)tnSub.Tag);
+                            }
+                        }
+                    }
+                }
+
+                return list;
+            }
+        }
+
+        public Dictionary<string, DocProperty> SharedProperties
+        {
+            get
+            {
+                return this.m_sharedproperties;
             }
         }
 

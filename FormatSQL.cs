@@ -18,8 +18,7 @@ using IfcDoc.Schema.DOC;
 namespace IfcDoc
 {
     class FormatSQL : 
-        IFormatExtension,
-        IFormatData
+        IFormatExtension
     {
         private void BuildFields(StringBuilder sb, DocEntity docEntity, Dictionary<string, DocObject> map)
         {
@@ -237,7 +236,7 @@ namespace IfcDoc
                 colformat.Add(format);
 
                 string desc = "";
-                CvtValuePath valpath = CvtValuePath.Parse(expr, map); //todo: move out of loop
+                CvtValuePath valpath = CvtValuePath.Parse(expr, map);
                 colmaps.Add(valpath);
                 if (valpath != null)
                 {

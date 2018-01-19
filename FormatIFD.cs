@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
+using IfcDoc.Schema;
 using IfcDoc.Schema.DOC;
 
 namespace IfcDoc
@@ -68,7 +69,7 @@ namespace IfcDoc
                         string ifdguid = rowcells[0];
                         string ifdname = rowcells[1];
 
-                        Guid guid = IfcGloballyUniqueId.Parse(ifdguid);
+                        Guid guid = SGuid.Parse(ifdguid);
 
                         string[] nameparts = ifdname.Split('.');
                         string psetname = nameparts[0].Trim();

@@ -17,8 +17,8 @@ namespace IfcDoc
         private DocProject m_project;
         private DocTemplateDefinition m_template;
         private DocModelRule m_modelrule; // relative rule for which to add constraints
-        private SEntity m_instance;
-        private SEntity[] m_population; // all instances for which rule is applicable, to check uniqueness
+        private object m_instance;
+        private object[] m_population; // all instances for which rule is applicable, to check uniqueness
 
         public CtlOperators()
         {
@@ -66,7 +66,7 @@ namespace IfcDoc
             }
         }
 
-        public SEntity[] CurrentPopulation
+        public object[] CurrentPopulation
         {
             get
             {
@@ -78,7 +78,7 @@ namespace IfcDoc
             }
         }
 
-        public SEntity CurrentInstance
+        public object CurrentInstance
         {
             get
             {

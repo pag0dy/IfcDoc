@@ -139,7 +139,7 @@ namespace IfcDoc
                             {
                                 string subType = fullID[1];
 
-                                if(docObj is DocEntity)
+                                if (docObj is DocEntity)
                                 {
                                     DocEntity entity = (DocEntity)docObj;
 
@@ -152,14 +152,18 @@ namespace IfcDoc
                                         }
                                     }
                                 }
-                                if(docObj is DocEnumeration)
+
+                                if (docObj is DocEnumeration)
                                 {
                                     DocEnumeration type = (DocEnumeration)docObj;
 
                                     foreach(DocConstant constnt in type.Constants)
                                     {
-                                        docObj = type;
-                                        break;
+                                        if (constnt.Name == subType)
+                                        {
+                                            docObj = constnt;
+                                            break;
+                                        }
                                     }
                                 }
                                 if(docObj is DocPropertyEnumeration)
@@ -168,28 +172,39 @@ namespace IfcDoc
 
                                     foreach(DocPropertyConstant propConst in propEnum.Constants)
                                     {
-                                        docObj = propEnum;
-                                        break;
+                                        if (propConst.Name == subType)
+                                        {
+                                            docObj = propConst;
+                                            break;
+                                        }
                                     }
                                 }
-                                if(docObj is DocPropertySet)
+
+                                if (docObj is DocPropertySet)
                                 {
                                     DocPropertySet propSet = (DocPropertySet)docObj;
 
                                     foreach(DocProperty docProp in propSet.Properties)
                                     {
-                                        docObj = propSet;
-                                        break;
+                                        if (docProp.Name == subType)
+                                        {
+                                            docObj = docProp;
+                                            break;
+                                        }
                                     }
                                 }
-                                if(docObj is DocQuantitySet)
+
+                                if (docObj is DocQuantitySet)
                                 {
                                     DocQuantitySet quantSet = (DocQuantitySet)docObj;
 
                                     foreach(DocQuantity docQuant in quantSet.Quantities)
                                     {
-                                        docObj = quantSet;
-                                        break;
+                                        if (docQuant.Name == subType)
+                                        {
+                                            docObj = docQuant;
+                                            break;
+                                        }
                                     }
                                 }
                             }
@@ -243,13 +258,13 @@ namespace IfcDoc
             }
         }
 
-        private void WriteItem(System.IO.StreamWriter writer, DocObject docEntity, int level, string topLevelName)
+        private void WriteItem(System.IO.StreamWriter writer, DocObject docEntity, DocObject docParent)
         {
-            for (int i = 0; i < level; i++)
+            if (docParent != null)
             {
-                writer.Write(topLevelName + ".");
+                writer.Write(docParent.Name + ".");
             }
-            
+
             writer.Write(docEntity.Name);
 
             if (this.m_locales != null)
@@ -259,14 +274,38 @@ namespace IfcDoc
                     string localname = "";
                     string localdesc = "";
 
-                    foreach (DocLocalization docLocal in docEntity.Localization)
+                    if (this.m_locales.Length == 1 && this.m_locales[0] == "iv")
                     {
-                        if (docLocal.Locale.StartsWith(locale))
+                        // invariant
+                        localname = docEntity.Name;
+                        localdesc = docEntity.Documentation;
+                    }
+                    else
+                    {
+                        foreach (DocLocalization docLocal in docEntity.Localization)
                         {
-                            localname = docLocal.Name;
-                            localdesc = docLocal.Documentation;
-                            break;
+                            if (docLocal.Locale.StartsWith(locale))
+                            {
+                                localname = docLocal.Name;
+                                localdesc = docLocal.Documentation;
+                                break;
+                            }
                         }
+                    }
+
+                    // cleanup -- remove return characters and tabs for compatibility with 
+                    if(localname != null)
+                    {
+                        localname = localname.Replace("\r", "");
+                        localname = localname.Replace("\n", "");
+                        localname = localname.Replace("\t", "");
+                    }
+
+                    if(localdesc != null)
+                    {
+                        localdesc = localdesc.Replace("\r", "");
+                        localdesc = localdesc.Replace("\n", "");
+                        localdesc = localdesc.Replace("\t", "");
                     }
 
                     writer.Write("\t");
@@ -285,16 +324,24 @@ namespace IfcDoc
             {
                 DocObject docEntity = sortlist[key];
 
-                WriteItem(writer, docEntity, 0, docEntity.Name);
+                WriteItem(writer, docEntity, null);
 
                 if (docEntity is DocEntity)
                 {
+                    DocEntity docEnt = (DocEntity)docEntity;
                     if ((this.m_scope & DocDefinitionScopeEnum.EntityAttribute) != 0)
                     {
-                        DocEntity docEnt = (DocEntity)docEntity;
                         foreach (DocAttribute docAttr in docEnt.Attributes)
                         {
-                            WriteItem(writer, docAttr, 1, docEntity.Name);
+                            WriteItem(writer, docAttr, docEntity);
+                        }
+                    }
+
+                    if ((this.m_scope & DocDefinitionScopeEnum.RuleWhere) != 0)
+                    {
+                        foreach (DocWhereRule docRule in docEnt.WhereRules)
+                        {
+                            WriteItem(writer, docRule, docEntity);
                         }
                     }
                 }
@@ -305,7 +352,7 @@ namespace IfcDoc
                         DocEnumeration docEnum = (DocEnumeration)docEntity;
                         foreach (DocConstant docConst in docEnum.Constants)
                         {
-                            WriteItem(writer, docConst, 1, docEntity.Name);
+                            WriteItem(writer, docConst, docEnum);
                         }
                     }
                 }
@@ -320,13 +367,14 @@ namespace IfcDoc
                         {
                             docApp = this.m_project.GetDefinition(docApplicable[0].BaseDefinition) as DocEntity;
                         }
+
                         foreach (DocProperty docProp in docPset.Properties)
                         {
                             // filter out leaf properties defined at common pset (e.g. Reference, Status)
                             DocProperty docSuper = this.m_project.FindProperty(docProp.Name, docApp);
                             if (docSuper == docProp || docSuper == null)
                             {
-                                WriteItem(writer, docProp, 1, docEntity.Name);
+                                WriteItem(writer, docProp, docPset);
                             }
                         }
                     }
@@ -338,7 +386,7 @@ namespace IfcDoc
                         DocPropertyEnumeration docPE = (DocPropertyEnumeration)docEntity;
                         foreach (DocPropertyConstant docPC in docPE.Constants)
                         {
-                            WriteItem(writer, docPC, 1, docEntity.Name);
+                            WriteItem(writer, docPC, docPE);
                         }
                     }
                 }
@@ -349,7 +397,7 @@ namespace IfcDoc
                         DocQuantitySet docQset = (DocQuantitySet)docEntity;
                         foreach (DocQuantity docQuan in docQset.Quantities)
                         {
-                            WriteItem(writer, docQuan, 1, docEntity.Name);
+                            WriteItem(writer, docQuan, docQset);
                         }
                     }
                 }

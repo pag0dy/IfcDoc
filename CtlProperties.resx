@@ -147,6 +147,12 @@
   <data name="columnHeaderDesc.Width" type="System.Int32, mscorlib">
     <value>196</value>
   </data>
+  <data name="columnHeaderURL.Text" xml:space="preserve">
+    <value>URL</value>
+  </data>
+  <data name="columnHeaderURL.Width" type="System.Int32, mscorlib">
+    <value>200</value>
+  </data>
   <data name="listViewLocale.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
@@ -1057,7 +1063,7 @@
     <value>ctlRules</value>
   </data>
   <data name="&gt;&gt;ctlRules.Type" xml:space="preserve">
-    <value>IfcDoc.CtlRules, IfcDoc, Version=11.6.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>IfcDoc.CtlRules, IfcDoc, Version=11.7.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;ctlRules.Parent" xml:space="preserve">
     <value>tabPageTemplate</value>
@@ -1108,7 +1114,7 @@
     <value>ctlParameters</value>
   </data>
   <data name="&gt;&gt;ctlParameters.Type" xml:space="preserve">
-    <value>IfcDoc.CtlParameters, IfcDoc, Version=11.6.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>IfcDoc.CtlParameters, IfcDoc, Version=11.7.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;ctlParameters.Parent" xml:space="preserve">
     <value>tabPageConcept</value>
@@ -4841,7 +4847,7 @@
     <value>ctlOperators</value>
   </data>
   <data name="&gt;&gt;ctlOperators.Type" xml:space="preserve">
-    <value>IfcDoc.CtlOperators, IfcDoc, Version=11.6.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>IfcDoc.CtlOperators, IfcDoc, Version=11.7.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;ctlOperators.Parent" xml:space="preserve">
     <value>tabPageOperations</value>
@@ -4911,7 +4917,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAABy
-        CwAAAk1TRnQBSQFMAgEBBAEAAawBAQGsAQEBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
+        CwAAAk1TRnQBSQFMAgEBBAEAAbwBAQG8AQEBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
         AwABQAMAASADAAEBAQABCAYAAQgYAAGAAgABgAMAAoABAAGAAwABgAEAAYABAAKAAgADwAEAAcAB3AHA
         AQAB8AHKAaYBAAEzBQABMwEAATMBAAEzAQACMwIAAxYBAAMcAQADIgEAAykBAANVAQADTQEAA0IBAAM5
         AQABgAF8Af8BAAJQAf8BAAGTAQAB1gEAAf8B7AHMAQABxgHWAe8BAAHWAucBAAGQAakBrQIAAf8BMwMA
@@ -7165,6 +7171,18 @@ The EXPRESS schema identifier is defined at the first node in the tree.</value>
   <data name="&gt;&gt;imageListInheritance.Type" xml:space="preserve">
     <value>System.Windows.Forms.ImageList, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;toolStripButtonRootEntity.Name" xml:space="preserve">
+    <value>toolStripButtonRootEntity</value>
+  </data>
+  <data name="&gt;&gt;toolStripButtonRootEntity.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator1.Name" xml:space="preserve">
+    <value>toolStripSeparator1</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;toolStripMenuItemModeInherit.Name" xml:space="preserve">
     <value>toolStripMenuItemModeInherit</value>
   </data>
@@ -7291,17 +7309,11 @@ The EXPRESS schema identifier is defined at the first node in the tree.</value>
   <data name="&gt;&gt;openFileDialogExample.Type" xml:space="preserve">
     <value>System.Windows.Forms.OpenFileDialog, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;toolStripButtonRootEntity.Name" xml:space="preserve">
-    <value>toolStripButtonRootEntity</value>
+  <data name="&gt;&gt;columnHeaderURL.Name" xml:space="preserve">
+    <value>columnHeaderURL</value>
   </data>
-  <data name="&gt;&gt;toolStripButtonRootEntity.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;toolStripSeparator1.Name" xml:space="preserve">
-    <value>toolStripSeparator1</value>
-  </data>
-  <data name="&gt;&gt;toolStripSeparator1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;columnHeaderURL.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>CtlProperties</value>
