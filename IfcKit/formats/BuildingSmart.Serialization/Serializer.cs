@@ -36,7 +36,12 @@ namespace BuildingSmart.Serialization
         /// Creates serializer accepting all types within assembly.
         /// </summary>
         /// <param name="typeProject">Type of the root object to load</param>
-        public Serializer(Type typeProject) : this(typeProject, typeProject.Assembly.GetTypes())
+        public Serializer(Type typeProject) : this(typeProject, null, null, null)
+        {
+        }
+
+        public Serializer(Type typeProject, Type[] loadtypes)
+            : this(typeProject, loadtypes, null, null)
         {
         }
 
@@ -45,44 +50,60 @@ namespace BuildingSmart.Serialization
         /// </summary>
         /// <param name="typeProject">Type of the root object to load</param>
         /// <param name="types">Other types that may be loaded, or null for all types within assembly of typeProject.</param>
-        public Serializer(Type typeProject, Type[] types)
+        /// <param name="schema">Schema name to use, or null to determine from assembly of typeProject.</param>
+        /// <param name="release">Release name to use, or null to determine from assembly of typeProject.</param>
+        public Serializer(Type typeProject, Type[] types, string schema, string release)
         {
             this._projtype = typeProject;
 
-            // determine the schema according to the last part of the assembly name
-            // e.g. BuildingSmart.IFC4X1
+            if (types == null)
+            {
+                types = typeProject.Assembly.GetTypes();
+            }
+
             AssemblyName aname = typeProject.Assembly.GetName();
             string[] assemblynameparts = aname.Name.Split('.');
-            this._schema = assemblynameparts[assemblynameparts.Length - 1];
 
-            this._release = "final"; // assume final release unless specified otherwise
-            //AssemblyVersionAttribute attrVersion = (AssemblyVersionAttribute)typeProject.Assembly.GetCustomAttribute(typeof(AssemblyVersionAttribute));
-            if (aname.Version != null)//attrVersion != null)
+            // determine the schema according to the last part of the assembly name
+            // e.g. BuildingSmart.IFC4X1
+            if (schema != null)
             {
-                //string[] versionparts = attrVersion.Version.Split('.');
-                //int addendum = 0;
-                //int corrigendum = 0;
-                //if (versionparts.Length == 4 && Int32.TryParse(versionparts[2], out addendum) && Int32.TryParse(versionparts[3], out corrigendum))
+                this._schema = schema;
+            }
+            else
+            {
+                this._schema = assemblynameparts[assemblynameparts.Length - 1];
+            }
 
-                int addendum = aname.Version.MajorRevision;
-                int corrigendum = aname.Version.MinorRevision;
+            if (release != null)
+            {
+                this._release = release;
+            }
+            else
+            {
+                this._release = "final"; // assume final release unless specified otherwise
+                if (aname.Version != null)//attrVersion != null)
                 {
-                    StringBuilder specrelease = new StringBuilder();
-                    if (addendum > 0)
+                    int addendum = aname.Version.MajorRevision;
+                    int corrigendum = aname.Version.MinorRevision;
                     {
-                        specrelease.Append("Add");
-                        specrelease.Append(addendum.ToString());
-
-                        if (corrigendum > 0)
+                        StringBuilder specrelease = new StringBuilder();
+                        if (addendum > 0)
                         {
-                            specrelease.Append("TC");
-                            specrelease.Append(corrigendum.ToString());
-                        }
-                    }
+                            specrelease.Append("Add");
+                            specrelease.Append(addendum.ToString());
 
-                    if (specrelease.Length > 0)
-                    {
-                        this._release = specrelease.ToString();
+                            if (corrigendum > 0)
+                            {
+                                specrelease.Append("TC");
+                                specrelease.Append(corrigendum.ToString());
+                            }
+                        }
+
+                        if (specrelease.Length > 0)
+                        {
+                            this._release = specrelease.ToString();
+                        }
                     }
                 }
             }

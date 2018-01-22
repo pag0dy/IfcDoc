@@ -41,6 +41,16 @@ namespace BuildingSmart.Serialization.Spf
         }
 
         /// <summary>
+        /// Creates an instance of a STEP Physical Format (SPF) serializer for specified types.
+        /// </summary>
+        /// <param name="roottype"></param>
+        /// <param name="loadtypes"></param>
+        public StepSerializer(Type roottype, Type[] loadtypes, string schema, string release)
+            : base(roottype, loadtypes, schema, release)
+        {
+        }
+
+        /// <summary>
         /// Reads an object graph from a stream in STEP Physical File format (SPF) according to ISO 10303-21.
         /// </summary>
         /// <param name="stream">The stream to read.</param>
@@ -238,42 +248,56 @@ namespace BuildingSmart.Serialization.Spf
             sb.Append(strType);
             sb.Append("(");
 
-            IList<FieldInfo> fields = this.GetFieldsOrdered(t);
-            for (int iField = 0; iField < fields.Count; iField++)
+            if (t.IsValueType)
             {
-                if (iField != 0)
+                FieldInfo[] fields = t.GetFields(BindingFlags.Public | BindingFlags.Instance);
+                if(fields.Length == 1)
                 {
-                    sb.Append(",");
+                    object val = fields[0].GetValue(o);
+                    string strValue = FormatValue(val, qRoot, qResource, idgen);
+                    sb.Append(strValue);
                 }
+            }
+            else
+            {
 
-                System.Reflection.FieldInfo field = fields[iField];
-
-                if (field == null)
+                IList<FieldInfo> fields = this.GetFieldsOrdered(t);
+                for (int iField = 0; iField < fields.Count; iField++)
                 {
-                    // special case if field is overridden
-                    sb.Append("*");
-                }
-                else
-                {
-                    object val = field.GetValue(o);
-                    if (field.FieldType.IsInterface && !field.FieldType.IsGenericType && val is ValueType)
+                    if (iField != 0)
                     {
-                        // may need to qualify constructor
-                        if (val != null)
-                        {
-                            // value type
-                            string strValue = FormatConstructor(val, qRoot, qResource, idgen);
-                            sb.Append(strValue);
-                        }
-                        else
-                        {
-                            sb.Append("$");
-                        }
+                        sb.Append(",");
+                    }
+
+                    System.Reflection.FieldInfo field = fields[iField];
+
+                    if (field == null)
+                    {
+                        // special case if field is overridden
+                        sb.Append("*");
                     }
                     else
                     {
-                        string strValue = FormatValue(val, qRoot, qResource, idgen);
-                        sb.Append(strValue);
+                        object val = field.GetValue(o);
+                        if (field.FieldType.IsInterface && !field.FieldType.IsGenericType && val is ValueType)
+                        {
+                            // may need to qualify constructor
+                            if (val != null)
+                            {
+                                // value type
+                                string strValue = FormatConstructor(val, qRoot, qResource, idgen);
+                                sb.Append(strValue);
+                            }
+                            else
+                            {
+                                sb.Append("$");
+                            }
+                        }
+                        else
+                        {
+                            string strValue = FormatValue(val, qRoot, qResource, idgen);
+                            sb.Append(strValue);
+                        }
                     }
                 }
             }
