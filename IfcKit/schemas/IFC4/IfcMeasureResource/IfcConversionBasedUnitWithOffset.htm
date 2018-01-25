@@ -1,0 +1,22 @@
+﻿<p><em>IfcConversionBasedUnitWithOffset</em> is a unit which is converted from another unit by applying a conversion factor and an offset.</p>
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC4.
+</blockquote>
+
+<p>Example: The temperature unit Fahrenheit is based on the temperature unit Kelvin as follows:</p>
+
+<blockquote><em>f</em>&nbsp;=&nbsp;<em>k</em>&nbsp;&middot;&nbsp;1.8&nbsp;&ndash;&nbsp;459.67</blockquote>
+
+<p>wherein <em>k</em> is an absolute temperature expressed in Kelvin and <em>f</em> is the same temperature in Fahrenheit.  The following entity instances provide Fahrenheit as a unit:</p>
+
+<blockquote><code>
+IfcConversionBasedUnitWithOffset(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;IfcDimensionalExponents(0, 0, 0, 0, 1, 0, 0),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;THERMODYNAMICTEMPERATUREUNIT,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'Fahrenheit',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;IfcMeasureWithUnit(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IfcThermodynamicTemperatureMeasure(1.8),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IfcSiUnit(THERMODYNAMICTEMPERATUREUNIT, ?, KELVIN)),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;-459.67);
+</code></blockquote>

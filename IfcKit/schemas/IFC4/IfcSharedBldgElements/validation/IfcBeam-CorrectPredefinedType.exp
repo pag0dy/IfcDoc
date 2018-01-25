@@ -1,0 +1,3 @@
+﻿NOT(EXISTS(PredefinedType)) OR
+ (PredefinedType <> IfcBeamTypeEnum.USERDEFINED) OR
+ ((PredefinedType = IfcBeamTypeEnum.USERDEFINED) AND EXISTS (SELF\IfcObject.ObjectType))

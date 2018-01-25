@@ -1,0 +1,3 @@
+﻿NOT(EXISTS(PredefinedType)) OR
+(PredefinedType <> IfcMechanicalFastenerTypeEnum.USERDEFINED) OR
+((PredefinedType = IfcMechanicalFastenerTypeEnum.USERDEFINED) AND EXISTS (SELF\IfcObject.ObjectType))

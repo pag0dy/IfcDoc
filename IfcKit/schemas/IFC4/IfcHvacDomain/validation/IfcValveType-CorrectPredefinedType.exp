@@ -1,0 +1,2 @@
+﻿(PredefinedType <> IfcValveTypeEnum.USERDEFINED) OR
+((PredefinedType = IfcValveTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcElementType.ElementType))

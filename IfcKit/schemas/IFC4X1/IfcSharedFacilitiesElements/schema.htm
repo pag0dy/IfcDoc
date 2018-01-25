@@ -1,0 +1,66 @@
+﻿<p>The <em>IfcSharedFacilitiesElements</em> schema
+defines basic concepts in the facilities management (FM) domain. This
+schema, along with <em>IfcProcessExtension</em> and <em>IfcSharedMgmtElements</em>, provide a
+set of models that can be used by applications needing to share
+information concerning facilities management related issues.</p>
+
+<p>The <em>IfcSharedFacilitiesElements</em> schema
+supports ideas including: </p>
+<ul>
+  <li>Furniture. </li>
+  <li>Grouping of elements of system furniture into individual
+furniture items. </li>
+  <li>Asset identification. </li>
+  <li>Inventory of objects (including asset, furniture and space
+objects within separate inventories).</li>
+</ul>
+ 
+<h3>6.4.1.1 Furniture and System Furniture</h3> 
+ 
+<p>In the <em>IfcProductExtension</em> schema, the <em>IfcElement</em> entity is decomposed into a number of subtypes. One of these is the <em>IfcFurnishingElement</em> entity from the <em>IfcFurniture</em> and <em>IfcSystemFurnitureElement</em> entities are derived.</p> 
+ 
+<p>Figure 277 illustrates a furniture object (instance of the <em>IfcFurniture</em> entity, which is considered to be a discrete item of furniture in its own right (for example, a table or chair).</p>
+
+<table>
+<tr><td><img src="../../figures/ifcsharedfacilitieselements-fig01.gif" alt="Furniture" border="0" height="186" width="356"></td></tr>
+<tr><td><p class="figure">Figure 277 &mdash; Furniture</p></td></tr>
+</table>
+
+<p>Figure 278 illustrates a system furniture element object (instance of the <em>IfcSystemFurnitureElement</em> entity), which is an identifiable item (such as a modesty panel, side, or desktop) that participates in the assembly of a discrete item of furniture.</p> 
+
+<table> 
+<tr><td><img src="../../figures/ifcsharedfacilitieselements-fig02.gif" alt="SystemFurnitureElements" border="0" height="287" width="370"> 
+<tr><td><p class="figure">Figure 278 &mdash; System furniture element</p></td></tr>
+</table>
+ 
+<p>Each <em>IfcFurniture</em> object and each <em>IfcSystemFurnitureElement</em>
+object is of a particular type. It may be a chair, desk, table etc for
+discrete furniture or modesty panel, side panel, desktop etc. for
+system furniture. Specification of the type is left to the user of the
+application providing the information. For applications however, there
+are a number of predefined property sets for types of furniture that
+can be assigned to furniture objects. Other property sets may be
+defined as necessary.</p> 
+ 
+<h3>6.4.1.2 Asset Identification</h3> 
+ 
+<p>An <em>IfcAsset</em> allows for the grouping of objects to form a unit that has an identifiable financial value and/or upon which specific facilities management operations take place, as shown in Figure 279.</p> 
+ 
+<p>Each asset carries a unique identifier, cost, ownership,location and other information that is required.</p> 
+
+<table>
+<tr><td><img src="../../figures/ifcsharedfacilitieselements-fig03.gif" alt="Assets" border="0" height="389" width="612"></td></tr>
+<tr><td><p class="figure">Figure 279 &mdash; Asset identification</p></td></tr>
+</table>
+ 
+<h3>6.4.1.3 Inventory</h3> 
+ 
+<p>An <em>IfcInventory</em> provides a list of objects of a particular
+type, the type of objects that are contained being identified by the
+<em>IfcInventoryEnum</em>.</p> 
+ 
+<p>Each inventory has one or more responsible persons and an
+organizational jurisdiction (which is valuable in facilities management
+situations where more than one functional group or organization is
+concerned).</p> 
+ 

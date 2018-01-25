@@ -1,0 +1,9 @@
+﻿<p>A ramp comprises a single inclined segment, or several inclined segments that are connected by a horizontal segment, refered to as a landing. A ramp flight is the single inclined segment and part of the ramp construction. In case of single flight ramps, the ramp flight and the ramp are identical.</p>
+
+<blockquote class="note">NOTE&nbsp; A single flight ramp is represented by an <em>IfcRamp</em> instance without using aggregation and by utilizing the product shape representation directly at <em>IfcRamp</em>.</blockquote>
+
+<p>An <em>IfcRampFlight</em> is an aggregated part of an <em>IfcRamp</em> realized through the <em>IfcRelAggregates</em> relationship, the ramp flight is therefore included in the set of <em>IfcRelAggregates.RelatedObjects</em>. </p>
+
+<p>An <em>IfcRampFlight</em> connects the floor slab of zero to two different storeys (or partial storeys or landings) within a building. The connection relationship between the <em>IfcRampFlight</em> and the <em>IfcSlab</em> can be expressed using the <em>IfcRelConnectsElements</em> relationship.</p>
+
+<blockquote class="history">HISTORY&nbsp; New entity in IFC2.0.</blockquote>

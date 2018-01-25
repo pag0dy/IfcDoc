@@ -1,0 +1,31 @@
+﻿<p>The <em>IfcPropertyTemplate</em> is an abstract supertype
+comprising the templates for all dynamically extensible properties,
+either as an <em>IfcComplexPropertyTemplate</em>, or an
+<em>IfcSimplePropertyTemplate</em>. These templates determine the
+structure of:</p>
+<ul>
+<li>in case of <em>IfcComplexPropertyTemplate</em>
+<ul>
+<li>an <em>IfcComplexProperty</em></li>
+<li>an <em>IfcPhysicalComplexQuantity</em></li>
+</ul>
+</li>
+<li>in case of <em>IfcSimplePropertyTemplate</em>
+<ul>
+<li>a subtype of <em>IfcSimpleProperty</em></li>
+<li>a subtype of <em>IfcPhysicalSimpleQuantity</em></li>
+</ul>
+</li>
+</ul>
+<p>The individual property templates are interpreted according to
+their <em>Name</em> attribute and may have a predefined property
+type, property unit, and property data type. A template however
+shall not have measure values, or quantity values assigned.</p>
+
+<blockquote class="note">
+NOTE&nbsp; Property templates can form part of a property library used and attached as part of a project library. In general the <em>IfcPropertySetTemplate</em>, containing the subtypes of <em>IfcPropertyTemplate</em> would be directly linked to the <em>IfcProjectLibrary</em>.
+</blockquote>
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC4.
+</blockquote>

@@ -12,6 +12,8 @@ using System.Text;
 using System.Xml.Serialization;
 using System.Runtime.Serialization;
 
+using IfcDoc.Format.XML;
+
 namespace IfcDoc.Schema.MVD
 {
     public static class SchemaMVD
@@ -38,6 +40,37 @@ namespace IfcDoc.Schema.MVD
                 }
 
                 return s_types;
+            }
+        }
+
+        internal static void Load(DOC.DocProject docProject, string filename)
+        {
+            for (int iNS = 0; iNS < mvdXML.Namespaces.Length; iNS++)
+            {
+                string xmlns = mvdXML.Namespaces[iNS];
+                using (FormatXML format = new FormatXML(filename, typeof(mvdXML), xmlns))
+                {
+                    try
+                    {
+                        format.Load();
+                        mvdXML mvd = (mvdXML)format.Instance;
+                        Program.ImportMvd(mvd, docProject, filename);
+                        break;
+                    }
+                    catch (InvalidOperationException xx)
+                    {
+                        // keep going until successful
+
+                        if (iNS == mvdXML.Namespaces.Length - 1)
+                        {
+                            throw new InvalidOperationException("The file is not of a supported format (mvdXML 1.0 or mvdXML 1.1).");
+                        }
+                    }
+                    catch (Exception xx)
+                    {
+                        xmlns = null;
+                    }
+                }
             }
         }
     }
@@ -75,21 +108,24 @@ namespace IfcDoc.Schema.MVD
         [DataMember(Order = 0)] public List<ConceptTemplate> Templates = new List<ConceptTemplate>();
         [DataMember(Order = 1)] public List<ModelView> Views = new List<ModelView>();
 
-        [XmlAttribute("schemaLocation", Namespace="http://www.w3.org/2001/XMLSchema-instance")]
-        //public string schemaLocation = "http://www.buildingsmart-tech.org/mvd/XML/1.1 http://www.buildingsmart-tech.org/mvd/XML/1.1/mvdXML_V1.1_add1.xsd";
-        public string schemaLocation = "http://www.buildingsmart-tech.org/mvd/XML/1.1 http://www.buildingsmart-tech.org/mvd/XML/1.2/mvdXML_V1.2.xsd";
+        [XmlAttribute("schemaLocation", Namespace = "http://www.w3.org/2001/XMLSchema-instance")]
+        public string schemaLocation = LocationV11;
 
         // namespaces in order of attempts to load
         public static readonly string[] Namespaces = new string[]
         {
-            DefaultNamespace,
+            NamespaceV12,
             "http://buildingsmart-tech.org/mvdXML/mvdXML1-0",
             "http://buildingsmart-tech.org/mvdXML/mvdXML_V1-0",
             "http://buildingsmart-tech.org/mvdXML/mvdXML1-1",
             "http://buildingsmart-tech.org/mvd/XML/1.1"
         };
 
-        public const string DefaultNamespace = "http://buildingsmart-tech.org/mvd/XML/1.2";
+        public const string LocationV11 = "http://www.buildingsmart-tech.org/mvd/XML/1.1 http://www.buildingsmart-tech.org/mvd/XML/1.1/mvdXML_V1.1_add1.xsd";
+        public const string LocationV12 = "http://www.buildingsmart-tech.org/mvd/XML/1.2 http://www.buildingsmart-tech.org/mvd/XML/1.2/mvdXML_V1.2.xsd";
+
+        public const string NamespaceV11 = "http://buildingsmart-tech.org/mvd/XML/1.1";
+        public const string NamespaceV12 = "http://buildingsmart-tech.org/mvd/XML/1.2";
     }
 
     [XmlType("ConceptTemplate")]
@@ -265,9 +301,9 @@ namespace IfcDoc.Schema.MVD
     public class EntityRule : AbstractRule
     {
         [DataMember(Order = 0), XmlAttribute("EntityName")] public string EntityName;
-        [DataMember(Order = 1)] public List<AttributeRule> AttributeRules;
-        [DataMember(Order = 2)] public List<Constraint> Constraints;
-        [DataMember(Order = 3)] public References References;
+        [DataMember(Order = 1)] public References References;
+        [DataMember(Order = 2)] public List<AttributeRule> AttributeRules;
+        [DataMember(Order = 3)] public List<Constraint> Constraints;
     }
 
     [XmlType("References")]
@@ -283,11 +319,16 @@ namespace IfcDoc.Schema.MVD
         [DataMember(Order = 0), XmlAttribute("Expression")] public string Expression;
     }
 
-    [XmlType("TemplateRule")]
+    [XmlType("TemplateRule"), XmlInclude(typeof(TemplateItem))]
     public class TemplateRule : AbstractRule
     {
         [DataMember(Order = 0), XmlAttribute("Parameters")] public string Parameters;
-        [DataMember(Order = 1), XmlAttribute("Order")] public int Order;
+    }
+
+    [XmlType("TemplateItem")] // todo: update XSD
+    public class TemplateItem : TemplateRule
+    {
+        [DataMember(Order = 0), XmlAttribute("Order")] public int Order; // mvdXML 1.2
         [DataMember(Order = 1), XmlAttribute("Usage")] public TemplateRuleUsage Usage; // mvdxml 1.2
         [DataMember(Order = 2)] public List<ConceptRequirement> Requirements; // proposed for mvdxml 1.2
         [DataMember(Order = 3)] public List<Concept> References; // proposed for mvdxml 1.2

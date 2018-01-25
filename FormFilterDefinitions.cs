@@ -40,6 +40,10 @@ namespace IfcDoc
                 {
                     scope |= DocDefinitionScopeEnum.EntityAttribute;
                 }
+                if (this.checkBoxRules.Checked)
+                {
+                    scope |= DocDefinitionScopeEnum.RuleWhere;
+                }
                 if (this.checkBoxPset.Checked)
                 {
                     scope |= DocDefinitionScopeEnum.Pset;

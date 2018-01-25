@@ -1,0 +1,23 @@
+﻿<p>The distribution element <em>IfcDistributionControlElement</em> defines occurrence elements of a building automation control system that are used to impart control over elements of a distribution system.</p>
+
+<p><i>IfcDistributionControlElement</i> defines elements of a building automation control system. These are typically used to control distribution system elements to maintain  variables such as temperature, humidity, pressure, flow, power, or lighting levels, through the modulation, staging or sequencing of mechanical or electrical devices. The three general functional categories of control elements are as follows:</p>
+
+<ul> 
+<li>Impart control over flow control elements (<em>IfcFlowController</em>) in a distribution system such as dampers, valves, or relays, typically through the use of actuation (<em>IfcActuator</em>).</li>
+<li>Sensing elements (<em>IfcSensor</em>) that measure changes in the controlled variable such as temperature, humidity, pressure, or flow.</li>
+<li>Controllers (<em>IfcController</em>) typically classified according to the control action they seek to perform and generally responsible for making decisions about the elements under control.</li>
+</ul>
+    
+<p>Since <i>IfcDistributionControlElement</i> and its subtypes typically relate to many different distribution flow elements (<em>IfcDistributionFlowElement</em>), the objectified relationship <em>IfcRelFlowControlElements</em> has been provided to relate control and flow elements as required.</p>
+
+<p>The key distinction between <em>IfcDistributionFlowElement</em> and <em>IfcDistributionControlElement</em> is whether it is internal or external to the flow system, respectively. For example, the distinction between <em>IfcFlowMeter</em> (subtype of <em>IfcDistributionFlowElement</em> measuring a flow quantity) and <em>IfcFlowInstrument</em> (subtype of <em>IfcDistributionControlElement</em> measuring a flow quality), is based on this principal.  A physical device that connects within the flow system in which it measures (having inlet/outlet pipes for the measured substance) follows the <em>IfcDistributionFlowElement</em> hierarchy (and therefore <em>IfcFlowMeter</em> which measures the flow internally).  Otherwise, if it monitors/controls but does not connect inline within the flow system (it is external or is a component of another device), then it follows the <em>IfcDistributionControlElement</em> hierarchy (and therefore <em>IfcFlowInstrument</em> which may display various attributes through connected sensors).</p>
+    
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC2.0.
+</blockquote>
+
+<blockquote class="change-ifc2x4">
+IFC4 CHANGE&nbsp; Attribute <em>ControlElementId</em> attribute deleted; replaced by classification usage. 
+Ports are now primarily defined using <em>IfcRelNests</em> to enable definition of ports at type definitions (both forward and backward compatible), provide a logical order, and reduce the number of relationship objects needed.  The relationship <em>IfcRelConnectsPortToElement</em> is still supported, however is now specific to dynamically connected ports.
+</blockquote>
+      

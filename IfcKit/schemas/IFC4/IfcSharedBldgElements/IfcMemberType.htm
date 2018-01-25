@@ -1,0 +1,29 @@
+﻿<p>The element type
+<em>IfcMemberType</em> defines commonly shared information for
+occurrences of members. Members are predominately linear building
+elements, often forming part of a structural system. The
+orientation of the member (being horizontal, vertical or sloped)
+is not relevant to its definition (in contrary to beam and
+column). The set of shared information may include:</p>
+<ul>
+<li>common properties within shared property sets</li>
+<li>common material information</li>
+<li>common profile definitions</li>
+<li>common shape representations</li>
+</ul>
+<p>It is used to define a member specification, or member style
+(the specific product information that is common to all
+occurrences of that member type). Member types may be exchanged
+without being already assigned to occurrences.</p>
+<p>Occurrences of the <em>IfcMemberType</em> within building models
+are represented by instances of <em>IfcMemberStandardCase</em> if
+the <em>IfcMemberType</em> has a single associated
+<em>IfcMaterialProfileSet</em>; otherwise they are represented by
+instances of <em>IfcMember</em>. Occurrences of the
+<em>IfcMemberType</em> within structural analysis models are
+represented by instances of <em>IfcStructuralCurveMember</em>, or
+its applicable subtypes.</p>
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC2x2 Addendum 1.
+</blockquote>

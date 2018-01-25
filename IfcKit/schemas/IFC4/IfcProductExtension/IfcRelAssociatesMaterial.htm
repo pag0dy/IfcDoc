@@ -1,0 +1,109 @@
+﻿<p><em>IfcRelAssociatesMaterial</em> is an objectified relationship between a
+material definition and elements or element types to which this
+material definition applies.</p>
+
+<p>The material definition can be:</p>
+<ul>
+<li>assigned to an element occurrence as a specific usage of a
+layer set or profile set</li>
+<li>assigned to an element occurrence or element type as a layer
+set, profile set, constituent set or a single material</li>
+</ul>
+<p>Materials can be arranged by layers and applied to layered
+elements. Typical elements are walls and slabs.</p>
+<ul>
+<li>An <em>IfcMaterialLayerSet</em>, for layered elements with an
+indication of the layering direction and individual layer
+thicknesses</li>
+<li>An <em>IfcMaterialLayerSetUsage</em>, i.e. a material layer set
+with positioning information along the reference axis or surface
+of the element.
+
+<blockquote class="note">
+NOTE&nbsp; As a material layer set usage is an
+occurrence based information, that applies to each individual
+element, it cannot be assigned to an element
+type.
+</blockquote>
+
+</li>
+</ul>
+<p>Material can be applied to profiles. Typical elements using
+profile material are beam, column, member</p>
+<ul>
+<li>An <em>IfcMaterialProfileSet</em>, i.e. a set of material
+assigned to a set of profiles, with a single material assigned to
+a single profile as the default.</li>
+<li>An <em>IfcMaterialProfileSetUsage</em>, i.e. a material profile
+set with positioning information relative to the element axis,
+also refered to as cardinal point.
+<blockquote class="note">
+NOTE&nbsp; As a material profile set usage is an
+occurrence based information, that applies to each individual
+element, it cannot be assigned to an element
+type.
+</blockquote>
+
+</li>
+</ul>
+<p>Materials can be arranged by identified parts of a component
+based element. Typical elements are dorrs/windows (with
+components such as lining, framing and glazing), or distribution
+elements.</p>
+<ul>
+<li>An <em>IfcMaterialConstituentSet</em>, for component based
+elements with an indication of the component by keyword to which
+the material consituent applies.
+<blockquote class="note">
+NOTE&nbsp; See the material use definitions at each
+applicable subtype of <em>IfcElement</em> or <em>IfcElementType</em>
+for a provision of these keywords.
+</blockquote>
+</li>
+</ul>
+
+<p>As a fallback, or in cases where only a single material
+information is needed, material information can be directly
+associated</p>
+<ul>
+<li>A single <em>IfcMaterial</em> for any element where the
+material use definition does not prohibits its direct
+association</li>
+<li>An <em>IfcMaterialList</em>, e.g. for composite elements,
+without an information, how the different materials are arranged.
+
+<blockquote class="deprecated">
+DEPRECATED&nbsp; The use of <em>IfcMaterialList</em> is deprecated in IFC4 onwards. Use
+<em>IfcMaterialConstituentSet</em> instead.
+</blockquote>
+
+</li>
+</ul>
+<p>The <em>IfcRelAssociatesMaterial</em> relationship is a special
+type of the <em>IfcRelAssociates</em> relationship. It can be
+applied to subtypes of <em>IfcElement</em> and subtypes of
+<em>IfcElementType</em>.</p>
+<ul>
+<li>The <em>IfcElement</em> has an inverse relation to its material
+definition by the <em>HasAssociations</em> attribute, inherited
+from <em>IfcObject</em>.</li>
+<li>The <em>IfcElementType</em> has an inverse relation to its
+material definition by the <em>HasAssociations</em> attribute,
+inherited from <em>IfcPropertyDefinition</em>.</li>
+</ul>
+<p>If both, the element occurrence (by an instance of
+<em>IfcElement</em>) and the element type (by an instance of
+<em>IfcElementType</em>, connected through
+<em>IfcRelDefinesByType</em>) have an associated material, then the
+material associated to the element occurrence overrides the
+material associated to the element type.</p>
+<blockquote class="history">HISTORY&nbsp; New entity in IFC2x.</blockquote>
+<p class="spec-head">Informal Propositions:</p>
+<ol>
+<li>An <em>IfcMaterialLayerSetUsage</em> shall not be associated
+with a subtype of <em>IfcElementType</em>, it should only be
+associated with individual occurrences</li>
+<li>An <em>IfcMaterialProfileSetUsage</em> shall not be associated
+with a subtype of <em>IfcElementType</em>, it should only be
+associated with individual occurrences</li>
+</ol>

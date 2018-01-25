@@ -1,0 +1,48 @@
+﻿<p>An <em>IfcElementQuantity</em> defines a set of derived measures of an element's physical property. Elements could be spatial structure elements (like buildings, storeys, or spaces) or building elements (like walls, slabs, finishes). The <em>IfcElementQuantity</em> gets assigned to the element by using the <em>IfcRelDefinesByProperties</em> relationship.</p>
+<p>The optional <em>MethodOfMeasurement</em> attribute defines the code, e.g. from a standard method of measurement, which had been used to calculate the element quantity.</p>
+    <blockquote class="note">
+        NOTE&nbsp; The recognizable values for the name and the method of measurement attributes have to be agreed upon in
+        further agreement documents, such as implementers agreements. Some of these agreements might be limited to a
+        certain region, to which the method of measurement applies.
+    </blockquote>
+    <p>
+      The name attribute, given at the individual <em>Quantities</em> provides a recognizable semantic meaning of the element
+      quantity. Both information is needed to establish a precise meaning for the measure value. An optional description may be
+      assigned to each of the <em>Quantities</em>. All quantities assigned by a single instance of <em>IfcElementQuantity</em>
+      are deemed to have been generated according to the same method of measurement. However several instances of
+      <em>IfcElementQuantity</em> are assignable to an element, thus allowing for an element having quantities generated according
+      to several methods of measurement.
+    </p>
+<blockquote class="example">
+EXAMPLE&nbsp; To exchange the net floor area of spaces in the German region (as <em>IfcSpace</em>), the name might be 'Netto-Grundfl&auml;che' (net floor area), and the method of  measurement might be accordingly 'DIN277-2' (German industry norm no. 277 edition 2).
+</blockquote>
+
+<blockquote class="example">
+EXAMPLE&nbsp; The same instance of <em>IfcSpace</em> may have a different area measure assigned in the German region according to a housing regulation, the name would be 'Wohnfl&auml;che' and the method of measurement would be '2.BV'. It would be attached to the <em>IfcSpace</em> by a separate <em>IfcRelDefinesByProperties</em> relationship.
+</blockquote>
+
+<p>The <em>IfcElementQuantity</em> can have the following subtypes of <em>IfcPhysicalQuantity</em> within its SET of <em>Quantities</em>, which count for the basis measure types used:</p>
+    <ul>
+      <li>count measure</li>
+      <li>weight measure</li>
+      <li>length measure</li>
+      <li>area measure</li>
+      <li>volume measure</li>
+      <li>time measure</li>
+    </ul>
+<p>Base quantities are quantity definitions that are independent of a particular method of measurement and therefore internationally applicable. Base quantities are defined as gross and net values and provided by measurement of the correct geometric shape representation of the element. This specification includes a set of base quantity definition. See each subtype of <em>IfcElement</em> for applicable base quantities.</p>
+
+<p>The following general agreements apply for each base quantity set</p>
+<ul>
+ <li><em>IfcElementQuantity.Name</em> = &lt;name of the qto definition template&gt;</li>
+ <li><em>IfcElementQuantity.MethodOfMeasurement</em> = 'BaseQuantities'</li>
+ <li><em>IfcElementQuantity.Quantities</em> = SET of subtypes of <em>IfcPhysicalSimpleQuantity</em> with values for the <em>Name</em> attribute as published as part of this specifciation.</li>
+</ul>
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC2x.
+</blockquote>
+<blockquote class="change-ifc2x4">
+IFC4 CHANGE&nbsp; Subtyped from new intermediate <em>IfcQuantitySet</em> supertype.
+</blockquote>
+

@@ -1,0 +1,25 @@
+﻿<p>An <em>IfcClassificationReference</em> is a reference into a classification system or source (see <em>IfcClassification</em>) for a specific classification key (or notation).</p>
+
+<p>The inherited attributes have the following meaning:</p>
+<ul>
+<li><em>Identification</em>: holds the key provided for a specific references to classification items (or tables).</li>
+<li><em>Name</em>: allows for a human interpretable designation of a classification notation.</li>
+<li><em>Location</em>: optionally holds a direct URI link into the classification system (or source) to hyperlink the classification key.</li>
+</ul>
+
+<p>The <em>IfcClassificationReference</em> can either be assigned directly to the <em>IfcClassification</em>, such as if no classification hierarchy has to be included, or it references the parent classification notation, if the fully classification hierarchy is included in the data set. The first is refered to as "lightweight classification", and the second as "full classification". The attribute <em>ReferencedSource</em> then holds the following information (choice by <em>IfcClassificationReferenceSelect</em>):</p>
+<ol>
+<li>being of type <em>IfcClassification</em>: direct reference to the classification system (with meta information provided);</li>
+<li>being of type <em>IfcClassificationReference</em>: reference to the parent classification notation within the classification hierarchy.</li>
+</ol>
+
+<blockquote class="example">
+EXAMPLE&nbsp; The <em>IfcClassificationReference</em> can be used as a form of 'lightweight' classification through the '<em>Identification</em>' attribute inherited from the abstract <em>IfcExternalReference</em> class. In this case, the '<em>Identification</em>' could take (for instance) the Uniclass notation "L6814" which, if the classification was well understood by all parties and was known to be taken from a particular classification source, would be sufficient. The <em>Name</em> attribute could be the title "Tanking". This would remove the need for the overhead of the more complete classification structure of the model.</p>
+</blockquote>
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC2x.
+
+</blockquote>
+<blockquote class="change-ifc2x4">
+IFC4 CHANGE&nbsp; The attribute <em>Description</em> and inverse attribute <em>HasReferences</em> are added.  The attribute <em>Identification</em> has been renamed from ItemReference.
+</blockquote>

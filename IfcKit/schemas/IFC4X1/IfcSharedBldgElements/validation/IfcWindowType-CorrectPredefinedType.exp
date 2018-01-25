@@ -1,0 +1,2 @@
+﻿(PredefinedType <> IfcWindowTypeEnum.USERDEFINED) OR
+((PredefinedType = IfcWindowTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcElementType.ElementType))

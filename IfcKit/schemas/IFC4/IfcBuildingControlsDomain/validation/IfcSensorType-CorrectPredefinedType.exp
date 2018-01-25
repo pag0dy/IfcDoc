@@ -1,0 +1,2 @@
+﻿(PredefinedType <> IfcSensorTypeEnum.USERDEFINED) OR
+((PredefinedType = IfcSensorTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcElementType.ElementType))

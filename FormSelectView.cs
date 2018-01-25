@@ -71,6 +71,44 @@ namespace IfcDoc
             }
         }
 
+        public string VersionMVDXML
+        {
+            get
+            {
+                switch(this.comboBoxMVDXML.SelectedIndex)
+                {
+                    case 0:
+                        return IfcDoc.Schema.MVD.mvdXML.NamespaceV11;
+
+                    case 1:
+                        return IfcDoc.Schema.MVD.mvdXML.NamespaceV12;
+                }
+
+                return null;
+            }
+            set
+            {
+                if (value != null)
+                {
+                    this.comboBoxMVDXML.Visible = true;
+                    switch(value)
+                    {
+                        case IfcDoc.Schema.MVD.mvdXML.NamespaceV11:
+                            this.comboBoxMVDXML.SelectedIndex = 0;
+                            break;
+
+                        case IfcDoc.Schema.MVD.mvdXML.NamespaceV12:
+                            this.comboBoxMVDXML.SelectedIndex = 1;
+                            break;
+                    }
+                }
+                else
+                {
+                    this.comboBoxMVDXML.Visible = false;
+                }
+            }
+        }
+
         public DocModelView[] Selection
         {
             get

@@ -67,9 +67,7 @@
             this.textBoxIdentityUuid = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.tabPageTemplate = new System.Windows.Forms.TabPage();
-            this.ctlRules = new IfcDoc.CtlRules();
             this.tabPageConcept = new System.Windows.Forms.TabPage();
-            this.ctlParameters = new IfcDoc.CtlParameters();
             this.tabPageRequirements = new System.Windows.Forms.TabPage();
             this.listViewExchange = new System.Windows.Forms.ListView();
             this.columnHeaderExchangeName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -187,7 +185,6 @@
             this.toolStripButtonExampleLink = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonExampleClear = new System.Windows.Forms.ToolStripButton();
             this.tabPageOperations = new System.Windows.Forms.TabPage();
-            this.ctlOperators = new IfcDoc.CtlOperators();
             this.tabPageConceptRoot = new System.Windows.Forms.TabPage();
             this.listViewConceptRoot = new System.Windows.Forms.ListView();
             this.columnHeaderRootTemplate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -195,6 +192,8 @@
             this.columnHeaderRootStatus = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.imageListInheritance = new System.Windows.Forms.ImageList(this.components);
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.toolStripButtonRootEntity = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemModeInherit = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemModeOverride = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemModeSuppress = new System.Windows.Forms.ToolStripMenuItem();
@@ -244,8 +243,10 @@
             this.imageListRules = new System.Windows.Forms.ImageList(this.components);
             this.openFileDialogIcon = new System.Windows.Forms.OpenFileDialog();
             this.openFileDialogExample = new System.Windows.Forms.OpenFileDialog();
-            this.toolStripButtonRootEntity = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.ctlRules = new IfcDoc.CtlRules();
+            this.ctlParameters = new IfcDoc.CtlParameters();
+            this.ctlOperators = new IfcDoc.CtlOperators();
+            this.columnHeaderURL = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerTranslation)).BeginInit();
             this.splitContainerTranslation.Panel1.SuspendLayout();
             this.splitContainerTranslation.Panel2.SuspendLayout();
@@ -303,7 +304,8 @@
             this.listViewLocale.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeaderLocale,
             this.columnHeaderName,
-            this.columnHeaderDesc});
+            this.columnHeaderDesc,
+            this.columnHeaderURL});
             resources.ApplyResources(this.listViewLocale, "listViewLocale");
             this.listViewLocale.FullRowSelect = true;
             this.listViewLocale.HideSelection = false;
@@ -579,35 +581,12 @@
             this.tabPageTemplate.Name = "tabPageTemplate";
             this.tabPageTemplate.UseVisualStyleBackColor = true;
             // 
-            // ctlRules
-            // 
-            this.ctlRules.Attribute = null;
-            this.ctlRules.BaseTemplate = null;
-            this.ctlRules.CurrentInstance = null;
-            resources.ApplyResources(this.ctlRules, "ctlRules");
-            this.ctlRules.Name = "ctlRules";
-            this.ctlRules.Project = null;
-            this.ctlRules.Selection = null;
-            this.ctlRules.Template = null;
-            this.ctlRules.SelectionChanged += new System.EventHandler(this.ctlRules_SelectionChanged);
-            this.ctlRules.ContentChanged += new System.EventHandler(this.ctlRules_ContentChanged);
-            // 
             // tabPageConcept
             // 
             this.tabPageConcept.Controls.Add(this.ctlParameters);
             resources.ApplyResources(this.tabPageConcept, "tabPageConcept");
             this.tabPageConcept.Name = "tabPageConcept";
             this.tabPageConcept.UseVisualStyleBackColor = true;
-            // 
-            // ctlParameters
-            // 
-            this.ctlParameters.ConceptItem = null;
-            this.ctlParameters.ConceptLeaf = null;
-            this.ctlParameters.ConceptRoot = null;
-            this.ctlParameters.CurrentInstance = null;
-            resources.ApplyResources(this.ctlParameters, "ctlParameters");
-            this.ctlParameters.Name = "ctlParameters";
-            this.ctlParameters.Project = null;
             // 
             // tabPageRequirements
             // 
@@ -1740,16 +1719,6 @@
             this.tabPageOperations.Name = "tabPageOperations";
             this.tabPageOperations.UseVisualStyleBackColor = true;
             // 
-            // ctlOperators
-            // 
-            this.ctlOperators.CurrentInstance = null;
-            this.ctlOperators.CurrentPopulation = null;
-            resources.ApplyResources(this.ctlOperators, "ctlOperators");
-            this.ctlOperators.Name = "ctlOperators";
-            this.ctlOperators.Project = null;
-            this.ctlOperators.Rule = null;
-            this.ctlOperators.Template = null;
-            // 
             // tabPageConceptRoot
             // 
             this.tabPageConceptRoot.Controls.Add(this.listViewConceptRoot);
@@ -1803,6 +1772,18 @@
             this.toolStripMenuItemModeSuppress});
             resources.ApplyResources(this.toolStrip1, "toolStrip1");
             this.toolStrip1.Name = "toolStrip1";
+            // 
+            // toolStripButtonRootEntity
+            // 
+            this.toolStripButtonRootEntity.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            resources.ApplyResources(this.toolStripButtonRootEntity, "toolStripButtonRootEntity");
+            this.toolStripButtonRootEntity.Name = "toolStripButtonRootEntity";
+            this.toolStripButtonRootEntity.Click += new System.EventHandler(this.toolStripButtonRootEntity_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            resources.ApplyResources(this.toolStripSeparator1, "toolStripSeparator1");
             // 
             // toolStripMenuItemModeInherit
             // 
@@ -2382,17 +2363,42 @@
             this.openFileDialogExample.DefaultExt = "ifc";
             resources.ApplyResources(this.openFileDialogExample, "openFileDialogExample");
             // 
-            // toolStripButtonRootEntity
+            // ctlRules
             // 
-            this.toolStripButtonRootEntity.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            resources.ApplyResources(this.toolStripButtonRootEntity, "toolStripButtonRootEntity");
-            this.toolStripButtonRootEntity.Name = "toolStripButtonRootEntity";
-            this.toolStripButtonRootEntity.Click += new System.EventHandler(this.toolStripButtonRootEntity_Click);
+            this.ctlRules.Attribute = null;
+            this.ctlRules.BaseTemplate = null;
+            this.ctlRules.CurrentInstance = null;
+            resources.ApplyResources(this.ctlRules, "ctlRules");
+            this.ctlRules.Name = "ctlRules";
+            this.ctlRules.Project = null;
+            this.ctlRules.Selection = null;
+            this.ctlRules.Template = null;
+            this.ctlRules.SelectionChanged += new System.EventHandler(this.ctlRules_SelectionChanged);
+            this.ctlRules.ContentChanged += new System.EventHandler(this.ctlRules_ContentChanged);
             // 
-            // toolStripSeparator1
+            // ctlParameters
             // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            resources.ApplyResources(this.toolStripSeparator1, "toolStripSeparator1");
+            this.ctlParameters.ConceptItem = null;
+            this.ctlParameters.ConceptLeaf = null;
+            this.ctlParameters.ConceptRoot = null;
+            this.ctlParameters.CurrentInstance = null;
+            resources.ApplyResources(this.ctlParameters, "ctlParameters");
+            this.ctlParameters.Name = "ctlParameters";
+            this.ctlParameters.Project = null;
+            // 
+            // ctlOperators
+            // 
+            this.ctlOperators.CurrentInstance = null;
+            this.ctlOperators.CurrentPopulation = null;
+            resources.ApplyResources(this.ctlOperators, "ctlOperators");
+            this.ctlOperators.Name = "ctlOperators";
+            this.ctlOperators.Project = null;
+            this.ctlOperators.Rule = null;
+            this.ctlOperators.Template = null;
+            // 
+            // columnHeaderURL
+            // 
+            resources.ApplyResources(this.columnHeaderURL, "columnHeaderURL");
             // 
             // CtlProperties
             // 
@@ -2687,5 +2693,6 @@
         private System.Windows.Forms.CheckBox checkBoxPublishBSI;
         private System.Windows.Forms.ToolStripButton toolStripButtonRootEntity;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ColumnHeader columnHeaderURL;
     }
 }

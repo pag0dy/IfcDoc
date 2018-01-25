@@ -1,0 +1,27 @@
+﻿<p>A zone is a group of spaces,
+partial spaces or other zones. Zone structures may not be
+hierarchical (in contrary to the spatial structure of a project -
+see <em>IfcSpatialStructureElement</em>), i.e. one individual
+<em>IfcSpace</em> may be associated with zero, one, or several
+<em>IfcZone</em>'s. <em>IfcSpace</em>'s are grouped into an
+<em>IfcZone</em> by using the objectified relationship
+<em>IfcRelAssignsToGroup</em> as specified at the supertype
+<em>IfcGroup</em>.</p>
+
+<blockquote class="note">
+NOTE&nbsp; Certain use cases may restrict the
+freedom of non hierarchical relationships. In some building
+service use cases the zone denotes a view based delimited volume
+for the purpose of analysis and calculation. This type of zone
+cannot overlap with respect to that analysis, but may overlap
+otherwise.
+</blockquote>
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC1.0
+</blockquote>
+
+<blockquote class="change-ifc2x4">
+IFC4 CHANGE&nbsp; The entity is now subtyped from <em>IfcSystem</em> (not its supertype <em>IfcGroup</em>) with upward compatibility for file based
+exchange.
+</blockquote>

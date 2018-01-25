@@ -1,0 +1,17 @@
+﻿<p>The assignment relationship, <em>IfcRelAssigns</em>, is a generalization of "link" relationships among instances of <em>IfcObject</em> and its various 1<sup>st</sup> level subtypes. A link denotes the specific association through which one object (the client) applies the services of other objects (the suppliers), or through which one object may navigate to other objects.</p>
+
+<p>The client is denoted as the relating object and is established at the level of the specific, instantiable subtypes of <em>IfcRelAssigns</em>. The suppliers are denoted as the related objects and they are established by the <em>RelatedObjects</em> attribute.</p> 
+	 
+<blockquote class="note">
+NOTE&nbsp; The terms "client" and "supplier" are used in a general concept and do not imply any meaning for implementations of systems (like client-server).
+</blockquote>
+
+<blockquote class="example">
+EXAMPLE&nbsp; A resource may receive information about its nature of representing real building products by establishing a link between <em>IfcResource</em> and <em>IfcBuildingElement</em> (subtype of <em>IfcProduct</em>) through the assignment relationship <em>IfcRelAssignsToResource</em>. The resource is then the client that applies the services of other objects (here building elements) to express the particular view of elements to be consumed as a resource in a process.
+</blockquote>
+
+<p>The assignment relationship establishs a bi-directional relationship among the participating objects and does not imply any dependency. The subtypes of <em>IfcRelAssigns</em> establishes the particular semantic meaning of the assignment relationship.</p>
+
+<blockquote class="history"> 
+HISTORY&nbsp; New entity in IFC2x.
+</blockquote> 

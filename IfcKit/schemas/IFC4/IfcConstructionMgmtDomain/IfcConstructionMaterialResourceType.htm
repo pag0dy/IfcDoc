@@ -1,0 +1,15 @@
+﻿<p>The resource type <em>IfcConstructionMaterialType</em> defines commonly shared information for occurrences of construction material resources. The set of shared information may include:</p>
+<ul>
+<li>common productivities</li>
+<li>common cost rates</li>
+<li>common properties within shared property sets</li>
+</ul>
+<p>It is used to define a construction material resource specification (the specific resource information that is common to all occurrences of that resource). Resource types may be exchanged without being already assigned to occurrences.</p>
+<p>Occurrences of the <em>IfcConstructionMaterialResourceType</em> are represented by instances of <em>IfcConstructionMaterialResource</em>.</p>
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC4.
+</blockquote>
+
+<p class="use-head">Assignment Use Definition</p>
+<p>In addition to assignments specified at the base class <em>IfcConstructionResourceType</em>, a construction material resource type may have assignments of its own using <em>IfcRelAssignsToResource</em> where <em>RelatingResource</em> refers to the <em>IfcConstructionMaterialResourceType</em> and <em>RelatedObjects</em> contains one or more <em>IfcTypeProduct</em> subtypes.  Such relationship indicates material specifications to be used as input, which is instantiated as an occurrence assigned for each resource occurrence.  The <em>IfcGeographicElementType</em> product type may be used to hold the material representation (via <em>IfcRelAssociatesMaterial</em>. There may be multiple chains of production where such product type may have its own task and resource types assigned indicating how to transport or extract such material.</p>

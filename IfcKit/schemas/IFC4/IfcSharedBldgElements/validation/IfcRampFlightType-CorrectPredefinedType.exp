@@ -1,0 +1,2 @@
+﻿(PredefinedType <> IfcRampFlightTypeEnum.USERDEFINED) OR
+((PredefinedType = IfcRampFlightTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcElementType.ElementType))

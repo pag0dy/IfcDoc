@@ -1,0 +1,25 @@
+﻿<p>The <em>IfcRectangularTrimmedSurface</em> is a surface created by bounding its <em>BasisSurface</em> along two pairs of parallel curves defined within the parametric space of the referenced surface.</p>
+
+<blockquote class="extDef">
+NOTE&nbsp; Definition according to ISO/CD 10303-42:1992<br>
+The trimmed surface is a simple bounded surface in which the boundaries are the constant parametric lines <em>u</em><sub>1</sub> = u1, <em>u</em><sub>2</sub> = u2, <em>v</em><sub>1</sub> = v1 and <em>v</em><sub>2</sub> = v2. All these values shall be within the parametric range of the referenced surface. Cyclic properties of the parameter range are assumed.
+The rectangular trimmed surface inherits its parameterization directly from the basis surface and has parameter ranges from 0 to |<em>u</em><sub>2</sub> - <em>u</em><sub>1</sub>| and 0 to|<em>v</em><sub>2</sub>-<em>v</em><sub>1</sub>|.</blockquote>
+
+<blockquote class="note">
+NOTE&nbsp; If the surface is closed in a given parametric direction, the values of <em>u</em><sub>2</sub> or <em>v</em><sub>2</sub> may require to be increased by the cyclic range.
+</blockquote> 
+<blockquote class="example">
+EXAMPLE&nbsp; 370 degrees is equivalent to 10 degrees, for those surfaces whose parametric form is defined using circular functions (sine and cosine).</blockquote>
+
+<blockquote class="note">
+NOTE&nbsp; Entity adapted from <strong>rectangular_trimmed_surface</strong> in ISO 10303-42.
+</blockquote>
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC2x.
+</blockquote>
+
+<p class="spec-head">Informal Propositions:</p> 
+<ol> 
+<li>The domain of the trimmed surface shall be within the domain of the surface being trimmed.</li> 
+</ol> 

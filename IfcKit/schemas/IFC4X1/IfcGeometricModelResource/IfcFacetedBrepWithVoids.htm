@@ -1,0 +1,39 @@
+﻿    <p>
+      The <em>IfcFacetedBrepWithVoids</em> is a specialization of a
+      faceted B-rep which contains one or more voids in its
+      interior. The voids are represented as closed shells which
+      are defined so that the shell normal point into the void.
+    </p>
+    <blockquote class="note">
+      NOTE&nbsp; Entity adapted from
+      <strong>brep_with_voids</strong> AND
+      <strong>faceted_brep</strong> defined in ISO 10303-42.
+    </blockquote>
+    <blockquote class="history">
+      HISTORY&nbsp; New entity in IFC1.0
+    </blockquote>
+    <blockquote class="change-ifc2x4">
+      IFC4 CHANGE&nbsp; Subtyping changed from
+      <em>IfcManifoldSolidBrep</em> to <em>IfcFacetedBrep</em> with
+      upward compatibility for file based exchange.
+    </blockquote>
+    <p>
+      &nbsp;
+    </p>
+    <p class="spec-head">Informal Propositions:</p>
+    <ol>
+      <li>Each void shell shall be disjoint from the outer shell
+      and from every other void shell
+      </li>
+      <li>Each void shell shall be enclosed within the outer shell
+      but not within any other void shell. In particular the outer
+      shell is not in the set of void shells
+      </li>
+      <li>Each shell in the <em>IfcManifoldSolidBrep</em> shall be
+      referenced only once.
+      </li>
+      <li>All the bounding loops of all the faces of all the shells
+      in the <em>IfcFacetedBrep</em> shall be of type
+      <em>IfcPolyLoop</em>.
+      </li>
+    </ol>

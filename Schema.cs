@@ -1,4 +1,4 @@
-﻿// Name:        FormatSPF.cs
+﻿// Name:        Schema.cs
 // Description: Base classes for schema support
 // Author:      Tim Chipman
 // Origination: This is based on prior work of Constructivity donated to BuildingSmart at no charge.
@@ -9,6 +9,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Reflection;
 using System.Text;
 using System.Runtime.Serialization;
@@ -22,48 +23,8 @@ namespace IfcDoc.Schema
     [DataContract]
     public abstract class SRecord
     {
-        private long m_localID;
-
         public SRecord()
         {
-        }
-
-        [Browsable(false), XmlIgnore(), IgnoreDataMember]
-        public long OID
-        {
-            get
-            {
-                return this.m_localID;
-            }
-            set
-            {
-                if (this.m_localID != 0)
-                {
-                    throw new InvalidOperationException("OID has already been set and cannot be changed.");
-                }
-
-                this.m_localID = value;
-            }
-        }
-
-#if false
-        [Browsable(false), XmlIgnore(), IgnoreDataMember]
-        public bool Existing
-        {
-            get
-            {
-                return this.m_existing;
-            }
-            set
-            {
-                this.m_existing = value;
-            }
-        }
-#endif
-
-        public virtual void Delete()
-        {
-            this.m_localID = -1; // debug value indicated object was deleted
         }
     }
 
@@ -94,9 +55,6 @@ namespace IfcDoc.Schema
         static Dictionary<Type, IList<FieldInfo>> s_fieldallmap = new Dictionary<Type, IList<FieldInfo>>();
         static Dictionary<Type, IList<PropertyInfo>> s_propertymapdeclared = new Dictionary<Type, IList<PropertyInfo>>(); // cached properties per type
         static Dictionary<Type, IList<PropertyInfo>> s_propertymapinverse = new Dictionary<Type, IList<PropertyInfo>>(); // cached properties per type
-
-        public static event EventHandler EntityCreated;
-        public static event EventHandler EntityDeleted;
 
         public static FieldInfo GetFieldByName(Type type, string name)
         {
@@ -199,7 +157,7 @@ namespace IfcDoc.Schema
             {
                 foreach (FieldInfo field in fields)
                 {
-                    if (field.IsDefined(typeof(DataLookupAttribute), false))
+                    if (field.IsDefined(typeof(InversePropertyAttribute), false))
                     {
                         // sort order...
                         list.Add(field);
@@ -211,68 +169,12 @@ namespace IfcDoc.Schema
 
         // INSTANCE methods
 
-        public SEntity()
+        public virtual void Delete()
         {
-            if (SEntity.EntityCreated != null)
-            {
-                SEntity.EntityCreated(this, EventArgs.Empty);
-            }
+            // no longer does anything inherently -- derived classes may override to remove references pointing to object
+            // todo: clean up code so this is no longer called
         }
 
-        public override void Delete()
-        {
-            if (SEntity.EntityDeleted != null)
-            {
-                SEntity.EntityDeleted(this, EventArgs.Empty);
-            }
-
-            // call base AFTER event notification such that OID remains while removing from list
-            base.Delete();
-        }
-
-#if false
-        /// <summary>
-        /// Marks object as in-use (setting Exists to True) such that any unmarked objects may then be garbage collected.
-        /// </summary>
-        public void Mark()
-        {
-            if (this.Existing)
-                return;
-
-            this.Existing = true;
-
-            Type t = this.GetType();
-            IList<FieldInfo> listFields = SEntity.GetFieldsOrdered(t);
-            foreach (FieldInfo field in listFields)
-            {
-                if (typeof(SEntity).IsAssignableFrom(field.FieldType))
-                {
-                    SEntity obj = field.GetValue(this) as SEntity;
-                    if(obj != null)
-                    {
-                        obj.Mark();
-                    }
-                }
-                else if(field.FieldType.IsGenericType && field.FieldType.GetGenericTypeDefinition() == typeof(List<>) &&
-                    typeof(SEntity).IsAssignableFrom(field.FieldType.GetGenericArguments()[0]))
-
-                {
-                    System.Collections.IList list = (System.Collections.IList)field.GetValue(this) as System.Collections.IList;
-                    if(list != null)
-                    {
-                        foreach(object obj in list)
-                        {
-                            if(obj is SEntity)
-                            {
-                                SEntity ent = (SEntity)obj;
-                                ent.Mark();
-                            }
-                        }
-                    }
-                }
-            }
-        }
-#endif
         /// <summary>
         /// Gets user-friendly caption describing the type of object.
         /// </summary>
@@ -293,12 +195,9 @@ namespace IfcDoc.Schema
                 return attr.DisplayName;
             }
 
-
             // fall back on internal type
             return this.GetType().Name;
         }
-
-
 
         public virtual object Clone()
         {
@@ -370,110 +269,6 @@ namespace IfcDoc.Schema
             }
 
             return clone;
-        }
-    }
-
-#if false // use .net WCF attributes now
-
-    /// <summary>
-    /// This shadows the WCF definition, allowing for future forward compatibility
-    /// </summary>
-    public class DataContractAttribute : System.Attribute
-    {
-    }
-
-    /// <summary>
-    /// This shadows the WCF definition, allowing for future forward compatibility
-    /// </summary>
-    [
-    AttributeUsage(AttributeTargets.Field | AttributeTargets.Property, AllowMultiple = false, Inherited = false),
-    ]
-    public class DataMemberAttribute : System.Attribute
-    {
-        int m_order;
-        string m_name;
-        bool m_required;
-
-        public DataMemberAttribute()
-        {
-            m_order = 0; // unordered; 1+ means ordered
-            m_required = false;
-        }
-
-        public DataMemberAttribute(int order)
-        {
-            m_order = order;
-            m_required = false;
-        }
-
-        public int Order
-        {
-            get
-            {
-                return m_order;
-            }
-            set
-            {
-                m_order = value;
-            }
-        }
-
-        public string Name
-        {
-            get
-            {
-                return m_name;
-            }
-            set
-            {
-                m_name = value;
-            }
-        }
-
-        public bool IsRequired
-        {
-            get
-            {
-                return m_required;
-            }
-            set
-            {
-                m_required = value;
-            }
-        }
-    }
-#endif
-
-    /// <summary>
-    /// Indicates that field is populated by looking up a field on a target object.
-    /// </summary>
-    [
-    AttributeUsage(AttributeTargets.Field, AllowMultiple = false, Inherited = false),
-    ]
-    public class DataLookupAttribute : System.Attribute
-    {
-        string m_name;
-
-        public DataLookupAttribute()
-        {
-            this.m_name = null;
-        }
-
-        public DataLookupAttribute(string name)
-        {
-            this.m_name = name;
-        }
-
-        public string Name
-        {
-            get
-            {
-                return m_name;
-            }
-            set
-            {
-                m_name = value;
-            }
         }
     }
 

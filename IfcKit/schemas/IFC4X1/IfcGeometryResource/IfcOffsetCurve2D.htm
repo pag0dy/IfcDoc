@@ -1,0 +1,20 @@
+﻿<p>An <em>IfcOffsetCurve2D</em> is a curve defined by an offset in 2D space from its <em>BasisCurve</em>.</p>
+<blockquote class="extDef">NOTE Definition according to ISO/CD 10303-42:1992<br>
+An offset curve 2d is a curve at a constant distance from a basis curve in two-dimensional space. This entity defines a
+simple plane-offset curve by offsetting by distance along the normal to basis curve in the plane of basis curve. The
+underlying curve shall have a well-defined tangent direction at every point. In the case of a composite curve, the
+transition code between each segment shall be cont same gradient or cont same gradient same curvature.
+<blockquote class="note">NOTE&nbsp; The offset curve 2d may differ in nature from the basis curve; the offset of a non
+self- intersecting curve can be self-intersecting. Care should be taken to ensure that the offset to a continuous curve
+does not become discontinuous.</blockquote>
+The offset curve 2d takes its parameterization from the basis curve. The offset curve 2d
+is parameterized as:
+<blockquote>
+<img src="../../../figures/ifcoffsetcurve2d-math1.gif" alt="Math" width="281" height="22" border="0">
+</blockquote>
+where <b>T</b> is the unit tangent vector to the basis curve <b>C</b>(<em>u</em>) at
+parameter value <em>u</em>, and <em>d</em> is distance. The underlying curve shall be two-dimensional.
+</blockquote>
+<blockquote class="note">NOTE&nbsp; Entity adapted from <strong>offset_curve_2d</strong> defined in ISO
+10303-42.</blockquote>
+<blockquote class="history">HISTORY&nbsp; New entity in IFC2x</blockquote>

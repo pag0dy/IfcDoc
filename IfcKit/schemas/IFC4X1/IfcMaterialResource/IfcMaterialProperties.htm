@@ -1,0 +1,67 @@
+﻿    <p>
+      The <em>IfcMaterialProperties</em> assigns a set of material properties to associated material definitions. The set may be
+      identified by a <em>Name</em> and a <em>Description</em>. The <em>IfcProperty</em> (instantiable subtypes) is used to express
+      the individual material properties by name, description, value and unit.
+    </p>
+    <blockquote class="note">
+      NOTE&nbsp; The set of material properties can be assigned to an individual <em>IfcMaterial</em>, a set or composite of
+      materials (<em>IfcMaterialConstituent</em>, <em>IfcMaterialConstituentSet</em>), or set or individual
+      material layer (<em>IfcMaterialLayer</em>, <em>IfcMaterialLayerSet</em>), or a set or individual
+      material profile (<em>IfcMaterialProfile</em>, <em>IfcMaterialProfileSet</em>)
+    </blockquote>
+    <blockquote class="history">
+      HISTORY&nbsp; New entity in IFC2x.
+    </blockquote>
+    <blockquote class="change-ifc2x4">
+      IFC4 CHANGE&nbsp; Entity made non-abstract. The subtypes IfcMechanicalMaterialProperties, IfcThermalMaterialProperties,
+      IfcHygroscopicMaterialProperties, IfcGeneralMaterialProperties, IfcOpticalMaterialProperties, IfcWaterProperties, IfcFuelProperties,
+      IfcProductsOfCombustionProperties, IfcExtendedMaterialProperties have been deleted, use <em>IfcMaterialProperties</em> instead.
+    </blockquote>
+    <p>
+      &nbsp;
+    </p>
+<!--
+    <p class="use-head">
+      Property use definitions
+    </p>
+    <p>
+      The following sets of material property definitions are part
+      of this IFC release. They are direct instantiations of
+      <em>IfcProperties</em> with the <em>Name</em> attribute
+      holding the property set name.
+    </p>
+
+<ul>
+<li><b>(All Types)</b>
+<ul class="inner">
+<li><a href="../../psd/ifcmaterialresource/Pset_MaterialCombustion.xml">Pset_MaterialCombustion</a> (<a href="../../ifckernel/lexical/ifcpropertysettemplatetypeenum.htm">occurrence driven</a>)</li>
+<li><a href="../../psd/ifcmaterialresource/Pset_MaterialCommon.xml">Pset_MaterialCommon</a> (<a href="../../ifckernel/lexical/ifcpropertysettemplatetypeenum.htm">occurrence driven</a>)</li>
+<li><a href="../../psd/ifcmaterialresource/Pset_MaterialEnergy.xml">Pset_MaterialEnergy</a> (<a href="../../ifckernel/lexical/ifcpropertysettemplatetypeenum.htm">occurrence driven</a>)</li>
+<li><a href="../../psd/ifcmaterialresource/Pset_MaterialFuel.xml">Pset_MaterialFuel</a> (<a href="../../ifckernel/lexical/ifcpropertysettemplatetypeenum.htm">occurrence driven</a>)</li>
+<li><a href="../../psd/ifcmaterialresource/Pset_MaterialHygroscopic.xml">Pset_MaterialHygroscopic</a> (<a href="../../ifckernel/lexical/ifcpropertysettemplatetypeenum.htm">occurrence driven</a>)</li>
+<li><a href="../../psd/ifcmaterialresource/Pset_MaterialMechanical.xml">Pset_MaterialMechanical</a> (<a href="../../ifckernel/lexical/ifcpropertysettemplatetypeenum.htm">occurrence driven</a>)</li>
+<li><a href="../../psd/ifcmaterialresource/Pset_MaterialOptical.xml">Pset_MaterialOptical</a> (<a href="../../ifckernel/lexical/ifcpropertysettemplatetypeenum.htm">occurrence driven</a>)</li>
+<li><a href="../../psd/ifcmaterialresource/Pset_MaterialThermal.xml">Pset_MaterialThermal</a> (<a href="../../ifckernel/lexical/ifcpropertysettemplatetypeenum.htm">occurrence driven</a>)</li>
+<li><a href="../../psd/ifcmaterialresource/Pset_MaterialWater.xml">Pset_MaterialWater</a> (<a href="../../ifckernel/lexical/ifcpropertysettemplatetypeenum.htm">occurrence driven</a>)</li>
+</ul>
+</li>
+<li><b>Concrete</b>
+<ul class="inner">
+<li><a href="../../psd/ifcmaterialresource/Pset_MaterialConcrete.xml">Pset_MaterialConcrete</a> (<a href="../../ifckernel/lexical/ifcpropertysettemplatetypeenum.htm">occurrence driven</a>)</li>
+</ul>
+</li>
+<li><b>Steel</b>
+<ul class="inner">
+<li><a href="../../psd/ifcmaterialresource/Pset_MaterialSteel.xml">Pset_MaterialSteel</a> (<a href="../../ifckernel/lexical/ifcpropertysettemplatetypeenum.htm">occurrence driven</a>)</li>
+</ul>
+</li>
+<li><b>Wood</b>
+<ul class="inner">
+<li><a href="../../psd/ifcmaterialresource/Pset_MaterialWood.xml">Pset_MaterialWood</a> (<a href="../../ifckernel/lexical/ifcpropertysettemplatetypeenum.htm">occurrence driven</a>)</li>
+<li><a href="../../psd/ifcmaterialresource/Pset_MaterialWoodBasedBeam.xml">Pset_MaterialWoodBasedBeam</a> (<a href="../../ifckernel/lexical/ifcpropertysettemplatetypeenum.htm">occurrence driven</a>)</li>
+<li><a href="../../psd/ifcmaterialresource/Pset_MaterialWoodBasedPanel.xml">Pset_MaterialWoodBasedPanel</a> (<a href="../../ifckernel/lexical/ifcpropertysettemplatetypeenum.htm">occurrence driven</a>)</li>
+</ul>
+</li>
+</ul>
+
+--!>

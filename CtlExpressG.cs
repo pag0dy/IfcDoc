@@ -27,7 +27,7 @@ namespace IfcDoc
         DocObject m_highlight;
         DocLine m_lineselection;
         DocLine m_linehighlight;
-        Dictionary<string, DocObject> m_map;
+        DocProject m_project;
         bool m_scrollselection;
         bool m_mousedown;
         ResizeHandle m_handle;
@@ -74,15 +74,15 @@ namespace IfcDoc
             this.Invalidate();
         }
 
-        public Dictionary<string, DocObject> Map
+        public DocProject Project
         {
             get
             {
-                return this.m_map;   
+                return this.m_project;
             }
             set
             {
-                this.m_map = value;
+                this.m_project = value;
             }
         }
 
@@ -236,9 +236,9 @@ namespace IfcDoc
 
         protected override void OnPaint(PaintEventArgs pe)
         {
-            if (this.m_image == null && this.m_schema != null && this.m_map != null)
+            if (this.m_image == null && this.m_schema != null && this.m_project != null)
             {
-                this.m_image = FormatPNG.CreateSchemaDiagram(this.m_schema, this.m_map, this.m_diagramformat);
+                this.m_image = FormatPNG.CreateSchemaDiagram(this.m_schema, this.m_project, this.m_diagramformat);
                 this.AutoScrollMinSize = new Size(this.m_image.Width, this.m_image.Height);
             }
 
@@ -495,7 +495,10 @@ namespace IfcDoc
             else if (selection is DocPageTarget)
             {
                 DocPageTarget docTarget = (DocPageTarget)selection;
-                LayoutLine(docTarget.Definition, docTarget, docTarget.DiagramLine);
+                if (docTarget.Definition != null)
+                {
+                    LayoutLine(docTarget.Definition, docTarget, docTarget.DiagramLine);
+                }
                 docTarget.DiagramLine.Reverse();
             }
 
@@ -1001,6 +1004,9 @@ namespace IfcDoc
 
         public static void LayoutLine(DocDefinition defA, DocDefinition defB, List<DocPoint> list)
         {
+            if (defA == null)
+                return;
+
             if (list == null)
                 return;
 
@@ -1427,24 +1433,6 @@ namespace IfcDoc
             if (docEnt != null)
             {
                 e.Effect = DragDropEffects.Move;
-
-                if (!String.IsNullOrEmpty(docEnt.BaseDefinition))
-                {
-                    DocObject docBase = null;
-                    if (this.m_map.TryGetValue(docEnt.BaseDefinition, out docBase))
-                    {
-                        if (docBase is DocEntity)
-                        {
-                            DocEntity docEntBase = (DocEntity)docBase;
-                            //...docEntBase.
-                        }
-                    }
-                }
-
-                foreach (DocAttribute docAttr in docEnt.Attributes)
-                {
-                    //111docAttr.
-                }
             }
 
         }

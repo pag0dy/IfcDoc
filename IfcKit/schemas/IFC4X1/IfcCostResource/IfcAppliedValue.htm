@@ -1,0 +1,16 @@
+﻿<p>This entity captures a value driven by a formula, with additional qualifications including unit basis, valid date range, and categorization.</p> 
+
+<p>The extent of the <em>IfcAppliedValue</em> is determined by the <em>AppliedValue</em> attribute which may be defined either as an <em>IfcMeasureWithUnit</em> or as an <em>IfcMonetaryMeasure</em> or as an <em>IfcRatioMeasure</em> via the <em>IfcAppliedValueSelect</em> type. </p> 
+
+<p>Optionally, an <em>IfcAppliedValue</em> may have an applicable date. This is intended to fix the date on which the value became relevant for use. It may be the date on which the value was set in the model or it may be a prior or future date when the value becomes operable. Similarly, an <em>IfcAppliedValue</em> may have a 'fixed until' date. This is intended to fix the date on which the value ceases to be relevant for use.</p> 
+
+<p>An instance of <em>IfcAppliedValue</em> may have a unit basis asserted.  This is defined as an <em>IfcMeasureWithUnit</em> that determines the extent of the unit value for application purposes. It is assumed that when this attribute is asserted, then the value given to <em>IfcAppliedValue</em> is that for unit quantity. This is not enforced within the schema and thus needs to be controlled within an application.</p>
+
+<p>Applied values may be referenced from a document (such as a price list). The relationship between one or more occurrences of <em>IfcAppliedValue</em> (or its subtypes) is achieved through the use of the <em>IfcExternalReferenceRelationship</em> in which the document provides the <em>IfcExternalReferenceRelationship.RelatingExtReference</em> and the value occurrences are the <em>IfcExternalReferenceRelationship.RelatedResourceObjects</em>.</p>
+
+<blockquote class="history">
+  HISTORY&nbsp; New entity in IFC2x2.
+</blockquote> 
+<blockquote class="change-ifc2x4">
+  IFC4 CHANGE&nbsp; Entity made non-abstract to support general formula expressions of constraints, data type of date-based attributes changed into <em>IfcDate</em>, <i>ValueType</i> and <i>Condition</i> promoted from <i>IfcCostValue</i>, <i>Components</i> and <i>ArithmeticOperator</i> attributes added to replace <i>IfcAppliedValueRelationship</i> for more efficient encoding and reference tracking.
+</blockquote> 

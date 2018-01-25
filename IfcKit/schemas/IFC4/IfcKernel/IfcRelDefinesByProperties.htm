@@ -1,0 +1,9 @@
+﻿<p>The objectified relationship <em>IfcRelDefinesByProperties</em> defines the relationships between property set definitions and objects. Properties are aggregated in property sets. Property sets can be either directly assigned to occurrence objects using this relationship, or assigned to an object type and assigned via that type to occurrence objects. The assignment of an <em>IfcPropertySet</em> to an <em>IfcTypeObject</em> is not handled via this objectified relationship, but through the direct relationship <em>HasPropertySets</em> at <em>IfcTypeObject</em>.</p>
+
+<p>The <em>IfcRelDefinesByProperties</em> is an N-to-N relationship, as it allows for the assignment of one or more property sets to one or more objects. Those objects then share the same property definition.</p>
+
+<blockquote class="history">HISTORY&nbsp; New entity in IFC2.0. Has been renamed from <em>IfcRelAssignsProperties</em> in IFC2x.</blockquote>
+
+<blockquote class="change-ifc2x4">
+IFC4 CHANGE&nbsp; The attribute <em>RelatedObjects</em> had been demoted from the supertype <em>IfcRelDefines</em> to <em>IfcRelDefinesByProperties</em>. This relationship has been modified to support multiple property sets referenced by a single relationship.
+</blockquote>

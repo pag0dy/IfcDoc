@@ -1,0 +1,7 @@
+﻿RULE IfcSingleProjectInstance FOR
+	(IfcProject);
+
+    WHERE
+      WR1 : SIZEOF(IfcProject) <= 1;
+END_RULE;
+

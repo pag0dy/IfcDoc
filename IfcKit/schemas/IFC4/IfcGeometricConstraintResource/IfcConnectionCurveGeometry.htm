@@ -1,0 +1,21 @@
+﻿<p><em>IfcConnectionCurveGeometry</em> is used to describe the geometric constraints that facilitate the physical connection of two objects at a curve or at an edge with curve geometry associated. It is envisioned as a control that applies to the element connection relationships. </p>
+
+<p>The <em>IfcCurve</em> (or the <em>IfcEdgeCurve</em> with an associated <em>IfcCurve</em>) at the <em>CurveOnRelatingElement</em> attribute defines the curve where the basic geometry items of the connected elements connects. The curve geometry and coordinates are provided within the local coordinate system of the <em>RelatingElement</em>, as specified at the <em>IfcRelConnects</em> subtype that utilizes the <em>IfcConnectionCurveGeometry</em>. Optionally, the same curve geometry and coordinates can also be provided within the local coordinate system of the <em>RelatedElement</em> by using the <em>CurveOnRelatedElement</em> attribute. </p>
+<blockquote class="example">
+EXAMPLE&nbsp; The connection relationship between two walls has a geometric constraint which describes the end caps (or cut-off of the wall ends) by a <em>CurveOnRelatingElement</em> for the first wall and a <em>CurveOnRelatedElement</em> for the second wall. The exact usage of the <em>IfcConnectionCurveGeometry</em> is further defined in the geometry use sections of the elements that use it.
+</blockquote>
+
+<p>The available geometry for the connection constraint may be further restricted to only allow straight segments by applying <em>IfcPolyline</em>
+only. Such an usage constraint is provided at the object definition of the <em>IfcElement</em> subtype, utilizing the element connection by referring to the subtype of <em>IfcRelConnects</em> with the associated&nbsp;<em>IfcConnectionCurveGeometry.</em></p>
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC1.5.
+</blockquote>
+
+<blockquote class="change-ifc2x">
+IFC2x CHANGE&nbsp; Renamed from IfcLineConnectionGeometry.
+</blockquote>
+
+<blockquote class="change-ifc2x3">
+IFC2x3 CHANGE&nbsp; The provision of topology with associated geometry, <em>IfcEdgeCurve</em>, is enabled by using the <em>IfcCurveOrEdgeCurve</em>.
+</blockquote>

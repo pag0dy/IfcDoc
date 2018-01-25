@@ -1,0 +1,1 @@
+﻿(SIZEOF(SELF) = 3) OR (ABS(SELF[4]) < 1000000)

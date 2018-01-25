@@ -1,0 +1,63 @@
+﻿<p>An <em>IfcLocalPlacement</em> defines the relative placement of a product in relation to the
+placement of another product or the absolute placement of a product within the geometric representation context of the project. </p>
+<p>The <em>IfcLocalPlacement</em> allows that an <em>IfcProduct</em> can be placed by this <em>IfcLocalPlacement</em> (through
+the attribute<em>ObjectPlacement</em>) within the local coordinate system of the object placement of another <em>IfcProduct</em>,
+which is referenced by the <em>PlacementRelTo</em>. Rules to prevent cyclic relative placements have to be introduced on the
+application level.</p>
+<p>If the <em>PlacementRelTo</em> is not given, then
+the <em>IfcProduct</em> is placed absolutely within the
+world coordinate system.</p>
+
+<p>The following conventions shall apply as default relative positions if the relative placement is used. The conventions are given for all five direct subtypes of <em>IfcProduct</em>, the <em>IfcSpatialStructureElement</em>, <em>IfcElement</em>, <em>IfcAnnotation</em>, <em>IfcGrid</em>, <em>IfcPort</em>. More detailed placement information is given at the level of subtypes of those five types mentioned.</p>
+<ul>
+  <li>For the subtypes of <em>IfcSpatialStructureElement</em> the following conventions apply
+    <ul>
+      <li><em>IfcSite</em> shall be placed absolutely within the world coordinate system established by the geometric
+representation context of the <em>IfcProject</em> </li>
+      <li><em>IfcBuilding</em> shall be placed relative to the local placement of <em>IfcSite</em> </li>
+      <li><em>IfcBuildingStorey</em> shall be placed relative to the local placement of <em>IfcBuilding</em> </li>
+    </ul>
+  </li>
+  <li>For <em>IfcGrid</em> and <em>IfcAnnotation</em> the convention applies that it shall be placed relative
+    <ul>
+      <li> to the local placement of its container, either <em>IfcSite</em>, <em>IfcBuilding</em>, or <em>IfcBuildingStorey</em>
+        <ul>
+          <li>it should be the same container element that is referenced by the <em>IfcRelContainedInSpatialStructure</em>
+containment relationship,</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>For <em>IfcPort</em> the convention applies that it shall be placed relative
+    <ul>
+      <li> to the local placement of the <em>IfcElement</em> it belongs to
+        <ul>
+          <li>it should be the same element that is referenced by the <em>IfcRelConnectsPortToElement</em> connection
+relationship,</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li> For <em>IfcElement</em> the convention applies that it shall be placed relative:
+    <ul>
+      <li> to the local placement of its container, either <em>IfcSite</em>, <em>IfcBuilding</em>, or <em>IfcBuildingStorey</em>
+        <ul>
+          <li>it should be the same container element that is referenced by the <em>IfcRelContainedInSpatialStructure</em>
+containment relationship,</li>
+        </ul>
+      </li>
+      <li>to the local placement of the <em>IfcElement</em> to which it is tied by an element composition relationship
+        <ul>
+          <li>for features that are located relative to the main component (such as openings), as expressed by <em>IfcRelVoidsElement</em> and <em>IfcRelProjectsElement</em>;</li>
+          <li>for elements that fill an opening (such as doors or windows), as expressed by <em>IfcRelFillsElement</em>;</li>
+          <li>for coverings that cover the element, as expressed by <em>IfcRelCoversBldgElements</em>;</li>
+          <li>for sub components that are aggregated to the main component, as expressed by <em>IfcRelAggregates</em> and <em>IfcRelNests</em>.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC1.0.
+</blockquote>

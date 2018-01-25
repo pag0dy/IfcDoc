@@ -1,0 +1,29 @@
+﻿<p>An <em>IfcCartesianTransformationOperator</em> defines an abstract supertype of different kinds of geometric
+transformations.</p>
+<blockquote class="extDef">NOTE&nbsp; Definition according to ISO/CD 10303-42:1992<br>
+A Cartesian transformation operator defines a geometric transformation composed of translation, rotation, mirroring and
+uniform scaling. The list of normalized vectors u defines the columns of an orthogonal matrix T. These vectors are
+computed, by the base axis function, from the direction attributes axis1, axis2 and, in Cartesian transformation
+operator 3d, axis3. If <b>|T|= -1</b>, the transformation includes mirroring. The local origin point <b>A</b>, the
+scale value <b><em>S</em></b> and the matrix <b>T</b> together define a transformation.<br>
+<br>
+The transformation for a point with position vector P is defined by
+<blockquote style=" font-size:inherit;">P -&gt; A + <em>S</em>TP</blockquote>
+<p style=" font-size:inherit;">The transformation for a direction d is defined by</p>
+<blockquote style=" font-size:inherit;">d -&gt; Td</blockquote>
+<p style=" font-size:inherit;">The transformation for a vector with orientation d and magnitude k is defined by</p>
+<blockquote style=" font-size:inherit;">d -&gt; Td, and<br>
+<em>k -&gt; Sk</em></blockquote>
+<p style=" font-size:inherit;">For those entities whose attributes include an axis2 placement, the transformation is
+applied, after the derivation, to the derived attributes p defining the placement coordinate directions. For a
+transformed surface, the direction of the surface normal at any point is obtained by transforming the normal, at the
+corresponding point, to the original surface. For geometric entities with attributes (such as the radius of a circle)
+which have the dimensionality of length, the values will be multiplied by <em>S</em>.</p>
+<p style=" font-size:inherit;">For curves on surface the p curve.reference to curve will be unaffected by any
+transformation. The Cartesian transformation operator shall only be applied to geometry defined in a consistent system
+of units with the same units on each axis. With all optional attributes omitted, the transformation defaults to the
+identity transformation. The Cartesian transformation operator shall only be instantiated as one of its subtypes.</p>
+</blockquote>
+<blockquote class="note">NOTE&nbsp; Entity adapted from <strong>cartesian_transformation_operator</strong>
+defined in ISO10303-42.</blockquote>
+<blockquote class="history">HISTORY&nbsp; New entity in IFC2x.</blockquote>

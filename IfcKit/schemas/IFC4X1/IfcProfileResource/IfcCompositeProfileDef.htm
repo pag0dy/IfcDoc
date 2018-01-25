@@ -1,0 +1,46 @@
+﻿<p>The <em>IfcCompositeProfileDef</em>
+defines the profile by composition of other profiles. The composition
+is given by a set of at least two other profile definitions. Any
+profile definition (except for another composite profile) can be used
+to construct the composite. </p>
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC2x.
+</blockquote>
+
+<p>Figure 314 illustrates the composite profile definition. The <em>IfcCompositeProfileDef</em> does not define an own position coordinate system, it is directly defined in the underlying coordinate system. The underlying coordinate system is defined by the swept surface or swept area solid that uses the profile definition. It is the xy plane of either:</p>
+      <ul>
+        <li><em>IfcSweptSurface.Position</em></li>
+        <li><em>IfcSweptAreaSolid.Position</em></li>
+      </ul>
+<p>Or in case of sectioned spines it is the xy plane of each list member of <em>IfcSectionedSpine.CrossSectionPositions</em>. The <em>IfcCompositeProfileDef</em> is defined using other profile definitions. Those other profile definitions are directly inserted into the underlying coordinate system.</p>
+      <ul>
+        <li>In case of parameterized profile definitions, the <em>Position</em> attribute of those standard profiles is used to place the profiles relatively to each other.</li>
+        <li>In case of arbitrary profile definitions, each Cartesian coordinate is given directly within the underlying coordinate system.</li>
+      </ul>
+
+<blockquote class="note">
+NOTE&nbsp; The black coordinate axes show the underlying coordinate system of the swept surface or swept area solid.
+</blockquote>
+
+<table>
+<tr><td style="vertical-align: top; text-align: left; width: 400px;"><img src="../../../figures/ifccompositeprofiledef-layout1.gif" alt="composite" border="0" height="300" width="400"></td></tr>
+<tr><td><p class="figure">Figure 314</p></td></tr>
+</table>
+
+<p class="use-head">Twin profiles special case</p>
+
+<p>If twin profiles are modeled by profile composition, the base profile should
+only be specified once. It is then included into the composite profile directly
+and additionally indirectly via <em>IfcMirroredProfileDef</em>. For example, a
+double angle made of two L100x10 with 10mm air gap between them, i.e. a
+_|&nbsp;|_ shape, can be modeled as</p>
+
+<blockquote><code>
+single_L : IfcLShapeProfileDef := IfcLShapeProfileDef(AREA, 'L100X100X10',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;IfcAxis2Placement2D(IfcCartesianPoint(((.100+.010)/2., .0)), ?),<br>
+&nbsp;&nbsp;&nbsp;&nbsp;.100, .100, .010, .012, ?, 0., ?, ?);<br>
+&nbsp;<br>
+double_L : IfcCompositeProfileDef := IfcCompositeProfileDef(AREA, 'double angle',<br>
+&nbsp;&nbsp;&nbsp;&nbsp;(single_L, IfcMirroredProfileDef(AREA, ?, single_L, ?)), 'twin profile');
+</code></blockquote>

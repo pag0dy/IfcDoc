@@ -1,0 +1,29 @@
+﻿	 <p> <em>IfcReinforcementDefinitionProperties</em> defines the cross section
+		properties of reinforcement included in reinforced concrete building elements.
+		The property set definition may be used both in conjunction with insitu and
+		precast structures. </p> 
+
+	 <p> This subtype of <em>IfcPropertySetDefinition</em> is used to define the
+		reinforcement properties in early design stages, such as in requirement
+		definition or scheme design. In later design stages explicit instances of
+		subtypes of <em>IfcReinforcingElement</em> are used. The intended usage may be
+		indicated using the <em>DefinitionType</em> attribute value as a designator:
+		recommended values are 'Reinforcement area requirement' or 'Reinforcement
+		configuration requirement'. Other values may be used according to local
+		standards. </p> 
+	 <p> Only one property set definition of this kind is used for each concrete
+		building element in each intended usage indicated by the <em>DefinitionType</em>
+		attribute value. This set then defines a list of cross section properties in a
+		discrete number of longitudinal sections as instances of
+		<em>IfcSectionReinforcementProperties</em> (one for each structural reinforcement
+		bar role), which in turn have a section cross section property defined as a
+		profile and a number of reinforcement properties, one for each steel grade /
+		bar type. </p>
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC2x2
+</blockquote>
+
+<blockquote class="change-ifc2x4">
+IFC4 CHANGE&nbsp; Supertype changed from <em>IfcPropertySetDefinition</em> to <em>IfcPreDefinedPropertySet</em>
+</blockquote>

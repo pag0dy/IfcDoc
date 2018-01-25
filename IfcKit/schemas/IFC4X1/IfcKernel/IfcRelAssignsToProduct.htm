@@ -1,0 +1,13 @@
+﻿<p>The objectified relationship <em>IfcRelAssignsToProduct</em> handles the assignment of objects (subtypes of <em>IfcObject</em>) to a product (subtypes of <em>IfcProduct</em>). The <em>Name</em> attribute should be used to classify the usage of the <em>IfcRelAssignsToProduct</em> objectified relationship. The following <em>Name</em> values are proposed:</p>
+<ul>
+<li>'Context' : Assignment of a context specific representation, such as of structural members to a different context representation (with potentially different decomposition breakdown) such as of building elements for a specific context specific representation. </li>
+<li>'View' : Assignment of a product (via <em>RelatingProduct</em>) that is decomposed according to a discipline view, to another product (via <em>RelatedObjects</em>) that is decomposed according to a different discipline view. An example is the assignment of the architectural slab to a different decomposition of the pre manufactured sections of a slab (under a precast concrete discipline view).</li>
+</ul>
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC2x
+</blockquote>
+
+<blockquote class="change-ifc2x3">
+IFC2x3 CHANGE&nbsp; The reference of a product within a spatial structure is now handled by a new relationship object <em>IfcRelReferencedInSpatialStructure</em>. The <em>IfcRelAssignsToProduct</em> shall not be used to represent this relation from IFC2x3 onwards.
+</blockquote>

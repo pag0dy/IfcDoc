@@ -1,0 +1,2 @@
+﻿(PredefinedType <> IfcFlowMeterTypeEnum.USERDEFINED) OR
+((PredefinedType = IfcFlowMeterTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcElementType.ElementType))

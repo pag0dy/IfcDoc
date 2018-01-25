@@ -1,0 +1,24 @@
+﻿<p>The <em>IfcReparametrisedCompositeCurveSegment</em> is geometrically identical to a <em>IfcCompositeCurveSegment</em>
+but with the additional capability of reparametrization.</p>
+<blockquote class="extDef">
+NOTE&nbsp; Definition according to ISO/CD 10303-42:1992<br>
+The reparametrised composite curve segment is a special type of composite curve segment which provides the capability to
+re-define its parametric length without changing its geometry.
+<br><br>
+Let l = <em>ParamLength</em>.</br>
+If t<sub><small>0</small></sub> &le; t &le; t<sub><small>1</small></sub> is the parameter range of
+<em>ParentCurve</em>, the new parameter . for the reparametrised composite curve segment is given by the equation:
+  <blockquote class="extDef">
+  <img src="../../../figures/ifcreparametrisedcompositecurvesegment-math1.gif" width="100" height="60"> if <em>SameSense</em> = TRUE;
+  </blockquote>
+or by the equation:
+  <blockquote class="extDef">
+  <img src="../../../figures/ifcreparametrisedcompositecurvesegment-math2.gif" width="100" height="60"> if <em>SameSense</em> = FALSE;
+  </blockquote>
+</blockquote>
+<blockquote class="note">
+NOTE&nbsp; Entity adapted from <strong>reparametrised_composite_curve_segment</strong> in ISO 10303-42.
+</blockquote>
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC4
+</blockquote>

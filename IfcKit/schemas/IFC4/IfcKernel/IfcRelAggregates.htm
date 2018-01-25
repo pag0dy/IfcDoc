@@ -1,0 +1,22 @@
+﻿<p>The aggregation relationship <em>IfcRelAggregates</em> is a special type of the general composition/decomposition (or whole/part) relationship
+<em>IfcRelDecomposes</em>. The aggregation relationship can be applied to all subtypes of <em>IfcObjectDefinition</em>.</p>
+<p>In cases of aggregation of physical elements into a physical aggregate the shape representation of the whole (within the same
+representation identifier) can be taken from the sum of the shape representations of the parts.</p>
+
+<blockquote class="example">
+EXAMPLE&nbsp; A roof is the aggregation of the roof elements, such as roof slabs, rafters, purlins, etc. Within the
+same representation identifier (such as the body geometric representation), the shape representation of the roof is given by
+the shape representation of its parts.
+</blockquote>
+
+<p>Decompositions imply a dependency, implying that the whole depends on the definition of the parts and the parts depend
+on the existence of the whole. The behaviour that is implied from the dependency relationship has to be established inside the applications.</p>
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC2x.
+</blockquote>
+
+<blockquote class="change-ifc2x4">
+IFC4 CHANGE The attributes <em>RelatingObject</em> and <em>RelatedObjects</em> are demoted from the supertype <em>IfcRelDecomposes</em>.
+</blockquote>
+

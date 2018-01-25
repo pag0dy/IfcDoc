@@ -109,7 +109,6 @@
             resources.ApplyResources(this.ctlConcept, "ctlConcept");
             this.ctlConcept.ConceptRoot = null;
             this.ctlConcept.CurrentInstance = null;
-            this.ctlConcept.Map = null;
             this.ctlConcept.Name = "ctlConcept";
             this.ctlConcept.Project = null;
             this.ctlConcept.Selection = null;

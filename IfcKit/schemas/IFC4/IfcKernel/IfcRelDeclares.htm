@@ -1,0 +1,17 @@
+﻿<p>The objectified relationship <em>IfcRelDeclares</em> handles the declaration of objects (subtypes of <em>IfcObject</em>) or properties (subtypes of <em>IfcPropertyDefinition</em>) to a project or project library (represented by <em>IfcProject</em>, or <em>IfcProjectLibrary</em>).</p>
+
+<p>The relationship handles the assignment of other objects, like <em>IfcActor</em>, or <em>IfcTypeObject</em> to the project, or project libary. The attribute <em>RelatedDefinitions</em> provides the references to the first level objects, that are the elements within the context. All other objects that relate to the first level objects are also defined in the context.</p>
+
+<blockquote class="note">
+NOTE&nbsp; Every object (as subtype of <em>IfcObject</em>) has to be declared within the context of a single <em>IfcProject</em>, or of a <em>IfcProjectLibrary</em> assigned to a single <em>IfcProject</em>. This declaration is transitive. For example: the <em>IfcWorkPlan</em> as first level object is declared within the context of <em>IfcProject</em> via <em>IfcRelDeclares</em>, all related <em>IfcWorkSchedule</em>'s are related to the context in a transitive way through <em>IfcWorkPlan</em>.
+</blockquote>
+
+<blockquote class="note">
+NOTE&nbsp; The assignment excludes subtypes of <em>IfcProduct</em>'s, these are assigned to the <em>IfcProject</em> using the spatial structure approach through <em>IfcSpatialStructureElement</em>(s), where the outer container element such as <em>IfcSite</em> or <em>IfcBuilding</em> has an <em>IfcRelAggregates</em> relationship with the <em>IfcProject</em>.
+</blockquote>
+
+<p>The <em>RelatingContext</em> is the project, or project library that comprises all elements. The unit assignments and the presentation contexts defined at <em>IfcProject</em> or <em>IfcProjectLibrary</em> apply to all these elements.</p>
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in  IFC4.
+</blockquote>

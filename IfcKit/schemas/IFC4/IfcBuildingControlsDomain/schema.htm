@@ -1,0 +1,46 @@
+﻿<p>The <em>IfcBuildingControlsDomain</em> schema forms
+part of the Domain Layer of the IFC Model. It extends the ideas
+concerning building services outlined in the <em>IfcSharedBldgServicesElements</em>
+schema. It defines concepts of building automation, control,
+instrumentation and alarm. </p>
+
+<p>The <em>IfcBuildingControlsDomain</em> schema
+supports ideas including types and occurrences of: </p>
+<ul>
+  <li>actuator</li>
+  <li>alarm</li>
+  <li>controller</li>
+  <li>sensor</li>
+  <li>flow instrument</li>
+  <li>unitary control element</li>
+</ul>
+<p>Elements that perform the control action such as valves and dampers are principally types of distribution flow element and are located in the <em>IfcHvacDomain</em> and <em>IfcElectricalDomain</em> schemas.</p>
+
+<p>Occurrences of control elements capture design information, while realtime device state is captured on <em>IfcPerformanceHistory</em>, for which control elements may be assigned.  
+Various standard property sets are defined for performance history to capture direct control data.</p>
+<p>Control elements are identified within control systems using <em>IfcRelAssociatesClassification</em> to indicate URLs of gateways and addresses of devices and data points.</p>  
+<p>To support multiple lifecycle stages, realtime control data (<em>IfcPerformanceHistory</em>) and design data (<em>IfcDistributionElement</em> subtypes) 
+are separate such that each may be used independently without the existence of the other, however both may be related via <em>IfcRelAssignsToControl</em>.  
+If device addressing is known at the time of design where classification is applied to occurrence entities, 
+then upon connecting to a control system the control element occurrences can be assigned to realtime device data (<em>IfcPerformanceHistory</em>) automatically according to matching classification.</p>
+<p>To connect control elements to physical flow elements measured or controlled, the <em>IfcRelFlowControlElements</em> relationship is used.  
+For example, such relationship may map an actuator to a damper, or a temperature sensor to an evaporator coil.
+Performance data for <em>IfcDistributionFlowElement</em> entities may be derived by traversing such relationships.</p>
+
+<p>The <em>IfcBuildingControlsDomain</em> schema does not specify building automation protocols, but may be mapped to standard protocols or vendor implementations for commissioning and operations interoperability.  Common applicable entities are described as follows:</p>
+<ul>
+  <li><em>IfcPerformanceHistory</em>: Captures realtime device data in the form of property sets.</li>
+  <li><em>IfcPropertySet</em>: Captures a set of realtime device data, either using predefined data structures or custom information.</li>
+  <li><em>IfcPropertySetTemplate</em>: Captures metadata about custom properties, such as names, descriptions, data types, units, and ranges.</li>
+  <li><em>IfcRelAssociatesClassification</em>: Associates addresses of devices and control points to uniquely identify within a control system.</li>
+  <li><em>IfcController</em>: Captures non-realtime occurrence information for hardware or software-based arbitrary analog and digital data.</li>
+  <li><em>IfcAlarm</em>: Captures non-realtime occurrence information for hardware or software-based alarm sources.</li>
+  <li><em>IfcEvent</em>: Captures alarm event handling information.</li>
+  <li><em>IfcProcedure</em>: Captures device procedures that may be run arbitrarily or in response to events.</li>
+  <li><em>IfcTask</em>: Captures device programs that may be scheduled at various times.</li>
+</ul>
+
+
+<blockquote class="history">
+HISTORY&nbsp; New schema in IFC2x2.
+</blockquote>

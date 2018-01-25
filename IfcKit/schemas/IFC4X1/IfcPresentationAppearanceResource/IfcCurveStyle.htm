@@ -1,0 +1,25 @@
+﻿<p>An <em>IfcCurveStyle</em> provides the style table for presentation information assigned to geometric curves. The style is defined by a color, a font and a width. The <em>IfcCurveStyle</em> defines curve patterns as model patterns, that is, the distance between visible and invisible segments of curve patterns are given in model space dimensions (that have to be scaled using the target plot scale).</p>
+
+<p>Styles are intended to be shared by multiple <em>IfcStyledItem</em>'s, assigning the style to occurrences of (subtypes of) <em>IfcGeometricRepresentationItem</em>'s. Measures given to a font pattern or a curve width are given in global drawing length units.</p>
+
+<blockquote class="note">
+NOTE&nbsp; global units are defined at the single <em>IfcProject</em> instance, given by <em>UnitsInContext:IfcUnitAssignment</em>, the same units are used for the geometric representation items and for the style definitions.
+</blockquote>
+
+<p>The measure values for font pattern and curve width apply to the model space with a target plot scale provided for the correct appearance in the default plot scale.. For different scale and projection dependent curve styles a different instance of <em>IfcCurveStyle</em> needs to be used by <em>IfcPresentationStyleAssignment</em> for different <em>IfcGeometricRepresentationSubContext</em> dependent representations.</p>
+
+<blockquote class="note">NOTE&nbsp; the target plot scale is given by <em>IfcGeometricRepresentationSubContext.TargetScale</em>.
+</blockquote>
+
+<p>An <em>IfcCurveStyle</em> can be assigned to <em>IfcGeometricRepresentationItem</em>'s via the <em>IfcPresentationStyleAssignment</em> through an intermediate <em>IfcStyledItem</em> or <em>IfcAnnotationCurveOccurrence</em>.</p>
+
+<blockquote class="extDef">
+NOTE&nbsp; Definition according to ISO/CD 10303-46:1992<br>
+A curve style specifies the visual appearance of curves.</blockquote>
+<blockquote class="note">
+NOTE&nbsp; Corresponding ISO 10303 name: curve_style. Please refer to ISO/IS 10303-46:1994 for the final definition of the formal standard.
+</blockquote>
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC2x2.</small> </font>
+</blockquote>

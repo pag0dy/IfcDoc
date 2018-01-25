@@ -216,10 +216,11 @@ namespace IfcDoc.Format.HTM
 
         public void WriteDefinition(string definition)
         {
-            string format = FormatDefinition(definition);
+            string format = FormatDefinition(definition, "../../");
             WriteLine(format);
         }
 
+#if false // unused???
         /// <summary>
         /// Encodes HTML, preserves tabs and new lines, and generates hyperlinks for IFC references
         /// </summary>
@@ -254,8 +255,14 @@ namespace IfcDoc.Format.HTM
 
             this.Write(sb.ToString());
         }
+#endif
 
-        public void WriteExpression(string rawtext)
+        /// <summary>
+        /// Writes text containing definition identifiers -- e.g. schema languages, instance data
+        /// </summary>
+        /// <param name="rawtext">The text to markup.</param>
+        /// <param name="urlprefix">Prefix of URLs to use that points to schema directory of documentation -- may be relative or absolute.</param>
+        public void WriteExpression(string rawtext, string urlprefix)
         {
             if (rawtext == null)
                 return;
@@ -264,7 +271,7 @@ namespace IfcDoc.Format.HTM
             html = html.Replace("\r\n", "<br/>\r\n");
             html = html.Replace("\t", "&nbsp;");
 
-            html = FormatExpression(html);
+            html = FormatExpression(html, urlprefix);
             this.Write(html);
         }
 
@@ -273,7 +280,7 @@ namespace IfcDoc.Format.HTM
         /// </summary>
         /// <param name="expression"></param>
         /// <returns></returns>
-        public string FormatExpression(string expression)
+        public string FormatExpression(string expression, string urlprefix)
         {
             string escaped = expression;// System.Security.SecurityElement.Escape(expression);
             if (escaped != null)
@@ -315,7 +322,7 @@ namespace IfcDoc.Format.HTM
 
                         if (this.m_mapEntity.ContainsKey(identifier))
                         {
-                            string fmt = FormatDefinition(identifier);
+                            string fmt = FormatDefinition(identifier, urlprefix);
                             sb.Append(fmt);
                         }
                         else
@@ -333,11 +340,16 @@ namespace IfcDoc.Format.HTM
             return html;
         }
 
+        private string FormatDefinition(string definition)
+        {
+            return FormatDefinition(definition, "../../");
+        }
+
         /// <summary>
         /// Writes definition, using hyperlink for IFC-defined type (e.g. IfcCartesianPoint) or bold for primitive type (e.g. INTEGER)
         /// </summary>
         /// <param name="definition"></param>
-        private string FormatDefinition(string definition)
+        private string FormatDefinition(string definition, string urlprefix)
         {
             DocObject ent = null;
             string schema = null;
@@ -366,17 +378,17 @@ namespace IfcDoc.Format.HTM
                         }
                         else if(ent is DocPropertySet || ent is DocPropertyEnumeration)
                         {
-                            string hyperlink = @"../../" + schema.ToLower() + @"/pset/" + definition.ToLower() + ".htm";
+                            string hyperlink = urlprefix + schema.ToLower() + @"/pset/" + definition.ToLower() + ".htm";
                             return "<a href=\"" + hyperlink + "\">" + definition + "</a>";
                         }
                         else if(ent is DocQuantitySet)
                         {
-                            string hyperlink = @"../../" + schema.ToLower() + @"/qset/" + definition.ToLower() + ".htm";
+                            string hyperlink = urlprefix + schema.ToLower() + @"/qset/" + definition.ToLower() + ".htm";
                             return "<a href=\"" + hyperlink + "\">" + definition + "</a>";
                         }
                         else //if (ent is DocDefinition)
                         {
-                            string hyperlink = @"../../" + schema.ToLower() + @"/lexical/" + definition.ToLower() + ".htm";
+                            string hyperlink = urlprefix + schema.ToLower() + @"/lexical/" + definition.ToLower() + ".htm";
                             return "<a href=\"" + hyperlink + "\">" + definition + "</a>";
                         }
                     }
@@ -943,7 +955,7 @@ namespace IfcDoc.Format.HTM
                     this.m_writer.Write(docWhere.Name);
                     this.m_writer.Write(" : ");
                     //this.m_writer.Write(html);
-                    this.WriteExpression(docWhere.Expression);
+                    this.WriteExpression(docWhere.Expression, "../../");
                     //this.WriteFormatted(docWhere.Expression);
                     this.m_writer.Write(";<br/>");                    
                 }
@@ -1145,7 +1157,7 @@ namespace IfcDoc.Format.HTM
 
             escaped = System.Security.SecurityElement.Escape(escaped);
             escaped = escaped.Replace("&apos;", "'");
-            escaped = FormatExpression(escaped);
+            escaped = FormatExpression(escaped, "../../");
 
             escaped = escaped.Replace("\r\n", "<br/>");
             escaped = escaped.Replace("    ", "&nbsp;&nbsp;&nbsp;&nbsp;");
@@ -2830,15 +2842,13 @@ namespace IfcDoc.Format.HTM
                     "<td>IFC-SPF property and quantity templates</td>" +
                     "<td><a href=\"" + linkprefix + ".ifc\">" + code + ".ifc</a></td>" +
                     "<td>&nbsp;</td>" +
-                    "</tr>");
+                    "</tr>" +
 
-#if false
                     "<tr>" +
                     "<td>IFC-XML property and quantity templates</td>" +
                     "<td><a href=\"" + linkprefix + ".ifcxml\">" + code + ".ifcxml</a></td>" +
                     "<td>&nbsp;</td>" +
-                    "</tr>"
-#endif
+                    "</tr>");
 
                 if (!docPublication.ISO)
                 {
@@ -2886,7 +2896,11 @@ namespace IfcDoc.Format.HTM
                 }
             }
 
-            this.WriteLinkTo(docPublication, "listing-" + code.ToLower(), 3);
+            if (code != null)
+            {
+                WriteLinkTo(docPublication, "listing-" + code.ToLower(), 3);
+            }
+
             this.WriteFooter(docPublication.Footer);
         }
 
@@ -2945,12 +2959,15 @@ namespace IfcDoc.Format.HTM
                 entity.Localization.Sort();
                 foreach (DocLocalization doclocal in entity.Localization)
                 {
-                    string localname = doclocal.Name;
-
-                    string localid = doclocal.Locale.Substring(0, 2).ToLower();
-                    if (locales.Contains(localid))
+                    if (doclocal.Locale != null)
                     {
-                        this.WriteLine("<tr><td><img src=\"../../../img/locale-" + localid + ".png\" /></td><td><b>" + localname + "</b></td></tr>");
+                        string localname = doclocal.Name;
+
+                        string localid = doclocal.Locale.Substring(0, 2).ToLower();
+                        if (locales.Contains(localid))
+                        {
+                            this.WriteLine("<tr><td><img src=\"../../../img/locale-" + localid + ".png\" /></td><td><b>" + localname + "</b></td></tr>");
+                        }
                     }
                 }
                 this.WriteLine("</table>");
@@ -3324,17 +3341,40 @@ namespace IfcDoc.Format.HTM
 
         }
 
-        internal void WriteTerm(DocTerm docRef)
+        /// <summary>
+        /// Writes term to documentation
+        /// </summary>
+        /// <param name="docRef">The term to write</param>
+        /// <param name="indexpath">The 1-based index path of the term</param>
+        internal void WriteTerm(DocTerm docRef, int[] indexpath)
         {
-            this.WriteLine("<dt class=\"term\"><strong name=\"" + DocumentationISO.MakeLinkName(docRef) + "\" id=\"" + DocumentationISO.MakeLinkName(docRef) + "\">" + docRef.Name + "</strong></dt>");
+            StringBuilder sbIndex = new StringBuilder();
+            for (int i = 0; i < indexpath.Length; i++ )
+            {
+                if(i > 0)
+                {
+                    sbIndex.Append(".");
+                }
+                sbIndex.Append(indexpath[i]);
+            }
+
+            this.WriteLine("<dt class=\"term\"><strong name=\"" + DocumentationISO.MakeLinkName(docRef) + "\" id=\"" + DocumentationISO.MakeLinkName(docRef) + "\">" +
+                sbIndex.ToString() + " " + docRef.Name + "</strong></dt>");
             this.WriteLine("<dd class=\"term\">" + docRef.Documentation);
 
             if (docRef.Terms.Count > 0)
             {
+                int[] subindexpath = new int[indexpath.Length + 1];
+                for (int i = 0; i < indexpath.Length; i++ )
+                {
+                    subindexpath[i] = indexpath[i];
+                }
+
                 this.WriteLine("<dl>");
                 foreach (DocTerm sub in docRef.Terms)
                 {
-                    WriteTerm(sub);
+                    subindexpath[subindexpath.Length - 1]++;
+                    WriteTerm(sub, subindexpath);
                 }
                 this.WriteLine("</dl>");
             }

@@ -1,0 +1,34 @@
+﻿<p>The <em>IfcRelProjectsElement</em> is an objectified relationship
+between an element and one projection element that creates a
+modifier to the shape of the element. The relationship is defined
+to be a 1:1 relationship, if an element has more than one
+projection, several relationship objects have to be used, each
+pointing to a different projection element. The
+<em>IfcRelProjectsElement</em> establishes an aggregation
+relationship between the main element and a sub ordinary addition
+feature.</p>
+<blockquote class="note">
+NOTE&nbsp; In contrary the
+<em>IfcRelAggregates</em> relationship established an aggregation
+of equal parts to a whole.
+</blockquote>
+<p>The <em>IfcRelProjectsElement</em> implies a Boolean operation of
+addition for the geometric bodies of the element and the feature
+element. As with all decomposition relationships it determines:</p>
+<ul>
+<li>existence dependency - the <em>RelatedFeatureElement</em>
+cannot exist without the <em>RelatingElement</em></li>
+<li>hierarchical and non-cyclical relationship - the
+<em>IfcRelProjectsElement</em> can only alter a single
+<em>IfcElement</em></li>
+<li>no spatial containment - the <em>IfcFeatureElementAddition</em>
+as related element never participates in the hiearchical spatial
+containment relationship
+<em>IfcRelContainedInSpatialStructure</em></li>
+</ul>
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC2x2.
+</blockquote>
+<blockquote class="change-ifc2x4">
+IFC4 CHANGE&nbsp; Supertype changed to IfcRelDecomposes.
+</blockquote>

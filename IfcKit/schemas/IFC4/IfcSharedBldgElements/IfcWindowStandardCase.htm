@@ -1,0 +1,45 @@
+﻿<p>The standard window,
+<em>IfcWindowStandardCase</em>, defines a window with certain
+constraints for the provision of operation types, opening
+directions, frame and lining parameters, construction types and
+with certain constraints for the geometric representation. The
+<em>IfcWindowStandardCase</em> handles all cases of windows,
+that:</p>
+<ul>
+<li>are inserted into an opening, represented by
+<em>IfcOpeningElement</em>, using the <em>IfcRelFillsElement</em>
+relationship</li>
+<li>have a local placement relative to this opening, and with the
+y-axis of the placement pointing into the opening direction</li>
+<li>have a profile geometry, represented by
+<em>IfcShapeRepresentation.RepresentationIdentifier</em>="Profile"
+as a closed curve to which the window parameter apply. The
+profile represents a rectangle within the xz plane of the local
+placement</li>
+<li>have a reference to an <em>IfcWindowType</em> to define the
+opening direction and the operation type (swinging, sliding,
+folding, etc.) of the window. The attribute <em>OperationType</em>
+shall be provided and not being UNDEFINED, and the attribute
+<em>ParameterTakesPrecedence</em> shall be "TRUE".</li>
+<li>have a single <em>IfcWindowLiningProperties</em> and a set of
+<em>IfcWindowPanelProperties</em> instances included in the set of
+<em>HasPropertySets</em> at <em>IfcWindowType</em></li>
+</ul>
+<blockquote class="history">HISTORY&nbsp; New entity in IFC4.</blockquote>
+
+<p>The geometric representation of <em>IfcWindowStandardCase</em>
+is defined using the following multiple shape representations for
+its definition:</p>
+<ul>
+<li><u>Profile</u>: a three-dimensional closed curve within a
+particular shape representation. The profile is used to apply the
+parameter of the parametric window representation. The profile
+around the edges of the opening is used to apply the window
+lining and window panel shape parameter.</li>
+<li><u>Body</u>: A SweptSolid, SurfaceModel, or
+Brep Representation or a CSG additionally defining the 3D shape
+of the standard window in addition to the parametric
+representation by applying the <em>IfcWindowLiningProperties</em>
+and an the <em>IfcWindowPanelProperties</em> to the Profile
+representation.</li>
+</ul>

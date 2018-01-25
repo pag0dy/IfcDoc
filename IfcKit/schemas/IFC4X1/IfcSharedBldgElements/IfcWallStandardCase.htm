@@ -1,0 +1,43 @@
+﻿<p>The <em>IfcWallStandardCase</em> defines a wall with certain
+constraints for the provision of parameters and with certain
+constraints for the geometric representation. The
+<em>IfcWallStandardCase</em> handles all cases of walls, that are
+extruded vertically:</p>
+<ul>
+<li>along the positive z axis of the wall object coordinate system,
+and</li>
+<li>along the positve z axis of the global (world) coordinate
+system</li>
+</ul>
+<p>and have a single thickness along the path for each wall layer,
+i.e.:</p>
+<ul>
+<li>parallel sides for straight walls</li>
+<li>co-centric sides for curved walls.</li>
+</ul>
+<p>and have either:</p>
+<ul>
+<li>a straight line axis (straight wall), or</li>
+<li>a circular arc axis (round wall).</li>
+</ul>
+<p>and shall not have</p>
+<ul>
+<li>aggregated components, that is, parts aggregated to a wall by <em>IfcRelAggregates</em></li>
+<li>shape representation for 'Body' not being an extrusion, or clipped extrusion</li>
+</ul>
+<p>The following parameter have to be provided:</p>
+<ul>
+<li>Wall height, taken from the depth of extrusion, provided by the geometric representation.</li>
+<li>Wall thickness, taken from the material layer set usage, attached to the wall</li>
+<li>Wall offset from axis, taken from the material layer set usage, attached to the wall</li>
+</ul>
+<p>The <em>IfcWallStandardCase</em> requires the provision of the wall axis either a straight line that is parallel to the x-axis of the object coordinate system, or a circular arc where the tangent at start is parallel to the x-axis of the object coordinate system. The direction of the wall axis shall be the positive direction of
+that x-axis.</p>
+<p>The material of the wall is defined by the <em>IfcMaterialLayerSetUsage</em> and is attached by the <em>IfcRelAssociatesMaterial</em> objectified relationship. It is
+accessible by the inverse <em>HasAssociations</em> relationship. The material layer set usage has to be given (enforced by where rule).</p>
+
+<p>An 'Axis' and a 'Body' shape representation has to be provided, and it is invalid to exchange a 'Tessellation', 'SurfaceModel', 'Brep' or 'MappedRepresentation' representation for the 'Body' shape representation of the <em>IfcWallStandardCase</em>.
+
+<blockquote class="history">HISTORY&nbsp; New entity in IFC2x.</blockquote>
+
+

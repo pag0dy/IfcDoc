@@ -1,0 +1,63 @@
+﻿<p>
+ The schema <em>IfcMaterialResource</em> contains the types and entities that are used to define materials (substances,
+ of which products are made of). Materials are defined generically.
+</p>
+<blockquote class="note">
+ NOTE&nbsp; The references to the usage of materials is made from the relevant elements through the objectified
+ relationship <em>IfcRelAssociatesMaterial</em>.
+</blockquote>
+<p>
+ Material definitions are distinguished by how they apply to elements or element types and by their components (layers,
+ profiles, parts).
+</p>
+<p>
+ Material designation can be made for standard element occurrences to support a limited range of their parametric representation using
+</p>
+<ol>
+ <li>a structured set of material layers <em>IfcMaterialLayerSetUsage</em> and how the layers relate to the reference axis or plane,</li>
+ <li>a structured set of material profiles <em>IfcMaterialProfileSetUsage</em> and how the profiles relate to the reference axis.</li>
+</ol>
+<blockquote class="note">NOTE&nbsp; 
+ Often specific subtypes of building elements are used to have such parametric representations associated, they use the 
+ common suffix 'StandardCase', for example <em>IfcWallStandardCase</em>, or <em>IfcBeamStandardCase</em>.</blockquote>
+<p>
+ Material designation can be made for element occurrences or element types without applying a parametric meaning using
+</p>
+<ol>
+ <li>a set of material layers (with a specified configuration by sequence and thickness of material layers)
+  <em>IfcMaterialLayerSet</em>, or </li>
+ <li>a set of material profiles (with a specified configuration by positioning and outline profile of material
+  profiles) <em>IfcMaterialProfileSet</em>, or</li>
+ <li>a set of materials (without a specified configuration or structure) <em>IfcMaterialConstituentSet</em>, or</li>
+ <li>as fallback by a single material <em>IfcMaterial</em> (including composite materials),</li>
+</ol>
+<p>
+ These options are exposed for association with <em>IfcElement</em> or <em>IfcElementType</em> and their subtypes
+ through a select type <em>IfcMaterialSelect</em>. The association is realized by the objectified relationship
+ <em>IfcRelAssociatesMaterial</em>, accessible by the inverse relationship <em>AssociatedTo</em>. Some associations to
+ specific material entities may be restricted as not being appropriate within the specialized element or element type definitions.
+</p>
+<p>
+  The following material properties and information sets can be assigned to an <em>IfcMaterialDefinition</em>, or only to a
+  single <em>IfcMaterial</em>.
+</p>
+<ul>
+ <li>Material properties;</li>
+ <li>Material classification and material library reference;</li>
+ <li>Material presentation in shape models (e.g. by color, hatching, rendering);</li>
+ <li>Relation to the ingredients of a material composite.</li>
+</ul>
+<blockquote class="history">
+ HISTORY&nbsp; New schema in IFC1.0
+</blockquote>
+<blockquote class="change-ifc2x4">
+ IFC4 CHANGE&nbsp; Definition of material properties and their assignment to <em>IfcMaterial</em> or other appropriate
+ options in <em>IfcMaterialSelect</em> is now fully captured by <em>IfcExtendedMaterialProperties</em> using the general
+ <em>IfcProperty</em> approach. Specific predefined subtypes of <em>IfcMaterialProperties</em> are no longer available.
+</blockquote>
+<blockquote class="deprecated">
+ DEPRECATION&nbsp; Material designation by using <em>IfcMaterialList</em> is deprecated and should not be used.
+ The classification of materials should not be done using <em>IfcMaterialClassificationRelationship</em> anymore (entity
+ type deprecated); the <em>IfcExternalReferenceRelationship</em> in <em>IfcExternalReferenceResource</em> schema should be used
+ instead.
+</blockquote>

@@ -1,0 +1,2 @@
+﻿NOT(EXISTS(SELF\IfcCartesianTransformationOperator.Axis1)) OR 
+(SELF\IfcCartesianTransformationOperator.Axis1.Dim = 3)

@@ -1,0 +1,22 @@
+﻿<p>A roof is the covering of the top part of a building, it protects the building against the effects of wheather.</p>
+<blockquote class="extDef">NOTE&nbsp; Definition according to ISO 6707-1: 
+construction enclosing the building from above.</blockquote>
+
+<p> The <em>IfcRoof</em> shall either be represented:</p>
+<ul>
+<li>as a roof assembly that aggregates all parts (slabs, rafters and purlins, or other included roofs, such as dormers) with own shape representaion, or</li>
+<li>as a single roof without decomposition including all shape representations directly at the roof entity.</li>
+</ul>
+
+<blockquote class="note">NOTE&nbsp; In case of an <em>IfcRoof</em> being the assembly of all parts of the roof the aggregation is handled by the <em>IfcRelAggregates</em> relationship, relating an <em>IfcRoof</em> with the related roof elements, like slabs (represented by <em>IfcSlab</em>), rafters and purlins (represented by <em>IfcBeam</em>), or other included roofs, such as dormers (represented by <em>IfcRoof</em>).</blockquote>
+
+<blockquote class="note">NOTE&nbsp; Model View Definitions and implementer 
+agreements may restrict the <em>IfcRoof</em> being an assembly to not have an 
+independent shape representation, but to always require that the decomposed parts have a shape representation. In this case, at least the 'Body' geometric representations shall not be provided directly at <em>IfcRoof</em> if it is an
+ assembly. The 'Body' geometric 
+representation of the <em>IfcRoof</em> is then the sum of the 'Body' shape representation of the parts 
+within the decomposition structure.</blockquote>
+
+
+<blockquote class="history">HISTORY&nbsp; New entity in IFC2.0.</blockquote>
+<blockquote class="change-ifc2x4">IFC4 CHANGE&nbsp; Attribute <em>ShapeType</em> renamed to <em>PredefinedType</em>.</blockquote>

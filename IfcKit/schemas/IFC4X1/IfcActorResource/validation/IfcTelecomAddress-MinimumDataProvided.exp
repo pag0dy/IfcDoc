@@ -1,0 +1,6 @@
+﻿EXISTS (TelephoneNumbers) OR
+EXISTS (FacsimileNumbers) OR 
+EXISTS (PagerNumber) OR
+EXISTS (ElectronicMailAddresses) OR 
+EXISTS (WWWHomePageURL) OR
+EXISTS (MessagingIDs)

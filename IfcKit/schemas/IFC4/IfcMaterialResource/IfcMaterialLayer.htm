@@ -1,0 +1,15 @@
+﻿<p><em>IfcMaterialLayer</em> is a single and identifiable part of an element which is constructed of a number of layers (one or more). Each <em>IfcMaterialLayer</em> has a constant thickness and is located relative to the referencing <em>IfcMaterialLayerSet</em> along the material layer set base (MlsBase).</p>
+
+<p>Air gaps within a material layer set are represented as an <em>IfcMaterialLayer</em> with the attribute <em>IsVentilated</em> having the value TRUE or UNKNOWN. Such air gaps shall be interpreted as voids (not having a material).</p>
+
+<blockquote class="example">EXAMPLE&nbsp; A cavity wall with brick masonry used with an air gap in between would be modeled using three <em>IfcMaterialLayer</em>'s: [1] Brick, [2] Air gap, [3] Brick. The inner layer "Brick" would have a <em>Name</em> = "Brick", an individual <em>LayerThickness</em>, and potentially a <em>Category</em> indicating it as "load bearing", and a <em>Priority</em> that controls how this material layer interacts with other material layers in wall connections.</blockquote>
+
+<p>The <em>IfcMaterialLayer</em> may have a material layer name which may differ from the <em>IfcMaterial</em> name referenced.</p>
+
+<blockquote class="example">EXAMPLE&nbsp; The <em>IfcMaterialLayer</em> name of an insulation layer can be "Insulation", whereas the <em>IfcMaterial</em> name is "polystyrene insulating boards".</blockquote>
+
+<blockquote class="history">HISTORY&nbsp; New entity in IFC1.5</blockquote>
+
+<blockquote class="change-ifc2x4">
+IFC4 CHANGE&nbsp; The attributes <em>Name</em>, <em>Description</em>, <em>Category</em>, <em>Priority</em> have been added at the end of attribute list. Data type of <em>LayerThickness</em> relaxed to <em>IfcNonNegativeLengthMeasure</em>.
+</blockquote>

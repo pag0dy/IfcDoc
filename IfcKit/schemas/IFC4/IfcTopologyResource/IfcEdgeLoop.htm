@@ -1,0 +1,13 @@
+﻿<p> </p>
+<blockquote class="extDef">NOTE&nbsp; Definition according to ISO/CD 10303-42:1992<br> 
+An edge_loop is a loop with nonzero extent. It is a path in which the start and end vertices are the same. Its domain, if present, is a closed curve. An edge_loop may overlap itself.</blockquote>
+
+<blockquote class="note">NOTE&nbsp; Entity adapted from <strong>edge_loop</strong> defined in ISO 10303-42.</blockquote>
+<blockquote class="history"> HISTORY&nbsp; New entity in IFC2x2.</blockquote>
+
+<p class="spec-head">Informal Propositions:</p> 
+<ol> 
+<li>The genus of the <em>IfcEdgeLoop</em> shall be 1 or greater.</li> 
+<li>The Euler formula shall be satisfied:<br>(number of vertices) + genus - (number of edges) = 1;</li> 
+<li>No edge may be referenced more than once by the same <em>IfcEdgeLoop</em> with the same sense. For this purpose, an edge which is not an oriented edge is considered to be referenced with the sense TRUE.</li> 
+</ol> 

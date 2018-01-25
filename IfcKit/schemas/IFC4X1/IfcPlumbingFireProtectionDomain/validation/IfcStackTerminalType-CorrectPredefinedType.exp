@@ -1,0 +1,2 @@
+﻿(PredefinedType <> IfcStackTerminalTypeEnum.USERDEFINED) OR
+((PredefinedType = IfcStackTerminalTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcElementType.ElementType))

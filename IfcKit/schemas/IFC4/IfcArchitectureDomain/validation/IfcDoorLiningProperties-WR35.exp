@@ -1,0 +1,7 @@
+﻿(EXISTS(SELF\IfcPropertySetDefinition.DefinesType[1])) 
+AND 
+(
+ ('IFCSHAREDBLDGELEMENTS.IFCDOORTYPE' IN TYPEOF(SELF\IfcPropertySetDefinition.DefinesType[1]))
+  OR
+ ('IFCARCHITECTUREDOMAIN.IFCDOORSTYLE' IN TYPEOF(SELF\IfcPropertySetDefinition.DefinesType[1]))
+)

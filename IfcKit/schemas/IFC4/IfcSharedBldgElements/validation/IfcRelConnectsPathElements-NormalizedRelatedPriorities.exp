@@ -1,0 +1,5 @@
+﻿(SIZEOF(RelatedPriorities) = 0)
+OR
+(SIZEOF (QUERY (temp <* RelatedPriorities
+  | {0 <= temp <= 100}
+  )) = SIZEOF(RelatedPriorities))

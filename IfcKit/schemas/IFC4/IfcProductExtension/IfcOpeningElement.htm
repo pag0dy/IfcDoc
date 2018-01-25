@@ -1,0 +1,46 @@
+﻿<p>The opening element stands for opening, recess or chase, all reflecting voids. It represents a void within any element that has physical manifestation. Openings
+can be inserted into walls, slabs, beams, columns, or other elements.</p>
+
+<p>There are two main representations for opening elements:</p>
+<ul>
+<li>Openings that have a constant profile along a linear extrusion. They are placed relative to the voided elements and the extrusion direction is perpendicular to the plane of the element (horizontally for walls, vertically for slabs). Only a single extrusion body is allowed. It cuts through the whole thickness of the voided element, i.e. it reflects a true opening.
+<blockquote class="note">NOTE&nbsp; The entity <em>IfcOpeningStandardCase</em> has been deprecated.</blockquote>
+</li>
+<li><em>IfcOpeningElement</em> is used for all other occurrences of openings and in particular also for niches or recesses.</li>
+</ul>
+<blockquote class="note">NOTE&nbsp; Model View Definitions may restrict the types of elements which can be voided by an <em>IfcOpeningElement</em></blockquote>
+
+<p>There are two different types of opening elements:</p>
+<ul>
+<li>an opening, where the thickness of the opening is greater or equal to the thickness of the element;</li>
+<li>a recess or niche, where the thickness of the recess is smaller than the thickness of the element.</li>
+</ul>
+<p>The attribute <em>PredefinedType</em> should be used to capture the differences,</p>
+<ul>
+<li>the attribute is set to OPENING for an opening or</li>
+<li>the attribute is set to RECESS for a recess or niche.</li>
+<li>If the value for <em>PredefinedType</em> is omitted, or the value is set to NOTDEFINED, no specific information of whether it is an opening or recess shall be assumed.</li>
+</ul>
+
+<p>An <em>IfcOpeningElement</em> has to be inserted into an <em>IfcElement</em> by using the <em>IfcRelVoidsElement</em> relationship. It may be filled by an <em>IfcDoor</em>, <em>IfcWindow</em>, or another filling element by using the relationship <em>IfcRelFillsElements</em>. Depending on the type of the <em>IfcShapeRepresentation</em> of the <em>IfcOpeningElement</em> the voiding relationship implies:</p>
+<ul>
+ <li> if the <em>IfcShapeRepresentation</em>.<emRepresentationIdentifier</em> = 'Body', then the Body shape represntation of the opening has to be subtracted from the body shape representation of the voided element - implicit Boolean difference operation.</li>
+ <li> if the <em>IfcShapeRepresentation</em>.<emRepresentationIdentifier</em> = 'Reference', then the Reference shape representation of the opening is not subtracted, it is provided in addition to the hole in the Body shape representation of the voided element.</li>
+</ul>
+
+<p>The <em>IfcOpeningElement</em> shall not participate in the containment relationship, i.e. it is not linked directly to the spatial structure of the project. It has a mandatory <em>VoidsElements</em> inverse relationship pointing to the <em>IfcElement</em> that is contained in the spatial structure.</p>
+<ul>
+<li>The inverse relationship <em>ContainedInStructure</em> shall be NIL.</li>
+</ul>
+
+<blockquote class="note">NOTE&nbsp; See <em>IfcRelVoidsElement</em> for a diagram on how to apply spatial containment and the voiding relationship.</blockquote>
+<blockquote class="history">HISTORY&nbsp; New entity in IFC1.0</blockquote>
+
+<blockquote class="change-ifc2x">
+IFC2x CHANGE&nbsp; The intermediate ABSTRACT supertypes <em>IfcFeatureElement</em> and <em>IfcFeatureSubtraction</em> have been added.
+</blockquote>
+
+<blockquote class="change-ifc2x4">
+IFC4 CHANGE&nbsp; The attribute <em>PredefinedType</em> has been added at the end of attribute list. It should be used instead of the inherited attribute <em>ObjectType</em> from now on.
+</blockquote>
+

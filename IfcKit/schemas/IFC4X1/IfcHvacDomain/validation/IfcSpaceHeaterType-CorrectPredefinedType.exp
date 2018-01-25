@@ -1,0 +1,2 @@
+﻿(PredefinedType <> IfcSpaceHeaterTypeEnum.USERDEFINED) OR
+((PredefinedType = IfcSpaceHeaterTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcElementType.ElementType))

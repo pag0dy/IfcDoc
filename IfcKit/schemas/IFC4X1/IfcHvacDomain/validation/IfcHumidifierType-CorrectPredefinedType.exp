@@ -1,0 +1,2 @@
+﻿(PredefinedType <> IfcHumidifierTypeEnum.USERDEFINED) OR
+((PredefinedType = IfcHumidifierTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcElementType.ElementType))

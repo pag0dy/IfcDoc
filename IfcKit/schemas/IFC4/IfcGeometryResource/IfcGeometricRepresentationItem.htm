@@ -1,0 +1,26 @@
+﻿<p>An <em>IfcGeometricRepresentationItem</em> is the common supertype of all geometric items used within a
+representation. It is positioned within a geometric coordinate system, directly or indirectly through intervening
+items.</p>
+<blockquote class="extDef">
+<p style="font-size:inherit">NOTE Definition according to ISO/CD 10303-42:1992<br>
+An geometric representation item is a representation item that has the additional meaning of having geometric position
+or orientation or both. This meaning is present by virtue of:</p>
+<ul style="font-size:inherit">
+<li style="font-size:inherit">being a Cartesian point or a direction</li>
+<li style="font-size:inherit">referencing directly a Cartesian point or direction</li>
+<li style="font-size:inherit">referencing indirectly a Cartesian point or direction</li>
+</ul>
+<p style="font-size:inherit">An indirect reference to a Cartesian point or direction means that a given geometric item
+references the Cartesian point or direction through one or more intervening geometry or topology items.</p>
+<blockquote class="example">EXAMPLE&nbsp;1 Consider a circle. It gains its geometric position and orientation by virtue
+of a reference to axis2_placement (<em>IfcAxis2Placement</em>) that is turn references a cartesian_point
+(<em>IfcCartesianPoint</em>) and several directions (<em>IfcDirection</em>).</blockquote>
+<blockquote class="example">EXAMPLE&nbsp;2 Consider a manifold brep. A manifold_solid_brep
+(<em>IfcManifoldSolidBrep</em>) is a geometric_representation_item (<em>IfcGeometricRepresentationItem</em>) that
+through several layers of topological_representation_item's (<em>IfcTopologicalRepresentationItem</em>) references poly
+loops (<em>IfcPolyLoop</em>). Through additional intervening entities poly loops reference cartesian_point's
+(<em>IfcCartesianPoint</em>).</blockquote>
+</blockquote>
+<blockquote class="note">NOTE&nbsp; Entity adapted from <strong>geometric_representation_item</strong> defined in ISO
+10303-42.</blockquote>
+<blockquote class="history">HISTORY&nbsp; New entity in IFC1.5</blockquote>

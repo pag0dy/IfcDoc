@@ -1,0 +1,2 @@
+﻿(PredefinedType <> IfcTransformerTypeEnum.USERDEFINED) OR
+((PredefinedType = IfcTransformerTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcElementType.ElementType))

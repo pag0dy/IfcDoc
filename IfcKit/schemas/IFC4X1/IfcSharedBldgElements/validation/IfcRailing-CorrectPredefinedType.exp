@@ -1,0 +1,3 @@
+﻿NOT(EXISTS(PredefinedType)) OR
+ (PredefinedType <> IfcRailingTypeEnum.USERDEFINED) OR
+ ((PredefinedType = IfcRailingTypeEnum.USERDEFINED) AND EXISTS (SELF\IfcObject.ObjectType))

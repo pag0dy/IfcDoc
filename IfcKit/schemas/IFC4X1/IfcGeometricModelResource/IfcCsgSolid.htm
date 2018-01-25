@@ -1,0 +1,21 @@
+﻿<p>An <em>IfcCsgSolid</em> is the representation of a 3D shape using constructive solid geometry model. It is represented by a single 3D CSG primitive, or as a result of a Boolean operation. The operants of a Boolean operation can be Boolean operations themselves forming a CSG tree. The following volumes can be parts of the CSG tree:
+<ul>
+ <li>Boundary representation models, such as <em>IfcFacetedBrep</em>, <em>IfcFacetedBrepWithVoids</em>, </li>
+ <li>Closed tesselated representation modles, such as <em>IfcPolygonalFaceSet</em>, <em>IfcTriangulatedFaceSet</em>, </li>
+ <li>Swept area solids, such as <em>IfcExtrudedAreaSolid</em>, <em>IfcRevolvedAreaSolid</em>, and their subtypes for tapering, </li>
+ <li>Advanced swept area solids, such as <em>IfcSurfaceCurveSweptAreaSolid</em>), <em>IfcFixedReferenceSweptAreaSolid</em>, <em>IfcSweptDiskSolid</em> </li>
+ <li>Half space solids, such as <em>IfcHalfSpaceSolid</em> and its subtypes), and </li>
+ <li>CSG primitives, the subtypes of <em>IfcCsgPrimitive3D</em>. </li>
+</ul>
+</p>
+<blockquote class="extDef">NOTE&nbsp; Definition according to ISO/CD 10303-42:1992<br>
+A solid represented as a CSG model is defined by a collection of so-called primitive solids, combined using regularized Boolean operations. The allowed operations are intersection, union, and difference. As a special case a CSG solid can also consists of a single CSG primitive.<br>
+<br>
+A CSG solid requires two kinds of information for its complete definition: geometric and structural.
+<ul style=" font-size:inherit;">
+<li style=" font-size:inherit;">The geometric information is conveyed by solid models. These typically primitive volumes such as cylinders, wedges and extrusions, but can include general B-Rep models. Solid models can also be half space solids.</li>
+<li style=" font-size:inherit;">The structural information is in a tree (strictly an acyclic directed graph) of Boolean result and CSG solids, which represent a &lsquo;recipe&rsquo; for building the solid. The terminal nodes are the geometric primitives and other solids. Every CSG solid has precisely one Boolean result associated with it which is the root of the tree that defines the solid. (There may be further Boolean results within the tree as operands). The significance of a CSG solid entity is that the solid defined by the associated tree is thus identified as a significant object itself, and in this way it is distinguished from other Boolean result entities representing intermediate results during the construction process.</li>
+</ul>
+</blockquote>
+<blockquote class="note">NOTE&nbsp; Entity adapted from <strong>csg_solid</strong> is defined in ISO 10303-42.</blockquote>
+<blockquote class="history">HISTORY&nbsp; New entity in IFC1.5.1</blockquote>

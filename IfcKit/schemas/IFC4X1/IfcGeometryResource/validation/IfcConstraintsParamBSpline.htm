@@ -1,0 +1,21 @@
+﻿<blockquote class="extDef">NOTE&nbsp; Definition according to ISO/CD 10303-42:1992<br>
+This function checks the parametrisation of a B-spline curve or (one of the
+directions of) a B-spline surface and returns TRUE if no
+inconsistencies are found. These constraints are:
+<ol style="list-style-type:lower-roman;">
+<li>Degree &le; 1.</li>
+<li>Upper index on knots &le; 2.</li>
+<li>Upper index on control points &le; degree.</li>
+<li>Sum of knot multiplicities = degree + (upper index on control
+points) + 2.</li>
+<li>For the first and last knot the multiplicity is bounded by 1
+and (degree+1).</li>
+<li>For all other knots the knot multiplicity is bounded by 1 and
+degree.</li>
+<li>The consecutive knots are increasing in value.</li>
+</ol>
+</blockquote>
+
+<blockquote class="note">NOTE&nbsp; Function adapted from <strong>constraints_param_b_spline</strong> defined in ISO 10303-42.</blockquote>
+
+<blockquote class="history">HISTORY&nbsp; New function in IFC4</blockquote>

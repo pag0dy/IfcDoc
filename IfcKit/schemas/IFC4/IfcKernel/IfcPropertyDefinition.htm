@@ -1,0 +1,27 @@
+﻿<p><em>IfcPropertyDefinition</em> defines the generalization of all characteristics (i.e. a grouping of individual properties), that may be assigned to objects. Currently, subtypes of <em>IfcPropertyDefinition</em> include property set occurrences, property set templates, and property templates.</p>
+<ul>
+ <li><strong>Property set template</strong> - <em>IfcPropertySetTemplate</em>, a collection of property templates that determine the definition of properties used within a project context.</li>
+ <li><strong>Property template</strong> - <em>IfcPropertyTemplate</em>, a single template that determines the definition of a particular property used in the same project context. The template may determine the name, description, data type, the unit, or a standard expression for each property that is based on that template.</li>
+ <li><strong>Property set occurrence</strong> - <em>IfcPropertySet</em>, a set of individual properties (that may or may not be determined by a property template) holding individual values, measure types and units, and are associated to an object occurrence or object type.</li>
+</ul>
+
+<blockquote class="note">
+NOTE&nbsp; The subtype hierarchy of <em>IfcPropertyDefinition</em> also includes statically defined property sets as <em>IfcPreDefinedPropertySet</em>. Those are rarely used collections of fixed attributes combined in an entity definition. The <em>IfcPreDefinedPropertySet</em> can not be determined by an <em>IfcPropertySetTemplate</em>.
+</blockquote>
+
+<blockquote class="note">
+NOTE&nbsp; Individual properties, (subtypes of <em>IfcProperty</em>), are currently not included in the subtype hierarchy of <em>IfcPropertyDefinition</em>. This anomaly is due to upward compatibility reasons with earlier releases of this
+standard.
+</blockquote>
+
+<p>Property definitions define information that is shared among multiple instances of objects, either object occurrences or object types. <em>IfcPropertyDefinition</em>'s (by their instantiable subtypes) can participate within the following relationships:</p>
+<ul>
+ <li><strong>Assignment to a project context</strong> - an <em>HasContext</em> relationship to <em>IfcRelDeclares</em> that establishes the project context in which this property definition is declared. This relationship is predominately applicable to subtypes of <em>IfcPropertyTemplateDefinition</em>.</li>
+ <li><strong>Association to external resources</strong> - an <em>HasAssociation</em> relationship to <em>IfcRelAssociates</em> that refers to external sources of information (most notably a classification or document) and creates a uni-directional association. There is no dependency implied by the
+association.</li>
+</ul>
+<p>Subtypes are included in more specific relationships, see <em>IfcPropertySetDefinition</em> and <em>IfcPropertyTemplateDefinition</em> for details.</p>
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC2.0
+</blockquote>

@@ -1,0 +1,24 @@
+﻿<p>A stair is a vertical passageway allowing occupants to walk (step) from one floor level to another floor
+level at a different elevation. It may include a landing as an intermediate floor slab.</p>
+<blockquote class="extDef">NOTE&nbsp; Definition according to ISO 6707-1: 
+Construction comprising a succession of horizontal stages (steps or landings) that make it
+possible to pass on foot to other levels.</blockquote>
+
+<p> The <em>IfcStair</em> shall either be represented:</p>
+<ul>
+<li>as a stair assembly entity that aggregates all parts (stair flight, landing, etc. with own representations), or</li>
+<li>as a single stair entity without decomposition including all representation directly at the stair entity.</li>
+</ul>
+
+<blockquote class="note">NOTE&nbsp; In case of an <em>IfcStair</em> being the aggregate of all parts of the stair the aggregation is handled by the <em>IfcRelAggregates</em> relationship, relating an <em>IfcStair</em> with the related <em>IfcStairFlight</em> and landings, <em>IfcSlab</em> with PredefinedType=LANDING. <em>IfcRailing</em>'s belonging to the stair may also be included into the aggregation.</blockquote>
+
+<blockquote class="note">NOTE&nbsp; Model View Definitions and implementer 
+agreements may restrict the <em>IfcStair</em> being an assembly to not have an 
+independent shape representation, but to always require that the decomposed parts have a shape representation. In this case, at least the 'Body' geometric representations shall not be provided directly at <em>IfcStair</em> if it is an
+ assembly. The 'Body' geometric 
+representation of the <em>IfcStair</em> is then the sum of the 'Body' shape representation of the parts 
+within the decomposition structure.</blockquote>
+
+
+<blockquote class="history">HISTORY&nbsp; New entity in IFC2.0.</blockquote>
+<blockquote class="change-ifc2x4">IFC4 CHANGE Attribute <em>ShapeType</em> renamed to <em>PredefinedType</em>.</blockquote>

@@ -1,0 +1,26 @@
+﻿<p>The element type <em>IfcWindowType</em> defines commonly shared information for occurrences of windows. The set of shared information may include:</p>
+<ul>
+<li>common properties within shared property sets</li>
+<li>common material information</li>
+<li>common partitioning of panels</li>
+<li>common operation types of panels</li>
+<li>common shape representations</li>
+</ul>
+<p>A window type defines the particular parameter of the lining and one (or several) panels through the <em>IfcWindowLiningProperties</em> and the <em>IfcWindowPanelProperties</em> as predefined property sets applicable to windows only.</p>
+<p>It is used to define a window specification, or window style (the specific product information that is common to all occurrences of that window type). Window types may be exchanged without being already assigned to occurrences.</p>
+<p>Occurrences of the <em>IfcWindowType</em> within building models are represented by instances of <em>IfcWindow</em> or <em>IfcWindowStandardCase</em>.</p>
+
+<blockquote class="history">HISTORY&nbsp; New entity in IFC4. The entity <em>IfcWindowType</em> replaces the previous definition <em>IfcWindowStyle</em> (which is deprecated in IFC4).</blockquote>
+
+<p class="use-head">Geometry Use Definitions</b></u>:</p>
+<p>The <em>IfcWindowType</em> may define the common shape of window occurrences. The common shape can be defined by</p>
+<ul>
+<li>applying shape parameters defined within the associated <em>IfcWindowLiningProperties</em> and <em>IfcWindowPanelProperties</em> applied to the 'Profile'
+geometric representation. It is only applicable if the <em>IfcWindowType</em> has only occurrences of type <em>IfcWindowStandardCase</em> (See geometric use definition of
+<em>IfcWindowStandardCase</em> for further information).</li>
+<li>applying the <em>RepresentationMaps</em> attribute to refer to a list of <em>IfcRepresentationMap</em>'s, that allow for multiple geometric representations (e.g. with
+<em>IfcShapeRepresentation</em>'s having an <em>RepresentationIdentifier</em> 'Box', 'Profile', 'FootPrint', or 'Body')
+<blockquote class="note">NOTE&nbsp; The product shape representations are defined as <em>RepresentationMaps</em> (attribute of the supertype <em>IfcTypeProduct</em>), which get assigned by an element occurrence instance through the <em>IfcShapeRepresentation.Item[n]</em> being an <em>IfcMappedItem</em>. See <em>IfcTypeProduct</em> for further information.</blockquote>
+<blockquote class="note">NOTE&nbsp; The values of attributes <em>RepresentationIdentifier</em> and <em>RepresentationType</em> of <em>IfcShapeRepresentation</em> are restricted in the same way as those for <em>IfcWindow</em> and <em>IfcWindowStandardCase</em></blockquote>
+</li>
+</ul>

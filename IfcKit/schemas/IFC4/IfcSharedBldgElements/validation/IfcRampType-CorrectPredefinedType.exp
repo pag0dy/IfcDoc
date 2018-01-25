@@ -1,0 +1,2 @@
+﻿(PredefinedType <> IfcRampTypeEnum.USERDEFINED) OR
+((PredefinedType = IfcRampTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcElementType.ElementType))

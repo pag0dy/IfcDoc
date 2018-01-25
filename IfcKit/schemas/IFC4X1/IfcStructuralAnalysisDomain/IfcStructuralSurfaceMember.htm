@@ -1,0 +1,21 @@
+﻿<p>Instances of <em>IfcStructuralSurfaceMember</em> describe face members, that is, structural analysis idealizations of slabs, walls, and shells.  Surface members may be planar or curved.</p>
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC2x2.
+</blockquote>
+
+<blockquote class="change-ifc2x4">
+IFC4 CHANGE&nbsp; Use definitions changed, WHERE rule added.
+</blockquote>
+
+<p><b><u>Coordinate Systems</u></b>:</p>
+
+<p>See definitions at <em>IfcStructuralItem</em>.  The local coordinate system is established by the reference surface given by topology representation.</p>
+
+<p><b><u>Material Use Definition</u></b></p>
+
+<p>The material of direct instances <em>IfcStructuralSurfaceMember</em> (in contrast to instances of the subtype <em>IfcStructuralSurfaceMemberVarying</em>) is defined by <em>IfcMaterial</em> and attached by the <em>IfcRelAssociatesMaterial.RelatingMaterial</em>.  It is accessible by the inverse <em>HasAssociations</em> relationship.</p>
+
+<p>The material is specified minimally by a name which corresponds with an agreed upon standardized structural material designation.  An external reference to the source which specifies the material designation should be provided.  Alternatively, structural material properties may be provided by means of <em>IfcMechanicalMaterialProperties</em> and <em>IfcExtendedMaterialProperties</em>.</p>
+
+<p>Direct instances of <em>IfcStructuralSurfaceMember</em> are assumed to be located centrically relative to their reference surface.  Their depth is provided in the attribute <em>Thickness</em>.</p>

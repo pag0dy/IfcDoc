@@ -1,0 +1,3 @@
+﻿IfcConstraintsParamBSpline (
+  SELF\IfcBSplineSurface.UDegree, KnotUUpper, 
+  SELF\IfcBSplineSurface.UUpper, UMultiplicities, UKnots)

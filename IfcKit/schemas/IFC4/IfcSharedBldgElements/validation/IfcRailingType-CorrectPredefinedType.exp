@@ -1,0 +1,2 @@
+﻿(PredefinedType <> IfcRailingTypeEnum.USERDEFINED) OR
+((PredefinedType = IfcRailingTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcElementType.ElementType))

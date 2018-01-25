@@ -1,0 +1,8 @@
+﻿((PhysicalOrVirtualBoundary = IfcPhysicalOrVirtualEnum.Physical) 
+  AND (NOT('IFCPRODUCTEXTENSION.IFCVIRTUALELEMENT' IN TYPEOF(RelatedBuildingElement)))) 
+OR 
+((PhysicalOrVirtualBoundary = IfcPhysicalOrVirtualEnum.Virtual) 
+  AND (('IFCPRODUCTEXTENSION.IFCVIRTUALELEMENT' IN TYPEOF(RelatedBuildingElement)) 
+  OR   ('IFCPRODUCTEXTENSION.IFCOPENINGELEMENT' IN TYPEOF(RelatedBuildingElement)))) 
+OR 
+(PhysicalOrVirtualBoundary = IfcPhysicalOrVirtualEnum.NotDefined)

@@ -1,0 +1,20 @@
+﻿<p>A slab is a component of the construction that normally encloses a space vertically. The slab may provide the lower support (floor) or upper construction (roof slab) in any space in a building.</p>
+
+<blockquote class="extDef">NOTE&nbsp; Definition according to ISO 6707-1<br>thick, flat or shaped component, usually larger than 300 mm square, used to form a covering or projecting from a building.</blockquote>
+
+<p> Only the core or constructional part of this construction is considered to be a slab. The upper finish (flooring, roofing) and the lower finish (ceiling, suspended ceiling) are considered to be coverings. A special type of slab is the landing, described as a floor section to which one or more stair flights or ramp flights connect.</p>
+
+<blockquote class="note">NOTE&nbsp; There is a representation of slabs for structural analysis provided by a proper subtype of <em>IfcStructuralMember</em> being part of the <em>IfcStructuralAnalysisModel</em>.</blockquote>
+
+<blockquote class="note">NOTE&nbsp; An arbitrary planar element to which this semantic information is not applicable or irrelevant shall be modeled as <em>IfcPlate</em>.</blockquote>
+
+<p>There are two main representations for slab occurrences:</p>
+<ul>
+<li><em>IfcSlab</em> with <em>IfcMaterialLayerSetUsage</em> is used for all occurrences of slabs, that are prismatic and where the thickness parameter can be fully described by the <em>IfcMaterialLayerSetUsage</em>. These slabs are always represented geometrically by a 'SweptSolid' geometry (or by a 'Clipping' geometry based on 'SweptSolid'), if a 3D geometric representation is assigned.
+<blockquote class="note">NOTE&nbsp; The entity <em>IfcSlabStandardCase</em> has been deprecated, <em>IfcSlab</em> with <em>IfcMaterialLayerSetUsage</em> is used instead.</blockquote>
+</li>
+<li><em>IfcSlab</em> without <em>IfcMaterialLayerSetUsage</em> is used for all other occurrences of slabs, particularly for slabs with changing thickness, or slabs with non planar surfaces, and slabs having only 'SweptSolid' or 'Brep' geometry, or if a more parametric representation is not intended.</li>
+</ul>
+<blockquote class="note">NOTE&nbsp; The entity <em>IfcSlabElementedCase</em> has been deprecated, <em>IfcSlab></em> with <em>IfcRelAggregates</em> is used to describe occurrences of slabs which are aggregated from subordinate elements,.</blockquote>
+
+<blockquote class="history">HISTORY&nbsp; New entity in IFC2.0; it is a merger of the two previous entities IfcFloor, IfcRoofSlab, introduced in IFC1.0 </blockquote>

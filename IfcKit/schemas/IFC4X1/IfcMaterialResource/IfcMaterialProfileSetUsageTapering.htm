@@ -1,0 +1,27 @@
+﻿<p><em>IfcMaterialProfileSetUsageTapering</em> specifies dual material profile sets in association with tapered prismatic (beam- or column-like) elements.</p>
+
+<blockquote class="history">
+HISTORY  New entity in IFC4
+</blockquote>
+
+<p class="use-head">Usage with tapered building elements</p>
+<p>The inherited attribute <em>ForProfileSet</em> specifies the
+profile and material at the start of the member,
+<em>ForProfileEndSet</em> at its end. Start and end correspond to
+the extrusion direction in the shape model of the shape
+representation of the element or element type.</p>
+<p>Both material profile sets should refer to the same material,
+that is, only differ with respect to their profiles.</p>
+
+<p class="use-head">Usage with structural analysis curve members</p>
+<p><em>IfcMaterialProfileSetUsageTapering</em> may be used with the
+structural analysis idealization
+(<em>IfcStructuralCurveMember</em>) of uniform members as well as
+of tapered members.</p>
+<p>In case of uniform members, <em>ForProfileSet</em> and
+<em>ForProfileEndSet</em> refer to the same material profile set.
+In case of tapered members, <em>ForProfileSet</em> specifies the
+profile and material at the start of the member,
+<em>ForProfileEndSet</em> at its end. Start and end correspond to
+the edge direction in the topological representation of the curve
+member.</p>

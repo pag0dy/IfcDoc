@@ -1,0 +1,38 @@
+﻿    <p>
+      A transport element is a generalization of all transport related objects that move
+      people, animals or goods within a building or building
+      complex. The <em>IfcTransportElement</em> defines the
+      occurrence of a transport element, that (if given), is
+      expressed by the <em>IfcTransportElementType</em>.
+    </p>
+    <blockquote class="example">
+      EXAMPLE&nbsp; Transportation elements include elevator
+      (lift), escalator, moving walkway, etc.
+    </blockquote>
+    <blockquote class="note">
+      NOTE&nbsp; More detailed equipment that may be a part of a
+      transportation device, like a lifting hook, is defined as
+      <em>IfcDiscreteAccessory</em>. It maybe included as a part of
+      the <em>IfcTransportElement</em> by virtue of the objectified
+      relationship <em>IfcRelAggregates</em>.
+    </blockquote>
+    <p>
+      Depending on local classification systems transport elements
+      and transportation systems in buildings are either considered
+      as part of a building system, or as part of a building
+      service system. Within IFC they are considered as part of a
+      building system and may have to be mapped appropriately.
+    </p>
+    <blockquote class="history">
+      HISTORY&nbsp; New entity in IFC2x.
+    </blockquote>
+    <blockquote class="change-ifc2x">
+      IFC2x CHANGE&nbsp; The attribute
+      <em>PredefinedType</em> (previously OperationType) is made
+      optional.
+    </blockquote>
+    <blockquote class="change-ifc2x4">
+      IFC4 CHANGE&nbsp; The last attributes CapacityByWeight and
+      CapacityByNumber are removed, use Pset_TransportElementCommon
+      instead.
+    </blockquote>

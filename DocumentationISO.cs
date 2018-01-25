@@ -11,7 +11,10 @@ using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Text;
-using System.Xml.Serialization;
+//using System.Xml.Serialization;
+
+//using BuildingSmart.IFC;
+using BuildingSmart.IFC.IfcKernel;
 
 using IfcDoc.Schema;
 using IfcDoc.Schema.DOC;
@@ -20,13 +23,16 @@ using IfcDoc.Schema.MVD;
 using IfcDoc.Format.EXP;
 using IfcDoc.Format.CSC;
 using IfcDoc.Format.JAV;
-using IfcDoc.Format.JSN;
 using IfcDoc.Format.HTM;
 using IfcDoc.Format.XSD;
 using IfcDoc.Format.XML;
-using IfcDoc.Format.SML;
-using IfcDoc.Format.SPF;
 using IfcDoc.Format.PNG;
+
+using BuildingSmart.Serialization;
+using BuildingSmart.Serialization.Json;
+using BuildingSmart.Serialization.Spf;
+using BuildingSmart.Serialization.Turtle;
+using BuildingSmart.Serialization.Xml;
 
 namespace IfcDoc
 {
@@ -47,15 +53,24 @@ namespace IfcDoc
             }
         }
 
+
         /// <summary>
-        /// Exports file according to format.
+        /// Exports file.
         /// </summary>
-        /// <param name="filepath">File path to export.</param>
-        /// <param name="templates">Optional filter of templates to export.</param>
-        /// <param name="views">Optional filter of views to export, where first one indicates primary view (for defining schema).</param>
-        /// <param name="schemas">Optional filter of schemas to export.</param>
-        /// <param name="locales">Optional filter of locales to export.</param>
-        public static void DoExport(DocProject docProject, DocPublication docPublication, string filepath, DocModelView[] views, string[] locales, DocDefinitionScopeEnum scope, Dictionary<long, SEntity> instances,
+        /// <param name="docProject">Required project.</param>
+        /// <param name="docPublication">Optional publication for providing specific settings.</param>
+        /// <param name="filepath">Required path to file to be exported.</param>
+        /// <param name="views">Optional list of model views.</param>
+        /// <param name="locales">Optional list of locales.</param>
+        /// <param name="scope">Mask of definitions to export.</param>
+        /// <param name="schemaNamespace">Optional version of export format; provided for mvdXML.</param>
+        /// <param name="instances">Required map of instances.</param>
+        /// <param name="mapEntity">Required map of definitions.</param>
+        public static void DoExport(
+            DocProject docProject, DocPublication docPublication, string filepath, 
+            DocModelView[] views, string[] locales, 
+            DocDefinitionScopeEnum scope, 
+            string schemaNamespace,
             Dictionary<string, DocObject> mapEntity)
         {
             string ext = System.IO.Path.GetExtension(filepath).ToLower();
@@ -72,6 +87,9 @@ namespace IfcDoc
                 xmlns = views[0].XsdUri;
             }
 
+            string schemacode = docProject.GetSchemaIdentifier();
+            string schemauri = docProject.GetSchemaURI(null);
+          
             // special case for zip files -- determine based on special naming; make configurable in future
             Type typeExport = null;
             if (filepath.EndsWith("-psd.zip_"))
@@ -85,42 +103,42 @@ namespace IfcDoc
 
             switch (ext)
             {
-                case ".ifc":
-                    Program.t_lastid = 0;
-                    Program.t_instances = new Dictionary<long, SEntity>();
-                    SEntity.EntityCreated += Program.SEntity_EntityCreated;
-                    try
+                case ".ifc": // generate templates in ifc file for property sets and quantity sets
+                    using (FileStream stream = new FileStream(filepath, FileMode.Create))
                     {
-                        using (FormatSPF format = new FormatSPF(filepath, Schema.IFC.SchemaIfc.Types, Program.t_instances))
-                        {
-                            string filename = System.IO.Path.GetFileName(filepath);
-                            format.InitHeaders(filename, docProject.GetSchemaIdentifier());
-                            Schema.IFC.IfcProject ifcProject = new IfcDoc.Schema.IFC.IfcProject();
-                            Program.ExportIfc(ifcProject, docProject, included);
-                            format.Save();
-                        }
-                    }
-                    finally
-                    {
-                        SEntity.EntityCreated -= Program.SEntity_EntityCreated;
+                        // export property sets and quantity sets
+                        IfcProject ifcProject = new IfcProject();
+                        Program.ExportIfc(ifcProject, docProject, included);
+                        StepSerializer format = new StepSerializer(ifcProject.GetType());
+                        format.WriteObject(stream, ifcProject);
                     }
                     break;
 
-                case ".ifcxml":
-                    using (FormatXML format = new FormatXML(filepath, typeof(Schema.IFC.IfcProject), xmlns))
+                case ".ifcxml":                    
+                    using (FileStream stream = new FileStream(filepath, FileMode.Create))
                     {
-                        Schema.IFC.IfcProject ifcProject = new IfcDoc.Schema.IFC.IfcProject();
+                        // export property sets and quantity sets
+                        IfcProject ifcProject = new IfcProject();
                         Program.ExportIfc(ifcProject, docProject, included);
-                        format.Instance = ifcProject;
-                        format.Save();
+                        XmlSerializer format = new XmlSerializer(ifcProject.GetType());
+                        format.WriteObject(stream, ifcProject);
                     }
                     break;
 
                 case ".mvdxml":
-                    using (FormatXML format = new FormatXML(filepath, typeof(mvdXML), mvdXML.DefaultNamespace))
+                    if(schemaNamespace == null)
+                    {
+                        schemaNamespace = mvdXML.NamespaceV11;
+                    }
+                    using (FormatXML format = new FormatXML(filepath, typeof(mvdXML), schemaNamespace))
                     {
                         mvdXML mvd = new mvdXML();
-                        Program.ExportMvd(mvd, docProject, mapEntity, included);
+                        if(schemaNamespace == mvdXML.NamespaceV12)
+                        {
+                            mvd.schemaLocation = mvdXML.LocationV12;
+                        }
+
+                        Program.ExportMvd(mvd, docProject, schemaNamespace, mapEntity, included);
                         format.Instance = mvd;
                         format.Save();
                     }
@@ -368,14 +386,17 @@ namespace IfcDoc
 
             foreach (DocConceptRoot docRoot in docView.ConceptRoots)
             {
-                foreach (DocTemplateUsage docUsage in docRoot.Concepts)
+                if (docRoot.ApplicableEntity != null)
                 {
-                    foreach (DocExchangeItem docReq in docUsage.Exchanges)
+                    foreach (DocTemplateUsage docUsage in docRoot.Concepts)
                     {
-                        //if (docReq.Exchange == def && docReq.Requirement != DocExchangeRequirementEnum.NotRelevant && docReq.Requirement != DocExchangeRequirementEnum.Excluded && !sortlist.ContainsKey(docRoot.ApplicableEntity.Name))
-                        if (docReq.Exchange == def && docReq.Requirement != DocExchangeRequirementEnum.NotRelevant && !sortlist.ContainsKey(docRoot.ApplicableEntity.Name))
+                        foreach (DocExchangeItem docReq in docUsage.Exchanges)
                         {
-                            sortlist.Add(docRoot.ApplicableEntity.Name, docRoot);
+                            //if (docReq.Exchange == def && docReq.Requirement != DocExchangeRequirementEnum.NotRelevant && docReq.Requirement != DocExchangeRequirementEnum.Excluded && !sortlist.ContainsKey(docRoot.ApplicableEntity.Name))
+                            if (docReq.Exchange == def && docReq.Requirement != DocExchangeRequirementEnum.NotRelevant && !sortlist.ContainsKey(docRoot.ApplicableEntity.Name))
+                            {
+                                sortlist.Add(docRoot.ApplicableEntity.Name, docRoot);
+                            }
                         }
                     }
                 }
@@ -427,7 +448,7 @@ namespace IfcDoc
                                 if(!externaldataconstraints)
                                 {
                                     // show heading for first time
-                                    sbMain.Append("<h4>Data Requirements for tabular formats</h4>");
+                                    //sbMain.Append("<h4>Information Requirements</h4>");// for tabular formats</h4>");
                                     externaldataconstraints = true;
                                 }
 
@@ -447,7 +468,16 @@ namespace IfcDoc
                                 // table and description
                                 sbMain.AppendLine("<a id=\"" + MakeLinkName(docConcept) + "\"/>");
 
-                                sbMain.Append("<h5>" + docConcept.Name + "</h5>");
+
+                                if (!String.IsNullOrEmpty(docConcept.Name))
+                                {
+                                    sbMain.Append("<h5>" + docConcept.Name + "</h5>"); // changed for IFC-Bridge
+                                }
+                                else
+                                {
+                                    //sbMain.Append("<h5>" + docConcept.Name + "</h5>");
+                                    sbMain.Append("<h5>" + docRoot.Name + "</h5>"); // changed for IFC-Bridge
+                                }
                                 sbMain.Append(docConcept.Documentation);
 
                                 sbMain.AppendLine("<table class=\"gridtable\">");
@@ -493,11 +523,11 @@ namespace IfcDoc
                                     string refv = docItem.GetParameterValue("Reference");
                                     string disp = "#" + docItem.GetColor().ToArgb().ToString("X8").Substring(2, 6); //docItem.GetParameterValue("Color");
                                     string mapp = FormatReference(docProject, refv);
-                                    string desc = "";
+                                    string desc = docItem.Documentation;// "";
 
 
                                     CvtValuePath valpath = CvtValuePath.Parse(refv, mapEntity);
-                                    if (valpath != null)
+                                    if (valpath != null && String.IsNullOrEmpty(desc))
                                     {
                                         desc = valpath.GetDescription(mapEntity, docView);
                                     }
@@ -854,7 +884,7 @@ namespace IfcDoc
                     if (def is DocTemplateDefinition)
                     {
                         System.IO.Directory.CreateDirectory(path + "\\schema\\templates\\diagrams");
-                        using (Image image = IfcDoc.Format.PNG.FormatPNG.CreateTemplateDiagram((DocTemplateDefinition)def, mapEntity, layout, docProject, null))
+                        using (Image image = IfcDoc.Format.PNG.FormatPNG.CreateTemplateDiagram((DocTemplateDefinition)def, layout, docProject, null))
                         {
                             if (image != null)
                             {
@@ -866,7 +896,7 @@ namespace IfcDoc
                     else if (def is DocEntity) // no longer used directly; now for each model view in annex D
                     {
                         System.IO.Directory.CreateDirectory(path + "\\diagrams\\" + MakeLinkName(docView));
-                        using (Image image = IfcDoc.Format.PNG.FormatPNG.CreateConceptDiagram((DocEntity)def, docView, mapEntity, layout, docProject, null))
+                        using (Image image = IfcDoc.Format.PNG.FormatPNG.CreateConceptDiagram((DocEntity)def, docView, layout, docProject, null))
                         {
                             string filepath = path + "\\diagrams\\" + MakeLinkName(docView) + "\\" + filename;
                             image.Save(filepath, System.Drawing.Imaging.ImageFormat.Png);
@@ -1031,11 +1061,14 @@ namespace IfcDoc
 
                         foreach (DocConceptRoot docRoot in docView.ConceptRoots)
                         {
-                            foreach (DocTemplateUsage docUsage in docRoot.Concepts)
+                            if (docRoot.ApplicableEntity != null)
                             {
-                                if (docUsage.Definition == def && !mapUsage.ContainsKey(docRoot.ApplicableEntity.Name))
+                                foreach (DocTemplateUsage docUsage in docRoot.Concepts)
                                 {
-                                    mapUsage.Add(docRoot.ApplicableEntity.Name, docUsage);
+                                    if (docUsage.Definition == def && !mapUsage.ContainsKey(docRoot.ApplicableEntity.Name))
+                                    {
+                                        mapUsage.Add(docRoot.ApplicableEntity.Name, docUsage);
+                                    }
                                 }
                             }
                         }
@@ -1254,170 +1287,336 @@ namespace IfcDoc
                 }
             }
 
-            foreach (DocSection docSection in docProject.Sections)
+            // if there's a single view, sort in order of concept roots
+            if (listView.Count == 1)
             {
-                foreach (DocSchema docSchema in docSection.Schemas)
+
+                foreach (DocModelView docEachView in listView)
                 {
-                    foreach (DocEntity docEntity in docSchema.Entities)
+                    foreach (DocConceptRoot docRoot in docEachView.ConceptRoots)
                     {
-                        // track the first unique item using a mapping
-                        List<DocTemplateItem> listItems = new List<DocTemplateItem>();
-                        List<DocTemplateUsage> listUsage = new List<DocTemplateUsage>();
-
-                        // correlate first item with exchanges that include item and any related ones
-                        Dictionary<DocTemplateItem, List<DocModelView>> mapView = new Dictionary<DocTemplateItem, List<DocModelView>>();
-
-                        foreach (DocModelView docEachView in listView)
+                        if (!docRoot.IsDeprecated())
                         {
-                            foreach (DocConceptRoot docRoot in docEachView.ConceptRoots)
+                            // track the first unique item using a mapping
+                            List<DocTemplateItem> listItems = new List<DocTemplateItem>();
+                            List<DocTemplateUsage> listUsage = new List<DocTemplateUsage>();
+
+                            // correlate first item with exchanges that include item and any related ones
+                            Dictionary<DocTemplateItem, List<DocModelView>> mapView = new Dictionary<DocTemplateItem, List<DocModelView>>();
+
+                            DocConceptRoot docRootDefault = null;
+                            DocTemplateUsage docConcDefault = null;
+
+                            foreach (DocTemplateUsage docConcept in docRoot.Concepts)
                             {
-                                if (docRoot.ApplicableEntity == docEntity && !docRoot.IsDeprecated())
-                                {                                    
-                                    foreach (DocTemplateUsage docConcept in docRoot.Concepts)
+                                if (docConcept.Definition != null && docConcept.Definition.Uuid == DocTemplateDefinition.guidTemplateMapping)
+                                {
+                                    foreach (DocTemplateItem docItem in docConcept.Items)
                                     {
-                                        if (docConcept.Definition != null && docConcept.Definition.Uuid == DocTemplateDefinition.guidTemplateMapping)
+                                        string refItem = docItem.GetParameterValue("Reference");
+
+                                        // is it already define?
+                                        bool add = true;
+
+                                        if (refItem != null)
                                         {
-                                            foreach (DocTemplateItem docItem in docConcept.Items)
+                                            foreach (DocTemplateItem docExist in listItems)
                                             {
-                                                string refItem = docItem.GetParameterValue("Reference");
-
-                                                // is it already define?
-                                                bool add = true;
-                                                foreach (DocTemplateItem docExist in listItems)
+                                                string refExist = docExist.GetParameterValue("Reference");
+                                                if (refItem == refExist)
                                                 {
-                                                    string refExist = docExist.GetParameterValue("Reference");
-                                                    if (refItem == refExist)
+                                                    // already there
+                                                    add = false;
+                                                    if (!mapView.ContainsKey(docExist))
                                                     {
-                                                        // already there
-                                                        add = false;
-                                                        if (!mapView.ContainsKey(docExist))
-                                                        {
-                                                            mapView.Add(docExist, new List<DocModelView>());
-                                                        }
-                                                        mapView[docExist].Add(docEachView);
-
-                                                        break;
+                                                        mapView.Add(docExist, new List<DocModelView>());
                                                     }
+                                                    mapView[docExist].Add(docEachView);
+
+                                                    break;
                                                 }
+                                            }
+                                        }
 
-                                                if (add)
+                                        if (add)
+                                        {
+                                            listItems.Add(docItem);
+                                            listUsage.Add(docConcept);
+
+                                            if (!mapView.ContainsKey(docItem))
+                                            {
+                                                mapView.Add(docItem, new List<DocModelView>());
+                                            }
+                                            mapView[docItem].Add(docEachView);
+
+                                            docRootDefault = docRoot;
+                                            docConcDefault = docConcept;
+                                        }
+                                    }
+                                }
+                            }
+
+                            if (listItems.Count > 0)
+                            {
+                                if (docRootDefault != null && docRootDefault.Name != null)
+                                {
+                                    sb.AppendLine("<h5>" + docRootDefault.Name + "</h5>");
+                                    sb.Append(docRootDefault.Documentation);
+                                }
+                                else if (docConcDefault != null && docConcDefault.Name != null)
+                                {
+                                    sb.AppendLine("<h5>" + docConcDefault.Name + "</h5>");
+                                    //sb.Append(docConcDefault.Documentation);
+                                }
+
+                                // now generate requirements table
+                                sb.AppendLine("<table class=\"gridtable\">");
+                                sb.AppendLine("<tr><th>Field</th><th>Mapping</th><th>Definition</th>");
+
+                                foreach (DocExchangeDefinition docEachExchange in docView.Exchanges)
+                                {
+                                    sb.Append("<th>" + docEachExchange.Name + "</th>");
+                                }
+
+                                sb.AppendLine("</tr>");
+
+                                for (int iItem = 0; iItem < listItems.Count; iItem++)
+                                {
+                                    DocTemplateItem docItem = listItems[iItem];
+                                    DocTemplateUsage docUsage = listUsage[iItem];
+
+                                    string name = docItem.GetParameterValue("Name");
+                                    string refv = docItem.GetParameterValue("Reference");
+                                    string disp = "#" + docItem.GetColor().ToArgb().ToString("X8").Substring(2, 6); //docItem.GetParameterValue("Color");
+                                    string mapp = FormatReference(docProject, refv);
+                                    string desc = docItem.Documentation;
+
+                                    CvtValuePath valpath = CvtValuePath.Parse(refv, mapEntity);
+                                    if (valpath != null && String.IsNullOrEmpty(desc))
+                                    {
+                                        desc = valpath.GetDescription(mapEntity, docView);
+                                    }
+
+                                    string style = "";
+                                    if (!String.IsNullOrEmpty(disp))
+                                    {
+                                        style = " style=\"background-color:" + disp + ";\"";
+                                    }
+
+                                    sb.Append("<tr><td" + style + ">" + name + "</td><td>" + mapp + "</td><td>" + desc + "</td>");
+
+                                    for (int iExchange = 0; iExchange < docView.Exchanges.Count; iExchange++)
+                                    {
+                                        sb.Append("<td>");
+
+                                        // check if exchange is referenced
+                                        DocExchangeDefinition docExchange = docView.Exchanges[iExchange];
+                                        foreach (DocExchangeItem docExchangeItem in docUsage.Exchanges)
+                                        {
+                                            if (docExchangeItem.Exchange == docExchange &&
+                                                (docExchangeItem.Requirement == DocExchangeRequirementEnum.Mandatory || docExchangeItem.Requirement == DocExchangeRequirementEnum.Optional))
+                                            {
+                                                sb.Append("<img width=\"16\" src=\"../../../img/attr-mandatory.png\" title=\"\" />");
+                                                break;
+                                            }
+                                        }
+
+                                        sb.Append("</td>");
+                                    }
+
+
+                                    sb.AppendLine("</tr>");
+
+                                    sbData.AppendLine();
+                                }
+
+                                sb.AppendLine("</table>");
+
+
+
+                            }
+                        }
+                    }
+                }
+
+           
+                //todo: modularize instead of duplicate...
+            }
+            else
+            {
+                // otherwise, sort in order of entity
+                foreach (DocSection docSection in docProject.Sections)
+                {
+                    foreach (DocSchema docSchema in docSection.Schemas)
+                    {
+                        foreach (DocEntity docEntity in docSchema.Entities)
+                        {
+                            // track the first unique item using a mapping
+                            List<DocTemplateItem> listItems = new List<DocTemplateItem>();
+                            List<DocTemplateUsage> listUsage = new List<DocTemplateUsage>();
+
+                            // correlate first item with exchanges that include item and any related ones
+                            Dictionary<DocTemplateItem, List<DocModelView>> mapView = new Dictionary<DocTemplateItem, List<DocModelView>>();
+
+                            DocConceptRoot docRootDefault = null;
+
+                            foreach (DocModelView docEachView in listView)
+                            {
+                                foreach (DocConceptRoot docRoot in docEachView.ConceptRoots)
+                                {
+                                    if (docRoot.ApplicableEntity == docEntity && !docRoot.IsDeprecated())
+                                    {
+                                        foreach (DocTemplateUsage docConcept in docRoot.Concepts)
+                                        {
+                                            if (docConcept.Definition != null && docConcept.Definition.Uuid == DocTemplateDefinition.guidTemplateMapping)
+                                            {
+                                                foreach (DocTemplateItem docItem in docConcept.Items)
                                                 {
-                                                    listItems.Add(docItem);
-                                                    listUsage.Add(docConcept);
+                                                    string refItem = docItem.GetParameterValue("Reference");
 
-                                                    if (!mapView.ContainsKey(docItem))
+                                                    // is it already define?
+                                                    bool add = true;
+                                                    foreach (DocTemplateItem docExist in listItems)
                                                     {
-                                                        mapView.Add(docItem, new List<DocModelView>());
+                                                        string refExist = docExist.GetParameterValue("Reference");
+                                                        if (refItem == refExist)
+                                                        {
+                                                            // already there
+                                                            add = false;
+                                                            if (!mapView.ContainsKey(docExist))
+                                                            {
+                                                                mapView.Add(docExist, new List<DocModelView>());
+                                                            }
+                                                            mapView[docExist].Add(docEachView);
+
+                                                            break;
+                                                        }
                                                     }
-                                                    mapView[docItem].Add(docEachView);
+
+                                                    if (add)
+                                                    {
+                                                        listItems.Add(docItem);
+                                                        listUsage.Add(docConcept);
+
+                                                        if (!mapView.ContainsKey(docItem))
+                                                        {
+                                                            mapView.Add(docItem, new List<DocModelView>());
+                                                        }
+                                                        mapView[docItem].Add(docEachView);
+
+                                                        docRootDefault = docRoot;
+                                                    }
                                                 }
                                             }
                                         }
                                     }
                                 }
                             }
-                        }
 
-                        if (listItems.Count > 0)
-                        {
-                            sb.AppendLine("<h5>" + docEntity.Name + "</h5>");
-                            //sb.AppendLine(docEntity.Documentation);
-
-                            // now generate requirements table
-                            sb.AppendLine("<table class=\"gridtable\">");
-                            sb.AppendLine("<tr><th>Field</th><th>Mapping</th><th>Definition</th>");
-
-                            foreach (DocModelView docEachView in docView.ModelViews)
+                            if (listItems.Count > 0)
                             {
-                                sb.Append("<th>" + docEachView.Name + "</th>");
-                            }
-
-                            foreach (DocExchangeDefinition docEachExchange in docView.Exchanges)
-                            {
-                                sb.Append("<th>" + docEachExchange.Name + "</th>");
-                            }
-
-                            sb.AppendLine("</tr>");
-
-                            for (int iItem = 0; iItem < listItems.Count; iItem++)
-                            {
-                                DocTemplateItem docItem = listItems[iItem];
-                                DocTemplateUsage docUsage = listUsage[iItem];
-
-                                string name = docItem.GetParameterValue("Name");
-                                string refv = docItem.GetParameterValue("Reference");
-                                string disp = "#" + docItem.GetColor().ToArgb().ToString("X8").Substring(2, 6); //docItem.GetParameterValue("Color");
-                                string mapp = FormatReference(docProject, refv);
-                                string desc = docItem.Documentation;
-
-                                CvtValuePath valpath = CvtValuePath.Parse(refv, mapEntity);
-                                if (valpath != null && String.IsNullOrEmpty(desc))
+                                if (docRootDefault != null && docRootDefault.Name != null)
                                 {
-                                    desc = valpath.GetDescription(mapEntity, docView);
+                                    sb.AppendLine("<h5>" + docRootDefault.Name + "</h5>");
+                                    sb.Append(docRootDefault.Documentation);
+                                }
+                                else
+                                {
+                                    sb.AppendLine("<h5>" + docEntity.Name + "</h5>");
                                 }
 
-                                string style = "";
-                                if (!String.IsNullOrEmpty(disp))
-                                {
-                                    style = " style=\"background-color:" + disp + ";\"";
-                                }
-
-                                sb.Append("<tr><td" + style + ">" + name + "</td><td>" + mapp + "</td><td>" + desc + "</td>");
+                                // now generate requirements table
+                                sb.AppendLine("<table class=\"gridtable\">");
+                                sb.AppendLine("<tr><th>Field</th><th>Mapping</th><th>Definition</th>");
 
                                 foreach (DocModelView docEachView in docView.ModelViews)
                                 {
-                                    sb.Append("<td>");
-
-                                    DocTemplateItem docCross = CheckForReference(docProject, docEachView, null, refv);
-                                    if(docCross != null)
-                                    {
-                                        sb.Append("<img width=\"16\" src=\"../../../img/attr-mandatory.png\" title=\"\" />");
-                                    }
-
-                                    sb.Append("</td>");
+                                    sb.Append("<th>" + docEachView.Name + "</th>");
                                 }
 
-                                for (int iExchange = 0; iExchange < docView.Exchanges.Count; iExchange++)
+                                foreach (DocExchangeDefinition docEachExchange in docView.Exchanges)
                                 {
-                                    sb.Append("<td>");
-
-                                    // check if exchange is referenced
-                                    DocExchangeDefinition docExchange = docView.Exchanges[iExchange];
-                                    foreach (DocExchangeItem docExchangeItem in docUsage.Exchanges)
-                                    {
-                                        if (docExchangeItem.Exchange == docExchange &&
-                                            (docExchangeItem.Requirement == DocExchangeRequirementEnum.Mandatory || docExchangeItem.Requirement == DocExchangeRequirementEnum.Optional))
-                                        {
-                                            sb.Append("<img width=\"16\" src=\"../../../img/attr-mandatory.png\" title=\"\" />");
-                                            break;
-                                        }
-                                    }
-
-                                    sb.Append("</td>");
+                                    sb.Append("<th>" + docEachExchange.Name + "</th>");
                                 }
-
 
                                 sb.AppendLine("</tr>");
 
-                                sbData.AppendLine();
-                            }
-
-                            sb.AppendLine("</table>");
-
-                            // new: append documentation for concept roots
-                            foreach (DocModelView docEachView in listView)
-                            {
-                                foreach (DocConceptRoot docRoot in docEachView.ConceptRoots)
+                                for (int iItem = 0; iItem < listItems.Count; iItem++)
                                 {
-                                    if (docRoot.ApplicableEntity == docEntity && !docRoot.IsDeprecated() && !String.IsNullOrEmpty(docRoot.Documentation))
-                                    {
-                                        //sb.AppendLine("<h5>" + docRoot.Name + "</h5>");
-                                        sb.Append(docRoot.Documentation);
-                                    }
-                                }
-                                break; // hack -- multiple views!!!
-                            }
+                                    DocTemplateItem docItem = listItems[iItem];
+                                    DocTemplateUsage docUsage = listUsage[iItem];
 
+                                    string name = docItem.GetParameterValue("Name");
+                                    string refv = docItem.GetParameterValue("Reference");
+                                    string disp = "#" + docItem.GetColor().ToArgb().ToString("X8").Substring(2, 6); //docItem.GetParameterValue("Color");
+                                    string mapp = FormatReference(docProject, refv);
+                                    string desc = docItem.Documentation;
+
+                                    if(name.Contains("Beam"))
+                                    {
+                                        name.ToCharArray();
+                                    }
+
+                                    CvtValuePath valpath = CvtValuePath.Parse(refv, mapEntity);
+                                    if (valpath != null && String.IsNullOrEmpty(desc))
+                                    {
+                                        desc = valpath.GetDescription(mapEntity, docView);
+                                    }
+
+                                    string style = "";
+                                    if (!String.IsNullOrEmpty(disp))
+                                    {
+                                        style = " style=\"background-color:" + disp + ";\"";
+                                    }
+
+                                    if (mapp == null)
+                                        mapp = String.Empty;
+
+                                    sb.Append("<tr><td" + style + ">" + name + "</td><td>" + mapp + "</td><td>" + desc + "</td>");
+
+                                    foreach (DocModelView docEachView in docView.ModelViews)
+                                    {
+                                        sb.Append("<td>");
+
+                                        DocTemplateItem docCross = CheckForReference(docProject, docEachView, null, refv);
+                                        if (docCross != null)
+                                        {
+                                            sb.Append("<img width=\"16\" src=\"../../../img/attr-mandatory.png\" title=\"\" />");
+                                        }
+
+                                        sb.Append("</td>");
+                                    }
+
+                                    for (int iExchange = 0; iExchange < docView.Exchanges.Count; iExchange++)
+                                    {
+                                        sb.Append("<td>");
+
+                                        // check if exchange is referenced
+                                        DocExchangeDefinition docExchange = docView.Exchanges[iExchange];
+                                        foreach (DocExchangeItem docExchangeItem in docUsage.Exchanges)
+                                        {
+                                            if (docExchangeItem.Exchange == docExchange &&
+                                                (docExchangeItem.Requirement == DocExchangeRequirementEnum.Mandatory || docExchangeItem.Requirement == DocExchangeRequirementEnum.Optional))
+                                            {
+                                                sb.Append("<img width=\"16\" src=\"../../../img/attr-mandatory.png\" title=\"\" />");
+                                                break;
+                                            }
+                                        }
+
+                                        sb.Append("</td>");
+                                    }
+
+
+                                    sb.AppendLine("</tr>");
+
+                                    sbData.AppendLine();
+                                }
+
+                                sb.AppendLine("</table>");
+
+
+
+                            }
                         }
                     }
                 }
@@ -2223,12 +2422,11 @@ namespace IfcDoc
             Dictionary<DocObject, bool> included,
             Dictionary<string, DocObject> mapEntity,
             Dictionary<string, string> mapSchema,
-            Dictionary<string, Type> typemap,
             List<ContentRef> listFigures, 
             List<ContentRef> listTables,
             FormatHTM htmTOC,
             FormatHTM htmSectionTOC,
-            Dictionary<DocFormatSchemaEnum, IFormatData> mapFormats,
+            Dictionary<DocFormatSchemaEnum, Serializer> mapFormats,
             Dictionary<long, SEntity> outerinstancemap, // instance data of parent example, if inherited
             SEntity outerinstanceroot
             )
@@ -2326,51 +2524,12 @@ namespace IfcDoc
                                 filestream.Write(filecontents, 0, filecontents.Length);
                             }
 
-                            using (FormatSPF spfExample = new FormatSPF(new System.IO.MemoryStream(filecontents, false), typemap, null))
+                            using (Stream memstream = new MemoryStream(filecontents, false))
                             {
+                                Serializer spfExample = mapFormats[DocFormatSchemaEnum.STEP];
+                                object rootproject = spfExample.ReadObject(memstream);
+                                
                                 string pathListing = path + @"\annex\annex-e\" + MakeLinkName(docExample) + ".ifc.htm";
-
-                                if (docPublication.GetFormatOption(DocFormatSchemaEnum.STEP) == DocFormatOptionEnum.Examples)//Properties.Settings.Default.ExampleSPF)
-                                {
-                                    if (docPublication.HtmlExamples)
-                                    {
-                                        using (FormatHTM htmListing = new FormatHTM(pathListing, mapEntity, mapSchema, included))
-                                        {
-                                            htmListing.WriteHeader(docExample.Name, 2, docPublication.Header);
-
-                                            htmListing.WriteLine("<tt class=\"spf\">");
-                                            string htm = null;
-                                            try
-                                            {
-                                                htm = spfExample.LoadMarkup();
-                                                outerinstancemap = spfExample.Instances;
-                                            }
-                                            catch
-                                            {
-                                            }
-                                            htmListing.Write(htm);
-                                            htmListing.Write("</tt>");
-                                            htmListing.WriteFooter(String.Empty);
-
-                                        }
-                                    }
-                                    else
-                                    {
-                                        spfExample.Load();
-                                        outerinstancemap = spfExample.Instances;
-                                    }
-                                }
-
-                                // find the IfcProject
-                                SEntity rootproject = null;
-                                foreach (SEntity ent in spfExample.Instances.Values)
-                                {
-                                    if (ent.GetType().Name.Equals("IfcProject"))
-                                    {
-                                        rootproject = ent;
-                                        break;
-                                    }
-                                }
 
                                 foreach (DocFormat docFormat in docPublication.Formats)
                                 {
@@ -2378,29 +2537,32 @@ namespace IfcDoc
                                     if (docFormat.FormatOptions == DocFormatOptionEnum.Examples && docFormat.FormatType != DocFormatSchemaEnum.SQL)
                                     {
                                         long filesize = filecontents.LongLength;
-                                        if (docFormat.FormatType != DocFormatSchemaEnum.STEP)
+
+                                        Serializer formatext = null;
+                                        if (mapFormats.TryGetValue(docFormat.FormatType, out formatext))
                                         {
-                                            IFormatData formatext = null;
-                                            if (mapFormats.TryGetValue(docFormat.FormatType, out formatext))
+                                            string pathRAW = path + @"\annex\annex-e\" + MakeLinkName(docExample) + "." + docFormat.ExtensionInstances;
+                                            using (Stream stream = new FileStream(pathRAW, FileMode.Create))
                                             {
-                                                string pathRAW = path + @"\annex\annex-e\" + MakeLinkName(docExample) + "." + docFormat.ExtensionInstances;
-                                                using (Stream stream = new FileStream(pathRAW, FileMode.Create))
-                                                {
-                                                    formatext.FormatData(stream, docProject, docPublication, null, mapEntity, typemap, spfExample.Instances, rootproject, false);
-                                                    filesize = stream.Length;
-                                                }
+                                                formatext.WriteObject(stream, rootproject);
+                                                stream.Flush();
+                                                filesize = stream.Length;
 
                                                 if (docPublication.HtmlExamples)
                                                 {
+                                                    // markup output with hyperlinks
                                                     string pathHTM = pathRAW + ".htm";
                                                     using (FormatHTM fmtHTM = new FormatHTM(pathHTM, mapEntity, mapSchema, included))
                                                     {
+                                                        stream.Position = 0;
+                                                        StreamReader reader = new StreamReader(stream);
+                                                        string sourcecontent = reader.ReadToEnd();
+
                                                         fmtHTM.WriteHeader(docExample.Name, 2, docPublication.Header);
-                                                        formatext.FormatData(fmtHTM.Stream, docProject, docPublication, null, mapEntity, typemap, spfExample.Instances, rootproject, true);
+                                                        fmtHTM.WriteExpression(sourcecontent, "../../schema/");
                                                         fmtHTM.WriteFooter("");
                                                     }
                                                 }
-
                                             }
                                         }
 
@@ -2461,7 +2623,7 @@ namespace IfcDoc
                         {
                             if (docExample.Name.Equals(docExchange.Name))
                             {
-                                GenerateExampleExchange(docProject, docPublication, docExample, docExchange, path, indexpath, mapEntity, mapSchema, included, typemap, outerinstancemap, outerinstanceroot, htmSectionTOC);
+                                GenerateExampleExchange(docProject, docPublication, docExample, docExchange, path, indexpath, mapEntity, mapSchema, included, outerinstancemap, outerinstanceroot, htmSectionTOC);
                                 break;
                             }
                         }
@@ -2479,7 +2641,7 @@ namespace IfcDoc
                             }
                         }
 
-                        GenerateExampleExchange(docProject, docPublication, docExample, docExchange, path, indexpath, mapEntity, mapSchema, included, typemap, outerinstancemap, outerinstanceroot, htmSectionTOC);
+                        GenerateExampleExchange(docProject, docPublication, docExample, docExchange, path, indexpath, mapEntity, mapSchema, included, outerinstancemap, outerinstanceroot, htmSectionTOC);
                     }
 
                     htmExample.WriteLinkTo(docProject, docPublication, docExample);
@@ -2497,7 +2659,7 @@ namespace IfcDoc
                     indexpath.Add(0);
                     foreach(DocExample docSub in docExample.Examples)
                     {
-                        GenerateExample(docProject, docPublication, docSub, listFormats, path, indexpath, included, mapEntity, mapSchema, typemap, listFigures, listTables, htmTOC, htmSectionTOC, mapFormats, outerinstancemap, outerinstanceroot);
+                        GenerateExample(docProject, docPublication, docSub, listFormats, path, indexpath, included, mapEntity, mapSchema, listFigures, listTables, htmTOC, htmSectionTOC, mapFormats, outerinstancemap, outerinstanceroot);
                     }
                     indexpath.RemoveAt(indexpath.Count - 1);
                 }
@@ -2508,7 +2670,9 @@ namespace IfcDoc
         /// <summary>
         /// Generates example exchange-specific information -- tables based on mappings
         /// </summary>
-        private static void GenerateExampleExchange(DocProject docProject, DocPublication docPublication, DocExample docExample, DocExchangeDefinition docExchange, string path, List<int> indexpath, Dictionary<string, DocObject> mapEntity, Dictionary<string, string> mapSchema, Dictionary<DocObject, bool> mapIncluded, Dictionary<string, Type> typemap, Dictionary<long, SEntity> instances, SEntity root, FormatHTM htmSectionTOC)
+        private static void GenerateExampleExchange(DocProject docProject, DocPublication docPublication, DocExample docExample, DocExchangeDefinition docExchange, 
+            string path, List<int> indexpath, Dictionary<string, DocObject> mapEntity, Dictionary<string, string> mapSchema, Dictionary<DocObject, bool> mapIncluded, 
+            Dictionary<long, SEntity> instances, SEntity root, FormatHTM htmSectionTOC)
         {
             indexpath.Add(0);
 
@@ -3084,7 +3248,7 @@ namespace IfcDoc
 
                 ConceptTemplate mvdTemplate = new ConceptTemplate();
                 Program.ExportMvdTemplate(mvdTemplate, docTemplate, included, false);
-                XmlSerializer ser = new XmlSerializer(typeof(ConceptTemplate));
+                System.Xml.Serialization.XmlSerializer ser = new System.Xml.Serialization.XmlSerializer(typeof(ConceptTemplate));
                 StringBuilder mvdOutput = new StringBuilder();
                 using (System.IO.Stream streamMVD = new System.IO.MemoryStream())
                 {
@@ -3114,7 +3278,7 @@ namespace IfcDoc
                 {
                     htmTemplate.WriteSummaryHeader("mvdXML Specification", false, docPublication);
                     htmTemplate.WriteLine("<div class=\"xsd\"><code class=\"xsd\">");
-                    htmTemplate.WriteExpression(mvdOutput.ToString()); //... need to use tabs...
+                    htmTemplate.WriteExpression(mvdOutput.ToString(), "../../"); //... need to use tabs...
                     htmTemplate.WriteLine("</code></div>");
                     htmTemplate.WriteSummaryFooter(docPublication);
                 }
@@ -3415,8 +3579,8 @@ namespace IfcDoc
 
                                         //... mvdXML for entire root
                                         ConceptRoot mvdConceptRoot = new ConceptRoot();
-                                        Program.ExportMvdConceptRoot(mvdConceptRoot, docRoot, docProject, mapEntity, false);
-                                        XmlSerializer ser = new XmlSerializer(typeof(ConceptRoot));
+                                        Program.ExportMvdConceptRoot(mvdConceptRoot, docRoot, docProject, null, mapEntity, false);
+                                        System.Xml.Serialization.XmlSerializer ser = new System.Xml.Serialization.XmlSerializer(typeof(ConceptRoot));
                                         StringBuilder mvdOutput = new StringBuilder();
                                         using (System.IO.Stream streamMVD = new System.IO.MemoryStream())
                                         {
@@ -3610,7 +3774,7 @@ namespace IfcDoc
         public static void GenerateListings(
             DocProject docProject, DocPublication docPublication, DocModelView docModelView,
             Dictionary<string, DocObject> mapEntity, Dictionary<string, string> mapSchema, Dictionary<DocObject, bool> included,
-            Dictionary<long, SEntity> instances, string[] locales, Dictionary<DocFormatSchemaEnum, IFormatExtension> mapFormatSchema,
+            string[] locales, Dictionary<DocFormatSchemaEnum, IFormatExtension> mapFormatSchema,
             int[] indexpath, string pathPublication, 
             FormatHTM htmTOC, FormatHTM htmSectionTOC)
         {
@@ -3649,13 +3813,13 @@ namespace IfcDoc
                 // show filtered schemas for model views only if exchanges defined
                 DocModelView[] modelviews = docProject.GetViewInheritance(docModelView);
 
-                DoExport(docProject, docPublication, path + @"\annex\annex-a\" + MakeLinkName(docModelView) + @"\" + code + ".exp", modelviews, locales, DocDefinitionScopeEnum.Default, instances, mapEntity);
+                DoExport(docProject, docPublication, path + @"\annex\annex-a\" + MakeLinkName(docModelView) + @"\" + code + ".exp", modelviews, locales, DocDefinitionScopeEnum.Default, null, mapEntity);
                 //DoExport(docProject, path + @"\annex\annex-a\" + MakeLinkName(docModelView) + @"\" + code + ".xsd", modelviews, locales, DocDefinitionScopeEnum.Default, instances, mapEntity);
-                DoExport(docProject, docPublication, path + @"\annex\annex-a\" + MakeLinkName(docModelView) + @"\" + code + ".ifc", modelviews, locales, DocDefinitionScopeEnum.Default, instances, mapEntity);
-                //DoExport(docProject, path + @"\annex\annex-a\" + MakeLinkName(docModelView) + @"\" + code + ".ifcxml", modelviews, locales, instances);
-                DoExport(docProject, docPublication, path + @"\annex\annex-a\" + MakeLinkName(docModelView) + @"\" + code + ".xml", modelviews, locales, DocDefinitionScopeEnum.Default, instances, mapEntity);
-                DoExport(docProject, docPublication, path + @"\annex\annex-a\" + MakeLinkName(docModelView) + @"\" + code + "-psd.zip_", modelviews, locales, DocDefinitionScopeEnum.Default, instances, mapEntity);
-                DoExport(docProject, docPublication, path + @"\annex\annex-a\" + MakeLinkName(docModelView) + @"\" + code + "-qto.zip_", modelviews, locales, DocDefinitionScopeEnum.Default, instances, mapEntity);
+                DoExport(docProject, docPublication, path + @"\annex\annex-a\" + MakeLinkName(docModelView) + @"\" + code + ".ifc", modelviews, locales, DocDefinitionScopeEnum.Default, null, mapEntity);
+                DoExport(docProject, docPublication, path + @"\annex\annex-a\" + MakeLinkName(docModelView) + @"\" + code + ".ifcxml", modelviews, locales, DocDefinitionScopeEnum.Default, null, mapEntity);
+                DoExport(docProject, docPublication, path + @"\annex\annex-a\" + MakeLinkName(docModelView) + @"\" + code + ".xml", modelviews, locales, DocDefinitionScopeEnum.Default, null, mapEntity);
+                DoExport(docProject, docPublication, path + @"\annex\annex-a\" + MakeLinkName(docModelView) + @"\" + code + "-psd.zip_", modelviews, locales, DocDefinitionScopeEnum.Default, null, mapEntity);
+                DoExport(docProject, docPublication, path + @"\annex\annex-a\" + MakeLinkName(docModelView) + @"\" + code + "-qto.zip_", modelviews, locales, DocDefinitionScopeEnum.Default, null, mapEntity);
 
                 if (docPublication.GetFormatOption(DocFormatSchemaEnum.STEP) != DocFormatOptionEnum.None)
                 {
@@ -3674,11 +3838,11 @@ namespace IfcDoc
 
                     // change: root always has full schema
                     string pathTarget = pathPublication + @"\" + docProject.GetSchemaIdentifier() + ".exp";
-                    DoExport(docProject, docPublication, pathTarget, null, null, DocDefinitionScopeEnum.Default, instances, mapEntity);
+                    DoExport(docProject, docPublication, pathTarget, null, null, DocDefinitionScopeEnum.Default, null, mapEntity);
 
                 }
 
-                DoExport(docProject, docPublication, path + @"\annex\annex-a\" + MakeLinkName(docModelView) + @"\" + code + ".mvdxml", new DocModelView[] { docModelView }, locales, DocDefinitionScopeEnum.Default, instances, mapEntity);
+                DoExport(docProject, docPublication, path + @"\annex\annex-a\" + MakeLinkName(docModelView) + @"\" + code + ".mvdxml", new DocModelView[] { docModelView }, locales, DocDefinitionScopeEnum.Default, null, mapEntity);
 
                 foreach (DocFormat docFormat in docPublication.Formats)
                 {
@@ -3696,7 +3860,7 @@ namespace IfcDoc
                         {
                             htmFormat.UseAnchors = false;
                             htmFormat.WriteHeader(docFormat.ExtensionSchema, 3, docPublication.Header);
-                            htmFormat.WriteExpression(content);
+                            htmFormat.WriteExpression(content, "../../schema/");
                             htmFormat.WriteFooter("");
                         }
 
@@ -3727,7 +3891,7 @@ namespace IfcDoc
                 subindexpath[subindexpath.Length - 1] = iTemplate;
 
                 GenerateListings(docProject, docPublication, docSub, mapEntity, mapSchema, included,
-                    instances, locales, mapFormatSchema, subindexpath, pathPublication, htmTOC, htmSectionTOC);
+                    locales, mapFormatSchema, subindexpath, pathPublication, htmTOC, htmSectionTOC);
             }
         }
 
@@ -3890,6 +4054,7 @@ namespace IfcDoc
             foreach (DocModelView docSubView in docProjectModelView.ModelViews)
             {
                 //if (included == null || included.ContainsKey(docSubTemplate))
+                if (!docSubView.IsDeprecated())
                 {
                     iTemplate++;
                     int[] subindexpath = new int[indexpath.Length + 1];
@@ -3901,116 +4066,9 @@ namespace IfcDoc
 
         }
 
-        public static void GenerateImplementationGuide(
-            DocProject docProject,
-            DocPublication docPublication,
-            DocModelView docView,
-            Dictionary<string, DocObject> mapEntity,
-            Dictionary<string, string> mapSchema,
-            string path,
-            Dictionary<DocObject, bool> included)
-        {
-            return;//...
-            if (included.ContainsKey(docView) && !String.IsNullOrEmpty(docView.Code))// && !String.IsNullOrEmpty(docView.BaseView)) // only generate for COBie and GSAie -- reference base view
-            {
-                // new: short-form documentation
-                string pathShort = path + "\\html\\schema\\views\\" + MakeLinkName(docView) + "\\guide.htm";
-                using (FormatHTM htmShort = new FormatHTM(pathShort, mapEntity, mapSchema, included))
-                {
-                    htmShort.WriteHeader(docView.Name, 3, null);
-
-                    htmShort.WriteLine("<h1>" + docView.Name + "</h1>");
-                    htmShort.WriteDocumentationMarkup(docView.Documentation, docView, docPublication);
-
-                    List<DocModelView> listView = new List<DocModelView>();
-                    BuildViewList(docProject, listView, docView);
-
-                    // organize by schema, entity, concept root, concepts
-                    int iSchema = 0;
-                    foreach (DocSection docSection in docProject.Sections)
-                    {
-                        foreach (DocSchema docSchema in docSection.Schemas)
-                        {
-                            bool includeschema = false;
-                            int iEntity = 0;
-                            int iRoot = 0;
-                            foreach(DocEntity docEntity in docSchema.Entities)
-                            {
-                                bool includeentity = false;
-                                foreach (DocModelView docEachView in listView)
-                                {
-                                    //int iRoot = 0;
-                                    foreach (DocConceptRoot docRoot in docEachView.ConceptRoots)
-                                    {
-                                        if (docRoot.ApplicableEntity == docEntity)
-                                        {
-                                            if (!includeschema)
-                                            {
-                                                includeschema = true;
-                                                iSchema++;
-
-                                                string caption = docSchema.Name;
-                                                DocLocalization docLocal = docSchema.GetLocalization("en");
-                                                if(docLocal != null)
-                                                {
-                                                    caption = docLocal.Name;
-                                                }
-
-                                                htmShort.Write("<p></p>");
-                                                htmShort.WriteLine("<h1>" + iSchema.ToString() + " " + caption + "</h1>");
-                                            }
-
-                                            /*
-                                            if (!includeentity)
-                                            {
-                                                includeentity = true;
-                                                iEntity++;
-                                                htmShort.WriteLine("<h2>" + iSchema.ToString() + "." + iEntity.ToString() + " " + docEntity.Name + "</h2>");
-                                            }*/
-
-                                            iRoot++;
-                                            htmShort.WriteLine("<h3>" + iSchema.ToString() + "." + /*iEntity.ToString() + "." + */ iRoot.ToString() + " " + docRoot.Name + "</h3>");
-                                            htmShort.WriteDocumentationMarkup(docRoot.Documentation, docRoot, docPublication);
-
-                                            // new: show requirements table
-
-                                            int iConcept = 0;
-                                            foreach (DocTemplateUsage docConcept in docRoot.Concepts)
-                                            {
-                                                if (docConcept.Definition != null && docConcept.Definition.Uuid != DocTemplateDefinition.guidTemplateMapping)
-                                                {
-                                                    iConcept++;
-                                                    htmShort.WriteLine("<h4>" + iSchema.ToString() + "." + /*iEntity.ToString() + "." + */ iRoot.ToString() + "." + iConcept.ToString() + " " + docConcept.Name + "</h4>");
-                                                    htmShort.WriteDocumentationMarkup(docConcept.Documentation, docConcept, docPublication);
-
-                                                    string concept = FormatConceptTable(docProject, docView, docEntity, docRoot, docConcept, mapEntity, mapSchema);
-                                                    htmShort.WriteLine(concept);
-                                                }
-
-                                                // special case for template mapping???
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }                   
-
-                    htmShort.WriteFooter(null);
-                }
-            }
-
-            // recurse
-            foreach(DocModelView docSub in docView.ModelViews)
-            {
-                GenerateImplementationGuide(docProject, docPublication, docSub, mapEntity, mapSchema, path, included);
-            }
-        }
-
         public static void Generate(
             DocProject docProject,
             string path,
-            Dictionary<long, SEntity> instances,
             Dictionary<string, DocObject> mapEntity,
             Dictionary<string, string> mapSchema,
             DocPublication[] publications,
@@ -4020,22 +4078,19 @@ namespace IfcDoc
             foreach (DocPublication docPub in publications)
             {
                 string relpath = path + @"\" + MakeLinkName(docPub);
-                GeneratePublication(docProject, relpath, instances, mapEntity, mapSchema, docPub, worker, formProgress);
+                GeneratePublication(docProject, relpath, mapEntity, mapSchema, docPub, worker, formProgress);
             }
-
         }
 
         public static void GeneratePublication(
             DocProject docProject, 
             string pathPublication,
-            Dictionary<long, SEntity> instances,
             Dictionary<string, DocObject> mapEntity, 
             Dictionary<string, string> mapSchema, 
             DocPublication docPublication,
             BackgroundWorker worker, 
             FormProgress formProgress)
         {
-            instances.Clear(); // clear out old state from mvdxml export
             docPublication.ErrorLog.Clear();
 
             string path = pathPublication + @"\html";
@@ -4065,21 +4120,27 @@ namespace IfcDoc
                 listChangeSets = docPublication.ChangeSets;
             }
 
+            // compile schema and extract the IfcProject type
+            Type typeProject = Compiler.CompileProject(docProject);
+
             // for now these are paired; in future they may be split
             Dictionary<DocFormatSchemaEnum, IFormatExtension> mapFormatSchema = new Dictionary<DocFormatSchemaEnum, IFormatExtension>();
-            Dictionary<DocFormatSchemaEnum, IFormatData> mapFormatData = new Dictionary<DocFormatSchemaEnum, IFormatData>();
+            Dictionary<DocFormatSchemaEnum, Serializer> mapFormatData = new Dictionary<DocFormatSchemaEnum, Serializer>();
             foreach (DocFormat docFormat in docPublication.Formats)
             {
                 switch(docFormat.FormatType)
                 {
+                    case DocFormatSchemaEnum.STEP:
+                        mapFormatData.Add(docFormat.FormatType, new StepSerializer(typeProject));
+                        break;
+
                     case DocFormatSchemaEnum.OWL:
                         mapFormatSchema.Add(docFormat.FormatType, new FormatOWL());
-                        mapFormatData.Add(docFormat.FormatType, new FormatTTL(new System.IO.MemoryStream(), xmlns));
+                        mapFormatData.Add(docFormat.FormatType, new TurtleSerializer(typeProject));
                         break;
 
                     case DocFormatSchemaEnum.SQL:
                         mapFormatSchema.Add(docFormat.FormatType, new FormatSQL());
-                        mapFormatData.Add(docFormat.FormatType, new FormatSQL());
                         break;
 
                     case DocFormatSchemaEnum.CS:
@@ -4088,12 +4149,12 @@ namespace IfcDoc
 
                     case DocFormatSchemaEnum.JSON:
                         mapFormatSchema.Add(docFormat.FormatType, new FormatJAV());
-                        mapFormatData.Add(docFormat.FormatType, new FormatJSN(xsdFormatBase, xmlns, docPublication.GetReleaseIdentifier()));
+                        mapFormatData.Add(docFormat.FormatType, new JsonSerializer(typeProject));
                         break;
 
                     case DocFormatSchemaEnum.XML:
                         mapFormatSchema.Add(docFormat.FormatType, new FormatXSD(null));
-                        mapFormatData.Add(docFormat.FormatType, new FormatSML(new System.IO.MemoryStream(), xsdFormatBase, xmlns, docPublication.GetReleaseIdentifier()));
+                        mapFormatData.Add(docFormat.FormatType, new XmlSerializer(typeProject));
                         break;
 
                 }
@@ -4204,7 +4265,7 @@ namespace IfcDoc
 
             // build filter
             Dictionary<DocObject, bool> included = null;
-            if (views != null)
+            if (views != null && views.Length > 0)
             {
                 included = new Dictionary<DocObject, bool>();
                 foreach (DocModelView docEachView in views)
@@ -4221,9 +4282,6 @@ namespace IfcDoc
                 {
                     dictionaryViews[i] = new Dictionary<DocObject, bool>();
                     docProject.RegisterObjectsInScope(docProject.ModelViews[i], dictionaryViews[i]);
-
-                    //// not currently done 
-                    GenerateImplementationGuide(docProject, docPublication, docView, mapEntity, mapSchema, pathPublication, included);
                 }
             }
 
@@ -4754,6 +4812,7 @@ namespace IfcDoc
                                 foreach(DocModelView docProjectModelView in docPublication.Views)
                                 {
                                     //if (included == null || included.ContainsKey(docProjectModelView))
+                                    if (!docProjectModelView.IsDeprecated())
                                     {
                                         iView++;
                                         int[] indexpath = new int[] { 1, iView };
@@ -4790,9 +4849,11 @@ namespace IfcDoc
                                 htmSection.WriteLine("<dl>");
                                 if (docProject.Terms != null)
                                 {
-                                    foreach(DocTerm docTerm in docProject.Terms)
+                                    int[] indexpath = new int[] { 3, 1, 0 };
+                                    foreach (DocTerm docTerm in docProject.Terms)
                                     {
-                                        htmSection.WriteTerm(docTerm);
+                                        indexpath[2]++;
+                                        htmSection.WriteTerm(docTerm, indexpath);
                                     }
                                 }
                                 htmSection.WriteLine("</dl>");
@@ -4811,7 +4872,7 @@ namespace IfcDoc
                                     {
                                         DocAbbreviation docRef = sl[s];
                                         htmSection.WriteLine("<tr><td class=\"abbreviatedterm\" id=\"" + MakeLinkName(docRef) + "\">" + docRef.Name + "</td>");
-                                        htmSection.WriteLine("<td class=\"abbrebiatedterm\">" + docRef.Documentation + "</td></tr>");
+                                        htmSection.WriteLine("<td class=\"abbreviatedterm\">" + docRef.Documentation + "</td></tr>");
                                     }
                                 }
                                 htmSection.WriteLine("</table>");
@@ -5096,7 +5157,7 @@ namespace IfcDoc
                                                                             {
                                                                                 htmDef.WriteSummaryHeader(docFormat.FormatType.ToString() + " Specification", false, docPublication);
                                                                                 htmDef.Write("<div class=\"xsd\"><code class=\"xsd\">");
-                                                                                htmDef.WriteExpression(output);
+                                                                                htmDef.WriteExpression(output, "../../");
                                                                                 htmDef.Write("</code></div>");
                                                                                 htmDef.WriteSummaryFooter(docPublication);
                                                                             }
@@ -5362,7 +5423,7 @@ namespace IfcDoc
                                                                             {
                                                                                 htmDef.WriteSummaryHeader(docFormat.FormatType.ToString() + " Specification", false, docPublication);
                                                                                 htmDef.Write("<div class=\"xsd\"><code class=\"xsd\">");
-                                                                                htmDef.WriteExpression(output);
+                                                                                htmDef.WriteExpression(output, "../../");
                                                                                 htmDef.Write("</code></div>");
                                                                                 htmDef.WriteSummaryFooter(docPublication);
                                                                             }
@@ -5571,7 +5632,7 @@ namespace IfcDoc
                                                                 //http://lookup.bsdd.buildingsmart.com/api/4.0/IfdPSet/search/Pset_ActionRequest
 
                                                                 // use guid
-                                                                string guid = IfcGloballyUniqueId.Format(entity.Uuid);
+                                                                string guid = SGuid.Format(entity.Uuid);
                                                                 htmDef.WriteLine("<p><a href=\"http://lookup.bsdd.buildingsmart.com/api/4.0/IfdPSet/" + guid + "/ifcVersion/2x4\" target=\"ifd\"><img border=\"0\" src=\"../../../img/external.png\" title=\"Link to IFD\"/> buildingSMART Data Dictionary</a></p>\r\n");
 
                                                                 htmDef.WriteLine("<p><a href=\"../../../psd/" + entity.Name + ".xml\"><img border=\"0\" src=\"../../../img/diagram.png\" title=\"Link to PSD-XML\"/> PSD-XML</a></p>\r\n");
@@ -5812,7 +5873,7 @@ namespace IfcDoc
                                         }
 
                                         //string formaturi = uriprefix + "/" + version + "_" + release.ToUpper() + "." + docFormat.ExtensionSchema;
-                                        string formaturi = uriprefix + "/" + version + "." + docFormat.ExtensionSchema;
+                                        string formaturi = uriprefix + "/" + "IFC4" /*version*/ + "." + docFormat.ExtensionSchema;
 
                                         htmSection.WriteLine("<tr><td>" + formatdesc + "</td><td><a href=\"" + formaturi + "\" target=\"_blank\">" + formaturi + "</a></td></tr>");
                                     }
@@ -5868,7 +5929,7 @@ namespace IfcDoc
 
                                             indexpath[0]++;
                                             GenerateListings(docProject, docPublication, docModelView,
-                                                mapEntity, mapSchema, included, instances, locales, mapFormatSchema,
+                                                mapEntity, mapSchema, included, locales, mapFormatSchema,
                                                 indexpath, pathPublication, 
                                                 htmTOC, htmSectionTOC);
                                         }
@@ -6167,7 +6228,7 @@ namespace IfcDoc
                                             // generate diagrams
                                             //if (!Properties.Settings.Default.SkipDiagrams)
                                             {
-                                                Image imageSchema = FormatPNG.CreateSchemaDiagram(docSchema, mapEntity, diagramformat);
+                                                Image imageSchema = FormatPNG.CreateSchemaDiagram(docSchema, docProject, diagramformat);
 
                                                 using (FormatHTM htmSchemaDiagram = new FormatHTM(path + "/annex/annex-d/" + MakeLinkName(docSchema) + "/index.htm", mapEntity, mapSchema, included))
                                                 {
@@ -6406,38 +6467,21 @@ namespace IfcDoc
                             case 'E':
                                 if (docProject.Examples != null && !Properties.Settings.Default.SkipDiagrams)
                                 {
+                                    List<DocXsdFormat> listFormats = new List<DocXsdFormat>(xsdFormatBase);
+                                    /*
+                                    if (docExample.Views.Count > 0)
+                                    {
+                                        foreach (DocXsdFormat customformat in docExample.Views[0].XsdFormats)
+                                        {
+                                            listFormats.Add(customformat);
+                                        }
+                                    }*/
+
                                     List<int> indexpath = new List<int>();
                                     indexpath.Add(0);
                                     foreach(DocExample docExample in docProject.Examples)
                                     {
-                                        Dictionary<string, Type> typemap = new Dictionary<string, Type>();
-                                        Compiler compiler = new Compiler(docProject, docExample.Views.ToArray(), null);
-                                        System.Reflection.Emit.AssemblyBuilder assembly = compiler.Assembly;
-                                        Type[] types = null;
-                                        try
-                                        {
-                                            types = assembly.GetTypes();
-                                        }
-                                        catch(System.Reflection.ReflectionTypeLoadException)
-                                        {
-                                            // schema could not be compiled according to definition
-                                        }
-
-                                        foreach (Type t in types)
-                                        {
-                                            typemap.Add(t.Name.ToUpper(), t);
-                                        }
-
-                                        List<DocXsdFormat> listFormats = new List<DocXsdFormat>(xsdFormatBase);
-                                        if (docExample.Views.Count > 0)
-                                        {
-                                            foreach (DocXsdFormat customformat in docExample.Views[0].XsdFormats)
-                                            {
-                                                listFormats.Add(customformat);
-                                            }
-                                        }
-
-                                        GenerateExample(docProject, docPublication, docExample, listFormats, path, indexpath, included, mapEntity, mapSchema, typemap, listFigures, listTables, htmTOC, htmSectionTOC, mapFormatData, null, null);
+                                        GenerateExample(docProject, docPublication, docExample, listFormats, path, indexpath, included, mapEntity, mapSchema, listFigures, listTables, htmTOC, htmSectionTOC, mapFormatData, null, null);
                                     }
                                 }
                                 break;

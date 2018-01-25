@@ -1,0 +1,2 @@
+﻿(PredefinedType <> IfcShadingDeviceTypeEnum.USERDEFINED) OR
+((PredefinedType = IfcShadingDeviceTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcElementType.ElementType))

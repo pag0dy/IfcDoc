@@ -1,0 +1,27 @@
+﻿<p><em>IfcConnectionPointGeometry</em>
+is used to describe the geometric constraints that facilitate the
+physical connection of two objects at a point (here <em>IfcCartesianPoint</em>) or at an vertex with point
+coordinates associated. It is envisioned as a control that applies to the element connection relationships. </p>
+
+<blockquote class="example">
+EXAMPLE&nbsp; The connection relationship between two path based elements (like a column and a beam) has a geometric constraint which describes the connection points by a <em>PointOnRelatingElement</em> for the column and a <em>PointOnRelatedElement</em> for the beam. The exact usage of the <em>IfcConnectionPointGeometry</em> is further defined in the geometry use sections of the elements that use it.
+</blockquote>
+
+<p>The <em>IfcPoint</em> (or the <em>IfcVertexPoint</em> with an associated <em>IfcPoint</em>) at the <em>PointOnRelatingElement</em> attribute defines the point where the basic geometry items of the connected elements connect. The point coordinates are provided within the local coordinate system of the <em>RelatingElement</em>, as specified at the <em>IfcRelConnectsSubtype</em> that utilizes the <em>IfcConnectionPointGeometry</em>. Optionally, the same point coordinates can also be provided within the local coordinate system of the <em>RelatedElement</em> by using the <em>PointOnRelatedElement</em> attribute. If both point coordinates are not identical within a common parent coordinate system (ultimately within the world coordinate system), the subtype <em>IfcConnectionPointEccentricity</em> shall be used. </p>
+
+<blockquote class="note">
+NOTE&nbsp; If the point connection has an offset (if the two points or vertex points at the relating and related element do not physically match), the subtype <em>IfcConnectionPointEccentricity</em> shall be used.
+</blockquote>
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC1.5.
+</blockquote>
+
+<blockquote class="change-ifc2x">
+IFC2x CHANGE&nbsp; Renamed from IfcPointConnectionGeometry.
+</blockquote>
+
+<blockquote class="change-ifc2x3">
+IFC2x3 CHANGE&nbsp; The provision of topology with associated geometry, <em>IfcVertexPoint</em>, is
+enabled by using the <em>IfcPointOrVertexPoint</em>.
+</blockquote>

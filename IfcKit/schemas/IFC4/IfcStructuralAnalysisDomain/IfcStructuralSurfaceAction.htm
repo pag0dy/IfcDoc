@@ -1,0 +1,56 @@
+﻿<p>This entity defines an action which is distributed over a surface.
+A surface action may be connected with a surface member or surface connection.</p>
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC4.
+</blockquote>
+
+<blockquote class="change-ifc2x4">
+IFC4 CHANGE&nbsp; Former entity <em>IfcStructuralPlanarActionVarying</em> from IFC2x2 has been removed and are replaced by this entity.
+</blockquote>
+
+<p><b><u>Coordinate Systems</u></b>:</p>
+
+<p>See definitions at <em>IfcStructuralActivity</em>.</p>
+
+<p><b><u>Topology Use Definitions</u></b>:</p>
+
+<p>Standard Case:<br>
+If connected with a surface item and acting on its entirety, instances of
+<em>IfcStructuralCurveAction</em> shall not have an <em>ObjectPlacement</em> nor a
+<em>Representation</em>.  It is implied that the placement and representation of the
+<em>IfcStructuralActivity</em> is the same as the ones of the member or connection.</p>
+
+<p>Special Case 1:<br>
+If connected with a surface item but acting only on a part of it, instances of
+<em>IfcStructuralSurfaceAction</em> shall have an <em>ObjectPlacement</em> and
+<em>Representation</em>, containing an <em>IfcFaceSurface</em> which topologically
+defines the loaded part of the surface.  See <em>IfcStructuralActivity</em> for further
+definitions.</p>
+
+<p>Special Case 2:<br>
+If not connected with a structural item (which may happen in an incomplete or conceptual model),
+a surface action should have an <em>ObjectPlacement</em> and <em>Representation</em>, containing an
+<em>IfcFaceSurface</em>.  See <em>IfcStructuralActivity</em> for further definitions.</p>
+
+<p class="spec-head">Informal Propositions:</p>
+
+<ol>
+  <li>If the surface action is of the predefined type CONST,
+      <em>SELF\IfcStructuralActivity.AppliedLoad</em> must not be of type
+      <em>IfcStructuralLoadConfiguration</em>.</li>
+  <li>If the surface action is of the predefined type BILINEAR,
+      <em>SELF\IfcStructuralActivity.AppliedLoad</em> shall be of type
+      <em>IfcStructuralLoadConfiguration</em> and shall contain three items
+      with two-dimensional <em>IfcStructuralLoadConfiguration.Locations</em>,
+      defining the location of the load samples in local coordinates of the
+      surface action.</em>
+  <li>If the surface action is of the predefined type DISCRETE,
+      <em>SELF\IfcStructuralActivity.AppliedLoad</em> shall be of type
+      <em>IfcStructuralLoadConfiguration</em> and shall contain two or more
+      items with two-dimensional locations.</em>
+  <li>Point loads must be of type DISCRETE, thus contain two or more load points.
+      (Single point loads are modeled by <em>IfcStructuralPointLoad</em>.)</li>
+  <li>All items in <em>SELF\IfcStructuralActivity.AppliedLoad\IfcStructuralLoadConfiguration.Values</em>
+      shall be of the same entity type.</li>
+</ol>

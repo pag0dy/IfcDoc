@@ -1,0 +1,23 @@
+﻿<p>The object type defines the specific information about a type, being common to all occurrences of this type. It refers to the specific level of the
+well recognized <em>generic - specific - occurrance</em> modeling paradigm. The <em>IfcTypeObject</em> gets assigned to the individual object instances (the occurrences) via the <em>IfcRelDefinesByType</em> relationship.</p>
+
+<blockquote class="note">NOTE&nbsp; The terms 'Type' and 'Style' are often used interchangeably.</blockquote>
+
+<p>The object type is represented by a set of property set definitions. The attached property sets describe the available alpha-numeric information about the object type. and are used to define all common properties that apply to all object occurrences of that type.</p>
+
+<blockquote class="note">NOTE&nbsp; If a property having having the same name is used within the <em>IfcPropertySet</em> assigned to an <em>IfcTypeObject</em> (and subtypes) and to an occurrence of that type, then the occurrence property overrides the type property. See <em>IfcRelDefinesByType</em> for an explanatory
+figure.</blockquote>
+
+<p>Object types may be exchanged without being already assigned to objects. An object type may have an indication of the library (or catalogue) from which its definition originates. This association is handled by the inherited <em>HasAssociations</em> relationship pointing to <em>IfcRelAssociatesLibrary</em>.</p>
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC2x
+</blockquote>
+
+<blockquote class="change-ifc2x3">
+IFC2x3 CHANGE&nbsp; The <em>IfcTypeObject</em> is now subtyped from the new supertype <em>IfcObjectDefinition</em>, and the attribute <em>HasPropertySets</em> has been changed from a LIST into a SET.
+</blockquote>
+
+<blockquote class="change-ifc2x4">
+IFC4 CHANGE&nbsp; The entity <em>IfcTypeObject</em> shall not be instantiated from IFC4 onwards. It will be changed into an ABSTRACT supertype in future releases of IFC.  The inverse attribute <em>Types</em> has been renamed from <em>ObjectTypeOf</em>.
+</blockquote>

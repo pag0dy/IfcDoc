@@ -26,15 +26,14 @@ namespace IfcDoc
         DocTemplateDefinition m_template;
         DocConceptRoot m_conceptroot;
         DocAttribute m_attribute;
-        SEntity m_selection;
-        SEntity m_highlight;
+        object m_selection;
+        object m_highlight;
         int m_iSelection; // index of attribute within selection, or -1 if entity
         int m_iHighlight;
         Rectangle m_rcSelection;
         Rectangle m_rcHighlight;
-        Dictionary<string, DocObject> m_map;
         Dictionary<Rectangle, SEntity> m_hitmap;
-        SEntity m_instance; // optional instance to highlight
+        object m_instance; // optional instance to highlight
 
         public event EventHandler SelectionChanged;
 
@@ -45,18 +44,6 @@ namespace IfcDoc
             this.DoubleBuffered = true;
             this.ResizeRedraw = true;
             this.AutoScroll = true;
-        }
-
-        public Dictionary<string, DocObject> Map
-        {
-            get
-            {
-                return this.m_map;
-            }
-            set
-            {
-                this.m_map = value;
-            }
         }
 
         public DocProject Project
@@ -101,7 +88,7 @@ namespace IfcDoc
             }
         }
 
-        public SEntity Selection
+        public object Selection
         {
             get
             {
@@ -131,23 +118,20 @@ namespace IfcDoc
                         this.m_rcSelection = rc;
                         this.m_iSelection = -1;
 
-                        if (this.m_map.ContainsKey(mr.Name))
+                        DocEntity docEntity = this.m_project.GetDefinition(mr.Name) as DocEntity;
+                        if (docEntity != null)
                         {
-                            DocEntity docEntity = this.m_map[mr.Name] as DocEntity;
-                            if (docEntity != null)
-                            {
-                                List<DocAttribute> listAttr = new List<DocAttribute>();
-                                FormatPNG.BuildAttributeList(docEntity, listAttr, this.m_map);
+                            List<DocAttribute> listAttr = new List<DocAttribute>();
+                            FormatPNG.BuildAttributeList(docEntity, listAttr, this.m_project);
 
-                                for (int i = 0; i < listAttr.Count; i++)
+                            for (int i = 0; i < listAttr.Count; i++)
+                            {
+                                DocAttribute docAttr = listAttr[i];
+                                if (docAttr.Name.Equals(((DocModelRule)value).Name))
                                 {
-                                    DocAttribute docAttr = listAttr[i];
-                                    if (docAttr.Name.Equals(((DocModelRule)value).Name))
-                                    {
-                                        this.m_attribute = docAttr;
-                                        this.m_iSelection = i;
-                                        break;
-                                    }
+                                    this.m_attribute = docAttr;
+                                    this.m_iSelection = i;
+                                    break;
                                 }
                             }
                         }
@@ -158,9 +142,9 @@ namespace IfcDoc
                         this.m_rcSelection = rc;
                         this.m_iSelection = -1;
 
-                        DocEntity docEntity = this.m_map[this.m_template.Type] as DocEntity;
+                        DocEntity docEntity = this.m_project.GetDefinition(this.m_template.Type) as DocEntity;
                         List<DocAttribute> listAttr = new List<DocAttribute>();
-                        FormatPNG.BuildAttributeList(docEntity, listAttr, this.m_map);
+                        FormatPNG.BuildAttributeList(docEntity, listAttr, this.m_project);
 
                         for (int i = 0; i < listAttr.Count; i++)
                         {
@@ -192,7 +176,7 @@ namespace IfcDoc
             }
         }
 
-        public SEntity CurrentInstance
+        public object CurrentInstance
         {
             get
             {
@@ -216,15 +200,15 @@ namespace IfcDoc
             this.m_rcSelection = Rectangle.Empty;
             this.m_rcHighlight = Rectangle.Empty;
             this.m_hitmap.Clear();
-            if (this.m_template != null && this.m_project != null && this.m_map != null)
+            if (this.m_template != null && this.m_project != null)
             {
-                this.m_image = FormatPNG.CreateTemplateDiagram(this.m_template, this.m_map, this.m_hitmap, this.m_project, this.m_instance);
+                this.m_image = FormatPNG.CreateTemplateDiagram(this.m_template, this.m_hitmap, this.m_project, this.m_instance);
                 if (this.m_image != null)
                 {
                     this.AutoScrollMinSize = new Size(this.m_image.Width, this.m_image.Height);
                 }
             }
-            else if (this.m_conceptroot != null && this.m_project != null && this.m_map != null && this.m_conceptroot.ApplicableEntity != null)
+            else if (this.m_conceptroot != null && this.m_project != null && this.m_conceptroot.ApplicableEntity != null)
             {
                 DocModelView docView = null;
                 foreach (DocModelView eachView in this.m_project.ModelViews)
@@ -236,7 +220,7 @@ namespace IfcDoc
                     }
                 }
 
-                this.m_image = FormatPNG.CreateConceptDiagram(this.m_conceptroot.ApplicableEntity, docView, this.m_map, this.m_hitmap, this.m_project, this.m_instance);
+                this.m_image = FormatPNG.CreateConceptDiagram(this.m_conceptroot.ApplicableEntity, docView, this.m_hitmap, this.m_project, this.m_instance);
                 if (this.m_image != null)
                 {
                     this.AutoScrollMinSize = new Size(this.m_image.Width, this.m_image.Height);
@@ -338,14 +322,14 @@ namespace IfcDoc
 
                             if (docObjRef == null)
                             {
-                                this.m_map.TryGetValue(ruleEntity.Name, out docObjRef);
+                                docObjRef = this.m_project.GetDefinition(ruleEntity.Name);
                             }
 
                             if (docObjRef is DocEntity)
                             {
                                 docEntity = (DocEntity)docObjRef;
                                 List<DocAttribute> listAttr = new List<DocAttribute>();
-                                FormatPNG.BuildAttributeList(docEntity, listAttr, this.m_map);
+                                FormatPNG.BuildAttributeList(docEntity, listAttr, this.m_project);
 
                                 if (iAttr >= 0 && iAttr < listAttr.Count)
                                 {
@@ -362,9 +346,9 @@ namespace IfcDoc
                         }
                         else if (this.m_template != null)
                         {
-                            docEntity = this.m_map[this.m_template.Type] as DocEntity;
+                            docEntity = this.m_project.GetDefinition(this.m_template.Type) as DocEntity;
                             List<DocAttribute> listAttr = new List<DocAttribute>();
-                            FormatPNG.BuildAttributeList(docEntity, listAttr, this.m_map);
+                            FormatPNG.BuildAttributeList(docEntity, listAttr, this.m_project);
 
                             if (iAttr >= 0 && iAttr < listAttr.Count)
                             {

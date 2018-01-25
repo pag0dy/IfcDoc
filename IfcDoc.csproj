@@ -92,7 +92,9 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
@@ -155,10 +157,8 @@
     <Compile Include="DataDictionary.cs" />
     <Compile Include="DocumentationISO.cs" />
     <Compile Include="DifferenceEngine.cs" />
+    <Compile Include="FolderStorage.cs" />
     <Compile Include="FormatOWL.cs" />
-    <Compile Include="FormatTTL.cs" />
-    <Compile Include="FormatJSN.cs" />
-    <Compile Include="FormatSMF.cs" />
     <Compile Include="FormatSQL.cs" />
     <Compile Include="FormatZIP.cs" />
     <Compile Include="FormCredentials.cs">
@@ -167,11 +167,23 @@
     <Compile Include="FormCredentials.Designer.cs">
       <DependentUpon>FormCredentials.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormDatabase.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormDatabase.Designer.cs">
+      <DependentUpon>FormDatabase.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormFilterDefinitions.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FormFilterDefinitions.Designer.cs">
       <DependentUpon>FormFilterDefinitions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormSaveFolder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSaveFolder.Designer.cs">
+      <DependentUpon>FormSaveFolder.cs</DependentUpon>
     </Compile>
     <Compile Include="FormSelectProperty.cs">
       <SubType>Form</SubType>
@@ -191,7 +203,6 @@
     <Compile Include="FormValidate.Designer.cs">
       <DependentUpon>FormValidate.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormatSML.cs" />
     <Compile Include="FormParameters.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -204,6 +215,13 @@
     <Compile Include="FormSelectExchange.Designer.cs">
       <DependentUpon>FormSelectExchange.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormValidateMappings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormValidateMappings.Designer.cs">
+      <DependentUpon>FormValidateMappings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SchemaSVG.cs" />
     <Compile Include="SchemaXsd.cs" />
     <Compile Include="ThemedTreeView.cs">
       <SubType>Component</SubType>
@@ -226,12 +244,6 @@
     </Compile>
     <Compile Include="FormConstraint.Designer.cs">
       <DependentUpon>FormConstraint.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FormDownload.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormDownload.Designer.cs">
-      <DependentUpon>FormDownload.cs</DependentUpon>
     </Compile>
     <Compile Include="FormMerge.cs">
       <SubType>Form</SubType>
@@ -330,15 +342,12 @@
     <Compile Include="FormSelectView.Designer.cs">
       <DependentUpon>FormSelectView.cs</DependentUpon>
     </Compile>
-    <Compile Include="IfcGloballyUniqueId.cs" />
-    <Compile Include="NBIMS.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="SchemaCNF.cs" />
-    <Compile Include="SchemaIfc.cs" />
     <Compile Include="SchemaMvd.cs" />
     <Compile Include="SchemaPsd.cs" />
     <Compile Include="FormatXML.cs" />
@@ -355,7 +364,6 @@
     </Compile>
     <Compile Include="Schema.cs" />
     <Compile Include="SchemaDoc.cs" />
-    <Compile Include="FormatSPF.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SchemaSch.cs" />
@@ -398,6 +406,9 @@
     <EmbeddedResource Include="FormCredentials.resx">
       <DependentUpon>FormCredentials.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormDatabase.resx">
+      <DependentUpon>FormDatabase.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormEdit.ja-JP.resx">
       <DependentUpon>FormEdit.cs</DependentUpon>
     </EmbeddedResource>
@@ -418,6 +429,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormRule.ja.resx">
       <DependentUpon>FormRule.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSaveFolder.resx">
+      <DependentUpon>FormSaveFolder.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormSelectEntity.ja.resx">
       <DependentUpon>FormSelectEntity.cs</DependentUpon>
@@ -442,10 +456,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormConstraint.resx">
       <DependentUpon>FormConstraint.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormDownload.resx">
-      <DependentUpon>FormDownload.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="FormEdit.ja.resx">
@@ -526,6 +536,9 @@
       <DependentUpon>FormSelectView.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormValidateMappings.resx">
+      <DependentUpon>FormValidateMappings.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -563,6 +576,35 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="csproj2.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="assemblyinfo.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="IfcKit\formats\BuildingSmart.Serialization\BuildingSmart.Serialization.csproj">
+      <Project>{36a0328b-1a60-4f07-bc34-4d22a7f65cac}</Project>
+      <Name>BuildingSmart.Serialization</Name>
+    </ProjectReference>
+    <ProjectReference Include="IfcKit\formats\json\BuildingSmart.Serialization.Json.csproj">
+      <Project>{2d912a6f-3f73-480c-b023-f1d7ef0dc954}</Project>
+      <Name>BuildingSmart.Serialization.Json</Name>
+    </ProjectReference>
+    <ProjectReference Include="IfcKit\formats\spf\BuildingSmart.Serialization.Step.csproj">
+      <Project>{9dc23719-6569-4f9a-a676-aad97d1d233f}</Project>
+      <Name>BuildingSmart.Serialization.Step</Name>
+    </ProjectReference>
+    <ProjectReference Include="IfcKit\formats\ttl\BuildingSmart.Serialization.Turtle.csproj">
+      <Project>{fa52d32f-d526-4f88-855e-282829ff3c9f}</Project>
+      <Name>BuildingSmart.Serialization.Turtle</Name>
+    </ProjectReference>
+    <ProjectReference Include="IfcKit\formats\xml\BuildingSmart.Serialization.Xml.csproj">
+      <Project>{55cd2497-80a6-49b9-880b-ab0743b7deca}</Project>
+      <Name>BuildingSmart.Serialization.Xml</Name>
+    </ProjectReference>
+    <ProjectReference Include="IfcKit\schemas\IFC4x1\BuildingSmart.IFC4X1.csproj">
+      <Project>{2ffe04f0-b6c2-405e-92a4-d1f3b6b037bc}</Project>
+      <Name>BuildingSmart.IFC4X1</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

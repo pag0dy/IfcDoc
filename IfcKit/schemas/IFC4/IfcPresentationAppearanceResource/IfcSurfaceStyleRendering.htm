@@ -1,0 +1,47 @@
+﻿<p><em>IfcSurfaceStyleRendering</em> holds the properties for visualization related to a particular surface side style. It allows rendering properties to be defined by:</p> 
+<ul> 
+ <li>a colour component (<em>SurfaceColour</em> attribute inherited from <em>IfcSurfaceStyleShading</em>)</li> 
+ <li>a transparency component (<em>Transparency</em> attribute inherited from <em>IfcSurfaceStyleShading</em>)</li> 
+ <li>a reflectance component, given either by 
+  <ul> 
+   <li>applying reflectance factors to the surface colour: 
+    <ul> 
+     <li>diffuse component (<em>SurfaceColour * DiffuseFactor</em>)</li>				  
+     <li>transmission component (<em>SurfaceColour * TransmissionFactor</em>)</li> 
+     <li>diffuse transmission component (<em>SurfaceColour * DiffuseTransmissionFactor</em>)</li> 
+     <li>reflection component (<em>SurfaceColour * ReflectionFactor</em>)</li> 
+     <li>specular component (<em>SurfaceColour * SpecularFactor</em> attribute together with <em>SpecularHighlight</em>)</li> 
+    </ul> 
+  </li> 
+  <li>or, by explicitly defining such factors as colours (<em>DiffuseColour</em>, <em>TransmissionColour</em>, <em>DiffuseTransmissionColour</em>, <em>ReflectionColour</em> and <em>SpecularColour</em>)
+  </li> 
+ </ul> 
+ </li> 
+ <li>a displacement component, currently only given by a texture map with the TextureType = bump</li> 
+ <li>a coverage component, currently only given by the alpha component of the texture map (2 or 4 component colour texture)</li> 
+</ul> 
+
+<blockquote class="note">
+NOTE&nbsp; The inherited attribute <em>SurfaceColour</em> is treated as the ambient colour and specifies how much ambient light from light sources this surface shall reflect. Ambient light is omnidirectional and depends only on the number of light sources, not their positions with respect to the surface.
+</blockquote> 
+
+<blockquote class="note"> 
+NOTE&nbsp; If the reflectance method, as given by the <em>IfcReflectanceMethodEnum</em> is "GLASS", the transmission factor controls the level of transparency in the glass, In this case the transparency factor is interpreted as transmission factor.
+</blockquote> 
+
+<blockquote class="note">
+NOTE&nbsp; If both <em>Transparency</em> and <em>TransmissionColour</em> (or factor) are included, the following definitions apply:
+ <ul> 
+  <li class="small">Transparency is the ratio of the transmitted flux in a solid angle of 2 * PI sr (one hemisphere). It is a simple colour filtration that does not account for refraction.</li> 
+  <li class="small">Transmission factor of a material is the ratio of transmitted flux in a given solid angle to the transmitted flux of a completely diffuse material with 100% transmission in the same solid angle. It is the portion of light that goes through the material and may be refracted.</li> 
+ </ul>
+</blockquote> 
+
+<blockquote class="note">
+NOTE&nbsp; For reflectance equations and further information about the surface style properties and its processing, see:
+ <ul> 
+  <li class="small">ISO/IEC 14772-1: 1997: The Virtual Reality Modeling Language</li> 
+ </ul>
+</blockquote> 
+
+<blockquote class="history">HISTORY&nbsp; New entity in IFC2x.</blockquote>

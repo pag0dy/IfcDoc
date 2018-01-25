@@ -1,0 +1,37 @@
+﻿<p>A surface feature is a modification at (onto, or into) of the surface of an element.  Parts of the surface of the entire surface may be affected.  The volume and mass of the element may be increased, remain unchanged, or be decreased by the surface feature, depending on manufacturing technology.  However, any increase or decrease of volume is small compared to the total volume of the element.</u></p>
+
+<p>The standard use of instances of <em>IfcSurfaceFeature</em> is as a part of element type objects (instances of subtypes of <em>IfcElementType</em>).  The part&ndash;whole relationship is established by an aggregation relationship object, expressing the decomposition of an element type into one or more additive elements (element parts) and zero or more feature elements.</p>
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC4.
+</blockquote>
+
+<p><b><u>Containment Use Definition</u></b>:</p>
+
+<p>Surface features shall have no spatial containment relationship to the spatial structure since they are dependent on element types without spatial containment relationships or on an element occurrence with own spatial containment relationship.</p>
+<ul>
+  <li>The <em>SELF\IfcElement.ContainedInStructure</em> relationship shall be NIL.</li>
+</ul>
+
+<p><b><u>Geometry use definition</u></b>:</p>
+
+<p>The geometric representation of <em>IfcSurfaceFeatureElement</em> is given by the <em>IfcProductDefinitionShape</em>, allowing multiple geometric representation.</p>
+
+<p><b>Local Placement</b></p>
+
+<p>The local placement for <em>IfcSurfaceFeatureElement</em> is defined in its supertype <em>IfcProduct</em>. It is defined by the <em>IfcLocalPlacement</em>, which defines the local coordinate system that is referenced by all geometric representations.</p>
+<ul>
+  <li>In case of features which are part of an element type, absolute placement into the type object's implied coordinate system shall be used.</li>
+  <li>In case of features which are voiding an element occurrence, the <em>PlacementRelTo</em> relationship of <em>IfcLocalPlacement</em> shall point to the local placement of the respective element.</li>
+</ul>
+
+<p><b>Shape representation</b></p>
+
+<p>Different shape representations may be used, depending on the nature of the feature and information requirements:</p>
+<ul>
+  <li>Symbolic representation, such as the two-dimensional bounding box of a tag.</p>
+  <li>A geometric set representing the geometric items of a mark.</li>
+  <li>Surface representations of treated parts of the lement surface by means of <em>IfcShellBasedSurfaceModel</em>.  The faces within the surface model may be included into a B-Rep model within a representation map of the parent element type.</li>
+</ul>
+
+<p>Higher-level parameters (geometric and non-geometric) may be provided by property sets based on local agreements.</p>

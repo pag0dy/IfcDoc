@@ -119,7 +119,7 @@
   </resheader>
   <data name="textBox1.Text" xml:space="preserve">
     <value>IFC Documentation Generator
-Version 11.6 (October 12, 2017)
+Version 11.8 (December 31, 2017)
 © Copyright 2011-2017 buildingSMART International Ltd.
 
 Model Support Group (MSG)
@@ -128,6 +128,6 @@ Thomas Liebich - MSG Leader (tl@aec3.com)
 Comments, issues or any other feedback may be posted at:
 https://github.com/BuildingSMART/IfcDoc
 
-MVD-XML Version 1.2</value>
+MVD-XML Version 1.1, 1.2</value>
   </data>
 </root>

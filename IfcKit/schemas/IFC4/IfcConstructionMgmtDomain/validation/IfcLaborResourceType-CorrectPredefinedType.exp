@@ -1,0 +1,2 @@
+﻿(PredefinedType <> IfcLaborResourceTypeEnum.USERDEFINED) OR
+((PredefinedType = IfcLaborResourceTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcTypeResource.ResourceType))

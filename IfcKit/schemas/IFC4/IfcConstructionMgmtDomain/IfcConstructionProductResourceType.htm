@@ -1,0 +1,15 @@
+﻿<p>The resource type <em>IfcConstructionProductType</em> defines commonly shared information for occurrences of construction product resources. The set of shared information may include:</p>
+<ul>
+<li>common productivities</li>
+<li>common cost rates</li>
+<li>common properties within shared property sets</li>
+</ul>
+<p>It is used to define a construction product resource specification (i.e. the specific resource information that is common to all occurrences of that resource). Resource types may be exchanged without being already assigned to occurrences.</p>
+<p>Occurrences of the <em>IfcConstructionProductResourceType</em> are represented by instances of <em>IfcConstructionProductResource</em>.</p>
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC4.
+</blockquote>
+
+<p class="use-head">Assignment use definition</p>
+<p>In addition to assignments specified at the base class <em>IfcConstructionResourceType</em>, a construction product resource type may have assignments of its own using <em>IfcRelAssignsToResource</em> where <em>RelatingResource</em> refers to the <em>IfcConstructionProductResourceType</em> and <em>RelatedObjects</em> contains one or more <em>IfcTypeProduct</em> subtypes.  Such relationship indicates the type of product to be used as input, which is instantiated as an occurrence assigned for each resource occurrence.  There may be multiple chains of production where such product type may have its own task and resource types assigned.</p>

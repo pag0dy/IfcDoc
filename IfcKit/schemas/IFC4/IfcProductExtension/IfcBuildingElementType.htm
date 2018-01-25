@@ -1,0 +1,13 @@
+﻿<p>The <em>IfcBuildingElementType</em> provides the type information for <em>IfcBuildingElement</em> occurrences.</p>
+
+<blockquote class="note">
+NOTE&nbsp; The product representations are defined as representation maps (at the level of the supertype <em>IfcTypeProduct</em>, which gets assigned by an element occurrence instance through the <em>IfcShapeRepresentation.Item[1]</em> being an <em>IfcMappedItem</em>.
+</blockquote>
+
+<p>A building element type is used to define the common properties of a certain type of building element that are applied to all occurrences of that type. It is used to define a building element specification (i.e. the specific product information, that is common to all occurrences of that product type). Building element types (or the instantiable subtypes) may be exchanged without being already assigned to occurrences.</p>
+
+<p>The <em>IfcBuildingElementType</em> is an abstract type that cannot be instantiated. For arbitrary building element types, that cannot be expressed by a subtype of <em>IfcBuildingElementType </em>, use <em>IfcBuildingElementProxyType</em>. Occurrences of subtypes of the <em>IfcBuildingElementType</em> are represented by instances of the appropriate subtypes of <em>IfcBuildingElement</em>.</p>
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC2x2.
+</blockquote>

@@ -1,0 +1,41 @@
+﻿<p>The <em>IfcPropertySet</em> is a container that holds properties within a property tree. These properties are interpreted according to their name attribute. Each individual property has a significant name string. Some property sets are included in the specification of this standard and have a predefined set of properties indicated by assigning a significant name. These property sets are listed under "property sets" within this specification. Property sets applicable to certain objects are listed in the object specification. The naming convention "Pset_Xxx" applies to all those property sets that are defined as part of this  specification and it shall be used as the value of the <em>Name</em> attribute.</p>
+
+<p>In addition any user defined property set can be captured. Property sets that are not declared as part of the IFC specification shall have a <em>Name</em> value not including the "Pset_" prefix.</p>
+
+<p><em>IfcPropertySet</em> can be assigned to object occurrences and object types. An <em>IfcPropertySet</em> assigned to an object type is shared among all occurrences of the same object type.</p>
+
+<blockquote class="note">
+NOTE&nbsp; See <em>IfcRelDefinesByType</em> for how to override property sets assigned to an object type within the object occurrence.
+</blockquote>
+
+<p>An <em>IfcPropertySetTemplate</em> may define the underlying structure, i.e. the required name, the applicable object or object types to which the property set can be attached, and the individual properties that can be included. Property sets are related to other objects by using the relationship object that refers to the corresponding object:</p>
+    <ul>
+      <li>
+        <b>Occurrence Object</b>:
+        <em>IfcRelDefinesByProperties</em> using the inverse
+        attribute <em>DefinesOccurrence</em>.
+      </li>
+      <li>
+        <b>Type Object</b>: using a direct link by inverse
+        attribute <em>DefinesType</em>.
+      </li>
+      <li>
+        <b>Underlying template</b>:
+        <em>IfcRelDefinesByTemplate</em> using the inverse
+        attribute <em>IsDefinedBy</em>.
+      </li>
+      <li>
+        <b>External reference</b>: subtypes of
+        <em>IfcRelAssociates</em> are used to provide a link to a
+        classification system, or external library providing
+        further reference to the property set. Accessible by
+        inverse attribute <em>HasAssociations</em>.
+      </li>
+    </ul>
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC1.0
+</blockquote>
+<blockquote class="change-ifc2x4">
+IFC4 CHANGE&nbsp; All statically defined property set entities are no longer subtypes of <em>IfcPropertySet</em>.
+</blockquote>

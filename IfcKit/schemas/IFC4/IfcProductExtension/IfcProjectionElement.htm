@@ -1,0 +1,25 @@
+﻿<p>The projection element is a specialization of the general feature element to represent projections applied to building elements. It represents a solid
+attached to any element that has physical manifestation.</p>
+
+<blockquote class="example">
+EXAMPLE&nbsp; A wall projection such as a pilaster strip is handled by <em>IfcProjectionElement</em>
+</blockquote>
+
+<blockquote class="note"> 
+NOTE&nbsp; View definitions or implementer agreements may restrict the types of elements to which <em>IfcProjectionElement</em> can be applied.
+</blockquote>
+
+<p>An <em>IfcProjectionElement</em> has to be linked to a element (all subtypes of <em>IfcElement</em>) by using the <em>IfcRelProjectsElement</em> relationship. Its existence depends on the existence of the master element. The relationship implies a Boolean union operation between the volume of the projection element and the volume of the element.</p>
+
+<p>The <em>IfcProjectionElement</em> shall not participate in the containment relationship, i.e. it is not linked directly to the spatial structure of the project. It has a mandatory <em>ProjectsElements</em> inverse relationship pointing to the <em>IfcElement</em> that is contained in the spatial structure.</p>
+<ul>
+<li>The inverse relationship <em>ContainedInStructure</em> shall be NIL.</li>
+</ul>
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC2x2.
+</blockquote>
+
+<blockquote class="change-ifc2x4">
+IFC4 CHANGE&nbsp; The attribute <em>PredefinedType</em> has been added at the end of attribute list.
+</blockquote>

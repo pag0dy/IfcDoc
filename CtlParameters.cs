@@ -21,7 +21,7 @@ namespace IfcDoc
         Dictionary<string, DocObject> m_map;
         DocModelRule[] m_columns;
         bool m_editcon;
-        SEntity m_instance;
+        object m_instance;
 
         public CtlParameters()
         {
@@ -117,7 +117,7 @@ namespace IfcDoc
             }
         }
 
-        public SEntity CurrentInstance
+        public object CurrentInstance
         {
             get
             {
@@ -170,12 +170,12 @@ namespace IfcDoc
 
                 if (docUsage != null && this.CurrentInstance != null)
                 {
-                    List<SEntity> listMismatch = docUsage.GetValidationMismatches(this.CurrentInstance, this.ConceptItem);
-                    foreach (SEntity o in listMismatch)
+                    List<object> listMismatch = docUsage.GetValidationMismatches(this.CurrentInstance, this.ConceptItem);
+                    foreach (object o in listMismatch)
                     {
                         ListViewItem lvi = new ListViewItem();
                         lvi.Tag = o;
-                        lvi.Text = o.OID.ToString();
+                        lvi.Text = o.GetHashCode().ToString();//... o.OID.ToString();
 
                         System.Reflection.FieldInfo field = o.GetType().GetField("Name");
                         if (field != null)
@@ -303,49 +303,52 @@ namespace IfcDoc
                     DocEntity docEntity = this.m_project.GetDefinition(docTemplate.Type) as DocEntity;// docConceptRoot.ApplicableEntity;
                     foreach (DocModelRuleAttribute docRule in docTemplate.Rules)
                     {
-                        DocAttribute docAttribute = docEntity.ResolveParameterAttribute(docRule, rule.Identification, m_map);
-                        if(docAttribute == null)
+                        if (docEntity != null)
                         {
-                            // try on type itself, e.g. PredefinedType
-                            docAttribute = docConceptRoot.ApplicableEntity.ResolveParameterAttribute(docRule, rule.Identification, m_map);
-                        }
-                        if (docAttribute != null)
-                        {
-                            DocObject docDef = null;
-                            if (this.m_map.TryGetValue(docAttribute.DefinedType, out docDef) && docDef is DocDefinition)
+                            DocAttribute docAttribute = docEntity.ResolveParameterAttribute(docRule, rule.Identification, m_map);
+                            if (docAttribute == null)
                             {
-                                if (docDef is DocEnumeration)
+                                // try on type itself, e.g. PredefinedType
+                                docAttribute = docConceptRoot.ApplicableEntity.ResolveParameterAttribute(docRule, rule.Identification, m_map);
+                            }
+                            if (docAttribute != null)
+                            {
+                                DocObject docDef = null;
+                                if (this.m_map.TryGetValue(docAttribute.DefinedType, out docDef) && docDef is DocDefinition)
                                 {
-                                    DocEnumeration docEnum = (DocEnumeration)docDef;
+                                    if (docDef is DocEnumeration)
+                                    {
+                                        DocEnumeration docEnum = (DocEnumeration)docDef;
+                                        DataGridViewComboBoxCell cell = new DataGridViewComboBoxCell();
+                                        cell.MaxDropDownItems = 32;
+                                        cell.DropDownWidth = 200;
+                                        // add blank item
+                                        cell.Items.Add(String.Empty);
+                                        foreach (DocConstant docConst in docEnum.Constants)
+                                        {
+                                            cell.Items.Add(docConst.Name);
+                                        }
+                                        column.CellTemplate = cell;
+                                    }
+                                    else if (docDef is DocEntity || docDef is DocSelect)
+                                    {
+                                        // button to launch dialog for picking entity
+                                        DataGridViewButtonCell cell = new DataGridViewButtonCell();
+                                        cell.Tag = docDef;
+                                        column.CellTemplate = cell;
+                                    }
+                                }
+                                else if (docAttribute.DefinedType != null && (docAttribute.DefinedType.Equals("LOGICAL") || docAttribute.DefinedType.Equals("BOOLEAN")))
+                                {
                                     DataGridViewComboBoxCell cell = new DataGridViewComboBoxCell();
-                                    cell.MaxDropDownItems = 32;
+                                    cell.MaxDropDownItems = 4;
                                     cell.DropDownWidth = 200;
                                     // add blank item
                                     cell.Items.Add(String.Empty);
-                                    foreach (DocConstant docConst in docEnum.Constants)
-                                    {
-                                        cell.Items.Add(docConst.Name);
-                                    }
+                                    cell.Items.Add(Boolean.FalseString);
+                                    cell.Items.Add(Boolean.TrueString);
                                     column.CellTemplate = cell;
                                 }
-                                else if (docDef is DocEntity || docDef is DocSelect)
-                                {
-                                    // button to launch dialog for picking entity
-                                    DataGridViewButtonCell cell = new DataGridViewButtonCell();
-                                    cell.Tag = docDef;
-                                    column.CellTemplate = cell;
-                                }
-                            }
-                            else if (docAttribute.DefinedType != null && (docAttribute.DefinedType.Equals("LOGICAL") || docAttribute.DefinedType.Equals("BOOLEAN")))
-                            {
-                                DataGridViewComboBoxCell cell = new DataGridViewComboBoxCell();
-                                cell.MaxDropDownItems = 4;
-                                cell.DropDownWidth = 200;
-                                // add blank item
-                                cell.Items.Add(String.Empty);
-                                cell.Items.Add(Boolean.FalseString);
-                                cell.Items.Add(Boolean.TrueString);
-                                column.CellTemplate = cell;
                             }
                         }
                     }
@@ -808,6 +811,21 @@ namespace IfcDoc
                     docItem.SetUsage(this.dataGridViewConceptRules.SelectedCells[0].Value as string);
                     this.dataGridViewConceptRules.SelectedCells[0].OwningRow.DefaultCellStyle.BackColor = docItem.GetColor();
                     this.dataGridViewConceptRules.InvalidateRow(row);
+                }
+            }
+        }
+
+        private void toolStripButtonConceptEntity_Click(object sender, EventArgs e)
+        {
+            DocConceptRoot docRoot = this.m_conceptroot;
+            if(docRoot == null)
+                return;
+
+            using (FormSelectEntity form = new FormSelectEntity(null, docRoot.ApplicableEntity, this.m_project, SelectDefinitionOptions.Entity))
+            {
+                if (form.ShowDialog(this) == DialogResult.OK)
+                {
+                    docRoot.ApplicableEntity = form.SelectedEntity as DocEntity;
                 }
             }
         }

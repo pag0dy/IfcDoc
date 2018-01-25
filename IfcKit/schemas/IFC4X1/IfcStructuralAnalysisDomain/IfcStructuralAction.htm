@@ -1,0 +1,25 @@
+﻿<p>A structural action is a structural activity that acts upon
+a structural item or building element.</p>
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC2x2.
+</blockquote>
+
+<blockquote class="change-ifc2x4">
+IFC4 CHANGE&nbsp; Attribute <em>DestabilizingLoad</em> made optional.  Attribute <em>CausedBy</em> deleted; use <em>IfcRelAssignsToProduct</em> via <em>ReferencedBy</em> instead.
+</blockquote>
+
+<p class="use-head">Relationship use definition</p>
+<p>Structural actions are grouped into either an <em>IfcStructuralLoadGroup</em> of predefined
+type LOAD_GROUP or, more often, an <em>IfcStructuralLoadCase</em>.  This is accomplished via the
+inverse relationship <em>HasAssignments</em> and an <em>IfcRelAssignsToGroup</em> relationship object.
+<em>IfcStructuralLoadGroup.LoadGroupFor</em> or <em>IfcStructuralLoadCase.LoadGroupFor</em> respectively
+refers to the structural analysis model(s) in which the loads are used.</p>
+
+<p>It is furthermore possible to establish relationships between actions in one analysis model
+and reactions in another analysis model which cause the actions.  For example, a support reaction
+from one structural system may be taken over as a load onto another supporting structural system.
+This is expressed by means of the inverse relationship <em>ReferencedBy</em> of the action and an
+<em>IfcRelAssignsToProduct</em> relationship object.  <em>IfcRelAssignsToProduct.Name</em> is set to
+'Causes' and <em>IfcRelAssignsToProduct.RelatedObjects</em> refers to an instance of a subtype of
+<em>IfcStructuralReaction</em>.</p>

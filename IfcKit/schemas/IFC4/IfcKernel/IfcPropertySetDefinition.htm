@@ -1,0 +1,26 @@
+﻿<p><em>IfcPropertySetDefinition</em> is a generalization of all individual property sets that can be assigned to an object or type object. The property set definition can be either:</p>
+<ul>
+ <li><strong>Dynamically extendable property sets</strong> - <em>IfcPropertySet</em>, a set of properties for which the IFC specification only provides a kind of "meta model", to be further declared by agreement. This means no entity definition of the properties exists within the IFC specification. The declaration is done by assigning a significant string value to the <em>Name</em> attribute of the entity as defined in the entity <em>IfcPropertySet</em> and at each
+subtype of <em>IfcProperty</em>, referenced by the property set. Dynamically defined property sets may have an underlying template provided by <em>IfcPropertySetTemplate</em>.</li>
+ <li><strong>Statically defined property sets</strong> - <em>IfcPreDefinedPropertySet</em>, a property set entity that exists within the IFC specification. The semantic meaning of each statically defined property set is declared by its entity type and the meaning of the properties is defined by the name and data type
+of the explicit attribute representing it.</li>
+</ul>
+
+<p>Property set definitions define information that is shared among multiple instances of objects, either object occurrences or object types. <em>IfcPropertySetDefinition</em>'s (by their instantiable subtypes) can participate within the following relationships:</p>
+ <ul>
+ <li><strong>Assignment to object types</strong> - an <em>DefinesType</em> direct relationship to <em>IfcTypeObject</em> that applies the property set, with all included properties, to the object type. Those properties apply to all object occurrences having the same object type.</li>
+ <li><strong>Assignment to object occurrences</strong> - an <em>DefinesOccurrence</em> relationship to <em>IfcRelDefinesByProperties</em> that applies the property set, with all included properties, to the object occurrence.</li>
+</ul>
+
+<blockquote class="note">
+NOTE&nbsp; Properties assigned to object occurrences may override properties assigned to the object type. See <em>IfcRelDefinesByType</em> for further information.
+</blockquote>
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC2x
+</blockquote>
+
+<blockquote class="change-ifc2x4">
+IFC4 CHANGE&nbsp; The subtype <em>IfcPreDefinedPropertySet</em> has been added.
+</blockquote>
+

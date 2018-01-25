@@ -1,0 +1,2 @@
+﻿(PredefinedType <> IfcAirTerminalBoxTypeEnum.USERDEFINED) OR
+((PredefinedType = IfcAirTerminalBoxTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcElementType.ElementType))

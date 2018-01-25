@@ -1,0 +1,2 @@
+﻿(PredefinedType <> IfcEvaporatorTypeEnum.USERDEFINED) OR
+((PredefinedType = IfcEvaporatorTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcElementType.ElementType))

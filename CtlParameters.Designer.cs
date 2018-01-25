@@ -51,6 +51,7 @@
             this.listView1 = new System.Windows.Forms.ListView();
             this.columnHeaderInstance = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.toolStripButtonConceptEntity = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewConceptRules)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -72,7 +73,8 @@
             this.toolStripButtonConceptTemplate,
             this.toolStripSeparator2,
             this.toolStripButtonShowFailures,
-            this.toolStripComboBoxOperator});
+            this.toolStripComboBoxOperator,
+            this.toolStripButtonConceptEntity});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(400, 25);
@@ -296,6 +298,17 @@
             this.columnHeaderName.Text = "Name";
             this.columnHeaderName.Width = 200;
             // 
+            // toolStripButtonConceptEntity
+            // 
+            this.toolStripButtonConceptEntity.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripButtonConceptEntity.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonConceptEntity.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonConceptEntity.Image")));
+            this.toolStripButtonConceptEntity.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonConceptEntity.Name = "toolStripButtonConceptEntity";
+            this.toolStripButtonConceptEntity.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButtonConceptEntity.Text = "Change Entity";
+            this.toolStripButtonConceptEntity.Click += new System.EventHandler(this.toolStripButtonConceptEntity_Click);
+            // 
             // CtlParameters
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -337,5 +350,6 @@
         private System.Windows.Forms.ColumnHeader columnHeaderInstance;
         private System.Windows.Forms.ColumnHeader columnHeaderName;
         private System.Windows.Forms.ToolStripComboBox toolStripComboBoxOperator;
+        private System.Windows.Forms.ToolStripButton toolStripButtonConceptEntity;
     }
 }

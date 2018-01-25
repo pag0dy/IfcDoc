@@ -179,7 +179,6 @@ namespace IfcDoc
         private void treeView_AfterSelect(object sender, TreeViewEventArgs e)
         {
             DocTemplateDefinition dtd = (DocTemplateDefinition)this.treeView.SelectedNode.Tag;
-            this.ctlConcept.Map = this.m_map;
             this.ctlConcept.Project = this.m_project;
             this.ctlConcept.Template = dtd;
             this.ctlConcept.Enabled = true;

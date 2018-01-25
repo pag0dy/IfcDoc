@@ -1,0 +1,3 @@
+﻿NOT(EXISTS(PredefinedType)) OR
+(PredefinedType <> IfcTendonAnchorTypeEnum.USERDEFINED) OR
+((PredefinedType = IfcTendonAnchorTypeEnum.USERDEFINED) AND EXISTS (SELF\IfcObject.ObjectType))

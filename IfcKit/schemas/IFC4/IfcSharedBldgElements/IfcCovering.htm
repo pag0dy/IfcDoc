@@ -1,0 +1,60 @@
+﻿<p>A covering is an element which covers some part of another element and is fully dependent on that other element. The
+<em>IfcCovering</em> defines the occurrence of a covering type, that (if given) is expressed by the <em>IfcCoveringType</em>.</p>
+
+<blockquote class="extDef">NOTE&nbsp; Definition according to ISO ISO 6707-1: final coverings and treatments of surfaces and their
+intersections.</blockquote>
+
+<p>Coverings are elements with relationships to the covered element and the space on the other side, they may contain openings,
+assigned by <em>IfcRelVoidsElement</em>, material information, assigned by <em>IfcRelAssociatesMaterial</em>, and others.</p>
+
+<blockquote class="example">
+EXAMPLE&nbsp; Coverings include wall claddings, floorings, suspended ceilings, moldings and skirting boards.
+</blockquote>
+
+<blockquote class="note">
+NOTE&nbsp; A more basic information about claddings, floorings, and ceilings of a space can be attached to <em>IfcSpace</em>'s using the 
+Pset_SpaceCommon properties. Then only a name can be provided and the covering quantities would be interpreted from the space quantities.
+</blockquote>
+
+<p>Coverings can be assigned to</p>
+<ul>
+<li>a space represented by <em>IfcSpace</em>
+<ul>
+<li>using the inverse relationship <em>CoversSpaces</em> pointing to <em>IfcRelCoversSpaces</em>. The space is then accessible via
+<em>IfcRelCoversSpaces.RelatedSpace</em>. It defines to which space a covering is facing towards.</li>
+</ul>
+</li>
+<li>a space boundary represented by <em>IfcRelSpaceBoundary</em>
+<ul>
+<li>using the inverse relationship <em>ProvidesBoundaries</em> pointing to <em>IfcRelSpaceBoundary.</em> The space is then
+accessible via <em>IfcRelSpaceBoundary.RelatingSpace</em>.</li>
+</ul>
+</li>
+<li>a building element represented by <em>IfcBuildingElement</em>
+<ul>
+<li>using the inverse relationship <em>Covers</em> pointing to <em>IfcRelCoversBldgElements</em>. The building element is then
+accessible via
+<em>IfcRelCoversBldgElements.RelatingBuildingElement</em>.</li>
+</ul>
+</li>
+</ul>
+
+<blockquote class="note">NOTE&nbsp; The mere containment relationship between an <em>IfcCovering</em> and an <em>IfcSpace</em> is created
+by using <em>IfcRelContainedInSpatialStructure</em></blockquote>
+<p>The following guideline shall apply:</p>
+<ul>
+<li>(default) if the space has coverings that may not have their own shape representation and no defined relationships to the building
+elements they cover, then the <em>IfcCovering</em> shall be assigned to <em>IfcSpace</em> using the <em>IfcRelCoversSpaces</em>
+relationship,</li>
+<li>if the space has coverings that have an own shape representation and the space has defined space boundaries, then the
+covering, which relates to that space, shall be contained in the space using <em>IfcRelContainedInSpatialStructure</em>. It may be
+assigned to the space boundaries using the <em>IfcRelSpaceBoundary</em>.</li>
+<li>if the covering does not relate to a space, then the covering should be assigned to the building element or a distribution
+element using the <em>IfcRelCoversBldgElements</em> relationship.</li>
+</ul>
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC1.0.
+</blockquote>
+<blockquote class="change-ifc2x">
+IFC2x CHANGE&nbsp; The attribute <em>PredefinedType</em> is now optional and should only be inserted when no type information, given by <em>IfcCoveringType</em>, is assigned to the <em>IfcCovering</em> occurrence by <em>IfcRelDefinesByType</em>.
+</blockquote>

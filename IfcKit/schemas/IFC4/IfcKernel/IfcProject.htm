@@ -1,0 +1,26 @@
+﻿<p><em>IfcProject</em> indicates the undertaking of some design, engineering, construction, or
+maintenance activities leading towards a product. The project establishes the context for information to be exchanged or shared, and it may represent a construction project but does not have to.  The <em>IfcProject</em>'s main purpose in an exchange structure is to provide the root instance and the context for all other information items included.</p>
+<p>The context provided by the <em>IfcProject</em> includes:</p>
+<ul>
+ <li>the default units</li>
+ <li>the geometric representation context for exchange structures including shape representations
+ <ul>
+  <li>the project coordinate system</li>
+  <li>the coordinate space dimension</li>
+  <li>the precision used within the geometric representations</li>
+  <li>optionally the indication of the true north</li>
+  <li>optionally the map conversion between the project coordinate system and the geospatial coordinate reference system.</li>
+ </ul>
+ </li>
+</ul>
+
+<blockquote class="history">HISTORY&nbsp; New entity in IFC1.0</blockquote>
+
+<blockquote class="change-ifc2x4">
+IFC4 CHANGE&nbsp; The attributes <em>RepresentationContexts</em> and <em>UnitsInContext</em> are made optional and are promoted to supertype <em>IfcContext</em>.
+</blockquote>
+
+<p class="spec-head">Informal Propositions:</p>
+<ol>
+<li>There shall only be one project within the exchange context. This is enforced by the global rule <em>IfcSingleProjectInstance</em>.</li>
+</ol>

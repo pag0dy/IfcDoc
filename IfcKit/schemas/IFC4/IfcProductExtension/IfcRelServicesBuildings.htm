@@ -1,0 +1,30 @@
+﻿    <p>
+      The <em>IfcRelServicesBuildings</em> is an objectified relationship that defines the relationship between a system
+      and the sites, buildings, storeys, spaces, or spatial zones, it serves. Examples of systems are:
+    </p>
+    <ul>
+      <li>building service systems (heating, cooling, waste water system) represented by instances of
+      <em>IfcDistributionSystem</em>;
+      </li>
+      <li>building systems (fenestration, shading) represented by instances of <em>IfcBuildingSystem</em>;
+      </li>
+      <li>zones as collection of logically grouped spaces represented by instances of <em>IfcZone</em>
+      </li>
+      <li>idealized structural analysis systems represented by instances of <em>IfcStructuralAnalysisModel</em>.
+      </li>
+    </ul>
+    <blockquote class="note">
+      NOTE&nbsp; The name <em>IfcRelServicesBuildings</em> is a known
+      anomaly, as the relationship is not restricted to buildings
+      anymore.
+    </blockquote>
+    <blockquote class="history">
+      HISTORY&nbsp; New entity in IFC1.0.
+    </blockquote>
+    <blockquote class="change-ifc2x">
+      IFC2x CHANGE&nbsp; The data type of the
+      attribute <em>RelatedBuildings</em> has been changed from
+      <em>IfcBuilding</em> to its supertype
+      <em>IfcSpatialStructureElement</em> with upward compatibility
+      for file based exchange.
+    </blockquote>

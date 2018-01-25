@@ -1,0 +1,23 @@
+﻿<p>The <em>IfcPropertyResource</em> defines a basic set of property types that can be associated with occurrence objects (subtypes of <em>IfcObject</em>) and type objects (subtypes of <em>IfcTypeObject</em>) through the <em>IfcPropertySet</em> (defined in the <em>IfcKernel</em> schema). These properties are used to assign property definitions that are semantically defined by a name string and are extensible in terms of their definitions.</p> 
+
+<blockquote class="note"> 
+NOTE&nbsp; Frequently, there is a need to extend the attributes that are attached to an individual object or group of objects. Yet it may not be necessary to extend the attributes for every object within the same class. Using the same capabilities as for types of an element, it is possible to define such sets of attributes and associate them with individual objects.
+</blockquote> 
+
+<p>The association of attributes to objects can be defined by two different ways:</p> 
+<ul> 
+<li>by defining a type object (<em>IfcTypeObject</em>) which defines a specific object information (including the relevant properties) that is assigned to all instances (or occurrences) of the type object (via the <em>IfcRelDefinesByType</em> relationship).</li> 
+<li>by defining a property set (<em>IfcPropertySet</em>, a logical grouping of related properties) which defines the common property information for an individual instance (or occurrence), this is done via the <em>IfcRelDefinesByProperties</em> relationship.</li> 
+</ul> 
+
+<p>The semantic information of what an individual property denotes has to be given by the <em>Name</em> attribute. The <em>Name</em> is human interpretable and can also be computer interpretable by convention. This convention has to be established by implementers' agreements.</p> 
+
+<blockquote class="note"> 
+NOTE&nbsp; The IFC specification defines a set of property sets, which provides a recommended usage of property sets for objects in the IFC model. In addition to the IFC property set specification also regional or project specific definitions of property sets are possible. Thereby property sets provide an mechanism to localize IFC definitions.
+</blockquote> 
+
+<p>All subtypes of <em>IfcProperty</em> are referenced later by the <em>IfcPropertySet</em>. Thereby the <em>IfcPropertySet</em> establishes a tree of property definitions through the <em>IfcSimpleProperty</em> (and its subtypes) and <em>IfcComplexProperty</em>. Any instance of <em>IfcSimpleProperty</em> within this tree shall only be referenced once (by either <em>IfcPropertySet</em> or <em>IfcComplexProperty</em>).</p>
+
+<blockquote class="note">
+NOTE&nbsp; The property set attached to an object shall have a tree structure, therefore all properties (either <em>IfcSimpleProperty</em> -and subtypes- or <em>IfcComplexProperty</em>) shall be used only once within that structure.
+</blockquote>

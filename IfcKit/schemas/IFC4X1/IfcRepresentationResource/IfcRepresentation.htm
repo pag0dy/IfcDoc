@@ -1,0 +1,62 @@
+﻿    <p>
+      The <em>IfcRepresentation</em> defines the general concept of
+      representing product properties and in particular the product
+      shape.
+    </p>
+    <blockquote class="extDef">
+      NOTE&nbsp; Definition from ISO 10303-43:<br>
+      A representation is a collection of one or more representation items that are
+      related in a specified representation context. The relationship of representation
+			item to representation context is the basis for distinguishing which representation
+			item entities are related.<br><br>
+			A representation item can be related to a representation context directly, when it 
+			occurs as an element is a representation, or indirectly, when it is referenced
+			through any number of intervening entities, each of type representation item.
+    </blockquote>
+    <blockquote class="note">
+      NOTE&nbsp; Entity adapted from
+      <strong>representation</strong> defined in ISO 10303-42.
+    </blockquote>
+    <blockquote class="history">
+      HISTORY&nbsp; New entity in IFC2.0
+    </blockquote>
+    <blockquote class="change-ifc2x3">
+      IFC2x3 CHANGE&nbsp; The inverse attributes
+      <em>LayerAssignments</em> and<em>RepresentationMap</em> have been
+      added with upward compatibility.
+    </blockquote>
+    <blockquote class="change-ifc2x4">
+      IFC4 CHANGE&nbsp; Entity <em>IfcRepresentation</em> has been
+      changed into an ABSTRACT supertype.
+    </blockquote>
+    <p class="use-head">
+      Representation Use Definition
+    </p>
+    <p>
+      Each representation, either <em>IfcShapeRepresentation</em>, or
+      <em>IfcTopologyRepresentation</em> shall have a well defined:
+    </p>
+    <ul>
+      <li>
+        <em>ContextOfItems</em>: Reference to an
+        <em>IfcGeometricRepresentationContext</em> as agreed for this
+        representation.
+      </li>
+      <li>
+        <em>RepresentationIdentifier</em>: Name of the
+        representation, for example, 'Body' for 3D shape,
+        'FootPrint' for 2D ground view, 'Axis' for reference axis.
+      </li>
+      <li>
+        <em>RepresentationType</em>: Name for the geometric, or
+        topological representation type, for example, 'SweptSolid'
+        for 3D swept solids, 'Brep' for boundary representation.
+      </li>
+    </ul>
+    <blockquote class="note">
+      NOTE&nbsp; Guidelines for applying correct values to those
+      attributes are provided in the geometry use definition
+      section at each subtype of <em>IfcElement</em>. These
+      guidelines can be further refined in view definitions or
+      implementer agreements.
+    </blockquote>

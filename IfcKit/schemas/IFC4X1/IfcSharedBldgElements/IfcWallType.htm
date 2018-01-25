@@ -1,0 +1,41 @@
+﻿<p>The element type
+<em>IfcWallType</em> defines commonly shared information for
+occurrences of walls. The set of shared information may
+include:</p>
+<ul>
+<li>common properties within shared property sets</li>
+<li>common material information</li>
+<li>common material layer definitions</li>
+<li>common shape representations</li>
+</ul>
+
+<blockquote class="note">
+NOTE&nbsp; It is illegal to share shape representations as representation maps for occurrences of <em>IfcWallStandardcase</em>.
+</blockquote>
+
+<p>It is used to define a wall specification (i.e. the specific
+product information, that is common to all occurrences of that
+product type). Wall types may be exchanged without being already
+assigned to occurrences.</p>
+<blockquote class="note">NOTE&nbsp; The product representations are defined
+as representation maps (at the level of the supertype
+<em>IfcTypeProduct</em>, which gets assigned by an element
+occurrence instance through the
+<em>IfcShapeRepresentation.Item[1]</em> being an
+<em>IfcMappedItem</em>.</blockquote>
+<p>Occurrences of the <em>IfcWallType</em> within building models
+are represented by instances of <em>IfcWallStandardCase</em> if the
+<em>IfcWallType</em> has a single associated
+<em>IfcMaterialLayerSet</em>; otherwise they are represented by
+instances of <em>IfcWall</em>, or <em>IfcWallElementedCase</em>.
+Occurrences of the <em>IfcWallType</em> within structural analysis
+models are represented by instances of
+<em>IfcStructuralSurfaceMember</em>, or its applicable
+subtypes.</p>
+<blockquote class="history">HISTORY&nbsp; New entity in IFC2x2.</blockquote>
+<p class="spec-head">Informal Propositions:</p>
+<ol>
+<li>The material assignment, if provided using the
+<em>IfcRelAssociatesMaterial</em> relationship, shall not reference
+the <em>IfcMaterialLayerSetUsage</em>.</li>
+</ol>

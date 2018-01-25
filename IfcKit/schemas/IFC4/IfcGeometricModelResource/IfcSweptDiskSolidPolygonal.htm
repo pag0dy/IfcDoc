@@ -1,0 +1,10 @@
+﻿<p>The <em>IfcSweptDiskSolidPolygonal</em> is a <em>IfcSweptDiskSolid</em> where the <em>Directrix</em> is restricted
+to be provided by an poly line only. An optional <em>FilletRadius</em> attribute can be asserted, it is then
+applied as a fillet to all transitions between the segments of the poly line.</p>
+<blockquote class="note">NOTE&nbsp; The geometric item <em>IfcIndexedPolyCurve</em> provides a more compact representation compared with <em>IfcPolyline</em>. Therefore it is the prefered curve representation for the <em>Directrix</em>. The <em>IfcIndexedPolyCurve</em> shall not have <em>Segments</em> defined, resticting it to a poly line only.</blockquote>
+<blockquote class="history">HISTORY&nbsp; New entity in IFC4.</blockquote>
+<p class="spec-head">Informal Propositions:</p>
+<ol>
+<li>The <em>FilletRadius</em>, if provided, has to be smaller then or equal to the length of the start and end segment
+of the <em>IfcPolyline</em>, and smaller then or equal to one half of the lenght of the shortest inner segment.</li>
+</ol>

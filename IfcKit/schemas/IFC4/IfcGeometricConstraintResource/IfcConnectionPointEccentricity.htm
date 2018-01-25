@@ -1,0 +1,26 @@
+﻿<p><em>IfcConnectionPointEccentricity</em> is used to describe the geometric constraints that facilitate the physical connection of two objects at a point or vertex point with associated point coordinates. There is a physical distance, or eccentricity, etween the connection points of both object. The eccentricity can be either given by:</p>
+<ul>
+<li>providing the <em>PointOnRelatingElement</em> and the <em>PointOnRelatedElement</em>, where both point coordinates are not identical within a common parent coordinate system (latestly within the world coordinate system),</li>
+<li>providing the <em>PointOnRelatingElement</em> and the three distance measures, <em>EccentricityInX</em>, <em>EccentricityInY</em>, and <em>EccentricityInZ</em> (or only <em>EccentricityInX</em>, and <em>EccentricityInY</em> if the
+underlying coordinate system is two-dimensional), or</li>
+<li>providing both.</li>
+</ul>
+
+<blockquote class="note">
+NOTE  If both, <em>PointOnRelatedElement</em>, and <em>EccentricityInX</em>, <em>EccentricityInY</em>, (<em>EccentricityInZ</em>) are provided, the values should be consistent. In case of any non-consistency, the calculated distance between <em>PointOnRelatingElement</em> and <em>PointOnRelatedElement</em> takes precedence.
+</blockquote>
+
+<p>The <em>IfcPoint</em> (or the <em>IfcVertexPoint</em> with an associated <em>IfcPoint</em>) at the <em>PointOnRelatingElement</em> attribute defines the point where the basic geometry items of the connected elements connects. The point coordinates are provided within the local coordinate system of the <em>RelatingElement</em>, as specified at the <em>IfcRelConnects</em> subtype that utilizes the <em>IfcConnectionPointGeometry</em>. Optionally, the same point coordinates can also be provided within the local coordinate system of the <em>RelatedElement</em> by using the <em>PointOnRelatedElement</em> attribute, otherwise the distance to the point at the RelatedElement has to be given by the three eccentricity values.</p>
+
+<p>The explicit values for <em>EccentricityInX</em>, <em>EccentricityInY</em>, and <em>EccentricityInZ</em> are always
+measured in the following direction and coordinate system (defining when the value is positive or negative):</p>
+<ul>
+<li>from the <em>PointOnRelatedElement</em> to <em>PointOnRelatingElement</em> within the coordinate system of the <em>RelatingElement</em>.</li>
+<li>in addition: when used to specify connections in structural analysis models, the <em>IfcStructuralMember</em> is to be used as the <em>RelatingElement</em> of the relationship object utilizing <em>IfcConnectionPointEccentricity</em>, and the <em>IfcStructuralConnection</em> is the <em>RelatedElement</em>.</li>
+</ul>
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC2x3.
+</blockquote>
+
+

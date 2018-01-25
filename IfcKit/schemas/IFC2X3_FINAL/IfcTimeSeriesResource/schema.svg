@@ -1,0 +1,224 @@
+<?xml version="1.0"?>
+<svg xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="1.1" width="1200" height="888" xmlns="http://www.w3.org/2000/svg">
+  <g id="IfcIrregularTimeSeries" fill="yellow">
+    <rect x="358.83329625" y="532.3438125" width="181.90000125" height="41.80000125" stroke="black" />
+    <text x="449.783296875" y="553.243813125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcIrregularTimeSeries</text>
+    <g id="Values">
+      <polyline points="445.1148375,574.143825 445.1148375,647.90169375 " fill="none" stroke="black" />
+      <text x="479.405473875" y="614.0964964875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">Values L[1:?]</text>
+    </g>
+  </g>
+  <g id="IfcIrregularTimeSeriesValue" fill="yellow">
+    <rect x="358.81510875" y="647.901675" width="182.9697675" height="41.83615875" stroke="black" />
+    <text x="450.2999925" y="668.819754375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcIrregularTimeSeriesValue</text>
+    <g id="TimeStamp">
+      <polyline points="501.5450625,689.7378375 501.5450625,802.1682 " fill="none" stroke="black" />
+      <text x="534.394456875" y="740.6971155" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">TimeStamp</text>
+    </g>
+    <g id="ListValues">
+      <polyline points="450.3,689.7378375 450.3,743.29371 299.5879125,743.29371 299.5879125,802.42822875 " fill="none" stroke="black" />
+      <text x="395.469594" y="793.06902675" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">ListValues L[1:?]</text>
+    </g>
+  </g>
+  <g id="IfcRegularTimeSeries" fill="yellow">
+    <rect x="27.11785725" y="532.3266" width="181.9125" height="41.80000125" stroke="black" />
+    <text x="118.07410725" y="553.226600625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcRegularTimeSeries</text>
+    <g id="TimeStep">
+      <polyline points="199.01500125,574.1266125 199.01500125,604.752585 " fill="none" stroke="black" />
+      <text x="235.032605625" y="597.925606875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">TimeStep</text>
+    </g>
+    <g id="Values">
+      <polyline points="59.2079925,574.1266125 59.2079925,647.91840375 " fill="none" stroke="black" />
+      <text x="95.999314125" y="614.964435375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">Values L[1:?]</text>
+    </g>
+  </g>
+  <g id="IfcTimeSeries" fill="yellow">
+    <rect x="55.52844" y="31.826506125" width="125.893155" height="388.5015" stroke="black" />
+    <polyline points="117.16104375,420.3280125 117.16104375,512.356515 " fill="none" stroke="black" stroke-width="3" />
+    <polyline points="117.16104375,512.356515 117.0229275,512.3565375 117.0229275,532.326601875 " fill="none" stroke="black" stroke-width="3" />
+    <polyline points="117.16104375,512.356515 449.7832875,512.3565375 449.7832875,532.343814375 " fill="none" stroke="black" stroke-width="3" />
+    <text x="118.4750175" y="226.077256125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcTimeSeries</text>
+    <g id="Name">
+      <polyline points="181.421595,53.42085 358.80122625,53.42085 " fill="none" stroke="black" />
+      <text x="266.169483375" y="50.7928984875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">Name</text>
+    </g>
+    <g id="Description">
+      <polyline points="181.421595,92.5773225 358.80595125,92.5773225 " fill="none" stroke="black" stroke-dasharray="1,1" />
+      <text x="266.960231325" y="89.4237807" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">Description</text>
+    </g>
+    <g id="StartTime">
+      <polyline points="181.421595,136.72692 358.8047775,136.72692 " fill="none" stroke="black" />
+      <text x="271.427162025" y="135.412944225" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">StartTime</text>
+    </g>
+    <g id="EndTime">
+      <polyline points="181.421595,177.72297 358.81422375,177.72297 " fill="none" stroke="black" />
+      <text x="269.3295238875" y="176.408994225" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">EndTime</text>
+    </g>
+    <g id="TimeSeriesDataType">
+      <polyline points="181.421595,221.3469375 358.792275,221.3469375 " fill="none" stroke="black" />
+      <text x="269.89669908375" y="217.9831596" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">TimeSeriesDataType</text>
+    </g>
+    <g id="DataOrigin">
+      <polyline points="181.421595,260.50341 358.7989875,260.50341 " fill="none" stroke="black" />
+      <text x="272.0170229625" y="258.1654671375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">DataOrigin</text>
+    </g>
+    <g id="UserDefinedDataOrigin">
+      <polyline points="181.421595,301.49947875 358.83844875,301.49947875 " fill="none" stroke="black" stroke-dasharray="1,1" />
+      <text x="270.130021875" y="301.49947875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">UserDefinedDataOrigin</text>
+    </g>
+    <g id="Unit">
+      <polyline points="181.421595,339.341955 358.80065625,339.341955 " fill="none" stroke="black" stroke-dasharray="1,1" />
+      <text x="266.169198375" y="335.40002775" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">Unit</text>
+    </g>
+    <g id="DocumentedBy">
+      <polyline points="358.8027675,400.118325 181.421595,400.118325 " fill="none" stroke="black" />
+      <text x="270.11218125" y="413.243325" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">DocumentedBy S[0:1]</text>
+    </g>
+  </g>
+  <g id="IfcTimeSeriesReferenceRelationship" fill="yellow">
+    <rect x="358.8027675" y="379.2659625" width="224.09639625" height="41.70472125" stroke="black" />
+    <text x="470.850965625" y="400.118323125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcTimeSeriesReferenceRelationship</text>
+    <g id="ReferencedTimeSeries">
+      <polyline points="358.8027675,400.118325 181.421595,400.118325 " fill="none" stroke="black" />
+      <text x="264.856278375" y="397.4903734875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">ReferencedTimeSeries</text>
+    </g>
+    <g id="TimeSeriesReferences">
+      <polyline points="413.0772,420.9706875 413.0772,457.05333 " fill="none" stroke="black" />
+      <text x="495.06928875" y="433.584854625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">TimeSeriesReferences S[1:?]</text>
+    </g>
+  </g>
+  <g id="IfcTimeSeriesValue" fill="yellow">
+    <rect x="27.09767775" y="647.9184" width="133.8661125" height="37.5" stroke="black" />
+    <text x="94.030734" y="666.6684" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcTimeSeriesValue</text>
+    <g id="ListValues">
+      <polyline points="94.556325,685.4184 94.556325,743.92332375 236.5170675,743.92332375 236.5170675,802.4282475 " fill="none" stroke="black" />
+      <text x="159.07253625" y="796.56455475" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">ListValues L[1:?]</text>
+    </g>
+  </g>
+  <g id="IfcDataOriginEnum" fill="green">
+    <rect x="358.7989875" y="245.90437875" width="170.44291875" height="30.308559375" stroke="black" />
+    <text x="444.020446875" y="261.0586584375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcDataOriginEnum</text>
+  </g>
+  <g id="IfcTimeSeriesDataTypeEnum" fill="green">
+    <rect x="358.792275" y="207.47592" width="170.4549825" height="30.312986625" stroke="black" />
+    <text x="444.01976625" y="222.6324133125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcTimeSeriesDataTypeEnum</text>
+  </g>
+  <g id="IFCMEASURERESOURCE">
+    <g id="IfcValue" fill="grey">
+      <rect x="138.96483375" y="802.428225" width="260.80325625" height="46.52951625" stroke="black" />
+      <text x="269.366461875" y="825.692983125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCMEASURERESOURCE
+IfcValue</text>
+    </g>
+    <g id="IfcTimeMeasure" fill="grey">
+      <rect x="811.6897875" y="342.815385" width="260.78466" height="46.52951625" stroke="black" />
+      <text x="942.0821175" y="366.080143125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCMEASURERESOURCE
+IfcTimeMeasure</text>
+    </g>
+    <g id="IfcLabel" fill="grey">
+      <rect x="811.6979625" y="35.457402375" width="260.779035" height="46.0806975" stroke="black" />
+      <text x="942.08748" y="58.497751125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCMEASURERESOURCE
+IfcLabel</text>
+    </g>
+    <g id="IfcUnit" fill="grey">
+      <rect x="811.6845" y="235.1853225" width="260.77785375" height="46.0806975" stroke="black" />
+      <text x="942.073426875" y="258.22567125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCMEASURERESOURCE
+IfcUnit</text>
+    </g>
+    <g id="IfcText" fill="grey">
+      <rect x="811.6635375" y="181.60505625" width="260.77555875" height="46.0806975" stroke="black" />
+      <text x="942.051316875" y="204.645405" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCMEASURERESOURCE
+IfcText</text>
+    </g>
+    <g id="IfcSIUnit" />
+  </g>
+  <g id="IFCDATETIMERESOURCE">
+    <g id="IfcDateTimeSelect" fill="grey">
+      <rect x="811.6820625" y="288.77455875" width="260.8079925" height="46.52951625" stroke="black" />
+      <text x="942.08605875" y="312.039316875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCDATETIMERESOURCE
+IfcDateTimeSelect</text>
+    </g>
+    <g id="IfcDateAndTime" />
+  </g>
+  <g id="IFCEXTERNALREFERENCERESOURCE">
+    <g id="IfcDocumentSelect" fill="grey">
+      <rect x="811.6677" y="89.06761125" width="260.8044525" height="86.02555875" stroke="black" />
+      <text x="942.06992625" y="132.080390625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCEXTERNALREFERENCERESOURCE
+IfcDocumentSelect</text>
+    </g>
+    <g id="IfcDocumentReference" />
+  </g>
+  <g id="IFCUTILITYRESOURCE" />
+  <g id="IFCACTORRESOURCE">
+    <g id="IfcPersonAndOrganization" />
+  </g>
+  <g id="2,1 IfcLabel" fill="blue">
+    <rect x="717.1773375" y="39.28414125" width="50.59784625" height="31.343211375" rx="10" ry="10" stroke="black" />
+    <polyline points="767.7751875,54.9557475 811.6979475,54.9557475 " fill="none" stroke="black" />
+    <text x="742.476260625" y="54.9557469375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcLabel</text>
+    <g id="2,1 IfcLabel" fill="silver">
+      <rect x="358.80122625" y="41.24072625" width="92.625" height="33.745277625" rx="10" ry="10" stroke="black" />
+      <text x="405.11372625" y="58.1133650625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcLabel</text>
+    </g>
+    <g id="2,1 IfcLabel" fill="silver">
+      <rect x="358.83844875" y="283.31049375" width="85.125" height="33.75" rx="10" ry="10" stroke="black" />
+      <text x="401.40094875" y="300.18549375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcLabel</text>
+    </g>
+  </g>
+  <g id="2,2 IfcUnit" fill="blue">
+    <rect x="717.1526625" y="232.7108775" width="50.59784625" height="31.343211375" rx="10" ry="10" stroke="black" />
+    <polyline points="767.7505125,248.38248375 811.684485,248.38248375 " fill="none" stroke="black" />
+    <text x="742.451585625" y="248.3824831875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,2 IfcUnit</text>
+    <g id="2,2 IfcUnit" fill="silver">
+      <rect x="358.8006525" y="322.32022125" width="92.625" height="33.745277625" rx="10" ry="10" stroke="black" />
+      <text x="405.1131525" y="339.1928600625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,2 IfcUnit</text>
+    </g>
+  </g>
+  <g id="2,3 IfcText" fill="blue">
+    <rect x="717.1674" y="188.54547375" width="50.59784625" height="31.343211375" rx="10" ry="10" stroke="black" />
+    <polyline points="767.76525,204.21708 811.6635,204.21708 " fill="none" stroke="black" />
+    <text x="742.466323125" y="204.2170794375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,3 IfcText</text>
+    <g id="2,3 IfcText" fill="silver">
+      <rect x="358.80595125" y="80.13440625" width="92.625" height="33.745277625" rx="10" ry="10" stroke="black" />
+      <text x="405.11845125" y="97.0070450625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,3 IfcText</text>
+    </g>
+  </g>
+  <g id="2,4 IfcTimeMeasure" fill="blue">
+    <rect x="717.1497" y="346.27774875" width="50.59784625" height="31.343211375" rx="10" ry="10" stroke="black" />
+    <polyline points="767.74755,361.9493625 811.6897725,361.9493625 " fill="none" stroke="black" />
+    <text x="742.448623125" y="361.9493544375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,4 IfcTimeMeasure</text>
+    <g id="2,4 IfcTimeMeasure" fill="silver">
+      <rect x="179.01301125" y="604.7526" width="118.46543625" height="33.745277625" rx="10" ry="10" stroke="black" />
+      <text x="238.245729375" y="621.6252388125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,4 IfcTimeMeasure</text>
+    </g>
+  </g>
+  <g id="2,5 IfcDateTimeSelect" fill="blue">
+    <rect x="717.1635375" y="286.3001175" width="50.59784625" height="31.343211375" rx="10" ry="10" stroke="black" />
+    <polyline points="767.7613875,301.97172375 811.6820475,301.97172375 " fill="none" stroke="black" />
+    <text x="742.462460625" y="301.9717231875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,5 IfcDateTimeSelect</text>
+    <g id="2,5 IfcDateTimeSelect" fill="silver">
+      <rect x="358.80478875" y="119.0151075" width="127.83837" height="33.745277625" rx="10" ry="10" stroke="black" />
+      <text x="422.72397375" y="135.8877463125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,5 IfcDateTimeSelect</text>
+    </g>
+    <g id="2,5 IfcDateTimeSelect" fill="silver">
+      <rect x="358.81423875" y="157.8736575" width="127.83837" height="33.745277625" rx="10" ry="10" stroke="black" />
+      <text x="422.73342375" y="174.7462963125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,5 IfcDateTimeSelect</text>
+    </g>
+    <g id="2,5 IfcDateTimeSelect" fill="silver">
+      <rect x="423.5999625" y="802.1682" width="127.841025" height="33.745277625" rx="10" ry="10" stroke="black" />
+      <text x="487.520475" y="819.0408388125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,5 IfcDateTimeSelect</text>
+    </g>
+  </g>
+  <g id="2,6 IfcDocumentSelect" fill="blue">
+    <rect x="717.1526625" y="92.89435125" width="50.596665" height="31.455711375" rx="10" ry="10" stroke="black" />
+    <polyline points="767.74935,108.6222075 811.6677,108.6222075 " fill="none" stroke="black" />
+    <text x="742.450995" y="108.6222069375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,6 IfcDocumentSelect</text>
+    <g id="2,6 IfcDocumentSelect" fill="silver">
+      <rect x="358.83" y="457.0533375" width="130.091025" height="33.745277625" rx="10" ry="10" stroke="black" />
+      <text x="423.8755125" y="473.9259763125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,6 IfcDocumentSelect</text>
+    </g>
+  </g>
+  <g>
+    <rect x="0" y="0" width="600" height="888" fill="none" stroke="lime" />
+    <rect x="600" y="0" width="600" height="888" fill="none" stroke="lime" />
+  </g>
+</svg>

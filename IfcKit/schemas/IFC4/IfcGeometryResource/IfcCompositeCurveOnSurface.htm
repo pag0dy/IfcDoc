@@ -1,0 +1,18 @@
+﻿<p>The <em>IfcCompositeCurveOnSurface</em> is a collection of segments, based on p-curves. i.e. a curve which lies on
+the basis of a surface and is defined in the parameter space of that surface. The p-curve segment is a special type of
+a composite curve segment and shall only be used to bound a surface.</p>
+<blockquote class="extDef">
+<p style="font-size:inherit">NOTE Definition according to ISO/CD 10303-42:1992<br>
+A composite curve on surface is a collection of segments which are curves on a surface. Each segment shall lie on the
+basis surface.</p>
+<p style="font-size:inherit">There shall be at least positional continuity between adjacent segments. The
+parameterization of the composite curve is obtained from the accumulation of the parametric ranges of the segments. The
+first segment is parameterized from <em>0</em> to <em>l<sub>1</sub></em>, and, for <em>i &ge; 2</em>, the
+<em>i<sup>th</sup></em> segment is parameterized from</p>
+<blockquote><img src="../../../figures/ifccompositecurveonsurface-math1.gif" alt="formula" width="140" height="60"></blockquote>
+<p style="font-size:inherit">where <em>l<sub>k</sub></em> is the parametric length (that is, the difference between
+maximum and minimum parameter values) of the <em>k<sup>th</sup></em> curve segment.</p>
+</blockquote>
+<blockquote class="note">Entity adapted from <strong>composite_curve_on_surface</strong> defined in ISO
+10303-42.</blockquote>
+<blockquote class="history">HISTORY&nbsp; New entity in IFC4.</blockquote>

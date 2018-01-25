@@ -11,6 +11,8 @@ using System.Text;
 using System.Reflection;
 using System.Reflection.Emit;
 using System.Runtime.Serialization;
+using System.Xml.Serialization;
+using System.ComponentModel.DataAnnotations.Schema;
 
 using IfcDoc.Schema;
 using IfcDoc.Schema.DOC;
@@ -30,15 +32,46 @@ namespace IfcDoc
         private Dictionary<Type, Dictionary<string, FieldInfo>> m_fields;
         private Dictionary<DocTemplateDefinition, MethodInfo> m_templates;
 
+        public static Type CompileProject(DocProject docProject)
+        {
+            Compiler compiler = new Compiler(docProject, null, null);
+            System.Reflection.Emit.AssemblyBuilder assembly = compiler.Assembly;
+            Type[] types = null;
+            try
+            {
+                types = assembly.GetTypes();
+            }
+            catch (System.Reflection.ReflectionTypeLoadException)
+            {
+                // schema could not be compiled according to definition
+            }
+
+            foreach (Type t in types)
+            {
+                // todo: make root type configurable with schema
+                if (t.Name.Equals("IfcProject"))
+                    return t;
+            }
+
+            return null; // no root type
+        }
+
         public Compiler(DocProject project, DocModelView[] views, DocExchangeDefinition exchange)
         {
             this.m_project = project;
             this.m_views = views;
             this.m_exchange = exchange;
 
+            // version needs to be included for extracting XML namespace (Major.Minor.Addendum.Corrigendum)
+            string version = project.GetSchemaVersion();
+            ConstructorInfo conContract = (typeof(AssemblyVersionAttribute).GetConstructor(new Type[] { typeof(string) }));
+            CustomAttributeBuilder cabAssemblyVersion = new CustomAttributeBuilder(conContract, new object[] { version } );
+
             string schemaid = project.GetSchemaIdentifier();
-            this.m_assembly = AppDomain.CurrentDomain.DefineDynamicAssembly(new AssemblyName(schemaid), AssemblyBuilderAccess.RunAndSave);
-            this.m_module = this.m_assembly.DefineDynamicModule("IFC4.dll", "IFC4.dll");
+            string assembly = "BuildingSmart." + schemaid;
+            string module = assembly + ".dll";
+            this.m_assembly = AppDomain.CurrentDomain.DefineDynamicAssembly(new AssemblyName(assembly), AssemblyBuilderAccess.RunAndSave, new CustomAttributeBuilder[] { cabAssemblyVersion });
+            this.m_module = this.m_assembly.DefineDynamicModule(module, module);
             this.m_definitions = new Dictionary<string, DocObject>();
             this.m_types = new Dictionary<string, Type>();
             this.m_fields = new Dictionary<Type, Dictionary<string, FieldInfo>>();
@@ -349,7 +382,7 @@ namespace IfcDoc
 
         public FieldInfo RegisterField(Type type, string field)
         {
-            while (type != null && type != typeof(SEntity))
+            while (type != null && type != typeof(object))
             {
                 Dictionary<string, FieldInfo> map = this.m_fields[type];
                 FieldInfo fieldinfo = null;
@@ -375,7 +408,7 @@ namespace IfcDoc
             // this implementation maps direct and inverse attributes to fields for brevity; a production implementation would use properties as well
 
             if (strtype == null)
-                return typeof(SEntity);
+                return typeof(object);
 
             Type type = null;
 
@@ -475,13 +508,19 @@ namespace IfcDoc
                 this.m_fields.Add(tb, mapField);
 
                 ConstructorInfo conMember = typeof(DataMemberAttribute).GetConstructor(new Type[] { /*typeof(int)*/ });
-                ConstructorInfo conLookup = typeof(DataLookupAttribute).GetConstructor(new Type[] { typeof(string) });
+                ConstructorInfo conLookup = typeof(InversePropertyAttribute).GetConstructor(new Type[] { typeof(string) });
 
                 PropertyInfo propMemberOrder = typeof(DataMemberAttribute).GetProperty("Order");
 
                 int order = 0;
                 foreach (DocAttribute docAttribute in docEntity.Attributes)
                 {
+                    DocObject docRef = null;
+                    if (docAttribute.DefinedType != null)
+                    {
+                        this.m_definitions.TryGetValue(docAttribute.DefinedType, out docRef);
+                    }
+
                     // exclude derived attributes
                     if (String.IsNullOrEmpty(docAttribute.Derived))
                     {
@@ -493,33 +532,94 @@ namespace IfcDoc
                         {
                             if (docAttribute.AggregationAttribute != null)
                             {
-                                // nested collection, e.g. IfcCartesianPointList3D
-                                typefield = typeof(List<>).MakeGenericType(new Type[] { typefield });
+                                // list of list
+                                switch(docAttribute.AggregationAttribute.GetAggregation())
+                                {
+                                    case DocAggregationEnum.SET:
+                                        typefield = typeof(ISet<>).MakeGenericType(new Type[] { typefield });
+                                        break;
+
+                                    case DocAggregationEnum.LIST:
+                                    default:
+                                        typefield = typeof(IList<>).MakeGenericType(new Type[] { typefield });
+                                        break;
+                                }
                             }
 
-                            typefield = typeof(List<>).MakeGenericType(new Type[] { typefield });
+                            switch (docAttribute.GetAggregation())
+                            {
+                                case DocAggregationEnum.SET:
+                                    typefield = typeof(ISet<>).MakeGenericType(new Type[] { typefield });
+                                    break;
+
+                                case DocAggregationEnum.LIST:
+                                default:
+                                    typefield = typeof(IList<>).MakeGenericType(new Type[] { typefield });
+                                    break;
+                            }
                         }
                         else if (typefield.IsValueType && docAttribute.IsOptional)
                         {
                             typefield = typeof(Nullable<>).MakeGenericType(new Type[] { typefield });
                         }
 
-                        FieldBuilder fb = tb.DefineField(docAttribute.Name, typefield, FieldAttributes.Public); // public for now                    
+                        FieldBuilder fb = tb.DefineField("_" + docAttribute.Name, typefield, FieldAttributes.Public); // public for now                    
                         mapField.Add(docAttribute.Name, fb);
 
                         if (String.IsNullOrEmpty(docAttribute.Inverse))
                         {
                             // direct attributes are fields marked for serialization
-                            //CustomAttributeBuilder cb = new CustomAttributeBuilder(conMember, new object[] { order });
                             CustomAttributeBuilder cb = new CustomAttributeBuilder(conMember, new object[] {}, new PropertyInfo[] { propMemberOrder }, new object[] { order });
                             fb.SetCustomAttribute(cb);
                             order++;
+
+                            // mark if required
+                            if (!docAttribute.IsOptional)
+                            {
+                                ConstructorInfo conReq = typeof(System.ComponentModel.DataAnnotations.RequiredAttribute).GetConstructor(new Type[] { });
+                                CustomAttributeBuilder cabReq = new CustomAttributeBuilder(conReq, new object[] { });
+                                fb.SetCustomAttribute(cabReq);
+                            }
+
                         }
                         else
                         {
                             // inverse attributes are fields marked for lookup
                             CustomAttributeBuilder cb = new CustomAttributeBuilder(conLookup, new object[] { docAttribute.Inverse });
                             fb.SetCustomAttribute(cb);
+                        }
+
+                        // XML
+                        ConstructorInfo conXSD;
+                        CustomAttributeBuilder cabXSD;
+                        if (docAttribute.AggregationAttribute == null && (docRef is DocDefined || docRef is DocEnumeration))
+                        {
+                            conXSD = typeof(XmlAttributeAttribute).GetConstructor(new Type[] { });
+                            cabXSD = new CustomAttributeBuilder(conXSD, new object[] { });
+                            fb.SetCustomAttribute(cabXSD);
+                        }
+                        else
+                        {
+                            switch (docAttribute.XsdFormat)
+                            {
+                                case DocXsdFormatEnum.Element:
+                                    conXSD = typeof(XmlElementAttribute).GetConstructor(new Type[] { typeof(string) });
+                                    cabXSD = new CustomAttributeBuilder(conXSD, new object[] { docAttribute.DefinedType });
+                                    fb.SetCustomAttribute(cabXSD);
+                                    break;
+
+                                case DocXsdFormatEnum.Attribute:
+                                    conXSD = typeof(XmlElementAttribute).GetConstructor(new Type[] { });
+                                    cabXSD = new CustomAttributeBuilder(conXSD, new object[] { });
+                                    fb.SetCustomAttribute(cabXSD);
+                                    break;
+
+                                case DocXsdFormatEnum.Hidden:
+                                    conXSD = typeof(XmlIgnoreAttribute).GetConstructor(new Type[] { });
+                                    cabXSD = new CustomAttributeBuilder(conXSD, new object[] { });
+                                    fb.SetCustomAttribute(cabXSD);
+                                    break;
+                            }
                         }
                     }
                 }
@@ -601,7 +701,17 @@ namespace IfcDoc
                 {
                     if (docDef.Aggregation != null && docDef.Aggregation.AggregationType != 0)
                     {
-                        typeliteral = typeof(List<>).MakeGenericType(new Type[] { typeliteral });
+                        switch(docDef.Aggregation.GetAggregation())
+                        {
+                            case DocAggregationEnum.SET:
+                                typeliteral = typeof(ISet<>).MakeGenericType(new Type[] { typeliteral });
+                                break;
+
+                            case DocAggregationEnum.LIST:
+                            default:
+                                typeliteral = typeof(IList<>).MakeGenericType(new Type[] { typeliteral });
+                                break;
+                        }
                     }
                     else
                     {

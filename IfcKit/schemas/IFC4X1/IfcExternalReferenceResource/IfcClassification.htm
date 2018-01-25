@@ -1,0 +1,20 @@
+﻿<p>An <em>IfcClassification</em> is used for the arrangement of objects into a class or category according to a common purpose or their possession of common characteristics. A classification in the sense of <em>IfcClassification</em> is taxonomy, or taxonomic scheme, arranged in a hierarchical structure. A category of objects relates to other categories in a generalization-specialization relationship. Therefore the classification items in an classification are organized in a tree structure.</p>
+
+<p>The <em>IfcClassification</em> identifies the classification system or source to which a classification reference refers to. Each classification reference may reference an instance of <em>IfcClassification</em>. A classification system declared may be either formally published, or it may be a locally defined method of classifiying information.</p>
+
+<blockquote class="note">
+NOTE&nbsp; Examples for such formally published classifications are Omniclass, Uniclass, Masterformat, or DIN277.
+</blockquote>
+
+<p>There are two methods to define and reference a classification system:</p>
+<ol>
+<li>Including the classification system structure within the dataset: Here a hierarchical tree of <em>IfcClassificationReference</em>'s is included that defines the classification system including the relationship between the classification items. The <em>ReferencedSource</em> attribute of <em>IfcClassificationReference</em> links the classification item to the parent item, and the parent item finally to the <em>IfcClassification</em>.</li>
+<li>Referencing the classification system by a classification key or id: Here the <em>IfcClassificationReference</em> is used to assign a classification id or key as <em>Identification</em> attribute and it may link by <em>ReferencedSource</em> attribute directly to the <em>IfcClassification</em>.</li>
+</ol>
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC1.5
+</blockquote>
+<blockquote class="change-ifc2x4">
+IFC 2x4 CHANGE&nbsp; Attribute <em>Edition</em> made optional. Attributes: <em>Description</em>, <em>Location</em>, and <em>ReferenceTokens</em> and inverse attribute <em>HasReferences</em> added.
+</blockquote>

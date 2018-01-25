@@ -90,16 +90,18 @@
             this.toolStripMenuItemFile = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemFileNew = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemFileOpen = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemFileOpenFolder = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparatorFile1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemFileSave = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemFileSaveAs = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemFileSaveFolder = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparatorFile2 = new System.Windows.Forms.ToolStripSeparator();
             this.mergeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemFileImport = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemImportDatabase = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemFileUpdate = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemFileExport = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemExportFolder = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemDownload = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemPublish = new System.Windows.Forms.ToolStripMenuItem();
@@ -226,11 +228,9 @@
             this.toolStripMenuItemToolsValidate = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemToolsConvert = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemToolsMigrateExamples = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemMergeProperties = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem8 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemToolsISO = new System.Windows.Forms.ToolStripMenuItem();
-            this.ToolStripMenuItemGenerateBallotSubmission = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemToolsSourceCode = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemToolsModule = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemHelpAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialogLoad = new System.Windows.Forms.OpenFileDialog();
@@ -659,7 +659,6 @@
             resources.ApplyResources(this.ctlConcept, "ctlConcept");
             this.ctlConcept.ConceptRoot = null;
             this.ctlConcept.CurrentInstance = null;
-            this.ctlConcept.Map = null;
             this.ctlConcept.Name = "ctlConcept";
             this.ctlConcept.Project = null;
             this.ctlConcept.Selection = null;
@@ -672,9 +671,10 @@
             this.ctlExpressG.AllowDrop = true;
             resources.ApplyResources(this.ctlExpressG, "ctlExpressG");
             this.ctlExpressG.Format = IfcDoc.Format.PNG.DiagramFormat.ExpressG;
-            this.ctlExpressG.Map = null;
+            this.ctlExpressG.Marker = new System.Drawing.Point(0, 0);
             this.ctlExpressG.Mode = IfcDoc.ToolMode.Select;
             this.ctlExpressG.Name = "ctlExpressG";
+            this.ctlExpressG.Project = null;
             this.ctlExpressG.Schema = null;
             this.ctlExpressG.ScrollToSelection = true;
             this.ctlExpressG.Selection = null;
@@ -824,16 +824,18 @@
             this.toolStripMenuItemFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItemFileNew,
             this.toolStripMenuItemFileOpen,
+            this.toolStripMenuItemFileOpenFolder,
             this.toolStripSeparatorFile1,
             this.toolStripMenuItemFileSave,
             this.toolStripMenuItemFileSaveAs,
+            this.toolStripMenuItemFileSaveFolder,
             this.toolStripSeparatorFile2,
             this.mergeToolStripMenuItem,
             this.toolStripMenuItem3,
             this.toolStripMenuItemFileImport,
+            this.toolStripMenuItemImportDatabase,
             this.toolStripMenuItemFileUpdate,
             this.toolStripMenuItemFileExport,
-            this.toolStripMenuItemExportFolder,
             this.toolStripMenuItem5,
             this.toolStripMenuItemDownload,
             this.toolStripMenuItemPublish,
@@ -854,6 +856,12 @@
             this.toolStripMenuItemFileOpen.Name = "toolStripMenuItemFileOpen";
             this.toolStripMenuItemFileOpen.Click += new System.EventHandler(this.toolStripMenuItemFileOpen_Click);
             // 
+            // toolStripMenuItemFileOpenFolder
+            // 
+            this.toolStripMenuItemFileOpenFolder.Name = "toolStripMenuItemFileOpenFolder";
+            resources.ApplyResources(this.toolStripMenuItemFileOpenFolder, "toolStripMenuItemFileOpenFolder");
+            this.toolStripMenuItemFileOpenFolder.Click += new System.EventHandler(this.toolStripMenuItemFileOpenFolder_Click);
+            // 
             // toolStripSeparatorFile1
             // 
             this.toolStripSeparatorFile1.Name = "toolStripSeparatorFile1";
@@ -870,6 +878,12 @@
             this.toolStripMenuItemFileSaveAs.Name = "toolStripMenuItemFileSaveAs";
             resources.ApplyResources(this.toolStripMenuItemFileSaveAs, "toolStripMenuItemFileSaveAs");
             this.toolStripMenuItemFileSaveAs.Click += new System.EventHandler(this.toolStripMenuItemFileSaveAs_Click);
+            // 
+            // toolStripMenuItemFileSaveFolder
+            // 
+            this.toolStripMenuItemFileSaveFolder.Name = "toolStripMenuItemFileSaveFolder";
+            resources.ApplyResources(this.toolStripMenuItemFileSaveFolder, "toolStripMenuItemFileSaveFolder");
+            this.toolStripMenuItemFileSaveFolder.Click += new System.EventHandler(this.toolStripMenuItemFileSaveFolder_Click);
             // 
             // toolStripSeparatorFile2
             // 
@@ -893,6 +907,12 @@
             this.toolStripMenuItemFileImport.Name = "toolStripMenuItemFileImport";
             this.toolStripMenuItemFileImport.Click += new System.EventHandler(this.toolStripMenuItemFileImport_Click);
             // 
+            // toolStripMenuItemImportDatabase
+            // 
+            this.toolStripMenuItemImportDatabase.Name = "toolStripMenuItemImportDatabase";
+            resources.ApplyResources(this.toolStripMenuItemImportDatabase, "toolStripMenuItemImportDatabase");
+            this.toolStripMenuItemImportDatabase.Click += new System.EventHandler(this.toolStripMenuItemImportDatabase_Click);
+            // 
             // toolStripMenuItemFileUpdate
             // 
             resources.ApplyResources(this.toolStripMenuItemFileUpdate, "toolStripMenuItemFileUpdate");
@@ -904,12 +924,6 @@
             resources.ApplyResources(this.toolStripMenuItemFileExport, "toolStripMenuItemFileExport");
             this.toolStripMenuItemFileExport.Name = "toolStripMenuItemFileExport";
             this.toolStripMenuItemFileExport.Click += new System.EventHandler(this.toolStripMenuItemFileExport_Click);
-            // 
-            // toolStripMenuItemExportFolder
-            // 
-            this.toolStripMenuItemExportFolder.Name = "toolStripMenuItemExportFolder";
-            resources.ApplyResources(this.toolStripMenuItemExportFolder, "toolStripMenuItemExportFolder");
-            this.toolStripMenuItemExportFolder.Click += new System.EventHandler(this.toolStripMenuItemExportFolder_Click);
             // 
             // toolStripMenuItem5
             // 
@@ -1745,11 +1759,9 @@
             this.toolStripMenuItemToolsValidate,
             this.toolStripMenuItemToolsConvert,
             this.toolStripMenuItemToolsMigrateExamples,
+            this.toolStripMenuItemMergeProperties,
             this.toolStripMenuItem8,
-            this.toolStripMenuItemToolsISO,
-            this.ToolStripMenuItemGenerateBallotSubmission,
-            this.toolStripMenuItemToolsSourceCode,
-            this.toolStripMenuItemToolsModule});
+            this.toolStripMenuItemToolsISO});
             this.toolStripMenuItemTools.Name = "toolStripMenuItemTools";
             resources.ApplyResources(this.toolStripMenuItemTools, "toolStripMenuItemTools");
             // 
@@ -1771,6 +1783,12 @@
             resources.ApplyResources(this.toolStripMenuItemToolsMigrateExamples, "toolStripMenuItemToolsMigrateExamples");
             this.toolStripMenuItemToolsMigrateExamples.Click += new System.EventHandler(this.toolStripMenuItemToolsMigrateExamples_Click);
             // 
+            // toolStripMenuItemMergeProperties
+            // 
+            this.toolStripMenuItemMergeProperties.Name = "toolStripMenuItemMergeProperties";
+            resources.ApplyResources(this.toolStripMenuItemMergeProperties, "toolStripMenuItemMergeProperties");
+            this.toolStripMenuItemMergeProperties.Click += new System.EventHandler(this.toolStripMenuItemMergeProperties_Click);
+            // 
             // toolStripMenuItem8
             // 
             this.toolStripMenuItem8.Name = "toolStripMenuItem8";
@@ -1781,24 +1799,6 @@
             resources.ApplyResources(this.toolStripMenuItemToolsISO, "toolStripMenuItemToolsISO");
             this.toolStripMenuItemToolsISO.Name = "toolStripMenuItemToolsISO";
             this.toolStripMenuItemToolsISO.Click += new System.EventHandler(this.toolStripMenuItemToolsISO_Click);
-            // 
-            // ToolStripMenuItemGenerateBallotSubmission
-            // 
-            this.ToolStripMenuItemGenerateBallotSubmission.Name = "ToolStripMenuItemGenerateBallotSubmission";
-            resources.ApplyResources(this.ToolStripMenuItemGenerateBallotSubmission, "ToolStripMenuItemGenerateBallotSubmission");
-            this.ToolStripMenuItemGenerateBallotSubmission.Click += new System.EventHandler(this.ToolStripMenuItemGenerateBallotSubmission_Click);
-            // 
-            // toolStripMenuItemToolsSourceCode
-            // 
-            this.toolStripMenuItemToolsSourceCode.Name = "toolStripMenuItemToolsSourceCode";
-            resources.ApplyResources(this.toolStripMenuItemToolsSourceCode, "toolStripMenuItemToolsSourceCode");
-            this.toolStripMenuItemToolsSourceCode.Click += new System.EventHandler(this.toolStripMenuItemToolsSourceCode_Click);
-            // 
-            // toolStripMenuItemToolsModule
-            // 
-            this.toolStripMenuItemToolsModule.Name = "toolStripMenuItemToolsModule";
-            resources.ApplyResources(this.toolStripMenuItemToolsModule, "toolStripMenuItemToolsModule");
-            this.toolStripMenuItemToolsModule.Click += new System.EventHandler(this.toolStripMenuItemToolsModule_Click);
             // 
             // helpToolStripMenuItem
             // 
@@ -2282,7 +2282,6 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemContextInsertProperty;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemContextInsertQset;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemContextInsertQuantity;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemExportFolder;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemContextInsertExample;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemEditMoveOut;
@@ -2297,8 +2296,6 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemToolsValidate;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem8;
         private System.ComponentModel.BackgroundWorker backgroundWorkerValidate;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemToolsSourceCode;
-        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemGenerateBallotSubmission;
         private CtlCheckGrid ctlCheckGrid;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemContextInsertNormative;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemContextInsertTerm;
@@ -2405,7 +2402,6 @@
         private System.Windows.Forms.SplitContainer splitContainerWorkspace;
         private System.Windows.Forms.ImageList imageListRules;
         private CtlInheritance ctlInheritance;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemToolsModule;
         private System.Windows.Forms.SaveFileDialog saveFileDialogModule;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemEnableDisable;
@@ -2464,5 +2460,9 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemInsertProcessDefinition;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemInsertProcessInput;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemToolsMigrateExamples;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemImportDatabase;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemFileOpenFolder;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemFileSaveFolder;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemMergeProperties;
     }
 }

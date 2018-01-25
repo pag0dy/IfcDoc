@@ -1,0 +1,2 @@
+﻿SIZEOF(QUERY(Temp <* SELF\IfcGeometricSet.Elements |
+'IFCGEOMETRYRESOURCE.IFCSURFACE' IN TYPEOF(Temp))) = 0

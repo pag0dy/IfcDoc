@@ -1,0 +1,8 @@
+﻿SIZEOF(QUERY (ElpFbnds <* 
+  QUERY (Bnds <* SELF\IfcFace.Bounds |
+    'IFCTOPOLOGYRESOURCE.IFCEDGELOOP' IN TYPEOF(Bnds.Bound)) |
+     NOT (SIZEOF (QUERY (Oe <* ElpFbnds.Bound\IfcEdgeLoop.EdgeList |
+       NOT('IFCTOPOLOGYRESOURCE.IFCEDGECURVE' IN 
+       TYPEOF(Oe\IfcOrientedEdge.EdgeElement)
+  ))) = 0
+))) = 0

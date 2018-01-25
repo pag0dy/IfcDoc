@@ -1,0 +1,47 @@
+// This file was automatically generated from IFCDOC at www.buildingsmart-tech.org.
+// IFC content is copyright (C) 1996-2018 BuildingSMART International Ltd.
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Runtime.InteropServices;
+using System.Runtime.Serialization;
+using System.Xml.Serialization;
+
+using BuildingSmart.IFC.IfcGeometricModelResource;
+using BuildingSmart.IFC.IfcGeometryResource;
+using BuildingSmart.IFC.IfcKernel;
+using BuildingSmart.IFC.IfcMeasureResource;
+using BuildingSmart.IFC.IfcPresentationAppearanceResource;
+using BuildingSmart.IFC.IfcProductExtension;
+using BuildingSmart.IFC.IfcProfileResource;
+using BuildingSmart.IFC.IfcTopologyResource;
+
+namespace BuildingSmart.IFC.IfcGeometricConstraintResource
+{
+	[Guid("59d16e41-5c1a-43d5-8705-044920cf9cbc")]
+	public partial class IfcAlignment2DVerSegParabolicArc : IfcAlignment2DVerticalSegment
+	{
+		[DataMember(Order=0)] 
+		[XmlAttribute]
+		[Required()]
+		IfcPositiveLengthMeasure _ParabolaConstant;
+	
+		[DataMember(Order=1)] 
+		[XmlAttribute]
+		[Required()]
+		IfcBoolean _IsConvex;
+	
+	
+		[Description(@"Parabola constant (determining the “steepness” of the parabola). The parabola constant is provided by the “minimum parabola radius”, the true radius of a parabola at its vertical axis (the zero-gradient point of the parabola). The minimum radius is twice the focal length of the parabola (the distance between the focal point and the vertex).")]
+		public IfcPositiveLengthMeasure ParabolaConstant { get { return this._ParabolaConstant; } set { this._ParabolaConstant = value;} }
+	
+		[Description(@"Orientation of the parabolic arc, convex (Boolean=”true”) means decreasing gradient along the arc at the beginning such as at the crest of a hill, concave (Boolean=”false”) means increasing gradient along the arc at the beginning such as at the base of a valley.")]
+		public IfcBoolean IsConvex { get { return this._IsConvex; } set { this._IsConvex = value;} }
+	
+	
+	}
+	
+}

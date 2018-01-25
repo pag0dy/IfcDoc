@@ -1,0 +1,11 @@
+﻿<p>The window style defines a particular style of windows, which may be included into the spatial context of the building model through instances of <em>IfcWindow</em>. A window style defines the overall parameter of the window style and refers to the particular parameter of the lining and one (or several) panels through <em>IfcWindowLiningProperties</em> and <em>IfcWindowPanelProperties</em>.</p>
+
+<p>The window entity (<em>IfcWindow</em>) defines a particular occurrence of a window inserted in the spatial context of a project. The actual parameter of the window and/or its shape is defined at the <em>IfcWindowStyle</em>, to which the <em>IfcWindow</em> related by the inverse relationship <em>IsDefinedBy</em> pointing to <em>IfcRelDefinesByType</em>. The <em>IfcWindowStyle</em> also defines the particular attributes for the lining (<em>IfcWindowLiningProperties</em>) and panels (<em>IfcWindowPanelProperties</em>).</p>
+
+<p>The <em>IfcWindowStyle</em> defines the baseline geometry, or the representation map, for all occurrences of the window style, given by the IfcWindow, pointing to this style. The representation of the window style may be given by the agreed set of minimal parameters, defined for the window lining and the window panel(s), or it may be given by a geometric representation used by the <em>IfcRepresentationMap</em>. The attribute <em>ParameterTakesPrecedence</em> decides, whether the set of parameters can be used to exactly represent the shape of the window style (TRUE), or whether the attached <em>IfcRepresentationMap</em> holds the exact representation (FALSE).</p>
+
+<p>The <em>IfcWindowStyleOperationTypeEnum</em> defines the general layout of the window style. Depending on the enumerator, the appropriate instances of <em>IfcWindowLiningProperties</em> and <em>IfcWindowPanelProperties</em> are attached in the list of <em>HasPropertySets</em>. See geometry use definitions there.</p>
+
+<blockquote class="history">HISTORY&nbsp; New entity in IFC2x.</blockquote>
+<blockquote class="deprecated">IFC4 CHANGE&nbsp; The entity has been deprecated and shall not be used. The new entity <em>IfcWindowType</em> shall be used instead.</blockquote>
+

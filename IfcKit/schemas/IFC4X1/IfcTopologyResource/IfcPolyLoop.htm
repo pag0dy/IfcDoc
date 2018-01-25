@@ -1,0 +1,30 @@
+﻿<p> </p>
+<blockquote class="extDef">NOTE&nbsp; Definition according to ISO/CD 10303-42:1992<br>
+A poly loop is a loop with straight edges bounding a planar region in space. A poly loop is a loop of genus 1 where the loop is represented
+by an ordered coplanar collection of points forming the vertices of the loop. The loop is composed of straight line segments joining a point in
+the collection to the succeeding point in the collection. The closing segment is from the last to the first point in the collection. 
+The direction of the loop is in the direction of the line segments.
+<br><br>
+A poly loop shall conform to the following topological constraints:
+<ul>
+  <li class="extDef">the loop has the genus of one.</li>
+  <li class="extDef">the following equation shall be satisfied
+  <br><img src="../../../figures/ifcpolyloop-math1.gif" height="26" width="138"></li>
+</ul>
+The <em>IfcPolyLoop</em> is always closed and the last segment is from the last <em>IfcCartesianPoint</em>
+in the list of <em>Polygon</em>'s to the first <em>IfcCartesianPoint</em>. Therefore the first point shall not be repeated at the end of the list,
+neither by referencing the same instance, nor by using an additional instance of&nbsp;<em>IfcCartesianPoint</em> having the
+coordinates as the first point.
+<br><br>
+NOTE&nbsp; This entity exists primarily to facilitate the efficient communication of faceted B-rep models.
+</blockquote>
+<p>&nbsp;</p>
+
+<blockquote class="note">NOTE&nbsp; Entity adapted from <strong>poly_loop</strong> defined in ISO 10303-42.</blockquote>
+<blockquote class="history">HISTORY &nbsp; New entity in IFC1.0</blockquote>
+
+<p class="spec-head">Informal Propositions:</p>
+<ol>
+  <li>All the points in the polygon defining the poly loop shall be coplanar.</li>
+  <li>The first and the last <em>Polygon</em> shall be different by value.</li>
+</ol>

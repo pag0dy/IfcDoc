@@ -1,0 +1,2 @@
+﻿(PredefinedType <> IfcSanitaryTerminalTypeEnum.USERDEFINED) OR
+((PredefinedType = IfcSanitaryTerminalTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcElementType.ElementType))

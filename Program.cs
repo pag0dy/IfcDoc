@@ -14,10 +14,15 @@ using IfcDoc.Schema.VEX;
 using IfcDoc.Schema.DOC;
 using IfcDoc.Schema.MVD;
 using IfcDoc.Schema.PSD;
-using IfcDoc.Schema.IFC;
 using IfcDoc.Schema.SCH;
-using IfcDoc.Format.SPF;
 using IfcDoc.Format.HTM;
+
+//using BuildingSmart.IFC;
+using BuildingSmart.IFC.IfcKernel;
+using BuildingSmart.IFC.IfcExternalReferenceResource;
+using BuildingSmart.IFC.IfcMeasureResource;
+using BuildingSmart.IFC.IfcPropertyResource;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 #if MDB
     using IfcDoc.Format.MDB;
@@ -33,27 +38,6 @@ namespace IfcDoc
             System.Windows.Forms.Application.EnableVisualStyles();
             System.Windows.Forms.Application.SetCompatibleTextRenderingDefault(false);
             System.Windows.Forms.Application.Run(new FormEdit(args));
-        }
-
-        static SCHEMATA GetSchemata(FormatSPF file)
-        {
-            foreach (SEntity entity in file.Instances.Values)
-            {
-                if (entity is SCHEMATA)
-                {
-                    return (SCHEMATA)entity;
-                }
-            }
-
-            return null;
-        }
-
-        public static string DatabasePath
-        {
-            get
-            {
-                return System.IO.Path.GetDirectoryName(typeof(Program).Assembly.Location) + @"\ifcdoc.mdb";
-            }
         }
 
         private static void ImportVexRectangle(DocDefinition docDefinition, RECTANGLE rectangle, SCHEMATA schemata)
@@ -1036,11 +1020,34 @@ namespace IfcDoc
             return docSchema;
         }
 
+        internal static void ExportIfcDefinition(
+            IfcPropertyTemplateDefinition ifcDefinition, 
+            DocObject docObject)
+        {
+            ifcDefinition.GlobalId = new IfcGloballyUniqueId(SGuid.Format(docObject.Uuid));
+            ifcDefinition.Name = new IfcLabel(docObject.Name);
+            ifcDefinition.Description = new IfcText(docObject.Documentation);
 
+            foreach (DocLocalization docLoc in docObject.Localization)
+            {
+                IfcLibraryReference ifcLib = new IfcLibraryReference();
+                ifcLib.Language = new IfcLanguageId(new IfcIdentifier(docLoc.Locale));
+                ifcLib.Name = new IfcLabel(docLoc.Name);
+                ifcLib.Description = new IfcText(docLoc.Documentation);
+                ifcLib.Location = new IfcURIReference(docLoc.URL);
+
+                IfcRelAssociatesLibrary ifcRal = new IfcRelAssociatesLibrary();
+                ifcRal.RelatingLibrary = ifcLib;
+                ifcRal.RelatedObjects.Add(ifcDefinition);
+
+                ifcDefinition.HasAssociations.Add(ifcRal);
+            }
+        }
 
         internal static void ExportIfc(IfcProject ifcProject, DocProject docProject, Dictionary<DocObject, bool> included)
         {
-            ifcProject.Name = "IFC4 Property Set Templates";
+            ifcProject.GlobalId = new IfcGloballyUniqueId(SGuid.Format(docProject.Sections[0].Uuid));
+            ifcProject.Name = new IfcLabel("IFC Templates");
 
             // cache enumerators
             Dictionary<string, DocPropertyEnumeration> mapEnums = new Dictionary<string, DocPropertyEnumeration>();
@@ -1061,20 +1068,8 @@ namespace IfcDoc
                 }
             }
 
-            IfcLibraryInformation ifcLibInfo = null;
-#if false // optimization: don't include library info
-            IfcLibraryInformation ifcLibInfo = new IfcLibraryInformation();
-            ifcLibInfo.Publisher = null; // BuildingSmart...
-            ifcLibInfo.Version = "IFC4";
-            ifcLibInfo.VersionDate = DateTime.UtcNow;
-            ifcLibInfo.Location = "";
-            ifcLibInfo.Name = ifcProject.Name;
-            IfcRelAssociatesLibrary ifcRelLibProject = new IfcRelAssociatesLibrary();
-            ifcRelLibProject.RelatingLibrary = ifcLibInfo;
-            ifcRelLibProject.RelatedObjects.Add(ifcProject);
-#endif
-
             IfcRelDeclares rel = new IfcRelDeclares();
+            rel.GlobalId = new IfcGloballyUniqueId(SGuid.Format(docProject.Sections[1].Uuid));
             rel.RelatingContext = ifcProject;
 
             ifcProject.Declares.Add(rel);
@@ -1087,48 +1082,31 @@ namespace IfcDoc
                     {
                         if (included == null || included.ContainsKey(docPset))
                         {
-
                             IfcPropertySetTemplate ifcPset = new IfcPropertySetTemplate();
                             rel.RelatedDefinitions.Add(ifcPset);
-                            ifcPset.GlobalId = SGuid.Format(docPset.Uuid);
-                            ifcPset.Name = docPset.Name;
-                            ifcPset.Description = docPset.Documentation;
+
+                            ExportIfcDefinition(ifcPset, docPset);
 
                             switch (docPset.PropertySetType)
                             {
                                 case "PSET_TYPEDRIVENOVERRIDE":
-                                    ifcPset.PredefinedType = IfcPropertySetTemplateTypeEnum.PSET_TYPEDRIVENOVERRIDE;
+                                    ifcPset.TemplateType = IfcPropertySetTemplateTypeEnum.PSET_TYPEDRIVENOVERRIDE;
                                     break;
 
                                 case "PSET_OCCURRENCEDRIVEN":
-                                    ifcPset.PredefinedType = IfcPropertySetTemplateTypeEnum.PSET_OCCURRENCEDRIVEN;
+                                    ifcPset.TemplateType = IfcPropertySetTemplateTypeEnum.PSET_OCCURRENCEDRIVEN;
                                     break;
 
                                 case "PSET_PERFORMANCEDRIVEN":
-                                    ifcPset.PredefinedType = IfcPropertySetTemplateTypeEnum.PSET_PERFORMANCEDRIVEN;
+                                    ifcPset.TemplateType = IfcPropertySetTemplateTypeEnum.PSET_PERFORMANCEDRIVEN;
                                     break;
                             }
 
-                            ifcPset.ApplicableEntity = docPset.ApplicableType;
-
-                            foreach (DocLocalization docLoc in docPset.Localization)
-                            {
-                                IfcLibraryReference ifcLib = new IfcLibraryReference();
-                                ifcLib.Language = docLoc.Locale;
-                                ifcLib.Name = docLoc.Name;
-                                ifcLib.Description = docLoc.Documentation;
-                                ifcLib.ReferencedLibrary = ifcLibInfo;
-
-                                IfcRelAssociatesLibrary ifcRal = new IfcRelAssociatesLibrary();
-                                ifcRal.RelatingLibrary = ifcLib;
-                                ifcRal.RelatedObjects.Add(ifcPset);
-
-                                ifcPset.HasAssociations.Add(ifcRal);
-                            }
+                            ifcPset.ApplicableEntity = new IfcIdentifier(docPset.ApplicableType);
 
                             foreach (DocProperty docProp in docPset.Properties)
                             {
-                                IfcPropertyTemplate ifcProp = ExportIfcPropertyTemplate(docProp, ifcLibInfo, mapEnums);
+                                IfcPropertyTemplate ifcProp = ExportIfcPropertyTemplate(docProp, mapEnums);
                                 ifcPset.HasPropertyTemplates.Add(ifcProp);
                             }
                         }
@@ -1140,44 +1118,20 @@ namespace IfcDoc
                         {
                             IfcPropertySetTemplate ifcPset = new IfcPropertySetTemplate();
                             rel.RelatedDefinitions.Add(ifcPset);
-                            ifcPset.Name = docQuantitySet.Name;
-                            ifcPset.Description = docQuantitySet.Documentation;
-                            ifcPset.PredefinedType = IfcPropertySetTemplateTypeEnum.QTO_OCCURRENCEDRIVEN;
-                            ifcPset.ApplicableEntity = docQuantitySet.ApplicableType;
 
-                            foreach (DocLocalization docLoc in docQuantitySet.Localization)
-                            {
-                                IfcLibraryReference ifcLib = new IfcLibraryReference();
-                                ifcLib.Language = docLoc.Locale;
-                                ifcLib.Name = docLoc.Name;
-                                ifcLib.Description = docLoc.Documentation;
-                                ifcLib.ReferencedLibrary = ifcLibInfo;
+                            ExportIfcDefinition(ifcPset, docQuantitySet);
 
-                                IfcRelAssociatesLibrary ifcRal = new IfcRelAssociatesLibrary();
-                                ifcRal.RelatingLibrary = ifcLib;
-                                ifcRal.RelatedObjects.Add(ifcPset);
-                            }
+                            ifcPset.TemplateType = IfcPropertySetTemplateTypeEnum.QTO_OCCURRENCEDRIVEN;
+                            ifcPset.ApplicableEntity = new IfcIdentifier(docQuantitySet.ApplicableType);
 
                             foreach (DocQuantity docProp in docQuantitySet.Quantities)
                             {
                                 IfcSimplePropertyTemplate ifcProp = new IfcSimplePropertyTemplate();
                                 ifcPset.HasPropertyTemplates.Add(ifcProp);
-                                ifcProp.Name = docProp.Name;
-                                ifcProp.Description = docProp.Documentation;
+
+                                ExportIfcDefinition(ifcProp, docProp);
+
                                 ifcProp.TemplateType = (IfcSimplePropertyTemplateTypeEnum)Enum.Parse(typeof(IfcSimplePropertyTemplateTypeEnum), docProp.QuantityType.ToString());
-
-                                foreach (DocLocalization docLoc in docProp.Localization)
-                                {
-                                    IfcLibraryReference ifcLib = new IfcLibraryReference();
-                                    ifcLib.Language = docLoc.Locale;
-                                    ifcLib.Name = docLoc.Name;
-                                    ifcLib.Description = docLoc.Documentation;
-                                    ifcLib.ReferencedLibrary = ifcLibInfo;
-
-                                    IfcRelAssociatesLibrary ifcRal = new IfcRelAssociatesLibrary();
-                                    ifcRal.RelatingLibrary = ifcLib;
-                                    ifcRal.RelatedObjects.Add(ifcProp);
-                                }
                             }
                         }
                     }
@@ -1185,32 +1139,22 @@ namespace IfcDoc
             }
         }
 
-        // ugly, needs to be refactored, but quick fix for now
-        [ThreadStatic] static internal long t_lastid;
-        [ThreadStatic] static internal Dictionary<long, SEntity> t_instances;
-        internal static void SEntity_EntityCreated(object sender, EventArgs e)
-        {
-            t_lastid++;
-
-            SEntity entity = (SEntity)sender;
-            entity.OID = t_lastid;
-            t_instances.Add(entity.OID, entity);
-        }
-
-        private static IfcPropertyTemplate ExportIfcPropertyTemplate(DocProperty docProp, IfcLibraryInformation ifcLibInfo, Dictionary<string, DocPropertyEnumeration> mapEnums)
+        private static IfcPropertyTemplate ExportIfcPropertyTemplate(
+            DocProperty docProp, 
+            Dictionary<string, DocPropertyEnumeration> mapEnums)
         {
             if (docProp.PropertyType == DocPropertyTemplateTypeEnum.COMPLEX)
             {
                 IfcComplexPropertyTemplate ifcProp = new IfcComplexPropertyTemplate();
-                ifcProp.GlobalId = SGuid.Format(docProp.Uuid);
-                ifcProp.Name = docProp.Name;
-                ifcProp.Description = docProp.Documentation;
+
+                ExportIfcDefinition(ifcProp, docProp);
+
                 ifcProp.TemplateType = IfcComplexPropertyTemplateTypeEnum.P_COMPLEX;
-                ifcProp.UsageName = docProp.PrimaryDataType;
+                ifcProp.UsageName = new IfcLabel(docProp.PrimaryDataType);
 
                 foreach (DocProperty docSubProp in docProp.Elements)
                 {
-                    IfcPropertyTemplate ifcSub = ExportIfcPropertyTemplate(docSubProp, ifcLibInfo, mapEnums);
+                    IfcPropertyTemplate ifcSub = ExportIfcPropertyTemplate(docSubProp, mapEnums);
                     ifcProp.HasPropertyTemplates.Add(ifcSub);
                 }
 
@@ -1219,34 +1163,18 @@ namespace IfcDoc
             else
             {
                 IfcSimplePropertyTemplate ifcProp = new IfcSimplePropertyTemplate();
-                ifcProp.GlobalId = SGuid.Format(docProp.Uuid);
-                ifcProp.Name = docProp.Name;
-                ifcProp.Description = docProp.Documentation;
+
+                ExportIfcDefinition(ifcProp, docProp);
+
                 ifcProp.TemplateType = (IfcSimplePropertyTemplateTypeEnum)Enum.Parse(typeof(IfcSimplePropertyTemplateTypeEnum), docProp.PropertyType.ToString());
-                ifcProp.PrimaryMeasureType = docProp.PrimaryDataType;
-                ifcProp.SecondaryMeasureType = docProp.SecondaryDataType;
-
-                foreach (DocLocalization docLoc in docProp.Localization)
-                {
-                    IfcLibraryReference ifcLib = new IfcLibraryReference();
-                    ifcLib.Language = docLoc.Locale;
-                    ifcLib.Name = docLoc.Name;
-                    ifcLib.Description = docLoc.Documentation;
-                    ifcLib.ReferencedLibrary = ifcLibInfo;
-
-                    IfcRelAssociatesLibrary ifcRal = new IfcRelAssociatesLibrary();
-                    ifcRal.RelatingLibrary = ifcLib;
-                    ifcRal.RelatedObjects.Add(ifcProp);
-
-                    ifcProp.HasAssociations.Add(ifcRal);
-                }
-
+                ifcProp.PrimaryMeasureType = new IfcLabel(docProp.PrimaryDataType);
+                ifcProp.SecondaryMeasureType = new IfcLabel(docProp.SecondaryDataType);
 
                 // enumerations
                 if (ifcProp.TemplateType == IfcSimplePropertyTemplateTypeEnum.P_ENUMERATEDVALUE && ifcProp.SecondaryMeasureType != null)
                 {
                     // NEW: lookup formal enumeration
-                    string propdatatype = ifcProp.SecondaryMeasureType;
+                    string propdatatype = ifcProp.SecondaryMeasureType.GetValueOrDefault().Value;
                     int colon = propdatatype.IndexOf(':');
                     if(colon > 0)
                     {
@@ -1257,9 +1185,8 @@ namespace IfcDoc
                     if(mapEnums.TryGetValue(propdatatype, out docEnumeration))
                     {
                         ifcProp.Enumerators = new IfcPropertyEnumeration();
-                        ifcProp.GlobalId = SGuid.Format(docEnumeration.Uuid);
-                        ifcProp.Enumerators.Name = docEnumeration.Name;
-                        ifcProp.Enumerators.EnumerationValues = new List<IfcValue>();
+                        ifcProp.GlobalId = new IfcGloballyUniqueId(SGuid.Format(docEnumeration.Uuid));
+                        ifcProp.Enumerators.Name = new IfcLabel(docEnumeration.Name);
                         ifcProp.SecondaryMeasureType = null;
 
                         foreach(DocPropertyConstant docConst in docEnumeration.Constants)
@@ -1272,15 +1199,15 @@ namespace IfcDoc
                             foreach (DocLocalization docLoc in docConst.Localization)
                             {
                                 IfcLibraryReference ifcLib = new IfcLibraryReference();
-                                ifcLib.Identification = docConst.Name; // distinguishes the constant value within the enumeration
-                                ifcLib.Language = docLoc.Locale;
-                                ifcLib.Name = docLoc.Name;
-                                ifcLib.Description = docLoc.Documentation;
-                                ifcLib.ReferencedLibrary = ifcLibInfo;
+                                ifcLib.Identification = new IfcIdentifier(docConst.Name); // distinguishes the constant value within the enumeration
+                                ifcLib.Language = new IfcLanguageId(new IfcIdentifier(docLoc.Locale));
+                                ifcLib.Name = new IfcLabel(docLoc.Name);
+                                ifcLib.Description = new IfcText(docLoc.Documentation);
+                                ifcLib.Location = new IfcURIReference(docLoc.URL);
 
-                                if(docLoc.Documentation == null && docLoc.Locale == "en")
+                                if (docLoc.Documentation == null && docLoc.Locale == "en")
                                 {
-                                    ifcLib.Description = docConst.Documentation;
+                                    ifcLib.Description = new IfcText(docConst.Documentation);
                                 }
 
                                 IfcRelAssociatesLibrary ifcRal = new IfcRelAssociatesLibrary();
@@ -2101,65 +2028,69 @@ namespace IfcDoc
             }
         }
 
-        private static DocTemplateItem ImportMvdItem(TemplateRule rule, DocProject docProject, Dictionary<Guid, ExchangeRequirement> mapExchange)
+        private static DocTemplateItem ImportMvdItem(TemplateRule ruleItem, DocProject docProject, Dictionary<Guid, ExchangeRequirement> mapExchange)
         {
             DocTemplateItem docItem = new DocTemplateItem();
-            docItem.Documentation = rule.Description;
-            docItem.RuleInstanceID = rule.RuleID;
-            docItem.ParseParameterExpressions(rule.Parameters); // convert from mvdXML
+            docItem.Documentation = ruleItem.Description;
+            docItem.RuleInstanceID = ruleItem.RuleID;
+            docItem.ParseParameterExpressions(ruleItem.Parameters); // convert from mvdXML
 
             // V11.6
-            if (rule.Requirements != null)
+            if (ruleItem is TemplateItem)
             {
-                foreach (ConceptRequirement mvdReq in rule.Requirements)
+                TemplateItem rule = (TemplateItem)ruleItem;
+                if (rule.Requirements != null)
                 {
-                    ExchangeRequirement mvdExchange = null;
-                    if (mapExchange.TryGetValue(mvdReq.ExchangeRequirement, out mvdExchange))
+                    foreach (ConceptRequirement mvdReq in rule.Requirements)
                     {
-                        DocExchangeItem docReq = new DocExchangeItem();
-                        docItem.Exchanges.Add(docReq);
-                        ImportMvdRequirement(mvdReq, docReq, docProject);
+                        ExchangeRequirement mvdExchange = null;
+                        if (mapExchange.TryGetValue(mvdReq.ExchangeRequirement, out mvdExchange))
+                        {
+                            DocExchangeItem docReq = new DocExchangeItem();
+                            docItem.Exchanges.Add(docReq);
+                            ImportMvdRequirement(mvdReq, docReq, docProject);
+                        }
                     }
                 }
-            }
 
-            if (rule.References != null)
-            {
-                foreach (Concept con in rule.References)
+                if (rule.References != null)
                 {
-                    DocTemplateUsage docInner = new DocTemplateUsage();
-                    docItem.Concepts.Add(docInner);
-                    ImportMvdConcept(con, docInner, docProject, mapExchange);
+                    foreach (Concept con in rule.References)
+                    {
+                        DocTemplateUsage docInner = new DocTemplateUsage();
+                        docItem.Concepts.Add(docInner);
+                        ImportMvdConcept(con, docInner, docProject, mapExchange);
+                    }
                 }
-            }
 
-            docItem.Order = rule.Order;
-            switch (rule.Usage)
-            {
-                case TemplateRuleUsage.System:
-                    docItem.Calculated = true;
-                    break;
+                docItem.Order = rule.Order;
+                switch (rule.Usage)
+                {
+                    case TemplateRuleUsage.System:
+                        docItem.Calculated = true;
+                        break;
 
-                case TemplateRuleUsage.Calculation:
-                    docItem.Calculated = true;
-                    docItem.Optional = true;
-                    break;
+                    case TemplateRuleUsage.Calculation:
+                        docItem.Calculated = true;
+                        docItem.Optional = true;
+                        break;
 
-                case TemplateRuleUsage.Reference:
-                    docItem.Reference = true;
-                    break;
+                    case TemplateRuleUsage.Reference:
+                        docItem.Reference = true;
+                        break;
 
-                case TemplateRuleUsage.Key:
-                    docItem.Key = true;
-                    break;
+                    case TemplateRuleUsage.Key:
+                        docItem.Key = true;
+                        break;
 
-                case TemplateRuleUsage.Optional:
-                    docItem.Optional = true;
-                    break;
+                    case TemplateRuleUsage.Optional:
+                        docItem.Optional = true;
+                        break;
 
-                case TemplateRuleUsage.Required:
-                    // default
-                    break;
+                    case TemplateRuleUsage.Required:
+                        // default
+                        break;
+                }
             }
 
             return docItem;
@@ -2247,7 +2178,7 @@ namespace IfcDoc
                             loc.Name = def.Tags;
                             loc.Locale = def.Body[0].Lang;
                             loc.Documentation = def.Body[0].Content;
-                            loc.Category = DocCategoryEnum.Definition;
+                            loc.Category = DocCategoryEnum.Definition;                            
                         }
                         else if (def.Body != null)
                         {
@@ -2364,7 +2295,13 @@ namespace IfcDoc
             mvdRequirement.ExchangeRequirement = docExchangeRef.Exchange.Uuid;
         }
 
-        internal static void ExportMvdConcept(Concept mvdConceptLeaf, DocTemplateUsage docTemplateUsage, DocProject docProject, Dictionary<string, DocObject> map, bool documentation)
+        internal static void ExportMvdConcept(
+            Concept mvdConceptLeaf, 
+            DocTemplateUsage docTemplateUsage, 
+            DocProject docProject, 
+            string version,
+            Dictionary<string, DocObject> map, 
+            bool documentation)
         {
             ExportMvdObject(mvdConceptLeaf, docTemplateUsage, documentation);
 
@@ -2404,87 +2341,92 @@ namespace IfcDoc
                 mvdConceptLeaf.TemplateRules.Operator = (TemplateOperator)Enum.Parse(typeof(TemplateOperator), docTemplateUsage.Operator.ToString());
                 foreach (DocTemplateItem docRule in docTemplateUsage.Items)
                 {
-                    TemplateRule mvdTemplateRule = ExportMvdItem(docRule, docTemplateUsage.Definition, docProject, map);
+                    TemplateRule mvdTemplateRule = ExportMvdItem(docRule, docTemplateUsage.Definition, docProject, version, map);
                     mvdConceptLeaf.TemplateRules.TemplateRule.Add(mvdTemplateRule);
 
-                    // V11.6: requirements
-                    foreach (DocExchangeItem docExchangeRef in docTemplateUsage.Exchanges)
-                    {
-                        if (docExchangeRef.Exchange != null)
-                        {
-                            ConceptRequirement mvdRequirement = new ConceptRequirement();
-
-                            if (mvdTemplateRule.Requirements == null)
-                            {
-                                mvdTemplateRule.Requirements = new List<ConceptRequirement>();
-                            }
-                            mvdTemplateRule.Requirements.Add(mvdRequirement);
-                            ExportMvdRequirement(mvdRequirement, docExchangeRef);
-                        }
-                    }
-
                     // using proposed mvdXML schema
-                    mvdTemplateRule.References = new List<Concept>();
-                    foreach (DocTemplateUsage docInner in docRule.Concepts)
+                    if (mvdTemplateRule is TemplateItem)
                     {
-                        Concept mvdInner = new Concept();
-                        mvdTemplateRule.References.Add(mvdInner);
-                        ExportMvdConcept(mvdInner, docInner, docProject, map, documentation);
+                        TemplateItem ruleV12 = (TemplateItem)mvdTemplateRule;
+                        ruleV12.References = new List<Concept>();
+                        foreach (DocTemplateUsage docInner in docRule.Concepts)
+                        {
+                            Concept mvdInner = new Concept();
+                            ruleV12.References.Add(mvdInner);
+                            ExportMvdConcept(mvdInner, docInner, docProject, version, map, documentation);
+                        }
                     }
                 }
             }
         }
 
-        internal static TemplateRule ExportMvdItem(DocTemplateItem docRule, DocTemplateDefinition docTemplate, DocProject docProject, Dictionary<string, DocObject> map)
+        internal static TemplateRule ExportMvdItem(
+            DocTemplateItem docItem, 
+            DocTemplateDefinition docTemplate, 
+            DocProject docProject, 
+            string version,
+            Dictionary<string, DocObject> map)
         {
-            TemplateRule mvdTemplateRule = new TemplateRule();
-            mvdTemplateRule.Description = docRule.Documentation;
-            if (docRule.Calculated)
+            TemplateRule mvdRule;
+
+            if (version == mvdXML.NamespaceV12)
             {
-                if (docRule.Optional)
+                TemplateItem mvdTemplateRule = new TemplateItem();
+                mvdRule = mvdTemplateRule;
+                if (docItem.Calculated)
                 {
-                    mvdTemplateRule.Usage = TemplateRuleUsage.Calculation;
+                    if (docItem.Optional)
+                    {
+                        mvdTemplateRule.Usage = TemplateRuleUsage.Calculation;
+                    }
+                    else
+                    {
+                        mvdTemplateRule.Usage = TemplateRuleUsage.System;
+                    }
                 }
-                else
+                else if (docItem.Key)
                 {
-                    mvdTemplateRule.Usage = TemplateRuleUsage.System;
+                    mvdTemplateRule.Usage = TemplateRuleUsage.Key;
+                }
+                else if (docItem.Reference)
+                {
+                    mvdTemplateRule.Usage = TemplateRuleUsage.Reference;
+                }
+                else if (docItem.Optional)
+                {
+                    mvdTemplateRule.Usage = TemplateRuleUsage.Optional;
+                }
+
+                mvdTemplateRule.Order = docItem.Order;
+
+                // requirements -- not yet captured in user interface
+                if (docItem.Exchanges.Count > 0)
+                {
+                    mvdTemplateRule.Requirements = new List<ConceptRequirement>();
+                    foreach (DocExchangeItem docExchangeItem in docItem.Exchanges)
+                    {
+                        ConceptRequirement mvdRequirement = new ConceptRequirement();
+                        mvdTemplateRule.Requirements.Add(mvdRequirement);
+                        ExportMvdRequirement(mvdRequirement, docExchangeItem);
+                    }
                 }
             }
-            else if(docRule.Key)
+            else
             {
-                mvdTemplateRule.Usage = TemplateRuleUsage.Key;
-            }
-            else if(docRule.Reference)
-            {
-                mvdTemplateRule.Usage = TemplateRuleUsage.Reference;
-            }
-            else if(docRule.Optional)
-            {
-                mvdTemplateRule.Usage = TemplateRuleUsage.Optional;
+                mvdRule = new TemplateRule();
             }
 
-            mvdTemplateRule.Order = docRule.Order;
+            mvdRule.Description = docItem.Documentation;
+            mvdRule.Parameters = docItem.FormatParameterExpressions(docTemplate, docProject, map); // was RuleParameters;
 
-            // new: use special mvdXML 1.1 syntax
-            mvdTemplateRule.Parameters = docRule.FormatParameterExpressions(docTemplate, docProject, map); // was RuleParameters;
-            
-            // requirements -- not yet captured in user interface
-            if(docRule.Exchanges.Count > 0)
-            {
-                mvdTemplateRule.Requirements = new List<ConceptRequirement>();
-                foreach(DocExchangeItem docExchangeItem in docRule.Exchanges)
-                {
-                    ConceptRequirement er = new ConceptRequirement();
-                }
-            }
-
-            return mvdTemplateRule;
+            return mvdRule;
         }
 
         // each list is optional- if specified then must be followed; if null, then no filter applies (all included)
         internal static void ExportMvd(
             mvdXML mvd,
             DocProject docProject,
+            string version,
             Dictionary<string, DocObject> map,
             Dictionary<DocObject, bool> included)
         {
@@ -2507,12 +2449,18 @@ namespace IfcDoc
                 {
                     ModelView mvdModelView = new ModelView();
                     mvd.Views.Add(mvdModelView);
-                    ExportMvdView(mvdModelView, docModelView, docProject, map, included);
+                    ExportMvdView(mvdModelView, docModelView, docProject, version, map, included);
                 }
             }
         }
 
-        internal static void ExportMvdView(ModelView mvdModelView, DocModelView docModelView, DocProject docProject, Dictionary<string, DocObject> map, Dictionary<DocObject, bool> included)
+        internal static void ExportMvdView(
+            ModelView mvdModelView, 
+            DocModelView docModelView, 
+            DocProject docProject, 
+            string version,
+            Dictionary<string, DocObject> map, 
+            Dictionary<DocObject, bool> included)
         {
             ExportMvdObject(mvdModelView, docModelView, true);
             mvdModelView.ApplicableSchema = docProject.GetSchemaIdentifier();
@@ -2544,24 +2492,33 @@ namespace IfcDoc
                     ConceptRoot mvdConceptRoot = new ConceptRoot();
                     mvdModelView.Roots.Add(mvdConceptRoot);
 
-                    Program.ExportMvdConceptRoot(mvdConceptRoot, docRoot, docProject, map, true);
+                    Program.ExportMvdConceptRoot(mvdConceptRoot, docRoot, docProject, version, map, true);
                 }
             }
 
-            // export nested model views
-            if(docModelView.ModelViews.Count > 0)
+            // V12: export nested model views
+            if (version == mvdXML.NamespaceV12)
             {
-                mvdModelView.Views = new List<ModelView>();
-            }
-            foreach(DocModelView docSubView in docModelView.ModelViews)
-            {
-                ModelView mvdSubView = new ModelView();
-                mvdModelView.Views.Add(mvdSubView);
-                Program.ExportMvdView(mvdSubView, docSubView, docProject, map, included);
+                if (docModelView.ModelViews.Count > 0)
+                {
+                    mvdModelView.Views = new List<ModelView>();
+                }
+                foreach (DocModelView docSubView in docModelView.ModelViews)
+                {
+                    ModelView mvdSubView = new ModelView();
+                    mvdModelView.Views.Add(mvdSubView);
+                    Program.ExportMvdView(mvdSubView, docSubView, docProject, version, map, included);
+                }
             }
         }
 
-        internal static void ExportMvdConceptRoot(ConceptRoot mvdConceptRoot, DocConceptRoot docRoot, DocProject docProject, Dictionary<string, DocObject> map, bool documentation)
+        internal static void ExportMvdConceptRoot(
+            ConceptRoot mvdConceptRoot, 
+            DocConceptRoot docRoot, 
+            DocProject docProject, 
+            string version,
+            Dictionary<string, DocObject> map, 
+            bool documentation)
         {
             ExportMvdObject(mvdConceptRoot, docRoot, documentation);
 
@@ -2581,7 +2538,7 @@ namespace IfcDoc
                 mvdConceptRoot.Applicability.TemplateRules.Operator = (TemplateOperator)Enum.Parse(typeof(TemplateOperator), docRoot.ApplicableOperator.ToString());
                 foreach (DocTemplateItem docItem in docRoot.ApplicableItems)
                 {
-                    TemplateRule rule = ExportMvdItem(docItem, docRoot.ApplicableTemplate, docProject, map);
+                    TemplateRule rule = ExportMvdItem(docItem, docRoot.ApplicableTemplate, docProject, null, map);
                     mvdConceptRoot.Applicability.TemplateRules.TemplateRule.Add(rule);
                 }
             }
@@ -2593,7 +2550,7 @@ namespace IfcDoc
                 {
                     Concept mvdConceptLeaf = new Concept();
                     mvdConceptRoot.Concepts.Add(mvdConceptLeaf);
-                    ExportMvdConcept(mvdConceptLeaf, docTemplateUsage, docProject, map, documentation);
+                    ExportMvdConcept(mvdConceptLeaf, docTemplateUsage, docProject, version, map, documentation);
                 }
             }
         }
@@ -2753,6 +2710,23 @@ namespace IfcDoc
                     mvdRuleEntity.Description = docRuleEntity.Description;
                     mvdRuleEntity.EntityName = docRuleEntity.Name;
 
+                    // references
+                    DocModelRuleEntity dme = (DocModelRuleEntity)docRuleEntity;
+                    if (dme.References.Count > 0)
+                    {
+                        mvdRuleEntity.References = new References();
+                        mvdRuleEntity.References.IdPrefix = dme.Prefix;
+                        mvdRuleEntity.References.Template = new List<TemplateRef>();
+                        foreach (DocTemplateDefinition dtd in dme.References)
+                        {
+                            TemplateRef tr = new TemplateRef();
+                            tr.Ref = dtd.Uuid;
+                            mvdRuleEntity.References.Template.Add(tr);
+
+                            break; // only one reference template can be exported
+                        }
+                    }
+
                     foreach (DocModelRule docRuleAttribute in docRuleEntity.Rules)
                     {
                         if (docRuleAttribute is DocModelRuleAttribute)
@@ -2770,14 +2744,6 @@ namespace IfcDoc
                         {
                             DocModelRuleConstraint mrc = (DocModelRuleConstraint)docRuleAttribute;
 
-                            if(mvdRuleEntity.Constraints == null)
-                            {
-                                mvdRuleEntity.Constraints = new List<Constraint>();
-                            }
-
-                            Constraint mvdConstraint = new Constraint();
-                            mvdRuleEntity.Constraints.Add(mvdConstraint);
-
                             string expr = mrc.FormatExpression(docTemplate);
                             // replace with attribute name
                             if (expr != null)
@@ -2785,41 +2751,29 @@ namespace IfcDoc
                                 int bracket = expr.IndexOf('[');
                                 if (bracket > 0)
                                 {
+                                    if (mvdRuleEntity.Constraints == null)
+                                    {
+                                        mvdRuleEntity.Constraints = new List<Constraint>();
+                                    }
+
+                                    Constraint mvdConstraint = new Constraint();
+                                    mvdRuleEntity.Constraints.Add(mvdConstraint);
+
                                     if (expr.StartsWith("("))
                                     {
                                         string toDelete = expr.Substring(1, (bracket - 1));
                                         expr = expr.Substring(1).Replace(toDelete, "");
                                         mvdConstraint.Expression = docRule.Identification + expr.Remove(expr.Length - 1);
-                                    }
+                                    } 
                                     else
                                     {
-                                        //string toDelete = expr.Substring(0, bracket);
-                                        mvdConstraint.Expression = docRule.Identification + expr.Substring(bracket); //expr.Replace(toDelete, "");
+                                        mvdConstraint.Expression = docRule.Identification + expr.Substring(bracket);
                                     }
                                 }
                             }
                         }
-                        else
-                        {
-                            docRuleAttribute.ToString();
-                        }
                     }
 
-                    DocModelRuleEntity dme = (DocModelRuleEntity)docRuleEntity;
-                    if(dme.References.Count > 0)
-                    {
-                        mvdRuleEntity.References = new References();
-                        mvdRuleEntity.References.IdPrefix = dme.Prefix;
-                        mvdRuleEntity.References.Template = new List<TemplateRef>();
-                        foreach (DocTemplateDefinition dtd in dme.References)
-                        {
-                            TemplateRef tr = new TemplateRef();
-                            tr.Ref = dtd.Uuid;
-                            mvdRuleEntity.References.Template.Add(tr);
-
-                            break; // only one reference template can be exported
-                        }
-                    }
                 }
                 else if (docRuleEntity is DocModelRuleConstraint)
                 {

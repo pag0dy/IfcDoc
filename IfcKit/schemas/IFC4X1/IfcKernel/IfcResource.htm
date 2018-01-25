@@ -1,0 +1,19 @@
+﻿<p><em>IfcResource</em> contains the information needed to represent the costs, schedule, and other impacts from the use of a thing in a process. It is not intended to use <em>IfcResource</em> to model the general properties of the things themselves, while an optional linkage from <em>IfcResource</em> to the things to be used can be specified (specifically, the relationship from subtypes of <em>IfcResource</em> to <em>IfcProduct</em> through the <em>IfcRelAssignsToResource</em> relationship). </p> 
+
+<p>There are two basic intended uses of <em>IfcResource</em>. First, if the attributes of the thing are not needed for the purpose of the use of <em>IfcResource</em>, or the types of things are not explicitly modeled in IFC yet, then the linkage between the resource and the thing doesn't have to be instantiated in the system. That is, the attributes of <em>IfcResource</em> (or its subtypes) alone are sufficient to represent the use of the thing as a resource for the purpose of the project. </p> 
+
+<blockquote class="example"> 
+EXAMPLE&nbsp; construction equipment such as earth-moving vehicles or tools are not currently modeled within the IFC. For the purpose of estimating and scheduling, these can be represented using subtypes of <em>IfcResource</em> alone.
+</blockquote> 
+
+<p>Second, if the attributes of the thing are needed for the use of <em>IfcResource</em> objects, and they are modeled explicitly as objects, then the <em>IfcResource</em> instances can be linked to the instances of the type of the things being referenced. Things that might be used as resources and that are already modeled in the IFC include physical products, people and organizations, and materials. The relationship object <em>IfcRelAssignsToResource</em> is provided for this approach.</p> 
+
+<p>The inherited attribute <em>ObjectType</em> is used as a textual code that identifies the resource type. </p> 
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC1.0
+</blockquote> 
+
+<blockquote class="change-ifc2x">
+IFC2x CHANGE&nbsp; The attributes BaseUnit and ResourceConsumption have been removed from the abstract entity; they are reintroduced at a lower level in the hierarchy.
+</blockquote>

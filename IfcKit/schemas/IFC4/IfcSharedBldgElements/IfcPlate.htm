@@ -1,0 +1,21 @@
+﻿<p>An <em>IfcPlate</em> is a planar and often flat part with constant thickness. A plate may carry loads between or beyond points of support, or provide stiffening. The location of the plate (being horizontal, vertical or sloped) is not relevant to its definition (in contrary to <em>IfcWall</em> and <em>IfcSlab</em> (as floor slab)). </p>
+
+<blockquote class="extDef">NOTE&nbsp; Definition according to ISO 6707-1: thin, rigid, flat, metal product, of a thickness greater than that of a sheet.</blockquote>
+
+<p>Plates are normally made of steel, other metallic material, or by glass panels. However the definition of <em>IfcPlate</em> is material independent and specific material information shall be handled by using <em>IfcAssociatesMaterial</em> to assign a material specification to the <em>IfcPlate</em>.</p>
+
+<blockquote class="note">NOTE&nbsp; Although not necessarily, plates are often add-on parts. This is represented by the <em>IfcRelAggregates</em> decomposition mechanism used to aggregate parts, such as <em>IfcPlate</em>, into a container element such as <em>IfcElementAssembly</em> or <em>IfcCurtainWall</em>.</blockquote>
+
+<blockquote class="note">NOTE&nbsp; The representation of a plate in a structural analysis model is provided by <em>IfcStructuralSurfaceMember</em> being part of an <em>IfcStructuralAnalysisModel</em>.</blockquote>
+
+<p>An instance <em>IfcPlate</em> should preferably get its geometric representation and material assignment through the type definition by <em>IfcPlateType</em> assigned using the <em>IfcRelDefinesByType</em> relationship. This allows identical plates in a construction to be represented by the same instance of <em>IfcPlateType</em>. The position number of a plate as often used in steel construction is assigned through the attribute <em>IfcElement.Tag</em></p>
+
+<p><p>There are two main representations for plate occurrences:</p>
+<ul>
+<li><em>IfcPlate</em> with <em>IfcMaterialLayerSetUsage</em> is used for all occurrences of plates, that are prismatic and where the thickness parameter can be fully described by the <em>IfcMaterialLayerSetUsage</em>. These plates are always represented geometrically by a 'SweptSolid' geometry (or by a 'Clipping' geometry based on 'SweptSolid'), if a 3D geometric representation is assigned.
+<blockquote class="note">NOTE&nbsp; The entity <em>IfcPlateStandardCase</em> has been deprecated, <em>IfcPlate</em> with <em>IfcMaterialLayerSetUsage</em> is used instead.</blockquote>
+</li>
+<li><em>IfcPlate</em> without <em>IfcMaterialLayerSetUsage</em> is used for all other occurrences of plates, particularly for plates with changing thickness, or plates with non planar surfaces, and plates having only 'SurfaceModel' or 'Brep' geometry or if a more parametric representation is not intended.</li>
+</ul>
+
+<blockquote class="history">HISTORY&nbsp; New entity in IFC2x2</blockquote>

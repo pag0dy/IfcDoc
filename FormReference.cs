@@ -38,6 +38,8 @@ namespace IfcDoc
             // parse value
             CvtValuePath valuepath = CvtValuePath.Parse(value, map);
             LoadValuePath(valuepath);
+
+            this.textBoxReference.ReadOnly = false;
         }
 
         public string ValuePath

@@ -1,0 +1,4 @@
+﻿NOT(EXISTS(SELF\IfcTypeObject.Types[1])) OR
+(SIZEOF(QUERY(temp <* SELF\IfcTypeObject.Types[1].RelatedObjects |
+  NOT('IFCKERNEL.IFCPRODUCT' IN TYPEOF(temp)))
+) = 0)

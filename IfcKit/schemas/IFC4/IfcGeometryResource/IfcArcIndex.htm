@@ -1,0 +1,24 @@
+﻿<p>The <em>IfcArcIndex</em> describes a single circular arc segment within a poly curve by providing a list on indices. The first index is the start point of the circular arc, the second index is a point on arc, the third index is the end point of the circular arc. The three points shall not be co-linear.</p>
+
+<blockquote class="note">NOTE&nbsp; The type is used for <em>IfcIndexedPolyCurve</em> to point into an <em>IfcCartesianPointList</em> for providing the Cartesian points of the circular arc segments of the poly curve.</blockquote>
+<blockquote class="note">The circular arc segment is always parameterized from start to end point</blockquote>
+<blockquote class="note">
+<blockquote class="note"><img src="../../../figures/ifccircle-math1.gif" width="205" height="22" alt="formula"></blockquote>
+</blockquote>
+</blockquote>
+<blockquote class="extDef">
+ The points from <em>IfcCartesianPointList</em> that define the circle span a plane:
+ <ul style="font-size:inherit">
+  <li style="font-size:inherit"><strong>x</strong> and <strong>y</strong> are orthogonal unit vectors in this plane</li>
+  <li style="font-size:inherit">the parameterization range <strong>u</strong> is defined from start to end point. <strong>u</strong> is an angular parameter and when a numerical value is specified it shall use the current units for plane angle measure</li>
+  <li style="font-size:inherit"><strong>R</strong> is the radius of the circle.</li>
+  <li style="font-size:inherit"><strong>C</strong> is the center point.</li>
+ </ul>
+</blockquote>
+<blockquote>
+<blockquote class="history">HISTORY&nbsp; New Type in IFC4 ADD1</blockquote>
+
+<p class="spec-head">Informal Propositions:</p>
+<ol>
+ <li>The second index, resolving to a point on arc, shall resolve into a Cartesian point that has approximately the same distance to the start point and the end point of the circular arc. This is due to avoid numeric instability, if the point on arc is too close to either the start or the end point.</li>
+</ol>

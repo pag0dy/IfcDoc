@@ -1,0 +1,140 @@
+<?xml version="1.0"?>
+<svg xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="1.1" width="600" height="888" xmlns="http://www.w3.org/2000/svg">
+  <g id="IfcFireSuppressionTerminal" fill="yellow">
+    <rect x="323.58" y="125.8749975" width="243.75" height="41.475" stroke="black" />
+    <text x="445.455" y="146.6124975" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcFireSuppressionTerminal</text>
+    <g id="PredefinedType">
+      <polyline points="564.58005,167.3499975 564.58005,192.131247 402.2975175,192.131247 " fill="none" stroke="black" stroke-dasharray="1,1" />
+      <text x="448.293786375" y="178.73749785" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">PredefinedType</text>
+    </g>
+  </g>
+  <g id="IfcFireSuppressionTerminalType" fill="yellow">
+    <rect x="28.447501125" y="125.87500875" width="243.73750125" height="41.50000125" stroke="black" />
+    <text x="150.31625175" y="146.625009375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcFireSuppressionTerminalType</text>
+    <g id="PredefinedType">
+      <polyline points="31.89378225,167.37501 31.89378225,191.631253125 185.33499975,191.631253125 " fill="none" stroke="black" />
+      <text x="146.93940225" y="176.7593748" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">PredefinedType</text>
+    </g>
+  </g>
+  <g id="IfcInterceptor" fill="yellow">
+    <rect x="326.31" y="698.1499875" width="241.99999875" height="37.5" stroke="black" />
+    <text x="447.309999375" y="716.8999875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcInterceptor</text>
+    <g id="PredefinedType">
+      <polyline points="566.31,735.6499875 566.31,757.3999875 400.935,757.3999875 " fill="none" stroke="black" stroke-dasharray="1,1" />
+      <text x="447.934999875" y="744.5249875125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">PredefinedType</text>
+    </g>
+  </g>
+  <g id="IfcInterceptorType" fill="yellow">
+    <rect x="27.310000125" y="698.1499875" width="241.99999875" height="37.5" stroke="black" />
+    <text x="148.3099995" y="716.8999875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcInterceptorType</text>
+    <g id="PredefinedType">
+      <polyline points="27.310000125,735.6499875 27.310000125,757.3999875 185.309998875,757.3999875 " fill="none" stroke="black" />
+      <text x="144.30999825" y="744.5249875125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">PredefinedType</text>
+    </g>
+  </g>
+  <g id="IfcSanitaryTerminal" fill="yellow">
+    <rect x="323.6424975" y="229.875" width="243.72499875" height="41.475" stroke="black" />
+    <text x="445.504996875" y="250.6125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcSanitaryTerminal</text>
+    <g id="PredefinedType">
+      <polyline points="565.5784125,271.35 565.5784125,294.754999875 401.27251875,294.754999875 " fill="none" stroke="black" stroke-dasharray="1,1" />
+      <text x="448.42546575" y="282.865820865" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">PredefinedType</text>
+    </g>
+  </g>
+  <g id="IfcSanitaryTerminalType" fill="yellow">
+    <rect x="28.410002625" y="229.8799875" width="243.75" height="41.475" stroke="black" />
+    <text x="150.285002625" y="250.6174875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcSanitaryTerminalType</text>
+    <g id="PredefinedType">
+      <polyline points="29.2505205,271.3549875 29.2505205,294.75499875 184.3350105,294.75499875 " fill="none" stroke="black" />
+      <text x="69.25052175" y="304.754998725" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">PredefinedType</text>
+    </g>
+  </g>
+  <g id="IfcStackTerminal" fill="yellow">
+    <rect x="323.6175" y="333.85000125" width="243.72499875" height="41.475" stroke="black" />
+    <text x="445.479999375" y="354.58750125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcStackTerminal</text>
+    <g id="PredefinedType">
+      <polyline points="565.547475,375.3250125 565.547475,398.0650125 402.32249625,398.0650125 " fill="none" stroke="black" stroke-dasharray="1,1" />
+      <text x="447.934985625" y="386.085012525" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">PredefinedType</text>
+    </g>
+  </g>
+  <g id="IfcStackTerminalType" fill="yellow">
+    <rect x="28.410002625" y="333.83001" width="243.7374975" height="41.50000125" stroke="black" />
+    <text x="150.278751375" y="354.580010625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcStackTerminalType</text>
+    <g id="PredefinedType">
+      <polyline points="30.20510325,375.33 30.20510325,396.2299875 185.36001075,396.2299875 " fill="none" stroke="black" />
+      <text x="69.20510325" y="405.2237374875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">PredefinedType</text>
+    </g>
+  </g>
+  <g id="IfcWasteTerminal" fill="yellow">
+    <rect x="323.6175" y="437.8375125" width="243.7250025" height="41.475" stroke="black" />
+    <text x="445.48000125" y="458.5750125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcWasteTerminal</text>
+    <g id="PredefinedType">
+      <polyline points="565.5415875,479.3125125 565.5415875,497.717511375 402.3225,497.717511375 " fill="none" stroke="black" stroke-dasharray="1,1" />
+      <text x="448.932043875" y="485.8937681625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">PredefinedType</text>
+    </g>
+  </g>
+  <g id="IfcWasteTerminalType" fill="yellow">
+    <rect x="28.435000125" y="437.8174875" width="243.75" height="41.50000125" stroke="black" />
+    <text x="150.310000125" y="458.567488125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcWasteTerminalType</text>
+    <g id="PredefinedType">
+      <polyline points="29.275518,479.3175 29.275518,499.21748625 185.35998675,499.21748625 " fill="none" stroke="black" />
+      <text x="68.731771125" y="506.9424793125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">PredefinedType</text>
+    </g>
+  </g>
+  <g id="IfcFireSuppressionTerminalTypeEnum" fill="green">
+    <rect x="185.3349975" y="182.88749625" width="216.96250125" height="19.750000125" stroke="black" />
+    <text x="293.816248125" y="192.7624963125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcFireSuppressionTerminalTypeEnum</text>
+  </g>
+  <g id="IfcInterceptorTypeEnum" fill="green">
+    <rect x="185.31" y="749.1499875" width="215.625" height="19.750000125" stroke="black" />
+    <text x="293.1225" y="759.0249875625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcInterceptorTypeEnum</text>
+  </g>
+  <g id="IfcSanitaryTerminalTypeEnum" fill="green">
+    <rect x="184.335015" y="284.88" width="216.9375" height="19.750000125" stroke="black" />
+    <text x="292.803765" y="294.7550000625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcSanitaryTerminalTypeEnum</text>
+  </g>
+  <g id="IfcStackTerminalTypeEnum" fill="green">
+    <rect x="185.36001" y="386.8549875" width="216.96250125" height="19.750000125" stroke="black" />
+    <text x="293.841260625" y="396.7299875625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcStackTerminalTypeEnum</text>
+  </g>
+  <g id="IfcWasteTerminalTypeEnum" fill="green">
+    <rect x="185.3599875" y="488.8425" width="216.96250125" height="19.750000125" stroke="black" />
+    <text x="293.841238125" y="498.7175000625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcWasteTerminalTypeEnum</text>
+  </g>
+  <g id="IFCSHAREDBLDGSERVICEELEMENTS">
+    <g id="IfcFlowTerminalType" fill="grey">
+      <rect x="9.787497375" y="10.637500125" width="233.62500375" height="86.25" stroke="black" />
+      <polyline points="126.59999625,96.88750125 126.59999625,115.38375 8.20999875,115.38375 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="8.20999875,115.38375 8.2100025,458.567475 28.435000125,458.567475 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="8.20999875,115.38375 8.2100025,354.57998625 28.4100015,354.57998625 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="8.20999875,115.38375 8.2100025,250.6174875 28.4100015,250.6174875 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="8.20999875,115.38375 8.2100025,146.62499625 28.447501125,146.62499625 " fill="none" stroke="black" stroke-width="3" />
+      <text x="126.59999925" y="53.762500125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCSHAREDBLDGSERVICEELEMENTS
+IfcFlowTerminalType</text>
+    </g>
+    <g id="IfcFlowTerminal" fill="grey">
+      <rect x="386.5999875" y="10.562500125" width="203.25" height="85.62499875" stroke="black" />
+      <polyline points="488.2249875,96.1875 488.2249875,113.374999875 588.46498875,113.374999875 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="588.46498875,113.374999875 588.465,146.6124975 567.33,146.6124975 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="588.46498875,113.374999875 588.465,250.6125 567.36749925,250.6125 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="588.46498875,113.374999875 588.465,354.58750125 567.3424995,354.58750125 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="588.46498875,113.374999875 588.465,458.5750125 567.342501375,458.5750125 " fill="none" stroke="black" stroke-width="3" />
+      <text x="488.2249875" y="53.3749995" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCSHAREDBLDGSERVICEELEMENTS
+IfcFlowTerminal</text>
+    </g>
+    <g id="IfcFlowTreatmentDeviceType" fill="grey">
+      <rect x="14.2875" y="582.1249875" width="204.75" height="85.875" stroke="black" />
+      <polyline points="17.6625,667.9999875 17.6625,716.8999875 27.310000125,716.8999875 " fill="none" stroke="black" stroke-width="3" />
+      <text x="116.6625" y="625.0624875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCSHAREDBLDGSERVICEELEMENTS
+IfcFlowTreatmentDeviceType</text>
+    </g>
+    <g id="IfcFlowTreatmentDevice" fill="grey">
+      <rect x="384.3" y="579.1125" width="204.12499875" height="85.875" stroke="black" />
+      <polyline points="584.3625,664.9875 584.3625,681.745929375 584.12361312375,681.745929375 584.12361312375,716.899999875 568.30999999875,716.899999875 " fill="none" stroke="black" stroke-width="3" />
+      <text x="486.362499375" y="622.05" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCSHAREDBLDGSERVICEELEMENTS
+IfcFlowTreatmentDevice</text>
+    </g>
+  </g>
+  <g>
+    <rect x="0" y="0" width="600" height="888" fill="none" stroke="lime" />
+  </g>
+</svg>

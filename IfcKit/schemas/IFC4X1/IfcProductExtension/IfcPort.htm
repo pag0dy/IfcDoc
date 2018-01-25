@@ -1,0 +1,10 @@
+﻿<p>A port provides the means for an element to connect to other elements.</p>
+<p>An <em>IfcPort</em> is associated with an <em>IfcElement</em>, it belongs to through the objectified relationship <em>IfcRelNests</em> if such port is fixed, or <em>IfcRelConnectsPortToElement</em> if such port is dynamically attached. Exactly two ports, belonging to two different elements, are connected with       each other through the objectified relationship <em>IfcRelConnectsPorts</em>.</p>
+
+<p>An instance of <em>IfcElement</em> may have one or more points at which it connects to other instances of <em>IfcElement</em>. An instance of em>IfcPort</em> is located at a point where a connection can occur. The location of the port is determined in the context of the local coordinate system of the element to which it belongs. As a subordinate part being fully dependent on the master element the <em>IfcPort</em> shall have no independent containment relationship to the spatial structure.</p>
+
+<p>The local placement for <em>IfcPort</em> is defined in its supertype <em>IfcProduct</em>. It is defined by the <em>IfcLocalPlacement</em>, which defines the local coordinate system that is referenced by all geometric representations. The <em>PlacementRelTo</em> relationship of <em>IfcLocalPlacement</em> shall point to the local placement of the master <em>IfcElement</em> or <em>IfcElementType</em> (relevant subtypes), which is related to the <em>IfcPort</em> by the relationship object <em>IfcRelNests</em> for fixed ports, or <em>IfcRelConnectsPortToElement</em> for dynamic ports.</p>
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC2x2.
+</blockquote>

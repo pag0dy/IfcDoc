@@ -1,0 +1,3 @@
+﻿NOT EXISTS(PredefinedType) OR
+(PredefinedType <> IfcPileTypeEnum.USERDEFINED) OR
+((PredefinedType = IfcPileTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcObject.ObjectType))

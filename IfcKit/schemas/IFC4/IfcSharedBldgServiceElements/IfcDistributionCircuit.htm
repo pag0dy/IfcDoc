@@ -1,0 +1,23 @@
+﻿<p>
+A distribution circuit is a partition of a distribution system that is conditionally switched such as an electrical circuit.
+</p>
+
+<blockquote class="history">HISTORY&nbsp; New entity in IFC4.</blockquote>
+
+<blockquote class="change-ifc2x4">
+IFC4 CHANGE&nbsp; For electrical power systems, <em>IfcElectricalCircuit</em> has been used for low-voltage (12-1000 V) power circuits and has been replaced by <em>IfcDistributionCircuit</em> in IFC4; <em>IfcDistributionSystem</em> with PredefinedType 'ELECTRICAL' should be used for overall power systems, and <em>IfcDistributionCircuit</em> with PredefinedType 'ELECTRICAL' should be used for each switched circuit.
+</blockquote>
+
+
+<p><b><u>Composition Use Definition</u></b></p>
+
+<p>An <em>IfcDistributionCircuit</em> may aggregate an <em>IfcDistributionSystem</em> using the <em>IfcRelAggregates</em> relationship where <em>RelatingObject</em> refers to the <em>IfcDistributionSystem</em> and <em>RelatedObjects</em> includes one or more <em>IfcDistributionCircuit</em> groups.
+
+<p>An <em>IfcDistributionCircuit</em> may be aggregated into sub-circuits using the <em>IfcRelAggregates</em> relationship where <em>RelatingObject</em> refers to the parent <em>IfcDistributionCircuit</em> and <em>RelatedObjects</em> refers to one or more <em>IfcDistributionCircuit</em> sub-circuits.</p>
+
+
+<p><b><u>Assignment Use Definition</u></b></p>
+
+<p>An <em>IfcDistributionCircuit</em> should be assigned to an <em>IfcDistributionPort</em> on an <em>IfcFlowController</em> element indicating the host or origination of the system using the <em>IfcRelAssignsToProduct</em> relationship.</p>
+
+<p>Each device whose operation is conditional based upon the state of the circuit is assigned to the <em>IfcDistributionCircuit</em> via the <em>IfcRelAssignsToGroup</em> relationship.  An <em>IfcDistributionElement</em> may belong to multiple systems or circuits, however only one <em>IfcDistributionSystem</em> or <em>IfcDistributionCircuit</em> of a particular <em>PredefinedType</em>.</p>

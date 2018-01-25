@@ -68,7 +68,7 @@ namespace IfcDoc
             }
         }
 
-        public SEntity CurrentInstance
+        public object CurrentInstance
         {
             get
             {

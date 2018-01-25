@@ -1,0 +1,54 @@
+﻿<p>An <em>IfcFixedReferenceSweptAreaSolid</em> is a type of swept area solid which is the result of sweeping an area along a
+<em>Directrix</em>. The swept area is provided by a subtype of <em>IfcProfileDef</em>. The profile is placed
+by an implicit cartesian transformation operator at the start point of the sweep, where the profile normal agrees
+to the tangent of the directrix at this point, and the profile's x-axis agrees to the <em>FixedReference</em> direction. The orientation of the curve during the sweeping operation is controlled by the <em>FixedReference</em> direction.</p>
+
+<p>The <em>SweptArea</em> is swept along the <em>Directrix</em> in such a way that the origin of the local coordinate system 
+used to define the <em>SweptArea</em> is on the <em>Directrix</em> and the local X axis is in the direction of the projection of
+<em>FixedReference</em> onto the normal plane to the directrix at this point. The resulting solid has the property that
+the cross section of the surface by the normal plane to the <em>Directrix</em> at any point is a copy of the
+<em>SweptArea</em>. The resulting swept solid is placed by the <em>Position</em> coordinate system.</p>
+
+<p>The <em>Directrix</em> and the <em>ReferenceSurface</em> are positioned within the object coordinate system. The start
+of the sweeping operation is at the <em>StartParam</em>, the parameter value is provided based on the curve parameterization.
+If no <em>StartParam</em> is provided the start defaults to the begin of the directrix. The end of the sweeping operation is 
+at the <em>EndParam</em>, the parameter value is provided based on the curve parameterization. If no <em>EndParam</em> is provided 
+the end defaults to the end of the directrix.</p>
+
+<blockquote class="note">NOTE&nbsp; The <em>StartParam</em> and the <em>EndParam</em> are not normalized by default, they depend
+upon the parameterization of the curve. However using the <em>IfcReparametrisedCompositeCurveSegment</em> within an 
+<em>IfcCompositeCurve</em> as the directrix allows to explicitly reparameterize the underlying sweeping curve.
+</blockquote>
+
+<blockquote class="example">
+EXAMPLE&nbsp; The reference surface is any surface (plane, cylindric, composite) situated in 3D space and positioned in the object 
+coordinate system. In many cases, it is a surface of extrusion. The directrix lies on the surface, often defined as a p-curve at
+this reference surface. At any point of the directrix, a plane can be constructed. The origin of the position coordinate system
+lies at the directrix. The Axis3 (the z-axis, or normal) of the position coordinate system is identical to the tangent of the directrix at this point, the Axis1 (the x axis, or u) of the position coordinate system is identical to the <em>FixedReference</em> 
+direction. The Axis2 (the y axis, or v) is constructed. In this case the resulting swept solid is not repositioned.
+</blockquote>
+
+<p>The orientation of the <em>SweptArea</em> as it sweeps along the <em>Directrix</em> is precisely defined by a
+<em>CartesianTransformationOperator3d</em> with attributes:</p>
+<ul>
+<li><em>LocalOrigin</em> as point (0; 0; 0),</li>
+<li><em>Axis1</em> as the <em>FixedReference</em>.</li>
+<li><em>Axis3</em> as the direction of the tangent vector <b>t</b> at the point of the <em>Directrix</em> with
+parameter <b>u</b>.</li>
+</ul>
+<p>The remaining attributes are defaulted to define a corresponding transformation matrix <b>T(u)</b>, which varies
+with the <em>Directrix</em> parameter <b>u</b>.</p>
+
+<blockquote class="note">NOTE&nbsp; The geometric shape of the solid is not dependent upon the curve parameterization;
+the volume depends upon the area swept and the length of the <em>Directrix</em>.</blockquote>
+
+<blockquote class="note">NOTE&nbsp; Entity adapted from <strong>fixed_reference_swept_surface</strong> defined in
+ISO 10303-42.</blockquote>
+<blockquote class="history">HISTORY&nbsp; New entity in IFC4.</blockquote>
+<p class="spec-head">Informal Propositions:</p>
+<ol>
+<li>The <em>SweptArea</em> shall lie in the plane z = 0.</li>
+<li>The <em>FixedReference</em> shall not be parallel to a tangent vector to the directrix at any point along this
+curve.</li>
+<li>The <em>Directrix</em> curve shall be tangent continuous.</li>
+</ol>

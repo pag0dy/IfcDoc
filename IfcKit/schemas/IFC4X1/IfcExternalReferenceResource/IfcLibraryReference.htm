@@ -1,0 +1,10 @@
+﻿<p>An <em>IfcLibraryReference</em> is a reference into a library of information by <em>Location</em> (provided as a URI). It also provides an optional inherited <em>Identification</em> key to allow more specific references to library sections or tables. The inherited <em>Name</em> attribute allows for a human interpretable identification of the library item. Also, general information on the library from which the reference is taken, is given by the <em>ReferencedLibrary</em> relation which identifies the relevant occurrence of <em>IfcLibraryInformation</em>.</p>
+
+<p>The <em>ifcLibraryReference</em> additionally provides the capability to handle multilingual library entries. The <em>Language</em> attribute then holds the language tag for the language used by the strings kept in the <em>Name</em> and the <em>Description</em> attribute.</p>
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC2.0.
+</blockquote>
+<blockquote class="change-ifc2x4">
+IFC4 CHANGE&nbsp; <em>Description</em> and <em>Language</em> attribute added; <em>ReferencedLibrary</em> attribute added (reversing previous ReferenceIntoLibrary inverse relationship).
+</blockquote>

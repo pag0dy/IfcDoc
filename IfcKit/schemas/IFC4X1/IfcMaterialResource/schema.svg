@@ -1,0 +1,752 @@
+<?xml version="1.0"?>
+<svg xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="1.1" width="3000" height="888" xmlns="http://www.w3.org/2000/svg">
+  <g id="IfcMaterial" fill="yellow">
+    <rect x="259.93455375" y="567.888075" width="151.301775" height="117.518985" stroke="black" />
+    <text x="335.58544125" y="626.6475675" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcMaterial</text>
+    <g id="Name">
+      <polyline points="411.236325,585.209625 481.34373,585.209625 " fill="none" stroke="black" />
+      <text x="434.335639875" y="579.6239955" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">Name</text>
+    </g>
+    <g id="Description">
+      <polyline points="411.236325,626.206575 481.35511125,626.206575 " fill="none" stroke="black" stroke-dasharray="1,1" />
+      <text x="445.00926405" y="620.631940875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">Description</text>
+    </g>
+    <g id="Category">
+      <polyline points="411.236325,665.077275 481.35908625,665.077275 " fill="none" stroke="black" stroke-dasharray="1,1" />
+      <text x="440.7230715" y="660.092265375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">Category</text>
+    </g>
+    <g id="HasRepresentation">
+      <polyline points="277.6950075,685.407075 277.6950075,717.534511875 71.911935,717.534511875 71.911935,687.692062875 " fill="none" stroke="black" />
+      <text x="170.55818925" y="729.6215701875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">HasRepresentation S[0:1]</text>
+    </g>
+    <g id="IsRelatedWith">
+      <polyline points="351.6603225,772.8018 351.6603225,685.40704875 " fill="none" stroke="black" />
+      <text x="291.08688" y="718.621353375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IsRelatedWith S[0:?]</text>
+    </g>
+    <g id="RelatesTo">
+      <polyline points="383.8216875,772.8018 383.8216875,685.40704875 " fill="none" stroke="black" />
+      <text x="440.10115875" y="717.54930825" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">RelatesTo S[0:1]</text>
+    </g>
+  </g>
+  <g id="IfcMaterialClassificationRelationship" fill="yellow">
+    <rect x="2593.3613625" y="689.0812875" width="142.16430375" height="66.44521875" stroke="black" />
+    <text x="2664.443514375" y="722.303896875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcMaterialClassificationRelationship</text>
+    <g id="MaterialClassifications">
+      <polyline points="2664.4435125,755.526525 2664.4435125,785.7279915 2871.2403675,785.7279915 2871.2403675,774.40448325 " fill="none" stroke="black" />
+      <text x="2780.593364625" y="814.204050375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">MaterialClassifications S[1:?]</text>
+    </g>
+    <g id="ClassifiedMaterial">
+      <polyline points="2636.5703625,755.526525 2636.5703625,804.70263 " fill="none" stroke="black" />
+      <text x="2594.76059625" y="788.117943" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">ClassifiedMaterial</text>
+    </g>
+  </g>
+  <g id="IfcMaterialConstituent" fill="yellow">
+    <rect x="1900.70775" y="229.52164125" width="171.48405375" height="177.8625" stroke="black" />
+    <text x="1986.449776875" y="318.45289125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcMaterialConstituent</text>
+    <g id="Name">
+      <polyline points="2072.1918,247.6979175 2216.957655,247.6979175 " fill="none" stroke="black" stroke-dasharray="1,1" />
+      <text x="2110.26928575" y="243.409737375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">Name</text>
+    </g>
+    <g id="Description">
+      <polyline points="2072.1918,283.0754025 2216.957655,283.0754025 " fill="none" stroke="black" stroke-dasharray="1,1" />
+      <text x="2120.98973625" y="278.787222375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">Description</text>
+    </g>
+    <g id="Material">
+      <polyline points="2072.1918,320.59698 2216.95099875,320.59698 " fill="none" stroke="black" />
+      <text x="2113.482092625" y="316.308799875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">Material</text>
+    </g>
+    <g id="Fraction">
+      <polyline points="2072.1918,359.19060375 2216.94879,359.19060375 " fill="none" stroke="black" stroke-dasharray="1,1" />
+      <text x="2112.408943125" y="354.902423625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">Fraction</text>
+    </g>
+    <g id="Category">
+      <polyline points="2072.1918,395.64015 2216.94879,395.64015 " fill="none" stroke="black" stroke-dasharray="1,1" />
+      <text x="2114.553033375" y="391.351969875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">Category</text>
+    </g>
+    <g id="ToMaterialConstituentSet">
+      <polyline points="1921.5938625,134.5317 1921.5938625,229.52164125 " fill="none" stroke="black" />
+      <text x="1997.17963125" y="164.304976875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">ToMaterialConstituentSet</text>
+    </g>
+  </g>
+  <g id="IfcMaterialConstituentSet" fill="yellow">
+    <rect x="1899.6445875" y="62.7678375" width="173.62814625" height="71.76385875" stroke="black" />
+    <text x="1986.458660625" y="98.649766875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcMaterialConstituentSet</text>
+    <g id="Name">
+      <polyline points="2073.2727375,78.2809125 2215.8504,78.2809125 " fill="none" stroke="black" stroke-dasharray="1,1" />
+      <text x="2111.32817175" y="72.92068725" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">Name</text>
+    </g>
+    <g id="Description">
+      <polyline points="2073.2727375,113.6583975 2215.8504,113.6583975 " fill="none" stroke="black" stroke-dasharray="1,1" />
+      <text x="2122.048622625" y="110.4422623125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">Description</text>
+    </g>
+    <g id="MaterialConstituents">
+      <polyline points="1921.5938625,134.5317 1921.5938625,229.52164125 " fill="none" stroke="black" stroke-dasharray="1,1" />
+      <text x="1991.81940375" y="194.9227905" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">MaterialConstituents S[1:?]</text>
+    </g>
+  </g>
+  <g id="IfcMaterialDefinition" fill="yellow">
+    <rect x="263.66094" y="292.8712425" width="142.53883875" height="46.07635875" stroke="black" />
+    <polyline points="263.66094,315.90942375 240.422230875,315.90942375 " fill="none" stroke="black" stroke-width="3" />
+    <polyline points="240.422230875,315.90942375 240.42223125,407.42625 121.4274225,407.42625 " fill="none" stroke="black" stroke-width="3" />
+    <polyline points="240.422230875,315.90942375 240.42223125,626.647575 259.934552625,626.647575 " fill="none" stroke="black" stroke-width="3" />
+    <polyline points="240.422230875,315.90942375 240.42223125,441.903975 137.9377725,441.903975 " fill="none" stroke="black" stroke-width="3" />
+    <polyline points="240.422230875,315.90942375 240.42223125,476.4279375 124.04731875,476.4279375 " fill="none" stroke="black" stroke-width="3" />
+    <polyline points="240.422230875,315.90942375 240.42223125,510.9173625 159.29731875,510.9173625 " fill="none" stroke="black" stroke-width="3" />
+    <polyline points="240.422230875,315.90942375 240.42223125,545.3823375 145.4091375,545.3823375 " fill="none" stroke="black" stroke-width="3" />
+    <polyline points="240.422230875,315.90942375 240.42223125,372.07140375 135.281865,372.07140375 " fill="none" stroke="black" stroke-width="3" />
+    <text x="334.930359375" y="315.909421875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcMaterialDefinition</text>
+    <g id="AssociatedTo">
+      <polyline points="370.36290375,292.8712425 370.36290375,102.54702 438.5143875,102.54702 " fill="none" stroke="black" />
+      <text x="400.60986" y="49.9532775" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">AssociatedTo S[0:?]</text>
+    </g>
+    <g id="HasExternalReferences">
+      <polyline points="406.199775,324.2389875 421.466737875,324.2389875 421.466737875,383.34895875 " fill="none" stroke="black" />
+      <text x="517.0679105625" y="342.390007875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">HasExternalReferences S[0:?]</text>
+    </g>
+    <g id="HasProperties">
+      <polyline points="386.3647875,292.8712425 386.3647875,219.42536625 459.797715,219.42536625 " fill="none" stroke="black" />
+      <text x="423.6194314875" y="235.506043125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">HasProperties S[0:?]</text>
+    </g>
+  </g>
+  <g id="IfcMaterialLayer" fill="yellow">
+    <rect x="679.0605375" y="461.027625" width="108.4182" height="254.58912375" stroke="black" />
+    <text x="733.2696375" y="588.322186875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcMaterialLayer</text>
+    <g id="Material">
+      <polyline points="787.4787375,474.423075 944.7724125,474.423075 " fill="none" stroke="black" stroke-dasharray="1,1" />
+      <text x="852.10311675" y="471.2080186875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">Material</text>
+    </g>
+    <g id="LayerThickness">
+      <polyline points="787.4787375,513.2790375 946.653225,513.2790375 " fill="none" stroke="black" />
+      <text x="870.2821164375" y="510.0629023125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">LayerThickness</text>
+    </g>
+    <g id="IsVentilated">
+      <polyline points="787.4787375,550.6518 944.78913,550.6518 " fill="none" stroke="black" stroke-dasharray="1,1" />
+      <text x="858.62745975" y="546.445871625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IsVentilated</text>
+    </g>
+    <g id="Name">
+      <polyline points="787.4787375,586.41015 944.78685,586.41015 " fill="none" stroke="black" stroke-dasharray="1,1" />
+      <text x="847.36984575" y="582.378393375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">Name</text>
+    </g>
+    <g id="Description">
+      <polyline points="787.4787375,620.323275 944.807925,620.323275 " fill="none" stroke="black" stroke-dasharray="1,1" />
+      <text x="859.326827625" y="616.580887425" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">Description</text>
+    </g>
+    <g id="Category">
+      <polyline points="787.4787375,654.99375 944.80005,654.99375 " fill="none" stroke="black" stroke-dasharray="1,1" />
+      <text x="854.612750625" y="651.688583475" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">Category</text>
+    </g>
+    <g id="Priority">
+      <polyline points="787.4787375,700.643926458008 787.4787375,700.643926458008 946.771423339845,700.643926458008 " fill="none" stroke="black" stroke-dasharray="1,1" />
+      <text x="867.125080419923" y="693.143926458008" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">Priority</text>
+    </g>
+    <g id="ToMaterialLayerSet">
+      <polyline points="731.202825,381.1729875 731.202825,461.02761375 " fill="none" stroke="black" />
+      <text x="671.1683025" y="437.441435625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">ToMaterialLayerSet</text>
+    </g>
+  </g>
+  <g id="IfcMaterialLayerSet" fill="yellow">
+    <rect x="653.5011375" y="290.07074625" width="133.96248" height="91.1022525" stroke="black" />
+    <text x="720.4823775" y="335.6218725" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcMaterialLayerSet</text>
+    <g id="MaterialLayers">
+      <polyline points="731.202825,381.1729875 731.202825,461.02761375 " fill="none" stroke="black" />
+      <text x="676.03113375" y="419.217856125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">MaterialLayers L[1:?]</text>
+    </g>
+    <g id="LayerSetName">
+      <polyline points="787.4635875,300.74691375 962.7717075,300.74691375 " fill="none" stroke="black" stroke-dasharray="1,1" />
+      <text x="866.541286875" y="296.458733625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">LayerSetName</text>
+    </g>
+    <g id="Description">
+      <polyline points="787.4635875,335.6218725 962.77829625,335.6218725 " fill="none" stroke="black" stroke-dasharray="1,1" />
+      <text x="853.680040875" y="331.333692375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">Description</text>
+    </g>
+    <g id="TotalThickness">
+      <polyline points="787.4635875,371.51592375 962.77829625,371.51592375 " fill="none" stroke="black" />
+      <text x="881.55321225" y="367.227743625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">TotalThickness</text>
+    </g>
+  </g>
+  <g id="IfcMaterialLayerSetUsage" fill="yellow">
+    <rect x="624.3801" y="62.7416625" width="163.10073375" height="87.35009625" stroke="black" />
+    <text x="705.930466875" y="106.416710625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcMaterialLayerSetUsage</text>
+    <g id="ForLayerSet">
+      <polyline points="705.93045,150.09175875 705.93045,290.07074625 " fill="none" stroke="black" />
+      <text x="739.250873625" y="219.3157725375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">ForLayerSet</text>
+    </g>
+    <g id="LayerSetDirection">
+      <polyline points="787.4808375,77.3486475 962.74516875,77.3486475 " fill="none" stroke="black" />
+      <text x="856.466218875" y="74.38300605" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">LayerSetDirection</text>
+    </g>
+    <g id="DirectionSense">
+      <polyline points="787.4808375,107.149065 962.73515625,107.149065 " fill="none" stroke="black" />
+      <text x="850.7166405" y="104.2666666125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">DirectionSense</text>
+    </g>
+    <g id="OffsetFromReferenceLine">
+      <polyline points="787.4808375,140.06908875 962.71621875,140.06908875 " fill="none" stroke="black" />
+      <text x="871.8834718875" y="137.260364475" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">OffsetFromReferenceLine</text>
+    </g>
+    <g id="ReferenceExtent">
+      <polyline points="764.4297,150.09175875 764.4297,184.1399775 962.72281125,184.1399775 " fill="none" stroke="black" stroke-dasharray="1,1" />
+      <text x="854.196940125" y="197.00451825" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">ReferenceExtent</text>
+    </g>
+  </g>
+  <g id="IfcMaterialLayerWithOffsets" fill="yellow">
+    <rect x="667.3000125" y="781.6355625" width="120.17817" height="77.16567" stroke="black" />
+    <text x="727.3890975" y="820.2183975" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcMaterialLayerWithOffsets</text>
+    <g id="OffsetDirection">
+      <polyline points="787.4782125,801.58395 937.293375,801.58395 " fill="none" stroke="black" />
+      <text x="838.8008025" y="797.295769875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">OffsetDirection</text>
+    </g>
+    <g id="OffsetValues">
+      <polyline points="787.4782125,839.5992 937.299975,839.5992 " fill="none" stroke="black" />
+      <text x="852.740688375" y="836.3830648125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">OffsetValues</text>
+    </g>
+  </g>
+  <g id="IfcMaterialList" fill="yellow">
+    <rect x="2446.090875" y="688.866" width="112.68137625" height="37.5" stroke="black" />
+    <text x="2502.431563125" y="707.616" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcMaterialList</text>
+    <g id="Materials">
+      <polyline points="2468.1261,726.366 2468.1261,804.67275 " fill="none" stroke="black" />
+      <text x="2508.8638125" y="749.4149685" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">Materials L[1:?]</text>
+    </g>
+  </g>
+  <g id="IfcMaterialProfile" fill="yellow">
+    <rect x="1276.212225" y="481.9132125" width="151.24362375" height="177.8970225" stroke="black" />
+    <text x="1351.834036875" y="570.86172375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcMaterialProfile</text>
+    <g id="Name">
+      <polyline points="1427.455875,574.554825 1529.53402875,574.554825 " fill="none" stroke="black" stroke-dasharray="1,1" />
+      <text x="1467.774501375" y="569.19459975" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">Name</text>
+    </g>
+    <g id="Description">
+      <polyline points="1427.455875,608.7448875 1529.54718375,608.7448875 " fill="none" stroke="black" stroke-dasharray="1,1" />
+      <text x="1476.3574390875" y="606.6007974" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">Description</text>
+    </g>
+    <g id="Material">
+      <polyline points="1427.455875,500.5234125 1529.54944875,500.5234125 " fill="none" stroke="black" stroke-dasharray="1,1" />
+      <text x="1470.998346375" y="495.16318725" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">Material</text>
+    </g>
+    <g id="Profile">
+      <polyline points="1427.455875,535.8242625 1645.62561375,535.8242625 " fill="none" stroke="black" />
+      <text x="1577.508830625" y="531.536082375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">Profile</text>
+    </g>
+    <g id="Priority">
+      <polyline points="1276.212225,659.810235 1276.212225,700.643926458008 1127.14642333985,700.643926458008 " fill="none" stroke="black" stroke-dasharray="1,1" />
+      <text x="1201.67932416992" y="713.560772187011" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">Priority</text>
+    </g>
+    <g id="Category">
+      <polyline points="1427.455875,641.211825 1529.52286875,641.211825 " fill="none" stroke="black" stroke-dasharray="1,1" />
+      <text x="1472.615734125" y="637.7120642625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">Category</text>
+    </g>
+    <g id="ToMaterialProfileSet">
+      <polyline points="1348.3398,372.31714875 1348.3398,481.913205 " fill="none" stroke="black" />
+      <text x="1412.77674" y="451.62037725" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">ToMaterialProfileSet</text>
+    </g>
+  </g>
+  <g id="IfcMaterialProfileSet" fill="yellow">
+    <rect x="1276.19955" y="300.5339175" width="151.24887375" height="71.78323125" stroke="black" />
+    <text x="1351.823986875" y="336.425533125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcMaterialProfileSet</text>
+    <g id="Name">
+      <polyline points="1427.44845,313.34332875 1528.47225,313.34332875 " fill="none" stroke="black" stroke-dasharray="1,1" />
+      <text x="1491.896935875" y="305.83901325" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">Name</text>
+    </g>
+    <g id="Description">
+      <polyline points="1427.44845,350.17645875 1477.9746675,350.17645875 1477.9746675,350.3510821725 1528.500885,350.3510821725 " fill="none" stroke="black" stroke-dasharray="1,1" />
+      <text x="1484.676034875" y="344.90354521125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">Description</text>
+    </g>
+    <g id="MaterialProfiles">
+      <polyline points="1348.3398,372.31714875 1348.3398,481.913205 " fill="none" stroke="black" />
+      <text x="1404.20038125" y="434.207197125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">MaterialProfiles L[1:?]</text>
+    </g>
+    <g id="CompositeProfile">
+      <polyline points="1402.210125,372.31717125 1402.210125,398.9715765 1643.47642875,398.9715765 " fill="none" stroke="black" stroke-dasharray="1,1" />
+      <text x="1507.13046525" y="405.140040375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">CompositeProfile</text>
+    </g>
+  </g>
+  <g id="IfcMaterialProfileSetUsage" fill="yellow">
+    <rect x="1278.8596125" y="98.3890875" width="163.0756575" height="66.4372875" stroke="black" />
+    <text x="1360.39744125" y="131.60773125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcMaterialProfileSetUsage</text>
+    <g id="ForProfileSet">
+      <polyline points="1351.821075,164.826375 1351.821075,300.53391375 " fill="none" stroke="black" />
+      <text x="1387.059963" y="251.605018125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">ForProfileSet</text>
+    </g>
+    <g id="CardinalPoint">
+      <polyline points="1353.4128375,98.3890875 1353.4128375,50.40967875 1499.66824125,50.40967875 " fill="none" stroke="black" stroke-dasharray="1,1" />
+      <text x="1399.81814625" y="22.416497625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">CardinalPoint</text>
+    </g>
+    <g id="ReferenceExtent">
+      <polyline points="1384.5787125,164.826375 1384.5787125,204.50679375 1500.893445,204.50679375 " fill="none" stroke="black" stroke-dasharray="1,1" />
+      <text x="1433.892786" y="217.37133375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">ReferenceExtent</text>
+    </g>
+  </g>
+  <g id="IfcMaterialProfileSetUsageTapering" fill="yellow">
+    <rect x="1499.6361" y="98.3568675" width="221.32336125" height="66.445215" stroke="black" />
+    <text x="1610.297780625" y="131.579475" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcMaterialProfileSetUsageTapering</text>
+    <g id="ForProfileEndSet">
+      <polyline points="1713.052425,164.8020825 1713.052425,260.50699875 1402.21009875,260.50699875 1402.21009875,300.53391 " fill="none" stroke="black" />
+      <text x="1584.0791895" y="322.115883375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">ForProfileEndSet</text>
+    </g>
+    <g id="CardinalEndPoint">
+      <polyline points="1540.6302,98.3568675 1540.6302,64.60888125 " fill="none" stroke="black" stroke-dasharray="1,1" />
+      <text x="1589.91398625" y="88.046461875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">CardinalEndPoint</text>
+    </g>
+  </g>
+  <g id="IfcMaterialProfileWithOffsets" fill="yellow">
+    <rect x="1274.2564875" y="770.486325" width="105.01726125" height="60.012945" stroke="black" />
+    <text x="1326.765118125" y="800.4927975" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcMaterialProfileWithOffsets</text>
+    <g id="OffsetValues">
+      <polyline points="1379.2737375,800.492775 1637.6322825,800.492775 " fill="none" stroke="black" />
+      <text x="1503.09278475" y="796.204594875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">OffsetValues</text>
+    </g>
+  </g>
+  <g id="IfcMaterialProperties" fill="yellow">
+    <rect x="1902.1798875" y="587.75625" width="154.32702" height="70.73339625" stroke="black" />
+    <text x="1979.3433975" y="623.122948125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcMaterialProperties</text>
+    <g id="Material">
+      <polyline points="2056.5069,637.0837125 2215.8308475,637.0837125 " fill="none" stroke="black" />
+      <text x="2095.43116125" y="633.8675773125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">Material</text>
+    </g>
+  </g>
+  <g id="IfcMaterialRelationship" fill="yellow">
+    <rect x="261.3675" y="772.8018" width="146.28020625" height="50.36454" stroke="black" />
+    <text x="334.507603125" y="797.98407" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcMaterialRelationship</text>
+    <g id="RelatingMaterial">
+      <polyline points="383.8216875,772.8018 383.8216875,685.40704875 " fill="none" stroke="black" />
+      <text x="424.02048" y="746.51361675" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">RelatingMaterial</text>
+    </g>
+    <g id="RelatedMaterials">
+      <polyline points="351.6603225,772.8018 351.6603225,685.40704875 " fill="none" stroke="black" />
+      <text x="297.51915" y="745.977594" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">RelatedMaterials S[1:?]</text>
+    </g>
+    <g id="Expression">
+      <polyline points="407.647725,796.01835 479.3270175,796.01835 " fill="none" stroke="black" stroke-dasharray="1,1" />
+      <text x="438.127146" y="791.730169875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">Expression</text>
+    </g>
+  </g>
+  <g id="IfcMaterialUsageDefinition" fill="yellow">
+    <rect x="14.946486375" y="151.3481175" width="159.69156" height="46.07635875" stroke="black" />
+    <polyline points="30.72180975,197.42447625 30.72180975,250.76842875 " fill="none" stroke="black" stroke-width="3" />
+    <polyline points="30.72180975,250.76842875 127.42059375,250.76842875 127.42059375,267.662848125 " fill="none" stroke="black" stroke-width="3" />
+    <polyline points="30.72180975,250.76842875 30.713579625,250.76842875 30.713579625,308.77384875 " fill="none" stroke="black" stroke-width="3" />
+    <text x="94.792266375" y="174.386296875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcMaterialUsageDefinition</text>
+    <g id="AssociatedTo">
+      <polyline points="31.060639875,151.3481175 31.060639875,38.4784575 438.514377375,38.4784575 " fill="none" stroke="black" />
+      <text x="302.326347375" y="105.313714125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">AssociatedTo S[1:?]</text>
+    </g>
+  </g>
+  <g id="IfcCardinalPointReference" fill="green">
+    <rect x="1499.6682375" y="36.210473625" width="152.1386025" height="28.3984065" stroke="black" />
+    <text x="1575.73753875" y="50.409676875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcCardinalPointReference</text>
+  </g>
+  <g id="IfcDirectionSenseEnum" fill="green">
+    <rect x="962.735175" y="94.91619" width="135.33813" height="23.895816375" stroke="black" />
+    <text x="1030.40424" y="106.8640981875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcDirectionSenseEnum</text>
+  </g>
+  <g id="IfcLayerSetDirectionEnum" fill="green">
+    <rect x="962.7451875" y="59.699505" width="143.90994" height="29.04163275" stroke="black" />
+    <text x="1034.7001575" y="74.220321375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcLayerSetDirectionEnum</text>
+  </g>
+  <g id="IfcMaterialSelect" fill="green">
+    <rect x="151.259595" y="76.8897525" width="121.47639" height="42.76381125" stroke="black" />
+    <polyline points="211.99779,119.65356375 211.99779,131.748682875 " fill="none" stroke="black" />
+    <polyline points="211.99779,131.748682875 110.8729425,131.7486825 110.8729425,151.348117125 " fill="none" stroke="black" />
+    <polyline points="211.99779,131.748682875 305.9851425,131.7486825 305.9851425,292.87124625 " fill="none" stroke="black" />
+    <polyline points="211.99779,131.748682875 245.99113125,131.7486825 245.99113125,151.041178125 " fill="none" stroke="black" />
+    <text x="211.99779" y="98.271658125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcMaterialSelect</text>
+  </g>
+  <g id="INTEGER" fill="grey">
+    <rect x="1681.7658375" y="39.426615" width="64.44704625" height="19.822045125" stroke="black" />
+    <text x="1713.989360625" y="49.3376375625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">INTEGER</text>
+  </g>
+  <g id="INTEGER" fill="grey">
+    <rect x="1681.7658375" y="39.426615" width="64.44704625" height="19.822045125" stroke="black" />
+    <text x="1713.989360625" y="49.3376375625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">INTEGER</text>
+  </g>
+  <g id="IFCPROPERTYRESOURCE">
+    <g id="IfcPropertySingleValue" />
+    <g id="IfcPropertyBoundedValue" />
+    <g id="IfcPropertyTableValue" />
+    <g id="IfcExtendedProperties" fill="grey">
+      <rect x="1902.1800375" y="468.0007125" width="154.35956625" height="85.46862375" stroke="black" />
+      <polyline points="1979.3598375,553.469325 1979.3598375,570.612781125 1979.34341732475,570.612781125 1979.34341732475,587.75623725 " fill="none" stroke="black" stroke-width="3" />
+      <text x="1979.359820625" y="510.735024375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCPROPERTYRESOURCE
+IfcExtendedProperties</text>
+    </g>
+  </g>
+  <g id="IFCMEASURERESOURCE">
+    <g id="IfcLengthMeasure" fill="grey">
+      <rect x="2729.42805" y="63.51376125" width="152.5064475" height="85.89980625" stroke="black" />
+      <text x="2805.68127375" y="106.463664375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCMEASURERESOURCE
+IfcLengthMeasure</text>
+    </g>
+    <g id="IfcPositiveLengthMeasure" fill="grey">
+      <rect x="2479.188" y="522.7259625" width="148.5" height="86.25" stroke="black" />
+      <text x="2553.438" y="565.8509625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCMEASURERESOURCE
+IfcPositiveLengthMeasure</text>
+    </g>
+    <g id="IfcLogical" fill="grey">
+      <rect x="2479.2130875" y="374.56132875" width="149.741205" height="85.19226" stroke="black" />
+      <text x="2554.08369" y="417.15745875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCMEASURERESOURCE
+IfcLogical</text>
+    </g>
+    <g id="IfcLabel" fill="grey">
+      <rect x="2479.1608875" y="219.90020625" width="152.423715" height="85.98516375" stroke="black" />
+      <text x="2555.372745" y="262.892788125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCMEASURERESOURCE
+IfcLabel</text>
+    </g>
+    <g id="IfcSiUnit" />
+    <g id="IfcText" fill="grey">
+      <rect x="2724.50685" y="374.58105" width="162.38245875" height="85.16839125" stroke="black" />
+      <text x="2805.698079375" y="417.165245625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCMEASURERESOURCE
+IfcText</text>
+    </g>
+    <g id="IfcNormalisedRatioMeasure" fill="grey">
+      <rect x="2479.1818875" y="63.49782" width="151.29681" height="85.89179625" stroke="black" />
+      <text x="2554.8302925" y="106.443718125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCMEASURERESOURCE
+IfcNormalisedRatioMeasure</text>
+    </g>
+    <g id="IfcNonNegativeLengthMeasure" fill="grey">
+      <rect x="2724.7366125" y="219.92317875" width="161.94704625" height="86.01975" stroke="black" />
+      <text x="2805.710135625" y="262.93305375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCMEASURERESOURCE
+IfcNonNegativeLengthMeasure</text>
+    </g>
+    <g id="IfcInteger" fill="grey">
+      <rect x="946.771423339845" y="685.110061645508" width="180.375" height="31.067729625" stroke="black" />
+      <text x="1036.95892333985" y="700.643926458008" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCMEASURERESOURCE
+IfcInteger</text>
+    </g>
+  </g>
+  <g id="IFCREPRESENTATIONRESOURCE">
+    <g id="IfcMaterialDefinitionRepresentation" fill="grey">
+      <rect x="14.931785625" y="570.20775" width="206.156175" height="117.48428625" stroke="black" />
+      <text x="118.009873125" y="628.949893125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCREPRESENTATIONRESOURCE
+IfcMaterialDefinitionRepresentation</text>
+    </g>
+  </g>
+  <g id="IFCEXTERNALREFERENCERESOURCE">
+    <g id="IfcClassificationSelect" fill="grey">
+      <rect x="2763.624975" y="689.187675" width="215.230845" height="85.2167925" stroke="black" />
+      <text x="2871.2403975" y="731.79607125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCEXTERNALREFERENCERESOURCE
+IfcClassificationSelect</text>
+    </g>
+    <g id="IfcClassificationReference" />
+    <g id="IfcExternalReferenceRelationship" fill="grey">
+      <rect x="378.8701125" y="383.3489625" width="209.55046875" height="96.18907125" stroke="black" />
+      <text x="483.645346875" y="431.443498125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCEXTERNALREFERENCERESOURCE
+IfcExternalReferenceRelationship</text>
+    </g>
+    <g id="IfcResourceLevelRelationship" fill="grey">
+      <rect x="13.339056375" y="773.45475" width="209.5590975" height="85.46862375" stroke="black" />
+      <polyline points="222.898155,797.9643 242.1328275,797.9643 242.1328275,797.984063300625 261.3675,797.984063300625 " fill="none" stroke="black" stroke-width="3" />
+      <text x="118.118605125" y="816.189061875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCEXTERNALREFERENCERESOURCE
+IfcResourceLevelRelationship</text>
+    </g>
+  </g>
+  <g id="IFCPROFILERESOURCE">
+    <g id="IfcProfileDef" fill="grey">
+      <rect x="1645.625625" y="474.390975" width="141.96613875" height="99.67861125" stroke="black" />
+      <text x="1716.608694375" y="524.230280625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCPROFILERESOURCE
+IfcProfileDef</text>
+    </g>
+    <g id="IfcCompositeProfileDef" fill="grey">
+      <rect x="1643.476425" y="348.086895" width="142.21365" height="103.9667925" stroke="black" />
+      <text x="1714.58325" y="400.07029125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCPROFILERESOURCE
+IfcCompositeProfileDef</text>
+    </g>
+  </g>
+  <g id="IFCPRODUCTEXTENSION">
+    <g id="IfcRelAssociatesMaterial" fill="grey">
+      <rect x="438.5143875" y="21.346158" width="150.98456625" height="91.90089375" stroke="black" />
+      <text x="514.006670625" y="67.296604875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCPRODUCTEXTENSION
+IfcRelAssociatesMaterial</text>
+    </g>
+  </g>
+  <g id="IFCGEOMETRYRESOURCE" />
+  <g id="IFCPRESENTATIONAPPEARANCERESOURCE">
+    <g id="IfcNullStyle" />
+  </g>
+  <g id="2,1 IfcLayerSetDirectionEnum" fill="blue">
+    <rect x="1062.5949375" y="11.2801815" width="45.004785" height="31.87727475" rx="10" ry="10" stroke="black" />
+    <polyline points="1081.408875,43.15745625 1081.408875,59.69950725 " fill="none" stroke="black" />
+    <text x="1085.09733" y="27.218818875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcLayerSetDirectionEnum</text>
+    <g id="2,1 IfcLayerSetDirectionEnum" fill="silver">
+      <rect x="937.293375" y="786.575025" width="173.25" height="30.017729625" rx="10" ry="10" stroke="black" />
+      <text x="1023.918375" y="801.5838898125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcLayerSetDirectionEnum</text>
+    </g>
+  </g>
+  <g id="5,1 IfcPositiveLengthMeasure" fill="blue">
+    <rect x="2533.0755" y="473.499375" width="47.21908875" height="31.875" rx="10" ry="10" stroke="black" />
+    <polyline points="2556.68505,505.374375 2556.68505,522.725969625 " fill="none" stroke="black" />
+    <text x="2556.685044375" y="489.436875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">5,1 IfcPositiveLengthMeasure</text>
+    <g id="5,1 IfcPositiveLengthMeasure" fill="silver">
+      <rect x="962.7228375" y="169.1399775" width="147.375" height="30" rx="10" ry="10" stroke="black" />
+      <text x="1036.4103375" y="184.1399775" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">5,1 IfcPositiveLengthMeasure</text>
+    </g>
+    <g id="5,1 IfcPositiveLengthMeasure" fill="silver">
+      <rect x="1500.8934375" y="189.5067975" width="147.375" height="30" rx="10" ry="10" stroke="black" />
+      <text x="1574.5809375" y="204.5067975" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">5,1 IfcPositiveLengthMeasure</text>
+    </g>
+  </g>
+  <g id="5,2 IfcLogical" fill="blue">
+    <rect x="2532.3225375" y="327.18540375" width="45.004785" height="31.87727475" rx="10" ry="10" stroke="black" />
+    <polyline points="2554.8249375,359.06268 2554.8249375,374.5613295 " fill="none" stroke="black" />
+    <text x="2554.82493" y="343.124041125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">5,2 IfcLogical</text>
+    <g id="5,2 IfcLogical" fill="silver">
+      <rect x="944.7891375" y="534.4911" width="103.5" height="31.067729625" rx="10" ry="10" stroke="black" />
+      <text x="996.5391375" y="550.0249648125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">5,2 IfcLogical</text>
+    </g>
+  </g>
+  <g id="5,3 IfcLabel" fill="blue">
+    <rect x="2515.4439" y="176.81247375" width="78.74664375" height="31.87727475" rx="10" ry="10" stroke="black" />
+    <polyline points="2554.81725,208.68975 2554.81725,219.90020775 " fill="none" stroke="black" />
+    <text x="2554.817221875" y="192.751111125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">5,3 IfcLabel</text>
+    <g id="5,3 IfcLabel" fill="silver">
+      <rect x="481.359075" y="638.7724875" width="96.375" height="30.017729625" rx="10" ry="10" stroke="black" />
+      <text x="529.546575" y="653.7813523125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">5,3 IfcLabel</text>
+    </g>
+    <g id="5,3 IfcLabel" fill="silver">
+      <rect x="481.3437375" y="566.9454375" width="96.375" height="30.017729625" rx="10" ry="10" stroke="black" />
+      <text x="529.5312375" y="581.9543023125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">5,3 IfcLabel</text>
+    </g>
+    <g id="5,3 IfcLabel" fill="silver">
+      <rect x="479.3269875" y="783.520125" width="96.375" height="30" rx="10" ry="10" stroke="black" />
+      <text x="527.5144875" y="798.520125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">5,3 IfcLabel</text>
+    </g>
+    <g id="5,3 IfcLabel" fill="silver">
+      <rect x="944.78685" y="569.8873875" width="96.375" height="31.067729625" rx="10" ry="10" stroke="black" />
+      <text x="992.97435" y="585.4212523125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">5,3 IfcLabel</text>
+    </g>
+    <g id="5,3 IfcLabel" fill="silver">
+      <rect x="944.80005" y="640.6907625" width="96.375" height="31.067729625" rx="10" ry="10" stroke="black" />
+      <text x="992.98755" y="656.2246273125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">5,3 IfcLabel</text>
+    </g>
+    <g id="5,3 IfcLabel" fill="silver">
+      <rect x="962.7717" y="287.38847625" width="73.5" height="30" rx="10" ry="10" stroke="black" />
+      <text x="999.5217" y="302.38847625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">5,3 IfcLabel</text>
+    </g>
+    <g id="5,3 IfcLabel" fill="silver">
+      <rect x="1528.47225" y="297.8427" width="96.375" height="30.017729625" rx="10" ry="10" stroke="black" />
+      <text x="1576.65975" y="312.8515648125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">5,3 IfcLabel</text>
+    </g>
+    <g id="5,3 IfcLabel" fill="silver">
+      <rect x="1529.534025" y="554.2558125" width="96.375" height="31.067729625" rx="10" ry="10" stroke="black" />
+      <text x="1577.721525" y="569.7896773125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">5,3 IfcLabel</text>
+    </g>
+    <g id="5,3 IfcLabel" fill="silver">
+      <rect x="1529.52285" y="628.2247875" width="96.375" height="30" rx="10" ry="10" stroke="black" />
+      <text x="1577.71035" y="643.2247875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">5,3 IfcLabel</text>
+    </g>
+    <g id="5,3 IfcLabel" fill="silver">
+      <rect x="2216.9576625" y="231.62587125" width="73.5" height="30" rx="10" ry="10" stroke="black" />
+      <text x="2253.7076625" y="246.62587125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">5,3 IfcLabel</text>
+    </g>
+    <g id="5,3 IfcLabel" fill="silver">
+      <rect x="2216.9488125" y="381.7122" width="73.5" height="30" rx="10" ry="10" stroke="black" />
+      <text x="2253.6988125" y="396.7122" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">5,3 IfcLabel</text>
+    </g>
+    <g id="5,3 IfcLabel" fill="silver">
+      <rect x="2215.8504" y="67.08386625" width="73.5" height="30" rx="10" ry="10" stroke="black" />
+      <text x="2252.6004" y="82.08386625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">5,3 IfcLabel</text>
+    </g>
+  </g>
+  <g id="5,4 IfcText" fill="blue">
+    <rect x="2766.3293625" y="327.21173625" width="78.74664375" height="31.87727475" rx="10" ry="10" stroke="black" />
+    <polyline points="2805.7027125,359.0890125 2805.7027125,374.581014 " fill="none" stroke="black" />
+    <text x="2805.702684375" y="343.150373625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">5,4 IfcText</text>
+    <g id="5,4 IfcText" fill="silver">
+      <rect x="481.3551" y="604.4670375" width="90.375" height="30.017729625" rx="10" ry="10" stroke="black" />
+      <text x="526.5426" y="619.4759023125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">5,4 IfcText</text>
+    </g>
+    <g id="5,4 IfcText" fill="silver">
+      <rect x="944.807925" y="605.2951875" width="90.375" height="31.067729625" rx="10" ry="10" stroke="black" />
+      <text x="989.995425" y="620.8290523125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">5,4 IfcText</text>
+    </g>
+    <g id="5,4 IfcText" fill="silver">
+      <rect x="962.7783" y="321.69391875" width="68.625" height="30" rx="10" ry="10" stroke="black" />
+      <text x="997.0908" y="336.69391875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">5,4 IfcText</text>
+    </g>
+    <g id="5,4 IfcText" fill="silver">
+      <rect x="1528.5009" y="335.3422275" width="96.375" height="30.017729625" rx="10" ry="10" stroke="black" />
+      <text x="1576.6884" y="350.3510923125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">5,4 IfcText</text>
+    </g>
+    <g id="5,4 IfcText" fill="silver">
+      <rect x="1529.54715" y="590.7053625" width="96.375" height="31.067729625" rx="10" ry="10" stroke="black" />
+      <text x="1577.73465" y="606.2392273125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">5,4 IfcText</text>
+    </g>
+    <g id="5,4 IfcText" fill="silver">
+      <rect x="2216.9576625" y="269.14744875" width="68.625" height="30" rx="10" ry="10" stroke="black" />
+      <text x="2251.2701625" y="284.14744875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">5,4 IfcText</text>
+    </g>
+    <g id="5,4 IfcText" fill="silver">
+      <rect x="2215.8504" y="103.53340125" width="68.625" height="30" rx="10" ry="10" stroke="black" />
+      <text x="2250.1629" y="118.53340125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">5,4 IfcText</text>
+    </g>
+  </g>
+  <g id="5,5 IfcNormalisedRatioMeasure" fill="blue">
+    <rect x="2527.25895" y="17.222583375" width="55.10319" height="31.87727475" rx="10" ry="10" stroke="black" />
+    <polyline points="2554.810575,49.09985625 2554.810575,63.497815125 " fill="none" stroke="black" />
+    <text x="2554.810545" y="33.16122075" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">5,5 IfcNormalisedRatioMeasure</text>
+    <g id="5,5 IfcNormalisedRatioMeasure" fill="silver">
+      <rect x="2216.9488125" y="344.19060375" width="154.875" height="30" rx="10" ry="10" stroke="black" />
+      <text x="2294.3863125" y="359.19060375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">5,5 IfcNormalisedRatioMeasure</text>
+    </g>
+  </g>
+  <g id="5,6 IfcNonNegativeLengthMeasure" fill="blue">
+    <rect x="2783.2035375" y="176.80249125" width="45" height="31.875" rx="10" ry="10" stroke="black" />
+    <polyline points="2805.7035375,208.67749125 2805.7035375,219.92317575 " fill="none" stroke="black" />
+    <text x="2805.7035375" y="192.73999125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">5,6 IfcNonNegativeLengthMeasure</text>
+    <g id="5,6 IfcNonNegativeLengthMeasure" fill="silver">
+      <rect x="946.6532625" y="499.3510875" width="169.5" height="30" rx="10" ry="10" stroke="black" />
+      <text x="1031.4032625" y="514.3510875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">5,6 IfcNonNegativeLengthMeasure</text>
+    </g>
+  </g>
+  <g id="5,7 IfcLengthMeasure" fill="blue">
+    <rect x="2778.12975" y="17.207857125" width="55.0976775" height="31.87727475" rx="10" ry="10" stroke="black" />
+    <polyline points="2805.6785625,49.08513 2805.6785625,63.513755625 " fill="none" stroke="black" />
+    <text x="2805.67858875" y="33.1464945" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">5,7 IfcLengthMeasure</text>
+    <g id="5,7 IfcLengthMeasure" fill="silver">
+      <rect x="962.7162375" y="124.652265" width="138.75" height="30.017729625" rx="10" ry="10" stroke="black" />
+      <text x="1032.0912375" y="139.6611298125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">5,7 IfcLengthMeasure</text>
+    </g>
+    <g id="5,7 IfcLengthMeasure" fill="silver">
+      <rect x="937.299975" y="822.917325" width="138.75" height="30.017729625" rx="10" ry="10" stroke="black" />
+      <text x="1006.674975" y="837.9261898125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">5,7 IfcLengthMeasure</text>
+    </g>
+    <g id="5,7 IfcLengthMeasure" fill="silver">
+      <rect x="962.7783" y="354.927315" width="115.5" height="30" rx="10" ry="10" stroke="black" />
+      <text x="1020.5283" y="369.927315" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">5,7 IfcLengthMeasure</text>
+    </g>
+    <g id="5,7 IfcLengthMeasure" fill="silver">
+      <rect x="1637.632275" y="784.4207625" width="115.5" height="30" rx="10" ry="10" stroke="black" />
+      <text x="1695.382275" y="799.4207625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">5,7 IfcLengthMeasure</text>
+    </g>
+  </g>
+  <g id="1,1 IfcMaterial" fill="blue">
+    <rect x="252.845115" y="510.0347625" width="78.3710025" height="31.87727475" rx="10" ry="10" stroke="black" />
+    <polyline points="292.03061625,541.91205 292.03061625,567.88808775 " fill="none" stroke="black" />
+    <text x="292.03061625" y="525.973399875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">1,1 IfcMaterial</text>
+    <g id="1,1 IfcMaterial" fill="silver">
+      <rect x="944.7724125" y="463.6906875" width="106.875" height="31.067729625" rx="10" ry="10" stroke="black" />
+      <text x="998.2099125" y="479.2245523125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">1,1 IfcMaterial</text>
+    </g>
+    <g id="1,1 IfcMaterial" fill="silver">
+      <rect x="1529.549475" y="484.5729" width="106.875" height="31.067729625" rx="10" ry="10" stroke="black" />
+      <text x="1582.986975" y="500.1067648125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">1,1 IfcMaterial</text>
+    </g>
+    <g id="1,1 IfcMaterial" fill="silver">
+      <rect x="2216.951025" y="306.66902625" width="83.25" height="30" rx="10" ry="10" stroke="black" />
+      <text x="2258.576025" y="321.66902625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">1,1 IfcMaterial</text>
+    </g>
+    <g id="1,1 IfcMaterial" fill="silver">
+      <rect x="2449.1566125" y="804.6727875" width="106.875" height="30.017729625" rx="10" ry="10" stroke="black" />
+      <text x="2502.5941125" y="819.6816523125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">1,1 IfcMaterial</text>
+    </g>
+    <g id="1,1 IfcMaterial" fill="silver">
+      <rect x="2589.5851125" y="804.7026" width="83.25" height="30" rx="10" ry="10" stroke="black" />
+      <text x="2631.2101125" y="819.7026" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">1,1 IfcMaterial</text>
+    </g>
+  </g>
+  <g id="2,2 IfcMaterialLayerSet" fill="blue">
+    <rect x="639.6506625" y="208.68280125" width="45" height="31.875" rx="10" ry="10" stroke="black" />
+    <polyline points="668.02965,240.55780125 668.02965,290.07074625 " fill="none" stroke="black" />
+    <text x="662.1506625" y="224.62030125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,2 IfcMaterialLayerSet</text>
+    <g id="2,2 IfcMaterialLayerSet" fill="silver">
+      <rect x="14.906863125" y="357.07140375" width="120.375" height="30" rx="10" ry="10" stroke="black" />
+      <text x="75.094363125" y="372.07140375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,2 IfcMaterialLayerSet</text>
+    </g>
+  </g>
+  <g id="2,3 IfcMaterialLayer" fill="blue">
+    <rect x="737.5043625" y="415.8333" width="47.27196375" height="31.87727475" rx="10" ry="10" stroke="black" />
+    <polyline points="761.14035,447.7105875 761.14035,461.027625 " fill="none" stroke="black" />
+    <text x="761.140344375" y="431.771937375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,3 IfcMaterialLayer</text>
+    <g id="2,3 IfcMaterialLayer" fill="silver">
+      <rect x="14.92742175" y="392.42625" width="106.5" height="30" rx="10" ry="10" stroke="black" />
+      <text x="68.17742175" y="407.42625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,3 IfcMaterialLayer</text>
+    </g>
+  </g>
+  <g id="3,1 IfcMaterialProfile" fill="blue">
+    <rect x="1214.106825" y="480.92865" width="45" height="31.875" rx="10" ry="10" stroke="black" />
+    <polyline points="1259.106825,496.86615 1276.212244125,496.86615 " fill="none" stroke="black" />
+    <text x="1236.606825" y="496.86615" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">3,1 IfcMaterialProfile</text>
+    <g id="3,1 IfcMaterialProfile" fill="silver">
+      <rect x="14.922318375" y="461.4279375" width="109.125" height="30" rx="10" ry="10" stroke="black" />
+      <text x="69.484818375" y="476.4279375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">3,1 IfcMaterialProfile</text>
+    </g>
+  </g>
+  <g id="3,2 IfcMaterialProfileSet" fill="blue">
+    <rect x="1214.090175" y="300.62139375" width="45" height="31.875" rx="10" ry="10" stroke="black" />
+    <polyline points="1259.090175,316.55889375 1276.199559375,316.55889375 " fill="none" stroke="black" />
+    <text x="1236.590175" y="316.55889375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">3,2 IfcMaterialProfileSet</text>
+    <g id="3,2 IfcMaterialProfileSet" fill="silver">
+      <rect x="14.93777325" y="426.903975" width="123" height="30" rx="10" ry="10" stroke="black" />
+      <text x="76.43777325" y="441.903975" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">3,2 IfcMaterialProfileSet</text>
+    </g>
+  </g>
+  <g id="4,1 IfcMaterialConstituent" fill="blue">
+    <rect x="1826.7500625" y="238.18548" width="45" height="31.875" rx="10" ry="10" stroke="black" />
+    <polyline points="1871.7500625,254.12298 1900.70775,254.12298 " fill="none" stroke="black" />
+    <text x="1849.2500625" y="254.12298" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">4,1 IfcMaterialConstituent</text>
+    <g id="4,1 IfcMaterialConstituent" fill="silver">
+      <rect x="14.909137875" y="530.3823375" width="130.5" height="30" rx="10" ry="10" stroke="black" />
+      <text x="80.159137875" y="545.3823375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">4,1 IfcMaterialConstituent</text>
+    </g>
+  </g>
+  <g id="4,2 IfcMaterialConstituentSet" fill="blue">
+    <rect x="1829.9530125" y="66.65827125" width="45" height="31.875" rx="10" ry="10" stroke="black" />
+    <polyline points="1874.9530125,82.59577125 1899.644572125,82.59577125 " fill="none" stroke="black" />
+    <text x="1852.4530125" y="82.59577125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">4,2 IfcMaterialConstituentSet</text>
+    <g id="4,2 IfcMaterialConstituentSet" fill="silver">
+      <rect x="14.922318375" y="495.9173625" width="144.375" height="30" rx="10" ry="10" stroke="black" />
+      <text x="87.109818375" y="510.9173625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">4,2 IfcMaterialConstituentSet</text>
+    </g>
+  </g>
+  <g id="1,2 IfcMaterialDefinition" fill="blue">
+    <rect x="312.4303575" y="233.9962425" width="45" height="31.875" rx="10" ry="10" stroke="black" />
+    <polyline points="334.9303575,265.8712425 334.9303575,279.3712425 334.9303575,279.3712425 334.9303575,292.8712425 " fill="none" stroke="black" />
+    <text x="334.9303575" y="249.9337425" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">1,2 IfcMaterialDefinition</text>
+    <g id="1,2 IfcMaterialDefinition" fill="silver">
+      <rect x="2215.8308625" y="624.7396125" width="121.875" height="30" rx="10" ry="10" stroke="black" />
+      <text x="2276.7683625" y="639.7396125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">1,2 IfcMaterialDefinition</text>
+    </g>
+  </g>
+  <g id="4,3 IfcMaterialProperties" fill="blue">
+    <rect x="2137.37265" y="587.8437" width="45" height="31.875" rx="10" ry="10" stroke="black" />
+    <polyline points="2137.37265,603.7812 2056.50689625,603.7812 " fill="none" stroke="black" />
+    <text x="2159.87265" y="603.7812" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">4,3 IfcMaterialProperties</text>
+    <g id="4,3 IfcMaterialProperties" fill="silver">
+      <rect x="459.7977" y="204.42536625" width="125.25" height="30" rx="10" ry="10" stroke="black" />
+      <text x="522.4227" y="219.42536625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">4,3 IfcMaterialProperties</text>
+    </g>
+  </g>
+  <g id="3,3 IfcMaterialProfileSetUsage" fill="blue">
+    <rect x="1216.75635" y="98.4765675" width="45" height="31.875" rx="10" ry="10" stroke="black" />
+    <polyline points="1261.75635,114.4140675 1278.859612875,114.4140675 " fill="none" stroke="black" />
+    <text x="1239.25635" y="114.4140675" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">3,3 IfcMaterialProfileSetUsage</text>
+    <g id="3,3 IfcMaterialProfileSetUsage" fill="silver">
+      <rect x="52.42059375" y="267.66284625" width="150" height="30" rx="10" ry="10" stroke="black" />
+      <text x="127.42059375" y="282.66284625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">3,3 IfcMaterialProfileSetUsage</text>
+    </g>
+  </g>
+  <g id="2,4 IfcMaterialLayerSetUsage" fill="blue">
+    <rect x="742.461375" y="15.659161125" width="45" height="31.875" rx="10" ry="10" stroke="black" />
+    <polyline points="764.961375,47.53416 764.961375,62.741664375 " fill="none" stroke="black" />
+    <text x="764.961375" y="31.596661125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,4 IfcMaterialLayerSetUsage</text>
+    <g id="2,4 IfcMaterialLayerSetUsage" fill="silver">
+      <rect x="14.916512625" y="308.77384875" width="147.375" height="30" rx="10" ry="10" stroke="black" />
+      <text x="88.604012625" y="323.77384875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,4 IfcMaterialLayerSetUsage</text>
+    </g>
+  </g>
+  <g id="5,8 IfcMaterialList" fill="blue">
+    <rect x="2419.89705" y="620.342625" width="45" height="31.875" rx="10" ry="10" stroke="black" />
+    <polyline points="2431.6765875,652.217625 2431.6765875,707.61603 2446.090873125,707.61603 " fill="none" stroke="black" />
+    <text x="2442.39705" y="636.280125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">5,8 IfcMaterialList</text>
+    <g id="5,8 IfcMaterialList" fill="silver">
+      <rect x="197.24113125" y="151.04117625" width="97.5" height="30" rx="10" ry="10" stroke="black" />
+      <text x="245.99113125" y="166.04117625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">5,8 IfcMaterialList</text>
+    </g>
+  </g>
+  <g>
+    <rect x="0" y="0" width="600" height="888" fill="none" stroke="lime" />
+    <rect x="600" y="0" width="600" height="888" fill="none" stroke="lime" />
+    <rect x="1200" y="0" width="600" height="888" fill="none" stroke="lime" />
+    <rect x="1800" y="0" width="600" height="888" fill="none" stroke="lime" />
+    <rect x="2400" y="0" width="600" height="888" fill="none" stroke="lime" />
+  </g>
+</svg>

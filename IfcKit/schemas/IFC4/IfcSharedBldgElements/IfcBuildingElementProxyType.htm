@@ -1,0 +1,34 @@
+﻿    <p>
+      <em>IfcBuildingElementProxyType</em> defines a list of
+      commonly shared property set definitions of a building
+      element proxy and an optional set of product
+      representations. It is used to define an element
+      specification (i.e. the specific product information, that
+      is common to all occurrences of that product type).
+    </p>
+    <blockquote class="note">
+      NOTE&nbsp; The product representations are defined as
+        representation maps (at the level of the supertype
+        <em>IfcTypeProduct</em>, which gets assigned by an element
+        occurrence instance through the
+        <em>IfcShapeRepresentation.Item[1]</em> being an
+        <em>IfcMappedItem</em>.
+    </blockquote>
+    <p>
+      A building element proxy type is used to define the common
+      properties of a certain type of a building element proxy
+      that may be applied to many instances of that type to
+      assign a specific style. Building element proxy types may
+      be exchanged without being already assigned to occurrences.
+    </p>
+<blockquote class="note">
+NOTE&nbsp; Although an building element proxy does not have a predefined ontological meaning the provision of a type may be helpful in sharing information among multiple occurrences. Applications that provide type information for element types not yet included in the current IFC specification can use the <em>IfcBuildingElementProxyType</em> to exchange such types.
+</blockquote>
+    <p>
+      The occurrences of the <em>IfcBuildingElementProxyType</em>
+      are represented by instances of
+      <em>IfcBuildingElementProxy</em>.
+    </p>
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC2x3.
+</blockquote>

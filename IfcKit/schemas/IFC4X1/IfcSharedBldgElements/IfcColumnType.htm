@@ -1,0 +1,26 @@
+﻿<p>The element type
+<em>IfcColumnType</em> defines commonly shared information for
+occurrences of columns. The set of shared information may
+include:</p>
+<ul>
+<li>common properties within shared property sets</li>
+<li>common material information</li>
+<li>common profile definitions</li>
+<li>common shape representations</li>
+</ul>
+<p>It is used to define a column specification, or column style
+(i.e. the specific product information that is common to all
+occurrences of that column type). Column types may be exchanged
+without being already assigned to occurrences.</p>
+<p>Occurrences of the <em>IfcColumnType</em> within building models
+are represented by instances of <em>IfcColumnStandardCase</em> if
+the <em>IfcColumnType</em> has a single associated
+<em>IfcMaterialProfileSet</em>; otherwise they are represented by
+instances of <em>IfcColumn</em>. Occurrences of the
+<em>IfcColumnType</em> within structural analysis models are
+represented by instances of <em>IfcStructuralCurveMember</em>, or
+its applicable subtypes.</p>
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC2x2.
+</blockquote>

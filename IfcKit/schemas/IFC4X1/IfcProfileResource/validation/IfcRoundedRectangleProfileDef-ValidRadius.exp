@@ -1,0 +1,2 @@
+﻿((RoundingRadius <= (SELF\IfcRectangleProfileDef.XDim/2.)) AND 
+ (RoundingRadius <= (SELF\IfcRectangleProfileDef.YDim/2.)))

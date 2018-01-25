@@ -1,0 +1,2 @@
+﻿(PredefinedType <> IfcCompressorTypeEnum.USERDEFINED) OR
+((PredefinedType = IfcCompressorTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcElementType.ElementType))

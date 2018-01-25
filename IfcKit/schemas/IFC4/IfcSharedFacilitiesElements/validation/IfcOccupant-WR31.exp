@@ -1,0 +1,2 @@
+﻿NOT(PredefinedType = IfcOccupantTypeEnum.USERDEFINED) 
+OR EXISTS(SELF\IfcObject.ObjectType)

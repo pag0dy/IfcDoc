@@ -1,0 +1,2 @@
+﻿ (TargetView <> IfcGeometricProjectionEnum.USERDEFINED) OR 
+((TargetView =  IfcGeometricProjectionEnum.USERDEFINED) AND EXISTS(UserDefinedTargetView)) 

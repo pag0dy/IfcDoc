@@ -1,0 +1,43 @@
+﻿<p>The entity <em>IfcStructuralLoadGroup</em> is used to structure the
+physical impacts.  By using the grouping features inherited from <em>IfcGroup</em>, instances of
+<em>IfcStructuralAction</em> (or its subclasses) and of <em>IfcStructuralLoadGroup</em> can be used to
+define load groups, load cases and load combinations.  (See also <em>IfcLoadGroupTypeEnum</em>.)</p>
+
+<blockquote class="note">
+NOTE&nbsp; Important functionality for the description of a load-bearing system
+is derived from the existing IFC entity <em>IfcGroup</em>.  This class provides, via the relationship
+class <em>IfcRelAssignsToGroup</em>, the needed grouping mechanism.  In this way, instances of
+<em>IfcStructuralAction</em> belonging to a specific load group can be unambiguously determined.
+</blockquote>
+
+<blockquote class="note">
+NOTE&nbsp; The relationship class <em>IfcRelAssignsToGroupByFactor</em> is
+used to group load cases into load combinations.  The factor provided in this assignment relationship
+is to applied together with the optional <em>IfcStructuralLoadGroup.Coefficient</em>.  Unlike this
+coefficient which always affects the load group, the <em>IfcRelAssignsToGroupByFactor.Factor</em> is
+specific for a load case&mdash;load combination pair.  As many instances of
+<em>IfcRelAssignsToGroupByFactor</em> are used within one load combination as there are different
+<em>Factor</em>s to be applied to load cases in the load combination.
+On the other hand, a load case may appear in more than one load combination
+and can have a different <em>Factor</em> in each assignment by <em>IfcRelAssignsToGroupByFactor</em>.
+</blockquote>
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC2x2.
+</blockquote>
+
+<blockquote class="change-ifc2x4">
+IFC4 CHANGE&nbsp; Subtype <em>IfcStructuralLoadCase</em> added.  Informal propositions and WHERE rule added.
+Predefined type LOAD_COMBINATION_GROUP made obsolete and removed.
+</blockquote>
+
+<p class="spec-head">Informal Propositions:</p>
+
+<ol>
+  <li>Load groups of type LOAD_GROUP shall only contain instances of <em>IfcStructuralAction</em>.</li>
+  <li>Load groups of type LOAD_CASE shall always be instantiated from the subtype <em>IfcStructuralLoadCase</em>,
+      not directly from the generic type <em>IfcStructuralLoadGroup</em> itself.</li>
+  <li>Instances of <em>IfcStructuralLoadCase</em> shall only contain instances of <em>IfcStructuralAction</em>
+      or/ and instances of <em>IfcStructuralLoadGroup</em> of type LOAD_GROUP.</li>
+  <li>Load groups of type LOAD_COMBINATION shall only contain instances of <em>IfcStructuralLoadCase</em>.</li>
+</ol>

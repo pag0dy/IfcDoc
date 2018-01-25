@@ -1,0 +1,2 @@
+﻿(PredefinedType <> IfcElectricTimeControlTypeEnum.USERDEFINED) OR
+((PredefinedType = IfcElectricTimeControlTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcElementType.ElementType))

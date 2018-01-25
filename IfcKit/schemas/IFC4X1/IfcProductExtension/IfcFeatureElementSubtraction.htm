@@ -1,0 +1,43 @@
+﻿<p>The <em>IfcFeatureElementSubtraction</em> is specialization of
+the general feature element, that represents an existence dependent
+elements which modifies the shape and appearance of the associated
+master element. The <em>IfcFeatureElementSubtraction</em> offers the
+ability to handle shape modifiers as semantic objects within the
+IFC object model that subtract from the shape of the master
+element.</p>
+
+<blockquote class="note">
+NOTE&nbsp; A single subtraction feature
+such as the subtype <em>IfcOpeningElement</em> is assigned by a
+single subtraction relationship <em>IfcRelVoidsElement</em> to one
+occurrences of <em>IfcElement</em>. It establishes a 1:1
+relationship between the opening and the element. An element may
+have several <em>IfcRelVoidsElement</em> relationships, enabling
+several voids.
+</blockquote>
+
+<p>The voiding relationship between a master element and a
+subtraction feature is geometrically resolved by a Boolean
+difference operation.</p>
+
+<p>The local placement for <em>IfcFeatureElementSubtraction</em> is
+defined in its supertype <em>IfcProduct</em>. It is defined by the
+<em>IfcLocalPlacement</em>, which defines the local coordinate system
+that is referenced by all geometric representations. The local
+placement is always defined in relation to the local placement of
+the building element from which the feature element substration is
+substracted:</p>
+<ul>
+<li>The <em>PlacementRelTo</em> relationship of
+<em>IfcLocalPlacement</em> shall point (if given) to the local
+placement of the same <em>IfcElement</em>, which is used in the
+<em>VoidsElements.RelatingElement</em> inverse attribute.</li>
+</ul>
+
+<blockquote class="history">
+  HISTORY&nbsp; New entity in IFC2x2.
+</blockquote>
+<blockquote class="change-ifc2x2">
+  IFC2x2 CHANGE&nbsp;  The entity is introduced as an upward compatible extension of the IFC2x
+  platform. It is an intermediate abstract supertype without defining its own explicit attributes.
+</blockquote>

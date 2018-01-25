@@ -1,0 +1,94 @@
+﻿<p>An <em>IfcTask</em> is an identifiable unit of work to be carried out in a construction project.</p>
+<p>A task is typically used to describe an activity for the construction or installation of products, but is not
+limited to these types. For example it might be used to describe design processes, move operations and other
+design, construction and operation related activities as well.</p>
+<p>
+Quantities of resources
+ consumed by the task are dealt with by defining the
+ <em>IfcElementQuantity</em> for the resource and not at the
+ instance of <em>IfcTask</em>.</p>
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC1.0. Renamed from <em>IfcWorkTask</em> in IFC2x.
+</blockquote>
+<blockquote class="change-ifc2x4">
+IFC4 CHANGE&nbsp; Attributes <em>TaskTime</em> and <em>PredefinedType</em> added. IfcMove and IfcOrderRequest has been removed in IFC4 and are now represented by <em>IfcTask</em>. IfcRelAssignsTasks relationship has been
+ removed as well.
+    </blockquote>
+    <p class="use-head">Attribute use definition</p>
+    <p>
+      Each occurrence of <em>IfcTask</em> is given a name that is
+      indicative of its content (<em>IfcRoot.Name</em>). A textual
+      description of the task may be provided and this may be
+      further elaborated by a narrative long description
+      (<em>IfcProcess.LongDescription</em>). A work method may be
+      declared for the method of work used in carrying out a
+      task. A task is identified as being either a milestone task
+      or not. A milestone task is defined by the marker
+      <em>IsMilestone</em>. and has no duration. A status and
+      priority for each task may also be set.
+    </p>
+    <p class="use-head">Time and duration use definition</p>
+    <p>
+      Compared to previous IFC releases, basic task time
+      information (scheduled start time, scheduled finish
+      time, duration) is now directly attached to <em>IfcTask</em>
+      through the <em>TaskTime</em> attribute. Regular tasks are
+      defined through <em>IfcTaskTime</em>. Recurring tasks are
+      defined through <em>IfcTaskTimeRecurring</em>. In case a
+      regular task is derived from a recurring task both tasks
+      should be linked together through a <em>IfcRelNests</em>
+      relationship, where <em>IfcRelNests.IsNestedBy</em> points to
+      the recurring task and <em>IfcRelNests.Nests</em> points to
+      all regular tasks that have been derived from the recurring
+      task.
+    </p>
+    <p class="use-head">Representation of  other activities</p>
+    <p>
+      The use definitions for <em>IfcTask</em> have been generalised to
+      represent other activities as well, including activities
+      that had been defined by own entities in previous IFC
+      releases. This includes
+    </p>
+    <ul>
+      <li>Order actions</li>
+      <li>Move operations</li>
+    </ul>
+    <p>
+      <em>IfcTask</em> represents an order that might be carried
+      out by a Helpdesk acting the role of interface for the
+      organization between the facility user and the functional
+      requirement of fulfilling their needs. The actual task
+      represented by the <em>IfcTask</em> entity is turning a
+      request into an order and initiating the action that will
+      enable the order to be completed. The
+      <em>IfcProjectOrder</em> or one of its subtypes including
+      maintenance work order, is related to the <em>IfcTask</em>
+      using <em>IfcRelAssignsToControl</em>.
+    </p>
+    <p>
+      <em>IfcTask</em> can also be used to describe an activity
+      that moves people, groups within an organization or
+      complete organizations together with their associated
+      furniture and equipment from one place to another. It thus
+      replaces the previous IFC entity IfcMove. The functionality
+      is represented in <em>IfcTask</em> as follows:<br>
+    </p>
+<ul>
+      <li>Move from: The place from which actors and their
+      associated equipment are moving.<br>
+      Use <em>IfcRelAssignsToProcess</em> where
+      <em>RelatingProcess</em> points to the task and
+      <em>RelatedObjects</em> holds the location(s) from which to
+      move.</li>
+      <li>Move to: The place to which actors and their
+      associated equipment are moving.<br>
+      Use <em>IfcRelAssignsToProduct</em> where
+      <em>RelatedObjects</em> points to the task(s) and
+      <em>RelatingProduct</em> points to the location to which to
+      move.</li>
+     <li>Punch list: A list of points concerning a move that
+      require attention.<br>
+      Use <em>LongDescription</em> or else identify sub-tasks to
+      track punch list items individually via <em>IfcRelNests</em>.</li>
+</ul>

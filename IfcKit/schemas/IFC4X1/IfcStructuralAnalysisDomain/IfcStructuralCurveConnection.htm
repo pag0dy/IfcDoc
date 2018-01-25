@@ -1,0 +1,13 @@
+﻿<p>Instances of <em>IfcStructuralCurveConnection</em> describe edge 'nodes', i.e. edges where two or more surface members are joined, or edge supports.  Edge curves may be straight or curved.</p>
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC2x2.
+</blockquote>
+
+<blockquote class="change-ifc2x4">
+IFC4 CHANGE&nbsp; Attribute <em>Axis</em> added, allowing for skewed supports.  Use definitions added.
+</blockquote>
+
+<p><b><u>Coordinate Systems</u></b>:</p>
+
+<p>See definitions at <em>IfcStructuralItem</em>.  The local coordinate system is established by the reference curve given by topology representation and by the attribute <em>Axis</em>.  The local x axis is parallel with the tangent on the reference curve.  The local z axis is located in the surface which is created by sweeping <em>Axis</em> along the reference curve and is directed according to <em>Axis</em>.  The local y axis is directed such that x,y,z form a right-handed Cartesian coordinate system.</p>

@@ -1,0 +1,1 @@
+﻿SIZEOF(QUERY(temp <* InnerCurves | temp.Dim <> 2)) = 0

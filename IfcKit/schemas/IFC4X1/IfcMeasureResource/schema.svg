@@ -1,0 +1,1518 @@
+<?xml version="1.0"?>
+<svg xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="1.1" width="3000" height="888" xmlns="http://www.w3.org/2000/svg">
+  <g id="IfcContextDependentUnit" fill="yellow">
+    <rect x="202.5562575" y="546.1113375" width="145.11034875" height="37.5" stroke="black" />
+    <text x="275.111431875" y="564.8613375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcContextDependentUnit</text>
+    <g id="Name">
+      <polyline points="257.8140375,583.6113375 257.8140375,629.43242625 " fill="none" stroke="black" />
+      <text x="275.173730625" y="614.383945125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">Name</text>
+    </g>
+    <g id="HasExternalReference">
+      <polyline points="347.66660625,564.8613375 364.919983875,564.8613375 364.919983875,710.89649625 219.915400125,710.89649625 " fill="none" stroke="black" />
+      <text x="308.3902644375" y="794.668888875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">HasExternalReference S[0:?]</text>
+    </g>
+  </g>
+  <g id="IfcConversionBasedUnit" fill="yellow">
+    <rect x="380.0601375" y="546.0877125" width="167.50000125" height="37.5" stroke="black" />
+    <text x="463.810138125" y="564.8377125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcConversionBasedUnit</text>
+    <g id="Name">
+      <polyline points="463.810125,583.5877125 463.810125,629.4310575 " fill="none" stroke="black" />
+      <text x="480.6235155" y="613.696272375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">Name</text>
+    </g>
+    <g id="ConversionFactor">
+      <polyline points="444.0483375,583.5877125 444.0483375,696.87153 " fill="none" stroke="black" />
+      <text x="505.2026325" y="630.69742875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">ConversionFactor</text>
+    </g>
+    <g id="HasExternalReference">
+      <polyline points="391.2408,583.5877125 391.2408,757.89012375 219.91539,757.89012375 " fill="none" stroke="black" />
+      <text x="309.2874286875" y="856.117930125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">HasExternalReference S[0:?]</text>
+    </g>
+  </g>
+  <g id="IfcConversionBasedUnitWithOffset" fill="yellow">
+    <rect x="380.088" y="801.88425" width="124.28827125" height="46.79967375" stroke="black" />
+    <text x="442.232135625" y="825.284086875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcConversionBasedUnitWithOffset</text>
+    <g id="ConversionOffset">
+      <polyline points="380.088,825.2841 218.27050125,825.2841 " fill="none" stroke="black" />
+      <text x="299.774429775" y="820.03908375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">ConversionOffset</text>
+    </g>
+  </g>
+  <g id="IfcDerivedUnit" fill="yellow">
+    <rect x="9.678405375" y="96.63091875" width="109.74511875" height="49.5" stroke="black" />
+    <text x="64.55096475" y="121.38091875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcDerivedUnit</text>
+    <g id="Elements">
+      <polyline points="99.21390375,146.13091875 99.21390375,180.68193075 " fill="none" stroke="black" />
+      <text x="150.10872" y="167.389894125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">Elements S[1:?]</text>
+    </g>
+    <g id="UnitType">
+      <polyline points="34.869833625,96.63091875 34.869833625,51.62572125 " fill="none" stroke="black" />
+      <text x="58.89490125" y="71.900546175" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">UnitType</text>
+    </g>
+    <g id="UserDefinedType">
+      <polyline points="119.42352375,121.38091875 160.6347375,121.38091875 160.6347375,121.38091875 201.845955,121.38091875 " fill="none" stroke="black" stroke-dasharray="1,1" />
+      <text x="159.7019401125" y="116.716922625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">UserDefinedType</text>
+    </g>
+    <g id="Dimensions">
+      <polyline points="35.3205675,146.13091875 35.3205675,243.55045875 285.5506125,243.55045875 " fill="none" stroke="black" />
+      <text x="205.90278375" y="186.8972175" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">Dimensions</text>
+    </g>
+  </g>
+  <g id="IfcDerivedUnitElement" fill="yellow">
+    <rect x="80.0027625" y="180.68193" width="155.9965125" height="42.00279" stroke="black" />
+    <text x="158.00101875" y="201.683325" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcDerivedUnitElement</text>
+    <g id="Unit">
+      <polyline points="235.999275,217.4914275 532.164585,217.4914275 532.164585,440.392575 " fill="none" stroke="black" />
+      <text x="408.024503625" y="324.43290225" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">Unit</text>
+    </g>
+    <g id="Exponent">
+      <polyline points="235.99927125,187.0492575 307.42804875,187.0492575 " fill="none" stroke="black" />
+      <text x="266.87705925" y="184.093255575" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">Exponent</text>
+    </g>
+  </g>
+  <g id="IfcDimensionalExponents" fill="yellow">
+    <rect x="285.5506125" y="236.2155075" width="90.4089375" height="206.8882575" stroke="black" />
+    <text x="330.75508125" y="339.65963625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcDimensionalExponents</text>
+    <g id="LengthExponent">
+      <polyline points="285.5506125,270.09292875 91.71629625,270.09292875 " fill="none" stroke="black" />
+      <text x="190.2921580125" y="267.7436817" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">LengthExponent</text>
+    </g>
+    <g id="MassExponent">
+      <polyline points="285.5506125,294.9909075 91.691295,294.9909075 " fill="none" stroke="black" />
+      <text x="187.62711165" y="290.06568375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">MassExponent</text>
+    </g>
+    <g id="TimeExponent">
+      <polyline points="285.5506125,316.95792 91.7037975,316.95792 " fill="none" stroke="black" />
+      <text x="188.66606364" y="313.38512355" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">TimeExponent</text>
+    </g>
+    <g id="ElectricCurrentExponent">
+      <polyline points="285.5506125,341.1347325 91.7037975,341.1347325 " fill="none" stroke="black" />
+      <text x="191.0073601125" y="336.561936" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">ElectricCurrentExponent</text>
+    </g>
+    <g id="ThermodynamicTemperatureExponent">
+      <polyline points="285.5506125,363.09134625 91.7037975,363.09134625 " fill="none" stroke="black" />
+      <text x="188.94136275375" y="359.0412465" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">ThermodynamicTemperatureExponent</text>
+    </g>
+    <g id="AmountOfSubstanceExponent">
+      <polyline points="285.5506125,388.44585 91.71629625,388.44585 " fill="none" stroke="black" />
+      <text x="193.822760625" y="384.068757" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">AmountOfSubstanceExponent</text>
+    </g>
+    <g id="LuminousIntensityExponent">
+      <polyline points="285.5506125,413.49255 91.71629625,413.49255 " fill="none" stroke="black" />
+      <text x="192.599211375" y="410.2183029375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">LuminousIntensityExponent</text>
+    </g>
+  </g>
+  <g id="IfcMeasureWithUnit" fill="yellow">
+    <rect x="672.9979875" y="145.15725375" width="142.37500125" height="54.1117425" stroke="black" />
+    <text x="744.185488125" y="172.213125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcMeasureWithUnit</text>
+    <g id="ValueComponent">
+      <polyline points="815.373,155.93869875 936.03250875,155.93869875 " fill="none" stroke="black" />
+      <text x="876.6355536375" y="151.274702625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">ValueComponent</text>
+    </g>
+    <g id="UnitComponent">
+      <polyline points="815.373,187.32509625 936.00057,187.32509625 " fill="none" stroke="black" />
+      <text x="875.686785" y="181.512799875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">UnitComponent</text>
+    </g>
+  </g>
+  <g id="IfcMonetaryUnit" fill="yellow">
+    <rect x="407.0671875" y="101.49004875" width="106.15329" height="37.5" stroke="black" />
+    <text x="460.1438325" y="120.24004875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcMonetaryUnit</text>
+    <g id="Currency">
+      <polyline points="460.1438625,138.99004875 460.1438625,167.75625375 " fill="none" stroke="black" />
+      <text x="483.426531375" y="159.3430665" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">Currency</text>
+    </g>
+  </g>
+  <g id="IfcNamedUnit" fill="yellow">
+    <rect x="478.7095875" y="440.392575" width="102.75" height="51.49999875" stroke="black" />
+    <polyline points="530.0845875,491.8926 530.0845875,517.89675225 " fill="none" stroke="black" stroke-width="3" />
+    <polyline points="530.0845875,517.89675225 275.11143375,517.8967125 275.11143375,546.111304875 " fill="none" stroke="black" stroke-width="3" />
+    <polyline points="530.0845875,517.89675225 456.3703875,517.8967125 456.3703875,546.087700875 " fill="none" stroke="black" stroke-width="3" />
+    <polyline points="530.0845875,517.89675225 126.0879975,517.8967125 126.0879975,546.124503 " fill="none" stroke="black" stroke-width="3" />
+    <text x="530.0845875" y="466.142574375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcNamedUnit</text>
+    <g id="Dimensions">
+      <polyline points="492.5251125,440.392575 492.5251125,339.65964 375.9595575,339.65964 " fill="none" stroke="black" />
+      <text x="404.20086225" y="363.356591625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">Dimensions</text>
+    </g>
+    <g id="UnitType">
+      <polyline points="478.7095875,466.14255 417.356775,466.14255 " fill="none" stroke="black" />
+      <text x="449.9028528375" y="463.16732655" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">UnitType</text>
+    </g>
+  </g>
+  <g id="IfcSIUnit" fill="yellow">
+    <rect x="78.087195" y="546.1245375" width="92.34288" height="37.5" stroke="black" />
+    <text x="124.258635" y="564.8745375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcSIUnit</text>
+    <g id="Prefix">
+      <polyline points="91.8947775,583.6245375 91.8947775,619.839667875 " fill="none" stroke="black" stroke-dasharray="1,1" />
+      <text x="112.83906225" y="605.5531663125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">Prefix</text>
+    </g>
+    <g id="Name">
+      <polyline points="147.47625,583.6245375 147.47625,658.34242125 " fill="none" stroke="black" />
+      <text x="164.896395375" y="615.385075125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">Name</text>
+    </g>
+    <g id="Dimensions">
+      <polyline points="92.08574625,546.1245375 92.08574625,494.61414375 299.2355475,494.61414375 299.2355475,443.10375375 " fill="none" stroke="black" />
+      <text x="246.621774375" y="491.616458475" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">Dimensions</text>
+    </g>
+  </g>
+  <g id="IfcUnitAssignment" fill="yellow">
+    <rect x="208.918515" y="17.73840825" width="133.75000125" height="37.5" stroke="black" />
+    <text x="275.793515625" y="36.48840825" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcUnitAssignment</text>
+    <g id="Units">
+      <polyline points="342.66851625,36.48840825 461.850885,36.48840825 " fill="none" stroke="black" />
+      <text x="402.259700625" y="31.7478615" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">Units S[1:?]</text>
+    </g>
+  </g>
+  <g id="IfcAbsorbedDoseMeasure" fill="green">
+    <rect x="1897.1491125" y="121.39081875" width="198.47370375" height="20.596144125" stroke="black" />
+    <text x="1996.385964375" y="131.6888908125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcAbsorbedDoseMeasure</text>
+  </g>
+  <g id="IfcAccelerationMeasure" fill="green">
+    <rect x="2124.4251" y="95.842545" width="171.2762325" height="20.596144125" stroke="black" />
+    <text x="2210.06321625" y="106.1406170625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcAccelerationMeasure</text>
+  </g>
+  <g id="IfcAmountOfSubstanceMeasure" fill="green">
+    <rect x="1332.135675" y="260.38680375" width="165.551955" height="20.551116375" stroke="black" />
+    <text x="1414.9116525" y="270.6623619375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcAmountOfSubstanceMeasure</text>
+  </g>
+  <g id="IfcAngularVelocityMeasure" fill="green">
+    <rect x="2124.4162125" y="120.20107875" width="171.27499875" height="20.596144125" stroke="black" />
+    <text x="2210.053711875" y="130.4991508125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcAngularVelocityMeasure</text>
+  </g>
+  <g id="IfcAreaDensityMeasure" fill="green">
+    <rect x="2595.4125" y="110.01144" width="280.46562375" height="26.377276875" stroke="black" />
+    <text x="2735.645311875" y="123.2000784375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcAreaDensityMeasure</text>
+  </g>
+  <g id="IfcAreaMeasure" fill="green">
+    <rect x="1540.9393875" y="258.80402625" width="152.0625" height="24.75" stroke="black" />
+    <text x="1616.9706375" y="271.17902625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcAreaMeasure</text>
+  </g>
+  <g id="IfcBinary" fill="green">
+    <rect x="934.664337158205" y="482.00001525879" width="70.12778625" height="20.15712225" stroke="black" />
+    <text x="969.728230283205" y="492.07857638379" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcBinary</text>
+  </g>
+  <g id="IfcBoolean" fill="green">
+    <rect x="805.4217375" y="387.2028375" width="64.32499875" height="20.15712225" stroke="black" />
+    <text x="837.584236875" y="397.281398625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcBoolean</text>
+  </g>
+  <g id="IfcComplexNumber" fill="green">
+    <rect x="1332.8926875" y="720.2788875" width="165.5488725" height="20.551116375" stroke="black" />
+    <text x="1415.66712375" y="730.5544456875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcComplexNumber</text>
+  </g>
+  <g id="IfcCompoundPlaneAngleMeasure" fill="green">
+    <rect x="1896.6961125" y="95.86509" width="198.45886875" height="20.596144125" stroke="black" />
+    <text x="1995.925546875" y="106.1631620625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcCompoundPlaneAngleMeasure</text>
+  </g>
+  <g id="IfcContextDependentMeasure" fill="green">
+    <rect x="1332.1376625" y="297.8988225" width="165.521925" height="24.75" stroke="black" />
+    <text x="1414.898625" y="310.2738225" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcContextDependentMeasure</text>
+  </g>
+  <g id="IfcCountMeasure" fill="green">
+    <rect x="1540.9626375" y="302.04279" width="152.05000125" height="20.576248875" stroke="black" />
+    <text x="1616.987638125" y="312.3309144375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcCountMeasure</text>
+  </g>
+  <g id="IfcCurvatureMeasure" fill="green">
+    <rect x="2595.4455" y="180.52289625" width="280.4431875" height="26.377276875" stroke="black" />
+    <text x="2735.66709375" y="193.7115346875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcCurvatureMeasure</text>
+  </g>
+  <g id="IfcDescriptiveMeasure" fill="green">
+    <rect x="1332.1583625" y="338.125275" width="165.551745" height="20.15712225" stroke="black" />
+    <text x="1414.934235" y="348.203836125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcDescriptiveMeasure</text>
+  </g>
+  <g id="IfcDoseEquivalentMeasure" fill="green">
+    <rect x="2124.3953625" y="144.5639175" width="171.25561125" height="20.596144125" stroke="black" />
+    <text x="2210.023168125" y="154.8619895625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcDoseEquivalentMeasure</text>
+  </g>
+  <g id="IfcDynamicViscosityMeasure" fill="green">
+    <rect x="1897.643025" y="146.23421625" width="198.45886875" height="20.596144125" stroke="black" />
+    <text x="1996.872459375" y="156.5322883125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcDynamicViscosityMeasure</text>
+  </g>
+  <g id="IfcElectricCapacitanceMeasure" fill="green">
+    <rect x="1897.62525" y="170.8875825" width="198.4756875" height="20.596144125" stroke="black" />
+    <text x="1996.86309375" y="181.1856545625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcElectricCapacitanceMeasure</text>
+  </g>
+  <g id="IfcElectricChargeMeasure" fill="green">
+    <rect x="2124.41625" y="168.95202375" width="171.26152875" height="20.596144125" stroke="black" />
+    <text x="2210.047014375" y="179.2500958125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcElectricChargeMeasure</text>
+  </g>
+  <g id="IfcElectricConductanceMeasure" fill="green">
+    <rect x="2124.423975" y="193.3311225" width="171.27106125" height="20.596144125" stroke="black" />
+    <text x="2210.059505625" y="203.6291945625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcElectricConductanceMeasure</text>
+  </g>
+  <g id="IfcElectricCurrentMeasure" fill="green">
+    <rect x="1540.9650375" y="345.3115725" width="152.0571225" height="24.75" stroke="black" />
+    <text x="1616.99359875" y="357.6865725" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcElectricCurrentMeasure</text>
+  </g>
+  <g id="IfcElectricResistanceMeasure" fill="green">
+    <rect x="1897.6308375" y="195.5532525" width="198.4653225" height="20.596144125" stroke="black" />
+    <text x="1996.86349875" y="205.8513245625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcElectricResistanceMeasure</text>
+  </g>
+  <g id="IfcElectricVoltageMeasure" fill="green">
+    <rect x="2124.4066125" y="217.69524375" width="171.25000125" height="20.596144125" stroke="black" />
+    <text x="2210.031613125" y="227.9933158125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcElectricVoltageMeasure</text>
+  </g>
+  <g id="IfcEnergyMeasure" fill="green">
+    <rect x="1897.6255875" y="220.20732375" width="198.47500125" height="20.596144125" stroke="black" />
+    <text x="1996.863088125" y="230.5053958125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcEnergyMeasure</text>
+  </g>
+  <g id="IfcForceMeasure" fill="green">
+    <rect x="2124.3990375" y="242.087295" width="171.27854625" height="20.596144125" stroke="black" />
+    <text x="2210.038310625" y="252.3853670625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcForceMeasure</text>
+  </g>
+  <g id="IfcFrequencyMeasure" fill="green">
+    <rect x="1897.6017" y="244.86376875" width="198.476745" height="20.596144125" stroke="black" />
+    <text x="1996.8400725" y="255.1618408125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcFrequencyMeasure</text>
+  </g>
+  <g id="IfcHeatFluxDensityMeasure" fill="green">
+    <rect x="2124.41265" y="266.4528675" width="171.24462375" height="20.596144125" stroke="black" />
+    <text x="2210.034961875" y="276.7509395625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcHeatFluxDensityMeasure</text>
+  </g>
+  <g id="IfcHeatingValueMeasure" fill="green">
+    <rect x="2595.4296375" y="569.8734" width="280.47040875" height="26.3631975" stroke="black" />
+    <text x="2735.664841875" y="583.05499875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcHeatingValueMeasure</text>
+  </g>
+  <g id="IfcIdentifier" fill="green">
+    <rect x="936.1101375" y="419.0647875" width="70.16383875" height="20.15712225" stroke="black" />
+    <text x="971.192056875" y="429.143348625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcIdentifier</text>
+  </g>
+  <g id="IfcIlluminanceMeasure" fill="green">
+    <rect x="2124.4061625" y="315.22621875" width="171.27386625" height="20.596144125" stroke="black" />
+    <text x="2210.043095625" y="325.5242908125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcIlluminanceMeasure</text>
+  </g>
+  <g id="IfcInductanceMeasure" fill="green">
+    <rect x="1897.6275375" y="269.52463125" width="198.45100125" height="20.596144125" stroke="black" />
+    <text x="1996.853038125" y="279.8227033125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcInductanceMeasure</text>
+  </g>
+  <g id="IfcInteger" fill="green">
+    <rect x="803.000091552735" y="451.000015258789" width="66.9999408721935" height="24.499984741211" stroke="black" />
+    <text x="836.500061988832" y="463.250007629394" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcInteger</text>
+  </g>
+  <g id="IfcIntegerCountRateMeasure" fill="green">
+    <rect x="2124.387675" y="290.8355775" width="171.2625" height="20.596144125" stroke="black" />
+    <text x="2210.018925" y="301.1336495625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcIntegerCountRateMeasure</text>
+  </g>
+  <g id="IfcIonConcentrationMeasure" fill="green">
+    <rect x="2595.4380375" y="625.5104625" width="280.46470875" height="26.3631975" stroke="black" />
+    <text x="2735.670391875" y="638.69206125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcIonConcentrationMeasure</text>
+  </g>
+  <g id="IfcIsothermalMoistureCapacityMeasure" fill="green">
+    <rect x="1897.60725" y="294.16462125" width="199.37784375" height="20.596144125" stroke="black" />
+    <text x="1997.296171875" y="304.4626933125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcIsothermalMoistureCapacityMeasure</text>
+  </g>
+  <g id="IfcKinematicViscosityMeasure" fill="green">
+    <rect x="2124.406875" y="339.613755" width="171.2625" height="19.8756975" stroke="black" />
+    <text x="2210.038125" y="349.55160375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcKinematicViscosityMeasure</text>
+  </g>
+  <g id="IfcLabel" fill="green">
+    <rect x="936.83655" y="387.459375" width="70.15397625" height="20.15712225" stroke="black" />
+    <text x="971.913538125" y="397.537936125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcLabel</text>
+  </g>
+  <g id="IfcLengthMeasure" fill="green">
+    <rect x="1332.167775" y="372.36790125" width="165.53749875" height="24.75" stroke="black" />
+    <text x="1414.936524375" y="384.74290125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcLengthMeasure</text>
+  </g>
+  <g id="IfcLinearForceMeasure" fill="green">
+    <rect x="1897.624575" y="318.84123" width="198.4709025" height="20.596144125" stroke="black" />
+    <text x="1996.86002625" y="329.1393020625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcLinearForceMeasure</text>
+  </g>
+  <g id="IfcLinearMomentMeasure" fill="green">
+    <rect x="2124.41865" y="363.99565125" width="171.2553975" height="20.596144125" stroke="black" />
+    <text x="2210.04634875" y="374.2937233125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcLinearMomentMeasure</text>
+  </g>
+  <g id="IfcLinearStiffnessMeasure" fill="green">
+    <rect x="2124.4461375" y="388.355475" width="171.27657375" height="20.596144125" stroke="black" />
+    <text x="2210.084424375" y="398.6535470625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcLinearStiffnessMeasure</text>
+  </g>
+  <g id="IfcLinearVelocityMeasure" fill="green">
+    <rect x="1897.623825" y="343.4948175" width="198.47500125" height="24.75" stroke="black" />
+    <text x="1996.861325625" y="355.8698175" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcLinearVelocityMeasure</text>
+  </g>
+  <g id="IfcLogical" fill="green">
+    <rect x="805.4134125" y="419.0155875" width="64.34532375" height="20.15712225" stroke="black" />
+    <text x="837.586074375" y="429.094148625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcLogical</text>
+  </g>
+  <g id="IfcLuminousFluxMeasure" fill="green">
+    <rect x="2124.462525" y="412.7388" width="171.2450025" height="20.596144125" stroke="black" />
+    <text x="2210.08502625" y="423.0368720625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcLuminousFluxMeasure</text>
+  </g>
+  <g id="IfcLuminousIntensityDistributionMeasure" fill="green">
+    <rect x="2595.416925" y="486.4087125" width="280.4670675" height="26.361384" stroke="black" />
+    <text x="2735.65045875" y="499.5894045" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcLuminousIntensityDistributionMeasure</text>
+  </g>
+  <g id="IfcLuminousIntensityMeasure" fill="green">
+    <rect x="1540.922775" y="388.5598125" width="152.06424375" height="24.75" stroke="black" />
+    <text x="1616.954896875" y="400.9348125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcLuminousIntensityMeasure</text>
+  </g>
+  <g id="IfcMagneticFluxDensityMeasure" fill="green">
+    <rect x="2124.4427625" y="437.122575" width="171.28127625" height="20.596144125" stroke="black" />
+    <text x="2210.083400625" y="447.4206470625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcMagneticFluxDensityMeasure</text>
+  </g>
+  <g id="IfcMagneticFluxMeasure" fill="green">
+    <rect x="1897.6047375" y="373.01223" width="198.4700025" height="20.596144125" stroke="black" />
+    <text x="1996.83973875" y="383.3103020625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcMagneticFluxMeasure</text>
+  </g>
+  <g id="IfcMassDensityMeasure" fill="green">
+    <rect x="1897.6288875" y="397.683225" width="198.45" height="19.8756975" stroke="black" />
+    <text x="1996.8538875" y="407.62107375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcMassDensityMeasure</text>
+  </g>
+  <g id="IfcMassFlowRateMeasure" fill="green">
+    <rect x="2124.43815" y="461.49495" width="171.25000125" height="19.8756975" stroke="black" />
+    <text x="2210.063150625" y="471.43279875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcMassFlowRateMeasure</text>
+  </g>
+  <g id="IfcMassMeasure" fill="green">
+    <rect x="1540.9756125" y="431.8226625" width="152.03294625" height="20.15712225" stroke="black" />
+    <text x="1616.992085625" y="441.901223625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcMassMeasure</text>
+  </g>
+  <g id="IfcMassPerLengthMeasure" fill="green">
+    <rect x="2595.42105" y="208.33952625" width="280.44262875" height="26.36933025" stroke="black" />
+    <text x="2735.642364375" y="221.524191375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcMassPerLengthMeasure</text>
+  </g>
+  <g id="IfcModulusOfElasticityMeasure" fill="green">
+    <rect x="1897.6125" y="422.32635" width="198.46556625" height="20.596144125" stroke="black" />
+    <text x="1996.845283125" y="432.6244220625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcModulusOfElasticityMeasure</text>
+  </g>
+  <g id="IfcModulusOfLinearSubgradeReactionMeasure" fill="green">
+    <rect x="2595.4114875" y="430.7990625" width="280.44174375" height="26.36933025" stroke="black" />
+    <text x="2735.632359375" y="443.983727625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcModulusOfLinearSubgradeReactionMeasure</text>
+  </g>
+  <g id="IfcModulusOfRotationalSubgradeReactionMeasure" fill="green">
+    <rect x="2595.4114875" y="458.6098875" width="280.444035" height="26.377276875" stroke="black" />
+    <text x="2735.633505" y="471.7985259375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcModulusOfRotationalSubgradeReactionMeasure</text>
+  </g>
+  <g id="IfcModulusOfSubgradeReactionMeasure" fill="green">
+    <rect x="2124.428625" y="485.8571625" width="171.26479875" height="33.25577475" stroke="black" />
+    <text x="2210.061024375" y="502.485049875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcModulusOfSubgradeReactionMeasure</text>
+  </g>
+  <g id="IfcMoistureDiffusivityMeasure" fill="green">
+    <rect x="1897.6368375" y="446.997825" width="198.4526025" height="20.596144125" stroke="black" />
+    <text x="1996.86313875" y="457.2958970625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcMoistureDiffusivityMeasure</text>
+  </g>
+  <g id="IfcMolecularWeightMeasure" fill="green">
+    <rect x="2124.4374" y="523.6008375" width="171.24610125" height="20.596144125" stroke="black" />
+    <text x="2210.060450625" y="533.8989095625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcMolecularWeightMeasure</text>
+  </g>
+  <g id="IfcMomentOfInertiaMeasure" fill="green">
+    <rect x="1897.615425" y="471.674475" width="198.4585425" height="20.596144125" stroke="black" />
+    <text x="1996.84469625" y="481.9725470625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcMomentOfInertiaMeasure</text>
+  </g>
+  <g id="IfcMonetaryMeasure" fill="green">
+    <rect x="2124.456975" y="547.9761" width="171.25000125" height="19.8756975" stroke="black" />
+    <text x="2210.081975625" y="557.91394875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcMonetaryMeasure</text>
+  </g>
+  <g id="IfcNonNegativeLengthMeasure" fill="green">
+    <rect x="1333.8775875" y="458.38695" width="164.8936425" height="20.625" stroke="black" />
+    <text x="1416.32440875" y="468.69945" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcNonNegativeLengthMeasure</text>
+  </g>
+  <g id="IfcNormalisedRatioMeasure" fill="green">
+    <rect x="1561.194975" y="600.2169" width="148.52707875" height="24.954438" stroke="black" />
+    <text x="1635.458514375" y="612.694119" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcNormalisedRatioMeasure</text>
+  </g>
+  <g id="IfcNumericMeasure" fill="green">
+    <rect x="1332.9129375" y="513.2716125" width="165.5204475" height="20.15712225" stroke="black" />
+    <text x="1415.67316125" y="523.350173625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcNumericMeasure</text>
+  </g>
+  <g id="IfcParameterValue" fill="green">
+    <rect x="1540.9458" y="469.0839375" width="152.05000125" height="20.15712225" stroke="black" />
+    <text x="1616.970800625" y="479.162498625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcParameterValue</text>
+  </g>
+  <g id="IfcPHMeasure" fill="green">
+    <rect x="2595.4383375" y="597.6920625" width="280.45073625" height="26.3631975" stroke="black" />
+    <text x="2735.663705625" y="610.87366125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcPHMeasure</text>
+  </g>
+  <g id="IfcPlanarForceMeasure" fill="green">
+    <rect x="1897.64775" y="496.3482375" width="198.4435125" height="20.596144125" stroke="black" />
+    <text x="1996.86950625" y="506.6463095625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcPlanarForceMeasure</text>
+  </g>
+  <g id="IfcPlaneAngleMeasure" fill="green">
+    <rect x="1332.8907" y="547.5080625" width="165.53749875" height="24.75" stroke="black" />
+    <text x="1415.659449375" y="559.8830625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcPlaneAngleMeasure</text>
+  </g>
+  <g id="IfcPositiveInteger" fill="green">
+    <rect x="729.000045776366" y="504.000030517579" width="95.999969482422" height="24.499984741211" stroke="black" />
+    <text x="777.000030517577" y="516.250022888184" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcPositiveInteger</text>
+  </g>
+  <g id="IfcPositiveLengthMeasure" fill="green">
+    <rect x="1358.2645875" y="418.9735125" width="139.41912" height="21.765042375" stroke="black" />
+    <text x="1427.9741475" y="429.8560336875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcPositiveLengthMeasure</text>
+  </g>
+  <g id="IfcPositivePlaneAngleMeasure" fill="green">
+    <rect x="1332.8942625" y="590.00085" width="165.53268375" height="24.75" stroke="black" />
+    <text x="1415.660604375" y="602.37585" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcPositivePlaneAngleMeasure</text>
+  </g>
+  <g id="IfcPositiveRatioMeasure" fill="green">
+    <rect x="1540.966575" y="561.8904" width="132.62500125" height="24.75" stroke="black" />
+    <text x="1607.279075625" y="574.2654" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcPositiveRatioMeasure</text>
+  </g>
+  <g id="IfcPowerMeasure" fill="green">
+    <rect x="2124.425325" y="572.3653125" width="171.2625" height="19.8756975" stroke="black" />
+    <text x="2210.056575" y="582.30316125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcPowerMeasure</text>
+  </g>
+  <g id="IfcPressureMeasure" fill="green">
+    <rect x="1897.6320375" y="520.9940625" width="198.45174375" height="19.8756975" stroke="black" />
+    <text x="1996.857909375" y="530.93191125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcPressureMeasure</text>
+  </g>
+  <g id="IfcRadioActivityMeasure" fill="green">
+    <rect x="2124.4599" y="596.747775" width="171.2457375" height="20.596144125" stroke="black" />
+    <text x="2210.08276875" y="607.0458470625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcRadioActivityMeasure</text>
+  </g>
+  <g id="IfcRatioMeasure" fill="green">
+    <rect x="1540.975725" y="506.337225" width="152.03749875" height="24.75" stroke="black" />
+    <text x="1616.994474375" y="518.712225" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcRatioMeasure</text>
+  </g>
+  <g id="IfcReal" fill="green">
+    <rect x="810.426025390624" y="565.706329345702" width="64.30879125" height="20.15712225" stroke="black" />
+    <text x="842.580421015624" y="575.784890470702" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcReal</text>
+  </g>
+  <g id="IfcRotationalFrequencyMeasure" fill="green">
+    <rect x="1897.60875" y="545.6415375" width="198.46576125" height="20.596144125" stroke="black" />
+    <text x="1996.841630625" y="555.9396095625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcRotationalFrequencyMeasure</text>
+  </g>
+  <g id="IfcRotationalMassMeasure" fill="green">
+    <rect x="2595.435225" y="236.1342675" width="280.45680375" height="26.377276875" stroke="black" />
+    <text x="2735.663626875" y="249.3229059375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcRotationalMassMeasure</text>
+  </g>
+  <g id="IfcRotationalStiffnessMeasure" fill="green">
+    <rect x="2124.45045" y="621.1401" width="171.27397875" height="20.596144125" stroke="black" />
+    <text x="2210.087439375" y="631.4381720625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcRotationalStiffnessMeasure</text>
+  </g>
+  <g id="IfcSectionalAreaIntegralMeasure" fill="green">
+    <rect x="2595.4341" y="263.95257" width="280.45680375" height="26.36933025" stroke="black" />
+    <text x="2735.662501875" y="277.137235125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcSectionalAreaIntegralMeasure</text>
+  </g>
+  <g id="IfcSectionModulusMeasure" fill="green">
+    <rect x="2595.422175" y="291.743655" width="280.4693025" height="26.3852235" stroke="black" />
+    <text x="2735.65682625" y="304.93626675" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcSectionModulusMeasure</text>
+  </g>
+  <g id="IfcShearModulusMeasure" fill="green">
+    <rect x="1897.6461" y="570.311025" width="198.452325" height="20.596144125" stroke="black" />
+    <text x="1996.8722625" y="580.6090970625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcShearModulusMeasure</text>
+  </g>
+  <g id="IfcSolidAngleMeasure" fill="green">
+    <rect x="1540.9417125" y="637.8179625" width="151.99999875" height="24.75" stroke="black" />
+    <text x="1616.941711875" y="650.1929625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcSolidAngleMeasure</text>
+  </g>
+  <g id="IfcSoundPowerLevelMeasure" fill="green">
+    <rect x="2595.4480875" y="52.6873275" width="280.44331125" height="26.353716375" stroke="black" />
+    <text x="2735.669743125" y="65.8641856875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcSoundPowerLevelMeasure</text>
+  </g>
+  <g id="IfcSoundPowerMeasure" fill="green">
+    <rect x="2595.423525" y="514.2210375" width="280.44331125" height="26.353716375" stroke="black" />
+    <text x="2735.645180625" y="527.3978956875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcSoundPowerMeasure</text>
+  </g>
+  <g id="IfcSoundPressureLevelMeasure" fill="green">
+    <rect x="2595.4197" y="81.34363875" width="280.44766875" height="26.380625625" stroke="black" />
+    <text x="2735.643534375" y="94.5339515625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcSoundPressureLevelMeasure</text>
+  </g>
+  <g id="IfcSoundPressureMeasure" fill="green">
+    <rect x="2595.4278375" y="542.02185" width="280.44766875" height="26.380625625" stroke="black" />
+    <text x="2735.651671875" y="555.2121628125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcSoundPressureMeasure</text>
+  </g>
+  <g id="IfcSpecificHeatCapacityMeasure" fill="green">
+    <rect x="1897.6235625" y="594.9631875" width="198.45016875" height="20.596144125" stroke="black" />
+    <text x="1996.848646875" y="605.2612595625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcSpecificHeatCapacityMeasure</text>
+  </g>
+  <g id="IfcTemperatureGradientMeasure" fill="green">
+    <rect x="2595.4227375" y="319.54887375" width="280.4437425" height="26.361384" stroke="black" />
+    <text x="2735.64460875" y="332.72956575" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcTemperatureGradientMeasure</text>
+  </g>
+  <g id="IfcTemperatureRateOfChangeMeasure" fill="green">
+    <rect x="2595.4300125" y="138.65762625" width="280.47760125" height="26.34743475" stroke="black" />
+    <text x="2735.668813125" y="151.831343625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcTemperatureRateOfChangeMeasure</text>
+  </g>
+  <g id="IfcText" fill="green">
+    <rect x="935.6642625" y="452.79465" width="70.12778625" height="20.15712225" stroke="black" />
+    <text x="970.728155625" y="462.873211125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcText</text>
+  </g>
+  <g id="IfcThermalAdmittanceMeasure" fill="green">
+    <rect x="2124.4347375" y="645.5247" width="171.2463675" height="19.8756975" stroke="black" />
+    <text x="2210.05792125" y="655.46254875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcThermalAdmittanceMeasure</text>
+  </g>
+  <g id="IfcThermalConductivityMeasure" fill="green">
+    <rect x="1897.6421625" y="619.6241625" width="198.45280125" height="20.596144125" stroke="black" />
+    <text x="1996.868563125" y="629.9222345625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcThermalConductivityMeasure</text>
+  </g>
+  <g id="IfcThermalExpansionCoefficientMeasure" fill="green">
+    <rect x="2595.4359375" y="402.9905625" width="280.47499875" height="26.377276875" stroke="black" />
+    <text x="2735.673436875" y="416.1792009375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcThermalExpansionCoefficientMeasure</text>
+  </g>
+  <g id="IfcThermalResistanceMeasure" fill="green">
+    <rect x="2124.4492875" y="669.8912625" width="171.26424375" height="19.8756975" stroke="black" />
+    <text x="2210.081409375" y="679.82911125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcThermalResistanceMeasure</text>
+  </g>
+  <g id="IfcThermalTransmittanceMeasure" fill="green">
+    <rect x="1897.6231875" y="644.2893" width="198.46249875" height="19.8756975" stroke="black" />
+    <text x="1996.854436875" y="654.22714875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcThermalTransmittanceMeasure</text>
+  </g>
+  <g id="IfcThermodynamicTemperatureMeasure" fill="green">
+    <rect x="1331.947125" y="668.21895" width="165.5543475" height="33.192732375" stroke="black" />
+    <text x="1414.72429875" y="684.8153161875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcThermodynamicTemperatureMeasure</text>
+  </g>
+  <g id="IfcTimeMeasure" fill="green">
+    <rect x="1332.8962875" y="627.9759375" width="165.525" height="24.75" stroke="black" />
+    <text x="1415.6587875" y="640.3509375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcTimeMeasure</text>
+  </g>
+  <g id="IfcTorqueMeasure" fill="green">
+    <rect x="2124.409575" y="693.5416125" width="171.24578625" height="20.596144125" stroke="black" />
+    <text x="2210.032468125" y="703.8396845625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcTorqueMeasure</text>
+  </g>
+  <g id="IfcVaporPermeabilityMeasure" fill="green">
+    <rect x="1897.6299" y="668.9411625" width="198.4572375" height="20.596144125" stroke="black" />
+    <text x="1996.85851875" y="679.2392345625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcVaporPermeabilityMeasure</text>
+  </g>
+  <g id="IfcVolumeMeasure" fill="green">
+    <rect x="1540.9396875" y="681.068475" width="152.01250125" height="24.75" stroke="black" />
+    <text x="1616.945938125" y="693.443475" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcVolumeMeasure</text>
+  </g>
+  <g id="IfcVolumetricFlowRateMeasure" fill="green">
+    <rect x="2124.3997875" y="717.906675" width="171.2767425" height="19.8756975" stroke="black" />
+    <text x="2210.03815875" y="727.84452375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcVolumetricFlowRateMeasure</text>
+  </g>
+  <g id="IfcWarpingConstantMeasure" fill="green">
+    <rect x="2595.427125" y="347.3659575" width="280.44430125" height="26.377276875" stroke="black" />
+    <text x="2735.649275625" y="360.5545959375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcWarpingConstantMeasure</text>
+  </g>
+  <g id="IfcWarpingMomentMeasure" fill="green">
+    <rect x="2595.4146375" y="375.171525" width="280.46986125" height="26.3852235" stroke="black" />
+    <text x="2735.649568125" y="388.36413675" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcWarpingMomentMeasure</text>
+  </g>
+  <g id="IfcDerivedUnitEnum" fill="green">
+    <rect x="13.21310175" y="25.8401055" width="115.00000125" height="25.7856105" stroke="black" />
+    <text x="70.713102375" y="38.73291075" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcDerivedUnitEnum</text>
+  </g>
+  <g id="IfcSIPrefix" fill="green">
+    <rect x="50.3776575" y="619.839675" width="70.37500125" height="20.15712225" stroke="black" />
+    <text x="85.565158125" y="629.918236125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcSIPrefix</text>
+  </g>
+  <g id="IfcSIUnitName" fill="green">
+    <rect x="57.10132125" y="658.342425" width="110.37499875" height="24.75" stroke="black" />
+    <text x="112.288820625" y="670.717425" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcSIUnitName</text>
+  </g>
+  <g id="IfcUnitEnum" fill="green">
+    <rect x="336.98177625" y="458.443125" width="80.37499875" height="20.15712225" stroke="black" />
+    <text x="377.169275625" y="468.521686125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcUnitEnum</text>
+  </g>
+  <g id="IfcDerivedMeasureValue" fill="green">
+    <rect x="1955.8543875" y="19.314382875" width="135.7149375" height="19.912459125" stroke="black" />
+    <polyline points="2091.569325,28.689389625 2109.044133,28.689389625 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.044175,727.281675 2124.399792375,727.281675 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.044175,653.6643 2096.08571925,653.6643 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.044175,679.2662625 2124.449292375,679.2662625 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.044175,654.8997 2124.434742375,654.8997 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.044175,530.3690625 2096.08381425,530.3690625 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.044175,581.7403125 2124.425329875,581.7403125 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.044175,470.86995 2124.438154875,470.86995 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.044175,407.058225 2096.078935125,407.058225 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.044175,355.8698175 2096.09885925,355.8698175 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.044175,348.988755 2124.406879875,348.988755 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.044175,300.55039875 2124.387679875,300.55039875 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.044175,276.16768875 2124.412654875,276.16768875 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.044175,254.57858625 2096.078478,254.57858625 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.044175,229.92214125 2096.10062175,229.92214125 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.044175,227.410065 2124.406617375,227.410065 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.044175,155.9490375 2096.10192675,155.9490375 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.044175,105.57991125 2095.15500375,105.57991125 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.044175,129.9159 2124.416217375,129.9159 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.044175,629.3389875 2096.09499675,629.3389875 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.044175,533.3156625 2124.437404875,533.3156625 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.044175,678.65595 2096.08717125,678.65595 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.044175,456.71265 2096.089473,456.71265 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.044175,299.62090125 2096.98512675,299.62090125 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.044175,604.6780125 2096.07376425,604.6780125 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.0441375,557.3511 2124.456979875,557.3511 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.0441375,446.8374 2124.442767375,446.8374 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.0441375,382.7270625 2096.074773,382.7270625 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.0441375,422.453625 2124.462529875,422.453625 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.0441375,251.80212 2124.399042375,251.80212 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.0441375,279.2394525 2096.07857175,279.2394525 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.0441375,324.94104375 2124.406167375,324.94104375 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.0441375,205.26807375 2096.096194875,205.26807375 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.0441375,203.04594375 2124.423979875,203.04594375 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.0441375,178.666845 2124.416254875,178.666845 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.0441375,154.27873875 2124.395367375,154.27873875 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.0441375,180.60240375 2096.1009705,180.60240375 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.0441375,130.555425 2095.62284325,130.555425 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.0441375,606.4625625 2124.459904875,606.4625625 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.0441375,555.3563625 2096.07454425,555.3563625 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.0441375,703.2564 2124.409579875,703.2564 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.0441375,105.55736625 2124.425104875,105.55736625 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.0441375,328.55606625 2096.095510875,328.55606625 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.0441375,398.0703 2124.446142375,398.0703 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.0441375,502.4850375 2124.428629875,502.4850375 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.0441375,432.0411375 2096.07809925,432.0411375 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.0441375,481.3893 2096.0740005,481.3893 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.0441375,506.0630625 2096.0912955,506.0630625 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.0441375,630.854925 2124.450454875,630.854925 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.0441375,580.02585 2096.098458,580.02585 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.0441375,373.71047625 2124.418654875,373.71047625 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.044175,28.606288125 2450.84376,28.606288125 2450.84376,499.589375625 2595.416925,499.589375625 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.044175,28.883266125 2550.0600375,28.883266125 2550.0600375,193.711534875 2595.44548875,193.711534875 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.044175,28.861444125 2540.6262,28.861444125 2540.6262,221.524192875 2595.421035,221.524192875 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.044175,29.08423125 2467.91881125,29.08423125 2467.91881125,443.98370625 2595.4114875,443.98370625 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.044175,29.106093375 2459.09317875,29.106093375 2459.09317875,470.389705875 2595.4114875,470.389705875 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.044175,28.844841375 2530.91835,28.844841375 2530.91835,248.167048875 2595.43522125,248.167048875 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.044175,28.8767565 2521.409475,28.8767565 2521.409475,277.137234 2595.43405875,277.137234 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.044175,28.904896875 2511.9657375,28.904896875 2511.9657375,304.936265625 2595.42216,304.936265625 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.044175,29.101649625 2502.7258875,29.101649625 2502.7258875,332.729560875 2595.4227525,332.729560875 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.044175,28.969683 2476.57402875,28.969683 2476.57402875,416.1791955 2595.4359375,416.1791955 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.044175,28.979638875 2493.6548625,28.979638875 2493.6548625,360.554597625 2595.42711375,360.554597625 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.044175,28.984816875 2484.5788125,28.984816875 2484.5788125,388.364139375 2595.41463,388.364139375 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.044175,28.90517175 2442.4623225,28.90517175 2442.4623225,527.39788425 2595.423525,527.39788425 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.0441375,28.842691875 2434.45951875,28.842691875 2434.45951875,555.212154375 2595.4278375,555.212154375 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.0441375,28.836761625 2426.76327,28.836761625 2426.76327,583.054999125 2595.42963,583.054999125 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.0441375,28.89978375 2419.85169,28.89978375 2419.85169,610.87368375 2595.4383375,610.87368375 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.0441375,28.643646375 2412.58446375,28.643646375 2412.58446375,638.692033875 2595.4380375,638.692033875 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.0441375,28.8408435 2559.5613375,28.8408435 2559.5613375,151.83134475 2595.430020375,151.83134475 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.0441375,28.947415875 2568.0322125,28.947415875 2568.0322125,123.200077125 2595.412540125,123.200077125 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.0441375,28.96308 2582.7087,28.96308 2582.7087,65.864186625 2595.448083,65.864186625 " fill="none" stroke="black" />
+    <polyline points="2109.044133,28.689389625 2109.0441375,29.0642445 2576.13555,29.0642445 2576.13555,94.5339495 2595.41972475,94.5339495 " fill="none" stroke="black" />
+    <text x="2023.71185625" y="29.2706124375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcDerivedMeasureValue</text>
+  </g>
+  <g id="IfcMeasureValue" fill="green">
+    <rect x="1354.378875" y="195.065895" width="108" height="24.75" stroke="black" />
+    <polyline points="1462.378875,207.440895 1517.55628125,207.440895 " fill="none" stroke="black" />
+    <polyline points="1517.55628125,207.440895 1517.5563375,693.443475 1540.93967775,693.443475 " fill="none" stroke="black" />
+    <polyline points="1517.55628125,207.440895 1517.5563375,640.3509375 1498.42127775,640.3509375 " fill="none" stroke="black" />
+    <polyline points="1517.55628125,207.440895 1517.5563375,684.815325 1497.50146275,684.815325 " fill="none" stroke="black" />
+    <polyline points="1517.55628125,207.440895 1517.5563375,650.1929625 1540.94170275,650.1929625 " fill="none" stroke="black" />
+    <polyline points="1517.55628125,207.440895 1517.5563375,574.2654 1540.96656525,574.2654 " fill="none" stroke="black" />
+    <polyline points="1517.55628125,207.440895 1517.5563375,518.712225 1540.97571525,518.712225 " fill="none" stroke="black" />
+    <polyline points="1517.55628125,207.440895 1517.5563375,602.37585 1498.4269365,602.37585 " fill="none" stroke="black" />
+    <polyline points="1517.55628125,207.440895 1517.5563375,559.8830625 1498.428189,559.8830625 " fill="none" stroke="black" />
+    <polyline points="1517.55628125,207.440895 1517.5563375,479.1625125 1540.94579025,479.1625125 " fill="none" stroke="black" />
+    <polyline points="1517.55628125,207.440895 1517.5563375,523.35015 1498.43337525,523.35015 " fill="none" stroke="black" />
+    <polyline points="1517.55628125,207.440895 1517.5563375,441.9012375 1540.97560275,441.9012375 " fill="none" stroke="black" />
+    <polyline points="1517.55628125,207.440895 1517.5563375,429.8560125 1497.68369775,429.8560125 " fill="none" stroke="black" />
+    <polyline points="1517.55628125,207.440895 1517.5563375,384.7429125 1497.705264,384.7429125 " fill="none" stroke="black" />
+    <polyline points="1517.55628125,207.440895 1517.5563375,357.6865725 1540.96502775,357.6865725 " fill="none" stroke="black" />
+    <polyline points="1517.55628125,207.440895 1517.5563375,348.203835 1497.71009775,348.203835 " fill="none" stroke="black" />
+    <polyline points="1517.55628125,207.440895 1517.5563375,312.330915 1540.96262775,312.330915 " fill="none" stroke="black" />
+    <polyline points="1517.55628125,207.440895 1517.5563375,310.2738225 1497.65957775,310.2738225 " fill="none" stroke="black" />
+    <polyline points="1517.55628125,207.440895 1517.5563375,271.17903 1540.93937775,271.17903 " fill="none" stroke="black" />
+    <polyline points="1517.55628125,207.440895 1517.5563375,269.76180375 1497.68762025,269.76180375 " fill="none" stroke="black" />
+    <polyline points="1517.55628125,207.440895 1517.5562625,402.5307 1540.92276525,402.5307 " fill="none" stroke="black" />
+    <polyline points="1517.55628125,207.440895 1517.5562625,612.694125 1561.19494875,612.694125 " fill="none" stroke="black" />
+    <polyline points="1517.55628125,207.440895 1517.5562625,730.55445 1498.44155025,730.55445 " fill="none" stroke="black" />
+    <polyline points="1517.55628125,207.440895 1517.5563,468.69945 1498.771230375,468.69945 " fill="none" stroke="black" />
+    <text x="1408.378875" y="207.440895" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcMeasureValue</text>
+  </g>
+  <g id="IfcSimpleValue" fill="green">
+    <rect x="778.579925537111" y="325.665412902832" width="91.19065125" height="21.988129875" stroke="black" />
+    <polyline points="869.770576787111,336.6594675 869.770576787111,336.6594675 899.7529635,336.6594675 " fill="none" stroke="black" />
+    <polyline points="899.7529635,336.6594675 899.7529635,336.6594675 899.7529635,463.250007629392 870.000032424926,463.250007629392 " fill="none" stroke="black" />
+    <polyline points="899.7529635,336.6594675 899.7529635,336.6594675 899.7529635,575.784890470703 874.734816640624,575.784890470703 " fill="none" stroke="black" />
+    <polyline points="899.7529635,336.6594675 899.7529635,336.6594675 899.7529635,397.281398625 869.74673625,397.281398625 " fill="none" stroke="black" />
+    <polyline points="899.7529635,336.6594675 899.752875,429.1433625 936.11015175,429.1433625 " fill="none" stroke="black" />
+    <polyline points="899.7529635,336.6594675 899.7529635,336.6594675 899.7529635,462.873211125 935.6642625,462.873211125 " fill="none" stroke="black" />
+    <polyline points="899.7529635,336.6594675 899.752875,397.53795 936.836543625,397.53795 " fill="none" stroke="black" />
+    <polyline points="899.7529635,336.6594675 899.75295,429.0941625 869.75876025,429.0941625 " fill="none" stroke="black" />
+    <polyline points="899.7529635,336.6594675 899.7529635,336.6594675 899.7529635,611.734804204102 935.63333129883,611.734804204102 " fill="none" stroke="black" />
+    <polyline points="899.7529635,336.6594675 899.7529635,336.6594675 899.7529635,671.301805546875 935.63333129883,671.301805546875 " fill="none" stroke="black" />
+    <polyline points="899.7529635,336.6594675 899.7529635,336.6594675 899.7529635,727.902589848634 935.63333129883,727.902589848634 " fill="none" stroke="black" />
+    <polyline points="899.7529635,336.6594675 899.7529635,336.6594675 899.7529635,784.496004155272 935.63333129883,784.496004155272 " fill="none" stroke="black" />
+    <polyline points="899.7529635,336.6594675 899.7529635,336.6594675 899.7529635,840.412549746094 935.63333129883,840.412549746094 " fill="none" stroke="black" />
+    <polyline points="778.579925537111,347.653542777832 777.000030517579,347.653542777832 777.000030517579,504.000030517579 " fill="none" stroke="black" />
+    <polyline points="869.770576787111,347.653542777832 869.770576787111,492.07857638379 934.664337158205,492.07857638379 " fill="none" stroke="black" />
+    <text x="824.175251162111" y="336.659477840332" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcSimpleValue</text>
+  </g>
+  <g id="IfcUnit" fill="green">
+    <rect x="461.8509" y="22.79308125" width="56.25" height="27.314845875" stroke="black" />
+    <polyline points="489.9759,50.1079275 489.9759,74.85578025 " fill="none" stroke="black" />
+    <polyline points="489.9759,74.85578025 97.1961975,74.85577875 97.1961975,96.630917625 " fill="none" stroke="black" />
+    <polyline points="489.9759,74.85578025 570.6097125,74.85577875 570.6097125,440.39258625 " fill="none" stroke="black" />
+    <polyline points="489.9759,74.85578025 460.143825,74.85577875 460.143825,101.490048375 " fill="none" stroke="black" />
+    <text x="489.9759" y="36.4505041875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcUnit</text>
+  </g>
+  <g id="IfcValue" fill="green">
+    <rect x="1217.64195" y="89.80721625" width="61.23794625" height="37.103241" stroke="black" />
+    <polyline points="1278.8799,108.35884125 1320.20476125,108.35884125 " fill="none" stroke="black" />
+    <polyline points="1320.20476125,108.35884125 1320.2047875,207.440895 1354.378871625,207.440895 " fill="none" stroke="black" />
+    <polyline points="1320.20476125,108.35884125 1320.20475,160.269795 1356.69150225,160.269795 " fill="none" stroke="black" />
+    <polyline points="1320.20476125,108.35884125 1320.20475,108.7449 1353.197945625,108.7449 " fill="none" stroke="black" />
+    <text x="1248.260923125" y="108.35883675" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcValue</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1212.032925" y="260.55227625" width="70.8409575" height="20.15712225" stroke="black" />
+    <text x="1247.45340375" y="270.630837375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.259575" y="121.21270125" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.384575" y="131.291262375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1721.8790625" y="261.71342625" width="70.875" height="20.15712225" stroke="black" />
+    <text x="1757.3165625" y="271.791987375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="BOOLEAN" fill="grey">
+    <rect x="676.8034875" y="387.97725" width="76.125" height="20.15712225" stroke="black" />
+    <text x="714.8659875" y="398.055811125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">BOOLEAN</text>
+  </g>
+  <g id="INTEGER" fill="grey">
+    <rect x="1807.2247125" y="95.50697625" width="64.1749125" height="20.15712225" stroke="black" />
+    <text x="1839.31216875" y="105.585537375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">INTEGER</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1212.0224625" y="300.78469875" width="70.8409575" height="20.15712225" stroke="black" />
+    <text x="1247.44294125" y="310.863259875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="NUMBER" fill="grey">
+    <rect x="1721.8596" y="303.58444125" width="70.875" height="20.15712225" stroke="black" />
+    <text x="1757.2971" y="313.663002375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">NUMBER</text>
+  </g>
+  <g id="STRING" fill="grey">
+    <rect x="1212.0316125" y="341.02567875" width="70.875" height="20.15712225" stroke="black" />
+    <text x="1247.4691125" y="351.104239875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">STRING</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1808.0049" y="145.4917725" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.1299" y="155.570333625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1721.901075" y="345.1380075" width="70.875" height="20.15712225" stroke="black" />
+    <text x="1757.338575" y="355.216568625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.2398125" y="218.77998" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.3648125" y="228.858541125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1807.9747125" y="220.46852625" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.0997125" y="230.547087375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1807.97415" y="245.45538" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.09915" y="255.533941125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.2326125" y="267.56089125" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.3576125" y="277.639452375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="INTEGER" fill="grey">
+    <rect x="676.8199875" y="452.3071875" width="76.125" height="20.15712225" stroke="black" />
+    <text x="714.8824875" y="462.385748625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">INTEGER</text>
+  </g>
+  <g id="INTEGER" fill="grey">
+    <rect x="2322.994875" y="291.96633375" width="70.5" height="20.15712225" stroke="black" />
+    <text x="2358.244875" y="302.044894875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">INTEGER</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.2292375" y="340.79283" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.3542375" y="350.871391125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1211.9994375" y="376.3965" width="70.8409575" height="20.15712225" stroke="black" />
+    <text x="1247.41991625" y="386.475061125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1807.99485" y="345.40980375" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.11985" y="355.488364875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1721.8596" y="390.8082375" width="70.875" height="20.15712225" stroke="black" />
+    <text x="1757.2971" y="400.886798625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1807.9879125" y="395.4040875" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.1129125" y="405.482648625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.227925" y="462.8024625" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.352925" y="472.881023625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1721.85915" y="431.1751125" width="70.875" height="20.15712225" stroke="black" />
+    <text x="1757.29665" y="441.253673625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.2329875" y="542.7632625" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.3579875" y="552.841823625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="NUMBER" fill="grey">
+    <rect x="1212.77655" y="513.8051625" width="70.875" height="20.15712225" stroke="black" />
+    <text x="1248.21405" y="523.883723625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">NUMBER</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1721.866125" y="467.572725" width="70.875" height="20.15712225" stroke="black" />
+    <text x="1757.303625" y="477.651286125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1212.7473375" y="550.3938" width="70.8409575" height="20.15712225" stroke="black" />
+    <text x="1248.16781625" y="560.472361125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1721.8901625" y="508.2379125" width="70.875" height="20.15712225" stroke="black" />
+    <text x="1757.3276625" y="518.316473625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.25425" y="567.152475" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.37925" y="577.231036125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1808.0049375" y="520.3428" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.1299375" y="530.421361125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1721.897625" y="642.460125" width="57.36663" height="20.15712225" stroke="black" />
+    <text x="1750.58094" y="652.538686125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="STRING" fill="grey">
+    <rect x="1073.4405" y="418.4459625" width="63.375" height="20.15712225" stroke="black" />
+    <text x="1105.128" y="428.524523625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">STRING</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.24" y="640.3552875" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.365" y="650.433848625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.24225" y="664.75275" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.36725" y="674.831311125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1807.9942875" y="645.2878875" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.1192875" y="655.366448625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1212.7632" y="673.851075" width="70.8409575" height="20.15712225" stroke="black" />
+    <text x="1248.18367875" y="683.929636125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1212.7924875" y="626.0202375" width="70.8409575" height="20.15712225" stroke="black" />
+    <text x="1248.21296625" y="636.098798625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1721.88675" y="685.5694875" width="57.36663" height="20.15712225" stroke="black" />
+    <text x="1750.570065" y="695.648048625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.239325" y="712.8807375" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.364325" y="722.959298625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="STRING" fill="grey">
+    <rect x="1074.2380875" y="386.342325" width="63.375" height="20.15712225" stroke="black" />
+    <text x="1105.9255875" y="396.420886125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">STRING</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1212.8038125" y="720.62475" width="70.875" height="20.625" stroke="black" />
+    <text x="1248.2413125" y="730.93725" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="STRING" fill="grey">
+    <rect x="1073.0860875" y="451.5381375" width="63.375" height="20.460090375" stroke="black" />
+    <text x="1104.7735875" y="461.7681826875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">STRING</text>
+  </g>
+  <g id="LOGICAL" fill="grey">
+    <rect x="676.8052125" y="420.5652375" width="76.125" height="20.15712225" stroke="black" />
+    <text x="714.8677125" y="430.643798625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">LOGICAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1807.9750875" y="620.2836" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.1000875" y="630.362161125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.2349" y="518.34555" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.3599" y="528.424111125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1807.9814625" y="670.2839625" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.1064625" y="680.362523625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1807.9988625" y="445.3955625" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.1238625" y="455.474123625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1808.0044125" y="295.45069125" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.1294125" y="305.529252375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1807.9857" y="595.30185" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.1107" y="605.380411125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.2607375" y="438.39345" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.3857375" y="448.472011125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1807.974075" y="370.39736625" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.099075" y="380.475927375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.236325" y="413.972925" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.361325" y="424.051486125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.241125" y="243.16915875" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.366125" y="253.247719875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1807.977825" y="270.45165" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.102825" y="280.530211125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.2031" y="316.38637125" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.3281" y="326.464932375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1807.9825875" y="195.47089125" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.1075875" y="205.549452375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.241575" y="194.391555" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.366575" y="204.470116125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.2262375" y="169.9955625" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.3512375" y="180.074123625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.2328" y="145.59929625" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.3578" y="155.677857375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1807.972575" y="170.4690375" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.097575" y="180.547598625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1807.4933625" y="119.94436125" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1835.6183625" y="130.022922375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.2478375" y="591.5694" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.3728375" y="601.647961125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1807.9974" y="545.3173875" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.1224" y="555.395948625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.2565" y="690.7192875" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.3815" y="700.797848625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.2255625" y="96.82905" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.3505625" y="106.907611125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1808.003325" y="320.42719125" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.128325" y="330.505752375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.24285" y="389.579025" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.36785" y="399.657586125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2338.36725" y="492.8320875" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2366.49225" y="502.910648625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1808.003325" y="420.390225" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.128325" y="430.468786125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1807.9831125" y="470.3694375" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.1081125" y="480.447998625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1808.003325" y="495.3466875" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.128325" y="505.425248625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.250725" y="615.96735" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.375725" y="626.045911125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1807.9932375" y="570.3076125" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.1182375" y="580.386173625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.2544" y="365.177415" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.3794" y="375.255976125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2923.0585875" y="49.99019625" width="60.91626" height="598.9913625" stroke="black" />
+    <text x="2953.5167175" y="349.4858775" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="INTEGER" fill="grey">
+    <rect x="21.21629625" y="259.3897425" width="70.5" height="20.15712225" stroke="black" />
+    <text x="56.46629625" y="269.468303625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">INTEGER</text>
+  </g>
+  <g id="INTEGER" fill="grey">
+    <rect x="21.191296125" y="282.798075" width="70.5" height="20.15712225" stroke="black" />
+    <text x="56.441296125" y="292.876636125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">INTEGER</text>
+  </g>
+  <g id="INTEGER" fill="grey">
+    <rect x="21.203796375" y="306.22307625" width="70.5" height="20.15712225" stroke="black" />
+    <text x="56.453796375" y="316.301637375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">INTEGER</text>
+  </g>
+  <g id="INTEGER" fill="grey">
+    <rect x="21.203796375" y="329.64807375" width="70.5" height="20.15712225" stroke="black" />
+    <text x="56.453796375" y="339.726634875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">INTEGER</text>
+  </g>
+  <g id="INTEGER" fill="grey">
+    <rect x="21.203796375" y="353.073075" width="70.5" height="20.15712225" stroke="black" />
+    <text x="56.453796375" y="363.151636125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">INTEGER</text>
+  </g>
+  <g id="INTEGER" fill="grey">
+    <rect x="21.21629625" y="376.510575" width="70.5" height="20.15712225" stroke="black" />
+    <text x="56.46629625" y="386.589136125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">INTEGER</text>
+  </g>
+  <g id="INTEGER" fill="grey">
+    <rect x="21.21629625" y="399.948075" width="70.5" height="20.15712225" stroke="black" />
+    <text x="56.46629625" y="410.026636125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">INTEGER</text>
+  </g>
+  <g id="INTEGER" fill="grey">
+    <rect x="307.42804875" y="178.99541625" width="70.5" height="20.15712225" stroke="black" />
+    <text x="342.67804875" y="189.073977375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">INTEGER</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1212.032925" y="260.55227625" width="70.8409575" height="20.15712225" stroke="black" />
+    <text x="1247.45340375" y="270.630837375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.259575" y="121.21270125" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.384575" y="131.291262375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1721.8790625" y="261.71342625" width="70.875" height="20.15712225" stroke="black" />
+    <text x="1757.3165625" y="271.791987375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="BOOLEAN" fill="grey">
+    <rect x="676.8034875" y="387.97725" width="76.125" height="20.15712225" stroke="black" />
+    <text x="714.8659875" y="398.055811125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">BOOLEAN</text>
+  </g>
+  <g id="INTEGER" fill="grey">
+    <rect x="1807.2247125" y="95.50697625" width="64.1749125" height="20.15712225" stroke="black" />
+    <text x="1839.31216875" y="105.585537375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">INTEGER</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1212.0224625" y="300.78469875" width="70.8409575" height="20.15712225" stroke="black" />
+    <text x="1247.44294125" y="310.863259875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="NUMBER" fill="grey">
+    <rect x="1721.8596" y="303.58444125" width="70.875" height="20.15712225" stroke="black" />
+    <text x="1757.2971" y="313.663002375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">NUMBER</text>
+  </g>
+  <g id="STRING" fill="grey">
+    <rect x="1212.0316125" y="341.02567875" width="70.875" height="20.15712225" stroke="black" />
+    <text x="1247.4691125" y="351.104239875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">STRING</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1808.0049" y="145.4917725" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.1299" y="155.570333625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1721.901075" y="345.1380075" width="70.875" height="20.15712225" stroke="black" />
+    <text x="1757.338575" y="355.216568625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.2398125" y="218.77998" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.3648125" y="228.858541125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1807.9747125" y="220.46852625" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.0997125" y="230.547087375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1807.97415" y="245.45538" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.09915" y="255.533941125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.2326125" y="267.56089125" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.3576125" y="277.639452375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="INTEGER" fill="grey">
+    <rect x="676.8199875" y="452.3071875" width="76.125" height="20.15712225" stroke="black" />
+    <text x="714.8824875" y="462.385748625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">INTEGER</text>
+  </g>
+  <g id="INTEGER" fill="grey">
+    <rect x="2322.994875" y="291.96633375" width="70.5" height="20.15712225" stroke="black" />
+    <text x="2358.244875" y="302.044894875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">INTEGER</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.2292375" y="340.79283" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.3542375" y="350.871391125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1211.9994375" y="376.3965" width="70.8409575" height="20.15712225" stroke="black" />
+    <text x="1247.41991625" y="386.475061125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1807.99485" y="345.40980375" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.11985" y="355.488364875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1721.8596" y="390.8082375" width="70.875" height="20.15712225" stroke="black" />
+    <text x="1757.2971" y="400.886798625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1807.9879125" y="395.4040875" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.1129125" y="405.482648625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.227925" y="462.8024625" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.352925" y="472.881023625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1721.85915" y="431.1751125" width="70.875" height="20.15712225" stroke="black" />
+    <text x="1757.29665" y="441.253673625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.2329875" y="542.7632625" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.3579875" y="552.841823625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="NUMBER" fill="grey">
+    <rect x="1212.77655" y="513.8051625" width="70.875" height="20.15712225" stroke="black" />
+    <text x="1248.21405" y="523.883723625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">NUMBER</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1721.866125" y="467.572725" width="70.875" height="20.15712225" stroke="black" />
+    <text x="1757.303625" y="477.651286125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1212.7473375" y="550.3938" width="70.8409575" height="20.15712225" stroke="black" />
+    <text x="1248.16781625" y="560.472361125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1721.8901625" y="508.2379125" width="70.875" height="20.15712225" stroke="black" />
+    <text x="1757.3276625" y="518.316473625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.25425" y="567.152475" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.37925" y="577.231036125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1808.0049375" y="520.3428" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.1299375" y="530.421361125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="674.81951904297" y="562.545639038085" width="76.125" height="20.15712225" stroke="black" />
+    <text x="712.88201904297" y="572.624200163085" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1721.897625" y="642.460125" width="57.36663" height="20.15712225" stroke="black" />
+    <text x="1750.58094" y="652.538686125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="STRING" fill="grey">
+    <rect x="1073.4405" y="418.4459625" width="63.375" height="20.15712225" stroke="black" />
+    <text x="1105.128" y="428.524523625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">STRING</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.24" y="640.3552875" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.365" y="650.433848625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.24225" y="664.75275" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.36725" y="674.831311125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1807.9942875" y="645.2878875" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.1192875" y="655.366448625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1212.7632" y="673.851075" width="70.8409575" height="20.15712225" stroke="black" />
+    <text x="1248.18367875" y="683.929636125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1212.7924875" y="626.0202375" width="70.8409575" height="20.15712225" stroke="black" />
+    <text x="1248.21296625" y="636.098798625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1721.88675" y="685.5694875" width="57.36663" height="20.15712225" stroke="black" />
+    <text x="1750.570065" y="695.648048625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.239325" y="712.8807375" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.364325" y="722.959298625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="STRING" fill="grey">
+    <rect x="1074.2380875" y="386.342325" width="63.375" height="20.15712225" stroke="black" />
+    <text x="1105.9255875" y="396.420886125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">STRING</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1212.8038125" y="720.62475" width="70.875" height="20.625" stroke="black" />
+    <text x="1248.2413125" y="730.93725" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="STRING" fill="grey">
+    <rect x="1073.0860875" y="451.5381375" width="63.375" height="20.460090375" stroke="black" />
+    <text x="1104.7735875" y="461.7681826875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">STRING</text>
+  </g>
+  <g id="LOGICAL" fill="grey">
+    <rect x="676.8052125" y="420.5652375" width="76.125" height="20.15712225" stroke="black" />
+    <text x="714.8677125" y="430.643798625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">LOGICAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1807.9750875" y="620.2836" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.1000875" y="630.362161125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.2349" y="518.34555" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.3599" y="528.424111125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1807.9814625" y="670.2839625" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.1064625" y="680.362523625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1807.9988625" y="445.3955625" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.1238625" y="455.474123625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1808.0044125" y="295.45069125" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.1294125" y="305.529252375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1807.9857" y="595.30185" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.1107" y="605.380411125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.2607375" y="438.39345" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.3857375" y="448.472011125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1807.974075" y="370.39736625" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.099075" y="380.475927375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.236325" y="413.972925" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.361325" y="424.051486125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.241125" y="243.16915875" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.366125" y="253.247719875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1807.977825" y="270.45165" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.102825" y="280.530211125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.2031" y="316.38637125" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.3281" y="326.464932375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1807.9825875" y="195.47089125" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.1075875" y="205.549452375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.241575" y="194.391555" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.366575" y="204.470116125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.2262375" y="169.9955625" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.3512375" y="180.074123625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.2328" y="145.59929625" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.3578" y="155.677857375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1807.972575" y="170.4690375" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.097575" y="180.547598625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1807.4933625" y="119.94436125" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1835.6183625" y="130.022922375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.2478375" y="591.5694" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.3728375" y="601.647961125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1807.9974" y="545.3173875" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.1224" y="555.395948625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.2565" y="690.7192875" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.3815" y="700.797848625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.2255625" y="96.82905" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.3505625" y="106.907611125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1808.003325" y="320.42719125" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.128325" y="330.505752375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.24285" y="389.579025" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.36785" y="399.657586125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2338.36725" y="492.8320875" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2366.49225" y="502.910648625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1808.003325" y="420.390225" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.128325" y="430.468786125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1807.9831125" y="470.3694375" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.1081125" y="480.447998625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1808.003325" y="495.3466875" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.128325" y="505.425248625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.250725" y="615.96735" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.375725" y="626.045911125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="1807.9932375" y="570.3076125" width="56.25" height="20.15712225" stroke="black" />
+    <text x="1836.1182375" y="580.386173625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2337.2544" y="365.177415" width="56.25" height="20.15712225" stroke="black" />
+    <text x="2365.3794" y="375.255976125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="REAL" fill="grey">
+    <rect x="2923.0585875" y="49.99019625" width="60.91626" height="598.9913625" stroke="black" />
+    <text x="2953.5167175" y="349.4858775" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">REAL</text>
+  </g>
+  <g id="INTEGER" fill="grey">
+    <rect x="21.21629625" y="259.3897425" width="70.5" height="20.15712225" stroke="black" />
+    <text x="56.46629625" y="269.468303625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">INTEGER</text>
+  </g>
+  <g id="INTEGER" fill="grey">
+    <rect x="21.191296125" y="282.798075" width="70.5" height="20.15712225" stroke="black" />
+    <text x="56.441296125" y="292.876636125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">INTEGER</text>
+  </g>
+  <g id="INTEGER" fill="grey">
+    <rect x="21.203796375" y="306.22307625" width="70.5" height="20.15712225" stroke="black" />
+    <text x="56.453796375" y="316.301637375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">INTEGER</text>
+  </g>
+  <g id="INTEGER" fill="grey">
+    <rect x="21.203796375" y="329.64807375" width="70.5" height="20.15712225" stroke="black" />
+    <text x="56.453796375" y="339.726634875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">INTEGER</text>
+  </g>
+  <g id="INTEGER" fill="grey">
+    <rect x="21.203796375" y="353.073075" width="70.5" height="20.15712225" stroke="black" />
+    <text x="56.453796375" y="363.151636125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">INTEGER</text>
+  </g>
+  <g id="INTEGER" fill="grey">
+    <rect x="21.21629625" y="376.510575" width="70.5" height="20.15712225" stroke="black" />
+    <text x="56.46629625" y="386.589136125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">INTEGER</text>
+  </g>
+  <g id="INTEGER" fill="grey">
+    <rect x="21.21629625" y="399.948075" width="70.5" height="20.15712225" stroke="black" />
+    <text x="56.46629625" y="410.026636125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">INTEGER</text>
+  </g>
+  <g id="INTEGER" fill="grey">
+    <rect x="307.42804875" y="178.99541625" width="70.5" height="20.15712225" stroke="black" />
+    <text x="342.67804875" y="189.073977375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">INTEGER</text>
+  </g>
+  <g id="BINARY" fill="grey">
+    <rect x="1073.80349731445" y="481.697062392578" width="63.375" height="20.460090375" stroke="black" />
+    <text x="1105.49099731445" y="491.927107580078" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">BINARY</text>
+  </g>
+  <g id="IFCEXTERNALREFERENCERESOURCE">
+    <g id="IfcExternalReferenceRelationship" fill="grey">
+      <rect x="11.114094" y="694.036725" width="208.801305" height="85.858305" stroke="black" />
+      <text x="115.5147465" y="736.9658775" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCEXTERNALREFERENCERESOURCE
+IfcExternalReferenceRelationship</text>
+    </g>
+  </g>
+  <g id="IFCDATETIMERESOURCE">
+    <g id="IfcDate" fill="grey">
+      <rect x="935.63333129883" y="647.977294921875" width="192.5502825" height="46.64902125" stroke="black" />
+      <text x="1031.90847254883" y="671.301805546875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCDATETIMERESOURCE
+IfcDate</text>
+    </g>
+    <g id="IfcDateTime" fill="grey">
+      <rect x="935.63333129883" y="588.410293579102" width="192.56009625" height="46.64902125" stroke="black" />
+      <text x="1031.91337942383" y="611.734804204102" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCDATETIMERESOURCE
+IfcDateTime</text>
+    </g>
+    <g id="IfcTime" fill="grey">
+      <rect x="935.63333129883" y="704.578079223634" width="192.52507875" height="46.64902125" stroke="black" />
+      <text x="1031.89587067383" y="727.902589848634" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCDATETIMERESOURCE
+IfcTime</text>
+    </g>
+    <g id="IfcDuration" fill="grey">
+      <rect x="935.63333129883" y="761.171493530273" width="192.543075" height="46.64902125" stroke="black" />
+      <text x="1031.90486879883" y="784.496004155273" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCDATETIMERESOURCE
+IfcDuration</text>
+    </g>
+    <g id="IfcTimeStamp" fill="grey">
+      <rect x="935.63333129883" y="817.080505371094" width="194.78583" height="46.66408875" stroke="black" />
+      <text x="1033.02624629883" y="840.412549746094" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCDATETIMERESOURCE
+IfcTimeStamp</text>
+    </g>
+  </g>
+  <g id="2,1 IfcReal" fill="blue">
+    <rect x="818.120330810546" y="613.89808654785" width="45" height="31.875" rx="10" ry="10" stroke="black" />
+    <polyline points="840.620330810546,613.89808654785 840.620330810546,585.863451595702 840.620330810546,585.863451595702 " fill="none" stroke="black" />
+    <text x="840.620330810546" y="629.83558654785" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcReal</text>
+    <g id="2,1 IfcReal" fill="silver">
+      <rect x="140.150805" y="810.68475" width="78.1197075" height="30" rx="10" ry="10" stroke="black" />
+      <text x="179.21065875" y="825.68475" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,1 IfcReal</text>
+    </g>
+  </g>
+  <g id="2,2 IfcLabel" fill="blue">
+    <rect x="949.413525" y="328.584375" width="45" height="31.875" rx="10" ry="10" stroke="black" />
+    <polyline points="971.913525,360.459375 971.913525,373.959375 971.913525,373.959375 971.913525,387.459375 " fill="none" stroke="black" />
+    <text x="971.913525" y="344.521875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,2 IfcLabel</text>
+    <g id="2,2 IfcLabel" fill="silver">
+      <rect x="201.84595875" y="106.38091875" width="82.79967375" height="30" rx="10" ry="10" stroke="black" />
+      <text x="243.245795625" y="121.38091875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,2 IfcLabel</text>
+    </g>
+    <g id="2,2 IfcLabel" fill="silver">
+      <rect x="457.0190625" y="629.43105" width="82.79967375" height="30" rx="10" ry="10" stroke="black" />
+      <text x="498.418899375" y="644.43105" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,2 IfcLabel</text>
+    </g>
+    <g id="2,2 IfcLabel" fill="silver">
+      <rect x="224.78390625" y="629.4324375" width="82.79967375" height="30" rx="10" ry="10" stroke="black" />
+      <text x="266.183743125" y="644.4324375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,2 IfcLabel</text>
+    </g>
+    <g id="2,2 IfcLabel" fill="silver">
+      <rect x="424.4369625" y="167.75625375" width="82.79967375" height="30" rx="10" ry="10" stroke="black" />
+      <text x="465.836799375" y="182.75625375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,2 IfcLabel</text>
+    </g>
+  </g>
+  <g id="2,3 IfcSimpleValue" fill="blue">
+    <rect x="674.2697625" y="318.171105" width="45" height="31.875" rx="10" ry="10" stroke="black" />
+    <polyline points="719.2697625,334.108605 778.579925537111,334.108605 778.579925537111,334.108605 " fill="none" stroke="black" />
+    <text x="696.7697625" y="334.108605" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,3 IfcSimpleValue</text>
+    <g id="2,3 IfcSimpleValue" fill="silver">
+      <rect x="1356.6915375" y="145.269795" width="117.809445" height="30" rx="10" ry="10" stroke="black" />
+      <text x="1415.59626" y="160.269795" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,3 IfcSimpleValue</text>
+    </g>
+  </g>
+  <g id="4,1 IfcDerivedMeasureValue" fill="blue">
+    <rect x="1869.68715" y="13.9272285" width="45" height="31.875" rx="10" ry="10" stroke="black" />
+    <polyline points="1914.68715,29.8647285 1955.85437625,29.8647285 " fill="none" stroke="black" />
+    <text x="1892.18715" y="29.8647285" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">4,1 IfcDerivedMeasureValue</text>
+    <g id="4,1 IfcDerivedMeasureValue" fill="silver">
+      <rect x="1353.1979625" y="93.74115375" width="143.05496625" height="30.00749175" rx="10" ry="10" stroke="black" />
+      <text x="1424.725445625" y="108.744899625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">4,1 IfcDerivedMeasureValue</text>
+    </g>
+  </g>
+  <g id="3,1 IfcValue" fill="blue">
+    <rect x="1225.760925" y="30.932217" width="45" height="31.875" rx="10" ry="10" stroke="black" />
+    <polyline points="1248.260925,62.80721625 1248.260925,76.30721625 1248.260925,76.30721625 1248.260925,89.80721625 " fill="none" stroke="black" />
+    <text x="1248.260925" y="46.869717" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">3,1 IfcValue</text>
+    <g id="3,1 IfcValue" fill="silver">
+      <rect x="936.0325125" y="138.384135" width="83.54967375" height="30" rx="10" ry="10" stroke="black" />
+      <text x="977.807349375" y="153.384135" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">3,1 IfcValue</text>
+    </g>
+  </g>
+  <g id="2,4 IfcMeasureWithUnit" fill="blue">
+    <rect x="721.685475" y="86.28225375" width="45" height="31.875" rx="10" ry="10" stroke="black" />
+    <polyline points="744.185475,118.15725375 744.185475,131.65725375 744.185475,131.65725375 744.185475,145.15725375 " fill="none" stroke="black" />
+    <text x="744.185475" y="102.21975375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,4 IfcMeasureWithUnit</text>
+    <g id="2,4 IfcMeasureWithUnit" fill="silver">
+      <rect x="427.2214125" y="696.8715375" width="121.5" height="30.00749175" rx="10" ry="10" stroke="black" />
+      <text x="487.9714125" y="711.875283375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">2,4 IfcMeasureWithUnit</text>
+    </g>
+  </g>
+  <g id="1,1 IfcUnit" fill="blue">
+    <rect x="540.71085" y="20.878585125" width="45" height="31.875" rx="10" ry="10" stroke="black" />
+    <polyline points="540.71085,36.816085125 518.1009165,36.816085125 " fill="none" stroke="black" />
+    <text x="563.21085" y="36.816085125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">1,1 IfcUnit</text>
+    <g id="1,1 IfcUnit" fill="silver">
+      <rect x="936.0005625" y="172.75497375" width="75.4947075" height="30" rx="10" ry="10" stroke="black" />
+      <text x="973.74791625" y="187.75497375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">1,1 IfcUnit</text>
+    </g>
+  </g>
+  <g>
+    <rect x="0" y="0" width="600" height="888" fill="none" stroke="lime" />
+    <rect x="600" y="0" width="600" height="888" fill="none" stroke="lime" />
+    <rect x="1200" y="0" width="600" height="888" fill="none" stroke="lime" />
+    <rect x="1800" y="0" width="600" height="888" fill="none" stroke="lime" />
+    <rect x="2400" y="0" width="600" height="888" fill="none" stroke="lime" />
+  </g>
+</svg>

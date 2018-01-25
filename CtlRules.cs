@@ -17,8 +17,8 @@ namespace IfcDoc
         DocTemplateDefinition m_parent;
         DocTemplateDefinition m_template;
         DocAttribute m_attribute;
-        SEntity m_selection;
-        SEntity m_instance;
+        object m_selection;
+        object m_instance;
 
         public event EventHandler SelectionChanged;
         public event EventHandler ContentChanged;
@@ -79,7 +79,7 @@ namespace IfcDoc
             }
         }
 
-        public SEntity Selection
+        public object Selection
         {
             get
             {
@@ -109,7 +109,7 @@ namespace IfcDoc
             }
         }
 
-        public SEntity CurrentInstance
+        public object CurrentInstance
         {
             get
             {

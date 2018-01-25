@@ -1,0 +1,12 @@
+﻿<p><em>IfcPerformanceHistory</em> is used to document the actual performance of an occurrence instance over time. It includes machine-measured data from building automation systems and human-specified data such as task and resource usage.  The data may represent actual conditions, predictions, or simulations.</p>
+
+<p>The realtime data tracked by performance history takes the form of property sets where all properties are based on time series. Unlike design-based data at occurrences and types, performance-driven data is time-sensitive and may change in realtime by some measurement device. Data may be captured at irregular intervals such as when values change beyond established thresholds, or at regular intervals of specified duration.</p>
+
+
+<h4>Declaration use definition</h4>
+
+<p><em>IfcPerformanceHistory</em> may be declared within a project using <em>IfcRelDeclares</em> where <em>RelatingContext</em> refers to the <em>IfcProject</em> and <em>RelatedDefinitions</em> includes the <em>IfcPerformanceHistory</em>. Default units (used for property sets) are indicated by the declaring project. Only top-level objects are declared; nested performance history objects (through <em>IfcRelNests</em>) do not participate in such relationship.</p>
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC2x2.
+</blockquote> 

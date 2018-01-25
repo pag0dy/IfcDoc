@@ -1,0 +1,36 @@
+﻿<p>A generic and abstract relationship which subtypes are used to:</p>
+<ul>
+<li>assign a object type to an object occurrence</li>
+<li>assign a property set to an object instance</li>
+<li>assign a property set template to a property set</li>
+</ul>
+
+<blockquote class="example">
+EXAMPLE&nbsp; Several instances of windows within
+the IFC project model may be of the same (catalogue or
+manufacturer) type. Thereby they share the same properties. This
+relationship is established by the subtype
+<em>IfcRelDefinesByType</em> of <em>IfcRelDefines</em> relationship
+assigning an <em>IfcWindowStyle</em> to multiple occurrences
+<em>IfcWindow</em>.
+</blockquote>
+
+<blockquote class="example">
+EXAMPLE&nbsp; The (same) property set, e.g. 
+Pset_ProductManufacturerInfo, keeping the manufacturer name,
+label and production year of a product, can be assigned to one,
+or many instances of furnishing. This relationship is established
+by the subtype <em>IfcRelDefinesByProperties</em> of
+<em>IfcRelDefines</em> relationship assigning an
+<em>IfcPropertySet</em> to one or more instances of
+<em>IfcFurnishingElement</em>.
+</blockquote>
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC2x.
+</blockquote>
+
+<blockquote class="change-ifc2x4">
+IFC4 CHANGE&nbsp; The attribute <em>RelatedObjects</em> had been demoted to the subtypes <em>IfcRelDefinesByProperties</em> and
+<em>IfcRelDefinesByType</em>.
+</blockquote>

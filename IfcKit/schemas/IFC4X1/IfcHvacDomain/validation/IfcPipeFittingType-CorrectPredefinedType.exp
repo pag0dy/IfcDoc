@@ -1,0 +1,2 @@
+﻿(PredefinedType <> IfcPipeFittingTypeEnum.USERDEFINED) OR
+((PredefinedType = IfcPipeFittingTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcElementType.ElementType))

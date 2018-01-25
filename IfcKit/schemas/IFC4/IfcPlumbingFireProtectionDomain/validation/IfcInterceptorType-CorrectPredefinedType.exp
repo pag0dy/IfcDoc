@@ -1,0 +1,2 @@
+﻿(PredefinedType <> IfcInterceptorTypeEnum.USERDEFINED) OR
+((PredefinedType = IfcInterceptorTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcElementType.ElementType))

@@ -1,0 +1,40 @@
+﻿<p>A slab is a component of the construction that normally encloses a space vertically. The slab may provide the lower support (floor) or upper construction (roof slab) in any space in a building.</p>
+<blockquote class="extDef">NOTE&nbsp; Definition according to ISO 6707-1<br> 
+thick, flat or shaped component, usually larger than 300 mm square, used to form a covering or projecting from a building.</blockquote>
+
+<p> Only the core or constructional part of this construction is considered to be a slab. The upper finish (flooring, roofing) and the lower finish (ceiling, suspended ceiling) are considered to be coverings. A special type of slab is the landing, described as a floor section to which one or more stair flights or ramp flights connect.</p>
+
+<blockquote class="note">
+NOTE&nbsp; There is a representation of slabs for structural analysis provided by a proper subtype of
+<em>IfcStructuralMember</em> being part of the <em>IfcStructuralAnalysisModel</em>.
+</blockquote>
+<blockquote class="note">
+NOTE&nbsp; An arbitrary planar element to which this semantic information is not applicable or irrelevant shall be modeled as <em>IfcPlate</em>.
+</blockquote>
+
+<p>A slab may have openings, such as floor openings, or recesses.
+They are defined by an <em>IfcOpeningElement</em> attached to the
+slab using the inverse relationship <em>HasOpenings</em> pointing
+to <em>IfcRelVoidsElement</em>.</p>
+<p>There are three entities for slab occurrences:</p>
+<ul>
+<li><em>IfcSlabStandardCase</em> used for all occurrences of slabs,
+that are prismatic and where the thickness parameter can be fully
+described by the <em>IfcMaterialLayerSetUsage</em>. These slabs are
+always represented geometrically by a 'SweptSolid' geometry (or
+by a 'Clipping' geometry based on 'SweptSolid'), if a 3D
+geometric representation is assigned. In addition they have to
+have a corresponding <em>IfcMaterialLayerSetUsage</em>
+assigned.</li>
+<li><em>IfcSlabElementedCase</em> used for occurrences of slabs
+which are aggregated from subordinate elements, following
+specific decomposition rules expressed by the mandatory use of
+<em>IfcRelAggregates</em> relationship.</li>
+<li><em>IfcSlab</em> used for all other occurrences of slabs,
+particularly for slabs with changing thickness, or slabs with non
+planar surfaces, and slabs having only 'SweptSolid' or 'Brep'
+geometry.</li>
+</ul>
+
+<blockquote class="history">HISTORY&nbsp; New entity in IFC2.0; it is a merger of the two previous entities
+IfcFloor, IfcRoofSlab, introduced in IFC1.0</blockquote>

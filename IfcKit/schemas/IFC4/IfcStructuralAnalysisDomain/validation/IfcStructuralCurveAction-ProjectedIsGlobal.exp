@@ -1,0 +1,3 @@
+﻿(NOT EXISTS(ProjectedOrTrue)) OR
+((ProjectedOrTrue <> PROJECTED_LENGTH) OR
+ (SELF\IfcStructuralActivity.GlobalOrLocal = GLOBAL_COORDS))

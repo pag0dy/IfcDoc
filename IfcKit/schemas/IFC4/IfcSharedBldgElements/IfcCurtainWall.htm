@@ -1,0 +1,37 @@
+﻿<p>A curtain wall is an exterior wall of a building which is
+an assembly of components, hung from the edge of the floor/roof
+structure rather than bearing on a floor. Curtain wall is
+represented as a building element assembly and implemented as a
+subtype of <em>IfcBuildingElement</em> that uses an
+<em>IfcRelAggregates</em> relationship.</p>
+<blockquote class="extDef">NOTE&nbsp; Definition according to ISO 6707-1: 
+non load bearing wall positioned on the outside of a building and enclosing it.</blockquote>
+
+<blockquote class="history">HISTORY&nbsp; New entity in IFC2.0</blockquote>
+
+<p>The geometric representation of <em>IfcCurtainWall</em> is given by the <em>IfcProductDefinitionShape</em>, allowing multiple
+geometric representations. Independent 'Body' geometric representation, as described below, should only be used when the
+<em>IfcCurtainWall</em> is not defined as an aggregate. If defined as an aggregate, the geometric representation is the sum of the
+representations of the components within the aggregate.</p>
+
+<p>The geometric representation of <em>IfcCurtainWall</em> is defined using the following multiple shape representations for
+its definition:</p>
+<ul>
+<li>Axis: A two-dimensional open curve (for restrictions see below) defining the axis for the curtain wall.
+<ul>
+<li>This is an optional representation for curtain walls.</li>
+</ul>
+</li>
+<li>Body: A surface model or boundary representation model representation defining the 3D shape of the curtain wall.
+<ul>
+<li>If the <em>IfcCurtainWall</em> has components (referenced by <em>SELF\IfcObject.IsDecomposedBy</em>) then no independent shape
+representation with <em>RepresentationType</em> = 'Body' shall be defined. The body of <em>IfcCurtainWall</em> is then geometrically
+represented by the shape representation of its components. The components are accessed via
+<em>SELF\IfcObject.IsDecomposedBy[1].RelatedObjects</em>.</li>
+</ul>
+<ul>
+<li>If the <em>IfcCurtainWall</em> has no components defined (empty set of <em>SELF\IfcObject.IsDecomposedBy</em>) then the
+<em>IfcCurtainWall</em> may be represented by an shape representation with the <em>RepresentationIdentifier</em> ='Body'.</li>
+</ul>
+</li>
+</ul>

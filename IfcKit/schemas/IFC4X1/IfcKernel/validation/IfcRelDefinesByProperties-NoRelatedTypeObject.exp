@@ -1,0 +1,1 @@
+﻿SIZEOF(QUERY(Types <* SELF\IfcRelDefinesByProperties.RelatedObjects |  'IFCKERNEL.IFCTYPEOBJECT' IN TYPEOF(Types))) = 0

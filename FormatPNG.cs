@@ -29,12 +29,16 @@ namespace IfcDoc.Format.PNG
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public static void BuildAttributeList(DocEntity entity, List<DocAttribute> list, Dictionary<string, DocObject> map)
+        public static void BuildAttributeList(DocEntity entity, List<DocAttribute> list, DocProject docProject)
         {
             DocObject docBase = null;
-            if (entity.BaseDefinition != null && map.TryGetValue(entity.BaseDefinition, out docBase))
+            if (entity.BaseDefinition != null)
             {
-                BuildAttributeList((DocEntity)docBase, list, map);
+                docBase = docProject.GetDefinition(entity.BaseDefinition);
+                if (docBase != null)
+                {
+                    BuildAttributeList((DocEntity)docBase, list, docProject);
+                }
             }
 
             foreach (DocAttribute docAttr in entity.Attributes)
@@ -65,7 +69,6 @@ namespace IfcDoc.Format.PNG
             DocEntity docEntity, 
             DocModelView docView, 
             DocModelRuleAttribute ruleAttribute, 
-            Dictionary<string, DocObject> map, 
             int offset,
             Dictionary<Rectangle, SEntity> layout, 
             DocProject docProject,
@@ -77,7 +80,7 @@ namespace IfcDoc.Format.PNG
 
             // find the index of the attribute
             List<DocAttribute> listAttr = new List<DocAttribute>();
-            BuildAttributeList(docEntity, listAttr, map);
+            BuildAttributeList(docEntity, listAttr, docProject);
 
             int iAttr = -1;
             for (int i = 0; i < listAttr.Count; i++)
@@ -123,7 +126,7 @@ namespace IfcDoc.Format.PNG
 
                         if (docObj == null)
                         {
-                            map.TryGetValue(ruleEntity.Name, out docObj);
+                            docObj = docProject.GetDefinition(ruleEntity.Name);
                         }
 
                         {
@@ -139,7 +142,7 @@ namespace IfcDoc.Format.PNG
 
                                 // resolve inverse attribute                        
                                 List<DocAttribute> listTarget = new List<DocAttribute>();
-                                BuildAttributeList(docEntityTarget, listTarget, map);
+                                BuildAttributeList(docEntityTarget, listTarget, docProject);
                                 for (int i = 0; i < listTarget.Count; i++)
                                 {
                                     DocAttribute docAttrTarget = listTarget[i];
@@ -166,8 +169,8 @@ namespace IfcDoc.Format.PNG
                                             if (docTest.BaseDefinition == null)
                                                 break;
 
-                                            DocObject docBase = null;
-                                            if (map.TryGetValue(docTest.BaseDefinition, out docBase))
+                                            DocObject docBase = docProject.GetDefinition(docTest.BaseDefinition) as DocEntity;
+                                            if (docBase != null)
                                             {
                                                 docTest = docBase as DocEntity;
                                             }
@@ -187,7 +190,7 @@ namespace IfcDoc.Format.PNG
                                 }
 
                                 // draw the entity, recurse
-                                DrawEntity(g, lane + 1, lanes, docEntityTarget, docView, null, ruleEntity, map, layout, docProject, docSchema, valueinstance);
+                                DrawEntity(g, lane + 1, lanes, docEntityTarget, docView, null, ruleEntity, layout, docProject, docSchema, valueinstance);
                             }
                             else
                             {
@@ -356,14 +359,13 @@ namespace IfcDoc.Format.PNG
             DocModelView docView,
             DocTemplateDefinition docTemplate, 
             DocModelRuleEntity docRule, 
-            Dictionary<string, DocObject> map,
             Dictionary<Rectangle, SEntity> layout,
             DocProject docProject,
             DocSchema docSchema,
             object instance)
         {
             List<DocAttribute> listAttr = new List<DocAttribute>();
-            BuildAttributeList(docEntity, listAttr, map);
+            BuildAttributeList(docEntity, listAttr, docProject);
 
             while(lanes.Count < lane + 1)
             {
@@ -651,9 +653,9 @@ namespace IfcDoc.Format.PNG
                     }
 
                     DocObject docTest = null;
-                    if (docEntitySuper.BaseDefinition != null && map.TryGetValue(docEntitySuper.BaseDefinition, out docTest))
+                    if (docEntitySuper.BaseDefinition != null)
                     {
-                        docEntitySuper = docTest as DocEntity;
+                        docEntitySuper = docProject.GetDefinition(docEntitySuper.BaseDefinition) as DocEntity;
                     }
                     else
                     {
@@ -783,7 +785,7 @@ namespace IfcDoc.Format.PNG
                         lastTemplate = eachTemplate;
                     }
 
-                    DrawAttribute(g, lane, lanes, docEntity, docView, ruleAttributeSort, map, offset, layout, docProject, docSchema, instance as SEntity);
+                    DrawAttribute(g, lane, lanes, docEntity, docView, ruleAttributeSort, offset, layout, docProject, docSchema, instance as SEntity);
                 }
                 offset++;
             }
@@ -806,7 +808,7 @@ namespace IfcDoc.Format.PNG
         /// <param name="docProject"></param>
         /// <param name="instance"></param>
         /// <returns></returns>
-        internal static Image CreateConceptDiagram(DocEntity docEntity, DocModelView docView, Dictionary<string, DocObject> map, Dictionary<Rectangle, SEntity> layout, DocProject docProject, SEntity instance)
+        internal static Image CreateConceptDiagram(DocEntity docEntity, DocModelView docView, Dictionary<Rectangle, SEntity> layout, DocProject docProject, object instance)
         {
             DocSchema docSchema = docProject.GetSchemaOfDefinition(docEntity);
 
@@ -818,7 +820,7 @@ namespace IfcDoc.Format.PNG
             }
 
             // determine boundaries
-            DrawEntity(null, 0, lanes, docEntity, docView, null, null, map, layout, docProject, docSchema, instance);
+            DrawEntity(null, 0, lanes, docEntity, docView, null, null, layout, docProject, docSchema, instance);
             Rectangle rcBounds = Rectangle.Empty;
             foreach (Rectangle rc in layout.Keys)
             {
@@ -848,7 +850,7 @@ namespace IfcDoc.Format.PNG
                     lanes.Add(0);
                 }
 
-                DrawEntity(g, 0, lanes, docEntity, docView, null, null, map, layout, docProject, docSchema, instance);
+                DrawEntity(g, 0, lanes, docEntity, docView, null, null, layout, docProject, docSchema, instance);
 
                 g.DrawRectangle(Pens.Black, 0, 0, rcBounds.Width - 1, rcBounds.Height - 1);
             }
@@ -861,10 +863,13 @@ namespace IfcDoc.Format.PNG
         /// </summary>
         /// <param name="docTemplate"></param>
         /// <returns></returns>
-        internal static Image CreateTemplateDiagram(DocTemplateDefinition docTemplate, Dictionary<string, DocObject> map, Dictionary<Rectangle, SEntity> layout, DocProject docProject, SEntity instance)
+        internal static Image CreateTemplateDiagram(DocTemplateDefinition docTemplate, Dictionary<Rectangle, SEntity> layout, DocProject docProject, object instance)
         {
-            DocObject docTarget = null;
-            if (docTemplate.Type == null || !map.TryGetValue(docTemplate.Type, out docTarget) || !(docTarget is DocEntity))
+            if (docTemplate.Type == null)
+                return null;
+
+            DocObject docTarget = docProject.GetDefinition(docTemplate.Type) as DocEntity;
+            if (docTarget == null)
                 return null;
 
             DocEntity docEntity = (DocEntity)docTarget;
@@ -877,7 +882,7 @@ namespace IfcDoc.Format.PNG
                 lanes.Add(0);
             }
             layout.Clear();
-            DrawEntity(null, 0, lanes, docEntity, null, docTemplate, null, map, layout, docProject, docSchema, instance);
+            DrawEntity(null, 0, lanes, docEntity, null, docTemplate, null, layout, docProject, docSchema, instance);
 
             Rectangle rcBounds = new Rectangle();
             foreach(Rectangle rc in layout.Keys)
@@ -906,7 +911,7 @@ namespace IfcDoc.Format.PNG
                     lanes.Add(0);
                 }
                 layout.Clear();
-                DrawEntity(g, 0, lanes, docEntity, null, docTemplate, null, map, layout, docProject, docSchema, instance);
+                DrawEntity(g, 0, lanes, docEntity, null, docTemplate, null, layout, docProject, docSchema, instance);
                 g.DrawRectangle(Pens.Black, 0, 0, rcBounds.Width - 1, rcBounds.Height - 1);
             }
 
@@ -949,7 +954,7 @@ namespace IfcDoc.Format.PNG
             Pen penDash, 
             DocDefinition docType, 
             DocRectangle docRectangle,
-            Dictionary<string, DocObject> map, DiagramFormat format)
+            DocProject docProject, DiagramFormat format)
         {
             Rectangle rc;
             if (docRectangle != null)
@@ -1024,10 +1029,10 @@ namespace IfcDoc.Format.PNG
                     int y = rcTop.Bottom;
                     foreach (DocAttribute docAttr in docEntity.Attributes)
                     {
-                        DocObject docAttrType = null;
+                        DocObject docAttrType = docProject.GetDefinition(docAttr.DefinedType);
 
                         // include native types, enumerations, and defined types
-                        if (!map.TryGetValue(docAttr.DefinedType, out docAttrType) || docAttrType is DocEnumeration || docAttrType is DocDefined)
+                        if (docAttrType == null || docAttrType is DocEnumeration || docAttrType is DocDefined)
                         {
                             Rectangle rcAttr = new Rectangle(rc.Left, y, rc.Width, 12);
                             g.DrawString(docAttr.Name + ":" + docAttr.DefinedType, font, Brushes.Black, rcAttr, sfLeft);
@@ -1044,8 +1049,8 @@ namespace IfcDoc.Format.PNG
                         bool include = true;
                         if (format == DiagramFormat.UML)
                         {
-                            DocObject docAttrType = null;
-                            include = (map.TryGetValue(docAttr.DefinedType, out docAttrType) && (docAttrType is DocEntity || docAttrType is DocSelect));
+                            DocObject docAttrType = docProject.GetDefinition(docAttr.DefinedType);
+                            include = (docAttrType is DocEntity || docAttrType is DocSelect);
                         }
 
                         if (include)
@@ -1222,7 +1227,7 @@ namespace IfcDoc.Format.PNG
 
         }
 
-        internal static Image CreateSchemaDiagram(DocSchema docSchema, Dictionary<string, DocObject> map, DiagramFormat format)
+        internal static Image CreateSchemaDiagram(DocSchema docSchema, DocProject docProject, DiagramFormat format)
         {
             float pageX = (float)CtlExpressG.PageX;
             float pageY = (float)CtlExpressG.PageY;
@@ -1283,12 +1288,12 @@ namespace IfcDoc.Format.PNG
                             {
                                 foreach (DocType docType in docSchema.Types)
                                 {
-                                    DrawSchemaDefinition(g, font, fontBold, fontBoldItalic, sf, sfLeft, penDash, docType, null, map, format);
+                                    DrawSchemaDefinition(g, font, fontBold, fontBoldItalic, sf, sfLeft, penDash, docType, null, docProject, format);
                                 }
 
                                 foreach (DocEntity docType in docSchema.Entities)
                                 {
-                                    DrawSchemaDefinition(g, font, fontBold, fontBoldItalic, sf, sfLeft, penDash, docType, null, map, format);
+                                    DrawSchemaDefinition(g, font, fontBold, fontBoldItalic, sf, sfLeft, penDash, docType, null, docProject, format);
                                 }
 
                                 if (docSchema.PageTargets != null)
@@ -1303,8 +1308,8 @@ namespace IfcDoc.Format.PNG
                                             bool include = true;
                                             if(format == DiagramFormat.UML)
                                             {
-                                                DocObject docRef = null;
-                                                if (map.TryGetValue(docTarget.Definition.Name, out docRef))
+                                                DocObject docRef = docProject.GetDefinition(docTarget.Definition.Name);
+                                                if (docRef != null)
                                                 {
                                                     include = (docRef is DocEntity || docRef is DocSelect);
                                                 }
@@ -1373,7 +1378,7 @@ namespace IfcDoc.Format.PNG
                                                     {
                                                         if (format == DiagramFormat.UML)
                                                         {
-                                                            DrawSchemaDefinition(g, font, fontBold, fontBoldItalic, sf, sfLeft, penDash, docTarget.Definition, docSource.DiagramRectangle, map, format);
+                                                            DrawSchemaDefinition(g, font, fontBold, fontBoldItalic, sf, sfLeft, penDash, docTarget.Definition, docSource.DiagramRectangle, docProject, format);
                                                         }
                                                         else
                                                         {
@@ -1408,8 +1413,8 @@ namespace IfcDoc.Format.PNG
                                             bool include = true;
                                             if (format == DiagramFormat.UML)
                                             {
-                                                DocObject docRef = null;
-                                                if (map.TryGetValue(docDefRef.Name, out docRef))
+                                                DocObject docRef = docProject.GetDefinition(docDefRef.Name);
+                                                if (docRef != null)
                                                 {
                                                     include = (docRef is DocEntity || docRef is DocSelect);
                                                 }
@@ -1426,10 +1431,10 @@ namespace IfcDoc.Format.PNG
                                                 if (format == DiagramFormat.UML)
                                                 {
                                                     // embed referenced definition
-                                                    DocObject docObjRef = null;
-                                                    if(map.TryGetValue(docDefRef.Name, out docObjRef) && docObjRef is DocDefinition)
+                                                    DocObject docObjRef = docProject.GetDefinition(docDefRef.Name);
+                                                    if (docObjRef is DocDefinition)
                                                     {
-                                                        DrawSchemaDefinition(g, font, fontBold, fontBoldItalic, sf, sfLeft, penDash, (DocDefinition)docObjRef, docDefRef.DiagramRectangle, map, format);
+                                                        DrawSchemaDefinition(g, font, fontBold, fontBoldItalic, sf, sfLeft, penDash, (DocDefinition)docObjRef, docDefRef.DiagramRectangle, docProject, format);
 
                                                         // UML only (not in original EXPRESS-G diagrams)
                                                         foreach (DocAttributeRef docAttrRef in docDefRef.AttributeRefs)

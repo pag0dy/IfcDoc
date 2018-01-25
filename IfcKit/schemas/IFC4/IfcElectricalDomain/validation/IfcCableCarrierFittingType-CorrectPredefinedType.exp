@@ -1,0 +1,2 @@
+﻿(PredefinedType <> IfcCableCarrierFittingTypeEnum.USERDEFINED) OR
+((PredefinedType = IfcCableCarrierFittingTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcElementType.ElementType))

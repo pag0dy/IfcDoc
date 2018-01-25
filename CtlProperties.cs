@@ -30,7 +30,7 @@ namespace IfcDoc
         bool m_editcon; // suppress updates of concepts while moving or deleting
         bool m_loadagg;
         bool m_loadall;
-        SEntity m_instance; // optional instance to highlight
+        object m_instance; // optional instance to highlight
 
         public event EventHandler Navigate;
         public event EventHandler RuleSelectionChanged;
@@ -105,6 +105,7 @@ namespace IfcDoc
                     lvi.Text = docLocal.Locale;
                     lvi.SubItems.Add(docLocal.Name);
                     lvi.SubItems.Add(docLocal.Documentation);
+                    lvi.SubItems.Add(docLocal.URL);
                     this.listViewLocale.Items.Add(lvi);
                 }
 
@@ -554,6 +555,11 @@ namespace IfcDoc
                     this.listViewFormats.Items.Clear();
                     foreach (DocFormat docFormat in docPublication.Formats)
                     {
+                        if((int)docFormat.FormatType == 0)
+                        {
+                            docFormat.FormatType = DocFormatSchemaEnum.OWL; // fixup rename that broke files
+                        }
+
                         ListViewItem lvi = new ListViewItem();
                         lvi.ImageIndex = 0;
                         lvi.Tag = docFormat;
@@ -656,7 +662,7 @@ namespace IfcDoc
             }
         }
 
-        public SEntity[] CurrentPopulation
+        public object[] CurrentPopulation
         {
             get
             {
@@ -668,7 +674,7 @@ namespace IfcDoc
             }
         }
 
-        public SEntity CurrentInstance
+        public object CurrentInstance
         {
             get
             {
@@ -899,6 +905,12 @@ namespace IfcDoc
         {
             DocPropertySet docPset = (DocPropertySet)this.m_target;
             docPset.PropertySetType = this.comboBoxPsetType.Text;
+
+            if (this.SchemaChanged != null)
+            {
+                // update icon in tree
+                this.SchemaChanged(this, EventArgs.Empty);
+            }
         }
 
         private void comboBoxPsetType_TextUpdate(object sender, EventArgs e)
@@ -2246,7 +2258,7 @@ namespace IfcDoc
 
         }
 
-        public SEntity SelectedRule
+        public object SelectedRule
         {
             get
             {
@@ -2856,6 +2868,11 @@ namespace IfcDoc
 
             DocProperty docProperty = (DocProperty)this.m_target;
             docProperty.AccessState = (DocStateEnum)this.comboBoxPropertyAccess.SelectedIndex;
+
+            if(this.SchemaChanged != null)
+            {
+                this.SchemaChanged(this, EventArgs.Empty);
+            }
         }
 
         private void comboBoxQuantityAccess_SelectedIndexChanged(object sender, EventArgs e)
@@ -2865,6 +2882,11 @@ namespace IfcDoc
 
             DocQuantity docProperty = (DocQuantity)this.m_target;
             docProperty.AccessState = (DocStateEnum)this.comboBoxPropertyAccess.SelectedIndex;
+
+            if (this.SchemaChanged != null)
+            {
+                this.SchemaChanged(this, EventArgs.Empty);
+            }
         }
 
         private void checkBoxPublishHtmlExamples_CheckedChanged(object sender, EventArgs e)

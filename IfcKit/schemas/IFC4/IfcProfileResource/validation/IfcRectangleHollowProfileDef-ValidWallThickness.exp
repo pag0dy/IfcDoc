@@ -1,0 +1,2 @@
+﻿(WallThickness < (SELF\IfcRectangleProfileDef.XDim/2.)) AND 
+(WallThickness < (SELF\IfcRectangleProfileDef.YDim/2.))

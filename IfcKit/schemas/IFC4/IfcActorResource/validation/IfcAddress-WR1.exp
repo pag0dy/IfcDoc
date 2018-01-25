@@ -1,0 +1,4 @@
+﻿(NOT(EXISTS(Purpose))) OR
+((Purpose <> IfcAddressTypeEnum.USERDEFINED) OR
+((Purpose = IfcAddressTypeEnum.USERDEFINED) AND
+  EXISTS(SELF.UserDefinedPurpose)))

@@ -1,0 +1,28 @@
+﻿<p>The <em>IfcElementAssemblyType</em>
+defines a list of commonly shared property set definitions of an
+element and an optional set of product representations. It is
+used to define an element specification (i.e. the specific
+product information, that is common to all occurrences of that
+product type).</p>
+
+<blockquote class="note">
+NOTE&nbsp; The product representations are defined
+as representation maps (at the level of the supertype
+<em>IfcTypeProduct</em>, which gets assigned by an element
+occurrence instance through the
+<em>IfcShapeRepresentation.Item[1]</em> being an
+<em>IfcMappedItem</em>.
+</blockquote>
+
+<p>An element assembly type is used to define the common
+properties of a certain type of an element assembly that may be
+applied to many instances of that type to assign a specific
+style. An element assembly types (or the instantiable subtypes)
+may be exchanged without being already assigned to
+occurrences.</p>
+<p>The occurrences of the <em>IfcElementAssemblyType</em> are
+represented by instances of <em>IfcElementAssembly</em>.</p>
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC4.
+</blockquote>

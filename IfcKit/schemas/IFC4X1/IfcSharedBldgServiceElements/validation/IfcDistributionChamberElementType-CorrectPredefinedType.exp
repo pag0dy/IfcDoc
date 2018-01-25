@@ -1,0 +1,2 @@
+﻿(PredefinedType <> IfcDistributionChamberElementTypeEnum.USERDEFINED) OR
+((PredefinedType = IfcDistributionChamberElementTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcElementType.ElementType))

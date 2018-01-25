@@ -1,0 +1,3 @@
+﻿IfcConstraintsParamBSpline (
+  SELF\IfcBSplineSurface.VDegree, KnotVUpper, 
+  SELF\IfcBSplineSurface.VUpper, VMultiplicities, VKnots)

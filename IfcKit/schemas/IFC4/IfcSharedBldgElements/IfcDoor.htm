@@ -1,0 +1,58 @@
+﻿<p>The door is a building element that is predominately used to provide controlled access for people and goods. It includes constructions with hinged, pivoted, sliding, and additionally revolving and folding operations. A door consists of a lining and one or several panels.</p>
+
+<blockquote class="extDef">NOTE&nbsp; Definition according to ISO 6707-1: 
+construction for closing an opening, intended primarily for access with hinged, pivoted or sliding operation.</blockquote>
+
+<p>The <em>IfcDoor</em> defines a particular occurrence of a door inserted in the spatial context of a project. A door can:</p>
+<ul>
+<li>be inserted as a filler in an opening using the <em>IfcRelFillsElement</em> relationship, then the <em>IfcDoor</em> has an inverse attribute <em>FillsVoids</em> provided;
+<blockquote class="note">NOTE&nbsp; Model View Definitions may restrict the relationship to only include one door into one opening</blockquote>
+</li>
+<li>be part of an element assembly, in general an <em>IfcCurtainWall</em>, using the <em>IfcRelAggregates</em> relationship, then the <em>IfcDoor</em> has an inverse attribute <em>Decomposes</em> is provided;</li>
+<li>be a "free standing" door, then the <em>IfcDoor</em> has no inverse attributes <em>FillsVoids</em> or <em>Decomposes</em> provided.</li>
+</ul>
+
+<p>There are two main representations for door occurrences:</p>
+<ul>
+<li><em>IfcDoor</em> with a shape representation having RepresentationIdenfifier='Profile' is used for all occurrences of doors, that have a 'Profile' shape representation defined to which a set of shape parameters for lining and framing properties apply. Additionally it requires the provision of an <em>IfcDoorType</em> that references one <em>IfcDoorLiningProperties</em> and one to many <em>IfcDoorPanelProperties</em>;
+<blockquote class="note">NOTE&nbsp; The entity <em>IfcDoorStandardCase</em> has been deprecated.</blockquote>
+</li>
+<li><em>IfcDoor</em> with other shape representations an no assiged <em>IfcDoorLiningProperties</em> and <em>IfcDoorPanelProperties</em> is used for all other occurrences of doors, particularly for doors having only 'Brep', or 'SurfaceModel' geometry without applying shape parameters.</li>
+</ul>
+<p>The actual parameters of the door and/or its shape are defined by the <em>IfcDoor</em> as the object occurrence definition, or by the <em>IfcDoorType</em> as the object type definition. The following parameters are provided:</p>
+<ul>
+<li>at the <em>IfcDoor</em> for occurrence specific parameters. The <em>IfcDoor</em> specifies:</li>
+<li style="list-style: none">
+<ul>
+<li>the door width and height</li>
+<li>the door opening direction (by the y-axis of the <em>ObjectPlacement</em>)</li>
+</ul></li>
+<li>at the <em>IfcDoorType</em>, to which the <em>IfcDoor</em> is related by the inverse relationship <em>IsTypedBy</em> pointing to <em>IfcRelDefinesByType</em>, for type parameters common to all occurrences of the same type.</li>
+<li style="list-style: none">
+<ul>
+<li>the operation type (single swing, double swing, revolving, etc.)</li>
+<li>the door hinge side (by using two different styles for right and left opening doors)</li>
+<li>the construction material type</li>
+<li>the particular attributes for the lining by the <em>IfcDoorLiningProperties</em></li>
+<li>the particular attributes for the panels by the <em>IfcDoorPanelProperties</em></li> 
+</ul>
+</li>
+</ul>
+
+<blockquote class="history">HISTORY&nbsp; New entity in IFC1.0.</blockquote>
+<blockquote class="change-ifc2x4">IFC4 CHANGE&nbsp; The attributes <em>PredefinedType</em> and <em>OperationType</em> are added, the applicable type object has been changed to <em>IfcDoorType</em>.</blockquote>
+
+<p>The geometric representation of <em>IfcDoor</em> is given by the <em>IfcProductDefinitionShape</em>, allowing multiple geometric
+representations. The <em>IfcDoor</em> may get its parameter and shape from the <em>IfcDoorType</em>. If an <em>IfcRepresentationMap</em> (a
+block definition) is defined for the <em>IfcDoorType</em>, then the <em>IfcDoor</em> inserts it through the <em>IfcMappedItem</em>.</p>
+
+<p>The geometric representation of <em>IfcDoor</em> is defined using the following (potentially multiple) <em>IfcShapeRepresentation</em>'s for its <em>IfcProductDefinitionShape</em>:</p>
+<ul>
+<li><u>Profile</u>: A 'Curve3D' consisting of a single losed curve defining the outer boundary of the door (lining). The door parametric representation uses this profile in order to apply the door lining and panel parameter. If not provided, the profile of the <em>IfcOpeningElement</em> is taken.</li>
+<li><u>FootPrint</u>: A 'GeometricCurveSet', or 'Annotation2D' representation defining the 2D shape of the door</li>
+<li><u>Body</u>: A 'SweptSolid', 'SurfaceModel', or 'Brep' representation defining the 3D shape of the door.</li>
+</ul>
+<p>In addition the parametric representation of a (limited) door shape is available by applying the parameters from <em>IfcDoorType</em> referencing <em>IfcDoorLiningProperties</em> and <em>IfcDoorPanelProperties</em>. The purpose of the parameter is described at those entities and below (door opening operation by door type). The overall size of the <em>IfcDoor</em> to be used to apply 
+the lining or panel parameter provided by the <em>IfcDoorType</em> is 
+determined by the IfcShapeRepresentation with the 
+RepresentationIdentifier = 'Profile'.</p>

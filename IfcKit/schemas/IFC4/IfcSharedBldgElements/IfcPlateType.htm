@@ -1,0 +1,39 @@
+﻿<p>The element type <em>IfcPlateType</em> defines commonly shared
+information for occurrences of plates. The set of shared
+information may include:</p>
+<ul>
+<li>common properties within shared property sets</li>
+<li>common material information</li>
+<li>common material layer definitions</li>
+<li>common shape representations</li>
+</ul>
+
+<blockquote class="note">
+NOTE&nbsp; It is illegal to share shape representations as representation maps for occurrences of <em>IfcPlateStandardCase</em>.
+</blockquote>
+
+<p>It is used to define a plate specification (i.e. the specific
+product information, that is common to all occurrences of that
+product type). Plate types may be exchanged without being already
+assigned to occurrences.</p>
+<blockquote class="note">NOTE&nbsp; The product representations are defined as
+representation maps (at the level of the supertype
+<em>IfcTypeProduct</em>, which gets assigned by an element occurrence
+instance through the <em>IfcShapeRepresentation.Item[1]</em> being an
+<em>IfcMappedItem</em>.</blockquote>
+<p>The occurrences of the <em>IfcPlateType</em> within building
+models are represented by instances of <em>IfcPlateStandardCase</em>
+if the <em>IfcPlateType</em> has a single associated
+<em>IfcMaterialLayerSet</em>; otherwise they are represented by
+instances of <em>IfcPlate</em>.</p>
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC2x2.
+</blockquote>
+
+<p class="spec-head">Informal Propositions:</p>
+<ol>
+<li>The material assignment, if provided using the
+<em>IfcRelAssociatesMaterial</em> relationship, shall not reference
+the <em>IfcMaterialLayerSetUsage</em>.</li>
+</ol>

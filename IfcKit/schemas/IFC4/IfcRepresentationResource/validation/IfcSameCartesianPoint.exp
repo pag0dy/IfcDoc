@@ -1,0 +1,8 @@
+﻿FUNCTION IfcSameCartesianPoint
+  (cp1, cp2 : IfcCartesianPoint; Epsilon : REAL)
+  : LOGICAL ;
+LOCAL
+tmp : GENERIC;
+END_LOCAL;
+RETURN(tmp);
+END_FUNCTION;

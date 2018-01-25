@@ -1,0 +1,2 @@
+﻿(NOT(EXISTS(DefiningValues)) AND NOT(EXISTS(DefinedValues)))
+OR (SIZEOF(DefiningValues) = SIZEOF(DefinedValues))

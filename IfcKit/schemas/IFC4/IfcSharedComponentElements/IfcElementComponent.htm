@@ -1,0 +1,38 @@
+﻿<p>
+An element component is a representation for minor items included in, added to or connecting to or between
+   elements, which usually are not of interest from the overall building structure viewpoint.
+   However, these small parts may have vital and load carrying functions within the construction.
+   These items do not provide any actual space boundaries.
+   Typical examples of <em>IfcElementComponent</em>s include different kinds of fasteners and various accessories.
+</p>
+
+<p>One or several instances of subtypes of <em>IfcElementComponent</em> should always be accompanied by a defining instance of a respective subtype of <em>IfcElementComponentType</em>.  The type object holds shape and material information.</p>
+
+
+<blockquote class="history">HISTORY&nbsp; New entity in IFC2x2</blockquote>
+
+<p>It is often desirable to model a number of same-shaped element components by means of a single
+occurrence object, e.g. several bolts within a connection or a row of reinforcement elements.
+In this IFC release, this is possible by means of multiple mapped representation as documented below.</p>
+
+<p>To express the multiplicity of element components also on a higher semantic level,
+a <em>Qto_ElementComponentPatternQuantities</em> should be provided via <em>IfcRelDefinesByProperties</em>
+and contain the number of pieces which are placed by a single <em>IfcElementComponent</em> instance.</p>
+
+<p class="use-head"><b>Symbolic Representation</b></p>
+
+<p>A symbolic representation is defined for a row of components or several rows of
+components within a single instance of <em>IfcElementComponent</em>.  Such rows or arrays may
+contain possibly large numbers of individual pieces.  The product definition shape consists of
+an <em>IfcShapeRepresentation</em> with the attribute values</p>
+<ul>
+  <li><em>RepresentationIdentifier</em> : 'Row'</li>
+  <li><em>RepresentationType</em> : 'GeometricCurveSet'</li>
+</ul>
+<p>and one or several curves as geometric items.  The curves represent where reference points of
+the pieces are located.  For example, such reference points may be at the heads of mechanical fasteners
+or at the starting point of the extrusion axis of reinforcement bars.  In case of straight components
+(bolts, nails, staples, straight reinforcement bars, or similar), the local placement of the
+<em>IfcElementComponent</em> shall be located and oriented such that the local z axis is parallel with
+the axes of the components.  A <em>Qto_ElementComponentPatternQuantities</em> should denote the count
+of pieces in the row or array and their spacing.</p>

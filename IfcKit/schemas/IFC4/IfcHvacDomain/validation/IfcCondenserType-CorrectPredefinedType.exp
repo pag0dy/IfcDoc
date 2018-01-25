@@ -1,0 +1,2 @@
+﻿(PredefinedType <> IfcCondenserTypeEnum.USERDEFINED) OR
+((PredefinedType = IfcCondenserTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcElementType.ElementType))

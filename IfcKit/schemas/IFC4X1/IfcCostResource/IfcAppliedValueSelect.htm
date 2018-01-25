@@ -1,0 +1,19 @@
+﻿<p><em>IfcAppliedValueSelect</em> defines a value to be calculated within a formula.</p> 
+
+<p>Types are used as follows:</p>
+<ul>
+  <li><i>IfcValue</i>: A constant value using project default units.</li>
+  <li><i>IfcMeasureWithUnit</i>: A constant value using specified units.</li>
+  <li><i>IfcReference</i>: A value referenced on an object attribute.</li>
+</ul>
+
+<p>For cost values, the following guidance applies:</p>
+<ul>
+<li><i>IfcMeasureWithUnit</i> allows the specification of both the actual figure for the value together with the currency in which the value is represented.</li> 
+<li>Selecting <em>IfcMonetaryMeasure</em> allows the specification only of the value, the currency being as set by the global context.</li> 
+<li>Selecting <em>IfcRatioMeasure</em> assumes that the amount is a percentage or other REAL number. Note that if the amount is normally specified as -20%, then this figure will need to be converted to a multiplier of 0.8 </li>
+</ul>
+
+<blockquote class="history">
+HISTORY&nbsp; New select type in IFC2x2.
+</blockquote> 

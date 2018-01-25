@@ -1,0 +1,15 @@
+﻿<p>The <em>IfcCurveBoundedPlane</em> is a parametric planar surface with curved boundaries defined by one or more
+boundary curves. The bounded plane is defined to be the portion of the basis surface in the direction of N x T from any
+point on the boundary, where N is the surface normal and T the boundary curve tangent vector at this point. The region
+so defined shall be arcwise connected.</p>
+<p>The <em>BasisSurface</em> is an <em>IfcPlane</em> that establishes the position coordinate system by
+<em>SELF\IfcElementarySurface.Position</em>. The <em>OuterBoundary</em> and the <em>InnerBoundaries</em> (if provided)
+shall lie on the surface of <em>IfcPlane</em>. The outer and inner boundary curves shall be defined using the
+<em>u</em>, and <em>v</em> values provided by parameterization of the <em>BasisSurface</em> as their <em>x</em>, and
+<em>y</em> coordinate values.</p>
+<blockquote class="note">NOTE&nbsp; Entity defined in analogy to <strong>curve_bounded_surface</strong> defined in ISO
+10303-42.</blockquote>
+<blockquote class="history">HISTORY &nbsp;New entity in IFC1.5</blockquote>
+<blockquote class="change-ifc2x">IFC2x CHANGE&nbsp; The data type of the attribute <em>OuterBoundary</em> and
+<em>InnerBoundaries</em> has been changed from <em>Ifc2DCompositeCurve</em> to supertype
+<em>IfcCurve</em>.</blockquote>

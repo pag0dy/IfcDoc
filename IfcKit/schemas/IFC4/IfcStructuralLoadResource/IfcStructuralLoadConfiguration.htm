@@ -1,0 +1,13 @@
+﻿<p>This class combines one or more load or result values in a 1- or 2-dimensional configuration.</p>
+
+<blockquote class="history">HISTORY&nbsp; New entity in IFC4.</blockquote>
+
+<p class="spec-head">Informal Propositions:</p>
+
+<ol>
+  <li>All items in <em>Values</em> shall be of the same type.</li>
+  <li>If the loads or results comprise a curve activity, 1-dimensional locations shall be given, measured locally along the curve.  The location shall not exceed the bounds of the curve actvity.  The load samples and corresponding locations shall be given in ascending order of locations.</li>
+  <li>If the loads or results comprise a surface activity, 2-dimensional locations shall be given, measured in the surface activity's local x and y directions.  The location shall not exceed the bounds of the surface activity.</li>
+</ol>
+
+<blockquote class="note">NOTE&nbsp; There are no ordering requirements in the 2-dimensional case, but the 1-dimensional case shall be spatially ordered for simplicity.</blockquote>

@@ -1,0 +1,1 @@
+﻿SIZEOF(QUERY(temp <* InnerCurves | 'IFCGEOMETRYRESOURCE.IFCLINE' IN TYPEOF(temp))) = 0

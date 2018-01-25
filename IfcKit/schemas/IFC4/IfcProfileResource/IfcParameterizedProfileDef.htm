@@ -1,0 +1,50 @@
+﻿<p>The parameterized profile definition
+defines a 2D position coordinate system to which the parameters of the
+different profiles relate to. All profiles are defined centric to the
+origin of the position coordinate system, or more specific, the origin
+[0.,0.] shall be in the center of the bounding box of the profile.</p>
+
+<p>The <em>Position</em> attribute of <em>IfcParameterizedProfileDef</em>
+is used to position the profile within the XY plane of the underlying
+coordinate system of the swept surface geometry, the swept area
+solid or the sectioned spine. It can be used to position the profile at
+any point which becomes the origin [0.,0.,0.] of the extruded
+or rotated surface or solid.</p>
+
+<p>The <em>Position</em> attribute should not be used if the transformation
+can be specified in a containing object instead.  In particular, this
+applies if the <em>IfcParameterizedProfileDef</em> is referenced as
+<em>SweptArea</em> in subtypes of <em>IfcSweptAreaSolid</em> or as
+<em>CrossSections</em> in <em>IfcSectionedSpine</em>.</p>
+
+<p>Several subtypes of <em>IfcParameterizedProfileDef</em> provide
+shape parameters which are optional. Sending systems should always
+provide values for these parameters if possible. If these parameters
+are left unspecified, receiving systems may retrieve values for them
+by external reference (if a reference to an external document or library
+is given; see guidance at <em>IfcProfileDef</em>), or estimate them, or
+simply assume zero values.</p>
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC2x2.
+</blockquote>
+
+<blockquote class="change-ifc2x">
+IFC2x CHANGE&nbsp; The <em>IfcParameterizedProfileDef</em>
+is introduced as an intermediate new abstract entity that unifies the
+definition and usage of the position coordinate system for all
+parameterized profiles. The Position attribute has been removed at all
+subtypes (like <em>IfcRectangleProfileDef</em>, <em>IfcCircleProfileDef</em>,
+etc.).
+</blockquote>
+
+<blockquote class="change-ifc2x3">
+IFC2x3 CHANGE&nbsp; All profile origins are now in the center
+of the bounding box.
+</blockquote>
+
+<blockquote class="change-ifc2x4">
+IFC4 CHANGE&nbsp; <em>Position</em> attribute made optional (default: identity transformation).<br>
+Several radius parameters in subtypes have been changed from optional <em>IfcPositiveLengthMeasure</em> (assumed default: 0.) to optional <em>IfcNonNegativeLengthMeasure</em> (default: unspecified).  This change allows to explicitly specify zero radius.  Sending systems shall export 0. values if parameters are known to be 0.<br>
+Subtypes <em>IfcCraneRailAShapeProfileDef</em> and <em>IfcCraneRailFShapeProfileDef</em> deleted.  Rail profiles shall be modeled as <em>IfcArbitraryClosedProfileDef</em> or as <em>IfcAsymmetricIShapeProfileDef</em> together with appropriate external reference.
+</blockquote>

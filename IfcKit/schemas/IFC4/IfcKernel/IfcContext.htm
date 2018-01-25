@@ -1,0 +1,9 @@
+﻿<p><em>IfcContext</em> is the generalization of a project context in which objects, type objects, property sets, and properties are defined. The <em>IfcProject</em> as subtype of <em>IfcContext</em> provides the context for all information on a construction project, it may include one or several <em>IfcProjectLibrary</em>'s as subtype of <em>IfcContext</em> to register the included libraries for the project. A library of products that is referenced is declared within the <em>IfcProjectLibrary</em> as the context of that library.</p>
+
+<p>Context definitions can be named, using the inherited <em>Name</em> attribute, which should be a user recognizable key or number for the context. The <em>LongName</em> can add a full name. Further explanations to the context can be given using the inherited <em>Description</em> attribute.</p>
+
+<p>A Context is declared by the relationship object <em>IfcRelDeclares</em> that refers to the corresponding objects within the context. More specific relationships are introduced at the level of subtypes.</p>
+
+<blockquote class="history">
+HISTORY&nbsp; New abstract entity in IFC4.
+</blockquote>

@@ -1,0 +1,14 @@
+﻿<p>The standard opening, <em>IfcOpeningStandardCase</em>, defines an opening with certain constraints for the dimension parameters, position within the voided element, and with certain constraints for the geometric representation. The <em>IfcOpeningStandardCase</em> handles all cases of openings, that:</p>
+<ul>
+<li>are true openings where the opening depth is greather than or equal to the thickness of the element, and the <em>Predefinedtype</em> is set correctly to .OPENING.</li>
+<li>are true recesses where the opening depth is lower than the thickness of the element, and the <em>Predefinedtype</em> is set correctly to .RECESS.</li> 
+<li>are extruded perpendicular to the wall plane in case of openings in a wall</li>
+<li>are extruded perpendicular to the slab plane in case of openings in a slab</li>
+<li>have a local placement relative to the local placement of the voided element</li>
+<li>have a 'Body' shape representation with 'SweptSolid' representation type</li>
+<li>have only a single extrusion body within the 'Body' shape representation</li>
+</ul>
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC4
+</blockquote>

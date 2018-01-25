@@ -1,0 +1,36 @@
+﻿<p>The element component type <b>IfcMechanicalFastenerType</b> defines commonly shared information for occurrences of mechanical fasteners. The set of shared information may include: <ul>
+<li>common properties with shared property sets</li>
+<li>common representations</li>
+<li>common materials</li>
+<li>common composition of elements</li>
+</ul><p>It is used to define a mechanical fastener type specification indicating the specific product information that is common to all occurrences of that product type. 
+The <b>IfcMechanicalFastenerType</b> may be declared within <em>IfcProject</em> or <em>IfcProjectLibrary</em> using <em>IfcRelDeclares</em> and may be exchanged with or without occurrences of the type. Occurrences of <b>IfcMechanicalFastenerType</b> are represented by instances of <em>IfcMechanicalFastener</em>.</p>
+
+
+<blockquote class="history">HISTORY&nbsp; New entity in IFC2x2
+</blockquote>
+
+<blockquote class="change-ifc2x4">
+IFC4 CHANGE&nbsp; Supertype changed from <em>IfcFastenerType</em> to <em>IfcElementComponentType</em>. Attributes <em>PredefinedType</em>, <em>NominalDiameter</em>, <em>NominalLength</em> added.
+</blockquote>
+
+<p class="use-head">Classification Use Definition</p>
+
+<p>Mechanical fasteners, especially bolts, are often standardized.  To refer to a formal fastener
+designation according to a standard (a product norm), <em>IfcRelAssociatesClassification</em> together
+with <em>IfcClassificationReference</em> should be used.</p>
+<ul>
+<li><em>IfcClassificationReference.Identification</em>
+contains a machine-readable form of the formal fastener designation from the norm.
+Example: 'M16X80-10.9-HV' for a high-strength structural bolting assembly for preloading with
+hexagon bolt and nut.  (On the other hand, <em>IfcMechanicalFastenerType.Name</em> contains a
+displayable name which may not necessarily be the same as the formal designation.)</li>
+<li><em>IfcClassificationReference.Name</em> carries the short name of the fastener norm.
+Example: 'EN 14399-4' as the respective European standard for high-strength hexagon bolts.</li>
+<li>Optionally, the norm can be further described by
+<em>IfcClassificationReference.ReferencedSource</em>, including information like publisher and
+date of issue of the norm.</li>
+</ul>
+
+<p>Furthermore, <em>IfcRelAssociatesLibrary</em> together with <em>IfcLibraryReference</em> may be
+used to refer to a library which contains fastener definitions.</p>

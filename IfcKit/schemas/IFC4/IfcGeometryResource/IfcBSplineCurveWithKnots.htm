@@ -1,0 +1,17 @@
+﻿<p>The <em>IfcBSplineCurveWithKnots</em> is a spline curve parameterized by spline functions for which the knot values
+are explicitly given.</p>
+<blockquote class="extDef">
+NOTE&nbsp; Definition according to ISO/CD 10303-42:1992<br>
+This is the type of b-spline curve for which the knot values are explicitly given. This subtype shall be used to
+represent non-uniform B-spline curves and may be used for other knot types.<br></r>
+Let <i>L</i> denote the number of distinct values amongst the <i>d</i>+<i>k</i>+2 knots
+in the knot list; <i>L</i> will be referred to as the &lsquo;upper index on knots&rsquo;. Let <i>m<sub>j</sub></i>
+denote the multiplicity (i.e., number of repetitions) of the <i>j</i>th distinct knot. Then:<br><br>
+<img src="../../../figures/ifcbsplinecurve-math2.gif" alt="formula" border="0"><br><br>
+All knot multiplicities except the first and the last shall be in the range
+1,...,<i>d</i>; the first and last may have a maximum value of <i>d</i> + 1. In evaluating the basis functions, a knot
+<i>u</i> of, e.g., multiplicity 3 is interpreted as a sequence <i>u</i>, <i>u</i>, <i>u</i>,; in the knot array.
+</blockquote>
+<blockquote class="note">NOTE&nbsp; Entity adapted from <strong>b_spline_curve_with_knots</strong> defined in
+ISO10303-42.</blockquote>
+<blockquote class="history">HISTORY&nbsp; New entity in IFC4.</blockquote>

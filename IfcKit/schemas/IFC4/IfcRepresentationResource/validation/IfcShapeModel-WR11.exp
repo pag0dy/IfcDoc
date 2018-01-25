@@ -1,0 +1,3 @@
+﻿(SIZEOF(SELF\IfcRepresentation.OfProductRepresentation) = 1) XOR 
+(SIZEOF(SELF\IfcRepresentation.RepresentationMap) = 1) XOR
+(SIZEOF(OfShapeAspect) = 1)

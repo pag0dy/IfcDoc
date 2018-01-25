@@ -1,0 +1,94 @@
+﻿<p>The element type
+<em>IfcWindowType</em> defines commonly shared information for
+occurrences of windows. The set of shared information may
+include:</p>
+<ul>
+<li>common properties within shared property sets</li>
+<li>common material information</li>
+<li>common partitioning of panels</li>
+<li>common operation types of panels</li>
+<li>common shape representations</li>
+</ul>
+<p>A window type defines the particular parameter of the lining
+and one (or several) panels through the
+<em>IfcWindowLiningProperties</em> and the
+<em>IfcWindowPanelProperties</em> as predefined property sets
+applicable to windows only.</p>
+<p>It is used to define a window specification, or window style
+(the specific product information that is common to all
+occurrences of that window type). Window types may be exchanged
+without being already assigned to occurrences.</p>
+<p>Occurrences of the <em>IfcWindowType</em> within building models
+are represented by instances of <em>IfcWindow</em> or
+<em>IfcWindowStandardCase</em>.</p>
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC4. The entity <em>IfcWindowType</em> replaces the previous definition <em>IfcWindowStyle</em> (which is deprecated in IFC4).</blockquote>
+
+<p class="use-head">Partitioning type use definition</p>
+<p>The <em>IfcWindowTypePartitioningEnum</em> defines the general
+layout of the window type and its symbolic presentation.
+Depending on the enumerator, the appropriate instances of
+<em>IfcWindowLiningProperties</em> and
+<em>IfcWindowPanelProperties</em> are attached in the list of
+<em>HasPropertySets</em>. The <em>IfcWindowTypePartitioningEnum</em>
+mainly determines the way of partitioning the window into
+individual window panels and thereby number and position of
+window panels.</p>
+<p>See geometry use definitions at
+<em>IfcWindowTypePartitioningEnum</em> for the correct usage of
+panel partitioning and <em>IfcWindowPanelProperties</em> for the
+opening symbols for different panel operation types.</p>
+<p class="use-head">Material Use Definition</p>
+<p>The material of the <em>IfcWindowType</em> is defined by the
+<em>IfcMaterialConstituentSet</em> or as fall back by
+<em>IfcMaterial</em> and attached by the
+<em>IfcRelAssociatesMaterial</em><em>.RelatingMaterial</em>. It is
+accessible by the inverse <em>HasAssociations</em>
+relationship.</p>
+<p>The following keywords for
+<em>IfcMaterialConstituentSet.MaterialConstituents[n].Name</em>
+shall be used:</p>
+<ul>
+<li>'Lining' - to indicate that the material constituent applies
+to to the window lining</li>
+<li>'Framing' - to indicate that the material constituent applies
+to to the window panels, if not provided, the 'Lining' material
+information applied to panels as well</li>
+<li>'Glazing' - to indicate that the material constituent applies
+to to the glazing part</li>
+</ul>
+<p>If the fall back single <em>IfcMaterial</em> is referenced, it
+applies to the lining and framing of the window.</p>
+
+<p class="use-head">Geometry Use Definitions</b></u>:</p>
+<p>The <em>IfcWindowType</em> may define the common shape of window
+occurrences. The common shape can be defined by</p>
+<ul>
+<li>applying shape parameters defined within the associated
+<em>IfcWindowLiningProperties</em> and
+<em>IfcWindowPanelProperties</em> applied to the 'Profile'
+geometric representation. It is only applicable if the
+<em>IfcWindowType</em> has only occurrences of type
+<em>IfcWindowStandardCase</em> (See geometric use definition of
+<em>IfcWindowStandardCase</em> for further information).</li>
+<li>applying the <em>RepresentationMaps</em> attribute to refer to
+a list of <em>IfcRepresentationMap</em>'s, that allow for multiple
+geometric representations (e.g. with
+<em>IfcShapeRepresentation</em>'s having an
+<em>RepresentationIdentifier</em> 'Box', 'Profile', 'FootPrint', or
+'Body')
+<blockquote class="note">NOTE&nbsp; The product shape representations are
+defined as <em>RepresentationMaps</em> (attribute of the supertype
+<em>IfcTypeProduct</em>), which get assigned by an element
+occurrence instance through the
+<em>IfcShapeRepresentation.Item[n]</em> being an
+<em>IfcMappedItem</em>. See <em>IfcTypeProduct</em> for further
+information.</blockquote>
+<blockquote class="note">NOTE&nbsp; The values of attributes
+<em>RepresentationIdentifier</em> and <em>RepresentationType</em> of
+<em>IfcShapeRepresentation</em> are restricted in the same way as
+those for <em>IfcWindow</em> and
+<em>IfcWindowStandardCase</em></blockquote>
+</li>
+</ul>

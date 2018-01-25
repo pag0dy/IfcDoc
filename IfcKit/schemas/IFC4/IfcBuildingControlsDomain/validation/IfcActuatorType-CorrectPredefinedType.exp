@@ -1,0 +1,2 @@
+﻿(PredefinedType <> IfcActuatorTypeEnum.USERDEFINED) OR
+((PredefinedType = IfcActuatorTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcElementType.ElementType))

@@ -1,0 +1,2 @@
+﻿(PredefinedType <> IfcPlateTypeEnum.USERDEFINED) OR
+((PredefinedType = IfcPlateTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcElementType.ElementType))

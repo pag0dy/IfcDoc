@@ -1,0 +1,2 @@
+﻿(PredefinedType <> IfcAlarmTypeEnum.USERDEFINED) OR
+((PredefinedType = IfcAlarmTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcElementType.ElementType))

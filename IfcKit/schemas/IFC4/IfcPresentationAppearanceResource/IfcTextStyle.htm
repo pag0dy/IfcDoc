@@ -1,0 +1,27 @@
+﻿<p>The <em>IfcTextStyle</em> is a presentation style for annotations that place a text in model space. The <em>IfcTextStyle</em> provides the text style for presentation information assigned to <em>IfcTextLiteral</em>'s. The style is defined by color, text font characteristics, and text box characteristics.</p>
+
+<p>An <em>IfcTextStyle</em> is instantiated with:</p>
+<ul>
+  <li><em>TextCharacterAppearance</em>: <em>IfcTextStyleForDefinedFont</em></li>
+  <li><em>TextStyle</em>: <em>IfcTextStyleTextModel</em></li>
+  <li><em>TextFontStyle</em>: <em>IfcTextStyleFontModel</em></li>
+</ul>
+
+<p>An <em>IfcTextStyle</em> is assigned to <em>IfcTextLiteral</em> through the <em>IfcStyledItem</em> entity.</p>
+
+
+<blockquote class="note">
+NOTE&nbsp; Entity adopted from font properties (font-family, font-style, font-variant, font-weight, font-size), Color and background properties (color, background-color) and text properties (word-spacing, letter-spacing, text-decoration, text-transform, text-align, text-indent, line-height) defined in <a href="../../../bibliography.htm#CSS1">CSS-1</a>.
+</blockquote>
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC2x2.
+</blockquote>
+
+<blockquote class="change-ifc2x3">
+IFC2x3 CHANGE&nbsp; The <em>IfcTextStyle</em> has been changed by adding <em>TextFontStyle</em> and different data types for <em>TextStyle</em> and <em>IfcTextCharacterAppearance</em>.
+</blockquote>
+
+<blockquote class="change-ifc2x4">
+IFC4 CHANGE&nbsp; The <em>IfcTextStyle</em> has been simplified by removing old vector based text style definitions.
+</blockquote>

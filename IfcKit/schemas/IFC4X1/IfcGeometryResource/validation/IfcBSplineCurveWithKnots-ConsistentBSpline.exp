@@ -1,0 +1,2 @@
+﻿IfcConstraintsParamBSpline(Degree, UpperIndexOnKnots,
+UpperIndexOnControlPoints, KnotMultiplicities, Knots)

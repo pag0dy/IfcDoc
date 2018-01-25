@@ -1,0 +1,59 @@
+﻿    <p>
+      The <em>IfcTextureCoordinateGenerator</em> describes a
+      procedurally defined mapping function with input parameter to
+      map 2D texture coordinates to 3D geometry vertices. The
+      allowable <em>Mode</em> values and input <em>Parameter</em>
+      need to be agreed upon in view definitions and implementer
+      agreements.
+    </p>
+    <blockquote class="note">
+NOTE&nbsp; It is recommended to use
+        the texture coordinate generation modes as defined in
+        X3D.
+    </blockquote>
+    <blockquote class="extDef">
+        NOTE&nbsp; Definition according to
+        ISO/IEC 19775-1:<br><br>
+				The TextureCoordinateGenerator supports the automatic
+				generation of texture coordinates for geometric shapes.<br>
+      The mode field describes the algorithm used to compute
+      texture coordinates.
+        <ul class="std" style=" font-size:inherit;">
+          <li style=" font-size:inherit;">SPHERE,
+          </li>
+          <li style=" font-size:inherit;">CAMERASPACENORMAL,
+          </li>
+          <li style=" font-size:inherit;">CAMERASPACEPOSITION,
+          </li>
+          <li style=" font-size:inherit;">CAMERASPACEREFLECTIONVECTOR,
+          </li>
+          <li style=" font-size:inherit;">SPHERE-LOCAL,
+          </li>
+          <li style=" font-size:inherit;">COORD,
+          </li>
+          <li style=" font-size:inherit;">COORD-EYE,
+          </li>
+          <li style=" font-size:inherit;">NOISE,
+          </li>
+          <li style=" font-size:inherit;">NOISE-EYE,
+          </li>
+          <li style=" font-size:inherit;">SPHERE-REFLECT,
+          </li>
+          <li style=" font-size:inherit;">SPHERE-REFLECT-LOCAL
+          </li>
+        </ul>
+		</blockquote>
+    <blockquote class="note">
+      NOTE&nbsp; The definitions of texturing within this standard
+      have been developed in dependence on the texture component of
+      X3D. See ISO/IEC 19775-1.2:2008 X3D Architecture and base
+      components Edition 2, Part 1, 18 Texturing component for the
+      definitions in the international standard.
+    </blockquote>
+    <blockquote class="history">
+      HISTORY&nbsp; New entity in IFC2x2.
+    </blockquote>
+    <blockquote class="change-ifc2x2">
+      IFC2x2 Add2 CHANGE&nbsp; The attribute Texture has been
+      deleted.
+    </blockquote>

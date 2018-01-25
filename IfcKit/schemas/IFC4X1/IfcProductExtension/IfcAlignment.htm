@@ -1,0 +1,27 @@
+﻿<p>An alignment is used to define a reference system to position elements mainly for linear construction works, such as roads, rails, bridges, and others. The relative positioning along the alignment is defined by the linear referencing methodology.</p>
+
+<blockquote name="note">NOTE&nbsp; See ISO 19148 Geographic information &ndash; Linear referencing for general definitions about linear referencing.</blockquote>
+
+<p>A single alignment may have:</p>
+<ul>
+<li>a horizontal alignment defined in the x/y plane of the engineering coordinate system</li>
+<li>an accompanying vertical alignment, defined along the horizontal alignment in the distance along / z coordinate space</li>
+<li>a relative alignment, defined as a span within another alignment and/or at constant or variable offsets</li>
+<li>a 3D alignment, either computed from the horizontal and vertical alignment, or extracted from geospatial data.</li>
+</ul>
+
+<p>Alignments may be aggregated into referents (<i>IfcReferent</i>) or derivative alignments. Derivative alignments may be used to indicate dependent alignments, such as an alignment for a bridge that is relative to a parent alignment for a road, where the child <i>IfcAlignment</i> may have <i>Axis</i> set to <i>IfcOffsetCurveByDistances</i> that starts and ends at a span within the extent of the <i>IfcAlignmentCurve</i> defined at the <i>Axis</i> of the parent <i>IfcAlignment</i>.</p>
+
+<p>Alignments may be assigned to groups using <i>IfcRelAssignsToGroup</i>, where <i>IfcGroup</i> or subtypes may capture information common to multiple alignments.</p>
+
+
+<p>Supported representations of <span class="self-ref">IfcAlignment</span>.Axis are:</p>
+<ul>
+<li><i>IfcAlignmentCurve</i> as a 3D horizontal and vertical alignment (represented by their alignment segments)</li>
+<li><i>IfcAlignmentCurve</i> as a 2D horizontal alignment (represented by its horizontal alignment segments) without a vertical alignment</li>
+<li><i>IfcOffsetCurveByDistances</i> as a 2D or 3D curve defined relative to an <i>IfcAlignmentCurve</i> or another <i>IfcOffsetCurveByDistances</i></li>
+<li><i>IfcPolyline</i> as a 3D alignment by a 3D polyline representation (such as coming from a survey)</li>
+<li><i>IfcPolyline</i> as a 2D horizontal alignment by a 2D polyline representation (such as in very early planning phases or as a map representation)</li>
+</ul>
+
+<blockquote class="note">NOTE&nbsp; Although <i>Axis</i> is an <i>IfcCurve</i> base type, only derived types <i>IfcAlignmentCurve</i>, <i>IfcOffsetCurveByDistances</i>, and <i>IfcPolyline</i> are meant to be supported types. Derivative specifications (Model View Definitions) may expand this set to include additional curve types.</blockquote>

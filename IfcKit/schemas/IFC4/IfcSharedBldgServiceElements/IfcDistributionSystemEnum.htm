@@ -1,0 +1,7 @@
+﻿    <p>This enumeration identifies different types of distribution systems.  It is used to designate systems by their function as well as ports of devices within such systems to restrict connectivity to compatible connections.</p>
+
+    <blockquote class="history">
+        HISTORY&nbsp; New enumeration in IFC4.
+    </blockquote>
+
+    <p>Ports for cable carriers may be connected using <em>IfcCableCarrierSegment</em> and <em>IfcCableCarrierFitting</em>.  Type objects for cable carrier segments and fittings (<em>IfcCableCarrierSegmentType</em> and <em>IfcCableCarrierFittingType</em> that are not specific to a particular system type may have ports with <em>PredefinedType</em> of NOTDEFINED which indicates that occurrences of such objects may connect to ports of any other cable-carrier based port.  Valid enumerations for cable carriers are the same as that for cables, and may be asserted if ports of the contained cables are all of the same type.</p>

@@ -1,0 +1,46 @@
+﻿<p>
+  The example demonstrates the use of various way to use mapped items to represent a simple geometric form of a building element proxy. 
+  All example files use the same representation map being a swept solid defining the shape (a block of 1m x 1m x 2m).
+</p>
+<blockquote class="note">
+  NOTE&nbsp; See the example of "Basic geometric shape" for the definition of the swept solid. Any other shape representation, e.g.
+  'Brep', 'CSG', or 'SurfaceModel' could have been used to represent the representation map.</blockquote>
+<p>
+  The basic structure provided with the sample IFC files include:
+</p>
+<ul>
+  <li>the basic context of the data set provided by <em>IfcProject</em> and referenced entities:
+   <ul class="inner">
+    <li><em>IfcOwnerHistory</em> for user, application and time stamp where the project data set had been created;
+    </li>
+    <li>IfcGeometricRepresentationContext for the general context, including representation type, dimension, coordinate system, and precision;
+    </li>
+    <li>IfcUnitAssignment for the default units used within the data set,
+    </li>
+   </ul>
+  </li>
+  <li>the basic spatial structure of the project provided by a single <em>IfcBuilding</em> with referenced entities:
+   <ul class="inner">
+    <li>
+      <em>IfcLocalPlacement</em> to create the local object coordinate system of the building being the parant coordinate system for all
+      objects contained within the building;
+    </li>
+    <li>
+      <em>IfcRelAggregates</em> to link the <em>IfcBuilding</em> to the <em>IfcProject</em> as the uppermost item of the project spatial structure,
+    </li>
+   </ul>
+  </li>
+  <li>the proxy element having a shape representation provided by a single <em>IfcBuildingElementProxy</em> with referenced entities:
+   <ul class="inner">
+    <li>
+      <em>IfcLocalPlacement</em> to create the local object coordinate system of the proxy relative to the object coordinate system of the building;
+    </li>
+    <li>
+      <em>IfcProductDefinitionShape</em> to define the geometry within the local object coordinate system.
+    </li>
+   </ul>
+  </li>
+</ul>
+<blockquote class="note">
+  Depending on the model view definition some representation types may not be allowed in actual exchange scenarios.
+</blockquote>

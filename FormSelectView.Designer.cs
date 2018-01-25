@@ -35,6 +35,7 @@
             this.buttonOK = new System.Windows.Forms.Button();
             this.imageList = new System.Windows.Forms.ImageList(this.components);
             this.treeView = new System.Windows.Forms.TreeView();
+            this.comboBoxMVDXML = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // labelDescription
@@ -67,12 +68,23 @@
             resources.ApplyResources(this.treeView, "treeView");
             this.treeView.Name = "treeView";
             // 
+            // comboBoxMVDXML
+            // 
+            resources.ApplyResources(this.comboBoxMVDXML, "comboBoxMVDXML");
+            this.comboBoxMVDXML.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxMVDXML.FormattingEnabled = true;
+            this.comboBoxMVDXML.Items.AddRange(new object[] {
+            resources.GetString("comboBoxMVDXML.Items"),
+            resources.GetString("comboBoxMVDXML.Items1")});
+            this.comboBoxMVDXML.Name = "comboBoxMVDXML";
+            // 
             // FormSelectView
             // 
             this.AcceptButton = this.buttonOK;
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
+            this.Controls.Add(this.comboBoxMVDXML);
             this.Controls.Add(this.treeView);
             this.Controls.Add(this.labelDescription);
             this.Controls.Add(this.buttonCancel);
@@ -93,5 +105,6 @@
         private System.Windows.Forms.Button buttonOK;
         private System.Windows.Forms.ImageList imageList;
         private System.Windows.Forms.TreeView treeView;
+        private System.Windows.Forms.ComboBox comboBoxMVDXML;
     }
 }

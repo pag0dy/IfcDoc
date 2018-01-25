@@ -1,0 +1,29 @@
+﻿<p>The <em>IfcMirroredProfileDef</em> defines the profile by mirroring the parent profile about the y axis of the parent profile coordinate system. That is, left and right of the parent profile are swapped.</p>
+
+<p>Notes:</p>
+
+<p><em>IfcMirroredProfileDef</em> is primarily useful together with
+<em>IfcCShapeProfileDef</em>, <em>IfcLShapeProfileDef</em>,
+<em>IfcUShapeProfileDef</em>, or <em>IfcZShapeProfileDef</em> as
+parent profile but can be used with other parent profile types as well.</p>
+
+<p>Mirroring of an <em>IfcParameterizedProfileDef</em> is performed after
+translation and rotation according to its <em>Position</em> attribute.
+For example, if the parent profile's <em>Position</em> offsets it by half
+of its width to the right, then the mirrored profile will be offset by
+half of its width to the left.</p>
+
+<p>Mirroring about the x axis, i.e. swapping top and bottom, can be
+achieved by mirroring about the y axis coupled with 180 degree rotation
+about the z axis.
+In general, rotation happens in a containing object such as
+<em>IfcSweptAreaSolid</em>, i.e. after mirroring by <em>IfcMirroredProfileDef</em>
+was performed.
+If the parent profile is an <em>IfcParameterizedProfileDef</em>, rotation
+can alternatively happen already in the parent profile by means of its
+<em>Position</em> attribute, i.e. before mirroring by <em>IfcMirroredProfileDef</em>
+was performed.</p>
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC4.
+</blockquote>

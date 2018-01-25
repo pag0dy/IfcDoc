@@ -1,0 +1,110 @@
+﻿<p>The abstract entity <em>IfcStructuralItem</em> is the generalization of structural members and structural connections, that is, analysis idealizations of elements in the building model.  It defines the relation between structural members and connections with structural activities (actions and reactions).</p>
+
+<p>Relationships between elements in the building model and structural items as their idealizations can be expressed by instances of <em>IfcRelAssignsToProduct</em>.</p>
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC2x2.
+</blockquote>
+
+<blockquote class="change-ifc2x4">
+IFC4 CHANGE&nbsp; Use definitions and informal proposition added.
+</blockquote>
+
+<p><b><u>Coordinate Systems</u></b>:</p>
+
+<p>The following coordinate systems are distinguished:</p>
+
+<ul>
+  <li>The so-called global coordinate system is the coordinate system shared by all items and activities which are grouped in a common <em>IfcStructuralAnalysisModel</em>.  This coordinate system is established by <em>SELF\IfcProduct.ObjectPlacement</em>.  (This coordinate system is not necessarily the same as the <em>IfcProject</em>'s world coordinate system.)</li>
+  <li>The so-called local coordinate system is a coordinate system local to a structural item (connection or member).  This coordinate system is established by a <em>Representation</em> (attribute inherited from <em>IfcProduct</em>) in conjunction with further use definitions and attributes of subtypes of <em>IfcStructuralItem</em>.</li>
+</ul>
+
+<p>Representation items in topology representations are always given within the <em>ObjectPlacement</em>, i.e. in so-called global coordinates (global with respect to the <em>IfcStructuralAnalysisModel</em> to which this item belongs).</em>
+
+<p>The usage of local coordinate systems is further defined in subtypes.</p>
+
+<p><b><u>Topology Use Definitions</u></b>:</p>
+
+<p>Instances of <em>IfcStructuralItem</em> shall have a topology representation.  It includes a placement and a product representation. The <em>IfcProductRepresentation</em> shall be given by an item in a <em>Representation</em> of type <em>IfcTopologyRepresentation</em>.</p>
+
+<p><b>Local Placement</b></p>
+
+<p>The local placement for <em>IfcStructuralItem</em> is defined in its supertype <em>IfcProduct</em>.  It is defined by the <em>IfcLocalPlacement</em>, which establishes a global coordinate system which shall be common to all items and activities in an <em>IfcStructuralAnalysisModel</em>.</p>
+
+<p><b>Topology Representation</b></p>
+
+<p>Instances of <em>IfcStructuralItem</em> shall have a topology representation given by an instance of a subtype of <em>IfcTopologicalRepresentationItem</em>, which should be the single item of <em>IfcTopologyRepresentation.Items</em>.  Depending on the dimensionality of the structural item, one of the following types of toplogical representation items shall be used:</p>
+
+<ul>
+  <li>Point connections shall be represented by an <em>IfcVertexPoint</em> with an underlying <em>IfcCartesianPoint</em>.
+      The Cartesian point is the reference point of the connection in the so-called global coordinate system.
+      The following labels are used in the <em>IfcTopologyRepresentation</em>:
+      <ul>
+        <li><em>RepresentationIdentifier</em>: 'Reference'</li>
+        <li><em>RepresentationType</em>: 'Vertex'</li>
+      </ul>
+      <br>
+      </li>
+
+  <li>Curve members and curve connections shall either be represented by an <em>IfcOrientedEdge</em>,
+      <em>IfcEdgeCurve</em>, or <em>IfcEdge</em>.  The curve to which the <em>IfcEdgeCurve</em> (or an
+      <em>IfcOrientedEdge</em>'s underlying <em>IfcEdgeCurve</em>) refers to is the reference curve of the structural
+      item in the global coordinate system.  Start and end vertex of the edge shall be <em>IfcVertexPoint</em>s
+      with underlying <em>IfcCartesianPoint</em>s.
+      The following labels are used in the <em>IfcTopologyRepresentation</em>:
+      <ul>
+        <li><em>RepresentationIdentifier</em>: 'Reference'</li>
+        <li><em>RepresentationType</em>: 'Edge'</li>
+      </ul>
+<blockquote class="note">NOTE&nbsp; While an <em>IfcEdge</em> (or <em>IfcOrientedEdge</em> with underlying
+      <em>IfcEdge</em>) does not provide an explicit underlying curve geometry, it may be used to imply an
+      underlying straight line as reference curve with the origin of the curve parameter at the start vertex
+      point.</blockquote>
+      </li>
+
+  <li>Surface members and surface connections shall be represented by an <em>IfcFaceSurface</em>.
+      The underlying surface defines the reference surface of the structural surface item in the global
+      coordiante system.  All edges in the bounds of the face shall conform to the rules for edge
+      representations of structural curve item.
+      The following labels are used in the <em>IfcTopologyRepresentation</em>:
+      <ul>
+        <li><em>RepresentationIdentifier</em>: 'Reference'</li>
+        <li><em>RepresentationType</em>: 'Face'</li>
+      </ul>
+      </li>
+</ul>
+
+<p>The reference point, reference curve, or reference surface partially or completely defines the local coordinate system of the represented structural item according to the following rules.  In all cases, The local x,y,z directions form a right-handed Cartesian coordinate system.</p>
+
+<p><em>Structural point items</em></p>
+
+<ul>
+  <li>The reference point in the representation is the origin of the local coordinate system of the structural item.</li>
+  <li>The axes of the local coordiante system are either parallel with and directed like the so-called global coordinate axes, or are oriented according to definitions at the respective subtype of <em>IfcStructuralItem</em>.</li>
+</ul>
+
+<p><em>Structural curve items</em></p>
+
+<ul>
+  <li>The u parameter origin of the reference curve in the representation is the origin of the local coordinate system of the structural item.</li>
+  <li>The local x axis is parallel with the tangent on the curve and directed like the u parameter direction.</li>
+  <li>The local y and z axes are oriented according to definitions at the respective subtypes of <em>IfcStructuralItem</em>.</li>
+</ul>
+
+<p><em>Structural surface items</em></p>
+
+<ul>
+  <li>The u,v parameter origin of the reference surface in the representation is the origin of the local coordinate system of the structural item.</li>
+  <li>The local x and y directions follow the tangents on the surface and are in parallel with and directed like u and v respectively.</li>
+  <li>The local z direction is in parallel with and directed like the surface normal.</li>
+</ul>
+
+<p class="spec-head">Informal Propositions:</p>
+
+<ol>
+  <li>The <em>ObjectPlacement</em>s of all structural items which are grouped into the same instance of <em>IfcStructuralAnalysisModel</em> shall refer to the same instance of <em>IfcObjectPlacement</em>.</li>
+</ol>
+
+<blockquote class="note">NOTE&nbsp; This rule is necessary to achieve consistent topology representations.  The topology representations of structural items in an analysis model are meant to share vertices and edges und must therefore have the same object placement.</blockquote>
+
+<blockquote class="note">NOTE&nbsp; A structural item may be grouped into more than one analysis model. In this case, all these models must use the same instance of <em>IfcObjectPlacement</em>.</blockquote>

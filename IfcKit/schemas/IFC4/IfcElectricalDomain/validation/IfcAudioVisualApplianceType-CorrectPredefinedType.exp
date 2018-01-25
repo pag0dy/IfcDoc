@@ -1,0 +1,2 @@
+﻿(PredefinedType <> IfcAudioVisualApplianceTypeEnum.USERDEFINED) OR
+((PredefinedType = IfcAudioVisualApplianceTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcElementType.ElementType))

@@ -1,0 +1,47 @@
+﻿    <p>
+      The nesting relationship <em>IfcRelNests</em> is a special type
+      of the general composition/decomposition (or whole/part)
+      relationship <em>IfcRelDecomposes</em>. The nesting
+      relationship can be applied to all non physical subtypes of
+      object and object types, namely processes, controls (like
+      cost items), and resources. It can also be applied to
+      physical subtypes of object and object types, namely elements
+      having ports. The nesting implies an order among the nested
+      parts.
+    </p>
+    <blockquote class="example">
+      EXAMPLE&nbsp; A nesting of costs items in an
+      <em>IfcCostSchedule</em> is the composition of complex cost
+      items from other cost items. The order of the nested cost
+      items underneath the parent cost item is determined by the
+      order of the list of <em>RelatedObjects</em>.
+    </blockquote>
+    <blockquote class="example">
+      EXAMPLE&nbsp; A nesting of <em>IfcTask</em>'s within a work
+      schedule is the composition of a parent work task from more
+      specific sub work tasks. The order of the sub tasks
+      underneath the parent task is determined by the order of the
+      list of <em>RelatedObjects</em>.
+    </blockquote>
+    <blockquote class="example">
+      EXAMPLE&nbsp; A series of <em>IfcDistributionPort</em>'s can
+      be nested within an <em>IfcDistributionElement</em>. They
+      decompose the distribution element and have an implied order.
+    </blockquote>
+    <p>
+      Decompositions imply a dependency, i.e. the definition of the
+      whole depends on the definition of the parts and the parts
+      depend on the existence of the whole. The behaviour that is
+      implied from the dependency has to be established inside the
+      applications.
+    </p>
+    <blockquote class="history">
+      HISTORY&nbsp; New entity in IFC2.0
+    </blockquote>
+    <blockquote class="change-ifc2x4">
+      IFC4 CHANGE&nbsp; The attributes <em>RelatingObject</em> and
+      <em>RelatedObjects</em> are demoted from the supertype
+      <em>IfcRelDecomposes</em>, and <em>RelatedObjects</em> is refined
+      to be a list. The use of <em>IfcRelNests</em> is repurposed to
+      be a nesting of an ordered collections of parts.
+    </blockquote>

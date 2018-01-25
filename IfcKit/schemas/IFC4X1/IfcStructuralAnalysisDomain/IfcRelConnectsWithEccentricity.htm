@@ -1,0 +1,24 @@
+﻿<p>The entity <em>IfcRelConnectsWithEccentricity</em> adds the definition of eccentricity to the connection between a structural member and a structural connection (representing either a node or support).</p>
+
+<blockquote class="note">
+NOTE&nbsp; Another eccentricity model is available independently of eccentric connection specification:  The section profile of a curve member may be inserted eccentrically with respect to the member's reference curve, see definitions at <em>IfcStructuralCurveMember</em>.  Whether one or the other or both eccentricity models may be used is subject to information requirements and local agreements.
+</blockquote>
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC2x3.
+</blockquote>
+
+<blockquote class="change-ifc2x4">
+IFC4 CHANGE&nbsp; Use definitions changed to always require two topology items.
+</blockquote>
+
+<p><b>Use Definition</b></p>
+
+<p><em>Point Connection</em><br>
+<em>ConnectionConstraint</em> shall be of type <em>IfcConnectionPointGeometry</em> and shall refer to two instances of <em>IfcVertexPoint</em>.</p>
+
+<p><em>Curve Connection</em><br>
+<em>ConnectionConstraint</em> shall be of type <em>IfcConnectionCurveGeometry</em> and shall refer to two instances of <em>IfcEdge</em> or subtypes.</p>
+
+<p><em>Surface Connection</em><br>
+<em>ConnectionConstraint</em> shall be of type <em>IfcConnectionSurfaceGeometry</em> and shall refer to two instances of <em>IfcFaceSurface</em>.</p>

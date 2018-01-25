@@ -1,0 +1,3 @@
+﻿SIZEOF(QUERY(temp <* Representations | 
+  (NOT('IFCREPRESENTATIONRESOURCE.IFCSHAPEMODEL' IN TYPEOF(temp)))
+)) = 0

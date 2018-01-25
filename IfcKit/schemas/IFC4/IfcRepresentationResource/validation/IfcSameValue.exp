@@ -1,0 +1,8 @@
+﻿FUNCTION IfcSameValue
+  (Value1, Value2 : REAL; Epsilon : REAL)
+  : LOGICAL ;
+LOCAL
+tmp : GENERIC;
+END_LOCAL;
+RETURN(tmp);
+END_FUNCTION;

@@ -1,0 +1,20 @@
+﻿<epm-html>
+
+<p><em>IfcOwnerHistory</em> defines all history and identification related information. In order to provide fast access it is directly attached to all independent objects, relationships and properties.</p>
+
+<p><em>IfcOwnerHistory</em> is used to identify the creating and owning application and user for the associated object, as well as capture the last modifying application and user.</p>
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC1.0. 
+</blockquote>
+<blockquote class="change-ifc2x4">IFC4 CHANGE&nbsp; ChangeAction is now optional and a related WHERE rule enforces conditions when it is asserted.
+</blockquote>
+
+<p class="spec-head">Informal Propositions:</p>
+<ol>
+<li>If LastModifiedDate is defined but ChangeAction is not asserted, then the state of ChangeAction is assumed to be UNDEFINED.</li>	  
+<li>If both LastModifiedDate and ChangeAction are asserted, then the state of ChangeAction applies to the value asserted in LastModifiedDate.</li>
+
+</ol>
+
+</epm-html>

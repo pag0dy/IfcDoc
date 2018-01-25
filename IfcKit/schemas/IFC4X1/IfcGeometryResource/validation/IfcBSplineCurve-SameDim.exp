@@ -1,0 +1,3 @@
+﻿SIZEOF(QUERY(Temp <* ControlPointsList |
+  Temp.Dim <> ControlPointsList[1].Dim))
+= 0

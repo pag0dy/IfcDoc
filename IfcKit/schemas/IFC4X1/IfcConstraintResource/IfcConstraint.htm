@@ -1,0 +1,17 @@
+﻿<p>An <em>IfcConstraint</em> is used to define a constraint or limiting value or boundary condition that may be applied to an object or to the value of a property. </p> 
+
+<p>Constraints may be subdivided into user-defined constraints and system-defined constraints. User-defined constraints are applied by a user and are restricted to high-level definitions such as object properties. System-defined constraints may apply to any object attribute, are typically defined by an application to enforce data validation or parametric behavior, and are intended to be enforced by applications but not to be directly editable by an end-user.</p>
+
+<p><em>IfcConstraint</em> may be associated with any subtype of <i>IfcObjectDefinition</i> or <i>IfcPropertyDefinition</i> through the <em>IfcRelAssociatesConstraint</em> relationship to indicate a system-defined constraint, or may be associated with <em>IfcResourceObjectSelect</em> (such as <i>IfcPropertySingleValue</i>) by <em>IfcResourceConstraintRelationship</em> to indicate a user-defined constraint.</p> 
+
+<p>A constraint must have a name applied through the <em>IfcConstraint.Name</em> attribute and optionally, a description through <em>IfcConstraint.Description</em>. The grade of the constraint (hard, soft, advisory) must be specified through <em>IfcConstraint.ConstraintGrade</em> or <em>IfcConstraint.UserDefinedGrade</em> whilst the source, creating actor and time at which the constraint is created may be optionally asserted through <em>IfcConstraint.ConstraintSource</em>, <em>IfcConstraint.CreatingActor</em> and <em>IfcConstraint.CreationTime</em>.</p> 
+
+<p>A constraint may also have additional external information (such as classification or document information) associated to it by <em>IfcExternalReferenceRelationship</em>, accessible through inverse attribute <em>IfcConstraint.HasExternalReferences</em></p>
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC2.0
+</blockquote> 
+
+<blockquote class="change-ifc2x4">
+IFC4 CHANGE&nbsp; CreationTime changed to IfcDateTime for ISO 8601 representation, HasExternalReferences new inverse attribute.
+</blockquote>

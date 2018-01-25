@@ -1,0 +1,2 @@
+﻿(PredefinedType <> IfcConstructionEquipmentResourceTypeEnum.USERDEFINED) OR
+((PredefinedType = IfcConstructionEquipmentResourceTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcTypeResource.ResourceType))

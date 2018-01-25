@@ -1,0 +1,41 @@
+﻿<p>The planar surface is an unbounded surface in the direction of <em>x</em> and <em>y</em>. Bounded planar surfaces are defined by using a subtype of <em>IfcBoundedSurface</em> with <em>BasisSurface</em> being a plane.</p>
+
+<blockquote class="extDef">
+NOTE&nbsp; Definition according to ISO/CD 10303-42:1992<br>
+A plane is an unbounded surface with a constant normal. A plane is defined by a point on the plane and the normal direction to the plane. The data is to be interpreted as follows:
+<pre>
+   C = Position.Location
+   x = Position.P[1]
+   y = Position.P[2]
+   z = Position.P[3] =&gt; normal to plane
+</pre>
+and the surface is parameterized as:
+<blockquote class="extDef">
+<img src="../../../figures/ifcplane-math1.gif.gif" alt="formula" width="141" height="21">
+</blockquote>
+where the parametric range is -&infin; &lt; <em>u,v</em> &lt;
+&infin;. In the above parameterization the length unit for the
+unit vectors <b>x</b> and <b>y</b> is derived from the context of
+the plane.</blockquote>
+
+<blockquote class="note">NOTE&nbsp; A rectangular bounded planar surface can be defined by an <em>IfcRectangularTrimmedSurface</em> with
+<em>BasisSurface</em> being the plane and <em>U1</em> = left bound in <b>x</b>, <em>U2</em> = right bound in <b>x</b>, <em>V</em>1 = lower
+bound in <b>y</b>, <em>V2</em> = upper bound in <b>y</b> if viewed into the direction of the negative normal. (assuming the
+<em>Usense</em> and <em>Vsense</em> agree to the sense of the basis surface).</blockquote>
+<p>The inherited attributes are interpreted as</p>
+<ul>
+<li><em>SELF\IfcElementarySurface.Position</em> defines the
+location and orientation of the planar surface.</li>
+<li><em>SELF\IfcElementarySurface.Position.Location</em> defines a
+point on the planar surface.</li>
+<li><em>SELF\IfcElementarySurface.Position.P[3]</em> defines the
+normal of the planar surface.</li>
+</ul>
+
+<blockquote class="note">
+NOTE&nbsp; Entity adapted from <strong>plane</strong> in ISO 10303-42.
+</blockquote>
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC1.5
+</blockquote>

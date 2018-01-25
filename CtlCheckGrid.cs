@@ -544,7 +544,7 @@ namespace IfcDoc
         DocProject m_project;
         List<DocTemplateDefinition> m_listTemplate;
 
-        public CheckGridEntity(DocConceptRoot docRoot, DocModelView docView, DocProject docProject, Dictionary<string, DocObject> map)
+        public CheckGridEntity(DocConceptRoot docRoot, DocModelView docView, DocProject docProject)
         {
             this.m_root = docRoot;
             this.m_view = docView;
@@ -562,8 +562,9 @@ namespace IfcDoc
                     bool include = false;
 
                     // check for inheritance                
-                    DocObject docApplicableEntity = null;
-                    if (docTemplate.Type != null && map.TryGetValue(docTemplate.Type, out docApplicableEntity) && docApplicableEntity is DocEntity)
+                    DocObject docApplicableEntity = docProject.GetDefinition(docTemplate.Type) as DocEntity;
+
+                    if (docTemplate.Type != null && docApplicableEntity is DocEntity)
                     {
                         // check for inheritance
                         DocEntity docBase = docRoot.ApplicableEntity;
@@ -578,15 +579,7 @@ namespace IfcDoc
                             if (docBase.BaseDefinition == null)
                                 break;
 
-                            DocObject docEach = null;
-                            if (map.TryGetValue(docBase.BaseDefinition, out docEach))
-                            {
-                                docBase = (DocEntity)docEach;
-                            }
-                            else
-                            {
-                                docBase = null;
-                            }
+                            docBase = docProject.GetDefinition(docBase.BaseDefinition) as DocEntity;
                         }
                     }
 

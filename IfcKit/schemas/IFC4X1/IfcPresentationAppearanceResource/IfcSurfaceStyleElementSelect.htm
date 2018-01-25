@@ -1,0 +1,17 @@
+﻿<p>The <em>IfcSurfaceStyleElementSelect</em> provides a selection between different surface styles, including <em>IfcSurfaceStyleRendering</em> for rendering properties, <em>IfcSurfaceStyleLighting</em>, which holds the exact physically based lighting properties for lighting based calculation algorithms (as the opposite to the rendering based calculation), the <em>IfcSurfaceStyleRefraction</em> (for more advanced refraction indices) and <em>IfcSurfaceStyleWithTextures</em> to allow for image textures applied to surfaces. In addition an <em>IfcExternallyDefinedSurfaceStyle</em> can be selected that points into an external rendering material library.</p> 
+
+<blockquote class="note"> 
+NOTE&nbsp; The <em>IfcSurfaceLightingProperties</em> are needed for exact lighting calculation, because physically based lighting calculation algorithms need exact physically based parameters. The factors in <em>IfcSurfaceStyleRendering</em> lack the physical base, they are intended for rendering calculations, but a lighting calculation based software cannot use these values.
+</blockquote> 
+
+<blockquote class="extDef">
+NOTE&nbsp; Definition according to ISO/CD 10303-46:1992<br>
+The surface style element select is a selection of the different surface styles to use in the presentation of the side of a surface.</blockquote> 
+
+<blockquote class="note">
+NOTE&nbsp; Type adapted from <strong>surface_style_element_select</strong> defined in ISO10303-46.
+</blockquote>
+
+<blockquote class="history">
+HISTORY&nbsp; New select type in IFC2x2.
+</blockquote>

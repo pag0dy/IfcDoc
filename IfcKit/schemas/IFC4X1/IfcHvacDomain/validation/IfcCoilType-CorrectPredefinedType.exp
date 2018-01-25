@@ -1,0 +1,2 @@
+﻿(PredefinedType <> IfcCoilTypeEnum.USERDEFINED) OR
+((PredefinedType = IfcCoilTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcElementType.ElementType))

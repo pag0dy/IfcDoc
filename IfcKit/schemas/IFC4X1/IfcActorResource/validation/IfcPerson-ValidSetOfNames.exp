@@ -1,0 +1,1 @@
+﻿NOT EXISTS(MiddleNames) OR EXISTS(FamilyName) OR EXISTS(GivenName)

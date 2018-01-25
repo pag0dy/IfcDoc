@@ -1,0 +1,1 @@
+﻿SIZEOF(QUERY(temp <* HasProperties | SELF :=: temp)) = 0

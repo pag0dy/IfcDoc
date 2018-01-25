@@ -1,0 +1,24 @@
+﻿<p>A ramp is a vertical passageway which provides a human circulation link between one floor level and another floor level at a different elevation. It may include a landing as an intermediate floor slab. A ramp normally does not include steps.</p>
+<blockquote class="extDef">NOTE&nbsp; Definition according to ISO 6707-1: 
+Inclined way or floor joining two surfaces at different levels.</blockquote>
+
+<p> The <em>IfcRamp</em> shall either be represented:</p>
+<ul>
+<li>as a ramp assembly that aggregates all parts(ramp flight, landing, etc.) with own shape representations, or</li>
+<li>as a single ramp without decomposition including all shape representations directly at the ramp entity.</li>
+</ul>
+
+<blockquote class="note">NOTE&nbsp; In case of an <em>IfcRamp</em> being the assembly of all parts
+of the ramp the aggregation is handled by the <em>IfcRelAggregates</em> relationship, relating an <em>IfcRamp</em>
+with the related <em>IfcRampFlight</em> and landings, <em>IfcSlab</em> with PredefinedType=LANDING. <em>IfcRailing</em>'s belonging to the ramp may also be included into the aggregation.</blockquote>
+
+<blockquote class="note">NOTE&nbsp; Model View Definitions and implementer 
+agreements may restrict the <em>IfcRamp</em> being an assembly to not have an 
+independent shape representation, but to always require that the decomposed parts have a shape representation. In this case, at least the 'Body' geometric representations shall not be provided directly at <em>IfcRamp</em> if it is an
+ assembly. The 'Body' geometric 
+representation of the <em>IfcRamp</em> is then the sum of the 'Body' shape representation of the parts 
+within the decomposition structure.</blockquote>
+
+
+<blockquote class="history">HISTORY&nbsp; New entity in IFC2.0.</blockquote>
+<blockquote class="change-ifc2x4">IFC4 CHANGE Attribute <em>ShapeType</em> renamed to <em>PredefinedType</em></blockquote>

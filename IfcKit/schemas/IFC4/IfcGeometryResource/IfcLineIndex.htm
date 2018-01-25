@@ -1,0 +1,13 @@
+﻿<p>The <em>IfcLineIndex</em> describes a single or multiple straight segments within a poly curve by providing a list on indices. The first index is the start point of the line segment, the last index is the end point of the line segment. If more than two indices are included, then all intermediate indices define intermediate points of the poly line segment connected in the order of appearance of the list of indices.</p>
+
+<blockquote class="note">NOTE&nbsp; The type is used for <em>IfcIndexedPolyCurve</em> to point into an <em>IfcCartesianPointList</em> for providing the Cartesian points of the straight segments of the poly curve.</blockquote>
+<blockquote class="extDef">
+NOTE&nbsp; IfcLineIndex follows the definition of polyline according to ISO/CD 10303-42:1992<br>
+A polyline is a bounded curve of <em>n</em> - 1 linear segments, defined by a list of <em>n</em> points, P<sub>1</sub>, P<sub>2</sub> ... P<sub>n</sub>. The <em>i</em> <sup>th</sup> segment of the curve is parameterized as follows:
+<blockquote class="extDef">
+<img src="../../../figures/ifcpolyline-math1.gif" width="190" height="24" align="middle">&nbsp;&nbsp;&nbsp;
+<em>for</em> 1 &le; <em>i</em> &le; <em>n</em> - 1
+</blockquote>
+where <em>i</em> - 1 &le; <em>u</em> &le; <em>i</em> and with parametric range of 0 &le; <em>u</em> &le; <em>n</em> - 1.
+</blockquote>
+<blockquote class="history">HISTORY&nbsp; New Type in IFC4 ADD1</blockquote>

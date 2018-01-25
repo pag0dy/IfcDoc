@@ -1,0 +1,40 @@
+﻿    <p>
+      A feature element addition is a specialization of the general
+      feature element, that represents an existence dependent
+      element which modifies the shape and appearance of the
+      associated master element. The
+      <em>IfcFeatureElementAddition</em> offers the ability to
+      handle shape modifiers as semantic objects within the IFC
+      object model that add to the shape of the master element.
+    </p>
+    <p>
+      The <em>IfcFeatureElementAddition</em> is associated to its
+      master element by virtue of the objectified relationship
+      <em>IfcRelProjectsElement</em>. This relationship implies a
+      Boolean 'union' operation between the shape of the master
+      element and the shape of the addition feature.
+    </p>
+    <p>
+      The local placement for <em>IfcFeatureElementAddition</em> is
+      defined in its supertype <em>IfcProduct</em>. It is defined
+      by the <em>IfcLocalPlacement</em>, which defines the local
+      coordinate system that is referenced by all geometric
+      representations. The local placement is always defined in
+      relation to the local placement of the element to which the
+      feature element is added:
+    </p>
+    <ul>
+      <li>The <em>PlacementRelTo</em> relationship of
+      <em>IfcLocalPlacement</em> shall point to the local placement
+      of the same <em>IfcElement</em>, which is used in the
+      <em>HasAdditionFeature.RelatingElement</em> inverse
+      attribute.
+      </li>
+    </ul>
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC2x2.
+</blockquote>
+<blockquote class="change-ifc2x2">
+IFC2x2 CHANGE&nbsp;  The entity is introduced as an upward compatible extension of the IFC2x
+platform. It is an intermediate abstract supertype without defining its own explicit attributes.
+</blockquote>

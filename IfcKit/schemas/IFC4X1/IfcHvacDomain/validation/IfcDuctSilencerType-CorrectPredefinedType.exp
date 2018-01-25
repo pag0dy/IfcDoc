@@ -1,0 +1,2 @@
+﻿(PredefinedType <> IfcDuctSilencerTypeEnum.USERDEFINED) OR
+((PredefinedType = IfcDuctSilencerTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcElementType.ElementType))

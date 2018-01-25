@@ -1,0 +1,1 @@
+﻿SIZEOF(QUERY(temp <* HasQuantities | SELF :=: temp)) = 0

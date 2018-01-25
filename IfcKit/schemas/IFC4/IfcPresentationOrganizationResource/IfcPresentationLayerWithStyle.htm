@@ -1,0 +1,23 @@
+﻿<p>An <em>IfcPresentationLayerAssignmentWithStyle</em> extends the presentation layer assignment with capabilities to define visibility control, access control and common style information.</p>
+
+<p>The visibility control allows to define a layer to be either 'on' or 'off', and/or 'frozen' or 'not frozen'. The access control allows to block graphical entities from manipulations by setting a layer to be either 'blocked' or 'not blocked'. Common style information can be given to the layer.</p>
+
+<blockquote class="note">
+NOTE&nbsp; Style information assigned to layers is often restricted to 'layer colour', 'curve font', and/or 'curve width'. These styles are assigned by using the <em>IfcCurveStyle</em> within the <em>LayerStyles</em>.
+</blockquote>
+
+<blockquote class="note">
+NOTE&nbsp; If a styled item is assigned to a layer using the <em>IfcPresentationLayerAssignmentWithStyle</em>, it inherits the style information from the layer. In this case, it should omit its own style information. If the styled item has style information assigned (such as by <em>IfcCurveStyle</em>, <em>IfcFillAreaStyle</em>, <em>IfcTextStyle</em>, <em>IfcSurfaceStyle</em>, <em>IfcSymbolStyle</em>), then it overrides the style provided by the <em>IfcPresentationLayerAssignmentWithStyle</em>.
+</blockquote>
+
+<blockquote class="note">
+NOTE&nbsp; The <em>IfcPresentationLayerAssignmentWithStyle</em> extends the presentation_layer_assignment entity as defined in ISO/IS 10303-46:1994, p. 36.
+</blockquote>
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC2x2.
+</blockquote>
+
+<blockquote class="change-ifc2x3">
+IFC2x3 CHANGE &nbsp;The attributes have been modified without upward compatibility.
+</blockquote>
