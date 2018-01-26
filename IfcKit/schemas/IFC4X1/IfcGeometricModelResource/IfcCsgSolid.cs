@@ -10,11 +10,10 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcTopologyResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcGeometricModelResource
 {
@@ -25,6 +24,15 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 		[Required()]
 		IfcCsgSelect _TreeRootExpression;
 	
+	
+		public IfcCsgSolid()
+		{
+		}
+	
+		public IfcCsgSolid(IfcCsgSelect __TreeRootExpression)
+		{
+			this._TreeRootExpression = __TreeRootExpression;
+		}
 	
 		[Description(@"Boolean expression of primitives and regularized operators describing the solid. The root of the tree of Boolean expressions is given explicitly as an <em>IfcBooleanResult</em> entitiy or as a primitive (subtypes of <em>IfcCsgPrimitive3D</em>).
 	</EPM-HMTL>")]

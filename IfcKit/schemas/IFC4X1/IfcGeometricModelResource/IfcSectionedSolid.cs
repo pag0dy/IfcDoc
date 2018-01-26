@@ -10,11 +10,11 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometricModelResource
 {
@@ -27,8 +27,19 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 	
 		[DataMember(Order=1)] 
 		[Required()]
+		[MinLength(2)]
 		IList<IfcProfileDef> _CrossSections = new List<IfcProfileDef>();
 	
+	
+		public IfcSectionedSolid()
+		{
+		}
+	
+		public IfcSectionedSolid(IfcCurve __Directrix, IfcProfileDef[] __CrossSections)
+		{
+			this._Directrix = __Directrix;
+			this._CrossSections = new List<IfcProfileDef>(__CrossSections);
+		}
 	
 		[Description("The curve used to define the sweeping operation.")]
 		public IfcCurve Directrix { get { return this._Directrix; } set { this._Directrix = value;} }

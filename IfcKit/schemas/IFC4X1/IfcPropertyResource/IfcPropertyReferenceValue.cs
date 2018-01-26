@@ -10,16 +10,11 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
 using BuildingSmart.IFC.IfcApprovalResource;
 using BuildingSmart.IFC.IfcConstraintResource;
-using BuildingSmart.IFC.IfcCostResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcPropertyResource
 {
@@ -33,6 +28,17 @@ namespace BuildingSmart.IFC.IfcPropertyResource
 		[DataMember(Order=1)] 
 		IfcObjectReferenceSelect _PropertyReference;
 	
+	
+		public IfcPropertyReferenceValue()
+		{
+		}
+	
+		public IfcPropertyReferenceValue(IfcIdentifier __Name, IfcText? __Description, IfcText? __UsageName, IfcObjectReferenceSelect __PropertyReference)
+			: base(__Name, __Description)
+		{
+			this._UsageName = __UsageName;
+			this._PropertyReference = __PropertyReference;
+		}
 	
 		[Description("Description of the use of the referenced value within the property. It is a descr" +
 	    "iptive text that may hold an expression or other additional information.")]

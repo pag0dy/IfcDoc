@@ -10,12 +10,10 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcPresentationDefinitionResource
 {
@@ -32,6 +30,16 @@ namespace BuildingSmart.IFC.IfcPresentationDefinitionResource
 		[Required()]
 		IfcLengthMeasure _SizeInY;
 	
+	
+		public IfcPlanarExtent()
+		{
+		}
+	
+		public IfcPlanarExtent(IfcLengthMeasure __SizeInX, IfcLengthMeasure __SizeInY)
+		{
+			this._SizeInX = __SizeInX;
+			this._SizeInY = __SizeInY;
+		}
 	
 		[Description("The extent in the direction of the x-axis.")]
 		public IfcLengthMeasure SizeInX { get { return this._SizeInX; } set { this._SizeInX = value;} }

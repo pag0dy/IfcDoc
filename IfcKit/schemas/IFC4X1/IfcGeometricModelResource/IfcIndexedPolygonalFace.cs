@@ -13,8 +13,7 @@ using System.Xml.Serialization;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcTopologyResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcGeometricModelResource
 {
@@ -24,11 +23,22 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 		[DataMember(Order=0)] 
 		[XmlAttribute]
 		[Required()]
+		[MinLength(3)]
 		IList<IfcPositiveInteger> _CoordIndex = new List<IfcPositiveInteger>();
 	
 		[InverseProperty("Faces")] 
+		[MinLength(1)]
 		ISet<IfcPolygonalFaceSet> _ToFaceSet = new HashSet<IfcPolygonalFaceSet>();
 	
+	
+		public IfcIndexedPolygonalFace()
+		{
+		}
+	
+		public IfcIndexedPolygonalFace(IfcPositiveInteger[] __CoordIndex)
+		{
+			this._CoordIndex = new List<IfcPositiveInteger>(__CoordIndex);
+		}
 	
 		[Description(@"One-dimensional list with the indices for the three or more points, that define the vertices of the outer loop. If the tessellated face set is closed, indicated by <em>SELF\IfcTessellatedFaceSet.Closed</em>, then the points, defining the outer loop, shall connect counter clockwise, as seen from the outside of the body, so that the resulting normal will point outwards.
 	<blockquote class=""note"">NOTE&nbsp; The coordinates of the vertices are provided by the indexed list of <em>SELF\IfcTessellatedFaceSet.Coordinates.CoordList</em>. If the  <em>SELF\IfcTessellatedFaceSet.PnIndex</em> is provided, the indices point into it, otherwise directly into the <em>IfcCartesianPointList3D</em>.</blockquote>")]

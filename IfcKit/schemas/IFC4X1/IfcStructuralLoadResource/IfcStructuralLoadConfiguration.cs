@@ -19,12 +19,25 @@ namespace BuildingSmart.IFC.IfcStructuralLoadResource
 	{
 		[DataMember(Order=0)] 
 		[Required()]
+		[MinLength(1)]
 		IList<IfcStructuralLoadOrResult> _Values = new List<IfcStructuralLoadOrResult>();
 	
 		[DataMember(Order=1)] 
 		[XmlElement("IfcLengthMeasure")]
+		[MinLength(1)]
 		IList<IfcLengthMeasure> _Locations = new List<IfcLengthMeasure>();
 	
+	
+		public IfcStructuralLoadConfiguration()
+		{
+		}
+	
+		public IfcStructuralLoadConfiguration(IfcLabel? __Name, IfcStructuralLoadOrResult[] __Values, IfcLengthMeasure[] __Locations)
+			: base(__Name)
+		{
+			this._Values = new List<IfcStructuralLoadOrResult>(__Values);
+			this._Locations = new List<IfcLengthMeasure>(__Locations);
+		}
 	
 		[Description("List of load or result values.")]
 		public IList<IfcStructuralLoadOrResult> Values { get { return this._Values; } }

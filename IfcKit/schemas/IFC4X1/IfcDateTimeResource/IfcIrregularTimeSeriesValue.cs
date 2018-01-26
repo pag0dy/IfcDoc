@@ -10,7 +10,6 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 
 namespace BuildingSmart.IFC.IfcDateTimeResource
@@ -25,8 +24,19 @@ namespace BuildingSmart.IFC.IfcDateTimeResource
 	
 		[DataMember(Order=1)] 
 		[Required()]
+		[MinLength(1)]
 		IList<IfcValue> _ListValues = new List<IfcValue>();
 	
+	
+		public IfcIrregularTimeSeriesValue()
+		{
+		}
+	
+		public IfcIrregularTimeSeriesValue(IfcDateTime __TimeStamp, IfcValue[] __ListValues)
+		{
+			this._TimeStamp = __TimeStamp;
+			this._ListValues = new List<IfcValue>(__ListValues);
+		}
 	
 		[Description("The specification of the time point.")]
 		public IfcDateTime TimeStamp { get { return this._TimeStamp; } set { this._TimeStamp = value;} }

@@ -10,13 +10,11 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometricModelResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcPresentationOrganizationResource;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
@@ -46,6 +44,20 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		[Required()]
 		IfcTransitionCurveType _TransitionCurveType;
 	
+	
+		public IfcTransitionCurveSegment2D()
+		{
+		}
+	
+		public IfcTransitionCurveSegment2D(IfcCartesianPoint __StartPoint, IfcPlaneAngleMeasure __StartDirection, IfcPositiveLengthMeasure __SegmentLength, IfcPositiveLengthMeasure? __StartRadius, IfcPositiveLengthMeasure? __EndRadius, IfcBoolean __IsStartRadiusCCW, IfcBoolean __IsEndRadiusCCW, IfcTransitionCurveType __TransitionCurveType)
+			: base(__StartPoint, __StartDirection, __SegmentLength)
+		{
+			this._StartRadius = __StartRadius;
+			this._EndRadius = __EndRadius;
+			this._IsStartRadiusCCW = __IsStartRadiusCCW;
+			this._IsEndRadiusCCW = __IsEndRadiusCCW;
+			this._TransitionCurveType = __TransitionCurveType;
+		}
 	
 		[Description("The radius of the curve at the start point. If the radius is not provided by a va" +
 	    "lue, i.e. being “NIL” it is interpreted as INFINITE – the <i>StartPoint</i> is a" +

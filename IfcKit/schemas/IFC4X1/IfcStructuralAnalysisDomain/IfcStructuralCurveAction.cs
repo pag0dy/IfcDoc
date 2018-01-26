@@ -11,12 +11,11 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcGeometricConstraintResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcProductExtension;
 using BuildingSmart.IFC.IfcRepresentationResource;
 using BuildingSmart.IFC.IfcStructuralLoadResource;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcStructuralAnalysisDomain
 {
@@ -32,6 +31,17 @@ namespace BuildingSmart.IFC.IfcStructuralAnalysisDomain
 		[Required()]
 		IfcStructuralCurveActivityTypeEnum _PredefinedType;
 	
+	
+		public IfcStructuralCurveAction()
+		{
+		}
+	
+		public IfcStructuralCurveAction(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcObjectPlacement __ObjectPlacement, IfcProductRepresentation __Representation, IfcStructuralLoad __AppliedLoad, IfcGlobalOrLocalEnum __GlobalOrLocal, IfcBoolean? __DestabilizingLoad, IfcProjectedOrTrueLengthEnum? __ProjectedOrTrue, IfcStructuralCurveActivityTypeEnum __PredefinedType)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType, __ObjectPlacement, __Representation, __AppliedLoad, __GlobalOrLocal, __DestabilizingLoad)
+		{
+			this._ProjectedOrTrue = __ProjectedOrTrue;
+			this._PredefinedType = __PredefinedType;
+		}
 	
 		[Description("Defines whether load values are given per true length of the curve on which they " +
 	    "act, or per length of the projection of the curve in load direction.  The latter" +

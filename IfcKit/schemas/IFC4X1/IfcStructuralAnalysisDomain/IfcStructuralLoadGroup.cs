@@ -10,13 +10,9 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcGeometricConstraintResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcStructuralLoadResource;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcStructuralAnalysisDomain
 {
@@ -47,11 +43,26 @@ namespace BuildingSmart.IFC.IfcStructuralAnalysisDomain
 		IfcLabel? _Purpose;
 	
 		[InverseProperty("ResultForLoadGroup")] 
+		[MaxLength(1)]
 		ISet<IfcStructuralResultGroup> _SourceOfResultGroup = new HashSet<IfcStructuralResultGroup>();
 	
 		[InverseProperty("LoadedBy")] 
 		ISet<IfcStructuralAnalysisModel> _LoadGroupFor = new HashSet<IfcStructuralAnalysisModel>();
 	
+	
+		public IfcStructuralLoadGroup()
+		{
+		}
+	
+		public IfcStructuralLoadGroup(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcLoadGroupTypeEnum __PredefinedType, IfcActionTypeEnum __ActionType, IfcActionSourceTypeEnum __ActionSource, IfcRatioMeasure? __Coefficient, IfcLabel? __Purpose)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType)
+		{
+			this._PredefinedType = __PredefinedType;
+			this._ActionType = __ActionType;
+			this._ActionSource = __ActionSource;
+			this._Coefficient = __Coefficient;
+			this._Purpose = __Purpose;
+		}
 	
 		[Description("Selects a predefined type for the load group.  It can be differentiated between l" +
 	    "oad groups, load cases, load combinations, or userdefined grouping levels.\r\n")]

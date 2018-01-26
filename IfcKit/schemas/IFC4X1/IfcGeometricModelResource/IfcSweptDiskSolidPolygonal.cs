@@ -10,11 +10,11 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcTopologyResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcGeometricModelResource
 {
@@ -25,6 +25,16 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 		[XmlAttribute]
 		IfcPositiveLengthMeasure? _FilletRadius;
 	
+	
+		public IfcSweptDiskSolidPolygonal()
+		{
+		}
+	
+		public IfcSweptDiskSolidPolygonal(IfcCurve __Directrix, IfcPositiveLengthMeasure __Radius, IfcPositiveLengthMeasure? __InnerRadius, IfcParameterValue? __StartParam, IfcParameterValue? __EndParam, IfcPositiveLengthMeasure? __FilletRadius)
+			: base(__Directrix, __Radius, __InnerRadius, __StartParam, __EndParam)
+		{
+			this._FilletRadius = __FilletRadius;
+		}
 	
 		[Description("The fillet that is equally applied to all transitions between the segments of the" +
 	    " <em>IfcPolyline</em>, providing the geometric representation for <em>the Direct" +

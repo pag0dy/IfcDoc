@@ -10,16 +10,11 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
 using BuildingSmart.IFC.IfcApprovalResource;
 using BuildingSmart.IFC.IfcConstraintResource;
-using BuildingSmart.IFC.IfcCostResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcPropertyResource
 {
@@ -33,8 +28,20 @@ namespace BuildingSmart.IFC.IfcPropertyResource
 	
 		[DataMember(Order=1)] 
 		[Required()]
+		[MinLength(1)]
 		ISet<IfcProperty> _HasProperties = new HashSet<IfcProperty>();
 	
+	
+		public IfcComplexProperty()
+		{
+		}
+	
+		public IfcComplexProperty(IfcIdentifier __Name, IfcText? __Description, IfcIdentifier __UsageName, IfcProperty[] __HasProperties)
+			: base(__Name, __Description)
+		{
+			this._UsageName = __UsageName;
+			this._HasProperties = new HashSet<IfcProperty>(__HasProperties);
+		}
 	
 		[Description(@"Usage description of the <em>IfcComplexProperty</em> within the property set which references the <em>IfcComplexProperty</em>.
 	<blockquote class=""note"">NOTE&nbsp; Consider a complex property for glazing properties. The <em>Name</em> attribute of the <em>IfcComplexProperty</em> could be <em>Pset_GlazingProperties</em>, and the UsageName attribute could be <em>OuterGlazingPane</em>.</blockquote>

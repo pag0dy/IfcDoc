@@ -10,14 +10,6 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometricConstraintResource
 {
@@ -31,6 +23,16 @@ namespace BuildingSmart.IFC.IfcGeometricConstraintResource
 		[DataMember(Order=1)] 
 		IfcPointOrVertexPoint _PointOnRelatedElement;
 	
+	
+		public IfcConnectionPointGeometry()
+		{
+		}
+	
+		public IfcConnectionPointGeometry(IfcPointOrVertexPoint __PointOnRelatingElement, IfcPointOrVertexPoint __PointOnRelatedElement)
+		{
+			this._PointOnRelatingElement = __PointOnRelatingElement;
+			this._PointOnRelatedElement = __PointOnRelatedElement;
+		}
 	
 		[Description("Point at which the connected object is aligned at the relating element, given in " +
 	    "the LCS of the relating element.")]

@@ -10,12 +10,9 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationDefinitionResource;
-using BuildingSmart.IFC.IfcTopologyResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 {
@@ -45,6 +42,19 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 		[Required()]
 		IfcPlaneAngleMeasure _HatchLineAngle;
 	
+	
+		public IfcFillAreaStyleHatching()
+		{
+		}
+	
+		public IfcFillAreaStyleHatching(IfcCurveStyle __HatchLineAppearance, IfcHatchLineDistanceSelect __StartOfNextHatchLine, IfcCartesianPoint __PointOfReferenceHatchLine, IfcCartesianPoint __PatternStart, IfcPlaneAngleMeasure __HatchLineAngle)
+		{
+			this._HatchLineAppearance = __HatchLineAppearance;
+			this._StartOfNextHatchLine = __StartOfNextHatchLine;
+			this._PointOfReferenceHatchLine = __PointOfReferenceHatchLine;
+			this._PatternStart = __PatternStart;
+			this._HatchLineAngle = __HatchLineAngle;
+		}
 	
 		[Description("The curve style of the hatching lines. Any curve style pattern shall start at the" +
 	    " origin of each hatch line. ")]

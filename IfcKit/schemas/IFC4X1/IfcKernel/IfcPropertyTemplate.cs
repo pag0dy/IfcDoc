@@ -10,16 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricConstraintResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProcessExtension;
-using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
 using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcKernel
@@ -33,6 +24,15 @@ namespace BuildingSmart.IFC.IfcKernel
 		[InverseProperty("HasPropertyTemplates")] 
 		ISet<IfcPropertySetTemplate> _PartOfPsetTemplate = new HashSet<IfcPropertySetTemplate>();
 	
+	
+		public IfcPropertyTemplate()
+		{
+		}
+	
+		public IfcPropertyTemplate(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description)
+		{
+		}
 	
 		[Description("Reference to a complex property templates. It should only be provided, if the <em" +
 	    ">PropertyType</em> of the referenced complex property template is set to <small>" +

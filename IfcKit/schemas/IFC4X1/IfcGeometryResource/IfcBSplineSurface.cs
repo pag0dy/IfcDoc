@@ -10,13 +10,11 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometricModelResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcPresentationOrganizationResource;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
@@ -36,6 +34,7 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		[DataMember(Order=2)] 
 		[XmlElement("IfcCartesianPoint")]
 		[Required()]
+		[MinLength(2)]
 		IList<IfcCartesianPoint> _ControlPointsList = new List<IfcCartesianPoint>();
 	
 		[DataMember(Order=3)] 
@@ -58,6 +57,21 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		[Required()]
 		IfcLogical _SelfIntersect;
 	
+	
+		public IfcBSplineSurface()
+		{
+		}
+	
+		public IfcBSplineSurface(IfcInteger __UDegree, IfcInteger __VDegree, IfcCartesianPoint[] __ControlPointsList, IfcBSplineSurfaceForm __SurfaceForm, IfcLogical __UClosed, IfcLogical __VClosed, IfcLogical __SelfIntersect)
+		{
+			this._UDegree = __UDegree;
+			this._VDegree = __VDegree;
+			this._ControlPointsList = new List<IfcCartesianPoint>(__ControlPointsList);
+			this._SurfaceForm = __SurfaceForm;
+			this._UClosed = __UClosed;
+			this._VClosed = __VClosed;
+			this._SelfIntersect = __SelfIntersect;
+		}
 	
 		[Description("Algebraic degree of basis functions in <em>u</em>.")]
 		public IfcInteger UDegree { get { return this._UDegree; } set { this._UDegree = value;} }

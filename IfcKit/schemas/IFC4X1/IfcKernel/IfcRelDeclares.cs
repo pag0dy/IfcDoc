@@ -10,16 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricConstraintResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProcessExtension;
-using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
 using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcKernel
@@ -34,8 +25,20 @@ namespace BuildingSmart.IFC.IfcKernel
 	
 		[DataMember(Order=1)] 
 		[Required()]
+		[MinLength(1)]
 		ISet<IfcDefinitionSelect> _RelatedDefinitions = new HashSet<IfcDefinitionSelect>();
 	
+	
+		public IfcRelDeclares()
+		{
+		}
+	
+		public IfcRelDeclares(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcContext __RelatingContext, IfcDefinitionSelect[] __RelatedDefinitions)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description)
+		{
+			this._RelatingContext = __RelatingContext;
+			this._RelatedDefinitions = new HashSet<IfcDefinitionSelect>(__RelatedDefinitions);
+		}
 	
 		[Description("Reference to the <em>IfcProject</em> to which additional information is assigned." +
 	    "")]

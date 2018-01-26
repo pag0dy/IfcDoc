@@ -10,9 +10,11 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcTopologyResource
 {
@@ -30,6 +32,17 @@ namespace BuildingSmart.IFC.IfcTopologyResource
 		[Required()]
 		IfcBoolean _SameSense;
 	
+	
+		public IfcEdgeCurve()
+		{
+		}
+	
+		public IfcEdgeCurve(IfcVertex __EdgeStart, IfcVertex __EdgeEnd, IfcCurve __EdgeGeometry, IfcBoolean __SameSense)
+			: base(__EdgeStart, __EdgeEnd)
+		{
+			this._EdgeGeometry = __EdgeGeometry;
+			this._SameSense = __SameSense;
+		}
 	
 		[Description("The curve which defines the shape and spatial location of the edge. This curve ma" +
 	    "y be unbounded and is implicitly trimmed by the vertices of the edge; this defin" +

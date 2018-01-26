@@ -10,7 +10,6 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 
 namespace BuildingSmart.IFC.IfcDateTimeResource
@@ -20,8 +19,18 @@ namespace BuildingSmart.IFC.IfcDateTimeResource
 	{
 		[DataMember(Order=0)] 
 		[Required()]
+		[MinLength(1)]
 		IList<IfcValue> _ListValues = new List<IfcValue>();
 	
+	
+		public IfcTimeSeriesValue()
+		{
+		}
+	
+		public IfcTimeSeriesValue(IfcValue[] __ListValues)
+		{
+			this._ListValues = new List<IfcValue>(__ListValues);
+		}
 	
 		[Description("A list of time-series values. At least one value is required.")]
 		public IList<IfcValue> ListValues { get { return this._ListValues; } }

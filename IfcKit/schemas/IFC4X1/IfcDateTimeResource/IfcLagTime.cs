@@ -10,7 +10,6 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 
 namespace BuildingSmart.IFC.IfcDateTimeResource
@@ -27,6 +26,17 @@ namespace BuildingSmart.IFC.IfcDateTimeResource
 		[Required()]
 		IfcTaskDurationEnum _DurationType;
 	
+	
+		public IfcLagTime()
+		{
+		}
+	
+		public IfcLagTime(IfcLabel? __Name, IfcDataOriginEnum? __DataOrigin, IfcLabel? __UserDefinedDataOrigin, IfcTimeOrRatioSelect __LagValue, IfcTaskDurationEnum __DurationType)
+			: base(__Name, __DataOrigin, __UserDefinedDataOrigin)
+		{
+			this._LagValue = __LagValue;
+			this._DurationType = __DurationType;
+		}
 	
 		[Description("    Value of the time lag selected as being either a ratio or a\r\n    time measure" +
 	    ".")]

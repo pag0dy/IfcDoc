@@ -10,18 +10,23 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationDefinitionResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 {
 	[Guid("03e6248c-2c4c-4b92-aa0e-2d3861296a9e")]
 	public partial class IfcDraughtingPreDefinedColour : IfcPreDefinedColour
 	{
+	
+		public IfcDraughtingPreDefinedColour()
+		{
+		}
+	
+		public IfcDraughtingPreDefinedColour(IfcLabel __Name)
+			: base(__Name)
+		{
+		}
 	
 	
 	}

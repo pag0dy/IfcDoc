@@ -10,13 +10,10 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcGeometricModelResource;
+using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcPresentationOrganizationResource;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
@@ -28,7 +25,27 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		[DataMember(Order=0)] 
 		[XmlAttribute]
 		[Required()]
+		[MinLength(2)]
+		[MaxLength(3)]
 		IList<IfcReal> _DirectionRatios = new List<IfcReal>();
+	
+	
+		public IfcDirection()
+		{
+		}
+	
+		public IfcDirection(IfcReal[] __DirectionRatios)
+		{
+			this._DirectionRatios = new List<IfcReal>(__DirectionRatios);
+		}
+	
+		public IfcDirection(Double x, Double y) : this(new IfcReal[]{ new IfcReal(x), new IfcReal(y)})
+		{
+		}
+	
+		public IfcDirection(Double x, Double y, Double z) : this(new IfcReal[]{ new IfcReal(x), new IfcReal(y), new IfcReal(z)})
+		{
+		}
 	
 	
 		[Description("The components in the direction of X axis (DirectionRatios[1]), of Y axis (Direct" +

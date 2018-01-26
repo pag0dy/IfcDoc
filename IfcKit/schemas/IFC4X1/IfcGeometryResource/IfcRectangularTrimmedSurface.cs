@@ -10,13 +10,11 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometricModelResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcPresentationOrganizationResource;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
@@ -58,6 +56,21 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		[Required()]
 		IfcBoolean _Vsense;
 	
+	
+		public IfcRectangularTrimmedSurface()
+		{
+		}
+	
+		public IfcRectangularTrimmedSurface(IfcSurface __BasisSurface, IfcParameterValue __U1, IfcParameterValue __V1, IfcParameterValue __U2, IfcParameterValue __V2, IfcBoolean __Usense, IfcBoolean __Vsense)
+		{
+			this._BasisSurface = __BasisSurface;
+			this._U1 = __U1;
+			this._V1 = __V1;
+			this._U2 = __U2;
+			this._V2 = __V2;
+			this._Usense = __Usense;
+			this._Vsense = __Vsense;
+		}
 	
 		[Description("Surface being trimmed.")]
 		public IfcSurface BasisSurface { get { return this._BasisSurface; } set { this._BasisSurface = value;} }

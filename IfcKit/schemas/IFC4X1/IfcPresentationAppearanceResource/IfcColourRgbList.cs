@@ -10,12 +10,8 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationDefinitionResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 {
@@ -24,8 +20,18 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 	{
 		[DataMember(Order=0)] 
 		[Required()]
+		[MinLength(1)]
 		IList<IfcNormalisedRatioMeasure> _ColourList = new List<IfcNormalisedRatioMeasure>();
 	
+	
+		public IfcColourRgbList()
+		{
+		}
+	
+		public IfcColourRgbList(IfcNormalisedRatioMeasure[] __ColourList)
+		{
+			this._ColourList = new List<IfcNormalisedRatioMeasure>(__ColourList);
+		}
 	
 		[Description(@"List of colours defined by the red, green, blue components. All values are provided as a ratio of 0.0 &le; <i>value</i> &le; 1.0. When using 8bit for each colour channel, a value of 0.0 equals 0, a value of 1.0 equals 255, and values between are interpolated.")]
 		public IList<IfcNormalisedRatioMeasure> ColourList { get { return this._ColourList; } }

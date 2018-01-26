@@ -10,23 +10,10 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometricConstraintResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcQuantityResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcSharedBldgElements;
-using BuildingSmart.IFC.IfcSharedBldgServiceElements;
-using BuildingSmart.IFC.IfcSharedComponentElements;
-using BuildingSmart.IFC.IfcSharedFacilitiesElements;
-using BuildingSmart.IFC.IfcStructuralElementsDomain;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcProductExtension
 {
@@ -55,6 +42,20 @@ namespace BuildingSmart.IFC.IfcProductExtension
 		[Required()]
 		Boolean? _ImpliedOrder;
 	
+	
+		public IfcRelInterferesElements()
+		{
+		}
+	
+		public IfcRelInterferesElements(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcElement __RelatingElement, IfcElement __RelatedElement, IfcConnectionGeometry __InterferenceGeometry, IfcIdentifier? __InterferenceType, Boolean? __ImpliedOrder)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description)
+		{
+			this._RelatingElement = __RelatingElement;
+			this._RelatedElement = __RelatedElement;
+			this._InterferenceGeometry = __InterferenceGeometry;
+			this._InterferenceType = __InterferenceType;
+			this._ImpliedOrder = __ImpliedOrder;
+		}
 	
 		[Description(@"Reference to a subtype of <em>IfcElement</> that is the <em>RelatingElement</em> in the interference relationship. Depending on the value of <em>ImpliedOrder</em> the <em>RelatingElement</em> may carry the notion to be the element from which the interference geometry should be subtracted.")]
 		public IfcElement RelatingElement { get { return this._RelatingElement; } set { this._RelatingElement = value;} }

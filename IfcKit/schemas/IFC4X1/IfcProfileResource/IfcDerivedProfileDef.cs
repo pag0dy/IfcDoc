@@ -13,7 +13,6 @@ using System.Xml.Serialization;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPropertyResource;
 
 namespace BuildingSmart.IFC.IfcProfileResource
 {
@@ -34,6 +33,18 @@ namespace BuildingSmart.IFC.IfcProfileResource
 		[XmlAttribute]
 		IfcLabel? _Label;
 	
+	
+		public IfcDerivedProfileDef()
+		{
+		}
+	
+		public IfcDerivedProfileDef(IfcProfileTypeEnum __ProfileType, IfcLabel? __ProfileName, IfcProfileDef __ParentProfile, IfcCartesianTransformationOperator2D __Operator, IfcLabel? __Label)
+			: base(__ProfileType, __ProfileName)
+		{
+			this._ParentProfile = __ParentProfile;
+			this._Operator = __Operator;
+			this._Label = __Label;
+		}
 	
 		[Description("The parent profile provides the origin of the transformation.")]
 		public IfcProfileDef ParentProfile { get { return this._ParentProfile; } set { this._ParentProfile = value;} }

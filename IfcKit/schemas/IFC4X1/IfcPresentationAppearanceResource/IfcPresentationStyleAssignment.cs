@@ -10,12 +10,6 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationDefinitionResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 {
@@ -25,8 +19,18 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 	{
 		[DataMember(Order=0)] 
 		[Required()]
+		[MinLength(1)]
 		ISet<IfcPresentationStyleSelect> _Styles = new HashSet<IfcPresentationStyleSelect>();
 	
+	
+		public IfcPresentationStyleAssignment()
+		{
+		}
+	
+		public IfcPresentationStyleAssignment(IfcPresentationStyleSelect[] __Styles)
+		{
+			this._Styles = new HashSet<IfcPresentationStyleSelect>(__Styles);
+		}
 	
 		[Description("A set of presentation styles that are assigned to styled items.")]
 		public ISet<IfcPresentationStyleSelect> Styles { get { return this._Styles; } }

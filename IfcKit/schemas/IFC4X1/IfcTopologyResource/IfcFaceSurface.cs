@@ -10,9 +10,11 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcTopologyResource
 {
@@ -30,6 +32,17 @@ namespace BuildingSmart.IFC.IfcTopologyResource
 		[Required()]
 		IfcBoolean _SameSense;
 	
+	
+		public IfcFaceSurface()
+		{
+		}
+	
+		public IfcFaceSurface(IfcFaceBound[] __Bounds, IfcSurface __FaceSurface, IfcBoolean __SameSense)
+			: base(__Bounds)
+		{
+			this._FaceSurface = __FaceSurface;
+			this._SameSense = __SameSense;
+		}
 	
 		[Description("The surface which defines the internal shape of the face. This surface may be unb" +
 	    "ounded. The domain of the face is defined by this surface and the bounding loops" +

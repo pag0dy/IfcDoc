@@ -10,9 +10,10 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcTopologyResource
 {
@@ -25,6 +26,15 @@ namespace BuildingSmart.IFC.IfcTopologyResource
 		[Required()]
 		IfcPoint _VertexGeometry;
 	
+	
+		public IfcVertexPoint()
+		{
+		}
+	
+		public IfcVertexPoint(IfcPoint __VertexGeometry)
+		{
+			this._VertexGeometry = __VertexGeometry;
+		}
 	
 		[Description("The geometric point, which defines the position in geometric space of the vertex." +
 	    "")]

@@ -10,16 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricConstraintResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProcessExtension;
-using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
 using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcKernel
@@ -32,11 +23,24 @@ namespace BuildingSmart.IFC.IfcKernel
 		IfcIdentifier? _ApplicableOccurrence;
 	
 		[DataMember(Order=1)] 
+		[MinLength(1)]
 		ISet<IfcPropertySetDefinition> _HasPropertySets = new HashSet<IfcPropertySetDefinition>();
 	
 		[InverseProperty("RelatingType")] 
+		[MaxLength(1)]
 		ISet<IfcRelDefinesByType> _Types = new HashSet<IfcRelDefinesByType>();
 	
+	
+		public IfcTypeObject()
+		{
+		}
+	
+		public IfcTypeObject(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcIdentifier? __ApplicableOccurrence, IfcPropertySetDefinition[] __HasPropertySets)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description)
+		{
+			this._ApplicableOccurrence = __ApplicableOccurrence;
+			this._HasPropertySets = new HashSet<IfcPropertySetDefinition>(__HasPropertySets);
+		}
 	
 		[Description(@"The attribute optionally defines the data type of the occurrence object, to which the assigned type object can relate. If not present, no instruction is given to which occurrence object the type object is applicable. The following conventions are used:
 	<ul>

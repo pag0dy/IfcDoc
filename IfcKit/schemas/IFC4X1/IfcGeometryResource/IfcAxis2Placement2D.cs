@@ -10,13 +10,8 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcPresentationOrganizationResource;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
@@ -28,6 +23,16 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		[XmlElement]
 		IfcDirection _RefDirection;
 	
+	
+		public IfcAxis2Placement2D()
+		{
+		}
+	
+		public IfcAxis2Placement2D(IfcCartesianPoint __Location, IfcDirection __RefDirection)
+			: base(__Location)
+		{
+			this._RefDirection = __RefDirection;
+		}
 	
 		[Description("The direction used to determine the direction of the local X axis. If a value is " +
 	    "omited that it defaults to [1.0, 0.0.].\r\n</HTML>")]

@@ -10,12 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcPresentationDefinitionResource
 {
@@ -28,6 +23,10 @@ namespace BuildingSmart.IFC.IfcPresentationDefinitionResource
 		public IfcBoxAlignment(IfcLabel value)
 		{
 			this.Value = value;
+		}
+		public IfcBoxAlignment(String value)
+		{
+			this.Value = new IfcLabel(value);
 		}
 	}
 	

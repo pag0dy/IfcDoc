@@ -13,7 +13,6 @@ using System.Xml.Serialization;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPropertyResource;
 
 namespace BuildingSmart.IFC.IfcProfileResource
 {
@@ -25,6 +24,16 @@ namespace BuildingSmart.IFC.IfcProfileResource
 		[Required()]
 		IfcPositiveLengthMeasure _Thickness;
 	
+	
+		public IfcCenterLineProfileDef()
+		{
+		}
+	
+		public IfcCenterLineProfileDef(IfcProfileTypeEnum __ProfileType, IfcLabel? __ProfileName, IfcBoundedCurve __Curve, IfcPositiveLengthMeasure __Thickness)
+			: base(__ProfileType, __ProfileName, __Curve)
+		{
+			this._Thickness = __Thickness;
+		}
 	
 		[Description("Constant thickness applied along the center line.")]
 		public IfcPositiveLengthMeasure Thickness { get { return this._Thickness; } set { this._Thickness = value;} }

@@ -11,12 +11,8 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcPresentationOrganizationResource;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
@@ -30,6 +26,8 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 	
 		[DataMember(Order=1)] 
 		[Required()]
+		[MinLength(1)]
+		[MaxLength(2)]
 		IList<IfcPcurve> _AssociatedGeometry = new List<IfcPcurve>();
 	
 		[DataMember(Order=2)] 
@@ -37,6 +35,17 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		[Required()]
 		IfcPreferredSurfaceCurveRepresentation _MasterRepresentation;
 	
+	
+		public IfcSurfaceCurve()
+		{
+		}
+	
+		public IfcSurfaceCurve(IfcCurve __Curve3D, IfcPcurve[] __AssociatedGeometry, IfcPreferredSurfaceCurveRepresentation __MasterRepresentation)
+		{
+			this._Curve3D = __Curve3D;
+			this._AssociatedGeometry = new List<IfcPcurve>(__AssociatedGeometry);
+			this._MasterRepresentation = __MasterRepresentation;
+		}
 	
 		[Description("The curve which is the three-dimensional representation of the surface curve.")]
 		public IfcCurve Curve3D { get { return this._Curve3D; } set { this._Curve3D = value;} }

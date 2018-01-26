@@ -11,13 +11,9 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfileResource;
 using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcMaterialResource
 {
@@ -56,6 +52,21 @@ namespace BuildingSmart.IFC.IfcMaterialResource
 		[InverseProperty("MaterialLayers")] 
 		IfcMaterialLayerSet _ToMaterialLayerSet;
 	
+	
+		public IfcMaterialLayer()
+		{
+		}
+	
+		public IfcMaterialLayer(IfcMaterial __Material, IfcNonNegativeLengthMeasure __LayerThickness, IfcLogical? __IsVentilated, IfcLabel? __Name, IfcText? __Description, IfcLabel? __Category, IfcInteger? __Priority)
+		{
+			this._Material = __Material;
+			this._LayerThickness = __LayerThickness;
+			this._IsVentilated = __IsVentilated;
+			this._Name = __Name;
+			this._Description = __Description;
+			this._Category = __Category;
+			this._Priority = __Priority;
+		}
 	
 		[Description("Optional reference to the material from which the layer is constructed. Note that" +
 	    " if this value is not given, it does not denote a layer with no material (an air" +

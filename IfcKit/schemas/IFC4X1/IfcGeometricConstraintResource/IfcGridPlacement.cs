@@ -10,14 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometricConstraintResource
 {
@@ -32,6 +25,16 @@ namespace BuildingSmart.IFC.IfcGeometricConstraintResource
 		[DataMember(Order=1)] 
 		IfcGridPlacementDirectionSelect _PlacementRefDirection;
 	
+	
+		public IfcGridPlacement()
+		{
+		}
+	
+		public IfcGridPlacement(IfcVirtualGridIntersection __PlacementLocation, IfcGridPlacementDirectionSelect __PlacementRefDirection)
+		{
+			this._PlacementLocation = __PlacementLocation;
+			this._PlacementRefDirection = __PlacementRefDirection;
+		}
 	
 		[Description("Placement of the object coordinate system defined by the intersection of two grid" +
 	    " axes.\r\n")]

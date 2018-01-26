@@ -10,14 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometricConstraintResource
 {
@@ -36,6 +29,18 @@ namespace BuildingSmart.IFC.IfcGeometricConstraintResource
 		[XmlAttribute]
 		IfcLengthMeasure? _EccentricityInZ;
 	
+	
+		public IfcConnectionPointEccentricity()
+		{
+		}
+	
+		public IfcConnectionPointEccentricity(IfcPointOrVertexPoint __PointOnRelatingElement, IfcPointOrVertexPoint __PointOnRelatedElement, IfcLengthMeasure? __EccentricityInX, IfcLengthMeasure? __EccentricityInY, IfcLengthMeasure? __EccentricityInZ)
+			: base(__PointOnRelatingElement, __PointOnRelatedElement)
+		{
+			this._EccentricityInX = __EccentricityInX;
+			this._EccentricityInY = __EccentricityInY;
+			this._EccentricityInZ = __EccentricityInZ;
+		}
 	
 		[Description("Distance in x direction between the two points (or vertex points) engaged in the " +
 	    "point connection.")]

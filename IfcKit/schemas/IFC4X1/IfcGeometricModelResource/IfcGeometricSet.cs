@@ -11,10 +11,8 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcTopologyResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcGeometricModelResource
 {
@@ -23,8 +21,18 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 	{
 		[DataMember(Order=0)] 
 		[Required()]
+		[MinLength(1)]
 		ISet<IfcGeometricSetSelect> _Elements = new HashSet<IfcGeometricSetSelect>();
 	
+	
+		public IfcGeometricSet()
+		{
+		}
+	
+		public IfcGeometricSet(IfcGeometricSetSelect[] __Elements)
+		{
+			this._Elements = new HashSet<IfcGeometricSetSelect>(__Elements);
+		}
 	
 		[Description("The geometric elements which make up the geometric set, these may be points, curv" +
 	    "es or surfaces; but are required to be of the same coordinate space dimensionali" +

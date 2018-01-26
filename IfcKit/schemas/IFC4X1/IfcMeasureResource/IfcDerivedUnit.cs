@@ -10,8 +10,6 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
 
 namespace BuildingSmart.IFC.IfcMeasureResource
 {
@@ -21,6 +19,7 @@ namespace BuildingSmart.IFC.IfcMeasureResource
 	{
 		[DataMember(Order=0)] 
 		[Required()]
+		[MinLength(1)]
 		ISet<IfcDerivedUnitElement> _Elements = new HashSet<IfcDerivedUnitElement>();
 	
 		[DataMember(Order=1)] 
@@ -32,6 +31,17 @@ namespace BuildingSmart.IFC.IfcMeasureResource
 		[XmlAttribute]
 		IfcLabel? _UserDefinedType;
 	
+	
+		public IfcDerivedUnit()
+		{
+		}
+	
+		public IfcDerivedUnit(IfcDerivedUnitElement[] __Elements, IfcDerivedUnitEnum __UnitType, IfcLabel? __UserDefinedType)
+		{
+			this._Elements = new HashSet<IfcDerivedUnitElement>(__Elements);
+			this._UnitType = __UnitType;
+			this._UserDefinedType = __UserDefinedType;
+		}
 	
 		[Description("The group of units and their exponents that define the derived unit.")]
 		public ISet<IfcDerivedUnitElement> Elements { get { return this._Elements; } }

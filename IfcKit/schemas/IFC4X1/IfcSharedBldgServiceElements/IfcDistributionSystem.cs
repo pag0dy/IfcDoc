@@ -13,6 +13,7 @@ using System.Xml.Serialization;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcProductExtension;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcSharedBldgServiceElements
 {
@@ -27,6 +28,17 @@ namespace BuildingSmart.IFC.IfcSharedBldgServiceElements
 		[XmlAttribute]
 		IfcDistributionSystemEnum? _PredefinedType;
 	
+	
+		public IfcDistributionSystem()
+		{
+		}
+	
+		public IfcDistributionSystem(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcLabel? __LongName, IfcDistributionSystemEnum? __PredefinedType)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType)
+		{
+			this._LongName = __LongName;
+			this._PredefinedType = __PredefinedType;
+		}
 	
 		[Description(@"Long name for a distribution system, used for informal purposes. It should be used, if available, in conjunction with the inherited <em>Name</em> attribute.
 	<blockquote class=""note"">NOTE&nbsp; In many scenarios the <em>Name</em> attribute refers to the short name or number of a distribution system or branch circuit, and the <em>LongName</em> refers to a descriptive name.

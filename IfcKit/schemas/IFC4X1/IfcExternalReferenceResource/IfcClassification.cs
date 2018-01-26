@@ -10,18 +10,9 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcApprovalResource;
-using BuildingSmart.IFC.IfcConstraintResource;
-using BuildingSmart.IFC.IfcCostResource;
 using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcQuantityResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcExternalReferenceResource
 {
@@ -57,6 +48,7 @@ namespace BuildingSmart.IFC.IfcExternalReferenceResource
 	
 		[DataMember(Order=6)] 
 		[XmlAttribute]
+		[MinLength(1)]
 		IList<IfcIdentifier> _ReferenceTokens = new List<IfcIdentifier>();
 	
 		[InverseProperty("RelatingClassification")] 
@@ -66,6 +58,21 @@ namespace BuildingSmart.IFC.IfcExternalReferenceResource
 		[XmlElement("IfcClassificationReference")]
 		ISet<IfcClassificationReference> _HasReferences = new HashSet<IfcClassificationReference>();
 	
+	
+		public IfcClassification()
+		{
+		}
+	
+		public IfcClassification(IfcLabel? __Source, IfcLabel? __Edition, IfcDate? __EditionDate, IfcLabel __Name, IfcText? __Description, IfcURIReference? __Location, IfcIdentifier[] __ReferenceTokens)
+		{
+			this._Source = __Source;
+			this._Edition = __Edition;
+			this._EditionDate = __EditionDate;
+			this._Name = __Name;
+			this._Description = __Description;
+			this._Location = __Location;
+			this._ReferenceTokens = new List<IfcIdentifier>(__ReferenceTokens);
+		}
 	
 		[Description(@"Source (or publisher) for this classification.
 	<blockquote class=""note"">NOTE&nbsp; that the source of the classification means the person or organization that was the original author or the person or organization currently acting as the publisher.</blockquote>")]

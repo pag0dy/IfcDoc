@@ -14,10 +14,7 @@ using BuildingSmart.IFC.IfcActorResource;
 using BuildingSmart.IFC.IfcControlExtension;
 using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcPropertyResource;
 
 namespace BuildingSmart.IFC.IfcApprovalResource
 {
@@ -74,6 +71,23 @@ namespace BuildingSmart.IFC.IfcApprovalResource
 		[InverseProperty("RelatingApproval")] 
 		ISet<IfcApprovalRelationship> _Relates = new HashSet<IfcApprovalRelationship>();
 	
+	
+		public IfcApproval()
+		{
+		}
+	
+		public IfcApproval(IfcIdentifier? __Identifier, IfcLabel? __Name, IfcText? __Description, IfcDateTime? __TimeOfApproval, IfcLabel? __Status, IfcLabel? __Level, IfcText? __Qualifier, IfcActorSelect __RequestingApproval, IfcActorSelect __GivingApproval)
+		{
+			this._Identifier = __Identifier;
+			this._Name = __Name;
+			this._Description = __Description;
+			this._TimeOfApproval = __TimeOfApproval;
+			this._Status = __Status;
+			this._Level = __Level;
+			this._Qualifier = __Qualifier;
+			this._RequestingApproval = __RequestingApproval;
+			this._GivingApproval = __GivingApproval;
+		}
 	
 		[Description("A computer interpretable identifier by which the approval is known.")]
 		public IfcIdentifier? Identifier { get { return this._Identifier; } set { this._Identifier = value;} }

@@ -10,12 +10,9 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationDefinitionResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 {
@@ -23,8 +20,19 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 	public partial class IfcIndexedTriangleTextureMap : IfcIndexedTextureMap
 	{
 		[DataMember(Order=0)] 
+		[MinLength(1)]
 		IList<IfcPositiveInteger> _TexCoordIndex = new List<IfcPositiveInteger>();
 	
+	
+		public IfcIndexedTriangleTextureMap()
+		{
+		}
+	
+		public IfcIndexedTriangleTextureMap(IfcSurfaceTexture[] __Maps, IfcTessellatedFaceSet __MappedTo, IfcTextureVertexList __TexCoords, IfcPositiveInteger[] __TexCoordIndex)
+			: base(__Maps, __MappedTo, __TexCoords)
+		{
+			this._TexCoordIndex = new List<IfcPositiveInteger>(__TexCoordIndex);
+		}
 	
 		[Description("Index into the <em>IfcTextureVertexList</em> for each vertex of the triangles rep" +
 	    "resenting the <em>IfcTriangulatedFaceSet</em>.")]

@@ -11,7 +11,7 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcMeasureResource;
+using BuildingSmart.IFC.IfcPropertyResource;
 
 namespace BuildingSmart.IFC.IfcActorResource
 {
@@ -32,8 +32,20 @@ namespace BuildingSmart.IFC.IfcActorResource
 		IfcOrganization _TheOrganization;
 	
 		[DataMember(Order=2)] 
+		[MinLength(1)]
 		IList<IfcActorRole> _Roles = new List<IfcActorRole>();
 	
+	
+		public IfcPersonAndOrganization()
+		{
+		}
+	
+		public IfcPersonAndOrganization(IfcPerson __ThePerson, IfcOrganization __TheOrganization, IfcActorRole[] __Roles)
+		{
+			this._ThePerson = __ThePerson;
+			this._TheOrganization = __TheOrganization;
+			this._Roles = new List<IfcActorRole>(__Roles);
+		}
 	
 		[Description("The person who is related to the organization.")]
 		public IfcPerson ThePerson { get { return this._ThePerson; } set { this._ThePerson = value;} }

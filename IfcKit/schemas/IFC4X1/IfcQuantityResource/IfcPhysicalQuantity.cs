@@ -32,8 +32,19 @@ namespace BuildingSmart.IFC.IfcQuantityResource
 		ISet<IfcExternalReferenceRelationship> _HasExternalReferences = new HashSet<IfcExternalReferenceRelationship>();
 	
 		[InverseProperty("HasQuantities")] 
+		[MaxLength(1)]
 		ISet<IfcPhysicalComplexQuantity> _PartOfComplex = new HashSet<IfcPhysicalComplexQuantity>();
 	
+	
+		public IfcPhysicalQuantity()
+		{
+		}
+	
+		public IfcPhysicalQuantity(IfcLabel __Name, IfcText? __Description)
+		{
+			this._Name = __Name;
+			this._Description = __Description;
+		}
 	
 		[Description("Name of the element quantity or measure. The name attribute has to be made recogn" +
 	    "izable by further agreements.")]

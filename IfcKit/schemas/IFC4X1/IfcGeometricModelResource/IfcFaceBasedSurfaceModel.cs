@@ -10,10 +10,10 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProfileResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometricModelResource
@@ -24,8 +24,18 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 	{
 		[DataMember(Order=0)] 
 		[Required()]
+		[MinLength(1)]
 		ISet<IfcConnectedFaceSet> _FbsmFaces = new HashSet<IfcConnectedFaceSet>();
 	
+	
+		public IfcFaceBasedSurfaceModel()
+		{
+		}
+	
+		public IfcFaceBasedSurfaceModel(IfcConnectedFaceSet[] __FbsmFaces)
+		{
+			this._FbsmFaces = new HashSet<IfcConnectedFaceSet>(__FbsmFaces);
+		}
 	
 		[Description("The set of connected face sets comprising the face based surface model.")]
 		public ISet<IfcConnectedFaceSet> FbsmFaces { get { return this._FbsmFaces; } }

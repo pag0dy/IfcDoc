@@ -10,7 +10,6 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 
 namespace BuildingSmart.IFC.IfcDateTimeResource
@@ -78,6 +77,30 @@ namespace BuildingSmart.IFC.IfcDateTimeResource
 		[XmlAttribute]
 		IfcPositiveRatioMeasure? _Completion;
 	
+	
+		public IfcResourceTime()
+		{
+		}
+	
+		public IfcResourceTime(IfcLabel? __Name, IfcDataOriginEnum? __DataOrigin, IfcLabel? __UserDefinedDataOrigin, IfcDuration? __ScheduleWork, IfcPositiveRatioMeasure? __ScheduleUsage, IfcDateTime? __ScheduleStart, IfcDateTime? __ScheduleFinish, IfcLabel? __ScheduleContour, IfcDuration? __LevelingDelay, IfcBoolean? __IsOverAllocated, IfcDateTime? __StatusTime, IfcDuration? __ActualWork, IfcPositiveRatioMeasure? __ActualUsage, IfcDateTime? __ActualStart, IfcDateTime? __ActualFinish, IfcDuration? __RemainingWork, IfcPositiveRatioMeasure? __RemainingUsage, IfcPositiveRatioMeasure? __Completion)
+			: base(__Name, __DataOrigin, __UserDefinedDataOrigin)
+		{
+			this._ScheduleWork = __ScheduleWork;
+			this._ScheduleUsage = __ScheduleUsage;
+			this._ScheduleStart = __ScheduleStart;
+			this._ScheduleFinish = __ScheduleFinish;
+			this._ScheduleContour = __ScheduleContour;
+			this._LevelingDelay = __LevelingDelay;
+			this._IsOverAllocated = __IsOverAllocated;
+			this._StatusTime = __StatusTime;
+			this._ActualWork = __ActualWork;
+			this._ActualUsage = __ActualUsage;
+			this._ActualStart = __ActualStart;
+			this._ActualFinish = __ActualFinish;
+			this._RemainingWork = __RemainingWork;
+			this._RemainingUsage = __RemainingUsage;
+			this._Completion = __Completion;
+		}
 	
 		[Description(@"Indicates the total work (e.g. person-hours) allocated to the task on behalf of the resource. 
 	Note: this is not necessarily the same as the task duration (IfcTaskTime.ScheduleDuration); it may vary according to the resource usage ratio and other resources assigned to the task.")]

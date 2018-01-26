@@ -11,8 +11,8 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcTopologyResource
 {
@@ -24,6 +24,15 @@ namespace BuildingSmart.IFC.IfcTopologyResource
 		[Required()]
 		IfcVertex _LoopVertex;
 	
+	
+		public IfcVertexLoop()
+		{
+		}
+	
+		public IfcVertexLoop(IfcVertex __LoopVertex)
+		{
+			this._LoopVertex = __LoopVertex;
+		}
 	
 		[Description("The vertex which defines the entire loop.")]
 		public IfcVertex LoopVertex { get { return this._LoopVertex; } set { this._LoopVertex = value;} }

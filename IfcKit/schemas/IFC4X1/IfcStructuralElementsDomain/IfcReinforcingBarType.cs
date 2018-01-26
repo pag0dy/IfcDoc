@@ -10,11 +10,13 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcProductExtension;
 using BuildingSmart.IFC.IfcProfileResource;
 using BuildingSmart.IFC.IfcSharedComponentElements;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcStructuralElementsDomain
 {
@@ -47,8 +49,25 @@ namespace BuildingSmart.IFC.IfcStructuralElementsDomain
 		IfcLabel? _BendingShapeCode;
 	
 		[DataMember(Order=6)] 
+		[MinLength(1)]
 		IList<IfcBendingParameterSelect> _BendingParameters = new List<IfcBendingParameterSelect>();
 	
+	
+		public IfcReinforcingBarType()
+		{
+		}
+	
+		public IfcReinforcingBarType(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcIdentifier? __ApplicableOccurrence, IfcPropertySetDefinition[] __HasPropertySets, IfcRepresentationMap[] __RepresentationMaps, IfcLabel? __Tag, IfcLabel? __ElementType, IfcReinforcingBarTypeEnum __PredefinedType, IfcPositiveLengthMeasure? __NominalDiameter, IfcAreaMeasure? __CrossSectionArea, IfcPositiveLengthMeasure? __BarLength, IfcReinforcingBarSurfaceEnum? __BarSurface, IfcLabel? __BendingShapeCode, IfcBendingParameterSelect[] __BendingParameters)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ApplicableOccurrence, __HasPropertySets, __RepresentationMaps, __Tag, __ElementType)
+		{
+			this._PredefinedType = __PredefinedType;
+			this._NominalDiameter = __NominalDiameter;
+			this._CrossSectionArea = __CrossSectionArea;
+			this._BarLength = __BarLength;
+			this._BarSurface = __BarSurface;
+			this._BendingShapeCode = __BendingShapeCode;
+			this._BendingParameters = new List<IfcBendingParameterSelect>(__BendingParameters);
+		}
 	
 		[Description("Subtype of reinforcing bar.")]
 		public IfcReinforcingBarTypeEnum PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }

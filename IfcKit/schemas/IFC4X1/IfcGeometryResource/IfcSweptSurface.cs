@@ -10,13 +10,11 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
@@ -32,6 +30,16 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		[XmlElement]
 		IfcAxis2Placement3D _Position;
 	
+	
+		public IfcSweptSurface()
+		{
+		}
+	
+		public IfcSweptSurface(IfcProfileDef __SweptCurve, IfcAxis2Placement3D __Position)
+		{
+			this._SweptCurve = __SweptCurve;
+			this._Position = __Position;
+		}
 	
 		[Description("The curve to be swept in defining the surface. The curve is defined as a profile " +
 	    "within the position coordinate system.")]

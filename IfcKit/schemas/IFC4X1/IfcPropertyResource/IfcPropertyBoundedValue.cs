@@ -10,16 +10,11 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
 using BuildingSmart.IFC.IfcApprovalResource;
 using BuildingSmart.IFC.IfcConstraintResource;
-using BuildingSmart.IFC.IfcCostResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcPropertyResource
 {
@@ -38,6 +33,19 @@ namespace BuildingSmart.IFC.IfcPropertyResource
 		[DataMember(Order=3)] 
 		IfcValue _SetPointValue;
 	
+	
+		public IfcPropertyBoundedValue()
+		{
+		}
+	
+		public IfcPropertyBoundedValue(IfcIdentifier __Name, IfcText? __Description, IfcValue __UpperBoundValue, IfcValue __LowerBoundValue, IfcUnit __Unit, IfcValue __SetPointValue)
+			: base(__Name, __Description)
+		{
+			this._UpperBoundValue = __UpperBoundValue;
+			this._LowerBoundValue = __LowerBoundValue;
+			this._Unit = __Unit;
+			this._SetPointValue = __SetPointValue;
+		}
 	
 		[Description("Upper bound value for the interval defining the property value. If the value is n" +
 	    "ot given, it indicates an open bound (all values to be greater than or equal to " +

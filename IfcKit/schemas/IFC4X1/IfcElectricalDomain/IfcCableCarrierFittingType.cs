@@ -10,8 +10,12 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcGeometryResource;
+using BuildingSmart.IFC.IfcKernel;
+using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcProductExtension;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcElectricalDomain
 {
@@ -23,6 +27,16 @@ namespace BuildingSmart.IFC.IfcElectricalDomain
 		[Required()]
 		IfcCableCarrierFittingTypeEnum _PredefinedType;
 	
+	
+		public IfcCableCarrierFittingType()
+		{
+		}
+	
+		public IfcCableCarrierFittingType(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcIdentifier? __ApplicableOccurrence, IfcPropertySetDefinition[] __HasPropertySets, IfcRepresentationMap[] __RepresentationMaps, IfcLabel? __Tag, IfcLabel? __ElementType, IfcCableCarrierFittingTypeEnum __PredefinedType)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ApplicableOccurrence, __HasPropertySets, __RepresentationMaps, __Tag, __ElementType)
+		{
+			this._PredefinedType = __PredefinedType;
+		}
 	
 		[Description("<p>Identifies the predefined types of cable carrier fitting from which the type r" +
 	    "equired may be set.</p>")]

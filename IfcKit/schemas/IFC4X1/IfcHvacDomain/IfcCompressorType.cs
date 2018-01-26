@@ -10,8 +10,12 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcGeometryResource;
+using BuildingSmart.IFC.IfcKernel;
+using BuildingSmart.IFC.IfcMeasureResource;
+using BuildingSmart.IFC.IfcProductExtension;
 using BuildingSmart.IFC.IfcSharedBldgServiceElements;
-using BuildingSmart.IFC.IfcSharedComponentElements;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcHvacDomain
 {
@@ -23,6 +27,16 @@ namespace BuildingSmart.IFC.IfcHvacDomain
 		[Required()]
 		IfcCompressorTypeEnum _PredefinedType;
 	
+	
+		public IfcCompressorType()
+		{
+		}
+	
+		public IfcCompressorType(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcIdentifier? __ApplicableOccurrence, IfcPropertySetDefinition[] __HasPropertySets, IfcRepresentationMap[] __RepresentationMaps, IfcLabel? __Tag, IfcLabel? __ElementType, IfcCompressorTypeEnum __PredefinedType)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ApplicableOccurrence, __HasPropertySets, __RepresentationMaps, __Tag, __ElementType)
+		{
+			this._PredefinedType = __PredefinedType;
+		}
 	
 		[Description("Defines the type of compressor (e.g., hermetic, reciprocating, etc.).")]
 		public IfcCompressorTypeEnum PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }

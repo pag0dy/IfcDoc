@@ -10,14 +10,10 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcCostResource;
 using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcProcessExtension
 {
@@ -40,6 +36,19 @@ namespace BuildingSmart.IFC.IfcProcessExtension
 		[XmlElement]
 		IfcEventTime _EventOccurenceTime;
 	
+	
+		public IfcEvent()
+		{
+		}
+	
+		public IfcEvent(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcIdentifier? __Identification, IfcText? __LongDescription, IfcEventTypeEnum? __PredefinedType, IfcEventTriggerTypeEnum? __EventTriggerType, IfcLabel? __UserDefinedEventTriggerType, IfcEventTime __EventOccurenceTime)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType, __Identification, __LongDescription)
+		{
+			this._PredefinedType = __PredefinedType;
+			this._EventTriggerType = __EventTriggerType;
+			this._UserDefinedEventTriggerType = __UserDefinedEventTriggerType;
+			this._EventOccurenceTime = __EventOccurenceTime;
+		}
 	
 		[Description("    Identifies the predefined types of an event from which \r\n    the type require" +
 	    "d may be set.")]

@@ -10,23 +10,9 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricConstraintResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcQuantityResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcSharedBldgElements;
-using BuildingSmart.IFC.IfcSharedBldgServiceElements;
-using BuildingSmart.IFC.IfcSharedComponentElements;
-using BuildingSmart.IFC.IfcSharedFacilitiesElements;
-using BuildingSmart.IFC.IfcStructuralElementsDomain;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcProductExtension
 {
@@ -35,6 +21,7 @@ namespace BuildingSmart.IFC.IfcProductExtension
 	{
 		[DataMember(Order=0)] 
 		[Required()]
+		[MinLength(1)]
 		ISet<IfcProduct> _RelatedElements = new HashSet<IfcProduct>();
 	
 		[DataMember(Order=1)] 
@@ -42,6 +29,17 @@ namespace BuildingSmart.IFC.IfcProductExtension
 		[Required()]
 		IfcSpatialElement _RelatingStructure;
 	
+	
+		public IfcRelReferencedInSpatialStructure()
+		{
+		}
+	
+		public IfcRelReferencedInSpatialStructure(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcProduct[] __RelatedElements, IfcSpatialElement __RelatingStructure)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description)
+		{
+			this._RelatedElements = new HashSet<IfcProduct>(__RelatedElements);
+			this._RelatingStructure = __RelatingStructure;
+		}
 	
 		[Description(@"Set of products, which are referenced within this level of the spatial structure hierarchy.
 	<blockquote class=""note"">NOTE&nbsp; Referenced elements are contained elsewhere within the spatial structure, they are referenced additionally by this spatial structure element, e.g., because they span several stories.</blockquote>")]

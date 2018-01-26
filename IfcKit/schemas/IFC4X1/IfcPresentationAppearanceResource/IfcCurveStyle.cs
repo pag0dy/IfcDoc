@@ -10,12 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationDefinitionResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 {
@@ -36,6 +31,19 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 		[XmlAttribute]
 		IfcBoolean? _ModelOrDraughting;
 	
+	
+		public IfcCurveStyle()
+		{
+		}
+	
+		public IfcCurveStyle(IfcLabel? __Name, IfcCurveFontOrScaledCurveFontSelect __CurveFont, IfcSizeSelect __CurveWidth, IfcColour __CurveColour, IfcBoolean? __ModelOrDraughting)
+			: base(__Name)
+		{
+			this._CurveFont = __CurveFont;
+			this._CurveWidth = __CurveWidth;
+			this._CurveColour = __CurveColour;
+			this._ModelOrDraughting = __ModelOrDraughting;
+		}
 	
 		[Description(@"A curve style font which is used to present a curve. It can either be a predefined curve font, or an explicitly defined curve font. Both may be scaled. If not given, then the curve font should be taken from the layer assignment with style, if that is not given either, then the default curve font applies.")]
 		public IfcCurveFontOrScaledCurveFontSelect CurveFont { get { return this._CurveFont; } set { this._CurveFont = value;} }

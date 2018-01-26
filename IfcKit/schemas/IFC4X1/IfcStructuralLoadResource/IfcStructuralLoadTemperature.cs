@@ -30,6 +30,18 @@ namespace BuildingSmart.IFC.IfcStructuralLoadResource
 		IfcThermodynamicTemperatureMeasure? _DeltaTZ;
 	
 	
+		public IfcStructuralLoadTemperature()
+		{
+		}
+	
+		public IfcStructuralLoadTemperature(IfcLabel? __Name, IfcThermodynamicTemperatureMeasure? __DeltaTConstant, IfcThermodynamicTemperatureMeasure? __DeltaTY, IfcThermodynamicTemperatureMeasure? __DeltaTZ)
+			: base(__Name)
+		{
+			this._DeltaTConstant = __DeltaTConstant;
+			this._DeltaTY = __DeltaTY;
+			this._DeltaTZ = __DeltaTZ;
+		}
+	
 		[Description(@"Temperature change which affects the complete section of the structural member, or the uniform portion of a non-uniform temperature change.
 	
 	<blockquote class=""note"">NOTE&nbsp; A positive value describes an increase in temperature.  I.e. a positive constant temperature change causes elongation of a member, or compression in the member if there are respective restraints.</blockquote>")]

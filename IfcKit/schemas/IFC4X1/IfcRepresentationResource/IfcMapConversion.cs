@@ -10,14 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcRepresentationResource
 {
@@ -51,6 +44,21 @@ namespace BuildingSmart.IFC.IfcRepresentationResource
 		[XmlAttribute]
 		IfcReal? _Scale;
 	
+	
+		public IfcMapConversion()
+		{
+		}
+	
+		public IfcMapConversion(IfcCoordinateReferenceSystemSelect __SourceCRS, IfcCoordinateReferenceSystem __TargetCRS, IfcLengthMeasure __Eastings, IfcLengthMeasure __Northings, IfcLengthMeasure __OrthogonalHeight, IfcReal? __XAxisAbscissa, IfcReal? __XAxisOrdinate, IfcReal? __Scale)
+			: base(__SourceCRS, __TargetCRS)
+		{
+			this._Eastings = __Eastings;
+			this._Northings = __Northings;
+			this._OrthogonalHeight = __OrthogonalHeight;
+			this._XAxisAbscissa = __XAxisAbscissa;
+			this._XAxisOrdinate = __XAxisOrdinate;
+			this._Scale = __Scale;
+		}
 	
 		[Description(@"Specifies the location along the easting of the coordinate system of the target map coordinate reference system.
 	<blockquote class=""note"">NOTE&nbsp; for right-handed Cartesian coordinate systems this would establish the location along the x axis.</blockquote>")]

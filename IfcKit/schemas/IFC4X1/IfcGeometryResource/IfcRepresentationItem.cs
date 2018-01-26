@@ -10,13 +10,8 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcPresentationOrganizationResource;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
@@ -25,12 +20,18 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		BuildingSmart.IFC.IfcPresentationOrganizationResource.IfcLayeredItem
 	{
 		[InverseProperty("AssignedItems")] 
+		[MaxLength(1)]
 		ISet<IfcPresentationLayerAssignment> _LayerAssignment = new HashSet<IfcPresentationLayerAssignment>();
 	
 		[InverseProperty("Item")] 
 		[XmlElement]
+		[MaxLength(1)]
 		ISet<IfcStyledItem> _StyledByItem = new HashSet<IfcStyledItem>();
 	
+	
+		public IfcRepresentationItem()
+		{
+		}
 	
 		[Description(@"Assignment of the representation item to a single or multiple layer(s). The <em>LayerAssignments</em> can override a <em>LayerAssignments</em> of the <em>IfcRepresentation</em> it is used  within the list of <em>Items</em>.
 	<blockquote class=""change-ifc2x3"">IFC2x3 CHANGE&nbsp; The inverse attribute <em>LayerAssignments</em> has been added.</blockquote>

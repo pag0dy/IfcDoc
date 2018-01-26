@@ -13,8 +13,7 @@ using System.Xml.Serialization;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcTopologyResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcGeometricModelResource
 {
@@ -32,6 +31,16 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 		[Required()]
 		IfcBoolean _AgreementFlag;
 	
+	
+		public IfcHalfSpaceSolid()
+		{
+		}
+	
+		public IfcHalfSpaceSolid(IfcSurface __BaseSurface, IfcBoolean __AgreementFlag)
+		{
+			this._BaseSurface = __BaseSurface;
+			this._AgreementFlag = __AgreementFlag;
+		}
 	
 		[Description("Surface defining side of half space.")]
 		public IfcSurface BaseSurface { get { return this._BaseSurface; } set { this._BaseSurface = value;} }

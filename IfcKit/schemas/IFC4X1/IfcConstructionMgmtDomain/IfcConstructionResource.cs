@@ -15,6 +15,7 @@ using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcQuantityResource;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcConstructionMgmtDomain
 {
@@ -26,12 +27,25 @@ namespace BuildingSmart.IFC.IfcConstructionMgmtDomain
 		IfcResourceTime _Usage;
 	
 		[DataMember(Order=1)] 
+		[MinLength(1)]
 		IList<IfcAppliedValue> _BaseCosts = new List<IfcAppliedValue>();
 	
 		[DataMember(Order=2)] 
 		[XmlElement]
 		IfcPhysicalQuantity _BaseQuantity;
 	
+	
+		public IfcConstructionResource()
+		{
+		}
+	
+		public IfcConstructionResource(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcIdentifier? __Identification, IfcText? __LongDescription, IfcResourceTime __Usage, IfcAppliedValue[] __BaseCosts, IfcPhysicalQuantity __BaseQuantity)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType, __Identification, __LongDescription)
+		{
+			this._Usage = __Usage;
+			this._BaseCosts = new List<IfcAppliedValue>(__BaseCosts);
+			this._BaseQuantity = __BaseQuantity;
+		}
 	
 		[Description(@"Indicates the work, usage, and times scheduled and completed.  Some attributes on this object may have associated constraints or time series; see documentation of <em>IfcResourceTime</em> for specific usage.  If the resource is nested, then certain values may be calculated based on the component resources as indicated at <em>IfcResourceTime</em>.
 	

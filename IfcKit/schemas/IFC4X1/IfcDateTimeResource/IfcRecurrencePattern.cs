@@ -10,7 +10,6 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 
 namespace BuildingSmart.IFC.IfcDateTimeResource
@@ -25,14 +24,17 @@ namespace BuildingSmart.IFC.IfcDateTimeResource
 	
 		[DataMember(Order=1)] 
 		[XmlAttribute]
+		[MinLength(1)]
 		ISet<IfcDayInMonthNumber> _DayComponent = new HashSet<IfcDayInMonthNumber>();
 	
 		[DataMember(Order=2)] 
 		[XmlAttribute]
+		[MinLength(1)]
 		ISet<IfcDayInWeekNumber> _WeekdayComponent = new HashSet<IfcDayInWeekNumber>();
 	
 		[DataMember(Order=3)] 
 		[XmlAttribute]
+		[MinLength(1)]
 		ISet<IfcMonthInYearNumber> _MonthComponent = new HashSet<IfcMonthInYearNumber>();
 	
 		[DataMember(Order=4)] 
@@ -48,8 +50,25 @@ namespace BuildingSmart.IFC.IfcDateTimeResource
 		IfcInteger? _Occurrences;
 	
 		[DataMember(Order=7)] 
+		[MinLength(1)]
 		IList<IfcTimePeriod> _TimePeriods = new List<IfcTimePeriod>();
 	
+	
+		public IfcRecurrencePattern()
+		{
+		}
+	
+		public IfcRecurrencePattern(IfcRecurrenceTypeEnum __RecurrenceType, IfcDayInMonthNumber[] __DayComponent, IfcDayInWeekNumber[] __WeekdayComponent, IfcMonthInYearNumber[] __MonthComponent, IfcInteger? __Position, IfcInteger? __Interval, IfcInteger? __Occurrences, IfcTimePeriod[] __TimePeriods)
+		{
+			this._RecurrenceType = __RecurrenceType;
+			this._DayComponent = new HashSet<IfcDayInMonthNumber>(__DayComponent);
+			this._WeekdayComponent = new HashSet<IfcDayInWeekNumber>(__WeekdayComponent);
+			this._MonthComponent = new HashSet<IfcMonthInYearNumber>(__MonthComponent);
+			this._Position = __Position;
+			this._Interval = __Interval;
+			this._Occurrences = __Occurrences;
+			this._TimePeriods = new List<IfcTimePeriod>(__TimePeriods);
+		}
 	
 		[Description("    Defines the recurrence type that gives meaning to the used\r\n    attributes an" +
 	    "d decides about possible attribute\r\n    combinations, i.e. what attributes are n" +

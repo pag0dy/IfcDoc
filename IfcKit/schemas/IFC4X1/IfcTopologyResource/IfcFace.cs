@@ -11,8 +11,8 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcTopologyResource
 {
@@ -21,11 +21,21 @@ namespace BuildingSmart.IFC.IfcTopologyResource
 	{
 		[DataMember(Order=0)] 
 		[Required()]
+		[MinLength(1)]
 		ISet<IfcFaceBound> _Bounds = new HashSet<IfcFaceBound>();
 	
 		[InverseProperty("MappedTo")] 
 		ISet<IfcTextureMap> _HasTextureMaps = new HashSet<IfcTextureMap>();
 	
+	
+		public IfcFace()
+		{
+		}
+	
+		public IfcFace(IfcFaceBound[] __Bounds)
+		{
+			this._Bounds = new HashSet<IfcFaceBound>(__Bounds);
+		}
 	
 		[Description("Boundaries of the face.\r\n")]
 		public ISet<IfcFaceBound> Bounds { get { return this._Bounds; } }

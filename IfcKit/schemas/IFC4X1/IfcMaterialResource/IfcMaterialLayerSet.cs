@@ -11,13 +11,9 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfileResource;
 using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcMaterialResource
 {
@@ -26,6 +22,7 @@ namespace BuildingSmart.IFC.IfcMaterialResource
 	{
 		[DataMember(Order=0)] 
 		[Required()]
+		[MinLength(1)]
 		IList<IfcMaterialLayer> _MaterialLayers = new List<IfcMaterialLayer>();
 	
 		[DataMember(Order=1)] 
@@ -36,6 +33,17 @@ namespace BuildingSmart.IFC.IfcMaterialResource
 		[XmlAttribute]
 		IfcText? _Description;
 	
+	
+		public IfcMaterialLayerSet()
+		{
+		}
+	
+		public IfcMaterialLayerSet(IfcMaterialLayer[] __MaterialLayers, IfcLabel? __LayerSetName, IfcText? __Description)
+		{
+			this._MaterialLayers = new List<IfcMaterialLayer>(__MaterialLayers);
+			this._LayerSetName = __LayerSetName;
+			this._Description = __Description;
+		}
 	
 		[Description("Identification of the <em>IfcMaterialLayer</em>&rsquo;s from which the <em>IfcMat" +
 	    "erialLayerSet</em> is composed.")]

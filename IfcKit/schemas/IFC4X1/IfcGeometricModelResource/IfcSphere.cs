@@ -13,8 +13,7 @@ using System.Xml.Serialization;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcTopologyResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcGeometricModelResource
 {
@@ -26,6 +25,16 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 		[Required()]
 		IfcPositiveLengthMeasure _Radius;
 	
+	
+		public IfcSphere()
+		{
+		}
+	
+		public IfcSphere(IfcAxis2Placement3D __Position, IfcPositiveLengthMeasure __Radius)
+			: base(__Position)
+		{
+			this._Radius = __Radius;
+		}
 	
 		[Description("The radius of the sphere.")]
 		public IfcPositiveLengthMeasure Radius { get { return this._Radius; } set { this._Radius = value;} }

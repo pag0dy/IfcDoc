@@ -11,17 +11,9 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcApprovalResource;
-using BuildingSmart.IFC.IfcConstraintResource;
-using BuildingSmart.IFC.IfcCostResource;
 using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcQuantityResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcExternalReferenceResource
 {
@@ -59,6 +51,20 @@ namespace BuildingSmart.IFC.IfcExternalReferenceResource
 		[InverseProperty("ReferencedLibrary")] 
 		ISet<IfcLibraryReference> _HasLibraryReferences = new HashSet<IfcLibraryReference>();
 	
+	
+		public IfcLibraryInformation()
+		{
+		}
+	
+		public IfcLibraryInformation(IfcLabel __Name, IfcLabel? __Version, IfcActorSelect __Publisher, IfcDateTime? __VersionDate, IfcURIReference? __Location, IfcText? __Description)
+		{
+			this._Name = __Name;
+			this._Version = __Version;
+			this._Publisher = __Publisher;
+			this._VersionDate = __VersionDate;
+			this._Location = __Location;
+			this._Description = __Description;
+		}
 	
 		[Description("The name which is used to identify the library.")]
 		public IfcLabel Name { get { return this._Name; } set { this._Name = value;} }

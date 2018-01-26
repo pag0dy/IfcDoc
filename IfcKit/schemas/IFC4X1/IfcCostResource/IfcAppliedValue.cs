@@ -14,6 +14,7 @@ using BuildingSmart.IFC.IfcConstraintResource;
 using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcMeasureResource;
+using BuildingSmart.IFC.IfcPropertyResource;
 
 namespace BuildingSmart.IFC.IfcCostResource
 {
@@ -59,11 +60,30 @@ namespace BuildingSmart.IFC.IfcCostResource
 		IfcArithmeticOperatorEnum? _ArithmeticOperator;
 	
 		[DataMember(Order=9)] 
+		[MinLength(1)]
 		IList<IfcAppliedValue> _Components = new List<IfcAppliedValue>();
 	
 		[InverseProperty("RelatedResourceObjects")] 
 		ISet<IfcExternalReferenceRelationship> _HasExternalReference = new HashSet<IfcExternalReferenceRelationship>();
 	
+	
+		public IfcAppliedValue()
+		{
+		}
+	
+		public IfcAppliedValue(IfcLabel? __Name, IfcText? __Description, IfcAppliedValueSelect __AppliedValue, IfcMeasureWithUnit __UnitBasis, IfcDate? __ApplicableDate, IfcDate? __FixedUntilDate, IfcLabel? __Category, IfcLabel? __Condition, IfcArithmeticOperatorEnum? __ArithmeticOperator, IfcAppliedValue[] __Components)
+		{
+			this._Name = __Name;
+			this._Description = __Description;
+			this._AppliedValue = __AppliedValue;
+			this._UnitBasis = __UnitBasis;
+			this._ApplicableDate = __ApplicableDate;
+			this._FixedUntilDate = __FixedUntilDate;
+			this._Category = __Category;
+			this._Condition = __Condition;
+			this._ArithmeticOperator = __ArithmeticOperator;
+			this._Components = new List<IfcAppliedValue>(__Components);
+		}
 	
 		[Description("A name or additional clarification given to a cost value.")]
 		public IfcLabel? Name { get { return this._Name; } set { this._Name = value;} }

@@ -10,12 +10,8 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationDefinitionResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 {
@@ -32,6 +28,17 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 		[Required()]
 		IfcTextureVertexList _TexCoords;
 	
+	
+		public IfcIndexedTextureMap()
+		{
+		}
+	
+		public IfcIndexedTextureMap(IfcSurfaceTexture[] __Maps, IfcTessellatedFaceSet __MappedTo, IfcTextureVertexList __TexCoords)
+			: base(__Maps)
+		{
+			this._MappedTo = __MappedTo;
+			this._TexCoords = __TexCoords;
+		}
 	
 		[Description("Reference to the <em>IfcTessellatedFaceSet</em> to which it applies the texture m" +
 	    "ap.")]

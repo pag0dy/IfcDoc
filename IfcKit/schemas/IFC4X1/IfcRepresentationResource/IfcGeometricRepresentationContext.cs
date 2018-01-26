@@ -10,14 +10,8 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
 using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcRepresentationResource
 {
@@ -49,8 +43,22 @@ namespace BuildingSmart.IFC.IfcRepresentationResource
 	
 		[InverseProperty("SourceCRS")] 
 		[XmlElement]
+		[MaxLength(1)]
 		ISet<IfcCoordinateOperation> _HasCoordinateOperation = new HashSet<IfcCoordinateOperation>();
 	
+	
+		public IfcGeometricRepresentationContext()
+		{
+		}
+	
+		public IfcGeometricRepresentationContext(IfcLabel? __ContextIdentifier, IfcLabel? __ContextType, IfcDimensionCount __CoordinateSpaceDimension, IfcReal? __Precision, IfcAxis2Placement __WorldCoordinateSystem, IfcDirection __TrueNorth)
+			: base(__ContextIdentifier, __ContextType)
+		{
+			this._CoordinateSpaceDimension = __CoordinateSpaceDimension;
+			this._Precision = __Precision;
+			this._WorldCoordinateSystem = __WorldCoordinateSystem;
+			this._TrueNorth = __TrueNorth;
+		}
 	
 		[Description("The integer dimension count of the coordinate space modeled in a geometric repres" +
 	    "entation context.\r\n<br>\r\n")]

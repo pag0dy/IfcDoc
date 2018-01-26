@@ -10,14 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcMaterialResource
 {
@@ -26,8 +19,13 @@ namespace BuildingSmart.IFC.IfcMaterialResource
 		BuildingSmart.IFC.IfcMaterialResource.IfcMaterialSelect
 	{
 		[InverseProperty("RelatingMaterial")] 
+		[MinLength(1)]
 		ISet<IfcRelAssociatesMaterial> _AssociatedTo = new HashSet<IfcRelAssociatesMaterial>();
 	
+	
+		public IfcMaterialUsageDefinition()
+		{
+		}
 	
 		[Description("Use of the <em>IfcMaterialUsageDefinition</em> subtypes within the material assoc" +
 	    "iation of an element occurrence. The association is established by the <em>IfcRe" +

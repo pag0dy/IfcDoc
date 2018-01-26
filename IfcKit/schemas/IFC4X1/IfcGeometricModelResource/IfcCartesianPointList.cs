@@ -11,16 +11,18 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcTopologyResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcGeometricModelResource
 {
 	[Guid("300d59f2-14b1-4472-b5a4-8cf798c02341")]
 	public abstract partial class IfcCartesianPointList : IfcGeometricRepresentationItem
 	{
+	
+		public IfcCartesianPointList()
+		{
+		}
 	
 		public new IfcDimensionCount Dim { get { return new IfcDimensionCount(); } }
 	

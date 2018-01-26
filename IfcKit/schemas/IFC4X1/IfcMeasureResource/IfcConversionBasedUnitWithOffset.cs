@@ -10,7 +10,6 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
 
 namespace BuildingSmart.IFC.IfcMeasureResource
@@ -23,6 +22,16 @@ namespace BuildingSmart.IFC.IfcMeasureResource
 		[Required()]
 		IfcReal _ConversionOffset;
 	
+	
+		public IfcConversionBasedUnitWithOffset()
+		{
+		}
+	
+		public IfcConversionBasedUnitWithOffset(IfcDimensionalExponents __Dimensions, IfcUnitEnum __UnitType, IfcLabel __Name, IfcMeasureWithUnit __ConversionFactor, IfcReal __ConversionOffset)
+			: base(__Dimensions, __UnitType, __Name, __ConversionFactor)
+		{
+			this._ConversionOffset = __ConversionOffset;
+		}
 	
 		[Description("A positive or negative offset to add after the inherited <em>ConversionFactor</em" +
 	    "> was applied.\r\n")]

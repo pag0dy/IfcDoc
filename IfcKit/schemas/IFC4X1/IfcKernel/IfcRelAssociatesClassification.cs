@@ -10,16 +10,8 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricConstraintResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProcessExtension;
-using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
 using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcKernel
@@ -31,6 +23,16 @@ namespace BuildingSmart.IFC.IfcKernel
 		[Required()]
 		IfcClassificationSelect _RelatingClassification;
 	
+	
+		public IfcRelAssociatesClassification()
+		{
+		}
+	
+		public IfcRelAssociatesClassification(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcDefinitionSelect[] __RelatedObjects, IfcClassificationSelect __RelatingClassification)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __RelatedObjects)
+		{
+			this._RelatingClassification = __RelatingClassification;
+		}
 	
 		[Description("Classification applied to the objects.")]
 		public IfcClassificationSelect RelatingClassification { get { return this._RelatingClassification; } set { this._RelatingClassification = value;} }

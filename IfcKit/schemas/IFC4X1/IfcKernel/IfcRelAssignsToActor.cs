@@ -11,15 +11,7 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricConstraintResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProcessExtension;
-using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
 using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcKernel
@@ -36,6 +28,17 @@ namespace BuildingSmart.IFC.IfcKernel
 		[XmlElement]
 		IfcActorRole _ActingRole;
 	
+	
+		public IfcRelAssignsToActor()
+		{
+		}
+	
+		public IfcRelAssignsToActor(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcObjectDefinition[] __RelatedObjects, IfcObjectTypeEnum? __RelatedObjectsType, IfcActor __RelatingActor, IfcActorRole __ActingRole)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __RelatedObjects, __RelatedObjectsType)
+		{
+			this._RelatingActor = __RelatingActor;
+			this._ActingRole = __ActingRole;
+		}
 	
 		[Description("Reference to the information about the actor. It comprises the information about " +
 	    "the person or organization and its addresses.\r\n")]

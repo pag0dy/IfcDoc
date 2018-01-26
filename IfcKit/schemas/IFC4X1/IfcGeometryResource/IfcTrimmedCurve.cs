@@ -10,13 +10,11 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometricModelResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcPresentationOrganizationResource;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
@@ -30,10 +28,14 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 	
 		[DataMember(Order=1)] 
 		[Required()]
+		[MinLength(1)]
+		[MaxLength(2)]
 		ISet<IfcTrimmingSelect> _Trim1 = new HashSet<IfcTrimmingSelect>();
 	
 		[DataMember(Order=2)] 
 		[Required()]
+		[MinLength(1)]
+		[MaxLength(2)]
 		ISet<IfcTrimmingSelect> _Trim2 = new HashSet<IfcTrimmingSelect>();
 	
 		[DataMember(Order=3)] 
@@ -46,6 +48,19 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		[Required()]
 		IfcTrimmingPreference _MasterRepresentation;
 	
+	
+		public IfcTrimmedCurve()
+		{
+		}
+	
+		public IfcTrimmedCurve(IfcCurve __BasisCurve, IfcTrimmingSelect[] __Trim1, IfcTrimmingSelect[] __Trim2, IfcBoolean __SenseAgreement, IfcTrimmingPreference __MasterRepresentation)
+		{
+			this._BasisCurve = __BasisCurve;
+			this._Trim1 = new HashSet<IfcTrimmingSelect>(__Trim1);
+			this._Trim2 = new HashSet<IfcTrimmingSelect>(__Trim2);
+			this._SenseAgreement = __SenseAgreement;
+			this._MasterRepresentation = __MasterRepresentation;
+		}
 	
 		[Description("The curve to be trimmed. For curves with multiple representations any parameter v" +
 	    "alues given as Trim1 or Trim2 refer to the master representation of the BasisCur" +

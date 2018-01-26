@@ -10,9 +10,6 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcConstraintResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 
 namespace BuildingSmart.IFC.IfcUtilityResource
@@ -21,12 +18,23 @@ namespace BuildingSmart.IFC.IfcUtilityResource
 	public partial class IfcTableRow
 	{
 		[DataMember(Order=0)] 
+		[MinLength(1)]
 		IList<IfcValue> _RowCells = new List<IfcValue>();
 	
 		[DataMember(Order=1)] 
 		[XmlAttribute]
 		IfcBoolean? _IsHeading;
 	
+	
+		public IfcTableRow()
+		{
+		}
+	
+		public IfcTableRow(IfcValue[] __RowCells, IfcBoolean? __IsHeading)
+		{
+			this._RowCells = new List<IfcValue>(__RowCells);
+			this._IsHeading = __IsHeading;
+		}
 	
 		[Description("The data value of the table cell..")]
 		public IList<IfcValue> RowCells { get { return this._RowCells; } }

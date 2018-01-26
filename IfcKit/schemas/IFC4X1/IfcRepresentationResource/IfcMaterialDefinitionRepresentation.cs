@@ -10,14 +10,8 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcRepresentationResource
 {
@@ -29,6 +23,16 @@ namespace BuildingSmart.IFC.IfcRepresentationResource
 		[Required()]
 		IfcMaterial _RepresentedMaterial;
 	
+	
+		public IfcMaterialDefinitionRepresentation()
+		{
+		}
+	
+		public IfcMaterialDefinitionRepresentation(IfcLabel? __Name, IfcText? __Description, IfcRepresentation[] __Representations, IfcMaterial __RepresentedMaterial)
+			: base(__Name, __Description, __Representations)
+		{
+			this._RepresentedMaterial = __RepresentedMaterial;
+		}
 	
 		[Description("Reference to the material to which the representation applies.")]
 		public IfcMaterial RepresentedMaterial { get { return this._RepresentedMaterial; } set { this._RepresentedMaterial = value;} }

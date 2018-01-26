@@ -10,16 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricConstraintResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProcessExtension;
-using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
 using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcKernel
@@ -37,6 +28,15 @@ namespace BuildingSmart.IFC.IfcKernel
 		[InverseProperty("RelatingPropertyDefinition")] 
 		ISet<IfcRelDefinesByProperties> _DefinesOccurrence = new HashSet<IfcRelDefinesByProperties>();
 	
+	
+		public IfcPropertySetDefinition()
+		{
+		}
+	
+		public IfcPropertySetDefinition(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description)
+		{
+		}
 	
 		[Description(@"The type object to which the property set is assigned. The property set acts as a shared property set to all occurrences of the type object.
 	<blockquote class=""note"">

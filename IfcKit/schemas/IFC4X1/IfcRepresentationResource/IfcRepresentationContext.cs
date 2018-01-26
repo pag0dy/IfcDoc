@@ -10,14 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcRepresentationResource
 {
@@ -35,6 +28,16 @@ namespace BuildingSmart.IFC.IfcRepresentationResource
 		[InverseProperty("ContextOfItems")] 
 		ISet<IfcRepresentation> _RepresentationsInContext = new HashSet<IfcRepresentation>();
 	
+	
+		public IfcRepresentationContext()
+		{
+		}
+	
+		public IfcRepresentationContext(IfcLabel? __ContextIdentifier, IfcLabel? __ContextType)
+		{
+			this._ContextIdentifier = __ContextIdentifier;
+			this._ContextType = __ContextType;
+		}
 	
 		[Description("The optional identifier of the representation context as used within a project.")]
 		public IfcLabel? ContextIdentifier { get { return this._ContextIdentifier; } set { this._ContextIdentifier = value;} }

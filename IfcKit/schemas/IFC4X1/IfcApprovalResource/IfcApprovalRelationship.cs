@@ -10,14 +10,8 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcControlExtension;
-using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcPropertyResource;
 
 namespace BuildingSmart.IFC.IfcApprovalResource
 {
@@ -31,8 +25,20 @@ namespace BuildingSmart.IFC.IfcApprovalResource
 	
 		[DataMember(Order=1)] 
 		[Required()]
+		[MinLength(1)]
 		ISet<IfcApproval> _RelatedApprovals = new HashSet<IfcApproval>();
 	
+	
+		public IfcApprovalRelationship()
+		{
+		}
+	
+		public IfcApprovalRelationship(IfcLabel? __Name, IfcText? __Description, IfcApproval __RelatingApproval, IfcApproval[] __RelatedApprovals)
+			: base(__Name, __Description)
+		{
+			this._RelatingApproval = __RelatingApproval;
+			this._RelatedApprovals = new HashSet<IfcApproval>(__RelatedApprovals);
+		}
 	
 		[Description("The approval that other approval is related to.")]
 		public IfcApproval RelatingApproval { get { return this._RelatingApproval; } set { this._RelatingApproval = value;} }

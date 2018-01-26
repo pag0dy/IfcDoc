@@ -10,12 +10,9 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcCostResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcQuantityResource;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcSharedMgmtElements
 {
@@ -34,6 +31,18 @@ namespace BuildingSmart.IFC.IfcSharedMgmtElements
 		[XmlAttribute]
 		IfcText? _LongDescription;
 	
+	
+		public IfcActionRequest()
+		{
+		}
+	
+		public IfcActionRequest(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcIdentifier? __Identification, IfcActionRequestTypeEnum? __PredefinedType, IfcLabel? __Status, IfcText? __LongDescription)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType, __Identification)
+		{
+			this._PredefinedType = __PredefinedType;
+			this._Status = __Status;
+			this._LongDescription = __LongDescription;
+		}
 	
 		[Description("Identifies the predefined type of sources through which a request can be made.\r\n\r" +
 	    "\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE  The attribute has been added.</b" +

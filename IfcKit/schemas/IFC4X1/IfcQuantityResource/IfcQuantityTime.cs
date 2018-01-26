@@ -28,6 +28,17 @@ namespace BuildingSmart.IFC.IfcQuantityResource
 		IfcLabel? _Formula;
 	
 	
+		public IfcQuantityTime()
+		{
+		}
+	
+		public IfcQuantityTime(IfcLabel __Name, IfcText? __Description, IfcNamedUnit __Unit, IfcTimeMeasure __TimeValue, IfcLabel? __Formula)
+			: base(__Name, __Description, __Unit)
+		{
+			this._TimeValue = __TimeValue;
+			this._Formula = __Formula;
+		}
+	
 		[Description("Time measure value of this quantity.")]
 		public IfcTimeMeasure TimeValue { get { return this._TimeValue; } set { this._TimeValue = value;} }
 	

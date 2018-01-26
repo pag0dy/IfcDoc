@@ -10,16 +10,11 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
 using BuildingSmart.IFC.IfcApprovalResource;
 using BuildingSmart.IFC.IfcConstraintResource;
-using BuildingSmart.IFC.IfcCostResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcPropertyResource
 {
@@ -32,6 +27,17 @@ namespace BuildingSmart.IFC.IfcPropertyResource
 		[DataMember(Order=1)] 
 		IfcUnit _Unit;
 	
+	
+		public IfcPropertySingleValue()
+		{
+		}
+	
+		public IfcPropertySingleValue(IfcIdentifier __Name, IfcText? __Description, IfcValue __NominalValue, IfcUnit __Unit)
+			: base(__Name, __Description)
+		{
+			this._NominalValue = __NominalValue;
+			this._Unit = __Unit;
+		}
 	
 		[Description(@"Value and measure type of this property. 
 	<blockquote class=""note"">NOTE&nbsp; By virtue of the defined data type, that is selected from the SELECT <em>IfcValue</em>, the appropriate unit can be found within the <em>IfcUnitAssignment</em>, defined for the project if no value for the unit attribute is given.</blockquote>

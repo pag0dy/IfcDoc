@@ -13,8 +13,7 @@ using System.Xml.Serialization;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcTopologyResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcGeometricModelResource
 {
@@ -26,6 +25,16 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 		[Required()]
 		IfcBoundingBox _Enclosure;
 	
+	
+		public IfcBoxedHalfSpace()
+		{
+		}
+	
+		public IfcBoxedHalfSpace(IfcSurface __BaseSurface, IfcBoolean __AgreementFlag, IfcBoundingBox __Enclosure)
+			: base(__BaseSurface, __AgreementFlag)
+		{
+			this._Enclosure = __Enclosure;
+		}
 	
 		[Description("The box which bounds the resulting solid of the Boolean operation involving the h" +
 	    "alf space solid for computational purposes only.\r\n")]

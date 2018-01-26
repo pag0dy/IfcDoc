@@ -10,13 +10,11 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometricModelResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcPresentationOrganizationResource;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
@@ -25,6 +23,7 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 	{
 		[DataMember(Order=0)] 
 		[Required()]
+		[MinLength(1)]
 		IList<IfcCompositeCurveSegment> _Segments = new List<IfcCompositeCurveSegment>();
 	
 		[DataMember(Order=1)] 
@@ -32,6 +31,16 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		[Required()]
 		IfcLogical _SelfIntersect;
 	
+	
+		public IfcCompositeCurve()
+		{
+		}
+	
+		public IfcCompositeCurve(IfcCompositeCurveSegment[] __Segments, IfcLogical __SelfIntersect)
+		{
+			this._Segments = new List<IfcCompositeCurveSegment>(__Segments);
+			this._SelfIntersect = __SelfIntersect;
+		}
 	
 		[Description(@"The component bounded curves, their transitions and senses. The transition attribute for the last segment defines the transition between the end of the last segment and the start of the first; this transition attribute may take the value discontinuous, which indicates an open curve. ")]
 		public IList<IfcCompositeCurveSegment> Segments { get { return this._Segments; } }

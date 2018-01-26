@@ -42,6 +42,21 @@ namespace BuildingSmart.IFC.IfcStructuralLoadResource
 		IfcForceMeasure? _CompressionFailureZ;
 	
 	
+		public IfcFailureConnectionCondition()
+		{
+		}
+	
+		public IfcFailureConnectionCondition(IfcLabel? __Name, IfcForceMeasure? __TensionFailureX, IfcForceMeasure? __TensionFailureY, IfcForceMeasure? __TensionFailureZ, IfcForceMeasure? __CompressionFailureX, IfcForceMeasure? __CompressionFailureY, IfcForceMeasure? __CompressionFailureZ)
+			: base(__Name)
+		{
+			this._TensionFailureX = __TensionFailureX;
+			this._TensionFailureY = __TensionFailureY;
+			this._TensionFailureZ = __TensionFailureZ;
+			this._CompressionFailureX = __CompressionFailureX;
+			this._CompressionFailureY = __CompressionFailureY;
+			this._CompressionFailureZ = __CompressionFailureZ;
+		}
+	
 		[Description("Tension force in x-direction leading to failure of the connection.")]
 		public IfcForceMeasure? TensionFailureX { get { return this._TensionFailureX; } set { this._TensionFailureX = value;} }
 	

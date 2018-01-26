@@ -10,9 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
 using BuildingSmart.IFC.IfcConstraintResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 
 namespace BuildingSmart.IFC.IfcUtilityResource
@@ -39,6 +37,19 @@ namespace BuildingSmart.IFC.IfcUtilityResource
 		[XmlElement]
 		IfcReference _ReferencePath;
 	
+	
+		public IfcTableColumn()
+		{
+		}
+	
+		public IfcTableColumn(IfcIdentifier? __Identifier, IfcLabel? __Name, IfcText? __Description, IfcUnit __Unit, IfcReference __ReferencePath)
+		{
+			this._Identifier = __Identifier;
+			this._Name = __Name;
+			this._Description = __Description;
+			this._Unit = __Unit;
+			this._ReferencePath = __ReferencePath;
+		}
 	
 		[Description("The <i>Identifier</i> identifies the column within the table. If provided, it mus" +
 	    "t be unique within the table. Columns may be cross-referenced across multiple ta" +

@@ -10,13 +10,11 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometricModelResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcPresentationOrganizationResource;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
@@ -30,6 +28,7 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 	
 		[DataMember(Order=1)] 
 		[Required()]
+		[MinLength(1)]
 		ISet<IfcBoundaryCurve> _Boundaries = new HashSet<IfcBoundaryCurve>();
 	
 		[DataMember(Order=2)] 
@@ -37,6 +36,17 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		[Required()]
 		IfcBoolean _ImplicitOuter;
 	
+	
+		public IfcCurveBoundedSurface()
+		{
+		}
+	
+		public IfcCurveBoundedSurface(IfcSurface __BasisSurface, IfcBoundaryCurve[] __Boundaries, IfcBoolean __ImplicitOuter)
+		{
+			this._BasisSurface = __BasisSurface;
+			this._Boundaries = new HashSet<IfcBoundaryCurve>(__Boundaries);
+			this._ImplicitOuter = __ImplicitOuter;
+		}
 	
 		[Description("The surface to be bounded.")]
 		public IfcSurface BasisSurface { get { return this._BasisSurface; } set { this._BasisSurface = value;} }

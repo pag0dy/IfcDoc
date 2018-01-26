@@ -10,13 +10,8 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcPresentationOrganizationResource;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
@@ -31,6 +26,16 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		[Required()]
 		IfcDirection _VerticalAxisDirection;
 	
+	
+		public IfcOrientationExpression()
+		{
+		}
+	
+		public IfcOrientationExpression(IfcDirection __LateralAxisDirection, IfcDirection __VerticalAxisDirection)
+		{
+			this._LateralAxisDirection = __LateralAxisDirection;
+			this._VerticalAxisDirection = __VerticalAxisDirection;
+		}
 	
 		[Description("Direction of the lateral axis.")]
 		public IfcDirection LateralAxisDirection { get { return this._LateralAxisDirection; } set { this._LateralAxisDirection = value;} }

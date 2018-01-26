@@ -10,12 +10,9 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationDefinitionResource;
-using BuildingSmart.IFC.IfcTopologyResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 {
@@ -25,10 +22,13 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 	{
 		[DataMember(Order=0)] 
 		[Required()]
+		[MinLength(2)]
+		[MaxLength(2)]
 		IList<IfcVector> _TilingPattern = new List<IfcVector>();
 	
 		[DataMember(Order=1)] 
 		[Required()]
+		[MinLength(1)]
 		ISet<IfcStyledItem> _Tiles = new HashSet<IfcStyledItem>();
 	
 		[DataMember(Order=2)] 
@@ -36,6 +36,17 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 		[Required()]
 		IfcPositiveRatioMeasure _TilingScale;
 	
+	
+		public IfcFillAreaStyleTiles()
+		{
+		}
+	
+		public IfcFillAreaStyleTiles(IfcVector[] __TilingPattern, IfcStyledItem[] __Tiles, IfcPositiveRatioMeasure __TilingScale)
+		{
+			this._TilingPattern = new List<IfcVector>(__TilingPattern);
+			this._Tiles = new HashSet<IfcStyledItem>(__Tiles);
+			this._TilingScale = __TilingScale;
+		}
 	
 		[Description("A two direction repeat factor defining the shape and relative positioning of the " +
 	    "tiles.\r\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; The attribute type h" +

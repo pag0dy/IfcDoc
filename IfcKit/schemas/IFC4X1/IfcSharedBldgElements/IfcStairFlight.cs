@@ -10,18 +10,13 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
+using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcPropertyResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
+using BuildingSmart.IFC.IfcStructuralAnalysisDomain;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcSharedBldgElements
 {
@@ -48,6 +43,20 @@ namespace BuildingSmart.IFC.IfcSharedBldgElements
 		[XmlAttribute]
 		IfcStairFlightTypeEnum? _PredefinedType;
 	
+	
+		public IfcStairFlight()
+		{
+		}
+	
+		public IfcStairFlight(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcObjectPlacement __ObjectPlacement, IfcProductRepresentation __Representation, IfcIdentifier? __Tag, IfcInteger? __NumberOfRisers, IfcInteger? __NumberOfTreads, IfcPositiveLengthMeasure? __RiserHeight, IfcPositiveLengthMeasure? __TreadLength, IfcStairFlightTypeEnum? __PredefinedType)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType, __ObjectPlacement, __Representation, __Tag)
+		{
+			this._NumberOfRisers = __NumberOfRisers;
+			this._NumberOfTreads = __NumberOfTreads;
+			this._RiserHeight = __RiserHeight;
+			this._TreadLength = __TreadLength;
+			this._PredefinedType = __PredefinedType;
+		}
 	
 		[Description("Number of the risers included in the stair flight\r\n<blockquote class=\"change-ifc2" +
 	    "x4\">IFC4 CHANGE  The attribute has been deprecated it shall only be exposed with" +

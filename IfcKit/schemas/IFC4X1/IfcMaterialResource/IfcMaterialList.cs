@@ -10,14 +10,6 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcMaterialResource
 {
@@ -27,8 +19,18 @@ namespace BuildingSmart.IFC.IfcMaterialResource
 	{
 		[DataMember(Order=0)] 
 		[Required()]
+		[MinLength(1)]
 		IList<IfcMaterial> _Materials = new List<IfcMaterial>();
 	
+	
+		public IfcMaterialList()
+		{
+		}
+	
+		public IfcMaterialList(IfcMaterial[] __Materials)
+		{
+			this._Materials = new List<IfcMaterial>(__Materials);
+		}
 	
 		[Description("Materials used in a composition of substances.")]
 		public IList<IfcMaterial> Materials { get { return this._Materials; } }

@@ -11,17 +11,9 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcApprovalResource;
-using BuildingSmart.IFC.IfcConstraintResource;
-using BuildingSmart.IFC.IfcCostResource;
 using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcQuantityResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcExternalReferenceResource
 {
@@ -67,6 +59,7 @@ namespace BuildingSmart.IFC.IfcExternalReferenceResource
 		IfcActorSelect _DocumentOwner;
 	
 		[DataMember(Order=9)] 
+		[MinLength(1)]
 		ISet<IfcActorSelect> _Editors = new HashSet<IfcActorSelect>();
 	
 		[DataMember(Order=10)] 
@@ -107,8 +100,34 @@ namespace BuildingSmart.IFC.IfcExternalReferenceResource
 		ISet<IfcDocumentInformationRelationship> _IsPointedTo = new HashSet<IfcDocumentInformationRelationship>();
 	
 		[InverseProperty("RelatingDocument")] 
+		[MaxLength(1)]
 		ISet<IfcDocumentInformationRelationship> _IsPointer = new HashSet<IfcDocumentInformationRelationship>();
 	
+	
+		public IfcDocumentInformation()
+		{
+		}
+	
+		public IfcDocumentInformation(IfcIdentifier __Identification, IfcLabel __Name, IfcText? __Description, IfcURIReference? __Location, IfcText? __Purpose, IfcText? __IntendedUse, IfcText? __Scope, IfcLabel? __Revision, IfcActorSelect __DocumentOwner, IfcActorSelect[] __Editors, IfcDateTime? __CreationTime, IfcDateTime? __LastRevisionTime, IfcIdentifier? __ElectronicFormat, IfcDate? __ValidFrom, IfcDate? __ValidUntil, IfcDocumentConfidentialityEnum? __Confidentiality, IfcDocumentStatusEnum? __Status)
+		{
+			this._Identification = __Identification;
+			this._Name = __Name;
+			this._Description = __Description;
+			this._Location = __Location;
+			this._Purpose = __Purpose;
+			this._IntendedUse = __IntendedUse;
+			this._Scope = __Scope;
+			this._Revision = __Revision;
+			this._DocumentOwner = __DocumentOwner;
+			this._Editors = new HashSet<IfcActorSelect>(__Editors);
+			this._CreationTime = __CreationTime;
+			this._LastRevisionTime = __LastRevisionTime;
+			this._ElectronicFormat = __ElectronicFormat;
+			this._ValidFrom = __ValidFrom;
+			this._ValidUntil = __ValidUntil;
+			this._Confidentiality = __Confidentiality;
+			this._Status = __Status;
+		}
 	
 		[Description("Identifier that uniquely identifies a document.\r\n<blockquote class=\"change-ifc2x4" +
 	    "\">IFC4 CHANGE&nbsp; Attribute renamed from <em>DocumentId</em>.\r\n</blockquote>")]

@@ -10,12 +10,8 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationDefinitionResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 {
@@ -25,8 +21,19 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 		[DataMember(Order=0)] 
 		[XmlAttribute]
 		[Required()]
+		[MinLength(2)]
+		[MaxLength(2)]
 		IList<IfcParameterValue> _Coordinates = new List<IfcParameterValue>();
 	
+	
+		public IfcTextureVertex()
+		{
+		}
+	
+		public IfcTextureVertex(IfcParameterValue[] __Coordinates)
+		{
+			this._Coordinates = new List<IfcParameterValue>(__Coordinates);
+		}
 	
 		[Description("The first Coordinate[1] is the S, the second Coordinate[2] is the T parameter val" +
 	    "ue.")]

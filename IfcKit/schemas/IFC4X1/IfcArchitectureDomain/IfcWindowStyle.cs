@@ -10,19 +10,10 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcSharedBldgElements;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcArchitectureDomain
 {
@@ -49,6 +40,19 @@ namespace BuildingSmart.IFC.IfcArchitectureDomain
 		[Required()]
 		IfcBoolean _Sizeable;
 	
+	
+		public IfcWindowStyle()
+		{
+		}
+	
+		public IfcWindowStyle(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcIdentifier? __ApplicableOccurrence, IfcPropertySetDefinition[] __HasPropertySets, IfcRepresentationMap[] __RepresentationMaps, IfcLabel? __Tag, IfcWindowStyleConstructionEnum __ConstructionType, IfcWindowStyleOperationEnum __OperationType, IfcBoolean __ParameterTakesPrecedence, IfcBoolean __Sizeable)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ApplicableOccurrence, __HasPropertySets, __RepresentationMaps, __Tag)
+		{
+			this._ConstructionType = __ConstructionType;
+			this._OperationType = __OperationType;
+			this._ParameterTakesPrecedence = __ParameterTakesPrecedence;
+			this._Sizeable = __Sizeable;
+		}
 	
 		[Description("Type defining the basic construction and material type of the window.")]
 		public IfcWindowStyleConstructionEnum ConstructionType { get { return this._ConstructionType; } set { this._ConstructionType = value;} }

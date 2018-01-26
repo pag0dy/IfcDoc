@@ -30,6 +30,18 @@ namespace BuildingSmart.IFC.IfcStructuralLoadResource
 		IfcLengthMeasure? _SlippageZ;
 	
 	
+		public IfcSlippageConnectionCondition()
+		{
+		}
+	
+		public IfcSlippageConnectionCondition(IfcLabel? __Name, IfcLengthMeasure? __SlippageX, IfcLengthMeasure? __SlippageY, IfcLengthMeasure? __SlippageZ)
+			: base(__Name)
+		{
+			this._SlippageX = __SlippageX;
+			this._SlippageY = __SlippageY;
+			this._SlippageZ = __SlippageZ;
+		}
+	
 		[Description("Slippage in x-direction of the coordinate system defined by the instance which us" +
 	    "es this resource object.")]
 		public IfcLengthMeasure? SlippageX { get { return this._SlippageX; } set { this._SlippageX = value;} }

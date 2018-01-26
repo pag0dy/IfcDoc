@@ -10,14 +10,10 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcGeometricModelResource;
 using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcTopologyResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcGeometricConstraintResource
 {
@@ -29,8 +25,20 @@ namespace BuildingSmart.IFC.IfcGeometricConstraintResource
 		IfcCurveSegment2D _CurveGeometry;
 	
 		[InverseProperty("Segments")] 
+		[MinLength(1)]
+		[MaxLength(1)]
 		ISet<IfcAlignment2DHorizontal> _ToHorizontal = new HashSet<IfcAlignment2DHorizontal>();
 	
+	
+		public IfcAlignment2DHorizontalSegment()
+		{
+		}
+	
+		public IfcAlignment2DHorizontalSegment(IfcBoolean? __TangentialContinuity, IfcLabel? __StartTag, IfcLabel? __EndTag, IfcCurveSegment2D __CurveGeometry)
+			: base(__TangentialContinuity, __StartTag, __EndTag)
+		{
+			this._CurveGeometry = __CurveGeometry;
+		}
 	
 		[Description("Geometric representation of the horizontal alignment within the 2D X/Y coordinate" +
 	    " space.")]

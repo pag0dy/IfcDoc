@@ -12,12 +12,9 @@ using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcGeometricModelResource;
 using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcTopologyResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcGeometricConstraintResource
 {
@@ -35,6 +32,17 @@ namespace BuildingSmart.IFC.IfcGeometricConstraintResource
 		[XmlAttribute]
 		IfcLabel? _Tag;
 	
+	
+		public IfcAlignmentCurve()
+		{
+		}
+	
+		public IfcAlignmentCurve(IfcAlignment2DHorizontal __Horizontal, IfcAlignment2DVertical __Vertical, IfcLabel? __Tag)
+		{
+			this._Horizontal = __Horizontal;
+			this._Vertical = __Vertical;
+			this._Tag = __Tag;
+		}
 	
 		[Description("The horizontal component of the curve.")]
 		public IfcAlignment2DHorizontal Horizontal { get { return this._Horizontal; } set { this._Horizontal = value;} }

@@ -11,12 +11,8 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcPresentationOrganizationResource;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
@@ -34,6 +30,16 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		[Required()]
 		IfcCurve _ReferenceCurve;
 	
+	
+		public IfcPcurve()
+		{
+		}
+	
+		public IfcPcurve(IfcSurface __BasisSurface, IfcCurve __ReferenceCurve)
+		{
+			this._BasisSurface = __BasisSurface;
+			this._ReferenceCurve = __ReferenceCurve;
+		}
 	
 		public IfcSurface BasisSurface { get { return this._BasisSurface; } set { this._BasisSurface = value;} }
 	

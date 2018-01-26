@@ -11,8 +11,8 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcTopologyResource
 {
@@ -24,6 +24,16 @@ namespace BuildingSmart.IFC.IfcTopologyResource
 		[Required()]
 		IfcEdge _ParentEdge;
 	
+	
+		public IfcSubedge()
+		{
+		}
+	
+		public IfcSubedge(IfcVertex __EdgeStart, IfcVertex __EdgeEnd, IfcEdge __ParentEdge)
+			: base(__EdgeStart, __EdgeEnd)
+		{
+			this._ParentEdge = __ParentEdge;
+		}
 	
 		[Description("The Edge, or Subedge, which contains the Subedge.")]
 		public IfcEdge ParentEdge { get { return this._ParentEdge; } set { this._ParentEdge = value;} }

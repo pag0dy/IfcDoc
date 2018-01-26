@@ -10,8 +10,8 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcMeasureResource;
+using BuildingSmart.IFC.IfcPropertyResource;
 
 namespace BuildingSmart.IFC.IfcActorResource
 {
@@ -24,6 +24,7 @@ namespace BuildingSmart.IFC.IfcActorResource
 	
 		[DataMember(Order=1)] 
 		[XmlAttribute]
+		[MinLength(1)]
 		IList<IfcLabel> _AddressLines = new List<IfcLabel>();
 	
 		[DataMember(Order=2)] 
@@ -46,6 +47,22 @@ namespace BuildingSmart.IFC.IfcActorResource
 		[XmlAttribute]
 		IfcLabel? _Country;
 	
+	
+		public IfcPostalAddress()
+		{
+		}
+	
+		public IfcPostalAddress(IfcAddressTypeEnum? __Purpose, IfcText? __Description, IfcLabel? __UserDefinedPurpose, IfcLabel? __InternalLocation, IfcLabel[] __AddressLines, IfcLabel? __PostalBox, IfcLabel? __Town, IfcLabel? __Region, IfcLabel? __PostalCode, IfcLabel? __Country)
+			: base(__Purpose, __Description, __UserDefinedPurpose)
+		{
+			this._InternalLocation = __InternalLocation;
+			this._AddressLines = new List<IfcLabel>(__AddressLines);
+			this._PostalBox = __PostalBox;
+			this._Town = __Town;
+			this._Region = __Region;
+			this._PostalCode = __PostalCode;
+			this._Country = __Country;
+		}
 	
 		[Description("An organization defined address for internal mail delivery.")]
 		public IfcLabel? InternalLocation { get { return this._InternalLocation; } set { this._InternalLocation = value;} }

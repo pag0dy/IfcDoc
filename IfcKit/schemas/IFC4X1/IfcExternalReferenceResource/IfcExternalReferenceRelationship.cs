@@ -10,18 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcApprovalResource;
-using BuildingSmart.IFC.IfcConstraintResource;
-using BuildingSmart.IFC.IfcCostResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcQuantityResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcExternalReferenceResource
 {
@@ -35,8 +24,20 @@ namespace BuildingSmart.IFC.IfcExternalReferenceResource
 	
 		[DataMember(Order=1)] 
 		[Required()]
+		[MinLength(1)]
 		ISet<IfcResourceObjectSelect> _RelatedResourceObjects = new HashSet<IfcResourceObjectSelect>();
 	
+	
+		public IfcExternalReferenceRelationship()
+		{
+		}
+	
+		public IfcExternalReferenceRelationship(IfcLabel? __Name, IfcText? __Description, IfcExternalReference __RelatingReference, IfcResourceObjectSelect[] __RelatedResourceObjects)
+			: base(__Name, __Description)
+		{
+			this._RelatingReference = __RelatingReference;
+			this._RelatedResourceObjects = new HashSet<IfcResourceObjectSelect>(__RelatedResourceObjects);
+		}
 	
 		[Description(@"An external reference that can be used to tag an object within the range of <em>IfcResourceObjectSelect</em>.
 	<blockquote class=""note"">

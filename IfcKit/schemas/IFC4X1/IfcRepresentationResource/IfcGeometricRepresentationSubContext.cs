@@ -10,14 +10,8 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
 using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcRepresentationResource
 {
@@ -42,6 +36,19 @@ namespace BuildingSmart.IFC.IfcRepresentationResource
 		[XmlAttribute]
 		IfcLabel? _UserDefinedTargetView;
 	
+	
+		public IfcGeometricRepresentationSubContext()
+		{
+		}
+	
+		public IfcGeometricRepresentationSubContext(IfcLabel? __ContextIdentifier, IfcLabel? __ContextType, IfcDimensionCount __CoordinateSpaceDimension, IfcReal? __Precision, IfcAxis2Placement __WorldCoordinateSystem, IfcDirection __TrueNorth, IfcGeometricRepresentationContext __ParentContext, IfcPositiveRatioMeasure? __TargetScale, IfcGeometricProjectionEnum __TargetView, IfcLabel? __UserDefinedTargetView)
+			: base(__ContextIdentifier, __ContextType, __CoordinateSpaceDimension, __Precision, __WorldCoordinateSystem, __TrueNorth)
+		{
+			this._ParentContext = __ParentContext;
+			this._TargetScale = __TargetScale;
+			this._TargetView = __TargetView;
+			this._UserDefinedTargetView = __UserDefinedTargetView;
+		}
 	
 		[Description("Parent context from which the sub context derives its world coordinate system, pr" +
 	    "ecision, space coordinate dimension and true north.")]

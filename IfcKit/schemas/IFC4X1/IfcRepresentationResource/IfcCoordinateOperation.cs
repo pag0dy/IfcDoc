@@ -10,14 +10,6 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialResource;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcRepresentationResource
 {
@@ -34,6 +26,16 @@ namespace BuildingSmart.IFC.IfcRepresentationResource
 		[Required()]
 		IfcCoordinateReferenceSystem _TargetCRS;
 	
+	
+		public IfcCoordinateOperation()
+		{
+		}
+	
+		public IfcCoordinateOperation(IfcCoordinateReferenceSystemSelect __SourceCRS, IfcCoordinateReferenceSystem __TargetCRS)
+		{
+			this._SourceCRS = __SourceCRS;
+			this._TargetCRS = __TargetCRS;
+		}
 	
 		[Description("Source coordinate reference system for the operation.")]
 		public IfcCoordinateReferenceSystemSelect SourceCRS { get { return this._SourceCRS; } set { this._SourceCRS = value;} }

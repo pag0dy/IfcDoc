@@ -10,14 +10,6 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometricConstraintResource
 {
@@ -31,6 +23,16 @@ namespace BuildingSmart.IFC.IfcGeometricConstraintResource
 		[DataMember(Order=1)] 
 		IfcCurveOrEdgeCurve _CurveOnRelatedElement;
 	
+	
+		public IfcConnectionCurveGeometry()
+		{
+		}
+	
+		public IfcConnectionCurveGeometry(IfcCurveOrEdgeCurve __CurveOnRelatingElement, IfcCurveOrEdgeCurve __CurveOnRelatedElement)
+		{
+			this._CurveOnRelatingElement = __CurveOnRelatingElement;
+			this._CurveOnRelatedElement = __CurveOnRelatedElement;
+		}
 	
 		[Description("The bounded curve at which the connected objects are aligned at the relating elem" +
 	    "ent, given in the LCS of the relating element.")]

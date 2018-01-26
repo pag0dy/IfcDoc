@@ -10,16 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricConstraintResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProcessExtension;
-using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
 using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcKernel
@@ -33,6 +24,7 @@ namespace BuildingSmart.IFC.IfcKernel
 	
 		[InverseProperty("RelatedObjects")] 
 		[XmlElement]
+		[MaxLength(1)]
 		ISet<IfcRelDefinesByObject> _IsDeclaredBy = new HashSet<IfcRelDefinesByObject>();
 	
 		[InverseProperty("RelatingObject")] 
@@ -40,12 +32,23 @@ namespace BuildingSmart.IFC.IfcKernel
 	
 		[InverseProperty("RelatedObjects")] 
 		[XmlElement]
+		[MaxLength(1)]
 		ISet<IfcRelDefinesByType> _IsTypedBy = new HashSet<IfcRelDefinesByType>();
 	
 		[InverseProperty("RelatedObjects")] 
 		[XmlElement("IfcRelDefinesByProperties")]
 		ISet<IfcRelDefinesByProperties> _IsDefinedBy = new HashSet<IfcRelDefinesByProperties>();
 	
+	
+		public IfcObject()
+		{
+		}
+	
+		public IfcObject(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description)
+		{
+			this._ObjectType = __ObjectType;
+		}
 	
 		[Description(@"The type denotes a particular type that indicates the object further. The use has to be established at the level of instantiable subtypes. In particular it holds the user defined type, if the enumeration of the attribute <em>PredefinedType</em> is set to USERDEFINED. 
 	<br>")]

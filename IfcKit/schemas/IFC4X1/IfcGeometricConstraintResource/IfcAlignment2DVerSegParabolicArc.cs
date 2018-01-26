@@ -10,14 +10,10 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcGeometricModelResource;
 using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcTopologyResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcGeometricConstraintResource
 {
@@ -34,6 +30,17 @@ namespace BuildingSmart.IFC.IfcGeometricConstraintResource
 		[Required()]
 		IfcBoolean _IsConvex;
 	
+	
+		public IfcAlignment2DVerSegParabolicArc()
+		{
+		}
+	
+		public IfcAlignment2DVerSegParabolicArc(IfcBoolean? __TangentialContinuity, IfcLabel? __StartTag, IfcLabel? __EndTag, IfcLengthMeasure __StartDistAlong, IfcPositiveLengthMeasure __HorizontalLength, IfcLengthMeasure __StartHeight, IfcRatioMeasure __StartGradient, IfcPositiveLengthMeasure __ParabolaConstant, IfcBoolean __IsConvex)
+			: base(__TangentialContinuity, __StartTag, __EndTag, __StartDistAlong, __HorizontalLength, __StartHeight, __StartGradient)
+		{
+			this._ParabolaConstant = __ParabolaConstant;
+			this._IsConvex = __IsConvex;
+		}
 	
 		[Description(@"Parabola constant (determining the “steepness” of the parabola). The parabola constant is provided by the “minimum parabola radius”, the true radius of a parabola at its vertical axis (the zero-gradient point of the parabola). The minimum radius is twice the focal length of the parabola (the distance between the focal point and the vertex).")]
 		public IfcPositiveLengthMeasure ParabolaConstant { get { return this._ParabolaConstant; } set { this._ParabolaConstant = value;} }

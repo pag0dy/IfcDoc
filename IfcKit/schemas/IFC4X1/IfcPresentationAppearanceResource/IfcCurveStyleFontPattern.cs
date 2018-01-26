@@ -10,12 +10,8 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationDefinitionResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 {
@@ -32,6 +28,16 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 		[Required()]
 		IfcPositiveLengthMeasure _InvisibleSegmentLength;
 	
+	
+		public IfcCurveStyleFontPattern()
+		{
+		}
+	
+		public IfcCurveStyleFontPattern(IfcLengthMeasure __VisibleSegmentLength, IfcPositiveLengthMeasure __InvisibleSegmentLength)
+		{
+			this._VisibleSegmentLength = __VisibleSegmentLength;
+			this._InvisibleSegmentLength = __InvisibleSegmentLength;
+		}
 	
 		[Description(@"The length of the visible segment in the pattern definition.
 	<blockquote class=""note"">NOTE&nbsp; For a visible segment representing a point, the value 0. should be assigned.</blockquote>

@@ -10,14 +10,10 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcGeometricModelResource;
 using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcTopologyResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcGeometricConstraintResource
 {
@@ -45,8 +41,23 @@ namespace BuildingSmart.IFC.IfcGeometricConstraintResource
 		IfcRatioMeasure _StartGradient;
 	
 		[InverseProperty("Segments")] 
+		[MinLength(1)]
+		[MaxLength(1)]
 		ISet<IfcAlignment2DVertical> _ToVertical = new HashSet<IfcAlignment2DVertical>();
 	
+	
+		public IfcAlignment2DVerticalSegment()
+		{
+		}
+	
+		public IfcAlignment2DVerticalSegment(IfcBoolean? __TangentialContinuity, IfcLabel? __StartTag, IfcLabel? __EndTag, IfcLengthMeasure __StartDistAlong, IfcPositiveLengthMeasure __HorizontalLength, IfcLengthMeasure __StartHeight, IfcRatioMeasure __StartGradient)
+			: base(__TangentialContinuity, __StartTag, __EndTag)
+		{
+			this._StartDistAlong = __StartDistAlong;
+			this._HorizontalLength = __HorizontalLength;
+			this._StartHeight = __StartHeight;
+			this._StartGradient = __StartGradient;
+		}
 	
 		[Description("Distance along the horizontal alignment, measured along the <i>IfcAlignment2DHori" +
 	    "zontal</i> given in the length unit of the global <i>IfcUnitAssignment</i>.")]

@@ -42,6 +42,21 @@ namespace BuildingSmart.IFC.IfcStructuralLoadResource
 		IfcLinearMomentMeasure? _LinearMomentZ;
 	
 	
+		public IfcStructuralLoadLinearForce()
+		{
+		}
+	
+		public IfcStructuralLoadLinearForce(IfcLabel? __Name, IfcLinearForceMeasure? __LinearForceX, IfcLinearForceMeasure? __LinearForceY, IfcLinearForceMeasure? __LinearForceZ, IfcLinearMomentMeasure? __LinearMomentX, IfcLinearMomentMeasure? __LinearMomentY, IfcLinearMomentMeasure? __LinearMomentZ)
+			: base(__Name)
+		{
+			this._LinearForceX = __LinearForceX;
+			this._LinearForceY = __LinearForceY;
+			this._LinearForceZ = __LinearForceZ;
+			this._LinearMomentX = __LinearMomentX;
+			this._LinearMomentY = __LinearMomentY;
+			this._LinearMomentZ = __LinearMomentZ;
+		}
+	
 		[Description("Linear force value in x-direction. ")]
 		public IfcLinearForceMeasure? LinearForceX { get { return this._LinearForceX; } set { this._LinearForceX = value;} }
 	

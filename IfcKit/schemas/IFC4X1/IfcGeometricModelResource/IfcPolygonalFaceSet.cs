@@ -13,8 +13,7 @@ using System.Xml.Serialization;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcTopologyResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcGeometricModelResource
 {
@@ -27,12 +26,26 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 	
 		[DataMember(Order=1)] 
 		[Required()]
+		[MinLength(1)]
 		IList<IfcIndexedPolygonalFace> _Faces = new List<IfcIndexedPolygonalFace>();
 	
 		[DataMember(Order=2)] 
 		[XmlAttribute]
+		[MinLength(1)]
 		IList<IfcPositiveInteger> _PnIndex = new List<IfcPositiveInteger>();
 	
+	
+		public IfcPolygonalFaceSet()
+		{
+		}
+	
+		public IfcPolygonalFaceSet(IfcCartesianPointList3D __Coordinates, IfcBoolean? __Closed, IfcIndexedPolygonalFace[] __Faces, IfcPositiveInteger[] __PnIndex)
+			: base(__Coordinates)
+		{
+			this._Closed = __Closed;
+			this._Faces = new List<IfcIndexedPolygonalFace>(__Faces);
+			this._PnIndex = new List<IfcPositiveInteger>(__PnIndex);
+		}
 	
 		[Description("Indication whether the <em>IfcPolygonalFaceSet</em> is a closed shell or not. If " +
 	    "omited no such information can be provided.")]

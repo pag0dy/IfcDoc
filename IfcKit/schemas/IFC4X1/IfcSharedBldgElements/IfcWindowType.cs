@@ -10,18 +10,11 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcSharedBldgElements
 {
@@ -46,6 +39,19 @@ namespace BuildingSmart.IFC.IfcSharedBldgElements
 		[XmlAttribute]
 		IfcLabel? _UserDefinedPartitioningType;
 	
+	
+		public IfcWindowType()
+		{
+		}
+	
+		public IfcWindowType(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcIdentifier? __ApplicableOccurrence, IfcPropertySetDefinition[] __HasPropertySets, IfcRepresentationMap[] __RepresentationMaps, IfcLabel? __Tag, IfcLabel? __ElementType, IfcWindowTypeEnum __PredefinedType, IfcWindowTypePartitioningEnum __PartitioningType, IfcBoolean? __ParameterTakesPrecedence, IfcLabel? __UserDefinedPartitioningType)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ApplicableOccurrence, __HasPropertySets, __RepresentationMaps, __Tag, __ElementType)
+		{
+			this._PredefinedType = __PredefinedType;
+			this._PartitioningType = __PartitioningType;
+			this._ParameterTakesPrecedence = __ParameterTakesPrecedence;
+			this._UserDefinedPartitioningType = __UserDefinedPartitioningType;
+		}
 	
 		[Description("Identifies the predefined types of a window element from which the type required " +
 	    "may be set.")]

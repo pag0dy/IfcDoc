@@ -13,7 +13,6 @@ using System.Xml.Serialization;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPropertyResource;
 
 namespace BuildingSmart.IFC.IfcProfileResource
 {
@@ -25,6 +24,16 @@ namespace BuildingSmart.IFC.IfcProfileResource
 		[Required()]
 		IfcPositiveLengthMeasure _Radius;
 	
+	
+		public IfcCircleProfileDef()
+		{
+		}
+	
+		public IfcCircleProfileDef(IfcProfileTypeEnum __ProfileType, IfcLabel? __ProfileName, IfcAxis2Placement2D __Position, IfcPositiveLengthMeasure __Radius)
+			: base(__ProfileType, __ProfileName, __Position)
+		{
+			this._Radius = __Radius;
+		}
 	
 		[Description("The radius of the circle.")]
 		public IfcPositiveLengthMeasure Radius { get { return this._Radius; } set { this._Radius = value;} }

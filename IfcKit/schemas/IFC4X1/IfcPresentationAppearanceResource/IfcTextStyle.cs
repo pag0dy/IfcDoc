@@ -10,12 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationDefinitionResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 {
@@ -39,6 +34,19 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 		[XmlAttribute]
 		IfcBoolean? _ModelOrDraughting;
 	
+	
+		public IfcTextStyle()
+		{
+		}
+	
+		public IfcTextStyle(IfcLabel? __Name, IfcTextStyleForDefinedFont __TextCharacterAppearance, IfcTextStyleTextModel __TextStyle, IfcTextFontSelect __TextFontStyle, IfcBoolean? __ModelOrDraughting)
+			: base(__Name)
+		{
+			this._TextCharacterAppearance = __TextCharacterAppearance;
+			this._TextStyle = __TextStyle;
+			this._TextFontStyle = __TextFontStyle;
+			this._ModelOrDraughting = __ModelOrDraughting;
+		}
 	
 		[Description("A character style to be used for presented text.\r\n<blockquote class=\"change-ifc2x" +
 	    "4\">IFC4 CHANGE&nbsp; Superfluous select type IfcCharacterStyleSelect has been re" +

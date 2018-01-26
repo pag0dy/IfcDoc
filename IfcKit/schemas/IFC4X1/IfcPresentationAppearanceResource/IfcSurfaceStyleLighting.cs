@@ -10,12 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationDefinitionResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 {
@@ -43,6 +38,18 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 		[Required()]
 		IfcColourRgb _ReflectanceColour;
 	
+	
+		public IfcSurfaceStyleLighting()
+		{
+		}
+	
+		public IfcSurfaceStyleLighting(IfcColourRgb __DiffuseTransmissionColour, IfcColourRgb __DiffuseReflectionColour, IfcColourRgb __TransmissionColour, IfcColourRgb __ReflectanceColour)
+		{
+			this._DiffuseTransmissionColour = __DiffuseTransmissionColour;
+			this._DiffuseReflectionColour = __DiffuseReflectionColour;
+			this._TransmissionColour = __TransmissionColour;
+			this._ReflectanceColour = __ReflectanceColour;
+		}
 	
 		[Description(@"The degree of diffusion of the transmitted light. In the case of completely transparent materials there is no diffusion. The greater the diffusing power, the smaller the direct component of the transmitted light, up to the point where only diffuse light is produced. A value of 1 means totally diffuse for that colour part of the light.
 	<blockquote class=""note"">NOTE&nbsp; The factor can be measured physically and has three ratios for the red, green and blue part of the light.</blockquote>")]

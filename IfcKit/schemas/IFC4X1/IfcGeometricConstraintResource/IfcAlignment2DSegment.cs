@@ -10,14 +10,10 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcGeometricModelResource;
 using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcTopologyResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcGeometricConstraintResource
 {
@@ -36,6 +32,17 @@ namespace BuildingSmart.IFC.IfcGeometricConstraintResource
 		[XmlAttribute]
 		IfcLabel? _EndTag;
 	
+	
+		public IfcAlignment2DSegment()
+		{
+		}
+	
+		public IfcAlignment2DSegment(IfcBoolean? __TangentialContinuity, IfcLabel? __StartTag, IfcLabel? __EndTag)
+		{
+			this._TangentialContinuity = __TangentialContinuity;
+			this._StartTag = __StartTag;
+			this._EndTag = __EndTag;
+		}
 	
 		[Description("Connectivity between the continuous segments is not enforced per se to be tangent" +
 	    "ial. Setting \"TangentialContinuity\" to True means that the current segment shall" +

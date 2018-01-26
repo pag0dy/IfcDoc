@@ -15,7 +15,7 @@ using BuildingSmart.IFC.IfcCostResource;
 using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcProductExtension;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcSharedFacilitiesElements
 {
@@ -56,6 +56,24 @@ namespace BuildingSmart.IFC.IfcSharedFacilitiesElements
 		[XmlElement]
 		IfcCostValue _DepreciatedValue;
 	
+	
+		public IfcAsset()
+		{
+		}
+	
+		public IfcAsset(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcIdentifier? __Identification, IfcCostValue __OriginalValue, IfcCostValue __CurrentValue, IfcCostValue __TotalReplacementCost, IfcActorSelect __Owner, IfcActorSelect __User, IfcPerson __ResponsiblePerson, IfcDate? __IncorporationDate, IfcCostValue __DepreciatedValue)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType)
+		{
+			this._Identification = __Identification;
+			this._OriginalValue = __OriginalValue;
+			this._CurrentValue = __CurrentValue;
+			this._TotalReplacementCost = __TotalReplacementCost;
+			this._Owner = __Owner;
+			this._User = __User;
+			this._ResponsiblePerson = __ResponsiblePerson;
+			this._IncorporationDate = __IncorporationDate;
+			this._DepreciatedValue = __DepreciatedValue;
+		}
 	
 		[Description(@"A unique identification assigned to an asset that enables its differentiation from other assets.
 	<blockquote class=""note"">NOTE&nbsp; The asset identifier is unique within the asset register. It differs from the globally unique id assigned to the instance of an entity populating a database.</blockquote>")]

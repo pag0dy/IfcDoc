@@ -10,7 +10,6 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 
 namespace BuildingSmart.IFC.IfcDateTimeResource
@@ -30,6 +29,17 @@ namespace BuildingSmart.IFC.IfcDateTimeResource
 		[XmlAttribute]
 		IfcLabel? _UserDefinedDataOrigin;
 	
+	
+		public IfcSchedulingTime()
+		{
+		}
+	
+		public IfcSchedulingTime(IfcLabel? __Name, IfcDataOriginEnum? __DataOrigin, IfcLabel? __UserDefinedDataOrigin)
+		{
+			this._Name = __Name;
+			this._DataOrigin = __DataOrigin;
+			this._UserDefinedDataOrigin = __UserDefinedDataOrigin;
+		}
 	
 		[Description("    Optional name for the time definition. ")]
 		public IfcLabel? Name { get { return this._Name; } set { this._Name = value;} }

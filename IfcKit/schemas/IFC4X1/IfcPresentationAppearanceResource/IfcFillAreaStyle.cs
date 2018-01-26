@@ -10,12 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationDefinitionResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 {
@@ -25,12 +20,24 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 	{
 		[DataMember(Order=0)] 
 		[Required()]
+		[MinLength(1)]
 		ISet<IfcFillStyleSelect> _FillStyles = new HashSet<IfcFillStyleSelect>();
 	
 		[DataMember(Order=1)] 
 		[XmlAttribute]
 		IfcBoolean? _ModelorDraughting;
 	
+	
+		public IfcFillAreaStyle()
+		{
+		}
+	
+		public IfcFillAreaStyle(IfcLabel? __Name, IfcFillStyleSelect[] __FillStyles, IfcBoolean? __ModelorDraughting)
+			: base(__Name)
+		{
+			this._FillStyles = new HashSet<IfcFillStyleSelect>(__FillStyles);
+			this._ModelorDraughting = __ModelorDraughting;
+		}
 	
 		[Description("The set of fill area styles to use in presenting visible curve segments, annotati" +
 	    "on fill areas or surfaces.")]

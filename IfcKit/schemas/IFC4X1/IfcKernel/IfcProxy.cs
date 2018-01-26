@@ -10,15 +10,8 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometricConstraintResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProcessExtension;
-using BuildingSmart.IFC.IfcPropertyResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
 using BuildingSmart.IFC.IfcUtilityResource;
 
@@ -36,6 +29,17 @@ namespace BuildingSmart.IFC.IfcKernel
 		[XmlAttribute]
 		IfcLabel? _Tag;
 	
+	
+		public IfcProxy()
+		{
+		}
+	
+		public IfcProxy(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcObjectPlacement __ObjectPlacement, IfcProductRepresentation __Representation, IfcObjectTypeEnum __ProxyType, IfcLabel? __Tag)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType, __ObjectPlacement, __Representation)
+		{
+			this._ProxyType = __ProxyType;
+			this._Tag = __Tag;
+		}
 	
 		[Description("High level (and only) semantic meaning attached to the IfcProxy, defining the bas" +
 	    "ic construct type behind the Proxy, e.g. Product or Process.\r\n")]

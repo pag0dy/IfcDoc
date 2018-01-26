@@ -13,7 +13,6 @@ using System.Xml.Serialization;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPropertyResource;
 
 namespace BuildingSmart.IFC.IfcProfileResource
 {
@@ -40,6 +39,19 @@ namespace BuildingSmart.IFC.IfcProfileResource
 		[Required()]
 		IfcLengthMeasure _TopXOffset;
 	
+	
+		public IfcTrapeziumProfileDef()
+		{
+		}
+	
+		public IfcTrapeziumProfileDef(IfcProfileTypeEnum __ProfileType, IfcLabel? __ProfileName, IfcAxis2Placement2D __Position, IfcPositiveLengthMeasure __BottomXDim, IfcPositiveLengthMeasure __TopXDim, IfcPositiveLengthMeasure __YDim, IfcLengthMeasure __TopXOffset)
+			: base(__ProfileType, __ProfileName, __Position)
+		{
+			this._BottomXDim = __BottomXDim;
+			this._TopXDim = __TopXDim;
+			this._YDim = __YDim;
+			this._TopXOffset = __TopXOffset;
+		}
 	
 		[Description("The extent of the bottom line measured along the implicit x-axis.")]
 		public IfcPositiveLengthMeasure BottomXDim { get { return this._BottomXDim; } set { this._BottomXDim = value;} }

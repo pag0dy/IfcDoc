@@ -10,7 +10,6 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcConstraintResource;
 using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcMeasureResource;
@@ -43,6 +42,20 @@ namespace BuildingSmart.IFC.IfcCostResource
 		[XmlElement]
 		IfcLibraryInformation _RateSource;
 	
+	
+		public IfcCurrencyRelationship()
+		{
+		}
+	
+		public IfcCurrencyRelationship(IfcLabel? __Name, IfcText? __Description, IfcMonetaryUnit __RelatingMonetaryUnit, IfcMonetaryUnit __RelatedMonetaryUnit, IfcPositiveRatioMeasure __ExchangeRate, IfcDateTime? __RateDateTime, IfcLibraryInformation __RateSource)
+			: base(__Name, __Description)
+		{
+			this._RelatingMonetaryUnit = __RelatingMonetaryUnit;
+			this._RelatedMonetaryUnit = __RelatedMonetaryUnit;
+			this._ExchangeRate = __ExchangeRate;
+			this._RateDateTime = __RateDateTime;
+			this._RateSource = __RateSource;
+		}
 	
 		[Description("The monetary unit from which an exchange is derived. For instance, in the case of" +
 	    " a conversion from GBP to USD, the relating monetary unit is GBP.")]

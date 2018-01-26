@@ -11,13 +11,9 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfileResource;
 using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcMaterialResource
 {
@@ -33,8 +29,20 @@ namespace BuildingSmart.IFC.IfcMaterialResource
 		IfcText? _Description;
 	
 		[DataMember(Order=2)] 
+		[MinLength(1)]
 		ISet<IfcMaterialConstituent> _MaterialConstituents = new HashSet<IfcMaterialConstituent>();
 	
+	
+		public IfcMaterialConstituentSet()
+		{
+		}
+	
+		public IfcMaterialConstituentSet(IfcLabel? __Name, IfcText? __Description, IfcMaterialConstituent[] __MaterialConstituents)
+		{
+			this._Name = __Name;
+			this._Description = __Description;
+			this._MaterialConstituents = new HashSet<IfcMaterialConstituent>(__MaterialConstituents);
+		}
 	
 		[Description("The name by which the constituent set is known.")]
 		public IfcLabel? Name { get { return this._Name; } set { this._Name = value;} }

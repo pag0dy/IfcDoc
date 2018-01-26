@@ -11,12 +11,11 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcGeometricConstraintResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcProductExtension;
 using BuildingSmart.IFC.IfcRepresentationResource;
 using BuildingSmart.IFC.IfcStructuralLoadResource;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcStructuralAnalysisDomain
 {
@@ -34,8 +33,20 @@ namespace BuildingSmart.IFC.IfcStructuralAnalysisDomain
 		IfcGlobalOrLocalEnum _GlobalOrLocal;
 	
 		[InverseProperty("RelatedStructuralActivity")] 
+		[MaxLength(1)]
 		ISet<IfcRelConnectsStructuralActivity> _AssignedToStructuralItem = new HashSet<IfcRelConnectsStructuralActivity>();
 	
+	
+		public IfcStructuralActivity()
+		{
+		}
+	
+		public IfcStructuralActivity(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcObjectPlacement __ObjectPlacement, IfcProductRepresentation __Representation, IfcStructuralLoad __AppliedLoad, IfcGlobalOrLocalEnum __GlobalOrLocal)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType, __ObjectPlacement, __Representation)
+		{
+			this._AppliedLoad = __AppliedLoad;
+			this._GlobalOrLocal = __GlobalOrLocal;
+		}
 	
 		[Description(@"Load or result resource object which defines the load type, direction, and load values.
 	

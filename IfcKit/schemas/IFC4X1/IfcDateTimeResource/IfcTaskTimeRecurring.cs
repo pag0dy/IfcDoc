@@ -10,7 +10,6 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 
 namespace BuildingSmart.IFC.IfcDateTimeResource
@@ -23,6 +22,16 @@ namespace BuildingSmart.IFC.IfcDateTimeResource
 		[Required()]
 		IfcRecurrencePattern _Recurrence;
 	
+	
+		public IfcTaskTimeRecurring()
+		{
+		}
+	
+		public IfcTaskTimeRecurring(IfcLabel? __Name, IfcDataOriginEnum? __DataOrigin, IfcLabel? __UserDefinedDataOrigin, IfcTaskDurationEnum? __DurationType, IfcDuration? __ScheduleDuration, IfcDateTime? __ScheduleStart, IfcDateTime? __ScheduleFinish, IfcDateTime? __EarlyStart, IfcDateTime? __EarlyFinish, IfcDateTime? __LateStart, IfcDateTime? __LateFinish, IfcDuration? __FreeFloat, IfcDuration? __TotalFloat, IfcBoolean? __IsCritical, IfcDateTime? __StatusTime, IfcDuration? __ActualDuration, IfcDateTime? __ActualStart, IfcDateTime? __ActualFinish, IfcDuration? __RemainingTime, IfcPositiveRatioMeasure? __Completion, IfcRecurrencePattern __Recurrence)
+			: base(__Name, __DataOrigin, __UserDefinedDataOrigin, __DurationType, __ScheduleDuration, __ScheduleStart, __ScheduleFinish, __EarlyStart, __EarlyFinish, __LateStart, __LateFinish, __FreeFloat, __TotalFloat, __IsCritical, __StatusTime, __ActualDuration, __ActualStart, __ActualFinish, __RemainingTime, __Completion)
+		{
+			this._Recurrence = __Recurrence;
+		}
 	
 		public IfcRecurrencePattern Recurrence { get { return this._Recurrence; } set { this._Recurrence = value;} }
 	

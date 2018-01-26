@@ -21,6 +21,16 @@ namespace BuildingSmart.IFC.IfcStructuralLoadResource
 		IfcWarpingStiffnessSelect _WarpingStiffness;
 	
 	
+		public IfcBoundaryNodeConditionWarping()
+		{
+		}
+	
+		public IfcBoundaryNodeConditionWarping(IfcLabel? __Name, IfcTranslationalStiffnessSelect __TranslationalStiffnessX, IfcTranslationalStiffnessSelect __TranslationalStiffnessY, IfcTranslationalStiffnessSelect __TranslationalStiffnessZ, IfcRotationalStiffnessSelect __RotationalStiffnessX, IfcRotationalStiffnessSelect __RotationalStiffnessY, IfcRotationalStiffnessSelect __RotationalStiffnessZ, IfcWarpingStiffnessSelect __WarpingStiffness)
+			: base(__Name, __TranslationalStiffnessX, __TranslationalStiffnessY, __TranslationalStiffnessZ, __RotationalStiffnessX, __RotationalStiffnessY, __RotationalStiffnessZ)
+		{
+			this._WarpingStiffness = __WarpingStiffness;
+		}
+	
 		[Description("Defines the warping stiffness value.")]
 		public IfcWarpingStiffnessSelect WarpingStiffness { get { return this._WarpingStiffness; } set { this._WarpingStiffness = value;} }
 	

@@ -13,8 +13,7 @@ using System.Xml.Serialization;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcTopologyResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcGeometricModelResource
 {
@@ -23,12 +22,24 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 	{
 		[DataMember(Order=0)] 
 		[Required()]
+		[MinLength(1)]
 		IList<IfcLengthMeasure> _CoordList = new List<IfcLengthMeasure>();
 	
 		[DataMember(Order=1)] 
 		[XmlAttribute]
+		[MinLength(1)]
 		IList<IfcLabel> _TagList = new List<IfcLabel>();
 	
+	
+		public IfcCartesianPointList2D()
+		{
+		}
+	
+		public IfcCartesianPointList2D(IfcLengthMeasure[] __CoordList, IfcLabel[] __TagList)
+		{
+			this._CoordList = new List<IfcLengthMeasure>(__CoordList);
+			this._TagList = new List<IfcLabel>(__TagList);
+		}
 	
 		[Description("Two-dimensional list of Cartesian points provided by two coordinates.")]
 		public IList<IfcLengthMeasure> CoordList { get { return this._CoordList; } }

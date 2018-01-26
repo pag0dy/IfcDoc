@@ -10,11 +10,15 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfileResource;
+using BuildingSmart.IFC.IfcRepresentationResource;
+using BuildingSmart.IFC.IfcSharedBldgElements;
 using BuildingSmart.IFC.IfcSharedComponentElements;
+using BuildingSmart.IFC.IfcStructuralAnalysisDomain;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcStructuralElementsDomain
 {
@@ -57,6 +61,24 @@ namespace BuildingSmart.IFC.IfcStructuralElementsDomain
 		[XmlAttribute]
 		IfcReinforcingMeshTypeEnum? _PredefinedType;
 	
+	
+		public IfcReinforcingMesh()
+		{
+		}
+	
+		public IfcReinforcingMesh(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcObjectPlacement __ObjectPlacement, IfcProductRepresentation __Representation, IfcIdentifier? __Tag, IfcLabel? __SteelGrade, IfcPositiveLengthMeasure? __MeshLength, IfcPositiveLengthMeasure? __MeshWidth, IfcPositiveLengthMeasure? __LongitudinalBarNominalDiameter, IfcPositiveLengthMeasure? __TransverseBarNominalDiameter, IfcAreaMeasure? __LongitudinalBarCrossSectionArea, IfcAreaMeasure? __TransverseBarCrossSectionArea, IfcPositiveLengthMeasure? __LongitudinalBarSpacing, IfcPositiveLengthMeasure? __TransverseBarSpacing, IfcReinforcingMeshTypeEnum? __PredefinedType)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType, __ObjectPlacement, __Representation, __Tag, __SteelGrade)
+		{
+			this._MeshLength = __MeshLength;
+			this._MeshWidth = __MeshWidth;
+			this._LongitudinalBarNominalDiameter = __LongitudinalBarNominalDiameter;
+			this._TransverseBarNominalDiameter = __TransverseBarNominalDiameter;
+			this._LongitudinalBarCrossSectionArea = __LongitudinalBarCrossSectionArea;
+			this._TransverseBarCrossSectionArea = __TransverseBarCrossSectionArea;
+			this._LongitudinalBarSpacing = __LongitudinalBarSpacing;
+			this._TransverseBarSpacing = __TransverseBarSpacing;
+			this._PredefinedType = __PredefinedType;
+		}
 	
 		[Description("Deprecated.\r\n\r\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; Attribute depr" +
 	    "ecated.  Use respective attribute at <em>IfcReinforcingMeshType</em> instead.</b" +

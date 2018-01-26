@@ -10,14 +10,9 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcGeometricModelResource;
 using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcTopologyResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcGeometricConstraintResource
 {
@@ -26,11 +21,23 @@ namespace BuildingSmart.IFC.IfcGeometricConstraintResource
 	{
 		[DataMember(Order=0)] 
 		[Required()]
+		[MinLength(1)]
 		IList<IfcAlignment2DVerticalSegment> _Segments = new List<IfcAlignment2DVerticalSegment>();
 	
 		[InverseProperty("Vertical")] 
+		[MinLength(1)]
+		[MaxLength(1)]
 		ISet<IfcAlignmentCurve> _ToAlignmentCurve = new HashSet<IfcAlignmentCurve>();
 	
+	
+		public IfcAlignment2DVertical()
+		{
+		}
+	
+		public IfcAlignment2DVertical(IfcAlignment2DVerticalSegment[] __Segments)
+		{
+			this._Segments = new List<IfcAlignment2DVerticalSegment>(__Segments);
+		}
 	
 		[Description("An ordered list of unique vertical alignment segments, each (but the last) are jo" +
 	    "int end to start")]

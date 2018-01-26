@@ -10,8 +10,11 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcGeometryResource;
+using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcProductExtension;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcSharedComponentElements
 {
@@ -31,6 +34,18 @@ namespace BuildingSmart.IFC.IfcSharedComponentElements
 		[XmlAttribute]
 		IfcPositiveLengthMeasure? _NominalLength;
 	
+	
+		public IfcMechanicalFastenerType()
+		{
+		}
+	
+		public IfcMechanicalFastenerType(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcIdentifier? __ApplicableOccurrence, IfcPropertySetDefinition[] __HasPropertySets, IfcRepresentationMap[] __RepresentationMaps, IfcLabel? __Tag, IfcLabel? __ElementType, IfcMechanicalFastenerTypeEnum __PredefinedType, IfcPositiveLengthMeasure? __NominalDiameter, IfcPositiveLengthMeasure? __NominalLength)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ApplicableOccurrence, __HasPropertySets, __RepresentationMaps, __Tag, __ElementType)
+		{
+			this._PredefinedType = __PredefinedType;
+			this._NominalDiameter = __NominalDiameter;
+			this._NominalLength = __NominalLength;
+		}
 	
 		[Description("Subtype of mechanical fastener")]
 		public IfcMechanicalFastenerTypeEnum PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }

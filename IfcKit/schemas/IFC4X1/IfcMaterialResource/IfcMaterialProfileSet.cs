@@ -11,13 +11,10 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
 using BuildingSmart.IFC.IfcProfileResource;
 using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcMaterialResource
 {
@@ -34,12 +31,25 @@ namespace BuildingSmart.IFC.IfcMaterialResource
 	
 		[DataMember(Order=2)] 
 		[Required()]
+		[MinLength(1)]
 		IList<IfcMaterialProfile> _MaterialProfiles = new List<IfcMaterialProfile>();
 	
 		[DataMember(Order=3)] 
 		[XmlElement]
 		IfcCompositeProfileDef _CompositeProfile;
 	
+	
+		public IfcMaterialProfileSet()
+		{
+		}
+	
+		public IfcMaterialProfileSet(IfcLabel? __Name, IfcText? __Description, IfcMaterialProfile[] __MaterialProfiles, IfcCompositeProfileDef __CompositeProfile)
+		{
+			this._Name = __Name;
+			this._Description = __Description;
+			this._MaterialProfiles = new List<IfcMaterialProfile>(__MaterialProfiles);
+			this._CompositeProfile = __CompositeProfile;
+		}
 	
 		[Description("The name by which the material profile set is known.")]
 		public IfcLabel? Name { get { return this._Name; } set { this._Name = value;} }

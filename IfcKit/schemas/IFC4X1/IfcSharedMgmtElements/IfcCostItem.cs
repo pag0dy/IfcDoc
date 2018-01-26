@@ -10,12 +10,11 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
 using BuildingSmart.IFC.IfcCostResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcQuantityResource;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcSharedMgmtElements
 {
@@ -27,11 +26,25 @@ namespace BuildingSmart.IFC.IfcSharedMgmtElements
 		IfcCostItemTypeEnum? _PredefinedType;
 	
 		[DataMember(Order=1)] 
+		[MinLength(1)]
 		IList<IfcCostValue> _CostValues = new List<IfcCostValue>();
 	
 		[DataMember(Order=2)] 
+		[MinLength(1)]
 		IList<IfcPhysicalQuantity> _CostQuantities = new List<IfcPhysicalQuantity>();
 	
+	
+		public IfcCostItem()
+		{
+		}
+	
+		public IfcCostItem(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcIdentifier? __Identification, IfcCostItemTypeEnum? __PredefinedType, IfcCostValue[] __CostValues, IfcPhysicalQuantity[] __CostQuantities)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType, __Identification)
+		{
+			this._PredefinedType = __PredefinedType;
+			this._CostValues = new List<IfcCostValue>(__CostValues);
+			this._CostQuantities = new List<IfcPhysicalQuantity>(__CostQuantities);
+		}
 	
 		[Description("Predefined generic type for a cost item that is specified in an enumeration. Ther" +
 	    "e may be a property set given specificly for the predefined types.\r\n\r\n<blockquot" +

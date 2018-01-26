@@ -25,8 +25,20 @@ namespace BuildingSmart.IFC.IfcActorResource
 	
 		[DataMember(Order=1)] 
 		[Required()]
+		[MinLength(1)]
 		ISet<IfcOrganization> _RelatedOrganizations = new HashSet<IfcOrganization>();
 	
+	
+		public IfcOrganizationRelationship()
+		{
+		}
+	
+		public IfcOrganizationRelationship(IfcLabel? __Name, IfcText? __Description, IfcOrganization __RelatingOrganization, IfcOrganization[] __RelatedOrganizations)
+			: base(__Name, __Description)
+		{
+			this._RelatingOrganization = __RelatingOrganization;
+			this._RelatedOrganizations = new HashSet<IfcOrganization>(__RelatedOrganizations);
+		}
 	
 		[Description("Organization which is the relating part of the relationship between organizations" +
 	    ".")]

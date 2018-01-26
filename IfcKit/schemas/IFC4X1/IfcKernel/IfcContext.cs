@@ -10,15 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricConstraintResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProcessExtension;
-using BuildingSmart.IFC.IfcPropertyResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
 using BuildingSmart.IFC.IfcUtilityResource;
 
@@ -40,6 +32,7 @@ namespace BuildingSmart.IFC.IfcKernel
 		IfcLabel? _Phase;
 	
 		[DataMember(Order=3)] 
+		[MinLength(1)]
 		ISet<IfcRepresentationContext> _RepresentationContexts = new HashSet<IfcRepresentationContext>();
 	
 		[DataMember(Order=4)] 
@@ -54,6 +47,20 @@ namespace BuildingSmart.IFC.IfcKernel
 		[XmlElement("IfcRelDeclares")]
 		ISet<IfcRelDeclares> _Declares = new HashSet<IfcRelDeclares>();
 	
+	
+		public IfcContext()
+		{
+		}
+	
+		public IfcContext(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcLabel? __LongName, IfcLabel? __Phase, IfcRepresentationContext[] __RepresentationContexts, IfcUnitAssignment __UnitsInContext)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description)
+		{
+			this._ObjectType = __ObjectType;
+			this._LongName = __LongName;
+			this._Phase = __Phase;
+			this._RepresentationContexts = new HashSet<IfcRepresentationContext>(__RepresentationContexts);
+			this._UnitsInContext = __UnitsInContext;
+		}
 	
 		[Description(@"The object type denotes a particular type that indicates the object further. The use has to be established at the level of instantiable subtypes. 
 	<blockquote class=""note"">

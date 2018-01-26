@@ -10,16 +10,8 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcApprovalResource;
-using BuildingSmart.IFC.IfcConstraintResource;
-using BuildingSmart.IFC.IfcCostResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcPropertyResource
 {
@@ -36,8 +28,20 @@ namespace BuildingSmart.IFC.IfcPropertyResource
 	
 		[DataMember(Order=2)] 
 		[Required()]
+		[MinLength(1)]
 		ISet<IfcProperty> _Properties = new HashSet<IfcProperty>();
 	
+	
+		public IfcExtendedProperties()
+		{
+		}
+	
+		public IfcExtendedProperties(IfcIdentifier? __Name, IfcText? __Description, IfcProperty[] __Properties)
+		{
+			this._Name = __Name;
+			this._Description = __Description;
+			this._Properties = new HashSet<IfcProperty>(__Properties);
+		}
 	
 		[Description("The name given to the set of properties. ")]
 		public IfcIdentifier? Name { get { return this._Name; } set { this._Name = value;} }

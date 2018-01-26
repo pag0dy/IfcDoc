@@ -10,8 +10,6 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
 
 namespace BuildingSmart.IFC.IfcMeasureResource
 {
@@ -29,6 +27,16 @@ namespace BuildingSmart.IFC.IfcMeasureResource
 		[Required()]
 		IfcUnitEnum _UnitType;
 	
+	
+		public IfcNamedUnit()
+		{
+		}
+	
+		public IfcNamedUnit(IfcDimensionalExponents __Dimensions, IfcUnitEnum __UnitType)
+		{
+			this._Dimensions = __Dimensions;
+			this._UnitType = __UnitType;
+		}
 	
 		[Description("The dimensional exponents of the SI base units by which the named unit is defined" +
 	    ".")]

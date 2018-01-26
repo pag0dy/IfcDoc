@@ -10,13 +10,11 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometricModelResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcPresentationOrganizationResource;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
@@ -37,6 +35,17 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		[Required()]
 		IfcPositiveLengthMeasure _SegmentLength;
 	
+	
+		public IfcCurveSegment2D()
+		{
+		}
+	
+		public IfcCurveSegment2D(IfcCartesianPoint __StartPoint, IfcPlaneAngleMeasure __StartDirection, IfcPositiveLengthMeasure __SegmentLength)
+		{
+			this._StartPoint = __StartPoint;
+			this._StartDirection = __StartDirection;
+			this._SegmentLength = __SegmentLength;
+		}
 	
 		[Description("The start point of the 2D curve as x/y coordinates defined by a 2D Cartesian poin" +
 	    "t.")]

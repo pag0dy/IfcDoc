@@ -13,7 +13,6 @@ using System.Xml.Serialization;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPropertyResource;
 
 namespace BuildingSmart.IFC.IfcProfileResource
 {
@@ -60,6 +59,24 @@ namespace BuildingSmart.IFC.IfcProfileResource
 		[XmlAttribute]
 		IfcPlaneAngleMeasure? _FlangeSlope;
 	
+	
+		public IfcTShapeProfileDef()
+		{
+		}
+	
+		public IfcTShapeProfileDef(IfcProfileTypeEnum __ProfileType, IfcLabel? __ProfileName, IfcAxis2Placement2D __Position, IfcPositiveLengthMeasure __Depth, IfcPositiveLengthMeasure __FlangeWidth, IfcPositiveLengthMeasure __WebThickness, IfcPositiveLengthMeasure __FlangeThickness, IfcNonNegativeLengthMeasure? __FilletRadius, IfcNonNegativeLengthMeasure? __FlangeEdgeRadius, IfcNonNegativeLengthMeasure? __WebEdgeRadius, IfcPlaneAngleMeasure? __WebSlope, IfcPlaneAngleMeasure? __FlangeSlope)
+			: base(__ProfileType, __ProfileName, __Position)
+		{
+			this._Depth = __Depth;
+			this._FlangeWidth = __FlangeWidth;
+			this._WebThickness = __WebThickness;
+			this._FlangeThickness = __FlangeThickness;
+			this._FilletRadius = __FilletRadius;
+			this._FlangeEdgeRadius = __FlangeEdgeRadius;
+			this._WebEdgeRadius = __WebEdgeRadius;
+			this._WebSlope = __WebSlope;
+			this._FlangeSlope = __FlangeSlope;
+		}
 	
 		[Description("Web lengths, see illustration above (= h).")]
 		public IfcPositiveLengthMeasure Depth { get { return this._Depth; } set { this._Depth = value;} }

@@ -10,10 +10,9 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
 using BuildingSmart.IFC.IfcConstraintResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcMeasureResource;
+using BuildingSmart.IFC.IfcPropertyResource;
 
 namespace BuildingSmart.IFC.IfcUtilityResource
 {
@@ -27,11 +26,24 @@ namespace BuildingSmart.IFC.IfcUtilityResource
 		IfcLabel? _Name;
 	
 		[DataMember(Order=1)] 
+		[MinLength(1)]
 		IList<IfcTableRow> _Rows = new List<IfcTableRow>();
 	
 		[DataMember(Order=2)] 
+		[MinLength(1)]
 		IList<IfcTableColumn> _Columns = new List<IfcTableColumn>();
 	
+	
+		public IfcTable()
+		{
+		}
+	
+		public IfcTable(IfcLabel? __Name, IfcTableRow[] __Rows, IfcTableColumn[] __Columns)
+		{
+			this._Name = __Name;
+			this._Rows = new List<IfcTableRow>(__Rows);
+			this._Columns = new List<IfcTableColumn>(__Columns);
+		}
 	
 		public IfcLabel? Name { get { return this._Name; } set { this._Name = value;} }
 	

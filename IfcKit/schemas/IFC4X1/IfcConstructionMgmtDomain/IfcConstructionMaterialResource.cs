@@ -15,6 +15,7 @@ using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcQuantityResource;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcConstructionMgmtDomain
 {
@@ -25,6 +26,16 @@ namespace BuildingSmart.IFC.IfcConstructionMgmtDomain
 		[XmlAttribute]
 		IfcConstructionMaterialResourceTypeEnum? _PredefinedType;
 	
+	
+		public IfcConstructionMaterialResource()
+		{
+		}
+	
+		public IfcConstructionMaterialResource(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcIdentifier? __Identification, IfcText? __LongDescription, IfcResourceTime __Usage, IfcAppliedValue[] __BaseCosts, IfcPhysicalQuantity __BaseQuantity, IfcConstructionMaterialResourceTypeEnum? __PredefinedType)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType, __Identification, __LongDescription, __Usage, __BaseCosts, __BaseQuantity)
+		{
+			this._PredefinedType = __PredefinedType;
+		}
 	
 		[Description("Defines types of construction material resources.\r\n<blockquote class=\"change-ifc2" +
 	    "x4\">IFC4 New attribute.</blockquote>")]

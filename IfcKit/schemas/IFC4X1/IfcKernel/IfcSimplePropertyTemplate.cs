@@ -10,16 +10,8 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricConstraintResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProcessExtension;
 using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
 using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcKernel
@@ -57,6 +49,23 @@ namespace BuildingSmart.IFC.IfcKernel
 		[XmlAttribute]
 		IfcStateEnum? _AccessState;
 	
+	
+		public IfcSimplePropertyTemplate()
+		{
+		}
+	
+		public IfcSimplePropertyTemplate(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcSimplePropertyTemplateTypeEnum? __TemplateType, IfcLabel? __PrimaryMeasureType, IfcLabel? __SecondaryMeasureType, IfcPropertyEnumeration __Enumerators, IfcUnit __PrimaryUnit, IfcUnit __SecondaryUnit, IfcLabel? __Expression, IfcStateEnum? __AccessState)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description)
+		{
+			this._TemplateType = __TemplateType;
+			this._PrimaryMeasureType = __PrimaryMeasureType;
+			this._SecondaryMeasureType = __SecondaryMeasureType;
+			this._Enumerators = __Enumerators;
+			this._PrimaryUnit = __PrimaryUnit;
+			this._SecondaryUnit = __SecondaryUnit;
+			this._Expression = __Expression;
+			this._AccessState = __AccessState;
+		}
 	
 		[Description(@"Property type defining whether the property template defines a property with a single value, a bounded value, a list value, a table value, an enumerated value, or a reference value. Or the quantity type defining whether the template defines a quantity with a length, area, volume, weight or time value.
 	<blockquote class=""note"">NOTE&nbsp; the value of this property determines the correct use of the <em>PrimaryUnit</em>, <em>SecondaryUnit</em>, <em>PrimaryDataType</em>, <em>SecondaryDataType</em>, and <em>Expression</em> attributes.</blockquote>")]

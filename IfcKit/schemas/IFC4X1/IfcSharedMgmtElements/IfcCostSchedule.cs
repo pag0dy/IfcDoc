@@ -10,12 +10,10 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcCostResource;
 using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcQuantityResource;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcSharedMgmtElements
 {
@@ -38,6 +36,19 @@ namespace BuildingSmart.IFC.IfcSharedMgmtElements
 		[XmlAttribute]
 		IfcDateTime? _UpdateDate;
 	
+	
+		public IfcCostSchedule()
+		{
+		}
+	
+		public IfcCostSchedule(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcIdentifier? __Identification, IfcCostScheduleTypeEnum? __PredefinedType, IfcLabel? __Status, IfcDateTime? __SubmittedOn, IfcDateTime? __UpdateDate)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType, __Identification)
+		{
+			this._PredefinedType = __PredefinedType;
+			this._Status = __Status;
+			this._SubmittedOn = __SubmittedOn;
+			this._UpdateDate = __UpdateDate;
+		}
 	
 		[Description("Predefined generic type for a cost schedule that is specified in an enumeration. " +
 	    "There may be a property set given specifically for the predefined types.\r\n\r\n<blo" +

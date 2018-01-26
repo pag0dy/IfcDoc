@@ -13,8 +13,7 @@ using System.Xml.Serialization;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcTopologyResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcGeometricModelResource
 {
@@ -31,6 +30,17 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 		[Required()]
 		IfcPositiveLengthMeasure _BottomRadius;
 	
+	
+		public IfcRightCircularCone()
+		{
+		}
+	
+		public IfcRightCircularCone(IfcAxis2Placement3D __Position, IfcPositiveLengthMeasure __Height, IfcPositiveLengthMeasure __BottomRadius)
+			: base(__Position)
+		{
+			this._Height = __Height;
+			this._BottomRadius = __BottomRadius;
+		}
 	
 		[Description("The distance between the base of the cone and the apex.")]
 		public IfcPositiveLengthMeasure Height { get { return this._Height; } set { this._Height = value;} }

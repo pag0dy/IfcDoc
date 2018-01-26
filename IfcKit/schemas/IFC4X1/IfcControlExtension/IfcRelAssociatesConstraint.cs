@@ -10,13 +10,10 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcApprovalResource;
 using BuildingSmart.IFC.IfcConstraintResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcProductExtension;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcControlExtension
 {
@@ -32,6 +29,17 @@ namespace BuildingSmart.IFC.IfcControlExtension
 		[Required()]
 		IfcConstraint _RelatingConstraint;
 	
+	
+		public IfcRelAssociatesConstraint()
+		{
+		}
+	
+		public IfcRelAssociatesConstraint(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcDefinitionSelect[] __RelatedObjects, IfcLabel? __Intent, IfcConstraint __RelatingConstraint)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __RelatedObjects)
+		{
+			this._Intent = __Intent;
+			this._RelatingConstraint = __RelatingConstraint;
+		}
 	
 		[Description("The intent of the constraint usage with regard to its related IfcConstraint and I" +
 	    "fcObjects, IfcPropertyDefinitions or IfcRelationships. Typical values can be e.g" +

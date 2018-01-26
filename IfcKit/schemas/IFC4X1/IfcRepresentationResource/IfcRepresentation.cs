@@ -10,13 +10,8 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
 using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcRepresentationResource
@@ -40,9 +35,11 @@ namespace BuildingSmart.IFC.IfcRepresentationResource
 	
 		[DataMember(Order=3)] 
 		[Required()]
+		[MinLength(1)]
 		ISet<IfcRepresentationItem> _Items = new HashSet<IfcRepresentationItem>();
 	
 		[InverseProperty("MappedRepresentation")] 
+		[MaxLength(1)]
 		ISet<IfcRepresentationMap> _RepresentationMap = new HashSet<IfcRepresentationMap>();
 	
 		[InverseProperty("AssignedItems")] 
@@ -51,6 +48,18 @@ namespace BuildingSmart.IFC.IfcRepresentationResource
 		[InverseProperty("Representations")] 
 		ISet<IfcProductRepresentation> _OfProductRepresentation = new HashSet<IfcProductRepresentation>();
 	
+	
+		public IfcRepresentation()
+		{
+		}
+	
+		public IfcRepresentation(IfcRepresentationContext __ContextOfItems, IfcLabel? __RepresentationIdentifier, IfcLabel? __RepresentationType, IfcRepresentationItem[] __Items)
+		{
+			this._ContextOfItems = __ContextOfItems;
+			this._RepresentationIdentifier = __RepresentationIdentifier;
+			this._RepresentationType = __RepresentationType;
+			this._Items = new HashSet<IfcRepresentationItem>(__Items);
+		}
 	
 		[Description("Definition of the representation context for which the different subtypes of repr" +
 	    "esentation are valid.")]

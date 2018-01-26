@@ -10,10 +10,6 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationDefinitionResource;
 using BuildingSmart.IFC.IfcTopologyResource;
 
@@ -24,6 +20,7 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 	{
 		[DataMember(Order=0)] 
 		[Required()]
+		[MinLength(3)]
 		IList<IfcTextureVertex> _Vertices = new List<IfcTextureVertex>();
 	
 		[DataMember(Order=1)] 
@@ -31,6 +28,17 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 		[Required()]
 		IfcFace _MappedTo;
 	
+	
+		public IfcTextureMap()
+		{
+		}
+	
+		public IfcTextureMap(IfcSurfaceTexture[] __Maps, IfcTextureVertex[] __Vertices, IfcFace __MappedTo)
+			: base(__Maps)
+		{
+			this._Vertices = new List<IfcTextureVertex>(__Vertices);
+			this._MappedTo = __MappedTo;
+		}
 	
 		[Description("List of texture coordinate vertices that are applied to the corresponding points " +
 	    "of the polyloop defining a face bound.")]

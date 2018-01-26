@@ -10,16 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricConstraintResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProcessExtension;
-using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
 using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcKernel
@@ -36,8 +27,21 @@ namespace BuildingSmart.IFC.IfcKernel
 		IfcComplexPropertyTemplateTypeEnum? _TemplateType;
 	
 		[DataMember(Order=2)] 
+		[MinLength(1)]
 		ISet<IfcPropertyTemplate> _HasPropertyTemplates = new HashSet<IfcPropertyTemplate>();
 	
+	
+		public IfcComplexPropertyTemplate()
+		{
+		}
+	
+		public IfcComplexPropertyTemplate(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __UsageName, IfcComplexPropertyTemplateTypeEnum? __TemplateType, IfcPropertyTemplate[] __HasPropertyTemplates)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description)
+		{
+			this._UsageName = __UsageName;
+			this._TemplateType = __TemplateType;
+			this._HasPropertyTemplates = new HashSet<IfcPropertyTemplate>(__HasPropertyTemplates);
+		}
 	
 		public IfcLabel? UsageName { get { return this._UsageName; } set { this._UsageName = value;} }
 	

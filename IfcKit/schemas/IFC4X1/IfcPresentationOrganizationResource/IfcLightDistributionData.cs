@@ -10,11 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcPresentationOrganizationResource
 {
@@ -29,13 +25,26 @@ namespace BuildingSmart.IFC.IfcPresentationOrganizationResource
 		[DataMember(Order=1)] 
 		[XmlAttribute]
 		[Required()]
+		[MinLength(1)]
 		IList<IfcPlaneAngleMeasure> _SecondaryPlaneAngle = new List<IfcPlaneAngleMeasure>();
 	
 		[DataMember(Order=2)] 
 		[XmlAttribute]
 		[Required()]
+		[MinLength(1)]
 		IList<IfcLuminousIntensityDistributionMeasure> _LuminousIntensity = new List<IfcLuminousIntensityDistributionMeasure>();
 	
+	
+		public IfcLightDistributionData()
+		{
+		}
+	
+		public IfcLightDistributionData(IfcPlaneAngleMeasure __MainPlaneAngle, IfcPlaneAngleMeasure[] __SecondaryPlaneAngle, IfcLuminousIntensityDistributionMeasure[] __LuminousIntensity)
+		{
+			this._MainPlaneAngle = __MainPlaneAngle;
+			this._SecondaryPlaneAngle = new List<IfcPlaneAngleMeasure>(__SecondaryPlaneAngle);
+			this._LuminousIntensity = new List<IfcLuminousIntensityDistributionMeasure>(__LuminousIntensity);
+		}
 	
 		[Description("The main plane angle (A, B or C angles, according to the light distribution curve" +
 	    " chosen).")]

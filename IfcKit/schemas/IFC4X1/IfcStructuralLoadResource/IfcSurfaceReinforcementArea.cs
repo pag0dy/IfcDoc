@@ -19,16 +19,32 @@ namespace BuildingSmart.IFC.IfcStructuralLoadResource
 	{
 		[DataMember(Order=0)] 
 		[XmlAttribute]
+		[MinLength(2)]
+		[MaxLength(3)]
 		IList<IfcLengthMeasure> _SurfaceReinforcement1 = new List<IfcLengthMeasure>();
 	
 		[DataMember(Order=1)] 
 		[XmlAttribute]
+		[MinLength(2)]
+		[MaxLength(3)]
 		IList<IfcLengthMeasure> _SurfaceReinforcement2 = new List<IfcLengthMeasure>();
 	
 		[DataMember(Order=2)] 
 		[XmlAttribute]
 		IfcRatioMeasure? _ShearReinforcement;
 	
+	
+		public IfcSurfaceReinforcementArea()
+		{
+		}
+	
+		public IfcSurfaceReinforcementArea(IfcLabel? __Name, IfcLengthMeasure[] __SurfaceReinforcement1, IfcLengthMeasure[] __SurfaceReinforcement2, IfcRatioMeasure? __ShearReinforcement)
+			: base(__Name)
+		{
+			this._SurfaceReinforcement1 = new List<IfcLengthMeasure>(__SurfaceReinforcement1);
+			this._SurfaceReinforcement2 = new List<IfcLengthMeasure>(__SurfaceReinforcement2);
+			this._ShearReinforcement = __ShearReinforcement;
+		}
 	
 		[Description(@"Reinforcement at the face of the member which is located at the side of the positive local z direction of the surface member.  Specified as area per length, e.g. square metre per metre (hence length measure, e.g. metre).  The reinforcement area may be specified for two or three directions of reinforcement bars.")]
 		public IList<IfcLengthMeasure> SurfaceReinforcement1 { get { return this._SurfaceReinforcement1; } }

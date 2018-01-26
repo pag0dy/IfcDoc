@@ -10,16 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricConstraintResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProcessExtension;
-using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
 using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcKernel
@@ -37,11 +28,24 @@ namespace BuildingSmart.IFC.IfcKernel
 	
 		[DataMember(Order=2)] 
 		[Required()]
+		[MinLength(1)]
 		ISet<IfcPropertyTemplate> _HasPropertyTemplates = new HashSet<IfcPropertyTemplate>();
 	
 		[InverseProperty("RelatingTemplate")] 
 		ISet<IfcRelDefinesByTemplate> _Defines = new HashSet<IfcRelDefinesByTemplate>();
 	
+	
+		public IfcPropertySetTemplate()
+		{
+		}
+	
+		public IfcPropertySetTemplate(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcPropertySetTemplateTypeEnum? __TemplateType, IfcIdentifier? __ApplicableEntity, IfcPropertyTemplate[] __HasPropertyTemplates)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description)
+		{
+			this._TemplateType = __TemplateType;
+			this._ApplicableEntity = __ApplicableEntity;
+			this._HasPropertyTemplates = new HashSet<IfcPropertyTemplate>(__HasPropertyTemplates);
+		}
 	
 		[Description(@"Property set type defining whether the property set is applicable to a type (subtypes of <em>IfcTypeObject</em>), to an occurrence (subtypes of <em>IfcObject</em>), or as a special case to a performance history.<br><br>
 	The attribute <em>ApplicableEntity</em> may further refine the applicability to a single or multiple entity type(s).")]

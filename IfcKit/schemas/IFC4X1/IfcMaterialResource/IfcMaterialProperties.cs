@@ -11,13 +11,8 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfileResource;
 using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcMaterialResource
 {
@@ -29,6 +24,16 @@ namespace BuildingSmart.IFC.IfcMaterialResource
 		[Required()]
 		IfcMaterialDefinition _Material;
 	
+	
+		public IfcMaterialProperties()
+		{
+		}
+	
+		public IfcMaterialProperties(IfcIdentifier? __Name, IfcText? __Description, IfcProperty[] __Properties, IfcMaterialDefinition __Material)
+			: base(__Name, __Description, __Properties)
+		{
+			this._Material = __Material;
+		}
 	
 		[Description("Reference to the material definition to which the set of properties is assigned.\r" +
 	    "\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE  The datatype has been changed to" +

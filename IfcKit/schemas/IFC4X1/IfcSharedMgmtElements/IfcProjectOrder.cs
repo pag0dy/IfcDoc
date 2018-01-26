@@ -10,12 +10,9 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcCostResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcQuantityResource;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcSharedMgmtElements
 {
@@ -34,6 +31,18 @@ namespace BuildingSmart.IFC.IfcSharedMgmtElements
 		[XmlAttribute]
 		IfcText? _LongDescription;
 	
+	
+		public IfcProjectOrder()
+		{
+		}
+	
+		public IfcProjectOrder(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcIdentifier? __Identification, IfcProjectOrderTypeEnum? __PredefinedType, IfcLabel? __Status, IfcText? __LongDescription)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType, __Identification)
+		{
+			this._PredefinedType = __PredefinedType;
+			this._Status = __Status;
+			this._LongDescription = __LongDescription;
+		}
 	
 		[Description("Predefined generic type for a project order that is specified in an enumeration. " +
 	    "There may be a property set given specificly for the predefined types.\r\n\r\n<block" +

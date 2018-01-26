@@ -10,13 +10,8 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
 using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcRepresentationResource
@@ -24,6 +19,15 @@ namespace BuildingSmart.IFC.IfcRepresentationResource
 	[Guid("0ffbaf6a-8bec-4275-b1b8-f3dcb7318ee3")]
 	public abstract partial class IfcStyleModel : IfcRepresentation
 	{
+	
+		public IfcStyleModel()
+		{
+		}
+	
+		public IfcStyleModel(IfcRepresentationContext __ContextOfItems, IfcLabel? __RepresentationIdentifier, IfcLabel? __RepresentationType, IfcRepresentationItem[] __Items)
+			: base(__ContextOfItems, __RepresentationIdentifier, __RepresentationType, __Items)
+		{
+		}
 	
 	
 	}

@@ -11,10 +11,10 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcCostResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcQuantityResource;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcConstructionMgmtDomain
 {
@@ -22,12 +22,24 @@ namespace BuildingSmart.IFC.IfcConstructionMgmtDomain
 	public abstract partial class IfcConstructionResourceType : IfcTypeResource
 	{
 		[DataMember(Order=0)] 
+		[MinLength(1)]
 		IList<IfcAppliedValue> _BaseCosts = new List<IfcAppliedValue>();
 	
 		[DataMember(Order=1)] 
 		[XmlElement]
 		IfcPhysicalQuantity _BaseQuantity;
 	
+	
+		public IfcConstructionResourceType()
+		{
+		}
+	
+		public IfcConstructionResourceType(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcIdentifier? __ApplicableOccurrence, IfcPropertySetDefinition[] __HasPropertySets, IfcIdentifier? __Identification, IfcText? __LongDescription, IfcLabel? __ResourceType, IfcAppliedValue[] __BaseCosts, IfcPhysicalQuantity __BaseQuantity)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ApplicableOccurrence, __HasPropertySets, __Identification, __LongDescription, __ResourceType)
+		{
+			this._BaseCosts = new List<IfcAppliedValue>(__BaseCosts);
+			this._BaseQuantity = __BaseQuantity;
+		}
 	
 		[Description(@"Indicates the unit costs and environmental impacts for which accrued amounts should be calculated.  Such unit costs may be split into <em>Name</em> designations (e.g. 'Standard', 'Overtime'), and may contain a hierarchy of cost values that apply at different dates (using <em>IfcCostValue.ApplicableDate</em> and <em>IfcCostValue.FixedUntilDate</em>).
 	

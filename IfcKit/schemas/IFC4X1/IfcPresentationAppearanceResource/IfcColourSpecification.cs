@@ -10,12 +10,8 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationDefinitionResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 {
@@ -27,6 +23,15 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 		[XmlAttribute]
 		IfcLabel? _Name;
 	
+	
+		public IfcColourSpecification()
+		{
+		}
+	
+		public IfcColourSpecification(IfcLabel? __Name)
+		{
+			this._Name = __Name;
+		}
 	
 		[Description(@"Optional name given to a particular colour specification in addition to the colour components (like the RGB values).
 	<blockquote class=""example"">EXAMPLE&nbsp; Names of a industry colour classification, such as RAL.</blockquote>

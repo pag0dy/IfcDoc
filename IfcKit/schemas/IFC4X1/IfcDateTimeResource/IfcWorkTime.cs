@@ -10,7 +10,6 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 
 namespace BuildingSmart.IFC.IfcDateTimeResource
@@ -30,6 +29,18 @@ namespace BuildingSmart.IFC.IfcDateTimeResource
 		[XmlAttribute]
 		IfcDate? _Finish;
 	
+	
+		public IfcWorkTime()
+		{
+		}
+	
+		public IfcWorkTime(IfcLabel? __Name, IfcDataOriginEnum? __DataOrigin, IfcLabel? __UserDefinedDataOrigin, IfcRecurrencePattern __RecurrencePattern, IfcDate? __Start, IfcDate? __Finish)
+			: base(__Name, __DataOrigin, __UserDefinedDataOrigin)
+		{
+			this._RecurrencePattern = __RecurrencePattern;
+			this._Start = __Start;
+			this._Finish = __Finish;
+		}
 	
 		[Description("    Recurrence pattern that defines a time period, which, if given, is\r\n    valid" +
 	    " within the time period defined by\r\n    <em>IfcWorkTime.Start</em> and <em>IfcWo" +

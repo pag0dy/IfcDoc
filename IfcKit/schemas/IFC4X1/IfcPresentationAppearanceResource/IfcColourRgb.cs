@@ -10,12 +10,8 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationDefinitionResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 {
@@ -38,6 +34,18 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 		[Required()]
 		IfcNormalisedRatioMeasure _Blue;
 	
+	
+		public IfcColourRgb()
+		{
+		}
+	
+		public IfcColourRgb(IfcLabel? __Name, IfcNormalisedRatioMeasure __Red, IfcNormalisedRatioMeasure __Green, IfcNormalisedRatioMeasure __Blue)
+			: base(__Name)
+		{
+			this._Red = __Red;
+			this._Green = __Green;
+			this._Blue = __Blue;
+		}
 	
 		[Description("The intensity of the red colour component.\r\n<blockquote class=\"note\">NOTE&nbsp; T" +
 	    "he colour component value is given within the range of 0..1, and not within the " +

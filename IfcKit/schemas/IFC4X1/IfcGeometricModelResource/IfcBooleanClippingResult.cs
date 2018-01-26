@@ -11,16 +11,23 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcTopologyResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcGeometricModelResource
 {
 	[Guid("a6eb852d-2266-484e-b385-16dab2770609")]
 	public partial class IfcBooleanClippingResult : IfcBooleanResult
 	{
+	
+		public IfcBooleanClippingResult()
+		{
+		}
+	
+		public IfcBooleanClippingResult(IfcBooleanOperator __Operator, IfcBooleanOperand __FirstOperand, IfcBooleanOperand __SecondOperand)
+			: base(__Operator, __FirstOperand, __SecondOperand)
+		{
+		}
 	
 	
 	}

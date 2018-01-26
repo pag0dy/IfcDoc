@@ -10,11 +10,12 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometricModelResource
 {
@@ -26,6 +27,16 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 		[Required()]
 		IfcProfileDef _EndSweptArea;
 	
+	
+		public IfcRevolvedAreaSolidTapered()
+		{
+		}
+	
+		public IfcRevolvedAreaSolidTapered(IfcProfileDef __SweptArea, IfcAxis2Placement3D __Position, IfcAxis1Placement __Axis, IfcPlaneAngleMeasure __Angle, IfcProfileDef __EndSweptArea)
+			: base(__SweptArea, __Position, __Axis, __Angle)
+		{
+			this._EndSweptArea = __EndSweptArea;
+		}
 	
 		public IfcProfileDef EndSweptArea { get { return this._EndSweptArea; } set { this._EndSweptArea = value;} }
 	

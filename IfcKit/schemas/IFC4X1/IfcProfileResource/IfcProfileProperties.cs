@@ -11,7 +11,6 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPropertyResource;
 
@@ -25,6 +24,16 @@ namespace BuildingSmart.IFC.IfcProfileResource
 		[Required()]
 		IfcProfileDef _ProfileDefinition;
 	
+	
+		public IfcProfileProperties()
+		{
+		}
+	
+		public IfcProfileProperties(IfcIdentifier? __Name, IfcText? __Description, IfcProperty[] __Properties, IfcProfileDef __ProfileDefinition)
+			: base(__Name, __Description, __Properties)
+		{
+			this._ProfileDefinition = __ProfileDefinition;
+		}
 	
 		[Description("Profile definition which is qualified by these properties.")]
 		public IfcProfileDef ProfileDefinition { get { return this._ProfileDefinition; } set { this._ProfileDefinition = value;} }

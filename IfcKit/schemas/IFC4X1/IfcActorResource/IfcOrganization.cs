@@ -12,6 +12,7 @@ using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcMeasureResource;
+using BuildingSmart.IFC.IfcPropertyResource;
 
 namespace BuildingSmart.IFC.IfcActorResource
 {
@@ -35,9 +36,11 @@ namespace BuildingSmart.IFC.IfcActorResource
 		IfcText? _Description;
 	
 		[DataMember(Order=3)] 
+		[MinLength(1)]
 		IList<IfcActorRole> _Roles = new List<IfcActorRole>();
 	
 		[DataMember(Order=4)] 
+		[MinLength(1)]
 		IList<IfcAddress> _Addresses = new List<IfcAddress>();
 	
 		[InverseProperty("RelatedOrganizations")] 
@@ -49,6 +52,19 @@ namespace BuildingSmart.IFC.IfcActorResource
 		[InverseProperty("TheOrganization")] 
 		ISet<IfcPersonAndOrganization> _Engages = new HashSet<IfcPersonAndOrganization>();
 	
+	
+		public IfcOrganization()
+		{
+		}
+	
+		public IfcOrganization(IfcIdentifier? __Identification, IfcLabel __Name, IfcText? __Description, IfcActorRole[] __Roles, IfcAddress[] __Addresses)
+		{
+			this._Identification = __Identification;
+			this._Name = __Name;
+			this._Description = __Description;
+			this._Roles = new List<IfcActorRole>(__Roles);
+			this._Addresses = new List<IfcAddress>(__Addresses);
+		}
 	
 		[Description("Identification of the organization.")]
 		public IfcIdentifier? Identification { get { return this._Identification; } set { this._Identification = value;} }

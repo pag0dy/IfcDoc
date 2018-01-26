@@ -10,11 +10,15 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfileResource;
+using BuildingSmart.IFC.IfcRepresentationResource;
+using BuildingSmart.IFC.IfcSharedBldgElements;
 using BuildingSmart.IFC.IfcSharedComponentElements;
+using BuildingSmart.IFC.IfcStructuralAnalysisDomain;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcStructuralElementsDomain
 {
@@ -53,6 +57,23 @@ namespace BuildingSmart.IFC.IfcStructuralElementsDomain
 		[XmlAttribute]
 		IfcPositiveLengthMeasure? _MinCurvatureRadius;
 	
+	
+		public IfcTendon()
+		{
+		}
+	
+		public IfcTendon(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcObjectPlacement __ObjectPlacement, IfcProductRepresentation __Representation, IfcIdentifier? __Tag, IfcLabel? __SteelGrade, IfcTendonTypeEnum? __PredefinedType, IfcPositiveLengthMeasure? __NominalDiameter, IfcAreaMeasure? __CrossSectionArea, IfcForceMeasure? __TensionForce, IfcPressureMeasure? __PreStress, IfcNormalisedRatioMeasure? __FrictionCoefficient, IfcPositiveLengthMeasure? __AnchorageSlip, IfcPositiveLengthMeasure? __MinCurvatureRadius)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType, __ObjectPlacement, __Representation, __Tag, __SteelGrade)
+		{
+			this._PredefinedType = __PredefinedType;
+			this._NominalDiameter = __NominalDiameter;
+			this._CrossSectionArea = __CrossSectionArea;
+			this._TensionForce = __TensionForce;
+			this._PreStress = __PreStress;
+			this._FrictionCoefficient = __FrictionCoefficient;
+			this._AnchorageSlip = __AnchorageSlip;
+			this._MinCurvatureRadius = __MinCurvatureRadius;
+		}
 	
 		[Description("Predefined generic types for a tendon.\r\n\r\n<blockquote class=\"change-ifc2x4\">IFC4 " +
 	    "CHANGE&nbsp; Attribute made optional.</blockquote>")]

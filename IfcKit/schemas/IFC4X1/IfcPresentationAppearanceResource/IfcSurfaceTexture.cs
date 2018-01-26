@@ -10,12 +10,9 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationDefinitionResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 {
@@ -42,6 +39,7 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 	
 		[DataMember(Order=4)] 
 		[XmlAttribute]
+		[MinLength(1)]
 		IList<IfcIdentifier> _Parameter = new List<IfcIdentifier>();
 	
 		[InverseProperty("Maps")] 
@@ -50,6 +48,19 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 		[InverseProperty("Textures")] 
 		ISet<IfcSurfaceStyleWithTextures> _UsedInStyles = new HashSet<IfcSurfaceStyleWithTextures>();
 	
+	
+		public IfcSurfaceTexture()
+		{
+		}
+	
+		public IfcSurfaceTexture(IfcBoolean __RepeatS, IfcBoolean __RepeatT, IfcIdentifier? __Mode, IfcCartesianTransformationOperator2D __TextureTransform, IfcIdentifier[] __Parameter)
+		{
+			this._RepeatS = __RepeatS;
+			this._RepeatT = __RepeatT;
+			this._Mode = __Mode;
+			this._TextureTransform = __TextureTransform;
+			this._Parameter = new List<IfcIdentifier>(__Parameter);
+		}
 	
 		[Description(@"The <em>RepeatS</em> field specifies how the texture wraps in the S direction. If <em>RepeatS</em> is TRUE (the default), the texture map is repeated outside the [0.0, 1.0] texture coordinate range in the S direction so that it fills the shape. If <em>RepeatS</em> is FALSE, the texture coordinates are clamped in the S direction to lie within the [0.0, 1.0] range.
 	<br /> ")]

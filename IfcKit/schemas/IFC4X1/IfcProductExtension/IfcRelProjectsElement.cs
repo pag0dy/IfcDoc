@@ -10,23 +10,9 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricConstraintResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcQuantityResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcSharedBldgElements;
-using BuildingSmart.IFC.IfcSharedBldgServiceElements;
-using BuildingSmart.IFC.IfcSharedComponentElements;
-using BuildingSmart.IFC.IfcSharedFacilitiesElements;
-using BuildingSmart.IFC.IfcStructuralElementsDomain;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcProductExtension
 {
@@ -43,6 +29,17 @@ namespace BuildingSmart.IFC.IfcProductExtension
 		[Required()]
 		IfcFeatureElementAddition _RelatedFeatureElement;
 	
+	
+		public IfcRelProjectsElement()
+		{
+		}
+	
+		public IfcRelProjectsElement(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcElement __RelatingElement, IfcFeatureElementAddition __RelatedFeatureElement)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description)
+		{
+			this._RelatingElement = __RelatingElement;
+			this._RelatedFeatureElement = __RelatedFeatureElement;
+		}
 	
 		[Description("Element at which a projection is created by the associated <em>IfcProjectionEleme" +
 	    "nt</em>.")]

@@ -10,19 +10,10 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcPropertyResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcSharedBldgElements;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcArchitectureDomain
 {
@@ -51,6 +42,20 @@ namespace BuildingSmart.IFC.IfcArchitectureDomain
 		[XmlElement]
 		IfcShapeAspect _ShapeAspectStyle;
 	
+	
+		public IfcPermeableCoveringProperties()
+		{
+		}
+	
+		public IfcPermeableCoveringProperties(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcPermeableCoveringOperationEnum __OperationType, IfcWindowPanelPositionEnum __PanelPosition, IfcPositiveLengthMeasure? __FrameDepth, IfcPositiveLengthMeasure? __FrameThickness, IfcShapeAspect __ShapeAspectStyle)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description)
+		{
+			this._OperationType = __OperationType;
+			this._PanelPosition = __PanelPosition;
+			this._FrameDepth = __FrameDepth;
+			this._FrameThickness = __FrameThickness;
+			this._ShapeAspectStyle = __ShapeAspectStyle;
+		}
 	
 		[Description("Types of permeable covering operations. Also used to assign standard symbolic pre" +
 	    "sentations according to national building standards.\r\n")]

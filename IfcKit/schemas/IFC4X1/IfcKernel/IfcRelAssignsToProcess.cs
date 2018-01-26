@@ -10,16 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricConstraintResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProcessExtension;
-using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
 using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcKernel
@@ -35,6 +26,17 @@ namespace BuildingSmart.IFC.IfcKernel
 		[XmlElement]
 		IfcMeasureWithUnit _QuantityInProcess;
 	
+	
+		public IfcRelAssignsToProcess()
+		{
+		}
+	
+		public IfcRelAssignsToProcess(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcObjectDefinition[] __RelatedObjects, IfcObjectTypeEnum? __RelatedObjectsType, IfcProcessSelect __RelatingProcess, IfcMeasureWithUnit __QuantityInProcess)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __RelatedObjects, __RelatedObjectsType)
+		{
+			this._RelatingProcess = __RelatingProcess;
+			this._QuantityInProcess = __QuantityInProcess;
+		}
 	
 		[Description("Reference to the process to which the objects are assigned to.\r\n<blockquote class" +
 	    "=\"change-ifc2x4\">IFC4 CHANGE Datatype expanded to include <em>IfcProcess</em> an" +

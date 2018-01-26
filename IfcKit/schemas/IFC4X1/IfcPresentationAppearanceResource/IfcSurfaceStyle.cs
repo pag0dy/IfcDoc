@@ -10,12 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationDefinitionResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 {
@@ -30,8 +25,21 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 	
 		[DataMember(Order=1)] 
 		[Required()]
+		[MinLength(1)]
+		[MaxLength(5)]
 		ISet<IfcSurfaceStyleElementSelect> _Styles = new HashSet<IfcSurfaceStyleElementSelect>();
 	
+	
+		public IfcSurfaceStyle()
+		{
+		}
+	
+		public IfcSurfaceStyle(IfcLabel? __Name, IfcSurfaceSide __Side, IfcSurfaceStyleElementSelect[] __Styles)
+			: base(__Name)
+		{
+			this._Side = __Side;
+			this._Styles = new HashSet<IfcSurfaceStyleElementSelect>(__Styles);
+		}
 	
 		[Description("An indication of which side of the surface to apply the style.")]
 		public IfcSurfaceSide Side { get { return this._Side; } set { this._Side = value;} }

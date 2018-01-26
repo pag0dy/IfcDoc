@@ -10,16 +10,11 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
 using BuildingSmart.IFC.IfcApprovalResource;
 using BuildingSmart.IFC.IfcConstraintResource;
-using BuildingSmart.IFC.IfcCostResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcPropertyResource
 {
@@ -27,11 +22,23 @@ namespace BuildingSmart.IFC.IfcPropertyResource
 	public partial class IfcPropertyListValue : IfcSimpleProperty
 	{
 		[DataMember(Order=0)] 
+		[MinLength(1)]
 		IList<IfcValue> _ListValues = new List<IfcValue>();
 	
 		[DataMember(Order=1)] 
 		IfcUnit _Unit;
 	
+	
+		public IfcPropertyListValue()
+		{
+		}
+	
+		public IfcPropertyListValue(IfcIdentifier __Name, IfcText? __Description, IfcValue[] __ListValues, IfcUnit __Unit)
+			: base(__Name, __Description)
+		{
+			this._ListValues = new List<IfcValue>(__ListValues);
+			this._Unit = __Unit;
+		}
 	
 		[Description("List of property values.\r\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; The" +
 	    " attribute has been made optional with upward compatibility for file based excha" +

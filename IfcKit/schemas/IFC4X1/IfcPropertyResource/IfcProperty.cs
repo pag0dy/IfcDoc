@@ -10,16 +10,11 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
 using BuildingSmart.IFC.IfcApprovalResource;
 using BuildingSmart.IFC.IfcConstraintResource;
-using BuildingSmart.IFC.IfcCostResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcPropertyResource
 {
@@ -53,6 +48,16 @@ namespace BuildingSmart.IFC.IfcPropertyResource
 		[InverseProperty("RelatedResourceObjects")] 
 		ISet<IfcResourceApprovalRelationship> _HasApprovals = new HashSet<IfcResourceApprovalRelationship>();
 	
+	
+		public IfcProperty()
+		{
+		}
+	
+		public IfcProperty(IfcIdentifier __Name, IfcText? __Description)
+		{
+			this._Name = __Name;
+			this._Description = __Description;
+		}
 	
 		[Description("Name for this property. This label is the significant name string that defines th" +
 	    "e semantic meaning for the property.")]

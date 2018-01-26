@@ -27,6 +27,18 @@ namespace BuildingSmart.IFC.IfcStructuralLoadResource
 		IfcModulusOfSubgradeReactionSelect _TranslationalStiffnessByAreaZ;
 	
 	
+		public IfcBoundaryFaceCondition()
+		{
+		}
+	
+		public IfcBoundaryFaceCondition(IfcLabel? __Name, IfcModulusOfSubgradeReactionSelect __TranslationalStiffnessByAreaX, IfcModulusOfSubgradeReactionSelect __TranslationalStiffnessByAreaY, IfcModulusOfSubgradeReactionSelect __TranslationalStiffnessByAreaZ)
+			: base(__Name)
+		{
+			this._TranslationalStiffnessByAreaX = __TranslationalStiffnessByAreaX;
+			this._TranslationalStiffnessByAreaY = __TranslationalStiffnessByAreaY;
+			this._TranslationalStiffnessByAreaZ = __TranslationalStiffnessByAreaZ;
+		}
+	
 		[Description("Translational stiffness value in x-direction of the coordinate system defined by " +
 	    "the instance which uses this resource object.")]
 		public IfcModulusOfSubgradeReactionSelect TranslationalStiffnessByAreaX { get { return this._TranslationalStiffnessByAreaX; } set { this._TranslationalStiffnessByAreaX = value;} }

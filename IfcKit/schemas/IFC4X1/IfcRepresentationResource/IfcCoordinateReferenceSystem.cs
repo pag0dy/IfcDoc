@@ -10,14 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcRepresentationResource
 {
@@ -43,8 +36,21 @@ namespace BuildingSmart.IFC.IfcRepresentationResource
 		IfcIdentifier? _VerticalDatum;
 	
 		[InverseProperty("SourceCRS")] 
+		[MaxLength(1)]
 		ISet<IfcCoordinateOperation> _HasCoordinateOperation = new HashSet<IfcCoordinateOperation>();
 	
+	
+		public IfcCoordinateReferenceSystem()
+		{
+		}
+	
+		public IfcCoordinateReferenceSystem(IfcLabel __Name, IfcText? __Description, IfcIdentifier? __GeodeticDatum, IfcIdentifier? __VerticalDatum)
+		{
+			this._Name = __Name;
+			this._Description = __Description;
+			this._GeodeticDatum = __GeodeticDatum;
+			this._VerticalDatum = __VerticalDatum;
+		}
 	
 		[Description(@"Name by which the coordinate reference system is identified.
 	<blockquote class=""note"">NOTE&nbsp; The name shall be taken from the list recognized by the European Petroleum Survey Group EPSG. It should then be qualified by the EPSG name space, for example as 'EPSG:5555'.</blockquote>

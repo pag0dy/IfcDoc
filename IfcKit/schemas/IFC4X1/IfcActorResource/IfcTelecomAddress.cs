@@ -12,6 +12,7 @@ using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcMeasureResource;
+using BuildingSmart.IFC.IfcPropertyResource;
 
 namespace BuildingSmart.IFC.IfcActorResource
 {
@@ -20,10 +21,12 @@ namespace BuildingSmart.IFC.IfcActorResource
 	{
 		[DataMember(Order=0)] 
 		[XmlAttribute]
+		[MinLength(1)]
 		IList<IfcLabel> _TelephoneNumbers = new List<IfcLabel>();
 	
 		[DataMember(Order=1)] 
 		[XmlAttribute]
+		[MinLength(1)]
 		IList<IfcLabel> _FacsimileNumbers = new List<IfcLabel>();
 	
 		[DataMember(Order=2)] 
@@ -32,6 +35,7 @@ namespace BuildingSmart.IFC.IfcActorResource
 	
 		[DataMember(Order=3)] 
 		[XmlAttribute]
+		[MinLength(1)]
 		IList<IfcLabel> _ElectronicMailAddresses = new List<IfcLabel>();
 	
 		[DataMember(Order=4)] 
@@ -40,8 +44,24 @@ namespace BuildingSmart.IFC.IfcActorResource
 	
 		[DataMember(Order=5)] 
 		[XmlAttribute]
+		[MinLength(1)]
 		IList<IfcURIReference> _MessagingIDs = new List<IfcURIReference>();
 	
+	
+		public IfcTelecomAddress()
+		{
+		}
+	
+		public IfcTelecomAddress(IfcAddressTypeEnum? __Purpose, IfcText? __Description, IfcLabel? __UserDefinedPurpose, IfcLabel[] __TelephoneNumbers, IfcLabel[] __FacsimileNumbers, IfcLabel? __PagerNumber, IfcLabel[] __ElectronicMailAddresses, IfcURIReference? __WWWHomePageURL, IfcURIReference[] __MessagingIDs)
+			: base(__Purpose, __Description, __UserDefinedPurpose)
+		{
+			this._TelephoneNumbers = new List<IfcLabel>(__TelephoneNumbers);
+			this._FacsimileNumbers = new List<IfcLabel>(__FacsimileNumbers);
+			this._PagerNumber = __PagerNumber;
+			this._ElectronicMailAddresses = new List<IfcLabel>(__ElectronicMailAddresses);
+			this._WWWHomePageURL = __WWWHomePageURL;
+			this._MessagingIDs = new List<IfcURIReference>(__MessagingIDs);
+		}
 	
 		[Description("The list of telephone numbers at which telephone messages may be received.")]
 		public IList<IfcLabel> TelephoneNumbers { get { return this._TelephoneNumbers; } }

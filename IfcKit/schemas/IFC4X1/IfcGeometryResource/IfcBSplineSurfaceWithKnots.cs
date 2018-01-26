@@ -10,13 +10,11 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometricModelResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcPresentationOrganizationResource;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
@@ -26,21 +24,25 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		[DataMember(Order=0)] 
 		[XmlAttribute]
 		[Required()]
+		[MinLength(2)]
 		IList<IfcInteger> _UMultiplicities = new List<IfcInteger>();
 	
 		[DataMember(Order=1)] 
 		[XmlAttribute]
 		[Required()]
+		[MinLength(2)]
 		IList<IfcInteger> _VMultiplicities = new List<IfcInteger>();
 	
 		[DataMember(Order=2)] 
 		[XmlAttribute]
 		[Required()]
+		[MinLength(2)]
 		IList<IfcParameterValue> _UKnots = new List<IfcParameterValue>();
 	
 		[DataMember(Order=3)] 
 		[XmlAttribute]
 		[Required()]
+		[MinLength(2)]
 		IList<IfcParameterValue> _VKnots = new List<IfcParameterValue>();
 	
 		[DataMember(Order=4)] 
@@ -48,6 +50,20 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		[Required()]
 		IfcKnotType _KnotSpec;
 	
+	
+		public IfcBSplineSurfaceWithKnots()
+		{
+		}
+	
+		public IfcBSplineSurfaceWithKnots(IfcInteger __UDegree, IfcInteger __VDegree, IfcCartesianPoint[] __ControlPointsList, IfcBSplineSurfaceForm __SurfaceForm, IfcLogical __UClosed, IfcLogical __VClosed, IfcLogical __SelfIntersect, IfcInteger[] __UMultiplicities, IfcInteger[] __VMultiplicities, IfcParameterValue[] __UKnots, IfcParameterValue[] __VKnots, IfcKnotType __KnotSpec)
+			: base(__UDegree, __VDegree, __ControlPointsList, __SurfaceForm, __UClosed, __VClosed, __SelfIntersect)
+		{
+			this._UMultiplicities = new List<IfcInteger>(__UMultiplicities);
+			this._VMultiplicities = new List<IfcInteger>(__VMultiplicities);
+			this._UKnots = new List<IfcParameterValue>(__UKnots);
+			this._VKnots = new List<IfcParameterValue>(__VKnots);
+			this._KnotSpec = __KnotSpec;
+		}
 	
 		[Description("The multiplicities of the knots in the <em>u</em> parameter direction.")]
 		public IList<IfcInteger> UMultiplicities { get { return this._UMultiplicities; } }

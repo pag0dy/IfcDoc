@@ -10,19 +10,26 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometricModelResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcPresentationOrganizationResource;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
 	[Guid("cfe5f36c-5489-4523-98cb-705240b9ba86")]
 	public partial class IfcBoundaryCurve : IfcCompositeCurveOnSurface
 	{
+	
+		public IfcBoundaryCurve()
+		{
+		}
+	
+		public IfcBoundaryCurve(IfcCompositeCurveSegment[] __Segments, IfcLogical __SelfIntersect)
+			: base(__Segments, __SelfIntersect)
+		{
+		}
 	
 	
 	}

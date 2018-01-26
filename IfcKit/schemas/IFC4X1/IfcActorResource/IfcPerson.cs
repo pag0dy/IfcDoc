@@ -12,6 +12,7 @@ using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcMeasureResource;
+using BuildingSmart.IFC.IfcPropertyResource;
 
 namespace BuildingSmart.IFC.IfcActorResource
 {
@@ -35,25 +36,46 @@ namespace BuildingSmart.IFC.IfcActorResource
 	
 		[DataMember(Order=3)] 
 		[XmlAttribute]
+		[MinLength(1)]
 		IList<IfcLabel> _MiddleNames = new List<IfcLabel>();
 	
 		[DataMember(Order=4)] 
 		[XmlAttribute]
+		[MinLength(1)]
 		IList<IfcLabel> _PrefixTitles = new List<IfcLabel>();
 	
 		[DataMember(Order=5)] 
 		[XmlAttribute]
+		[MinLength(1)]
 		IList<IfcLabel> _SuffixTitles = new List<IfcLabel>();
 	
 		[DataMember(Order=6)] 
+		[MinLength(1)]
 		IList<IfcActorRole> _Roles = new List<IfcActorRole>();
 	
 		[DataMember(Order=7)] 
+		[MinLength(1)]
 		IList<IfcAddress> _Addresses = new List<IfcAddress>();
 	
 		[InverseProperty("ThePerson")] 
 		ISet<IfcPersonAndOrganization> _EngagedIn = new HashSet<IfcPersonAndOrganization>();
 	
+	
+		public IfcPerson()
+		{
+		}
+	
+		public IfcPerson(IfcIdentifier? __Identification, IfcLabel? __FamilyName, IfcLabel? __GivenName, IfcLabel[] __MiddleNames, IfcLabel[] __PrefixTitles, IfcLabel[] __SuffixTitles, IfcActorRole[] __Roles, IfcAddress[] __Addresses)
+		{
+			this._Identification = __Identification;
+			this._FamilyName = __FamilyName;
+			this._GivenName = __GivenName;
+			this._MiddleNames = new List<IfcLabel>(__MiddleNames);
+			this._PrefixTitles = new List<IfcLabel>(__PrefixTitles);
+			this._SuffixTitles = new List<IfcLabel>(__SuffixTitles);
+			this._Roles = new List<IfcActorRole>(__Roles);
+			this._Addresses = new List<IfcAddress>(__Addresses);
+		}
 	
 		[Description("Identification of the person.")]
 		public IfcIdentifier? Identification { get { return this._Identification; } set { this._Identification = value;} }

@@ -10,7 +10,6 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 
 namespace BuildingSmart.IFC.IfcDateTimeResource
@@ -34,6 +33,19 @@ namespace BuildingSmart.IFC.IfcDateTimeResource
 		[XmlAttribute]
 		IfcDateTime? _ScheduleDate;
 	
+	
+		public IfcEventTime()
+		{
+		}
+	
+		public IfcEventTime(IfcLabel? __Name, IfcDataOriginEnum? __DataOrigin, IfcLabel? __UserDefinedDataOrigin, IfcDateTime? __ActualDate, IfcDateTime? __EarlyDate, IfcDateTime? __LateDate, IfcDateTime? __ScheduleDate)
+			: base(__Name, __DataOrigin, __UserDefinedDataOrigin)
+		{
+			this._ActualDate = __ActualDate;
+			this._EarlyDate = __EarlyDate;
+			this._LateDate = __LateDate;
+			this._ScheduleDate = __ScheduleDate;
+		}
 	
 		[Description("     The date on which an event actually occurs. It is a measured value.\r\n")]
 		public IfcDateTime? ActualDate { get { return this._ActualDate; } set { this._ActualDate = value;} }

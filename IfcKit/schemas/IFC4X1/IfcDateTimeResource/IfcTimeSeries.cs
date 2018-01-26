@@ -10,8 +10,10 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcConstraintResource;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcMeasureResource;
+using BuildingSmart.IFC.IfcPropertyResource;
 
 namespace BuildingSmart.IFC.IfcDateTimeResource
 {
@@ -58,8 +60,25 @@ namespace BuildingSmart.IFC.IfcDateTimeResource
 		IfcUnit _Unit;
 	
 		[InverseProperty("RelatedResourceObjects")] 
+		[MinLength(1)]
 		ISet<IfcExternalReferenceRelationship> _HasExternalReference = new HashSet<IfcExternalReferenceRelationship>();
 	
+	
+		public IfcTimeSeries()
+		{
+		}
+	
+		public IfcTimeSeries(IfcLabel __Name, IfcText? __Description, IfcDateTime __StartTime, IfcDateTime __EndTime, IfcTimeSeriesDataTypeEnum __TimeSeriesDataType, IfcDataOriginEnum __DataOrigin, IfcLabel? __UserDefinedDataOrigin, IfcUnit __Unit)
+		{
+			this._Name = __Name;
+			this._Description = __Description;
+			this._StartTime = __StartTime;
+			this._EndTime = __EndTime;
+			this._TimeSeriesDataType = __TimeSeriesDataType;
+			this._DataOrigin = __DataOrigin;
+			this._UserDefinedDataOrigin = __UserDefinedDataOrigin;
+			this._Unit = __Unit;
+		}
 	
 		[Description("An unique name for the time series.")]
 		public IfcLabel Name { get { return this._Name; } set { this._Name = value;} }

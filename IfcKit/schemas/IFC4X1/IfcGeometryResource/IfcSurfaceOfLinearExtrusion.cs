@@ -10,13 +10,12 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometricModelResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
@@ -33,6 +32,17 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		[Required()]
 		IfcLengthMeasure _Depth;
 	
+	
+		public IfcSurfaceOfLinearExtrusion()
+		{
+		}
+	
+		public IfcSurfaceOfLinearExtrusion(IfcProfileDef __SweptCurve, IfcAxis2Placement3D __Position, IfcDirection __ExtrudedDirection, IfcLengthMeasure __Depth)
+			: base(__SweptCurve, __Position)
+		{
+			this._ExtrudedDirection = __ExtrudedDirection;
+			this._Depth = __Depth;
+		}
 	
 		[Description("The direction of the extrusion.")]
 		public IfcDirection ExtrudedDirection { get { return this._ExtrudedDirection; } set { this._ExtrudedDirection = value;} }

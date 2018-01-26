@@ -10,13 +10,8 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
 using BuildingSmart.IFC.IfcCostResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcConstraintResource
 {
@@ -39,12 +34,26 @@ namespace BuildingSmart.IFC.IfcConstraintResource
 	
 		[DataMember(Order=3)] 
 		[XmlAttribute]
+		[MinLength(1)]
 		IList<IfcInteger> _ListPositions = new List<IfcInteger>();
 	
 		[DataMember(Order=4)] 
 		[XmlElement]
 		IfcReference _InnerReference;
 	
+	
+		public IfcReference()
+		{
+		}
+	
+		public IfcReference(IfcIdentifier? __TypeIdentifier, IfcIdentifier? __AttributeIdentifier, IfcLabel? __InstanceName, IfcInteger[] __ListPositions, IfcReference __InnerReference)
+		{
+			this._TypeIdentifier = __TypeIdentifier;
+			this._AttributeIdentifier = __AttributeIdentifier;
+			this._InstanceName = __InstanceName;
+			this._ListPositions = new List<IfcInteger>(__ListPositions);
+			this._InnerReference = __InnerReference;
+		}
 	
 		[Description(@"Optional identifier of the entity or type such as 'IfcMaterialLayerSet'. For entity, type, or select-based references within a collection, this resolves the reference to such type. 
 	If omitted, the type is assumed to be the same as the declared referencing attribute.

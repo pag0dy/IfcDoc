@@ -10,13 +10,9 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcGeometricConstraintResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcStructuralLoadResource;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcStructuralAnalysisDomain
 {
@@ -25,8 +21,20 @@ namespace BuildingSmart.IFC.IfcStructuralAnalysisDomain
 	{
 		[DataMember(Order=0)] 
 		[XmlAttribute]
+		[MinLength(3)]
+		[MaxLength(3)]
 		IList<IfcRatioMeasure> _SelfWeightCoefficients = new List<IfcRatioMeasure>();
 	
+	
+		public IfcStructuralLoadCase()
+		{
+		}
+	
+		public IfcStructuralLoadCase(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcLoadGroupTypeEnum __PredefinedType, IfcActionTypeEnum __ActionType, IfcActionSourceTypeEnum __ActionSource, IfcRatioMeasure? __Coefficient, IfcLabel? __Purpose, IfcRatioMeasure[] __SelfWeightCoefficients)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType, __PredefinedType, __ActionType, __ActionSource, __Coefficient, __Purpose)
+		{
+			this._SelfWeightCoefficients = new List<IfcRatioMeasure>(__SelfWeightCoefficients);
+		}
 	
 		[Description(@"The self weight coefficients specify ratios at which loads due to weight of members shall be included in the load case.  These loads are not explicitly modeled as instances of <em>IfcStructuralAction</em>.  Instead they shall be calculated according to geometry, section, and material of each member.
 	

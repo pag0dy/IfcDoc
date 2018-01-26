@@ -10,23 +10,11 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometricConstraintResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcQuantityResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcSharedBldgElements;
-using BuildingSmart.IFC.IfcSharedBldgServiceElements;
-using BuildingSmart.IFC.IfcSharedComponentElements;
-using BuildingSmart.IFC.IfcSharedFacilitiesElements;
-using BuildingSmart.IFC.IfcStructuralElementsDomain;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcProductExtension
 {
@@ -35,19 +23,35 @@ namespace BuildingSmart.IFC.IfcProductExtension
 	{
 		[DataMember(Order=0)] 
 		[Required()]
+		[MinLength(1)]
 		IList<IfcGridAxis> _UAxes = new List<IfcGridAxis>();
 	
 		[DataMember(Order=1)] 
 		[Required()]
+		[MinLength(1)]
 		IList<IfcGridAxis> _VAxes = new List<IfcGridAxis>();
 	
 		[DataMember(Order=2)] 
+		[MinLength(1)]
 		IList<IfcGridAxis> _WAxes = new List<IfcGridAxis>();
 	
 		[DataMember(Order=3)] 
 		[XmlAttribute]
 		IfcGridTypeEnum? _PredefinedType;
 	
+	
+		public IfcGrid()
+		{
+		}
+	
+		public IfcGrid(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcObjectPlacement __ObjectPlacement, IfcProductRepresentation __Representation, IfcGridAxis[] __UAxes, IfcGridAxis[] __VAxes, IfcGridAxis[] __WAxes, IfcGridTypeEnum? __PredefinedType)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType, __ObjectPlacement, __Representation)
+		{
+			this._UAxes = new List<IfcGridAxis>(__UAxes);
+			this._VAxes = new List<IfcGridAxis>(__VAxes);
+			this._WAxes = new List<IfcGridAxis>(__WAxes);
+			this._PredefinedType = __PredefinedType;
+		}
 	
 		[Description("List of grid axes defining the first row of grid lines.")]
 		public IList<IfcGridAxis> UAxes { get { return this._UAxes; } }

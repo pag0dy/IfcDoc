@@ -10,14 +10,8 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcControlExtension;
-using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcPropertyResource;
 
 namespace BuildingSmart.IFC.IfcApprovalResource
 {
@@ -26,6 +20,7 @@ namespace BuildingSmart.IFC.IfcApprovalResource
 	{
 		[DataMember(Order=0)] 
 		[Required()]
+		[MinLength(1)]
 		ISet<IfcResourceObjectSelect> _RelatedResourceObjects = new HashSet<IfcResourceObjectSelect>();
 	
 		[DataMember(Order=1)] 
@@ -33,6 +28,17 @@ namespace BuildingSmart.IFC.IfcApprovalResource
 		[Required()]
 		IfcApproval _RelatingApproval;
 	
+	
+		public IfcResourceApprovalRelationship()
+		{
+		}
+	
+		public IfcResourceApprovalRelationship(IfcLabel? __Name, IfcText? __Description, IfcResourceObjectSelect[] __RelatedResourceObjects, IfcApproval __RelatingApproval)
+			: base(__Name, __Description)
+		{
+			this._RelatedResourceObjects = new HashSet<IfcResourceObjectSelect>(__RelatedResourceObjects);
+			this._RelatingApproval = __RelatingApproval;
+		}
 	
 		[Description("Resource objects that are approved.")]
 		public ISet<IfcResourceObjectSelect> RelatedResourceObjects { get { return this._RelatedResourceObjects; } }

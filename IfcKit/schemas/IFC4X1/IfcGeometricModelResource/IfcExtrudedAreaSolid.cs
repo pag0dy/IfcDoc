@@ -10,11 +10,12 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometricModelResource
 {
@@ -31,6 +32,17 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 		[Required()]
 		IfcPositiveLengthMeasure _Depth;
 	
+	
+		public IfcExtrudedAreaSolid()
+		{
+		}
+	
+		public IfcExtrudedAreaSolid(IfcProfileDef __SweptArea, IfcAxis2Placement3D __Position, IfcDirection __ExtrudedDirection, IfcPositiveLengthMeasure __Depth)
+			: base(__SweptArea, __Position)
+		{
+			this._ExtrudedDirection = __ExtrudedDirection;
+			this._Depth = __Depth;
+		}
 	
 		[Description("The direction in which the surface, provided by <em>SweptArea</em> is to be swept" +
 	    ".")]

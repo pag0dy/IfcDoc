@@ -10,11 +10,12 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometricModelResource
 {
@@ -23,6 +24,7 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 	{
 		[DataMember(Order=0)] 
 		[Required()]
+		[MinLength(2)]
 		IList<IfcDistanceExpression> _CrossSectionPositions = new List<IfcDistanceExpression>();
 	
 		[DataMember(Order=1)] 
@@ -30,6 +32,17 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 		[Required()]
 		IfcBoolean _FixedAxisVertical;
 	
+	
+		public IfcSectionedSolidHorizontal()
+		{
+		}
+	
+		public IfcSectionedSolidHorizontal(IfcCurve __Directrix, IfcProfileDef[] __CrossSections, IfcDistanceExpression[] __CrossSectionPositions, IfcBoolean __FixedAxisVertical)
+			: base(__Directrix, __CrossSections)
+		{
+			this._CrossSectionPositions = new List<IfcDistanceExpression>(__CrossSectionPositions);
+			this._FixedAxisVertical = __FixedAxisVertical;
+		}
 	
 		[Description("List of distance expressions in sequentially increasing order paired with <i>Cros" +
 	    "sSections</i>, indicating the position of the corresponding section along the <i" +

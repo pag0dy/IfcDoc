@@ -10,14 +10,10 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcGeometricModelResource;
 using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcTopologyResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcGeometricConstraintResource
 {
@@ -30,11 +26,23 @@ namespace BuildingSmart.IFC.IfcGeometricConstraintResource
 	
 		[DataMember(Order=1)] 
 		[Required()]
+		[MinLength(1)]
 		IList<IfcAlignment2DHorizontalSegment> _Segments = new List<IfcAlignment2DHorizontalSegment>();
 	
 		[InverseProperty("Horizontal")] 
+		[MinLength(1)]
 		ISet<IfcAlignmentCurve> _ToAlignmentCurve = new HashSet<IfcAlignmentCurve>();
 	
+	
+		public IfcAlignment2DHorizontal()
+		{
+		}
+	
+		public IfcAlignment2DHorizontal(IfcLengthMeasure? __StartDistAlong, IfcAlignment2DHorizontalSegment[] __Segments)
+		{
+			this._StartDistAlong = __StartDistAlong;
+			this._Segments = new List<IfcAlignment2DHorizontalSegment>(__Segments);
+		}
 	
 		[Description("The value of the distance along at the start of the horizontal alignment. If omit" +
 	    "ed (standard) it is set to zero.")]

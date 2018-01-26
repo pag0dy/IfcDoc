@@ -10,19 +10,10 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcPropertyResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcSharedBldgElements;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcArchitectureDomain
 {
@@ -81,6 +72,28 @@ namespace BuildingSmart.IFC.IfcArchitectureDomain
 		[XmlAttribute]
 		IfcLengthMeasure? _LiningToPanelOffsetY;
 	
+	
+		public IfcDoorLiningProperties()
+		{
+		}
+	
+		public IfcDoorLiningProperties(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcPositiveLengthMeasure? __LiningDepth, IfcNonNegativeLengthMeasure? __LiningThickness, IfcPositiveLengthMeasure? __ThresholdDepth, IfcNonNegativeLengthMeasure? __ThresholdThickness, IfcNonNegativeLengthMeasure? __TransomThickness, IfcLengthMeasure? __TransomOffset, IfcLengthMeasure? __LiningOffset, IfcLengthMeasure? __ThresholdOffset, IfcPositiveLengthMeasure? __CasingThickness, IfcPositiveLengthMeasure? __CasingDepth, IfcShapeAspect __ShapeAspectStyle, IfcLengthMeasure? __LiningToPanelOffsetX, IfcLengthMeasure? __LiningToPanelOffsetY)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description)
+		{
+			this._LiningDepth = __LiningDepth;
+			this._LiningThickness = __LiningThickness;
+			this._ThresholdDepth = __ThresholdDepth;
+			this._ThresholdThickness = __ThresholdThickness;
+			this._TransomThickness = __TransomThickness;
+			this._TransomOffset = __TransomOffset;
+			this._LiningOffset = __LiningOffset;
+			this._ThresholdOffset = __ThresholdOffset;
+			this._CasingThickness = __CasingThickness;
+			this._CasingDepth = __CasingDepth;
+			this._ShapeAspectStyle = __ShapeAspectStyle;
+			this._LiningToPanelOffsetX = __LiningToPanelOffsetX;
+			this._LiningToPanelOffsetY = __LiningToPanelOffsetY;
+		}
 	
 		[Description(@"Depth of the door lining, measured perpendicular to the plane of the door lining. If omitted (and with a given value to lining thickness) it indicates an adjustable depth (i.e. a depth that adjusts to the thickness of the wall into which the occurrence of this door style is inserted).")]
 		public IfcPositiveLengthMeasure? LiningDepth { get { return this._LiningDepth; } set { this._LiningDepth = value;} }

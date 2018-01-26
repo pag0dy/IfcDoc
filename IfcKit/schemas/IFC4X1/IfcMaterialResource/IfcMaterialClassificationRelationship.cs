@@ -11,13 +11,6 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcMaterialResource
 {
@@ -26,6 +19,7 @@ namespace BuildingSmart.IFC.IfcMaterialResource
 	{
 		[DataMember(Order=0)] 
 		[Required()]
+		[MinLength(1)]
 		ISet<IfcClassificationSelect> _MaterialClassifications = new HashSet<IfcClassificationSelect>();
 	
 		[DataMember(Order=1)] 
@@ -33,6 +27,16 @@ namespace BuildingSmart.IFC.IfcMaterialResource
 		[Required()]
 		IfcMaterial _ClassifiedMaterial;
 	
+	
+		public IfcMaterialClassificationRelationship()
+		{
+		}
+	
+		public IfcMaterialClassificationRelationship(IfcClassificationSelect[] __MaterialClassifications, IfcMaterial __ClassifiedMaterial)
+		{
+			this._MaterialClassifications = new HashSet<IfcClassificationSelect>(__MaterialClassifications);
+			this._ClassifiedMaterial = __ClassifiedMaterial;
+		}
 	
 		[Description("The material classifications identifying the type of material.")]
 		public ISet<IfcClassificationSelect> MaterialClassifications { get { return this._MaterialClassifications; } }

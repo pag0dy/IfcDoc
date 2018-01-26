@@ -11,12 +11,8 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcPresentationOrganizationResource;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
@@ -28,6 +24,15 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		[Required()]
 		IfcCurve _BasisCurve;
 	
+	
+		public IfcOffsetCurve()
+		{
+		}
+	
+		public IfcOffsetCurve(IfcCurve __BasisCurve)
+		{
+			this._BasisCurve = __BasisCurve;
+		}
 	
 		[Description("The curve that is being offset.")]
 		public IfcCurve BasisCurve { get { return this._BasisCurve; } set { this._BasisCurve = value;} }

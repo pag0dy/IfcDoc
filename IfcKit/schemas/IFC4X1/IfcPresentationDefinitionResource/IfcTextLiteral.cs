@@ -10,12 +10,9 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcPresentationDefinitionResource
 {
@@ -36,6 +33,17 @@ namespace BuildingSmart.IFC.IfcPresentationDefinitionResource
 		[Required()]
 		IfcTextPath _Path;
 	
+	
+		public IfcTextLiteral()
+		{
+		}
+	
+		public IfcTextLiteral(IfcPresentableText __Literal, IfcAxis2Placement __Placement, IfcTextPath __Path)
+		{
+			this._Literal = __Literal;
+			this._Placement = __Placement;
+			this._Path = __Path;
+		}
 	
 		[Description("The text literal to be presented.")]
 		public IfcPresentableText Literal { get { return this._Literal; } set { this._Literal = value;} }

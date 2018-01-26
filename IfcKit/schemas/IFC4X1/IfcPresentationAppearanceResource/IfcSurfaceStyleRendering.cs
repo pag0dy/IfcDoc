@@ -10,12 +10,8 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationDefinitionResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 {
@@ -45,6 +41,22 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 		[Required()]
 		IfcReflectanceMethodEnum _ReflectanceMethod;
 	
+	
+		public IfcSurfaceStyleRendering()
+		{
+		}
+	
+		public IfcSurfaceStyleRendering(IfcColourRgb __SurfaceColour, IfcNormalisedRatioMeasure? __Transparency, IfcColourOrFactor __DiffuseColour, IfcColourOrFactor __TransmissionColour, IfcColourOrFactor __DiffuseTransmissionColour, IfcColourOrFactor __ReflectionColour, IfcColourOrFactor __SpecularColour, IfcSpecularHighlightSelect __SpecularHighlight, IfcReflectanceMethodEnum __ReflectanceMethod)
+			: base(__SurfaceColour, __Transparency)
+		{
+			this._DiffuseColour = __DiffuseColour;
+			this._TransmissionColour = __TransmissionColour;
+			this._DiffuseTransmissionColour = __DiffuseTransmissionColour;
+			this._ReflectionColour = __ReflectionColour;
+			this._SpecularColour = __SpecularColour;
+			this._SpecularHighlight = __SpecularHighlight;
+			this._ReflectanceMethod = __ReflectanceMethod;
+		}
 	
 		[Description(@"The diffuse part of the reflectance equation can be given as either a colour or a scalar factor.
 	The diffuse colour field reflects all light sources depending on the angle of the surface with respect to the light source. The more directly the surface faces the light, the more diffuse light reflects.

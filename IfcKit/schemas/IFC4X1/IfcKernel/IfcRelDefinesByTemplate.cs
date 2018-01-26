@@ -10,16 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricConstraintResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProcessExtension;
-using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
 using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcKernel
@@ -29,6 +20,7 @@ namespace BuildingSmart.IFC.IfcKernel
 	{
 		[DataMember(Order=0)] 
 		[Required()]
+		[MinLength(1)]
 		ISet<IfcPropertySetDefinition> _RelatedPropertySets = new HashSet<IfcPropertySetDefinition>();
 	
 		[DataMember(Order=1)] 
@@ -36,6 +28,17 @@ namespace BuildingSmart.IFC.IfcKernel
 		[Required()]
 		IfcPropertySetTemplate _RelatingTemplate;
 	
+	
+		public IfcRelDefinesByTemplate()
+		{
+		}
+	
+		public IfcRelDefinesByTemplate(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcPropertySetDefinition[] __RelatedPropertySets, IfcPropertySetTemplate __RelatingTemplate)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description)
+		{
+			this._RelatedPropertySets = new HashSet<IfcPropertySetDefinition>(__RelatedPropertySets);
+			this._RelatingTemplate = __RelatingTemplate;
+		}
 	
 		[Description("One or many property sets or quantity sets that obtain their definitions from the" +
 	    " single property set template.")]

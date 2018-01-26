@@ -10,8 +10,6 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
 
 namespace BuildingSmart.IFC.IfcMeasureResource
 {
@@ -25,6 +23,10 @@ namespace BuildingSmart.IFC.IfcMeasureResource
 		public IfcPositiveInteger(IfcInteger value)
 		{
 			this.Value = value;
+		}
+		public IfcPositiveInteger(Int64 value)
+		{
+			this.Value = new IfcInteger(value);
 		}
 	}
 	

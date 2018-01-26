@@ -10,14 +10,10 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcCostResource;
 using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcProcessExtension
 {
@@ -49,6 +45,21 @@ namespace BuildingSmart.IFC.IfcProcessExtension
 		[XmlAttribute]
 		IfcTaskTypeEnum? _PredefinedType;
 	
+	
+		public IfcTask()
+		{
+		}
+	
+		public IfcTask(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcIdentifier? __Identification, IfcText? __LongDescription, IfcLabel? __Status, IfcLabel? __WorkMethod, IfcBoolean __IsMilestone, IfcInteger? __Priority, IfcTaskTime __TaskTime, IfcTaskTypeEnum? __PredefinedType)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType, __Identification, __LongDescription)
+		{
+			this._Status = __Status;
+			this._WorkMethod = __WorkMethod;
+			this._IsMilestone = __IsMilestone;
+			this._Priority = __Priority;
+			this._TaskTime = __TaskTime;
+			this._PredefinedType = __PredefinedType;
+		}
 	
 		[Description(@"    Current status of the task.
 	    <blockquote class=""note"">NOTE&nbsp; Particular values for status are not

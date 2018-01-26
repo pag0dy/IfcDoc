@@ -11,9 +11,7 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPropertyResource;
 
 namespace BuildingSmart.IFC.IfcProfileResource
 {
@@ -37,6 +35,16 @@ namespace BuildingSmart.IFC.IfcProfileResource
 		[XmlElement("IfcProfileProperties")]
 		ISet<IfcProfileProperties> _HasProperties = new HashSet<IfcProfileProperties>();
 	
+	
+		public IfcProfileDef()
+		{
+		}
+	
+		public IfcProfileDef(IfcProfileTypeEnum __ProfileType, IfcLabel? __ProfileName)
+		{
+			this._ProfileType = __ProfileType;
+			this._ProfileName = __ProfileName;
+		}
 	
 		[Description(@"Defines the type of geometry into which this profile definition shall be resolved, either a curve or a surface area. In case of curve the profile should be referenced by a swept surface, in case of area the profile should be referenced by a swept area solid.")]
 		public IfcProfileTypeEnum ProfileType { get { return this._ProfileType; } set { this._ProfileType = value;} }

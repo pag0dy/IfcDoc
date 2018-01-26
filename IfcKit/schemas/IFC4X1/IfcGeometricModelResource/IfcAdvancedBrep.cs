@@ -10,10 +10,10 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProfileResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometricModelResource
@@ -21,6 +21,15 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 	[Guid("f05cf3b5-4402-4abe-a157-0c8a1f819929")]
 	public partial class IfcAdvancedBrep : IfcManifoldSolidBrep
 	{
+	
+		public IfcAdvancedBrep()
+		{
+		}
+	
+		public IfcAdvancedBrep(IfcClosedShell __Outer)
+			: base(__Outer)
+		{
+		}
 	
 	
 	}

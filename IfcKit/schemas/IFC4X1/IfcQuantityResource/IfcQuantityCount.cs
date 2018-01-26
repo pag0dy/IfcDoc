@@ -28,6 +28,17 @@ namespace BuildingSmart.IFC.IfcQuantityResource
 		IfcLabel? _Formula;
 	
 	
+		public IfcQuantityCount()
+		{
+		}
+	
+		public IfcQuantityCount(IfcLabel __Name, IfcText? __Description, IfcNamedUnit __Unit, IfcCountMeasure __CountValue, IfcLabel? __Formula)
+			: base(__Name, __Description, __Unit)
+		{
+			this._CountValue = __CountValue;
+			this._Formula = __Formula;
+		}
+	
 		[Description("Count measure value of this quantity.")]
 		public IfcCountMeasure CountValue { get { return this._CountValue; } set { this._CountValue = value;} }
 	

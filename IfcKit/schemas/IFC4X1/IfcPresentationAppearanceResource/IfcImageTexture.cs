@@ -11,11 +11,9 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationDefinitionResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 {
@@ -27,6 +25,16 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 		[Required()]
 		IfcURIReference _URLReference;
 	
+	
+		public IfcImageTexture()
+		{
+		}
+	
+		public IfcImageTexture(IfcBoolean __RepeatS, IfcBoolean __RepeatT, IfcIdentifier? __Mode, IfcCartesianTransformationOperator2D __TextureTransform, IfcIdentifier[] __Parameter, IfcURIReference __URLReference)
+			: base(__RepeatS, __RepeatT, __Mode, __TextureTransform, __Parameter)
+		{
+			this._URLReference = __URLReference;
+		}
 	
 		[Description("Location, provided as an URI, at which the image texture is electronically publis" +
 	    "hed.")]

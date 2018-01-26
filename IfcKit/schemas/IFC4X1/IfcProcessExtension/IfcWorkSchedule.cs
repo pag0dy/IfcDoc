@@ -11,13 +11,10 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcCostResource;
 using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcProcessExtension
 {
@@ -28,6 +25,16 @@ namespace BuildingSmart.IFC.IfcProcessExtension
 		[XmlAttribute]
 		IfcWorkScheduleTypeEnum? _PredefinedType;
 	
+	
+		public IfcWorkSchedule()
+		{
+		}
+	
+		public IfcWorkSchedule(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcIdentifier? __Identification, IfcDateTime __CreationDate, IfcPerson[] __Creators, IfcLabel? __Purpose, IfcDuration? __Duration, IfcDuration? __TotalFloat, IfcDateTime __StartTime, IfcDateTime? __FinishTime, IfcWorkScheduleTypeEnum? __PredefinedType)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType, __Identification, __CreationDate, __Creators, __Purpose, __Duration, __TotalFloat, __StartTime, __FinishTime)
+		{
+			this._PredefinedType = __PredefinedType;
+		}
 	
 		[Description("    Identifies the predefined types of a work schedule from which \r\n    the type " +
 	    "required may be set.")]

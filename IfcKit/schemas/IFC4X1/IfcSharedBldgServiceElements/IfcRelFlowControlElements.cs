@@ -12,7 +12,7 @@ using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcProductExtension;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcSharedBldgServiceElements
 {
@@ -21,6 +21,7 @@ namespace BuildingSmart.IFC.IfcSharedBldgServiceElements
 	{
 		[DataMember(Order=0)] 
 		[Required()]
+		[MinLength(1)]
 		ISet<IfcDistributionControlElement> _RelatedControlElements = new HashSet<IfcDistributionControlElement>();
 	
 		[DataMember(Order=1)] 
@@ -28,6 +29,17 @@ namespace BuildingSmart.IFC.IfcSharedBldgServiceElements
 		[Required()]
 		IfcDistributionFlowElement _RelatingFlowElement;
 	
+	
+		public IfcRelFlowControlElements()
+		{
+		}
+	
+		public IfcRelFlowControlElements(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcDistributionControlElement[] __RelatedControlElements, IfcDistributionFlowElement __RelatingFlowElement)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description)
+		{
+			this._RelatedControlElements = new HashSet<IfcDistributionControlElement>(__RelatedControlElements);
+			this._RelatingFlowElement = __RelatingFlowElement;
+		}
 	
 		[Description("References control elements which may be used to impart control on the Distributi" +
 	    "on Element.\r\n")]

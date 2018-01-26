@@ -10,14 +10,9 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcCostResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcProcessExtension
 {
@@ -38,6 +33,18 @@ namespace BuildingSmart.IFC.IfcProcessExtension
 		[XmlAttribute]
 		IfcLabel? _UserDefinedEventTriggerType;
 	
+	
+		public IfcEventType()
+		{
+		}
+	
+		public IfcEventType(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcIdentifier? __ApplicableOccurrence, IfcPropertySetDefinition[] __HasPropertySets, IfcIdentifier? __Identification, IfcText? __LongDescription, IfcLabel? __ProcessType, IfcEventTypeEnum __PredefinedType, IfcEventTriggerTypeEnum __EventTriggerType, IfcLabel? __UserDefinedEventTriggerType)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ApplicableOccurrence, __HasPropertySets, __Identification, __LongDescription, __ProcessType)
+		{
+			this._PredefinedType = __PredefinedType;
+			this._EventTriggerType = __EventTriggerType;
+			this._UserDefinedEventTriggerType = __UserDefinedEventTriggerType;
+		}
 	
 		[Description("    Identifies the predefined types of an event from which \r\n    the type require" +
 	    "d may be set.")]

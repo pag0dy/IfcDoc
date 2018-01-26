@@ -14,9 +14,6 @@ using BuildingSmart.IFC.IfcGeometricModelResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcPresentationOrganizationResource;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
@@ -33,6 +30,17 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		[Required()]
 		IfcLogical _SelfIntersect;
 	
+	
+		public IfcOffsetCurve2D()
+		{
+		}
+	
+		public IfcOffsetCurve2D(IfcCurve __BasisCurve, IfcLengthMeasure __Distance, IfcLogical __SelfIntersect)
+			: base(__BasisCurve)
+		{
+			this._Distance = __Distance;
+			this._SelfIntersect = __SelfIntersect;
+		}
 	
 		[Description(@"The distance of the offset curve from the basis curve. distance may be positive, negative or zero. A positive value of distance defines an offset in the direction which is normal to the curve in the sense of an anti-clockwise rotation through 90 degrees from the tangent vector T at the given point. (This is in the direction of orthogonal complement(T).)")]
 		public IfcLengthMeasure Distance { get { return this._Distance; } set { this._Distance = value;} }

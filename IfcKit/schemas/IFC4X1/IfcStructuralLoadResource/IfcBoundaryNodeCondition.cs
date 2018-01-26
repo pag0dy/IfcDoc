@@ -36,6 +36,21 @@ namespace BuildingSmart.IFC.IfcStructuralLoadResource
 		IfcRotationalStiffnessSelect _RotationalStiffnessZ;
 	
 	
+		public IfcBoundaryNodeCondition()
+		{
+		}
+	
+		public IfcBoundaryNodeCondition(IfcLabel? __Name, IfcTranslationalStiffnessSelect __TranslationalStiffnessX, IfcTranslationalStiffnessSelect __TranslationalStiffnessY, IfcTranslationalStiffnessSelect __TranslationalStiffnessZ, IfcRotationalStiffnessSelect __RotationalStiffnessX, IfcRotationalStiffnessSelect __RotationalStiffnessY, IfcRotationalStiffnessSelect __RotationalStiffnessZ)
+			: base(__Name)
+		{
+			this._TranslationalStiffnessX = __TranslationalStiffnessX;
+			this._TranslationalStiffnessY = __TranslationalStiffnessY;
+			this._TranslationalStiffnessZ = __TranslationalStiffnessZ;
+			this._RotationalStiffnessX = __RotationalStiffnessX;
+			this._RotationalStiffnessY = __RotationalStiffnessY;
+			this._RotationalStiffnessZ = __RotationalStiffnessZ;
+		}
+	
 		[Description("Translational stiffness value in x-direction of the coordinate system defined by " +
 	    "the instance which uses this resource object.")]
 		public IfcTranslationalStiffnessSelect TranslationalStiffnessX { get { return this._TranslationalStiffnessX; } set { this._TranslationalStiffnessX = value;} }

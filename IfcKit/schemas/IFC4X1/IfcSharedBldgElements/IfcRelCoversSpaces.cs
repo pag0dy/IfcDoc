@@ -10,18 +10,10 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcSharedBldgElements
 {
@@ -35,8 +27,20 @@ namespace BuildingSmart.IFC.IfcSharedBldgElements
 	
 		[DataMember(Order=1)] 
 		[Required()]
+		[MinLength(1)]
 		ISet<IfcCovering> _RelatedCoverings = new HashSet<IfcCovering>();
 	
+	
+		public IfcRelCoversSpaces()
+		{
+		}
+	
+		public IfcRelCoversSpaces(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcSpace __RelatingSpace, IfcCovering[] __RelatedCoverings)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description)
+		{
+			this._RelatingSpace = __RelatingSpace;
+			this._RelatedCoverings = new HashSet<IfcCovering>(__RelatedCoverings);
+		}
 	
 		[Description("Relationship to the space object that is covered.\r\n<blockquote class=\"change-ifc2" +
 	    "x4\">IFC4 CHANGE&nbsp; The attribute name has been changed from <em>RelatedSpace<" +

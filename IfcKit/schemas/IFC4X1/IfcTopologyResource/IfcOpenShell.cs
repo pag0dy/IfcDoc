@@ -11,8 +11,8 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcTopologyResource
 {
@@ -20,6 +20,15 @@ namespace BuildingSmart.IFC.IfcTopologyResource
 	public partial class IfcOpenShell : IfcConnectedFaceSet,
 		BuildingSmart.IFC.IfcTopologyResource.IfcShell
 	{
+	
+		public IfcOpenShell()
+		{
+		}
+	
+		public IfcOpenShell(IfcFace[] __CfsFaces)
+			: base(__CfsFaces)
+		{
+		}
 	
 	
 	}

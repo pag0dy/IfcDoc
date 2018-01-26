@@ -11,13 +11,8 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfileResource;
 using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcMaterialResource
 {
@@ -37,6 +32,10 @@ namespace BuildingSmart.IFC.IfcMaterialResource
 		[XmlElement("IfcMaterialProperties")]
 		ISet<IfcMaterialProperties> _HasProperties = new HashSet<IfcMaterialProperties>();
 	
+	
+		public IfcMaterialDefinition()
+		{
+		}
 	
 		[Description(@"Use of the <em>IfcMaterialDefinition</em> subtypes within the material association of an element occurrence or element type. The association is established by the <em>IfcRelAssociatesMaterial</em> relationship.
 	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The inverse attribute has been added.</blockquote>")]

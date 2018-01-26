@@ -10,8 +10,6 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcMeasureResource;
 
 namespace BuildingSmart.IFC.IfcDateTimeResource
 {
@@ -28,6 +26,16 @@ namespace BuildingSmart.IFC.IfcDateTimeResource
 		[Required()]
 		IfcTime _EndTime;
 	
+	
+		public IfcTimePeriod()
+		{
+		}
+	
+		public IfcTimePeriod(IfcTime __StartTime, IfcTime __EndTime)
+		{
+			this._StartTime = __StartTime;
+			this._EndTime = __EndTime;
+		}
 	
 		[Description("    Start time of the time period.")]
 		public IfcTime StartTime { get { return this._StartTime; } set { this._StartTime = value;} }

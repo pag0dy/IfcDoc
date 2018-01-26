@@ -10,12 +10,8 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationDefinitionResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 {
@@ -29,8 +25,20 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 	
 		[DataMember(Order=1)] 
 		[XmlAttribute]
+		[MinLength(1)]
 		IList<IfcReal> _Parameter = new List<IfcReal>();
 	
+	
+		public IfcTextureCoordinateGenerator()
+		{
+		}
+	
+		public IfcTextureCoordinateGenerator(IfcSurfaceTexture[] __Maps, IfcLabel __Mode, IfcReal[] __Parameter)
+			: base(__Maps)
+		{
+			this._Mode = __Mode;
+			this._Parameter = new List<IfcReal>(__Parameter);
+		}
 	
 		[Description(@"The <em>Mode</em> attribute describes the algorithm used to compute texture coordinates.
 	<blockquote class=""note"">NOTE&nbsp; The applicable values for the <em>Mode</em> attribute are determined by view definitions or implementer agreements. It is recommended to use the modes described in ISO/IES 19775-1.2:2008 X3D Architecture and base components Edition 2, Part 1. See <a href=""http://www.web3d.org/x3d/specifications/ISO-IEC-19775-1.2-X3D-AbstractSpecification/Part01/components/texturing.html#TextureCoordinateGenerator"">18.4.8 TextureCoordinateGenerator</a> for recommended values.</blockquote>")]

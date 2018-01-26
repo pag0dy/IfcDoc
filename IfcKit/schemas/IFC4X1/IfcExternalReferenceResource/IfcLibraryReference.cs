@@ -10,18 +10,10 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcApprovalResource;
-using BuildingSmart.IFC.IfcConstraintResource;
-using BuildingSmart.IFC.IfcCostResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcProfileResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcQuantityResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcExternalReferenceResource
 {
@@ -44,6 +36,18 @@ namespace BuildingSmart.IFC.IfcExternalReferenceResource
 		[InverseProperty("RelatingLibrary")] 
 		ISet<IfcRelAssociatesLibrary> _LibraryRefForObjects = new HashSet<IfcRelAssociatesLibrary>();
 	
+	
+		public IfcLibraryReference()
+		{
+		}
+	
+		public IfcLibraryReference(IfcURIReference? __Location, IfcIdentifier? __Identification, IfcLabel? __Name, IfcText? __Description, IfcLanguageId? __Language, IfcLibraryInformation __ReferencedLibrary)
+			: base(__Location, __Identification, __Name)
+		{
+			this._Description = __Description;
+			this._Language = __Language;
+			this._ReferencedLibrary = __ReferencedLibrary;
+		}
 	
 		[Description("Additional description provided for the library reference.\r\n<blockquote class=\"ch" +
 	    "ange-ifc2x4\">\r\n  IFC4 CHANGE&nbsp; New attribute added at the end of the attribu" +

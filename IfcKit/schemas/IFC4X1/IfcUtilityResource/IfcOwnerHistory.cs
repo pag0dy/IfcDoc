@@ -11,9 +11,7 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcConstraintResource;
 using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcMeasureResource;
 
 namespace BuildingSmart.IFC.IfcUtilityResource
 {
@@ -55,6 +53,22 @@ namespace BuildingSmart.IFC.IfcUtilityResource
 		[Required()]
 		IfcTimeStamp _CreationDate;
 	
+	
+		public IfcOwnerHistory()
+		{
+		}
+	
+		public IfcOwnerHistory(IfcPersonAndOrganization __OwningUser, IfcApplication __OwningApplication, IfcStateEnum? __State, IfcChangeActionEnum? __ChangeAction, IfcTimeStamp? __LastModifiedDate, IfcPersonAndOrganization __LastModifyingUser, IfcApplication __LastModifyingApplication, IfcTimeStamp __CreationDate)
+		{
+			this._OwningUser = __OwningUser;
+			this._OwningApplication = __OwningApplication;
+			this._State = __State;
+			this._ChangeAction = __ChangeAction;
+			this._LastModifiedDate = __LastModifiedDate;
+			this._LastModifyingUser = __LastModifyingUser;
+			this._LastModifyingApplication = __LastModifyingApplication;
+			this._CreationDate = __CreationDate;
+		}
 	
 		[Description("Direct reference to the end user who currently \"owns\" this object. Note that IFC " +
 	    "includes the concept of ownership transfer from one user to another and therefor" +

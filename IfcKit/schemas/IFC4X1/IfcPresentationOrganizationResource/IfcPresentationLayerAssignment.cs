@@ -10,11 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcPresentationOrganizationResource
 {
@@ -32,12 +28,25 @@ namespace BuildingSmart.IFC.IfcPresentationOrganizationResource
 	
 		[DataMember(Order=2)] 
 		[Required()]
+		[MinLength(1)]
 		ISet<IfcLayeredItem> _AssignedItems = new HashSet<IfcLayeredItem>();
 	
 		[DataMember(Order=3)] 
 		[XmlAttribute]
 		IfcIdentifier? _Identifier;
 	
+	
+		public IfcPresentationLayerAssignment()
+		{
+		}
+	
+		public IfcPresentationLayerAssignment(IfcLabel __Name, IfcText? __Description, IfcLayeredItem[] __AssignedItems, IfcIdentifier? __Identifier)
+		{
+			this._Name = __Name;
+			this._Description = __Description;
+			this._AssignedItems = new HashSet<IfcLayeredItem>(__AssignedItems);
+			this._Identifier = __Identifier;
+		}
 	
 		[Description("Name of the layer.")]
 		public IfcLabel Name { get { return this._Name; } set { this._Name = value;} }

@@ -10,16 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricConstraintResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProcessExtension;
-using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
 using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcKernel
@@ -30,12 +21,24 @@ namespace BuildingSmart.IFC.IfcKernel
 		[DataMember(Order=0)] 
 		[XmlIgnore]
 		[Required()]
+		[MinLength(1)]
 		ISet<IfcObjectDefinition> _RelatedObjects = new HashSet<IfcObjectDefinition>();
 	
 		[DataMember(Order=1)] 
 		[Required()]
 		IfcPropertySetDefinitionSelect _RelatingPropertyDefinition;
 	
+	
+		public IfcRelDefinesByProperties()
+		{
+		}
+	
+		public IfcRelDefinesByProperties(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcObjectDefinition[] __RelatedObjects, IfcPropertySetDefinitionSelect __RelatingPropertyDefinition)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description)
+		{
+			this._RelatedObjects = new HashSet<IfcObjectDefinition>(__RelatedObjects);
+			this._RelatingPropertyDefinition = __RelatingPropertyDefinition;
+		}
 	
 		[Description("Reference to the objects (or single object) to which the property definition appl" +
 	    "ies.\r\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; Data type promoted fro" +

@@ -13,7 +13,6 @@ using System.Xml.Serialization;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPropertyResource;
 
 namespace BuildingSmart.IFC.IfcProfileResource
 {
@@ -73,6 +72,27 @@ namespace BuildingSmart.IFC.IfcProfileResource
 		[XmlAttribute]
 		IfcPlaneAngleMeasure? _TopFlangeSlope;
 	
+	
+		public IfcAsymmetricIShapeProfileDef()
+		{
+		}
+	
+		public IfcAsymmetricIShapeProfileDef(IfcProfileTypeEnum __ProfileType, IfcLabel? __ProfileName, IfcAxis2Placement2D __Position, IfcPositiveLengthMeasure __BottomFlangeWidth, IfcPositiveLengthMeasure __OverallDepth, IfcPositiveLengthMeasure __WebThickness, IfcPositiveLengthMeasure __BottomFlangeThickness, IfcNonNegativeLengthMeasure? __BottomFlangeFilletRadius, IfcPositiveLengthMeasure __TopFlangeWidth, IfcPositiveLengthMeasure? __TopFlangeThickness, IfcNonNegativeLengthMeasure? __TopFlangeFilletRadius, IfcNonNegativeLengthMeasure? __BottomFlangeEdgeRadius, IfcPlaneAngleMeasure? __BottomFlangeSlope, IfcNonNegativeLengthMeasure? __TopFlangeEdgeRadius, IfcPlaneAngleMeasure? __TopFlangeSlope)
+			: base(__ProfileType, __ProfileName, __Position)
+		{
+			this._BottomFlangeWidth = __BottomFlangeWidth;
+			this._OverallDepth = __OverallDepth;
+			this._WebThickness = __WebThickness;
+			this._BottomFlangeThickness = __BottomFlangeThickness;
+			this._BottomFlangeFilletRadius = __BottomFlangeFilletRadius;
+			this._TopFlangeWidth = __TopFlangeWidth;
+			this._TopFlangeThickness = __TopFlangeThickness;
+			this._TopFlangeFilletRadius = __TopFlangeFilletRadius;
+			this._BottomFlangeEdgeRadius = __BottomFlangeEdgeRadius;
+			this._BottomFlangeSlope = __BottomFlangeSlope;
+			this._TopFlangeEdgeRadius = __TopFlangeEdgeRadius;
+			this._TopFlangeSlope = __TopFlangeSlope;
+		}
 	
 		[Description("Extent of the bottom flange, defined parallel to the x axis of the position coord" +
 	    "inate system.")]

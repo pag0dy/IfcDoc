@@ -14,9 +14,6 @@ using BuildingSmart.IFC.IfcGeometricModelResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcPresentationOrganizationResource;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
@@ -38,6 +35,18 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		[Required()]
 		IfcDirection _RefDirection;
 	
+	
+		public IfcOffsetCurve3D()
+		{
+		}
+	
+		public IfcOffsetCurve3D(IfcCurve __BasisCurve, IfcLengthMeasure __Distance, IfcLogical __SelfIntersect, IfcDirection __RefDirection)
+			: base(__BasisCurve)
+		{
+			this._Distance = __Distance;
+			this._SelfIntersect = __SelfIntersect;
+			this._RefDirection = __RefDirection;
+		}
 	
 		[Description("The distance of the offset curve from the basis curve. The distance may be positi" +
 	    "ve, negative or zero.")]

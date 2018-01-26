@@ -15,7 +15,7 @@ using BuildingSmart.IFC.IfcCostResource;
 using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcProductExtension;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcSharedFacilitiesElements
 {
@@ -30,6 +30,7 @@ namespace BuildingSmart.IFC.IfcSharedFacilitiesElements
 		IfcActorSelect _Jurisdiction;
 	
 		[DataMember(Order=2)] 
+		[MinLength(1)]
 		ISet<IfcPerson> _ResponsiblePersons = new HashSet<IfcPerson>();
 	
 		[DataMember(Order=3)] 
@@ -44,6 +45,21 @@ namespace BuildingSmart.IFC.IfcSharedFacilitiesElements
 		[XmlElement]
 		IfcCostValue _OriginalValue;
 	
+	
+		public IfcInventory()
+		{
+		}
+	
+		public IfcInventory(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcInventoryTypeEnum? __PredefinedType, IfcActorSelect __Jurisdiction, IfcPerson[] __ResponsiblePersons, IfcDate? __LastUpdateDate, IfcCostValue __CurrentValue, IfcCostValue __OriginalValue)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType)
+		{
+			this._PredefinedType = __PredefinedType;
+			this._Jurisdiction = __Jurisdiction;
+			this._ResponsiblePersons = new HashSet<IfcPerson>(__ResponsiblePersons);
+			this._LastUpdateDate = __LastUpdateDate;
+			this._CurrentValue = __CurrentValue;
+			this._OriginalValue = __OriginalValue;
+		}
 	
 		[Description("A list of the types of inventories from which that required may be selected.\r\n<bl" +
 	    "ockquote class=\"change-ifc2x4\">IFC4 CHANGE Attribute made optional.</blockquote>" +

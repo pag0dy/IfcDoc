@@ -10,16 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricConstraintResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProcessExtension;
-using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
 using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcKernel
@@ -44,6 +35,18 @@ namespace BuildingSmart.IFC.IfcKernel
 		[XmlAttribute]
 		IfcText? _Description;
 	
+	
+		public IfcRoot()
+		{
+		}
+	
+		public IfcRoot(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description)
+		{
+			this._GlobalId = __GlobalId;
+			this._OwnerHistory = __OwnerHistory;
+			this._Name = __Name;
+			this._Description = __Description;
+		}
 	
 		[Description("Assignment of a globally unique identifier within the entire software world.\r\n")]
 		public IfcGloballyUniqueId GlobalId { get { return this._GlobalId; } set { this._GlobalId = value;} }

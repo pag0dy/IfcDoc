@@ -10,13 +10,11 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometricModelResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcPresentationOrganizationResource;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
@@ -29,12 +27,24 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		IfcCartesianPointList _Points;
 	
 		[DataMember(Order=1)] 
+		[MinLength(1)]
 		IList<IfcSegmentIndexSelect> _Segments = new List<IfcSegmentIndexSelect>();
 	
 		[DataMember(Order=2)] 
 		[XmlAttribute]
 		IfcBoolean? _SelfIntersect;
 	
+	
+		public IfcIndexedPolyCurve()
+		{
+		}
+	
+		public IfcIndexedPolyCurve(IfcCartesianPointList __Points, IfcSegmentIndexSelect[] __Segments, IfcBoolean? __SelfIntersect)
+		{
+			this._Points = __Points;
+			this._Segments = new List<IfcSegmentIndexSelect>(__Segments);
+			this._SelfIntersect = __SelfIntersect;
+		}
 	
 		[Description(@"A list of points, provided by a point list of either two, or three dimensions, that is used to define the poly curve. If the attribute <em>Segments</em> is not provided, the poly curve is generated as a poly line by connecting the points in the order of their appearance in the point list. If the attribute <em>Segments</em> is provided, the segments determine, how the points are to be used to create straigth and circular arc segments.")]
 		public IfcCartesianPointList Points { get { return this._Points; } set { this._Points = value;} }

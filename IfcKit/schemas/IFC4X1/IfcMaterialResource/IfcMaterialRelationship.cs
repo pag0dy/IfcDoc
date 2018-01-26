@@ -11,13 +11,7 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcMaterialResource
 {
@@ -31,12 +25,25 @@ namespace BuildingSmart.IFC.IfcMaterialResource
 	
 		[DataMember(Order=1)] 
 		[Required()]
+		[MinLength(1)]
 		ISet<IfcMaterial> _RelatedMaterials = new HashSet<IfcMaterial>();
 	
 		[DataMember(Order=2)] 
 		[XmlAttribute]
 		IfcLabel? _Expression;
 	
+	
+		public IfcMaterialRelationship()
+		{
+		}
+	
+		public IfcMaterialRelationship(IfcLabel? __Name, IfcText? __Description, IfcMaterial __RelatingMaterial, IfcMaterial[] __RelatedMaterials, IfcLabel? __Expression)
+			: base(__Name, __Description)
+		{
+			this._RelatingMaterial = __RelatingMaterial;
+			this._RelatedMaterials = new HashSet<IfcMaterial>(__RelatedMaterials);
+			this._Expression = __Expression;
+		}
 	
 		[Description("Reference to the relating material (the composite).")]
 		public IfcMaterial RelatingMaterial { get { return this._RelatingMaterial; } set { this._RelatingMaterial = value;} }

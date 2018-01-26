@@ -10,10 +10,10 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProfileResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometricModelResource
@@ -23,8 +23,19 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 	{
 		[DataMember(Order=0)] 
 		[Required()]
+		[MinLength(1)]
 		ISet<IfcClosedShell> _Voids = new HashSet<IfcClosedShell>();
 	
+	
+		public IfcAdvancedBrepWithVoids()
+		{
+		}
+	
+		public IfcAdvancedBrepWithVoids(IfcClosedShell __Outer, IfcClosedShell[] __Voids)
+			: base(__Outer)
+		{
+			this._Voids = new HashSet<IfcClosedShell>(__Voids);
+		}
 	
 		public ISet<IfcClosedShell> Voids { get { return this._Voids; } }
 	

@@ -10,16 +10,11 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
 using BuildingSmart.IFC.IfcApprovalResource;
 using BuildingSmart.IFC.IfcConstraintResource;
-using BuildingSmart.IFC.IfcCostResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcPropertyResource
 {
@@ -27,9 +22,11 @@ namespace BuildingSmart.IFC.IfcPropertyResource
 	public partial class IfcPropertyTableValue : IfcSimpleProperty
 	{
 		[DataMember(Order=0)] 
+		[MinLength(1)]
 		IList<IfcValue> _DefiningValues = new List<IfcValue>();
 	
 		[DataMember(Order=1)] 
+		[MinLength(1)]
 		IList<IfcValue> _DefinedValues = new List<IfcValue>();
 	
 		[DataMember(Order=2)] 
@@ -46,6 +43,21 @@ namespace BuildingSmart.IFC.IfcPropertyResource
 		[XmlAttribute]
 		IfcCurveInterpolationEnum? _CurveInterpolation;
 	
+	
+		public IfcPropertyTableValue()
+		{
+		}
+	
+		public IfcPropertyTableValue(IfcIdentifier __Name, IfcText? __Description, IfcValue[] __DefiningValues, IfcValue[] __DefinedValues, IfcText? __Expression, IfcUnit __DefiningUnit, IfcUnit __DefinedUnit, IfcCurveInterpolationEnum? __CurveInterpolation)
+			: base(__Name, __Description)
+		{
+			this._DefiningValues = new List<IfcValue>(__DefiningValues);
+			this._DefinedValues = new List<IfcValue>(__DefinedValues);
+			this._Expression = __Expression;
+			this._DefiningUnit = __DefiningUnit;
+			this._DefinedUnit = __DefinedUnit;
+			this._CurveInterpolation = __CurveInterpolation;
+		}
 	
 		[Description("List of defining values, which determine the defined values. This list shall have" +
 	    " unique values only.\r\n<blockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; The at" +

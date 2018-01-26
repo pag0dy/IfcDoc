@@ -10,12 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationDefinitionResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 {
@@ -25,8 +20,18 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 	{
 		[DataMember(Order=0)] 
 		[Required()]
+		[MinLength(1)]
 		IList<IfcSurfaceTexture> _Textures = new List<IfcSurfaceTexture>();
 	
+	
+		public IfcSurfaceStyleWithTextures()
+		{
+		}
+	
+		public IfcSurfaceStyleWithTextures(IfcSurfaceTexture[] __Textures)
+		{
+			this._Textures = new List<IfcSurfaceTexture>(__Textures);
+		}
 	
 		[Description("The textures applied to the surface. In case of more than one surface texture is " +
 	    "included, the <em>IfcSurfaceStyleWithTexture</em> defines a multi texture.\r\n</EM" +

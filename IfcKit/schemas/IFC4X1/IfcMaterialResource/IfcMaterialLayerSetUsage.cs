@@ -10,14 +10,8 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcMaterialResource
 {
@@ -48,6 +42,19 @@ namespace BuildingSmart.IFC.IfcMaterialResource
 		[XmlAttribute]
 		IfcPositiveLengthMeasure? _ReferenceExtent;
 	
+	
+		public IfcMaterialLayerSetUsage()
+		{
+		}
+	
+		public IfcMaterialLayerSetUsage(IfcMaterialLayerSet __ForLayerSet, IfcLayerSetDirectionEnum __LayerSetDirection, IfcDirectionSenseEnum __DirectionSense, IfcLengthMeasure __OffsetFromReferenceLine, IfcPositiveLengthMeasure? __ReferenceExtent)
+		{
+			this._ForLayerSet = __ForLayerSet;
+			this._LayerSetDirection = __LayerSetDirection;
+			this._DirectionSense = __DirectionSense;
+			this._OffsetFromReferenceLine = __OffsetFromReferenceLine;
+			this._ReferenceExtent = __ReferenceExtent;
+		}
 	
 		[Description("The <em>IfcMaterialLayerSet</em> set to which the usage is applied.")]
 		public IfcMaterialLayerSet ForLayerSet { get { return this._ForLayerSet; } set { this._ForLayerSet = value;} }

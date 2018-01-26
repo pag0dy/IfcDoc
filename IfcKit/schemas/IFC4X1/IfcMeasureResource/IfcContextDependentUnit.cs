@@ -10,7 +10,6 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
 
 namespace BuildingSmart.IFC.IfcMeasureResource
@@ -27,6 +26,16 @@ namespace BuildingSmart.IFC.IfcMeasureResource
 		[InverseProperty("RelatedResourceObjects")] 
 		ISet<IfcExternalReferenceRelationship> _HasExternalReference = new HashSet<IfcExternalReferenceRelationship>();
 	
+	
+		public IfcContextDependentUnit()
+		{
+		}
+	
+		public IfcContextDependentUnit(IfcDimensionalExponents __Dimensions, IfcUnitEnum __UnitType, IfcLabel __Name)
+			: base(__Dimensions, __UnitType)
+		{
+			this._Name = __Name;
+		}
 	
 		[Description("The word, or group of words, by which the context dependent unit is referred to.")]
 		public IfcLabel Name { get { return this._Name; } set { this._Name = value;} }

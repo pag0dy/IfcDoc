@@ -10,12 +10,9 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationDefinitionResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 {
@@ -39,8 +36,21 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 		[DataMember(Order=3)] 
 		[XmlAttribute]
 		[Required()]
+		[MinLength(1)]
 		IList<IfcPositiveInteger> _ColourIndex = new List<IfcPositiveInteger>();
 	
+	
+		public IfcIndexedColourMap()
+		{
+		}
+	
+		public IfcIndexedColourMap(IfcTessellatedFaceSet __MappedTo, IfcNormalisedRatioMeasure? __Opacity, IfcColourRgbList __Colours, IfcPositiveInteger[] __ColourIndex)
+		{
+			this._MappedTo = __MappedTo;
+			this._Opacity = __Opacity;
+			this._Colours = __Colours;
+			this._ColourIndex = new List<IfcPositiveInteger>(__ColourIndex);
+		}
 	
 		[Description("Reference to the <em>IfcTessellatedFaceSet</em> to which it applies the colours a" +
 	    "nd alpha channel.")]

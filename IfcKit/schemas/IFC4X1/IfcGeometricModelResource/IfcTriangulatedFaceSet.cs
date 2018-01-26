@@ -13,8 +13,7 @@ using System.Xml.Serialization;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcTopologyResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcGeometricModelResource
 {
@@ -22,6 +21,7 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 	public partial class IfcTriangulatedFaceSet : IfcTessellatedFaceSet
 	{
 		[DataMember(Order=0)] 
+		[MinLength(1)]
 		IList<IfcParameterValue> _Normals = new List<IfcParameterValue>();
 	
 		[DataMember(Order=1)] 
@@ -30,12 +30,27 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 	
 		[DataMember(Order=2)] 
 		[Required()]
+		[MinLength(1)]
 		IList<IfcPositiveInteger> _CoordIndex = new List<IfcPositiveInteger>();
 	
 		[DataMember(Order=3)] 
 		[XmlAttribute]
+		[MinLength(1)]
 		IList<IfcPositiveInteger> _PnIndex = new List<IfcPositiveInteger>();
 	
+	
+		public IfcTriangulatedFaceSet()
+		{
+		}
+	
+		public IfcTriangulatedFaceSet(IfcCartesianPointList3D __Coordinates, IfcParameterValue[] __Normals, IfcBoolean? __Closed, IfcPositiveInteger[] __CoordIndex, IfcPositiveInteger[] __PnIndex)
+			: base(__Coordinates)
+		{
+			this._Normals = new List<IfcParameterValue>(__Normals);
+			this._Closed = __Closed;
+			this._CoordIndex = new List<IfcPositiveInteger>(__CoordIndex);
+			this._PnIndex = new List<IfcPositiveInteger>(__PnIndex);
+		}
 	
 		[Description(@"An ordered list of three directions for normals. It is a two-dimensional list of directions provided by three parameter 
 	values.

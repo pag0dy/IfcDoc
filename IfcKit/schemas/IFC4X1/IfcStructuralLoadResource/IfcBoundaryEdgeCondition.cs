@@ -36,6 +36,21 @@ namespace BuildingSmart.IFC.IfcStructuralLoadResource
 		IfcModulusOfRotationalSubgradeReactionSelect _RotationalStiffnessByLengthZ;
 	
 	
+		public IfcBoundaryEdgeCondition()
+		{
+		}
+	
+		public IfcBoundaryEdgeCondition(IfcLabel? __Name, IfcModulusOfTranslationalSubgradeReactionSelect __TranslationalStiffnessByLengthX, IfcModulusOfTranslationalSubgradeReactionSelect __TranslationalStiffnessByLengthY, IfcModulusOfTranslationalSubgradeReactionSelect __TranslationalStiffnessByLengthZ, IfcModulusOfRotationalSubgradeReactionSelect __RotationalStiffnessByLengthX, IfcModulusOfRotationalSubgradeReactionSelect __RotationalStiffnessByLengthY, IfcModulusOfRotationalSubgradeReactionSelect __RotationalStiffnessByLengthZ)
+			: base(__Name)
+		{
+			this._TranslationalStiffnessByLengthX = __TranslationalStiffnessByLengthX;
+			this._TranslationalStiffnessByLengthY = __TranslationalStiffnessByLengthY;
+			this._TranslationalStiffnessByLengthZ = __TranslationalStiffnessByLengthZ;
+			this._RotationalStiffnessByLengthX = __RotationalStiffnessByLengthX;
+			this._RotationalStiffnessByLengthY = __RotationalStiffnessByLengthY;
+			this._RotationalStiffnessByLengthZ = __RotationalStiffnessByLengthZ;
+		}
+	
 		[Description("Translational stiffness value in x-direction of the coordinate system defined by " +
 	    "the instance which uses this resource object.")]
 		public IfcModulusOfTranslationalSubgradeReactionSelect TranslationalStiffnessByLengthX { get { return this._TranslationalStiffnessByLengthX; } set { this._TranslationalStiffnessByLengthX = value;} }

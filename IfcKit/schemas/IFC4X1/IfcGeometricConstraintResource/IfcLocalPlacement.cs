@@ -10,14 +10,8 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcGeometricModelResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometricConstraintResource
 {
@@ -32,6 +26,16 @@ namespace BuildingSmart.IFC.IfcGeometricConstraintResource
 		[Required()]
 		IfcAxis2Placement _RelativePlacement;
 	
+	
+		public IfcLocalPlacement()
+		{
+		}
+	
+		public IfcLocalPlacement(IfcObjectPlacement __PlacementRelTo, IfcAxis2Placement __RelativePlacement)
+		{
+			this._PlacementRelTo = __PlacementRelTo;
+			this._RelativePlacement = __RelativePlacement;
+		}
 	
 		[Description("Reference to Object that provides the relative placement by its local coordinate " +
 	    "system. If it is omitted, then the local placement is given to the WCS, establis" +

@@ -15,6 +15,7 @@ using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcQuantityResource;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcConstructionMgmtDomain
 {
@@ -25,6 +26,16 @@ namespace BuildingSmart.IFC.IfcConstructionMgmtDomain
 		[XmlAttribute]
 		IfcCrewResourceTypeEnum? _PredefinedType;
 	
+	
+		public IfcCrewResource()
+		{
+		}
+	
+		public IfcCrewResource(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcIdentifier? __Identification, IfcText? __LongDescription, IfcResourceTime __Usage, IfcAppliedValue[] __BaseCosts, IfcPhysicalQuantity __BaseQuantity, IfcCrewResourceTypeEnum? __PredefinedType)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType, __Identification, __LongDescription, __Usage, __BaseCosts, __BaseQuantity)
+		{
+			this._PredefinedType = __PredefinedType;
+		}
 	
 		[Description("Defines types of crew resources.\r\n<blockquote class=\"change-ifc2x4\">IFC4 New attr" +
 	    "ibute.</blockquote>")]

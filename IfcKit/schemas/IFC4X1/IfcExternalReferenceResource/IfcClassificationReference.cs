@@ -10,18 +10,10 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcApprovalResource;
-using BuildingSmart.IFC.IfcConstraintResource;
-using BuildingSmart.IFC.IfcCostResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcProfileResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcQuantityResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcExternalReferenceResource
 {
@@ -49,6 +41,18 @@ namespace BuildingSmart.IFC.IfcExternalReferenceResource
 		[XmlElement("IfcClassificationReference")]
 		ISet<IfcClassificationReference> _HasReferences = new HashSet<IfcClassificationReference>();
 	
+	
+		public IfcClassificationReference()
+		{
+		}
+	
+		public IfcClassificationReference(IfcURIReference? __Location, IfcIdentifier? __Identification, IfcLabel? __Name, IfcClassificationReferenceSelect __ReferencedSource, IfcText? __Description, IfcIdentifier? __Sort)
+			: base(__Location, __Identification, __Name)
+		{
+			this._ReferencedSource = __ReferencedSource;
+			this._Description = __Description;
+			this._Sort = __Sort;
+		}
 	
 		[Description("The classification system or source that is referenced.\r\n<blockquote class=\"chang" +
 	    "e-ifc2x4\">IFC4 CHANGE&nbsp; Data type changed to <em>IfcClassificationReferenceS" +

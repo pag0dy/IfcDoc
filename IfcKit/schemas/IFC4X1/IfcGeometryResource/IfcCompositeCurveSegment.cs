@@ -10,13 +10,9 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcGeometricModelResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcPresentationOrganizationResource;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
@@ -39,8 +35,20 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		IfcCurve _ParentCurve;
 	
 		[InverseProperty("Segments")] 
+		[MinLength(1)]
 		ISet<IfcCompositeCurve> _UsingCurves = new HashSet<IfcCompositeCurve>();
 	
+	
+		public IfcCompositeCurveSegment()
+		{
+		}
+	
+		public IfcCompositeCurveSegment(IfcTransitionCode __Transition, IfcBoolean __SameSense, IfcCurve __ParentCurve)
+		{
+			this._Transition = __Transition;
+			this._SameSense = __SameSense;
+			this._ParentCurve = __ParentCurve;
+		}
 	
 		[Description("The state of transition (i.e., geometric continuity from the last point of this s" +
 	    "egment to the first point of the next segment) in a composite curve.")]

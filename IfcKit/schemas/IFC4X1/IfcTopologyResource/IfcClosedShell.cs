@@ -10,9 +10,10 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcTopologyResource
 {
@@ -21,6 +22,15 @@ namespace BuildingSmart.IFC.IfcTopologyResource
 		BuildingSmart.IFC.IfcTopologyResource.IfcShell,
 		BuildingSmart.IFC.IfcGeometricConstraintResource.IfcSolidOrShell
 	{
+	
+		public IfcClosedShell()
+		{
+		}
+	
+		public IfcClosedShell(IfcFace[] __CfsFaces)
+			: base(__CfsFaces)
+		{
+		}
 	
 	
 	}

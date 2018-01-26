@@ -11,12 +11,9 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcCostResource;
 using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcConstraintResource
 {
@@ -24,6 +21,7 @@ namespace BuildingSmart.IFC.IfcConstraintResource
 	public partial class IfcObjective : IfcConstraint
 	{
 		[DataMember(Order=0)] 
+		[MinLength(1)]
 		IList<IfcConstraint> _BenchmarkValues = new List<IfcConstraint>();
 	
 		[DataMember(Order=1)] 
@@ -39,6 +37,19 @@ namespace BuildingSmart.IFC.IfcConstraintResource
 		[XmlAttribute]
 		IfcLabel? _UserDefinedQualifier;
 	
+	
+		public IfcObjective()
+		{
+		}
+	
+		public IfcObjective(IfcLabel __Name, IfcText? __Description, IfcConstraintEnum __ConstraintGrade, IfcLabel? __ConstraintSource, IfcActorSelect __CreatingActor, IfcDateTime? __CreationTime, IfcLabel? __UserDefinedGrade, IfcConstraint[] __BenchmarkValues, IfcLogicalOperatorEnum? __LogicalAggregator, IfcObjectiveEnum __ObjectiveQualifier, IfcLabel? __UserDefinedQualifier)
+			: base(__Name, __Description, __ConstraintGrade, __ConstraintSource, __CreatingActor, __CreationTime, __UserDefinedGrade)
+		{
+			this._BenchmarkValues = new List<IfcConstraint>(__BenchmarkValues);
+			this._LogicalAggregator = __LogicalAggregator;
+			this._ObjectiveQualifier = __ObjectiveQualifier;
+			this._UserDefinedQualifier = __UserDefinedQualifier;
+		}
 	
 		[Description("A list of nested constraints.\r\n\r\n<blockquote class=\"change-ifc2x4\">IFC2X4 CHANGE&" +
 	    "nbsp; Modified to be a LIST of nested constraints, which replaces the former <i>" +

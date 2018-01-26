@@ -10,12 +10,8 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationDefinitionResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 {
@@ -24,8 +20,18 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 	{
 		[DataMember(Order=0)] 
 		[Required()]
+		[MinLength(1)]
 		IList<IfcParameterValue> _TexCoordsList = new List<IfcParameterValue>();
 	
+	
+		public IfcTextureVertexList()
+		{
+		}
+	
+		public IfcTextureVertexList(IfcParameterValue[] __TexCoordsList)
+		{
+			this._TexCoordsList = new List<IfcParameterValue>(__TexCoordsList);
+		}
 	
 		[Description("List of texture vertices defined by S-coordinate and T-coordinate.")]
 		public IList<IfcParameterValue> TexCoordsList { get { return this._TexCoordsList; } }

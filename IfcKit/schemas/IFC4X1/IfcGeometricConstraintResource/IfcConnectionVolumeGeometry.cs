@@ -10,14 +10,6 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometricConstraintResource
 {
@@ -31,6 +23,16 @@ namespace BuildingSmart.IFC.IfcGeometricConstraintResource
 		[DataMember(Order=1)] 
 		IfcSolidOrShell _VolumeOnRelatedElement;
 	
+	
+		public IfcConnectionVolumeGeometry()
+		{
+		}
+	
+		public IfcConnectionVolumeGeometry(IfcSolidOrShell __VolumeOnRelatingElement, IfcSolidOrShell __VolumeOnRelatedElement)
+		{
+			this._VolumeOnRelatingElement = __VolumeOnRelatingElement;
+			this._VolumeOnRelatedElement = __VolumeOnRelatedElement;
+		}
 	
 		[Description("Volume at which related object overlaps with the relating element, given in the L" +
 	    "CS of the relating element.")]

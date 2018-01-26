@@ -13,8 +13,7 @@ using System.Xml.Serialization;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcTopologyResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcGeometricModelResource
 {
@@ -31,6 +30,17 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 		[Required()]
 		IfcBoundedCurve _PolygonalBoundary;
 	
+	
+		public IfcPolygonalBoundedHalfSpace()
+		{
+		}
+	
+		public IfcPolygonalBoundedHalfSpace(IfcSurface __BaseSurface, IfcBoolean __AgreementFlag, IfcAxis2Placement3D __Position, IfcBoundedCurve __PolygonalBoundary)
+			: base(__BaseSurface, __AgreementFlag)
+		{
+			this._Position = __Position;
+			this._PolygonalBoundary = __PolygonalBoundary;
+		}
 	
 		[Description("<p>Definition of the position coordinate system for the bounding polyline <STRIKE" +
 	    ">and the base surface</STRIKE>.</p>")]

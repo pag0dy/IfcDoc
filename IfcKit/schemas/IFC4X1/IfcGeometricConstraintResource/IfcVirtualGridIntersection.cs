@@ -10,14 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometricConstraintResource
 {
@@ -27,13 +20,27 @@ namespace BuildingSmart.IFC.IfcGeometricConstraintResource
 	{
 		[DataMember(Order=0)] 
 		[Required()]
+		[MinLength(2)]
+		[MaxLength(2)]
 		IList<IfcGridAxis> _IntersectingAxes = new List<IfcGridAxis>();
 	
 		[DataMember(Order=1)] 
 		[XmlAttribute]
 		[Required()]
+		[MinLength(2)]
+		[MaxLength(3)]
 		IList<IfcLengthMeasure> _OffsetDistances = new List<IfcLengthMeasure>();
 	
+	
+		public IfcVirtualGridIntersection()
+		{
+		}
+	
+		public IfcVirtualGridIntersection(IfcGridAxis[] __IntersectingAxes, IfcLengthMeasure[] __OffsetDistances)
+		{
+			this._IntersectingAxes = new List<IfcGridAxis>(__IntersectingAxes);
+			this._OffsetDistances = new List<IfcLengthMeasure>(__OffsetDistances);
+		}
 	
 		[Description(@"Two grid axes which intersects at exactly one intersection (see also informal proposition at IfcGrid). If attribute OffsetDistances is omitted, the intersection defines the placement or ref direction of a grid placement directly. If OffsetDistances are given, the intersection is defined by the offset curves to the grid axes.")]
 		public IList<IfcGridAxis> IntersectingAxes { get { return this._IntersectingAxes; } }

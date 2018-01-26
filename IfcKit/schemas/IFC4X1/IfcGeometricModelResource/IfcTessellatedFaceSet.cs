@@ -11,10 +11,8 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcTopologyResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcGeometricModelResource
 {
@@ -29,12 +27,22 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 	
 		[InverseProperty("MappedTo")] 
 		[XmlElement]
+		[MaxLength(1)]
 		ISet<IfcIndexedColourMap> _HasColours = new HashSet<IfcIndexedColourMap>();
 	
 		[InverseProperty("MappedTo")] 
 		[XmlElement("IfcIndexedTextureMap")]
 		ISet<IfcIndexedTextureMap> _HasTextures = new HashSet<IfcIndexedTextureMap>();
 	
+	
+		public IfcTessellatedFaceSet()
+		{
+		}
+	
+		public IfcTessellatedFaceSet(IfcCartesianPointList3D __Coordinates)
+		{
+			this._Coordinates = __Coordinates;
+		}
 	
 		[Description("An ordered list of Cartesian points used by the coordinate index defined at the s" +
 	    "ubtypes of <em>IfcTessellatedFaceSet</em>.")]

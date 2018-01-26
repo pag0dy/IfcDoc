@@ -10,13 +10,11 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometricModelResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcPresentationOrganizationResource;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
@@ -30,6 +28,7 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 	
 		[DataMember(Order=1)] 
 		[Required()]
+		[MinLength(2)]
 		IList<IfcCartesianPoint> _ControlPointsList = new List<IfcCartesianPoint>();
 	
 		[DataMember(Order=2)] 
@@ -47,6 +46,19 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		[Required()]
 		IfcLogical _SelfIntersect;
 	
+	
+		public IfcBSplineCurve()
+		{
+		}
+	
+		public IfcBSplineCurve(IfcInteger __Degree, IfcCartesianPoint[] __ControlPointsList, IfcBSplineCurveForm __CurveForm, IfcLogical __ClosedCurve, IfcLogical __SelfIntersect)
+		{
+			this._Degree = __Degree;
+			this._ControlPointsList = new List<IfcCartesianPoint>(__ControlPointsList);
+			this._CurveForm = __CurveForm;
+			this._ClosedCurve = __ClosedCurve;
+			this._SelfIntersect = __SelfIntersect;
+		}
 	
 		[Description("The algebraic degree of the basis functions.")]
 		public IfcInteger Degree { get { return this._Degree; } set { this._Degree = value;} }

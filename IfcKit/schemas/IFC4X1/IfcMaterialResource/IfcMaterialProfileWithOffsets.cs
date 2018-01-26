@@ -11,13 +11,10 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
 using BuildingSmart.IFC.IfcProfileResource;
 using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcMaterialResource
 {
@@ -27,11 +24,23 @@ namespace BuildingSmart.IFC.IfcMaterialResource
 		[DataMember(Order=0)] 
 		[XmlAttribute]
 		[Required()]
-		IfcLengthMeasure _OffsetValues;
+		[MinLength(1)]
+		[MaxLength(2)]
+		IfcLengthMeasure[] _OffsetValues;
 	
+	
+		public IfcMaterialProfileWithOffsets()
+		{
+		}
+	
+		public IfcMaterialProfileWithOffsets(IfcLabel? __Name, IfcText? __Description, IfcMaterial __Material, IfcProfileDef __Profile, IfcInteger? __Priority, IfcLabel? __Category, IfcLengthMeasure[] __OffsetValues)
+			: base(__Name, __Description, __Material, __Profile, __Priority, __Category)
+		{
+			this._OffsetValues = __OffsetValues;
+		}
 	
 		[Description(@"The numerical value of profile offset, in the direction of the axis direction - always AXIS1 that is, the axis along the extrusion path. The <em>OffsetValues[1]</em> identifies the offset from the lower position along the axis direction (normally the start of the standard extrusion), the <em>OffsetValues[2]</em> identifies the offset from the upper position along the axis direction (normally the end of the standard extrusion).")]
-		public IfcLengthMeasure OffsetValues { get { return this._OffsetValues; } set { this._OffsetValues = value;} }
+		public IfcLengthMeasure[] OffsetValues { get { return this._OffsetValues; } }
 	
 	
 	}

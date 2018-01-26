@@ -10,14 +10,8 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcMaterialResource
 {
@@ -33,6 +27,17 @@ namespace BuildingSmart.IFC.IfcMaterialResource
 		[XmlAttribute]
 		IfcCardinalPointReference? _CardinalEndPoint;
 	
+	
+		public IfcMaterialProfileSetUsageTapering()
+		{
+		}
+	
+		public IfcMaterialProfileSetUsageTapering(IfcMaterialProfileSet __ForProfileSet, IfcCardinalPointReference? __CardinalPoint, IfcPositiveLengthMeasure? __ReferenceExtent, IfcMaterialProfileSet __ForProfileEndSet, IfcCardinalPointReference? __CardinalEndPoint)
+			: base(__ForProfileSet, __CardinalPoint, __ReferenceExtent)
+		{
+			this._ForProfileEndSet = __ForProfileEndSet;
+			this._CardinalEndPoint = __CardinalEndPoint;
+		}
 	
 		[Description("The second <em>IfcMaterialProfileSet</em> set to which the usage is applied.")]
 		public IfcMaterialProfileSet ForProfileEndSet { get { return this._ForProfileEndSet; } set { this._ForProfileEndSet = value;} }

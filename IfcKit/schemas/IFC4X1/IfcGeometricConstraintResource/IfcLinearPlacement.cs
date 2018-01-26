@@ -10,14 +10,8 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcGeometricModelResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometricConstraintResource
 {
@@ -38,6 +32,18 @@ namespace BuildingSmart.IFC.IfcGeometricConstraintResource
 		[DataMember(Order=3)] 
 		IfcAxis2Placement3D _CartesianPosition;
 	
+	
+		public IfcLinearPlacement()
+		{
+		}
+	
+		public IfcLinearPlacement(IfcCurve __PlacementRelTo, IfcDistanceExpression __Distance, IfcOrientationExpression __Orientation, IfcAxis2Placement3D __CartesianPosition)
+		{
+			this._PlacementRelTo = __PlacementRelTo;
+			this._Distance = __Distance;
+			this._Orientation = __Orientation;
+			this._CartesianPosition = __CartesianPosition;
+		}
 	
 		[Description("The curve used as the basis for positioning parameters.")]
 		public IfcCurve PlacementRelTo { get { return this._PlacementRelTo; } set { this._PlacementRelTo = value;} }

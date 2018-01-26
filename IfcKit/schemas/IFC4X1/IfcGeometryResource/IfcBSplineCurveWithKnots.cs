@@ -10,13 +10,11 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometricModelResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcPresentationOrganizationResource;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
@@ -26,11 +24,13 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		[DataMember(Order=0)] 
 		[XmlAttribute]
 		[Required()]
+		[MinLength(2)]
 		IList<IfcInteger> _KnotMultiplicities = new List<IfcInteger>();
 	
 		[DataMember(Order=1)] 
 		[XmlAttribute]
 		[Required()]
+		[MinLength(2)]
 		IList<IfcParameterValue> _Knots = new List<IfcParameterValue>();
 	
 		[DataMember(Order=2)] 
@@ -38,6 +38,18 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		[Required()]
 		IfcKnotType _KnotSpec;
 	
+	
+		public IfcBSplineCurveWithKnots()
+		{
+		}
+	
+		public IfcBSplineCurveWithKnots(IfcInteger __Degree, IfcCartesianPoint[] __ControlPointsList, IfcBSplineCurveForm __CurveForm, IfcLogical __ClosedCurve, IfcLogical __SelfIntersect, IfcInteger[] __KnotMultiplicities, IfcParameterValue[] __Knots, IfcKnotType __KnotSpec)
+			: base(__Degree, __ControlPointsList, __CurveForm, __ClosedCurve, __SelfIntersect)
+		{
+			this._KnotMultiplicities = new List<IfcInteger>(__KnotMultiplicities);
+			this._Knots = new List<IfcParameterValue>(__Knots);
+			this._KnotSpec = __KnotSpec;
+		}
 	
 		[Description("The multiplicities of the knots. This list defines the number of times each knot " +
 	    "in the knots list is to be repeated in constructing the knot array.")]

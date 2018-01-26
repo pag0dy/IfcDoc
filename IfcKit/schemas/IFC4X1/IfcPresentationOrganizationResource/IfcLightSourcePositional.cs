@@ -10,11 +10,9 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcPresentationOrganizationResource
 {
@@ -46,6 +44,20 @@ namespace BuildingSmart.IFC.IfcPresentationOrganizationResource
 		[Required()]
 		IfcReal _QuadricAttenuation;
 	
+	
+		public IfcLightSourcePositional()
+		{
+		}
+	
+		public IfcLightSourcePositional(IfcLabel? __Name, IfcColourRgb __LightColour, IfcNormalisedRatioMeasure? __AmbientIntensity, IfcNormalisedRatioMeasure? __Intensity, IfcCartesianPoint __Position, IfcPositiveLengthMeasure __Radius, IfcReal __ConstantAttenuation, IfcReal __DistanceAttenuation, IfcReal __QuadricAttenuation)
+			: base(__Name, __LightColour, __AmbientIntensity, __Intensity)
+		{
+			this._Position = __Position;
+			this._Radius = __Radius;
+			this._ConstantAttenuation = __ConstantAttenuation;
+			this._DistanceAttenuation = __DistanceAttenuation;
+			this._QuadricAttenuation = __QuadricAttenuation;
+		}
 	
 		[Description("Definition from ISO/CD 10303-46:1992: The Cartesian point indicates the position " +
 	    "of the light source.\r\nDefinition from VRML97 - ISO/IEC 14772-1:1997: A Point lig" +

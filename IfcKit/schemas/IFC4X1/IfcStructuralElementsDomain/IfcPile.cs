@@ -10,11 +10,14 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcSharedComponentElements;
+using BuildingSmart.IFC.IfcRepresentationResource;
+using BuildingSmart.IFC.IfcSharedBldgElements;
+using BuildingSmart.IFC.IfcStructuralAnalysisDomain;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcStructuralElementsDomain
 {
@@ -29,6 +32,17 @@ namespace BuildingSmart.IFC.IfcStructuralElementsDomain
 		[XmlAttribute]
 		IfcPileConstructionEnum? _ConstructionType;
 	
+	
+		public IfcPile()
+		{
+		}
+	
+		public IfcPile(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcObjectPlacement __ObjectPlacement, IfcProductRepresentation __Representation, IfcIdentifier? __Tag, IfcPileTypeEnum? __PredefinedType, IfcPileConstructionEnum? __ConstructionType)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType, __ObjectPlacement, __Representation, __Tag)
+		{
+			this._PredefinedType = __PredefinedType;
+			this._ConstructionType = __ConstructionType;
+		}
 	
 		[Description("The predefined generic type of the pile according to function.\r\n\r\n<blockquote cla" +
 	    "ss=\"change-ifc2x4\">IFC4 CHANGE&nbsp; Attribute made optional.  Type information " +

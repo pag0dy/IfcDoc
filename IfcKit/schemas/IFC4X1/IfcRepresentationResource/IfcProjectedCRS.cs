@@ -10,14 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcRepresentationResource
 {
@@ -36,6 +29,18 @@ namespace BuildingSmart.IFC.IfcRepresentationResource
 		[XmlElement]
 		IfcNamedUnit _MapUnit;
 	
+	
+		public IfcProjectedCRS()
+		{
+		}
+	
+		public IfcProjectedCRS(IfcLabel __Name, IfcText? __Description, IfcIdentifier? __GeodeticDatum, IfcIdentifier? __VerticalDatum, IfcIdentifier? __MapProjection, IfcIdentifier? __MapZone, IfcNamedUnit __MapUnit)
+			: base(__Name, __Description, __GeodeticDatum, __VerticalDatum)
+		{
+			this._MapProjection = __MapProjection;
+			this._MapZone = __MapZone;
+			this._MapUnit = __MapUnit;
+		}
 	
 		[Description("Name by which the map projection is identified.\r\n\r\n<blockquote class=\"examples\">E" +
 	    "XAMPLE&nbsp; map projects include:\r\n<ul class=\"note\">\r\n  <li class=\"note\">UTM</l" +

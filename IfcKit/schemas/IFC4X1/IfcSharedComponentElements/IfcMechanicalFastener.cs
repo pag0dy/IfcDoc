@@ -10,8 +10,14 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcGeometricConstraintResource;
+using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcProductExtension;
+using BuildingSmart.IFC.IfcRepresentationResource;
+using BuildingSmart.IFC.IfcSharedBldgElements;
+using BuildingSmart.IFC.IfcStructuralAnalysisDomain;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcSharedComponentElements
 {
@@ -30,6 +36,18 @@ namespace BuildingSmart.IFC.IfcSharedComponentElements
 		[XmlAttribute]
 		IfcMechanicalFastenerTypeEnum? _PredefinedType;
 	
+	
+		public IfcMechanicalFastener()
+		{
+		}
+	
+		public IfcMechanicalFastener(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcObjectPlacement __ObjectPlacement, IfcProductRepresentation __Representation, IfcIdentifier? __Tag, IfcPositiveLengthMeasure? __NominalDiameter, IfcPositiveLengthMeasure? __NominalLength, IfcMechanicalFastenerTypeEnum? __PredefinedType)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType, __ObjectPlacement, __Representation, __Tag)
+		{
+			this._NominalDiameter = __NominalDiameter;
+			this._NominalLength = __NominalLength;
+			this._PredefinedType = __PredefinedType;
+		}
 	
 		[Description("The nominal diameter describing the cross-section size of the fastener type.\r\n\r\n<" +
 	    "blockquote class=\"change-ifc2x4\">\r\nIFC4 CHANGE&nbsp; Deprecated; the respective " +

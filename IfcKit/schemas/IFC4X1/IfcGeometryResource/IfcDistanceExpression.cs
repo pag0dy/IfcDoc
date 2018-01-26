@@ -10,13 +10,9 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcGeometricModelResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcPresentationOrganizationResource;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
@@ -44,6 +40,19 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		[XmlAttribute]
 		IfcBoolean? _AlongHorizontal;
 	
+	
+		public IfcDistanceExpression()
+		{
+		}
+	
+		public IfcDistanceExpression(IfcLengthMeasure __DistanceAlong, IfcLengthMeasure? __OffsetLateral, IfcLengthMeasure? __OffsetVertical, IfcLengthMeasure? __OffsetLongitudinal, IfcBoolean? __AlongHorizontal)
+		{
+			this._DistanceAlong = __DistanceAlong;
+			this._OffsetLateral = __OffsetLateral;
+			this._OffsetVertical = __OffsetVertical;
+			this._OffsetLongitudinal = __OffsetLongitudinal;
+			this._AlongHorizontal = __AlongHorizontal;
+		}
 	
 		[Description(@"The distance along the basis curve, measured according to projection in the horizontal plane if AlongHorizontal is True, or according to 3D distance otherwise. If the basis curve refers to <i>IfcAlignmentCurve</i> and AlongHorizontal is True, then this measurement directly corresponds to <i>IfcAlignment2DHorizontal</i>.")]
 		public IfcLengthMeasure DistanceAlong { get { return this._DistanceAlong; } set { this._DistanceAlong = value;} }

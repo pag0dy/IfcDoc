@@ -10,7 +10,6 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 
 namespace BuildingSmart.IFC.IfcDateTimeResource
@@ -86,6 +85,32 @@ namespace BuildingSmart.IFC.IfcDateTimeResource
 		[XmlAttribute]
 		IfcPositiveRatioMeasure? _Completion;
 	
+	
+		public IfcTaskTime()
+		{
+		}
+	
+		public IfcTaskTime(IfcLabel? __Name, IfcDataOriginEnum? __DataOrigin, IfcLabel? __UserDefinedDataOrigin, IfcTaskDurationEnum? __DurationType, IfcDuration? __ScheduleDuration, IfcDateTime? __ScheduleStart, IfcDateTime? __ScheduleFinish, IfcDateTime? __EarlyStart, IfcDateTime? __EarlyFinish, IfcDateTime? __LateStart, IfcDateTime? __LateFinish, IfcDuration? __FreeFloat, IfcDuration? __TotalFloat, IfcBoolean? __IsCritical, IfcDateTime? __StatusTime, IfcDuration? __ActualDuration, IfcDateTime? __ActualStart, IfcDateTime? __ActualFinish, IfcDuration? __RemainingTime, IfcPositiveRatioMeasure? __Completion)
+			: base(__Name, __DataOrigin, __UserDefinedDataOrigin)
+		{
+			this._DurationType = __DurationType;
+			this._ScheduleDuration = __ScheduleDuration;
+			this._ScheduleStart = __ScheduleStart;
+			this._ScheduleFinish = __ScheduleFinish;
+			this._EarlyStart = __EarlyStart;
+			this._EarlyFinish = __EarlyFinish;
+			this._LateStart = __LateStart;
+			this._LateFinish = __LateFinish;
+			this._FreeFloat = __FreeFloat;
+			this._TotalFloat = __TotalFloat;
+			this._IsCritical = __IsCritical;
+			this._StatusTime = __StatusTime;
+			this._ActualDuration = __ActualDuration;
+			this._ActualStart = __ActualStart;
+			this._ActualFinish = __ActualFinish;
+			this._RemainingTime = __RemainingTime;
+			this._Completion = __Completion;
+		}
 	
 		[Description("Enables to specify the type of duration values for <em>ScheduleDuration</em>, <em" +
 	    ">ActualDuration</em> and <em>RemainingTime</em>. The duration type is either wor" +

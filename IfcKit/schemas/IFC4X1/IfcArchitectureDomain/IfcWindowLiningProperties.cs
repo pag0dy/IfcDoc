@@ -10,19 +10,10 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcPropertyResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcSharedBldgElements;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcArchitectureDomain
 {
@@ -77,6 +68,27 @@ namespace BuildingSmart.IFC.IfcArchitectureDomain
 		[XmlAttribute]
 		IfcLengthMeasure? _LiningToPanelOffsetY;
 	
+	
+		public IfcWindowLiningProperties()
+		{
+		}
+	
+		public IfcWindowLiningProperties(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcPositiveLengthMeasure? __LiningDepth, IfcNonNegativeLengthMeasure? __LiningThickness, IfcNonNegativeLengthMeasure? __TransomThickness, IfcNonNegativeLengthMeasure? __MullionThickness, IfcNormalisedRatioMeasure? __FirstTransomOffset, IfcNormalisedRatioMeasure? __SecondTransomOffset, IfcNormalisedRatioMeasure? __FirstMullionOffset, IfcNormalisedRatioMeasure? __SecondMullionOffset, IfcShapeAspect __ShapeAspectStyle, IfcLengthMeasure? __LiningOffset, IfcLengthMeasure? __LiningToPanelOffsetX, IfcLengthMeasure? __LiningToPanelOffsetY)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description)
+		{
+			this._LiningDepth = __LiningDepth;
+			this._LiningThickness = __LiningThickness;
+			this._TransomThickness = __TransomThickness;
+			this._MullionThickness = __MullionThickness;
+			this._FirstTransomOffset = __FirstTransomOffset;
+			this._SecondTransomOffset = __SecondTransomOffset;
+			this._FirstMullionOffset = __FirstMullionOffset;
+			this._SecondMullionOffset = __SecondMullionOffset;
+			this._ShapeAspectStyle = __ShapeAspectStyle;
+			this._LiningOffset = __LiningOffset;
+			this._LiningToPanelOffsetX = __LiningToPanelOffsetX;
+			this._LiningToPanelOffsetY = __LiningToPanelOffsetY;
+		}
 	
 		[Description("Depth of the window lining (dimension measured perpendicular to window elevation " +
 	    "plane).")]

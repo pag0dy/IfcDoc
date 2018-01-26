@@ -10,18 +10,11 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
+using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcSharedBldgElements
 {
@@ -48,6 +41,19 @@ namespace BuildingSmart.IFC.IfcSharedBldgElements
 		[Required()]
 		IfcConnectionTypeEnum _RelatingConnectionType;
 	
+	
+		public IfcRelConnectsPathElements()
+		{
+		}
+	
+		public IfcRelConnectsPathElements(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcConnectionGeometry __ConnectionGeometry, IfcElement __RelatingElement, IfcElement __RelatedElement, IfcInteger[] __RelatingPriorities, IfcInteger[] __RelatedPriorities, IfcConnectionTypeEnum __RelatedConnectionType, IfcConnectionTypeEnum __RelatingConnectionType)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ConnectionGeometry, __RelatingElement, __RelatedElement)
+		{
+			this._RelatingPriorities = new List<IfcInteger>(__RelatingPriorities);
+			this._RelatedPriorities = new List<IfcInteger>(__RelatedPriorities);
+			this._RelatedConnectionType = __RelatedConnectionType;
+			this._RelatingConnectionType = __RelatingConnectionType;
+		}
 	
 		[Description(@"Overriding priorities at this connection. It overrides the standard priority given at the wall layer provided by <em>IfcMaterialLayer</em>.<em>Priority</em>. The list of <em>RelatingProperties</em> corresponds to the list of <em>IfcMaterialLayerSet</em>.<em>MaterialLayers</em> of the element referenced by <em>RelatingObject</em>.
 	<blockquote class=""change-ifc2x4"">

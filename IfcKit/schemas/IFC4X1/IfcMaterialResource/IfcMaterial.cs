@@ -11,11 +11,8 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfileResource;
 using BuildingSmart.IFC.IfcPropertyResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
 
@@ -39,14 +36,27 @@ namespace BuildingSmart.IFC.IfcMaterialResource
 	
 		[InverseProperty("RepresentedMaterial")] 
 		[XmlElement]
+		[MaxLength(1)]
 		ISet<IfcMaterialDefinitionRepresentation> _HasRepresentation = new HashSet<IfcMaterialDefinitionRepresentation>();
 	
 		[InverseProperty("RelatedMaterials")] 
 		ISet<IfcMaterialRelationship> _IsRelatedWith = new HashSet<IfcMaterialRelationship>();
 	
 		[InverseProperty("RelatingMaterial")] 
+		[MaxLength(1)]
 		ISet<IfcMaterialRelationship> _RelatesTo = new HashSet<IfcMaterialRelationship>();
 	
+	
+		public IfcMaterial()
+		{
+		}
+	
+		public IfcMaterial(IfcLabel __Name, IfcText? __Description, IfcLabel? __Category)
+		{
+			this._Name = __Name;
+			this._Description = __Description;
+			this._Category = __Category;
+		}
 	
 		[Description(@"Name of the material. 
 	<blockquote class=""example"">EXAMPLE A view definition may require <em>Material.Name</em> to uniquely specify e.g. concrete or steel grade, in which case the attribute Material.Category could take the value 'Concrete' or 'Steel'. </blockquote>

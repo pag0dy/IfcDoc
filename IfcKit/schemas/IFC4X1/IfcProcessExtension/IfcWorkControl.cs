@@ -11,13 +11,10 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcCostResource;
 using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcProcessExtension
 {
@@ -30,6 +27,7 @@ namespace BuildingSmart.IFC.IfcProcessExtension
 		IfcDateTime _CreationDate;
 	
 		[DataMember(Order=1)] 
+		[MinLength(1)]
 		ISet<IfcPerson> _Creators = new HashSet<IfcPerson>();
 	
 		[DataMember(Order=2)] 
@@ -53,6 +51,22 @@ namespace BuildingSmart.IFC.IfcProcessExtension
 		[XmlAttribute]
 		IfcDateTime? _FinishTime;
 	
+	
+		public IfcWorkControl()
+		{
+		}
+	
+		public IfcWorkControl(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcIdentifier? __Identification, IfcDateTime __CreationDate, IfcPerson[] __Creators, IfcLabel? __Purpose, IfcDuration? __Duration, IfcDuration? __TotalFloat, IfcDateTime __StartTime, IfcDateTime? __FinishTime)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType, __Identification)
+		{
+			this._CreationDate = __CreationDate;
+			this._Creators = new HashSet<IfcPerson>(__Creators);
+			this._Purpose = __Purpose;
+			this._Duration = __Duration;
+			this._TotalFloat = __TotalFloat;
+			this._StartTime = __StartTime;
+			this._FinishTime = __FinishTime;
+		}
 	
 		[Description("    The date that the plan is created.")]
 		public IfcDateTime CreationDate { get { return this._CreationDate; } set { this._CreationDate = value;} }

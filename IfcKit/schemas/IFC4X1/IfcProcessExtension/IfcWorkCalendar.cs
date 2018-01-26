@@ -10,14 +10,10 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcCostResource;
 using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcProcessExtension
 {
@@ -25,15 +21,29 @@ namespace BuildingSmart.IFC.IfcProcessExtension
 	public partial class IfcWorkCalendar : IfcControl
 	{
 		[DataMember(Order=0)] 
+		[MinLength(1)]
 		ISet<IfcWorkTime> _WorkingTimes = new HashSet<IfcWorkTime>();
 	
 		[DataMember(Order=1)] 
+		[MinLength(1)]
 		ISet<IfcWorkTime> _ExceptionTimes = new HashSet<IfcWorkTime>();
 	
 		[DataMember(Order=2)] 
 		[XmlAttribute]
 		IfcWorkCalendarTypeEnum? _PredefinedType;
 	
+	
+		public IfcWorkCalendar()
+		{
+		}
+	
+		public IfcWorkCalendar(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcIdentifier? __Identification, IfcWorkTime[] __WorkingTimes, IfcWorkTime[] __ExceptionTimes, IfcWorkCalendarTypeEnum? __PredefinedType)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType, __Identification)
+		{
+			this._WorkingTimes = new HashSet<IfcWorkTime>(__WorkingTimes);
+			this._ExceptionTimes = new HashSet<IfcWorkTime>(__ExceptionTimes);
+			this._PredefinedType = __PredefinedType;
+		}
 	
 		[Description("    Set of times periods that are regarded as an initial set-up\r\n    of working t" +
 	    "imes. Exception times can then further restrict\r\n    these working times.\r\n ")]

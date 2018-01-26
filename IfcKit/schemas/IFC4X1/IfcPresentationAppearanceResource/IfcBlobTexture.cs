@@ -10,12 +10,9 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationDefinitionResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 {
@@ -32,6 +29,17 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 		[Required()]
 		IfcBinary _RasterCode;
 	
+	
+		public IfcBlobTexture()
+		{
+		}
+	
+		public IfcBlobTexture(IfcBoolean __RepeatS, IfcBoolean __RepeatT, IfcIdentifier? __Mode, IfcCartesianTransformationOperator2D __TextureTransform, IfcIdentifier[] __Parameter, IfcIdentifier __RasterFormat, IfcBinary __RasterCode)
+			: base(__RepeatS, __RepeatT, __Mode, __TextureTransform, __Parameter)
+		{
+			this._RasterFormat = __RasterFormat;
+			this._RasterCode = __RasterCode;
+		}
 	
 		[Description("The format of the <em>RasterCode</em> often using a compression.")]
 		public IfcIdentifier RasterFormat { get { return this._RasterFormat; } set { this._RasterFormat = value;} }

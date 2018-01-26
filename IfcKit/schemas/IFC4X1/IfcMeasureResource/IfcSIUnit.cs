@@ -10,8 +10,6 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
 
 namespace BuildingSmart.IFC.IfcMeasureResource
 {
@@ -27,6 +25,17 @@ namespace BuildingSmart.IFC.IfcMeasureResource
 		[Required()]
 		IfcSIUnitName _Name;
 	
+	
+		public IfcSIUnit()
+		{
+		}
+	
+		public IfcSIUnit(IfcDimensionalExponents __Dimensions, IfcUnitEnum __UnitType, IfcSIPrefix? __Prefix, IfcSIUnitName __Name)
+			: base(__Dimensions, __UnitType)
+		{
+			this._Prefix = __Prefix;
+			this._Name = __Name;
+		}
 	
 		[Description("The SI Prefix for defining decimal multiples and submultiples of the unit.")]
 		public IfcSIPrefix? Prefix { get { return this._Prefix; } set { this._Prefix = value;} }

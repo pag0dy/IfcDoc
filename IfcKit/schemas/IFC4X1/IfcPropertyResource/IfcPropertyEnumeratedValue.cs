@@ -10,16 +10,11 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
 using BuildingSmart.IFC.IfcApprovalResource;
 using BuildingSmart.IFC.IfcConstraintResource;
-using BuildingSmart.IFC.IfcCostResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcPropertyResource
 {
@@ -27,12 +22,24 @@ namespace BuildingSmart.IFC.IfcPropertyResource
 	public partial class IfcPropertyEnumeratedValue : IfcSimpleProperty
 	{
 		[DataMember(Order=0)] 
+		[MinLength(1)]
 		IList<IfcValue> _EnumerationValues = new List<IfcValue>();
 	
 		[DataMember(Order=1)] 
 		[XmlElement]
 		IfcPropertyEnumeration _EnumerationReference;
 	
+	
+		public IfcPropertyEnumeratedValue()
+		{
+		}
+	
+		public IfcPropertyEnumeratedValue(IfcIdentifier __Name, IfcText? __Description, IfcValue[] __EnumerationValues, IfcPropertyEnumeration __EnumerationReference)
+			: base(__Name, __Description)
+		{
+			this._EnumerationValues = new List<IfcValue>(__EnumerationValues);
+			this._EnumerationReference = __EnumerationReference;
+		}
 	
 		[Description(@"Enumeration values, which shall be listed in the referenced <em>IfcPropertyEnumeration</em>, if such a reference is provided.
 	<blockquote class=""change-ifc2x4"">IFC4 CHANGE&nbsp; The attribute has been made optional with upward compatibility for file based exchange.</blockquote>")]

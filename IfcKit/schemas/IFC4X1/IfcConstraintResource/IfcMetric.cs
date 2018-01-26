@@ -11,12 +11,9 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcCostResource;
 using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcConstraintResource
 {
@@ -39,6 +36,19 @@ namespace BuildingSmart.IFC.IfcConstraintResource
 		[XmlElement]
 		IfcReference _ReferencePath;
 	
+	
+		public IfcMetric()
+		{
+		}
+	
+		public IfcMetric(IfcLabel __Name, IfcText? __Description, IfcConstraintEnum __ConstraintGrade, IfcLabel? __ConstraintSource, IfcActorSelect __CreatingActor, IfcDateTime? __CreationTime, IfcLabel? __UserDefinedGrade, IfcBenchmarkEnum __Benchmark, IfcLabel? __ValueSource, IfcMetricValueSelect __DataValue, IfcReference __ReferencePath)
+			: base(__Name, __Description, __ConstraintGrade, __ConstraintSource, __CreatingActor, __CreationTime, __UserDefinedGrade)
+		{
+			this._Benchmark = __Benchmark;
+			this._ValueSource = __ValueSource;
+			this._DataValue = __DataValue;
+			this._ReferencePath = __ReferencePath;
+		}
 	
 		[Description("Enumeration that identifies the type of benchmark data.\r\n")]
 		public IfcBenchmarkEnum Benchmark { get { return this._Benchmark; } set { this._Benchmark = value;} }

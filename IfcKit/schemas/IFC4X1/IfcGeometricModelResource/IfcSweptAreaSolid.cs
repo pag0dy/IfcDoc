@@ -10,11 +10,11 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometricModelResource
 {
@@ -30,6 +30,16 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 		[XmlElement]
 		IfcAxis2Placement3D _Position;
 	
+	
+		public IfcSweptAreaSolid()
+		{
+		}
+	
+		public IfcSweptAreaSolid(IfcProfileDef __SweptArea, IfcAxis2Placement3D __Position)
+		{
+			this._SweptArea = __SweptArea;
+			this._Position = __Position;
+		}
 	
 		[Description("The surface defining the area to be swept. It is given as a profile definition wi" +
 	    "thin the xy plane of the position coordinate system.")]

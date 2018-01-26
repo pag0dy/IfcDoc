@@ -11,13 +11,9 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfileResource;
 using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcMaterialResource
 {
@@ -32,15 +28,28 @@ namespace BuildingSmart.IFC.IfcMaterialResource
 		[DataMember(Order=1)] 
 		[XmlAttribute]
 		[Required()]
-		IfcLengthMeasure _OffsetValues;
+		[MinLength(1)]
+		[MaxLength(2)]
+		IfcLengthMeasure[] _OffsetValues;
 	
+	
+		public IfcMaterialLayerWithOffsets()
+		{
+		}
+	
+		public IfcMaterialLayerWithOffsets(IfcMaterial __Material, IfcNonNegativeLengthMeasure __LayerThickness, IfcLogical? __IsVentilated, IfcLabel? __Name, IfcText? __Description, IfcLabel? __Category, IfcInteger? __Priority, IfcLayerSetDirectionEnum __OffsetDirection, IfcLengthMeasure[] __OffsetValues)
+			: base(__Material, __LayerThickness, __IsVentilated, __Name, __Description, __Category, __Priority)
+		{
+			this._OffsetDirection = __OffsetDirection;
+			this._OffsetValues = __OffsetValues;
+		}
 	
 		[Description("Orientation of the offset; shall be perpendicular to the parent layer set directi" +
 	    "on.\r\n")]
 		public IfcLayerSetDirectionEnum OffsetDirection { get { return this._OffsetDirection; } set { this._OffsetDirection = value;} }
 	
 		[Description(@"The numerical value of layer offset, in the direction of the axis assigned by the attribute <em>OffsetDirection</em>. The <em>OffsetValues[1]</em> identifies the offset from the lower position along the axis direction (normally the start of the standard extrusion), the <em>OffsetValues[2]</em> identifies the offset from the upper position along the axis direction (normally the end of the standard extrusion).")]
-		public IfcLengthMeasure OffsetValues { get { return this._OffsetValues; } set { this._OffsetValues = value;} }
+		public IfcLengthMeasure[] OffsetValues { get { return this._OffsetValues; } }
 	
 	
 	}
