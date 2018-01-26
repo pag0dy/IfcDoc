@@ -10,14 +10,8 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcRepresentationResource
 {
@@ -25,11 +19,22 @@ namespace BuildingSmart.IFC.IfcRepresentationResource
 	public partial class IfcProductDefinitionShape : IfcProductRepresentation
 	{
 		[InverseProperty("Representation")] 
+		[MinLength(1)]
+		[MaxLength(1)]
 		ISet<IfcProduct> _ShapeOfProduct = new HashSet<IfcProduct>();
 	
 		[InverseProperty("PartOfProductDefinitionShape")] 
 		ISet<IfcShapeAspect> _HasShapeAspects = new HashSet<IfcShapeAspect>();
 	
+	
+		public IfcProductDefinitionShape()
+		{
+		}
+	
+		public IfcProductDefinitionShape(IfcLabel? __Name, IfcText? __Description, IfcRepresentation[] __Representations)
+			: base(__Name, __Description, __Representations)
+		{
+		}
 	
 		[Description(@"<EPM-HTML>
 	The <i>IfcProductDefinitionShape</i> shall be used to provide a representation for a single instance of <i>IfcProduct</i>.

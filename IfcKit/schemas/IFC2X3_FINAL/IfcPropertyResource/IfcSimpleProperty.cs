@@ -10,20 +10,22 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcConstraintResource;
-using BuildingSmart.IFC.IfcCostResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcTimeSeriesResource;
 
 namespace BuildingSmart.IFC.IfcPropertyResource
 {
 	[Guid("4e9ac214-8d2c-46f4-834e-50100692246b")]
 	public abstract partial class IfcSimpleProperty : IfcProperty
 	{
+	
+		public IfcSimpleProperty()
+		{
+		}
+	
+		public IfcSimpleProperty(IfcIdentifier __Name, IfcText? __Description)
+			: base(__Name, __Description)
+		{
+		}
 	
 	
 	}

@@ -10,14 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcConstraintResource;
-using BuildingSmart.IFC.IfcCostResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcTimeSeriesResource;
 
 namespace BuildingSmart.IFC.IfcPropertyResource
 {
@@ -26,10 +19,12 @@ namespace BuildingSmart.IFC.IfcPropertyResource
 	{
 		[DataMember(Order=0)] 
 		[Required()]
+		[MinLength(1)]
 		IList<IfcValue> _DefiningValues = new List<IfcValue>();
 	
 		[DataMember(Order=1)] 
 		[Required()]
+		[MinLength(1)]
 		IList<IfcValue> _DefinedValues = new List<IfcValue>();
 	
 		[DataMember(Order=2)] 
@@ -42,6 +37,20 @@ namespace BuildingSmart.IFC.IfcPropertyResource
 		[DataMember(Order=4)] 
 		IfcUnit _DefinedUnit;
 	
+	
+		public IfcPropertyTableValue()
+		{
+		}
+	
+		public IfcPropertyTableValue(IfcIdentifier __Name, IfcText? __Description, IfcValue[] __DefiningValues, IfcValue[] __DefinedValues, IfcText? __Expression, IfcUnit __DefiningUnit, IfcUnit __DefinedUnit)
+			: base(__Name, __Description)
+		{
+			this._DefiningValues = new List<IfcValue>(__DefiningValues);
+			this._DefinedValues = new List<IfcValue>(__DefinedValues);
+			this._Expression = __Expression;
+			this._DefiningUnit = __DefiningUnit;
+			this._DefinedUnit = __DefinedUnit;
+		}
 	
 		[Description("List of defining values, which determine the defined values.")]
 		public IList<IfcValue> DefiningValues { get { return this._DefiningValues; } }

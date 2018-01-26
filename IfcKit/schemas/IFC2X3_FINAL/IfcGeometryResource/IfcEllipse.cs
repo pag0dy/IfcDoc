@@ -14,9 +14,6 @@ using BuildingSmart.IFC.IfcGeometricModelResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcPresentationOrganizationResource;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
@@ -33,6 +30,17 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		[Required()]
 		IfcPositiveLengthMeasure _SemiAxis2;
 	
+	
+		public IfcEllipse()
+		{
+		}
+	
+		public IfcEllipse(IfcAxis2Placement __Position, IfcPositiveLengthMeasure __SemiAxis1, IfcPositiveLengthMeasure __SemiAxis2)
+			: base(__Position)
+		{
+			this._SemiAxis1 = __SemiAxis1;
+			this._SemiAxis2 = __SemiAxis2;
+		}
 	
 		[Description("The first radius of the ellipse which shall be positive. Placement.Axes[1] gives " +
 	    "the direction of the SemiAxis1.")]

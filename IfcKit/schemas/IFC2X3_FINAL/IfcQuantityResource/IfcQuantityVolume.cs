@@ -23,6 +23,16 @@ namespace BuildingSmart.IFC.IfcQuantityResource
 		IfcVolumeMeasure _VolumeValue;
 	
 	
+		public IfcQuantityVolume()
+		{
+		}
+	
+		public IfcQuantityVolume(IfcLabel __Name, IfcText? __Description, IfcNamedUnit __Unit, IfcVolumeMeasure __VolumeValue)
+			: base(__Name, __Description, __Unit)
+		{
+			this._VolumeValue = __VolumeValue;
+		}
+	
 		[Description("Volume measure value of this quantity.")]
 		public IfcVolumeMeasure VolumeValue { get { return this._VolumeValue; } set { this._VolumeValue = value;} }
 	

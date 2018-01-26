@@ -10,12 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationDefinitionResource;
-using BuildingSmart.IFC.IfcPresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 {
@@ -36,6 +31,17 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 		[Required()]
 		IfcPositiveRatioMeasure _CurveFontScaling;
 	
+	
+		public IfcCurveStyleFontAndScaling()
+		{
+		}
+	
+		public IfcCurveStyleFontAndScaling(IfcLabel? __Name, IfcCurveStyleFontSelect __CurveFont, IfcPositiveRatioMeasure __CurveFontScaling)
+		{
+			this._Name = __Name;
+			this._CurveFont = __CurveFont;
+			this._CurveFontScaling = __CurveFontScaling;
+		}
 	
 		[Description("Name that may be assigned with the scaling of a curve font.")]
 		public IfcLabel? Name { get { return this._Name; } set { this._Name = value;} }

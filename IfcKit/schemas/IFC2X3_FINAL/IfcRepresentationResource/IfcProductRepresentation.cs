@@ -10,14 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcRepresentationResource
 {
@@ -34,8 +27,20 @@ namespace BuildingSmart.IFC.IfcRepresentationResource
 	
 		[DataMember(Order=2)] 
 		[Required()]
+		[MinLength(1)]
 		IList<IfcRepresentation> _Representations = new List<IfcRepresentation>();
 	
+	
+		public IfcProductRepresentation()
+		{
+		}
+	
+		public IfcProductRepresentation(IfcLabel? __Name, IfcText? __Description, IfcRepresentation[] __Representations)
+		{
+			this._Name = __Name;
+			this._Description = __Description;
+			this._Representations = new List<IfcRepresentation>(__Representations);
+		}
 	
 		[Description("The word or group of words by which the product representation is known.")]
 		public IfcLabel? Name { get { return this._Name; } set { this._Name = value;} }

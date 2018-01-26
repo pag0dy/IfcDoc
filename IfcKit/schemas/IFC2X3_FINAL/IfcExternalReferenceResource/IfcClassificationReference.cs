@@ -10,9 +10,9 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcMeasureResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
+using BuildingSmart.IFC.IfcPropertyResource;
 
 namespace BuildingSmart.IFC.IfcExternalReferenceResource
 {
@@ -23,6 +23,16 @@ namespace BuildingSmart.IFC.IfcExternalReferenceResource
 		[DataMember(Order=0)] 
 		IfcClassification _ReferencedSource;
 	
+	
+		public IfcClassificationReference()
+		{
+		}
+	
+		public IfcClassificationReference(IfcLabel? __Location, IfcIdentifier? __ItemReference, IfcLabel? __Name, IfcClassification __ReferencedSource)
+			: base(__Location, __ItemReference, __Name)
+		{
+			this._ReferencedSource = __ReferencedSource;
+		}
 	
 		[Description("The classification system or source that is referenced.")]
 		public IfcClassification ReferencedSource { get { return this._ReferencedSource; } set { this._ReferencedSource = value;} }

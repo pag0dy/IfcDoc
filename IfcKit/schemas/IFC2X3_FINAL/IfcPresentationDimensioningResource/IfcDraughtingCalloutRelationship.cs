@@ -10,11 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcPresentationDefinitionResource;
-using BuildingSmart.IFC.IfcPresentationResource;
 
 namespace BuildingSmart.IFC.IfcPresentationDimensioningResource
 {
@@ -37,6 +33,18 @@ namespace BuildingSmart.IFC.IfcPresentationDimensioningResource
 		[Required()]
 		IfcDraughtingCallout _RelatedDraughtingCallout;
 	
+	
+		public IfcDraughtingCalloutRelationship()
+		{
+		}
+	
+		public IfcDraughtingCalloutRelationship(IfcLabel? __Name, IfcText? __Description, IfcDraughtingCallout __RelatingDraughtingCallout, IfcDraughtingCallout __RelatedDraughtingCallout)
+		{
+			this._Name = __Name;
+			this._Description = __Description;
+			this._RelatingDraughtingCallout = __RelatingDraughtingCallout;
+			this._RelatedDraughtingCallout = __RelatedDraughtingCallout;
+		}
 	
 		[Description("The word or group of words by which the relationship is referred to.")]
 		public IfcLabel? Name { get { return this._Name; } set { this._Name = value;} }

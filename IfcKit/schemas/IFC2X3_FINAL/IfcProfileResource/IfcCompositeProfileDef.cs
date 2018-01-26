@@ -10,9 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 
 namespace BuildingSmart.IFC.IfcProfileResource
 {
@@ -21,12 +19,24 @@ namespace BuildingSmart.IFC.IfcProfileResource
 	{
 		[DataMember(Order=0)] 
 		[Required()]
+		[MinLength(2)]
 		ISet<IfcProfileDef> _Profiles = new HashSet<IfcProfileDef>();
 	
 		[DataMember(Order=1)] 
 		[XmlAttribute]
 		IfcLabel? _Label;
 	
+	
+		public IfcCompositeProfileDef()
+		{
+		}
+	
+		public IfcCompositeProfileDef(IfcProfileTypeEnum __ProfileType, IfcLabel? __ProfileName, IfcProfileDef[] __Profiles, IfcLabel? __Label)
+			: base(__ProfileType, __ProfileName)
+		{
+			this._Profiles = new HashSet<IfcProfileDef>(__Profiles);
+			this._Label = __Label;
+		}
 	
 		[Description("The profiles which are used to define the composite profile.")]
 		public ISet<IfcProfileDef> Profiles { get { return this._Profiles; } }

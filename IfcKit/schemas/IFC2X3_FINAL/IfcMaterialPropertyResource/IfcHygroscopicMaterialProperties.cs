@@ -10,11 +10,8 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcPropertyResource;
 
 namespace BuildingSmart.IFC.IfcMaterialPropertyResource
 {
@@ -41,6 +38,20 @@ namespace BuildingSmart.IFC.IfcMaterialPropertyResource
 		[XmlAttribute]
 		IfcMoistureDiffusivityMeasure? _MoistureDiffusivity;
 	
+	
+		public IfcHygroscopicMaterialProperties()
+		{
+		}
+	
+		public IfcHygroscopicMaterialProperties(IfcMaterial __Material, IfcPositiveRatioMeasure? __UpperVaporResistanceFactor, IfcPositiveRatioMeasure? __LowerVaporResistanceFactor, IfcIsothermalMoistureCapacityMeasure? __IsothermalMoistureCapacity, IfcVaporPermeabilityMeasure? __VaporPermeability, IfcMoistureDiffusivityMeasure? __MoistureDiffusivity)
+			: base(__Material)
+		{
+			this._UpperVaporResistanceFactor = __UpperVaporResistanceFactor;
+			this._LowerVaporResistanceFactor = __LowerVaporResistanceFactor;
+			this._IsothermalMoistureCapacity = __IsothermalMoistureCapacity;
+			this._VaporPermeability = __VaporPermeability;
+			this._MoistureDiffusivity = __MoistureDiffusivity;
+		}
 	
 		[Description("The vapor permeability relationship of air/material (typically value > 1), measur" +
 	    "ed in high relative humidity (typically in 95/50 % RH).")]

@@ -10,17 +10,10 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcArchitectureDomain;
-using BuildingSmart.IFC.IfcCostResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcProcessExtension;
-using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcQuantityResource;
-using BuildingSmart.IFC.IfcSharedFacilitiesElements;
-using BuildingSmart.IFC.IfcSharedMgmtElements;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcFacilitiesMgmtDomain
 {
@@ -32,6 +25,16 @@ namespace BuildingSmart.IFC.IfcFacilitiesMgmtDomain
 		[Required()]
 		IfcIdentifier _ActionID;
 	
+	
+		public IfcOrderAction()
+		{
+		}
+	
+		public IfcOrderAction(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcIdentifier __TaskId, IfcLabel? __Status, IfcLabel? __WorkMethod, Boolean __IsMilestone, Int64? __Priority, IfcIdentifier __ActionID)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType, __TaskId, __Status, __WorkMethod, __IsMilestone, __Priority)
+		{
+			this._ActionID = __ActionID;
+		}
 	
 		[Description("A unique identifier assigned to an action on issue.")]
 		public IfcIdentifier ActionID { get { return this._ActionID; } set { this._ActionID = value;} }

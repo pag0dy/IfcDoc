@@ -10,12 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationDefinitionResource;
-using BuildingSmart.IFC.IfcPresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 {
@@ -26,6 +21,15 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 		[XmlAttribute]
 		IfcLabel? _Name;
 	
+	
+		public IfcPresentationStyle()
+		{
+		}
+	
+		public IfcPresentationStyle(IfcLabel? __Name)
+		{
+			this._Name = __Name;
+		}
 	
 		[Description("<EPM-HTML>\r\nName of the presentation style.\r\n</EPM-HTML>")]
 		public IfcLabel? Name { get { return this._Name; } set { this._Name = value;} }

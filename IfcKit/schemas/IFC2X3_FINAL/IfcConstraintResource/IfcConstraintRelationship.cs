@@ -10,14 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcCostResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcTimeSeriesResource;
-using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcConstraintResource
 {
@@ -38,8 +31,21 @@ namespace BuildingSmart.IFC.IfcConstraintResource
 	
 		[DataMember(Order=3)] 
 		[Required()]
+		[MinLength(1)]
 		ISet<IfcConstraint> _RelatedConstraints = new HashSet<IfcConstraint>();
 	
+	
+		public IfcConstraintRelationship()
+		{
+		}
+	
+		public IfcConstraintRelationship(IfcLabel? __Name, IfcText? __Description, IfcConstraint __RelatingConstraint, IfcConstraint[] __RelatedConstraints)
+		{
+			this._Name = __Name;
+			this._Description = __Description;
+			this._RelatingConstraint = __RelatingConstraint;
+			this._RelatedConstraints = new HashSet<IfcConstraint>(__RelatedConstraints);
+		}
 	
 		[Description("A name used to identify or qualify the constraint relationship.")]
 		public IfcLabel? Name { get { return this._Name; } set { this._Name = value;} }

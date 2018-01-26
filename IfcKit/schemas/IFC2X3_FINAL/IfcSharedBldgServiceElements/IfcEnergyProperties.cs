@@ -10,21 +10,9 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcControlExtension;
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricConstraintResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialPropertyResource;
-using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcTimeSeriesResource;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcSharedBldgServiceElements
 {
@@ -39,6 +27,17 @@ namespace BuildingSmart.IFC.IfcSharedBldgServiceElements
 		[XmlAttribute]
 		IfcLabel? _UserDefinedEnergySequence;
 	
+	
+		public IfcEnergyProperties()
+		{
+		}
+	
+		public IfcEnergyProperties(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcEnergySequenceEnum? __EnergySequence, IfcLabel? __UserDefinedEnergySequence)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description)
+		{
+			this._EnergySequence = __EnergySequence;
+			this._UserDefinedEnergySequence = __UserDefinedEnergySequence;
+		}
 	
 		public IfcEnergySequenceEnum? EnergySequence { get { return this._EnergySequence; } set { this._EnergySequence = value;} }
 	

@@ -83,6 +83,31 @@ namespace BuildingSmart.IFC.IfcProfilePropertyResource
 		IfcLengthMeasure? _CentreOfGravityInY;
 	
 	
+		public IfcStructuralProfileProperties()
+		{
+		}
+	
+		public IfcStructuralProfileProperties(IfcLabel? __ProfileName, IfcProfileDef __ProfileDefinition, IfcMassPerLengthMeasure? __PhysicalWeight, IfcPositiveLengthMeasure? __Perimeter, IfcPositiveLengthMeasure? __MinimumPlateThickness, IfcPositiveLengthMeasure? __MaximumPlateThickness, IfcAreaMeasure? __CrossSectionArea, IfcMomentOfInertiaMeasure? __TorsionalConstantX, IfcMomentOfInertiaMeasure? __MomentOfInertiaYZ, IfcMomentOfInertiaMeasure? __MomentOfInertiaY, IfcMomentOfInertiaMeasure? __MomentOfInertiaZ, IfcWarpingConstantMeasure? __WarpingConstant, IfcLengthMeasure? __ShearCentreZ, IfcLengthMeasure? __ShearCentreY, IfcAreaMeasure? __ShearDeformationAreaZ, IfcAreaMeasure? __ShearDeformationAreaY, IfcSectionModulusMeasure? __MaximumSectionModulusY, IfcSectionModulusMeasure? __MinimumSectionModulusY, IfcSectionModulusMeasure? __MaximumSectionModulusZ, IfcSectionModulusMeasure? __MinimumSectionModulusZ, IfcSectionModulusMeasure? __TorsionalSectionModulus, IfcLengthMeasure? __CentreOfGravityInX, IfcLengthMeasure? __CentreOfGravityInY)
+			: base(__ProfileName, __ProfileDefinition, __PhysicalWeight, __Perimeter, __MinimumPlateThickness, __MaximumPlateThickness, __CrossSectionArea)
+		{
+			this._TorsionalConstantX = __TorsionalConstantX;
+			this._MomentOfInertiaYZ = __MomentOfInertiaYZ;
+			this._MomentOfInertiaY = __MomentOfInertiaY;
+			this._MomentOfInertiaZ = __MomentOfInertiaZ;
+			this._WarpingConstant = __WarpingConstant;
+			this._ShearCentreZ = __ShearCentreZ;
+			this._ShearCentreY = __ShearCentreY;
+			this._ShearDeformationAreaZ = __ShearDeformationAreaZ;
+			this._ShearDeformationAreaY = __ShearDeformationAreaY;
+			this._MaximumSectionModulusY = __MaximumSectionModulusY;
+			this._MinimumSectionModulusY = __MinimumSectionModulusY;
+			this._MaximumSectionModulusZ = __MaximumSectionModulusZ;
+			this._MinimumSectionModulusZ = __MinimumSectionModulusZ;
+			this._TorsionalSectionModulus = __TorsionalSectionModulus;
+			this._CentreOfGravityInX = __CentreOfGravityInX;
+			this._CentreOfGravityInY = __CentreOfGravityInY;
+		}
+	
 		[Description("Torsional constant about X-axis of profile coordinate system. Usually measured in" +
 	    " [mm4].")]
 		public IfcMomentOfInertiaMeasure? TorsionalConstantX { get { return this._TorsionalConstantX; } set { this._TorsionalConstantX = value;} }

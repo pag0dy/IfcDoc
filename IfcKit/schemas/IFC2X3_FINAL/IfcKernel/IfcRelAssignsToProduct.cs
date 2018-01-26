@@ -10,16 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcConstraintResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricConstraintResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
 using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcKernel
@@ -31,6 +22,16 @@ namespace BuildingSmart.IFC.IfcKernel
 		[Required()]
 		IfcProduct _RelatingProduct;
 	
+	
+		public IfcRelAssignsToProduct()
+		{
+		}
+	
+		public IfcRelAssignsToProduct(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcObjectDefinition[] __RelatedObjects, IfcObjectTypeEnum? __RelatedObjectsType, IfcProduct __RelatingProduct)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __RelatedObjects, __RelatedObjectsType)
+		{
+			this._RelatingProduct = __RelatingProduct;
+		}
 	
 		[Description("Reference to the Product to which the objects are assigned to.\r\n")]
 		public IfcProduct RelatingProduct { get { return this._RelatingProduct; } set { this._RelatingProduct = value;} }

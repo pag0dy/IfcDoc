@@ -10,11 +10,10 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
+using BuildingSmart.IFC.IfcConstraintResource;
 using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcUtilityResource;
+using BuildingSmart.IFC.IfcPropertyResource;
 
 namespace BuildingSmart.IFC.IfcTimeSeriesResource
 {
@@ -23,8 +22,19 @@ namespace BuildingSmart.IFC.IfcTimeSeriesResource
 	{
 		[DataMember(Order=0)] 
 		[Required()]
+		[MinLength(1)]
 		IList<IfcIrregularTimeSeriesValue> _Values = new List<IfcIrregularTimeSeriesValue>();
 	
+	
+		public IfcIrregularTimeSeries()
+		{
+		}
+	
+		public IfcIrregularTimeSeries(IfcLabel __Name, IfcText? __Description, IfcDateTimeSelect __StartTime, IfcDateTimeSelect __EndTime, IfcTimeSeriesDataTypeEnum __TimeSeriesDataType, IfcDataOriginEnum __DataOrigin, IfcLabel? __UserDefinedDataOrigin, IfcUnit __Unit, IfcIrregularTimeSeriesValue[] __Values)
+			: base(__Name, __Description, __StartTime, __EndTime, __TimeSeriesDataType, __DataOrigin, __UserDefinedDataOrigin, __Unit)
+		{
+			this._Values = new List<IfcIrregularTimeSeriesValue>(__Values);
+		}
 	
 		[Description("The collection of time series values.")]
 		public IList<IfcIrregularTimeSeriesValue> Values { get { return this._Values; } }

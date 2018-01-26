@@ -10,8 +10,6 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 
 namespace BuildingSmart.IFC.IfcExternalReferenceResource
@@ -24,6 +22,15 @@ namespace BuildingSmart.IFC.IfcExternalReferenceResource
 		[Required()]
 		IfcLabel _NotationValue;
 	
+	
+		public IfcClassificationNotationFacet()
+		{
+		}
+	
+		public IfcClassificationNotationFacet(IfcLabel __NotationValue)
+		{
+			this._NotationValue = __NotationValue;
+		}
 	
 		[Description("The notation value that specifies the classification e.g. \'L781\'")]
 		public IfcLabel NotationValue { get { return this._NotationValue; } set { this._NotationValue = value;} }

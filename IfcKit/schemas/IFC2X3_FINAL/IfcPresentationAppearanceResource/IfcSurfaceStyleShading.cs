@@ -10,12 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationDefinitionResource;
 using BuildingSmart.IFC.IfcPresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 {
@@ -27,6 +22,15 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 		[Required()]
 		IfcColourRgb _SurfaceColour;
 	
+	
+		public IfcSurfaceStyleShading()
+		{
+		}
+	
+		public IfcSurfaceStyleShading(IfcColourRgb __SurfaceColour)
+		{
+			this._SurfaceColour = __SurfaceColour;
+		}
 	
 		[Description("The colour used to render the surface. The surface colour for visualisation is de" +
 	    "fined by specifying the intensity of red, green and blue.\r\n")]

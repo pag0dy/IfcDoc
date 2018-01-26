@@ -22,6 +22,16 @@ namespace BuildingSmart.IFC.IfcStructuralLoadResource
 		IfcWarpingMomentMeasure? _WarpingMoment;
 	
 	
+		public IfcStructuralLoadSingleForceWarping()
+		{
+		}
+	
+		public IfcStructuralLoadSingleForceWarping(IfcLabel? __Name, IfcForceMeasure? __ForceX, IfcForceMeasure? __ForceY, IfcForceMeasure? __ForceZ, IfcTorqueMeasure? __MomentX, IfcTorqueMeasure? __MomentY, IfcTorqueMeasure? __MomentZ, IfcWarpingMomentMeasure? __WarpingMoment)
+			: base(__Name, __ForceX, __ForceY, __ForceZ, __MomentX, __MomentY, __MomentZ)
+		{
+			this._WarpingMoment = __WarpingMoment;
+		}
+	
 		[Description("The warping moment at the point load.")]
 		public IfcWarpingMomentMeasure? WarpingMoment { get { return this._WarpingMoment; } set { this._WarpingMoment = value;} }
 	

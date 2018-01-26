@@ -22,6 +22,15 @@ namespace BuildingSmart.IFC.IfcStructuralLoadResource
 		IfcLabel? _Name;
 	
 	
+		public IfcStructuralConnectionCondition()
+		{
+		}
+	
+		public IfcStructuralConnectionCondition(IfcLabel? __Name)
+		{
+			this._Name = __Name;
+		}
+	
 		[Description("Optionally defines a name for this connection condition.")]
 		public IfcLabel? Name { get { return this._Name; } set { this._Name = value;} }
 	

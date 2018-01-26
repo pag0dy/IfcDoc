@@ -10,12 +10,11 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcApprovalResource;
-using BuildingSmart.IFC.IfcConstraintResource;
 using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcTimeSeriesResource;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcControlExtension
 {
@@ -23,6 +22,7 @@ namespace BuildingSmart.IFC.IfcControlExtension
 	public partial class IfcTimeSeriesSchedule : IfcControl
 	{
 		[DataMember(Order=0)] 
+		[MinLength(1)]
 		IList<IfcDateTimeSelect> _ApplicableDates = new List<IfcDateTimeSelect>();
 	
 		[DataMember(Order=1)] 
@@ -34,6 +34,18 @@ namespace BuildingSmart.IFC.IfcControlExtension
 		[Required()]
 		IfcTimeSeries _TimeSeries;
 	
+	
+		public IfcTimeSeriesSchedule()
+		{
+		}
+	
+		public IfcTimeSeriesSchedule(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcDateTimeSelect[] __ApplicableDates, IfcTimeSeriesScheduleTypeEnum __TimeSeriesScheduleType, IfcTimeSeries __TimeSeries)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType)
+		{
+			this._ApplicableDates = new List<IfcDateTimeSelect>(__ApplicableDates);
+			this._TimeSeriesScheduleType = __TimeSeriesScheduleType;
+			this._TimeSeries = __TimeSeries;
+		}
 	
 		[Description(@"<EPM-HTML>Defines an ordered list of the dates for which the time-series data are applicable. For example, the definition of all public holiday dates for a given year allows the formulation of a ""holiday"" occupancy schedule from overall occupancy data. Local time can be used if the dates are not bound to a particular year.
 	

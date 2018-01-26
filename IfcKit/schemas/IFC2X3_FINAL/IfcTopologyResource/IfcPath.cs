@@ -12,6 +12,7 @@ using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcTopologyResource
 {
@@ -20,8 +21,18 @@ namespace BuildingSmart.IFC.IfcTopologyResource
 	{
 		[DataMember(Order=0)] 
 		[Required()]
+		[MinLength(1)]
 		IList<IfcOrientedEdge> _EdgeList = new List<IfcOrientedEdge>();
 	
+	
+		public IfcPath()
+		{
+		}
+	
+		public IfcPath(IfcOrientedEdge[] __EdgeList)
+		{
+			this._EdgeList = new List<IfcOrientedEdge>(__EdgeList);
+		}
 	
 		[Description("The list of oriented edges which are concatenated together to form this path.")]
 		public IList<IfcOrientedEdge> EdgeList { get { return this._EdgeList; } }

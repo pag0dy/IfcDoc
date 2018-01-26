@@ -10,13 +10,8 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcPresentationOrganizationResource;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
@@ -27,8 +22,20 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		IfcDirection _Axis3;
 	
 	
+		public IfcCartesianTransformationOperator3D()
+		{
+		}
+	
+		public IfcCartesianTransformationOperator3D(IfcDirection __Axis1, IfcDirection __Axis2, IfcCartesianPoint __LocalOrigin, Double? __Scale, IfcDirection __Axis3)
+			: base(__Axis1, __Axis2, __LocalOrigin, __Scale)
+		{
+			this._Axis3 = __Axis3;
+		}
+	
 		[Description("The exact direction of U[3], the derived Z axis direction.")]
 		public IfcDirection Axis3 { get { return this._Axis3; } set { this._Axis3 = value;} }
+	
+		public new IList<IfcDirection> U { get { return null; } }
 	
 	
 	}

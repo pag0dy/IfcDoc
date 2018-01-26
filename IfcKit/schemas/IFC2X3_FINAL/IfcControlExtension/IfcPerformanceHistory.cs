@@ -10,12 +10,9 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcApprovalResource;
-using BuildingSmart.IFC.IfcConstraintResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcTimeSeriesResource;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcControlExtension
 {
@@ -27,6 +24,16 @@ namespace BuildingSmart.IFC.IfcControlExtension
 		[Required()]
 		IfcLabel _LifeCyclePhase;
 	
+	
+		public IfcPerformanceHistory()
+		{
+		}
+	
+		public IfcPerformanceHistory(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcLabel __LifeCyclePhase)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType)
+		{
+			this._LifeCyclePhase = __LifeCyclePhase;
+		}
 	
 		[Description("Describes the applicable building life-cycle phase. Typical values should be DESI" +
 	    "GNDEVELOPMENT, SCHEMATICDEVELOPMENT, CONSTRUCTIONDOCUMENT, CONSTRUCTION, ASBUILT" +

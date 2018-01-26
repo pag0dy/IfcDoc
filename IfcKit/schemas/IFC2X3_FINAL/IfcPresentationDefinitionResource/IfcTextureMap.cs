@@ -10,13 +10,6 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcPresentationResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcPresentationDefinitionResource
 {
@@ -25,8 +18,18 @@ namespace BuildingSmart.IFC.IfcPresentationDefinitionResource
 	{
 		[DataMember(Order=0)] 
 		[Required()]
+		[MinLength(1)]
 		ISet<IfcVertexBasedTextureMap> _TextureMaps = new HashSet<IfcVertexBasedTextureMap>();
 	
+	
+		public IfcTextureMap()
+		{
+		}
+	
+		public IfcTextureMap(IfcVertexBasedTextureMap[] __TextureMaps)
+		{
+			this._TextureMaps = new HashSet<IfcVertexBasedTextureMap>(__TextureMaps);
+		}
 	
 		[Description("Reference to a list of texture vertex assignment to coordinates within a vertex b" +
 	    "ased geometry.")]

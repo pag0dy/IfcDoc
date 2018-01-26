@@ -10,11 +10,8 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcPropertyResource;
 
 namespace BuildingSmart.IFC.IfcMaterialPropertyResource
 {
@@ -37,6 +34,19 @@ namespace BuildingSmart.IFC.IfcMaterialPropertyResource
 		[XmlAttribute]
 		IfcPositiveRatioMeasure? _CO2Content;
 	
+	
+		public IfcProductsOfCombustionProperties()
+		{
+		}
+	
+		public IfcProductsOfCombustionProperties(IfcMaterial __Material, IfcSpecificHeatCapacityMeasure? __SpecificHeatCapacity, IfcPositiveRatioMeasure? __N20Content, IfcPositiveRatioMeasure? __COContent, IfcPositiveRatioMeasure? __CO2Content)
+			: base(__Material)
+		{
+			this._SpecificHeatCapacity = __SpecificHeatCapacity;
+			this._N20Content = __N20Content;
+			this._COContent = __COContent;
+			this._CO2Content = __CO2Content;
+		}
 	
 		[Description("Specific heat of the products of combustion: heat energy absorbed per\r\ntemperatur" +
 	    "e unit. Usually measured in [J/kg K].")]

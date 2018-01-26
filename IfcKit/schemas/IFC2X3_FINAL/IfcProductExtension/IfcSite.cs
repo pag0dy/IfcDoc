@@ -11,23 +11,11 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometricConstraintResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProfilePropertyResource;
-using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcQuantityResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcSharedBldgElements;
-using BuildingSmart.IFC.IfcSharedBldgServiceElements;
-using BuildingSmart.IFC.IfcStructuralAnalysisDomain;
-using BuildingSmart.IFC.IfcStructuralElementsDomain;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcProductExtension
 {
@@ -53,6 +41,20 @@ namespace BuildingSmart.IFC.IfcProductExtension
 		[DataMember(Order=4)] 
 		IfcPostalAddress _SiteAddress;
 	
+	
+		public IfcSite()
+		{
+		}
+	
+		public IfcSite(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcObjectPlacement __ObjectPlacement, IfcProductRepresentation __Representation, IfcLabel? __LongName, IfcElementCompositionEnum __CompositionType, IfcCompoundPlaneAngleMeasure? __RefLatitude, IfcCompoundPlaneAngleMeasure? __RefLongitude, IfcLengthMeasure? __RefElevation, IfcLabel? __LandTitleNumber, IfcPostalAddress __SiteAddress)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType, __ObjectPlacement, __Representation, __LongName, __CompositionType)
+		{
+			this._RefLatitude = __RefLatitude;
+			this._RefLongitude = __RefLongitude;
+			this._RefElevation = __RefElevation;
+			this._LandTitleNumber = __LandTitleNumber;
+			this._SiteAddress = __SiteAddress;
+		}
 	
 		[Description(@"<EPM-HTML>
 	World Latitude at reference point (most likely defined in legal description). Defined as integer values for degrees, minutes, seconds, and, optionally, millionths of seconds with respect to the world geodetic system WGS84.

@@ -10,23 +10,24 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcArchitectureDomain;
-using BuildingSmart.IFC.IfcCostResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcProcessExtension;
-using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcQuantityResource;
-using BuildingSmart.IFC.IfcSharedFacilitiesElements;
-using BuildingSmart.IFC.IfcSharedMgmtElements;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcFacilitiesMgmtDomain
 {
 	[Guid("d5fcb6fd-2d48-49c1-a9d8-8d8188da2f32")]
 	public partial class IfcFurnitureStandard : IfcControl
 	{
+	
+		public IfcFurnitureStandard()
+		{
+		}
+	
+		public IfcFurnitureStandard(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType)
+		{
+		}
 	
 	
 	}

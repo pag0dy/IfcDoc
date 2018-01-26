@@ -10,13 +10,9 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcPresentationResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcPresentationDefinitionResource
 {
@@ -31,6 +27,16 @@ namespace BuildingSmart.IFC.IfcPresentationDefinitionResource
 		[Required()]
 		IfcCartesianTransformationOperator2D _Target;
 	
+	
+		public IfcDefinedSymbol()
+		{
+		}
+	
+		public IfcDefinedSymbol(IfcDefinedSymbolSelect __Definition, IfcCartesianTransformationOperator2D __Target)
+		{
+			this._Definition = __Definition;
+			this._Target = __Target;
+		}
 	
 		[Description("An implicit description of the symbol, either predefined or externally defined.")]
 		public IfcDefinedSymbolSelect Definition { get { return this._Definition; } set { this._Definition = value;} }

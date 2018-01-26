@@ -10,13 +10,9 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcGeometricModelResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcPresentationOrganizationResource;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
@@ -34,12 +30,24 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		IfcLengthMeasure _Magnitude;
 	
 	
+		public IfcVector()
+		{
+		}
+	
+		public IfcVector(IfcDirection __Orientation, IfcLengthMeasure __Magnitude)
+		{
+			this._Orientation = __Orientation;
+			this._Magnitude = __Magnitude;
+		}
+	
 		[Description("The direction of the vector.")]
 		public IfcDirection Orientation { get { return this._Orientation; } set { this._Orientation = value;} }
 	
 		[Description("The magnitude of the vector. All vectors of Magnitude 0.0 are regarded as equal i" +
 	    "n value regardless of the orientation attribute.")]
 		public IfcLengthMeasure Magnitude { get { return this._Magnitude; } set { this._Magnitude = value;} }
+	
+		public new IfcDimensionCount Dim { get { return new IfcDimensionCount(); } }
 	
 	
 	}

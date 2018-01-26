@@ -10,11 +10,10 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
 using BuildingSmart.IFC.IfcCostResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcSharedMgmtElements
 {
@@ -25,6 +24,16 @@ namespace BuildingSmart.IFC.IfcSharedMgmtElements
 		[Required()]
 		IfcAppliedValue _RelatingAppliedValue;
 	
+	
+		public IfcRelAssociatesAppliedValue()
+		{
+		}
+	
+		public IfcRelAssociatesAppliedValue(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcRoot[] __RelatedObjects, IfcAppliedValue __RelatingAppliedValue)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __RelatedObjects)
+		{
+			this._RelatingAppliedValue = __RelatingAppliedValue;
+		}
 	
 		public IfcAppliedValue RelatingAppliedValue { get { return this._RelatingAppliedValue; } set { this._RelatingAppliedValue = value;} }
 	

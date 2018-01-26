@@ -10,7 +10,6 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcProfileResource;
 
 namespace BuildingSmart.IFC.IfcProfilePropertyResource
@@ -30,6 +29,17 @@ namespace BuildingSmart.IFC.IfcProfilePropertyResource
 		[DataMember(Order=2)] 
 		IfcProfileDef _EndProfile;
 	
+	
+		public IfcSectionProperties()
+		{
+		}
+	
+		public IfcSectionProperties(IfcSectionTypeEnum __SectionType, IfcProfileDef __StartProfile, IfcProfileDef __EndProfile)
+		{
+			this._SectionType = __SectionType;
+			this._StartProfile = __StartProfile;
+			this._EndProfile = __EndProfile;
+		}
 	
 		[Description("An indicator whether a specific piece of a cross section is uniform or tapered in" +
 	    " longitudinal direction.")]

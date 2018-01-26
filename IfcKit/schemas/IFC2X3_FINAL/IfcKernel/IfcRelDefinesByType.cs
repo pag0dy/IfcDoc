@@ -10,16 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcConstraintResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricConstraintResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
 using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcKernel
@@ -31,6 +22,16 @@ namespace BuildingSmart.IFC.IfcKernel
 		[Required()]
 		IfcTypeObject _RelatingType;
 	
+	
+		public IfcRelDefinesByType()
+		{
+		}
+	
+		public IfcRelDefinesByType(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcObject[] __RelatedObjects, IfcTypeObject __RelatingType)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __RelatedObjects)
+		{
+			this._RelatingType = __RelatingType;
+		}
 	
 		[Description("Reference to the type (or style) information for that object or set of objects.")]
 		public IfcTypeObject RelatingType { get { return this._RelatingType; } set { this._RelatingType = value;} }

@@ -10,11 +10,8 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcPropertyResource;
 
 namespace BuildingSmart.IFC.IfcMaterialPropertyResource
 {
@@ -48,6 +45,22 @@ namespace BuildingSmart.IFC.IfcMaterialPropertyResource
 		[XmlAttribute]
 		IfcNormalisedRatioMeasure? _DissolvedSolidsContent;
 	
+	
+		public IfcWaterProperties()
+		{
+		}
+	
+		public IfcWaterProperties(IfcMaterial __Material, Boolean? __IsPotable, IfcIonConcentrationMeasure? __Hardness, IfcIonConcentrationMeasure? __AlkalinityConcentration, IfcIonConcentrationMeasure? __AcidityConcentration, IfcNormalisedRatioMeasure? __ImpuritiesContent, IfcPHMeasure? __PHLevel, IfcNormalisedRatioMeasure? __DissolvedSolidsContent)
+			: base(__Material)
+		{
+			this._IsPotable = __IsPotable;
+			this._Hardness = __Hardness;
+			this._AlkalinityConcentration = __AlkalinityConcentration;
+			this._AcidityConcentration = __AcidityConcentration;
+			this._ImpuritiesContent = __ImpuritiesContent;
+			this._PHLevel = __PHLevel;
+			this._DissolvedSolidsContent = __DissolvedSolidsContent;
+		}
 	
 		[Description("If TRUE, then the water is considered potable.")]
 		public Boolean? IsPotable { get { return this._IsPotable; } set { this._IsPotable = value;} }

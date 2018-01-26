@@ -10,6 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcPropertyResource;
 
 namespace BuildingSmart.IFC.IfcDateTimeResource
 {
@@ -26,6 +27,16 @@ namespace BuildingSmart.IFC.IfcDateTimeResource
 		[Required()]
 		IfcLocalTime _TimeComponent;
 	
+	
+		public IfcDateAndTime()
+		{
+		}
+	
+		public IfcDateAndTime(IfcCalendarDate __DateComponent, IfcLocalTime __TimeComponent)
+		{
+			this._DateComponent = __DateComponent;
+			this._TimeComponent = __TimeComponent;
+		}
 	
 		[Description("The date element of the date time combination.")]
 		public IfcCalendarDate DateComponent { get { return this._DateComponent; } set { this._DateComponent = value;} }

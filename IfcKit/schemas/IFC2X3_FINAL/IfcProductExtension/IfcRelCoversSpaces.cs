@@ -10,24 +10,9 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricConstraintResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProfilePropertyResource;
-using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcQuantityResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcSharedBldgElements;
-using BuildingSmart.IFC.IfcSharedBldgServiceElements;
-using BuildingSmart.IFC.IfcStructuralAnalysisDomain;
-using BuildingSmart.IFC.IfcStructuralElementsDomain;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcProductExtension
 {
@@ -40,8 +25,20 @@ namespace BuildingSmart.IFC.IfcProductExtension
 	
 		[DataMember(Order=1)] 
 		[Required()]
+		[MinLength(1)]
 		ISet<IfcCovering> _RelatedCoverings = new HashSet<IfcCovering>();
 	
+	
+		public IfcRelCoversSpaces()
+		{
+		}
+	
+		public IfcRelCoversSpaces(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcSpace __RelatedSpace, IfcCovering[] __RelatedCoverings)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description)
+		{
+			this._RelatedSpace = __RelatedSpace;
+			this._RelatedCoverings = new HashSet<IfcCovering>(__RelatedCoverings);
+		}
 	
 		[Description("<EPM-HTML>\r\nRelationship to the space object that is covered.\r\n</EPM-HTML>")]
 		public IfcSpace RelatedSpace { get { return this._RelatedSpace; } set { this._RelatedSpace = value;} }

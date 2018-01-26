@@ -10,12 +10,6 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcPresentationResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcPresentationOrganizationResource
 {
@@ -30,8 +24,19 @@ namespace BuildingSmart.IFC.IfcPresentationOrganizationResource
 	
 		[DataMember(Order=1)] 
 		[Required()]
+		[MinLength(1)]
 		IList<IfcLightDistributionData> _DistributionData = new List<IfcLightDistributionData>();
 	
+	
+		public IfcLightIntensityDistribution()
+		{
+		}
+	
+		public IfcLightIntensityDistribution(IfcLightDistributionCurveEnum __LightDistributionCurve, IfcLightDistributionData[] __DistributionData)
+		{
+			this._LightDistributionCurve = __LightDistributionCurve;
+			this._DistributionData = new List<IfcLightDistributionData>(__DistributionData);
+		}
 	
 		[Description("Standardized  light distribution curve used to define the luminous intensity of t" +
 	    "he light in all directions.")]

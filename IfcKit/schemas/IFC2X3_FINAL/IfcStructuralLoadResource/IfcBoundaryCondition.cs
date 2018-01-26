@@ -22,6 +22,15 @@ namespace BuildingSmart.IFC.IfcStructuralLoadResource
 		IfcLabel? _Name;
 	
 	
+		public IfcBoundaryCondition()
+		{
+		}
+	
+		public IfcBoundaryCondition(IfcLabel? __Name)
+		{
+			this._Name = __Name;
+		}
+	
 		[Description("Optionally defines a name for this boundary condition.")]
 		public IfcLabel? Name { get { return this._Name; } set { this._Name = value;} }
 	

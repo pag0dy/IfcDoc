@@ -10,13 +10,10 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProductExtension;
 using BuildingSmart.IFC.IfcProfilePropertyResource;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcStructuralElementsDomain
 {
@@ -29,8 +26,20 @@ namespace BuildingSmart.IFC.IfcStructuralElementsDomain
 	
 		[DataMember(Order=1)] 
 		[Required()]
+		[MinLength(1)]
 		IList<IfcSectionReinforcementProperties> _ReinforcementSectionDefinitions = new List<IfcSectionReinforcementProperties>();
 	
+	
+		public IfcReinforcementDefinitionProperties()
+		{
+		}
+	
+		public IfcReinforcementDefinitionProperties(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __DefinitionType, IfcSectionReinforcementProperties[] __ReinforcementSectionDefinitions)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description)
+		{
+			this._DefinitionType = __DefinitionType;
+			this._ReinforcementSectionDefinitions = new List<IfcSectionReinforcementProperties>(__ReinforcementSectionDefinitions);
+		}
 	
 		[Description("Descriptive type name applied to reinforcement definition properties.")]
 		public IfcLabel? DefinitionType { get { return this._DefinitionType; } set { this._DefinitionType = value;} }

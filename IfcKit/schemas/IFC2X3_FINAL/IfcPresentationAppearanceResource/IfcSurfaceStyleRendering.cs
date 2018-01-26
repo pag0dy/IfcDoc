@@ -10,12 +10,8 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationDefinitionResource;
 using BuildingSmart.IFC.IfcPresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 {
@@ -49,6 +45,23 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 		[Required()]
 		IfcReflectanceMethodEnum _ReflectanceMethod;
 	
+	
+		public IfcSurfaceStyleRendering()
+		{
+		}
+	
+		public IfcSurfaceStyleRendering(IfcColourRgb __SurfaceColour, IfcNormalisedRatioMeasure? __Transparency, IfcColourOrFactor __DiffuseColour, IfcColourOrFactor __TransmissionColour, IfcColourOrFactor __DiffuseTransmissionColour, IfcColourOrFactor __ReflectionColour, IfcColourOrFactor __SpecularColour, IfcSpecularHighlightSelect __SpecularHighlight, IfcReflectanceMethodEnum __ReflectanceMethod)
+			: base(__SurfaceColour)
+		{
+			this._Transparency = __Transparency;
+			this._DiffuseColour = __DiffuseColour;
+			this._TransmissionColour = __TransmissionColour;
+			this._DiffuseTransmissionColour = __DiffuseTransmissionColour;
+			this._ReflectionColour = __ReflectionColour;
+			this._SpecularColour = __SpecularColour;
+			this._SpecularHighlight = __SpecularHighlight;
+			this._ReflectanceMethod = __ReflectanceMethod;
+		}
 	
 		[Description(@"Definition from ISO/CD 10303-46: The degree of transparency is indicated by the percentage of light traversing the surface.
 	Definition from VRML97 - ISO/IEC 14772-1:1997: The transparency field specifies how ""clear"" an object is, with 1.0 being completely transparent, and 0.0 completely opaque. If not given, the value 0.0 (opaque) is assumed.

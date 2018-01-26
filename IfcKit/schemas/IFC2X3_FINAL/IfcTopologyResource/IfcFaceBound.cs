@@ -12,6 +12,7 @@ using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcTopologyResource
 {
@@ -26,6 +27,16 @@ namespace BuildingSmart.IFC.IfcTopologyResource
 		[Required()]
 		Boolean _Orientation;
 	
+	
+		public IfcFaceBound()
+		{
+		}
+	
+		public IfcFaceBound(IfcLoop __Bound, Boolean __Orientation)
+		{
+			this._Bound = __Bound;
+			this._Orientation = __Orientation;
+		}
 	
 		[Description("The loop which will be used as a face boundary.\r\n")]
 		public IfcLoop Bound { get { return this._Bound; } set { this._Bound = value;} }

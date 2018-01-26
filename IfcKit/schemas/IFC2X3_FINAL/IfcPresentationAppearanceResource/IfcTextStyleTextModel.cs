@@ -10,12 +10,6 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationDefinitionResource;
-using BuildingSmart.IFC.IfcPresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 {
@@ -47,6 +41,21 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 		[DataMember(Order=6)] 
 		IfcSizeSelect _LineHeight;
 	
+	
+		public IfcTextStyleTextModel()
+		{
+		}
+	
+		public IfcTextStyleTextModel(IfcSizeSelect __TextIndent, IfcTextAlignment? __TextAlign, IfcTextDecoration? __TextDecoration, IfcSizeSelect __LetterSpacing, IfcSizeSelect __WordSpacing, IfcTextTransformation? __TextTransform, IfcSizeSelect __LineHeight)
+		{
+			this._TextIndent = __TextIndent;
+			this._TextAlign = __TextAlign;
+			this._TextDecoration = __TextDecoration;
+			this._LetterSpacing = __LetterSpacing;
+			this._WordSpacing = __WordSpacing;
+			this._TextTransform = __TextTransform;
+			this._LineHeight = __LineHeight;
+		}
 	
 		[Description("<EPM-HTML>\r\nThe property specifies the indentation that appears before the first " +
 	    "formatted line.\r\n  <blockquote> <small>NOTE&nbsp; It has been introduced for lat" +

@@ -10,11 +10,8 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcPropertyResource;
 
 namespace BuildingSmart.IFC.IfcMaterialPropertyResource
 {
@@ -33,6 +30,18 @@ namespace BuildingSmart.IFC.IfcMaterialPropertyResource
 		[XmlAttribute]
 		IfcMassDensityMeasure? _MassDensity;
 	
+	
+		public IfcGeneralMaterialProperties()
+		{
+		}
+	
+		public IfcGeneralMaterialProperties(IfcMaterial __Material, IfcMolecularWeightMeasure? __MolecularWeight, IfcNormalisedRatioMeasure? __Porosity, IfcMassDensityMeasure? __MassDensity)
+			: base(__Material)
+		{
+			this._MolecularWeight = __MolecularWeight;
+			this._Porosity = __Porosity;
+			this._MassDensity = __MassDensity;
+		}
 	
 		[Description("Molecular weight of material (typically gas), measured in g/mole.")]
 		public IfcMolecularWeightMeasure? MolecularWeight { get { return this._MolecularWeight; } set { this._MolecularWeight = value;} }

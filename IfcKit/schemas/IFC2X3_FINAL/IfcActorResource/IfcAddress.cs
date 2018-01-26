@@ -11,6 +11,7 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcMeasureResource;
+using BuildingSmart.IFC.IfcPropertyResource;
 
 namespace BuildingSmart.IFC.IfcActorResource
 {
@@ -36,6 +37,17 @@ namespace BuildingSmart.IFC.IfcActorResource
 		[InverseProperty("Addresses")] 
 		ISet<IfcOrganization> _OfOrganization = new HashSet<IfcOrganization>();
 	
+	
+		public IfcAddress()
+		{
+		}
+	
+		public IfcAddress(IfcAddressTypeEnum? __Purpose, IfcText? __Description, IfcLabel? __UserDefinedPurpose)
+		{
+			this._Purpose = __Purpose;
+			this._Description = __Description;
+			this._UserDefinedPurpose = __UserDefinedPurpose;
+		}
 	
 		[Description("Identifies the logical location of the address.")]
 		public IfcAddressTypeEnum? Purpose { get { return this._Purpose; } set { this._Purpose = value;} }

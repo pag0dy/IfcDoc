@@ -10,8 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcMeasureResource;
+using BuildingSmart.IFC.IfcConstraintResource;
 
 namespace BuildingSmart.IFC.IfcUtilityResource
 {
@@ -25,14 +24,31 @@ namespace BuildingSmart.IFC.IfcUtilityResource
 	
 		[DataMember(Order=1)] 
 		[Required()]
+		[MinLength(1)]
 		IList<IfcTableRow> _Rows = new List<IfcTableRow>();
 	
+	
+		public IfcTable()
+		{
+		}
+	
+		public IfcTable(String __Name, IfcTableRow[] __Rows)
+		{
+			this._Name = __Name;
+			this._Rows = new List<IfcTableRow>(__Rows);
+		}
 	
 		[Description("A unique name which is intended to describe the usage of the Table.")]
 		public String Name { get { return this._Name; } set { this._Name = value;} }
 	
 		[Description("Reference to information content of rows.")]
 		public IList<IfcTableRow> Rows { get { return this._Rows; } }
+	
+		public new Int64 NumberOfCellsInRow { get { return null; } }
+	
+		public new Int64 NumberOfHeadings { get { return null; } }
+	
+		public new Int64 NumberOfDataRows { get { return null; } }
 	
 	
 	}

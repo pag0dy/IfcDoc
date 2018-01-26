@@ -11,10 +11,8 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcTopologyResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcGeometricModelResource
 {
@@ -25,6 +23,15 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 		[Required()]
 		IfcCsgSelect _TreeRootExpression;
 	
+	
+		public IfcCsgSolid()
+		{
+		}
+	
+		public IfcCsgSolid(IfcCsgSelect __TreeRootExpression)
+		{
+			this._TreeRootExpression = __TreeRootExpression;
+		}
 	
 		[Description("Boolean expression of regularized operators describing the solid. The root of the" +
 	    " tree of Boolean expressions is given explicitly as an IfcBooleanResult (the onl" +

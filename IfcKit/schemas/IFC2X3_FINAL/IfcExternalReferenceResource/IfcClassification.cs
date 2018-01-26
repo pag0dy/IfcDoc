@@ -10,7 +10,6 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
 using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 
@@ -40,6 +39,18 @@ namespace BuildingSmart.IFC.IfcExternalReferenceResource
 		[InverseProperty("ItemOf")] 
 		ISet<IfcClassificationItem> _Contains = new HashSet<IfcClassificationItem>();
 	
+	
+		public IfcClassification()
+		{
+		}
+	
+		public IfcClassification(IfcLabel __Source, IfcLabel __Edition, IfcCalendarDate __EditionDate, IfcLabel __Name)
+		{
+			this._Source = __Source;
+			this._Edition = __Edition;
+			this._EditionDate = __EditionDate;
+			this._Name = __Name;
+		}
 	
 		[Description("Source (or publisher) for this classification.")]
 		public IfcLabel Source { get { return this._Source; } set { this._Source = value;} }

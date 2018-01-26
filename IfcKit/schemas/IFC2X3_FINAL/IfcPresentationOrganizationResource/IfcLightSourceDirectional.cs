@@ -10,12 +10,10 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcPresentationResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcPresentationOrganizationResource
 {
@@ -26,6 +24,16 @@ namespace BuildingSmart.IFC.IfcPresentationOrganizationResource
 		[Required()]
 		IfcDirection _Orientation;
 	
+	
+		public IfcLightSourceDirectional()
+		{
+		}
+	
+		public IfcLightSourceDirectional(IfcLabel? __Name, IfcColourRgb __LightColour, IfcNormalisedRatioMeasure? __AmbientIntensity, IfcNormalisedRatioMeasure? __Intensity, IfcDirection __Orientation)
+			: base(__Name, __LightColour, __AmbientIntensity, __Intensity)
+		{
+			this._Orientation = __Orientation;
+		}
 	
 		[Description(@"Definition from ISO/CD 10303-46:1992: This direction is the direction of the light source.
 	Definition from VRML97 - ISO/IEC 14772-1:1997: The direction field specifies the direction vector of the illumination emanating from the light source in the local coordinate system. Light is emitted along parallel rays from an infinite distance away. 

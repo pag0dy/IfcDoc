@@ -10,14 +10,10 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcCostResource;
 using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcProcessExtension
 {
@@ -89,6 +85,33 @@ namespace BuildingSmart.IFC.IfcProcessExtension
 		[InverseProperty("TimeForTask")] 
 		IfcRelAssignsTasks _ScheduleTimeControlAssigned;
 	
+	
+		public IfcScheduleTimeControl()
+		{
+		}
+	
+		public IfcScheduleTimeControl(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcDateTimeSelect __ActualStart, IfcDateTimeSelect __EarlyStart, IfcDateTimeSelect __LateStart, IfcDateTimeSelect __ScheduleStart, IfcDateTimeSelect __ActualFinish, IfcDateTimeSelect __EarlyFinish, IfcDateTimeSelect __LateFinish, IfcDateTimeSelect __ScheduleFinish, IfcTimeMeasure? __ScheduleDuration, IfcTimeMeasure? __ActualDuration, IfcTimeMeasure? __RemainingTime, IfcTimeMeasure? __FreeFloat, IfcTimeMeasure? __TotalFloat, Boolean? __IsCritical, IfcDateTimeSelect __StatusTime, IfcTimeMeasure? __StartFloat, IfcTimeMeasure? __FinishFloat, IfcPositiveRatioMeasure? __Completion)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType)
+		{
+			this._ActualStart = __ActualStart;
+			this._EarlyStart = __EarlyStart;
+			this._LateStart = __LateStart;
+			this._ScheduleStart = __ScheduleStart;
+			this._ActualFinish = __ActualFinish;
+			this._EarlyFinish = __EarlyFinish;
+			this._LateFinish = __LateFinish;
+			this._ScheduleFinish = __ScheduleFinish;
+			this._ScheduleDuration = __ScheduleDuration;
+			this._ActualDuration = __ActualDuration;
+			this._RemainingTime = __RemainingTime;
+			this._FreeFloat = __FreeFloat;
+			this._TotalFloat = __TotalFloat;
+			this._IsCritical = __IsCritical;
+			this._StatusTime = __StatusTime;
+			this._StartFloat = __StartFloat;
+			this._FinishFloat = __FinishFloat;
+			this._Completion = __Completion;
+		}
 	
 		[Description(@"The date on which a task is actually started. 
 	

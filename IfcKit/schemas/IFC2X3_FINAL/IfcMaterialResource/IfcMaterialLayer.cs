@@ -10,11 +10,8 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcMaterialResource
 {
@@ -38,6 +35,17 @@ namespace BuildingSmart.IFC.IfcMaterialResource
 		[InverseProperty("MaterialLayers")] 
 		IfcMaterialLayerSet _ToMaterialLayerSet;
 	
+	
+		public IfcMaterialLayer()
+		{
+		}
+	
+		public IfcMaterialLayer(IfcMaterial __Material, IfcPositiveLengthMeasure __LayerThickness, IfcLogical? __IsVentilated)
+		{
+			this._Material = __Material;
+			this._LayerThickness = __LayerThickness;
+			this._IsVentilated = __IsVentilated;
+		}
 	
 		[Description("Optional reference to the material from which the layer is constructed. Note, tha" +
 	    "t if this value is not given, it does not denote a layer with no material (an ai" +

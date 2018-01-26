@@ -11,16 +11,11 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcConstraintResource;
 using BuildingSmart.IFC.IfcCostResource;
 using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcQuantityResource;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcSharedFacilitiesElements
 {
@@ -38,6 +33,7 @@ namespace BuildingSmart.IFC.IfcSharedFacilitiesElements
 	
 		[DataMember(Order=2)] 
 		[Required()]
+		[MinLength(1)]
 		ISet<IfcPerson> _ResponsiblePersons = new HashSet<IfcPerson>();
 	
 		[DataMember(Order=3)] 
@@ -50,6 +46,21 @@ namespace BuildingSmart.IFC.IfcSharedFacilitiesElements
 		[DataMember(Order=5)] 
 		IfcCostValue _OriginalValue;
 	
+	
+		public IfcInventory()
+		{
+		}
+	
+		public IfcInventory(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcInventoryTypeEnum __InventoryType, IfcActorSelect __Jurisdiction, IfcPerson[] __ResponsiblePersons, IfcCalendarDate __LastUpdateDate, IfcCostValue __CurrentValue, IfcCostValue __OriginalValue)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType)
+		{
+			this._InventoryType = __InventoryType;
+			this._Jurisdiction = __Jurisdiction;
+			this._ResponsiblePersons = new HashSet<IfcPerson>(__ResponsiblePersons);
+			this._LastUpdateDate = __LastUpdateDate;
+			this._CurrentValue = __CurrentValue;
+			this._OriginalValue = __OriginalValue;
+		}
 	
 		[Description("A list of the types of inventories from which that required may be selected.\r\n")]
 		public IfcInventoryTypeEnum InventoryType { get { return this._InventoryType; } set { this._InventoryType = value;} }

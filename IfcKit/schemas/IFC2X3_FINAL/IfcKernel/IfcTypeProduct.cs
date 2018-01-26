@@ -10,16 +10,8 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcConstraintResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricConstraintResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
 using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcKernel
@@ -28,12 +20,24 @@ namespace BuildingSmart.IFC.IfcKernel
 	public partial class IfcTypeProduct : IfcTypeObject
 	{
 		[DataMember(Order=0)] 
+		[MinLength(1)]
 		IList<IfcRepresentationMap> _RepresentationMaps = new List<IfcRepresentationMap>();
 	
 		[DataMember(Order=1)] 
 		[XmlAttribute]
 		IfcLabel? _Tag;
 	
+	
+		public IfcTypeProduct()
+		{
+		}
+	
+		public IfcTypeProduct(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ApplicableOccurrence, IfcPropertySetDefinition[] __HasPropertySets, IfcRepresentationMap[] __RepresentationMaps, IfcLabel? __Tag)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ApplicableOccurrence, __HasPropertySets)
+		{
+			this._RepresentationMaps = new List<IfcRepresentationMap>(__RepresentationMaps);
+			this._Tag = __Tag;
+		}
 	
 		[Description("List of unique representation maps. Each representation map describes a block def" +
 	    "inition of the shape of the product style. By providing more than one representa" +

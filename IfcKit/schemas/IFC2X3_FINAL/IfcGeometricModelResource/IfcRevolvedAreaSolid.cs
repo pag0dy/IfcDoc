@@ -13,8 +13,8 @@ using System.Xml.Serialization;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometricModelResource
 {
@@ -31,12 +31,25 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 		IfcPlaneAngleMeasure _Angle;
 	
 	
+		public IfcRevolvedAreaSolid()
+		{
+		}
+	
+		public IfcRevolvedAreaSolid(IfcProfileDef __SweptArea, IfcAxis2Placement3D __Position, IfcAxis1Placement __Axis, IfcPlaneAngleMeasure __Angle)
+			: base(__SweptArea, __Position)
+		{
+			this._Axis = __Axis;
+			this._Angle = __Angle;
+		}
+	
 		[Description("Axis about which revolution will take place.")]
 		public IfcAxis1Placement Axis { get { return this._Axis; } set { this._Axis = value;} }
 	
 		[Description("Angle through which the sweep will be made. This angle is measured from the plane" +
 	    " of the sweep.")]
 		public IfcPlaneAngleMeasure Angle { get { return this._Angle; } set { this._Angle = value;} }
+	
+		public new IfcLine AxisLine { get { return null; } }
 	
 	
 	}

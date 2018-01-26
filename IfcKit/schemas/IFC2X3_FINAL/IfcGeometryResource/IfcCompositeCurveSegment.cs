@@ -10,13 +10,8 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcPresentationOrganizationResource;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
@@ -37,8 +32,20 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		IfcCurve _ParentCurve;
 	
 		[InverseProperty("Segments")] 
+		[MinLength(1)]
 		ISet<IfcCompositeCurve> _UsingCurves = new HashSet<IfcCompositeCurve>();
 	
+	
+		public IfcCompositeCurveSegment()
+		{
+		}
+	
+		public IfcCompositeCurveSegment(IfcTransitionCode __Transition, Boolean __SameSense, IfcCurve __ParentCurve)
+		{
+			this._Transition = __Transition;
+			this._SameSense = __SameSense;
+			this._ParentCurve = __ParentCurve;
+		}
 	
 		[Description("The state of transition (i.e., geometric continuity from the last point of this s" +
 	    "egment to the first point of the next segment) in a composite curve.")]
@@ -51,6 +58,8 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 	
 		[Description("The bounded curve which defines the geometry of the segment.")]
 		public IfcCurve ParentCurve { get { return this._ParentCurve; } set { this._ParentCurve = value;} }
+	
+		public new IfcDimensionCount Dim { get { return new IfcDimensionCount(); } }
 	
 		[Description("The set of composite curves which use this composite curve segment as a segment. " +
 	    "This set shall not be empty. ")]

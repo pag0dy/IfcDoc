@@ -10,11 +10,8 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcPropertyResource;
 
 namespace BuildingSmart.IFC.IfcMaterialPropertyResource
 {
@@ -46,8 +43,25 @@ namespace BuildingSmart.IFC.IfcMaterialPropertyResource
 		IfcPositiveRatioMeasure? _PlasticStrain;
 	
 		[DataMember(Order=6)] 
+		[MinLength(1)]
 		ISet<IfcRelaxation> _Relaxations = new HashSet<IfcRelaxation>();
 	
+	
+		public IfcMechanicalSteelMaterialProperties()
+		{
+		}
+	
+		public IfcMechanicalSteelMaterialProperties(IfcMaterial __Material, IfcDynamicViscosityMeasure? __DynamicViscosity, IfcModulusOfElasticityMeasure? __YoungModulus, IfcModulusOfElasticityMeasure? __ShearModulus, IfcPositiveRatioMeasure? __PoissonRatio, IfcThermalExpansionCoefficientMeasure? __ThermalExpansionCoefficient, IfcPressureMeasure? __YieldStress, IfcPressureMeasure? __UltimateStress, IfcPositiveRatioMeasure? __UltimateStrain, IfcModulusOfElasticityMeasure? __HardeningModule, IfcPressureMeasure? __ProportionalStress, IfcPositiveRatioMeasure? __PlasticStrain, IfcRelaxation[] __Relaxations)
+			: base(__Material, __DynamicViscosity, __YoungModulus, __ShearModulus, __PoissonRatio, __ThermalExpansionCoefficient)
+		{
+			this._YieldStress = __YieldStress;
+			this._UltimateStress = __UltimateStress;
+			this._UltimateStrain = __UltimateStrain;
+			this._HardeningModule = __HardeningModule;
+			this._ProportionalStress = __ProportionalStress;
+			this._PlasticStrain = __PlasticStrain;
+			this._Relaxations = new HashSet<IfcRelaxation>(__Relaxations);
+		}
 	
 		[Description("A measure of the yield stress (or characteristic 0.2 percent proof stress) of the" +
 	    " material. ")]

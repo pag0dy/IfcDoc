@@ -39,6 +39,20 @@ namespace BuildingSmart.IFC.IfcProfilePropertyResource
 		IfcAreaMeasure? _CrossSectionArea;
 	
 	
+		public IfcGeneralProfileProperties()
+		{
+		}
+	
+		public IfcGeneralProfileProperties(IfcLabel? __ProfileName, IfcProfileDef __ProfileDefinition, IfcMassPerLengthMeasure? __PhysicalWeight, IfcPositiveLengthMeasure? __Perimeter, IfcPositiveLengthMeasure? __MinimumPlateThickness, IfcPositiveLengthMeasure? __MaximumPlateThickness, IfcAreaMeasure? __CrossSectionArea)
+			: base(__ProfileName, __ProfileDefinition)
+		{
+			this._PhysicalWeight = __PhysicalWeight;
+			this._Perimeter = __Perimeter;
+			this._MinimumPlateThickness = __MinimumPlateThickness;
+			this._MaximumPlateThickness = __MaximumPlateThickness;
+			this._CrossSectionArea = __CrossSectionArea;
+		}
+	
 		[Description("Weight of an imaginary steel beam per length, as for example given by the nationa" +
 	    "l standards\t for this profile. Usually measured in [kg/m].")]
 		public IfcMassPerLengthMeasure? PhysicalWeight { get { return this._PhysicalWeight; } set { this._PhysicalWeight = value;} }

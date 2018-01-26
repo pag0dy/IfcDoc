@@ -10,10 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 
 namespace BuildingSmart.IFC.IfcPresentationResource
 {
@@ -25,6 +22,15 @@ namespace BuildingSmart.IFC.IfcPresentationResource
 		[XmlAttribute]
 		IfcLabel? _Name;
 	
+	
+		public IfcColourSpecification()
+		{
+		}
+	
+		public IfcColourSpecification(IfcLabel? __Name)
+		{
+			this._Name = __Name;
+		}
 	
 		[Description(@"<EPM-HTML>
 	Optional name given to a particular colour specification in addition to the colour components (like the RGB values).

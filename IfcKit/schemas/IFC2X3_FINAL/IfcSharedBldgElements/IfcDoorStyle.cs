@@ -10,18 +10,10 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcSharedBldgElements
 {
@@ -46,6 +38,19 @@ namespace BuildingSmart.IFC.IfcSharedBldgElements
 		[Required()]
 		Boolean _Sizeable;
 	
+	
+		public IfcDoorStyle()
+		{
+		}
+	
+		public IfcDoorStyle(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ApplicableOccurrence, IfcPropertySetDefinition[] __HasPropertySets, IfcRepresentationMap[] __RepresentationMaps, IfcLabel? __Tag, IfcDoorStyleOperationEnum __OperationType, IfcDoorStyleConstructionEnum __ConstructionType, Boolean __ParameterTakesPrecedence, Boolean __Sizeable)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ApplicableOccurrence, __HasPropertySets, __RepresentationMaps, __Tag)
+		{
+			this._OperationType = __OperationType;
+			this._ConstructionType = __ConstructionType;
+			this._ParameterTakesPrecedence = __ParameterTakesPrecedence;
+			this._Sizeable = __Sizeable;
+		}
 	
 		[Description("<EPM-HTML>\r\nType defining the general layout and operation of the door style.\r\n<b" +
 	    "r>\r\n</EPM-HTML>")]

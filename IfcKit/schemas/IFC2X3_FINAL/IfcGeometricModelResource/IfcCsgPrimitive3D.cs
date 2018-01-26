@@ -11,10 +11,8 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcTopologyResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcGeometricModelResource
 {
@@ -28,9 +26,20 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 		IfcAxis2Placement3D _Position;
 	
 	
+		public IfcCsgPrimitive3D()
+		{
+		}
+	
+		public IfcCsgPrimitive3D(IfcAxis2Placement3D __Position)
+		{
+			this._Position = __Position;
+		}
+	
 		[Description("<EPM-HTML>\r\nThe placement coordinate system to which the parameters of each indiv" +
 	    "idual CSG primitive apply.\r\n</EPM-HTML>")]
 		public IfcAxis2Placement3D Position { get { return this._Position; } set { this._Position = value;} }
+	
+		public new IfcDimensionCount Dim { get { return new IfcDimensionCount(); } }
 	
 	
 	}

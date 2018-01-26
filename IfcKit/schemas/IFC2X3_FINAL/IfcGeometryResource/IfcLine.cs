@@ -11,12 +11,8 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcPresentationOrganizationResource;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
@@ -31,6 +27,16 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		[Required()]
 		IfcVector _Dir;
 	
+	
+		public IfcLine()
+		{
+		}
+	
+		public IfcLine(IfcCartesianPoint __Pnt, IfcVector __Dir)
+		{
+			this._Pnt = __Pnt;
+			this._Dir = __Dir;
+		}
 	
 		[Description("The location of the line.")]
 		public IfcCartesianPoint Pnt { get { return this._Pnt; } set { this._Pnt = value;} }

@@ -10,10 +10,8 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcPropertyResource;
 
 namespace BuildingSmart.IFC.IfcMaterialPropertyResource
@@ -23,6 +21,7 @@ namespace BuildingSmart.IFC.IfcMaterialPropertyResource
 	{
 		[DataMember(Order=0)] 
 		[Required()]
+		[MinLength(1)]
 		ISet<IfcProperty> _ExtendedProperties = new HashSet<IfcProperty>();
 	
 		[DataMember(Order=1)] 
@@ -34,6 +33,18 @@ namespace BuildingSmart.IFC.IfcMaterialPropertyResource
 		[Required()]
 		IfcLabel _Name;
 	
+	
+		public IfcExtendedMaterialProperties()
+		{
+		}
+	
+		public IfcExtendedMaterialProperties(IfcMaterial __Material, IfcProperty[] __ExtendedProperties, IfcText? __Description, IfcLabel __Name)
+			: base(__Material)
+		{
+			this._ExtendedProperties = new HashSet<IfcProperty>(__ExtendedProperties);
+			this._Description = __Description;
+			this._Name = __Name;
+		}
 	
 		[Description("The set of material properties defined by user for this material.")]
 		public ISet<IfcProperty> ExtendedProperties { get { return this._ExtendedProperties; } }

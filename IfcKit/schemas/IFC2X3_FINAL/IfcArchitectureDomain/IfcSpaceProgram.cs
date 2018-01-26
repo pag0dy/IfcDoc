@@ -10,19 +10,10 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcSharedBldgElements;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcArchitectureDomain
 {
@@ -56,6 +47,20 @@ namespace BuildingSmart.IFC.IfcArchitectureDomain
 		[InverseProperty("RelatingSpaceProgram")] 
 		ISet<IfcRelInteractionRequirements> _HasInteractionReqsTo = new HashSet<IfcRelInteractionRequirements>();
 	
+	
+		public IfcSpaceProgram()
+		{
+		}
+	
+		public IfcSpaceProgram(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcIdentifier __SpaceProgramIdentifier, IfcAreaMeasure? __MaxRequiredArea, IfcAreaMeasure? __MinRequiredArea, IfcSpatialStructureElement __RequestedLocation, IfcAreaMeasure __StandardRequiredArea)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType)
+		{
+			this._SpaceProgramIdentifier = __SpaceProgramIdentifier;
+			this._MaxRequiredArea = __MaxRequiredArea;
+			this._MinRequiredArea = __MinRequiredArea;
+			this._RequestedLocation = __RequestedLocation;
+			this._StandardRequiredArea = __StandardRequiredArea;
+		}
 	
 		[Description("Identifier for this space program. It often refers to a number (or code) assigned" +
 	    " to the space program. Example: R-001.")]

@@ -11,15 +11,7 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcConstraintResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricConstraintResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
 using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcKernel
@@ -34,6 +26,16 @@ namespace BuildingSmart.IFC.IfcKernel
 		[InverseProperty("RelatingActor")] 
 		ISet<IfcRelAssignsToActor> _IsActingUpon = new HashSet<IfcRelAssignsToActor>();
 	
+	
+		public IfcActor()
+		{
+		}
+	
+		public IfcActor(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcActorSelect __TheActor)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType)
+		{
+			this._TheActor = __TheActor;
+		}
 	
 		[Description("Information about the actor.\r\n")]
 		public IfcActorSelect TheActor { get { return this._TheActor; } set { this._TheActor = value;} }

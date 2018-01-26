@@ -11,10 +11,10 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcCostResource;
 using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcSharedMgmtElements
 {
@@ -35,6 +35,7 @@ namespace BuildingSmart.IFC.IfcSharedMgmtElements
 		IfcLabel? _Status;
 	
 		[DataMember(Order=4)] 
+		[MinLength(1)]
 		ISet<IfcActorSelect> _TargetUsers = new HashSet<IfcActorSelect>();
 	
 		[DataMember(Order=5)] 
@@ -50,6 +51,23 @@ namespace BuildingSmart.IFC.IfcSharedMgmtElements
 		[Required()]
 		IfcCostScheduleTypeEnum _PredefinedType;
 	
+	
+		public IfcCostSchedule()
+		{
+		}
+	
+		public IfcCostSchedule(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcActorSelect __SubmittedBy, IfcActorSelect __PreparedBy, IfcDateTimeSelect __SubmittedOn, IfcLabel? __Status, IfcActorSelect[] __TargetUsers, IfcDateTimeSelect __UpdateDate, IfcIdentifier __ID, IfcCostScheduleTypeEnum __PredefinedType)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType)
+		{
+			this._SubmittedBy = __SubmittedBy;
+			this._PreparedBy = __PreparedBy;
+			this._SubmittedOn = __SubmittedOn;
+			this._Status = __Status;
+			this._TargetUsers = new HashSet<IfcActorSelect>(__TargetUsers);
+			this._UpdateDate = __UpdateDate;
+			this._ID = __ID;
+			this._PredefinedType = __PredefinedType;
+		}
 	
 		[Description("The identity of the person or organization submitting the cost schedule.")]
 		public IfcActorSelect SubmittedBy { get { return this._SubmittedBy; } set { this._SubmittedBy = value;} }

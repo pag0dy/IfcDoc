@@ -18,8 +18,18 @@ namespace BuildingSmart.IFC.IfcMeasureResource
 	{
 		[DataMember(Order=0)] 
 		[Required()]
+		[MinLength(1)]
 		ISet<IfcUnit> _Units = new HashSet<IfcUnit>();
 	
+	
+		public IfcUnitAssignment()
+		{
+		}
+	
+		public IfcUnitAssignment(IfcUnit[] __Units)
+		{
+			this._Units = new HashSet<IfcUnit>(__Units);
+		}
 	
 		[Description("Units to be included within a unit assignment.")]
 		public ISet<IfcUnit> Units { get { return this._Units; } }

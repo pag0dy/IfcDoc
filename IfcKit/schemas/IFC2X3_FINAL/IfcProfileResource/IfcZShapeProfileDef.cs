@@ -12,7 +12,6 @@ using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 
 namespace BuildingSmart.IFC.IfcProfileResource
 {
@@ -47,6 +46,21 @@ namespace BuildingSmart.IFC.IfcProfileResource
 		[XmlAttribute]
 		IfcPositiveLengthMeasure? _EdgeRadius;
 	
+	
+		public IfcZShapeProfileDef()
+		{
+		}
+	
+		public IfcZShapeProfileDef(IfcProfileTypeEnum __ProfileType, IfcLabel? __ProfileName, IfcAxis2Placement2D __Position, IfcPositiveLengthMeasure __Depth, IfcPositiveLengthMeasure __FlangeWidth, IfcPositiveLengthMeasure __WebThickness, IfcPositiveLengthMeasure __FlangeThickness, IfcPositiveLengthMeasure? __FilletRadius, IfcPositiveLengthMeasure? __EdgeRadius)
+			: base(__ProfileType, __ProfileName, __Position)
+		{
+			this._Depth = __Depth;
+			this._FlangeWidth = __FlangeWidth;
+			this._WebThickness = __WebThickness;
+			this._FlangeThickness = __FlangeThickness;
+			this._FilletRadius = __FilletRadius;
+			this._EdgeRadius = __EdgeRadius;
+		}
 	
 		[Description("Web length, see illustration above (= h). ")]
 		public IfcPositiveLengthMeasure Depth { get { return this._Depth; } set { this._Depth = value;} }

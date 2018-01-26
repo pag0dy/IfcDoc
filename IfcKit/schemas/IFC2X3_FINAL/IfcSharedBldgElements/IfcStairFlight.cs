@@ -10,18 +10,13 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
+using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcPropertyResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
+using BuildingSmart.IFC.IfcStructuralAnalysisDomain;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcSharedBldgElements
 {
@@ -42,6 +37,19 @@ namespace BuildingSmart.IFC.IfcSharedBldgElements
 		[XmlAttribute]
 		IfcPositiveLengthMeasure? _TreadLength;
 	
+	
+		public IfcStairFlight()
+		{
+		}
+	
+		public IfcStairFlight(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcObjectPlacement __ObjectPlacement, IfcProductRepresentation __Representation, IfcIdentifier? __Tag, Int64? __NumberOfRiser, Int64? __NumberOfTreads, IfcPositiveLengthMeasure? __RiserHeight, IfcPositiveLengthMeasure? __TreadLength)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType, __ObjectPlacement, __Representation, __Tag)
+		{
+			this._NumberOfRiser = __NumberOfRiser;
+			this._NumberOfTreads = __NumberOfTreads;
+			this._RiserHeight = __RiserHeight;
+			this._TreadLength = __TreadLength;
+		}
 	
 		[Description("Number of the risers included in the stair flight.")]
 		public Int64? NumberOfRiser { get { return this._NumberOfRiser; } set { this._NumberOfRiser = value;} }

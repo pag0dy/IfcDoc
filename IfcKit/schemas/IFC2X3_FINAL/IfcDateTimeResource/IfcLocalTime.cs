@@ -10,6 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcPropertyResource;
 
 namespace BuildingSmart.IFC.IfcDateTimeResource
 {
@@ -38,6 +39,19 @@ namespace BuildingSmart.IFC.IfcDateTimeResource
 		[XmlAttribute]
 		IfcDaylightSavingHour? _DaylightSavingOffset;
 	
+	
+		public IfcLocalTime()
+		{
+		}
+	
+		public IfcLocalTime(IfcHourInDay __HourComponent, IfcMinuteInHour? __MinuteComponent, IfcSecondInMinute? __SecondComponent, IfcCoordinatedUniversalTimeOffset __Zone, IfcDaylightSavingHour? __DaylightSavingOffset)
+		{
+			this._HourComponent = __HourComponent;
+			this._MinuteComponent = __MinuteComponent;
+			this._SecondComponent = __SecondComponent;
+			this._Zone = __Zone;
+			this._DaylightSavingOffset = __DaylightSavingOffset;
+		}
 	
 		[Description("The number of hours of the local time.")]
 		public IfcHourInDay HourComponent { get { return this._HourComponent; } set { this._HourComponent = value;} }

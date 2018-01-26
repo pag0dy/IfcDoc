@@ -30,6 +30,18 @@ namespace BuildingSmart.IFC.IfcStructuralLoadResource
 		IfcThermodynamicTemperatureMeasure? _DeltaT_Z;
 	
 	
+		public IfcStructuralLoadTemperature()
+		{
+		}
+	
+		public IfcStructuralLoadTemperature(IfcLabel? __Name, IfcThermodynamicTemperatureMeasure? __DeltaT_Constant, IfcThermodynamicTemperatureMeasure? __DeltaT_Y, IfcThermodynamicTemperatureMeasure? __DeltaT_Z)
+			: base(__Name)
+		{
+			this._DeltaT_Constant = __DeltaT_Constant;
+			this._DeltaT_Y = __DeltaT_Y;
+			this._DeltaT_Z = __DeltaT_Z;
+		}
+	
 		[Description("Temperature change which is applied to the complete section of the structural mem" +
 	    "ber. A positive value describes an increase in temperature.")]
 		public IfcThermodynamicTemperatureMeasure? DeltaT_Constant { get { return this._DeltaT_Constant; } set { this._DeltaT_Constant = value;} }

@@ -10,12 +10,8 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationDefinitionResource;
-using BuildingSmart.IFC.IfcPresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 {
@@ -26,6 +22,16 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 		[Required()]
 		IfcVector _SecondRepeatFactor;
 	
+	
+		public IfcTwoDirectionRepeatFactor()
+		{
+		}
+	
+		public IfcTwoDirectionRepeatFactor(IfcVector __RepeatFactor, IfcVector __SecondRepeatFactor)
+			: base(__RepeatFactor)
+		{
+			this._SecondRepeatFactor = __SecondRepeatFactor;
+		}
 	
 		[Description("A vector which specifies the relative positioning of tiles in the second directio" +
 	    "n.")]

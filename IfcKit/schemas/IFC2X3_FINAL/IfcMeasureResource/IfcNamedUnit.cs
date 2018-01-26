@@ -27,6 +27,16 @@ namespace BuildingSmart.IFC.IfcMeasureResource
 		IfcUnitEnum _UnitType;
 	
 	
+		public IfcNamedUnit()
+		{
+		}
+	
+		public IfcNamedUnit(IfcDimensionalExponents __Dimensions, IfcUnitEnum __UnitType)
+		{
+			this._Dimensions = __Dimensions;
+			this._UnitType = __UnitType;
+		}
+	
 		[Description("The dimensional exponents of the SI base units by which the named unit is defined" +
 	    ".")]
 		public IfcDimensionalExponents Dimensions { get { return this._Dimensions; } set { this._Dimensions = value;} }

@@ -11,20 +11,9 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcApprovalResource;
-using BuildingSmart.IFC.IfcCostResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProcessExtension;
-using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcQuantityResource;
-using BuildingSmart.IFC.IfcSharedMgmtElements;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcConstructionMgmtDomain
 {
@@ -38,6 +27,17 @@ namespace BuildingSmart.IFC.IfcConstructionMgmtDomain
 		[XmlAttribute]
 		IfcText? _JobDescription;
 	
+	
+		public IfcSubContractResource()
+		{
+		}
+	
+		public IfcSubContractResource(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcIdentifier? __ResourceIdentifier, IfcLabel? __ResourceGroup, IfcResourceConsumptionEnum? __ResourceConsumption, IfcMeasureWithUnit __BaseQuantity, IfcActorSelect __SubContractor, IfcText? __JobDescription)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType, __ResourceIdentifier, __ResourceGroup, __ResourceConsumption, __BaseQuantity)
+		{
+			this._SubContractor = __SubContractor;
+			this._JobDescription = __JobDescription;
+		}
 	
 		[Description("The actor performing the role of the subcontracted resource.")]
 		public IfcActorSelect SubContractor { get { return this._SubContractor; } set { this._SubContractor = value;} }

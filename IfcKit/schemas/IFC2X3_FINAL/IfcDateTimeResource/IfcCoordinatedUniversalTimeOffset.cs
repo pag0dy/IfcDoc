@@ -31,6 +31,17 @@ namespace BuildingSmart.IFC.IfcDateTimeResource
 		IfcAheadOrBehind _Sense;
 	
 	
+		public IfcCoordinatedUniversalTimeOffset()
+		{
+		}
+	
+		public IfcCoordinatedUniversalTimeOffset(IfcHourInDay __HourOffset, IfcMinuteInHour? __MinuteOffset, IfcAheadOrBehind __Sense)
+		{
+			this._HourOffset = __HourOffset;
+			this._MinuteOffset = __MinuteOffset;
+			this._Sense = __Sense;
+		}
+	
 		[Description("The number of hours by which local time is offset from coordinated universal time" +
 	    ".")]
 		public IfcHourInDay HourOffset { get { return this._HourOffset; } set { this._HourOffset = value;} }

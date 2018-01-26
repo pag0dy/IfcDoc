@@ -11,16 +11,11 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcConstraintResource;
 using BuildingSmart.IFC.IfcCostResource;
 using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcQuantityResource;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcSharedFacilitiesElements
 {
@@ -64,6 +59,24 @@ namespace BuildingSmart.IFC.IfcSharedFacilitiesElements
 		[Required()]
 		IfcCostValue _DepreciatedValue;
 	
+	
+		public IfcAsset()
+		{
+		}
+	
+		public IfcAsset(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcIdentifier __AssetID, IfcCostValue __OriginalValue, IfcCostValue __CurrentValue, IfcCostValue __TotalReplacementCost, IfcActorSelect __Owner, IfcActorSelect __User, IfcPerson __ResponsiblePerson, IfcCalendarDate __IncorporationDate, IfcCostValue __DepreciatedValue)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType)
+		{
+			this._AssetID = __AssetID;
+			this._OriginalValue = __OriginalValue;
+			this._CurrentValue = __CurrentValue;
+			this._TotalReplacementCost = __TotalReplacementCost;
+			this._Owner = __Owner;
+			this._User = __User;
+			this._ResponsiblePerson = __ResponsiblePerson;
+			this._IncorporationDate = __IncorporationDate;
+			this._DepreciatedValue = __DepreciatedValue;
+		}
 	
 		[Description(@"A unique identification assigned to an asset that enables its differentiation from other assets.
 	NOTE: The asset identifier is unique within the asset register. It differs from the globally unique id assigned to the instance of an entity populating a database")]

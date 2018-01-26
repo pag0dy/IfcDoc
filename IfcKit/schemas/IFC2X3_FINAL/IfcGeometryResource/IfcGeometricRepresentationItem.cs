@@ -10,19 +10,18 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcPresentationOrganizationResource;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
 	[Guid("3ad55fe2-21bc-49a7-bdac-b6db8bc84274")]
 	public abstract partial class IfcGeometricRepresentationItem : IfcRepresentationItem
 	{
+	
+		public IfcGeometricRepresentationItem()
+		{
+		}
 	
 	
 	}

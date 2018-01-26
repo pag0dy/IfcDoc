@@ -45,6 +45,21 @@ namespace BuildingSmart.IFC.IfcMeasureResource
 		Int64 _LuminousIntensityExponent;
 	
 	
+		public IfcDimensionalExponents()
+		{
+		}
+	
+		public IfcDimensionalExponents(Int64 __LengthExponent, Int64 __MassExponent, Int64 __TimeExponent, Int64 __ElectricCurrentExponent, Int64 __ThermodynamicTemperatureExponent, Int64 __AmountOfSubstanceExponent, Int64 __LuminousIntensityExponent)
+		{
+			this._LengthExponent = __LengthExponent;
+			this._MassExponent = __MassExponent;
+			this._TimeExponent = __TimeExponent;
+			this._ElectricCurrentExponent = __ElectricCurrentExponent;
+			this._ThermodynamicTemperatureExponent = __ThermodynamicTemperatureExponent;
+			this._AmountOfSubstanceExponent = __AmountOfSubstanceExponent;
+			this._LuminousIntensityExponent = __LuminousIntensityExponent;
+		}
+	
 		[Description("The power of the length base quantity.")]
 		public Int64 LengthExponent { get { return this._LengthExponent; } set { this._LengthExponent = value;} }
 	

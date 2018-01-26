@@ -10,14 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcRepresentationResource
 {
@@ -26,6 +19,7 @@ namespace BuildingSmart.IFC.IfcRepresentationResource
 	{
 		[DataMember(Order=0)] 
 		[Required()]
+		[MinLength(1)]
 		IList<IfcShapeModel> _ShapeRepresentations = new List<IfcShapeModel>();
 	
 		[DataMember(Order=1)] 
@@ -44,6 +38,19 @@ namespace BuildingSmart.IFC.IfcRepresentationResource
 		[Required()]
 		IfcProductDefinitionShape _PartOfProductDefinitionShape;
 	
+	
+		public IfcShapeAspect()
+		{
+		}
+	
+		public IfcShapeAspect(IfcShapeModel[] __ShapeRepresentations, IfcLabel? __Name, IfcText? __Description, Boolean? __ProductDefinitional, IfcProductDefinitionShape __PartOfProductDefinitionShape)
+		{
+			this._ShapeRepresentations = new List<IfcShapeModel>(__ShapeRepresentations);
+			this._Name = __Name;
+			this._Description = __Description;
+			this._ProductDefinitional = __ProductDefinitional;
+			this._PartOfProductDefinitionShape = __PartOfProductDefinitionShape;
+		}
 	
 		[Description(@"<EPM-HTML>List of <strike>shape</strike> representations. Each member defines a valid representation of a particular type within a particular representation context as being an aspect (or part) of a product definition.
 	<blockquote><small><font color=""#FF0000"">IFC2x Edition 3 CHANGE&nbsp; The data type has been changed from <i>IfcShapeRepresentation</i> to <i>IfcShapeModel</i> with upward compatibility </font></small></blockquote>

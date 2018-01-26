@@ -10,14 +10,9 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcCostResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcProcessExtension
 {
@@ -44,6 +39,20 @@ namespace BuildingSmart.IFC.IfcProcessExtension
 		[DataMember(Order=4)] 
 		Int64? _Priority;
 	
+	
+		public IfcTask()
+		{
+		}
+	
+		public IfcTask(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcIdentifier __TaskId, IfcLabel? __Status, IfcLabel? __WorkMethod, Boolean __IsMilestone, Int64? __Priority)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType)
+		{
+			this._TaskId = __TaskId;
+			this._Status = __Status;
+			this._WorkMethod = __WorkMethod;
+			this._IsMilestone = __IsMilestone;
+			this._Priority = __Priority;
+		}
 	
 		[Description("An identifying designation given to a task.")]
 		public IfcIdentifier TaskId { get { return this._TaskId; } set { this._TaskId = value;} }

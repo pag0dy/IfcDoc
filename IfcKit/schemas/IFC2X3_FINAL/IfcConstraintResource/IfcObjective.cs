@@ -11,13 +11,8 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcCostResource;
 using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcTimeSeriesResource;
-using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcConstraintResource
 {
@@ -39,6 +34,19 @@ namespace BuildingSmart.IFC.IfcConstraintResource
 		[XmlAttribute]
 		IfcLabel? _UserDefinedQualifier;
 	
+	
+		public IfcObjective()
+		{
+		}
+	
+		public IfcObjective(IfcLabel __Name, IfcText? __Description, IfcConstraintEnum __ConstraintGrade, IfcLabel? __ConstraintSource, IfcActorSelect __CreatingActor, IfcDateTimeSelect __CreationTime, IfcLabel? __UserDefinedGrade, IfcMetric __BenchmarkValues, IfcMetric __ResultValues, IfcObjectiveEnum __ObjectiveQualifier, IfcLabel? __UserDefinedQualifier)
+			: base(__Name, __Description, __ConstraintGrade, __ConstraintSource, __CreatingActor, __CreationTime, __UserDefinedGrade)
+		{
+			this._BenchmarkValues = __BenchmarkValues;
+			this._ResultValues = __ResultValues;
+			this._ObjectiveQualifier = __ObjectiveQualifier;
+			this._UserDefinedQualifier = __UserDefinedQualifier;
+		}
 	
 		[Description("A list of any benchmark values used for comparison purposes.")]
 		public IfcMetric BenchmarkValues { get { return this._BenchmarkValues; } set { this._BenchmarkValues = value;} }

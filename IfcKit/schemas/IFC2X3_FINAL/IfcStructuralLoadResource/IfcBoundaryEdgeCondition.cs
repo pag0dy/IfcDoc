@@ -42,6 +42,21 @@ namespace BuildingSmart.IFC.IfcStructuralLoadResource
 		IfcModulusOfRotationalSubgradeReactionMeasure? _RotationalStiffnessByLengthZ;
 	
 	
+		public IfcBoundaryEdgeCondition()
+		{
+		}
+	
+		public IfcBoundaryEdgeCondition(IfcLabel? __Name, IfcModulusOfLinearSubgradeReactionMeasure? __LinearStiffnessByLengthX, IfcModulusOfLinearSubgradeReactionMeasure? __LinearStiffnessByLengthY, IfcModulusOfLinearSubgradeReactionMeasure? __LinearStiffnessByLengthZ, IfcModulusOfRotationalSubgradeReactionMeasure? __RotationalStiffnessByLengthX, IfcModulusOfRotationalSubgradeReactionMeasure? __RotationalStiffnessByLengthY, IfcModulusOfRotationalSubgradeReactionMeasure? __RotationalStiffnessByLengthZ)
+			: base(__Name)
+		{
+			this._LinearStiffnessByLengthX = __LinearStiffnessByLengthX;
+			this._LinearStiffnessByLengthY = __LinearStiffnessByLengthY;
+			this._LinearStiffnessByLengthZ = __LinearStiffnessByLengthZ;
+			this._RotationalStiffnessByLengthX = __RotationalStiffnessByLengthX;
+			this._RotationalStiffnessByLengthY = __RotationalStiffnessByLengthY;
+			this._RotationalStiffnessByLengthZ = __RotationalStiffnessByLengthZ;
+		}
+	
 		[Description("Linear stiffness value in x-direction of the coordinate system defined by the ins" +
 	    "tance which uses this resource object.")]
 		public IfcModulusOfLinearSubgradeReactionMeasure? LinearStiffnessByLengthX { get { return this._LinearStiffnessByLengthX; } set { this._LinearStiffnessByLengthX = value;} }

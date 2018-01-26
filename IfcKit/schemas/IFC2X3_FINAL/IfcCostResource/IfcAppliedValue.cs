@@ -11,8 +11,8 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcMeasureResource;
+using BuildingSmart.IFC.IfcPropertyResource;
 
 namespace BuildingSmart.IFC.IfcCostResource
 {
@@ -49,6 +49,20 @@ namespace BuildingSmart.IFC.IfcCostResource
 		[InverseProperty("Components")] 
 		ISet<IfcAppliedValueRelationship> _IsComponentIn = new HashSet<IfcAppliedValueRelationship>();
 	
+	
+		public IfcAppliedValue()
+		{
+		}
+	
+		public IfcAppliedValue(IfcLabel? __Name, IfcText? __Description, IfcAppliedValueSelect __AppliedValue, IfcMeasureWithUnit __UnitBasis, IfcDateTimeSelect __ApplicableDate, IfcDateTimeSelect __FixedUntilDate)
+		{
+			this._Name = __Name;
+			this._Description = __Description;
+			this._AppliedValue = __AppliedValue;
+			this._UnitBasis = __UnitBasis;
+			this._ApplicableDate = __ApplicableDate;
+			this._FixedUntilDate = __FixedUntilDate;
+		}
 	
 		[Description("A name or additional clarification given to a cost (or impact) value.")]
 		public IfcLabel? Name { get { return this._Name; } set { this._Name = value;} }

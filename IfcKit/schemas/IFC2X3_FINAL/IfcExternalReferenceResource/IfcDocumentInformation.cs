@@ -35,6 +35,7 @@ namespace BuildingSmart.IFC.IfcExternalReferenceResource
 		IfcText? _Description;
 	
 		[DataMember(Order=3)] 
+		[MinLength(1)]
 		ISet<IfcDocumentReference> _DocumentReferences = new HashSet<IfcDocumentReference>();
 	
 		[DataMember(Order=4)] 
@@ -57,6 +58,7 @@ namespace BuildingSmart.IFC.IfcExternalReferenceResource
 		IfcActorSelect _DocumentOwner;
 	
 		[DataMember(Order=9)] 
+		[MinLength(1)]
 		ISet<IfcActorSelect> _Editors = new HashSet<IfcActorSelect>();
 	
 		[DataMember(Order=10)] 
@@ -86,8 +88,34 @@ namespace BuildingSmart.IFC.IfcExternalReferenceResource
 		ISet<IfcDocumentInformationRelationship> _IsPointedTo = new HashSet<IfcDocumentInformationRelationship>();
 	
 		[InverseProperty("RelatingDocument")] 
+		[MaxLength(1)]
 		ISet<IfcDocumentInformationRelationship> _IsPointer = new HashSet<IfcDocumentInformationRelationship>();
 	
+	
+		public IfcDocumentInformation()
+		{
+		}
+	
+		public IfcDocumentInformation(IfcIdentifier __DocumentId, IfcLabel __Name, IfcText? __Description, IfcDocumentReference[] __DocumentReferences, IfcText? __Purpose, IfcText? __IntendedUse, IfcText? __Scope, IfcLabel? __Revision, IfcActorSelect __DocumentOwner, IfcActorSelect[] __Editors, IfcDateAndTime __CreationTime, IfcDateAndTime __LastRevisionTime, IfcDocumentElectronicFormat __ElectronicFormat, IfcCalendarDate __ValidFrom, IfcCalendarDate __ValidUntil, IfcDocumentConfidentialityEnum? __Confidentiality, IfcDocumentStatusEnum? __Status)
+		{
+			this._DocumentId = __DocumentId;
+			this._Name = __Name;
+			this._Description = __Description;
+			this._DocumentReferences = new HashSet<IfcDocumentReference>(__DocumentReferences);
+			this._Purpose = __Purpose;
+			this._IntendedUse = __IntendedUse;
+			this._Scope = __Scope;
+			this._Revision = __Revision;
+			this._DocumentOwner = __DocumentOwner;
+			this._Editors = new HashSet<IfcActorSelect>(__Editors);
+			this._CreationTime = __CreationTime;
+			this._LastRevisionTime = __LastRevisionTime;
+			this._ElectronicFormat = __ElectronicFormat;
+			this._ValidFrom = __ValidFrom;
+			this._ValidUntil = __ValidUntil;
+			this._Confidentiality = __Confidentiality;
+			this._Status = __Status;
+		}
 	
 		[Description("Identifier that uniquely identifies a document.")]
 		public IfcIdentifier DocumentId { get { return this._DocumentId; } set { this._DocumentId = value;} }

@@ -10,12 +10,8 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationDefinitionResource;
-using BuildingSmart.IFC.IfcPresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 {
@@ -27,6 +23,16 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 		[Required()]
 		IfcIdentifier _UrlReference;
 	
+	
+		public IfcImageTexture()
+		{
+		}
+	
+		public IfcImageTexture(Boolean __RepeatS, Boolean __RepeatT, IfcSurfaceTextureEnum __TextureType, IfcCartesianTransformationOperator2D __TextureTransform, IfcIdentifier __UrlReference)
+			: base(__RepeatS, __RepeatT, __TextureType, __TextureTransform)
+		{
+			this._UrlReference = __UrlReference;
+		}
 	
 		public IfcIdentifier UrlReference { get { return this._UrlReference; } set { this._UrlReference = value;} }
 	

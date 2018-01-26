@@ -22,6 +22,15 @@ namespace BuildingSmart.IFC.IfcStructuralLoadResource
 		IfcLabel? _Name;
 	
 	
+		public IfcStructuralLoad()
+		{
+		}
+	
+		public IfcStructuralLoad(IfcLabel? __Name)
+		{
+			this._Name = __Name;
+		}
+	
 		[Description("Optionally defines a name for this load.")]
 		public IfcLabel? Name { get { return this._Name; } set { this._Name = value;} }
 	

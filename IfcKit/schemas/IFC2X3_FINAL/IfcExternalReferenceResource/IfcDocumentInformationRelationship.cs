@@ -10,8 +10,6 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 
 namespace BuildingSmart.IFC.IfcExternalReferenceResource
@@ -25,12 +23,24 @@ namespace BuildingSmart.IFC.IfcExternalReferenceResource
 	
 		[DataMember(Order=1)] 
 		[Required()]
+		[MinLength(1)]
 		ISet<IfcDocumentInformation> _RelatedDocuments = new HashSet<IfcDocumentInformation>();
 	
 		[DataMember(Order=2)] 
 		[XmlAttribute]
 		IfcLabel? _RelationshipType;
 	
+	
+		public IfcDocumentInformationRelationship()
+		{
+		}
+	
+		public IfcDocumentInformationRelationship(IfcDocumentInformation __RelatingDocument, IfcDocumentInformation[] __RelatedDocuments, IfcLabel? __RelationshipType)
+		{
+			this._RelatingDocument = __RelatingDocument;
+			this._RelatedDocuments = new HashSet<IfcDocumentInformation>(__RelatedDocuments);
+			this._RelationshipType = __RelationshipType;
+		}
 	
 		[Description("The document that acts as the parent, referencing or original document in a relat" +
 	    "ionship.")]

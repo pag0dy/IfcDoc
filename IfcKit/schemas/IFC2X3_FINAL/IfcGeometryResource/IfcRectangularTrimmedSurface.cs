@@ -10,13 +10,11 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometricModelResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcPresentationOrganizationResource;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
@@ -56,6 +54,21 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		Boolean _Vsense;
 	
 	
+		public IfcRectangularTrimmedSurface()
+		{
+		}
+	
+		public IfcRectangularTrimmedSurface(IfcSurface __BasisSurface, IfcParameterValue __U1, IfcParameterValue __V1, IfcParameterValue __U2, IfcParameterValue __V2, Boolean __Usense, Boolean __Vsense)
+		{
+			this._BasisSurface = __BasisSurface;
+			this._U1 = __U1;
+			this._V1 = __V1;
+			this._U2 = __U2;
+			this._V2 = __V2;
+			this._Usense = __Usense;
+			this._Vsense = __Vsense;
+		}
+	
 		[Description("Surface being trimmed.")]
 		public IfcSurface BasisSurface { get { return this._BasisSurface; } set { this._BasisSurface = value;} }
 	
@@ -78,6 +91,8 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		[Description("Flag to indicate whether the direction of the second parameter of the trimmed sur" +
 	    "face agrees with or opposes the sense of v in the basis surface.")]
 		public Boolean Vsense { get { return this._Vsense; } set { this._Vsense = value;} }
+	
+		public new IfcDimensionCount Dim { get { return new IfcDimensionCount(); } }
 	
 	
 	}

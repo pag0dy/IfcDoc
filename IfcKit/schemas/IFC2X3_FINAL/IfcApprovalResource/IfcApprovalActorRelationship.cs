@@ -11,9 +11,6 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPropertyResource;
 
 namespace BuildingSmart.IFC.IfcApprovalResource
 {
@@ -32,6 +29,17 @@ namespace BuildingSmart.IFC.IfcApprovalResource
 		[Required()]
 		IfcActorRole _Role;
 	
+	
+		public IfcApprovalActorRelationship()
+		{
+		}
+	
+		public IfcApprovalActorRelationship(IfcActorSelect __Actor, IfcApproval __Approval, IfcActorRole __Role)
+		{
+			this._Actor = __Actor;
+			this._Approval = __Approval;
+			this._Role = __Role;
+		}
 	
 		[Description("The reference to the actor who is acting in the given role on the approval specif" +
 	    "ied in this relationship.")]

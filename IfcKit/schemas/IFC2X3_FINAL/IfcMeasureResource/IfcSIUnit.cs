@@ -26,11 +26,24 @@ namespace BuildingSmart.IFC.IfcMeasureResource
 		IfcSIUnitName _Name;
 	
 	
+		public IfcSIUnit()
+		{
+		}
+	
+		public IfcSIUnit(IfcDimensionalExponents __Dimensions, IfcUnitEnum __UnitType, IfcSIPrefix? __Prefix, IfcSIUnitName __Name)
+			: base(__Dimensions, __UnitType)
+		{
+			this._Prefix = __Prefix;
+			this._Name = __Name;
+		}
+	
 		[Description("The SI Prefix for defining decimal multiples and submultiples of the unit.")]
 		public IfcSIPrefix? Prefix { get { return this._Prefix; } set { this._Prefix = value;} }
 	
 		[Description("The word, or group of words, by which the SI unit is referred to.")]
 		public IfcSIUnitName Name { get { return this._Name; } set { this._Name = value;} }
+	
+		public new IfcDimensionalExponents Dimensions { get { return null; } }
 	
 	
 	}

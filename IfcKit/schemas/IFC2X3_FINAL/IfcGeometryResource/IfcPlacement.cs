@@ -10,13 +10,8 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcPresentationOrganizationResource;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
@@ -28,9 +23,20 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		IfcCartesianPoint _Location;
 	
 	
+		public IfcPlacement()
+		{
+		}
+	
+		public IfcPlacement(IfcCartesianPoint __Location)
+		{
+			this._Location = __Location;
+		}
+	
 		[Description("The geometric position of a reference point, such as the center of a circle, of t" +
 	    "he item to be located.")]
 		public IfcCartesianPoint Location { get { return this._Location; } set { this._Location = value;} }
+	
+		public new IfcDimensionCount Dim { get { return new IfcDimensionCount(); } }
 	
 	
 	}

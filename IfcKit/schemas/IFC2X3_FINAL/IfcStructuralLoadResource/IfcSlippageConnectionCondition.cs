@@ -30,6 +30,18 @@ namespace BuildingSmart.IFC.IfcStructuralLoadResource
 		IfcLengthMeasure? _SlippageZ;
 	
 	
+		public IfcSlippageConnectionCondition()
+		{
+		}
+	
+		public IfcSlippageConnectionCondition(IfcLabel? __Name, IfcLengthMeasure? __SlippageX, IfcLengthMeasure? __SlippageY, IfcLengthMeasure? __SlippageZ)
+			: base(__Name)
+		{
+			this._SlippageX = __SlippageX;
+			this._SlippageY = __SlippageY;
+			this._SlippageZ = __SlippageZ;
+		}
+	
 		[Description("Slippage of that connection. Defines the maximum displacement in x-direction with" +
 	    "out any loading applied. \r\n")]
 		public IfcLengthMeasure? SlippageX { get { return this._SlippageX; } set { this._SlippageX = value;} }

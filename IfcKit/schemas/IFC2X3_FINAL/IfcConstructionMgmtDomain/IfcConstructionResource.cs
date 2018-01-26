@@ -10,21 +10,9 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcApprovalResource;
-using BuildingSmart.IFC.IfcCostResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProcessExtension;
-using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcQuantityResource;
-using BuildingSmart.IFC.IfcSharedMgmtElements;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcConstructionMgmtDomain
 {
@@ -46,6 +34,19 @@ namespace BuildingSmart.IFC.IfcConstructionMgmtDomain
 		[DataMember(Order=3)] 
 		IfcMeasureWithUnit _BaseQuantity;
 	
+	
+		public IfcConstructionResource()
+		{
+		}
+	
+		public IfcConstructionResource(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcIdentifier? __ResourceIdentifier, IfcLabel? __ResourceGroup, IfcResourceConsumptionEnum? __ResourceConsumption, IfcMeasureWithUnit __BaseQuantity)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType)
+		{
+			this._ResourceIdentifier = __ResourceIdentifier;
+			this._ResourceGroup = __ResourceGroup;
+			this._ResourceConsumption = __ResourceConsumption;
+			this._BaseQuantity = __BaseQuantity;
+		}
 	
 		[Description("Optional identification of a code or ID for the construction resource")]
 		public IfcIdentifier? ResourceIdentifier { get { return this._ResourceIdentifier; } set { this._ResourceIdentifier = value;} }

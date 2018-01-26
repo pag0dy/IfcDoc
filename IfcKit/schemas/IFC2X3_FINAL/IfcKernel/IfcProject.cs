@@ -10,15 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcConstraintResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricConstraintResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcPropertyResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
 using BuildingSmart.IFC.IfcUtilityResource;
 
@@ -37,12 +29,26 @@ namespace BuildingSmart.IFC.IfcKernel
 	
 		[DataMember(Order=2)] 
 		[Required()]
+		[MinLength(1)]
 		ISet<IfcRepresentationContext> _RepresentationContexts = new HashSet<IfcRepresentationContext>();
 	
 		[DataMember(Order=3)] 
 		[Required()]
 		IfcUnitAssignment _UnitsInContext;
 	
+	
+		public IfcProject()
+		{
+		}
+	
+		public IfcProject(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcLabel? __LongName, IfcLabel? __Phase, IfcRepresentationContext[] __RepresentationContexts, IfcUnitAssignment __UnitsInContext)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType)
+		{
+			this._LongName = __LongName;
+			this._Phase = __Phase;
+			this._RepresentationContexts = new HashSet<IfcRepresentationContext>(__RepresentationContexts);
+			this._UnitsInContext = __UnitsInContext;
+		}
 	
 		[Description("Long name for the project as used for reference purposes.")]
 		public IfcLabel? LongName { get { return this._LongName; } set { this._LongName = value;} }

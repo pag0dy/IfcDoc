@@ -10,17 +10,9 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcConstraintResource;
-using BuildingSmart.IFC.IfcCostResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcQuantityResource;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcSharedFacilitiesElements
 {
@@ -42,6 +34,19 @@ namespace BuildingSmart.IFC.IfcSharedFacilitiesElements
 		[DataMember(Order=3)] 
 		IfcMeasureValue _LowerValue;
 	
+	
+		public IfcServiceLifeFactor()
+		{
+		}
+	
+		public IfcServiceLifeFactor(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcServiceLifeFactorTypeEnum __PredefinedType, IfcMeasureValue __UpperValue, IfcMeasureValue __MostUsedValue, IfcMeasureValue __LowerValue)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description)
+		{
+			this._PredefinedType = __PredefinedType;
+			this._UpperValue = __UpperValue;
+			this._MostUsedValue = __MostUsedValue;
+			this._LowerValue = __LowerValue;
+		}
 	
 		[Description("Predefined service life factor types from which that required may be set. ")]
 		public IfcServiceLifeFactorTypeEnum PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }

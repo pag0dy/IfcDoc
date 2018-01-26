@@ -10,12 +10,8 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationDefinitionResource;
-using BuildingSmart.IFC.IfcPresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 {
@@ -31,6 +27,17 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 		[Required()]
 		Boolean _RasterCode;
 	
+	
+		public IfcBlobTexture()
+		{
+		}
+	
+		public IfcBlobTexture(Boolean __RepeatS, Boolean __RepeatT, IfcSurfaceTextureEnum __TextureType, IfcCartesianTransformationOperator2D __TextureTransform, IfcIdentifier __RasterFormat, Boolean __RasterCode)
+			: base(__RepeatS, __RepeatT, __TextureType, __TextureTransform)
+		{
+			this._RasterFormat = __RasterFormat;
+			this._RasterCode = __RasterCode;
+		}
 	
 		[Description("<EPM-HTML>\r\nThe format of the <i>RasterCode</i> often using a compression.\r\n</EPM" +
 	    "-HTML>")]

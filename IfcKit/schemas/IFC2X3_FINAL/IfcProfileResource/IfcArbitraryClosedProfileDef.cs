@@ -12,7 +12,6 @@ using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 
 namespace BuildingSmart.IFC.IfcProfileResource
 {
@@ -23,6 +22,16 @@ namespace BuildingSmart.IFC.IfcProfileResource
 		[Required()]
 		IfcCurve _OuterCurve;
 	
+	
+		public IfcArbitraryClosedProfileDef()
+		{
+		}
+	
+		public IfcArbitraryClosedProfileDef(IfcProfileTypeEnum __ProfileType, IfcLabel? __ProfileName, IfcCurve __OuterCurve)
+			: base(__ProfileType, __ProfileName)
+		{
+			this._OuterCurve = __OuterCurve;
+		}
 	
 		[Description("Bounded curve, defining the outer boundaries of the arbitrary profile.")]
 		public IfcCurve OuterCurve { get { return this._OuterCurve; } set { this._OuterCurve = value;} }

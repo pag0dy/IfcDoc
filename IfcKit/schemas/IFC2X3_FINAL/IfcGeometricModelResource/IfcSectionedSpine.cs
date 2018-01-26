@@ -11,10 +11,9 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometricModelResource
 {
@@ -27,12 +26,25 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 	
 		[DataMember(Order=1)] 
 		[Required()]
+		[MinLength(2)]
 		IList<IfcProfileDef> _CrossSections = new List<IfcProfileDef>();
 	
 		[DataMember(Order=2)] 
 		[Required()]
+		[MinLength(2)]
 		IList<IfcAxis2Placement3D> _CrossSectionPositions = new List<IfcAxis2Placement3D>();
 	
+	
+		public IfcSectionedSpine()
+		{
+		}
+	
+		public IfcSectionedSpine(IfcCompositeCurve __SpineCurve, IfcProfileDef[] __CrossSections, IfcAxis2Placement3D[] __CrossSectionPositions)
+		{
+			this._SpineCurve = __SpineCurve;
+			this._CrossSections = new List<IfcProfileDef>(__CrossSections);
+			this._CrossSectionPositions = new List<IfcAxis2Placement3D>(__CrossSectionPositions);
+		}
 	
 		[Description("A single composite curve, that defines the spine curve. Each of the composite cur" +
 	    "ve segments correspond to the part between two cross-sections.")]
@@ -47,6 +59,8 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 	    " The profiles defining the cross sections are positioned within the xy plane of " +
 	    "the corresponding position coordinate system.")]
 		public IList<IfcAxis2Placement3D> CrossSectionPositions { get { return this._CrossSectionPositions; } }
+	
+		public new IfcDimensionCount Dim { get { return new IfcDimensionCount(); } }
 	
 	
 	}

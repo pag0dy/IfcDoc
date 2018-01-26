@@ -10,13 +10,8 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcPresentationOrganizationResource;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
@@ -31,6 +26,17 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		IfcDirection _RefDirection;
 	
 	
+		public IfcAxis2Placement3D()
+		{
+		}
+	
+		public IfcAxis2Placement3D(IfcCartesianPoint __Location, IfcDirection __Axis, IfcDirection __RefDirection)
+			: base(__Location)
+		{
+			this._Axis = __Axis;
+			this._RefDirection = __RefDirection;
+		}
+	
 		[Description("The exact direction of the local Z Axis.")]
 		public IfcDirection Axis { get { return this._Axis; } set { this._Axis = value;} }
 	
@@ -39,6 +45,8 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 	    "d/or RefDirection is omitted, these directions are taken from the geometric coor" +
 	    "dinate system.")]
 		public IfcDirection RefDirection { get { return this._RefDirection; } set { this._RefDirection = value;} }
+	
+		public new IList<IfcDirection> P { get { return null; } }
 	
 	
 	}

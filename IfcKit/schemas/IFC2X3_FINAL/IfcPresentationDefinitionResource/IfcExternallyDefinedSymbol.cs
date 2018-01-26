@@ -11,12 +11,9 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcPresentationResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
+using BuildingSmart.IFC.IfcPropertyResource;
 
 namespace BuildingSmart.IFC.IfcPresentationDefinitionResource
 {
@@ -24,6 +21,15 @@ namespace BuildingSmart.IFC.IfcPresentationDefinitionResource
 	public partial class IfcExternallyDefinedSymbol : IfcExternalReference,
 		BuildingSmart.IFC.IfcPresentationDefinitionResource.IfcDefinedSymbolSelect
 	{
+	
+		public IfcExternallyDefinedSymbol()
+		{
+		}
+	
+		public IfcExternallyDefinedSymbol(IfcLabel? __Location, IfcIdentifier? __ItemReference, IfcLabel? __Name)
+			: base(__Location, __ItemReference, __Name)
+		{
+		}
 	
 	
 	}

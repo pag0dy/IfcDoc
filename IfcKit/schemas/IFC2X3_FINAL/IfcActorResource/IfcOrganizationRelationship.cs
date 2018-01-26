@@ -32,8 +32,21 @@ namespace BuildingSmart.IFC.IfcActorResource
 	
 		[DataMember(Order=3)] 
 		[Required()]
+		[MinLength(1)]
 		ISet<IfcOrganization> _RelatedOrganizations = new HashSet<IfcOrganization>();
 	
+	
+		public IfcOrganizationRelationship()
+		{
+		}
+	
+		public IfcOrganizationRelationship(IfcLabel __Name, IfcText? __Description, IfcOrganization __RelatingOrganization, IfcOrganization[] __RelatedOrganizations)
+		{
+			this._Name = __Name;
+			this._Description = __Description;
+			this._RelatingOrganization = __RelatingOrganization;
+			this._RelatedOrganizations = new HashSet<IfcOrganization>(__RelatedOrganizations);
+		}
 	
 		[Description("The word or group of words by which the relationship is referred to.")]
 		public IfcLabel Name { get { return this._Name; } set { this._Name = value;} }

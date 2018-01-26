@@ -10,16 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcConstraintResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricConstraintResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
 using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcKernel
@@ -45,6 +36,19 @@ namespace BuildingSmart.IFC.IfcKernel
 		[Required()]
 		IfcSequenceEnum _SequenceType;
 	
+	
+		public IfcRelSequence()
+		{
+		}
+	
+		public IfcRelSequence(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcProcess __RelatingProcess, IfcProcess __RelatedProcess, IfcTimeMeasure __TimeLag, IfcSequenceEnum __SequenceType)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description)
+		{
+			this._RelatingProcess = __RelatingProcess;
+			this._RelatedProcess = __RelatedProcess;
+			this._TimeLag = __TimeLag;
+			this._SequenceType = __SequenceType;
+		}
 	
 		[Description("Reference to the Process, that is the predecessor.\r\n")]
 		public IfcProcess RelatingProcess { get { return this._RelatingProcess; } set { this._RelatingProcess = value;} }

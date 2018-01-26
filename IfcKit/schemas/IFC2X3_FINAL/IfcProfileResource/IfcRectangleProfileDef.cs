@@ -12,7 +12,6 @@ using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 
 namespace BuildingSmart.IFC.IfcProfileResource
 {
@@ -29,6 +28,17 @@ namespace BuildingSmart.IFC.IfcProfileResource
 		[Required()]
 		IfcPositiveLengthMeasure _YDim;
 	
+	
+		public IfcRectangleProfileDef()
+		{
+		}
+	
+		public IfcRectangleProfileDef(IfcProfileTypeEnum __ProfileType, IfcLabel? __ProfileName, IfcAxis2Placement2D __Position, IfcPositiveLengthMeasure __XDim, IfcPositiveLengthMeasure __YDim)
+			: base(__ProfileType, __ProfileName, __Position)
+		{
+			this._XDim = __XDim;
+			this._YDim = __YDim;
+		}
 	
 		[Description("The extent of the rectangle in the direction of the x-axis.")]
 		public IfcPositiveLengthMeasure XDim { get { return this._XDim; } set { this._XDim = value;} }

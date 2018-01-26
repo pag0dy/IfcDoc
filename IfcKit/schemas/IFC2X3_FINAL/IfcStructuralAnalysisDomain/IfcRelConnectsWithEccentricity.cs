@@ -14,11 +14,8 @@ using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfilePropertyResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
 using BuildingSmart.IFC.IfcStructuralLoadResource;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcStructuralAnalysisDomain
 {
@@ -29,6 +26,16 @@ namespace BuildingSmart.IFC.IfcStructuralAnalysisDomain
 		[Required()]
 		IfcConnectionGeometry _ConnectionConstraint;
 	
+	
+		public IfcRelConnectsWithEccentricity()
+		{
+		}
+	
+		public IfcRelConnectsWithEccentricity(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcStructuralMember __RelatingStructuralMember, IfcStructuralConnection __RelatedStructuralConnection, IfcBoundaryCondition __AppliedCondition, IfcStructuralConnectionCondition __AdditionalConditions, IfcLengthMeasure? __SupportedLength, IfcAxis2Placement3D __ConditionCoordinateSystem, IfcConnectionGeometry __ConnectionConstraint)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __RelatingStructuralMember, __RelatedStructuralConnection, __AppliedCondition, __AdditionalConditions, __SupportedLength, __ConditionCoordinateSystem)
+		{
+			this._ConnectionConstraint = __ConnectionConstraint;
+		}
 	
 		[Description("<EPM-HTML>\r\nThe connection constraint explicitly states the eccentricity between " +
 	    "a structural element and a structural connection, either given by two point (use" +

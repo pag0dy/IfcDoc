@@ -10,24 +10,9 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricConstraintResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProfilePropertyResource;
-using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcQuantityResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcSharedBldgElements;
-using BuildingSmart.IFC.IfcSharedBldgServiceElements;
-using BuildingSmart.IFC.IfcStructuralAnalysisDomain;
-using BuildingSmart.IFC.IfcStructuralElementsDomain;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcProductExtension
 {
@@ -35,8 +20,18 @@ namespace BuildingSmart.IFC.IfcProductExtension
 	public partial class IfcSystem : IfcGroup
 	{
 		[InverseProperty("RelatingSystem")] 
+		[MaxLength(1)]
 		ISet<IfcRelServicesBuildings> _ServicesBuildings = new HashSet<IfcRelServicesBuildings>();
 	
+	
+		public IfcSystem()
+		{
+		}
+	
+		public IfcSystem(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType)
+		{
+		}
 	
 		[Description("<EPM-HTML>Reference to the <strike>building</strike> spatial structure via the ob" +
 	    "jectified relationship <i>IfcRelServicesBuildings</i>, which is serviced by the " +

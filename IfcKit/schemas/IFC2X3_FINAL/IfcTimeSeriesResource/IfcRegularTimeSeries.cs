@@ -10,11 +10,10 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
+using BuildingSmart.IFC.IfcConstraintResource;
 using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcUtilityResource;
+using BuildingSmart.IFC.IfcPropertyResource;
 
 namespace BuildingSmart.IFC.IfcTimeSeriesResource
 {
@@ -28,8 +27,20 @@ namespace BuildingSmart.IFC.IfcTimeSeriesResource
 	
 		[DataMember(Order=1)] 
 		[Required()]
+		[MinLength(1)]
 		IList<IfcTimeSeriesValue> _Values = new List<IfcTimeSeriesValue>();
 	
+	
+		public IfcRegularTimeSeries()
+		{
+		}
+	
+		public IfcRegularTimeSeries(IfcLabel __Name, IfcText? __Description, IfcDateTimeSelect __StartTime, IfcDateTimeSelect __EndTime, IfcTimeSeriesDataTypeEnum __TimeSeriesDataType, IfcDataOriginEnum __DataOrigin, IfcLabel? __UserDefinedDataOrigin, IfcUnit __Unit, IfcTimeMeasure __TimeStep, IfcTimeSeriesValue[] __Values)
+			: base(__Name, __Description, __StartTime, __EndTime, __TimeSeriesDataType, __DataOrigin, __UserDefinedDataOrigin, __Unit)
+		{
+			this._TimeStep = __TimeStep;
+			this._Values = new List<IfcTimeSeriesValue>(__Values);
+		}
 	
 		[Description("A duration of time intervals between values.")]
 		public IfcTimeMeasure TimeStep { get { return this._TimeStep; } set { this._TimeStep = value;} }

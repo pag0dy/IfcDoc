@@ -10,12 +10,8 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationDefinitionResource;
 using BuildingSmart.IFC.IfcPresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 {
@@ -33,6 +29,18 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 		[Required()]
 		IfcTextFontSelect _TextFontStyle;
 	
+	
+		public IfcTextStyle()
+		{
+		}
+	
+		public IfcTextStyle(IfcLabel? __Name, IfcCharacterStyleSelect __TextCharacterAppearance, IfcTextStyleSelect __TextStyle, IfcTextFontSelect __TextFontStyle)
+			: base(__Name)
+		{
+			this._TextCharacterAppearance = __TextCharacterAppearance;
+			this._TextStyle = __TextStyle;
+			this._TextFontStyle = __TextFontStyle;
+		}
 	
 		[Description("<EPM-HTML>\r\nA character style to be used for presented text.\r\n</EPM-HTML>")]
 		public IfcCharacterStyleSelect TextCharacterAppearance { get { return this._TextCharacterAppearance; } set { this._TextCharacterAppearance = value;} }

@@ -10,16 +10,22 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 
 namespace BuildingSmart.IFC.IfcPresentationResource
 {
 	[Guid("171f466f-6025-4af7-a7d9-7d9837152f6d")]
 	public partial class IfcDraughtingPreDefinedTextFont : IfcPreDefinedTextFont
 	{
+	
+		public IfcDraughtingPreDefinedTextFont()
+		{
+		}
+	
+		public IfcDraughtingPreDefinedTextFont(IfcLabel __Name)
+			: base(__Name)
+		{
+		}
 	
 	
 	}

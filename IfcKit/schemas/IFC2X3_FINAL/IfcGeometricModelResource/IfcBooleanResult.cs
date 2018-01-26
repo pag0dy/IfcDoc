@@ -11,10 +11,8 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcTopologyResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcGeometricModelResource
 {
@@ -37,6 +35,17 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 		IfcBooleanOperand _SecondOperand;
 	
 	
+		public IfcBooleanResult()
+		{
+		}
+	
+		public IfcBooleanResult(IfcBooleanOperator __Operator, IfcBooleanOperand __FirstOperand, IfcBooleanOperand __SecondOperand)
+		{
+			this._Operator = __Operator;
+			this._FirstOperand = __FirstOperand;
+			this._SecondOperand = __SecondOperand;
+		}
+	
 		[Description("The Boolean operator used in the operation to create the result.")]
 		public IfcBooleanOperator Operator { get { return this._Operator; } set { this._Operator = value;} }
 	
@@ -45,6 +54,8 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 	
 		[Description("The second operand specified for the operation.")]
 		public IfcBooleanOperand SecondOperand { get { return this._SecondOperand; } set { this._SecondOperand = value;} }
+	
+		public new IfcDimensionCount Dim { get { return new IfcDimensionCount(); } }
 	
 	
 	}

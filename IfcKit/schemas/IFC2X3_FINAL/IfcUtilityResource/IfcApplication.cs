@@ -38,6 +38,18 @@ namespace BuildingSmart.IFC.IfcUtilityResource
 		IfcIdentifier _ApplicationIdentifier;
 	
 	
+		public IfcApplication()
+		{
+		}
+	
+		public IfcApplication(IfcOrganization __ApplicationDeveloper, IfcLabel __Version, IfcLabel __ApplicationFullName, IfcIdentifier __ApplicationIdentifier)
+		{
+			this._ApplicationDeveloper = __ApplicationDeveloper;
+			this._Version = __Version;
+			this._ApplicationFullName = __ApplicationFullName;
+			this._ApplicationIdentifier = __ApplicationIdentifier;
+		}
+	
 		[Description("Name of the application developer, being requested to be member of the IAI.\r\n")]
 		public IfcOrganization ApplicationDeveloper { get { return this._ApplicationDeveloper; } set { this._ApplicationDeveloper = value;} }
 	

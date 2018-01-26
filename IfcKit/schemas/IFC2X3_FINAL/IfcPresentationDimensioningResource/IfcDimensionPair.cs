@@ -10,17 +10,22 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcPresentationDefinitionResource;
-using BuildingSmart.IFC.IfcPresentationResource;
 
 namespace BuildingSmart.IFC.IfcPresentationDimensioningResource
 {
 	[Guid("85ea82b3-638c-417a-b3dc-478e81ee6116")]
 	public partial class IfcDimensionPair : IfcDraughtingCalloutRelationship
 	{
+	
+		public IfcDimensionPair()
+		{
+		}
+	
+		public IfcDimensionPair(IfcLabel? __Name, IfcText? __Description, IfcDraughtingCallout __RelatingDraughtingCallout, IfcDraughtingCallout __RelatedDraughtingCallout)
+			: base(__Name, __Description, __RelatingDraughtingCallout, __RelatedDraughtingCallout)
+		{
+		}
 	
 	
 	}

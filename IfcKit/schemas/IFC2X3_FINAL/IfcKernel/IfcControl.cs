@@ -10,16 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcConstraintResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricConstraintResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
 using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcKernel
@@ -30,6 +21,15 @@ namespace BuildingSmart.IFC.IfcKernel
 		[InverseProperty("RelatingControl")] 
 		ISet<IfcRelAssignsToControl> _Controls = new HashSet<IfcRelAssignsToControl>();
 	
+	
+		public IfcControl()
+		{
+		}
+	
+		public IfcControl(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType)
+		{
+		}
 	
 		[Description("Reference to the relationship that associates the control to the object(s) being " +
 	    "controlled.\r\n")]

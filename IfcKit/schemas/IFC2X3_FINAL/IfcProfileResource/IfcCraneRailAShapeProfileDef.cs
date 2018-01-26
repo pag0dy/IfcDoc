@@ -12,7 +12,6 @@ using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 
 namespace BuildingSmart.IFC.IfcProfileResource
 {
@@ -77,6 +76,27 @@ namespace BuildingSmart.IFC.IfcProfileResource
 		[XmlAttribute]
 		IfcPositiveLengthMeasure? _CentreOfGravityInY;
 	
+	
+		public IfcCraneRailAShapeProfileDef()
+		{
+		}
+	
+		public IfcCraneRailAShapeProfileDef(IfcProfileTypeEnum __ProfileType, IfcLabel? __ProfileName, IfcAxis2Placement2D __Position, IfcPositiveLengthMeasure __OverallHeight, IfcPositiveLengthMeasure __BaseWidth2, IfcPositiveLengthMeasure? __Radius, IfcPositiveLengthMeasure __HeadWidth, IfcPositiveLengthMeasure __HeadDepth2, IfcPositiveLengthMeasure __HeadDepth3, IfcPositiveLengthMeasure __WebThickness, IfcPositiveLengthMeasure __BaseWidth4, IfcPositiveLengthMeasure __BaseDepth1, IfcPositiveLengthMeasure __BaseDepth2, IfcPositiveLengthMeasure __BaseDepth3, IfcPositiveLengthMeasure? __CentreOfGravityInY)
+			: base(__ProfileType, __ProfileName, __Position)
+		{
+			this._OverallHeight = __OverallHeight;
+			this._BaseWidth2 = __BaseWidth2;
+			this._Radius = __Radius;
+			this._HeadWidth = __HeadWidth;
+			this._HeadDepth2 = __HeadDepth2;
+			this._HeadDepth3 = __HeadDepth3;
+			this._WebThickness = __WebThickness;
+			this._BaseWidth4 = __BaseWidth4;
+			this._BaseDepth1 = __BaseDepth1;
+			this._BaseDepth2 = __BaseDepth2;
+			this._BaseDepth3 = __BaseDepth3;
+			this._CentreOfGravityInY = __CentreOfGravityInY;
+		}
 	
 		[Description("Total extent of the height, defined parallel to the y axis of the position coordi" +
 	    "nate system. See illustration above (= h1).")]

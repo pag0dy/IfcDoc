@@ -12,7 +12,6 @@ using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 
 namespace BuildingSmart.IFC.IfcProfileResource
 {
@@ -53,6 +52,23 @@ namespace BuildingSmart.IFC.IfcProfileResource
 		[XmlAttribute]
 		IfcPositiveLengthMeasure? _CentreOfGravityInY;
 	
+	
+		public IfcLShapeProfileDef()
+		{
+		}
+	
+		public IfcLShapeProfileDef(IfcProfileTypeEnum __ProfileType, IfcLabel? __ProfileName, IfcAxis2Placement2D __Position, IfcPositiveLengthMeasure __Depth, IfcPositiveLengthMeasure? __Width, IfcPositiveLengthMeasure __Thickness, IfcPositiveLengthMeasure? __FilletRadius, IfcPositiveLengthMeasure? __EdgeRadius, IfcPlaneAngleMeasure? __LegSlope, IfcPositiveLengthMeasure? __CentreOfGravityInX, IfcPositiveLengthMeasure? __CentreOfGravityInY)
+			: base(__ProfileType, __ProfileName, __Position)
+		{
+			this._Depth = __Depth;
+			this._Width = __Width;
+			this._Thickness = __Thickness;
+			this._FilletRadius = __FilletRadius;
+			this._EdgeRadius = __EdgeRadius;
+			this._LegSlope = __LegSlope;
+			this._CentreOfGravityInX = __CentreOfGravityInX;
+			this._CentreOfGravityInY = __CentreOfGravityInY;
+		}
 	
 		[Description("Leg length, see illustration above (= h). ")]
 		public IfcPositiveLengthMeasure Depth { get { return this._Depth; } set { this._Depth = value;} }

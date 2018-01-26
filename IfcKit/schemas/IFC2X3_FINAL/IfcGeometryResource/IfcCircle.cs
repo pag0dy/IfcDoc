@@ -14,9 +14,6 @@ using BuildingSmart.IFC.IfcGeometricModelResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcPresentationOrganizationResource;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
@@ -28,6 +25,16 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		[Required()]
 		IfcPositiveLengthMeasure _Radius;
 	
+	
+		public IfcCircle()
+		{
+		}
+	
+		public IfcCircle(IfcAxis2Placement __Position, IfcPositiveLengthMeasure __Radius)
+			: base(__Position)
+		{
+			this._Radius = __Radius;
+		}
 	
 		[Description("The radius of the circle, which shall be greater than zero.")]
 		public IfcPositiveLengthMeasure Radius { get { return this._Radius; } set { this._Radius = value;} }

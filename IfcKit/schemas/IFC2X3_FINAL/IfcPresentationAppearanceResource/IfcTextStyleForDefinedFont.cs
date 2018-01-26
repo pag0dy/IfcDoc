@@ -10,12 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationDefinitionResource;
 using BuildingSmart.IFC.IfcPresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 {
@@ -30,6 +25,16 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 		[DataMember(Order=1)] 
 		IfcColour _BackgroundColour;
 	
+	
+		public IfcTextStyleForDefinedFont()
+		{
+		}
+	
+		public IfcTextStyleForDefinedFont(IfcColour __Colour, IfcColour __BackgroundColour)
+		{
+			this._Colour = __Colour;
+			this._BackgroundColour = __BackgroundColour;
+		}
 	
 		[Description("<EPM-HTML>\r\nThis property describes the text color of an element (often referred " +
 	    "to as the foreground color).\r\n</EPM-HTML>")]

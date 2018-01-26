@@ -10,11 +10,8 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcPropertyResource;
 
 namespace BuildingSmart.IFC.IfcMaterialPropertyResource
 {
@@ -57,6 +54,24 @@ namespace BuildingSmart.IFC.IfcMaterialPropertyResource
 		[XmlAttribute]
 		IfcPositiveRatioMeasure? _SolarReflectanceBack;
 	
+	
+		public IfcOpticalMaterialProperties()
+		{
+		}
+	
+		public IfcOpticalMaterialProperties(IfcMaterial __Material, IfcPositiveRatioMeasure? __VisibleTransmittance, IfcPositiveRatioMeasure? __SolarTransmittance, IfcPositiveRatioMeasure? __ThermalIrTransmittance, IfcPositiveRatioMeasure? __ThermalIrEmissivityBack, IfcPositiveRatioMeasure? __ThermalIrEmissivityFront, IfcPositiveRatioMeasure? __VisibleReflectanceBack, IfcPositiveRatioMeasure? __VisibleReflectanceFront, IfcPositiveRatioMeasure? __SolarReflectanceFront, IfcPositiveRatioMeasure? __SolarReflectanceBack)
+			: base(__Material)
+		{
+			this._VisibleTransmittance = __VisibleTransmittance;
+			this._SolarTransmittance = __SolarTransmittance;
+			this._ThermalIrTransmittance = __ThermalIrTransmittance;
+			this._ThermalIrEmissivityBack = __ThermalIrEmissivityBack;
+			this._ThermalIrEmissivityFront = __ThermalIrEmissivityFront;
+			this._VisibleReflectanceBack = __VisibleReflectanceBack;
+			this._VisibleReflectanceFront = __VisibleReflectanceFront;
+			this._SolarReflectanceFront = __SolarReflectanceFront;
+			this._SolarReflectanceBack = __SolarReflectanceBack;
+		}
 	
 		[Description("Transmittance at normal incidence (visible). Defines the fraction of the visible " +
 	    "spectrum of solar radiation that passes through per unit area, perpendicular to " +

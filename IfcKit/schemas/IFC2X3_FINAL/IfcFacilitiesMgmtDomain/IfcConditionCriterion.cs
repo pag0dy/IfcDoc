@@ -10,17 +10,10 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcArchitectureDomain;
-using BuildingSmart.IFC.IfcCostResource;
 using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcProcessExtension;
-using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcQuantityResource;
-using BuildingSmart.IFC.IfcSharedFacilitiesElements;
-using BuildingSmart.IFC.IfcSharedMgmtElements;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcFacilitiesMgmtDomain
 {
@@ -35,6 +28,17 @@ namespace BuildingSmart.IFC.IfcFacilitiesMgmtDomain
 		[Required()]
 		IfcDateTimeSelect _CriterionDateTime;
 	
+	
+		public IfcConditionCriterion()
+		{
+		}
+	
+		public IfcConditionCriterion(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcConditionCriterionSelect __Criterion, IfcDateTimeSelect __CriterionDateTime)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType)
+		{
+			this._Criterion = __Criterion;
+			this._CriterionDateTime = __CriterionDateTime;
+		}
 	
 		[Description("The measured or assessed value of a criterion.")]
 		public IfcConditionCriterionSelect Criterion { get { return this._Criterion; } set { this._Criterion = value;} }

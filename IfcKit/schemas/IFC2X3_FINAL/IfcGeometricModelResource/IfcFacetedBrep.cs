@@ -11,9 +11,8 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProfileResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometricModelResource
@@ -21,6 +20,15 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 	[Guid("f6411fd1-a9ea-43ed-b5ad-b8419139fb6c")]
 	public partial class IfcFacetedBrep : IfcManifoldSolidBrep
 	{
+	
+		public IfcFacetedBrep()
+		{
+		}
+	
+		public IfcFacetedBrep(IfcClosedShell __Outer)
+			: base(__Outer)
+		{
+		}
 	
 	
 	}

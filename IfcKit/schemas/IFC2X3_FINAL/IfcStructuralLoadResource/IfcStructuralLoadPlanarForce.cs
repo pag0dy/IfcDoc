@@ -30,6 +30,18 @@ namespace BuildingSmart.IFC.IfcStructuralLoadResource
 		IfcPlanarForceMeasure? _PlanarForceZ;
 	
 	
+		public IfcStructuralLoadPlanarForce()
+		{
+		}
+	
+		public IfcStructuralLoadPlanarForce(IfcLabel? __Name, IfcPlanarForceMeasure? __PlanarForceX, IfcPlanarForceMeasure? __PlanarForceY, IfcPlanarForceMeasure? __PlanarForceZ)
+			: base(__Name)
+		{
+			this._PlanarForceX = __PlanarForceX;
+			this._PlanarForceY = __PlanarForceY;
+			this._PlanarForceZ = __PlanarForceZ;
+		}
+	
 		[Description("Planar force value in x-direction. ")]
 		public IfcPlanarForceMeasure? PlanarForceX { get { return this._PlanarForceX; } set { this._PlanarForceX = value;} }
 	

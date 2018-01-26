@@ -10,14 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcConstraintResource;
-using BuildingSmart.IFC.IfcCostResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcTimeSeriesResource;
 
 namespace BuildingSmart.IFC.IfcPropertyResource
 {
@@ -32,6 +25,17 @@ namespace BuildingSmart.IFC.IfcPropertyResource
 		[Required()]
 		IfcObjectReferenceSelect _PropertyReference;
 	
+	
+		public IfcPropertyReferenceValue()
+		{
+		}
+	
+		public IfcPropertyReferenceValue(IfcIdentifier __Name, IfcText? __Description, IfcLabel? __UsageName, IfcObjectReferenceSelect __PropertyReference)
+			: base(__Name, __Description)
+		{
+			this._UsageName = __UsageName;
+			this._PropertyReference = __PropertyReference;
+		}
 	
 		[Description("Description of the use of the referenced value within the property.")]
 		public IfcLabel? UsageName { get { return this._UsageName; } set { this._UsageName = value;} }

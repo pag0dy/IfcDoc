@@ -11,23 +11,11 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometricConstraintResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProfilePropertyResource;
-using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcQuantityResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcSharedBldgElements;
-using BuildingSmart.IFC.IfcSharedBldgServiceElements;
-using BuildingSmart.IFC.IfcStructuralAnalysisDomain;
-using BuildingSmart.IFC.IfcStructuralElementsDomain;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcProductExtension
 {
@@ -45,6 +33,18 @@ namespace BuildingSmart.IFC.IfcProductExtension
 		[DataMember(Order=2)] 
 		IfcPostalAddress _BuildingAddress;
 	
+	
+		public IfcBuilding()
+		{
+		}
+	
+		public IfcBuilding(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcObjectPlacement __ObjectPlacement, IfcProductRepresentation __Representation, IfcLabel? __LongName, IfcElementCompositionEnum __CompositionType, IfcLengthMeasure? __ElevationOfRefHeight, IfcLengthMeasure? __ElevationOfTerrain, IfcPostalAddress __BuildingAddress)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType, __ObjectPlacement, __Representation, __LongName, __CompositionType)
+		{
+			this._ElevationOfRefHeight = __ElevationOfRefHeight;
+			this._ElevationOfTerrain = __ElevationOfTerrain;
+			this._BuildingAddress = __BuildingAddress;
+		}
 	
 		[Description("Elevation above sea level of the reference height used for all storey elevation m" +
 	    "easures, equals to height 0.0. It is usually the ground floor level.")]

@@ -10,11 +10,9 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcCostResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcSharedMgmtElements
 {
@@ -35,6 +33,18 @@ namespace BuildingSmart.IFC.IfcSharedMgmtElements
 		[XmlAttribute]
 		IfcLabel? _Status;
 	
+	
+		public IfcProjectOrder()
+		{
+		}
+	
+		public IfcProjectOrder(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcIdentifier __ID, IfcProjectOrderTypeEnum __PredefinedType, IfcLabel? __Status)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType)
+		{
+			this._ID = __ID;
+			this._PredefinedType = __PredefinedType;
+			this._Status = __Status;
+		}
 	
 		[Description("A unique identification assigned to a project order that enables its differentiat" +
 	    "ion from other project orders.")]

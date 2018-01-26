@@ -21,6 +21,16 @@ namespace BuildingSmart.IFC.IfcQuantityResource
 		IfcNamedUnit _Unit;
 	
 	
+		public IfcPhysicalSimpleQuantity()
+		{
+		}
+	
+		public IfcPhysicalSimpleQuantity(IfcLabel __Name, IfcText? __Description, IfcNamedUnit __Unit)
+			: base(__Name, __Description)
+		{
+			this._Unit = __Unit;
+		}
+	
 		[Description("Optional assignment of a unit. If no unit is given, then the global unit assignme" +
 	    "nt, as established at the IfcProject, applies to the quantity measures.")]
 		public IfcNamedUnit Unit { get { return this._Unit; } set { this._Unit = value;} }

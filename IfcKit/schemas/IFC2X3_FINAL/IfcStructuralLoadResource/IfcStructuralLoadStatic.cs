@@ -18,6 +18,15 @@ namespace BuildingSmart.IFC.IfcStructuralLoadResource
 	public abstract partial class IfcStructuralLoadStatic : IfcStructuralLoad
 	{
 	
+		public IfcStructuralLoadStatic()
+		{
+		}
+	
+		public IfcStructuralLoadStatic(IfcLabel? __Name)
+			: base(__Name)
+		{
+		}
+	
 	
 	}
 	

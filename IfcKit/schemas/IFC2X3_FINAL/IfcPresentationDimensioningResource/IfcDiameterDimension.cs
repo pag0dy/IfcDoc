@@ -11,16 +11,23 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcPresentationDefinitionResource;
-using BuildingSmart.IFC.IfcPresentationResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcPresentationDimensioningResource
 {
 	[Guid("9b929c21-ec78-42d5-9bf4-8f23a4cf9cf2")]
 	public partial class IfcDiameterDimension : IfcDimensionCurveDirectedCallout
 	{
+	
+		public IfcDiameterDimension()
+		{
+		}
+	
+		public IfcDiameterDimension(IfcDraughtingCalloutElement[] __Contents)
+			: base(__Contents)
+		{
+		}
 	
 	
 	}

@@ -10,11 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcMaterialResource
 {
@@ -24,6 +20,7 @@ namespace BuildingSmart.IFC.IfcMaterialResource
 	{
 		[DataMember(Order=0)] 
 		[Required()]
+		[MinLength(1)]
 		IList<IfcMaterialLayer> _MaterialLayers = new List<IfcMaterialLayer>();
 	
 		[DataMember(Order=1)] 
@@ -31,11 +28,23 @@ namespace BuildingSmart.IFC.IfcMaterialResource
 		IfcLabel? _LayerSetName;
 	
 	
+		public IfcMaterialLayerSet()
+		{
+		}
+	
+		public IfcMaterialLayerSet(IfcMaterialLayer[] __MaterialLayers, IfcLabel? __LayerSetName)
+		{
+			this._MaterialLayers = new List<IfcMaterialLayer>(__MaterialLayers);
+			this._LayerSetName = __LayerSetName;
+		}
+	
 		[Description("Identification of the layers from which the material layer set is composed.")]
 		public IList<IfcMaterialLayer> MaterialLayers { get { return this._MaterialLayers; } }
 	
 		[Description("The name by which the material layer set is known.")]
 		public IfcLabel? LayerSetName { get { return this._LayerSetName; } set { this._LayerSetName = value;} }
+	
+		public new IfcLengthMeasure TotalThickness { get { return new IfcLengthMeasure(); } }
 	
 	
 	}

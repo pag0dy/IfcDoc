@@ -10,10 +10,10 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcPresentationResource
 {
@@ -24,6 +24,16 @@ namespace BuildingSmart.IFC.IfcPresentationResource
 		[Required()]
 		IfcAxis2Placement _Placement;
 	
+	
+		public IfcPlanarBox()
+		{
+		}
+	
+		public IfcPlanarBox(IfcLengthMeasure __SizeInX, IfcLengthMeasure __SizeInY, IfcAxis2Placement __Placement)
+			: base(__SizeInX, __SizeInY)
+		{
+			this._Placement = __Placement;
+		}
 	
 		[Description(@"<EPM-HTML>
 	The <i>IfcAxis2Placement</i> positions a local coordinate system for the definition of the rectangle. The origin of this local coordinate system serves as the lower left corner of the rectangular box.

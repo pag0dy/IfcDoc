@@ -12,7 +12,6 @@ using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 
 namespace BuildingSmart.IFC.IfcProfileResource
 {
@@ -29,6 +28,17 @@ namespace BuildingSmart.IFC.IfcProfileResource
 		[Required()]
 		IfcPositiveLengthMeasure _SemiAxis2;
 	
+	
+		public IfcEllipseProfileDef()
+		{
+		}
+	
+		public IfcEllipseProfileDef(IfcProfileTypeEnum __ProfileType, IfcLabel? __ProfileName, IfcAxis2Placement2D __Position, IfcPositiveLengthMeasure __SemiAxis1, IfcPositiveLengthMeasure __SemiAxis2)
+			: base(__ProfileType, __ProfileName, __Position)
+		{
+			this._SemiAxis1 = __SemiAxis1;
+			this._SemiAxis2 = __SemiAxis2;
+		}
 	
 		[Description("The first radius of the ellipse. It is measured along the direction of Position.P" +
 	    "[1].")]

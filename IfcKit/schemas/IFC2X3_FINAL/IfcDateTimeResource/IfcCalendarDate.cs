@@ -10,6 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcPropertyResource;
 
 namespace BuildingSmart.IFC.IfcDateTimeResource
 {
@@ -33,6 +34,17 @@ namespace BuildingSmart.IFC.IfcDateTimeResource
 		[Required()]
 		IfcYearNumber _YearComponent;
 	
+	
+		public IfcCalendarDate()
+		{
+		}
+	
+		public IfcCalendarDate(IfcDayInMonthNumber __DayComponent, IfcMonthInYearNumber __MonthComponent, IfcYearNumber __YearComponent)
+		{
+			this._DayComponent = __DayComponent;
+			this._MonthComponent = __MonthComponent;
+			this._YearComponent = __YearComponent;
+		}
 	
 		[Description("The day element of the calendar date.")]
 		public IfcDayInMonthNumber DayComponent { get { return this._DayComponent; } set { this._DayComponent = value;} }

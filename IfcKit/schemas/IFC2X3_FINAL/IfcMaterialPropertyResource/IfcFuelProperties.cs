@@ -10,11 +10,8 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcPropertyResource;
 
 namespace BuildingSmart.IFC.IfcMaterialPropertyResource
 {
@@ -37,6 +34,19 @@ namespace BuildingSmart.IFC.IfcMaterialPropertyResource
 		[XmlAttribute]
 		IfcHeatingValueMeasure? _HigherHeatingValue;
 	
+	
+		public IfcFuelProperties()
+		{
+		}
+	
+		public IfcFuelProperties(IfcMaterial __Material, IfcThermodynamicTemperatureMeasure? __CombustionTemperature, IfcPositiveRatioMeasure? __CarbonContent, IfcHeatingValueMeasure? __LowerHeatingValue, IfcHeatingValueMeasure? __HigherHeatingValue)
+			: base(__Material)
+		{
+			this._CombustionTemperature = __CombustionTemperature;
+			this._CarbonContent = __CarbonContent;
+			this._LowerHeatingValue = __LowerHeatingValue;
+			this._HigherHeatingValue = __HigherHeatingValue;
+		}
 	
 		[Description("Combustion temperature of the material when air is at 298 K and 100 kPa. ")]
 		public IfcThermodynamicTemperatureMeasure? CombustionTemperature { get { return this._CombustionTemperature; } set { this._CombustionTemperature = value;} }

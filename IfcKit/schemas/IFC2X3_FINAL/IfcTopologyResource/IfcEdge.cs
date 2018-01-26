@@ -12,6 +12,7 @@ using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcTopologyResource
 {
@@ -26,6 +27,16 @@ namespace BuildingSmart.IFC.IfcTopologyResource
 		[Required()]
 		IfcVertex _EdgeEnd;
 	
+	
+		public IfcEdge()
+		{
+		}
+	
+		public IfcEdge(IfcVertex __EdgeStart, IfcVertex __EdgeEnd)
+		{
+			this._EdgeStart = __EdgeStart;
+			this._EdgeEnd = __EdgeEnd;
+		}
 	
 		[Description("Start point (vertex) of the edge.\r\n")]
 		public IfcVertex EdgeStart { get { return this._EdgeStart; } set { this._EdgeStart = value;} }

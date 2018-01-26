@@ -10,12 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationDefinitionResource;
-using BuildingSmart.IFC.IfcPresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 {
@@ -27,6 +22,16 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 		[Required()]
 		IfcSymbolStyleSelect _StyleOfSymbol;
 	
+	
+		public IfcSymbolStyle()
+		{
+		}
+	
+		public IfcSymbolStyle(IfcLabel? __Name, IfcSymbolStyleSelect __StyleOfSymbol)
+			: base(__Name)
+		{
+			this._StyleOfSymbol = __StyleOfSymbol;
+		}
 	
 		[Description("The style applied to the symbol for its visual appearance.")]
 		public IfcSymbolStyleSelect StyleOfSymbol { get { return this._StyleOfSymbol; } set { this._StyleOfSymbol = value;} }

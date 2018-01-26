@@ -10,6 +10,9 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcConstraintResource;
+using BuildingSmart.IFC.IfcCostResource;
+using BuildingSmart.IFC.IfcFacilitiesMgmtDomain;
 
 namespace BuildingSmart.IFC.IfcMeasureResource
 {
@@ -27,6 +30,16 @@ namespace BuildingSmart.IFC.IfcMeasureResource
 		[Required()]
 		IfcUnit _UnitComponent;
 	
+	
+		public IfcMeasureWithUnit()
+		{
+		}
+	
+		public IfcMeasureWithUnit(IfcValue __ValueComponent, IfcUnit __UnitComponent)
+		{
+			this._ValueComponent = __ValueComponent;
+			this._UnitComponent = __UnitComponent;
+		}
 	
 		[Description("The value of the physical quantity when expressed in the specified units.")]
 		public IfcValue ValueComponent { get { return this._ValueComponent; } set { this._ValueComponent = value;} }

@@ -12,6 +12,7 @@ using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcTopologyResource
 {
@@ -20,8 +21,18 @@ namespace BuildingSmart.IFC.IfcTopologyResource
 	{
 		[DataMember(Order=0)] 
 		[Required()]
+		[MinLength(1)]
 		ISet<IfcFace> _CfsFaces = new HashSet<IfcFace>();
 	
+	
+		public IfcConnectedFaceSet()
+		{
+		}
+	
+		public IfcConnectedFaceSet(IfcFace[] __CfsFaces)
+		{
+			this._CfsFaces = new HashSet<IfcFace>(__CfsFaces);
+		}
 	
 		[Description("The set of faces arcwise connected along common edges or vertices.")]
 		public ISet<IfcFace> CfsFaces { get { return this._CfsFaces; } }

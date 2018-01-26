@@ -30,6 +30,18 @@ namespace BuildingSmart.IFC.IfcStructuralLoadResource
 		IfcModulusOfSubgradeReactionMeasure? _LinearStiffnessByAreaZ;
 	
 	
+		public IfcBoundaryFaceCondition()
+		{
+		}
+	
+		public IfcBoundaryFaceCondition(IfcLabel? __Name, IfcModulusOfSubgradeReactionMeasure? __LinearStiffnessByAreaX, IfcModulusOfSubgradeReactionMeasure? __LinearStiffnessByAreaY, IfcModulusOfSubgradeReactionMeasure? __LinearStiffnessByAreaZ)
+			: base(__Name)
+		{
+			this._LinearStiffnessByAreaX = __LinearStiffnessByAreaX;
+			this._LinearStiffnessByAreaY = __LinearStiffnessByAreaY;
+			this._LinearStiffnessByAreaZ = __LinearStiffnessByAreaZ;
+		}
+	
 		[Description("Linear stiffness value in x-direction of the coordinate system defined by the ins" +
 	    "tance which uses this resource object.")]
 		public IfcModulusOfSubgradeReactionMeasure? LinearStiffnessByAreaX { get { return this._LinearStiffnessByAreaX; } set { this._LinearStiffnessByAreaX = value;} }

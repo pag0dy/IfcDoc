@@ -10,11 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcPropertyResource;
 
 namespace BuildingSmart.IFC.IfcMaterialPropertyResource
 {
@@ -31,6 +27,16 @@ namespace BuildingSmart.IFC.IfcMaterialPropertyResource
 		[Required()]
 		IfcNormalisedRatioMeasure _InitialStress;
 	
+	
+		public IfcRelaxation()
+		{
+		}
+	
+		public IfcRelaxation(IfcNormalisedRatioMeasure __RelaxationValue, IfcNormalisedRatioMeasure __InitialStress)
+		{
+			this._RelaxationValue = __RelaxationValue;
+			this._InitialStress = __InitialStress;
+		}
 	
 		[Description("Time dependent loss of stress, relative to initial stress and therefore dimension" +
 	    "less.")]

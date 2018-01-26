@@ -42,6 +42,21 @@ namespace BuildingSmart.IFC.IfcStructuralLoadResource
 		IfcRotationalStiffnessMeasure? _RotationalStiffnessZ;
 	
 	
+		public IfcBoundaryNodeCondition()
+		{
+		}
+	
+		public IfcBoundaryNodeCondition(IfcLabel? __Name, IfcLinearStiffnessMeasure? __LinearStiffnessX, IfcLinearStiffnessMeasure? __LinearStiffnessY, IfcLinearStiffnessMeasure? __LinearStiffnessZ, IfcRotationalStiffnessMeasure? __RotationalStiffnessX, IfcRotationalStiffnessMeasure? __RotationalStiffnessY, IfcRotationalStiffnessMeasure? __RotationalStiffnessZ)
+			: base(__Name)
+		{
+			this._LinearStiffnessX = __LinearStiffnessX;
+			this._LinearStiffnessY = __LinearStiffnessY;
+			this._LinearStiffnessZ = __LinearStiffnessZ;
+			this._RotationalStiffnessX = __RotationalStiffnessX;
+			this._RotationalStiffnessY = __RotationalStiffnessY;
+			this._RotationalStiffnessZ = __RotationalStiffnessZ;
+		}
+	
 		[Description("Linear stiffness value in x-direction of the coordinate system defined by the ins" +
 	    "tance which uses this resource object. ")]
 		public IfcLinearStiffnessMeasure? LinearStiffnessX { get { return this._LinearStiffnessX; } set { this._LinearStiffnessX = value;} }

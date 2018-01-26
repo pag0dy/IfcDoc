@@ -10,13 +10,9 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcPresentationResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcPresentationDefinitionResource
 {
@@ -28,8 +24,19 @@ namespace BuildingSmart.IFC.IfcPresentationDefinitionResource
 		IfcCurve _OuterBoundary;
 	
 		[DataMember(Order=1)] 
+		[MinLength(1)]
 		ISet<IfcCurve> _InnerBoundaries = new HashSet<IfcCurve>();
 	
+	
+		public IfcAnnotationFillArea()
+		{
+		}
+	
+		public IfcAnnotationFillArea(IfcCurve __OuterBoundary, IfcCurve[] __InnerBoundaries)
+		{
+			this._OuterBoundary = __OuterBoundary;
+			this._InnerBoundaries = new HashSet<IfcCurve>(__InnerBoundaries);
+		}
 	
 		[Description(@"<EPM-HTML>
 	A closed curve that defines the outer boundary of the fill area. The areas defined by the outer boundary (minus potentially defined inner boundaries) is filled by the fill area style.

@@ -10,9 +10,6 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcMeasureResource;
 
 namespace BuildingSmart.IFC.IfcExternalReferenceResource
 {
@@ -22,8 +19,18 @@ namespace BuildingSmart.IFC.IfcExternalReferenceResource
 	{
 		[DataMember(Order=0)] 
 		[Required()]
+		[MinLength(1)]
 		ISet<IfcClassificationNotationFacet> _NotationFacets = new HashSet<IfcClassificationNotationFacet>();
 	
+	
+		public IfcClassificationNotation()
+		{
+		}
+	
+		public IfcClassificationNotation(IfcClassificationNotationFacet[] __NotationFacets)
+		{
+			this._NotationFacets = new HashSet<IfcClassificationNotationFacet>(__NotationFacets);
+		}
 	
 		[Description("Alphanumeric characters in defined groups from which the classification notation " +
 	    "is derived.\r\n")]

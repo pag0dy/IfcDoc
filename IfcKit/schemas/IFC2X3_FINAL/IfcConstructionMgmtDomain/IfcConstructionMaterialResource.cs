@@ -11,20 +11,9 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcApprovalResource;
-using BuildingSmart.IFC.IfcCostResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProcessExtension;
-using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcQuantityResource;
-using BuildingSmart.IFC.IfcSharedMgmtElements;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcConstructionMgmtDomain
 {
@@ -32,12 +21,24 @@ namespace BuildingSmart.IFC.IfcConstructionMgmtDomain
 	public partial class IfcConstructionMaterialResource : IfcConstructionResource
 	{
 		[DataMember(Order=0)] 
+		[MinLength(1)]
 		ISet<IfcActorSelect> _Suppliers = new HashSet<IfcActorSelect>();
 	
 		[DataMember(Order=1)] 
 		[XmlAttribute]
 		IfcRatioMeasure? _UsageRatio;
 	
+	
+		public IfcConstructionMaterialResource()
+		{
+		}
+	
+		public IfcConstructionMaterialResource(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcIdentifier? __ResourceIdentifier, IfcLabel? __ResourceGroup, IfcResourceConsumptionEnum? __ResourceConsumption, IfcMeasureWithUnit __BaseQuantity, IfcActorSelect[] __Suppliers, IfcRatioMeasure? __UsageRatio)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType, __ResourceIdentifier, __ResourceGroup, __ResourceConsumption, __BaseQuantity)
+		{
+			this._Suppliers = new HashSet<IfcActorSelect>(__Suppliers);
+			this._UsageRatio = __UsageRatio;
+		}
 	
 		[Description("Possible suppliers of the type of materials.")]
 		public ISet<IfcActorSelect> Suppliers { get { return this._Suppliers; } }

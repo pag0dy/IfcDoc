@@ -22,6 +22,16 @@ namespace BuildingSmart.IFC.IfcStructuralLoadResource
 		IfcCurvatureMeasure? _Distortion;
 	
 	
+		public IfcStructuralLoadSingleDisplacementDistortion()
+		{
+		}
+	
+		public IfcStructuralLoadSingleDisplacementDistortion(IfcLabel? __Name, IfcLengthMeasure? __DisplacementX, IfcLengthMeasure? __DisplacementY, IfcLengthMeasure? __DisplacementZ, IfcPlaneAngleMeasure? __RotationalDisplacementRX, IfcPlaneAngleMeasure? __RotationalDisplacementRY, IfcPlaneAngleMeasure? __RotationalDisplacementRZ, IfcCurvatureMeasure? __Distortion)
+			: base(__Name, __DisplacementX, __DisplacementY, __DisplacementZ, __RotationalDisplacementRX, __RotationalDisplacementRY, __RotationalDisplacementRZ)
+		{
+			this._Distortion = __Distortion;
+		}
+	
 		[Description("The distortion curvature given to the displacement load.")]
 		public IfcCurvatureMeasure? Distortion { get { return this._Distortion; } set { this._Distortion = value;} }
 	

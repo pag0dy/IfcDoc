@@ -10,9 +10,9 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcMeasureResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
+using BuildingSmart.IFC.IfcPropertyResource;
 
 namespace BuildingSmart.IFC.IfcExternalReferenceResource
 {
@@ -33,6 +33,17 @@ namespace BuildingSmart.IFC.IfcExternalReferenceResource
 		[XmlAttribute]
 		IfcLabel? _Name;
 	
+	
+		public IfcExternalReference()
+		{
+		}
+	
+		public IfcExternalReference(IfcLabel? __Location, IfcIdentifier? __ItemReference, IfcLabel? __Name)
+		{
+			this._Location = __Location;
+			this._ItemReference = __ItemReference;
+			this._Name = __Name;
+		}
 	
 		[Description(@"Location, where the external source (classification, document or library). This can be either human readable or computer interpretable. For electronic location normally given as an URL location string, however other ways of accessing external references may be established in an application scenario.
 	")]

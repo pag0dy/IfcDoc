@@ -10,11 +10,8 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcPropertyResource;
 
 namespace BuildingSmart.IFC.IfcMaterialPropertyResource
 {
@@ -37,6 +34,19 @@ namespace BuildingSmart.IFC.IfcMaterialPropertyResource
 		[XmlAttribute]
 		IfcThermalConductivityMeasure? _ThermalConductivity;
 	
+	
+		public IfcThermalMaterialProperties()
+		{
+		}
+	
+		public IfcThermalMaterialProperties(IfcMaterial __Material, IfcSpecificHeatCapacityMeasure? __SpecificHeatCapacity, IfcThermodynamicTemperatureMeasure? __BoilingPoint, IfcThermodynamicTemperatureMeasure? __FreezingPoint, IfcThermalConductivityMeasure? __ThermalConductivity)
+			: base(__Material)
+		{
+			this._SpecificHeatCapacity = __SpecificHeatCapacity;
+			this._BoilingPoint = __BoilingPoint;
+			this._FreezingPoint = __FreezingPoint;
+			this._ThermalConductivity = __ThermalConductivity;
+		}
 	
 		[Description("Defines the specific heat of the material: heat energy absorbed per\r\ntemperature " +
 	    "unit. Usually measured in [J/kg K].")]

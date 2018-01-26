@@ -10,9 +10,10 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcConstraintResource;
 using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcMeasureResource;
+using BuildingSmart.IFC.IfcPropertyResource;
 
 namespace BuildingSmart.IFC.IfcCostResource
 {
@@ -29,6 +30,17 @@ namespace BuildingSmart.IFC.IfcCostResource
 		[XmlAttribute]
 		IfcText? _Condition;
 	
+	
+		public IfcCostValue()
+		{
+		}
+	
+		public IfcCostValue(IfcLabel? __Name, IfcText? __Description, IfcAppliedValueSelect __AppliedValue, IfcMeasureWithUnit __UnitBasis, IfcDateTimeSelect __ApplicableDate, IfcDateTimeSelect __FixedUntilDate, IfcLabel __CostType, IfcText? __Condition)
+			: base(__Name, __Description, __AppliedValue, __UnitBasis, __ApplicableDate, __FixedUntilDate)
+		{
+			this._CostType = __CostType;
+			this._Condition = __Condition;
+		}
 	
 		[Description(@"<EPM-HTML>Specification of the type of cost type used.
 	

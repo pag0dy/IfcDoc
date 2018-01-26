@@ -10,12 +10,9 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationDefinitionResource;
-using BuildingSmart.IFC.IfcPresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 {
@@ -27,6 +24,15 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 		[Required()]
 		IfcAnnotationSymbolOccurrence _Symbol;
 	
+	
+		public IfcFillAreaStyleTileSymbolWithStyle()
+		{
+		}
+	
+		public IfcFillAreaStyleTileSymbolWithStyle(IfcAnnotationSymbolOccurrence __Symbol)
+		{
+			this._Symbol = __Symbol;
+		}
 	
 		[Description("A styled annotation symbol.")]
 		public IfcAnnotationSymbolOccurrence Symbol { get { return this._Symbol; } set { this._Symbol = value;} }

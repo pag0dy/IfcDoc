@@ -10,14 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometricConstraintResource
 {
@@ -31,6 +24,16 @@ namespace BuildingSmart.IFC.IfcGeometricConstraintResource
 		[DataMember(Order=1)] 
 		IfcVirtualGridIntersection _PlacementRefDirection;
 	
+	
+		public IfcGridPlacement()
+		{
+		}
+	
+		public IfcGridPlacement(IfcVirtualGridIntersection __PlacementLocation, IfcVirtualGridIntersection __PlacementRefDirection)
+		{
+			this._PlacementLocation = __PlacementLocation;
+			this._PlacementRefDirection = __PlacementRefDirection;
+		}
 	
 		[Description("A constraint on one or both ends of the path for an ExtrudedSolid.\r\n")]
 		public IfcVirtualGridIntersection PlacementLocation { get { return this._PlacementLocation; } set { this._PlacementLocation = value;} }

@@ -10,13 +10,10 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcPresentationOrganizationResource;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
@@ -29,6 +26,7 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 	
 		[DataMember(Order=1)] 
 		[Required()]
+		[MinLength(2)]
 		IList<IfcCartesianPoint> _ControlPointsList = new List<IfcCartesianPoint>();
 	
 		[DataMember(Order=2)] 
@@ -45,6 +43,19 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		Boolean? _SelfIntersect;
 	
 	
+		public IfcBSplineCurve()
+		{
+		}
+	
+		public IfcBSplineCurve(Int64 __Degree, IfcCartesianPoint[] __ControlPointsList, IfcBSplineCurveForm __CurveForm, Boolean? __ClosedCurve, Boolean? __SelfIntersect)
+		{
+			this._Degree = __Degree;
+			this._ControlPointsList = new List<IfcCartesianPoint>(__ControlPointsList);
+			this._CurveForm = __CurveForm;
+			this._ClosedCurve = __ClosedCurve;
+			this._SelfIntersect = __SelfIntersect;
+		}
+	
 		[Description("The algebraic degree of the basis functions.")]
 		public Int64 Degree { get { return this._Degree; } set { this._Degree = value;} }
 	
@@ -59,6 +70,10 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 	
 		[Description("Indication whether the curve self-intersects or not; it is for information only.")]
 		public Boolean? SelfIntersect { get { return this._SelfIntersect; } set { this._SelfIntersect = value;} }
+	
+		public new IfcCartesianPoint ControlPoints { get { return null; } }
+	
+		public new Int64 UpperIndexOnControlPoints { get { return null; } }
 	
 	
 	}

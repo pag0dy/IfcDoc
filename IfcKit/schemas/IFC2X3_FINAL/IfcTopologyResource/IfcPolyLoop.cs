@@ -12,6 +12,7 @@ using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcTopologyResource
 {
@@ -20,8 +21,18 @@ namespace BuildingSmart.IFC.IfcTopologyResource
 	{
 		[DataMember(Order=0)] 
 		[Required()]
+		[MinLength(3)]
 		IList<IfcCartesianPoint> _Polygon = new List<IfcCartesianPoint>();
 	
+	
+		public IfcPolyLoop()
+		{
+		}
+	
+		public IfcPolyLoop(IfcCartesianPoint[] __Polygon)
+		{
+			this._Polygon = new List<IfcCartesianPoint>(__Polygon);
+		}
 	
 		[Description("List of points defining the loop. There are no repeated points in the list. ")]
 		public IList<IfcCartesianPoint> Polygon { get { return this._Polygon; } }

@@ -10,9 +10,6 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcMeasureResource;
 
 namespace BuildingSmart.IFC.IfcExternalReferenceResource
 {
@@ -25,8 +22,19 @@ namespace BuildingSmart.IFC.IfcExternalReferenceResource
 	
 		[DataMember(Order=1)] 
 		[Required()]
+		[MinLength(1)]
 		ISet<IfcClassificationItem> _RelatedItems = new HashSet<IfcClassificationItem>();
 	
+	
+		public IfcClassificationItemRelationship()
+		{
+		}
+	
+		public IfcClassificationItemRelationship(IfcClassificationItem __RelatingItem, IfcClassificationItem[] __RelatedItems)
+		{
+			this._RelatingItem = __RelatingItem;
+			this._RelatedItems = new HashSet<IfcClassificationItem>(__RelatedItems);
+		}
 	
 		[Description("The parent level item in a classification structure that is used for relating the" +
 	    " child level items.")]

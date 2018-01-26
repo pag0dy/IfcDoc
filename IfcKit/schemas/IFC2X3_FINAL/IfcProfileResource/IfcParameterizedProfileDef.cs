@@ -12,7 +12,6 @@ using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 
 namespace BuildingSmart.IFC.IfcProfileResource
 {
@@ -23,6 +22,16 @@ namespace BuildingSmart.IFC.IfcProfileResource
 		[Required()]
 		IfcAxis2Placement2D _Position;
 	
+	
+		public IfcParameterizedProfileDef()
+		{
+		}
+	
+		public IfcParameterizedProfileDef(IfcProfileTypeEnum __ProfileType, IfcLabel? __ProfileName, IfcAxis2Placement2D __Position)
+			: base(__ProfileType, __ProfileName)
+		{
+			this._Position = __Position;
+		}
 	
 		[Description("Position coordinate system of the parameterized profile definition.")]
 		public IfcAxis2Placement2D Position { get { return this._Position; } set { this._Position = value;} }

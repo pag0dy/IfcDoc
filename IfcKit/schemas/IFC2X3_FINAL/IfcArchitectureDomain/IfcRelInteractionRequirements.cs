@@ -10,19 +10,10 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcSharedBldgElements;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcArchitectureDomain
 {
@@ -48,6 +39,20 @@ namespace BuildingSmart.IFC.IfcArchitectureDomain
 		[Required()]
 		IfcSpaceProgram _RelatingSpaceProgram;
 	
+	
+		public IfcRelInteractionRequirements()
+		{
+		}
+	
+		public IfcRelInteractionRequirements(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcCountMeasure? __DailyInteraction, IfcNormalisedRatioMeasure? __ImportanceRating, IfcSpatialStructureElement __LocationOfInteraction, IfcSpaceProgram __RelatedSpaceProgram, IfcSpaceProgram __RelatingSpaceProgram)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description)
+		{
+			this._DailyInteraction = __DailyInteraction;
+			this._ImportanceRating = __ImportanceRating;
+			this._LocationOfInteraction = __LocationOfInteraction;
+			this._RelatedSpaceProgram = __RelatedSpaceProgram;
+			this._RelatingSpaceProgram = __RelatingSpaceProgram;
+		}
 	
 		[Description("Number of interactions occurring on a daily basis. ")]
 		public IfcCountMeasure? DailyInteraction { get { return this._DailyInteraction; } set { this._DailyInteraction = value;} }

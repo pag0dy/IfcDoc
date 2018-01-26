@@ -10,11 +10,9 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcCostResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcSharedMgmtElements
 {
@@ -23,6 +21,7 @@ namespace BuildingSmart.IFC.IfcSharedMgmtElements
 	{
 		[DataMember(Order=0)] 
 		[Required()]
+		[MinLength(1)]
 		IList<IfcRelAssignsToProjectOrder> _Records = new List<IfcRelAssignsToProjectOrder>();
 	
 		[DataMember(Order=1)] 
@@ -30,6 +29,17 @@ namespace BuildingSmart.IFC.IfcSharedMgmtElements
 		[Required()]
 		IfcProjectOrderRecordTypeEnum _PredefinedType;
 	
+	
+		public IfcProjectOrderRecord()
+		{
+		}
+	
+		public IfcProjectOrderRecord(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcRelAssignsToProjectOrder[] __Records, IfcProjectOrderRecordTypeEnum __PredefinedType)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType)
+		{
+			this._Records = new List<IfcRelAssignsToProjectOrder>(__Records);
+			this._PredefinedType = __PredefinedType;
+		}
 	
 		[Description(@"Records in the sequence of occurrence the incident of a project order and the objects that are related to that project order. For instance, a maintenance incident will connect a work order with the objects (elements or assets) that are subject to the provisions of the work order")]
 		public IList<IfcRelAssignsToProjectOrder> Records { get { return this._Records; } }

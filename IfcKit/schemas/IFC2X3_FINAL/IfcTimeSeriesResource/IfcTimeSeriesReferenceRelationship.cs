@@ -10,11 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcTimeSeriesResource
 {
@@ -27,8 +23,19 @@ namespace BuildingSmart.IFC.IfcTimeSeriesResource
 	
 		[DataMember(Order=1)] 
 		[Required()]
+		[MinLength(1)]
 		ISet<IfcDocumentSelect> _TimeSeriesReferences = new HashSet<IfcDocumentSelect>();
 	
+	
+		public IfcTimeSeriesReferenceRelationship()
+		{
+		}
+	
+		public IfcTimeSeriesReferenceRelationship(IfcTimeSeries __ReferencedTimeSeries, IfcDocumentSelect[] __TimeSeriesReferences)
+		{
+			this._ReferencedTimeSeries = __ReferencedTimeSeries;
+			this._TimeSeriesReferences = new HashSet<IfcDocumentSelect>(__TimeSeriesReferences);
+		}
 	
 		public IfcTimeSeries ReferencedTimeSeries { get { return this._ReferencedTimeSeries; } set { this._ReferencedTimeSeries = value;} }
 	

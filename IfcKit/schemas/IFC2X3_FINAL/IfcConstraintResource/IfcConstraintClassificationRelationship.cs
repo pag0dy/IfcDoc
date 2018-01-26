@@ -10,14 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcCostResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcTimeSeriesResource;
-using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcConstraintResource
 {
@@ -30,8 +23,19 @@ namespace BuildingSmart.IFC.IfcConstraintResource
 	
 		[DataMember(Order=1)] 
 		[Required()]
+		[MinLength(1)]
 		ISet<IfcClassificationNotationSelect> _RelatedClassifications = new HashSet<IfcClassificationNotationSelect>();
 	
+	
+		public IfcConstraintClassificationRelationship()
+		{
+		}
+	
+		public IfcConstraintClassificationRelationship(IfcConstraint __ClassifiedConstraint, IfcClassificationNotationSelect[] __RelatedClassifications)
+		{
+			this._ClassifiedConstraint = __ClassifiedConstraint;
+			this._RelatedClassifications = new HashSet<IfcClassificationNotationSelect>(__RelatedClassifications);
+		}
 	
 		[Description("Constraint being classified")]
 		public IfcConstraint ClassifiedConstraint { get { return this._ClassifiedConstraint; } set { this._ClassifiedConstraint = value;} }

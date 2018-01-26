@@ -23,6 +23,16 @@ namespace BuildingSmart.IFC.IfcQuantityResource
 		IfcMassMeasure _WeightValue;
 	
 	
+		public IfcQuantityWeight()
+		{
+		}
+	
+		public IfcQuantityWeight(IfcLabel __Name, IfcText? __Description, IfcNamedUnit __Unit, IfcMassMeasure __WeightValue)
+			: base(__Name, __Description, __Unit)
+		{
+			this._WeightValue = __WeightValue;
+		}
+	
 		[Description("Mass measure value of this quantity.")]
 		public IfcMassMeasure WeightValue { get { return this._WeightValue; } set { this._WeightValue = value;} }
 	

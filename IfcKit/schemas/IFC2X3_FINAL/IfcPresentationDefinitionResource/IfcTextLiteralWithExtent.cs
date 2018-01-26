@@ -10,13 +10,10 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 using BuildingSmart.IFC.IfcPresentationResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcPresentationDefinitionResource
 {
@@ -32,6 +29,17 @@ namespace BuildingSmart.IFC.IfcPresentationDefinitionResource
 		[Required()]
 		IfcBoxAlignment _BoxAlignment;
 	
+	
+		public IfcTextLiteralWithExtent()
+		{
+		}
+	
+		public IfcTextLiteralWithExtent(IfcPresentableText __Literal, IfcAxis2Placement __Placement, IfcTextPath __Path, IfcPlanarExtent __Extent, IfcBoxAlignment __BoxAlignment)
+			: base(__Literal, __Placement, __Path)
+		{
+			this._Extent = __Extent;
+			this._BoxAlignment = __BoxAlignment;
+		}
 	
 		[Description("The extent in the x and y direction of the text literal.")]
 		public IfcPlanarExtent Extent { get { return this._Extent; } set { this._Extent = value;} }

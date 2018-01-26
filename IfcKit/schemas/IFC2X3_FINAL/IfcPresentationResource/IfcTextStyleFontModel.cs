@@ -10,8 +10,6 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 
@@ -22,6 +20,7 @@ namespace BuildingSmart.IFC.IfcPresentationResource
 	{
 		[DataMember(Order=0)] 
 		[XmlAttribute]
+		[MinLength(1)]
 		IList<IfcTextFontName> _FontFamily = new List<IfcTextFontName>();
 	
 		[DataMember(Order=1)] 
@@ -40,6 +39,20 @@ namespace BuildingSmart.IFC.IfcPresentationResource
 		[Required()]
 		IfcSizeSelect _FontSize;
 	
+	
+		public IfcTextStyleFontModel()
+		{
+		}
+	
+		public IfcTextStyleFontModel(IfcLabel __Name, IfcTextFontName[] __FontFamily, IfcFontStyle? __FontStyle, IfcFontVariant? __FontVariant, IfcFontWeight? __FontWeight, IfcSizeSelect __FontSize)
+			: base(__Name)
+		{
+			this._FontFamily = new List<IfcTextFontName>(__FontFamily);
+			this._FontStyle = __FontStyle;
+			this._FontVariant = __FontVariant;
+			this._FontWeight = __FontWeight;
+			this._FontSize = __FontSize;
+		}
 	
 		[Description(@"<EPM-HTML>
 	The value is a prioritized list of font family names and/or generic family names. The first list entry has the highest priority, if this font fails, the next list item shall be used. The last list item should (if possible) be a generic family.<br>

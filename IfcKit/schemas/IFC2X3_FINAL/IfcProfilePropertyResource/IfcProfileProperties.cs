@@ -26,6 +26,16 @@ namespace BuildingSmart.IFC.IfcProfilePropertyResource
 		IfcProfileDef _ProfileDefinition;
 	
 	
+		public IfcProfileProperties()
+		{
+		}
+	
+		public IfcProfileProperties(IfcLabel? __ProfileName, IfcProfileDef __ProfileDefinition)
+		{
+			this._ProfileName = __ProfileName;
+			this._ProfileDefinition = __ProfileDefinition;
+		}
+	
 		[Description("Standardized profile name as published in a profile table. All profile properties" +
 	    " are applicable to this standardized profile name.")]
 		public IfcLabel? ProfileName { get { return this._ProfileName; } set { this._ProfileName = value;} }

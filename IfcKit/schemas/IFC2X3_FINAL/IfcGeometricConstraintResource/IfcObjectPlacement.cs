@@ -10,14 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometricConstraintResource
 {
@@ -25,11 +18,17 @@ namespace BuildingSmart.IFC.IfcGeometricConstraintResource
 	public abstract partial class IfcObjectPlacement
 	{
 		[InverseProperty("ObjectPlacement")] 
+		[MinLength(1)]
+		[MaxLength(1)]
 		ISet<IfcProduct> _PlacesObject = new HashSet<IfcProduct>();
 	
 		[InverseProperty("PlacementRelTo")] 
 		ISet<IfcLocalPlacement> _ReferencedByPlacements = new HashSet<IfcLocalPlacement>();
 	
+	
+		public IfcObjectPlacement()
+		{
+		}
 	
 		[Description(@"<EPM-HTML>
 	The <i>IfcObjectPlacement</i> shall be used to provide a placement and an object coordinate system for a single instance of <i>IfcProduct</i>.

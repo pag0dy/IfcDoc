@@ -10,16 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcConstraintResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricConstraintResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
 using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcKernel
@@ -29,8 +20,19 @@ namespace BuildingSmart.IFC.IfcKernel
 	{
 		[DataMember(Order=0)] 
 		[Required()]
+		[MinLength(1)]
 		ISet<IfcRoot> _RelatedObjects = new HashSet<IfcRoot>();
 	
+	
+		public IfcRelAssociates()
+		{
+		}
+	
+		public IfcRelAssociates(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcRoot[] __RelatedObjects)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description)
+		{
+			this._RelatedObjects = new HashSet<IfcRoot>(__RelatedObjects);
+		}
 	
 		[Description("Objects or Types, to which the external references or information is associated.")]
 		public ISet<IfcRoot> RelatedObjects { get { return this._RelatedObjects; } }

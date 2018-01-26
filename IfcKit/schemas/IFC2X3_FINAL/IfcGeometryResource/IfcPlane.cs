@@ -10,19 +10,25 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcPresentationOrganizationResource;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
 	[Guid("b986ea11-24bb-4d48-902b-c8bffba5c89e")]
 	public partial class IfcPlane : IfcElementarySurface
 	{
+	
+		public IfcPlane()
+		{
+		}
+	
+		public IfcPlane(IfcAxis2Placement3D __Position)
+			: base(__Position)
+		{
+		}
 	
 	
 	}

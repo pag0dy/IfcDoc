@@ -10,13 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcPresentationResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcPresentationDefinitionResource
 {
@@ -30,8 +24,19 @@ namespace BuildingSmart.IFC.IfcPresentationDefinitionResource
 	
 		[DataMember(Order=1)] 
 		[Required()]
+		[MinLength(1)]
 		IList<IfcSimpleValue> _Parameter = new List<IfcSimpleValue>();
 	
+	
+		public IfcTextureCoordinateGenerator()
+		{
+		}
+	
+		public IfcTextureCoordinateGenerator(IfcLabel __Mode, IfcSimpleValue[] __Parameter)
+		{
+			this._Mode = __Mode;
+			this._Parameter = new List<IfcSimpleValue>(__Parameter);
+		}
 	
 		[Description("The mode describes the algorithm used to compute texture coordinates.")]
 		public IfcLabel Mode { get { return this._Mode; } set { this._Mode = value;} }

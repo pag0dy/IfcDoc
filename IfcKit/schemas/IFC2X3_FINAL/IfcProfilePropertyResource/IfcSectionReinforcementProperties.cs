@@ -11,7 +11,6 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcProfileResource;
 
 namespace BuildingSmart.IFC.IfcProfilePropertyResource
 {
@@ -43,8 +42,23 @@ namespace BuildingSmart.IFC.IfcProfilePropertyResource
 	
 		[DataMember(Order=5)] 
 		[Required()]
+		[MinLength(1)]
 		ISet<IfcReinforcementBarProperties> _CrossSectionReinforcementDefinitions = new HashSet<IfcReinforcementBarProperties>();
 	
+	
+		public IfcSectionReinforcementProperties()
+		{
+		}
+	
+		public IfcSectionReinforcementProperties(IfcLengthMeasure __LongitudinalStartPosition, IfcLengthMeasure __LongitudinalEndPosition, IfcLengthMeasure? __TransversePosition, IfcReinforcingBarRoleEnum __ReinforcementRole, IfcSectionProperties __SectionDefinition, IfcReinforcementBarProperties[] __CrossSectionReinforcementDefinitions)
+		{
+			this._LongitudinalStartPosition = __LongitudinalStartPosition;
+			this._LongitudinalEndPosition = __LongitudinalEndPosition;
+			this._TransversePosition = __TransversePosition;
+			this._ReinforcementRole = __ReinforcementRole;
+			this._SectionDefinition = __SectionDefinition;
+			this._CrossSectionReinforcementDefinitions = new HashSet<IfcReinforcementBarProperties>(__CrossSectionReinforcementDefinitions);
+		}
 	
 		[Description("The start position in longitudinal direction for the section reinforcement proper" +
 	    "ties.\r\n")]

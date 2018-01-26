@@ -10,14 +10,9 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcGeometricModelResource;
 using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometricConstraintResource
 {
@@ -38,17 +33,31 @@ namespace BuildingSmart.IFC.IfcGeometricConstraintResource
 		IfcBoolean _SameSense;
 	
 		[InverseProperty("WAxes")] 
+		[MaxLength(1)]
 		ISet<IfcGrid> _PartOfW = new HashSet<IfcGrid>();
 	
 		[InverseProperty("VAxes")] 
+		[MaxLength(1)]
 		ISet<IfcGrid> _PartOfV = new HashSet<IfcGrid>();
 	
 		[InverseProperty("UAxes")] 
+		[MaxLength(1)]
 		ISet<IfcGrid> _PartOfU = new HashSet<IfcGrid>();
 	
 		[InverseProperty("IntersectingAxes")] 
 		ISet<IfcVirtualGridIntersection> _HasIntersections = new HashSet<IfcVirtualGridIntersection>();
 	
+	
+		public IfcGridAxis()
+		{
+		}
+	
+		public IfcGridAxis(IfcLabel? __AxisTag, IfcCurve __AxisCurve, IfcBoolean __SameSense)
+		{
+			this._AxisTag = __AxisTag;
+			this._AxisCurve = __AxisCurve;
+			this._SameSense = __SameSense;
+		}
 	
 		[Description("The tag or name for this grid axis.")]
 		public IfcLabel? AxisTag { get { return this._AxisTag; } set { this._AxisTag = value;} }

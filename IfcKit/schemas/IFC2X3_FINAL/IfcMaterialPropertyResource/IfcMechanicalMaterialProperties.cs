@@ -10,11 +10,8 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcPropertyResource;
 
 namespace BuildingSmart.IFC.IfcMaterialPropertyResource
 {
@@ -41,6 +38,20 @@ namespace BuildingSmart.IFC.IfcMaterialPropertyResource
 		[XmlAttribute]
 		IfcThermalExpansionCoefficientMeasure? _ThermalExpansionCoefficient;
 	
+	
+		public IfcMechanicalMaterialProperties()
+		{
+		}
+	
+		public IfcMechanicalMaterialProperties(IfcMaterial __Material, IfcDynamicViscosityMeasure? __DynamicViscosity, IfcModulusOfElasticityMeasure? __YoungModulus, IfcModulusOfElasticityMeasure? __ShearModulus, IfcPositiveRatioMeasure? __PoissonRatio, IfcThermalExpansionCoefficientMeasure? __ThermalExpansionCoefficient)
+			: base(__Material)
+		{
+			this._DynamicViscosity = __DynamicViscosity;
+			this._YoungModulus = __YoungModulus;
+			this._ShearModulus = __ShearModulus;
+			this._PoissonRatio = __PoissonRatio;
+			this._ThermalExpansionCoefficient = __ThermalExpansionCoefficient;
+		}
 	
 		[Description("A measure of the viscous resistance of the material. ")]
 		public IfcDynamicViscosityMeasure? DynamicViscosity { get { return this._DynamicViscosity; } set { this._DynamicViscosity = value;} }

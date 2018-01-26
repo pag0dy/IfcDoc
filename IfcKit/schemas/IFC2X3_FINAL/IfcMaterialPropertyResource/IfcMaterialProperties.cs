@@ -10,11 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcMaterialResource;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcPropertyResource;
 
 namespace BuildingSmart.IFC.IfcMaterialPropertyResource
 {
@@ -25,6 +21,15 @@ namespace BuildingSmart.IFC.IfcMaterialPropertyResource
 		[Required()]
 		IfcMaterial _Material;
 	
+	
+		public IfcMaterialProperties()
+		{
+		}
+	
+		public IfcMaterialProperties(IfcMaterial __Material)
+		{
+			this._Material = __Material;
+		}
 	
 		[Description("Reference to the material to which the set of properties is assigned.")]
 		public IfcMaterial Material { get { return this._Material; } set { this._Material = value;} }

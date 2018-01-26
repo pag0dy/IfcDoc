@@ -10,14 +10,9 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcCostResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcProcessExtension
 {
@@ -27,6 +22,16 @@ namespace BuildingSmart.IFC.IfcProcessExtension
 		[DataMember(Order=0)] 
 		IfcScheduleTimeControl _TimeForTask;
 	
+	
+		public IfcRelAssignsTasks()
+		{
+		}
+	
+		public IfcRelAssignsTasks(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcObjectDefinition[] __RelatedObjects, IfcObjectTypeEnum? __RelatedObjectsType, IfcControl __RelatingControl, IfcScheduleTimeControl __TimeForTask)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __RelatedObjects, __RelatedObjectsType, __RelatingControl)
+		{
+			this._TimeForTask = __TimeForTask;
+		}
 	
 		[Description("Contained object for the time related information for the work schedule element.")]
 		public IfcScheduleTimeControl TimeForTask { get { return this._TimeForTask; } set { this._TimeForTask = value;} }

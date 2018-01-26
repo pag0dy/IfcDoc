@@ -10,8 +10,6 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 
 namespace BuildingSmart.IFC.IfcExternalReferenceResource
@@ -32,11 +30,24 @@ namespace BuildingSmart.IFC.IfcExternalReferenceResource
 		IfcLabel _Title;
 	
 		[InverseProperty("RelatedItems")] 
+		[MaxLength(1)]
 		ISet<IfcClassificationItemRelationship> _IsClassifiedItemIn = new HashSet<IfcClassificationItemRelationship>();
 	
 		[InverseProperty("RelatingItem")] 
+		[MaxLength(1)]
 		ISet<IfcClassificationItemRelationship> _IsClassifyingItemIn = new HashSet<IfcClassificationItemRelationship>();
 	
+	
+		public IfcClassificationItem()
+		{
+		}
+	
+		public IfcClassificationItem(IfcClassificationNotationFacet __Notation, IfcClassification __ItemOf, IfcLabel __Title)
+		{
+			this._Notation = __Notation;
+			this._ItemOf = __ItemOf;
+			this._Title = __Title;
+		}
 	
 		[Description("The notations from within a classification item that are used within the project." +
 	    "\r\nNOTE: In Uniclass this label is called the Code, in UDC it is called the Class" +

@@ -10,7 +10,6 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 
@@ -25,6 +24,7 @@ namespace BuildingSmart.IFC.IfcCostResource
 	
 		[DataMember(Order=1)] 
 		[Required()]
+		[MinLength(1)]
 		ISet<IfcAppliedValue> _ReferencingValues = new HashSet<IfcAppliedValue>();
 	
 		[DataMember(Order=2)] 
@@ -35,6 +35,18 @@ namespace BuildingSmart.IFC.IfcCostResource
 		[XmlAttribute]
 		IfcText? _Description;
 	
+	
+		public IfcReferencesValueDocument()
+		{
+		}
+	
+		public IfcReferencesValueDocument(IfcDocumentSelect __ReferencedDocument, IfcAppliedValue[] __ReferencingValues, IfcLabel? __Name, IfcText? __Description)
+		{
+			this._ReferencedDocument = __ReferencedDocument;
+			this._ReferencingValues = new HashSet<IfcAppliedValue>(__ReferencingValues);
+			this._Name = __Name;
+			this._Description = __Description;
+		}
 	
 		[Description("A document such as a price list or quotation from which costs are obtained.")]
 		public IfcDocumentSelect ReferencedDocument { get { return this._ReferencedDocument; } set { this._ReferencedDocument = value;} }

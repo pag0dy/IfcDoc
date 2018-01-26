@@ -11,9 +11,9 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
+using BuildingSmart.IFC.IfcPropertyResource;
 
 namespace BuildingSmart.IFC.IfcPresentationResource
 {
@@ -21,6 +21,15 @@ namespace BuildingSmart.IFC.IfcPresentationResource
 	public partial class IfcExternallyDefinedTextFont : IfcExternalReference,
 		BuildingSmart.IFC.IfcPresentationResource.IfcTextFontSelect
 	{
+	
+		public IfcExternallyDefinedTextFont()
+		{
+		}
+	
+		public IfcExternallyDefinedTextFont(IfcLabel? __Location, IfcIdentifier? __ItemReference, IfcLabel? __Name)
+			: base(__Location, __ItemReference, __Name)
+		{
+		}
 	
 	
 	}

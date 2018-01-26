@@ -11,13 +11,8 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcCostResource;
 using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcTimeSeriesResource;
-using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcConstraintResource
 {
@@ -70,6 +65,21 @@ namespace BuildingSmart.IFC.IfcConstraintResource
 		[InverseProperty("RelatedConstraints")] 
 		ISet<IfcConstraintAggregationRelationship> _IsAggregatedIn = new HashSet<IfcConstraintAggregationRelationship>();
 	
+	
+		public IfcConstraint()
+		{
+		}
+	
+		public IfcConstraint(IfcLabel __Name, IfcText? __Description, IfcConstraintEnum __ConstraintGrade, IfcLabel? __ConstraintSource, IfcActorSelect __CreatingActor, IfcDateTimeSelect __CreationTime, IfcLabel? __UserDefinedGrade)
+		{
+			this._Name = __Name;
+			this._Description = __Description;
+			this._ConstraintGrade = __ConstraintGrade;
+			this._ConstraintSource = __ConstraintSource;
+			this._CreatingActor = __CreatingActor;
+			this._CreationTime = __CreationTime;
+			this._UserDefinedGrade = __UserDefinedGrade;
+		}
 	
 		[Description("A name to be used for the constraint (e.g., ChillerCoefficientOfPerformance).")]
 		public IfcLabel Name { get { return this._Name; } set { this._Name = value;} }

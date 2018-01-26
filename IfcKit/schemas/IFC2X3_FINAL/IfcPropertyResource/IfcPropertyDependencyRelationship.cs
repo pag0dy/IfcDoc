@@ -10,14 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcConstraintResource;
-using BuildingSmart.IFC.IfcCostResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcTimeSeriesResource;
 
 namespace BuildingSmart.IFC.IfcPropertyResource
 {
@@ -44,6 +37,19 @@ namespace BuildingSmart.IFC.IfcPropertyResource
 		[XmlAttribute]
 		IfcText? _Expression;
 	
+	
+		public IfcPropertyDependencyRelationship()
+		{
+		}
+	
+		public IfcPropertyDependencyRelationship(IfcProperty __DependingProperty, IfcProperty __DependantProperty, IfcLabel? __Name, IfcText? __Description, IfcText? __Expression)
+		{
+			this._DependingProperty = __DependingProperty;
+			this._DependantProperty = __DependantProperty;
+			this._Name = __Name;
+			this._Description = __Description;
+			this._Expression = __Expression;
+		}
 	
 		[Description("The property on which the relationship depends.")]
 		public IfcProperty DependingProperty { get { return this._DependingProperty; } set { this._DependingProperty = value;} }

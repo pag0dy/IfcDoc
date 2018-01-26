@@ -10,16 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcConstraintResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricConstraintResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
 using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcKernel
@@ -28,11 +19,22 @@ namespace BuildingSmart.IFC.IfcKernel
 	public abstract partial class IfcPropertySetDefinition : IfcPropertyDefinition
 	{
 		[InverseProperty("RelatingPropertyDefinition")] 
+		[MaxLength(1)]
 		ISet<IfcRelDefinesByProperties> _PropertyDefinitionOf = new HashSet<IfcRelDefinesByProperties>();
 	
 		[InverseProperty("HasPropertySets")] 
+		[MaxLength(1)]
 		ISet<IfcTypeObject> _DefinesType = new HashSet<IfcTypeObject>();
 	
+	
+		public IfcPropertySetDefinition()
+		{
+		}
+	
+		public IfcPropertySetDefinition(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description)
+		{
+		}
 	
 		[Description(@"Reference to the relation to one or many objects that are characterized by the property definition. The reference may be omitted, if the property definition is used to define a style library and no instances, to which the particular style of property set is associated, exist yet.")]
 		public ISet<IfcRelDefinesByProperties> PropertyDefinitionOf { get { return this._PropertyDefinitionOf; } }

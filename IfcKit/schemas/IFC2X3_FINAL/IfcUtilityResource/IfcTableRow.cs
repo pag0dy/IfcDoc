@@ -10,7 +10,6 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 
 namespace BuildingSmart.IFC.IfcUtilityResource
@@ -20,6 +19,7 @@ namespace BuildingSmart.IFC.IfcUtilityResource
 	{
 		[DataMember(Order=0)] 
 		[Required()]
+		[MinLength(1)]
 		IList<IfcValue> _RowCells = new List<IfcValue>();
 	
 		[DataMember(Order=1)] 
@@ -29,6 +29,16 @@ namespace BuildingSmart.IFC.IfcUtilityResource
 		[InverseProperty("Rows")] 
 		IfcTable _OfTable;
 	
+	
+		public IfcTableRow()
+		{
+		}
+	
+		public IfcTableRow(IfcValue[] __RowCells, Boolean __IsHeading)
+		{
+			this._RowCells = new List<IfcValue>(__RowCells);
+			this._IsHeading = __IsHeading;
+		}
 	
 		[Description(@"The value of information by row and column using the units defined. NOTE - The row value identifies both the actual value and the units in which it is recorded. Each cell (unique row and column) may have a different value AND different units. If the row is a heading row, then the row values are strings defined by the IfcString.")]
 		public IList<IfcValue> RowCells { get { return this._RowCells; } }

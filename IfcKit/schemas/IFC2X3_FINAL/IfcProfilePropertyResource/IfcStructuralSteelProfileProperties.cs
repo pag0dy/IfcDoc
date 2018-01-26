@@ -35,6 +35,19 @@ namespace BuildingSmart.IFC.IfcProfilePropertyResource
 		IfcPositiveRatioMeasure? _PlasticShapeFactorZ;
 	
 	
+		public IfcStructuralSteelProfileProperties()
+		{
+		}
+	
+		public IfcStructuralSteelProfileProperties(IfcLabel? __ProfileName, IfcProfileDef __ProfileDefinition, IfcMassPerLengthMeasure? __PhysicalWeight, IfcPositiveLengthMeasure? __Perimeter, IfcPositiveLengthMeasure? __MinimumPlateThickness, IfcPositiveLengthMeasure? __MaximumPlateThickness, IfcAreaMeasure? __CrossSectionArea, IfcMomentOfInertiaMeasure? __TorsionalConstantX, IfcMomentOfInertiaMeasure? __MomentOfInertiaYZ, IfcMomentOfInertiaMeasure? __MomentOfInertiaY, IfcMomentOfInertiaMeasure? __MomentOfInertiaZ, IfcWarpingConstantMeasure? __WarpingConstant, IfcLengthMeasure? __ShearCentreZ, IfcLengthMeasure? __ShearCentreY, IfcAreaMeasure? __ShearDeformationAreaZ, IfcAreaMeasure? __ShearDeformationAreaY, IfcSectionModulusMeasure? __MaximumSectionModulusY, IfcSectionModulusMeasure? __MinimumSectionModulusY, IfcSectionModulusMeasure? __MaximumSectionModulusZ, IfcSectionModulusMeasure? __MinimumSectionModulusZ, IfcSectionModulusMeasure? __TorsionalSectionModulus, IfcLengthMeasure? __CentreOfGravityInX, IfcLengthMeasure? __CentreOfGravityInY, IfcAreaMeasure? __ShearAreaZ, IfcAreaMeasure? __ShearAreaY, IfcPositiveRatioMeasure? __PlasticShapeFactorY, IfcPositiveRatioMeasure? __PlasticShapeFactorZ)
+			: base(__ProfileName, __ProfileDefinition, __PhysicalWeight, __Perimeter, __MinimumPlateThickness, __MaximumPlateThickness, __CrossSectionArea, __TorsionalConstantX, __MomentOfInertiaYZ, __MomentOfInertiaY, __MomentOfInertiaZ, __WarpingConstant, __ShearCentreZ, __ShearCentreY, __ShearDeformationAreaZ, __ShearDeformationAreaY, __MaximumSectionModulusY, __MinimumSectionModulusY, __MaximumSectionModulusZ, __MinimumSectionModulusZ, __TorsionalSectionModulus, __CentreOfGravityInX, __CentreOfGravityInY)
+		{
+			this._ShearAreaZ = __ShearAreaZ;
+			this._ShearAreaY = __ShearAreaY;
+			this._PlasticShapeFactorY = __PlasticShapeFactorY;
+			this._PlasticShapeFactorZ = __PlasticShapeFactorZ;
+		}
+	
 		[Description("Area of the profile for calculating the shear stress for a shear force parallel t" +
 	    "o the profiles Z-axis. Usually measured in [mm2].")]
 		public IfcAreaMeasure? ShearAreaZ { get { return this._ShearAreaZ; } set { this._ShearAreaZ = value;} }

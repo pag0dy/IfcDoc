@@ -24,6 +24,10 @@ namespace BuildingSmart.IFC.IfcMeasureResource
 		{
 			this.Value = value;
 		}
+		public IfcPositivePlaneAngleMeasure(Double value)
+		{
+			this.Value = new IfcPlaneAngleMeasure(value);
+		}
 	}
 	
 }

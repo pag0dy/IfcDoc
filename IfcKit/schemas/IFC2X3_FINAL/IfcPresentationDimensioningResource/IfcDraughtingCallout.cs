@@ -11,10 +11,8 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcPresentationDefinitionResource;
-using BuildingSmart.IFC.IfcPresentationResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcPresentationDimensioningResource
 {
@@ -23,6 +21,7 @@ namespace BuildingSmart.IFC.IfcPresentationDimensioningResource
 	{
 		[DataMember(Order=0)] 
 		[Required()]
+		[MinLength(1)]
 		ISet<IfcDraughtingCalloutElement> _Contents = new HashSet<IfcDraughtingCalloutElement>();
 	
 		[InverseProperty("RelatedDraughtingCallout")] 
@@ -31,6 +30,15 @@ namespace BuildingSmart.IFC.IfcPresentationDimensioningResource
 		[InverseProperty("RelatingDraughtingCallout")] 
 		ISet<IfcDraughtingCalloutRelationship> _IsRelatedToCallout = new HashSet<IfcDraughtingCalloutRelationship>();
 	
+	
+		public IfcDraughtingCallout()
+		{
+		}
+	
+		public IfcDraughtingCallout(IfcDraughtingCalloutElement[] __Contents)
+		{
+			this._Contents = new HashSet<IfcDraughtingCalloutElement>(__Contents);
+		}
 	
 		[Description("The annotation curves, symbols, or text comprising the presentation of informatio" +
 	    "n.")]

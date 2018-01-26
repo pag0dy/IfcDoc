@@ -12,7 +12,6 @@ using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 
 namespace BuildingSmart.IFC.IfcProfileResource
 {
@@ -36,6 +35,19 @@ namespace BuildingSmart.IFC.IfcProfileResource
 		[XmlAttribute]
 		IfcPositiveLengthMeasure? _CentreOfGravityInY;
 	
+	
+		public IfcAsymmetricIShapeProfileDef()
+		{
+		}
+	
+		public IfcAsymmetricIShapeProfileDef(IfcProfileTypeEnum __ProfileType, IfcLabel? __ProfileName, IfcAxis2Placement2D __Position, IfcPositiveLengthMeasure __OverallWidth, IfcPositiveLengthMeasure __OverallDepth, IfcPositiveLengthMeasure __WebThickness, IfcPositiveLengthMeasure __FlangeThickness, IfcPositiveLengthMeasure? __FilletRadius, IfcPositiveLengthMeasure __TopFlangeWidth, IfcPositiveLengthMeasure? __TopFlangeThickness, IfcPositiveLengthMeasure? __TopFlangeFilletRadius, IfcPositiveLengthMeasure? __CentreOfGravityInY)
+			: base(__ProfileType, __ProfileName, __Position, __OverallWidth, __OverallDepth, __WebThickness, __FlangeThickness, __FilletRadius)
+		{
+			this._TopFlangeWidth = __TopFlangeWidth;
+			this._TopFlangeThickness = __TopFlangeThickness;
+			this._TopFlangeFilletRadius = __TopFlangeFilletRadius;
+			this._CentreOfGravityInY = __CentreOfGravityInY;
+		}
 	
 		[Description("Extent of the top flange, defined parallel to the x axis of the position coordina" +
 	    "te system.")]

@@ -10,9 +10,9 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcMeasureResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
+using BuildingSmart.IFC.IfcPropertyResource;
 
 namespace BuildingSmart.IFC.IfcExternalReferenceResource
 {
@@ -21,8 +21,18 @@ namespace BuildingSmart.IFC.IfcExternalReferenceResource
 		BuildingSmart.IFC.IfcExternalReferenceResource.IfcDocumentSelect
 	{
 		[InverseProperty("DocumentReferences")] 
+		[MaxLength(1)]
 		ISet<IfcDocumentInformation> _ReferenceToDocument = new HashSet<IfcDocumentInformation>();
 	
+	
+		public IfcDocumentReference()
+		{
+		}
+	
+		public IfcDocumentReference(IfcLabel? __Location, IfcIdentifier? __ItemReference, IfcLabel? __Name)
+			: base(__Location, __ItemReference, __Name)
+		{
+		}
 	
 		[Description("The document information that is being referenced.")]
 		public ISet<IfcDocumentInformation> ReferenceToDocument { get { return this._ReferenceToDocument; } }

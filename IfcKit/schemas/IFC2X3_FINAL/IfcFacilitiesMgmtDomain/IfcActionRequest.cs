@@ -10,17 +10,9 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcArchitectureDomain;
-using BuildingSmart.IFC.IfcCostResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcProcessExtension;
-using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcQuantityResource;
-using BuildingSmart.IFC.IfcSharedFacilitiesElements;
-using BuildingSmart.IFC.IfcSharedMgmtElements;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcFacilitiesMgmtDomain
 {
@@ -32,6 +24,16 @@ namespace BuildingSmart.IFC.IfcFacilitiesMgmtDomain
 		[Required()]
 		IfcIdentifier _RequestID;
 	
+	
+		public IfcActionRequest()
+		{
+		}
+	
+		public IfcActionRequest(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcIdentifier __RequestID)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType)
+		{
+			this._RequestID = __RequestID;
+		}
 	
 		[Description("A unique identifier assigned to the request on receipt.")]
 		public IfcIdentifier RequestID { get { return this._RequestID; } set { this._RequestID = value;} }

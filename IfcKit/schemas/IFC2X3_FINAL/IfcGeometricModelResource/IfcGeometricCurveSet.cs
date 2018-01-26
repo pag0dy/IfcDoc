@@ -11,16 +11,23 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcTopologyResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcGeometricModelResource
 {
 	[Guid("08eed2c6-f9ca-46e6-b3bc-8a675bd20d4f")]
 	public partial class IfcGeometricCurveSet : IfcGeometricSet
 	{
+	
+		public IfcGeometricCurveSet()
+		{
+		}
+	
+		public IfcGeometricCurveSet(IfcGeometricSetSelect[] __Elements)
+			: base(__Elements)
+		{
+		}
 	
 	
 	}

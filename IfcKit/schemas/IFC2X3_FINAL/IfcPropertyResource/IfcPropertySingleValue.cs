@@ -10,14 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcConstraintResource;
-using BuildingSmart.IFC.IfcCostResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcTimeSeriesResource;
 
 namespace BuildingSmart.IFC.IfcPropertyResource
 {
@@ -30,6 +23,17 @@ namespace BuildingSmart.IFC.IfcPropertyResource
 		[DataMember(Order=1)] 
 		IfcUnit _Unit;
 	
+	
+		public IfcPropertySingleValue()
+		{
+		}
+	
+		public IfcPropertySingleValue(IfcIdentifier __Name, IfcText? __Description, IfcValue __NominalValue, IfcUnit __Unit)
+			: base(__Name, __Description)
+		{
+			this._NominalValue = __NominalValue;
+			this._Unit = __Unit;
+		}
 	
 		[Description(@"<EPM-HTML>
 	Value and measure type of this property. 

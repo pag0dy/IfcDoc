@@ -31,6 +31,17 @@ namespace BuildingSmart.IFC.IfcActorResource
 		IfcText? _Description;
 	
 	
+		public IfcActorRole()
+		{
+		}
+	
+		public IfcActorRole(IfcRoleEnum __Role, IfcLabel? __UserDefinedRole, IfcText? __Description)
+		{
+			this._Role = __Role;
+			this._UserDefinedRole = __UserDefinedRole;
+			this._Description = __Description;
+		}
+	
 		[Description("The name of the role played by an actor. If the Role has value USERDEFINED, then\r" +
 	    "\nthe user defined role shall be provided as a value of the attribute UserDefined" +
 	    "Role.")]

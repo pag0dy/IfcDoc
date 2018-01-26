@@ -19,6 +19,7 @@ namespace BuildingSmart.IFC.IfcMeasureResource
 	{
 		[DataMember(Order=0)] 
 		[Required()]
+		[MinLength(1)]
 		ISet<IfcDerivedUnitElement> _Elements = new HashSet<IfcDerivedUnitElement>();
 	
 		[DataMember(Order=1)] 
@@ -31,6 +32,17 @@ namespace BuildingSmart.IFC.IfcMeasureResource
 		IfcLabel? _UserDefinedType;
 	
 	
+		public IfcDerivedUnit()
+		{
+		}
+	
+		public IfcDerivedUnit(IfcDerivedUnitElement[] __Elements, IfcDerivedUnitEnum __UnitType, IfcLabel? __UserDefinedType)
+		{
+			this._Elements = new HashSet<IfcDerivedUnitElement>(__Elements);
+			this._UnitType = __UnitType;
+			this._UserDefinedType = __UserDefinedType;
+		}
+	
 		[Description("The group of units and their exponents that define the derived unit.")]
 		public ISet<IfcDerivedUnitElement> Elements { get { return this._Elements; } }
 	
@@ -39,6 +51,8 @@ namespace BuildingSmart.IFC.IfcMeasureResource
 		public IfcDerivedUnitEnum UnitType { get { return this._UnitType; } set { this._UnitType = value;} }
 	
 		public IfcLabel? UserDefinedType { get { return this._UserDefinedType; } set { this._UserDefinedType = value;} }
+	
+		public new IfcDimensionalExponents Dimensions { get { return null; } }
 	
 	
 	}

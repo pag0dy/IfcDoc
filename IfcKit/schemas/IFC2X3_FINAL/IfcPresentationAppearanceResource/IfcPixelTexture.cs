@@ -10,12 +10,8 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationDefinitionResource;
-using BuildingSmart.IFC.IfcPresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 {
@@ -39,8 +35,22 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 	
 		[DataMember(Order=3)] 
 		[Required()]
+		[MinLength(1)]
 		IList<BINARY (32)> _Pixel = new List<BINARY (32)>();
 	
+	
+		public IfcPixelTexture()
+		{
+		}
+	
+		public IfcPixelTexture(Boolean __RepeatS, Boolean __RepeatT, IfcSurfaceTextureEnum __TextureType, IfcCartesianTransformationOperator2D __TextureTransform, IfcInteger __Width, IfcInteger __Height, IfcInteger __ColourComponents, BINARY (32)[] __Pixel)
+			: base(__RepeatS, __RepeatT, __TextureType, __TextureTransform)
+		{
+			this._Width = __Width;
+			this._Height = __Height;
+			this._ColourComponents = __ColourComponents;
+			this._Pixel = new List<BINARY (32)>(__Pixel);
+		}
 	
 		[Description("<EPM-HTML>\r\nThe number of pixels in width (S) direction.\r\n</EPM-HTML>")]
 		public IfcInteger Width { get { return this._Width; } set { this._Width = value;} }

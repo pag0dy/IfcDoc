@@ -11,14 +11,10 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcGeometricConstraintResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfilePropertyResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcStructuralLoadResource;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcStructuralAnalysisDomain
 {
@@ -31,6 +27,15 @@ namespace BuildingSmart.IFC.IfcStructuralAnalysisDomain
 		[InverseProperty("RelatingStructuralMember")] 
 		ISet<IfcRelConnectsStructuralMember> _ConnectedBy = new HashSet<IfcRelConnectsStructuralMember>();
 	
+	
+		public IfcStructuralMember()
+		{
+		}
+	
+		public IfcStructuralMember(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcObjectPlacement __ObjectPlacement, IfcProductRepresentation __Representation)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType, __ObjectPlacement, __Representation)
+		{
+		}
 	
 		[Description("<EPM-HTML>\r\nInverse link to the relationship object, that connects a physical ele" +
 	    "ment to this structural member (the element of which this structural member is t" +

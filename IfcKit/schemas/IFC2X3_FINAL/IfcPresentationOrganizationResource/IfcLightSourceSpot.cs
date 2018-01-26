@@ -10,12 +10,10 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcPresentationResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcPresentationOrganizationResource
 {
@@ -40,6 +38,19 @@ namespace BuildingSmart.IFC.IfcPresentationOrganizationResource
 		[Required()]
 		IfcPositivePlaneAngleMeasure _BeamWidthAngle;
 	
+	
+		public IfcLightSourceSpot()
+		{
+		}
+	
+		public IfcLightSourceSpot(IfcLabel? __Name, IfcColourRgb __LightColour, IfcNormalisedRatioMeasure? __AmbientIntensity, IfcNormalisedRatioMeasure? __Intensity, IfcCartesianPoint __Position, IfcPositiveLengthMeasure __Radius, IfcReal __ConstantAttenuation, IfcReal __DistanceAttenuation, IfcReal __QuadricAttenuation, IfcDirection __Orientation, IfcReal? __ConcentrationExponent, IfcPositivePlaneAngleMeasure __SpreadAngle, IfcPositivePlaneAngleMeasure __BeamWidthAngle)
+			: base(__Name, __LightColour, __AmbientIntensity, __Intensity, __Position, __Radius, __ConstantAttenuation, __DistanceAttenuation, __QuadricAttenuation)
+		{
+			this._Orientation = __Orientation;
+			this._ConcentrationExponent = __ConcentrationExponent;
+			this._SpreadAngle = __SpreadAngle;
+			this._BeamWidthAngle = __BeamWidthAngle;
+		}
 	
 		[Description(@"Definition from ISO/CD 10303-46:1992: This is the direction of the axis of the cone of the light source specified in the coordinate space of the representation being projected..
 	Definition from VRML97 - ISO/IEC 14772-1:1997: The direction field specifies the direction vector of the light's central axis defined in the local coordinate system.

@@ -12,12 +12,22 @@ using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcTopologyResource
 {
 	[Guid("0fa060dd-f132-4bb8-8a8a-c3ca6b00aae1")]
 	public partial class IfcFaceOuterBound : IfcFaceBound
 	{
+	
+		public IfcFaceOuterBound()
+		{
+		}
+	
+		public IfcFaceOuterBound(IfcLoop __Bound, Boolean __Orientation)
+			: base(__Bound, __Orientation)
+		{
+		}
 	
 	
 	}

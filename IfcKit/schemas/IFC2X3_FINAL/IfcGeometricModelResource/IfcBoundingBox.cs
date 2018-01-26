@@ -13,8 +13,7 @@ using System.Xml.Serialization;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcTopologyResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcGeometricModelResource
 {
@@ -41,6 +40,18 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 		IfcPositiveLengthMeasure _ZDim;
 	
 	
+		public IfcBoundingBox()
+		{
+		}
+	
+		public IfcBoundingBox(IfcCartesianPoint __Corner, IfcPositiveLengthMeasure __XDim, IfcPositiveLengthMeasure __YDim, IfcPositiveLengthMeasure __ZDim)
+		{
+			this._Corner = __Corner;
+			this._XDim = __XDim;
+			this._YDim = __YDim;
+			this._ZDim = __ZDim;
+		}
+	
 		[Description("Location of the bottom left corner (having the minimum values).")]
 		public IfcCartesianPoint Corner { get { return this._Corner; } set { this._Corner = value;} }
 	
@@ -52,6 +63,8 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 	
 		[Description("Height attribute (measured along the edge parallel to the Z Axis).")]
 		public IfcPositiveLengthMeasure ZDim { get { return this._ZDim; } set { this._ZDim = value;} }
+	
+		public new IfcDimensionCount Dim { get { return new IfcDimensionCount(); } }
 	
 	
 	}

@@ -10,18 +10,25 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcPresentationResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcPresentationOrganizationResource
 {
 	[Guid("fa331a24-f876-4715-a223-e547aa215200")]
 	public partial class IfcLightSourceAmbient : IfcLightSource
 	{
+	
+		public IfcLightSourceAmbient()
+		{
+		}
+	
+		public IfcLightSourceAmbient(IfcLabel? __Name, IfcColourRgb __LightColour, IfcNormalisedRatioMeasure? __AmbientIntensity, IfcNormalisedRatioMeasure? __Intensity)
+			: base(__Name, __LightColour, __AmbientIntensity, __Intensity)
+		{
+		}
 	
 	
 	}

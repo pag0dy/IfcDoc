@@ -10,13 +10,8 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcPresentationOrganizationResource;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
@@ -28,8 +23,13 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		ISet<IfcPresentationLayerAssignment> _LayerAssignments = new HashSet<IfcPresentationLayerAssignment>();
 	
 		[InverseProperty("Item")] 
+		[MaxLength(1)]
 		ISet<IfcStyledItem> _StyledByItem = new HashSet<IfcStyledItem>();
 	
+	
+		public IfcRepresentationItem()
+		{
+		}
 	
 		[Description(@"<EPM-HTML>Assignment of the representation item to a single or multiple layer(s). The <i>LayerAssignments</i> can override a <i>LayerAssignments</i> of the <i>IfcRepresentation</i> it is used  within the list of <i>Items</i>.
 	<blockquote>

@@ -25,6 +25,16 @@ namespace BuildingSmart.IFC.IfcMeasureResource
 		Int64 _Exponent;
 	
 	
+		public IfcDerivedUnitElement()
+		{
+		}
+	
+		public IfcDerivedUnitElement(IfcNamedUnit __Unit, Int64 __Exponent)
+		{
+			this._Unit = __Unit;
+			this._Exponent = __Exponent;
+		}
+	
 		[Description("The fixed quantity which is used as the mathematical factor.")]
 		public IfcNamedUnit Unit { get { return this._Unit; } set { this._Unit = value;} }
 	

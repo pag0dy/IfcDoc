@@ -10,14 +10,8 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcGeometricModelResource;
 using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProductExtension;
 using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometricConstraintResource
 {
@@ -35,6 +29,17 @@ namespace BuildingSmart.IFC.IfcGeometricConstraintResource
 		[Required()]
 		IfcProfileDef _ProfileOfPort;
 	
+	
+		public IfcConnectionPortGeometry()
+		{
+		}
+	
+		public IfcConnectionPortGeometry(IfcAxis2Placement __LocationAtRelatingElement, IfcAxis2Placement __LocationAtRelatedElement, IfcProfileDef __ProfileOfPort)
+		{
+			this._LocationAtRelatingElement = __LocationAtRelatingElement;
+			this._LocationAtRelatedElement = __LocationAtRelatedElement;
+			this._ProfileOfPort = __ProfileOfPort;
+		}
 	
 		[Description("Local placement of the port relative to its distribution element\'s local placemen" +
 	    "t. The element in question is that, which plays the role of the relating element" +

@@ -10,12 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationDefinitionResource;
-using BuildingSmart.IFC.IfcPresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 {
@@ -42,6 +37,19 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 		[DataMember(Order=4)] 
 		IfcSizeSelect _CharacterSpacing;
 	
+	
+		public IfcTextStyleWithBoxCharacteristics()
+		{
+		}
+	
+		public IfcTextStyleWithBoxCharacteristics(IfcPositiveLengthMeasure? __BoxHeight, IfcPositiveLengthMeasure? __BoxWidth, IfcPlaneAngleMeasure? __BoxSlantAngle, IfcPlaneAngleMeasure? __BoxRotateAngle, IfcSizeSelect __CharacterSpacing)
+		{
+			this._BoxHeight = __BoxHeight;
+			this._BoxWidth = __BoxWidth;
+			this._BoxSlantAngle = __BoxSlantAngle;
+			this._BoxRotateAngle = __BoxRotateAngle;
+			this._CharacterSpacing = __CharacterSpacing;
+		}
 	
 		[Description("It is the height scaling factor in the definition of a character glyph.")]
 		public IfcPositiveLengthMeasure? BoxHeight { get { return this._BoxHeight; } set { this._BoxHeight = value;} }

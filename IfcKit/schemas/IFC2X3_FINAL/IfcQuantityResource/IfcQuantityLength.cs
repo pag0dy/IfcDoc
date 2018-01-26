@@ -23,6 +23,16 @@ namespace BuildingSmart.IFC.IfcQuantityResource
 		IfcLengthMeasure _LengthValue;
 	
 	
+		public IfcQuantityLength()
+		{
+		}
+	
+		public IfcQuantityLength(IfcLabel __Name, IfcText? __Description, IfcNamedUnit __Unit, IfcLengthMeasure __LengthValue)
+			: base(__Name, __Description, __Unit)
+		{
+			this._LengthValue = __LengthValue;
+		}
+	
 		[Description("Length measure value of this quantity.")]
 		public IfcLengthMeasure LengthValue { get { return this._LengthValue; } set { this._LengthValue = value;} }
 	

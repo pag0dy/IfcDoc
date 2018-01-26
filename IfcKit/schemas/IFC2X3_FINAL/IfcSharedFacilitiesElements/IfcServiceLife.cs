@@ -10,17 +10,9 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcConstraintResource;
-using BuildingSmart.IFC.IfcCostResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcQuantityResource;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcSharedFacilitiesElements
 {
@@ -37,6 +29,17 @@ namespace BuildingSmart.IFC.IfcSharedFacilitiesElements
 		[Required()]
 		IfcTimeMeasure _ServiceLifeDuration;
 	
+	
+		public IfcServiceLife()
+		{
+		}
+	
+		public IfcServiceLife(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcServiceLifeTypeEnum __ServiceLifeType, IfcTimeMeasure __ServiceLifeDuration)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType)
+		{
+			this._ServiceLifeType = __ServiceLifeType;
+			this._ServiceLifeDuration = __ServiceLifeDuration;
+		}
 	
 		[Description("Predefined service life types from which that required may be set. ")]
 		public IfcServiceLifeTypeEnum ServiceLifeType { get { return this._ServiceLifeType; } set { this._ServiceLifeType = value;} }

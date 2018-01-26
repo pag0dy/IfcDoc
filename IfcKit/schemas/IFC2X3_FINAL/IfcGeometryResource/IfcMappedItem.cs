@@ -10,13 +10,8 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcPresentationOrganizationResource;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
@@ -31,6 +26,16 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		[Required()]
 		IfcCartesianTransformationOperator _MappingTarget;
 	
+	
+		public IfcMappedItem()
+		{
+		}
+	
+		public IfcMappedItem(IfcRepresentationMap __MappingSource, IfcCartesianTransformationOperator __MappingTarget)
+		{
+			this._MappingSource = __MappingSource;
+			this._MappingTarget = __MappingTarget;
+		}
 	
 		[Description("A representation map that is the source of the mapped item. It can be seen as a b" +
 	    "lock (or cell or marco) definition.")]

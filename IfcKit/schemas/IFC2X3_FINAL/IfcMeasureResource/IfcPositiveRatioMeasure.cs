@@ -25,6 +25,10 @@ namespace BuildingSmart.IFC.IfcMeasureResource
 		{
 			this.Value = value;
 		}
+		public IfcPositiveRatioMeasure(Double value)
+		{
+			this.Value = new IfcRatioMeasure(value);
+		}
 	}
 	
 }

@@ -10,19 +10,25 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcPresentationOrganizationResource;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
 	[Guid("7a38518c-4644-4c92-a76d-62b537919702")]
 	public partial class IfcBezierCurve : IfcBSplineCurve
 	{
+	
+		public IfcBezierCurve()
+		{
+		}
+	
+		public IfcBezierCurve(Int64 __Degree, IfcCartesianPoint[] __ControlPointsList, IfcBSplineCurveForm __CurveForm, Boolean? __ClosedCurve, Boolean? __SelfIntersect)
+			: base(__Degree, __ControlPointsList, __CurveForm, __ClosedCurve, __SelfIntersect)
+		{
+		}
 	
 	
 	}

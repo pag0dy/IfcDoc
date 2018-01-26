@@ -10,13 +10,6 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcPresentationResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcPresentationDefinitionResource
 {
@@ -24,8 +17,14 @@ namespace BuildingSmart.IFC.IfcPresentationDefinitionResource
 	public abstract partial class IfcTextureCoordinate
 	{
 		[InverseProperty("TextureCoordinates")] 
+		[MinLength(1)]
+		[MaxLength(1)]
 		ISet<IfcAnnotationSurface> _AnnotatedSurface = new HashSet<IfcAnnotationSurface>();
 	
+	
+		public IfcTextureCoordinate()
+		{
+		}
 	
 		public ISet<IfcAnnotationSurface> AnnotatedSurface { get { return this._AnnotatedSurface; } }
 	

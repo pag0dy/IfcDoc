@@ -10,21 +10,9 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcControlExtension;
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricConstraintResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialPropertyResource;
-using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcTimeSeriesResource;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcSharedBldgServiceElements
 {
@@ -65,6 +53,23 @@ namespace BuildingSmart.IFC.IfcSharedBldgServiceElements
 		[Required()]
 		Int64 _InputPhase;
 	
+	
+		public IfcElectricalBaseProperties()
+		{
+		}
+	
+		public IfcElectricalBaseProperties(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcEnergySequenceEnum? __EnergySequence, IfcLabel? __UserDefinedEnergySequence, IfcElectricCurrentEnum? __ElectricCurrentType, IfcElectricVoltageMeasure __InputVoltage, IfcFrequencyMeasure __InputFrequency, IfcElectricCurrentMeasure? __FullLoadCurrent, IfcElectricCurrentMeasure? __MinimumCircuitCurrent, IfcPowerMeasure? __MaximumPowerInput, IfcPowerMeasure? __RatedPowerInput, Int64 __InputPhase)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __EnergySequence, __UserDefinedEnergySequence)
+		{
+			this._ElectricCurrentType = __ElectricCurrentType;
+			this._InputVoltage = __InputVoltage;
+			this._InputFrequency = __InputFrequency;
+			this._FullLoadCurrent = __FullLoadCurrent;
+			this._MinimumCircuitCurrent = __MinimumCircuitCurrent;
+			this._MaximumPowerInput = __MaximumPowerInput;
+			this._RatedPowerInput = __RatedPowerInput;
+			this._InputPhase = __InputPhase;
+		}
 	
 		[Description("Type of electrical current applied")]
 		public IfcElectricCurrentEnum? ElectricCurrentType { get { return this._ElectricCurrentType; } set { this._ElectricCurrentType = value;} }

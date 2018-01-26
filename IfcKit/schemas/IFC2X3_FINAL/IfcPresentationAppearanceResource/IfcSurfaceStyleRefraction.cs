@@ -10,12 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationDefinitionResource;
-using BuildingSmart.IFC.IfcPresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 {
@@ -31,6 +26,16 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 		[XmlAttribute]
 		IfcReal? _DispersionFactor;
 	
+	
+		public IfcSurfaceStyleRefraction()
+		{
+		}
+	
+		public IfcSurfaceStyleRefraction(IfcReal? __RefractionIndex, IfcReal? __DispersionFactor)
+		{
+			this._RefractionIndex = __RefractionIndex;
+			this._DispersionFactor = __DispersionFactor;
+		}
 	
 		[Description("The index of refraction for all wave lengths of light. The refraction index is th" +
 	    "e ratio between the speed of light in a vacuum and the speed of light in the med" +

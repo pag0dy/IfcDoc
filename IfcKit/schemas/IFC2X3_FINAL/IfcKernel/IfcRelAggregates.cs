@@ -10,16 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcConstraintResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricConstraintResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
 using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcKernel
@@ -27,6 +18,15 @@ namespace BuildingSmart.IFC.IfcKernel
 	[Guid("02a680bf-4622-48e0-92eb-9c42ff0f72a1")]
 	public partial class IfcRelAggregates : IfcRelDecomposes
 	{
+	
+		public IfcRelAggregates()
+		{
+		}
+	
+		public IfcRelAggregates(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcObjectDefinition __RelatingObject, IfcObjectDefinition[] __RelatedObjects)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __RelatingObject, __RelatedObjects)
+		{
+		}
 	
 	
 	}

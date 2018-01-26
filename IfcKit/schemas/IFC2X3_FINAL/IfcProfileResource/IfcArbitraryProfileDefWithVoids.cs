@@ -12,7 +12,6 @@ using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 
 namespace BuildingSmart.IFC.IfcProfileResource
 {
@@ -21,8 +20,19 @@ namespace BuildingSmart.IFC.IfcProfileResource
 	{
 		[DataMember(Order=0)] 
 		[Required()]
+		[MinLength(1)]
 		ISet<IfcCurve> _InnerCurves = new HashSet<IfcCurve>();
 	
+	
+		public IfcArbitraryProfileDefWithVoids()
+		{
+		}
+	
+		public IfcArbitraryProfileDefWithVoids(IfcProfileTypeEnum __ProfileType, IfcLabel? __ProfileName, IfcCurve __OuterCurve, IfcCurve[] __InnerCurves)
+			: base(__ProfileType, __ProfileName, __OuterCurve)
+		{
+			this._InnerCurves = new HashSet<IfcCurve>(__InnerCurves);
+		}
 	
 		[Description("Set of bounded curves, defining the inner boundaries of the arbitrary profile.")]
 		public ISet<IfcCurve> InnerCurves { get { return this._InnerCurves; } }

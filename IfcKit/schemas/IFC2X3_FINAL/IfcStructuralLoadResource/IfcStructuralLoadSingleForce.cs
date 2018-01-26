@@ -42,6 +42,21 @@ namespace BuildingSmart.IFC.IfcStructuralLoadResource
 		IfcTorqueMeasure? _MomentZ;
 	
 	
+		public IfcStructuralLoadSingleForce()
+		{
+		}
+	
+		public IfcStructuralLoadSingleForce(IfcLabel? __Name, IfcForceMeasure? __ForceX, IfcForceMeasure? __ForceY, IfcForceMeasure? __ForceZ, IfcTorqueMeasure? __MomentX, IfcTorqueMeasure? __MomentY, IfcTorqueMeasure? __MomentZ)
+			: base(__Name)
+		{
+			this._ForceX = __ForceX;
+			this._ForceY = __ForceY;
+			this._ForceZ = __ForceZ;
+			this._MomentX = __MomentX;
+			this._MomentY = __MomentY;
+			this._MomentZ = __MomentZ;
+		}
+	
 		[Description("Force value in x-direction. ")]
 		public IfcForceMeasure? ForceX { get { return this._ForceX; } set { this._ForceX = value;} }
 	

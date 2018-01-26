@@ -10,14 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcConstraintResource;
-using BuildingSmart.IFC.IfcCostResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcTimeSeriesResource;
 
 namespace BuildingSmart.IFC.IfcPropertyResource
 {
@@ -26,11 +19,23 @@ namespace BuildingSmart.IFC.IfcPropertyResource
 	{
 		[DataMember(Order=0)] 
 		[Required()]
+		[MinLength(1)]
 		IList<IfcValue> _EnumerationValues = new List<IfcValue>();
 	
 		[DataMember(Order=1)] 
 		IfcPropertyEnumeration _EnumerationReference;
 	
+	
+		public IfcPropertyEnumeratedValue()
+		{
+		}
+	
+		public IfcPropertyEnumeratedValue(IfcIdentifier __Name, IfcText? __Description, IfcValue[] __EnumerationValues, IfcPropertyEnumeration __EnumerationReference)
+			: base(__Name, __Description)
+		{
+			this._EnumerationValues = new List<IfcValue>(__EnumerationValues);
+			this._EnumerationReference = __EnumerationReference;
+		}
 	
 		[Description("Enumeration values, which shall be listed in the referenced IfcPropertyEnumeratio" +
 	    "n, if such a reference is provided.")]

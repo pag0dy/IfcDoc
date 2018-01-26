@@ -10,15 +10,11 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfilePropertyResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
 using BuildingSmart.IFC.IfcStructuralLoadResource;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcStructuralAnalysisDomain
 {
@@ -46,6 +42,21 @@ namespace BuildingSmart.IFC.IfcStructuralAnalysisDomain
 		[DataMember(Order=5)] 
 		IfcAxis2Placement3D _ConditionCoordinateSystem;
 	
+	
+		public IfcRelConnectsStructuralMember()
+		{
+		}
+	
+		public IfcRelConnectsStructuralMember(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcStructuralMember __RelatingStructuralMember, IfcStructuralConnection __RelatedStructuralConnection, IfcBoundaryCondition __AppliedCondition, IfcStructuralConnectionCondition __AdditionalConditions, IfcLengthMeasure? __SupportedLength, IfcAxis2Placement3D __ConditionCoordinateSystem)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description)
+		{
+			this._RelatingStructuralMember = __RelatingStructuralMember;
+			this._RelatedStructuralConnection = __RelatedStructuralConnection;
+			this._AppliedCondition = __AppliedCondition;
+			this._AdditionalConditions = __AdditionalConditions;
+			this._SupportedLength = __SupportedLength;
+			this._ConditionCoordinateSystem = __ConditionCoordinateSystem;
+		}
 	
 		[Description("Reference to an instance of IfcStructuralMember (or its subclasses) which is conn" +
 	    "ected to the specified structural connection. ")]

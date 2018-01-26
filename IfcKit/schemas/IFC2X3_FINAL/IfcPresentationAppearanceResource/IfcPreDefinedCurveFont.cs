@@ -10,12 +10,8 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationDefinitionResource;
 using BuildingSmart.IFC.IfcPresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 {
@@ -23,6 +19,15 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 	public abstract partial class IfcPreDefinedCurveFont : IfcPreDefinedItem,
 		BuildingSmart.IFC.IfcPresentationAppearanceResource.IfcCurveStyleFontSelect
 	{
+	
+		public IfcPreDefinedCurveFont()
+		{
+		}
+	
+		public IfcPreDefinedCurveFont(IfcLabel __Name)
+			: base(__Name)
+		{
+		}
 	
 	
 	}

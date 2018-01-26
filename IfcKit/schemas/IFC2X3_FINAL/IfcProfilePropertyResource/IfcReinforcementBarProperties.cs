@@ -11,7 +11,6 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcProfileResource;
 
 namespace BuildingSmart.IFC.IfcProfilePropertyResource
 {
@@ -44,6 +43,20 @@ namespace BuildingSmart.IFC.IfcProfilePropertyResource
 		[XmlAttribute]
 		IfcCountMeasure? _BarCount;
 	
+	
+		public IfcReinforcementBarProperties()
+		{
+		}
+	
+		public IfcReinforcementBarProperties(IfcAreaMeasure __TotalCrossSectionArea, IfcLabel __SteelGrade, IfcReinforcingBarSurfaceEnum? __BarSurface, IfcLengthMeasure? __EffectiveDepth, IfcPositiveLengthMeasure? __NominalBarDiameter, IfcCountMeasure? __BarCount)
+		{
+			this._TotalCrossSectionArea = __TotalCrossSectionArea;
+			this._SteelGrade = __SteelGrade;
+			this._BarSurface = __BarSurface;
+			this._EffectiveDepth = __EffectiveDepth;
+			this._NominalBarDiameter = __NominalBarDiameter;
+			this._BarCount = __BarCount;
+		}
 	
 		[Description("The total effective cross-section area of the reinforcement of a specific steel g" +
 	    "rade.")]

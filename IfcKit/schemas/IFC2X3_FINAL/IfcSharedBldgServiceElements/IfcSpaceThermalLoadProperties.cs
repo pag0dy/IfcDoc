@@ -10,21 +10,10 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcControlExtension;
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricConstraintResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialPropertyResource;
-using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcPropertyResource;
 using BuildingSmart.IFC.IfcTimeSeriesResource;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcSharedBldgServiceElements
 {
@@ -74,6 +63,25 @@ namespace BuildingSmart.IFC.IfcSharedBldgServiceElements
 		[Required()]
 		IfcThermalLoadTypeEnum _ThermalLoadType;
 	
+	
+		public IfcSpaceThermalLoadProperties()
+		{
+		}
+	
+		public IfcSpaceThermalLoadProperties(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcPositiveRatioMeasure? __ApplicableValueRatio, IfcThermalLoadSourceEnum __ThermalLoadSource, IfcPropertySourceEnum __PropertySource, IfcText? __SourceDescription, IfcPowerMeasure __MaximumValue, IfcPowerMeasure? __MinimumValue, IfcTimeSeries __ThermalLoadTimeSeriesValues, IfcLabel? __UserDefinedThermalLoadSource, IfcLabel? __UserDefinedPropertySource, IfcThermalLoadTypeEnum __ThermalLoadType)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description)
+		{
+			this._ApplicableValueRatio = __ApplicableValueRatio;
+			this._ThermalLoadSource = __ThermalLoadSource;
+			this._PropertySource = __PropertySource;
+			this._SourceDescription = __SourceDescription;
+			this._MaximumValue = __MaximumValue;
+			this._MinimumValue = __MinimumValue;
+			this._ThermalLoadTimeSeriesValues = __ThermalLoadTimeSeriesValues;
+			this._UserDefinedThermalLoadSource = __UserDefinedThermalLoadSource;
+			this._UserDefinedPropertySource = __UserDefinedPropertySource;
+			this._ThermalLoadType = __ThermalLoadType;
+		}
 	
 		[Description("Percentage of use requirement or criteria applicable to the space, interpretation" +
 	    " depends on the source type.\r\n")]

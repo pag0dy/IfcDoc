@@ -12,7 +12,6 @@ using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 
 namespace BuildingSmart.IFC.IfcProfileResource
 {
@@ -23,6 +22,16 @@ namespace BuildingSmart.IFC.IfcProfileResource
 		[Required()]
 		IfcBoundedCurve _Curve;
 	
+	
+		public IfcArbitraryOpenProfileDef()
+		{
+		}
+	
+		public IfcArbitraryOpenProfileDef(IfcProfileTypeEnum __ProfileType, IfcLabel? __ProfileName, IfcBoundedCurve __Curve)
+			: base(__ProfileType, __ProfileName)
+		{
+			this._Curve = __Curve;
+		}
 	
 		[Description("Open bounded curve defining the profile.")]
 		public IfcBoundedCurve Curve { get { return this._Curve; } set { this._Curve = value;} }

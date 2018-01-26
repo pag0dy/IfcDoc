@@ -10,9 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcPresentationDefinitionResource;
 using BuildingSmart.IFC.IfcPresentationResource;
 
@@ -21,6 +19,15 @@ namespace BuildingSmart.IFC.IfcPresentationDimensioningResource
 	[Guid("06ed4512-ebe6-4ad3-bdbf-0f0582cc352a")]
 	public partial class IfcPreDefinedTerminatorSymbol : IfcPreDefinedSymbol
 	{
+	
+		public IfcPreDefinedTerminatorSymbol()
+		{
+		}
+	
+		public IfcPreDefinedTerminatorSymbol(IfcLabel __Name)
+			: base(__Name)
+		{
+		}
 	
 	
 	}

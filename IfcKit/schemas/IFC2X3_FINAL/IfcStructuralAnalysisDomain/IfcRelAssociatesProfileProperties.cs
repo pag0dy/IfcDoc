@@ -10,15 +10,11 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcGeometricConstraintResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProductExtension;
 using BuildingSmart.IFC.IfcProfilePropertyResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcStructuralLoadResource;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcStructuralAnalysisDomain
 {
@@ -35,6 +31,18 @@ namespace BuildingSmart.IFC.IfcStructuralAnalysisDomain
 		[DataMember(Order=2)] 
 		IfcOrientationSelect _ProfileOrientation;
 	
+	
+		public IfcRelAssociatesProfileProperties()
+		{
+		}
+	
+		public IfcRelAssociatesProfileProperties(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcRoot[] __RelatedObjects, IfcProfileProperties __RelatingProfileProperties, IfcShapeAspect __ProfileSectionLocation, IfcOrientationSelect __ProfileOrientation)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __RelatedObjects)
+		{
+			this._RelatingProfileProperties = __RelatingProfileProperties;
+			this._ProfileSectionLocation = __ProfileSectionLocation;
+			this._ProfileOrientation = __ProfileOrientation;
+		}
 	
 		[Description("Profile property definition assigned to the instances.")]
 		public IfcProfileProperties RelatingProfileProperties { get { return this._RelatingProfileProperties; } set { this._RelatingProfileProperties = value;} }

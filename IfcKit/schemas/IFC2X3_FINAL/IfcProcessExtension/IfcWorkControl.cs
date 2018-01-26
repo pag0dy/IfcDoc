@@ -11,13 +11,10 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcCostResource;
 using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcProcessExtension
 {
@@ -34,6 +31,7 @@ namespace BuildingSmart.IFC.IfcProcessExtension
 		IfcDateTimeSelect _CreationDate;
 	
 		[DataMember(Order=2)] 
+		[MinLength(1)]
 		ISet<IfcPerson> _Creators = new HashSet<IfcPerson>();
 	
 		[DataMember(Order=3)] 
@@ -63,6 +61,25 @@ namespace BuildingSmart.IFC.IfcProcessExtension
 		[XmlAttribute]
 		IfcLabel? _UserDefinedControlType;
 	
+	
+		public IfcWorkControl()
+		{
+		}
+	
+		public IfcWorkControl(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcIdentifier __Identifier, IfcDateTimeSelect __CreationDate, IfcPerson[] __Creators, IfcLabel? __Purpose, IfcTimeMeasure? __Duration, IfcTimeMeasure? __TotalFloat, IfcDateTimeSelect __StartTime, IfcDateTimeSelect __FinishTime, IfcWorkControlTypeEnum? __WorkControlType, IfcLabel? __UserDefinedControlType)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType)
+		{
+			this._Identifier = __Identifier;
+			this._CreationDate = __CreationDate;
+			this._Creators = new HashSet<IfcPerson>(__Creators);
+			this._Purpose = __Purpose;
+			this._Duration = __Duration;
+			this._TotalFloat = __TotalFloat;
+			this._StartTime = __StartTime;
+			this._FinishTime = __FinishTime;
+			this._WorkControlType = __WorkControlType;
+			this._UserDefinedControlType = __UserDefinedControlType;
+		}
 	
 		[Description("Identifier of the work plan, given by user.\r\n")]
 		public IfcIdentifier Identifier { get { return this._Identifier; } set { this._Identifier = value;} }

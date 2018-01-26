@@ -13,8 +13,7 @@ using System.Xml.Serialization;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcTopologyResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcGeometricModelResource
 {
@@ -36,6 +35,18 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 		[Required()]
 		IfcPositiveLengthMeasure _ZLength;
 	
+	
+		public IfcBlock()
+		{
+		}
+	
+		public IfcBlock(IfcAxis2Placement3D __Position, IfcPositiveLengthMeasure __XLength, IfcPositiveLengthMeasure __YLength, IfcPositiveLengthMeasure __ZLength)
+			: base(__Position)
+		{
+			this._XLength = __XLength;
+			this._YLength = __YLength;
+			this._ZLength = __ZLength;
+		}
 	
 		[Description("<EPM-HTML>\r\nThe size of the block along the placement X axis. It is provided by t" +
 	    "he inherited axis placement through <i>SELF\\IfcCsgPrimitive3D.Position.P[1]</i>." +

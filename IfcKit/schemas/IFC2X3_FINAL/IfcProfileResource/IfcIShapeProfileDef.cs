@@ -12,7 +12,6 @@ using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 
 namespace BuildingSmart.IFC.IfcProfileResource
 {
@@ -43,6 +42,20 @@ namespace BuildingSmart.IFC.IfcProfileResource
 		[XmlAttribute]
 		IfcPositiveLengthMeasure? _FilletRadius;
 	
+	
+		public IfcIShapeProfileDef()
+		{
+		}
+	
+		public IfcIShapeProfileDef(IfcProfileTypeEnum __ProfileType, IfcLabel? __ProfileName, IfcAxis2Placement2D __Position, IfcPositiveLengthMeasure __OverallWidth, IfcPositiveLengthMeasure __OverallDepth, IfcPositiveLengthMeasure __WebThickness, IfcPositiveLengthMeasure __FlangeThickness, IfcPositiveLengthMeasure? __FilletRadius)
+			: base(__ProfileType, __ProfileName, __Position)
+		{
+			this._OverallWidth = __OverallWidth;
+			this._OverallDepth = __OverallDepth;
+			this._WebThickness = __WebThickness;
+			this._FlangeThickness = __FlangeThickness;
+			this._FilletRadius = __FilletRadius;
+		}
 	
 		[Description("Total extent of the width, defined parallel to the x axis of the position coordin" +
 	    "ate system.")]

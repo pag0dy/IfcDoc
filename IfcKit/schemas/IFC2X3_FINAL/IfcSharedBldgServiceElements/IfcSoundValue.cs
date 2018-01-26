@@ -10,21 +10,10 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcControlExtension;
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricConstraintResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialPropertyResource;
-using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcPropertyResource;
 using BuildingSmart.IFC.IfcTimeSeriesResource;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcSharedBldgServiceElements
 {
@@ -42,6 +31,18 @@ namespace BuildingSmart.IFC.IfcSharedBldgServiceElements
 		[DataMember(Order=2)] 
 		IfcDerivedMeasureValue _SoundLevelSingleValue;
 	
+	
+		public IfcSoundValue()
+		{
+		}
+	
+		public IfcSoundValue(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcTimeSeries __SoundLevelTimeSeries, IfcFrequencyMeasure __Frequency, IfcDerivedMeasureValue __SoundLevelSingleValue)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description)
+		{
+			this._SoundLevelTimeSeries = __SoundLevelTimeSeries;
+			this._Frequency = __Frequency;
+			this._SoundLevelSingleValue = __SoundLevelSingleValue;
+		}
 	
 		[Description(@"A time series of sound pressure or sound power values. For sound pressure levels, the values are measured in decibels at a reference pressure of 20 microPascals for the referenced octave band frequency. For sound power levels, the values are measured in decibels at a reference power of 1 picowatt(10^(-12) watt) for the referenced octave band frequency.")]
 		public IfcTimeSeries SoundLevelTimeSeries { get { return this._SoundLevelTimeSeries; } set { this._SoundLevelTimeSeries = value;} }

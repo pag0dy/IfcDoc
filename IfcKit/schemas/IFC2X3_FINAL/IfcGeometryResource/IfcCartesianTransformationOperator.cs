@@ -10,13 +10,8 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcPresentationOrganizationResource;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
@@ -37,6 +32,18 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		Double? _Scale;
 	
 	
+		public IfcCartesianTransformationOperator()
+		{
+		}
+	
+		public IfcCartesianTransformationOperator(IfcDirection __Axis1, IfcDirection __Axis2, IfcCartesianPoint __LocalOrigin, Double? __Scale)
+		{
+			this._Axis1 = __Axis1;
+			this._Axis2 = __Axis2;
+			this._LocalOrigin = __LocalOrigin;
+			this._Scale = __Scale;
+		}
+	
 		[Description("The direction used to determine U[1], the derived X axis direction.")]
 		public IfcDirection Axis1 { get { return this._Axis1; } set { this._Axis1 = value;} }
 	
@@ -50,6 +57,10 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 	
 		[Description("The scaling value specified for the transformation.")]
 		public Double? Scale { get { return this._Scale; } set { this._Scale = value;} }
+	
+		public new Double Scl { get { return null; } }
+	
+		public new IfcDimensionCount Dim { get { return new IfcDimensionCount(); } }
 	
 	
 	}

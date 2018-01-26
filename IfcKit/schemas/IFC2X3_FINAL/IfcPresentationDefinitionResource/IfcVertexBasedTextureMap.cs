@@ -10,13 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcPresentationResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcPresentationDefinitionResource
 {
@@ -25,12 +19,24 @@ namespace BuildingSmart.IFC.IfcPresentationDefinitionResource
 	{
 		[DataMember(Order=0)] 
 		[Required()]
+		[MinLength(3)]
 		IList<IfcTextureVertex> _TextureVertices = new List<IfcTextureVertex>();
 	
 		[DataMember(Order=1)] 
 		[Required()]
+		[MinLength(3)]
 		IList<IfcCartesianPoint> _TexturePoints = new List<IfcCartesianPoint>();
 	
+	
+		public IfcVertexBasedTextureMap()
+		{
+		}
+	
+		public IfcVertexBasedTextureMap(IfcTextureVertex[] __TextureVertices, IfcCartesianPoint[] __TexturePoints)
+		{
+			this._TextureVertices = new List<IfcTextureVertex>(__TextureVertices);
+			this._TexturePoints = new List<IfcCartesianPoint>(__TexturePoints);
+		}
 	
 		[Description("List of texture vertex coordinates, each texture vertex refers to the Cartesian p" +
 	    "oint within the polyloop (corresponding lists). The first coordinate[1] is the S" +

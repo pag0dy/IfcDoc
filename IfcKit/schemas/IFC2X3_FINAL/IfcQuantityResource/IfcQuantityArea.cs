@@ -23,6 +23,16 @@ namespace BuildingSmart.IFC.IfcQuantityResource
 		IfcAreaMeasure _AreaValue;
 	
 	
+		public IfcQuantityArea()
+		{
+		}
+	
+		public IfcQuantityArea(IfcLabel __Name, IfcText? __Description, IfcNamedUnit __Unit, IfcAreaMeasure __AreaValue)
+			: base(__Name, __Description, __Unit)
+		{
+			this._AreaValue = __AreaValue;
+		}
+	
 		[Description("Area measure value of this quantity.")]
 		public IfcAreaMeasure AreaValue { get { return this._AreaValue; } set { this._AreaValue = value;} }
 	

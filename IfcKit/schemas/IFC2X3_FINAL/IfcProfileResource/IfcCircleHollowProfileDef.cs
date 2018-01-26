@@ -12,7 +12,6 @@ using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 
 namespace BuildingSmart.IFC.IfcProfileResource
 {
@@ -24,6 +23,16 @@ namespace BuildingSmart.IFC.IfcProfileResource
 		[Required()]
 		IfcPositiveLengthMeasure _WallThickness;
 	
+	
+		public IfcCircleHollowProfileDef()
+		{
+		}
+	
+		public IfcCircleHollowProfileDef(IfcProfileTypeEnum __ProfileType, IfcLabel? __ProfileName, IfcAxis2Placement2D __Position, IfcPositiveLengthMeasure __Radius, IfcPositiveLengthMeasure __WallThickness)
+			: base(__ProfileType, __ProfileName, __Position, __Radius)
+		{
+			this._WallThickness = __WallThickness;
+		}
 	
 		[Description("Thickness of the material, it is the difference between the outer and inner radiu" +
 	    "s.")]

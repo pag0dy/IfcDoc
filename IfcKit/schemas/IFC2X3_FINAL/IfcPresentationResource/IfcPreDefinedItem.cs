@@ -10,10 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 
 namespace BuildingSmart.IFC.IfcPresentationResource
 {
@@ -25,6 +22,15 @@ namespace BuildingSmart.IFC.IfcPresentationResource
 		[Required()]
 		IfcLabel _Name;
 	
+	
+		public IfcPreDefinedItem()
+		{
+		}
+	
+		public IfcPreDefinedItem(IfcLabel __Name)
+		{
+			this._Name = __Name;
+		}
 	
 		[Description("<EPM-HTML>\r\nThe string by which the pre defined item is identified. Allowable val" +
 	    "ues for the string are declared at the level of subtypes.\r\n</EPM-HTML>")]

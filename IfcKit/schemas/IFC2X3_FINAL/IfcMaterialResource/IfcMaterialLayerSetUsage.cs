@@ -10,11 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcMaterialResource
 {
@@ -41,6 +37,18 @@ namespace BuildingSmart.IFC.IfcMaterialResource
 		[Required()]
 		IfcLengthMeasure _OffsetFromReferenceLine;
 	
+	
+		public IfcMaterialLayerSetUsage()
+		{
+		}
+	
+		public IfcMaterialLayerSetUsage(IfcMaterialLayerSet __ForLayerSet, IfcLayerSetDirectionEnum __LayerSetDirection, IfcDirectionSenseEnum __DirectionSense, IfcLengthMeasure __OffsetFromReferenceLine)
+		{
+			this._ForLayerSet = __ForLayerSet;
+			this._LayerSetDirection = __LayerSetDirection;
+			this._DirectionSense = __DirectionSense;
+			this._OffsetFromReferenceLine = __OffsetFromReferenceLine;
+		}
 	
 		[Description("<EPM-HTML>\r\nThe <i>IfcMaterialLayerSet</i> set to which the usage is applied.\r\n</" +
 	    "EPM-HTML>")]

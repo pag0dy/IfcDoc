@@ -10,12 +10,10 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcPresentationResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcPresentationOrganizationResource
 {
@@ -48,6 +46,21 @@ namespace BuildingSmart.IFC.IfcPresentationOrganizationResource
 		[Required()]
 		IfcLightDistributionDataSourceSelect _LightDistributionDataSource;
 	
+	
+		public IfcLightSourceGoniometric()
+		{
+		}
+	
+		public IfcLightSourceGoniometric(IfcLabel? __Name, IfcColourRgb __LightColour, IfcNormalisedRatioMeasure? __AmbientIntensity, IfcNormalisedRatioMeasure? __Intensity, IfcAxis2Placement3D __Position, IfcColourRgb __ColourAppearance, IfcThermodynamicTemperatureMeasure __ColourTemperature, IfcLuminousFluxMeasure __LuminousFlux, IfcLightEmissionSourceEnum __LightEmissionSource, IfcLightDistributionDataSourceSelect __LightDistributionDataSource)
+			: base(__Name, __LightColour, __AmbientIntensity, __Intensity)
+		{
+			this._Position = __Position;
+			this._ColourAppearance = __ColourAppearance;
+			this._ColourTemperature = __ColourTemperature;
+			this._LuminousFlux = __LuminousFlux;
+			this._LightEmissionSource = __LightEmissionSource;
+			this._LightDistributionDataSource = __LightDistributionDataSource;
+		}
 	
 		[Description("The position of the light source. It is used to orientate the light distribution " +
 	    "curves.\r\n")]

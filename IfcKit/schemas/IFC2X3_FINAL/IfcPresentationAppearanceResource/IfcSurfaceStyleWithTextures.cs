@@ -10,12 +10,6 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationDefinitionResource;
-using BuildingSmart.IFC.IfcPresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 {
@@ -25,8 +19,18 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 	{
 		[DataMember(Order=0)] 
 		[Required()]
+		[MinLength(1)]
 		IList<IfcSurfaceTexture> _Textures = new List<IfcSurfaceTexture>();
 	
+	
+		public IfcSurfaceStyleWithTextures()
+		{
+		}
+	
+		public IfcSurfaceStyleWithTextures(IfcSurfaceTexture[] __Textures)
+		{
+			this._Textures = new List<IfcSurfaceTexture>(__Textures);
+		}
 	
 		[Description("The textures applied to the surface. Only one image map with the same image map t" +
 	    "ype shall be applied.")]

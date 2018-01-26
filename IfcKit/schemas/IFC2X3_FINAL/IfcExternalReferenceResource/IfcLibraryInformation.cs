@@ -36,8 +36,22 @@ namespace BuildingSmart.IFC.IfcExternalReferenceResource
 		IfcCalendarDate _VersionDate;
 	
 		[DataMember(Order=4)] 
+		[MinLength(1)]
 		ISet<IfcLibraryReference> _LibraryReference = new HashSet<IfcLibraryReference>();
 	
+	
+		public IfcLibraryInformation()
+		{
+		}
+	
+		public IfcLibraryInformation(IfcLabel __Name, IfcLabel? __Version, IfcOrganization __Publisher, IfcCalendarDate __VersionDate, IfcLibraryReference[] __LibraryReference)
+		{
+			this._Name = __Name;
+			this._Version = __Version;
+			this._Publisher = __Publisher;
+			this._VersionDate = __VersionDate;
+			this._LibraryReference = new HashSet<IfcLibraryReference>(__LibraryReference);
+		}
 	
 		[Description("The name which is used to identify the library.")]
 		public IfcLabel Name { get { return this._Name; } set { this._Name = value;} }

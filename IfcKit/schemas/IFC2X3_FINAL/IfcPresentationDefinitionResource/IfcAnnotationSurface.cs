@@ -10,13 +10,9 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcPresentationResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcPresentationDefinitionResource
 {
@@ -30,6 +26,16 @@ namespace BuildingSmart.IFC.IfcPresentationDefinitionResource
 		[DataMember(Order=1)] 
 		IfcTextureCoordinate _TextureCoordinates;
 	
+	
+		public IfcAnnotationSurface()
+		{
+		}
+	
+		public IfcAnnotationSurface(IfcGeometricRepresentationItem __Item, IfcTextureCoordinate __TextureCoordinates)
+		{
+			this._Item = __Item;
+			this._TextureCoordinates = __TextureCoordinates;
+		}
 	
 		[Description("<EPM-HTML>\r\nGeometric representation item, providing the geometric definition of " +
 	    "the annotated surface. It is further restricted to be a surface, surface model, " +

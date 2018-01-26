@@ -10,12 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationDefinitionResource;
-using BuildingSmart.IFC.IfcPresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 {
@@ -38,6 +33,18 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 		[DataMember(Order=3)] 
 		IfcCartesianTransformationOperator2D _TextureTransform;
 	
+	
+		public IfcSurfaceTexture()
+		{
+		}
+	
+		public IfcSurfaceTexture(Boolean __RepeatS, Boolean __RepeatT, IfcSurfaceTextureEnum __TextureType, IfcCartesianTransformationOperator2D __TextureTransform)
+		{
+			this._RepeatS = __RepeatS;
+			this._RepeatT = __RepeatT;
+			this._TextureType = __TextureType;
+			this._TextureTransform = __TextureTransform;
+		}
 	
 		[Description(@"The RepeatS field specifies how the texture wraps in the S direction. If RepeatS is TRUE (the default), the texture map is repeated outside the [0.0, 1.0] texture coordinate range in the S direction so that it fills the shape. If repeatS is FALSE, the texture coordinates are clamped in the S direction to lie within the [0.0, 1.0] range. ")]
 		public Boolean RepeatS { get { return this._RepeatS; } set { this._RepeatS = value;} }

@@ -42,6 +42,21 @@ namespace BuildingSmart.IFC.IfcStructuralLoadResource
 		IfcPlaneAngleMeasure? _RotationalDisplacementRZ;
 	
 	
+		public IfcStructuralLoadSingleDisplacement()
+		{
+		}
+	
+		public IfcStructuralLoadSingleDisplacement(IfcLabel? __Name, IfcLengthMeasure? __DisplacementX, IfcLengthMeasure? __DisplacementY, IfcLengthMeasure? __DisplacementZ, IfcPlaneAngleMeasure? __RotationalDisplacementRX, IfcPlaneAngleMeasure? __RotationalDisplacementRY, IfcPlaneAngleMeasure? __RotationalDisplacementRZ)
+			: base(__Name)
+		{
+			this._DisplacementX = __DisplacementX;
+			this._DisplacementY = __DisplacementY;
+			this._DisplacementZ = __DisplacementZ;
+			this._RotationalDisplacementRX = __RotationalDisplacementRX;
+			this._RotationalDisplacementRY = __RotationalDisplacementRY;
+			this._RotationalDisplacementRZ = __RotationalDisplacementRZ;
+		}
+	
 		[Description("Displacement in x-direction.")]
 		public IfcLengthMeasure? DisplacementX { get { return this._DisplacementX; } set { this._DisplacementX = value;} }
 	

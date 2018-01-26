@@ -10,12 +10,8 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometryResource;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationDefinitionResource;
-using BuildingSmart.IFC.IfcPresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 {
@@ -27,6 +23,15 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 		[Required()]
 		IfcVector _RepeatFactor;
 	
+	
+		public IfcOneDirectionRepeatFactor()
+		{
+		}
+	
+		public IfcOneDirectionRepeatFactor(IfcVector __RepeatFactor)
+		{
+			this._RepeatFactor = __RepeatFactor;
+		}
 	
 		[Description("A vector which specifies the relative positioning of hatch lines.")]
 		public IfcVector RepeatFactor { get { return this._RepeatFactor; } set { this._RepeatFactor = value;} }

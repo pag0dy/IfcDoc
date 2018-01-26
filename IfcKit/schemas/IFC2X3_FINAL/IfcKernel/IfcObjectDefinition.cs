@@ -10,16 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcConstraintResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricConstraintResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
 using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcKernel
@@ -34,11 +25,21 @@ namespace BuildingSmart.IFC.IfcKernel
 		ISet<IfcRelDecomposes> _IsDecomposedBy = new HashSet<IfcRelDecomposes>();
 	
 		[InverseProperty("RelatedObjects")] 
+		[MaxLength(1)]
 		ISet<IfcRelDecomposes> _Decomposes = new HashSet<IfcRelDecomposes>();
 	
 		[InverseProperty("RelatedObjects")] 
 		ISet<IfcRelAssociates> _HasAssociations = new HashSet<IfcRelAssociates>();
 	
+	
+		public IfcObjectDefinition()
+		{
+		}
+	
+		public IfcObjectDefinition(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description)
+		{
+		}
 	
 		[Description("Reference to the relationship objects, that assign (by an association relationshi" +
 	    "p) other subtypes of IfcObject to this object instance. Examples are the associa" +

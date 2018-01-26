@@ -10,8 +10,6 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 
 namespace BuildingSmart.IFC.IfcExternalReferenceResource
@@ -31,6 +29,17 @@ namespace BuildingSmart.IFC.IfcExternalReferenceResource
 		[XmlAttribute]
 		IfcLabel? _MimeSubtype;
 	
+	
+		public IfcDocumentElectronicFormat()
+		{
+		}
+	
+		public IfcDocumentElectronicFormat(IfcLabel? __FileExtension, IfcLabel? __MimeContentType, IfcLabel? __MimeSubtype)
+		{
+			this._FileExtension = __FileExtension;
+			this._MimeContentType = __MimeContentType;
+			this._MimeSubtype = __MimeSubtype;
+		}
 	
 		[Description("File extension of electronic document used by computer operating system.")]
 		public IfcLabel? FileExtension { get { return this._FileExtension; } set { this._FileExtension = value;} }

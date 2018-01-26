@@ -10,9 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcPropertyResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
 
@@ -29,11 +27,22 @@ namespace BuildingSmart.IFC.IfcMaterialResource
 		IfcLabel _Name;
 	
 		[InverseProperty("RepresentedMaterial")] 
+		[MaxLength(1)]
 		ISet<IfcMaterialDefinitionRepresentation> _HasRepresentation = new HashSet<IfcMaterialDefinitionRepresentation>();
 	
 		[InverseProperty("ClassifiedMaterial")] 
+		[MaxLength(1)]
 		ISet<IfcMaterialClassificationRelationship> _ClassifiedAs = new HashSet<IfcMaterialClassificationRelationship>();
 	
+	
+		public IfcMaterial()
+		{
+		}
+	
+		public IfcMaterial(IfcLabel __Name)
+		{
+			this._Name = __Name;
+		}
 	
 		[Description("Name of the material.")]
 		public IfcLabel Name { get { return this._Name; } set { this._Name = value;} }

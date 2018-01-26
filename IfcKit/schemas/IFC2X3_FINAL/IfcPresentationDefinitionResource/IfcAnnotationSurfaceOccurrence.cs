@@ -10,19 +10,25 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcPresentationResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcPresentationDefinitionResource
 {
 	[Guid("15873d7c-3ade-4e92-9823-835a92079cc7")]
 	public partial class IfcAnnotationSurfaceOccurrence : IfcAnnotationOccurrence
 	{
+	
+		public IfcAnnotationSurfaceOccurrence()
+		{
+		}
+	
+		public IfcAnnotationSurfaceOccurrence(IfcRepresentationItem __Item, IfcPresentationStyleAssignment[] __Styles, IfcLabel? __Name)
+			: base(__Item, __Styles, __Name)
+		{
+		}
 	
 	
 	}

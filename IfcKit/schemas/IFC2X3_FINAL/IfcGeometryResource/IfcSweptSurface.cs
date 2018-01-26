@@ -10,13 +10,11 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
@@ -32,6 +30,16 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		IfcAxis2Placement3D _Position;
 	
 	
+		public IfcSweptSurface()
+		{
+		}
+	
+		public IfcSweptSurface(IfcProfileDef __SweptCurve, IfcAxis2Placement3D __Position)
+		{
+			this._SweptCurve = __SweptCurve;
+			this._Position = __Position;
+		}
+	
 		[Description("The curve to be swept in defining the surface. The curve is defined as a profile " +
 	    "within the position coordinate system.")]
 		public IfcProfileDef SweptCurve { get { return this._SweptCurve; } set { this._SweptCurve = value;} }
@@ -39,6 +47,8 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		[Description("Position coordinate system for the placement of the profile within the xy plane o" +
 	    "f the axis placement.")]
 		public IfcAxis2Placement3D Position { get { return this._Position; } set { this._Position = value;} }
+	
+		public new IfcDimensionCount Dim { get { return new IfcDimensionCount(); } }
 	
 	
 	}

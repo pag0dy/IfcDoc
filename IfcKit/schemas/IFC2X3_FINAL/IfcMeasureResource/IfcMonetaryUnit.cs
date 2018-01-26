@@ -23,6 +23,15 @@ namespace BuildingSmart.IFC.IfcMeasureResource
 		IfcCurrencyEnum _Currency;
 	
 	
+		public IfcMonetaryUnit()
+		{
+		}
+	
+		public IfcMonetaryUnit(IfcCurrencyEnum __Currency)
+		{
+			this._Currency = __Currency;
+		}
+	
 		[Description("The international enumeration name of the currency.")]
 		public IfcCurrencyEnum Currency { get { return this._Currency; } set { this._Currency = value;} }
 	

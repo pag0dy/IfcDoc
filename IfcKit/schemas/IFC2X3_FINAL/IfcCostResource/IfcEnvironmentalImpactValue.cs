@@ -11,8 +11,8 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcMeasureResource;
+using BuildingSmart.IFC.IfcPropertyResource;
 
 namespace BuildingSmart.IFC.IfcCostResource
 {
@@ -33,6 +33,18 @@ namespace BuildingSmart.IFC.IfcCostResource
 		[XmlAttribute]
 		IfcLabel? _UserDefinedCategory;
 	
+	
+		public IfcEnvironmentalImpactValue()
+		{
+		}
+	
+		public IfcEnvironmentalImpactValue(IfcLabel? __Name, IfcText? __Description, IfcAppliedValueSelect __AppliedValue, IfcMeasureWithUnit __UnitBasis, IfcDateTimeSelect __ApplicableDate, IfcDateTimeSelect __FixedUntilDate, IfcLabel __ImpactType, IfcEnvironmentalImpactCategoryEnum __Category, IfcLabel? __UserDefinedCategory)
+			: base(__Name, __Description, __AppliedValue, __UnitBasis, __ApplicableDate, __FixedUntilDate)
+		{
+			this._ImpactType = __ImpactType;
+			this._Category = __Category;
+			this._UserDefinedCategory = __UserDefinedCategory;
+		}
 	
 		[Description("Specification of the environmental impact type to be referenced.")]
 		public IfcLabel ImpactType { get { return this._ImpactType; } set { this._ImpactType = value;} }

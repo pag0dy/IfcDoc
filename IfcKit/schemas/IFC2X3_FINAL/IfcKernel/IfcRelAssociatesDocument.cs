@@ -10,16 +10,8 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcConstraintResource;
 using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricConstraintResource;
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
 using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcKernel
@@ -31,6 +23,16 @@ namespace BuildingSmart.IFC.IfcKernel
 		[Required()]
 		IfcDocumentSelect _RelatingDocument;
 	
+	
+		public IfcRelAssociatesDocument()
+		{
+		}
+	
+		public IfcRelAssociatesDocument(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcRoot[] __RelatedObjects, IfcDocumentSelect __RelatingDocument)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __RelatedObjects)
+		{
+			this._RelatingDocument = __RelatingDocument;
+		}
 	
 		[Description("Document information or reference which is applied to the objects.")]
 		public IfcDocumentSelect RelatingDocument { get { return this._RelatingDocument; } set { this._RelatingDocument = value;} }

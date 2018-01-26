@@ -10,21 +10,11 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcControlExtension;
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricConstraintResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialPropertyResource;
 using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcPropertyResource;
 using BuildingSmart.IFC.IfcTimeSeriesResource;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcSharedBldgServiceElements
 {
@@ -85,6 +75,30 @@ namespace BuildingSmart.IFC.IfcSharedBldgServiceElements
 		[XmlAttribute]
 		IfcPressureMeasure? _PressureSingleValue;
 	
+	
+		public IfcFluidFlowProperties()
+		{
+		}
+	
+		public IfcFluidFlowProperties(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcPropertySourceEnum __PropertySource, IfcTimeSeries __FlowConditionTimeSeries, IfcTimeSeries __VelocityTimeSeries, IfcTimeSeries __FlowrateTimeSeries, IfcMaterial __Fluid, IfcTimeSeries __PressureTimeSeries, IfcLabel? __UserDefinedPropertySource, IfcThermodynamicTemperatureMeasure? __TemperatureSingleValue, IfcThermodynamicTemperatureMeasure? __WetBulbTemperatureSingleValue, IfcTimeSeries __WetBulbTemperatureTimeSeries, IfcTimeSeries __TemperatureTimeSeries, IfcDerivedMeasureValue __FlowrateSingleValue, IfcPositiveRatioMeasure? __FlowConditionSingleValue, IfcLinearVelocityMeasure? __VelocitySingleValue, IfcPressureMeasure? __PressureSingleValue)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description)
+		{
+			this._PropertySource = __PropertySource;
+			this._FlowConditionTimeSeries = __FlowConditionTimeSeries;
+			this._VelocityTimeSeries = __VelocityTimeSeries;
+			this._FlowrateTimeSeries = __FlowrateTimeSeries;
+			this._Fluid = __Fluid;
+			this._PressureTimeSeries = __PressureTimeSeries;
+			this._UserDefinedPropertySource = __UserDefinedPropertySource;
+			this._TemperatureSingleValue = __TemperatureSingleValue;
+			this._WetBulbTemperatureSingleValue = __WetBulbTemperatureSingleValue;
+			this._WetBulbTemperatureTimeSeries = __WetBulbTemperatureTimeSeries;
+			this._TemperatureTimeSeries = __TemperatureTimeSeries;
+			this._FlowrateSingleValue = __FlowrateSingleValue;
+			this._FlowConditionSingleValue = __FlowConditionSingleValue;
+			this._VelocitySingleValue = __VelocitySingleValue;
+			this._PressureSingleValue = __PressureSingleValue;
+		}
 	
 		[Description("The source of the fluid flow properties (e.g., are these design values, measured " +
 	    "values, etc.).")]

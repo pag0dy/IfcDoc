@@ -10,13 +10,8 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcPresentationOrganizationResource;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
@@ -30,6 +25,17 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		Double? _Scale3;
 	
 	
+		public IfcCartesianTransformationOperator3DnonUniform()
+		{
+		}
+	
+		public IfcCartesianTransformationOperator3DnonUniform(IfcDirection __Axis1, IfcDirection __Axis2, IfcCartesianPoint __LocalOrigin, Double? __Scale, IfcDirection __Axis3, Double? __Scale2, Double? __Scale3)
+			: base(__Axis1, __Axis2, __LocalOrigin, __Scale, __Axis3)
+		{
+			this._Scale2 = __Scale2;
+			this._Scale3 = __Scale3;
+		}
+	
 		[Description("The scaling value specified for the transformation along the axis 2. This is norm" +
 	    "ally the y scale factor.")]
 		public Double? Scale2 { get { return this._Scale2; } set { this._Scale2 = value;} }
@@ -37,6 +43,10 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		[Description("The scaling value specified for the transformation along the axis 3. This is norm" +
 	    "ally the z scale factor.")]
 		public Double? Scale3 { get { return this._Scale3; } set { this._Scale3 = value;} }
+	
+		public new Double Scl2 { get { return null; } }
+	
+		public new Double Scl3 { get { return null; } }
 	
 	
 	}

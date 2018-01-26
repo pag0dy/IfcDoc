@@ -10,13 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcPresentationOrganizationResource;
-using BuildingSmart.IFC.IfcProfileResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
@@ -34,6 +28,16 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		[InverseProperty("MappingSource")] 
 		ISet<IfcMappedItem> _MapUsage = new HashSet<IfcMappedItem>();
 	
+	
+		public IfcRepresentationMap()
+		{
+		}
+	
+		public IfcRepresentationMap(IfcAxis2Placement __MappingOrigin, IfcRepresentation __MappedRepresentation)
+		{
+			this._MappingOrigin = __MappingOrigin;
+			this._MappedRepresentation = __MappedRepresentation;
+		}
 	
 		[Description("An axis2 placement that defines the position about which the mapped\r\nrepresentati" +
 	    "on is mapped.")]

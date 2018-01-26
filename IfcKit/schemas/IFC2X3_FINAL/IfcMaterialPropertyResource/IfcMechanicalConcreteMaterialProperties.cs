@@ -10,11 +10,8 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcPropertyResource;
 
 namespace BuildingSmart.IFC.IfcMaterialPropertyResource
 {
@@ -45,6 +42,21 @@ namespace BuildingSmart.IFC.IfcMaterialPropertyResource
 		[XmlAttribute]
 		IfcText? _WaterImpermeability;
 	
+	
+		public IfcMechanicalConcreteMaterialProperties()
+		{
+		}
+	
+		public IfcMechanicalConcreteMaterialProperties(IfcMaterial __Material, IfcDynamicViscosityMeasure? __DynamicViscosity, IfcModulusOfElasticityMeasure? __YoungModulus, IfcModulusOfElasticityMeasure? __ShearModulus, IfcPositiveRatioMeasure? __PoissonRatio, IfcThermalExpansionCoefficientMeasure? __ThermalExpansionCoefficient, IfcPressureMeasure? __CompressiveStrength, IfcPositiveLengthMeasure? __MaxAggregateSize, IfcText? __AdmixturesDescription, IfcText? __Workability, IfcNormalisedRatioMeasure? __ProtectivePoreRatio, IfcText? __WaterImpermeability)
+			: base(__Material, __DynamicViscosity, __YoungModulus, __ShearModulus, __PoissonRatio, __ThermalExpansionCoefficient)
+		{
+			this._CompressiveStrength = __CompressiveStrength;
+			this._MaxAggregateSize = __MaxAggregateSize;
+			this._AdmixturesDescription = __AdmixturesDescription;
+			this._Workability = __Workability;
+			this._ProtectivePoreRatio = __ProtectivePoreRatio;
+			this._WaterImpermeability = __WaterImpermeability;
+		}
 	
 		[Description("The compressive strength of the concrete.")]
 		public IfcPressureMeasure? CompressiveStrength { get { return this._CompressiveStrength; } set { this._CompressiveStrength = value;} }

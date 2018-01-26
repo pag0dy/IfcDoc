@@ -10,13 +10,11 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometricModelResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcPresentationOrganizationResource;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
@@ -38,6 +36,17 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		IfcParameterValue _PointParameterV;
 	
 	
+		public IfcPointOnSurface()
+		{
+		}
+	
+		public IfcPointOnSurface(IfcSurface __BasisSurface, IfcParameterValue __PointParameterU, IfcParameterValue __PointParameterV)
+		{
+			this._BasisSurface = __BasisSurface;
+			this._PointParameterU = __PointParameterU;
+			this._PointParameterV = __PointParameterV;
+		}
+	
 		[Description("The surface to which the parameter values relate.")]
 		public IfcSurface BasisSurface { get { return this._BasisSurface; } set { this._BasisSurface = value;} }
 	
@@ -46,6 +55,8 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 	
 		[Description("The second parameter value of the point location.")]
 		public IfcParameterValue PointParameterV { get { return this._PointParameterV; } set { this._PointParameterV = value;} }
+	
+		public new IfcDimensionCount Dim { get { return new IfcDimensionCount(); } }
 	
 	
 	}

@@ -10,10 +10,8 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
 using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPropertyResource;
 
 namespace BuildingSmart.IFC.IfcApprovalResource
 {
@@ -59,6 +57,21 @@ namespace BuildingSmart.IFC.IfcApprovalResource
 		[InverseProperty("RelatingApproval")] 
 		ISet<IfcApprovalRelationship> _Relates = new HashSet<IfcApprovalRelationship>();
 	
+	
+		public IfcApproval()
+		{
+		}
+	
+		public IfcApproval(IfcText? __Description, IfcDateTimeSelect __ApprovalDateTime, IfcLabel? __ApprovalStatus, IfcLabel? __ApprovalLevel, IfcText? __ApprovalQualifier, IfcLabel __Name, IfcIdentifier __Identifier)
+		{
+			this._Description = __Description;
+			this._ApprovalDateTime = __ApprovalDateTime;
+			this._ApprovalStatus = __ApprovalStatus;
+			this._ApprovalLevel = __ApprovalLevel;
+			this._ApprovalQualifier = __ApprovalQualifier;
+			this._Name = __Name;
+			this._Identifier = __Identifier;
+		}
 	
 		[Description("A general textual description of a design, work task, plan, etc. that is being ap" +
 	    "proved for. \r\n")]

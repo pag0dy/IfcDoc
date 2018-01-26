@@ -10,13 +10,11 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
@@ -28,8 +26,20 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		IfcAxis1Placement _AxisPosition;
 	
 	
+		public IfcSurfaceOfRevolution()
+		{
+		}
+	
+		public IfcSurfaceOfRevolution(IfcProfileDef __SweptCurve, IfcAxis2Placement3D __Position, IfcAxis1Placement __AxisPosition)
+			: base(__SweptCurve, __Position)
+		{
+			this._AxisPosition = __AxisPosition;
+		}
+	
 		[Description("A point on the axis of revolution and the direction of the axis of revolution.")]
 		public IfcAxis1Placement AxisPosition { get { return this._AxisPosition; } set { this._AxisPosition = value;} }
+	
+		public new IfcLine AxisLine { get { return null; } }
 	
 	
 	}

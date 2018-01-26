@@ -14,7 +14,7 @@ using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcPresentationDefinitionResource;
-using BuildingSmart.IFC.IfcPresentationResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcPresentationDimensioningResource
 {
@@ -26,6 +26,16 @@ namespace BuildingSmart.IFC.IfcPresentationDimensioningResource
 		[Required()]
 		IfcDimensionExtentUsage _Role;
 	
+	
+		public IfcDimensionCurveTerminator()
+		{
+		}
+	
+		public IfcDimensionCurveTerminator(IfcRepresentationItem __Item, IfcPresentationStyleAssignment[] __Styles, IfcLabel? __Name, IfcAnnotationCurveOccurrence __AnnotatedCurve, IfcDimensionExtentUsage __Role)
+			: base(__Item, __Styles, __Name, __AnnotatedCurve)
+		{
+			this._Role = __Role;
+		}
 	
 		[Description("Role of the dimension curve terminator within a dimension curve (being either an " +
 	    "origin or target).")]

@@ -10,12 +10,8 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcPresentationResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcPresentationOrganizationResource
 {
@@ -38,6 +34,19 @@ namespace BuildingSmart.IFC.IfcPresentationOrganizationResource
 		[Required()]
 		ISet<IfcPresentationStyleSelect> _LayerStyles = new HashSet<IfcPresentationStyleSelect>();
 	
+	
+		public IfcPresentationLayerWithStyle()
+		{
+		}
+	
+		public IfcPresentationLayerWithStyle(IfcLabel __Name, IfcText? __Description, IfcLayeredItem[] __AssignedItems, IfcIdentifier? __Identifier, Boolean? __LayerOn, Boolean? __LayerFrozen, Boolean? __LayerBlocked, IfcPresentationStyleSelect[] __LayerStyles)
+			: base(__Name, __Description, __AssignedItems, __Identifier)
+		{
+			this._LayerOn = __LayerOn;
+			this._LayerFrozen = __LayerFrozen;
+			this._LayerBlocked = __LayerBlocked;
+			this._LayerStyles = new HashSet<IfcPresentationStyleSelect>(__LayerStyles);
+		}
 	
 		[Description("A logical setting, TRUE indicates that the layer is set to \'On\', FALSE that the l" +
 	    "ayer is set to \'Off\', UNKNOWN that such information is not available.")]

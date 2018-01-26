@@ -10,13 +10,11 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcPresentationResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcPresentationDefinitionResource
 {
@@ -30,6 +28,17 @@ namespace BuildingSmart.IFC.IfcPresentationDefinitionResource
 		[XmlAttribute]
 		IfcGlobalOrLocalEnum? _GlobalOrLocal;
 	
+	
+		public IfcAnnotationFillAreaOccurrence()
+		{
+		}
+	
+		public IfcAnnotationFillAreaOccurrence(IfcRepresentationItem __Item, IfcPresentationStyleAssignment[] __Styles, IfcLabel? __Name, IfcPoint __FillStyleTarget, IfcGlobalOrLocalEnum? __GlobalOrLocal)
+			: base(__Item, __Styles, __Name)
+		{
+			this._FillStyleTarget = __FillStyleTarget;
+			this._GlobalOrLocal = __GlobalOrLocal;
+		}
 	
 		[Description(@"<EPM-HTML>The point that specifies the starting location for the fill area style assigned to the annotation fill area occurrence. Depending on the attribute <i>GlobalOrLocal</i> the point is either given within the world coordinate system of the project or within the object coordinate system of the element or annotation. If the <i>FillStyleTarget</i> is not given, it defaults to 0.,0.
 	  <blockquote><small><font color=""#ff0000"">

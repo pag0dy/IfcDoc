@@ -10,12 +10,10 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcPresentationResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
 
 namespace BuildingSmart.IFC.IfcPresentationOrganizationResource
 {
@@ -38,6 +36,18 @@ namespace BuildingSmart.IFC.IfcPresentationOrganizationResource
 		[XmlAttribute]
 		IfcNormalisedRatioMeasure? _Intensity;
 	
+	
+		public IfcLightSource()
+		{
+		}
+	
+		public IfcLightSource(IfcLabel? __Name, IfcColourRgb __LightColour, IfcNormalisedRatioMeasure? __AmbientIntensity, IfcNormalisedRatioMeasure? __Intensity)
+		{
+			this._Name = __Name;
+			this._LightColour = __LightColour;
+			this._AmbientIntensity = __AmbientIntensity;
+			this._Intensity = __Intensity;
+		}
 	
 		[Description("The name given to the light source in presentation.\r\n")]
 		public IfcLabel? Name { get { return this._Name; } set { this._Name = value;} }

@@ -10,9 +10,6 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPropertyResource;
 
 namespace BuildingSmart.IFC.IfcApprovalResource
@@ -22,12 +19,23 @@ namespace BuildingSmart.IFC.IfcApprovalResource
 	{
 		[DataMember(Order=0)] 
 		[Required()]
+		[MinLength(1)]
 		ISet<IfcProperty> _ApprovedProperties = new HashSet<IfcProperty>();
 	
 		[DataMember(Order=1)] 
 		[Required()]
 		IfcApproval _Approval;
 	
+	
+		public IfcApprovalPropertyRelationship()
+		{
+		}
+	
+		public IfcApprovalPropertyRelationship(IfcProperty[] __ApprovedProperties, IfcApproval __Approval)
+		{
+			this._ApprovedProperties = new HashSet<IfcProperty>(__ApprovedProperties);
+			this._Approval = __Approval;
+		}
 	
 		[Description("Properties approved by the approval.")]
 		public ISet<IfcProperty> ApprovedProperties { get { return this._ApprovedProperties; } }

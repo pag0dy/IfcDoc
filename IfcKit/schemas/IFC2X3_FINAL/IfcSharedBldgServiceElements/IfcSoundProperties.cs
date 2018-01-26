@@ -10,21 +10,9 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcControlExtension;
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometricConstraintResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
-using BuildingSmart.IFC.IfcMaterialPropertyResource;
-using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcPropertyResource;
-using BuildingSmart.IFC.IfcTimeSeriesResource;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcSharedBldgServiceElements
 {
@@ -42,8 +30,22 @@ namespace BuildingSmart.IFC.IfcSharedBldgServiceElements
 	
 		[DataMember(Order=2)] 
 		[Required()]
+		[MinLength(1)]
+		[MaxLength(8)]
 		IList<IfcSoundValue> _SoundValues = new List<IfcSoundValue>();
 	
+	
+		public IfcSoundProperties()
+		{
+		}
+	
+		public IfcSoundProperties(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcBoolean __IsAttenuating, IfcSoundScaleEnum? __SoundScale, IfcSoundValue[] __SoundValues)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description)
+		{
+			this._IsAttenuating = __IsAttenuating;
+			this._SoundScale = __SoundScale;
+			this._SoundValues = new List<IfcSoundValue>(__SoundValues);
+		}
 	
 		[Description("If TRUE, values represent sound attenuation. If FALSE, values represent sound gen" +
 	    "eration. ")]

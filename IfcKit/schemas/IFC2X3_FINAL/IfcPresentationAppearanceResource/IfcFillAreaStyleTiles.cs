@@ -10,12 +10,9 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationDefinitionResource;
-using BuildingSmart.IFC.IfcPresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 {
@@ -29,6 +26,7 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 	
 		[DataMember(Order=1)] 
 		[Required()]
+		[MinLength(1)]
 		ISet<IfcFillAreaStyleTileShapeSelect> _Tiles = new HashSet<IfcFillAreaStyleTileShapeSelect>();
 	
 		[DataMember(Order=2)] 
@@ -36,6 +34,17 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 		[Required()]
 		IfcPositiveRatioMeasure _TilingScale;
 	
+	
+		public IfcFillAreaStyleTiles()
+		{
+		}
+	
+		public IfcFillAreaStyleTiles(IfcOneDirectionRepeatFactor __TilingPattern, IfcFillAreaStyleTileShapeSelect[] __Tiles, IfcPositiveRatioMeasure __TilingScale)
+		{
+			this._TilingPattern = __TilingPattern;
+			this._Tiles = new HashSet<IfcFillAreaStyleTileShapeSelect>(__Tiles);
+			this._TilingScale = __TilingScale;
+		}
 	
 		[Description("A two direction repeat factor defining the shape and relative positioning of the " +
 	    "tiles.")]

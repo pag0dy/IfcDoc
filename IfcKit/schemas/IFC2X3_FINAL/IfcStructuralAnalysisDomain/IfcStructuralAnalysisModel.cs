@@ -10,15 +10,11 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcProductExtension;
-using BuildingSmart.IFC.IfcProfilePropertyResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcStructuralLoadResource;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcStructuralAnalysisDomain
 {
@@ -34,11 +30,26 @@ namespace BuildingSmart.IFC.IfcStructuralAnalysisDomain
 		IfcAxis2Placement3D _OrientationOf2DPlane;
 	
 		[DataMember(Order=2)] 
+		[MinLength(1)]
 		ISet<IfcStructuralLoadGroup> _LoadedBy = new HashSet<IfcStructuralLoadGroup>();
 	
 		[DataMember(Order=3)] 
+		[MinLength(1)]
 		ISet<IfcStructuralResultGroup> _HasResults = new HashSet<IfcStructuralResultGroup>();
 	
+	
+		public IfcStructuralAnalysisModel()
+		{
+		}
+	
+		public IfcStructuralAnalysisModel(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcAnalysisModelTypeEnum __PredefinedType, IfcAxis2Placement3D __OrientationOf2DPlane, IfcStructuralLoadGroup[] __LoadedBy, IfcStructuralResultGroup[] __HasResults)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType)
+		{
+			this._PredefinedType = __PredefinedType;
+			this._OrientationOf2DPlane = __OrientationOf2DPlane;
+			this._LoadedBy = new HashSet<IfcStructuralLoadGroup>(__LoadedBy);
+			this._HasResults = new HashSet<IfcStructuralResultGroup>(__HasResults);
+		}
 	
 		[Description("Defines the type of the structural analysis model. ")]
 		public IfcAnalysisModelTypeEnum PredefinedType { get { return this._PredefinedType; } set { this._PredefinedType = value;} }

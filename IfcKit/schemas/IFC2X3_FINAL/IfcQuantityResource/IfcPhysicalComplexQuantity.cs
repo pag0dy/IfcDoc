@@ -19,6 +19,7 @@ namespace BuildingSmart.IFC.IfcQuantityResource
 	{
 		[DataMember(Order=0)] 
 		[Required()]
+		[MinLength(1)]
 		ISet<IfcPhysicalQuantity> _HasQuantities = new HashSet<IfcPhysicalQuantity>();
 	
 		[DataMember(Order=1)] 
@@ -34,6 +35,19 @@ namespace BuildingSmart.IFC.IfcQuantityResource
 		[XmlAttribute]
 		IfcLabel? _Usage;
 	
+	
+		public IfcPhysicalComplexQuantity()
+		{
+		}
+	
+		public IfcPhysicalComplexQuantity(IfcLabel __Name, IfcText? __Description, IfcPhysicalQuantity[] __HasQuantities, IfcLabel __Discrimination, IfcLabel? __Quality, IfcLabel? __Usage)
+			: base(__Name, __Description)
+		{
+			this._HasQuantities = new HashSet<IfcPhysicalQuantity>(__HasQuantities);
+			this._Discrimination = __Discrimination;
+			this._Quality = __Quality;
+			this._Usage = __Usage;
+		}
 	
 		[Description("Set of physical quantities that are grouped by this complex physical quantity acc" +
 	    "ording to a given discrimination.")]

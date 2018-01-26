@@ -10,14 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcConstraintResource;
-using BuildingSmart.IFC.IfcCostResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcMaterialResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcTimeSeriesResource;
 
 namespace BuildingSmart.IFC.IfcPropertyResource
 {
@@ -31,11 +24,23 @@ namespace BuildingSmart.IFC.IfcPropertyResource
 	
 		[DataMember(Order=1)] 
 		[Required()]
+		[MinLength(1)]
 		IList<IfcValue> _EnumerationValues = new List<IfcValue>();
 	
 		[DataMember(Order=2)] 
 		IfcUnit _Unit;
 	
+	
+		public IfcPropertyEnumeration()
+		{
+		}
+	
+		public IfcPropertyEnumeration(IfcLabel __Name, IfcValue[] __EnumerationValues, IfcUnit __Unit)
+		{
+			this._Name = __Name;
+			this._EnumerationValues = new List<IfcValue>(__EnumerationValues);
+			this._Unit = __Unit;
+		}
 	
 		[Description("Name of this enumeration.")]
 		public IfcLabel Name { get { return this._Name; } set { this._Name = value;} }

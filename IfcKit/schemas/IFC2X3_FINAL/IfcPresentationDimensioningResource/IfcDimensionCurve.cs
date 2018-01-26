@@ -14,7 +14,7 @@ using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcPresentationDefinitionResource;
-using BuildingSmart.IFC.IfcPresentationResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcPresentationDimensioningResource
 {
@@ -22,8 +22,18 @@ namespace BuildingSmart.IFC.IfcPresentationDimensioningResource
 	public partial class IfcDimensionCurve : IfcAnnotationCurveOccurrence
 	{
 		[InverseProperty("AnnotatedCurve")] 
+		[MaxLength(2)]
 		ISet<IfcTerminatorSymbol> _AnnotatedBySymbols = new HashSet<IfcTerminatorSymbol>();
 	
+	
+		public IfcDimensionCurve()
+		{
+		}
+	
+		public IfcDimensionCurve(IfcRepresentationItem __Item, IfcPresentationStyleAssignment[] __Styles, IfcLabel? __Name)
+			: base(__Item, __Styles, __Name)
+		{
+		}
 	
 		[Description("Reference to the terminator symbols that may be assigned to the dimension curve. " +
 	    "There shall be either zero, one or two terminator symbols assigned.")]

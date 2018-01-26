@@ -10,13 +10,10 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometricModelResource;
-using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcPresentationOrganizationResource;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
@@ -25,11 +22,24 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 	{
 		[DataMember(Order=0)] 
 		[Required()]
+		[MinLength(2)]
 		IList<Double> _WeightsData = new List<Double>();
 	
 	
+		public IfcRationalBezierCurve()
+		{
+		}
+	
+		public IfcRationalBezierCurve(Int64 __Degree, IfcCartesianPoint[] __ControlPointsList, IfcBSplineCurveForm __CurveForm, Boolean? __ClosedCurve, Boolean? __SelfIntersect, Double[] __WeightsData)
+			: base(__Degree, __ControlPointsList, __CurveForm, __ClosedCurve, __SelfIntersect)
+		{
+			this._WeightsData = new List<Double>(__WeightsData);
+		}
+	
 		[Description("The supplied values of the weights.")]
 		public IList<Double> WeightsData { get { return this._WeightsData; } }
+	
+		public new Double Weights { get { return null; } }
 	
 	
 	}

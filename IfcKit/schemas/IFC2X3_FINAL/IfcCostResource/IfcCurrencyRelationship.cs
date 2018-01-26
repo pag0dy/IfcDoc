@@ -40,6 +40,19 @@ namespace BuildingSmart.IFC.IfcCostResource
 		IfcLibraryInformation _RateSource;
 	
 	
+		public IfcCurrencyRelationship()
+		{
+		}
+	
+		public IfcCurrencyRelationship(IfcMonetaryUnit __RelatingMonetaryUnit, IfcMonetaryUnit __RelatedMonetaryUnit, IfcPositiveRatioMeasure __ExchangeRate, IfcDateAndTime __RateDateTime, IfcLibraryInformation __RateSource)
+		{
+			this._RelatingMonetaryUnit = __RelatingMonetaryUnit;
+			this._RelatedMonetaryUnit = __RelatedMonetaryUnit;
+			this._ExchangeRate = __ExchangeRate;
+			this._RateDateTime = __RateDateTime;
+			this._RateSource = __RateSource;
+		}
+	
 		[Description("The monetary unit from which an exchange is derived. For instance, in the case of" +
 	    " a conversion from GBP to USD, the relating monetary unit is GBP.")]
 		public IfcMonetaryUnit RelatingMonetaryUnit { get { return this._RelatingMonetaryUnit; } set { this._RelatingMonetaryUnit = value;} }

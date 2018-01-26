@@ -12,7 +12,6 @@ using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 
 namespace BuildingSmart.IFC.IfcProfileResource
 {
@@ -32,6 +31,18 @@ namespace BuildingSmart.IFC.IfcProfileResource
 		[XmlAttribute]
 		IfcPositiveLengthMeasure? _OuterFilletRadius;
 	
+	
+		public IfcRectangleHollowProfileDef()
+		{
+		}
+	
+		public IfcRectangleHollowProfileDef(IfcProfileTypeEnum __ProfileType, IfcLabel? __ProfileName, IfcAxis2Placement2D __Position, IfcPositiveLengthMeasure __XDim, IfcPositiveLengthMeasure __YDim, IfcPositiveLengthMeasure __WallThickness, IfcPositiveLengthMeasure? __InnerFilletRadius, IfcPositiveLengthMeasure? __OuterFilletRadius)
+			: base(__ProfileType, __ProfileName, __Position, __XDim, __YDim)
+		{
+			this._WallThickness = __WallThickness;
+			this._InnerFilletRadius = __InnerFilletRadius;
+			this._OuterFilletRadius = __OuterFilletRadius;
+		}
 	
 		[Description("Thickness of the material.")]
 		public IfcPositiveLengthMeasure WallThickness { get { return this._WallThickness; } set { this._WallThickness = value;} }

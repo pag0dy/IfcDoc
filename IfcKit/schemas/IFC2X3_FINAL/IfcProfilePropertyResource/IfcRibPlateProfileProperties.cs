@@ -40,6 +40,20 @@ namespace BuildingSmart.IFC.IfcProfilePropertyResource
 		IfcRibPlateDirectionEnum _Direction;
 	
 	
+		public IfcRibPlateProfileProperties()
+		{
+		}
+	
+		public IfcRibPlateProfileProperties(IfcLabel? __ProfileName, IfcProfileDef __ProfileDefinition, IfcPositiveLengthMeasure? __Thickness, IfcPositiveLengthMeasure? __RibHeight, IfcPositiveLengthMeasure? __RibWidth, IfcPositiveLengthMeasure? __RibSpacing, IfcRibPlateDirectionEnum __Direction)
+			: base(__ProfileName, __ProfileDefinition)
+		{
+			this._Thickness = __Thickness;
+			this._RibHeight = __RibHeight;
+			this._RibWidth = __RibWidth;
+			this._RibSpacing = __RibSpacing;
+			this._Direction = __Direction;
+		}
+	
 		[Description("Defines the thickness of the structural face member.")]
 		public IfcPositiveLengthMeasure? Thickness { get { return this._Thickness; } set { this._Thickness = value;} }
 	

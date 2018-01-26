@@ -10,12 +10,9 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationDefinitionResource;
-using BuildingSmart.IFC.IfcPresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
+using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 {
@@ -27,12 +24,24 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 	
 		[DataMember(Order=1)] 
 		[Required()]
+		[MinLength(1)]
 		ISet<IfcPresentationStyleAssignment> _Styles = new HashSet<IfcPresentationStyleAssignment>();
 	
 		[DataMember(Order=2)] 
 		[XmlAttribute]
 		IfcLabel? _Name;
 	
+	
+		public IfcStyledItem()
+		{
+		}
+	
+		public IfcStyledItem(IfcRepresentationItem __Item, IfcPresentationStyleAssignment[] __Styles, IfcLabel? __Name)
+		{
+			this._Item = __Item;
+			this._Styles = new HashSet<IfcPresentationStyleAssignment>(__Styles);
+			this._Name = __Name;
+		}
 	
 		[Description(@"<EPM-HTML>
 	A geometric representation item to which the style is assigned.

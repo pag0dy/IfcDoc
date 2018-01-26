@@ -26,6 +26,10 @@ namespace BuildingSmart.IFC.IfcMeasureResource
 		{
 			this.Value = value;
 		}
+		public IfcPositiveLengthMeasure(Double value)
+		{
+			this.Value = new IfcLengthMeasure(value);
+		}
 	}
 	
 }

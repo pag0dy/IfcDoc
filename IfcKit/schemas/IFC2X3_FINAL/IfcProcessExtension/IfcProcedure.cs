@@ -10,14 +10,9 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcCostResource;
-using BuildingSmart.IFC.IfcDateTimeResource;
-using BuildingSmart.IFC.IfcExternalReferenceResource;
-using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationAppearanceResource;
+using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcProcessExtension
 {
@@ -38,6 +33,18 @@ namespace BuildingSmart.IFC.IfcProcessExtension
 		[XmlAttribute]
 		IfcLabel? _UserDefinedProcedureType;
 	
+	
+		public IfcProcedure()
+		{
+		}
+	
+		public IfcProcedure(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcIdentifier __ProcedureID, IfcProcedureTypeEnum __ProcedureType, IfcLabel? __UserDefinedProcedureType)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType)
+		{
+			this._ProcedureID = __ProcedureID;
+			this._ProcedureType = __ProcedureType;
+			this._UserDefinedProcedureType = __UserDefinedProcedureType;
+		}
 	
 		[Description("An identifying designation given to a procedure.")]
 		public IfcIdentifier ProcedureID { get { return this._ProcedureID; } set { this._ProcedureID = value;} }

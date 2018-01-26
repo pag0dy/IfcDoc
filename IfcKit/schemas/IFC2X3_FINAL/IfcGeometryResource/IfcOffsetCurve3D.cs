@@ -14,9 +14,6 @@ using BuildingSmart.IFC.IfcGeometricModelResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcPresentationOrganizationResource;
-using BuildingSmart.IFC.IfcProfileResource;
-using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
@@ -40,6 +37,18 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		[Required()]
 		IfcDirection _RefDirection;
 	
+	
+		public IfcOffsetCurve3D()
+		{
+		}
+	
+		public IfcOffsetCurve3D(IfcCurve __BasisCurve, IfcLengthMeasure __Distance, Boolean? __SelfIntersect, IfcDirection __RefDirection)
+		{
+			this._BasisCurve = __BasisCurve;
+			this._Distance = __Distance;
+			this._SelfIntersect = __SelfIntersect;
+			this._RefDirection = __RefDirection;
+		}
 	
 		[Description("The curve that is being offset.")]
 		public IfcCurve BasisCurve { get { return this._BasisCurve; } set { this._BasisCurve = value;} }
