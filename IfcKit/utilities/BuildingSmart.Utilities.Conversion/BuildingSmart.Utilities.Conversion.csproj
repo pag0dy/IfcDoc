@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{9DC23719-6569-4F9A-A676-AAD97D1D233F}</ProjectGuid>
+    <ProjectGuid>{048106C1-7D68-4B3C-B7B1-EB437F2C15B0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BuildingSmart.Serialization.Step</RootNamespace>
-    <AssemblyName>BuildingSmart.Serialization.Step</AssemblyName>
+    <RootNamespace>BuildingSmart.Utilities.Conversion</RootNamespace>
+    <AssemblyName>BuildingSmart.Utilities.Conversion</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,9 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -41,12 +39,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SchemaIsoStep.cs" />
-    <Compile Include="StepSerializer.cs" />
+    <Compile Include="Converter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BuildingSmart.Serialization\BuildingSmart.Serialization.csproj">
+    <ProjectReference Include="..\..\formats\BuildingSmart.Serialization\BuildingSmart.Serialization.csproj">
       <Project>{36a0328b-1a60-4f07-bc34-4d22a7f65cac}</Project>
       <Name>BuildingSmart.Serialization</Name>
     </ProjectReference>

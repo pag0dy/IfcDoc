@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{9DC23719-6569-4F9A-A676-AAD97D1D233F}</ProjectGuid>
+    <ProjectGuid>{B0BAF044-8F12-4C67-B485-A6B98333AAA1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BuildingSmart.Serialization.Step</RootNamespace>
-    <AssemblyName>BuildingSmart.Serialization.Step</AssemblyName>
+    <RootNamespace>BuildingSmart.Utilities.Validation</RootNamespace>
+    <AssemblyName>BuildingSmart.Utilities.Validation</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,9 +31,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -41,14 +41,31 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SchemaIsoStep.cs" />
-    <Compile Include="StepSerializer.cs" />
+    <Compile Include="FormValidator.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormValidator.Designer.cs">
+      <DependentUpon>FormValidator.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BuildingSmart.Serialization\BuildingSmart.Serialization.csproj">
+    <EmbeddedResource Include="FormValidator.resx">
+      <DependentUpon>FormValidator.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\exchanges\BuildingSmart.Exchange\BuildingSmart.Exchange.csproj">
+      <Project>{b81264f7-07f2-49f1-8117-ec22c7355912}</Project>
+      <Name>BuildingSmart.Exchange</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\formats\BuildingSmart.Serialization\BuildingSmart.Serialization.csproj">
       <Project>{36a0328b-1a60-4f07-bc34-4d22a7f65cac}</Project>
       <Name>BuildingSmart.Serialization</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\formats\spf\BuildingSmart.Serialization.Step.csproj">
+      <Project>{9dc23719-6569-4f9a-a676-aad97d1d233f}</Project>
+      <Name>BuildingSmart.Serialization.Step</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

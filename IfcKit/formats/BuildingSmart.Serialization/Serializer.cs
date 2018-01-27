@@ -18,7 +18,85 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BuildingSmart.Serialization
 {
-    public abstract class Serializer
+    public abstract class Serializer : Inspector
+    {
+        protected static char[] HexChars = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
+
+        /// <summary>
+        /// Creates serializer accepting all types within assembly.
+        /// </summary>
+        /// <param name="typeProject">Type of the root object to load</param>
+        public Serializer(Type typeProject)
+            : base(typeProject, null, null, null)
+        {
+        }
+
+        public Serializer(Type typeProject, Type[] loadtypes)
+            : base(typeProject, loadtypes, null, null)
+        {
+        }
+
+        public Serializer(Type typeProject, Type[] types, string schema, string release)
+            : base(typeProject, types, schema, release)
+        {
+        }
+
+        public abstract object ReadObject(Stream stream);
+        public abstract void WriteObject(Stream stream, object graph);
+    }
+
+    public class Adapter : Inspector
+    {
+        public Adapter(Type typeProject)
+            : base(typeProject, null, null, null)
+        {
+        }
+
+        public Type GetType(string type)
+        {
+            return this.GetTypeByName(type);
+        }
+
+        public IList<FieldInfo> GetDirectFields(Type t)
+        {
+            return this.GetFieldsOrdered(t);
+        }
+
+        public IList<FieldInfo> GetInverseFields(Type t)
+        {
+            return this.GetFieldsInverseAll(t);
+        }
+
+        public Type GetCollectionType(Type t)
+        {
+            return this.GetCollectionInstanceType(t);
+        }
+
+        public void UpdateInverseReferences(object instance, FieldInfo field, object value)
+        {
+            if (value == null)
+                return;
+
+            Type t = value.GetType();
+            if (t.IsValueType || t.IsEnum || t == typeof(string))
+                return;
+
+            if (value is IEnumerable)
+            {
+                foreach (object elem in ((IEnumerable)value))
+                {
+                    this.UpdateInverse(instance, field, elem);
+                }
+            }
+            else
+            {
+                this.UpdateInverse(instance, field, value);
+            }
+        }
+
+    }
+
+    public abstract class Inspector
     {
         Type _projtype;
         Type _roottype;
@@ -30,17 +108,16 @@ namespace BuildingSmart.Serialization
         Dictionary<Type, IList<FieldInfo>> _fieldall = new Dictionary<Type, IList<FieldInfo>>(); // combined
         Dictionary<FieldInfo, List<FieldInfo>> _inversemap = new Dictionary<FieldInfo, List<FieldInfo>>();
 
-        protected static char[] HexChars = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
-
         /// <summary>
         /// Creates serializer accepting all types within assembly.
         /// </summary>
         /// <param name="typeProject">Type of the root object to load</param>
-        public Serializer(Type typeProject) : this(typeProject, null, null, null)
+        public Inspector(Type typeProject)
+            : this(typeProject, null, null, null)
         {
         }
 
-        public Serializer(Type typeProject, Type[] loadtypes)
+        public Inspector(Type typeProject, Type[] loadtypes)
             : this(typeProject, loadtypes, null, null)
         {
         }
@@ -52,7 +129,7 @@ namespace BuildingSmart.Serialization
         /// <param name="types">Other types that may be loaded, or null for all types within assembly of typeProject.</param>
         /// <param name="schema">Schema name to use, or null to determine from assembly of typeProject.</param>
         /// <param name="release">Release name to use, or null to determine from assembly of typeProject.</param>
-        public Serializer(Type typeProject, Type[] types, string schema, string release)
+        public Inspector(Type typeProject, Type[] types, string schema, string release)
         {
             this._projtype = typeProject;
 
@@ -165,9 +242,6 @@ namespace BuildingSmart.Serialization
             }
         }
 
-        public abstract object ReadObject(Stream stream);
-        public abstract void WriteObject(Stream stream, object graph);
-
         /// <summary>
         /// Writes characters to indent line.
         /// </summary>
@@ -269,7 +343,7 @@ namespace BuildingSmart.Serialization
         protected Type GetTypeByName(string name)
         {
             Type type = null;
-            if (this._typemap.TryGetValue(name, out type))
+            if (this._typemap.TryGetValue(name.ToUpper(), out type))
             {
                 return type;
             }
@@ -451,9 +525,9 @@ namespace BuildingSmart.Serialization
             }
         }
 
-        public void UpdateInverse(object instance, FieldInfo field, object value)
+        protected void UpdateInverse(object instance, FieldInfo field, object value)
         {
-            if (value is string || value is Byte[])
+            if (value is string || value is Byte[] || value is ValueType)
                 return;
 
             // set inverse link for singular references
