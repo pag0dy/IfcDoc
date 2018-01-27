@@ -57,8 +57,8 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 	
 		[Description("The scaling value specified for the transformation.")]
 		public Double? Scale { get { return this._Scale; } set { this._Scale = value;} }
-	
-		public new Double Scl { get { return null; } }
+
+        public new Double Scl { get { return 0.0; } }
 	
 		public new IfcDimensionCount Dim { get { return new IfcDimensionCount(); } }
 	

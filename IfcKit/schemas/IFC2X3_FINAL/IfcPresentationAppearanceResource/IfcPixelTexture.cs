@@ -36,20 +36,20 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 		[DataMember(Order=3)] 
 		[Required()]
 		[MinLength(1)]
-		IList<BINARY (32)> _Pixel = new List<BINARY (32)>();
+		IList<int> _Pixel = new List<int>();
 	
 	
 		public IfcPixelTexture()
 		{
 		}
 	
-		public IfcPixelTexture(Boolean __RepeatS, Boolean __RepeatT, IfcSurfaceTextureEnum __TextureType, IfcCartesianTransformationOperator2D __TextureTransform, IfcInteger __Width, IfcInteger __Height, IfcInteger __ColourComponents, BINARY (32)[] __Pixel)
+		public IfcPixelTexture(Boolean __RepeatS, Boolean __RepeatT, IfcSurfaceTextureEnum __TextureType, IfcCartesianTransformationOperator2D __TextureTransform, IfcInteger __Width, IfcInteger __Height, IfcInteger __ColourComponents, IList<int> __Pixel)
 			: base(__RepeatS, __RepeatT, __TextureType, __TextureTransform)
 		{
 			this._Width = __Width;
 			this._Height = __Height;
 			this._ColourComponents = __ColourComponents;
-			this._Pixel = new List<BINARY (32)>(__Pixel);
+			this._Pixel = new List<int>(__Pixel);
 		}
 	
 		[Description("<EPM-HTML>\r\nThe number of pixels in width (S) direction.\r\n</EPM-HTML>")]
@@ -68,7 +68,7 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 	IFC2x Edition 3 CHANGE&nbsp; The data type has been changed from STRING to BINARY.
 	</font></small></blockquote>
 	</EPM-HTML>")]
-		public IList<BINARY (32)> Pixel { get { return this._Pixel; } }
+		public IList<int> Pixel { get { return this._Pixel; } }
 	
 	
 	}

@@ -43,10 +43,10 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		[Description("The scaling value specified for the transformation along the axis 3. This is norm" +
 	    "ally the z scale factor.")]
 		public Double? Scale3 { get { return this._Scale3; } set { this._Scale3 = value;} }
+
+        public new Double Scl2 { get { return 0.0; } }
 	
-		public new Double Scl2 { get { return null; } }
-	
-		public new Double Scl3 { get { return null; } }
+		public new Double Scl3 { get { return 0.0; } }
 	
 	
 	}

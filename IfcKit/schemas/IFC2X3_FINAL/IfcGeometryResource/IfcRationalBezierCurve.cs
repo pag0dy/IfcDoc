@@ -39,7 +39,7 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		[Description("The supplied values of the weights.")]
 		public IList<Double> WeightsData { get { return this._WeightsData; } }
 	
-		public new Double Weights { get { return null; } }
+		public new Double Weights { get { return 0.0; } }
 	
 	
 	}

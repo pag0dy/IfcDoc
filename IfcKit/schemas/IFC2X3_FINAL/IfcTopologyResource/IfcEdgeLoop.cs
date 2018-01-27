@@ -37,8 +37,8 @@ namespace BuildingSmart.IFC.IfcTopologyResource
 		[Description("A list of oriented edge entities which are concatenated together to form this pat" +
 	    "h.")]
 		public IList<IfcOrientedEdge> EdgeList { get { return this._EdgeList; } }
-	
-		public new Int64 Ne { get { return null; } }
+
+        public new Int64 Ne { get { return 0; } }
 	
 	
 	}

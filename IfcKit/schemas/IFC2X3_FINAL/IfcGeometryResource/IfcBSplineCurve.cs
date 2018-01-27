@@ -73,7 +73,7 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 	
 		public new IfcCartesianPoint ControlPoints { get { return null; } }
 	
-		public new Int64 UpperIndexOnControlPoints { get { return null; } }
+		public new Int64 UpperIndexOnControlPoints { get { return 0; } }
 	
 	
 	}

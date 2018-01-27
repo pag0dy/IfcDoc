@@ -44,11 +44,11 @@ namespace BuildingSmart.IFC.IfcUtilityResource
 		[Description("Reference to information content of rows.")]
 		public IList<IfcTableRow> Rows { get { return this._Rows; } }
 	
-		public new Int64 NumberOfCellsInRow { get { return null; } }
+		public new Int64 NumberOfCellsInRow { get { return 0; } }
 	
-		public new Int64 NumberOfHeadings { get { return null; } }
+		public new Int64 NumberOfHeadings { get { return 0; } }
 	
-		public new Int64 NumberOfDataRows { get { return null; } }
+		public new Int64 NumberOfDataRows { get { return 0; } }
 	
 	
 	}

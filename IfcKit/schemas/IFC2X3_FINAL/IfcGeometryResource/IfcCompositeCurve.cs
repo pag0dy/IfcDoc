@@ -47,7 +47,7 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 	    " only.\r\n")]
 		public Boolean? SelfIntersect { get { return this._SelfIntersect; } set { this._SelfIntersect = value;} }
 	
-		public new Int64 NSegments { get { return null; } }
+		public new Int64 NSegments { get { return 0; } }
 	
 		public new Boolean? ClosedCurve { get { return null; } }
 	

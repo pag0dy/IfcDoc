@@ -35,8 +35,8 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		[Description("The scaling value specified for the transformation along the axis 2. This is norm" +
 	    "ally the y scale factor.")]
 		public Double? Scale2 { get { return this._Scale2; } set { this._Scale2 = value;} }
-	
-		public new Double Scl2 { get { return null; } }
+
+        public new Double Scl2 { get { return 0.0; } }
 	
 	
 	}

@@ -82,8 +82,8 @@ namespace BuildingSmart.IFC.IfcRepresentationResource
 		public new IfcDimensionCount CoordinateSpaceDimension { get { return new IfcDimensionCount(); } }
 	
 		public new IfcDirection TrueNorth { get { return null; } }
-	
-		public new Double Precision { get { return null; } }
+
+        public new Double Precision { get { return 0.0; } }
 	
 	
 	}
