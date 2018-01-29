@@ -8415,11 +8415,13 @@ namespace IfcDoc
                 }
 
                 // remove old listings
+#if false
                 for (int iExist = docConcept.Items.Count - 1; iExist >= 0; iExist--)
                 {
                     docConcept.Items[iExist].Delete();
                     docConcept.Items.RemoveAt(iExist);
                 }
+#endif
 
                 foreach (DocPropertySet docPset in psets)
                 {
