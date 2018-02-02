@@ -8415,13 +8415,12 @@ namespace IfcDoc
                 }
 
                 // remove old listings
-#if false
+
                 for (int iExist = docConcept.Items.Count - 1; iExist >= 0; iExist--)
                 {
                     docConcept.Items[iExist].Delete();
                     docConcept.Items.RemoveAt(iExist);
                 }
-#endif
 
                 foreach (DocPropertySet docPset in psets)
                 {
@@ -9107,8 +9106,19 @@ namespace IfcDoc
             if (this.treeView.SelectedNode.Tag is DocConceptRoot)
             {
                 docRoot = (DocConceptRoot)this.treeView.SelectedNode.Tag;
+                DocTemplateUsage psetConcept = null;
+                
+                foreach (DocTemplateUsage concept in docRoot.Concepts)
+                {
+                    if (concept.Definition.Name == "Property Sets for Objects")
+                    {
+                        psetConcept = concept;
+                        break;
+                    }
+                }
+
                 docEntity = docRoot.ApplicableEntity;
-                using (FormSelectProperty form = new FormSelectProperty(docEntity, this.m_project, true))
+                using (FormSelectProperty form = new FormSelectProperty(docEntity, this.m_project, true, psetConcept))
                 {
                     if (form.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
                     {

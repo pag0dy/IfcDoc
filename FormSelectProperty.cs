@@ -16,6 +16,7 @@ namespace IfcDoc
     {
         DocEntity m_entity;
         DocProject m_project;
+        DocTemplateUsage m_psetConcept;
         string m_portname;
 
         Dictionary<string, DocProperty> m_sharedproperties;
@@ -31,10 +32,11 @@ namespace IfcDoc
         /// <param name="docEntity">If entity specified, shows property sets and properties applicable to entity; if null, shows all property sets.</param>
         /// <param name="docProject">Required project.</param>
         /// <param name="multiselect">True to select multiple properties; False to select single property; Null to show properties that can be merged.</param>
-        public FormSelectProperty(DocEntity docEntity, DocProject docProject, bool? multiselect) : this()
+        public FormSelectProperty(DocEntity docEntity, DocProject docProject, bool? multiselect, DocTemplateUsage psetConcept = null) : this()
         {
             this.m_entity = docEntity;
             this.m_project = docProject;
+            this.m_psetConcept = psetConcept;
 
             if (multiselect != null)
             {
@@ -210,6 +212,24 @@ namespace IfcDoc
                             tnPset.Text = docPset.Name;
                             tnPset.ImageIndex = 0;
                             tnPset.SelectedImageIndex = 0;
+                            
+                            if (m_psetConcept != null)
+                            {
+                                if (m_psetConcept.Items.Any())
+                                {
+                                    foreach (DocTemplateItem pset in this.m_psetConcept.Items)
+                                    {
+                                        //String psetName = pset.RuleParameters.Split('=')[1];
+                                        //psetName = psetName.Replace(";", string.Empty);
+                                        String psetName = pset.GetParameterValue("PsetName");
+                                        if (psetName == tnPset.Text)
+                                        {
+                                            tnPset.Checked = true;
+                                        }
+                                    }
+                                }
+                            }
+
                             this.treeViewProperty.Nodes.Add(tnPset);
 
                             // only select psets if no entity defined
