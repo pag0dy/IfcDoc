@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using BuildingSmart.Exchange;
 using BuildingSmart.Serialization.Spf;
 
 namespace BuildingSmart.Utilities.Validation
@@ -24,22 +25,31 @@ namespace BuildingSmart.Utilities.Validation
             InitializeComponent();
         }
 
-        public FormValidator(object target) : this()
+        public FormValidator(Concept target)
+            : this()
         {
             this.m_target = target;
 
             // get the underlying IfcProject
-            FieldInfo fieldTarget = typeof(BuildingSmart.Exchange.Concept).GetFields(BindingFlags.NonPublic | BindingFlags.Instance)[0];
-            object ifcProject = fieldTarget.GetValue(target);
-
-            // retrieve dictionary of all objects
-            Type typeProject = ifcProject.GetType();
-            StepSerializer format = new StepSerializer(typeProject);
-            using (MemoryStream stream = new MemoryStream())
+            object ifcProject = target.Target;
+            if (ifcProject != null)
             {
-                format.WriteObject(stream, ifcProject);
-                stream.Position = 0;
-                format.ReadObject(stream, out this.m_instances);
+                try
+                {
+                    // retrieve dictionary of all objects
+                    Type typeProject = ifcProject.GetType();
+                    StepSerializer format = new StepSerializer(typeProject);
+                    using (MemoryStream stream = new MemoryStream())
+                    {
+                        format.WriteObject(stream, ifcProject);
+                        stream.Position = 0;
+                        format.ReadObject(stream, out this.m_instances);
+                    }
+                }
+                catch (Exception xx)
+                {
+                    MessageBox.Show(this, "There was an error serializing the data:\r\n\r\n" + xx.Message, "Validation Error");
+                }
             }
         }
 
