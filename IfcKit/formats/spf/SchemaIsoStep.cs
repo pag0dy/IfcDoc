@@ -220,7 +220,7 @@ namespace BuildingSmart.Serialization.Spf
         [DataMember(Order = 0)]
         string name;
         [DataMember(Order = 1)]
-        string time_stamp;
+        DateTime time_stamp;
         [DataMember(Order = 2)]
         List<string> author;
         [DataMember(Order = 3)]
@@ -240,7 +240,7 @@ namespace BuildingSmart.Serialization.Spf
         public FILE_NAME(string thename, string theauthor, string theorganization, string preprocessor, string system)
         {
             this.name = thename;
-            this.time_stamp = DateTime.UtcNow.ToString("O");
+            this.time_stamp = DateTime.UtcNow;
             this.author = new List<string>();
             this.author.Add(theauthor);
             this.organization = new List<string>();
@@ -264,7 +264,7 @@ namespace BuildingSmart.Serialization.Spf
         }
 
         [DataMember(Order = 1)]
-        public string Timestamp
+        public DateTime Timestamp
         {
             get
             {

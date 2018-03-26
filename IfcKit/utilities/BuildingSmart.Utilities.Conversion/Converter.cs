@@ -19,8 +19,17 @@ using BuildingSmart.Serialization;
 
 namespace BuildingSmart.Utilities.Conversion
 {
+    /// <summary>
+    /// Interface supporting updating or converting an object to conform to schema
+    /// </summary>
     public interface IConvert
     {
+        /// <summary>
+        /// Either updates the source object or returns a new object compatible with the target schema.
+        /// </summary>
+        /// <param name="source">The source object to process.</param>
+        /// <param name="type">The type of new object to convert, which may be within the same or different assembly as the source object's type.</param>
+        /// <returns>Either a new object of the specified type if converted, the same object if updated, or null if no conversion is available to remove the object.</returns>
         object Convert(object source, Type type);
     }
 
@@ -30,6 +39,7 @@ namespace BuildingSmart.Utilities.Conversion
         Type m_typeTarget;
         Dictionary<Type, Type> m_mapTypes;
         Dictionary<Type, IConvert> m_mapConverters;
+        Dictionary<Type, IConvert> m_mapHealers;
         Adapter m_adapterSource;
         Adapter m_adapterTarget;
 
@@ -48,7 +58,7 @@ namespace BuildingSmart.Utilities.Conversion
         /// <param name="sourceType">The source type (e.g. BuildingSmart.IFC4X1.IfcProject to capture everything)</param>
         /// <param name="targetType">The target type (e.g. BuildingSmart.IFC2X3_FINAL.IfcProject) -- must be equivalent to sourceType.</param>
         /// <param name="mapTypes">Mapping of conversions; if not found then inheritance is used to match the closest base type. Types may be of the same assembly or different assemblies.</param>
-        /// <param name="mapConverters">Custom conversion called for performing conversions of specific types</param>
+        /// <param name="mapConverters">Custom conversion called for performing conversions of specific types.</param>
         public Converter(Type sourceType, Type targetType, Dictionary<Type, Type> mapTypes, Dictionary<Type, IConvert> mapConverters)
         {
             this.m_typeSource = sourceType;
@@ -57,6 +67,19 @@ namespace BuildingSmart.Utilities.Conversion
             this.m_adapterTarget = new Adapter(targetType);
             this.m_mapTypes = mapTypes;
             this.m_mapConverters = mapConverters;
+
+            // separate abstract types into healers
+            this.m_mapHealers = new Dictionary<Type, IConvert>();
+            if(mapConverters != null)
+            {
+                foreach(Type t in mapConverters.Keys)
+                {
+                    if(t.IsAbstract)
+                    {
+                        this.m_mapHealers.Add(t, mapConverters[t]);
+                    }
+                }
+            }
         }
 
 
@@ -83,6 +106,19 @@ namespace BuildingSmart.Utilities.Conversion
                 // allocate target object
                 Type typeSource = o.GetType();
                 Type typeTarget = this.m_adapterTarget.GetType(typeSource.Name);
+
+                // heal any objects first (before transforming)
+                Type t = typeSource.BaseType;
+                while(t != typeof(object))
+                {
+                    IConvert healer = null;
+                    if (this.m_mapHealers.TryGetValue(t, out healer))
+                    {
+                        healer.Convert(o, t);
+                    }
+
+                    t = t.BaseType;
+                }
 
                 Type typeOverride = null;
                 if (this.m_mapTypes != null && this.m_mapTypes.TryGetValue(typeSource, out typeOverride))
@@ -239,6 +275,12 @@ namespace BuildingSmart.Utilities.Conversion
                             }
                         }
                     }
+
+                    // populate any required fields on target object
+                    //for (int iField = 0; iField < fieldsTarget.Count; iField++)
+                    //{
+
+                    //}
                 }
             }
 

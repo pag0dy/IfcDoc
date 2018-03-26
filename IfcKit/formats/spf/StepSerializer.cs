@@ -45,8 +45,8 @@ namespace BuildingSmart.Serialization.Spf
         /// </summary>
         /// <param name="roottype"></param>
         /// <param name="loadtypes"></param>
-        public StepSerializer(Type roottype, Type[] loadtypes, string schema, string release)
-            : base(roottype, loadtypes, schema, release)
+        public StepSerializer(Type roottype, Type[] loadtypes, string schema, string release, string application)
+            : base(roottype, loadtypes, schema, release, application)
         {
         }
 
@@ -86,14 +86,9 @@ namespace BuildingSmart.Serialization.Spf
             // third pass: read fields
             ReadContent(stream, instances, ParseScope.DataFields);
 
-            // find the single IfcProject -- perf
-            foreach (object o in instances.Values)
-            {
-                if (this.ProjectType.IsInstanceOfType(o))
-                    return o;
-            }
-
-            return null; // could not find the single project object
+            object root = null;
+            instances.TryGetValue(0, out root);
+            return root;
         }
 
         /// <summary>
@@ -379,6 +374,12 @@ namespace BuildingSmart.Serialization.Spf
             }
             else if (t.IsEnum)
             {
+                // if converting enumeration that doesn't exist in target schema, then revert to default (0) value, which is typically NOTDEFINED for IFC
+                if (!Enum.IsDefined(t, o))
+                {
+                    o = Enum.ToObject(t, 0);
+                }
+
                 return "." + o.ToString() + ".";
             }
             else if (t.IsValueType)
@@ -483,8 +484,12 @@ namespace BuildingSmart.Serialization.Spf
                 }
             }
 
-            sb.Append(")");
+            if (i == 0)
+            {
+                return "$"; // don't export empty collections; use null
+            }
 
+            sb.Append(")");
             return sb.ToString();
         }
 
@@ -928,10 +933,12 @@ namespace BuildingSmart.Serialization.Spf
             if (strval == "$" || strval == "*")
             {
                 // special case if list - create it
-                //if (typeof(IEnumerable).IsAssignableFrom(type))
-                //{
-                //    value = Activator.CreateInstance(type);
-                //}
+                if (type != typeof(string) && type != typeof(byte[]) &&
+                    typeof(IEnumerable).IsAssignableFrom(type))
+                {
+                    Type typeCollection = this.GetCollectionInstanceType(type);
+                    value = Activator.CreateInstance(typeCollection);
+                }
 
                 return value;
             }
@@ -1118,7 +1125,13 @@ namespace BuildingSmart.Serialization.Spf
         private void ParseFields(object instance, string line, Dictionary<long, object> idmap)
         {
             Type t = instance.GetType();
+
             IList<FieldInfo> fields = this.GetFieldsOrdered(t);
+            if (fields.Count == 0)
+            {
+                FieldInfo f = t.GetField("Value");
+                fields = new List<FieldInfo>(new FieldInfo[]{f});
+            }
 
             int iParam = line.IndexOf('(');
             try
@@ -1401,9 +1414,14 @@ namespace BuildingSmart.Serialization.Spf
                         Type t = this.GetTypeByName(strType);
                         if (t != null)
                         {
-                            // can't create more than one IfcProject -- must encapsulate within IfcProjectLibrary
                             object o = Activator.CreateInstance(t);// FormatterServices.GetUninitializedObject(t);
                             idmap.Add(id, o);
+
+                            // capture project
+                            if (this.RootType.IsInstanceOfType(o) && !idmap.ContainsKey(0))
+                            {
+                                idmap.Add(0, o);
+                            }
                         }
                     }
                     break;
