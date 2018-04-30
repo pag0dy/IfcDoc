@@ -1,3 +1,0 @@
-﻿NOT(EXISTS(PredefinedType)) OR 
- (PredefinedType <> IfcWasteTerminalTypeEnum.USERDEFINED) OR 
- ((PredefinedType = IfcWasteTerminalTypeEnum.USERDEFINED) AND EXISTS (SELF\IfcObject.ObjectType))

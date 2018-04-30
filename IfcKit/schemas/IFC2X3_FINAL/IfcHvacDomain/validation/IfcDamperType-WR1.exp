@@ -1,2 +1,0 @@
-﻿(PredefinedType <> IfcDamperTypeEnum.USERDEFINED) OR
-((PredefinedType = IfcDamperTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcElementType.ElementType))

@@ -1,2 +1,0 @@
-﻿(NOT(EXISTS(TopFlangeFilletRadius))) OR 
-(TopFlangeFilletRadius <= (TopFlangeWidth - WebThickness)/2.)

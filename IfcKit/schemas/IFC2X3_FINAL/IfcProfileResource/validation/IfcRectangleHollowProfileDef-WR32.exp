@@ -1,3 +1,0 @@
-﻿NOT(EXISTS(OuterFilletRadius)) OR 
-((OuterFilletRadius <= (SELF\IfcRectangleProfileDef.XDim/2.)) AND 
- (OuterFilletRadius <= (SELF\IfcRectangleProfileDef.YDim/2.)))

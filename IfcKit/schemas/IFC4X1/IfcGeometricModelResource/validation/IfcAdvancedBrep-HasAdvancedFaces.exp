@@ -1,3 +1,0 @@
-﻿SIZEOF(QUERY(Afs <* SELF\IfcManifoldSolidBrep.Outer.CfsFaces |
-  (NOT ('IFCTOPOLOGYRESOURCE.IFCADVANCEDFACE' IN TYPEOF(Afs)))
-)) = 0

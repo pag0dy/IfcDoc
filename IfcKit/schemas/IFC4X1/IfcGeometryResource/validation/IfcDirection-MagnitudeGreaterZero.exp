@@ -1,1 +1,0 @@
-﻿SIZEOF(QUERY(Tmp <* DirectionRatios | Tmp <> 0.0)) > 0

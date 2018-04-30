@@ -1,1 +1,0 @@
-﻿(NOT EXISTS(InnerRadius)) OR (Radius > InnerRadius)

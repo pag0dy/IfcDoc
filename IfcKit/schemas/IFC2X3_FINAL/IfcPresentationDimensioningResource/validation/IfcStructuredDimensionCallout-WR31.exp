@@ -1,5 +1,0 @@
-﻿SIZEOF(QUERY ( Ato <* QUERY ( Con <* SELF.contents | (
-      'IFCPRESENTATIONDEFINITIONRESOURCE.IFCANNOTATIONTEXTOCCURRENCE' IN 
-       TYPEOF(Con)) ) | (NOT (Ato.Name IN ['dimension value',
-      'tolerance value','unit text','prefix text','suffix text']))))
-     = 0

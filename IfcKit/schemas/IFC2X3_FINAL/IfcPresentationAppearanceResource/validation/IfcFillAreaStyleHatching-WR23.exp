@@ -1,2 +1,0 @@
-﻿NOT(EXISTS(PointOfReferenceHatchLine)) 
-OR (PointOfReferenceHatchLine.Dim = 2)

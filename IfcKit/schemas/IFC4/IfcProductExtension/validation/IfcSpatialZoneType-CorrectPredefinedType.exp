@@ -1,2 +1,0 @@
-﻿(PredefinedType <> IfcSpatialZoneTypeEnum.USERDEFINED) OR 
-((PredefinedType = IfcSpatialZoneTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcSpatialElementType.ElementType))

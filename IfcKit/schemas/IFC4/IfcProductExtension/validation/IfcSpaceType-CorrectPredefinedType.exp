@@ -1,2 +1,0 @@
-﻿(PredefinedType <> IfcSpaceTypeEnum.USERDEFINED) OR 
-((PredefinedType = IfcSpaceTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcSpatialElementType.ElementType))

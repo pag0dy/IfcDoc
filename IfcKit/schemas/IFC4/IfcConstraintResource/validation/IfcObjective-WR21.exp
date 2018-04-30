@@ -1,2 +1,0 @@
-﻿(ObjectiveQualifier <> IfcObjectiveEnum.USERDEFINED) OR
-((ObjectiveQualifier = IfcObjectiveEnum.USERDEFINED) AND EXISTS(SELF\IfcObjective.UserDefinedQualifier))

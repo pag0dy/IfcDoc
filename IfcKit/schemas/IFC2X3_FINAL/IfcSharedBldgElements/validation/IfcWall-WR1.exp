@@ -1,3 +1,0 @@
-﻿SIZEOF (QUERY(temp <* SELF\IfcObjectDefinition.HasAssociations |
-  'IFCPRODUCTEXTENSION.IFCRELASSOCIATESMATERIAL' IN TYPEOF(temp)
-  )) <= 1

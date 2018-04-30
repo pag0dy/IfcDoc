@@ -1,2 +1,0 @@
-﻿(PredefinedType <> IfcSolarDeviceTypeEnum.USERDEFINED) OR
-((PredefinedType = IfcSolarDeviceTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcElementType.ElementType))

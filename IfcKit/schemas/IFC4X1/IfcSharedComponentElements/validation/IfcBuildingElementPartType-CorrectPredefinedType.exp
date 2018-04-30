@@ -1,2 +1,0 @@
-﻿(PredefinedType <> IfcBuildingElementPartTypeEnum.USERDEFINED) OR
-((PredefinedType = IfcBuildingElementPartTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcElementType.ElementType))
