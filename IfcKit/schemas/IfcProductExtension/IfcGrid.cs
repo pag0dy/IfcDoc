@@ -18,7 +18,7 @@ using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcProductExtension
 {
-	public partial class IfcGrid : IfcProduct
+	public partial class IfcGrid : IfcPositioningElement
 	{
 		[DataMember(Order = 0)] 
 		[Description("List of grid axes defining the first row of grid lines.")]
@@ -39,13 +39,8 @@ namespace BuildingSmart.IFC.IfcProductExtension
 	
 		[DataMember(Order = 3)] 
 		[XmlAttribute]
-		[Description("Predefined types to define the particular type of the grid.  <blockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; New attribute.  </blockquote>")]
+		[Description("Predefined types to define the particular type of the grid.   <blockquote class=\"change-ifc4\">IFC4 Change&nbsp; New attribute.</blockquote>")]
 		public IfcGridTypeEnum? PredefinedType { get; set; }
-	
-		[InverseProperty("RelatedElements")] 
-		[Description("Relationship to a spatial structure element, to which the grid is primarily associated.  <blockquote class=\"change-ifc2x\">IFC2x CHANGE&nbsp; The inverse relationship has been added to <em>IfcGrid</em> with upward compatibility</blockquote>")]
-		[MaxLength(1)]
-		public ISet<IfcRelContainedInSpatialStructure> ContainedInStructure { get; protected set; }
 	
 	
 		public IfcGrid(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcObjectPlacement __ObjectPlacement, IfcProductRepresentation __Representation, IfcGridAxis[] __UAxes, IfcGridAxis[] __VAxes, IfcGridAxis[] __WAxes, IfcGridTypeEnum? __PredefinedType)
@@ -55,7 +50,6 @@ namespace BuildingSmart.IFC.IfcProductExtension
 			this.VAxes = new List<IfcGridAxis>(__VAxes);
 			this.WAxes = new List<IfcGridAxis>(__WAxes);
 			this.PredefinedType = __PredefinedType;
-			this.ContainedInStructure = new HashSet<IfcRelContainedInSpatialStructure>();
 		}
 	
 	

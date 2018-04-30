@@ -17,21 +17,15 @@ using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
-	public partial class IfcOffsetCurve2D : IfcCurve
+	public partial class IfcOffsetCurve2D : IfcOffsetCurve
 	{
 		[DataMember(Order = 0)] 
-		[XmlElement]
-		[Description("The curve that is being offset.")]
-		[Required()]
-		public IfcCurve BasisCurve { get; set; }
-	
-		[DataMember(Order = 1)] 
 		[XmlAttribute]
 		[Description("The distance of the offset curve from the basis curve. distance may be positive, negative or zero. A positive value of distance defines an offset in the direction which is normal to the curve in the sense of an anti-clockwise rotation through 90 degrees from the tangent vector T at the given point. (This is in the direction of orthogonal complement(T).)")]
 		[Required()]
 		public IfcLengthMeasure Distance { get; set; }
 	
-		[DataMember(Order = 2)] 
+		[DataMember(Order = 1)] 
 		[XmlAttribute]
 		[Description("An indication of whether the offset curve self-intersects; this is for information only.")]
 		[Required()]
@@ -39,8 +33,8 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 	
 	
 		public IfcOffsetCurve2D(IfcCurve __BasisCurve, IfcLengthMeasure __Distance, IfcLogical __SelfIntersect)
+			: base(__BasisCurve)
 		{
-			this.BasisCurve = __BasisCurve;
 			this.Distance = __Distance;
 			this.SelfIntersect = __SelfIntersect;
 		}

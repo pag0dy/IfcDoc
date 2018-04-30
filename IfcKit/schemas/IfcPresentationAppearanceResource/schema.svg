@@ -38,7 +38,6 @@
   </g>
   <g id="IfcColourSpecification" fill="yellow">
     <rect x="2738.8875375" y="1064.29995" width="143.71249875" height="46.24999875" stroke="black" />
-    <polyline points="2810.7437625,1110.549975 2810.7437625,1138.074975 " fill="none" stroke="black" stroke-width="3" />
     <text x="2810.743786875" y="1087.424949375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcColourSpecification</text>
     <g id="Name">
       <polyline points="2738.8875375,1087.4249625 2687.38753875,1087.4249625 " fill="none" stroke="black" stroke-dasharray="1,1" />
@@ -207,7 +206,6 @@
   </g>
   <g id="IfcIndexedTextureMap" fill="yellow">
     <rect x="1924.1374875" y="1057.3099875" width="111" height="52.5" stroke="black" />
-    <polyline points="2003.6374875,1109.8099875 2003.6374875,1137.670000125 " fill="none" stroke="black" stroke-width="3" />
     <text x="1979.6374875" y="1083.5599875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcIndexedTextureMap</text>
     <g id="MappedTo">
       <polyline points="2035.1374875,1071.893325 2187.2749875,1071.893325 " fill="none" stroke="black" />
@@ -248,12 +246,10 @@
   </g>
   <g id="IfcPreDefinedColour" fill="yellow">
     <rect x="2456.51251220703" y="1023.3125" width="83.74999875" height="46.24999875" stroke="black" />
-    <polyline points="2535.3874875,1069.56249875 2535.3874875,1069.56249875 2535.3874875,1137.0874875 " fill="none" stroke="black" stroke-width="3" />
     <text x="2498.38751158203" y="1046.437499375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcPreDefinedColour</text>
   </g>
   <g id="IfcPreDefinedCurveFont" fill="yellow">
     <rect x="1218.1066125" y="734.5517625" width="83.12500125" height="62.4999975" stroke="black" />
-    <polyline points="1259.6691375,797.051775 1259.6691375,820.25175 " fill="none" stroke="black" stroke-width="3" />
     <text x="1259.669113125" y="765.80176125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcPreDefinedCurveFont</text>
   </g>
   <g id="IfcPreDefinedItem" fill="yellow">
@@ -270,13 +266,10 @@
   </g>
   <g id="IfcPreDefinedTextFont" fill="yellow">
     <rect x="2426.3125125" y="422.612475" width="121.2375" height="46.24999875" stroke="black" />
-    <polyline points="2488.5054,468.8624625 2488.5054,526.1374875 " fill="none" stroke="black" stroke-width="3" />
     <text x="2486.9312625" y="445.737474375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcPreDefinedTextFont</text>
   </g>
   <g id="IfcPresentationStyle" fill="yellow">
     <rect x="1280.96154785156" y="39.6417560577394" width="100.000001907349" height="136.000001907349" stroke="black" />
-    <polyline points="1380.96154975891,78.9842491149904 1380.96154975891,78.9842491149904 1407.36907958984,78.9842491149904 " fill="none" stroke="black" stroke-width="3" />
-    <polyline points="1380.96154975891,148.009250640869 1380.96154975891,148.009250640869 1398.73797607422,148.009250640869 " fill="none" stroke="black" stroke-width="3" />
     <polyline points="1380.96154975891,110.984252929688 1380.96154975891,110.984252929688 1408.43780517578,110.984252929688 " fill="none" stroke="black" stroke-width="3" />
     <polyline points="1331.9816904068,175.641757965088 1331.9816904068,175.641757965088 1331.9816904068,184.176773071289 " fill="none" stroke="black" stroke-width="3" />
     <text x="1330.96154880524" y="107.641757011414" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcPresentationStyle</text>
@@ -387,7 +380,6 @@
   </g>
   <g id="IfcSurfaceStyleShading" fill="yellow">
     <rect x="692.39749145508" y="961.480041503906" width="93" height="54.4999980926513" stroke="black" />
-    <polyline points="738.8974875,1015.98003959656 738.8974875,1015.98003959656 738.8974875,1043.58 " fill="none" stroke="black" stroke-width="3" />
     <text x="738.89749145508" y="988.730040550232" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcSurfaceStyleShading</text>
     <g id="SurfaceColour">
       <polyline points="785.39749145508,974.930025 785.39749145508,974.930025 973.697475,974.930025 " fill="none" stroke="black" />

@@ -14,7 +14,6 @@
   </g>
   <g id="IfcConversionBasedUnit" fill="yellow">
     <rect x="380.0601375" y="546.0877125" width="167.50000125" height="37.5" stroke="black" />
-    <polyline points="413.9713125,583.5877125 413.9713125,801.884235 " fill="none" stroke="black" stroke-width="3" />
     <text x="463.810138125" y="564.8377125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcConversionBasedUnit</text>
     <g id="Name">
       <polyline points="463.810125,583.5877125 463.810125,629.4310575 " fill="none" stroke="black" />

@@ -14,7 +14,6 @@
   </g>
   <g id="IfcRelConnectsStructuralMember" fill="yellow">
     <rect x="701.941575" y="557.944875" width="186.77433" height="86.01017625" stroke="black" />
-    <polyline points="738.9414375,643.9550625 738.9414375,801.2609175 " fill="none" stroke="black" stroke-width="3" />
     <text x="795.32874" y="600.949963125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcRelConnectsStructuralMember</text>
     <g id="RelatingStructuralMember">
       <polyline points="888.7159125,563.8800375 978.2384775,563.8800375 978.2384775,305.18467875 " fill="none" stroke="black" />
@@ -122,7 +121,6 @@
   </g>
   <g id="IfcStructuralCurveAction" fill="yellow">
     <rect x="1819.71472167969" y="506.323440551756" width="141.703227996826" height="37.5" stroke="black" />
-    <polyline points="1961.41794967652,525.073440551756 1961.41794967652,525.073440551756 1989.35400390625,525.073440551756 " fill="none" stroke="black" stroke-width="3" />
     <text x="1890.5663356781" y="525.073440551756" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcStructuralCurveAction</text>
     <g id="ProjectedOrTrue">
       <polyline points="1890.69598770142,543.823440551756 1890.69598770142,543.823440551756 1890.69598770142,602.461730957033 " fill="none" stroke="black" stroke-dasharray="1,1" />
@@ -143,7 +141,6 @@
   </g>
   <g id="IfcStructuralCurveMember" fill="yellow">
     <rect x="1313.0684625" y="418.587825" width="113.94284625" height="60.31297875" stroke="black" />
-    <polyline points="1370.5078875,478.9008 1370.5078875,493.947271875 1370.5543776375,493.947271875 1370.5543776375,515.07744825 " fill="none" stroke="black" stroke-width="3" />
     <text x="1370.039885625" y="448.744314375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcStructuralCurveMember</text>
     <g id="PredefinedType">
       <polyline points="1427.0113125,432.2353875 1525.38279375,432.2353875 " fill="none" stroke="black" />
@@ -191,7 +188,6 @@
   </g>
   <g id="IfcStructuralLoadGroup" fill="yellow">
     <rect x="32.1190614700317" y="393.798309326171" width="118.703243255615" height="239.044425" stroke="black" />
-    <polyline points="85.47068625,632.842734326171 85.47068625,632.842734326171 85.47068625,799.823475 " fill="none" stroke="black" stroke-width="3" />
     <text x="91.4706830978394" y="513.320521826171" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcStructuralLoadGroup</text>
     <g id="PredefinedType">
       <polyline points="150.822304725647,403.6692075 150.822304725647,403.6692075 259.1436075,403.6692075 " fill="none" stroke="black" />
@@ -283,7 +279,6 @@
   </g>
   <g id="IfcStructuralSurfaceAction" fill="yellow">
     <rect x="1820.71478271484" y="689.361938476564" width="141.703227996826" height="37.5" stroke="black" />
-    <polyline points="1962.41801071167,708.111938476564 1962.41801071167,708.111938476564 1989.35400390625,708.111938476564 " fill="none" stroke="black" stroke-width="3" />
     <text x="1891.56639671326" y="708.111938476564" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcStructuralSurfaceAction</text>
     <g id="ProjectedOrTrue">
       <polyline points="1890.69598770142,689.361938476564 1890.69598770142,689.361938476564 1890.69598770142,645.399906635284 " fill="none" stroke="black" stroke-dasharray="1,1" />
@@ -300,7 +295,6 @@
   </g>
   <g id="IfcStructuralSurfaceMember" fill="yellow">
     <rect x="1313.0426625" y="615.252375" width="124.15041375" height="76.01635125" stroke="black" />
-    <polyline points="1375.1179125,691.2687375 1375.1179125,731.0175 " fill="none" stroke="black" stroke-width="3" />
     <text x="1375.117869375" y="653.260550625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcStructuralSurfaceMember</text>
     <g id="PredefinedType">
       <polyline points="1437.1930875,625.5585 1525.3605525,625.5585 " fill="none" stroke="black" />

@@ -10,11 +10,13 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 
 namespace BuildingSmart.IFC.IfcRepresentationResource
 {
-	public partial class IfcShapeAspect
+	public partial class IfcShapeAspect :
+		BuildingSmart.IFC.IfcExternalReferenceResource.IfcResourceObjectSelect
 	{
 		[DataMember(Order = 0)] 
 		[Description("List of <strike>shape</strike> representations. Each member defines a valid representation of a particular type within a particular representation context as being an aspect (or part) of a product definition.  <blockquote class=\"change-ifc2x3\">IFC2x3 CHANGE&nbsp; The data type has been changed from <em>IfcShapeRepresentation</em> to <em>IfcShapeModel</em> with upward compatibility </blockquote>")]
@@ -43,6 +45,10 @@ namespace BuildingSmart.IFC.IfcRepresentationResource
 		[Description("Reference to the <em>IfcProductDefinitionShape</em> or the <em>IfcRepresentationMap</em> of which this shape is an aspect.  <blockquote class=\"change-ifc2x4\">  IFC4 CHANGE&nbsp; Data type modified to be <em>IfcProductRepresentationSelect</em> allowing the assignment also to <em>IfcRepresentationMap</em>.  </blockquote>")]
 		public IfcProductRepresentationSelect PartOfProductDefinitionShape { get; set; }
 	
+		[InverseProperty("RelatedResourceObjects")] 
+		[Description("External references (e.g. classification) associated with the shape aspect.")]
+		public ISet<IfcExternalReferenceRelationship> HasExternalReferences { get; protected set; }
+	
 	
 		public IfcShapeAspect(IfcShapeModel[] __ShapeRepresentations, IfcLabel? __Name, IfcText? __Description, IfcLogical __ProductDefinitional, IfcProductRepresentationSelect __PartOfProductDefinitionShape)
 		{
@@ -51,6 +57,7 @@ namespace BuildingSmart.IFC.IfcRepresentationResource
 			this.Description = __Description;
 			this.ProductDefinitional = __ProductDefinitional;
 			this.PartOfProductDefinitionShape = __PartOfProductDefinitionShape;
+			this.HasExternalReferences = new HashSet<IfcExternalReferenceRelationship>();
 		}
 	
 	

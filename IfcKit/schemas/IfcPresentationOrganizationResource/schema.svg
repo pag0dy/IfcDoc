@@ -141,7 +141,6 @@
   </g>
   <g id="IfcPresentationLayerAssignment" fill="yellow">
     <rect x="15.3125" y="31.5250015258789" width="164.75" height="232.54999923706" stroke="black" />
-    <polyline points="97.6875162124635,264.075000762939 97.6875162124635,264.075000762939 97.6875162124635,353.390014648437 " fill="none" stroke="black" stroke-width="3" />
     <text x="97.6874999999999" y="147.800001144409" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcPresentationLayerAssignment</text>
     <g id="Name">
       <polyline points="180.0625,46.3625211715699 180.0625,46.3625211715699 308.912475585938,46.3625211715699 " fill="none" stroke="black" />

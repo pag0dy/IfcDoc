@@ -25,10 +25,17 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 		[MinLength(1)]
 		public IList<IfcLengthMeasure> CoordList { get; protected set; }
 	
+		[DataMember(Order = 1)] 
+		[XmlAttribute]
+		[Description("List of tags corresponding to each point that may be used to identify a basis curve according to the Tag attribute at <i>IfcOffsetCurveByDistances</i> or <i>IfcAlignmentCurve</i>.")]
+		[MinLength(1)]
+		public IList<IfcLabel> TagList { get; protected set; }
 	
-		public IfcCartesianPointList2D(IfcLengthMeasure[] __CoordList)
+	
+		public IfcCartesianPointList2D(IfcLengthMeasure[] __CoordList, IfcLabel[] __TagList)
 		{
 			this.CoordList = new List<IfcLengthMeasure>(__CoordList);
+			this.TagList = new List<IfcLabel>(__TagList);
 		}
 	
 	

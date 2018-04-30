@@ -2,7 +2,6 @@
 <svg xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="1.1" width="3000" height="888" xmlns="http://www.w3.org/2000/svg">
   <g id="IfcCoordinateOperation" fill="yellow">
     <rect x="1844.0529375" y="59.029035" width="187.91029875" height="37.5" stroke="black" />
-    <polyline points="1967,96.529035 1967,96.529035 1967,163 " fill="none" stroke="black" stroke-width="3" />
     <text x="1938.008086875" y="77.779035" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcCoordinateOperation</text>
     <g id="SourceCRS">
       <polyline points="2016.63457125,96.529035 2016.63457125,96.529035 2016.63457125,391.7436375 " fill="none" stroke="black" />
@@ -15,7 +14,6 @@
   </g>
   <g id="IfcCoordinateReferenceSystem" fill="yellow">
     <rect x="1844.01818847656" y="554.621154785156" width="137.46101625" height="135.9962175" stroke="black" />
-    <polyline points="1861.09815,690.617372285156 1861.09815,690.617372285156 1861.09815,729.7518 " fill="none" stroke="black" stroke-width="3" />
     <text x="1912.74869660156" y="622.619263535156" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcCoordinateReferenceSystem</text>
     <g id="Name">
       <polyline points="1981.47920472656,573.9717375 1981.47920472656,573.9717375 2188.3738875,573.9717375 " fill="none" stroke="black" />
@@ -224,7 +222,6 @@
   </g>
   <g id="IfcRepresentationContext" fill="yellow">
     <rect x="23.0454173088074" y="133.84790802002" width="167.37499875" height="92.0712486853027" stroke="black" />
-    <polyline points="127,225.919156705322 127,225.919156705322 127,244 " fill="none" stroke="black" stroke-width="3" />
     <text x="106.732916683807" y="179.883532362671" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcRepresentationContext</text>
     <g id="ContextIdentifier">
       <polyline points="190.420416058807,182.803474426269 190.420416058807,182.803474426269 439.04362487793,182.803474426269 " fill="none" stroke="black" stroke-dasharray="1,1" />
@@ -259,8 +256,12 @@
       <text x="786.158178616333" y="772.85858754297" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">ProductDefinitional</text>
     </g>
     <g id="PartOfProductDefinitionShape">
-      <polyline points="890.0847,789.9760875 890.0847,832.6939725 " fill="none" stroke="black" stroke-dasharray="1,1" />
-      <text x="961.194165" y="799.105004625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">PartOfProductDefinitionShape</text>
+      <polyline points="916.16262817383,789.97608 916.16262817383,789.97608 916.16262817383,824.693908691408 " fill="none" stroke="black" stroke-dasharray="1,1" />
+      <text x="916.16262817383" y="814.834994345704" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">PartOfProductDefinitionShape</text>
+    </g>
+    <g id="HasExternalReferences">
+      <polyline points="833.5144125,789.97608 833.5144125,833.302215576172 761.264450073244,833.302215576172 " fill="none" stroke="black" />
+      <text x="797.389431286622" y="819.139147788086" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">HasExternalReferences S[0:?]</text>
     </g>
   </g>
   <g id="IfcShapeModel" fill="yellow">
@@ -284,7 +285,6 @@
   </g>
   <g id="IfcStyleModel" fill="yellow">
     <rect x="653.544525" y="445.1290125" width="124.2340275" height="45.9082125" stroke="black" />
-    <polyline points="715.66155,491.037225 715.66155,603.251475 " fill="none" stroke="black" stroke-width="3" />
     <text x="715.66153875" y="468.08311875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcStyleModel</text>
   </g>
   <g id="IfcTopologyRepresentation" fill="yellow">
@@ -418,9 +418,21 @@ IfcPresentationLayerAssignment</text>
   </g>
   <g id="IFCEXTERNALREFERENCERESOURCE">
     <g id="IfcClassificationReference" />
+    <g id="IfcExternalReferenceRelationship" fill="grey">
+      <rect x="611.264450073244" y="816.427215576172" width="150" height="33.75" stroke="black" />
+      <text x="686.264450073244" y="833.302215576172" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCEXTERNALREFERENCERESOURCE
+IfcExternalReferenceRelationship</text>
+    </g>
   </g>
   <g id="IFCGEOMETRICMODELRESOURCE">
     <g id="IfcGeometricSet" />
+  </g>
+  <g id="IFCEXTERNALREFERENCERESOURCE">
+    <g id="IfcResourceObjectSelect" fill="grey">
+      <rect x="1017.26441955566" y="840.427154541015" width="150" height="33.75" stroke="black" />
+      <text x="1092.26441955566" y="857.302154541015" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCEXTERNALREFERENCERESOURCE
+IfcResourceObjectSelect</text>
+    </g>
   </g>
   <g id="2,1 IfcRepresentationMap" fill="blue">
     <rect x="671.0425125" y="-33.7348425" width="45" height="31.875" rx="10" ry="10" stroke="black" />
@@ -563,8 +575,8 @@ IfcPresentationLayerAssignment</text>
     <polyline points="1268.2743,624.4566375 1290.0126825,624.4566375 " fill="none" stroke="black" />
     <text x="1245.7743" y="624.4566375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">3,2 IfcProductRepresentationSelect</text>
     <g id="3,2 IfcProductRepresentationSelect" fill="silver">
-      <rect x="803.47515" y="832.69395" width="171.375" height="30" rx="10" ry="10" stroke="black" />
-      <text x="889.16265" y="847.69395" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">3,2 IfcProductRepresentationSelect</text>
+      <rect x="830.47512817383" y="824.693908691408" width="171.375" height="30" rx="10" ry="10" stroke="black" />
+      <text x="916.16262817383" y="839.693908691408" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">3,2 IfcProductRepresentationSelect</text>
     </g>
   </g>
   <g id="2,2 IfcShapeAspect" fill="blue">
