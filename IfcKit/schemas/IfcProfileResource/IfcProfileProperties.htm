@@ -1,0 +1,55 @@
+﻿    <p>
+      This is a collection of properties applicable to section
+      profile definitions.
+    </p>
+
+    <blockquote class="history">
+      HISTORY&nbsp; New entity in IFC2x2.
+    </blockquote>
+    <blockquote class="change-ifc2x4">
+      IFC4 CHANGE&nbsp; Entity made non-abstract. Subtypes
+      <em>IfcGeneralProfileProperties</em>,
+      <em>IfcStructuralProfileProperties</em>, and
+      <em>IfcStructuralSteelProfileProperties</em> deleted. Attribute
+      <em>ProfileName</em> deleted, use
+      <em>ProfileDefinition.ProfileName</em> instead. Attribute
+      <em>ProfileDefinition</em> made mandatory. Attributes
+      <em>Name</em>, <em>Description</em>, and <em>HasProperties</em>
+      added (inherited from <em>IfcExtendedProperties</em>).
+    </blockquote>
+<!--
+    <p class="use-head">
+      Property use definitions
+    </p>
+    <p>
+      The following sets of material property definitions are part
+      of this IFC release. They are direct instantiations of
+      <em>IfcProperties</em> with the <em>Name</em> attribute
+      holding the property set name.
+    </p>
+
+<ul>
+<li><a href="../../psd/ifcprofileresource/Pset_ProfileMechanical.xml">Pset_ProfileMechanical</a> (<a href="../../ifckernel/lexical/ifcpropertysettemplatetypeenum.htm">occurrence driven</a>)</li>
+<li><a href="../../psd/ifcprofileresource/Pset_ProfileArbitraryHollowCore.xml">Pset_ProfileArbitraryHollowCore</a> (<a href="../../ifckernel/lexical/ifcpropertysettemplatetypeenum.htm">occurrence driven</a>)</li>
+<li><a href="../../psd/ifcprofileresource/Pset_ProfileArbitraryDoubleT.xml">Pset_ProfileArbitraryDoubleT</a> (<a href="../../ifckernel/lexical/ifcpropertysettemplatetypeenum.htm">occurrence driven</a>)</li>
+</ul>
+
+<p>Figure 4 illustrates properties of <em>Pset_ProfileMechanical</em>.</p>
+<table>
+<tr><td><image src="../../../figures/ifcprofileproperties_mechanical.png" alt="Mechanical profile properties"/></td></tr>
+<tr><td><p class="figure">Figure 4 &mdash; Mechanical profile properties</p></td></tr>
+</table>
+
+<p>Figure 5 illustrates properties of <em>Pset_Profile_ArbitraryDoubleT</em>.</p>
+<table>
+<tr><td><image src="../../../figures/ifcprofileproperties_double_t.png" alt="Double T profile properties"/></td></tr>
+<tr><td><p class="figure">Figure 5 &mdash; Hollow core profile properties</p></td></tr>
+</table>
+
+<p>Figure 6 illustrates properties of <em>Pset_Profile_ArbitraryHollowCore</em>.</p>
+<table>
+<tr><td><image src="../../../figures/ifcprofileproperties_hollow_core.png" alt="Hollow core profile properties"/></td></tr>
+<tr><td><p class="figure">Figure 6 &mdash; Double T profile properties</p></td></tr>
+</table>
+
+--!>

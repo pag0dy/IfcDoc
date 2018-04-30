@@ -16,15 +16,17 @@ using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcProductExtension
 {
-	public partial class IfcRelVoidsElement : IfcRelConnects
+	public partial class IfcRelVoidsElement : IfcRelDecomposes
 	{
 		[DataMember(Order = 0)] 
-		[Description("<EPM-HTML>  Reference to <strike>building</strike> element in which a void is created by associated <strike>opening</strike> feature subtraction element.  <blockquote><small><font color=\"#ff0000\">  IFC2x PLATFORM CHANGE: The data type has been changed from <i>IfcBuildingElement</i> to <i>IfcElement</i> with upward compatibility for file based exchange.  </font></small></blockquote>  </EPM-HTML>  ")]
+		[XmlIgnore]
+		[Description("Reference to element in which a void is created by associated feature subtraction element.  <blockquote class=\"change-ifc2x\">IFC2x CHANGE&nbsp; The data type has been changed from <em>IfcBuildingElement</em> to <em>IfcElement</em> with upward compatibility for file based exchange.</blockquote>  ")]
 		[Required()]
 		public IfcElement RelatingBuildingElement { get; set; }
 	
 		[DataMember(Order = 1)] 
-		[Description("<EPM-HTML>  Reference to the <strike>opening</strike> feature subtraction element which defines a void in the associated <strike>opening</strike> element.  <blockquote><small><font color=\"#ff0000\">  IFC2x PLATFORM CHANGE&nbsp; The data type has been changed from <i>IfcOpeningElement</i> to <i>IfcFeatureElementSubtraction</i> with upward compatibility for file based exchange.  </font></small></blockquote>  </EPM-HTML>")]
+		[XmlElement]
+		[Description("Reference to the feature subtraction element which defines a void in the associated element.  <blockquote class=\"change-ifc2x\">IFC2x CHANGE&nbsp; The data type has been changed from <em>IfcOpeningElement</em> to <em>IfcFeatureElementSubtraction</em> with upward compatibility for file based exchange.</blockquote>")]
 		[Required()]
 		public IfcFeatureElementSubtraction RelatedOpeningElement { get; set; }
 	

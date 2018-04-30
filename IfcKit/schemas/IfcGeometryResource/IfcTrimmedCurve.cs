@@ -12,6 +12,7 @@ using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometricModelResource;
+using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
@@ -20,6 +21,7 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 	public partial class IfcTrimmedCurve : IfcBoundedCurve
 	{
 		[DataMember(Order = 0)] 
+		[XmlElement]
 		[Description("The curve to be trimmed. For curves with multiple representations any parameter values given as Trim1 or Trim2 refer to the master representation of the BasisCurve only.")]
 		[Required()]
 		public IfcCurve BasisCurve { get; set; }
@@ -39,9 +41,10 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		public ISet<IfcTrimmingSelect> Trim2 { get; protected set; }
 	
 		[DataMember(Order = 3)] 
+		[XmlAttribute]
 		[Description("Flag to indicate whether the direction of the trimmed curve agrees with or is opposed to the direction of the basis curve.")]
 		[Required()]
-		public Boolean SenseAgreement { get; set; }
+		public IfcBoolean SenseAgreement { get; set; }
 	
 		[DataMember(Order = 4)] 
 		[XmlAttribute]
@@ -50,7 +53,7 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		public IfcTrimmingPreference MasterRepresentation { get; set; }
 	
 	
-		public IfcTrimmedCurve(IfcCurve __BasisCurve, IfcTrimmingSelect[] __Trim1, IfcTrimmingSelect[] __Trim2, Boolean __SenseAgreement, IfcTrimmingPreference __MasterRepresentation)
+		public IfcTrimmedCurve(IfcCurve __BasisCurve, IfcTrimmingSelect[] __Trim1, IfcTrimmingSelect[] __Trim2, IfcBoolean __SenseAgreement, IfcTrimmingPreference __MasterRepresentation)
 		{
 			this.BasisCurve = __BasisCurve;
 			this.Trim1 = new HashSet<IfcTrimmingSelect>(__Trim1);

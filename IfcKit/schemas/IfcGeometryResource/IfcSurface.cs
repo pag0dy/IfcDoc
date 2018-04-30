@@ -26,6 +26,8 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		{
 		}
 	
+		public new IfcDimensionCount Dim { get { return new IfcDimensionCount(); } }
+	
 	
 	}
 	

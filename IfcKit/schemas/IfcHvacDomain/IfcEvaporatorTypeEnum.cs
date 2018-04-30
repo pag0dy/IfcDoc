@@ -15,18 +15,32 @@ namespace BuildingSmart.IFC.IfcHvacDomain
 {
 	public enum IfcEvaporatorTypeEnum
 	{
-		DIRECTEXPANSIONSHELLANDTUBE = 1,
+		[Description("Direct-expansion evaporator.")]
+		DIRECTEXPANSION = 1,
 	
-		DIRECTEXPANSIONTUBEINTUBE = 2,
+		[Description("Direct-expansion evaporator where a refrigerant evaporates inside a series of baf" +
+	    "fles that channel the fluid throughout the shell side.")]
+		DIRECTEXPANSIONSHELLANDTUBE = 2,
 	
-		DIRECTEXPANSIONBRAZEDPLATE = 3,
+		[Description("Direct-expansion evaporator where a refrigerant evaporates inside one or more pai" +
+	    "rs of coaxial tubes.")]
+		DIRECTEXPANSIONTUBEINTUBE = 3,
 	
-		FLOODEDSHELLANDTUBE = 4,
+		[Description("Direct-expansion evaporator where a refrigerant evaporates inside plates brazed o" +
+	    "r welded together to make up an assembly of separate channels.")]
+		DIRECTEXPANSIONBRAZEDPLATE = 4,
 	
-		SHELLANDCOIL = 5,
+		[Description("Evaporator in which refrigerant evaporates outside tubes.")]
+		FLOODEDSHELLANDTUBE = 5,
 	
+		[Description("Evaporator in which refrigerant evaporates inside a simple coiled tube immersed i" +
+	    "n the fluid to be cooled.")]
+		SHELLANDCOIL = 6,
+	
+		[Description("User-defined evaporator type.")]
 		USERDEFINED = -1,
 	
+		[Description("Undefined evaporator type.")]
 		NOTDEFINED = 0,
 	
 	}

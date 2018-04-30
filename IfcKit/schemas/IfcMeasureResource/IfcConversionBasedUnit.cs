@@ -10,10 +10,12 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcExternalReferenceResource;
 
 namespace BuildingSmart.IFC.IfcMeasureResource
 {
-	public partial class IfcConversionBasedUnit : IfcNamedUnit
+	public partial class IfcConversionBasedUnit : IfcNamedUnit,
+		BuildingSmart.IFC.IfcExternalReferenceResource.IfcResourceObjectSelect
 	{
 		[DataMember(Order = 0)] 
 		[XmlAttribute]
@@ -22,9 +24,14 @@ namespace BuildingSmart.IFC.IfcMeasureResource
 		public IfcLabel Name { get; set; }
 	
 		[DataMember(Order = 1)] 
+		[XmlElement]
 		[Description("The physical quantity from which the converted unit is derived.")]
 		[Required()]
 		public IfcMeasureWithUnit ConversionFactor { get; set; }
+	
+		[InverseProperty("RelatedResourceObjects")] 
+		[Description("Reference to external information, e.g. library, classification, or document information, which is associated with the conversion-based unit.  <blockquote class=\"change-ifc2x4\">IFC4 CHANGE New inverse attribute.</blockquote>")]
+		public ISet<IfcExternalReferenceRelationship> HasExternalReference { get; protected set; }
 	
 	
 		public IfcConversionBasedUnit(IfcDimensionalExponents __Dimensions, IfcUnitEnum __UnitType, IfcLabel __Name, IfcMeasureWithUnit __ConversionFactor)
@@ -32,6 +39,7 @@ namespace BuildingSmart.IFC.IfcMeasureResource
 		{
 			this.Name = __Name;
 			this.ConversionFactor = __ConversionFactor;
+			this.HasExternalReference = new HashSet<IfcExternalReferenceRelationship>();
 		}
 	
 	

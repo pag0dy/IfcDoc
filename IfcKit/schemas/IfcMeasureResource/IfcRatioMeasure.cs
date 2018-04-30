@@ -14,9 +14,9 @@ using System.Xml.Serialization;
 namespace BuildingSmart.IFC.IfcMeasureResource
 {
 	public partial struct IfcRatioMeasure :
-		BuildingSmart.IFC.IfcCostResource.IfcAppliedValueSelect,
 		BuildingSmart.IFC.IfcMeasureResource.IfcMeasureValue,
-		BuildingSmart.IFC.IfcPresentationAppearanceResource.IfcSizeSelect
+		BuildingSmart.IFC.IfcPresentationAppearanceResource.IfcSizeSelect,
+		BuildingSmart.IFC.IfcDateTimeResource.IfcTimeOrRatioSelect
 	{
 		[XmlText]
 		public Double Value { get; private set; }

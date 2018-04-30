@@ -14,9 +14,10 @@ using BuildingSmart.IFC.IfcMeasureResource;
 
 namespace BuildingSmart.IFC.IfcExternalReferenceResource
 {
-	public partial class IfcDocumentInformationRelationship
+	public partial class IfcDocumentInformationRelationship : IfcResourceLevelRelationship
 	{
 		[DataMember(Order = 0)] 
+		[XmlElement]
 		[Description("The document that acts as the parent, referencing or original document in a relationship.")]
 		[Required()]
 		public IfcDocumentInformation RelatingDocument { get; set; }
@@ -33,7 +34,8 @@ namespace BuildingSmart.IFC.IfcExternalReferenceResource
 		public IfcLabel? RelationshipType { get; set; }
 	
 	
-		public IfcDocumentInformationRelationship(IfcDocumentInformation __RelatingDocument, IfcDocumentInformation[] __RelatedDocuments, IfcLabel? __RelationshipType)
+		public IfcDocumentInformationRelationship(IfcLabel? __Name, IfcText? __Description, IfcDocumentInformation __RelatingDocument, IfcDocumentInformation[] __RelatedDocuments, IfcLabel? __RelationshipType)
+			: base(__Name, __Description)
 		{
 			this.RelatingDocument = __RelatingDocument;
 			this.RelatedDocuments = new HashSet<IfcDocumentInformation>(__RelatedDocuments);

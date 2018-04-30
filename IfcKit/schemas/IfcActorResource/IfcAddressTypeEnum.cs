@@ -15,14 +15,19 @@ namespace BuildingSmart.IFC.IfcActorResource
 {
 	public enum IfcAddressTypeEnum
 	{
+		[Description("An office address.")]
 		OFFICE = 1,
 	
+		[Description("A site address.")]
 		SITE = 2,
 	
+		[Description("A home address.")]
 		HOME = 3,
 	
+		[Description("A postal distribution point address.")]
 		DISTRIBUTIONPOINT = 4,
 	
+		[Description("A user defined address type to be provided.")]
 		USERDEFINED = -1,
 	
 	}

@@ -1,0 +1,16 @@
+﻿<p>A building system is a group by which building elements are grouped according to a common function within the building.</p>
+<p>The group <em>IfcBuildingSystem</em> defines the occurrence of a specialized system for use within the context of a building and
+finishing fabric. Important functionalities for the description of a building system are derived from supertypes:</p>
+<ul>
+<li>From <em>IfcSystem</em> it inherits the ability to couple the building system via <em>IfcRelServicesBuildings</em> to one or more
+<em>IfcSpatialElement</em> subtypes as necessary.</li> 
+<li>From <em>IfcGroup</em> it inherits the inverse attribute <em>IsGroupedBy</em>, pointing to the relationship class
+<em>IfcRelAssignsToGroup</em>. This allows to group building elements (instances of <em>IfcBuildingElement</em> subtypes,
+<em>IfcFurnishingElement</em> subtype, <em>IfcElementAssembly</em> and <em>IfcTransportElement</em>).</li>
+<li>From <em>IfcObjectDefinition</em> it inherits the inverse attribute <em>IsDecomposedBy</em> pointing to the relationship
+class <em>IfcRelAggregates</em>. It provides the hierarchy between the separate (partial) building systems.</li>
+</ul>
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC4.
+</blockquote>

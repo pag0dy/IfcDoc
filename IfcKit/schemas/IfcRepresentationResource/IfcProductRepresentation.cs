@@ -14,7 +14,7 @@ using BuildingSmart.IFC.IfcMeasureResource;
 
 namespace BuildingSmart.IFC.IfcRepresentationResource
 {
-	public partial class IfcProductRepresentation
+	public abstract partial class IfcProductRepresentation
 	{
 		[DataMember(Order = 0)] 
 		[XmlAttribute]
@@ -33,7 +33,7 @@ namespace BuildingSmart.IFC.IfcRepresentationResource
 		public IList<IfcRepresentation> Representations { get; protected set; }
 	
 	
-		public IfcProductRepresentation(IfcLabel? __Name, IfcText? __Description, IfcRepresentation[] __Representations)
+		protected IfcProductRepresentation(IfcLabel? __Name, IfcText? __Description, IfcRepresentation[] __Representations)
 		{
 			this.Name = __Name;
 			this.Description = __Description;

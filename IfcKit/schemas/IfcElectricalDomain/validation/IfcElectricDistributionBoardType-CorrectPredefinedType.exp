@@ -1,0 +1,2 @@
+﻿(PredefinedType <> IfcElectricDistributionBoardTypeEnum.USERDEFINED) OR
+((PredefinedType = IfcElectricDistributionBoardTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcElementType.ElementType))

@@ -1,53 +1,41 @@
-﻿<EPM-HTML>
-	 <P><U>Definition from IAI:</U> Instances of the entity
-		<I>IfcStructuralPointReaction</I> are used to define point reactions.
-		<I>IfcStructuralPointReaction</I> inherits all needed attributes from its
-		superclass <I>IfcStructuralReaction</I>.</P> 
-	 <P>The structural load, defining the point reaction is given by the
-		attribute <I>AppliedLoad</I> at the supertype <I>IfcStructuralActivity</I>.
-		The coordinate system, in which the <I>AppliedLoad</I> is defined is given by
-		the attribute <I>ObjectPlacement</I> at the supertype <I>IfcProduct</I>.</P> 
-	 <BLOCKQUOTE> 
-		<P><FONT COLOR="#0000FF" SIZE="-1">HISTORY: New entity in Release IFC2x
-		  Edition 2. </FONT></P> </BLOCKQUOTE> 
-	 <P><B><U>Topology Use Definition</U></B></P> 
-	 <P>Instances of <I>IfcStructuralPointReaction</I> shall have a topology
-		representation. It includes a placement and a product representation. The
-		<I>IfcProductRepresentation</I> shall be given by an item of
-		<I>Representations</I> being of type "<I>IfcTopologyRepresentation</I>". </P> 
-	 <P><B>Placement</B></P> 
-	 <P>The placement for <I>IfcStructuralPointReaction</I> is determined at its
-		supertype <I>IfcProduct</I>. It is defined by the optional
-		<I>IfcObjectPlacement</I>, referenced by <I>ObjectPlacement</I> at
-		<I>IfcProduct</I>, which establishes, if given, the object coordinate system
-		that is referenced by the applied load. </P> 
-	 <UL> 
-		<LI>Ifc the <I>ObjectPlacement</I> attribute is omitted, then all
-		  topological representations are given directly in world coordinates.</LI> 
-		<LI>Ifc the <I>ObjectPlacement</I> attribute is provided, then it
-		  establishes an object coordinate system for all topological representations
-		  which are given object coordinates. 
-		  <UL> 
-			 <LI>If the <I>PlacementRelTo</I> relationship of
-				<I>IfcLocalPlacement</I> is omitted, the object coordinate system is
-				established within the world coordinate system.</LI> 
-			 <LI>If the <I>PlacementRelTo</I> relationship of
-				<I>IfcLocalPlacement</I> is given, it shall point to the local placement of the
-				same <I>IfcSpatialStructureElement</I>, which is used in the
-				<I>ContainedInStructure</I> inverse attribute, or to a spatial structure
-				element at a higher level, referenced by that. </LI> 
-		  </UL> </LI> 
-	 </UL> 
-	 <P><B>Topology Representation</B></P> 
-	 <P>Instances of <I>IfcStructuralPointReaction</I> may have a topology
-		representation given by a vertex with an optional additional geometric
-		representation by a Cartesian point. It can be provided by either</P> 
-	 <UL> 
-		<LI><I>IfcVertex</I></LI> 
-		<LI><I>IfcVertexPoint</I></LI> 
-	 </UL> 
-	 <P>which should be the single item of
-		<I>IfcTopologyRepresentation.Items</I>. If no topology representation is given,
-		the location of the placement is taken as the vertex at which the point
-		reaction takes place.</P>
-</EPM-HTML>
+﻿<p>This entity defines a reaction which occurs at a point.
+A point reaction is typically connected with a point connection.
+It may also be connected with a curve member or curve connection,
+or surface member or surface connection.</p>
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC2x2.
+</blockquote>
+
+<blockquote class="change-ifc2x4">
+IFC4 CHANGE&nbsp; Attributes in the supertypes <em>IfcStructuralActivity</em> and <em>IfcStructuralReaction</em> changed.  Use definitions changed, informal propositions added.
+</blockquote>
+
+<p><b><u>Coordinate Systems</u></b>:</p>
+
+<p>See definitions at <em>IfcStructuralActivity</em>.</p>
+
+<p><b><u>Topology Use Definitions</u></b>:</p>
+
+<p>Standard Case:<br>
+If connected with a point item, instances of <em>IfcStructuralPointReaction</em>
+shall not have an <em>ObjectPlacement</em> nor a <em>Representation</em>.
+It is implied that the placement and representation of the reaction is the same
+as the structural item.</p>
+
+<p>Special Case 1:<br>
+If connected with a curve item or surface item, instances of <em>IfcStructuralPointReaction</em>
+shall have an <em>ObjectPlacement</em> and <em>Representation</em>, containing an <em>IfcVertexPoint</em>.
+See <em>IfcStructuralActivity</em> for further definitions.</p>
+
+<blockquote class="note">NOTE&nbsp; In order to model concentrated reactions on a curve or surface item,
+<em>IfcStructuralCurveReaction</em> or <em>IfcStructuralSurfaceAction</em> of type DISCRETE is
+preferable since they do not require an extra topology representation in this case.
+An <em>IfcStructuralPointReaction</em> should be used for a concentrated reaction on a curve or surface
+item only when an explicit vertex point representation is actually desired.</blockquote>
+
+<p>Special Case 2:<br>
+If not connected with a structural item (which may happen in an incomplete or
+conceptual model), a point action should have an <em>ObjectPlacement</em> and
+<em>Representation</em>, containing an <em>IfcVertexPoint</em>.
+See <em>IfcStructuralActivity</em> for further definitions.</p>

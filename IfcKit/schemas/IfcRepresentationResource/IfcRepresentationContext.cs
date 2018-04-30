@@ -14,7 +14,7 @@ using BuildingSmart.IFC.IfcMeasureResource;
 
 namespace BuildingSmart.IFC.IfcRepresentationResource
 {
-	public partial class IfcRepresentationContext
+	public abstract partial class IfcRepresentationContext
 	{
 		[DataMember(Order = 0)] 
 		[XmlAttribute]
@@ -31,7 +31,7 @@ namespace BuildingSmart.IFC.IfcRepresentationResource
 		public ISet<IfcRepresentation> RepresentationsInContext { get; protected set; }
 	
 	
-		public IfcRepresentationContext(IfcLabel? __ContextIdentifier, IfcLabel? __ContextType)
+		protected IfcRepresentationContext(IfcLabel? __ContextIdentifier, IfcLabel? __ContextType)
 		{
 			this.ContextIdentifier = __ContextIdentifier;
 			this.ContextType = __ContextType;

@@ -15,8 +15,10 @@ namespace BuildingSmart.IFC.IfcProductExtension
 {
 	public enum IfcAssemblyPlaceEnum
 	{
+		[Description("This assembly is assembled at site.")]
 		SITE = 1,
 	
+		[Description("This assembly is assembled in a factory.")]
 		FACTORY = 2,
 	
 		NOTDEFINED = 0,

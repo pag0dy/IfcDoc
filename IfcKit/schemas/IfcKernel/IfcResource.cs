@@ -15,16 +15,29 @@ using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcKernel
 {
-	public abstract partial class IfcResource : IfcObject
+	public abstract partial class IfcResource : IfcObject,
+		BuildingSmart.IFC.IfcKernel.IfcResourceSelect
 	{
+		[DataMember(Order = 0)] 
+		[XmlAttribute]
+		[Description("    An identifying designation given to a resource.      It is the identifier at the occurrence level.       <blockquote class=\"change-ifc2x4\">IFC4 CHANGE  Attribute promoted from subtype <em>IfcConstructionResource</em>.</blockquote>")]
+		public IfcIdentifier? Identification { get; set; }
+	
+		[DataMember(Order = 1)] 
+		[XmlAttribute]
+		[Description("A detailed description of the resource (e.g. the skillset for a labor resource).    <blockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; The attribute <em>LongDescription</em> is added replacing the <em>ResourceGroup</em> attribute at subtype <em>IfcConstructionResource</em>.</blockquote>")]
+		public IfcText? LongDescription { get; set; }
+	
 		[InverseProperty("RelatingResource")] 
-		[Description("Reference to the IfcRelAssignsToResource relationship and thus pointing to those objects, which are used as resources.")]
+		[Description("Set of relationships to other objects, e.g. products, processes, controls, resources or actors, for which this resource object is a resource.")]
 		public ISet<IfcRelAssignsToResource> ResourceOf { get; protected set; }
 	
 	
-		protected IfcResource(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType)
+		protected IfcResource(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcIdentifier? __Identification, IfcText? __LongDescription)
 			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType)
 		{
+			this.Identification = __Identification;
+			this.LongDescription = __LongDescription;
 			this.ResourceOf = new HashSet<IfcRelAssignsToResource>();
 		}
 	

@@ -1,0 +1,2 @@
+﻿(PredefinedType <> IfcSubContractResourceTypeEnum.USERDEFINED) OR
+((PredefinedType = IfcSubContractResourceTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcTypeResource.ResourceType))

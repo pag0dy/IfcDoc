@@ -15,10 +15,13 @@ namespace BuildingSmart.IFC.IfcProductExtension
 {
 	public enum IfcElementCompositionEnum
 	{
+		[Description("A group or aggregation of similar elements.")]
 		COMPLEX = 1,
 	
+		[Description("An (undivided) element itself.")]
 		ELEMENT = 2,
 	
+		[Description("A subelement or part.")]
 		PARTIAL = 3,
 	
 	}

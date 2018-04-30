@@ -15,20 +15,23 @@ namespace BuildingSmart.IFC.IfcHvacDomain
 {
 	public enum IfcFlowMeterTypeEnum
 	{
-		ELECTRICMETER = 1,
+		[Description("An electric meter or energy meter is a device that measures the amount of electri" +
+	    "cal energy supplied to or produced by a residence, business or machine.")]
+		ENERGYMETER = 1,
 	
-		ENERGYMETER = 2,
+		[Description("A device that measures the quantity of a gas or fuel.")]
+		GASMETER = 2,
 	
-		FLOWMETER = 3,
+		[Description("A device that measures the quantity of oil.")]
+		OILMETER = 3,
 	
-		GASMETER = 4,
+		[Description("A device that measures the quantity of water.")]
+		WATERMETER = 4,
 	
-		OILMETER = 5,
-	
-		WATERMETER = 6,
-	
+		[Description("User-defined meter type")]
 		USERDEFINED = -1,
 	
+		[Description("Undefined meter type")]
 		NOTDEFINED = 0,
 	
 	}

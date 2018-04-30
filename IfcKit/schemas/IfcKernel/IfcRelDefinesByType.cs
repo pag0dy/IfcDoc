@@ -18,14 +18,22 @@ namespace BuildingSmart.IFC.IfcKernel
 	public partial class IfcRelDefinesByType : IfcRelDefines
 	{
 		[DataMember(Order = 0)] 
+		[XmlIgnore]
+		[Required()]
+		[MinLength(1)]
+		public ISet<IfcObject> RelatedObjects { get; protected set; }
+	
+		[DataMember(Order = 1)] 
+		[XmlElement]
 		[Description("Reference to the type (or style) information for that object or set of objects.")]
 		[Required()]
 		public IfcTypeObject RelatingType { get; set; }
 	
 	
 		public IfcRelDefinesByType(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcObject[] __RelatedObjects, IfcTypeObject __RelatingType)
-			: base(__GlobalId, __OwnerHistory, __Name, __Description, __RelatedObjects)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description)
 		{
+			this.RelatedObjects = new HashSet<IfcObject>(__RelatedObjects);
 			this.RelatingType = __RelatingType;
 		}
 	

@@ -15,20 +15,30 @@ namespace BuildingSmart.IFC.IfcBuildingControlsDomain
 {
 	public enum IfcAlarmTypeEnum
 	{
+		[Description("An audible alarm.")]
 		BELL = 1,
 	
+		[Description("An alarm activation mechanism in which a protective glass has to be broken to ena" +
+	    "ble a button to be pressed.")]
 		BREAKGLASSBUTTON = 2,
 	
+		[Description("A visual alarm.")]
 		LIGHT = 3,
 	
+		[Description("An alarm activation mechanism in which activation is achieved by a pulling action" +
+	    ".")]
 		MANUALPULLBOX = 4,
 	
+		[Description("An audible alarm.")]
 		SIREN = 5,
 	
+		[Description("An audible alarm.")]
 		WHISTLE = 6,
 	
+		[Description("User-defined type.")]
 		USERDEFINED = -1,
 	
+		[Description("Undefined type.")]
 		NOTDEFINED = 0,
 	
 	}

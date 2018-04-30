@@ -18,7 +18,8 @@ namespace BuildingSmart.IFC.IfcKernel
 	public partial class IfcRelAssignsToGroup : IfcRelAssigns
 	{
 		[DataMember(Order = 0)] 
-		[Description("Reference to group that finally contains all assigned group members.  ")]
+		[XmlElement]
+		[Description("Reference to group that contains all assigned group members.  ")]
 		[Required()]
 		public IfcGroup RelatingGroup { get; set; }
 	

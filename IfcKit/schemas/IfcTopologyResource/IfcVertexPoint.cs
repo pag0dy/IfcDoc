@@ -21,6 +21,7 @@ namespace BuildingSmart.IFC.IfcTopologyResource
 		BuildingSmart.IFC.IfcGeometricConstraintResource.IfcPointOrVertexPoint
 	{
 		[DataMember(Order = 0)] 
+		[XmlElement]
 		[Description("The geometric point, which defines the position in geometric space of the vertex.")]
 		[Required()]
 		public IfcPoint VertexGeometry { get; set; }

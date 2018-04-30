@@ -11,14 +11,15 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcMeasureResource;
+using BuildingSmart.IFC.IfcPresentationDefinitionResource;
 
 namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 {
-	public partial class IfcCurveStyleFontPattern
+	public partial class IfcCurveStyleFontPattern : IfcPresentationItem
 	{
 		[DataMember(Order = 0)] 
 		[XmlAttribute]
-		[Description("<EPM-HTML>  The length of the visible segment in the pattern definition.  <blockquote><small>    NOTE&nbsp; For a visible segment representing a point, the value 0. should be assigned.<br>  <font color=\"#FF0000\">    IFC2x Edition 3 CHANGE&nbsp; The datatype has been changed to IfcLengthMeasure with upward compatibility for file-based exchange.  </font></small></blockquote>  </EPM-HTML>")]
+		[Description("The length of the visible segment in the pattern definition.  <blockquote class=\"note\">NOTE&nbsp; For a visible segment representing a point, the value 0. should be assigned.</blockquote>  <blockquote class=\"change-ifc2x3\">IFC2x3 CHANGE&nbsp; The datatype has been changed to IfcLengthMeasure with upward compatibility for file-based exchange.</blockquote>")]
 		[Required()]
 		public IfcLengthMeasure VisibleSegmentLength { get; set; }
 	

@@ -15,20 +15,35 @@ namespace BuildingSmart.IFC.IfcHvacDomain
 {
 	public enum IfcCondenserTypeEnum
 	{
-		WATERCOOLEDSHELLTUBE = 1,
+		[Description("A condenser in which heat is transferred to an air-stream.")]
+		AIRCOOLED = 1,
 	
-		WATERCOOLEDSHELLCOIL = 2,
+		[Description("A condenser that is cooled evaporatively.")]
+		EVAPORATIVECOOLED = 2,
 	
-		WATERCOOLEDTUBEINTUBE = 3,
+		[Description("Water-cooled condenser with unspecified operation.")]
+		WATERCOOLED = 3,
 	
+		[Description("Water-cooled condenser with plates brazed together to form an assembly of separat" +
+	    "e channels.")]
 		WATERCOOLEDBRAZEDPLATE = 4,
 	
-		AIRCOOLED = 5,
+		[Description("Water-cooled condenser with cooling water circulated through one or more continuo" +
+	    "us or assembled coils contained within the shell.")]
+		WATERCOOLEDSHELLCOIL = 5,
 	
-		EVAPORATIVECOOLED = 6,
+		[Description("Water-cooled condenser with cooling water circulated through one or more tubes co" +
+	    "ntained within the shell.")]
+		WATERCOOLEDSHELLTUBE = 6,
 	
+		[Description("Water-cooled condenser consisting of one or more assemblies of two tubes, one wit" +
+	    "hin the other.")]
+		WATERCOOLEDTUBEINTUBE = 7,
+	
+		[Description("User-defined condenser type.")]
 		USERDEFINED = -1,
 	
+		[Description("Undefined condenser type.")]
 		NOTDEFINED = 0,
 	
 	}

@@ -15,14 +15,28 @@ namespace BuildingSmart.IFC.IfcStructuralElementsDomain
 {
 	public enum IfcPileTypeEnum
 	{
-		COHESION = 1,
+		[Description("A bore pile.")]
+		BORED = 1,
 	
-		FRICTION = 2,
+		[Description("A rammed, vibrated, or otherwise driven pile.")]
+		DRIVEN = 2,
 	
-		SUPPORT = 3,
+		[Description("An injected pile-like construction.")]
+		JETGROUTING = 3,
 	
+		[Description("A cohesion pile.")]
+		COHESION = 4,
+	
+		[Description("A friction pile.")]
+		FRICTION = 5,
+	
+		[Description("A support pile.")]
+		SUPPORT = 6,
+	
+		[Description("The type of pile function is user defined.")]
 		USERDEFINED = -1,
 	
+		[Description("The type of pile function is not defined.")]
 		NOTDEFINED = 0,
 	
 	}

@@ -15,10 +15,18 @@ namespace BuildingSmart.IFC.IfcSharedBldgElements
 {
 	public enum IfcColumnTypeEnum
 	{
+		[Description("A standard member usually vertical and requiring resistance to vertical forces by" +
+	    " compression but also sometimes to lateral forces.")]
 		COLUMN = 1,
 	
+		[Description("A column element embedded within a wall that can be required to be load bearing b" +
+	    "ut may also only be used for decorative purposes.")]
+		PILASTER = 2,
+	
+		[Description("User-defined linear element.")]
 		USERDEFINED = -1,
 	
+		[Description("Undefined linear element.")]
 		NOTDEFINED = 0,
 	
 	}

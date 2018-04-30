@@ -1,0 +1,1 @@
+﻿EXISTS(Identification) OR EXISTS(FamilyName) OR EXISTS(GivenName)

@@ -24,15 +24,14 @@ namespace BuildingSmart.IFC.IfcSharedBldgElements
 	{
 		[DataMember(Order = 0)] 
 		[XmlAttribute]
-		[Description("Predefined shape types for a roof that are specified in an enumeration.")]
-		[Required()]
-		public IfcRoofTypeEnum ShapeType { get; set; }
+		[Description("Predefined generic types for a roof that are specified in an enumeration. There may be a property set given for the predefined types.  <blockquote class=\"note\">NOTE&nbsp; The <em>PredefinedType</em> shall only be used, if no <em>IfcRoofType</em> is assigned, providing its own <em>IfcRoofType.PredefinedType</em>.</blockquote>  <blockquote class=\"change-ifc2x4\">IFC4 CHANGE  The attribute has been renamed from ShapeType and changed to be OPTIONAL with upward compatibility for file based exchange.</blockquote>")]
+		public IfcRoofTypeEnum? PredefinedType { get; set; }
 	
 	
-		public IfcRoof(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcObjectPlacement __ObjectPlacement, IfcProductRepresentation __Representation, IfcIdentifier? __Tag, IfcRoofTypeEnum __ShapeType)
+		public IfcRoof(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcObjectPlacement __ObjectPlacement, IfcProductRepresentation __Representation, IfcIdentifier? __Tag, IfcRoofTypeEnum? __PredefinedType)
 			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType, __ObjectPlacement, __Representation, __Tag)
 		{
-			this.ShapeType = __ShapeType;
+			this.PredefinedType = __PredefinedType;
 		}
 	
 	

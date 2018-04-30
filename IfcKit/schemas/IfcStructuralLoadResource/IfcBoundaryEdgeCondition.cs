@@ -17,42 +17,36 @@ namespace BuildingSmart.IFC.IfcStructuralLoadResource
 	public partial class IfcBoundaryEdgeCondition : IfcBoundaryCondition
 	{
 		[DataMember(Order = 0)] 
-		[XmlAttribute]
-		[Description("Linear stiffness value in x-direction of the coordinate system defined by the instance which uses this resource object.")]
-		public IfcModulusOfLinearSubgradeReactionMeasure? LinearStiffnessByLengthX { get; set; }
+		[Description("Translational stiffness value in x-direction of the coordinate system defined by the instance which uses this resource object.")]
+		public IfcModulusOfTranslationalSubgradeReactionSelect TranslationalStiffnessByLengthX { get; set; }
 	
 		[DataMember(Order = 1)] 
-		[XmlAttribute]
-		[Description("Linear stiffness value in y-direction of the coordinate system defined by the instance which uses this resource object.")]
-		public IfcModulusOfLinearSubgradeReactionMeasure? LinearStiffnessByLengthY { get; set; }
+		[Description("Translational stiffness value in y-direction of the coordinate system defined by the instance which uses this resource object.")]
+		public IfcModulusOfTranslationalSubgradeReactionSelect TranslationalStiffnessByLengthY { get; set; }
 	
 		[DataMember(Order = 2)] 
-		[XmlAttribute]
-		[Description("Linear stiffness value in z-direction of the coordinate system defined by the instance which uses this resource object.")]
-		public IfcModulusOfLinearSubgradeReactionMeasure? LinearStiffnessByLengthZ { get; set; }
+		[Description("Translational stiffness value in z-direction of the coordinate system defined by the instance which uses this resource object.")]
+		public IfcModulusOfTranslationalSubgradeReactionSelect TranslationalStiffnessByLengthZ { get; set; }
 	
 		[DataMember(Order = 3)] 
-		[XmlAttribute]
 		[Description("Rotational stiffness value about the x-axis of the coordinate system defined by the instance which uses this resource object.")]
-		public IfcModulusOfRotationalSubgradeReactionMeasure? RotationalStiffnessByLengthX { get; set; }
+		public IfcModulusOfRotationalSubgradeReactionSelect RotationalStiffnessByLengthX { get; set; }
 	
 		[DataMember(Order = 4)] 
-		[XmlAttribute]
 		[Description("Rotational stiffness value about the y-axis of the coordinate system defined by the instance which uses this resource object.")]
-		public IfcModulusOfRotationalSubgradeReactionMeasure? RotationalStiffnessByLengthY { get; set; }
+		public IfcModulusOfRotationalSubgradeReactionSelect RotationalStiffnessByLengthY { get; set; }
 	
 		[DataMember(Order = 5)] 
-		[XmlAttribute]
 		[Description("Rotational stiffness value about the z-axis of the coordinate system defined by the instance which uses this resource object.")]
-		public IfcModulusOfRotationalSubgradeReactionMeasure? RotationalStiffnessByLengthZ { get; set; }
+		public IfcModulusOfRotationalSubgradeReactionSelect RotationalStiffnessByLengthZ { get; set; }
 	
 	
-		public IfcBoundaryEdgeCondition(IfcLabel? __Name, IfcModulusOfLinearSubgradeReactionMeasure? __LinearStiffnessByLengthX, IfcModulusOfLinearSubgradeReactionMeasure? __LinearStiffnessByLengthY, IfcModulusOfLinearSubgradeReactionMeasure? __LinearStiffnessByLengthZ, IfcModulusOfRotationalSubgradeReactionMeasure? __RotationalStiffnessByLengthX, IfcModulusOfRotationalSubgradeReactionMeasure? __RotationalStiffnessByLengthY, IfcModulusOfRotationalSubgradeReactionMeasure? __RotationalStiffnessByLengthZ)
+		public IfcBoundaryEdgeCondition(IfcLabel? __Name, IfcModulusOfTranslationalSubgradeReactionSelect __TranslationalStiffnessByLengthX, IfcModulusOfTranslationalSubgradeReactionSelect __TranslationalStiffnessByLengthY, IfcModulusOfTranslationalSubgradeReactionSelect __TranslationalStiffnessByLengthZ, IfcModulusOfRotationalSubgradeReactionSelect __RotationalStiffnessByLengthX, IfcModulusOfRotationalSubgradeReactionSelect __RotationalStiffnessByLengthY, IfcModulusOfRotationalSubgradeReactionSelect __RotationalStiffnessByLengthZ)
 			: base(__Name)
 		{
-			this.LinearStiffnessByLengthX = __LinearStiffnessByLengthX;
-			this.LinearStiffnessByLengthY = __LinearStiffnessByLengthY;
-			this.LinearStiffnessByLengthZ = __LinearStiffnessByLengthZ;
+			this.TranslationalStiffnessByLengthX = __TranslationalStiffnessByLengthX;
+			this.TranslationalStiffnessByLengthY = __TranslationalStiffnessByLengthY;
+			this.TranslationalStiffnessByLengthZ = __TranslationalStiffnessByLengthZ;
 			this.RotationalStiffnessByLengthX = __RotationalStiffnessByLengthX;
 			this.RotationalStiffnessByLengthY = __RotationalStiffnessByLengthY;
 			this.RotationalStiffnessByLengthZ = __RotationalStiffnessByLengthZ;

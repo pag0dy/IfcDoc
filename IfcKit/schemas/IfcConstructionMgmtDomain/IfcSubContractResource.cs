@@ -10,9 +10,11 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
+using BuildingSmart.IFC.IfcCostResource;
+using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
+using BuildingSmart.IFC.IfcQuantityResource;
 using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcConstructionMgmtDomain
@@ -20,20 +22,15 @@ namespace BuildingSmart.IFC.IfcConstructionMgmtDomain
 	public partial class IfcSubContractResource : IfcConstructionResource
 	{
 		[DataMember(Order = 0)] 
-		[Description("The actor performing the role of the subcontracted resource.")]
-		public IfcActorSelect SubContractor { get; set; }
-	
-		[DataMember(Order = 1)] 
 		[XmlAttribute]
-		[Description("The description of the jobs that this subcontract should complete.  ")]
-		public IfcText? JobDescription { get; set; }
+		[Description("Defines types of subcontract resources.  <blockquote class=\"change-ifc2x4\">IFC4 New attribute.</blockquote>")]
+		public IfcSubContractResourceTypeEnum? PredefinedType { get; set; }
 	
 	
-		public IfcSubContractResource(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcIdentifier? __ResourceIdentifier, IfcLabel? __ResourceGroup, IfcResourceConsumptionEnum? __ResourceConsumption, IfcMeasureWithUnit __BaseQuantity, IfcActorSelect __SubContractor, IfcText? __JobDescription)
-			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType, __ResourceIdentifier, __ResourceGroup, __ResourceConsumption, __BaseQuantity)
+		public IfcSubContractResource(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcIdentifier? __Identification, IfcText? __LongDescription, IfcResourceTime __Usage, IfcAppliedValue[] __BaseCosts, IfcPhysicalQuantity __BaseQuantity, IfcSubContractResourceTypeEnum? __PredefinedType)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType, __Identification, __LongDescription, __Usage, __BaseCosts, __BaseQuantity)
 		{
-			this.SubContractor = __SubContractor;
-			this.JobDescription = __JobDescription;
+			this.PredefinedType = __PredefinedType;
 		}
 	
 	

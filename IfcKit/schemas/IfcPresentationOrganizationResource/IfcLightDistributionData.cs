@@ -24,7 +24,7 @@ namespace BuildingSmart.IFC.IfcPresentationOrganizationResource
 	
 		[DataMember(Order = 1)] 
 		[XmlAttribute]
-		[Description("<EPM-HTML>  <P>The list of secondary plane angles (the &#945;, &#946; or &#947; angles) according to the light distribution curve chosen.  </P>  <BLOCKQUOTE>NOTE: The <I>SecondaryPlaneAngle</I> and <I>LuminousIntensity</I> lists are corresponding lists.  </BLOCKQUOTE>  </EPM-HTML>")]
+		[Description("<p>The list of secondary plane angles (the &#945;, &#946; or &#947; angles) according to the light distribution curve chosen.  </p>  <blockquote class=\"note\">NOTE&nbsp; The <em>SecondaryPlaneAngle</em> and <em>LuminousIntensity</em> lists are corresponding lists.  </blockquote>")]
 		[Required()]
 		[MinLength(1)]
 		public IList<IfcPlaneAngleMeasure> SecondaryPlaneAngle { get; protected set; }

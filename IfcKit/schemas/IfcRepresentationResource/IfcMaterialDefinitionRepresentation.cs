@@ -18,6 +18,7 @@ namespace BuildingSmart.IFC.IfcRepresentationResource
 	public partial class IfcMaterialDefinitionRepresentation : IfcProductRepresentation
 	{
 		[DataMember(Order = 0)] 
+		[XmlIgnore]
 		[Description("Reference to the material to which the representation applies.")]
 		[Required()]
 		public IfcMaterial RepresentedMaterial { get; set; }

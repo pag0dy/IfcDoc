@@ -10,6 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 
@@ -18,11 +19,13 @@ namespace BuildingSmart.IFC.IfcProfileResource
 	public partial class IfcDerivedProfileDef : IfcProfileDef
 	{
 		[DataMember(Order = 0)] 
+		[XmlElement]
 		[Description("The parent profile provides the origin of the transformation.")]
 		[Required()]
 		public IfcProfileDef ParentProfile { get; set; }
 	
 		[DataMember(Order = 1)] 
+		[XmlElement]
 		[Description("Transformation operator applied to the parent profile. ")]
 		[Required()]
 		public IfcCartesianTransformationOperator2D Operator { get; set; }

@@ -20,6 +20,7 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 	public partial class IfcOffsetCurve2D : IfcCurve
 	{
 		[DataMember(Order = 0)] 
+		[XmlElement]
 		[Description("The curve that is being offset.")]
 		[Required()]
 		public IfcCurve BasisCurve { get; set; }
@@ -31,12 +32,13 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		public IfcLengthMeasure Distance { get; set; }
 	
 		[DataMember(Order = 2)] 
+		[XmlAttribute]
 		[Description("An indication of whether the offset curve self-intersects; this is for information only.")]
 		[Required()]
-		public Boolean? SelfIntersect { get; set; }
+		public IfcLogical SelfIntersect { get; set; }
 	
 	
-		public IfcOffsetCurve2D(IfcCurve __BasisCurve, IfcLengthMeasure __Distance, Boolean? __SelfIntersect)
+		public IfcOffsetCurve2D(IfcCurve __BasisCurve, IfcLengthMeasure __Distance, IfcLogical __SelfIntersect)
 		{
 			this.BasisCurve = __BasisCurve;
 			this.Distance = __Distance;

@@ -18,7 +18,8 @@ namespace BuildingSmart.IFC.IfcKernel
 	public partial class IfcRelAssignsToControl : IfcRelAssigns
 	{
 		[DataMember(Order = 0)] 
-		[Description("Reference to the control that applies an control about objects.  ")]
+		[XmlElement]
+		[Description("Reference to the <em>IfcControl</em> that applies a control upon objects.")]
 		[Required()]
 		public IfcControl RelatingControl { get; set; }
 	

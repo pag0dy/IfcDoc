@@ -19,11 +19,13 @@ namespace BuildingSmart.IFC.IfcKernel
 	public partial class IfcRelAssignsToActor : IfcRelAssigns
 	{
 		[DataMember(Order = 0)] 
+		[XmlElement]
 		[Description("Reference to the information about the actor. It comprises the information about the person or organization and its addresses.  ")]
 		[Required()]
 		public IfcActor RelatingActor { get; set; }
 	
 		[DataMember(Order = 1)] 
+		[XmlElement]
 		[Description("Role of the actor played within the context of the assignment to the object(s).  ")]
 		public IfcActorRole ActingRole { get; set; }
 	

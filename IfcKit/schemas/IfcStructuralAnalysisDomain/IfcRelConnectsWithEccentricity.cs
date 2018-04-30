@@ -22,7 +22,8 @@ namespace BuildingSmart.IFC.IfcStructuralAnalysisDomain
 	public partial class IfcRelConnectsWithEccentricity : IfcRelConnectsStructuralMember
 	{
 		[DataMember(Order = 0)] 
-		[Description("<EPM-HTML>  The connection constraint explicitly states the eccentricity between a structural element and a structural connection, either given by two point (used to calculate the eccentricity), or by explicit x, y, and z offsets.  </EPM-HTML>")]
+		[XmlElement]
+		[Description("The connection constraint explicitly states the eccentricity between a structural member and a structural connection by means of two topological objects (vertex and vertex, or edge and edge, or face and face).")]
 		[Required()]
 		public IfcConnectionGeometry ConnectionConstraint { get; set; }
 	

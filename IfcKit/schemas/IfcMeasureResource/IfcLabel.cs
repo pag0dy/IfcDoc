@@ -14,10 +14,10 @@ using System.Xml.Serialization;
 namespace BuildingSmart.IFC.IfcMeasureResource
 {
 	public partial struct IfcLabel :
-		BuildingSmart.IFC.IfcFacilitiesMgmtDomain.IfcConditionCriterionSelect,
 		BuildingSmart.IFC.IfcMeasureResource.IfcSimpleValue
 	{
 		[XmlText]
+		[MaxLength(255)]
 		public String Value { get; private set; }
 	
 		public IfcLabel(String value) : this()

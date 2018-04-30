@@ -11,6 +11,7 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcGeometricConstraintResource;
+using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
@@ -22,15 +23,22 @@ namespace BuildingSmart.IFC.IfcStructuralAnalysisDomain
 	{
 		[DataMember(Order = 0)] 
 		[XmlAttribute]
-		[Description("Defines the load carrying behavior of the member, as far as it is taken into account in the analysis.")]
+		[Description("Type of member with respect to its load carrying behavior in this analysis idealization.")]
 		[Required()]
-		public IfcStructuralCurveTypeEnum PredefinedType { get; set; }
+		public IfcStructuralCurveMemberTypeEnum PredefinedType { get; set; }
+	
+		[DataMember(Order = 1)] 
+		[XmlElement]
+		[Description("Direction which is used in the definition of the local z axis.  <em>Axis</em> is specified relative to the so-called global coordinate system, i.e. the <em>SELF\\IfcProduct.ObjectPlacement</em>.    <blockquote class=\"note\">NOTE&nbsp; It is desirable and usually possible that many instances of <em>IfcStructuralCurveConnection</em> and <em>IfcStructuralCurveMember</em> share a common instance of <em>IfcDirection</em> as their <em>Axis</em> attribute.</blockquote>")]
+		[Required()]
+		public IfcDirection Axis { get; set; }
 	
 	
-		public IfcStructuralCurveMember(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcObjectPlacement __ObjectPlacement, IfcProductRepresentation __Representation, IfcStructuralCurveTypeEnum __PredefinedType)
+		public IfcStructuralCurveMember(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcObjectPlacement __ObjectPlacement, IfcProductRepresentation __Representation, IfcStructuralCurveMemberTypeEnum __PredefinedType, IfcDirection __Axis)
 			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType, __ObjectPlacement, __Representation)
 		{
 			this.PredefinedType = __PredefinedType;
+			this.Axis = __Axis;
 		}
 	
 	

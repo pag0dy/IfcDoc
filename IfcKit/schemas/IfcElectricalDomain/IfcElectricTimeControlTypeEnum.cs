@@ -15,14 +15,19 @@ namespace BuildingSmart.IFC.IfcElectricalDomain
 {
 	public enum IfcElectricTimeControlTypeEnum
 	{
+		[Description("A control that causes action to occur at set times.")]
 		TIMECLOCK = 1,
 	
+		[Description("A control that causes action to occur following a set duration.")]
 		TIMEDELAY = 2,
 	
+		[Description("Electromagnetically operated contactor for making or breaking a control circuit.")]
 		RELAY = 3,
 	
+		[Description("User-defined type.")]
 		USERDEFINED = -1,
 	
+		[Description("Undefined type.")]
 		NOTDEFINED = 0,
 	
 	}

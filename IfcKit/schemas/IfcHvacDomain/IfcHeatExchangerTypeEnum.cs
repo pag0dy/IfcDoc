@@ -15,12 +15,16 @@ namespace BuildingSmart.IFC.IfcHvacDomain
 {
 	public enum IfcHeatExchangerTypeEnum
 	{
+		[Description("Plate heat exchanger.")]
 		PLATE = 1,
 	
+		[Description("Shell and Tube heat exchanger.")]
 		SHELLANDTUBE = 2,
 	
+		[Description("User-defined heat exchanger type.")]
 		USERDEFINED = -1,
 	
+		[Description("Undefined heat exchanger type.")]
 		NOTDEFINED = 0,
 	
 	}

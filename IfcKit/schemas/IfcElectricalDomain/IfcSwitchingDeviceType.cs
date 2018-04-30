@@ -23,12 +23,12 @@ namespace BuildingSmart.IFC.IfcElectricalDomain
 	{
 		[DataMember(Order = 0)] 
 		[XmlAttribute]
-		[Description("Identifies the predefined types of switch from which the type required may be set.")]
+		[Description("<p>Identifies the predefined types of switch from which the type required may be set.</p>")]
 		[Required()]
 		public IfcSwitchingDeviceTypeEnum PredefinedType { get; set; }
 	
 	
-		public IfcSwitchingDeviceType(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ApplicableOccurrence, IfcPropertySetDefinition[] __HasPropertySets, IfcRepresentationMap[] __RepresentationMaps, IfcLabel? __Tag, IfcLabel? __ElementType, IfcSwitchingDeviceTypeEnum __PredefinedType)
+		public IfcSwitchingDeviceType(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcIdentifier? __ApplicableOccurrence, IfcPropertySetDefinition[] __HasPropertySets, IfcRepresentationMap[] __RepresentationMaps, IfcLabel? __Tag, IfcLabel? __ElementType, IfcSwitchingDeviceTypeEnum __PredefinedType)
 			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ApplicableOccurrence, __HasPropertySets, __RepresentationMaps, __Tag, __ElementType)
 		{
 			this.PredefinedType = __PredefinedType;

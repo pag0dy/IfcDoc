@@ -1,0 +1,1 @@
+﻿(SIZEOF(Segments) = 0) OR IfcConsecutiveSegments(Segments)

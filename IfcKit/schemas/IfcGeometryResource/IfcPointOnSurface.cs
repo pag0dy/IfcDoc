@@ -21,6 +21,7 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 	public partial class IfcPointOnSurface : IfcPoint
 	{
 		[DataMember(Order = 0)] 
+		[XmlElement]
 		[Description("The surface to which the parameter values relate.")]
 		[Required()]
 		public IfcSurface BasisSurface { get; set; }

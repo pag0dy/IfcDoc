@@ -19,7 +19,7 @@ namespace BuildingSmart.IFC.IfcProductExtension
 	public partial class IfcSystem : IfcGroup
 	{
 		[InverseProperty("RelatingSystem")] 
-		[Description("<EPM-HTML>Reference to the <strike>building</strike> spatial structure via the objectified relationship <i>IfcRelServicesBuildings</i>, which is serviced by the system.  </EPM-HTML>  ")]
+		[Description("Reference to the <strike>building</strike> spatial structure via the objectified relationship <em>IfcRelServicesBuildings</em>, which is serviced by the system.  ")]
 		[MaxLength(1)]
 		public ISet<IfcRelServicesBuildings> ServicesBuildings { get; protected set; }
 	

@@ -17,11 +17,11 @@ using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcProductExtension
 {
-	public partial class IfcElementQuantity : IfcPropertySetDefinition
+	public partial class IfcElementQuantity : IfcQuantitySet
 	{
 		[DataMember(Order = 0)] 
 		[XmlAttribute]
-		[Description("<EPM-HTML>Name of the method of measurement used to calculate the element quantity. The method of measurement attribute has to be made recognizable by further agreements.    <BLOCKQUOTE> <FONT COLOR=\"#FF0000\" SIZE=\"-1\">IFC2x2 Addendum 1 change: The attribute has been changed to be optional </FONT></BLOCKQUOTE>  </EPM-HTML>")]
+		[Description("Name of the method of measurement used to calculate the element quantity. The method of measurement attribute has to be made recognizable by further agreements.    <blockquote class=\"change-ifc2x2\">IFC2x2 Addendum 1 change: The attribute has been changed to be optional </blockquote>")]
 		public IfcLabel? MethodOfMeasurement { get; set; }
 	
 		[DataMember(Order = 1)] 

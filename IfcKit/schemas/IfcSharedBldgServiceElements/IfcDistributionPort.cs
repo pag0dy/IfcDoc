@@ -26,11 +26,22 @@ namespace BuildingSmart.IFC.IfcSharedBldgServiceElements
 		[Description("Enumeration that identifies if this port is a Sink (inlet), a Source (outlet) or both a SinkAndSource.  ")]
 		public IfcFlowDirectionEnum? FlowDirection { get; set; }
 	
+		[DataMember(Order = 1)] 
+		[XmlAttribute]
+		public IfcDistributionPortTypeEnum? PredefinedType { get; set; }
 	
-		public IfcDistributionPort(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcObjectPlacement __ObjectPlacement, IfcProductRepresentation __Representation, IfcFlowDirectionEnum? __FlowDirection)
+		[DataMember(Order = 2)] 
+		[XmlAttribute]
+		[Description("Enumeration that identifies the system type.  If a system type is defined, the port may only be connected to other ports having the same system type.")]
+		public IfcDistributionSystemEnum? SystemType { get; set; }
+	
+	
+		public IfcDistributionPort(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcObjectPlacement __ObjectPlacement, IfcProductRepresentation __Representation, IfcFlowDirectionEnum? __FlowDirection, IfcDistributionPortTypeEnum? __PredefinedType, IfcDistributionSystemEnum? __SystemType)
 			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType, __ObjectPlacement, __Representation)
 		{
 			this.FlowDirection = __FlowDirection;
+			this.PredefinedType = __PredefinedType;
+			this.SystemType = __SystemType;
 		}
 	
 	

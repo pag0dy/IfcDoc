@@ -10,39 +10,29 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 
 namespace BuildingSmart.IFC.IfcActorResource
 {
-	public partial class IfcOrganizationRelationship
+	public partial class IfcOrganizationRelationship : IfcResourceLevelRelationship
 	{
 		[DataMember(Order = 0)] 
-		[XmlAttribute]
-		[Description("The word or group of words by which the relationship is referred to.")]
-		[Required()]
-		public IfcLabel Name { get; set; }
-	
-		[DataMember(Order = 1)] 
-		[XmlAttribute]
-		[Description("Text that relates the nature of the relationship.")]
-		public IfcText? Description { get; set; }
-	
-		[DataMember(Order = 2)] 
+		[XmlElement]
 		[Description("Organization which is the relating part of the relationship between organizations.")]
 		[Required()]
 		public IfcOrganization RelatingOrganization { get; set; }
 	
-		[DataMember(Order = 3)] 
+		[DataMember(Order = 1)] 
 		[Description("The other, possibly dependent, organizations which are the related parts of the relationship between organizations.")]
 		[Required()]
 		[MinLength(1)]
 		public ISet<IfcOrganization> RelatedOrganizations { get; protected set; }
 	
 	
-		public IfcOrganizationRelationship(IfcLabel __Name, IfcText? __Description, IfcOrganization __RelatingOrganization, IfcOrganization[] __RelatedOrganizations)
+		public IfcOrganizationRelationship(IfcLabel? __Name, IfcText? __Description, IfcOrganization __RelatingOrganization, IfcOrganization[] __RelatedOrganizations)
+			: base(__Name, __Description)
 		{
-			this.Name = __Name;
-			this.Description = __Description;
 			this.RelatingOrganization = __RelatingOrganization;
 			this.RelatedOrganizations = new HashSet<IfcOrganization>(__RelatedOrganizations);
 		}

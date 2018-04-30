@@ -20,11 +20,13 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 	public partial class IfcCurveBoundedPlane : IfcBoundedSurface
 	{
 		[DataMember(Order = 0)] 
+		[XmlElement]
 		[Description("The surface to be bound.")]
 		[Required()]
 		public IfcPlane BasisSurface { get; set; }
 	
 		[DataMember(Order = 1)] 
+		[XmlElement]
 		[Description("The outer boundary of the surface.")]
 		[Required()]
 		public IfcCurve OuterBoundary { get; set; }
@@ -41,8 +43,6 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 			this.OuterBoundary = __OuterBoundary;
 			this.InnerBoundaries = new HashSet<IfcCurve>(__InnerBoundaries);
 		}
-	
-		public new IfcDimensionCount Dim { get { return new IfcDimensionCount(); } }
 	
 	
 	}

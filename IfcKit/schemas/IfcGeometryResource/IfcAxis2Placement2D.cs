@@ -19,7 +19,8 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		BuildingSmart.IFC.IfcGeometryResource.IfcAxis2Placement
 	{
 		[DataMember(Order = 0)] 
-		[Description("The direction used to determine the direction of the local X Axis.")]
+		[XmlElement]
+		[Description("The direction used to determine the direction of the local X axis. If a value is omited that it defaults to [1.0, 0.0.].  </HTML>")]
 		public IfcDirection RefDirection { get; set; }
 	
 	

@@ -19,12 +19,13 @@ namespace BuildingSmart.IFC.IfcPresentationDefinitionResource
 	public partial class IfcAnnotationFillArea : IfcGeometricRepresentationItem
 	{
 		[DataMember(Order = 0)] 
-		[Description("<EPM-HTML>  A closed curve that defines the outer boundary of the fill area. The areas defined by the outer boundary (minus potentially defined inner boundaries) is filled by the fill area style.  <blockquote><small><font color=\"#ff0000\">    IFC2x Edition 3 CHANGE&nbsp; The two new attributes <i>OuterBoundary</i> and <i>InnerBoundaries</i> replace the old single attribute Boundaries.  </font></small></blockquote>  </EPM-HTML>")]
+		[XmlElement]
+		[Description("A closed curve that defines the outer boundary of the fill area. The areas defined by the outer boundary (minus potentially defined inner boundaries) is filled by the fill area style.  <blockquote class=\"change-ifc2x3\">IFC2x3 CHANGE&nbsp; The two new attributes <em>OuterBoundary</em> and <em>InnerBoundaries</em> replace the old single attribute Boundaries.</blockquote>")]
 		[Required()]
 		public IfcCurve OuterBoundary { get; set; }
 	
 		[DataMember(Order = 1)] 
-		[Description("<EPM-HTML>  A set of inner curves that define the inner boundaries of the fill area. The areas defined by the inner boundaries are excluded from applying the fill area style.  <blockquote><small><font color=\"#ff0000\">    IFC2x Edition 3 CHANGE&nbsp; The two new attributes <i>OuterBoundary</i> and <i>InnerBoundaries</i> replace the old single attribute Boundaries.  </font></small></blockquote>  </EPM-HTML>")]
+		[Description("A set of inner curves that define the inner boundaries of the fill area. The areas defined by the inner boundaries are excluded from applying the fill area style.  <blockquote class=\"note\">IFC2x3 CHANGE&nbsp; The two new attributes <em>OuterBoundary</em> and <em>InnerBoundaries</em> replace the old single attribute Boundaries.</blockquote>")]
 		[MinLength(1)]
 		public ISet<IfcCurve> InnerBoundaries { get; protected set; }
 	

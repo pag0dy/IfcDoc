@@ -19,22 +19,23 @@ namespace BuildingSmart.IFC.IfcProductExtension
 	public partial class IfcRelServicesBuildings : IfcRelConnects
 	{
 		[DataMember(Order = 0)] 
+		[XmlElement]
 		[Description("System that services the Buildings.   ")]
 		[Required()]
 		public IfcSystem RelatingSystem { get; set; }
 	
 		[DataMember(Order = 1)] 
-		[Description("<EPM-HTML>  Spatial structure elements (including site, building, storeys) that are serviced by the system.  <blockquote><small><font color=\"#FF0000\">  IFC2x PLATFORM CHANGE&nbsp; The data type has been changed from <i>IfcBuilding</i> to <i>IfcSpatialStructureElement</i> with upward compatibility for file based exchange.  </font></small></blockquote>  </EPM-HTML>")]
+		[Description("Spatial structure elements (including site, building, storeys) that are serviced by the system.  <blockquote class=\"change-ifc2x\">    IFC2x CHANGE&nbsp; The data type has been changed from <em>IfcBuilding</em> to <em>IfcSpatialStructureElement</em> with upward compatibility for file based exchange.  </blockquote>  <blockquote class=\"change-ifc2x4\">    IFC4 CHANGE&nbsp; The data type has been changed from <em>IfcSpatialStructureElement</em> to <em>IfcSpatialElement</em> with upward compatibility for file based exchange.  </blockquote>")]
 		[Required()]
 		[MinLength(1)]
-		public ISet<IfcSpatialStructureElement> RelatedBuildings { get; protected set; }
+		public ISet<IfcSpatialElement> RelatedBuildings { get; protected set; }
 	
 	
-		public IfcRelServicesBuildings(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcSystem __RelatingSystem, IfcSpatialStructureElement[] __RelatedBuildings)
+		public IfcRelServicesBuildings(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcSystem __RelatingSystem, IfcSpatialElement[] __RelatedBuildings)
 			: base(__GlobalId, __OwnerHistory, __Name, __Description)
 		{
 			this.RelatingSystem = __RelatingSystem;
-			this.RelatedBuildings = new HashSet<IfcSpatialStructureElement>(__RelatedBuildings);
+			this.RelatedBuildings = new HashSet<IfcSpatialElement>(__RelatedBuildings);
 		}
 	
 	

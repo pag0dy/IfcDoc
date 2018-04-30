@@ -15,22 +15,16 @@ namespace BuildingSmart.IFC.IfcHvacDomain
 {
 	public enum IfcSpaceHeaterTypeEnum
 	{
-		SECTIONALRADIATOR = 1,
+		[Description("A heat-distributing unit that operates with gravity-circulated air.")]
+		CONVECTOR = 1,
 	
-		PANELRADIATOR = 2,
+		[Description("A heat-distributing unit that operates with thermal radiation.")]
+		RADIATOR = 2,
 	
-		TUBULARRADIATOR = 3,
-	
-		CONVECTOR = 4,
-	
-		BASEBOARDHEATER = 5,
-	
-		FINNEDTUBEUNIT = 6,
-	
-		UNITHEATER = 7,
-	
+		[Description("User-defined space heater type.")]
 		USERDEFINED = -1,
 	
+		[Description("Undefined space heater type.")]
 		NOTDEFINED = 0,
 	
 	}

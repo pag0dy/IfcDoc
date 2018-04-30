@@ -15,14 +15,27 @@ namespace BuildingSmart.IFC.IfcElectricalDomain
 {
 	public enum IfcTransformerTypeEnum
 	{
+		[Description("A transformer that changes the current between circuits.")]
 		CURRENT = 1,
 	
+		[Description("A transformer that changes the frequency between circuits.")]
 		FREQUENCY = 2,
 	
-		VOLTAGE = 3,
+		[Description("A transformer that converts from direct current (DC) to alternating current (AC)." +
+	    "")]
+		INVERTER = 3,
 	
+		[Description("A transformer that converts from alternating current (AC) to direct current (DC)." +
+	    "")]
+		RECTIFIER = 4,
+	
+		[Description("A transformer that changes the voltage between circuits.")]
+		VOLTAGE = 5,
+	
+		[Description("User-defined type.")]
 		USERDEFINED = -1,
 	
+		[Description("Undefined type.")]
 		NOTDEFINED = 0,
 	
 	}

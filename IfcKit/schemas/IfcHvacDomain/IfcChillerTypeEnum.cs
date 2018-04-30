@@ -15,14 +15,19 @@ namespace BuildingSmart.IFC.IfcHvacDomain
 {
 	public enum IfcChillerTypeEnum
 	{
+		[Description("Air cooled chiller.")]
 		AIRCOOLED = 1,
 	
+		[Description("Water cooled chiller.")]
 		WATERCOOLED = 2,
 	
+		[Description("Heat recovery chiller.")]
 		HEATRECOVERY = 3,
 	
+		[Description("User-defined chiller type.")]
 		USERDEFINED = -1,
 	
+		[Description("Undefined chiller type.")]
 		NOTDEFINED = 0,
 	
 	}

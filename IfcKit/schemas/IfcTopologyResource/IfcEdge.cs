@@ -19,11 +19,13 @@ namespace BuildingSmart.IFC.IfcTopologyResource
 	public partial class IfcEdge : IfcTopologicalRepresentationItem
 	{
 		[DataMember(Order = 0)] 
+		[XmlElement]
 		[Description("Start point (vertex) of the edge.  ")]
 		[Required()]
 		public IfcVertex EdgeStart { get; set; }
 	
 		[DataMember(Order = 1)] 
+		[XmlElement]
 		[Description("End point (vertex) of the edge. The same vertex can be used for both EdgeStart and EdgeEnd.  ")]
 		[Required()]
 		public IfcVertex EdgeEnd { get; set; }

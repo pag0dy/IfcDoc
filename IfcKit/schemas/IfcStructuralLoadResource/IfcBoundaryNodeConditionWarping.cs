@@ -17,13 +17,12 @@ namespace BuildingSmart.IFC.IfcStructuralLoadResource
 	public partial class IfcBoundaryNodeConditionWarping : IfcBoundaryNodeCondition
 	{
 		[DataMember(Order = 0)] 
-		[XmlAttribute]
 		[Description("Defines the warping stiffness value.")]
-		public IfcWarpingMomentMeasure? WarpingStiffness { get; set; }
+		public IfcWarpingStiffnessSelect WarpingStiffness { get; set; }
 	
 	
-		public IfcBoundaryNodeConditionWarping(IfcLabel? __Name, IfcLinearStiffnessMeasure? __LinearStiffnessX, IfcLinearStiffnessMeasure? __LinearStiffnessY, IfcLinearStiffnessMeasure? __LinearStiffnessZ, IfcRotationalStiffnessMeasure? __RotationalStiffnessX, IfcRotationalStiffnessMeasure? __RotationalStiffnessY, IfcRotationalStiffnessMeasure? __RotationalStiffnessZ, IfcWarpingMomentMeasure? __WarpingStiffness)
-			: base(__Name, __LinearStiffnessX, __LinearStiffnessY, __LinearStiffnessZ, __RotationalStiffnessX, __RotationalStiffnessY, __RotationalStiffnessZ)
+		public IfcBoundaryNodeConditionWarping(IfcLabel? __Name, IfcTranslationalStiffnessSelect __TranslationalStiffnessX, IfcTranslationalStiffnessSelect __TranslationalStiffnessY, IfcTranslationalStiffnessSelect __TranslationalStiffnessZ, IfcRotationalStiffnessSelect __RotationalStiffnessX, IfcRotationalStiffnessSelect __RotationalStiffnessY, IfcRotationalStiffnessSelect __RotationalStiffnessZ, IfcWarpingStiffnessSelect __WarpingStiffness)
+			: base(__Name, __TranslationalStiffnessX, __TranslationalStiffnessY, __TranslationalStiffnessZ, __RotationalStiffnessX, __RotationalStiffnessY, __RotationalStiffnessZ)
 		{
 			this.WarpingStiffness = __WarpingStiffness;
 		}

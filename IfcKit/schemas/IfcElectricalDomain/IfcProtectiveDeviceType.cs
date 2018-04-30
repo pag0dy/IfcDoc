@@ -23,12 +23,12 @@ namespace BuildingSmart.IFC.IfcElectricalDomain
 	{
 		[DataMember(Order = 0)] 
 		[XmlAttribute]
-		[Description("Identifies the predefined types of protective device from which the type required may be set.")]
+		[Description("<p>Identifies the predefined types of protective device from which the type required may be set.</p>")]
 		[Required()]
 		public IfcProtectiveDeviceTypeEnum PredefinedType { get; set; }
 	
 	
-		public IfcProtectiveDeviceType(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ApplicableOccurrence, IfcPropertySetDefinition[] __HasPropertySets, IfcRepresentationMap[] __RepresentationMaps, IfcLabel? __Tag, IfcLabel? __ElementType, IfcProtectiveDeviceTypeEnum __PredefinedType)
+		public IfcProtectiveDeviceType(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcIdentifier? __ApplicableOccurrence, IfcPropertySetDefinition[] __HasPropertySets, IfcRepresentationMap[] __RepresentationMaps, IfcLabel? __Tag, IfcLabel? __ElementType, IfcProtectiveDeviceTypeEnum __PredefinedType)
 			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ApplicableOccurrence, __HasPropertySets, __RepresentationMaps, __Tag, __ElementType)
 		{
 			this.PredefinedType = __PredefinedType;

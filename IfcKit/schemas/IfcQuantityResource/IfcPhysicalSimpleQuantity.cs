@@ -10,6 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 
 namespace BuildingSmart.IFC.IfcQuantityResource
@@ -17,6 +18,7 @@ namespace BuildingSmart.IFC.IfcQuantityResource
 	public abstract partial class IfcPhysicalSimpleQuantity : IfcPhysicalQuantity
 	{
 		[DataMember(Order = 0)] 
+		[XmlElement]
 		[Description("Optional assignment of a unit. If no unit is given, then the global unit assignment, as established at the IfcProject, applies to the quantity measures.")]
 		public IfcNamedUnit Unit { get; set; }
 	

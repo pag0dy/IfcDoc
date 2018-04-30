@@ -20,12 +20,12 @@ namespace BuildingSmart.IFC.IfcProductExtension
 	public partial class IfcRelAssociatesMaterial : IfcRelAssociates
 	{
 		[DataMember(Order = 0)] 
-		[Description("Material definition (either a single material, a list of materials, or a set of material layers) assigned to the elements.")]
+		[Description("Material definition assigned to the elements or element types. ")]
 		[Required()]
 		public IfcMaterialSelect RelatingMaterial { get; set; }
 	
 	
-		public IfcRelAssociatesMaterial(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcRoot[] __RelatedObjects, IfcMaterialSelect __RelatingMaterial)
+		public IfcRelAssociatesMaterial(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcDefinitionSelect[] __RelatedObjects, IfcMaterialSelect __RelatingMaterial)
 			: base(__GlobalId, __OwnerHistory, __Name, __Description, __RelatedObjects)
 		{
 			this.RelatingMaterial = __RelatingMaterial;

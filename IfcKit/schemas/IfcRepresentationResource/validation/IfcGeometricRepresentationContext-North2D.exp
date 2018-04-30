@@ -1,0 +1,1 @@
+﻿NOT(EXISTS(TrueNorth)) OR (HIINDEX(TrueNorth.DirectionRatios) = 2)

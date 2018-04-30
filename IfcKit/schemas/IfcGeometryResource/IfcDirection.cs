@@ -10,28 +10,39 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcGeometricConstraintResource;
+using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcPresentationOrganizationResource;
-using BuildingSmart.IFC.IfcStructuralAnalysisDomain;
 
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
 	public partial class IfcDirection : IfcGeometricRepresentationItem,
-		BuildingSmart.IFC.IfcStructuralAnalysisDomain.IfcOrientationSelect,
+		BuildingSmart.IFC.IfcGeometricConstraintResource.IfcGridPlacementDirectionSelect,
 		BuildingSmart.IFC.IfcGeometryResource.IfcVectorOrDirection
 	{
 		[DataMember(Order = 0)] 
+		[XmlAttribute]
 		[Description("The components in the direction of X axis (DirectionRatios[1]), of Y axis (DirectionRatios[2]), and of Z axis (DirectionRatios[3])   ")]
 		[Required()]
 		[MinLength(2)]
 		[MaxLength(3)]
-		public IList<Double> DirectionRatios { get; protected set; }
+		public IList<IfcReal> DirectionRatios { get; protected set; }
 	
 	
-		public IfcDirection(Double[] __DirectionRatios)
+		public IfcDirection(IfcReal[] __DirectionRatios)
 		{
-			this.DirectionRatios = new List<Double>(__DirectionRatios);
+			this.DirectionRatios = new List<IfcReal>(__DirectionRatios);
 		}
+	
+		public IfcDirection(Double x, Double y) : this(new IfcReal[]{ new IfcReal(x), new IfcReal(y)})
+		{
+		}
+	
+		public IfcDirection(Double x, Double y, Double z) : this(new IfcReal[]{ new IfcReal(x), new IfcReal(y), new IfcReal(z)})
+		{
+		}
+	
 	
 		public new IfcDimensionCount Dim { get { return new IfcDimensionCount(); } }
 	

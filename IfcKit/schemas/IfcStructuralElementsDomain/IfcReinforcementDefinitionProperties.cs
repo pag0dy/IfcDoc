@@ -12,12 +12,12 @@ using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcProfilePropertyResource;
+using BuildingSmart.IFC.IfcProfileResource;
 using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcStructuralElementsDomain
 {
-	public partial class IfcReinforcementDefinitionProperties : IfcPropertySetDefinition
+	public partial class IfcReinforcementDefinitionProperties : IfcPreDefinedPropertySet
 	{
 		[DataMember(Order = 0)] 
 		[XmlAttribute]

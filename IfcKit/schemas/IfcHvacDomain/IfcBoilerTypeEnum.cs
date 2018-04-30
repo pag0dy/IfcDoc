@@ -15,12 +15,16 @@ namespace BuildingSmart.IFC.IfcHvacDomain
 {
 	public enum IfcBoilerTypeEnum
 	{
+		[Description("Water boiler.")]
 		WATER = 1,
 	
+		[Description("Steam boiler.")]
 		STEAM = 2,
 	
+		[Description("User-defined Boiler type.")]
 		USERDEFINED = -1,
 	
+		[Description("Undefined Boiler type.")]
 		NOTDEFINED = 0,
 	
 	}

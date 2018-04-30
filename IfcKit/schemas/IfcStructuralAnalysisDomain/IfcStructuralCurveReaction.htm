@@ -1,0 +1,54 @@
+﻿<p>This entity defines a reaction which occurs distributed over a curve.
+A curve reaction may be connected with a curve member or curve connection,
+or surface member or surface connection.</p>
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC4.
+</blockquote>
+
+<p><b><u>Coordinate Systems</u></b>:</p>
+
+<p>See definitions at <em>IfcStructuralActivity</em>.</p>
+
+<p><b><u>Topology Use Definitions</u></b>:</p>
+
+<p>Standard Case:<br>
+If connected with a curve item, instances of <em>IfcStructuralCurveRection</em> shall not
+have an <em>ObjectPlacement</em> nor a <em>Representation</em>.  It is implied that the
+placement and representation of the <em>IfcStructuralActivity</em> is the same as the ones
+of the member or connection.</p>
+
+<p>Special Case:<br>
+If connected with a surface item, instances of <em>IfcStructuralCurveReaction</em> shall
+have an <em>ObjectPlacement</em> and <em>Representation</em>, containing an <em>IfcEdgeCurve</em>.
+See <em>IfcStructuralActivity</em> for further definitions.</p>
+
+<p class="spec-head">Informal Propositions:</p>
+
+<ol>
+  <li>If the curve reaction is of the predefined type CONST,
+      <em>SELF\IfcStructuralActivity.AppliedLoad</em> must not be of type
+      <em>IfcStructuralLoadConfiguration</em>.</li>
+  <li>If the curve reaction is of the predefined type LINEAR,
+      <em>SELF\IfcStructuralActivity.AppliedLoad</em> shall be of type
+      <em>IfcStructuralLoadConfiguration</em> and shall contain two items.</li>
+  <li>If the curve reaction is of the predefined type POLYGONAL,
+      <em>SELF\IfcStructuralActivity.AppliedLoad</em> shall be of type
+      <em>IfcStructuralLoadConfiguration</em> and shall contain three or more items.</li>
+  <li>If the curve action is of the predefined type DISCRETE,
+      <em>SELF\IfcStructuralActivity.AppliedLoad</em> shall be of type
+      <em>IfcStructuralLoadConfiguration</em> and shall contain two or more items.</li>
+  <li>In case of types LINEAR, POLYGONAL, and DISCRETE, the load items shall have
+      one-dimensional <em>IfcStructuralLoadConfiguration.Locations</em>, defining the
+      location of the result samples in local coordinates of the curve reaction.
+      The load items shall be provided in ascending order according to their locations.
+      The first and the last load item define the extent of the result distribution.</em>
+  <li>If the curve reaction is of the predefined type EQUIDISTANT,
+      <em>SELF\IfcStructuralActivity.AppliedLoad</em> shall be of type
+      <em>IfcStructuralLoadConfiguration</em> and shall contain two or more items.
+      <em>IfcStructuralLoadConfiguration.Locations</em> shall be omitted as it is implicit.
+      The load items shall be provided in ascending order.  The first and the last load
+      item are located at the beginning and end of the result distribution, respectively.</li>
+  <li>All items in <em>SELF\IfcStructuralActivity.AppliedLoad\IfcStructuralLoadConfiguration.Values</em>
+      shall be of the same entity type.</li>
+</ol>

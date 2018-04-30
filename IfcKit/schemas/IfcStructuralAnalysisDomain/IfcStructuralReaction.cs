@@ -21,15 +21,10 @@ namespace BuildingSmart.IFC.IfcStructuralAnalysisDomain
 {
 	public abstract partial class IfcStructuralReaction : IfcStructuralActivity
 	{
-		[InverseProperty("CausedBy")] 
-		[Description("Optional reference to instances of IfcStructuralAction which directly depend on this reaction. This reference is only needed if dependencies between structural analysis models must be captured. ")]
-		public ISet<IfcStructuralAction> Causes { get; protected set; }
-	
 	
 		protected IfcStructuralReaction(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcObjectPlacement __ObjectPlacement, IfcProductRepresentation __Representation, IfcStructuralLoad __AppliedLoad, IfcGlobalOrLocalEnum __GlobalOrLocal)
 			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType, __ObjectPlacement, __Representation, __AppliedLoad, __GlobalOrLocal)
 		{
-			this.Causes = new HashSet<IfcStructuralAction>();
 		}
 	
 	

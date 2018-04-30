@@ -13,20 +13,20 @@ using System.Xml.Serialization;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
-using BuildingSmart.IFC.IfcPresentationResource;
 
 namespace BuildingSmart.IFC.IfcPresentationOrganizationResource
 {
 	public partial class IfcLightSourceSpot : IfcLightSourcePositional
 	{
 		[DataMember(Order = 0)] 
+		[XmlElement]
 		[Description("Definition from ISO/CD 10303-46:1992: This is the direction of the axis of the cone of the light source specified in the coordinate space of the representation being projected..  Definition from VRML97 - ISO/IEC 14772-1:1997: The direction field specifies the direction vector of the light's central axis defined in the local coordinate system.  ")]
 		[Required()]
 		public IfcDirection Orientation { get; set; }
 	
 		[DataMember(Order = 1)] 
 		[XmlAttribute]
-		[Description("Definition from ISO/CD 10303-46:1992: This real is the exponent on the cosine of the angle between the line that starts at the position of the spot light source and is in the direction of the orientation of the spot light source and a line that starts at the position of the spot light source and goes through a point on the surface being shaded.  NOTE: This attribute does not exists in ISO/IEC 14772-1:1997.")]
+		[Description("Definition from ISO/CD 10303-46:1992: This real is the exponent on the cosine of the angle between the line that starts at the position of the spot light source and is in the direction of the orientation of the spot light source and a line that starts at the position of the spot light source and goes through a point on the surface being shaded.  NOTE&nbsp; This attribute does not exists in ISO/IEC 14772-1:1997.")]
 		public IfcReal? ConcentrationExponent { get; set; }
 	
 		[DataMember(Order = 2)] 

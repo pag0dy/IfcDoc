@@ -37,18 +37,24 @@ namespace BuildingSmart.IFC.IfcProductExtension
 		[MinLength(1)]
 		public IList<IfcGridAxis> WAxes { get; protected set; }
 	
+		[DataMember(Order = 3)] 
+		[XmlAttribute]
+		[Description("Predefined types to define the particular type of the grid.  <blockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; New attribute.  </blockquote>")]
+		public IfcGridTypeEnum? PredefinedType { get; set; }
+	
 		[InverseProperty("RelatedElements")] 
-		[Description("<EPM-HTML>  Relationship to a spatial structure element, to which the grid is primarily associated.  <blockquote><small><font color=\"#FF0000\">IFC2x PLATFORM CHANGE&nbsp; The inverse relationship has been added to <I>IfcGrid</I> with upward compatibility</font>  </small></blockquote>  </EPM-HTML>")]
+		[Description("Relationship to a spatial structure element, to which the grid is primarily associated.  <blockquote class=\"change-ifc2x\">IFC2x CHANGE&nbsp; The inverse relationship has been added to <em>IfcGrid</em> with upward compatibility</blockquote>")]
 		[MaxLength(1)]
 		public ISet<IfcRelContainedInSpatialStructure> ContainedInStructure { get; protected set; }
 	
 	
-		public IfcGrid(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcObjectPlacement __ObjectPlacement, IfcProductRepresentation __Representation, IfcGridAxis[] __UAxes, IfcGridAxis[] __VAxes, IfcGridAxis[] __WAxes)
+		public IfcGrid(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcObjectPlacement __ObjectPlacement, IfcProductRepresentation __Representation, IfcGridAxis[] __UAxes, IfcGridAxis[] __VAxes, IfcGridAxis[] __WAxes, IfcGridTypeEnum? __PredefinedType)
 			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType, __ObjectPlacement, __Representation)
 		{
 			this.UAxes = new List<IfcGridAxis>(__UAxes);
 			this.VAxes = new List<IfcGridAxis>(__VAxes);
 			this.WAxes = new List<IfcGridAxis>(__WAxes);
+			this.PredefinedType = __PredefinedType;
 			this.ContainedInStructure = new HashSet<IfcRelContainedInSpatialStructure>();
 		}
 	

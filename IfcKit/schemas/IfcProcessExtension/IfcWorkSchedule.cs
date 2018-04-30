@@ -20,10 +20,16 @@ namespace BuildingSmart.IFC.IfcProcessExtension
 {
 	public partial class IfcWorkSchedule : IfcWorkControl
 	{
+		[DataMember(Order = 0)] 
+		[XmlAttribute]
+		[Description("    Identifies the predefined types of a work schedule from which       the type required may be set.")]
+		public IfcWorkScheduleTypeEnum? PredefinedType { get; set; }
 	
-		public IfcWorkSchedule(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcIdentifier __Identifier, IfcDateTimeSelect __CreationDate, IfcPerson[] __Creators, IfcLabel? __Purpose, IfcTimeMeasure? __Duration, IfcTimeMeasure? __TotalFloat, IfcDateTimeSelect __StartTime, IfcDateTimeSelect __FinishTime, IfcWorkControlTypeEnum? __WorkControlType, IfcLabel? __UserDefinedControlType)
-			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType, __Identifier, __CreationDate, __Creators, __Purpose, __Duration, __TotalFloat, __StartTime, __FinishTime, __WorkControlType, __UserDefinedControlType)
+	
+		public IfcWorkSchedule(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcIdentifier? __Identification, IfcDateTime __CreationDate, IfcPerson[] __Creators, IfcLabel? __Purpose, IfcDuration? __Duration, IfcDuration? __TotalFloat, IfcDateTime __StartTime, IfcDateTime? __FinishTime, IfcWorkScheduleTypeEnum? __PredefinedType)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType, __Identification, __CreationDate, __Creators, __Purpose, __Duration, __TotalFloat, __StartTime, __FinishTime)
 		{
+			this.PredefinedType = __PredefinedType;
 		}
 	
 	

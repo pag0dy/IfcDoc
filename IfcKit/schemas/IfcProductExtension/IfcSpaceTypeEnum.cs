@@ -15,6 +15,22 @@ namespace BuildingSmart.IFC.IfcProductExtension
 {
 	public enum IfcSpaceTypeEnum
 	{
+		[Description("Any space not falling into another category.")]
+		SPACE = 1,
+	
+		[Description("A space dedication for use as a parking spot for vehicles, including access, such" +
+	    " as a parking aisle.")]
+		PARKING = 2,
+	
+		[Description("Gross Floor Area - a specific kind of space for each building story that includes" +
+	    " all net area and construction area (also the external envelop). Provision of su" +
+	    "ch a specific space is often required by regulations.")]
+		GFA = 3,
+	
+		INTERNAL = 4,
+	
+		EXTERNAL = 5,
+	
 		USERDEFINED = -1,
 	
 		NOTDEFINED = 0,

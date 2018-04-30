@@ -12,18 +12,19 @@ using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
 using BuildingSmart.IFC.IfcDateTimeResource;
+using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
 
 namespace BuildingSmart.IFC.IfcExternalReferenceResource
 {
-	public partial class IfcDocumentInformation :
+	public partial class IfcDocumentInformation : IfcExternalInformation,
 		BuildingSmart.IFC.IfcExternalReferenceResource.IfcDocumentSelect
 	{
 		[DataMember(Order = 0)] 
 		[XmlAttribute]
-		[Description("Identifier that uniquely identifies a document.")]
+		[Description("Identifier that uniquely identifies a document.  <blockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; Attribute renamed from <em>DocumentId</em>.  </blockquote>")]
 		[Required()]
-		public IfcIdentifier DocumentId { get; set; }
+		public IfcIdentifier Identification { get; set; }
 	
 		[DataMember(Order = 1)] 
 		[XmlAttribute]
@@ -37,9 +38,9 @@ namespace BuildingSmart.IFC.IfcExternalReferenceResource
 		public IfcText? Description { get; set; }
 	
 		[DataMember(Order = 3)] 
-		[Description("Information on the referenced document.")]
-		[MinLength(1)]
-		public ISet<IfcDocumentReference> DocumentReferences { get; protected set; }
+		[XmlAttribute]
+		[Description("Resource identifier or locator, provided as URI, URN or URL, of the document information for online references.  <blockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; New attribute added at the place of the removed attribute <em>DocumentReferences</em>.  </blockquote>")]
+		public IfcURIReference? Location { get; set; }
 	
 		[DataMember(Order = 4)] 
 		[XmlAttribute]
@@ -58,7 +59,7 @@ namespace BuildingSmart.IFC.IfcExternalReferenceResource
 	
 		[DataMember(Order = 7)] 
 		[XmlAttribute]
-		[Description("Document revision designation")]
+		[Description("Document revision designation.")]
 		public IfcLabel? Revision { get; set; }
 	
 		[DataMember(Order = 8)] 
@@ -71,24 +72,29 @@ namespace BuildingSmart.IFC.IfcExternalReferenceResource
 		public ISet<IfcActorSelect> Editors { get; protected set; }
 	
 		[DataMember(Order = 10)] 
-		[Description("Date and time stamp when the document was originally created.")]
-		public IfcDateAndTime CreationTime { get; set; }
+		[XmlAttribute]
+		[Description("Date and time stamp when the document was originally created.  <blockquote class=\"change-ifc2x4\">IFC4 CHANGE The data type has been changed to <em>IfcDateTime</em>, the date time string according to ISO8601.</blockquote>")]
+		public IfcDateTime? CreationTime { get; set; }
 	
 		[DataMember(Order = 11)] 
-		[Description("Date and time stamp when this document version was created.")]
-		public IfcDateAndTime LastRevisionTime { get; set; }
+		[XmlAttribute]
+		[Description("Date and time stamp when this document version was created.  <blockquote class=\"change-ifc2x4\">IFC4 CHANGE The data type has been changed to <em>IfcDateTime</em>, the date time string according to ISO8601.</blockquote>")]
+		public IfcDateTime? LastRevisionTime { get; set; }
 	
 		[DataMember(Order = 12)] 
-		[Description("Describes the electronic format of the document being referenced, providing the file extension and the manner in which the content is provided.")]
-		public IfcDocumentElectronicFormat ElectronicFormat { get; set; }
+		[XmlAttribute]
+		[Description("Describes the media type used in various internet protocols, also referred to as \"Content-type\", or \"MIME-type (Multipurpose Internet Mail Extension), of the document being referenced. It is composed of (at least) two parts, a type and a subtype.  <blockquote class=\"note\">NOTE&nbsp; The iana (Internet Assigned Numbers Authority) published the media types. </blockquote>  <blockquote class=\"example\">EXAMPLE&nbsp;  'image/png' denotes an image type of png (Portable Network Graphics) subtype,   'application/pdf' denotes an application specific type of pdf (Portable Document Format) subtype   </blockquote>  <blockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; The data type has been changed from entity data type to <em>IfcIdentifier</em>.  </blockquote>")]
+		public IfcIdentifier? ElectronicFormat { get; set; }
 	
 		[DataMember(Order = 13)] 
-		[Description("Date, when the document becomes valid.")]
-		public IfcCalendarDate ValidFrom { get; set; }
+		[XmlAttribute]
+		[Description("Date when the document becomes valid.  <blockquote class=\"change-ifc2x4\">IFC4 CHANGE The data type has been changed to <em>IfcDate</em>, the date string according to ISO8601.</blockquote>")]
+		public IfcDate? ValidFrom { get; set; }
 	
 		[DataMember(Order = 14)] 
-		[Description("Date until which the document remains valid.")]
-		public IfcCalendarDate ValidUntil { get; set; }
+		[XmlAttribute]
+		[Description("Date until which the document remains valid.  <blockquote class=\"change-ifc2x4\">IFC4 CHANGE The data type has been changed to <em>IfcDate</em>, the date string according to ISO8601.</blockquote>")]
+		public IfcDate? ValidUntil { get; set; }
 	
 		[DataMember(Order = 15)] 
 		[XmlAttribute]
@@ -97,11 +103,19 @@ namespace BuildingSmart.IFC.IfcExternalReferenceResource
 	
 		[DataMember(Order = 16)] 
 		[XmlAttribute]
-		[Description("The current status of the document. Examples of status values that might be used for a document information status include:  - DRAFT  - FINAL DRAFT  - FINAL  - REVISION")]
+		[Description("The current status of the document. Examples of status values that might be used for a document information status include:<BR>  - DRAFT<BR>  - FINAL DRAFT<BR>  - FINAL<BR>  - REVISION")]
 		public IfcDocumentStatusEnum? Status { get; set; }
 	
+		[InverseProperty("RelatingDocument")] 
+		[Description("The document information with which objects are associated.  <blockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; New inverse attribute.</blockquote>")]
+		public ISet<IfcRelAssociatesDocument> DocumentInfoForObjects { get; protected set; }
+	
+		[InverseProperty("ReferencedDocument")] 
+		[Description("The document references to which the document applies")]
+		public ISet<IfcDocumentReference> HasDocumentReferences { get; protected set; }
+	
 		[InverseProperty("RelatedDocuments")] 
-		[Description("An inverse relationship from the IfcDocumentInformationRelationship to the related documents.")]
+		[Description("An inverse relationship from the IfcDocumentInformationRelationship to the related documents./EPM-HTML>")]
 		public ISet<IfcDocumentInformationRelationship> IsPointedTo { get; protected set; }
 	
 		[InverseProperty("RelatingDocument")] 
@@ -110,12 +124,12 @@ namespace BuildingSmart.IFC.IfcExternalReferenceResource
 		public ISet<IfcDocumentInformationRelationship> IsPointer { get; protected set; }
 	
 	
-		public IfcDocumentInformation(IfcIdentifier __DocumentId, IfcLabel __Name, IfcText? __Description, IfcDocumentReference[] __DocumentReferences, IfcText? __Purpose, IfcText? __IntendedUse, IfcText? __Scope, IfcLabel? __Revision, IfcActorSelect __DocumentOwner, IfcActorSelect[] __Editors, IfcDateAndTime __CreationTime, IfcDateAndTime __LastRevisionTime, IfcDocumentElectronicFormat __ElectronicFormat, IfcCalendarDate __ValidFrom, IfcCalendarDate __ValidUntil, IfcDocumentConfidentialityEnum? __Confidentiality, IfcDocumentStatusEnum? __Status)
+		public IfcDocumentInformation(IfcIdentifier __Identification, IfcLabel __Name, IfcText? __Description, IfcURIReference? __Location, IfcText? __Purpose, IfcText? __IntendedUse, IfcText? __Scope, IfcLabel? __Revision, IfcActorSelect __DocumentOwner, IfcActorSelect[] __Editors, IfcDateTime? __CreationTime, IfcDateTime? __LastRevisionTime, IfcIdentifier? __ElectronicFormat, IfcDate? __ValidFrom, IfcDate? __ValidUntil, IfcDocumentConfidentialityEnum? __Confidentiality, IfcDocumentStatusEnum? __Status)
 		{
-			this.DocumentId = __DocumentId;
+			this.Identification = __Identification;
 			this.Name = __Name;
 			this.Description = __Description;
-			this.DocumentReferences = new HashSet<IfcDocumentReference>(__DocumentReferences);
+			this.Location = __Location;
 			this.Purpose = __Purpose;
 			this.IntendedUse = __IntendedUse;
 			this.Scope = __Scope;
@@ -129,6 +143,8 @@ namespace BuildingSmart.IFC.IfcExternalReferenceResource
 			this.ValidUntil = __ValidUntil;
 			this.Confidentiality = __Confidentiality;
 			this.Status = __Status;
+			this.DocumentInfoForObjects = new HashSet<IfcRelAssociatesDocument>();
+			this.HasDocumentReferences = new HashSet<IfcDocumentReference>();
 			this.IsPointedTo = new HashSet<IfcDocumentInformationRelationship>();
 			this.IsPointer = new HashSet<IfcDocumentInformationRelationship>();
 		}

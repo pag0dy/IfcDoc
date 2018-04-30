@@ -15,10 +15,16 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 {
 	public enum IfcBooleanOperator
 	{
+		[Description("The operation of constructing the regularized set theoretic union of the volumes " +
+	    "defined by two solids.")]
 		UNION = 1,
 	
+		[Description("The operation of constructing the regularised set theoretic intersection of the v" +
+	    "olumes defined by two solids.")]
 		INTERSECTION = 2,
 	
+		[Description("The regularised set theoretic difference between the volumes defined by two solid" +
+	    "s.")]
 		DIFFERENCE = 3,
 	
 	}

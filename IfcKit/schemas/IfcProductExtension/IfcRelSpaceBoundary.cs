@@ -22,14 +22,17 @@ namespace BuildingSmart.IFC.IfcProductExtension
 		[DataMember(Order = 0)] 
 		[Description("Reference to one spaces that is delimited by this boundary.")]
 		[Required()]
-		public IfcSpace RelatingSpace { get; set; }
+		public IfcSpaceBoundarySelect RelatingSpace { get; set; }
 	
 		[DataMember(Order = 1)] 
-		[Description("<EPM-HTML>  Reference to <strike>Building</strike> Element, that defines the Space Boundaries.  <blockquote><small><font color=\"#ff0000\">  IFC2x PLATFORM CHANGE: The data type has been changed from <i>IfcBuildingElement</i> to <i>IfcElement</i> with upward compatibility for file based exchange.  </font></small></blockquote>  </EPM-HTML>  ")]
+		[XmlElement]
+		[Description("Reference to <strike>Building</strike> Element, that defines the Space Boundaries.  <blockquote class=\"change-ifc2x\">IFC2x CHANGE&nbsp; The data type has been changed from <em>IfcBuildingElement</em> to <em>IfcElement</em> with upward compatibility for file based exchange. </blockquote>    <blockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; The attribute has been changed to be mandatory.</blockquote>  ")]
+		[Required()]
 		public IfcElement RelatedBuildingElement { get; set; }
 	
 		[DataMember(Order = 2)] 
-		[Description("<EPM-HTML>  Physical representation of the space boundary. Provided as a <u>curve or</u> surface given within the LCS of the space.  <blockquote><small><font color=\"#ff0000\">  IFC2x PLATFORM CHANGE&nbsp; The data type has been changed from <i>IfcConnectionSurfaceGeometry</i> to <i>IfcConnectionGeometry</i> with upward compatibility for file based exchange.  </font></small></blockquote>  </EPM-HTML>  ")]
+		[XmlElement]
+		[Description("Physical representation of the space boundary. Provided as a <u>curve or</u> surface given within the LCS of the space.  <blockquote class=\"change-ifc2x\">IFC2x CHANGE&nbsp; The data type has been changed from <em>IfcConnectionSurfaceGeometry</em> to <em>IfcConnectionGeometry</em> with upward compatibility for file based exchange.</blockquote>  ")]
 		public IfcConnectionGeometry ConnectionGeometry { get; set; }
 	
 		[DataMember(Order = 3)] 
@@ -45,7 +48,7 @@ namespace BuildingSmart.IFC.IfcProductExtension
 		public IfcInternalOrExternalEnum InternalOrExternalBoundary { get; set; }
 	
 	
-		public IfcRelSpaceBoundary(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcSpace __RelatingSpace, IfcElement __RelatedBuildingElement, IfcConnectionGeometry __ConnectionGeometry, IfcPhysicalOrVirtualEnum __PhysicalOrVirtualBoundary, IfcInternalOrExternalEnum __InternalOrExternalBoundary)
+		public IfcRelSpaceBoundary(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcSpaceBoundarySelect __RelatingSpace, IfcElement __RelatedBuildingElement, IfcConnectionGeometry __ConnectionGeometry, IfcPhysicalOrVirtualEnum __PhysicalOrVirtualBoundary, IfcInternalOrExternalEnum __InternalOrExternalBoundary)
 			: base(__GlobalId, __OwnerHistory, __Name, __Description)
 		{
 			this.RelatingSpace = __RelatingSpace;

@@ -20,6 +20,7 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 	public abstract partial class IfcElementarySurface : IfcSurface
 	{
 		[DataMember(Order = 0)] 
+		[XmlElement]
 		[Description("The position and orientation of the surface. This attribute is used in the definition of the parameterization of the surface.  ")]
 		[Required()]
 		public IfcAxis2Placement3D Position { get; set; }
@@ -29,8 +30,6 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		{
 			this.Position = __Position;
 		}
-	
-		public new IfcDimensionCount Dim { get { return new IfcDimensionCount(); } }
 	
 	
 	}

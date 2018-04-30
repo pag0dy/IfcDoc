@@ -1,0 +1,11 @@
+﻿FUNCTION IfcAssociatedSurface
+(Arg : IfcPcurve) : IfcSurface;
+
+   LOCAL
+     Surf : IfcSurface;
+   END_LOCAL;
+   
+   Surf := Arg\IfcPcurve.BasisSurface;
+   
+   RETURN(Surf);
+END_FUNCTION;

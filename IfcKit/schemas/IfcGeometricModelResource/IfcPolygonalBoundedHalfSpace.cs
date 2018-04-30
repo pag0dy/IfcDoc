@@ -11,6 +11,7 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcGeometryResource;
+using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
@@ -19,17 +20,19 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 	public partial class IfcPolygonalBoundedHalfSpace : IfcHalfSpaceSolid
 	{
 		[DataMember(Order = 0)] 
-		[Description("<EPM-HTML>  <P>Definition of the position coordinate system for the bounding polyline <STRIKE>and the base surface</STRIKE>.</P>  </EPM-HTML>")]
+		[XmlElement]
+		[Description("<p>Definition of the position coordinate system for the bounding polyline <STRIKE>and the base surface</STRIKE>.</p>")]
 		[Required()]
 		public IfcAxis2Placement3D Position { get; set; }
 	
 		[DataMember(Order = 1)] 
-		[Description("<EPM-HTML>  Two-dimensional <strike>polyline</strike> bounded curve, defined in the xy plane of the position coordinate system.  <blockquote><small><font color=\"#ff0000\">  IFC2x Edition 3 CHANGE&nbsp; The attribute type has been changed from <i>IfcPolyline</i> to its supertype <i>IfcBoundedCurve</i> with upward compatibility for file based exchange.  </font></small></blockquote>  </EPM-HTML>")]
+		[XmlElement]
+		[Description("Two-dimensional <strike>polyline</strike> bounded curve, defined in the xy plane of the position coordinate system.  <blockquote class=\"change-ifc2x3\">IFC2x3 CHANGE&nbsp; The attribute type has been changed from <em>IfcPolyline</em> to its supertype <em>IfcBoundedCurve</em> with upward compatibility for file based exchange.</blockquote>")]
 		[Required()]
 		public IfcBoundedCurve PolygonalBoundary { get; set; }
 	
 	
-		public IfcPolygonalBoundedHalfSpace(IfcSurface __BaseSurface, Boolean __AgreementFlag, IfcAxis2Placement3D __Position, IfcBoundedCurve __PolygonalBoundary)
+		public IfcPolygonalBoundedHalfSpace(IfcSurface __BaseSurface, IfcBoolean __AgreementFlag, IfcAxis2Placement3D __Position, IfcBoundedCurve __PolygonalBoundary)
 			: base(__BaseSurface, __AgreementFlag)
 		{
 			this.Position = __Position;

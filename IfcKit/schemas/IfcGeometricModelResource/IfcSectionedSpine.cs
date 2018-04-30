@@ -20,6 +20,7 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 	public partial class IfcSectionedSpine : IfcGeometricRepresentationItem
 	{
 		[DataMember(Order = 0)] 
+		[XmlElement]
 		[Description("A single composite curve, that defines the spine curve. Each of the composite curve segments correspond to the part between two cross-sections.")]
 		[Required()]
 		public IfcCompositeCurve SpineCurve { get; set; }

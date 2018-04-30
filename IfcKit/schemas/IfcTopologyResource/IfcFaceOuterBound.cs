@@ -11,6 +11,7 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcGeometryResource;
+using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
@@ -19,7 +20,7 @@ namespace BuildingSmart.IFC.IfcTopologyResource
 	public partial class IfcFaceOuterBound : IfcFaceBound
 	{
 	
-		public IfcFaceOuterBound(IfcLoop __Bound, Boolean __Orientation)
+		public IfcFaceOuterBound(IfcLoop __Bound, IfcBoolean __Orientation)
 			: base(__Bound, __Orientation)
 		{
 		}

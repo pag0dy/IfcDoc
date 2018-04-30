@@ -21,19 +21,19 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 	{
 		[DataMember(Order = 0)] 
 		[XmlAttribute]
-		[Description("<EPM-HTML>  The length of the base measured along the placement X axis. It is provided by the inherited axis placement through <i>SELF\\IfcCsgPrimitive3D.Position.P[1]</i>.  </EPM-HTML>")]
+		[Description("The length of the base measured along the placement X axis. It is provided by the inherited axis placement through <em>SELF\\IfcCsgPrimitive3D.Position.P[1]</em>.")]
 		[Required()]
 		public IfcPositiveLengthMeasure XLength { get; set; }
 	
 		[DataMember(Order = 1)] 
 		[XmlAttribute]
-		[Description("<EPM-HTML>  The length of the base measured along the placement Y axis. It is provided by the inherited axis placement through <i>SELF\\IfcCsgPrimitive3D.Position.P[2]</i>.  </EPM-HTML>")]
+		[Description("The length of the base measured along the placement Y axis. It is provided by the inherited axis placement through <em>SELF\\IfcCsgPrimitive3D.Position.P[2]</em>.")]
 		[Required()]
 		public IfcPositiveLengthMeasure YLength { get; set; }
 	
 		[DataMember(Order = 2)] 
 		[XmlAttribute]
-		[Description("<EPM-HTML>  The height of the apex above the plane of the base, measured in the direction of the placement Z axis, the <i>SELF\\IfcCsgPrimitive3D.Position.P[2]</i>.  </EPM-HTML>")]
+		[Description("The height of the apex above the plane of the base, measured in the direction of the placement Z axis, the <em>SELF\\IfcCsgPrimitive3D.Position.P[2]</em>.")]
 		[Required()]
 		public IfcPositiveLengthMeasure Height { get; set; }
 	

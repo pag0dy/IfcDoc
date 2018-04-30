@@ -1,0 +1,5 @@
+﻿(
+  (PredefinedType <> IfcLoadGroupTypeEnum.USERDEFINED) AND
+  (ActionType <> IfcActionTypeEnum.USERDEFINED) AND
+  (ActionSource <> IfcActionSourceTypeEnum.USERDEFINED)
+) OR EXISTS(SELF\IfcObject.ObjectType)

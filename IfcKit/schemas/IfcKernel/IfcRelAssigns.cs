@@ -25,7 +25,7 @@ namespace BuildingSmart.IFC.IfcKernel
 	
 		[DataMember(Order = 1)] 
 		[XmlAttribute]
-		[Description("Particular type of the assignment relationship. It can constrain the applicable object types, used within the role of RelatedObjects.  ")]
+		[Description("Particular type of the assignment relationship. It can constrain the applicable object types, used within the role of <em>RelatedObjects</em>.  <blockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; The attribute is deprecated and shall no longer be used. A NIL value should always be assigned.</blockquote>")]
 		public IfcObjectTypeEnum? RelatedObjectsType { get; set; }
 	
 	

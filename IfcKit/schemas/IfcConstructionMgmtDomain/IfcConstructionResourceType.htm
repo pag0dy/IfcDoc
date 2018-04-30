@@ -1,0 +1,19 @@
+﻿<p><em>IfcConstructionResourceType</em> is an abstract generalization of the different resource types used in construction projects, mainly labor, material, equipment and product resource types, plus subcontracted resource types and aggregations such as a crew resource type.</p> 
+
+<p>A resource type represents a model of "use of something" and does not necessarily correspond to a specific type of object such as a person or vehicle, but represents possible usages of such objects such as general labor or an equipment fleet.  A resource type can either represent usage in general (consumption attributes defined but no task type assignment) or a task-specific resource type (production attributes defined and having an <em>IfcTask</em> assignment).</p>
+
+<p>A construction resource type captures common productivities and cost rates for applying resources to particular task types.</p>
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC4.
+</blockquote>
+
+<p class="use-head">Composition use definition</p>
+<p>Resource types may be decomposed into nested resource types indicating productivities when applying the resource to specific task types using the <em>IfcRelNests</em> relationship where <em>IfcRelNests.RelatingObject</em> refers to the general resource type and <em>IfcRelNests.RelatedObjects</em> refers to one or more task-specific productivities.  For example, an <em>IfcLaborResourceType</em> may be defined for "Carpenter" which may have a nested <em>IfcLaborResourceType</em> for "Carpenter - Wall Framing" and another nested <em>IfcLaborResourceType</em> for "Carpenter - Drywall", each of which may have productivities based according to specific task types (<em>IfcTaskType</em>).</p> 
+
+<p class="use-head">Assignment use definition</p>
+<p>Resource types may be assigned to process types (<em>IfcTypeProcess</em> subtypes) using the <em>IfcRelAssignsToProcess</em> relationship as shown in Figure 2.  Such relationship indicates that the resource type applies to the process type for the use indicated (e.g. <em>IfcTaskType.PredefinedType</em>).  Such relationship enables a scenario of placing an <em>IfcProduct</em> of a particular <em>IfcTypeProduct</em>, querying for a set of <em>IfcTypeProcess</em> process types for constructing such product (e.g. <em>IfcTaskTypeEnum.CONSTRUCTION</em>), querying each <em>IfcTypeProcess</em> for a set of <em>IfcTypeResource</em> resource types for carrying out the process, and finally choosing an <em>IfcTypeProcess</em> and <em>IfcTypeResource</em> combination resulting in the shortest time for instantiated <em>IfcTask</em> occurrence(s) and/or lowest-cost for instantiated <em>IfcConstructionResource</em> occurrence(s).</p>
+<table>
+<tr><td><img alt="Assignment Use Definition" src="../../../figures/ifcconstructionresourcetype-assignment.png"></td></tr>
+<tr><td><p class="figure">Figure 2 &mdash; Construction resource type assignment</p></td></tr>
+</table>

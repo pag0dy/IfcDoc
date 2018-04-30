@@ -10,6 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPropertyResource;
 
@@ -17,12 +18,13 @@ namespace BuildingSmart.IFC.IfcActorResource
 {
 	public partial class IfcOrganization :
 		BuildingSmart.IFC.IfcActorResource.IfcActorSelect,
-		BuildingSmart.IFC.IfcPropertyResource.IfcObjectReferenceSelect
+		BuildingSmart.IFC.IfcPropertyResource.IfcObjectReferenceSelect,
+		BuildingSmart.IFC.IfcExternalReferenceResource.IfcResourceObjectSelect
 	{
 		[DataMember(Order = 0)] 
 		[XmlAttribute]
 		[Description("Identification of the organization.")]
-		public IfcIdentifier? Id { get; set; }
+		public IfcIdentifier? Identification { get; set; }
 	
 		[DataMember(Order = 1)] 
 		[XmlAttribute]
@@ -41,7 +43,7 @@ namespace BuildingSmart.IFC.IfcActorResource
 		public IList<IfcActorRole> Roles { get; protected set; }
 	
 		[DataMember(Order = 4)] 
-		[Description("Postal and telecom addresses of an organization.  <EPM-HTML>  <BLOCKQUOTE><FONT SIZE=\"-1\">NOTE: There may be several addresses related to an organization.  </FONT></BLOCKQUOTE>  </EPM-HTML>")]
+		[Description("Postal and telecom addresses of an organization.  <blockquote class=\"note\">NOTE&nbsp; There may be several addresses related to an organization.</blockquote>")]
 		[MinLength(1)]
 		public IList<IfcAddress> Addresses { get; protected set; }
 	
@@ -58,9 +60,9 @@ namespace BuildingSmart.IFC.IfcActorResource
 		public ISet<IfcPersonAndOrganization> Engages { get; protected set; }
 	
 	
-		public IfcOrganization(IfcIdentifier? __Id, IfcLabel __Name, IfcText? __Description, IfcActorRole[] __Roles, IfcAddress[] __Addresses)
+		public IfcOrganization(IfcIdentifier? __Identification, IfcLabel __Name, IfcText? __Description, IfcActorRole[] __Roles, IfcAddress[] __Addresses)
 		{
-			this.Id = __Id;
+			this.Identification = __Identification;
 			this.Name = __Name;
 			this.Description = __Description;
 			this.Roles = new List<IfcActorRole>(__Roles);

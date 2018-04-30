@@ -1,0 +1,3 @@
+﻿(EXISTS(LastModifiedDate)) OR
+(NOT(EXISTS(LastModifiedDate)) AND NOT(EXISTS(ChangeAction))) OR
+(NOT(EXISTS(LastModifiedDate)) AND EXISTS(ChangeAction) AND ((ChangeAction = IfcChangeActionEnum.NOTDEFINED) OR (ChangeAction = IfcChangeActionEnum.NOCHANGE)))

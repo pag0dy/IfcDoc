@@ -19,17 +19,19 @@ namespace BuildingSmart.IFC.IfcProductExtension
 	public partial class IfcRelConnectsPortToElement : IfcRelConnects
 	{
 		[DataMember(Order = 0)] 
+		[XmlElement]
 		[Description("Reference to an Port that is connected by the objectified relationship.")]
 		[Required()]
 		public IfcPort RelatingPort { get; set; }
 	
 		[DataMember(Order = 1)] 
-		[Description("Reference to an Element that is connected by the objectified relationship.")]
+		[XmlElement]
+		[Description("Reference to an <em>IfcDistributionElement</em> that has ports assigned.  <blockquote class=\"change-ifc2x4\">IFC4 CHANGE  Data type restricted to <em>IfcDistributionElement</em>.</blockquote>")]
 		[Required()]
-		public IfcElement RelatedElement { get; set; }
+		public IfcDistributionElement RelatedElement { get; set; }
 	
 	
-		public IfcRelConnectsPortToElement(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcPort __RelatingPort, IfcElement __RelatedElement)
+		public IfcRelConnectsPortToElement(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcPort __RelatingPort, IfcDistributionElement __RelatedElement)
 			: base(__GlobalId, __OwnerHistory, __Name, __Description)
 		{
 			this.RelatingPort = __RelatingPort;

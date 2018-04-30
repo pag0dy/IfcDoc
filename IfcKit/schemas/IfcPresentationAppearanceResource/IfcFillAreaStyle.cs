@@ -23,11 +23,17 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 		[MinLength(1)]
 		public ISet<IfcFillStyleSelect> FillStyles { get; protected set; }
 	
+		[DataMember(Order = 1)] 
+		[XmlAttribute]
+		[Description("Indication whether the length measures provided for the presentation style are model based, or draughting based.  <blockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; New attribute.  </blockquote>")]
+		public IfcBoolean? ModelorDraughting { get; set; }
 	
-		public IfcFillAreaStyle(IfcLabel? __Name, IfcFillStyleSelect[] __FillStyles)
+	
+		public IfcFillAreaStyle(IfcLabel? __Name, IfcFillStyleSelect[] __FillStyles, IfcBoolean? __ModelorDraughting)
 			: base(__Name)
 		{
 			this.FillStyles = new HashSet<IfcFillStyleSelect>(__FillStyles);
+			this.ModelorDraughting = __ModelorDraughting;
 		}
 	
 	

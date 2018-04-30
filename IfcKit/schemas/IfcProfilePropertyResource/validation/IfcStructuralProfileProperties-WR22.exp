@@ -1,1 +1,0 @@
-﻿NOT(EXISTS(ShearDeformationAreaZ)) OR (ShearDeformationAreaZ >= 0.)

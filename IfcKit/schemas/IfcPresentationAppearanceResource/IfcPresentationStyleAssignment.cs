@@ -13,7 +13,8 @@ using System.Xml.Serialization;
 
 namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 {
-	public partial class IfcPresentationStyleAssignment
+	public partial class IfcPresentationStyleAssignment :
+		BuildingSmart.IFC.IfcPresentationAppearanceResource.IfcStyleAssignmentSelect
 	{
 		[DataMember(Order = 0)] 
 		[Description("A set of presentation styles that are assigned to styled items.")]

@@ -10,6 +10,10 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcApprovalResource;
+using BuildingSmart.IFC.IfcConstraintResource;
+using BuildingSmart.IFC.IfcExternalReferenceResource;
+using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
 
 namespace BuildingSmart.IFC.IfcPropertyResource
@@ -17,14 +21,12 @@ namespace BuildingSmart.IFC.IfcPropertyResource
 	public partial class IfcPropertyTableValue : IfcSimpleProperty
 	{
 		[DataMember(Order = 0)] 
-		[Description("List of defining values, which determine the defined values.")]
-		[Required()]
+		[Description("List of defining values, which determine the defined values. This list shall have unique values only.  <blockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; The attribute has been made optional with upward compatibility for file based exchange.</blockquote>")]
 		[MinLength(1)]
 		public IList<IfcValue> DefiningValues { get; protected set; }
 	
 		[DataMember(Order = 1)] 
-		[Description("Defined values which are applicable for the scope as defined by the defining values.")]
-		[Required()]
+		[Description("Defined values which are applicable for the scope as defined by the defining values.  <blockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; The attribute has been made optional with upward compatibility for file based exchange.</blockquote>")]
 		[MinLength(1)]
 		public IList<IfcValue> DefinedValues { get; protected set; }
 	
@@ -41,8 +43,13 @@ namespace BuildingSmart.IFC.IfcPropertyResource
 		[Description("Unit for the defined values, if not given, the default value for the measure type (given by the TYPE of the defined values) is used as defined by the global unit assignment at IfcProject.")]
 		public IfcUnit DefinedUnit { get; set; }
 	
+		[DataMember(Order = 5)] 
+		[XmlAttribute]
+		[Description("Interpolation of the curve between two defining and defined values that are provided. if not provided a linear interpolation is assumed.  <blockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; The attribute has been added at the end of the attribute list.</blockquote>")]
+		public IfcCurveInterpolationEnum? CurveInterpolation { get; set; }
 	
-		public IfcPropertyTableValue(IfcIdentifier __Name, IfcText? __Description, IfcValue[] __DefiningValues, IfcValue[] __DefinedValues, IfcText? __Expression, IfcUnit __DefiningUnit, IfcUnit __DefinedUnit)
+	
+		public IfcPropertyTableValue(IfcIdentifier __Name, IfcText? __Description, IfcValue[] __DefiningValues, IfcValue[] __DefinedValues, IfcText? __Expression, IfcUnit __DefiningUnit, IfcUnit __DefinedUnit, IfcCurveInterpolationEnum? __CurveInterpolation)
 			: base(__Name, __Description)
 		{
 			this.DefiningValues = new List<IfcValue>(__DefiningValues);
@@ -50,6 +57,7 @@ namespace BuildingSmart.IFC.IfcPropertyResource
 			this.Expression = __Expression;
 			this.DefiningUnit = __DefiningUnit;
 			this.DefinedUnit = __DefinedUnit;
+			this.CurveInterpolation = __CurveInterpolation;
 		}
 	
 	

@@ -25,6 +25,7 @@ namespace BuildingSmart.IFC.IfcSharedBldgServiceElements
 		public ISet<IfcDistributionControlElement> RelatedControlElements { get; protected set; }
 	
 		[DataMember(Order = 1)] 
+		[XmlElement]
 		[Description("Relationship to a distribution flow element  ")]
 		[Required()]
 		public IfcDistributionFlowElement RelatingFlowElement { get; set; }

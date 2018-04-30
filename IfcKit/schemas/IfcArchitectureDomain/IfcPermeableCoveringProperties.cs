@@ -13,12 +13,11 @@ using System.Xml.Serialization;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
-using BuildingSmart.IFC.IfcSharedBldgElements;
 using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcArchitectureDomain
 {
-	public partial class IfcPermeableCoveringProperties : IfcPropertySetDefinition
+	public partial class IfcPermeableCoveringProperties : IfcPreDefinedPropertySet
 	{
 		[DataMember(Order = 0)] 
 		[XmlAttribute]
@@ -43,6 +42,7 @@ namespace BuildingSmart.IFC.IfcArchitectureDomain
 		public IfcPositiveLengthMeasure? FrameThickness { get; set; }
 	
 		[DataMember(Order = 4)] 
+		[XmlElement]
 		[Description("Optional link to a shape aspect definition, which points to the part of the geometric representation of the window style, which is used to represent the permeable covering.")]
 		public IfcShapeAspect ShapeAspectStyle { get; set; }
 	

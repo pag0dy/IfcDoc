@@ -10,9 +10,11 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcActorResource;
+using BuildingSmart.IFC.IfcCostResource;
+using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
+using BuildingSmart.IFC.IfcQuantityResource;
 using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcConstructionMgmtDomain
@@ -20,21 +22,15 @@ namespace BuildingSmart.IFC.IfcConstructionMgmtDomain
 	public partial class IfcConstructionMaterialResource : IfcConstructionResource
 	{
 		[DataMember(Order = 0)] 
-		[Description("Possible suppliers of the type of materials.")]
-		[MinLength(1)]
-		public ISet<IfcActorSelect> Suppliers { get; protected set; }
-	
-		[DataMember(Order = 1)] 
 		[XmlAttribute]
-		[Description("The ratio of the amount of a construction material used to the amount provided (determined as a quantity)")]
-		public IfcRatioMeasure? UsageRatio { get; set; }
+		[Description("Defines types of construction material resources.  <blockquote class=\"change-ifc2x4\">IFC4 New attribute.</blockquote>")]
+		public IfcConstructionMaterialResourceTypeEnum? PredefinedType { get; set; }
 	
 	
-		public IfcConstructionMaterialResource(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcIdentifier? __ResourceIdentifier, IfcLabel? __ResourceGroup, IfcResourceConsumptionEnum? __ResourceConsumption, IfcMeasureWithUnit __BaseQuantity, IfcActorSelect[] __Suppliers, IfcRatioMeasure? __UsageRatio)
-			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType, __ResourceIdentifier, __ResourceGroup, __ResourceConsumption, __BaseQuantity)
+		public IfcConstructionMaterialResource(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcIdentifier? __Identification, IfcText? __LongDescription, IfcResourceTime __Usage, IfcAppliedValue[] __BaseCosts, IfcPhysicalQuantity __BaseQuantity, IfcConstructionMaterialResourceTypeEnum? __PredefinedType)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType, __Identification, __LongDescription, __Usage, __BaseCosts, __BaseQuantity)
 		{
-			this.Suppliers = new HashSet<IfcActorSelect>(__Suppliers);
-			this.UsageRatio = __UsageRatio;
+			this.PredefinedType = __PredefinedType;
 		}
 	
 	

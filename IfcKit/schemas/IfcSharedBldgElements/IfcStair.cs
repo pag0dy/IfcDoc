@@ -24,15 +24,14 @@ namespace BuildingSmart.IFC.IfcSharedBldgElements
 	{
 		[DataMember(Order = 0)] 
 		[XmlAttribute]
-		[Description("Predefined shape types for a stair that are specified in an Enum.")]
-		[Required()]
-		public IfcStairTypeEnum ShapeType { get; set; }
+		[Description("Predefined generic type for a stair that is specified in an enumeration. There may be a property set given specifically for the predefined types.  <blockquote class=\"note\">NOTE&nbsp; The <em>PredefinedType</em> shall only be used, if no <em>IfcStairType</em> is assigned, providing its own <em>IfcStairType.PredefinedType</em>.</blockquote>  <blockquote class=\"change-ifc2x4\">IFC4 CHANGE  The attribute has been renamed from <em>ShapeType</em> and changed to be OPTIONAL with upward compatibility for file based exchange.</blockquote>")]
+		public IfcStairTypeEnum? PredefinedType { get; set; }
 	
 	
-		public IfcStair(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcObjectPlacement __ObjectPlacement, IfcProductRepresentation __Representation, IfcIdentifier? __Tag, IfcStairTypeEnum __ShapeType)
+		public IfcStair(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcObjectPlacement __ObjectPlacement, IfcProductRepresentation __Representation, IfcIdentifier? __Tag, IfcStairTypeEnum? __PredefinedType)
 			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType, __ObjectPlacement, __Representation, __Tag)
 		{
-			this.ShapeType = __ShapeType;
+			this.PredefinedType = __PredefinedType;
 		}
 	
 	

@@ -15,14 +15,25 @@ namespace BuildingSmart.IFC.IfcElectricalDomain
 {
 	public enum IfcOutletTypeEnum
 	{
+		[Description("An outlet used for an audio or visual device.")]
 		AUDIOVISUALOUTLET = 1,
 	
+		[Description("An outlet used for connecting communications equipment.")]
 		COMMUNICATIONSOUTLET = 2,
 	
+		[Description("An outlet used for connecting electrical devices requiring power.")]
 		POWEROUTLET = 3,
 	
+		[Description("An outlet used for connecting data communications equipment.")]
+		DATAOUTLET = 4,
+	
+		[Description("An outlet used for connecting telephone communications equipment.")]
+		TELEPHONEOUTLET = 5,
+	
+		[Description("User-defined type.")]
 		USERDEFINED = -1,
 	
+		[Description("Undefined type.<")]
 		NOTDEFINED = 0,
 	
 	}

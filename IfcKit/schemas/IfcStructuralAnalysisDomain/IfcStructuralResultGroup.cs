@@ -25,13 +25,15 @@ namespace BuildingSmart.IFC.IfcStructuralAnalysisDomain
 		public IfcAnalysisTheoryTypeEnum TheoryType { get; set; }
 	
 		[DataMember(Order = 1)] 
+		[XmlElement]
 		[Description("Reference to an instance of IfcStructuralLoadGroup for which this instance represents the result.")]
 		public IfcStructuralLoadGroup ResultForLoadGroup { get; set; }
 	
 		[DataMember(Order = 2)] 
-		[Description("This Boolean value allows to easily recognize if a linear analysis has been applied (allowing the superposition of analysis results), or vice versa.")]
+		[XmlAttribute]
+		[Description("This value allows to easily recognize whether a linear analysis has been applied (allowing the superposition of analysis results).")]
 		[Required()]
-		public Boolean IsLinear { get; set; }
+		public IfcBoolean IsLinear { get; set; }
 	
 		[InverseProperty("HasResults")] 
 		[Description("Reference to an instance of IfcStructuralAnalysisModel for which this instance captures a result.")]
@@ -39,7 +41,7 @@ namespace BuildingSmart.IFC.IfcStructuralAnalysisDomain
 		public ISet<IfcStructuralAnalysisModel> ResultGroupFor { get; protected set; }
 	
 	
-		public IfcStructuralResultGroup(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcAnalysisTheoryTypeEnum __TheoryType, IfcStructuralLoadGroup __ResultForLoadGroup, Boolean __IsLinear)
+		public IfcStructuralResultGroup(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcAnalysisTheoryTypeEnum __TheoryType, IfcStructuralLoadGroup __ResultForLoadGroup, IfcBoolean __IsLinear)
 			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType)
 		{
 			this.TheoryType = __TheoryType;

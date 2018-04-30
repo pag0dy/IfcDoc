@@ -10,11 +10,13 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 
 namespace BuildingSmart.IFC.IfcQuantityResource
 {
-	public abstract partial class IfcPhysicalQuantity
+	public abstract partial class IfcPhysicalQuantity :
+		BuildingSmart.IFC.IfcExternalReferenceResource.IfcResourceObjectSelect
 	{
 		[DataMember(Order = 0)] 
 		[XmlAttribute]
@@ -27,6 +29,10 @@ namespace BuildingSmart.IFC.IfcQuantityResource
 		[Description("Further explanation that might be given to the quantity.")]
 		public IfcText? Description { get; set; }
 	
+		[InverseProperty("RelatedResourceObjects")] 
+		[Description("Reference to an external reference, e.g. library, classification, or document information, that is associated to the quantity.  <blockquote class=\"change-ifc2x4\">IFC4 CHANGE New inverse attribute.</blockquote>")]
+		public ISet<IfcExternalReferenceRelationship> HasExternalReferences { get; protected set; }
+	
 		[InverseProperty("HasQuantities")] 
 		[Description("Reference to a physical complex quantity in which the physical quantity may be contained.")]
 		[MaxLength(1)]
@@ -37,6 +43,7 @@ namespace BuildingSmart.IFC.IfcQuantityResource
 		{
 			this.Name = __Name;
 			this.Description = __Description;
+			this.HasExternalReferences = new HashSet<IfcExternalReferenceRelationship>();
 			this.PartOfComplex = new HashSet<IfcPhysicalComplexQuantity>();
 		}
 	

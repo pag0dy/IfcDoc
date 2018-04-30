@@ -19,18 +19,20 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		BuildingSmart.IFC.IfcPresentationOrganizationResource.IfcLayeredItem
 	{
 		[InverseProperty("AssignedItems")] 
-		[Description("<EPM-HTML>Assignment of the representation item to a single or multiple layer(s). The <i>LayerAssignments</i> can override a <i>LayerAssignments</i> of the <i>IfcRepresentation</i> it is used  within the list of <i>Items</i>.  <blockquote>  <small>NOTE&nbsp; Implementation agreements can restrict the maximum number of layer assignments to 1.</small><br>  <small><font color=\"#ff0000\">IFC2x Edition 3 CHANGE&nbsp; The inverse attribute <i>LayerAssignments</i> has been added.</font></small>  </blockquote>  </EPM-HTML>")]
-		public ISet<IfcPresentationLayerAssignment> LayerAssignments { get; protected set; }
+		[Description("Assignment of the representation item to a single or multiple layer(s). The <em>LayerAssignments</em> can override a <em>LayerAssignments</em> of the <em>IfcRepresentation</em> it is used  within the list of <em>Items</em>.  <blockquote class=\"change-ifc2x3\">IFC2x3 CHANGE&nbsp; The inverse attribute <em>LayerAssignments</em> has been added.</blockquote>   <blockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; The inverse attribute <em>LayerAssignment</em> has  been restricted to max 1. Upward compatibility for file based exchange is guaranteed. </blockquote>")]
+		[MaxLength(1)]
+		public ISet<IfcPresentationLayerAssignment> LayerAssignment { get; protected set; }
 	
 		[InverseProperty("Item")] 
-		[Description("<EPM-HTML>  Reference to the <i>IfcStyledItem</i> that provides presentation information to the representation, e.g. a curve style, including colour and thickness to a geometric curve.    <blockquote>  <small><font color=\"#ff0000\">IFC2x Edition 3 CHANGE&nbsp; The inverse attribute <i>StyledByItem</i> has been added.</font></small>  </blockquote>  </EPM-HTML>")]
+		[XmlElement]
+		[Description("Reference to the <em>IfcStyledItem</em> that provides presentation information to the representation, e.g. a curve style, including colour and thickness to a geometric curve.    <blockquote class=\"change-ifc2x3\">IFC2x3 CHANGE&nbsp; The inverse attribute <em>StyledByItem</em> has been added.</blockquote>")]
 		[MaxLength(1)]
 		public ISet<IfcStyledItem> StyledByItem { get; protected set; }
 	
 	
 		protected IfcRepresentationItem()
 		{
-			this.LayerAssignments = new HashSet<IfcPresentationLayerAssignment>();
+			this.LayerAssignment = new HashSet<IfcPresentationLayerAssignment>();
 			this.StyledByItem = new HashSet<IfcStyledItem>();
 		}
 	

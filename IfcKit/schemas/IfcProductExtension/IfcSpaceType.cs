@@ -21,15 +21,21 @@ namespace BuildingSmart.IFC.IfcProductExtension
 	{
 		[DataMember(Order = 0)] 
 		[XmlAttribute]
-		[Description("<EPM-HTML>  Predefined types to define the particular type of space. There may be property set definitions available for each predefined type.  </EPM-HTML>")]
+		[Description("Predefined types to define the particular type of space. There may be property set definitions available for each predefined type.")]
 		[Required()]
 		public IfcSpaceTypeEnum PredefinedType { get; set; }
 	
+		[DataMember(Order = 1)] 
+		[XmlAttribute]
+		[Description("Long name for a space type, used for informal purposes. It should be used, if available, in conjunction with the inherited <em>Name</em> attribute.  <blockquote class=\"note\">    NOTE&nbsp; In many scenarios the <em>Name</em> attribute refers to the short name or number of a space type, and the <em>LongName</em> refers to the full descriptive name.  </blockquote>  <blockquote class=\"change-ifc2x4\">    IFC4 CHANGE&nbsp; New attribute added at the end of entity definition.  </blockquote>")]
+		public IfcLabel? LongName { get; set; }
 	
-		public IfcSpaceType(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ApplicableOccurrence, IfcPropertySetDefinition[] __HasPropertySets, IfcRepresentationMap[] __RepresentationMaps, IfcLabel? __Tag, IfcLabel? __ElementType, IfcSpaceTypeEnum __PredefinedType)
+	
+		public IfcSpaceType(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcIdentifier? __ApplicableOccurrence, IfcPropertySetDefinition[] __HasPropertySets, IfcRepresentationMap[] __RepresentationMaps, IfcLabel? __Tag, IfcLabel? __ElementType, IfcSpaceTypeEnum __PredefinedType, IfcLabel? __LongName)
 			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ApplicableOccurrence, __HasPropertySets, __RepresentationMaps, __Tag, __ElementType)
 		{
 			this.PredefinedType = __PredefinedType;
+			this.LongName = __LongName;
 		}
 	
 	

@@ -1,0 +1,1 @@
+﻿NOT(EXISTS(FilletRadius)) OR (FilletRadius >= SELF\IfcSweptDiskSolid.Radius)

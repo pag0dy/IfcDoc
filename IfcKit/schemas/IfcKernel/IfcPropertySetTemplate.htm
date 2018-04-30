@@ -1,0 +1,27 @@
+﻿<p><em>IfcPropertySetTemplate</em> defines the template for all dynamically extensible property sets represented by <em>IfcPropertySet</em>. The property set template is a container of property templates within a property tree. The individual property templates are interpreted according to their <em>Name</em> attribute and shall have no values assigned.</p>
+
+<blockquote class="note">NOTE&nbsp; By convention an <em>IfcPropertySetTemplate</em> can also be used as a template for an <em>IfcElementQuantity</em>, being a particular type of a property set definition.</blockquote>
+
+<p>Property set templates can form part of a property library used and declared within a project. Depending on the <em>TemplateType</em> the <em>IfcPropertySetTemplate</em> defines a template for:</p>
+<ul>
+ <li>"Pset_" - occurrences of <em>IfcPropertySet</em></li>
+ <li>"QTO_" - occurrences of <em>IfcElementQuantity</em></li>
+</ul>
+
+<p>The inherited <em>HasContext</em> inverse relation to <em>IfcRelDeclares</em> is used to declare the <em>IfcPropertySetTemplate</em> within a project library. If included in an exchange data set it can then be traversed through the <em>IfcProjectLibrary</em>. The <em>Defines</em> inverse relation to <em>IfcRelDefinesByTemplate</em> is provided to keep the definition relationship between the <em>IfcPropertySetTemplate</em> and the one to many <em>IfcPropertySet</em>'s, for which it provides the template. Figure 2 illustrates relationships used for property set templates.</p>
+
+<p>&nbsp;</p>
+<table summary="relationships used for property set templates">
+<tr>
+<td valign="top"><img src="../../../figures/ifcpropertysettemplate_fig-1.png" alt="property set template"></td>
+</tr>
+<tr><td><p class="figure">Figure 2 &mdash; Property set template relationships</p></td>
+</tr>
+</table>
+
+<p>Between <em>IfcProperty</em>'s within the <em>HasProperties</em> set of <em>IfcPropertySet</em> having the same <em>Name</em> attribute value as the <em>IfcPropertyTemplate</em>'s within the <em>HasPropertyTemplates</em> set of <em>IfcPropertySetTemplate</em> an implicit definition relationship is established that assigns the template to the individual properties. </p>
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC4.
+</blockquote>
+

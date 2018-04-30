@@ -32,11 +32,12 @@ namespace BuildingSmart.IFC.IfcProductExtension
 		public IfcLengthMeasure? ElevationOfTerrain { get; set; }
 	
 		[DataMember(Order = 2)] 
+		[XmlElement]
 		[Description("Address given to the building for postal purposes.")]
 		public IfcPostalAddress BuildingAddress { get; set; }
 	
 	
-		public IfcBuilding(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcObjectPlacement __ObjectPlacement, IfcProductRepresentation __Representation, IfcLabel? __LongName, IfcElementCompositionEnum __CompositionType, IfcLengthMeasure? __ElevationOfRefHeight, IfcLengthMeasure? __ElevationOfTerrain, IfcPostalAddress __BuildingAddress)
+		public IfcBuilding(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcObjectPlacement __ObjectPlacement, IfcProductRepresentation __Representation, IfcLabel? __LongName, IfcElementCompositionEnum? __CompositionType, IfcLengthMeasure? __ElevationOfRefHeight, IfcLengthMeasure? __ElevationOfTerrain, IfcPostalAddress __BuildingAddress)
 			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType, __ObjectPlacement, __Representation, __LongName, __CompositionType)
 		{
 			this.ElevationOfRefHeight = __ElevationOfRefHeight;

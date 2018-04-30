@@ -19,16 +19,19 @@ namespace BuildingSmart.IFC.IfcProductExtension
 	public partial class IfcRelConnectsPorts : IfcRelConnects
 	{
 		[DataMember(Order = 0)] 
+		[XmlElement]
 		[Description("Reference to the first port that is connected by the objectified relationship.")]
 		[Required()]
 		public IfcPort RelatingPort { get; set; }
 	
 		[DataMember(Order = 1)] 
+		[XmlElement]
 		[Description("Reference to the second port that is connected by the objectified relationship.")]
 		[Required()]
 		public IfcPort RelatedPort { get; set; }
 	
 		[DataMember(Order = 2)] 
+		[XmlElement]
 		[Description("Defines the element that realizes a port connection relationship.")]
 		public IfcElement RealizingElement { get; set; }
 	

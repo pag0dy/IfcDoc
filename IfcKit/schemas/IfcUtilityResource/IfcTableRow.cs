@@ -17,22 +17,17 @@ namespace BuildingSmart.IFC.IfcUtilityResource
 	public partial class IfcTableRow
 	{
 		[DataMember(Order = 0)] 
-		[Description("The value of information by row and column using the units defined. NOTE - The row value identifies both the actual value and the units in which it is recorded. Each cell (unique row and column) may have a different value AND different units. If the row is a heading row, then the row values are strings defined by the IfcString.")]
-		[Required()]
+		[Description("The data value of the table cell..")]
 		[MinLength(1)]
 		public IList<IfcValue> RowCells { get; protected set; }
 	
 		[DataMember(Order = 1)] 
-		[Description("Flag which identifies if the row is a heading row or a row which contains row values. NOTE - If the row is a heading, the flag takes the value = TRUE.")]
-		[Required()]
-		public Boolean IsHeading { get; set; }
-	
-		[InverseProperty("Rows")] 
-		[Description("Reference to the IfcTable, in which the IfcTableRow is defined (or contained).")]
-		public IfcTable OfTable { get; set; }
+		[XmlAttribute]
+		[Description("Flag which identifies if the row is a heading row or a row which contains row values. <blockquote class=\"note\">NOTE - If the row is a heading, the flag takes the value = TRUE.</blockquote>")]
+		public IfcBoolean? IsHeading { get; set; }
 	
 	
-		public IfcTableRow(IfcValue[] __RowCells, Boolean __IsHeading)
+		public IfcTableRow(IfcValue[] __RowCells, IfcBoolean? __IsHeading)
 		{
 			this.RowCells = new List<IfcValue>(__RowCells);
 			this.IsHeading = __IsHeading;

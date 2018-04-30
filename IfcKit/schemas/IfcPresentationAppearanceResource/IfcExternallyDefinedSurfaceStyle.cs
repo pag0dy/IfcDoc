@@ -21,8 +21,8 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 		BuildingSmart.IFC.IfcPresentationAppearanceResource.IfcSurfaceStyleElementSelect
 	{
 	
-		public IfcExternallyDefinedSurfaceStyle(IfcLabel? __Location, IfcIdentifier? __ItemReference, IfcLabel? __Name)
-			: base(__Location, __ItemReference, __Name)
+		public IfcExternallyDefinedSurfaceStyle(IfcURIReference? __Location, IfcIdentifier? __Identification, IfcLabel? __Name)
+			: base(__Location, __Identification, __Name)
 		{
 		}
 	

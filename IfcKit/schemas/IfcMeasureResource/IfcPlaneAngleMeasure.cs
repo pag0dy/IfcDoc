@@ -14,8 +14,8 @@ using System.Xml.Serialization;
 namespace BuildingSmart.IFC.IfcMeasureResource
 {
 	public partial struct IfcPlaneAngleMeasure :
-		BuildingSmart.IFC.IfcMeasureResource.IfcMeasureValue,
-		BuildingSmart.IFC.IfcStructuralAnalysisDomain.IfcOrientationSelect
+		BuildingSmart.IFC.IfcStructuralElementsDomain.IfcBendingParameterSelect,
+		BuildingSmart.IFC.IfcMeasureResource.IfcMeasureValue
 	{
 		[XmlText]
 		public Double Value { get; private set; }

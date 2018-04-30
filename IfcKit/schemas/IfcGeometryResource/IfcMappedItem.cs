@@ -18,11 +18,13 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 	public partial class IfcMappedItem : IfcRepresentationItem
 	{
 		[DataMember(Order = 0)] 
+		[XmlElement]
 		[Description("A representation map that is the source of the mapped item. It can be seen as a block (or cell or marco) definition.")]
 		[Required()]
 		public IfcRepresentationMap MappingSource { get; set; }
 	
 		[DataMember(Order = 1)] 
+		[XmlElement]
 		[Description("A representation item that is the target onto which the mapping source is mapped. It is constraint to be a Cartesian transformation operator.")]
 		[Required()]
 		public IfcCartesianTransformationOperator MappingTarget { get; set; }

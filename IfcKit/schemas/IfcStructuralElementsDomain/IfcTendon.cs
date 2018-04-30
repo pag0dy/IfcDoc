@@ -15,6 +15,8 @@ using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcProductExtension;
 using BuildingSmart.IFC.IfcRepresentationResource;
+using BuildingSmart.IFC.IfcSharedBldgElements;
+using BuildingSmart.IFC.IfcSharedComponentElements;
 using BuildingSmart.IFC.IfcStructuralAnalysisDomain;
 using BuildingSmart.IFC.IfcUtilityResource;
 
@@ -24,21 +26,18 @@ namespace BuildingSmart.IFC.IfcStructuralElementsDomain
 	{
 		[DataMember(Order = 0)] 
 		[XmlAttribute]
-		[Description("Predefined generic types for a tendon.")]
-		[Required()]
-		public IfcTendonTypeEnum PredefinedType { get; set; }
+		[Description("Predefined generic types for a tendon.    <blockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; Attribute made optional.</blockquote>")]
+		public IfcTendonTypeEnum? PredefinedType { get; set; }
 	
 		[DataMember(Order = 1)] 
 		[XmlAttribute]
-		[Description("The nominal diameter defining the cross-section size of the tendon.")]
-		[Required()]
-		public IfcPositiveLengthMeasure NominalDiameter { get; set; }
+		[Description("The nominal diameter defining the cross-section size of the tendon.    <blockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; Attribute made optional and deprecated.  Use respective attribute at <em>IfcTendonType</em> instead.</blockquote>")]
+		public IfcPositiveLengthMeasure? NominalDiameter { get; set; }
 	
 		[DataMember(Order = 2)] 
 		[XmlAttribute]
-		[Description("The effective cross-section area of the tendon.")]
-		[Required()]
-		public IfcAreaMeasure CrossSectionArea { get; set; }
+		[Description("The effective cross-section area of the tendon.    <blockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; Attribute made optional and deprecated.  Use respective attribute at <em>IfcTendonType</em> instead.</blockquote>")]
+		public IfcAreaMeasure? CrossSectionArea { get; set; }
 	
 		[DataMember(Order = 3)] 
 		[XmlAttribute]
@@ -52,7 +51,7 @@ namespace BuildingSmart.IFC.IfcStructuralElementsDomain
 	
 		[DataMember(Order = 5)] 
 		[XmlAttribute]
-		[Description("The friction coefficient for the bond between the tendon and the surrounding concrete.")]
+		[Description("The friction coefficient between tendon and tendon sheet while the tendon is unbonded.")]
 		public IfcNormalisedRatioMeasure? FrictionCoefficient { get; set; }
 	
 		[DataMember(Order = 6)] 
@@ -62,11 +61,11 @@ namespace BuildingSmart.IFC.IfcStructuralElementsDomain
 	
 		[DataMember(Order = 7)] 
 		[XmlAttribute]
-		[Description("The smallest curvature radius calculated on the whole effective length of the tendon where the tension properties are still valid. ")]
+		[Description("The smallest curvature radius calculated on the whole effective length of the tendon where the tension properties are still valid.")]
 		public IfcPositiveLengthMeasure? MinCurvatureRadius { get; set; }
 	
 	
-		public IfcTendon(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcObjectPlacement __ObjectPlacement, IfcProductRepresentation __Representation, IfcIdentifier? __Tag, IfcLabel? __SteelGrade, IfcTendonTypeEnum __PredefinedType, IfcPositiveLengthMeasure __NominalDiameter, IfcAreaMeasure __CrossSectionArea, IfcForceMeasure? __TensionForce, IfcPressureMeasure? __PreStress, IfcNormalisedRatioMeasure? __FrictionCoefficient, IfcPositiveLengthMeasure? __AnchorageSlip, IfcPositiveLengthMeasure? __MinCurvatureRadius)
+		public IfcTendon(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcObjectPlacement __ObjectPlacement, IfcProductRepresentation __Representation, IfcIdentifier? __Tag, IfcLabel? __SteelGrade, IfcTendonTypeEnum? __PredefinedType, IfcPositiveLengthMeasure? __NominalDiameter, IfcAreaMeasure? __CrossSectionArea, IfcForceMeasure? __TensionForce, IfcPressureMeasure? __PreStress, IfcNormalisedRatioMeasure? __FrictionCoefficient, IfcPositiveLengthMeasure? __AnchorageSlip, IfcPositiveLengthMeasure? __MinCurvatureRadius)
 			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType, __ObjectPlacement, __Representation, __Tag, __SteelGrade)
 		{
 			this.PredefinedType = __PredefinedType;

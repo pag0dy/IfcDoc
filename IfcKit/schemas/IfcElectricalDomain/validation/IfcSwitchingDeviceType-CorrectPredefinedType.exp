@@ -1,0 +1,2 @@
+﻿(PredefinedType <> IfcSwitchingDeviceTypeEnum.USERDEFINED) OR
+((PredefinedType = IfcSwitchingDeviceTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcElementType.ElementType))

@@ -21,13 +21,13 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 	{
 		[DataMember(Order = 0)] 
 		[XmlAttribute]
-		[Description("<EPM-HTML>  </EPM-HTML>")]
+		[Description("The distance between the planar circular faces of the cylinder.")]
 		[Required()]
 		public IfcPositiveLengthMeasure Height { get; set; }
 	
 		[DataMember(Order = 1)] 
 		[XmlAttribute]
-		[Description("<EPM-HTML>  </EPM-HTML>")]
+		[Description("The radius of the cylinder.")]
 		[Required()]
 		public IfcPositiveLengthMeasure Radius { get; set; }
 	

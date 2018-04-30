@@ -22,16 +22,16 @@ namespace BuildingSmart.IFC.IfcControlExtension
 		[DataMember(Order = 0)] 
 		[XmlAttribute]
 		[Description("The intent of the constraint usage with regard to its related IfcConstraint and IfcObjects, IfcPropertyDefinitions or IfcRelationships. Typical values can be e.g. RATIONALE or EXPECTED PERFORMANCE.")]
-		[Required()]
-		public IfcLabel Intent { get; set; }
+		public IfcLabel? Intent { get; set; }
 	
 		[DataMember(Order = 1)] 
+		[XmlElement]
 		[Description("Reference to constraint that is being applied using this relationship.")]
 		[Required()]
 		public IfcConstraint RelatingConstraint { get; set; }
 	
 	
-		public IfcRelAssociatesConstraint(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcRoot[] __RelatedObjects, IfcLabel __Intent, IfcConstraint __RelatingConstraint)
+		public IfcRelAssociatesConstraint(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcDefinitionSelect[] __RelatedObjects, IfcLabel? __Intent, IfcConstraint __RelatingConstraint)
 			: base(__GlobalId, __OwnerHistory, __Name, __Description, __RelatedObjects)
 		{
 			this.Intent = __Intent;

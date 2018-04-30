@@ -11,19 +11,21 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcActorResource;
-using BuildingSmart.IFC.IfcMeasureResource;
+using BuildingSmart.IFC.IfcDateTimeResource;
 
 namespace BuildingSmart.IFC.IfcUtilityResource
 {
 	public partial class IfcOwnerHistory
 	{
 		[DataMember(Order = 0)] 
+		[XmlElement]
 		[Description("Direct reference to the end user who currently \"owns\" this object. Note that IFC includes the concept of ownership transfer from one user to another and therefore distinguishes between the Owning User and Creating User.")]
 		[Required()]
 		public IfcPersonAndOrganization OwningUser { get; set; }
 	
 		[DataMember(Order = 1)] 
-		[Description("Direct reference to the application which currently \"Owns\" this object on behalf of the owning user, who uses this application. Note that IFC includes the concept of ownership transfer from one app to another and therefore distinguishes between the Owning Application and Creating Application.")]
+		[XmlElement]
+		[Description("Direct reference to the application which currently \"owns\" this object on behalf of the owning user of the application. Note that IFC includes the concept of ownership transfer from one application to another and therefore distinguishes between the Owning Application and Creating Application.")]
 		[Required()]
 		public IfcApplication OwningApplication { get; set; }
 	
@@ -35,30 +37,31 @@ namespace BuildingSmart.IFC.IfcUtilityResource
 		[DataMember(Order = 3)] 
 		[XmlAttribute]
 		[Description("Enumeration that defines the actions associated with changes made to the object.")]
-		[Required()]
-		public IfcChangeActionEnum ChangeAction { get; set; }
+		public IfcChangeActionEnum? ChangeAction { get; set; }
 	
 		[DataMember(Order = 4)] 
 		[XmlAttribute]
-		[Description("Date and Time at which the last modification occurred.")]
+		[Description("Date and Time expressed in UTC (Universal Time Coordinated, formerly Greenwich Mean Time or GMT) at which the last modification was made by LastModifyingUser and LastModifyingApplication.")]
 		public IfcTimeStamp? LastModifiedDate { get; set; }
 	
 		[DataMember(Order = 5)] 
-		[Description("User who carried out the last modification.")]
+		[XmlElement]
+		[Description("User who carried out the last modification using LastModifyingApplication.")]
 		public IfcPersonAndOrganization LastModifyingUser { get; set; }
 	
 		[DataMember(Order = 6)] 
-		[Description("Application used to carry out the last modification.")]
+		[XmlElement]
+		[Description("Application used to make the last modification.")]
 		public IfcApplication LastModifyingApplication { get; set; }
 	
 		[DataMember(Order = 7)] 
 		[XmlAttribute]
-		[Description("Time and date of creation.")]
+		[Description("The date and time expressed in UTC (Universal Time Coordinated, formerly Greenwich Mean Time or GMT) when first created by the original OwningApplication. Once defined this value remains unchanged through the lifetime of the entity. ")]
 		[Required()]
 		public IfcTimeStamp CreationDate { get; set; }
 	
 	
-		public IfcOwnerHistory(IfcPersonAndOrganization __OwningUser, IfcApplication __OwningApplication, IfcStateEnum? __State, IfcChangeActionEnum __ChangeAction, IfcTimeStamp? __LastModifiedDate, IfcPersonAndOrganization __LastModifyingUser, IfcApplication __LastModifyingApplication, IfcTimeStamp __CreationDate)
+		public IfcOwnerHistory(IfcPersonAndOrganization __OwningUser, IfcApplication __OwningApplication, IfcStateEnum? __State, IfcChangeActionEnum? __ChangeAction, IfcTimeStamp? __LastModifiedDate, IfcPersonAndOrganization __LastModifyingUser, IfcApplication __LastModifyingApplication, IfcTimeStamp __CreationDate)
 		{
 			this.OwningUser = __OwningUser;
 			this.OwningApplication = __OwningApplication;

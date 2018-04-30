@@ -13,7 +13,9 @@ using System.Xml.Serialization;
 
 namespace BuildingSmart.IFC.IfcMeasureResource
 {
-	public interface IfcValue
+	public interface IfcValue :
+		BuildingSmart.IFC.IfcCostResource.IfcAppliedValueSelect,
+		BuildingSmart.IFC.IfcConstraintResource.IfcMetricValueSelect
 	{
 	}
 	

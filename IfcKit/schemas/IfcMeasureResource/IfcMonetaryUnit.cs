@@ -18,12 +18,12 @@ namespace BuildingSmart.IFC.IfcMeasureResource
 	{
 		[DataMember(Order = 0)] 
 		[XmlAttribute]
-		[Description("The international enumeration name of the currency.")]
+		[Description("Code or name of the currency.  Permissible values are the three-letter alphabetic currency codes as per <a target=\"_top\" href=\"http://www.iso.org/iso/support/faqs/faqs_widely_used_standards/widely_used_standards_other/currency_codes/currency_codes_list-1.htm\">ISO 4217</a>, for example CNY, EUR, GBP, JPY, USD.")]
 		[Required()]
-		public IfcCurrencyEnum Currency { get; set; }
+		public IfcLabel Currency { get; set; }
 	
 	
-		public IfcMonetaryUnit(IfcCurrencyEnum __Currency)
+		public IfcMonetaryUnit(IfcLabel __Currency)
 		{
 			this.Currency = __Currency;
 		}

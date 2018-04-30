@@ -10,10 +10,12 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcExternalReferenceResource;
 
 namespace BuildingSmart.IFC.IfcMeasureResource
 {
-	public partial class IfcContextDependentUnit : IfcNamedUnit
+	public partial class IfcContextDependentUnit : IfcNamedUnit,
+		BuildingSmart.IFC.IfcExternalReferenceResource.IfcResourceObjectSelect
 	{
 		[DataMember(Order = 0)] 
 		[XmlAttribute]
@@ -21,11 +23,16 @@ namespace BuildingSmart.IFC.IfcMeasureResource
 		[Required()]
 		public IfcLabel Name { get; set; }
 	
+		[InverseProperty("RelatedResourceObjects")] 
+		[Description("Reference to external information, e.g. library, classification, or document information, which is associated with the context dependent unit.  <blockquote class=\"change-ifc2x4\">IFC4 CHANGE New inverse attribute</blockquote>")]
+		public ISet<IfcExternalReferenceRelationship> HasExternalReference { get; protected set; }
+	
 	
 		public IfcContextDependentUnit(IfcDimensionalExponents __Dimensions, IfcUnitEnum __UnitType, IfcLabel __Name)
 			: base(__Dimensions, __UnitType)
 		{
 			this.Name = __Name;
+			this.HasExternalReference = new HashSet<IfcExternalReferenceRelationship>();
 		}
 	
 	

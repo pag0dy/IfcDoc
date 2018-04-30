@@ -15,12 +15,18 @@ namespace BuildingSmart.IFC.IfcHvacDomain
 {
 	public enum IfcCooledBeamTypeEnum
 	{
+		[Description("An active or ventilated cooled beam provides cooling (and heating) but can also f" +
+	    "unction as an air terminal in a ventilation system.")]
 		ACTIVE = 1,
 	
+		[Description("A passive or static cooled beam provides cooling (and heating) to a room or zone." +
+	    "")]
 		PASSIVE = 2,
 	
+		[Description("User-defined cooled beam type.")]
 		USERDEFINED = -1,
 	
+		[Description("Undefined cooled beam type.")]
 		NOTDEFINED = 0,
 	
 	}

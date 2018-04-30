@@ -17,9 +17,11 @@ using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 namespace BuildingSmart.IFC.IfcGeometryResource
 {
 	public partial class IfcVector : IfcGeometricRepresentationItem,
+		BuildingSmart.IFC.IfcPresentationAppearanceResource.IfcHatchLineDistanceSelect,
 		BuildingSmart.IFC.IfcGeometryResource.IfcVectorOrDirection
 	{
 		[DataMember(Order = 0)] 
+		[XmlElement]
 		[Description("The direction of the vector.")]
 		[Required()]
 		public IfcDirection Orientation { get; set; }

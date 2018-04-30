@@ -13,7 +13,6 @@ using System.Xml.Serialization;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcPresentationOrganizationResource;
-using BuildingSmart.IFC.IfcPresentationResource;
 
 namespace BuildingSmart.IFC.IfcPresentationDefinitionResource
 {
@@ -21,18 +20,18 @@ namespace BuildingSmart.IFC.IfcPresentationDefinitionResource
 	{
 		[DataMember(Order = 0)] 
 		[XmlAttribute]
-		[Description("<EPM-HTML>  The text literal to be presented.  </EPM-HTML>")]
+		[Description("The text literal to be presented.")]
 		[Required()]
 		public IfcPresentableText Literal { get; set; }
 	
 		[DataMember(Order = 1)] 
-		[Description("<EPM-HTML>  An <i>IfcAxis2Placement</i> that determines the placement and orientation of the presented string.  <blockquote><small>When used with a text style based on <i>IfcTextStyleWithBoxCharacteristics</i> then the y-axis is taken as the reference direction for the box rotation angle and the box slant angle.  </small></blockquote>  </EPM-HTML>")]
+		[Description("An <em>IfcAxis2Placement</em> that determines the placement and orientation of the presented string.")]
 		[Required()]
 		public IfcAxis2Placement Placement { get; set; }
 	
 		[DataMember(Order = 2)] 
 		[XmlAttribute]
-		[Description("<EPM-HTML>  The writing direction of the text literal.  </EPM-HTML>")]
+		[Description("The writing direction of the text literal.")]
 		[Required()]
 		public IfcTextPath Path { get; set; }
 	

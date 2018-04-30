@@ -15,10 +15,15 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 {
 	public enum IfcSurfaceSide
 	{
+		[Description("The side of a surface which is in the same direction as the surface normal derive" +
+	    "d from the mathematical definition.")]
 		POSITIVE = 1,
 	
+		[Description("The side of a surface which is in the opposite direction than the surface normal " +
+	    "derived from the mathematical definition.")]
 		NEGATIVE = 2,
 	
+		[Description("Both, positive and negative side.")]
 		BOTH = 3,
 	
 	}

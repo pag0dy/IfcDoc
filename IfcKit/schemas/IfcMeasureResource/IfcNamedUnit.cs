@@ -17,6 +17,7 @@ namespace BuildingSmart.IFC.IfcMeasureResource
 		BuildingSmart.IFC.IfcMeasureResource.IfcUnit
 	{
 		[DataMember(Order = 0)] 
+		[XmlElement]
 		[Description("The dimensional exponents of the SI base units by which the named unit is defined.")]
 		[Required()]
 		public IfcDimensionalExponents Dimensions { get; set; }

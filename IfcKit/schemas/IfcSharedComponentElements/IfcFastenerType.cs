@@ -20,10 +20,17 @@ namespace BuildingSmart.IFC.IfcSharedComponentElements
 {
 	public partial class IfcFastenerType : IfcElementComponentType
 	{
+		[DataMember(Order = 0)] 
+		[XmlAttribute]
+		[Description("Subtype of fastener")]
+		[Required()]
+		public IfcFastenerTypeEnum PredefinedType { get; set; }
 	
-		public IfcFastenerType(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ApplicableOccurrence, IfcPropertySetDefinition[] __HasPropertySets, IfcRepresentationMap[] __RepresentationMaps, IfcLabel? __Tag, IfcLabel? __ElementType)
+	
+		public IfcFastenerType(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcIdentifier? __ApplicableOccurrence, IfcPropertySetDefinition[] __HasPropertySets, IfcRepresentationMap[] __RepresentationMaps, IfcLabel? __Tag, IfcLabel? __ElementType, IfcFastenerTypeEnum __PredefinedType)
 			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ApplicableOccurrence, __HasPropertySets, __RepresentationMaps, __Tag, __ElementType)
 		{
+			this.PredefinedType = __PredefinedType;
 		}
 	
 	

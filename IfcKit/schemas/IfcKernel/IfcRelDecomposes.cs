@@ -17,23 +17,10 @@ namespace BuildingSmart.IFC.IfcKernel
 {
 	public abstract partial class IfcRelDecomposes : IfcRelationship
 	{
-		[DataMember(Order = 0)] 
-		[Description("The object that represents the nest or aggregation.  ")]
-		[Required()]
-		public IfcObjectDefinition RelatingObject { get; set; }
 	
-		[DataMember(Order = 1)] 
-		[Description("The objects being nested or aggregated.  ")]
-		[Required()]
-		[MinLength(1)]
-		public ISet<IfcObjectDefinition> RelatedObjects { get; protected set; }
-	
-	
-		protected IfcRelDecomposes(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcObjectDefinition __RelatingObject, IfcObjectDefinition[] __RelatedObjects)
+		protected IfcRelDecomposes(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description)
 			: base(__GlobalId, __OwnerHistory, __Name, __Description)
 		{
-			this.RelatingObject = __RelatingObject;
-			this.RelatedObjects = new HashSet<IfcObjectDefinition>(__RelatedObjects);
 		}
 	
 	

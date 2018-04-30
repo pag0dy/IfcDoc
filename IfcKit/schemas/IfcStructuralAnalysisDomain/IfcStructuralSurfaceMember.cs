@@ -22,17 +22,17 @@ namespace BuildingSmart.IFC.IfcStructuralAnalysisDomain
 	{
 		[DataMember(Order = 0)] 
 		[XmlAttribute]
-		[Description("Defines the load carrying behavior of the member, as far as it is taken into account in the analysis.")]
+		[Description("Type of member with respect to its load carrying behavior in this analysis idealization.")]
 		[Required()]
-		public IfcStructuralSurfaceTypeEnum PredefinedType { get; set; }
+		public IfcStructuralSurfaceMemberTypeEnum PredefinedType { get; set; }
 	
 		[DataMember(Order = 1)] 
 		[XmlAttribute]
-		[Description("Defines the typically understood thickness of the structural face member, i.e. the smallest spatial dimension of the element.")]
+		[Description("Defines the typically understood thickness of the structural surface member, measured normal to its reference surface.")]
 		public IfcPositiveLengthMeasure? Thickness { get; set; }
 	
 	
-		public IfcStructuralSurfaceMember(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcObjectPlacement __ObjectPlacement, IfcProductRepresentation __Representation, IfcStructuralSurfaceTypeEnum __PredefinedType, IfcPositiveLengthMeasure? __Thickness)
+		public IfcStructuralSurfaceMember(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcObjectPlacement __ObjectPlacement, IfcProductRepresentation __Representation, IfcStructuralSurfaceMemberTypeEnum __PredefinedType, IfcPositiveLengthMeasure? __Thickness)
 			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType, __ObjectPlacement, __Representation)
 		{
 			this.PredefinedType = __PredefinedType;

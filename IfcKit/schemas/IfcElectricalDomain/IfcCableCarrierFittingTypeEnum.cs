@@ -15,16 +15,23 @@ namespace BuildingSmart.IFC.IfcElectricalDomain
 {
 	public enum IfcCableCarrierFittingTypeEnum
 	{
+		[Description("A fitting that changes the route of the cable carrier.")]
 		BEND = 1,
 	
+		[Description("A fitting at which two branches are taken from the main route of the cable carrie" +
+	    "r simultaneously.")]
 		CROSS = 2,
 	
+		[Description("A fitting that changes the physical size of the main route of the cable carrier.")]
 		REDUCER = 3,
 	
+		[Description("A fitting at which a branch is taken from the main route of the cable carrier.")]
 		TEE = 4,
 	
+		[Description("User-defined type.")]
 		USERDEFINED = -1,
 	
+		[Description("Undefined type.")]
 		NOTDEFINED = 0,
 	
 	}

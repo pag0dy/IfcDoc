@@ -20,6 +20,7 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 	public partial class IfcBoundingBox : IfcGeometricRepresentationItem
 	{
 		[DataMember(Order = 0)] 
+		[XmlElement]
 		[Description("Location of the bottom left corner (having the minimum values).")]
 		[Required()]
 		public IfcCartesianPoint Corner { get; set; }

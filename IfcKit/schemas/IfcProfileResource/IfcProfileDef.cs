@@ -10,11 +10,13 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 
 namespace BuildingSmart.IFC.IfcProfileResource
 {
-	public abstract partial class IfcProfileDef
+	public partial class IfcProfileDef :
+		BuildingSmart.IFC.IfcExternalReferenceResource.IfcResourceObjectSelect
 	{
 		[DataMember(Order = 0)] 
 		[XmlAttribute]
@@ -24,14 +26,25 @@ namespace BuildingSmart.IFC.IfcProfileResource
 	
 		[DataMember(Order = 1)] 
 		[XmlAttribute]
-		[Description("Name of the profile type according to some standard profile table. ")]
+		[Description("Human-readable name of the profile, for example according to a standard profile table. As noted above, machine-readable standardized profile designations should be provided in <em>IfcExternalReference.ItemReference</em>.  ")]
 		public IfcLabel? ProfileName { get; set; }
 	
+		[InverseProperty("RelatedResourceObjects")] 
+		[Description("Reference to external information, e.g. library, classification, or document information, which is associated with the profile.  <blockquote class=\"change-ifc2x4\">IFC4 CHANGE New inverse attribute</blockquote>")]
+		public ISet<IfcExternalReferenceRelationship> HasExternalReference { get; protected set; }
 	
-		protected IfcProfileDef(IfcProfileTypeEnum __ProfileType, IfcLabel? __ProfileName)
+		[InverseProperty("ProfileDefinition")] 
+		[XmlElement("IfcProfileProperties")]
+		[Description("Additional properties of the profile, for example mechanical properties.  <blockquote class=\"change-ifc2x4\">IFC4 CHANGE New inverse attribute</blockquote>")]
+		public ISet<IfcProfileProperties> HasProperties { get; protected set; }
+	
+	
+		public IfcProfileDef(IfcProfileTypeEnum __ProfileType, IfcLabel? __ProfileName)
 		{
 			this.ProfileType = __ProfileType;
 			this.ProfileName = __ProfileName;
+			this.HasExternalReference = new HashSet<IfcExternalReferenceRelationship>();
+			this.HasProperties = new HashSet<IfcProfileProperties>();
 		}
 	
 	

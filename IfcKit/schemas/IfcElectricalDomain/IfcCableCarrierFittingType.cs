@@ -23,12 +23,12 @@ namespace BuildingSmart.IFC.IfcElectricalDomain
 	{
 		[DataMember(Order = 0)] 
 		[XmlAttribute]
-		[Description("Identifies the predefined types of cable carrier fitting from which the type required may be set.")]
+		[Description("<p>Identifies the predefined types of cable carrier fitting from which the type required may be set.</p>")]
 		[Required()]
 		public IfcCableCarrierFittingTypeEnum PredefinedType { get; set; }
 	
 	
-		public IfcCableCarrierFittingType(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ApplicableOccurrence, IfcPropertySetDefinition[] __HasPropertySets, IfcRepresentationMap[] __RepresentationMaps, IfcLabel? __Tag, IfcLabel? __ElementType, IfcCableCarrierFittingTypeEnum __PredefinedType)
+		public IfcCableCarrierFittingType(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcIdentifier? __ApplicableOccurrence, IfcPropertySetDefinition[] __HasPropertySets, IfcRepresentationMap[] __RepresentationMaps, IfcLabel? __Tag, IfcLabel? __ElementType, IfcCableCarrierFittingTypeEnum __PredefinedType)
 			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ApplicableOccurrence, __HasPropertySets, __RepresentationMaps, __Tag, __ElementType)
 		{
 			this.PredefinedType = __PredefinedType;

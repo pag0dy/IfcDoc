@@ -1,0 +1,2 @@
+﻿(PredefinedType <> IfcOutletTypeEnum.USERDEFINED) OR
+((PredefinedType = IfcOutletTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcElementType.ElementType))

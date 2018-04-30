@@ -10,6 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcPresentationOrganizationResource;
@@ -20,6 +21,7 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 	public abstract partial class IfcManifoldSolidBrep : IfcSolidModel
 	{
 		[DataMember(Order = 0)] 
+		[XmlElement]
 		[Description("A closed shell defining the exterior boundary of the solid. The shell normal shall point away from the interior of the solid.")]
 		[Required()]
 		public IfcClosedShell Outer { get; set; }

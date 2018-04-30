@@ -15,20 +15,26 @@ namespace BuildingSmart.IFC.IfcBuildingControlsDomain
 {
 	public enum IfcControllerTypeEnum
 	{
+		[Description("Output increases or decreases at a constant or accelerating rate.")]
 		FLOATING = 1,
 	
-		PROPORTIONAL = 2,
+		[Description("Output is programmable such as Discrete Digital Control (DDC).")]
+		PROGRAMMABLE = 2,
 	
-		PROPORTIONALINTEGRAL = 3,
+		[Description("Output is proportional to the control error and optionally time integral and deri" +
+	    "vative.")]
+		PROPORTIONAL = 3,
 	
-		PROPORTIONALINTEGRALDERIVATIVE = 4,
+		[Description("Output is discrete value, can be one of three or more values.")]
+		MULTIPOSITION = 4,
 	
-		TIMEDTWOPOSITION = 5,
+		[Description("Output can be either on or off.")]
+		TWOPOSITION = 5,
 	
-		TWOPOSITION = 6,
-	
+		[Description("User-defined type.")]
 		USERDEFINED = -1,
 	
+		[Description("Undefined type.")]
 		NOTDEFINED = 0,
 	
 	}

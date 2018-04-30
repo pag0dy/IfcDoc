@@ -11,6 +11,7 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcGeometryResource;
+using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
@@ -19,17 +20,19 @@ namespace BuildingSmart.IFC.IfcTopologyResource
 	public partial class IfcOrientedEdge : IfcEdge
 	{
 		[DataMember(Order = 0)] 
+		[XmlElement]
 		[Description("Edge entity used to construct this oriented edge.  ")]
 		[Required()]
 		public IfcEdge EdgeElement { get; set; }
 	
 		[DataMember(Order = 1)] 
+		[XmlAttribute]
 		[Description("BOOLEAN, If TRUE the topological orientation as used coincides with the orientation from start vertex to end vertex of the edge element. If FALSE otherwise.  ")]
 		[Required()]
-		public Boolean Orientation { get; set; }
+		public IfcBoolean Orientation { get; set; }
 	
 	
-		public IfcOrientedEdge(IfcVertex __EdgeStart, IfcVertex __EdgeEnd, IfcEdge __EdgeElement, Boolean __Orientation)
+		public IfcOrientedEdge(IfcVertex __EdgeStart, IfcVertex __EdgeEnd, IfcEdge __EdgeElement, IfcBoolean __Orientation)
 			: base(__EdgeStart, __EdgeEnd)
 		{
 			this.EdgeElement = __EdgeElement;

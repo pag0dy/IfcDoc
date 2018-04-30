@@ -11,6 +11,7 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcGeometryResource;
+using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
@@ -30,7 +31,7 @@ namespace BuildingSmart.IFC.IfcTopologyResource
 			this.EdgeList = new List<IfcOrientedEdge>(__EdgeList);
 		}
 	
-		public new Int64 Ne { get { return null; } }
+		public new IfcInteger Ne { get { return new IfcInteger(); } }
 	
 	
 	}

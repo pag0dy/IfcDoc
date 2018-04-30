@@ -19,12 +19,13 @@ namespace BuildingSmart.IFC.IfcStructuralAnalysisDomain
 	public partial class IfcRelConnectsStructuralActivity : IfcRelConnects
 	{
 		[DataMember(Order = 0)] 
-		[Description("Reference to an instance of IfcStructuralItem or IfcBuildingElement (or its subclasses) to which the specified action is applied.")]
+		[Description("Reference to a structural item or element to which the specified activity is applied.")]
 		[Required()]
 		public IfcStructuralActivityAssignmentSelect RelatingElement { get; set; }
 	
 		[DataMember(Order = 1)] 
-		[Description("Reference to an instance of IfcStructuralActivity (or its subclasses) which is acting upon the specified structural element (represented by a respective structural representation entity). ")]
+		[XmlElement]
+		[Description("Reference to a structural activity which is acting upon the specified structural item or element.")]
 		[Required()]
 		public IfcStructuralActivity RelatedStructuralActivity { get; set; }
 	

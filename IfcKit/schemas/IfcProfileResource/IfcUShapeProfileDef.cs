@@ -10,6 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 
@@ -43,26 +44,21 @@ namespace BuildingSmart.IFC.IfcProfileResource
 	
 		[DataMember(Order = 4)] 
 		[XmlAttribute]
-		[Description("Fillet radius according the above illustration (= r1). If it is not given, zero is assumed. ")]
-		public IfcPositiveLengthMeasure? FilletRadius { get; set; }
+		[Description("Fillet radius according the above illustration (= r1).")]
+		public IfcNonNegativeLengthMeasure? FilletRadius { get; set; }
 	
 		[DataMember(Order = 5)] 
 		[XmlAttribute]
-		[Description("Edge radius according the above illustration (= r2). If it is not given, zero is assumed. ")]
-		public IfcPositiveLengthMeasure? EdgeRadius { get; set; }
+		[Description("Edge radius according the above illustration (= r2).")]
+		public IfcNonNegativeLengthMeasure? EdgeRadius { get; set; }
 	
 		[DataMember(Order = 6)] 
 		[XmlAttribute]
-		[Description("Slope of flange of the profile. If it is not given, zero is assumed.")]
+		[Description("Slope of flange of the profile.")]
 		public IfcPlaneAngleMeasure? FlangeSlope { get; set; }
 	
-		[DataMember(Order = 7)] 
-		[XmlAttribute]
-		[Description("<EPM-HTML> Location of centre of gravity along the x axis measured from the center of the bounding box.     <blockquote> <small><font color=\"#ff0000\">  IFC2x Edition 2 Addendum 2 CHANGE The attribute <i>CentreOfGravityInX</i> has been made optional. Upward compatibility for file based exchange is guaranteed.    </font></small></blockquote>  </EPM-HTML>")]
-		public IfcPositiveLengthMeasure? CentreOfGravityInX { get; set; }
 	
-	
-		public IfcUShapeProfileDef(IfcProfileTypeEnum __ProfileType, IfcLabel? __ProfileName, IfcAxis2Placement2D __Position, IfcPositiveLengthMeasure __Depth, IfcPositiveLengthMeasure __FlangeWidth, IfcPositiveLengthMeasure __WebThickness, IfcPositiveLengthMeasure __FlangeThickness, IfcPositiveLengthMeasure? __FilletRadius, IfcPositiveLengthMeasure? __EdgeRadius, IfcPlaneAngleMeasure? __FlangeSlope, IfcPositiveLengthMeasure? __CentreOfGravityInX)
+		public IfcUShapeProfileDef(IfcProfileTypeEnum __ProfileType, IfcLabel? __ProfileName, IfcAxis2Placement2D __Position, IfcPositiveLengthMeasure __Depth, IfcPositiveLengthMeasure __FlangeWidth, IfcPositiveLengthMeasure __WebThickness, IfcPositiveLengthMeasure __FlangeThickness, IfcNonNegativeLengthMeasure? __FilletRadius, IfcNonNegativeLengthMeasure? __EdgeRadius, IfcPlaneAngleMeasure? __FlangeSlope)
 			: base(__ProfileType, __ProfileName, __Position)
 		{
 			this.Depth = __Depth;
@@ -72,7 +68,6 @@ namespace BuildingSmart.IFC.IfcProfileResource
 			this.FilletRadius = __FilletRadius;
 			this.EdgeRadius = __EdgeRadius;
 			this.FlangeSlope = __FlangeSlope;
-			this.CentreOfGravityInX = __CentreOfGravityInX;
 		}
 	
 	

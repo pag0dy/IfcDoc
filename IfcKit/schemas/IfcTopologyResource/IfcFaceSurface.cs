@@ -12,6 +12,7 @@ using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometryResource;
+using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
@@ -21,17 +22,19 @@ namespace BuildingSmart.IFC.IfcTopologyResource
 		BuildingSmart.IFC.IfcGeometricConstraintResource.IfcSurfaceOrFaceSurface
 	{
 		[DataMember(Order = 0)] 
+		[XmlElement]
 		[Description("The surface which defines the internal shape of the face. This surface may be unbounded. The domain of the face is defined by this surface and the bounding loops in the inherited attribute SELF\\FaceBounds.")]
 		[Required()]
 		public IfcSurface FaceSurface { get; set; }
 	
 		[DataMember(Order = 1)] 
+		[XmlAttribute]
 		[Description("This flag indicates whether the sense of the surface normal agrees with (TRUE), or opposes (FALSE), the sense of the topological normal to the face.")]
 		[Required()]
-		public Boolean SameSense { get; set; }
+		public IfcBoolean SameSense { get; set; }
 	
 	
-		public IfcFaceSurface(IfcFaceBound[] __Bounds, IfcSurface __FaceSurface, Boolean __SameSense)
+		public IfcFaceSurface(IfcFaceBound[] __Bounds, IfcSurface __FaceSurface, IfcBoolean __SameSense)
 			: base(__Bounds)
 		{
 			this.FaceSurface = __FaceSurface;

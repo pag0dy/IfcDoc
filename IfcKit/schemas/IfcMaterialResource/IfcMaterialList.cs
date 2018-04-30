@@ -10,13 +10,11 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-using BuildingSmart.IFC.IfcPropertyResource;
 
 namespace BuildingSmart.IFC.IfcMaterialResource
 {
 	public partial class IfcMaterialList :
-		BuildingSmart.IFC.IfcMaterialResource.IfcMaterialSelect,
-		BuildingSmart.IFC.IfcPropertyResource.IfcObjectReferenceSelect
+		BuildingSmart.IFC.IfcMaterialResource.IfcMaterialSelect
 	{
 		[DataMember(Order = 0)] 
 		[Description("Materials used in a composition of substances.")]

@@ -1,0 +1,2 @@
+﻿(PredefinedType <> IfcCurtainWallTypeEnum.USERDEFINED) OR
+((PredefinedType = IfcCurtainWallTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcElementType.ElementType))

@@ -1,23 +1,18 @@
-﻿<EPM-HTML> 
-	 <P><U>Definition from IAI</U>: This objectified relationship
-		(<I>IfcRelAssignsToGroup</I>) handles the assignment of objects (subtypes of
-		<I>IfcObject</I>) to a group (subtypes of <I>IfcGroup</I>).</P>
-	 <P>The relationship handles the assignment of group members to the group
-		object. It allows for grouping arbitrary objects within a group, including
-		other groups. The grouping relationship can be applied in a recursive manner.
-		The resulting group is of type <I>IfcGroup</I>. The <I>Purpose</I> attribute
-		defined at the supertype IfcReleationship, may assign a descriptor, that
-		defines the purpose of the group.</P> 
-	 <P>The inherited attribute <I>RelatedObjects</I> gives the references to
-		the objects, which are the elements within the group. The <I>RelatingGroup</I>
-		is the group, that comprises all elements. </P> 
-	 <P><U>Informal proposition</U>:</P> 
-	 <OL> 
-		<LI>The group assignment relationship shall be a-cyclic, i.e. a group
-		  should not participate in its own grouping relationship.</LI> 
-	 </OL> 
-	 <BLOCKQUOTE> 
-		<P><FONT COLOR="#0000FF" SIZE="-1">HISTORY New entity in IFC Release 1.0.
-		  Has been renamed from IfcRelGroups in IFC Release 2x.</FONT>.
-		  </P></BLOCKQUOTE>
-</EPM-HTML>
+﻿<p>The objectified relationship <em>IfcRelAssignsToGroup</em> handles the assignment of object definitions (individual object occurrences as subtypes of <em>IfcObject</em>, and object types as subtypes of <em>IfcTypeObject</em>) to a group (subtypes of <em>IfcGroup</em>).</p>
+
+<p>The relationship handles the assignment of group members to the group object. It allows for grouping arbitrary objects within a group, including other groups. The grouping relationship can be applied in a recursive manner. The resulting group is of type <em>IfcGroup</em>.</p>
+
+<blockquote class="note">
+NOTE&nbsp; Examples of groups include zones as a grouping of spaces, distribution systems as a grouping of building service components, or structural analysis models as a grouping of structural items.
+</blockquote>
+
+<p>The inherited attribute <em>RelatedObjects</em> gives the references to the objects, which are the elements within the group. The <em>RelatingGroup</em> is the group that comprises all elements. The same object or object type can be included in zero, one or many groups. Grouping relationships are not hierarchical.</p>
+
+<p class="spec-head">Informal Propositions:</p>
+<ol>
+<li>The group assignment relationship shall be acyclic, that is, a group shall not participate in its own grouping relationship.</li>
+</ol>
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC1.0. It has been renamed from IfcRelGroups in IFC2x.
+</blockquote>

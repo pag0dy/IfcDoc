@@ -1,0 +1,1 @@
+﻿(PredefinedType <> IfcAnalysisModelTypeEnum.USERDEFINED) OR EXISTS(SELF\IfcObject.ObjectType)

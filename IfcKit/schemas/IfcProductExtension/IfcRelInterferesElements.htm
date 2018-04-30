@@ -1,0 +1,48 @@
+﻿<p>The <em>IfcRelInterferesElements</em> objectified relationship
+indicates that two elements interfere. Interference is a spatial
+overlap between the two elements. It is a 1 to 1 relationship.
+The concept of two elements interfering physically or logically
+is described independently from the elements. The interference
+may be related to the shape representation of the entities by
+providing an interference geometry.</p>
+<ul>
+<li>When the interference geometry is available it can be passed
+by the optional attribute <em>InterferenceGeometry</em> pointing to
+<em>IfcConnectionGeometry</em>. The connection geometry is provided
+as a point, curve, surface, or volume within the local placement
+coordinate systems of the connecting elements. The
+<em>IfcConnectionVolumeGeometry</em> is the default type to be used
+for interference in 3D space, as indicated in e.g. clash
+detections.</li>
+<li>If the interference geometry is omitted then the interference
+is provided as a logical relationship. Under this circumstance,
+the connection point, curve, surface, or solid has to be
+recalculated by the receiving application.</li>
+</ul>
+<p>The <em>RelatingElement</em> and <em>RelatedElement</em> define
+the two elements in the relationship, that may have different
+roles. This is controlled by the attribute
+<em>ImpliedOrder</em>.</p>
+<ul>
+<li><em>ImpliedOrder</em>=TRUE  The <em>RelatingElement</em>
+constitutes the primary element of the interference relationship.
+If the interference is to be resolved by subtracting the
+overlapping part, it should be subtracted from the
+<em>RelatingElement</em>. The net result would be the
+<em>RelatingElement</em> subtracted by the
+<em>InterferenceGeometry</em>. This would be the case in
+interference relationships where the <em>RelatedElement</em>
+creates a void in the <em>RelatingElement</em> dynamically.</li>
+<li><em>ImpliedOrder</em>=FALSE  The <em>RelatingElement</em> and
+<em>RelatedElement</em> have no priority among each other. If the
+interference is to be resolved then no information about whether
+the <em>InterferenceGeometry</em> should be subtracted from the
+<em>RelatingElement</em> or thed <em>RelatedElement</em> can be
+traced. This would be the case for clash detection results.</li>
+<li><em>ImpliedOrder</em>=UNKNOWN  No information about the
+priorities is provided.</li>
+</ul>
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC4.
+</blockquote>

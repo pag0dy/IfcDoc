@@ -17,6 +17,7 @@ namespace BuildingSmart.IFC.IfcMeasureResource
 		BuildingSmart.IFC.IfcMeasureResource.IfcSimpleValue
 	{
 		[XmlText]
+		[MaxLength(255)]
 		public String Value { get; private set; }
 	
 		public IfcIdentifier(String value) : this()

@@ -1,31 +1,43 @@
-﻿<EPM-HTML>
-<p><u>Definition from IAI</u>: The element type (<i>IfcSlabType</i>)
-defines a list of commonly shared property set definitions of a slab
-and an optional set of product representations. It is used to define a
-slab specification (i.e. the specific product information, that is
-common to all occurrences of that product type).</p> <blockquote>
-<p><font size="-1">NOTE: The product representations
-are defined as representation maps (at the level of the supertype <i>IfcTypeProduct</i>,
-which gets assigned by an element occurrence instance through the <i>IfcShapeRepresentation.Item[1]</i>
-being an <i>IfcMappedItem</i>.</font></p></blockquote>
-<p>An <i>IfcSlabType</i>&nbsp;is used to define
-the common properties of
-a specific slab that may be applied to many instances of that type to
-assign a specific style. A slab type can be used for a floor slab, a
-roof slab, a stair landing or a ramp flight. Building element types (or
-the instantiable subtypes) may be exchanged without being already
-assigned to occurrences.</p><p>The <i>IfcSlabType</i>
-can have common material (using the inverse relationship <i>HasAssociations</i>)
-or property set information (using <i>HasPropertySets</i>)
-assigned. If present, it does apply equally to all occurrences of the <i>IfcSlabType</i>.
-Property set information may be overridden at the occurrence.</p>
-<p>The occurrences of the <i>IfcSlabType</i>
-are represented by instances of <i>IfcSlab.&nbsp;</i><strike>or
-<i>IfcRampFlight</i></strike></p>
-<blockquote> <p><font color="#0000ff" size="-1">HISTORY:
-New entity in Release IFC2x Edition 2.</font></p></blockquote>
-<p><u>Informal proposition</u>:</p>
-<ol><li>The material assignment, if provided using the <i>IfcRelAssociatesMaterial</i>
-relationship, shall not reference the <i>IfcMaterialLayerSetUsage</i>.</li>
+﻿<p>The element type <em>IfcSlabType</em> defines commonly shared
+information for occurrences of slabs. The set of shared information
+may include:</p>
+<ul>
+<li>common properties within shared property sets</li>
+<li>common material information</li>
+<li>common material layer definitions</li>
+<li>common shape representations</li>
+</ul>
+
+<blockquote class="note">
+NOTE&nbsp; It is illegal to share shape representations as representation maps for occurrences of <em>IfcSlabStandardCase</em>.
+</blockquote>
+
+<p>It is used to define a slab specification (i.e. the specific
+product information, that is common to all occurrences of that
+product type). Slab types may be exchanged without being already
+assigned to occurrences.</p>
+
+<blockquote class="note">
+NOTE&nbsp; The product representations are defined as
+representation maps (at the level of the supertype
+<em>IfcTypeProduct</em>, which gets assigned by an element occurrence
+instance through the <em>IfcShapeRepresentation.Item[1]</em> being an
+<em>IfcMappedItem</em>.
+</blockquote>
+
+<p>The occurrences of the <em>IfcSlabType</em> within building models
+are represented by instances of <em>IfcSlabStandardCase</em> if the
+<em>IfcSlabType</em> has a single associated
+<em>IfcMaterialLayerSet</em>; otherwise they are represented by
+instances of <em>IfcSlab</em>, or <em>IfcSlabElementedCase</em>.</p>
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC2x2.
+</blockquote>
+
+<p class="spec-head">Informal Propositions:</p>
+<ol>
+<li>The material assignment, if provided using the
+<em>IfcRelAssociatesMaterial</em> relationship, shall not reference
+the <em>IfcMaterialLayerSetUsage</em>.</li>
 </ol>
-</EPM-HTML>

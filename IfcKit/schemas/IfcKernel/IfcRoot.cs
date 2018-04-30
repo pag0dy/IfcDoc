@@ -25,8 +25,8 @@ namespace BuildingSmart.IFC.IfcKernel
 		public IfcGloballyUniqueId GlobalId { get; set; }
 	
 		[DataMember(Order = 1)] 
-		[Description("Assignment of the information about the current ownership of that object, including owning actor, application, local identification and information captured about the recent changes of the object, NOTE: only the last modification in stored.  ")]
-		[Required()]
+		[XmlElement]
+		[Description("Assignment of the information about the current ownership of that object, including owning actor, application, local identification and information captured about the recent changes of the object,     <blockquote class=\"note\">NOTE&nbsp; only the last modification in stored - either as addition, deletion or modification.</blockquote>  <blockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; The attribute has been changed to be OPTIONAL.</blockquote>")]
 		public IfcOwnerHistory OwnerHistory { get; set; }
 	
 		[DataMember(Order = 2)] 

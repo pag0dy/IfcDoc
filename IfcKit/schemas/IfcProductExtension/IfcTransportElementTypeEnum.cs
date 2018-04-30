@@ -15,11 +15,25 @@ namespace BuildingSmart.IFC.IfcProductExtension
 {
 	public enum IfcTransportElementTypeEnum
 	{
+		[Description("Elevator or lift being a transport device to move people of good vertically.")]
 		ELEVATOR = 1,
 	
+		[Description("Escalator being a transport device to move people. It consists of individual link" +
+	    "ed steps that move up and down on tracks while keeping the threads horizontal.")]
 		ESCALATOR = 2,
 	
+		[Description("Moving walkway being a transport device to move people horizontally or on an incl" +
+	    "ine. It is a slow conveyor belt that transports people.")]
 		MOVINGWALKWAY = 3,
+	
+		[Description("A crane way system, normally including the crane rails, fasteners and the crane. " +
+	    "It is primarily used to move heavy goods in a factory or other industry building" +
+	    "s.")]
+		CRANEWAY = 4,
+	
+		[Description("A device used for lifting or lowering heavy goods. It may be manually operated or" +
+	    " electrically or pneumatically driven.")]
+		LIFTINGGEAR = 5,
 	
 		USERDEFINED = -1,
 	

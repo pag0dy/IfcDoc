@@ -10,14 +10,15 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcPresentationDefinitionResource;
 
 namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 {
-	public partial class IfcSurfaceStyleWithTextures :
+	public partial class IfcSurfaceStyleWithTextures : IfcPresentationItem,
 		BuildingSmart.IFC.IfcPresentationAppearanceResource.IfcSurfaceStyleElementSelect
 	{
 		[DataMember(Order = 0)] 
-		[Description("The textures applied to the surface. Only one image map with the same image map type shall be applied.")]
+		[Description("The textures applied to the surface. In case of more than one surface texture is included, the <em>IfcSurfaceStyleWithTexture</em> defines a multi texture.  </EMP-HTML>")]
 		[Required()]
 		[MinLength(1)]
 		public IList<IfcSurfaceTexture> Textures { get; protected set; }

@@ -1,9 +1,12 @@
-﻿<EPM-HTML>
+﻿<p><em>IfcPerformanceHistory</em> is used to document the actual performance of an occurrence instance over time. It includes machine-measured data from building automation systems and human-specified data such as task and resource usage.  The data may represent actual conditions, predictions, or simulations.</p>
 
-<P><U>Definition from IAI</U>: The <I>IfcPerformanceHistory</I> is used to document the actual performance of an occurrence instance over time. In practice, performance-related data are generally not easy to obtain as they can originate from different sources (e.g. predicted, simulated, or measured) and occur during different stages of the building life-cycle. Such time-related data cover a large spectrum, including meteorological data, schedules, operational status measurements, trend reports, etc.
-</P>
+<p>The realtime data tracked by performance history takes the form of property sets where all properties are based on time series. Unlike design-based data at occurrences and types, performance-driven data is time-sensitive and may change in realtime by some measurement device. Data may be captured at irregular intervals such as when values change beyond established thresholds, or at regular intervals of specified duration.</p>
 
-<BLOCKQUOTE>
-<P><FONT COLOR="#0000FF" SIZE="-1">HISTORY: New entity in Release IFC2x Edition 2.</FONT></P></BLOCKQUOTE> 
 
-</EPM-HTML>
+<h4>Declaration use definition</h4>
+
+<p><em>IfcPerformanceHistory</em> may be declared within a project using <em>IfcRelDeclares</em> where <em>RelatingContext</em> refers to the <em>IfcProject</em> and <em>RelatedDefinitions</em> includes the <em>IfcPerformanceHistory</em>. Default units (used for property sets) are indicated by the declaring project. Only top-level objects are declared; nested performance history objects (through <em>IfcRelNests</em>) do not participate in such relationship.</p>
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC2x2.
+</blockquote> 

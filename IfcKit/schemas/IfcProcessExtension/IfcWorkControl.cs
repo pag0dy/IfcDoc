@@ -22,59 +22,45 @@ namespace BuildingSmart.IFC.IfcProcessExtension
 	{
 		[DataMember(Order = 0)] 
 		[XmlAttribute]
-		[Description("Identifier of the work plan, given by user.  ")]
+		[Description("    The date that the plan is created.")]
 		[Required()]
-		public IfcIdentifier Identifier { get; set; }
+		public IfcDateTime CreationDate { get; set; }
 	
 		[DataMember(Order = 1)] 
-		[Description("The date that the plan is created.")]
-		[Required()]
-		public IfcDateTimeSelect CreationDate { get; set; }
-	
-		[DataMember(Order = 2)] 
-		[Description("The authors of the work plan.")]
+		[Description("    The authors of the work plan.")]
 		[MinLength(1)]
 		public ISet<IfcPerson> Creators { get; protected set; }
 	
+		[DataMember(Order = 2)] 
+		[XmlAttribute]
+		[Description("    A description of the purpose of the work schedule.")]
+		public IfcLabel? Purpose { get; set; }
+	
 		[DataMember(Order = 3)] 
 		[XmlAttribute]
-		[Description("A description of the purpose of the work schedule.")]
-		public IfcLabel? Purpose { get; set; }
+		[Description("    The total duration of the entire work schedule.")]
+		public IfcDuration? Duration { get; set; }
 	
 		[DataMember(Order = 4)] 
 		[XmlAttribute]
-		[Description("The total duration of the entire work schedule.")]
-		public IfcTimeMeasure? Duration { get; set; }
+		[Description("    The total time float of the entire work schedule.")]
+		public IfcDuration? TotalFloat { get; set; }
 	
 		[DataMember(Order = 5)] 
 		[XmlAttribute]
-		[Description("The total time float of the entire work schedule.")]
-		public IfcTimeMeasure? TotalFloat { get; set; }
+		[Description("    The start time of the schedule.")]
+		[Required()]
+		public IfcDateTime StartTime { get; set; }
 	
 		[DataMember(Order = 6)] 
-		[Description("The start time of the schedule.")]
-		[Required()]
-		public IfcDateTimeSelect StartTime { get; set; }
-	
-		[DataMember(Order = 7)] 
-		[Description("The finish time of the schedule.")]
-		public IfcDateTimeSelect FinishTime { get; set; }
-	
-		[DataMember(Order = 8)] 
 		[XmlAttribute]
-		[Description("Predefined work control types from which that required may be set. ")]
-		public IfcWorkControlTypeEnum? WorkControlType { get; set; }
-	
-		[DataMember(Order = 9)] 
-		[XmlAttribute]
-		[Description("A user defined work control type.")]
-		public IfcLabel? UserDefinedControlType { get; set; }
+		[Description("    The finish time of the schedule.")]
+		public IfcDateTime? FinishTime { get; set; }
 	
 	
-		protected IfcWorkControl(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcIdentifier __Identifier, IfcDateTimeSelect __CreationDate, IfcPerson[] __Creators, IfcLabel? __Purpose, IfcTimeMeasure? __Duration, IfcTimeMeasure? __TotalFloat, IfcDateTimeSelect __StartTime, IfcDateTimeSelect __FinishTime, IfcWorkControlTypeEnum? __WorkControlType, IfcLabel? __UserDefinedControlType)
-			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType)
+		protected IfcWorkControl(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcIdentifier? __Identification, IfcDateTime __CreationDate, IfcPerson[] __Creators, IfcLabel? __Purpose, IfcDuration? __Duration, IfcDuration? __TotalFloat, IfcDateTime __StartTime, IfcDateTime? __FinishTime)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType, __Identification)
 		{
-			this.Identifier = __Identifier;
 			this.CreationDate = __CreationDate;
 			this.Creators = new HashSet<IfcPerson>(__Creators);
 			this.Purpose = __Purpose;
@@ -82,8 +68,6 @@ namespace BuildingSmart.IFC.IfcProcessExtension
 			this.TotalFloat = __TotalFloat;
 			this.StartTime = __StartTime;
 			this.FinishTime = __FinishTime;
-			this.WorkControlType = __WorkControlType;
-			this.UserDefinedControlType = __UserDefinedControlType;
 		}
 	
 	

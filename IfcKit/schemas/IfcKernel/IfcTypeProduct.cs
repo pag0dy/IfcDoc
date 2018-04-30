@@ -16,7 +16,8 @@ using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcKernel
 {
-	public partial class IfcTypeProduct : IfcTypeObject
+	public partial class IfcTypeProduct : IfcTypeObject,
+		BuildingSmart.IFC.IfcKernel.IfcProductSelect
 	{
 		[DataMember(Order = 0)] 
 		[Description("List of unique representation maps. Each representation map describes a block definition of the shape of the product style. By providing more than one representation map, a multi-view block definition can be given.")]
@@ -28,12 +29,17 @@ namespace BuildingSmart.IFC.IfcKernel
 		[Description("The tag (or label) identifier at the particular type of a product, e.g. the article number (like the EAN). It is the identifier at the specific level.")]
 		public IfcLabel? Tag { get; set; }
 	
+		[InverseProperty("RelatingProduct")] 
+		[Description("Reference to the <em>IfcRelAssignsToProduct</em> relationship, by which other products, processes, controls, resources or actors (as subtypes of <em>IfcObjectDefinition</em>) can be related to this product type.  <blockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp;  New inverse relationship.</blockquote>")]
+		public ISet<IfcRelAssignsToProduct> ReferencedBy { get; protected set; }
 	
-		public IfcTypeProduct(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ApplicableOccurrence, IfcPropertySetDefinition[] __HasPropertySets, IfcRepresentationMap[] __RepresentationMaps, IfcLabel? __Tag)
+	
+		public IfcTypeProduct(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcIdentifier? __ApplicableOccurrence, IfcPropertySetDefinition[] __HasPropertySets, IfcRepresentationMap[] __RepresentationMaps, IfcLabel? __Tag)
 			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ApplicableOccurrence, __HasPropertySets)
 		{
 			this.RepresentationMaps = new List<IfcRepresentationMap>(__RepresentationMaps);
 			this.Tag = __Tag;
+			this.ReferencedBy = new HashSet<IfcRelAssignsToProduct>();
 		}
 	
 	

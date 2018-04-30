@@ -21,7 +21,7 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 	{
 		[DataMember(Order = 0)] 
 		[XmlAttribute]
-		[Description("<EPM-HTML>  </EPM-HTML>")]
+		[Description("The radius of the sphere.")]
 		[Required()]
 		public IfcPositiveLengthMeasure Radius { get; set; }
 	

@@ -22,20 +22,15 @@ namespace BuildingSmart.IFC.IfcStructuralAnalysisDomain
 	public abstract partial class IfcStructuralAction : IfcStructuralActivity
 	{
 		[DataMember(Order = 0)] 
+		[XmlAttribute]
 		[Description("Indicates if this action may cause a stability problem. If it is 'FALSE', no further investigations regarding stability problems are necessary. ")]
-		[Required()]
-		public Boolean DestabilizingLoad { get; set; }
-	
-		[DataMember(Order = 1)] 
-		[Description("Optional reference to an instance of IfcStructuralReaction representing a result of another structural analysis model which creates this action upon the considered structural analysis model. ")]
-		public IfcStructuralReaction CausedBy { get; set; }
+		public IfcBoolean? DestabilizingLoad { get; set; }
 	
 	
-		protected IfcStructuralAction(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcObjectPlacement __ObjectPlacement, IfcProductRepresentation __Representation, IfcStructuralLoad __AppliedLoad, IfcGlobalOrLocalEnum __GlobalOrLocal, Boolean __DestabilizingLoad, IfcStructuralReaction __CausedBy)
+		protected IfcStructuralAction(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcObjectPlacement __ObjectPlacement, IfcProductRepresentation __Representation, IfcStructuralLoad __AppliedLoad, IfcGlobalOrLocalEnum __GlobalOrLocal, IfcBoolean? __DestabilizingLoad)
 			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType, __ObjectPlacement, __Representation, __AppliedLoad, __GlobalOrLocal)
 		{
 			this.DestabilizingLoad = __DestabilizingLoad;
-			this.CausedBy = __CausedBy;
 		}
 	
 	

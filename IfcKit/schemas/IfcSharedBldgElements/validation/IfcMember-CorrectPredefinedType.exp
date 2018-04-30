@@ -1,0 +1,3 @@
+﻿NOT(EXISTS(PredefinedType)) OR
+ (PredefinedType <> IfcMemberTypeEnum.USERDEFINED) OR
+ ((PredefinedType = IfcMemberTypeEnum.USERDEFINED) AND EXISTS (SELF\IfcObject.ObjectType))

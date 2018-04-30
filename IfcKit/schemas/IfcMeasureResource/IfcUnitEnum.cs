@@ -73,6 +73,8 @@ namespace BuildingSmart.IFC.IfcMeasureResource
 	
 		VOLUMEUNIT = 29,
 	
+		[Description("User defined unit type. The type of unit is only implied by its name or the usage" +
+	    " context.")]
 		USERDEFINED = -1,
 	
 	}

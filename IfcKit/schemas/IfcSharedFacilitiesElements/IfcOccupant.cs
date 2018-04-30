@@ -21,12 +21,11 @@ namespace BuildingSmart.IFC.IfcSharedFacilitiesElements
 	{
 		[DataMember(Order = 0)] 
 		[XmlAttribute]
-		[Description("Predefined occupant types from which that required may be set. ")]
-		[Required()]
-		public IfcOccupantTypeEnum PredefinedType { get; set; }
+		[Description("Predefined occupant types from which that required may be set.    <blockquote class=\"change-ifc2x4\">IFC4 CHANGE Attribute made optional.</blockquote> ")]
+		public IfcOccupantTypeEnum? PredefinedType { get; set; }
 	
 	
-		public IfcOccupant(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcActorSelect __TheActor, IfcOccupantTypeEnum __PredefinedType)
+		public IfcOccupant(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcActorSelect __TheActor, IfcOccupantTypeEnum? __PredefinedType)
 			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType, __TheActor)
 		{
 			this.PredefinedType = __PredefinedType;

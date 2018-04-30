@@ -10,6 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcPresentationOrganizationResource;
@@ -17,7 +18,7 @@ using BuildingSmart.IFC.IfcTopologyResource;
 
 namespace BuildingSmart.IFC.IfcGeometricModelResource
 {
-	public partial class IfcFacetedBrepWithVoids : IfcManifoldSolidBrep
+	public partial class IfcFacetedBrepWithVoids : IfcFacetedBrep
 	{
 		[DataMember(Order = 0)] 
 		[Description("Set of closed shells defining voids within the solid.")]

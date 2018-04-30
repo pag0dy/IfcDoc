@@ -20,16 +20,19 @@ namespace BuildingSmart.IFC.IfcProductExtension
 	public partial class IfcRelConnectsElements : IfcRelConnects
 	{
 		[DataMember(Order = 0)] 
-		[Description("Relationship to the control class, that provides the geometrical constraints of the connection.  ")]
+		[XmlElement]
+		[Description("The geometric shape representation of the connection geometry that is provided in the object coordinate system of the <em>RelatingElement</em> (mandatory) and in the object coordinate system of the <em>RelatedElement</em> (optionally).")]
 		public IfcConnectionGeometry ConnectionGeometry { get; set; }
 	
 		[DataMember(Order = 1)] 
-		[Description("Reference to an Element that is connected by the objectified relationship.  ")]
+		[XmlElement]
+		[Description("Reference to a subtype of <em>IfcElement</em> that is connected by the connection relationship in the role of <em>RelatingElement</em>.  ")]
 		[Required()]
 		public IfcElement RelatingElement { get; set; }
 	
 		[DataMember(Order = 2)] 
-		[Description("Reference to an Element that is connected by the objectified relationship.  ")]
+		[XmlElement]
+		[Description("Reference to a subtype of <em>IfcElement</em> that is connected by the connection relationship in the role of <em>RelatedElement</em>.")]
 		[Required()]
 		public IfcElement RelatedElement { get; set; }
 	

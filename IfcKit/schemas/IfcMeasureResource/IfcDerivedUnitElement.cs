@@ -16,6 +16,7 @@ namespace BuildingSmart.IFC.IfcMeasureResource
 	public partial class IfcDerivedUnitElement
 	{
 		[DataMember(Order = 0)] 
+		[XmlElement]
 		[Description("The fixed quantity which is used as the mathematical factor.")]
 		[Required()]
 		public IfcNamedUnit Unit { get; set; }

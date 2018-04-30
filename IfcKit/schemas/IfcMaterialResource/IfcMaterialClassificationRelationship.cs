@@ -20,17 +20,18 @@ namespace BuildingSmart.IFC.IfcMaterialResource
 		[Description("The material classifications identifying the type of material.")]
 		[Required()]
 		[MinLength(1)]
-		public ISet<IfcClassificationNotationSelect> MaterialClassifications { get; protected set; }
+		public ISet<IfcClassificationSelect> MaterialClassifications { get; protected set; }
 	
 		[DataMember(Order = 1)] 
+		[XmlElement]
 		[Description("Material being classified.")]
 		[Required()]
 		public IfcMaterial ClassifiedMaterial { get; set; }
 	
 	
-		public IfcMaterialClassificationRelationship(IfcClassificationNotationSelect[] __MaterialClassifications, IfcMaterial __ClassifiedMaterial)
+		public IfcMaterialClassificationRelationship(IfcClassificationSelect[] __MaterialClassifications, IfcMaterial __ClassifiedMaterial)
 		{
-			this.MaterialClassifications = new HashSet<IfcClassificationNotationSelect>(__MaterialClassifications);
+			this.MaterialClassifications = new HashSet<IfcClassificationSelect>(__MaterialClassifications);
 			this.ClassifiedMaterial = __ClassifiedMaterial;
 		}
 	

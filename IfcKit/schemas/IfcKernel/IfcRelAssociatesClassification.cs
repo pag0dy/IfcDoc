@@ -21,10 +21,10 @@ namespace BuildingSmart.IFC.IfcKernel
 		[DataMember(Order = 0)] 
 		[Description("Classification applied to the objects.")]
 		[Required()]
-		public IfcClassificationNotationSelect RelatingClassification { get; set; }
+		public IfcClassificationSelect RelatingClassification { get; set; }
 	
 	
-		public IfcRelAssociatesClassification(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcRoot[] __RelatedObjects, IfcClassificationNotationSelect __RelatingClassification)
+		public IfcRelAssociatesClassification(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcDefinitionSelect[] __RelatedObjects, IfcClassificationSelect __RelatingClassification)
 			: base(__GlobalId, __OwnerHistory, __Name, __Description, __RelatedObjects)
 		{
 			this.RelatingClassification = __RelatingClassification;

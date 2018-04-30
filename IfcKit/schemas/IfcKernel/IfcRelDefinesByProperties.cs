@@ -18,14 +18,22 @@ namespace BuildingSmart.IFC.IfcKernel
 	public partial class IfcRelDefinesByProperties : IfcRelDefines
 	{
 		[DataMember(Order = 0)] 
-		[Description("Reference to the property set definition for that object or set of objects.  ")]
+		[XmlIgnore]
+		[Description("Reference to the objects (or single object) to which the property definition applies.  <blockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; Data type promoted from subtype <em>IfcObject</em>.  </blockquote>")]
 		[Required()]
-		public IfcPropertySetDefinition RelatingPropertyDefinition { get; set; }
+		[MinLength(1)]
+		public ISet<IfcObjectDefinition> RelatedObjects { get; protected set; }
+	
+		[DataMember(Order = 1)] 
+		[Description("Reference to the property set definition for that object or set of objects.")]
+		[Required()]
+		public IfcPropertySetDefinitionSelect RelatingPropertyDefinition { get; set; }
 	
 	
-		public IfcRelDefinesByProperties(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcObject[] __RelatedObjects, IfcPropertySetDefinition __RelatingPropertyDefinition)
-			: base(__GlobalId, __OwnerHistory, __Name, __Description, __RelatedObjects)
+		public IfcRelDefinesByProperties(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcObjectDefinition[] __RelatedObjects, IfcPropertySetDefinitionSelect __RelatingPropertyDefinition)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description)
 		{
+			this.RelatedObjects = new HashSet<IfcObjectDefinition>(__RelatedObjects);
 			this.RelatingPropertyDefinition = __RelatingPropertyDefinition;
 		}
 	

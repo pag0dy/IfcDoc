@@ -22,7 +22,7 @@ namespace BuildingSmart.IFC.IfcMeasureResource
 	
 		[DataMember(Order = 1)] 
 		[XmlAttribute]
-		[Description("The word, or group of words, by which the SI unit is referred to.")]
+		[Description("The word, or group of words, by which the SI unit is referred to.    <blockquote class=\"note\">NOTE&nbsp; Even though the SI system's base unit for mass is kilogram, the <em>IfcSIUnit</em> for mass is gram if no <em>Prefix</em> is asserted.</blockquote>  ")]
 		[Required()]
 		public IfcSIUnitName Name { get; set; }
 	

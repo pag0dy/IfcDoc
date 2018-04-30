@@ -10,6 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 
@@ -25,16 +26,16 @@ namespace BuildingSmart.IFC.IfcProfileResource
 	
 		[DataMember(Order = 1)] 
 		[XmlAttribute]
-		[Description("Radius of the circular arcs, by which all four corners of the outer contour of rectangle are equally rounded. If not given, zero (= no rounding arcs) applies.")]
-		public IfcPositiveLengthMeasure? InnerFilletRadius { get; set; }
+		[Description("Inner corner radius.")]
+		public IfcNonNegativeLengthMeasure? InnerFilletRadius { get; set; }
 	
 		[DataMember(Order = 2)] 
 		[XmlAttribute]
-		[Description("Radius of the circular arcs, by which all four corners of the outer contour of rectangle are equally rounded. If not given, zero (= no rounding arcs) applies.")]
-		public IfcPositiveLengthMeasure? OuterFilletRadius { get; set; }
+		[Description("Outer corner radius.")]
+		public IfcNonNegativeLengthMeasure? OuterFilletRadius { get; set; }
 	
 	
-		public IfcRectangleHollowProfileDef(IfcProfileTypeEnum __ProfileType, IfcLabel? __ProfileName, IfcAxis2Placement2D __Position, IfcPositiveLengthMeasure __XDim, IfcPositiveLengthMeasure __YDim, IfcPositiveLengthMeasure __WallThickness, IfcPositiveLengthMeasure? __InnerFilletRadius, IfcPositiveLengthMeasure? __OuterFilletRadius)
+		public IfcRectangleHollowProfileDef(IfcProfileTypeEnum __ProfileType, IfcLabel? __ProfileName, IfcAxis2Placement2D __Position, IfcPositiveLengthMeasure __XDim, IfcPositiveLengthMeasure __YDim, IfcPositiveLengthMeasure __WallThickness, IfcNonNegativeLengthMeasure? __InnerFilletRadius, IfcNonNegativeLengthMeasure? __OuterFilletRadius)
 			: base(__ProfileType, __ProfileName, __Position, __XDim, __YDim)
 		{
 			this.WallThickness = __WallThickness;

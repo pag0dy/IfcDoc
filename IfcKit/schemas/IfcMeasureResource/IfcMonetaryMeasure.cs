@@ -14,7 +14,6 @@ using System.Xml.Serialization;
 namespace BuildingSmart.IFC.IfcMeasureResource
 {
 	public partial struct IfcMonetaryMeasure :
-		BuildingSmart.IFC.IfcCostResource.IfcAppliedValueSelect,
 		BuildingSmart.IFC.IfcMeasureResource.IfcDerivedMeasureValue
 	{
 		[XmlText]

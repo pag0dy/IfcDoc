@@ -15,10 +15,27 @@ namespace BuildingSmart.IFC.IfcProductExtension
 {
 	public enum IfcInternalOrExternalEnum
 	{
+		[Description("The space boundary faces a physical or virtual element where there is an internal" +
+	    " space on the other side.")]
 		INTERNAL = 1,
 	
+		[Description("The space boundary faces a physical or virtual element where there is an external" +
+	    " space on the other side.")]
 		EXTERNAL = 2,
 	
+		[Description("The space boundary faces a physical or virtual element where there is earth (or t" +
+	    "errain) on the other side.")]
+		EXTERNAL_EARTH = 3,
+	
+		[Description("The space boundary faces a physical or virtual element where there is water (wate" +
+	    "r component of terrain) on the other side.")]
+		EXTERNAL_WATER = 4,
+	
+		[Description("The space boundary faces a physical or virtual element where there is another bui" +
+	    "lding on the other side.")]
+		EXTERNAL_FIRE = 5,
+	
+		[Description("No information available.")]
 		NOTDEFINED = 0,
 	
 	}

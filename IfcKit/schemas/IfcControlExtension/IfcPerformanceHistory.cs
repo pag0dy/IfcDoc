@@ -24,11 +24,17 @@ namespace BuildingSmart.IFC.IfcControlExtension
 		[Required()]
 		public IfcLabel LifeCyclePhase { get; set; }
 	
+		[DataMember(Order = 1)] 
+		[XmlAttribute]
+		[Description("Predefined generic type for a performace history that is specified in an enumeration.  <blockquote class=\"change-ifc2x4\">IFC4 CHANGE  The attribute has been added at the end of the entity definition.</blockquote> ")]
+		public IfcPerformanceHistoryTypeEnum? PredefinedType { get; set; }
 	
-		public IfcPerformanceHistory(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcLabel __LifeCyclePhase)
-			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType)
+	
+		public IfcPerformanceHistory(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcIdentifier? __Identification, IfcLabel __LifeCyclePhase, IfcPerformanceHistoryTypeEnum? __PredefinedType)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType, __Identification)
 		{
 			this.LifeCyclePhase = __LifeCyclePhase;
+			this.PredefinedType = __PredefinedType;
 		}
 	
 	

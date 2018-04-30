@@ -12,6 +12,7 @@ using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometricModelResource;
+using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
@@ -26,20 +27,21 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		public IList<IfcCompositeCurveSegment> Segments { get; protected set; }
 	
 		[DataMember(Order = 1)] 
+		[XmlAttribute]
 		[Description("Indication of whether the curve intersects itself or not; this is for information only.  ")]
 		[Required()]
-		public Boolean? SelfIntersect { get; set; }
+		public IfcLogical SelfIntersect { get; set; }
 	
 	
-		public IfcCompositeCurve(IfcCompositeCurveSegment[] __Segments, Boolean? __SelfIntersect)
+		public IfcCompositeCurve(IfcCompositeCurveSegment[] __Segments, IfcLogical __SelfIntersect)
 		{
 			this.Segments = new List<IfcCompositeCurveSegment>(__Segments);
 			this.SelfIntersect = __SelfIntersect;
 		}
 	
-		public new Int64 NSegments { get { return null; } }
+		public new IfcInteger NSegments { get { return new IfcInteger(); } }
 	
-		public new Boolean? ClosedCurve { get { return null; } }
+		public new IfcLogical ClosedCurve { get { return new IfcLogical(); } }
 	
 	
 	}

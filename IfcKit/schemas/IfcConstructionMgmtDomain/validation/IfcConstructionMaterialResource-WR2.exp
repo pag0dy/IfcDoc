@@ -1,2 +1,0 @@
-﻿NOT(EXISTS(SELF\IfcResource.ResourceOf[1])) OR
-(SELF\IfcResource.ResourceOf[1].RelatedObjectsType = IfcObjectTypeEnum.PRODUCT)

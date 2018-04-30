@@ -10,44 +10,36 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 
 namespace BuildingSmart.IFC.IfcPropertyResource
 {
-	public partial class IfcPropertyDependencyRelationship
+	public partial class IfcPropertyDependencyRelationship : IfcResourceLevelRelationship
 	{
 		[DataMember(Order = 0)] 
+		[XmlElement]
 		[Description("The property on which the relationship depends.")]
 		[Required()]
 		public IfcProperty DependingProperty { get; set; }
 	
 		[DataMember(Order = 1)] 
+		[XmlElement]
 		[Description("The dependant property.")]
 		[Required()]
 		public IfcProperty DependantProperty { get; set; }
 	
 		[DataMember(Order = 2)] 
 		[XmlAttribute]
-		[Description("Name of the relationship that provides additional meaning to the nature of the dependency.")]
-		public IfcLabel? Name { get; set; }
-	
-		[DataMember(Order = 3)] 
-		[XmlAttribute]
-		[Description("Additional description of the dependency.")]
-		public IfcText? Description { get; set; }
-	
-		[DataMember(Order = 4)] 
-		[XmlAttribute]
 		[Description("Expression that further describes the nature of the dependency relation.")]
 		public IfcText? Expression { get; set; }
 	
 	
-		public IfcPropertyDependencyRelationship(IfcProperty __DependingProperty, IfcProperty __DependantProperty, IfcLabel? __Name, IfcText? __Description, IfcText? __Expression)
+		public IfcPropertyDependencyRelationship(IfcLabel? __Name, IfcText? __Description, IfcProperty __DependingProperty, IfcProperty __DependantProperty, IfcText? __Expression)
+			: base(__Name, __Description)
 		{
 			this.DependingProperty = __DependingProperty;
 			this.DependantProperty = __DependantProperty;
-			this.Name = __Name;
-			this.Description = __Description;
 			this.Expression = __Expression;
 		}
 	

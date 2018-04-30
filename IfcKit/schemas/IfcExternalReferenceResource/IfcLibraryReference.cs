@@ -10,6 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 using BuildingSmart.IFC.IfcPropertyResource;
@@ -19,16 +20,33 @@ namespace BuildingSmart.IFC.IfcExternalReferenceResource
 	public partial class IfcLibraryReference : IfcExternalReference,
 		BuildingSmart.IFC.IfcExternalReferenceResource.IfcLibrarySelect
 	{
-		[InverseProperty("LibraryReference")] 
+		[DataMember(Order = 0)] 
+		[XmlAttribute]
+		[Description("Additional description provided for the library reference.  <blockquote class=\"change-ifc2x4\">    IFC4 CHANGE&nbsp; New attribute added at the end of the attribute list.  </blockquote>")]
+		public IfcText? Description { get; set; }
+	
+		[DataMember(Order = 1)] 
+		[XmlAttribute]
+		[Description("The language in which a library reference is expressed.  <blockquote class=\"change-ifc2x4\">    IFC4 CHANGE&nbsp; New attribute added at the end of the attribute list.  </blockquote>")]
+		public IfcLanguageId? Language { get; set; }
+	
+		[DataMember(Order = 2)] 
+		[XmlElement]
 		[Description("The library information that is being referenced.")]
-		[MaxLength(1)]
-		public ISet<IfcLibraryInformation> ReferenceIntoLibrary { get; protected set; }
+		public IfcLibraryInformation ReferencedLibrary { get; set; }
+	
+		[InverseProperty("RelatingLibrary")] 
+		[Description("The library reference with which objects are associated.  <blockquote class=\"change-ifc2x4\">    IFC4 CHANGE&nbsp; New inverse attribute.  </blockquote>")]
+		public ISet<IfcRelAssociatesLibrary> LibraryRefForObjects { get; protected set; }
 	
 	
-		public IfcLibraryReference(IfcLabel? __Location, IfcIdentifier? __ItemReference, IfcLabel? __Name)
-			: base(__Location, __ItemReference, __Name)
+		public IfcLibraryReference(IfcURIReference? __Location, IfcIdentifier? __Identification, IfcLabel? __Name, IfcText? __Description, IfcLanguageId? __Language, IfcLibraryInformation __ReferencedLibrary)
+			: base(__Location, __Identification, __Name)
 		{
-			this.ReferenceIntoLibrary = new HashSet<IfcLibraryInformation>();
+			this.Description = __Description;
+			this.Language = __Language;
+			this.ReferencedLibrary = __ReferencedLibrary;
+			this.LibraryRefForObjects = new HashSet<IfcRelAssociatesLibrary>();
 		}
 	
 	

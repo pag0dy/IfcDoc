@@ -16,14 +16,16 @@ using BuildingSmart.IFC.IfcMeasureResource;
 
 namespace BuildingSmart.IFC.IfcCostResource
 {
-	public partial class IfcCurrencyRelationship
+	public partial class IfcCurrencyRelationship : IfcResourceLevelRelationship
 	{
 		[DataMember(Order = 0)] 
+		[XmlElement]
 		[Description("The monetary unit from which an exchange is derived. For instance, in the case of a conversion from GBP to USD, the relating monetary unit is GBP.")]
 		[Required()]
 		public IfcMonetaryUnit RelatingMonetaryUnit { get; set; }
 	
 		[DataMember(Order = 1)] 
+		[XmlElement]
 		[Description("The monetary unit to which an exchange results. For instance, in the case of a conversion from GBP to USD, the related monetary unit is USD.")]
 		[Required()]
 		public IfcMonetaryUnit RelatedMonetaryUnit { get; set; }
@@ -35,16 +37,18 @@ namespace BuildingSmart.IFC.IfcCostResource
 		public IfcPositiveRatioMeasure ExchangeRate { get; set; }
 	
 		[DataMember(Order = 3)] 
-		[Description("The date and time at which an exchange rate applies.")]
-		[Required()]
-		public IfcDateAndTime RateDateTime { get; set; }
+		[XmlAttribute]
+		[Description("The date and time at which an exchange rate applies.  <blockquote class=\"change-ifc2x4\">IFC4 CHANGE Type changed from IfcDateTimeSelect. Attribute made optional.</blockquote>    ")]
+		public IfcDateTime? RateDateTime { get; set; }
 	
 		[DataMember(Order = 4)] 
+		[XmlElement]
 		[Description("The source from which an exchange rate is obtained.")]
 		public IfcLibraryInformation RateSource { get; set; }
 	
 	
-		public IfcCurrencyRelationship(IfcMonetaryUnit __RelatingMonetaryUnit, IfcMonetaryUnit __RelatedMonetaryUnit, IfcPositiveRatioMeasure __ExchangeRate, IfcDateAndTime __RateDateTime, IfcLibraryInformation __RateSource)
+		public IfcCurrencyRelationship(IfcLabel? __Name, IfcText? __Description, IfcMonetaryUnit __RelatingMonetaryUnit, IfcMonetaryUnit __RelatedMonetaryUnit, IfcPositiveRatioMeasure __ExchangeRate, IfcDateTime? __RateDateTime, IfcLibraryInformation __RateSource)
+			: base(__Name, __Description)
 		{
 			this.RelatingMonetaryUnit = __RelatingMonetaryUnit;
 			this.RelatedMonetaryUnit = __RelatedMonetaryUnit;

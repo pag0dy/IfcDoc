@@ -18,13 +18,14 @@ namespace BuildingSmart.IFC.IfcRepresentationResource
 	public partial class IfcGeometricRepresentationSubContext : IfcGeometricRepresentationContext
 	{
 		[DataMember(Order = 0)] 
+		[XmlIgnore]
 		[Description("Parent context from which the sub context derives its world coordinate system, precision, space coordinate dimension and true north.")]
 		[Required()]
 		public IfcGeometricRepresentationContext ParentContext { get; set; }
 	
 		[DataMember(Order = 1)] 
 		[XmlAttribute]
-		[Description("<EPM-HTML>  The target <font color=\"#ff0000\">plot</font> scale of the representation   to which this representation context applies.  <blockquote> <font size=\"-1\"> Scale indicates the target plot scale for  the representation sub context, all annotation styles are given in plot  dimensions according to this target plot scale.<br>  If multiple instances of <i>IfcGeometricRepresentationSubContext</i>  are given having the same <i>TargetView</i> value, the target plot scale   applies up to the next smaller scale, or up to unlimited small scale.    <br>    <br>  Note: Scale 1:100 (given as 0.01 within <i>TargetScale</i>)  is bigger then 1:200 (given as 0.005 within <i>TargetScale</i>).    </font></blockquote>  </EPM-HTML>")]
+		[Description("The target <font color=\"#ff0000\">plot</font> scale of the representation   to which this representation context applies.  <blockquote class=\"note\">NOTE&nbsp; Scale indicates the target plot scale for  the representation sub context, all annotation styles are given in plot  dimensions according to this target plot scale.<br>  If multiple instances of <em>IfcGeometricRepresentationSubContext</em>  are given having the same <em>TargetView</em> value, the target plot scale   applies up to the next smaller scale, or up to unlimited small scale.</blockquote>    <blockquote class=\"note\">NOTE&nbsp; Scale 1:100 (given as 0.01 within <em>TargetScale</em>)  is bigger then 1:200 (given as 0.005 within <em>TargetScale</em>).</blockquote>")]
 		public IfcPositiveRatioMeasure? TargetScale { get; set; }
 	
 		[DataMember(Order = 2)] 
@@ -39,7 +40,7 @@ namespace BuildingSmart.IFC.IfcRepresentationResource
 		public IfcLabel? UserDefinedTargetView { get; set; }
 	
 	
-		public IfcGeometricRepresentationSubContext(IfcLabel? __ContextIdentifier, IfcLabel? __ContextType, IfcDimensionCount __CoordinateSpaceDimension, Double? __Precision, IfcAxis2Placement __WorldCoordinateSystem, IfcDirection __TrueNorth, IfcGeometricRepresentationContext __ParentContext, IfcPositiveRatioMeasure? __TargetScale, IfcGeometricProjectionEnum __TargetView, IfcLabel? __UserDefinedTargetView)
+		public IfcGeometricRepresentationSubContext(IfcLabel? __ContextIdentifier, IfcLabel? __ContextType, IfcDimensionCount __CoordinateSpaceDimension, IfcReal? __Precision, IfcAxis2Placement __WorldCoordinateSystem, IfcDirection __TrueNorth, IfcGeometricRepresentationContext __ParentContext, IfcPositiveRatioMeasure? __TargetScale, IfcGeometricProjectionEnum __TargetView, IfcLabel? __UserDefinedTargetView)
 			: base(__ContextIdentifier, __ContextType, __CoordinateSpaceDimension, __Precision, __WorldCoordinateSystem, __TrueNorth)
 		{
 			this.ParentContext = __ParentContext;
@@ -54,7 +55,7 @@ namespace BuildingSmart.IFC.IfcRepresentationResource
 	
 		public new IfcDirection TrueNorth { get { return null; } }
 	
-		public new Double Precision { get { return null; } }
+		public new IfcReal Precision { get { return new IfcReal(); } }
 	
 	
 	}

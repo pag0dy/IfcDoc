@@ -15,12 +15,17 @@ namespace BuildingSmart.IFC.IfcHvacDomain
 {
 	public enum IfcDuctSegmentTypeEnum
 	{
+		[Description("A rigid segment is a continuous linear segment of duct that cannot be deformed.")]
 		RIGIDSEGMENT = 1,
 	
+		[Description("A flexible segment is a continuous non-linear segment of duct that can be deforme" +
+	    "d and change the direction of flow.")]
 		FLEXIBLESEGMENT = 2,
 	
+		[Description("User-defined segment.")]
 		USERDEFINED = -1,
 	
+		[Description("Undefined segment.")]
 		NOTDEFINED = 0,
 	
 	}

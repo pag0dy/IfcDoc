@@ -24,7 +24,7 @@ namespace BuildingSmart.IFC.IfcKernel
 		public IfcLibrarySelect RelatingLibrary { get; set; }
 	
 	
-		public IfcRelAssociatesLibrary(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcRoot[] __RelatedObjects, IfcLibrarySelect __RelatingLibrary)
+		public IfcRelAssociatesLibrary(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcDefinitionSelect[] __RelatedObjects, IfcLibrarySelect __RelatingLibrary)
 			: base(__GlobalId, __OwnerHistory, __Name, __Description, __RelatedObjects)
 		{
 			this.RelatingLibrary = __RelatingLibrary;

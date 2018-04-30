@@ -22,15 +22,20 @@ namespace BuildingSmart.IFC.IfcSharedFacilitiesElements
 	{
 		[DataMember(Order = 0)] 
 		[XmlAttribute]
-		[Description("A designation of where the assembly is intended to take place defined by an Enum.")]
+		[Description("<p>A designation of where the assembly is intended to take place. A selection of alternatives s provided in an enumerated list.</p>")]
 		[Required()]
 		public IfcAssemblyPlaceEnum AssemblyPlace { get; set; }
 	
+		[DataMember(Order = 1)] 
+		[XmlAttribute]
+		public IfcFurnitureTypeEnum? PredefinedType { get; set; }
 	
-		public IfcFurnitureType(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ApplicableOccurrence, IfcPropertySetDefinition[] __HasPropertySets, IfcRepresentationMap[] __RepresentationMaps, IfcLabel? __Tag, IfcLabel? __ElementType, IfcAssemblyPlaceEnum __AssemblyPlace)
+	
+		public IfcFurnitureType(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcIdentifier? __ApplicableOccurrence, IfcPropertySetDefinition[] __HasPropertySets, IfcRepresentationMap[] __RepresentationMaps, IfcLabel? __Tag, IfcLabel? __ElementType, IfcAssemblyPlaceEnum __AssemblyPlace, IfcFurnitureTypeEnum? __PredefinedType)
 			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ApplicableOccurrence, __HasPropertySets, __RepresentationMaps, __Tag, __ElementType)
 		{
 			this.AssemblyPlace = __AssemblyPlace;
+			this.PredefinedType = __PredefinedType;
 		}
 	
 	

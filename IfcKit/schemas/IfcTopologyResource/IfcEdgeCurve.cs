@@ -12,6 +12,7 @@ using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometryResource;
+using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
@@ -21,17 +22,19 @@ namespace BuildingSmart.IFC.IfcTopologyResource
 		BuildingSmart.IFC.IfcGeometricConstraintResource.IfcCurveOrEdgeCurve
 	{
 		[DataMember(Order = 0)] 
+		[XmlElement]
 		[Description("The curve which defines the shape and spatial location of the edge. This curve may be unbounded and is implicitly trimmed by the vertices of the edge; this defines the edge domain. Multiple edges can reference the same curve.")]
 		[Required()]
 		public IfcCurve EdgeGeometry { get; set; }
 	
 		[DataMember(Order = 1)] 
+		[XmlAttribute]
 		[Description("This logical flag indicates whether (TRUE), or not (FALSE) the senses of the edge and the curve defining the edge geometry are the same. The sense of an edge is from the edge start vertex to the edge end vertex; the sense of a curve is in the direction of increasing parameter. ")]
 		[Required()]
-		public Boolean SameSense { get; set; }
+		public IfcBoolean SameSense { get; set; }
 	
 	
-		public IfcEdgeCurve(IfcVertex __EdgeStart, IfcVertex __EdgeEnd, IfcCurve __EdgeGeometry, Boolean __SameSense)
+		public IfcEdgeCurve(IfcVertex __EdgeStart, IfcVertex __EdgeEnd, IfcCurve __EdgeGeometry, IfcBoolean __SameSense)
 			: base(__EdgeStart, __EdgeEnd)
 		{
 			this.EdgeGeometry = __EdgeGeometry;

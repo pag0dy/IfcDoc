@@ -18,29 +18,35 @@ namespace BuildingSmart.IFC.IfcExternalReferenceResource
 {
 	public abstract partial class IfcExternalReference :
 		BuildingSmart.IFC.IfcPresentationOrganizationResource.IfcLightDistributionDataSourceSelect,
-		BuildingSmart.IFC.IfcPropertyResource.IfcObjectReferenceSelect
+		BuildingSmart.IFC.IfcPropertyResource.IfcObjectReferenceSelect,
+		BuildingSmart.IFC.IfcExternalReferenceResource.IfcResourceObjectSelect
 	{
 		[DataMember(Order = 0)] 
 		[XmlAttribute]
-		[Description("Location, where the external source (classification, document or library). This can be either human readable or computer interpretable. For electronic location normally given as an URL location string, however other ways of accessing external references may be established in an application scenario.  ")]
-		public IfcLabel? Location { get; set; }
+		[Description("Location, where the external source (classification, document or library) can be accessed by electronic means. The electronic location is provided as an URI, and would normally be given as an URL location string.  <blockquote class=\"change-ifc2x4\">  IFC4 CHANGE&nbsp; The data type has been changed from <em>IfcLabel</em> to <em>IfcURIReference</em><br>.  </blockquote>  ")]
+		public IfcURIReference? Location { get; set; }
 	
 		[DataMember(Order = 1)] 
 		[XmlAttribute]
-		[Description("Identifier for the referenced item in the external source (classification, document or library). The internal reference can provide a computer interpretable pointer into electronic source.")]
-		public IfcIdentifier? ItemReference { get; set; }
+		[Description("The <em>Identification</em> provides a unique identifier of the referenced item within the external source (classification, document or library). It may be provided as   <ul>   <li>a key, e.g. a classification notation, like NF2.3</li>   <li>a handle</li>   <li>a uuid or guid</li>  </ul>  It may be human readable (such as a key) or not (such as a handle or uuid) depending on the context of its usage (which has to be determined by local agreement).  <blockquote class=\"change-ifc2x4\">  IFC4 CHANGE  Attribute renamed from <em>ItemReference</em> for consistency.<br>  </blockquote>")]
+		public IfcIdentifier? Identification { get; set; }
 	
 		[DataMember(Order = 2)] 
 		[XmlAttribute]
 		[Description("Optional name to further specify the reference. It can provide a human readable identifier (which does not necessarily need to have a counterpart in the internal structure of the document).")]
 		public IfcLabel? Name { get; set; }
 	
+		[InverseProperty("RelatingReference")] 
+		[Description("Reference to all associations between this external reference and objects within the <em>IfcResourceObjectSelect</em> that are tagged by the external reference.   <blockquote class=\"change-ifc2x4\">   IFC4 CHANGE&nbsp; New inverse attribute added with upward compatibility.<br>  </blockquote>")]
+		public ISet<IfcExternalReferenceRelationship> ExternalReferenceForResources { get; protected set; }
 	
-		protected IfcExternalReference(IfcLabel? __Location, IfcIdentifier? __ItemReference, IfcLabel? __Name)
+	
+		protected IfcExternalReference(IfcURIReference? __Location, IfcIdentifier? __Identification, IfcLabel? __Name)
 		{
 			this.Location = __Location;
-			this.ItemReference = __ItemReference;
+			this.Identification = __Identification;
 			this.Name = __Name;
+			this.ExternalReferenceForResources = new HashSet<IfcExternalReferenceRelationship>();
 		}
 	
 	

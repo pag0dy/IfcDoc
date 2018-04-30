@@ -10,8 +10,11 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcCostResource;
+using BuildingSmart.IFC.IfcDateTimeResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
+using BuildingSmart.IFC.IfcQuantityResource;
 using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcConstructionMgmtDomain
@@ -20,14 +23,14 @@ namespace BuildingSmart.IFC.IfcConstructionMgmtDomain
 	{
 		[DataMember(Order = 0)] 
 		[XmlAttribute]
-		[Description("The skill set required for this type of labor.")]
-		public IfcText? SkillSet { get; set; }
+		[Description("Defines types of labour resources.  <blockquote class=\"change-ifc2x4\">IFC4 New attribute.</blockquote>")]
+		public IfcLaborResourceTypeEnum? PredefinedType { get; set; }
 	
 	
-		public IfcLaborResource(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcIdentifier? __ResourceIdentifier, IfcLabel? __ResourceGroup, IfcResourceConsumptionEnum? __ResourceConsumption, IfcMeasureWithUnit __BaseQuantity, IfcText? __SkillSet)
-			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType, __ResourceIdentifier, __ResourceGroup, __ResourceConsumption, __BaseQuantity)
+		public IfcLaborResource(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcIdentifier? __Identification, IfcText? __LongDescription, IfcResourceTime __Usage, IfcAppliedValue[] __BaseCosts, IfcPhysicalQuantity __BaseQuantity, IfcLaborResourceTypeEnum? __PredefinedType)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType, __Identification, __LongDescription, __Usage, __BaseCosts, __BaseQuantity)
 		{
-			this.SkillSet = __SkillSet;
+			this.PredefinedType = __PredefinedType;
 		}
 	
 	

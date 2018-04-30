@@ -1,0 +1,2 @@
+﻿(PredefinedType <> IfcMechanicalFastenerTypeEnum.USERDEFINED) OR
+((PredefinedType = IfcMechanicalFastenerTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcElementType.ElementType))

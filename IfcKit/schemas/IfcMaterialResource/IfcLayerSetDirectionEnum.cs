@@ -15,10 +15,13 @@ namespace BuildingSmart.IFC.IfcMaterialResource
 {
 	public enum IfcLayerSetDirectionEnum
 	{
+		[Description("Usually x-axis.")]
 		AXIS1 = 1,
 	
+		[Description("Usually y-axis.")]
 		AXIS2 = 2,
 	
+		[Description("Usually z-axis.")]
 		AXIS3 = 3,
 	
 	}

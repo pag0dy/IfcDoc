@@ -15,10 +15,13 @@ namespace BuildingSmart.IFC.IfcHvacDomain
 {
 	public enum IfcTubeBundleTypeEnum
 	{
+		[Description("Finned tube bundle type.")]
 		FINNED = 1,
 	
+		[Description("User-defined tube bundle type.")]
 		USERDEFINED = -1,
 	
+		[Description("Undefined tube bundle type.")]
 		NOTDEFINED = 0,
 	
 	}

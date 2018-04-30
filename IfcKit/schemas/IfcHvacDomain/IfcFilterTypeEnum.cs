@@ -15,18 +15,28 @@ namespace BuildingSmart.IFC.IfcHvacDomain
 {
 	public enum IfcFilterTypeEnum
 	{
+		[Description("A filter used to remove particulates from air.")]
 		AIRPARTICLEFILTER = 1,
 	
-		ODORFILTER = 2,
+		[Description("A filter used to remove particulates from compressed air.")]
+		COMPRESSEDAIRFILTER = 2,
 	
-		OILFILTER = 3,
+		[Description("A filter used to remove odors from air.")]
+		ODORFILTER = 3,
 	
-		STRAINER = 4,
+		[Description("A filter used to remove particulates from oil.")]
+		OILFILTER = 4,
 	
-		WATERFILTER = 5,
+		[Description("A filter used to remove particulates from a fluid.")]
+		STRAINER = 5,
 	
+		[Description("A filter used to remove particulates from water.")]
+		WATERFILTER = 6,
+	
+		[Description("User-defined filter type.")]
 		USERDEFINED = -1,
 	
+		[Description("Undefined filter type.")]
 		NOTDEFINED = 0,
 	
 	}

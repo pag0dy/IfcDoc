@@ -13,13 +13,13 @@ using System.Xml.Serialization;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcPresentationOrganizationResource;
-using BuildingSmart.IFC.IfcPresentationResource;
 
 namespace BuildingSmart.IFC.IfcPresentationDefinitionResource
 {
 	public partial class IfcTextLiteralWithExtent : IfcTextLiteral
 	{
 		[DataMember(Order = 0)] 
+		[XmlElement]
 		[Description("The extent in the x and y direction of the text literal.")]
 		[Required()]
 		public IfcPlanarExtent Extent { get; set; }

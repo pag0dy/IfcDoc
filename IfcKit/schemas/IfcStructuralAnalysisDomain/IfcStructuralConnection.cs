@@ -22,7 +22,8 @@ namespace BuildingSmart.IFC.IfcStructuralAnalysisDomain
 	public abstract partial class IfcStructuralConnection : IfcStructuralItem
 	{
 		[DataMember(Order = 0)] 
-		[Description("Optional reference to an instance of IfcBoundaryCondition which defines the support condition of this 'connection'.")]
+		[XmlElement]
+		[Description("Optional boundary conditions which define support conditions of this connection object, given in local coordinate directions of the connection object.  If left unspecified, the connection object is assumed to have no supports besides being connected with members.")]
 		public IfcBoundaryCondition AppliedCondition { get; set; }
 	
 		[InverseProperty("RelatedStructuralConnection")] 

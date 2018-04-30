@@ -11,35 +11,42 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcConstraintResource;
+using BuildingSmart.IFC.IfcMeasureResource;
+using BuildingSmart.IFC.IfcPropertyResource;
 
 namespace BuildingSmart.IFC.IfcUtilityResource
 {
 	public partial class IfcTable :
-		BuildingSmart.IFC.IfcConstraintResource.IfcMetricValueSelect
+		BuildingSmart.IFC.IfcConstraintResource.IfcMetricValueSelect,
+		BuildingSmart.IFC.IfcPropertyResource.IfcObjectReferenceSelect
 	{
 		[DataMember(Order = 0)] 
-		[Description("A unique name which is intended to describe the usage of the Table.")]
-		[Required()]
-		public String Name { get; set; }
+		[XmlAttribute]
+		public IfcLabel? Name { get; set; }
 	
 		[DataMember(Order = 1)] 
 		[Description("Reference to information content of rows.")]
-		[Required()]
 		[MinLength(1)]
 		public IList<IfcTableRow> Rows { get; protected set; }
 	
+		[DataMember(Order = 2)] 
+		[Description("The column information associated with this table. ")]
+		[MinLength(1)]
+		public IList<IfcTableColumn> Columns { get; protected set; }
 	
-		public IfcTable(String __Name, IfcTableRow[] __Rows)
+	
+		public IfcTable(IfcLabel? __Name, IfcTableRow[] __Rows, IfcTableColumn[] __Columns)
 		{
 			this.Name = __Name;
 			this.Rows = new List<IfcTableRow>(__Rows);
+			this.Columns = new List<IfcTableColumn>(__Columns);
 		}
 	
-		public new Int64 NumberOfCellsInRow { get { return null; } }
+		public new IfcInteger NumberOfCellsInRow { get { return new IfcInteger(); } }
 	
-		public new Int64 NumberOfHeadings { get { return null; } }
+		public new IfcInteger NumberOfHeadings { get { return new IfcInteger(); } }
 	
-		public new Int64 NumberOfDataRows { get { return null; } }
+		public new IfcInteger NumberOfDataRows { get { return new IfcInteger(); } }
 	
 	
 	}

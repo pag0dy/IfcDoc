@@ -22,6 +22,7 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 	public partial class IfcSurfaceOfLinearExtrusion : IfcSweptSurface
 	{
 		[DataMember(Order = 0)] 
+		[XmlElement]
 		[Description("The direction of the extrusion.")]
 		[Required()]
 		public IfcDirection ExtrudedDirection { get; set; }

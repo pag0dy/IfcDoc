@@ -14,7 +14,13 @@ using System.Xml.Serialization;
 namespace BuildingSmart.IFC.IfcMeasureResource
 {
 	public partial struct IfcBoolean :
-		BuildingSmart.IFC.IfcMeasureResource.IfcSimpleValue
+		BuildingSmart.IFC.IfcStructuralLoadResource.IfcModulusOfRotationalSubgradeReactionSelect,
+		BuildingSmart.IFC.IfcStructuralLoadResource.IfcModulusOfSubgradeReactionSelect,
+		BuildingSmart.IFC.IfcStructuralLoadResource.IfcModulusOfTranslationalSubgradeReactionSelect,
+		BuildingSmart.IFC.IfcStructuralLoadResource.IfcRotationalStiffnessSelect,
+		BuildingSmart.IFC.IfcMeasureResource.IfcSimpleValue,
+		BuildingSmart.IFC.IfcStructuralLoadResource.IfcTranslationalStiffnessSelect,
+		BuildingSmart.IFC.IfcStructuralLoadResource.IfcWarpingStiffnessSelect
 	{
 		[XmlText]
 		public Boolean Value { get; private set; }

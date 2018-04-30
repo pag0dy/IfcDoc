@@ -11,6 +11,7 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcGeometryResource;
+using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
@@ -19,12 +20,13 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 	public partial class IfcBoxedHalfSpace : IfcHalfSpaceSolid
 	{
 		[DataMember(Order = 0)] 
-		[Description("The box which bounds the half space for computational purposes only.  ")]
+		[XmlElement]
+		[Description("The box which bounds the resulting solid of the Boolean operation involving the half space solid for computational purposes only.  ")]
 		[Required()]
 		public IfcBoundingBox Enclosure { get; set; }
 	
 	
-		public IfcBoxedHalfSpace(IfcSurface __BaseSurface, Boolean __AgreementFlag, IfcBoundingBox __Enclosure)
+		public IfcBoxedHalfSpace(IfcSurface __BaseSurface, IfcBoolean __AgreementFlag, IfcBoundingBox __Enclosure)
 			: base(__BaseSurface, __AgreementFlag)
 		{
 			this.Enclosure = __Enclosure;

@@ -14,6 +14,7 @@ using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcRepresentationResource;
+using BuildingSmart.IFC.IfcSharedBldgElements;
 using BuildingSmart.IFC.IfcStructuralAnalysisDomain;
 using BuildingSmart.IFC.IfcUtilityResource;
 
@@ -22,7 +23,7 @@ namespace BuildingSmart.IFC.IfcProductExtension
 	public abstract partial class IfcFeatureElementAddition : IfcFeatureElement
 	{
 		[InverseProperty("RelatedFeatureElement")] 
-		[Description("<EPM-HTML>  Reference to the <I>IfcRelProjectsElement</I> relationship that uses this <I>IfcFeatureElementAddition</I> to create a volume addition at an element. The <I>IfcFeatureElementAddition</I> can only be used to create a single addition at a single element using Boolean addition operation.  </EPM-HTML>")]
+		[Description("Reference to the <em>IfcRelProjectsElement</em> relationship that uses this <em>IfcFeatureElementAddition</em> to create a volume addition at an element. The <em>IfcFeatureElementAddition</em> can only be used to create a single addition at a single element using Boolean addition operation.")]
 		public IfcRelProjectsElement ProjectsElements { get; set; }
 	
 	

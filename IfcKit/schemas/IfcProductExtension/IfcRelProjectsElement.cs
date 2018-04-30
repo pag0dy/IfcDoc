@@ -16,15 +16,17 @@ using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcProductExtension
 {
-	public partial class IfcRelProjectsElement : IfcRelConnects
+	public partial class IfcRelProjectsElement : IfcRelDecomposes
 	{
 		[DataMember(Order = 0)] 
-		[Description("<EPM-HTML>  Element at which a projection is created by the associated <I>IfcProjectionElement</I>.  </EPM-HTML>")]
+		[XmlIgnore]
+		[Description("Element at which a projection is created by the associated <em>IfcProjectionElement</em>.")]
 		[Required()]
 		public IfcElement RelatingElement { get; set; }
 	
 		[DataMember(Order = 1)] 
-		[Description("<EPM-HTML>  Reference to the <I>IfcFeatureElementAddition</I> that defines an addition to the volume of the element, by using a Boolean addition operation. An example is a projection at the associated element.  </EPM-HTML>")]
+		[XmlElement]
+		[Description("Reference to the <em>IfcFeatureElementAddition</em> that defines an addition to the volume of the element, by using a Boolean addition operation. An example is a projection at the associated element.")]
 		[Required()]
 		public IfcFeatureElementAddition RelatedFeatureElement { get; set; }
 	

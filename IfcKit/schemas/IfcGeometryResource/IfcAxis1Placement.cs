@@ -18,6 +18,7 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 	public partial class IfcAxis1Placement : IfcPlacement
 	{
 		[DataMember(Order = 0)] 
+		[XmlElement]
 		[Description("The direction of the local Z axis.")]
 		public IfcDirection Axis { get; set; }
 	

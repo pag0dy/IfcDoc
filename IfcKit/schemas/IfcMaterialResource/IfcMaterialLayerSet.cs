@@ -10,29 +10,37 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcMeasureResource;
+using BuildingSmart.IFC.IfcProductExtension;
+using BuildingSmart.IFC.IfcPropertyResource;
 
 namespace BuildingSmart.IFC.IfcMaterialResource
 {
-	public partial class IfcMaterialLayerSet :
-		BuildingSmart.IFC.IfcMaterialResource.IfcMaterialSelect
+	public partial class IfcMaterialLayerSet : IfcMaterialDefinition
 	{
 		[DataMember(Order = 0)] 
-		[Description("Identification of the layers from which the material layer set is composed.")]
+		[Description("Identification of the <em>IfcMaterialLayer</em>&rsquo;s from which the <em>IfcMaterialLayerSet</em> is composed.")]
 		[Required()]
 		[MinLength(1)]
 		public IList<IfcMaterialLayer> MaterialLayers { get; protected set; }
 	
 		[DataMember(Order = 1)] 
 		[XmlAttribute]
-		[Description("The name by which the material layer set is known.")]
+		[Description("The name by which the <em>IfcMaterialLayerSet</em> is known.  ")]
 		public IfcLabel? LayerSetName { get; set; }
 	
+		[DataMember(Order = 2)] 
+		[XmlAttribute]
+		[Description("Definition of the <em>IfcMaterialLayerSet</em> in descriptive terms.  <blockquote class=\"change-ifc2x4\">    IFC4 CHANGE&nbsp; The attribute has been added at the end of attribute list.  </blockquote>    ")]
+		public IfcText? Description { get; set; }
 	
-		public IfcMaterialLayerSet(IfcMaterialLayer[] __MaterialLayers, IfcLabel? __LayerSetName)
+	
+		public IfcMaterialLayerSet(IfcMaterialLayer[] __MaterialLayers, IfcLabel? __LayerSetName, IfcText? __Description)
 		{
 			this.MaterialLayers = new List<IfcMaterialLayer>(__MaterialLayers);
 			this.LayerSetName = __LayerSetName;
+			this.Description = __Description;
 		}
 	
 		public new IfcLengthMeasure TotalThickness { get { return new IfcLengthMeasure(); } }

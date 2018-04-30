@@ -1,0 +1,19 @@
+﻿<p><em>IfcBuildingElementPart</em> represents major components as subordinate
+parts of a building element. Typical usage examples include precast concrete
+sandwich walls, where the layers may have different geometry representations.
+In this case the layered material representation does not sufficiently describe
+the element. Each layer is represented by an own instance of the
+<em>IfcBuildingElementPart</em> with its own geometry description.</p>
+
+<p>The kind of building element part is further specified by a
+corresponding instance of <em>IfcBuildingElementPartType</em>,
+referred to by <em>IfcRelDefinesByType</em>.</p>
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC2x2.
+</blockquote>
+
+<blockquote class="change-ifc2x4">
+IFC4 CHANGE&nbsp; Moved from <em>IfcStructuralElementsDomain</em> schema to <em>IfcSharedComponentElements</em> schema, compatible change of supertype,
+attribute <em>PredefinedType</em> added.
+</blockquote>

@@ -23,39 +23,38 @@ namespace BuildingSmart.IFC.IfcSharedFacilitiesElements
 	{
 		[DataMember(Order = 0)] 
 		[XmlAttribute]
-		[Description("A list of the types of inventories from which that required may be selected.  ")]
-		[Required()]
-		public IfcInventoryTypeEnum InventoryType { get; set; }
+		[Description("A list of the types of inventories from which that required may be selected.  <blockquote class=\"change-ifc2x4\">IFC4 CHANGE Attribute made optional.</blockquote>   ")]
+		public IfcInventoryTypeEnum? PredefinedType { get; set; }
 	
 		[DataMember(Order = 1)] 
 		[Description("The organizational unit to which the inventory is applicable.")]
-		[Required()]
 		public IfcActorSelect Jurisdiction { get; set; }
 	
 		[DataMember(Order = 2)] 
 		[Description("Persons who are responsible for the inventory.")]
-		[Required()]
 		[MinLength(1)]
 		public ISet<IfcPerson> ResponsiblePersons { get; protected set; }
 	
 		[DataMember(Order = 3)] 
-		[Description("The date on which the last update of the inventory was carried out.")]
-		[Required()]
-		public IfcCalendarDate LastUpdateDate { get; set; }
+		[XmlAttribute]
+		[Description("<p>The date on which the last update of the inventory was carried out.</p>  <blockquote class=\"change-ifc2x4\">IFC4 CHANGE Type changed from IfcDateTimeSelect.</blockquote>    ")]
+		public IfcDate? LastUpdateDate { get; set; }
 	
 		[DataMember(Order = 4)] 
+		[XmlElement]
 		[Description("An estimate of the current cost value of the inventory.")]
 		public IfcCostValue CurrentValue { get; set; }
 	
 		[DataMember(Order = 5)] 
+		[XmlElement]
 		[Description("An estimate of the original cost value of the inventory.")]
 		public IfcCostValue OriginalValue { get; set; }
 	
 	
-		public IfcInventory(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcInventoryTypeEnum __InventoryType, IfcActorSelect __Jurisdiction, IfcPerson[] __ResponsiblePersons, IfcCalendarDate __LastUpdateDate, IfcCostValue __CurrentValue, IfcCostValue __OriginalValue)
+		public IfcInventory(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcInventoryTypeEnum? __PredefinedType, IfcActorSelect __Jurisdiction, IfcPerson[] __ResponsiblePersons, IfcDate? __LastUpdateDate, IfcCostValue __CurrentValue, IfcCostValue __OriginalValue)
 			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType)
 		{
-			this.InventoryType = __InventoryType;
+			this.PredefinedType = __PredefinedType;
 			this.Jurisdiction = __Jurisdiction;
 			this.ResponsiblePersons = new HashSet<IfcPerson>(__ResponsiblePersons);
 			this.LastUpdateDate = __LastUpdateDate;

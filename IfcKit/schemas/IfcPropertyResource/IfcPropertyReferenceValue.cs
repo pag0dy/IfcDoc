@@ -10,6 +10,10 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcApprovalResource;
+using BuildingSmart.IFC.IfcConstraintResource;
+using BuildingSmart.IFC.IfcExternalReferenceResource;
+using BuildingSmart.IFC.IfcKernel;
 using BuildingSmart.IFC.IfcMeasureResource;
 
 namespace BuildingSmart.IFC.IfcPropertyResource
@@ -18,16 +22,15 @@ namespace BuildingSmart.IFC.IfcPropertyResource
 	{
 		[DataMember(Order = 0)] 
 		[XmlAttribute]
-		[Description("Description of the use of the referenced value within the property.")]
-		public IfcLabel? UsageName { get; set; }
+		[Description("Description of the use of the referenced value within the property. It is a descriptive text that may hold an expression or other additional information.")]
+		public IfcText? UsageName { get; set; }
 	
 		[DataMember(Order = 1)] 
-		[Description("Reference to another entity through one of the select types in IfcObjectReferenceSelect.")]
-		[Required()]
+		[Description("Reference to another property entity through one of the select types in the <em>IfcObjectReferenceSelect</em>.  <blockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; The attribute has been made optional with upward compatibility for file based exchange.</blockquote>")]
 		public IfcObjectReferenceSelect PropertyReference { get; set; }
 	
 	
-		public IfcPropertyReferenceValue(IfcIdentifier __Name, IfcText? __Description, IfcLabel? __UsageName, IfcObjectReferenceSelect __PropertyReference)
+		public IfcPropertyReferenceValue(IfcIdentifier __Name, IfcText? __Description, IfcText? __UsageName, IfcObjectReferenceSelect __PropertyReference)
 			: base(__Name, __Description)
 		{
 			this.UsageName = __UsageName;

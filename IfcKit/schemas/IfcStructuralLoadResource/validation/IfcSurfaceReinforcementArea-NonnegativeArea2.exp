@@ -1,0 +1,5 @@
+﻿(NOT EXISTS(SurfaceReinforcement2)) OR (
+    (SurfaceReinforcement2[1] >= 0.) AND
+    (SurfaceReinforcement2[2] >= 0.) AND
+    ((SIZEOF(SurfaceReinforcement2) = 1) OR (SurfaceReinforcement2[1] >= 0.))
+)

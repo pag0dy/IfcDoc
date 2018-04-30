@@ -24,7 +24,7 @@ namespace BuildingSmart.IFC.IfcKernel
 		public IfcDocumentSelect RelatingDocument { get; set; }
 	
 	
-		public IfcRelAssociatesDocument(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcRoot[] __RelatedObjects, IfcDocumentSelect __RelatingDocument)
+		public IfcRelAssociatesDocument(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcDefinitionSelect[] __RelatedObjects, IfcDocumentSelect __RelatingDocument)
 			: base(__GlobalId, __OwnerHistory, __Name, __Description, __RelatedObjects)
 		{
 			this.RelatingDocument = __RelatingDocument;

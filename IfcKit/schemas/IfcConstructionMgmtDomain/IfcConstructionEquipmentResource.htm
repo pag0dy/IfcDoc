@@ -1,13 +1,19 @@
-﻿<EPM-HTML> 
-	 <P><U>Definition from IAI: </U>An <I>IfcConstructionEquipmentResource</I>
-		is a type of construction equipment that is used as resource to assist in the
-		performance of construction. Construction Equipment resources are wholly or
-		partially consumed, or occupied (i.e. used) in the performance of construction.
-		</P> 
-	 <BLOCKQUOTE> 
-		<P>NOTE: There are differences in the specification of
-		  <I>IfcEquipmentElement</I> and
-		  <I>IfcConstructionEquipmentResource</I>.</P></BLOCKQUOTE> 
-	 <BLOCKQUOTE> <FONT COLOR="#0000FF" SIZE="-1">HISTORY: New Entity in IFC
-		Release 2.0 </BLOCKQUOTE> 
-</EPM-HTML>
+﻿<p><em>IfcConstructionEquipmentResource</em> is usage of construction equipment to assist in the performance of construction. Construction Equipment resources are wholly or partially consumed or occupied in the performance of construction.
+</p> 
+ 
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC2.0.
+</blockquote>
+
+<p>Occurrences of <em>IfcConstructionEquipmentResource</em> are products that are used as resources to assist the process of construction. More specifically, they are products that are standalone items brought to a project to fulfil a particular purpose. Examples might be a tower crane or other mobile crane, a screwing machine, or a lifting hoist. 
+
+<p>
+Instances of any subtype of <i>IfcProduct</i> may be assigned to the 
+equipment resource using <i>IfcRelAssignsToResource</i> in order to 
+characterize the equipment further, as described at the supertype 
+<i>IfcResource</i>.  Examples of relevant subtypes of <i>IfcProduct</i> are 
+<i>IfcTransportElement</i>, <i>IfcDiscreteAccessory</i>, or <i>IfcProxy</i> (for particular 
+cases where more precise usage details are not available)
+</p>
+
+<p></p>

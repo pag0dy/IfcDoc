@@ -20,28 +20,14 @@ namespace BuildingSmart.IFC.IfcProcessExtension
 	{
 		[DataMember(Order = 0)] 
 		[XmlAttribute]
-		[Description("An identifying designation given to a procedure.")]
-		[Required()]
-		public IfcIdentifier ProcedureID { get; set; }
-	
-		[DataMember(Order = 1)] 
-		[XmlAttribute]
-		[Description("Predefined procedure types from which that required may be set. ")]
-		[Required()]
-		public IfcProcedureTypeEnum ProcedureType { get; set; }
-	
-		[DataMember(Order = 2)] 
-		[XmlAttribute]
-		[Description("A user defined procedure type.")]
-		public IfcLabel? UserDefinedProcedureType { get; set; }
+		[Description("    Identifies the predefined types of a procedure from which       the type required may be set.")]
+		public IfcProcedureTypeEnum? PredefinedType { get; set; }
 	
 	
-		public IfcProcedure(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcIdentifier __ProcedureID, IfcProcedureTypeEnum __ProcedureType, IfcLabel? __UserDefinedProcedureType)
-			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType)
+		public IfcProcedure(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcIdentifier? __Identification, IfcText? __LongDescription, IfcProcedureTypeEnum? __PredefinedType)
+			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType, __Identification, __LongDescription)
 		{
-			this.ProcedureID = __ProcedureID;
-			this.ProcedureType = __ProcedureType;
-			this.UserDefinedProcedureType = __UserDefinedProcedureType;
+			this.PredefinedType = __PredefinedType;
 		}
 	
 	

@@ -15,16 +15,22 @@ namespace BuildingSmart.IFC.IfcStructuralElementsDomain
 {
 	public enum IfcTendonTypeEnum
 	{
-		STRAND = 1,
+		[Description("The tendon is configured as a bar.")]
+		BAR = 1,
 	
-		WIRE = 2,
+		[Description("The tendon is coated.")]
+		COATED = 2,
 	
-		BAR = 3,
+		[Description("The tendon is a strand.")]
+		STRAND = 3,
 	
-		COATED = 4,
+		[Description("The tendon is a wire.")]
+		WIRE = 4,
 	
+		[Description("The type of tendon is user defined.")]
 		USERDEFINED = -1,
 	
+		[Description("The type of tendon is not defined.")]
 		NOTDEFINED = 0,
 	
 	}

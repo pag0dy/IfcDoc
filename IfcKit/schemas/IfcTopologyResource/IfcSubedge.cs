@@ -19,6 +19,7 @@ namespace BuildingSmart.IFC.IfcTopologyResource
 	public partial class IfcSubedge : IfcEdge
 	{
 		[DataMember(Order = 0)] 
+		[XmlElement]
 		[Description("The Edge, or Subedge, which contains the Subedge.")]
 		[Required()]
 		public IfcEdge ParentEdge { get; set; }

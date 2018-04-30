@@ -15,8 +15,16 @@ namespace BuildingSmart.IFC.IfcElectricalDomain
 {
 	public enum IfcJunctionBoxTypeEnum
 	{
+		[Description("Contains cables, outlets, and/or switches for communications use.")]
+		DATA = 1,
+	
+		[Description("Contains cables, outlets, and/or switches for electrical power.")]
+		POWER = 2,
+	
+		[Description("User-defined type.")]
 		USERDEFINED = -1,
 	
+		[Description("Undefined type.")]
 		NOTDEFINED = 0,
 	
 	}

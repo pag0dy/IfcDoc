@@ -22,10 +22,16 @@ namespace BuildingSmart.IFC.IfcSharedBldgElements
 {
 	public partial class IfcBeam : IfcBuildingElement
 	{
+		[DataMember(Order = 0)] 
+		[XmlAttribute]
+		[Description("Predefined generic type for a beam that is specified in an enumeration. There may be a property set given specificly for the predefined types.  <blockquote class=\"note\">NOTE&nbsp; The <em>PredefinedType</em> shall only be used, if no <em>IfcBeamType</em> is assigned, providing its own <em>IfcBeamType.PredefinedType</em>.</blockquote>  <blockquote class=\"change-ifc2x4\">IFC4 CHANGE  The attribute has been added at the end of the entity definition.</blockquote> ")]
+		public IfcBeamTypeEnum? PredefinedType { get; set; }
 	
-		public IfcBeam(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcObjectPlacement __ObjectPlacement, IfcProductRepresentation __Representation, IfcIdentifier? __Tag)
+	
+		public IfcBeam(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcObjectPlacement __ObjectPlacement, IfcProductRepresentation __Representation, IfcIdentifier? __Tag, IfcBeamTypeEnum? __PredefinedType)
 			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType, __ObjectPlacement, __Representation, __Tag)
 		{
+			this.PredefinedType = __PredefinedType;
 		}
 	
 	

@@ -17,9 +17,7 @@ namespace BuildingSmart.IFC.IfcGeometricConstraintResource
 	public abstract partial class IfcObjectPlacement
 	{
 		[InverseProperty("ObjectPlacement")] 
-		[Description("<EPM-HTML>  The <i>IfcObjectPlacement</i> shall be used to provide a placement and an object coordinate system for a single instance of <i>IfcProduct</i>.  <blockquote><small>    <font color=\"#FF0000\">IFC2x Edition 3 CHANGE&nbsp; New inverse attribute.</font>  </small></blockquote>  </EPM-HTML>")]
-		[MinLength(1)]
-		[MaxLength(1)]
+		[Description("The <em>IfcObjectPlacement</em> shall be used to provide a placement and   an object coordinate system for instances of <em>IfcProduct</em>.   <blockquote class=\"note\">     If an <em>IfcObjectPlacement</em> is shared by many instances of <em>IfcProduct</em>      it does not apply a semantic meaning of being a shared placement that needs to be      maintained. The same instance of <em>IfcObjectPlacement</em> could simply be used to     reduce exchange file size.  </blockquote>  <blockquote class=\"change-ifc2x3\">     IFC2x3 CHANGE&nbsp; New inverse attribute.  </blockquote>  <blockquote class=\"change-ifc2x4\">     IFC4 CHANGE&nbsp; The cardinality has changed to 0..n to allow reuse of instances of      <em>IfcObjectPlacement</em> as placement object in one to many products. It takes also     into account that it can act as a placement for <em>IfcStructuralAnalysisModel</em>.  </blockquote>")]
 		public ISet<IfcProduct> PlacesObject { get; protected set; }
 	
 		[InverseProperty("PlacementRelTo")] 

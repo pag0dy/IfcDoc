@@ -10,6 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 
@@ -19,7 +20,7 @@ namespace BuildingSmart.IFC.IfcProfileResource
 	{
 		[DataMember(Order = 0)] 
 		[XmlAttribute]
-		[Description("<EPM-HTML>  Constant thickness applied along the center line.  </EPM-HTML>")]
+		[Description("Constant thickness applied along the center line.")]
 		[Required()]
 		public IfcPositiveLengthMeasure Thickness { get; set; }
 	

@@ -17,27 +17,24 @@ namespace BuildingSmart.IFC.IfcStructuralLoadResource
 	public partial class IfcBoundaryFaceCondition : IfcBoundaryCondition
 	{
 		[DataMember(Order = 0)] 
-		[XmlAttribute]
-		[Description("Linear stiffness value in x-direction of the coordinate system defined by the instance which uses this resource object.")]
-		public IfcModulusOfSubgradeReactionMeasure? LinearStiffnessByAreaX { get; set; }
+		[Description("Translational stiffness value in x-direction of the coordinate system defined by the instance which uses this resource object.")]
+		public IfcModulusOfSubgradeReactionSelect TranslationalStiffnessByAreaX { get; set; }
 	
 		[DataMember(Order = 1)] 
-		[XmlAttribute]
-		[Description("Linear stiffness value in y-direction of the coordinate system defined by the instance which uses this resource object.")]
-		public IfcModulusOfSubgradeReactionMeasure? LinearStiffnessByAreaY { get; set; }
+		[Description("Translational stiffness value in y-direction of the coordinate system defined by the instance which uses this resource object.")]
+		public IfcModulusOfSubgradeReactionSelect TranslationalStiffnessByAreaY { get; set; }
 	
 		[DataMember(Order = 2)] 
-		[XmlAttribute]
-		[Description("Linear stiffness value in z-direction of the coordinate system defined by the instance which uses this resource object.")]
-		public IfcModulusOfSubgradeReactionMeasure? LinearStiffnessByAreaZ { get; set; }
+		[Description("Translational stiffness value in z-direction of the coordinate system defined by the instance which uses this resource object.")]
+		public IfcModulusOfSubgradeReactionSelect TranslationalStiffnessByAreaZ { get; set; }
 	
 	
-		public IfcBoundaryFaceCondition(IfcLabel? __Name, IfcModulusOfSubgradeReactionMeasure? __LinearStiffnessByAreaX, IfcModulusOfSubgradeReactionMeasure? __LinearStiffnessByAreaY, IfcModulusOfSubgradeReactionMeasure? __LinearStiffnessByAreaZ)
+		public IfcBoundaryFaceCondition(IfcLabel? __Name, IfcModulusOfSubgradeReactionSelect __TranslationalStiffnessByAreaX, IfcModulusOfSubgradeReactionSelect __TranslationalStiffnessByAreaY, IfcModulusOfSubgradeReactionSelect __TranslationalStiffnessByAreaZ)
 			: base(__Name)
 		{
-			this.LinearStiffnessByAreaX = __LinearStiffnessByAreaX;
-			this.LinearStiffnessByAreaY = __LinearStiffnessByAreaY;
-			this.LinearStiffnessByAreaZ = __LinearStiffnessByAreaZ;
+			this.TranslationalStiffnessByAreaX = __TranslationalStiffnessByAreaX;
+			this.TranslationalStiffnessByAreaY = __TranslationalStiffnessByAreaY;
+			this.TranslationalStiffnessByAreaZ = __TranslationalStiffnessByAreaZ;
 		}
 	
 	

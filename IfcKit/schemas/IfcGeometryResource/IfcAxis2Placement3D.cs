@@ -19,10 +19,12 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		BuildingSmart.IFC.IfcGeometryResource.IfcAxis2Placement
 	{
 		[DataMember(Order = 0)] 
+		[XmlElement]
 		[Description("The exact direction of the local Z Axis.")]
 		public IfcDirection Axis { get; set; }
 	
 		[DataMember(Order = 1)] 
+		[XmlElement]
 		[Description("The direction used to determine the direction of the local X Axis. If necessary an adjustment is made to maintain orthogonality to the Axis direction. If Axis and/or RefDirection is omitted, these directions are taken from the geometric coordinate system.")]
 		public IfcDirection RefDirection { get; set; }
 	

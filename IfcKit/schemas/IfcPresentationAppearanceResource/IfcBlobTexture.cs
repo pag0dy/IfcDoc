@@ -12,6 +12,7 @@ using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
+using BuildingSmart.IFC.IfcPresentationDefinitionResource;
 
 namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 {
@@ -19,18 +20,19 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 	{
 		[DataMember(Order = 0)] 
 		[XmlAttribute]
-		[Description("<EPM-HTML>  The format of the <i>RasterCode</i> often using a compression.  </EPM-HTML>")]
+		[Description("The format of the <em>RasterCode</em> often using a compression.")]
 		[Required()]
 		public IfcIdentifier RasterFormat { get; set; }
 	
 		[DataMember(Order = 1)] 
-		[Description("<EPM-HTML>  Blob, given as a single binary, to capture the texture within one popular file (compression) format.  </EPM-HTML>")]
+		[XmlAttribute]
+		[Description("Blob, given as a single binary, to capture the texture within one popular file (compression) format. The file format is provided by the <em>RasterFormat</em> attribute.")]
 		[Required()]
-		public Boolean RasterCode { get; set; }
+		public IfcBinary RasterCode { get; set; }
 	
 	
-		public IfcBlobTexture(Boolean __RepeatS, Boolean __RepeatT, IfcSurfaceTextureEnum __TextureType, IfcCartesianTransformationOperator2D __TextureTransform, IfcIdentifier __RasterFormat, Boolean __RasterCode)
-			: base(__RepeatS, __RepeatT, __TextureType, __TextureTransform)
+		public IfcBlobTexture(IfcBoolean __RepeatS, IfcBoolean __RepeatT, IfcIdentifier? __Mode, IfcCartesianTransformationOperator2D __TextureTransform, IfcIdentifier[] __Parameter, IfcIdentifier __RasterFormat, IfcBinary __RasterCode)
+			: base(__RepeatS, __RepeatT, __Mode, __TextureTransform, __Parameter)
 		{
 			this.RasterFormat = __RasterFormat;
 			this.RasterCode = __RasterCode;

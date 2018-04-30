@@ -15,10 +15,14 @@ namespace BuildingSmart.IFC.IfcProductExtension
 {
 	public enum IfcPhysicalOrVirtualEnum
 	{
+		[Description("The space boundary is provided physically (by a physical element).")]
 		PHYSICAL = 1,
 	
+		[Description("The space boundary is provided virtually (by a logical divider that has no physic" +
+	    "al manifestation).")]
 		VIRTUAL = 2,
 	
+		[Description("No information available.")]
 		NOTDEFINED = 0,
 	
 	}

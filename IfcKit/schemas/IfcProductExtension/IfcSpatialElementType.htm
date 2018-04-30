@@ -1,0 +1,34 @@
+﻿<p><em>IfcSpatialElementType</em>
+defines a list of commonly shared property set definitions of a
+spatial structure element and an optional set of product
+representations. It is used to define a spatial element
+specification (the specific element information, that is
+common to all occurrences of that element type).</p>
+<blockquote class="note">
+NOTE&nbsp; The product representations are defined as
+representation maps (at the level of the supertype
+<em>IfcTypeProduct</em>, which gets assigned by an element
+occurrence instance through the
+<em>IfcShapeRepresentation.Item[1]</em> being an
+<em>IfcMappedItem</em>.
+</blockquote>
+
+<p>A spatial element type is used to define the common properties
+of a certain type of a spatial structure element that may be
+applied to many instances of that type to assign a specific
+style. Spatial element types (i.e. the instantiable subtypes) may
+be exchanged without being already assigned to occurrences.</p>
+
+<blockquote class="note">
+NOTE&nbsp; The spatial element types are often used to
+represent catalogues of predefined spatial types for shared
+attributes, less so for sharing a common representation
+map.
+</blockquote>
+
+<p>The occurrences of subtypes of the abstract
+<em>IfcSpatialElementType</em> are represented by instances of
+subtypes of the abstract <em>IfcSpatialElement</em>.</p>
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC4.
+</blockquote>

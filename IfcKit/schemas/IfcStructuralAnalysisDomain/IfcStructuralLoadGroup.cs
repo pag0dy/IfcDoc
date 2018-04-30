@@ -20,13 +20,13 @@ namespace BuildingSmart.IFC.IfcStructuralAnalysisDomain
 	{
 		[DataMember(Order = 0)] 
 		[XmlAttribute]
-		[Description("Selects a predefined type for the load group. It can be differentiated between load groups, load cases, load combination groups (a necessary construct for the description of load combinations) and load combinations. ")]
+		[Description("Selects a predefined type for the load group.  It can be differentiated between load groups, load cases, load combinations, or userdefined grouping levels.  ")]
 		[Required()]
 		public IfcLoadGroupTypeEnum PredefinedType { get; set; }
 	
 		[DataMember(Order = 1)] 
 		[XmlAttribute]
-		[Description("Type of actions in the group. Normally needed if 'PredefinedType' specifies a LOAD_COMBINATION_GROUP.")]
+		[Description("Type of actions in the group. Normally needed if 'PredefinedType' specifies a LOAD_CASE.")]
 		[Required()]
 		public IfcActionTypeEnum ActionType { get; set; }
 	

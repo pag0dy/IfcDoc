@@ -10,6 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 
@@ -43,16 +44,11 @@ namespace BuildingSmart.IFC.IfcProfileResource
 	
 		[DataMember(Order = 4)] 
 		[XmlAttribute]
-		[Description("Internal fillet radius according the above illustration (= r1). If it is not given, zero is assumed. ")]
-		public IfcPositiveLengthMeasure? InternalFilletRadius { get; set; }
-	
-		[DataMember(Order = 5)] 
-		[XmlAttribute]
-		[Description("<EPM-HTML> Location of centre of gravity along the x axis measured from the center of the bounding box.     <blockquote> <small><color=\"#ff0000\">  IFC2x Edition 2 Addendum 2 CHANGE The attribute <i>CentreOfGravityInX</i> has been made optional. Upward compatibility for file based exchange is guaranteed.    </font></small></blockquote>  </EPM-HTML>")]
-		public IfcPositiveLengthMeasure? CentreOfGravityInX { get; set; }
+		[Description("Internal fillet radius according the above illustration (= r1).")]
+		public IfcNonNegativeLengthMeasure? InternalFilletRadius { get; set; }
 	
 	
-		public IfcCShapeProfileDef(IfcProfileTypeEnum __ProfileType, IfcLabel? __ProfileName, IfcAxis2Placement2D __Position, IfcPositiveLengthMeasure __Depth, IfcPositiveLengthMeasure __Width, IfcPositiveLengthMeasure __WallThickness, IfcPositiveLengthMeasure __Girth, IfcPositiveLengthMeasure? __InternalFilletRadius, IfcPositiveLengthMeasure? __CentreOfGravityInX)
+		public IfcCShapeProfileDef(IfcProfileTypeEnum __ProfileType, IfcLabel? __ProfileName, IfcAxis2Placement2D __Position, IfcPositiveLengthMeasure __Depth, IfcPositiveLengthMeasure __Width, IfcPositiveLengthMeasure __WallThickness, IfcPositiveLengthMeasure __Girth, IfcNonNegativeLengthMeasure? __InternalFilletRadius)
 			: base(__ProfileType, __ProfileName, __Position)
 		{
 			this.Depth = __Depth;
@@ -60,7 +56,6 @@ namespace BuildingSmart.IFC.IfcProfileResource
 			this.WallThickness = __WallThickness;
 			this.Girth = __Girth;
 			this.InternalFilletRadius = __InternalFilletRadius;
-			this.CentreOfGravityInX = __CentreOfGravityInX;
 		}
 	
 	

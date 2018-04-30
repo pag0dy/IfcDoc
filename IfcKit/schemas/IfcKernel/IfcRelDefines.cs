@@ -17,17 +17,10 @@ namespace BuildingSmart.IFC.IfcKernel
 {
 	public abstract partial class IfcRelDefines : IfcRelationship
 	{
-		[DataMember(Order = 0)] 
-		[Description("Reference to the objects (or single object) to which the property definition applies.  ")]
-		[Required()]
-		[MinLength(1)]
-		public ISet<IfcObject> RelatedObjects { get; protected set; }
 	
-	
-		protected IfcRelDefines(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcObject[] __RelatedObjects)
+		protected IfcRelDefines(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description)
 			: base(__GlobalId, __OwnerHistory, __Name, __Description)
 		{
-			this.RelatedObjects = new HashSet<IfcObject>(__RelatedObjects);
 		}
 	
 	

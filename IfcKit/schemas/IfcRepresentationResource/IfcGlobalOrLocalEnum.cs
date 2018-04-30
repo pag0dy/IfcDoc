@@ -15,8 +15,10 @@ namespace BuildingSmart.IFC.IfcRepresentationResource
 {
 	public enum IfcGlobalOrLocalEnum
 	{
+		[Description("The global project coordinate system is used.")]
 		GLOBAL_COORDS = 1,
 	
+		[Description("The local object coordinate system is used.")]
 		LOCAL_COORDS = 2,
 	
 	}

@@ -21,6 +21,7 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 	public partial class IfcSurfaceOfRevolution : IfcSweptSurface
 	{
 		[DataMember(Order = 0)] 
+		[XmlElement]
 		[Description("A point on the axis of revolution and the direction of the axis of revolution.")]
 		[Required()]
 		public IfcAxis1Placement AxisPosition { get; set; }

@@ -10,6 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
@@ -18,7 +19,7 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 	public partial class IfcCartesianTransformationOperator2D : IfcCartesianTransformationOperator
 	{
 	
-		public IfcCartesianTransformationOperator2D(IfcDirection __Axis1, IfcDirection __Axis2, IfcCartesianPoint __LocalOrigin, Double? __Scale)
+		public IfcCartesianTransformationOperator2D(IfcDirection __Axis1, IfcDirection __Axis2, IfcCartesianPoint __LocalOrigin, IfcReal? __Scale)
 			: base(__Axis1, __Axis2, __LocalOrigin, __Scale)
 		{
 		}

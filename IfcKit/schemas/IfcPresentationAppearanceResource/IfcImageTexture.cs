@@ -10,8 +10,10 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
+using BuildingSmart.IFC.IfcPresentationDefinitionResource;
 
 namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 {
@@ -19,14 +21,15 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 	{
 		[DataMember(Order = 0)] 
 		[XmlAttribute]
+		[Description("Location, provided as an URI, at which the image texture is electronically published.")]
 		[Required()]
-		public IfcIdentifier UrlReference { get; set; }
+		public IfcURIReference URLReference { get; set; }
 	
 	
-		public IfcImageTexture(Boolean __RepeatS, Boolean __RepeatT, IfcSurfaceTextureEnum __TextureType, IfcCartesianTransformationOperator2D __TextureTransform, IfcIdentifier __UrlReference)
-			: base(__RepeatS, __RepeatT, __TextureType, __TextureTransform)
+		public IfcImageTexture(IfcBoolean __RepeatS, IfcBoolean __RepeatT, IfcIdentifier? __Mode, IfcCartesianTransformationOperator2D __TextureTransform, IfcIdentifier[] __Parameter, IfcURIReference __URLReference)
+			: base(__RepeatS, __RepeatT, __Mode, __TextureTransform, __Parameter)
 		{
-			this.UrlReference = __UrlReference;
+			this.URLReference = __URLReference;
 		}
 	
 	

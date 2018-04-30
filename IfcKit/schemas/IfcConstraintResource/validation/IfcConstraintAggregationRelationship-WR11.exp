@@ -1,3 +1,0 @@
-﻿SIZEOF(QUERY(temp <* RelatedConstraints | 
-  temp :=: RelatingConstraint
-  )) = 0

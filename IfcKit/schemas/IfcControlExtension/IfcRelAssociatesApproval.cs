@@ -20,12 +20,13 @@ namespace BuildingSmart.IFC.IfcControlExtension
 	public partial class IfcRelAssociatesApproval : IfcRelAssociates
 	{
 		[DataMember(Order = 0)] 
+		[XmlElement]
 		[Description("Reference to approval that is being applied using this relationship.")]
 		[Required()]
 		public IfcApproval RelatingApproval { get; set; }
 	
 	
-		public IfcRelAssociatesApproval(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcRoot[] __RelatedObjects, IfcApproval __RelatingApproval)
+		public IfcRelAssociatesApproval(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcDefinitionSelect[] __RelatedObjects, IfcApproval __RelatingApproval)
 			: base(__GlobalId, __OwnerHistory, __Name, __Description, __RelatedObjects)
 		{
 			this.RelatingApproval = __RelatingApproval;

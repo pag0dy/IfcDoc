@@ -20,10 +20,17 @@ namespace BuildingSmart.IFC.IfcSharedComponentElements
 {
 	public partial class IfcDiscreteAccessoryType : IfcElementComponentType
 	{
+		[DataMember(Order = 0)] 
+		[XmlAttribute]
+		[Description("Subtype of discrete accessory")]
+		[Required()]
+		public IfcDiscreteAccessoryTypeEnum PredefinedType { get; set; }
 	
-		public IfcDiscreteAccessoryType(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ApplicableOccurrence, IfcPropertySetDefinition[] __HasPropertySets, IfcRepresentationMap[] __RepresentationMaps, IfcLabel? __Tag, IfcLabel? __ElementType)
+	
+		public IfcDiscreteAccessoryType(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcIdentifier? __ApplicableOccurrence, IfcPropertySetDefinition[] __HasPropertySets, IfcRepresentationMap[] __RepresentationMaps, IfcLabel? __Tag, IfcLabel? __ElementType, IfcDiscreteAccessoryTypeEnum __PredefinedType)
 			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ApplicableOccurrence, __HasPropertySets, __RepresentationMaps, __Tag, __ElementType)
 		{
+			this.PredefinedType = __PredefinedType;
 		}
 	
 	

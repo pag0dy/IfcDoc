@@ -21,7 +21,8 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 		BuildingSmart.IFC.IfcGeometricModelResource.IfcCsgSelect
 	{
 		[DataMember(Order = 0)] 
-		[Description("<EPM-HTML>  The placement coordinate system to which the parameters of each individual CSG primitive apply.  </EPM-HTML>")]
+		[XmlElement]
+		[Description("The placement coordinate system to which the parameters of each individual CSG primitive apply.")]
 		[Required()]
 		public IfcAxis2Placement3D Position { get; set; }
 	

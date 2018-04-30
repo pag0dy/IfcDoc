@@ -18,7 +18,7 @@ namespace BuildingSmart.IFC.IfcStructuralLoadResource
 	{
 		[DataMember(Order = 0)] 
 		[XmlAttribute]
-		[Description("The distortion curvature given to the displacement load.")]
+		[Description("The distortion curvature (warping, i.e. a cross-sectional deplanation) given to the displacement load.")]
 		public IfcCurvatureMeasure? Distortion { get; set; }
 	
 	

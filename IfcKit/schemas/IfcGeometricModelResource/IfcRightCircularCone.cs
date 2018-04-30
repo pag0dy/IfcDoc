@@ -21,13 +21,13 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 	{
 		[DataMember(Order = 0)] 
 		[XmlAttribute]
-		[Description("<EPM-HTML>  </EPM-HTML>")]
+		[Description("The distance between the base of the cone and the apex.")]
 		[Required()]
 		public IfcPositiveLengthMeasure Height { get; set; }
 	
 		[DataMember(Order = 1)] 
 		[XmlAttribute]
-		[Description("<EPM-HTML>  </EPM-HTML>")]
+		[Description("The radius of the cone at the base.")]
 		[Required()]
 		public IfcPositiveLengthMeasure BottomRadius { get; set; }
 	

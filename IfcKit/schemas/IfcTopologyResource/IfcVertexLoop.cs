@@ -19,6 +19,7 @@ namespace BuildingSmart.IFC.IfcTopologyResource
 	public partial class IfcVertexLoop : IfcLoop
 	{
 		[DataMember(Order = 0)] 
+		[XmlElement]
 		[Description("The vertex which defines the entire loop.")]
 		[Required()]
 		public IfcVertex LoopVertex { get; set; }

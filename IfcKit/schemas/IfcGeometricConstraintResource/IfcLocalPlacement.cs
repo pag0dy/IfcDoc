@@ -18,6 +18,7 @@ namespace BuildingSmart.IFC.IfcGeometricConstraintResource
 	public partial class IfcLocalPlacement : IfcObjectPlacement
 	{
 		[DataMember(Order = 0)] 
+		[XmlElement]
 		[Description("Reference to Object that provides the relative placement by its local coordinate system. If it is omitted, then the local placement is given to the WCS, established by the geometric representation context.  ")]
 		public IfcObjectPlacement PlacementRelTo { get; set; }
 	

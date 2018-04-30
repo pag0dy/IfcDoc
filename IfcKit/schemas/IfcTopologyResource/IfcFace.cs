@@ -24,10 +24,14 @@ namespace BuildingSmart.IFC.IfcTopologyResource
 		[MinLength(1)]
 		public ISet<IfcFaceBound> Bounds { get; protected set; }
 	
+		[InverseProperty("MappedTo")] 
+		public ISet<IfcTextureMap> HasTextureMaps { get; protected set; }
+	
 	
 		public IfcFace(IfcFaceBound[] __Bounds)
 		{
 			this.Bounds = new HashSet<IfcFaceBound>(__Bounds);
+			this.HasTextureMaps = new HashSet<IfcTextureMap>();
 		}
 	
 	

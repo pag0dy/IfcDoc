@@ -24,7 +24,7 @@ namespace BuildingSmart.IFC.IfcSharedBldgElements
 	{
 		[DataMember(Order = 0)] 
 		[XmlAttribute]
-		[Description("<EPM-HTML>  Predefined generic types for a slab that are specified in an enumeration. There may be a property set given for the predefined types.  <BLOCKQUOTE> <FONT SIZE=\"-1\">NOTE: The use of the predefined type directly at the occurrence object level of <I>IfcSlab</I> is only permitted, if no type object <I>IfcSlabType</I> is assigned.</FONT></BLOCKQUOTE>  <BLOCKQUOTE> <FONT COLOR=\"#FF0000\" SIZE=\"-1\">IFC2x PLATFORM CHANGE: The attribute has been changed into an OPTIONAL attribute. </FONT></BLOCKQUOTE>  </EPM-HTML> ")]
+		[Description("Predefined generic type for a slab that is specified in an enumeration. There may be a property set given specifically for the predefined types.  <blockquote class=\"note\">NOTE&nbsp; The <em>PredefinedType</em> shall only be used, if no <em>IfcSlabType</em> is assigned, providing its own <em>IfcSlabType.PredefinedType</em>.</blockquote>  <blockquote  class=\"change-ifc2x\">IFC2x CHANGE The attribute has been changed into an OPTIONAL attribute.</blockquote> ")]
 		public IfcSlabTypeEnum? PredefinedType { get; set; }
 	
 	

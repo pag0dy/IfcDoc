@@ -19,12 +19,14 @@ namespace BuildingSmart.IFC.IfcProductExtension
 	public partial class IfcRelFillsElement : IfcRelConnects
 	{
 		[DataMember(Order = 0)] 
+		[XmlIgnore]
 		[Description("Opening Element being filled by virtue of this relationship.  ")]
 		[Required()]
 		public IfcOpeningElement RelatingOpeningElement { get; set; }
 	
 		[DataMember(Order = 1)] 
-		[Description("<EPM-HTML>  Reference to <strike>building</strike> element that occupies fully or partially the associated opening.  <blockquote><small><font color=\"#ff0000\">  IFC2x PLATFORM CHANGE: The data type has been changed from <i>IfcBuildingElement</i> to <i>IfcElement</i> with upward compatibility for file based exchange.  </font><small></blockquote>  </EPM-HTML>")]
+		[XmlElement]
+		[Description("Reference to <strike>building</strike> element that occupies fully or partially the associated opening.  <blockquote class=\"change-ifc2x\">IFC2x CHANGE&nbsp; The data type has been changed from <em>IfcBuildingElement</em> to <em>IfcElement</em> with upward compatibility for file based exchange.</blockquote>")]
 		[Required()]
 		public IfcElement RelatedBuildingElement { get; set; }
 	

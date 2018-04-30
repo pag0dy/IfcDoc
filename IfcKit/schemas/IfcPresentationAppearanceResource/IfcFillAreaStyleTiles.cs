@@ -20,15 +20,17 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 		BuildingSmart.IFC.IfcPresentationAppearanceResource.IfcFillStyleSelect
 	{
 		[DataMember(Order = 0)] 
-		[Description("A two direction repeat factor defining the shape and relative positioning of the tiles.")]
+		[Description("A two direction repeat factor defining the shape and relative positioning of the tiles.  <blockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; The attribute type has changed to directly reference two <em>IfcVector</em>'s.</blockquote>")]
 		[Required()]
-		public IfcOneDirectionRepeatFactor TilingPattern { get; set; }
+		[MinLength(2)]
+		[MaxLength(2)]
+		public IList<IfcVector> TilingPattern { get; protected set; }
 	
 		[DataMember(Order = 1)] 
-		[Description("A set of constituents of the tile.")]
+		[Description("A set of constituents of the tile being a styled item that is used as the annotation symbol for tiling the filled area.  <blockquote class=\"change-ifc2x4\">IFC4 CHANGE  The data type has been changed to <em>IfcStyledItem</em>.</blockquote>  <blockquote class=\"note\">NOTE&nbsp; Only <em>IfcStyleItem</em>'s that refer to a compatible geometric representation item and presentation style shall be used.</blockquote>")]
 		[Required()]
 		[MinLength(1)]
-		public ISet<IfcFillAreaStyleTileShapeSelect> Tiles { get; protected set; }
+		public ISet<IfcStyledItem> Tiles { get; protected set; }
 	
 		[DataMember(Order = 2)] 
 		[XmlAttribute]
@@ -37,10 +39,10 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 		public IfcPositiveRatioMeasure TilingScale { get; set; }
 	
 	
-		public IfcFillAreaStyleTiles(IfcOneDirectionRepeatFactor __TilingPattern, IfcFillAreaStyleTileShapeSelect[] __Tiles, IfcPositiveRatioMeasure __TilingScale)
+		public IfcFillAreaStyleTiles(IfcVector[] __TilingPattern, IfcStyledItem[] __Tiles, IfcPositiveRatioMeasure __TilingScale)
 		{
-			this.TilingPattern = __TilingPattern;
-			this.Tiles = new HashSet<IfcFillAreaStyleTileShapeSelect>(__Tiles);
+			this.TilingPattern = new List<IfcVector>(__TilingPattern);
+			this.Tiles = new HashSet<IfcStyledItem>(__Tiles);
 			this.TilingScale = __TilingScale;
 		}
 	

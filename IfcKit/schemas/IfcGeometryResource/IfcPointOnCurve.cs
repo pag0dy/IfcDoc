@@ -21,6 +21,7 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 	public partial class IfcPointOnCurve : IfcPoint
 	{
 		[DataMember(Order = 0)] 
+		[XmlElement]
 		[Description("The curve to which point parameter relates.")]
 		[Required()]
 		public IfcCurve BasisCurve { get; set; }

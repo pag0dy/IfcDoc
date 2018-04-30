@@ -1,0 +1,4 @@
+﻿(EXISTS(Representation) AND EXISTS(ObjectPlacement))
+            OR (EXISTS(Representation) AND 
+			   (SIZEOF(QUERY(temp <* Representation.Representations | 'IFCREPRESENTATIONRESOURCE.IFCSHAPEREPRESENTATION' IN TYPEOF(temp))) = 0))
+            OR (NOT(EXISTS(Representation)))

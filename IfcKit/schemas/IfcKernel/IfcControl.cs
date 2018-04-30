@@ -17,14 +17,20 @@ namespace BuildingSmart.IFC.IfcKernel
 {
 	public abstract partial class IfcControl : IfcObject
 	{
+		[DataMember(Order = 0)] 
+		[XmlAttribute]
+		[Description("    An identifying designation given to a control      It is the identifier at the occurrence level.       <blockquote class=\"change-ifc2x4\">IFC4 CHANGE  Attribute unified by promoting from various subtypes of <em>IfcControl</em>.   </blockquote>")]
+		public IfcIdentifier? Identification { get; set; }
+	
 		[InverseProperty("RelatingControl")] 
 		[Description("Reference to the relationship that associates the control to the object(s) being controlled.  ")]
 		public ISet<IfcRelAssignsToControl> Controls { get; protected set; }
 	
 	
-		protected IfcControl(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType)
+		protected IfcControl(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ObjectType, IfcIdentifier? __Identification)
 			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ObjectType)
 		{
+			this.Identification = __Identification;
 			this.Controls = new HashSet<IfcRelAssignsToControl>();
 		}
 	

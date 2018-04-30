@@ -14,6 +14,7 @@ using System.Xml.Serialization;
 namespace BuildingSmart.IFC.IfcMeasureResource
 {
 	public partial struct IfcLengthMeasure :
+		BuildingSmart.IFC.IfcStructuralElementsDomain.IfcBendingParameterSelect,
 		BuildingSmart.IFC.IfcMeasureResource.IfcMeasureValue,
 		BuildingSmart.IFC.IfcPresentationAppearanceResource.IfcSizeSelect
 	{

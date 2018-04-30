@@ -15,14 +15,19 @@ namespace BuildingSmart.IFC.IfcSharedFacilitiesElements
 {
 	public enum IfcInventoryTypeEnum
 	{
+		[Description("A collection of asset instances of type IfcAsset.")]
 		ASSETINVENTORY = 1,
 	
+		[Description("A collection of space instances of type IfcSpace.")]
 		SPACEINVENTORY = 2,
 	
+		[Description("A collection of furniture instances of type IfcFurnishingElement.")]
 		FURNITUREINVENTORY = 3,
 	
+		[Description("User-defined type.")]
 		USERDEFINED = -1,
 	
+		[Description("Undefined type.")]
 		NOTDEFINED = 0,
 	
 	}

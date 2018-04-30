@@ -18,6 +18,7 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 	public abstract partial class IfcPlacement : IfcGeometricRepresentationItem
 	{
 		[DataMember(Order = 0)] 
+		[XmlElement]
 		[Description("The geometric position of a reference point, such as the center of a circle, of the item to be located.")]
 		[Required()]
 		public IfcCartesianPoint Location { get; set; }

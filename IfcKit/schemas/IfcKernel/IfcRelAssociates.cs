@@ -15,19 +15,19 @@ using BuildingSmart.IFC.IfcUtilityResource;
 
 namespace BuildingSmart.IFC.IfcKernel
 {
-	public partial class IfcRelAssociates : IfcRelationship
+	public abstract partial class IfcRelAssociates : IfcRelationship
 	{
 		[DataMember(Order = 0)] 
-		[Description("Objects or Types, to which the external references or information is associated.")]
+		[Description("Set of object or property definitions to which the external references or information is associated. It includes object and type objects, property set templates, property templates and property sets and contexts.  <blockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; The attribute datatype has been changed from <em>IfcRoot</em> to <em>IfcDefinitionSelect</em>.</blockquote>")]
 		[Required()]
 		[MinLength(1)]
-		public ISet<IfcRoot> RelatedObjects { get; protected set; }
+		public ISet<IfcDefinitionSelect> RelatedObjects { get; protected set; }
 	
 	
-		public IfcRelAssociates(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcRoot[] __RelatedObjects)
+		protected IfcRelAssociates(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcDefinitionSelect[] __RelatedObjects)
 			: base(__GlobalId, __OwnerHistory, __Name, __Description)
 		{
-			this.RelatedObjects = new HashSet<IfcRoot>(__RelatedObjects);
+			this.RelatedObjects = new HashSet<IfcDefinitionSelect>(__RelatedObjects);
 		}
 	
 	

@@ -18,7 +18,8 @@ namespace BuildingSmart.IFC.IfcUtilityResource
 	public partial class IfcApplication
 	{
 		[DataMember(Order = 0)] 
-		[Description("Name of the application developer, being requested to be member of the IAI.  ")]
+		[XmlElement]
+		[Description("Name of the application developer.  ")]
 		[Required()]
 		public IfcOrganization ApplicationDeveloper { get; set; }
 	

@@ -28,7 +28,7 @@ namespace BuildingSmart.IFC.IfcHvacDomain
 		public IfcAirToAirHeatRecoveryTypeEnum PredefinedType { get; set; }
 	
 	
-		public IfcAirToAirHeatRecoveryType(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcLabel? __ApplicableOccurrence, IfcPropertySetDefinition[] __HasPropertySets, IfcRepresentationMap[] __RepresentationMaps, IfcLabel? __Tag, IfcLabel? __ElementType, IfcAirToAirHeatRecoveryTypeEnum __PredefinedType)
+		public IfcAirToAirHeatRecoveryType(IfcGloballyUniqueId __GlobalId, IfcOwnerHistory __OwnerHistory, IfcLabel? __Name, IfcText? __Description, IfcIdentifier? __ApplicableOccurrence, IfcPropertySetDefinition[] __HasPropertySets, IfcRepresentationMap[] __RepresentationMaps, IfcLabel? __Tag, IfcLabel? __ElementType, IfcAirToAirHeatRecoveryTypeEnum __PredefinedType)
 			: base(__GlobalId, __OwnerHistory, __Name, __Description, __ApplicableOccurrence, __HasPropertySets, __RepresentationMaps, __Tag, __ElementType)
 		{
 			this.PredefinedType = __PredefinedType;

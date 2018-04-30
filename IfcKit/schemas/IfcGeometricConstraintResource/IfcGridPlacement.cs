@@ -17,16 +17,17 @@ namespace BuildingSmart.IFC.IfcGeometricConstraintResource
 	public partial class IfcGridPlacement : IfcObjectPlacement
 	{
 		[DataMember(Order = 0)] 
-		[Description("A constraint on one or both ends of the path for an ExtrudedSolid.  ")]
+		[XmlElement]
+		[Description("Placement of the object coordinate system defined by the intersection of two grid axes.  ")]
 		[Required()]
 		public IfcVirtualGridIntersection PlacementLocation { get; set; }
 	
 		[DataMember(Order = 1)] 
-		[Description("Reference to a second grid axis intersection, which defines the orientation of the grid placement.")]
-		public IfcVirtualGridIntersection PlacementRefDirection { get; set; }
+		[Description("Reference to either an explicit direction, or a second grid axis intersection, which defines the orientation of the grid placement.  <blockquote class=\"change-ifc2x4\">IFC4 CHANGE  The select of an explict direction has been added.</blockquote>")]
+		public IfcGridPlacementDirectionSelect PlacementRefDirection { get; set; }
 	
 	
-		public IfcGridPlacement(IfcVirtualGridIntersection __PlacementLocation, IfcVirtualGridIntersection __PlacementRefDirection)
+		public IfcGridPlacement(IfcVirtualGridIntersection __PlacementLocation, IfcGridPlacementDirectionSelect __PlacementRefDirection)
 		{
 			this.PlacementLocation = __PlacementLocation;
 			this.PlacementRefDirection = __PlacementRefDirection;

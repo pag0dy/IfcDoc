@@ -10,6 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcGeometricConstraintResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
@@ -21,13 +22,14 @@ namespace BuildingSmart.IFC.IfcGeometricModelResource
 	public partial class IfcExtrudedAreaSolid : IfcSweptAreaSolid
 	{
 		[DataMember(Order = 0)] 
-		[Description("The direction in which the surface is to be swept.")]
+		[XmlElement]
+		[Description("The direction in which the surface, provided by <em>SweptArea</em> is to be swept.")]
 		[Required()]
 		public IfcDirection ExtrudedDirection { get; set; }
 	
 		[DataMember(Order = 1)] 
 		[XmlAttribute]
-		[Description("The distance the surface is to be swept.")]
+		[Description("The distance the surface is to be swept along the <em>ExtrudedDirection</em>.")]
 		[Required()]
 		public IfcPositiveLengthMeasure Depth { get; set; }
 	

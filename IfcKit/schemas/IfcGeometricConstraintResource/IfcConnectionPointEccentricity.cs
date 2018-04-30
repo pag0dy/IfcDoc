@@ -18,17 +18,17 @@ namespace BuildingSmart.IFC.IfcGeometricConstraintResource
 	{
 		[DataMember(Order = 0)] 
 		[XmlAttribute]
-		[Description("<EPM-HTML>  Distance in x direction between the two points (or vertex points) engaged in the point connection.  </EPM-HTML>")]
+		[Description("Distance in x direction between the two points (or vertex points) engaged in the point connection.")]
 		public IfcLengthMeasure? EccentricityInX { get; set; }
 	
 		[DataMember(Order = 1)] 
 		[XmlAttribute]
-		[Description("<EPM-HTML>  Distance in y direction between the two points (or vertex points) engaged in the point connection.  </EPM-HTML>")]
+		[Description("Distance in y direction between the two points (or vertex points) engaged in the point connection.")]
 		public IfcLengthMeasure? EccentricityInY { get; set; }
 	
 		[DataMember(Order = 2)] 
 		[XmlAttribute]
-		[Description("<EPM-HTML>  Distance in z direction between the two points (or vertex points) engaged in the point connection.  </EPM-HTML>")]
+		[Description("Distance in z direction between the two points (or vertex points) engaged in the point connection.")]
 		public IfcLengthMeasure? EccentricityInZ { get; set; }
 	
 	

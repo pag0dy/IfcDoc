@@ -10,6 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcExternalReferenceResource;
 using BuildingSmart.IFC.IfcGeometryResource;
 using BuildingSmart.IFC.IfcMeasureResource;
 
@@ -19,7 +20,7 @@ namespace BuildingSmart.IFC.IfcProfileResource
 	{
 		[DataMember(Order = 0)] 
 		[XmlAttribute]
-		[Description("Radius of the circular arcs, by which all four corners of the rectangle are equally rounded. If not given, zero (= no rounding arcs) applies.")]
+		[Description("Radius of the circular arcs by which all four corners of the rectangle are equally rounded.")]
 		[Required()]
 		public IfcPositiveLengthMeasure RoundingRadius { get; set; }
 	

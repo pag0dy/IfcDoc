@@ -10,6 +10,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
+using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPresentationAppearanceResource;
 using BuildingSmart.IFC.IfcPresentationOrganizationResource;
 
@@ -24,11 +25,13 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		public IfcTransitionCode Transition { get; set; }
 	
 		[DataMember(Order = 1)] 
-		[Description("An indicator of whether or not the sense of the segment agrees with, or opposes, that of the parent curve. If SameSense is false, the point with highest parameter value is taken as the first point of the segment.")]
+		[XmlAttribute]
+		[Description("An indicator of whether or not the sense of the segment agrees with, or opposes, that of the parent curve. If <em>SameSense</em> is false, the point with highest parameter value is taken as the first point of the segment.  <blockquote class=\"note\">NOTE&nbsp; If the datatype of <em>ParentCurve</em> is <em>IfcTrimmedCurve</em>, the value of <em>SameSense</em> overrides the value of <em>IfcTrimmedCurve.SenseAgreement</em></blockquote>")]
 		[Required()]
-		public Boolean SameSense { get; set; }
+		public IfcBoolean SameSense { get; set; }
 	
 		[DataMember(Order = 2)] 
+		[XmlElement]
 		[Description("The bounded curve which defines the geometry of the segment.")]
 		[Required()]
 		public IfcCurve ParentCurve { get; set; }
@@ -39,7 +42,7 @@ namespace BuildingSmart.IFC.IfcGeometryResource
 		public ISet<IfcCompositeCurve> UsingCurves { get; protected set; }
 	
 	
-		public IfcCompositeCurveSegment(IfcTransitionCode __Transition, Boolean __SameSense, IfcCurve __ParentCurve)
+		public IfcCompositeCurveSegment(IfcTransitionCode __Transition, IfcBoolean __SameSense, IfcCurve __ParentCurve)
 		{
 			this.Transition = __Transition;
 			this.SameSense = __SameSense;

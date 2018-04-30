@@ -11,7 +11,6 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 using BuildingSmart.IFC.IfcMeasureResource;
-using BuildingSmart.IFC.IfcPresentationResource;
 
 namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 {
@@ -30,13 +29,19 @@ namespace BuildingSmart.IFC.IfcPresentationAppearanceResource
 		[Description("The colour of the visible part of the curve. If not given, then the colour should be taken from the layer assignment with style, if that is not given either, then the default colour applies.")]
 		public IfcColour CurveColour { get; set; }
 	
+		[DataMember(Order = 3)] 
+		[XmlAttribute]
+		[Description("Indication whether the length measures provided for the presentation style are model based, or draughting based.  <blockquote class=\"change-ifc2x4\">IFC4 CHANGE&nbsp; New attribute.  </blockquote>")]
+		public IfcBoolean? ModelOrDraughting { get; set; }
 	
-		public IfcCurveStyle(IfcLabel? __Name, IfcCurveFontOrScaledCurveFontSelect __CurveFont, IfcSizeSelect __CurveWidth, IfcColour __CurveColour)
+	
+		public IfcCurveStyle(IfcLabel? __Name, IfcCurveFontOrScaledCurveFontSelect __CurveFont, IfcSizeSelect __CurveWidth, IfcColour __CurveColour, IfcBoolean? __ModelOrDraughting)
 			: base(__Name)
 		{
 			this.CurveFont = __CurveFont;
 			this.CurveWidth = __CurveWidth;
 			this.CurveColour = __CurveColour;
+			this.ModelOrDraughting = __ModelOrDraughting;
 		}
 	
 	

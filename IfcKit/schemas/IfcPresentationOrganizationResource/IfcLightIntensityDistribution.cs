@@ -23,7 +23,7 @@ namespace BuildingSmart.IFC.IfcPresentationOrganizationResource
 		public IfcLightDistributionCurveEnum LightDistributionCurve { get; set; }
 	
 		[DataMember(Order = 1)] 
-		[Description("<EPM-HTML>  <P>Light distribution data applied to the light source. It is defined by a list of main plane angles (B or C according to the light distribution curve chosen) that includes (for each B or C angle) a second list of secondary plane angles (the &#946; or &#947; angles) and the according luminous intensity distribution measures.  </P>  </EPM-HTML>")]
+		[Description("<p>Light distribution data applied to the light source. It is defined by a list of main plane angles (B or C according to the light distribution curve chosen) that includes (for each B or C angle) a second list of secondary plane angles (the &#946; or &#947; angles) and the according luminous intensity distribution measures.  </p>")]
 		[Required()]
 		[MinLength(1)]
 		public IList<IfcLightDistributionData> DistributionData { get; protected set; }

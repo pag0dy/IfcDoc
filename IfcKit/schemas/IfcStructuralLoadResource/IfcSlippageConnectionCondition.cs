@@ -18,17 +18,17 @@ namespace BuildingSmart.IFC.IfcStructuralLoadResource
 	{
 		[DataMember(Order = 0)] 
 		[XmlAttribute]
-		[Description("Slippage of that connection. Defines the maximum displacement in x-direction without any loading applied.   ")]
+		[Description("Slippage in x-direction of the coordinate system defined by the instance which uses this resource object.")]
 		public IfcLengthMeasure? SlippageX { get; set; }
 	
 		[DataMember(Order = 1)] 
 		[XmlAttribute]
-		[Description("Slippage of that connection. Defines the maximum displacement in y-direction without any loading applied.   ")]
+		[Description("Slippage in y-direction of the coordinate system defined by the instance which uses this resource object.")]
 		public IfcLengthMeasure? SlippageY { get; set; }
 	
 		[DataMember(Order = 2)] 
 		[XmlAttribute]
-		[Description("Slippage of that connection. Defines the maximum displacement in z-direction without any loading applied.   ")]
+		[Description("Slippage in z-direction of the coordinate system defined by the instance which uses this resource object.")]
 		public IfcLengthMeasure? SlippageZ { get; set; }
 	
 	
