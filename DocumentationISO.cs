@@ -15,6 +15,9 @@ using System.Text;
 
 //using BuildingSmart.IFC;
 using BuildingSmart.IFC.IfcKernel;
+using BuildingSmart.IFC.IfcMeasureResource;
+using BuildingSmart.IFC.IfcUtilityResource;
+using BuildingSmart.IFC.IfcRepresentationResource;
 
 using IfcDoc.Schema;
 using IfcDoc.Schema.DOC;
@@ -30,9 +33,10 @@ using IfcDoc.Format.PNG;
 
 using BuildingSmart.Serialization;
 using BuildingSmart.Serialization.Json;
-using BuildingSmart.Serialization.Spf;
+using BuildingSmart.Serialization.Step;
 using BuildingSmart.Serialization.Turtle;
 using BuildingSmart.Serialization.Xml;
+using BuildingSmart.Utilities.Conversion;
 
 namespace IfcDoc
 {
@@ -52,7 +56,6 @@ namespace IfcDoc
                 this.Page = page;
             }
         }
-
 
         /// <summary>
         /// Exports file.
@@ -107,7 +110,7 @@ namespace IfcDoc
                     using (FileStream stream = new FileStream(filepath, FileMode.Create))
                     {
                         // export property sets and quantity sets
-                        IfcProject ifcProject = new IfcProject();
+                        IfcProject ifcProject = new IfcProject(Program.NewGuid(), null, new IfcLabel("IFC Templates"), null, null, null, null, new IfcRepresentationContext[] { }, null);
                         Program.ExportIfc(ifcProject, docProject, included);
                         StepSerializer format = new StepSerializer(ifcProject.GetType());
                         format.WriteObject(stream, ifcProject);
@@ -118,7 +121,7 @@ namespace IfcDoc
                     using (FileStream stream = new FileStream(filepath, FileMode.Create))
                     {
                         // export property sets and quantity sets
-                        IfcProject ifcProject = new IfcProject();
+                        IfcProject ifcProject = new IfcProject(Program.NewGuid(), null, new IfcLabel("IFC Templates"), null, null, null, null, new IfcRepresentationContext[] { }, null);
                         Program.ExportIfc(ifcProject, docProject, included);
                         XmlSerializer format = new XmlSerializer(ifcProject.GetType());
                         format.WriteObject(stream, ifcProject);
@@ -155,10 +158,8 @@ namespace IfcDoc
 
                 case ".exp":
                     // use currently visible model view(s)
-                    using (FormatEXP format = new FormatEXP(filepath))
+                    using (FormatEXP format = new FormatEXP(docProject, null, views, filepath))
                     {
-                        format.Instance = docProject;
-                        format.ModelViews = views;
                         format.Save();
                     }
                     break;
@@ -2544,7 +2545,14 @@ namespace IfcDoc
                                             string pathRAW = path + @"\annex\annex-e\" + MakeLinkName(docExample) + "." + docFormat.ExtensionInstances;
                                             using (Stream stream = new FileStream(pathRAW, FileMode.Create))
                                             {
-                                                formatext.WriteObject(stream, rootproject);
+                                                try
+                                                {
+                                                    formatext.WriteObject(stream, rootproject);
+                                                }
+                                                catch(Exception xxx)
+                                                {
+                                                    xxx.ToString();
+                                                }
                                                 stream.Flush();
                                                 filesize = stream.Length;
 
@@ -3694,7 +3702,7 @@ namespace IfcDoc
         /// <param name="figurenumber">Last figure number; returns updated last figure number</param>
         /// <param name="tablenumber">Last table number; returns updated last table number</param>
         /// <returns>Updated content</returns>
-        private static string UpdateNumbering(string html, List<ContentRef> listFigures, List<ContentRef> listTables, DocObject target)
+        internal static string UpdateNumbering(string html, List<ContentRef> listFigures, List<ContentRef> listTables, DocObject target)
         {
             if (html == null)
                 return null;
@@ -3837,9 +3845,22 @@ namespace IfcDoc
                     //System.IO.File.Copy(pathSource, pathTarget, true);
 
                     // change: root always has full schema
+                    // long-form
                     string pathTarget = pathPublication + @"\" + docProject.GetSchemaIdentifier() + ".exp";
                     DoExport(docProject, docPublication, pathTarget, null, null, DocDefinitionScopeEnum.Default, null, mapEntity);
 
+                    // short-form
+                    foreach(DocSection docSection in docProject.Sections)
+                    {
+                        foreach(DocSchema docSchema in docSection.Schemas)
+                        {
+                            string pathSchema = pathPublication + @"\" + docSchema.Name + ".exp";
+                            using (FormatEXP format = new FormatEXP(docProject, docSchema, null, pathSchema))
+                            {
+                                format.Save();
+                            }
+                        }
+                    }
                 }
 
                 DoExport(docProject, docPublication, path + @"\annex\annex-a\" + MakeLinkName(docModelView) + @"\" + code + ".mvdxml", new DocModelView[] { docModelView }, locales, DocDefinitionScopeEnum.Default, null, mapEntity);
@@ -5632,7 +5653,7 @@ namespace IfcDoc
                                                                 //http://lookup.bsdd.buildingsmart.com/api/4.0/IfdPSet/search/Pset_ActionRequest
 
                                                                 // use guid
-                                                                string guid = SGuid.Format(entity.Uuid);
+                                                                string guid = GlobalId.Format(entity.Uuid);
                                                                 htmDef.WriteLine("<p><a href=\"http://lookup.bsdd.buildingsmart.com/api/4.0/IfdPSet/" + guid + "/ifcVersion/2x4\" target=\"ifd\"><img border=\"0\" src=\"../../../img/external.png\" title=\"Link to IFD\"/> buildingSMART Data Dictionary</a></p>\r\n");
 
                                                                 htmDef.WriteLine("<p><a href=\"../../../psd/" + entity.Name + ".xml\"><img border=\"0\" src=\"../../../img/diagram.png\" title=\"Link to PSD-XML\"/> PSD-XML</a></p>\r\n");

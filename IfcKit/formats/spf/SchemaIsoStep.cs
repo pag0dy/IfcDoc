@@ -7,7 +7,7 @@ using System.Text;
 // schema known to ISO step files - includes headers only
 // IFC-specific schema defined in Constructivity.Schema.IFC
 
-namespace BuildingSmart.Serialization.Spf
+namespace BuildingSmart.Serialization.Step
 {
     /// <summary>
     /// STEP file header for indicating file options.
@@ -19,34 +19,15 @@ namespace BuildingSmart.Serialization.Spf
     public class FILE_DESCRIPTION
     {
         [DataMember(Order = 0)]
-        List<string> description;
+        public List<string> description { get; protected set; }
+
         [DataMember(Order = 1)]
-        string implementation_level;
+        public string implementation_level { get; set; }
 
-        public FILE_DESCRIPTION()
+        public FILE_DESCRIPTION(string[] description)
         {
-            this.description = new List<string>();
+            this.description = new List<string>(description);
             this.implementation_level = "2;1";
-        }
-
-        public List<string> Description
-        {
-            get
-            {
-                return this.description;
-            }
-            set
-            {
-                this.description = value;
-            }
-        }
-
-        public string ImplementationLevel
-        {
-            get
-            {
-                return this.implementation_level;
-            }
         }
 
         // extensions IFC-specific
@@ -218,19 +199,25 @@ namespace BuildingSmart.Serialization.Spf
     public class FILE_NAME
     {
         [DataMember(Order = 0)]
-        string name;
+        public string name { get; set; }
+
         [DataMember(Order = 1)]
-        DateTime time_stamp;
+        public DateTime time_stamp { get; set; }
+
         [DataMember(Order = 2)]
-        List<string> author;
+        public List<string> author { get; protected set; }
+
         [DataMember(Order = 3)]
-        List<string> organization;
+        public List<string> organization { get; protected set; }
+
         [DataMember(Order = 4)]
-        string preprocessor_version;
+        public string preprocessor_version { get; set; }
+
         [DataMember(Order = 5)]
-        string originating_system;
+        public string originating_system { get; set; }
+
         [DataMember(Order = 6)]
-        string authorization;
+        public string authorization { get; set; }
 
         public FILE_NAME()
             : this(null, null, null, null, null)
@@ -344,11 +331,11 @@ namespace BuildingSmart.Serialization.Spf
     public class FILE_SCHEMA
     {
         [DataMember(Order = 0)]
-        public List<string> schema;
+        public List<string> schema { get; protected set; }
 
-        public FILE_SCHEMA()
+        public FILE_SCHEMA(string[] schemas)
         {
-            this.schema = new List<string>();
+            this.schema = new List<string>(schemas);
         }
     }
 }

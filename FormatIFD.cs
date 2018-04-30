@@ -12,6 +12,8 @@ using System.Text;
 using IfcDoc.Schema;
 using IfcDoc.Schema.DOC;
 
+using BuildingSmart.Utilities.Conversion;
+
 namespace IfcDoc
 {
     internal class FormatIFD : IDisposable
@@ -69,7 +71,7 @@ namespace IfcDoc
                         string ifdguid = rowcells[0];
                         string ifdname = rowcells[1];
 
-                        Guid guid = SGuid.Parse(ifdguid);
+                        Guid guid = GlobalId.Parse(ifdguid);
 
                         string[] nameparts = ifdname.Split('.');
                         string psetname = nameparts[0].Trim();

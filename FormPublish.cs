@@ -13,19 +13,27 @@ using System.Drawing;
 using System.IO;
 using System.Net;
 using System.Text;
+using System.Reflection;
 using System.Windows.Forms;
 using IfcDoc.Schema.DOC;
+
+using BuildingSmart.Utilities.Dictionary;
 
 namespace IfcDoc
 {
     public partial class FormPublish : Form
     {
-        string m_localpath;
         DocProject m_project;
-        List<DocModelView> m_views;
         Exception m_exception;
-        int m_protocol;
         bool m_download;
+
+        DataDictionary m_dictionary;
+        Dictionary<string, string> m_contexts;
+
+        Type m_typeProject; // when uploading, compiled type for project and assembly
+        Queue<Type> m_queueTypes;
+        int m_count; // total for progress counting
+        Dictionary<Type, TreeNode> m_mapTree;
 
         public FormPublish()
         {
@@ -34,58 +42,22 @@ namespace IfcDoc
             this.checkBoxRemember.Checked = !String.IsNullOrEmpty(Properties.Settings.Default.Username);
             this.textBoxUsername.Text = Properties.Settings.Default.Username;
             this.textBoxPassword.Text = Properties.Settings.Default.Password;
-
-            this.m_views = new List<DocModelView>();
         }
 
-        public bool Download
+        public FormPublish(DocProject docProject, bool download) : this()
         {
-            get
-            {
-                return this.m_download;
-            }
-            set
-            {
-                m_download = value;
-                if (m_download)
-                {
-                    this.Text = "Download";
-                    //this.treeViewContainer.Visible = true;
-                    //this.listViewViews.Visible = false;
-                }
-                else
-                {
-                    this.Text = "Upload";
-                    //this.treeViewContainer.Visible = false;
-                    //this.listViewViews.Visible = true;
-                }
-            }
-        }
+            this.m_project = docProject;
+            this.m_download = download;
 
-        public DocProject Project
-        {
-            get
+            if (m_download)
             {
-                return this.m_project;
+                this.Text = "Download";
             }
-            set
+            else
             {
-                this.m_project = value;
-
-                this.listViewViews.Items.Clear();
-
-                if (!this.m_download)
-                {
-                    foreach (DocModelView docView in this.m_project.ModelViews)
-                    {
-                        ListViewItem lvi = new ListViewItem();
-                        lvi.Tag = docView;
-                        lvi.Text = docView.Name;
-                        this.listViewViews.Items.Add(lvi);
-                    }
-                }
+                this.Text = "Upload";
             }
-        }
+        }      
 
         public string Url
         {
@@ -99,18 +71,6 @@ namespace IfcDoc
             }
         }
 
-        public string LocalPath
-        {
-            get
-            {
-                return this.m_localpath;
-            }
-            set
-            {
-                this.m_localpath = value;
-            }
-        }
-
         private void buttonOK_Click(object sender, EventArgs e)
         {
             this.textBoxUrl.Enabled = false;
@@ -118,37 +78,24 @@ namespace IfcDoc
             this.buttonOK.Enabled = false;
             this.errorProvider.Clear();
 
-            // register views locally
-            this.m_views.Clear();
-
-            if (this.m_download)
+            this.m_queueTypes = new Queue<Type>();
+            this.m_mapTree = new Dictionary<Type, TreeNode>();
+            foreach(TreeNode tnNamespace in this.treeViewContainer.Nodes)
             {
-                foreach(ListViewItem lvi in this.listViewViews.Items)
+                foreach (TreeNode tnType in tnNamespace.Nodes)
                 {
-                    if(lvi.Checked)
+                    if(tnType.Tag is Type && (tnType.Checked || tnNamespace.Checked))
                     {
-                        IfdContext ifdContext = (IfdContext)lvi.Tag;
-                        Guid guidView = IfcDoc.Schema.SGuid.Parse(ifdContext.guid);
-
-                        DocModelView docView = this.m_project.GetView(guidView);
-                        if (docView == null)
-                        {
-                            docView = new DocModelView();
-                            docView.Uuid = guidView;
-                            docView.Name = lvi.Text;
-                            docView.Status = ifdContext.status;
-                            docView.Version = ifdContext.versionId;
-                            docView.Copyright = ifdContext.versionDate;
-                            // access rights not captured -- specific to user
-                            this.m_project.ModelViews.Add(docView);
-                        }
-
-                        this.m_views.Add(docView);
+                        Type t = (Type)tnType.Tag;
+                        m_queueTypes.Enqueue(t);
+                        m_mapTree.Add(t, tnType);
                     }
                 }
             }
 
-            // start upload
+            this.m_count = this.m_queueTypes.Count;
+
+            // start upload or download
             this.backgroundWorkerPublish.RunWorkerAsync();
         }
 
@@ -160,64 +107,36 @@ namespace IfcDoc
             {
                 if (this.m_download)
                 {
-                    switch (this.m_protocol)
-                    {
-                        case 0:
-                            //...
-                            break;
-
-                        case 1:
-                        case 2:
-                            DataDictionary.Download(this.m_project, this.backgroundWorkerPublish, this.textBoxUrl.Text, this.textBoxUsername.Text, this.textBoxPassword.Text, this.m_views.ToArray());
-                            break;
-                    }
+                    //DataDictionary.Download(this.m_views.ToArray());
                 }
                 else
                 {
-                    switch (this.m_protocol)
+                    if (m_queueTypes != null)
                     {
-                        case 0:
+                        int i = 0;
+                        Type t = this.m_queueTypes.Peek();
+                        while(t != null)
+                        {
+                            try
                             {
-                                WebRequest request = HttpWebRequest.Create(this.textBoxUrl.Text);
-                                request.Method = "POST";
-
-                                using (FileStream streamFile = new FileStream(this.m_localpath, FileMode.Open))
-                                {
-                                    request.ContentLength = streamFile.Length;
-                                    request.ContentType = "application/step";
-                                    request.Headers[HttpRequestHeader.ContentLocation] = System.IO.Path.GetFileName(this.m_localpath);
-
-                                    // for now, treat content type as opaque document attachment (don't set Content-Type to 'application/step')
-                                    // future: treat as project file that be merged and compared
-
-                                    using (Stream streamWeb = request.GetRequestStream())
-                                    {
-                                        {
-                                            byte[] buffer = new byte[8192];
-                                            int len = 0;
-                                            do
-                                            {
-                                                len = streamFile.Read(buffer, 0, buffer.Length);
-                                                if (len > 0)
-                                                {
-                                                    streamWeb.Write(buffer, 0, len);
-                                                    this.backgroundWorkerPublish.ReportProgress((int)(100L * streamFile.Position / streamFile.Length));
-                                                }
-                                            } while (len > 0);
-                                        }
-                                    }
-                                }
+                                this.m_dictionary.WriteType(t);
                             }
-                            break;
-
-                        case 1:
-                        case 2:
-                            //if (this.treeViewContainer.SelectedNode.Tag is IfdConcept)
+                            catch (WebException webex)
                             {
-                                //IfdConcept ifdConcept = (IfdConcept)this.treeViewContainer.SelectedNode.Tag;
-                                DataDictionary.Upload(this.m_project, this.backgroundWorkerPublish, this.textBoxUrl.Text, this.textBoxUsername.Text, this.textBoxPassword.Text, String.Empty, this.m_views.ToArray());
+                                this.backgroundWorkerPublish.ReportProgress(0, webex);
+
+                                // wait 5 seconds, keep retrying
+                                System.Threading.Thread.Sleep(5000);
                             }
-                            break;
+
+                            this.m_queueTypes.Dequeue();
+                            i++;
+                            int prog = (int)((double)i * 100.0 / (double)this.m_count);
+                            this.backgroundWorkerPublish.ReportProgress(prog, t);
+
+                            if (e.Cancel)
+                                return;
+                        }
                     }
                 }
             }
@@ -230,6 +149,25 @@ namespace IfcDoc
         private void backgroundWorkerPublish_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             this.progressBar.Value = e.ProgressPercentage;
+
+            if (e.UserState is Type)
+            {
+                Type t = (Type)e.UserState;
+
+                TreeNode tn = null;
+                if (m_mapTree.TryGetValue(t, out tn))
+                {
+                    //tn.ForeColor = Color.Blue;
+                    tn.BackColor = Color.Lime;
+                    this.treeViewContainer.SelectedNode = tn;
+                    tn.EnsureVisible();
+                }
+            }
+            else if(e.UserState is Exception)
+            {
+                this.errorProvider.SetError(this.labelError, this.m_exception.Message);
+                // will attempt to keep going if web exception
+            }
         }
 
         private void backgroundWorkerPublish_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -252,116 +190,165 @@ namespace IfcDoc
             switch(this.comboBoxProtocol.SelectedIndex)
             {
                 case 0:
-                    this.textBoxUrl.Text = "http://mvd.buildingsmart-tech.org/ifc4";
+                    this.textBoxUrl.Text = DataDictionary.test_bsdd_buildingsmart_org;//"http://test.bsdd.buildingsmart.org/";
                     break;
 
                 case 1:
-                    this.textBoxUrl.Text = "http://test.bsdd.buildingsmart.org/";
-                    break;
-
-                case 2:
-                    this.textBoxUrl.Text = "http://bsdd.buildingsmart.org/";
+                    this.textBoxUrl.Text = DataDictionary.bsdd_buildingsmart_org;//"http://bsdd.buildingsmart.org/";
                     break;
             }
-
-            this.m_protocol = this.comboBoxProtocol.SelectedIndex;
         }
 
         private void FormPublish_Load(object sender, EventArgs e)
         {
-            this.comboBoxProtocol.SelectedIndex = 1;
+            this.comboBoxProtocol.SelectedIndex = 0;
         }
 
         private void buttonLogin_Click(object sender, EventArgs e)
         {
             this.buttonLogin.Enabled = false;
 
-            IfdConceptInRelationship ifdRoot = new IfdConceptInRelationship();
-            ifdRoot.guid = "1aUB00FUqHuO00025QrE$V";
-            TreeNode tnRoot = new TreeNode();
-            tnRoot.Tag = ifdRoot;
-            tnRoot.Text = "Data Dictionary";
-            this.treeViewContainer.Nodes.Add(tnRoot);
+            try
+            {
+                this.progressBar.Visible = true;
+                this.progressBar.Style = ProgressBarStyle.Marquee;
 
-            TreeNode tnSub = new TreeNode();
-            tnSub.Text = "Loading...";
-            tnRoot.Nodes.Add(tnSub);
+                this.m_dictionary = DataDictionary.Connect(this.textBoxUrl.Text, this.textBoxUsername.Text, this.textBoxPassword.Text);
 
-            tnRoot.Expand(); // was trigger event notification to load
+                this.comboBoxContext.Items.Clear();
+                this.m_contexts = this.m_dictionary.ReadContexts(!this.m_download);
+                if (this.m_contexts != null)
+                {
+                    foreach (string key in this.m_contexts.Keys)
+                    {
+                        string val = this.m_contexts[key];
+                        this.comboBoxContext.Items.Add(val);
+                    }
+                    if (this.comboBoxContext.Items.Count > 0)
+                    {
+                        this.comboBoxContext.SelectedIndex = 0;
+                        this.comboBoxContext.Enabled = true;
+                    }
+                }
+                else
+                {
+                    this.errorProvider.SetError(this.labelError, "The account provided does not have any write access.");
+                }
 
-            //this.backgroundWorkerContexts.RunWorkerAsync();
+                if (this.m_download)
+                {
+                    this.progressBar.Style = ProgressBarStyle.Continuous;
 
-            //this.backgroundWorkerConcepts.RunWorkerAsync(tnRoot);
+                    this.treeViewContainer.Nodes.Clear();
+
+                    Dictionary<string, object> objs = this.m_dictionary.ReadNamespace("BuildingSmart.IFC4X1");
+                    foreach (object o in objs.Values)
+                    {
+                        if (o is string)
+                        {
+                            TreeNode tnRoot = new TreeNode();
+                            tnRoot.Text = o.ToString();
+                            tnRoot.ImageIndex = 24;
+                            tnRoot.SelectedImageIndex = 24;
+                            this.treeViewContainer.Nodes.Add(tnRoot);
+
+                            Dictionary<string, object> subs = this.m_dictionary.ReadNamespace(tnRoot.Text);
+                            foreach(object s in subs.Values)
+                            {
+                                if (s is Type)
+                                {
+                                    Type t= (Type)s;
+                                    TreeNode tnSub = new TreeNode();
+                                    tnSub.Tag = s;
+                                    tnSub.Text = t.Name;
+                                    tnSub.ImageIndex = 5;
+                                    tnSub.SelectedImageIndex = 5;
+                                }
+                            }
+
+                            //TreeNode tnSub = new TreeNode();
+                            //tnSub.Text = "Loading...";
+                            //tnRoot.Nodes.Add(tnSub);
+
+                            //tnRoot.Expand(); // was trigger event notification to load
+                        }
+                    }
+                }
+                else
+                {
+                    // generate types
+                    this.m_typeProject = Compiler.CompileProject(this.m_project, true);
+                    if (this.m_typeProject != null)
+                    {
+                        // get the root type -- only write types that derive from the semantic base class (IfcRoot)
+                        Type typeBase = m_typeProject;
+                        while (typeBase.BaseType != null)
+                        {
+                            typeBase = typeBase.BaseType;
+                        }
+
+                        // publish types
+                        SortedDictionary<string, SortedDictionary<string, Type>> mapNamespace = new SortedDictionary<string, SortedDictionary<string, Type>>();
+
+                        Type[] types = m_typeProject.Assembly.GetTypes();
+
+                        this.progressBar.Style = ProgressBarStyle.Continuous;
+
+                        foreach (Type t in types)
+                        {
+                            if (t.IsClass)
+                            {
+                                SortedDictionary<string, Type> listNS = null;
+                                if (!mapNamespace.TryGetValue(t.Namespace, out listNS))
+                                {
+                                    listNS = new SortedDictionary<string, Type>();
+                                    mapNamespace.Add(t.Namespace, listNS);
+                                }
+                                listNS.Add(t.Name, t);
+                            }
+                        }
+
+                        foreach (string ns in mapNamespace.Keys)
+                        {
+                            TreeNode tn = new TreeNode();
+                            tn.Tag = ns;
+                            tn.Text = ns;
+                            tn.ImageIndex = 24;
+                            tn.SelectedImageIndex = 24;
+                            this.treeViewContainer.Nodes.Add(tn);
+
+                            SortedDictionary<string, Type> listNS = mapNamespace[ns];
+                            foreach (string typename in listNS.Keys)
+                            {
+                                Type t = listNS[typename];
+                                TreeNode tnType = new TreeNode();
+                                tnType.Tag = t;
+                                tnType.Text = t.Name;
+                                tnType.ImageIndex = 5;
+                                tnType.SelectedImageIndex = 5;
+
+                                tn.Nodes.Add(tnType);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        this.errorProvider.SetError(this.labelError, "No data has been defined that can be uploaded.");
+                    }
+                }
+            }
+            catch (Exception xx)
+            {
+                this.progressBar.Style = ProgressBarStyle.Continuous;
+                this.progressBar.Visible = false;
+                this.errorProvider.SetError(this.labelError, xx.Message);
+            }
+
 
             this.buttonOK.Enabled = true;
         }
 
-        private void backgroundWorkerContexts_DoWork(object sender, DoWorkEventArgs e)
-        {
-            ResponseContext response = DataDictionary.GetContexts(this.m_project, this.backgroundWorkerContexts, this.textBoxUrl.Text, this.textBoxUsername.Text, this.textBoxPassword.Text);
-            e.Result = response;
-        }
-
-        private void backgroundWorkerContexts_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            this.buttonLogin.Enabled = true;
-            this.listViewViews.Items.Clear();
-
-            ResponseContext response = e.Result as ResponseContext;
-            if (response == null)
-                return;
-
-            foreach (IfdContext ifdContext in response.IfdContext)
-            {
-                ListViewItem lvi = new ListViewItem();
-                lvi.Tag = ifdContext;
-                if (ifdContext.fullNames != null && ifdContext.fullNames.Length > 0)
-                {
-                    string name = ifdContext.fullNames[0].name; // fallback on first name returned
-
-                    // for now, hard-code to english ... todo: configure
-                    foreach(IfdName ifdName in ifdContext.fullNames)
-                    {
-                        if (ifdName.language.languageCode == "en" && ifdName.nameType == "FULLNAME")
-                        {
-                            name = ifdName.name;
-                        }
-                    }
-
-                    lvi.Text = name;
-
-                    // version
-                    lvi.SubItems.Add(ifdContext.versionId);
-
-                    // version date
-                    lvi.SubItems.Add(ifdContext.versionDate);
-
-                    // version date
-                    lvi.SubItems.Add(ifdContext.status);
-
-                    string access = "";
-                    if (ifdContext.restricted)
-                    {
-                        access = "Restricted";
-                    }
-                    else if(ifdContext.readOnly)
-                    {
-                        access = "Read-Only";
-                    }
-                    else
-                    {
-                        access = "Read/Write";
-                    }
-                    lvi.SubItems.Add(access);
-
-                    this.listViewViews.Items.Add(lvi);
-                }
-
-                // how to deal with contexts without names? don't add them for now
-
-            }
-        }
-
+     
         protected override void OnClosed(EventArgs e)
         {
             base.OnClosed(e);
@@ -379,24 +366,13 @@ namespace IfcDoc
             Properties.Settings.Default.Save();
         }
 
-        private void listViewViews_ItemChecked(object sender, ItemCheckedEventArgs e)
-        {
-            foreach (ListViewItem lvi in this.listViewViews.Items)
-            {
-                if (lvi.Checked)
-                {
-                    this.buttonOK.Enabled = true;
-                    return;
-                }
-            }
-
-            this.buttonOK.Enabled = false;
-        }
-
         private void treeViewContainer_BeforeExpand(object sender, TreeViewCancelEventArgs e)
         {
-            IfdConcept ifdConcept = e.Node.Tag as IfdConcept;
-            if (ifdConcept != null && e.Node.Nodes.Count == 1 && e.Node.Nodes[0].Tag == null)
+            if (!this.m_download)
+                return;
+
+            //IfdConcept ifdConcept = e.Node.Tag as IfdConcept;
+            if (e.Node.Nodes.Count == 1 && e.Node.Nodes[0].Tag == null)
             {
                 // load child concepts
                 try
@@ -419,15 +395,12 @@ namespace IfcDoc
 
         private void backgroundWorkerConcepts_DoWork(object sender, DoWorkEventArgs e)
         {
-            IfdConceptInRelationship ifdConcept = null;
+            if (this.m_dictionary == null)
+                return;
+
             TreeNode tn = (TreeNode)e.Argument;
-            ifdConcept = (IfdConceptInRelationship)tn.Tag;
-            IList<IfdConceptInRelationship> listItem = DataDictionary.GetConcepts(this.m_project, this.backgroundWorkerConcepts, this.textBoxUrl.Text, this.textBoxUsername.Text, this.textBoxPassword.Text, ifdConcept, true);
-            IList<IfdConceptInRelationship> listHost = DataDictionary.GetConcepts(this.m_project, this.backgroundWorkerConcepts, this.textBoxUrl.Text, this.textBoxUsername.Text, this.textBoxPassword.Text, ifdConcept, false);
-            List<IfdConceptInRelationship> listComb = new List<IfdConceptInRelationship>();
-            listComb.AddRange(listItem);
-            listComb.AddRange(listHost);
-            tn.Nodes[0].Tag = listComb;
+            Dictionary<string, object> items = this.m_dictionary.ReadNamespace(tn.Text);
+            tn.Nodes[0].Tag = items;
 
             e.Result = tn;
         }
@@ -436,15 +409,43 @@ namespace IfcDoc
         {
             TreeNode tn = (TreeNode)e.Result;
 
-            IList<IfdConceptInRelationship> list = (IList<IfdConceptInRelationship>)tn.Nodes[0].Tag;
+            object[] list = (object[])tn.Nodes[0].Tag;
             tn.Nodes.Clear();
 
-            foreach (IfdConceptInRelationship conc in list)
+            if (list == null)
+                return;
+
+            foreach (object conc in list)
             {
                 TreeNode tnConc = new TreeNode();
                 tnConc.Tag = conc;
-                tnConc.Text = conc.ToString();
 
+                if (conc is Type)
+                {
+                    Type t = (Type)conc;
+                    tnConc.Tag = t;
+                    tnConc.Text = t.Name;
+                    tnConc.ImageIndex = 5;
+
+                    foreach(PropertyInfo prop in t.GetProperties())
+                    {
+                        TreeNode tnProp = new TreeNode();
+                        tnProp.Tag = prop;
+                        tnProp.Text = tnProp.Name;
+                        tnProp.ImageIndex = 9;
+                    }
+                }
+                else if (conc is string)
+                {
+                    tnConc.Text = conc.ToString();
+                    tnConc.ImageIndex = 24;
+
+                    TreeNode tnSub = new TreeNode();
+                    tnSub.Text = "Loading...";
+                    tnConc.Nodes.Add(tnSub);
+                }
+
+#if false
                 IfdConceptTypeEnum ifdConceptType = IfdConceptTypeEnum.UNDEFINED;
                 Enum.TryParse<IfdConceptTypeEnum>(conc.conceptType, out ifdConceptType);
 
@@ -485,16 +486,18 @@ namespace IfcDoc
                     default:
                         break;
                 }
+#endif
                 tnConc.SelectedImageIndex = tnConc.ImageIndex;
 
                 tn.Nodes.Add(tnConc);
-
-                TreeNode tnSub = new TreeNode();
-                tnSub.Text = "Loading...";
-                tnConc.Nodes.Add(tnSub);
             }
 
-            tn.Text += " (" + list.Count + ")";
+            //tn.Text += " (" + list.Count + ")";
+        }
+
+        private void comboBoxContext_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

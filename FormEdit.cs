@@ -31,7 +31,7 @@ using IfcDoc.Format.PNG;
 
 using BuildingSmart.Serialization;
 using BuildingSmart.Serialization.Json;
-using BuildingSmart.Serialization.Spf;
+using BuildingSmart.Serialization.Step;
 using BuildingSmart.Serialization.Turtle;
 using BuildingSmart.Serialization.Xml;
 
@@ -362,51 +362,8 @@ namespace IfcDoc
                 return;
             }
 
-            // now capture any template definitions (upgrade in V3.5)
             foreach (DocModelView docModelView in this.m_project.ModelViews)
             {
-                if (docModelView.ConceptRoots == null)
-                {
-                    // must convert to new format
-                    docModelView.ConceptRoots = new List<DocConceptRoot>();
-
-                    foreach (DocSection docSection in this.m_project.Sections)
-                    {
-                        foreach (DocSchema docSchema in docSection.Schemas)
-                        {
-                            foreach (DocEntity docEntity in docSchema.Entities)
-                            {
-                                if (docEntity.__Templates != null)
-                                {
-                                    foreach (DocTemplateUsage docTemplateUsage in docEntity.__Templates)
-                                    {
-                                        // must generate or use existing concept root
-
-                                        DocConceptRoot docConceptRoot = null;
-                                        foreach (DocConceptRoot eachConceptRoot in docModelView.ConceptRoots)
-                                        {
-                                            if (eachConceptRoot.ApplicableEntity == docEntity)
-                                            {
-                                                docConceptRoot = eachConceptRoot;
-                                                break;
-                                            }
-                                        }
-
-                                        if (docConceptRoot == null)
-                                        {
-                                            docConceptRoot = new DocConceptRoot();
-                                            docConceptRoot.ApplicableEntity = docEntity;
-                                            docModelView.ConceptRoots.Add(docConceptRoot);
-                                        }
-
-                                        docConceptRoot.Concepts.Add(docTemplateUsage);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-
                 // sort alphabetically (V11.3+)
                 docModelView.SortConceptRoots();
             }
@@ -512,7 +469,7 @@ namespace IfcDoc
                         case ".ifcdoc":
                             using (FileStream streamDoc = new FileStream(this.m_file, FileMode.Create, FileAccess.ReadWrite))
                             {
-                                StepSerializer formatDoc = new StepSerializer(typeof(DocProject), SchemaDOC.Types);
+                                StepSerializer formatDoc = new StepSerializer(typeof(DocProject), SchemaDOC.Types, "IFCDOC_11_9", "IfcDoc 11.9", "BuildingSmart IFC Documentation Generator");
                                 formatDoc.WriteObject(streamDoc, this.m_project); // ... specify header...IFCDOC_11_8
                             }
                             break;
@@ -1201,7 +1158,7 @@ namespace IfcDoc
         private void UpdateTreeDeletion()
         {
             // remap to load tree
-            LoadTree();
+            //LoadTree();
         }
 
         private void toolStripMenuItemEditDelete_Click(object sender, EventArgs e)
@@ -5302,11 +5259,8 @@ namespace IfcDoc
 
         private void toolStripMenuItemDownload_Click(object sender, EventArgs e)
         {
-            using (FormPublish form = new FormPublish())
+            using (FormPublish form = new FormPublish(this.m_project, true))
             {
-                form.Download = true;
-                form.Project = this.m_project;
-                form.LocalPath = this.m_file;
                 if (this.m_server != null)
                 {
                     form.Url = this.m_server;
@@ -5324,10 +5278,8 @@ namespace IfcDoc
 
         private void toolStripMenuItemPublish_Click(object sender, EventArgs e)
         {
-            using (FormPublish form = new FormPublish())
+            using (FormPublish form = new FormPublish(this.m_project, false))
             {
-                form.Project = this.m_project;
-                form.LocalPath = this.m_file;
                 if (this.m_server != null)
                 {
                     form.Url = this.m_server;
@@ -8327,7 +8279,7 @@ namespace IfcDoc
                 {
                     if (form.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
                     {
-                        Compiler compiler = new Compiler(this.m_project, form.Selection, null);
+                        Compiler compiler = new Compiler(this.m_project, form.Selection, null, false);
                         System.Reflection.Emit.AssemblyBuilder ab = compiler.Assembly;
                         ab.Save("IFC4.dll");
 
@@ -8415,12 +8367,13 @@ namespace IfcDoc
                 }
 
                 // remove old listings
-
+#if false
                 for (int iExist = docConcept.Items.Count - 1; iExist >= 0; iExist--)
                 {
                     docConcept.Items[iExist].Delete();
                     docConcept.Items.RemoveAt(iExist);
                 }
+#endif
 
                 foreach (DocPropertySet docPset in psets)
                 {
@@ -9014,15 +8967,18 @@ namespace IfcDoc
             using (OpenFileDialog dlgImport = new OpenFileDialog())
             {
                 dlgImport.Title = "Convert [Step 1 of 2]: Choose the input file";
-                dlgImport.Filter = "IFC-SPF (*.ifc)|*.ifc";
+                dlgImport.Filter = 
+                    "IFC-SPF (*.ifc)|*.ifc|" +
+                    "IFC-XML (*.ifcxml)|*.ifcxml";
                 if (dlgImport.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
                 {
                     using (SaveFileDialog dlgExport = new SaveFileDialog())
                     {
                         dlgExport.Filter =
+                            "IFC-SPF (*.ifc)|*.ifc|" +
+                            "IFC-XML (*.ifcxml)|*.ifcxml|" +
                             "IFC-JSN (*.json)|*.json|" +
-                            "IFC-TTL (*.ttl)|*.ttl|" +
-                            "IFC-XML (*.ifcxml)|*.ifcxml";
+                            "IFC-TTL (*.ttl)|*.ttl";
 
                         dlgExport.Title = "Convert [Step 2 of 2]: Specify the output file and format";
                         dlgExport.FileName = System.IO.Path.GetFileNameWithoutExtension(dlgImport.FileName);
@@ -9036,22 +8992,37 @@ namespace IfcDoc
                             {
                                 using (FileStream streamSource = new FileStream(dlgImport.FileName, FileMode.Open))
                                 {
-                                    StepSerializer formatSource = new StepSerializer(typeProject);
+                                    Serializer formatSource = null;
+                                    switch(dlgImport.FilterIndex)
+                                    {
+                                        case 1:
+                                            formatSource = new StepSerializer(typeProject);
+                                            break;
+
+                                        case 2:
+                                            formatSource = new XmlSerializer(typeProject);
+                                            break;
+                                    }
+
                                     project = formatSource.ReadObject(streamSource);
 
                                     Serializer formatTarget = null;
                                     switch (dlgExport.FilterIndex)
                                     {
                                         case 1:
-                                            formatTarget = new JsonSerializer(typeProject);
+                                            formatTarget = new StepSerializer(typeProject);
                                             break;
 
                                         case 2:
-                                            formatTarget = new TurtleSerializer(typeProject);
+                                            formatTarget = new XmlSerializer(typeProject);
                                             break;
 
                                         case 3:
-                                            formatTarget = new XmlSerializer(typeProject);
+                                            formatTarget = new JsonSerializer(typeProject);
+                                            break;
+
+                                        case 4:
+                                            formatTarget = new TurtleSerializer(typeProject);
                                             break;
                                     }
 
@@ -9101,24 +9072,11 @@ namespace IfcDoc
         private void toolStripMenuItemInsertConceptPset_Click(object sender, EventArgs e)
         {
             // select property sets within dialog
-            DocConceptRoot docRoot = null;
-            DocEntity docEntity = null; // all properties
             if (this.treeView.SelectedNode.Tag is DocConceptRoot)
             {
-                docRoot = (DocConceptRoot)this.treeView.SelectedNode.Tag;
-                DocTemplateUsage psetConcept = null;
-                
-                foreach (DocTemplateUsage concept in docRoot.Concepts)
-                {
-                    if (concept.Definition.Name == "Property Sets for Objects")
-                    {
-                        psetConcept = concept;
-                        break;
-                    }
-                }
-
-                docEntity = docRoot.ApplicableEntity;
-                using (FormSelectProperty form = new FormSelectProperty(docEntity, this.m_project, true, psetConcept))
+                DocConceptRoot docRoot = (DocConceptRoot)this.treeView.SelectedNode.Tag;
+                DocEntity docEntity = docRoot.ApplicableEntity;
+                using (FormSelectProperty form = new FormSelectProperty(docEntity, this.m_project, true))
                 {
                     if (form.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
                     {
@@ -9128,6 +9086,99 @@ namespace IfcDoc
             }
             else if (this.treeView.SelectedNode.Tag is DocModelView)
             {
+                DocModelView docView = (DocModelView)this.treeView.SelectedNode.Tag;
+
+                // new: map each property set to concept root, each property to concept
+                foreach(DocSection docSection in this.m_project.Sections)
+                {
+                    foreach(DocSchema docSchema in docSection.Schemas)
+                    {
+                        foreach (DocPropertySet docPset in docSchema.PropertySets)
+                        {
+                            DocConceptRoot docRoot = new DocConceptRoot();
+                            docView.ConceptRoots.Add(docRoot);
+                            docRoot.CopyFrom(docPset);
+
+                            DocEntity docEntity = this.m_project.GetDefinition(docPset.ApplicableType) as DocEntity;
+                            if (docEntity != null)
+                            {
+                                docRoot.ApplicableEntity = docEntity;
+                            }
+
+
+                            // also get subtype, and apply constraint to ConceptRoot...
+
+                            // each property is a concept
+                            int order = 0;
+                            foreach (DocProperty docProp in docPset.Properties)
+                            {
+                                DocTemplateUsage docConcept = new DocTemplateUsage();
+                                docRoot.Concepts.Add(docConcept);
+                                docConcept.CopyFrom(docProp);
+
+                                DocTemplateDefinition docInnerTemplate = null;
+                                string suffix = String.Empty;
+                                switch (docProp.PropertyType)
+                                {
+                                    case DocPropertyTemplateTypeEnum.P_SINGLEVALUE:
+                                        docInnerTemplate = this.m_project.GetTemplate(DocTemplateDefinition.guidTemplatePropertySingle);
+                                        break;
+
+                                    case DocPropertyTemplateTypeEnum.P_BOUNDEDVALUE:
+                                        docInnerTemplate = this.m_project.GetTemplate(DocTemplateDefinition.guidTemplatePropertyBounded);
+                                        break;
+
+                                    case DocPropertyTemplateTypeEnum.P_ENUMERATEDVALUE:
+                                        docInnerTemplate = this.m_project.GetTemplate(DocTemplateDefinition.guidTemplatePropertyEnumerated);
+                                        if (docProp.SecondaryDataType != null)
+                                        {
+                                            int indexcolon = docProp.SecondaryDataType.IndexOf(':');
+                                            if (indexcolon > 0)
+                                            {
+                                                suffix = "Reference=" + docProp.SecondaryDataType.Substring(0, indexcolon);
+                                            }
+                                            else
+                                            {
+                                                suffix = "Reference=" + docProp.SecondaryDataType;
+                                            }
+                                        }
+                                        break;
+
+                                    case DocPropertyTemplateTypeEnum.P_LISTVALUE:
+                                        docInnerTemplate = this.m_project.GetTemplate(DocTemplateDefinition.guidTemplatePropertyList);
+                                        break;
+
+                                    case DocPropertyTemplateTypeEnum.P_TABLEVALUE:
+                                        docInnerTemplate = this.m_project.GetTemplate(DocTemplateDefinition.guidTemplatePropertyTable);
+                                        suffix = "Reference=" + docProp.SecondaryDataType;
+                                        break;
+
+                                    case DocPropertyTemplateTypeEnum.P_REFERENCEVALUE:
+                                        docInnerTemplate = this.m_project.GetTemplate(DocTemplateDefinition.guidTemplatePropertyReference);
+                                        suffix = "Reference=" + docProp.SecondaryDataType;
+                                        break;
+                                }
+
+                                if (docInnerTemplate != null)
+                                {
+                                    docConcept.Definition = docInnerTemplate;
+
+                                    order++;
+                                    DocTemplateItem docInnerItem = new DocTemplateItem();
+                                    docInnerItem.Order = order;
+                                    docInnerItem.RuleParameters = "PropertyName=" + docProp.Name + ";Value=" + docProp.PrimaryDataType + ";" + suffix;
+                                    docConcept.Items.Add(docInnerItem);
+                                }
+
+                            }
+
+                        }
+                    }
+                }
+
+                LoadTree();
+
+#if false
                 // all entities
                 DocModelView docView = (DocModelView)this.treeView.SelectedNode.Tag;
                 foreach (DocConceptRoot docEachRoot in docView.ConceptRoots)
@@ -9154,6 +9205,7 @@ namespace IfcDoc
 
                     this.BuildConceptForPropertySets(docEachRoot, psets.ToArray());
                 }
+#endif
             }
 
         }
@@ -9611,6 +9663,7 @@ namespace IfcDoc
                                     {
                                         string colname = readerKey.GetString(0);
                                         string contype = readerKey.GetString(1);
+                                        string conname = readerKey.GetString(2);
 
                                         DocTemplateItem docItem = null;
                                         if (mapItem.TryGetValue(colname, out docItem))

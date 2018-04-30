@@ -24,6 +24,8 @@ using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcPropertyResource;
 using BuildingSmart.IFC.IfcUtilityResource;
 
+using BuildingSmart.Utilities.Conversion;
+
 #if MDB
     using IfcDoc.Format.MDB;
 #endif
@@ -1024,31 +1026,25 @@ namespace IfcDoc
             IfcPropertyTemplateDefinition ifcDefinition, 
             DocObject docObject)
         {
-            ifcDefinition.GlobalId = new IfcGloballyUniqueId(SGuid.Format(docObject.Uuid));
+            ifcDefinition.GlobalId = new IfcGloballyUniqueId(GlobalId.Format(docObject.Uuid));
             ifcDefinition.Name = new IfcLabel(docObject.Name);
             ifcDefinition.Description = new IfcText(docObject.Documentation);
 
             foreach (DocLocalization docLoc in docObject.Localization)
             {
-                IfcLibraryReference ifcLib = new IfcLibraryReference();
-                ifcLib.Language = new IfcLanguageId(new IfcIdentifier(docLoc.Locale));
-                ifcLib.Name = new IfcLabel(docLoc.Name);
-                ifcLib.Description = new IfcText(docLoc.Documentation);
-                ifcLib.Location = new IfcURIReference(docLoc.URL);
-
-                IfcRelAssociatesLibrary ifcRal = new IfcRelAssociatesLibrary();
-                ifcRal.RelatingLibrary = ifcLib;
-                ifcRal.RelatedObjects.Add(ifcDefinition);
-
+                IfcLibraryReference ifcLib = new IfcLibraryReference(new IfcURIReference(docLoc.URL), null, new IfcLabel(docLoc.Name), new IfcText(docLoc.Documentation), new IfcLanguageId(docLoc.Locale), null);
+                IfcRelAssociatesLibrary ifcRal = new IfcRelAssociatesLibrary(NewGuid(), null, null, null, new IfcDefinitionSelect[] {ifcDefinition}, ifcLib);
                 ifcDefinition.HasAssociations.Add(ifcRal);
             }
         }
 
+        internal static IfcGloballyUniqueId NewGuid()
+        {
+            return new IfcGloballyUniqueId(GlobalId.Format(Guid.NewGuid()));
+        }
+
         internal static void ExportIfc(IfcProject ifcProject, DocProject docProject, Dictionary<DocObject, bool> included)
         {
-            ifcProject.GlobalId = new IfcGloballyUniqueId(SGuid.Format(docProject.Sections[0].Uuid));
-            ifcProject.Name = new IfcLabel("IFC Templates");
-
             // cache enumerators
             Dictionary<string, DocPropertyEnumeration> mapEnums = new Dictionary<string, DocPropertyEnumeration>();
             foreach (DocSection docSect in docProject.Sections)
@@ -1068,10 +1064,7 @@ namespace IfcDoc
                 }
             }
 
-            IfcRelDeclares rel = new IfcRelDeclares();
-            rel.GlobalId = new IfcGloballyUniqueId(SGuid.Format(docProject.Sections[1].Uuid));
-            rel.RelatingContext = ifcProject;
-
+            IfcRelDeclares rel = new IfcRelDeclares(Program.NewGuid(), null, null, null, ifcProject, new IfcDefinitionSelect[]{ifcProject});
             ifcProject.Declares.Add(rel);
 
             foreach (DocSection docSection in docProject.Sections)
@@ -1082,7 +1075,7 @@ namespace IfcDoc
                     {
                         if (included == null || included.ContainsKey(docPset))
                         {
-                            IfcPropertySetTemplate ifcPset = new IfcPropertySetTemplate();
+                            IfcPropertySetTemplate ifcPset = new IfcPropertySetTemplate(Program.NewGuid(), null, null, null, null, null, new IfcPropertyTemplate[]{});
                             rel.RelatedDefinitions.Add(ifcPset);
 
                             ExportIfcDefinition(ifcPset, docPset);
@@ -1116,7 +1109,7 @@ namespace IfcDoc
                     {
                         if (included == null || included.ContainsKey(docQuantitySet))
                         {
-                            IfcPropertySetTemplate ifcPset = new IfcPropertySetTemplate();
+                            IfcPropertySetTemplate ifcPset = new IfcPropertySetTemplate(Program.NewGuid(), null, null, null, null, null, new IfcPropertyTemplate[] { });
                             rel.RelatedDefinitions.Add(ifcPset);
 
                             ExportIfcDefinition(ifcPset, docQuantitySet);
@@ -1126,7 +1119,7 @@ namespace IfcDoc
 
                             foreach (DocQuantity docProp in docQuantitySet.Quantities)
                             {
-                                IfcSimplePropertyTemplate ifcProp = new IfcSimplePropertyTemplate();
+                                IfcSimplePropertyTemplate ifcProp = new IfcSimplePropertyTemplate(Program.NewGuid(), null, null, null, null, null, null, null, null, null, null, null);
                                 ifcPset.HasPropertyTemplates.Add(ifcProp);
 
                                 ExportIfcDefinition(ifcProp, docProp);
@@ -1145,7 +1138,7 @@ namespace IfcDoc
         {
             if (docProp.PropertyType == DocPropertyTemplateTypeEnum.COMPLEX)
             {
-                IfcComplexPropertyTemplate ifcProp = new IfcComplexPropertyTemplate();
+                IfcComplexPropertyTemplate ifcProp = new IfcComplexPropertyTemplate(Program.NewGuid(), null, null, null, null, null, new IfcPropertyTemplate[]{});
 
                 ExportIfcDefinition(ifcProp, docProp);
 
@@ -1162,7 +1155,7 @@ namespace IfcDoc
             }
             else
             {
-                IfcSimplePropertyTemplate ifcProp = new IfcSimplePropertyTemplate();
+                IfcSimplePropertyTemplate ifcProp = new IfcSimplePropertyTemplate(Program.NewGuid(), null, null, null, null, null, null, null, null, null, null, null);
 
                 ExportIfcDefinition(ifcProp, docProp);
 
@@ -1184,36 +1177,27 @@ namespace IfcDoc
                     DocPropertyEnumeration docEnumeration = null;
                     if(mapEnums.TryGetValue(propdatatype, out docEnumeration))
                     {
-                        ifcProp.Enumerators = new IfcPropertyEnumeration();
-                        ifcProp.GlobalId = new IfcGloballyUniqueId(SGuid.Format(docEnumeration.Uuid));
+                        ifcProp.Enumerators = new IfcPropertyEnumeration(new IfcLabel(docEnumeration.Name), new IfcValue[]{}, null);
+                        ifcProp.GlobalId = new IfcGloballyUniqueId(GlobalId.Format(docEnumeration.Uuid));
                         ifcProp.Enumerators.Name = new IfcLabel(docEnumeration.Name);
                         ifcProp.SecondaryMeasureType = null;
 
                         foreach(DocPropertyConstant docConst in docEnumeration.Constants)
                         {
-                            IfcLabel label = new IfcLabel();
-                            label.Value = docConst.Name;
+                            IfcLabel label = new IfcLabel(docConst.Name);
                             ifcProp.Enumerators.EnumerationValues.Add(label);
 
 
                             foreach (DocLocalization docLoc in docConst.Localization)
                             {
-                                IfcLibraryReference ifcLib = new IfcLibraryReference();
-                                ifcLib.Identification = new IfcIdentifier(docConst.Name); // distinguishes the constant value within the enumeration
-                                ifcLib.Language = new IfcLanguageId(new IfcIdentifier(docLoc.Locale));
-                                ifcLib.Name = new IfcLabel(docLoc.Name);
-                                ifcLib.Description = new IfcText(docLoc.Documentation);
-                                ifcLib.Location = new IfcURIReference(docLoc.URL);
+                                IfcLibraryReference ifcLib = new IfcLibraryReference(new IfcURIReference(docLoc.URL), new IfcIdentifier(docConst.Name), new IfcLabel(docLoc.Name), new IfcText(docLoc.Documentation), new IfcLanguageId(docLoc.Locale), null);
 
                                 if (docLoc.Documentation == null && docLoc.Locale == "en")
                                 {
                                     ifcLib.Description = new IfcText(docConst.Documentation);
                                 }
 
-                                IfcRelAssociatesLibrary ifcRal = new IfcRelAssociatesLibrary();
-                                ifcRal.RelatingLibrary = ifcLib;
-                                ifcRal.RelatedObjects.Add(ifcProp);
-
+                                IfcRelAssociatesLibrary ifcRal = new IfcRelAssociatesLibrary(NewGuid(), null, null, null, new IfcDefinitionSelect[]{ifcProp}, ifcLib);
                                 ifcProp.HasAssociations.Add(ifcRal);
                             }
 
@@ -1895,10 +1879,6 @@ namespace IfcDoc
                     if (docConceptRoot == null)
                     {
                         docConceptRoot = new DocConceptRoot();
-                        if (docView.ConceptRoots == null)
-                        {
-                            docView.ConceptRoots = new List<DocConceptRoot>();
-                        }
                         docView.ConceptRoots.Add(docConceptRoot);
                     }
 

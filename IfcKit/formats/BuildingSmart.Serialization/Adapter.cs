@@ -29,12 +29,12 @@ namespace BuildingSmart.Serialization
             return this.GetTypeByName(type);
         }
 
-        public IList<FieldInfo> GetDirectFields(Type t)
+        public IList<PropertyInfo> GetDirectFields(Type t)
         {
             return this.GetFieldsOrdered(t);
         }
 
-        public IList<FieldInfo> GetInverseFields(Type t)
+        public IList<PropertyInfo> GetInverseFields(Type t)
         {
             return this.GetFieldsInverseAll(t);
         }
@@ -44,7 +44,7 @@ namespace BuildingSmart.Serialization
             return this.GetCollectionInstanceType(t);
         }
 
-        public void UpdateInverseReferences(object instance, FieldInfo field, object value)
+        public void UpdateInverseReferences(object instance, PropertyInfo field, object value)
         {
             if (value == null)
                 return;

@@ -33,15 +33,15 @@ namespace BuildingSmart.Serialization.Turtle
             foreach (Type t in this.GetTypes())
             {
                 Type docClass = t;
-                IList<FieldInfo> listFields = GetFieldsOrdered(docClass);
-                foreach (FieldInfo fieldInfo in listFields)
+                IList<PropertyInfo> listFields = GetFieldsOrdered(docClass);
+                foreach (PropertyInfo fieldInfo in listFields)
                 {
                     string row0 = docClass.Name;
-                    string row1 = fieldInfo.Name.Substring(1);
-                    string row2 = fieldInfo.Name.Substring(1) + "_" + docClass.Name;
+                    string row1 = fieldInfo.Name;
+                    string row2 = fieldInfo.Name + "_" + docClass.Name;
                     string row3 = "ENTITY";
 
-                    Type typeField = fieldInfo.FieldType;
+                    Type typeField = fieldInfo.PropertyType;
                     if (typeField.IsGenericType && typeField.GetGenericTypeDefinition() == typeof(ISet<>))
                     {
                         row3 = "SET";
@@ -96,7 +96,7 @@ namespace BuildingSmart.Serialization.Turtle
             {
                 this.domain = domain;
                 this.originalName = originalName;
-                this.name = char.ToLower(name[0]) + name.Substring(1);
+                this.name = char.ToLower(name[0]) + name;
                 this.setorlist = setorlist;
             }
             public string domain;
@@ -241,8 +241,8 @@ namespace BuildingSmart.Serialization.Turtle
         {
             Type t = o.GetType();
 
-            IList<FieldInfo> fields = this.GetFieldsOrdered(t);
-            foreach (FieldInfo f in fields)
+            IList<PropertyInfo> fields = this.GetFieldsOrdered(t);
+            foreach (PropertyInfo f in fields)
             {
                 object v = f.GetValue(o);
 
@@ -251,7 +251,7 @@ namespace BuildingSmart.Serialization.Turtle
                     continue;
 
                 // write data type properties
-                Type ft = f.FieldType;
+                Type ft = f.PropertyType;
 
                 bool isvaluelist = (ft.IsGenericType && ft.GetGenericTypeDefinition() == typeof(List<>) && ft.GetGenericArguments()[0].IsValueType);
                 bool isvaluelistlist = (ft.IsGenericType && // e.g. IfcTriangulatedFaceSet.Normals
@@ -285,7 +285,7 @@ namespace BuildingSmart.Serialization.Turtle
                 }
                 else if (isentitylist || isentitylistlist)
                 {
-                    ObjectProperty p = GetObjectProperty(f.Name.Substring(1) + "_" + o.GetType().Name);
+                    ObjectProperty p = GetObjectProperty(f.Name + "_" + o.GetType().Name);
                     if (isentitylistlist)
                     {
                         System.Collections.IList list = (System.Collections.IList)v;
@@ -300,7 +300,7 @@ namespace BuildingSmart.Serialization.Turtle
                 else
                 {
                     //non-list attributes
-                    ObjectProperty p = GetObjectProperty(f.Name.Substring(1) + "_" + o.GetType().Name);
+                    ObjectProperty p = GetObjectProperty(f.Name + "_" + o.GetType().Name);
                     // TimC: review this: p.name is null
                     if (p != null)
                     {
@@ -315,14 +315,14 @@ namespace BuildingSmart.Serialization.Turtle
             return;
         }
 
-        private void WriteAnyOtherThing(StreamWriter writer, int indent, FieldInfo f, ObjectProperty p, object v,  
+        private void WriteAnyOtherThing(StreamWriter writer, int indent, PropertyInfo f, ObjectProperty p, object v,  
             Dictionary<string, URIObject> valueObjects,
             Queue<object> queue, Dictionary<object, long> idmap, ref int nextID)
         {
             if (p == null) // TimC: review this
                 return;
 
-            if (f.FieldType.IsInterface && v is ValueType)
+            if (f.PropertyType.IsInterface && v is ValueType)
             {
                 writer.Write(";" + "\r\n");
                 WriteIndent(writer, indent);
@@ -333,14 +333,14 @@ namespace BuildingSmart.Serialization.Turtle
                 writer.Write("inst:" + newUriObject.URI);
                 //this.WriteValueWrapper(v);
             }
-            else if (f.FieldType.IsValueType) // must be IfcBinary
+            else if (f.PropertyType.IsValueType) // must be IfcBinary
             {
                 Console.Out.WriteLine("MESSAGE-CHECK: Write IfcBinary 1");
                 writer.Write(";" + "\r\n");
                 WriteIndent(writer, indent);
                 writer.Write("ifcowl:" + p.name + " ");
 
-                FieldInfo fieldValue = f.FieldType.GetField("Value");
+                PropertyInfo fieldValue = f.PropertyType.GetProperty("Value");
                 if (fieldValue != null)
                 {
                     v = fieldValue.GetValue(v);
@@ -376,7 +376,7 @@ namespace BuildingSmart.Serialization.Turtle
             }
         }
 
-        private void WriteListOfListWithEntities(StreamWriter writer, int indent, Type t, FieldInfo f, System.Collections.IList list, 
+        private void WriteListOfListWithEntities(StreamWriter writer, int indent, Type t, PropertyInfo f, System.Collections.IList list, 
             Dictionary<string, URIObject> valueObjects, Dictionary<string, ListObject> listObjects, Dictionary<string, ListObject> listOfListObjects,
             Queue<object> queue, Dictionary<object, long> idmap, ref int nextID)
         {
@@ -385,7 +385,7 @@ namespace BuildingSmart.Serialization.Turtle
             //owl: onProperty ifc:coordIndex_IfcTriangulatedFaceSet
 
             //Console.Out.WriteLine("\r\n++ writing attribute: " + f.Name);
-            ObjectProperty p = GetObjectProperty(f.Name.Substring(1) + "_" + t.Name);
+            ObjectProperty p = GetObjectProperty(f.Name + "_" + t.Name);
             if (p.setorlist == "SET")
             {
                 //SET
@@ -394,7 +394,7 @@ namespace BuildingSmart.Serialization.Turtle
             else
             {
 
-                Type ft = f.FieldType;
+                Type ft = f.PropertyType;
                 ft = ft.GetGenericArguments()[0].GetGenericArguments()[0];
 
                 writer.Write(";" + "\r\n");
@@ -440,11 +440,11 @@ namespace BuildingSmart.Serialization.Turtle
             }
         }
 
-        private void WriteListOfListWithValues(StreamWriter writer, int indent, Type t, FieldInfo f, System.Collections.IList list,
+        private void WriteListOfListWithValues(StreamWriter writer, int indent, Type t, PropertyInfo f, System.Collections.IList list,
             Dictionary<string, URIObject> valueObjects, Dictionary<string, ListObject> listObjects, Dictionary<string, ListObject> listOfListObjects, ref int nextID)
         {
             //Console.Out.WriteLine("\r\n++ writing attribute: " + f.Name);
-            ObjectProperty p = GetObjectProperty(f.Name.Substring(1) + "_" + t.Name);
+            ObjectProperty p = GetObjectProperty(f.Name + "_" + t.Name);
             if (p.setorlist == "SET")
             {
                 //SET
@@ -453,7 +453,7 @@ namespace BuildingSmart.Serialization.Turtle
             else
             {
                 //LIST
-                Type ft = f.FieldType;
+                Type ft = f.PropertyType;
                 writer.Write(";" + "\r\n");
                 this.WriteIndent(writer, indent);
                 writer.Write("ifcowl:" + p.name + " ");
@@ -463,7 +463,7 @@ namespace BuildingSmart.Serialization.Turtle
                 //owl: allValuesFrom expr:INTEGER_List_List;
                 //owl: onProperty ifc:coordIndex_IfcTriangulatedFaceSet
                 ft = ft.GetGenericArguments()[0].GetGenericArguments()[0];
-                FieldInfo fieldValue = ft.GetField("Value");
+                PropertyInfo fieldValue = ft.GetProperty("Value");
 
                 List<string> listoflists = new List<string>();
                 ListObject newListObject;
@@ -488,7 +488,7 @@ namespace BuildingSmart.Serialization.Turtle
 #if VERBOSE
                     Console.Out.WriteLine("Message: Creating ListOfListWithValues with XSDType : " + fieldValue.FieldType.Name);
 #endif
-                    newListObject = GetListObject(ft.Name + "_List_", ft.Name, valuelist, fieldValue.FieldType.Name, valueObjects, listObjects, ref nextID);
+                    newListObject = GetListObject(ft.Name + "_List_", ft.Name, valuelist, fieldValue.PropertyType.Name, valueObjects, listObjects, ref nextID);
 
                     //add to listOfList
                     listoflists.Add(newListObject.URI);
@@ -500,12 +500,12 @@ namespace BuildingSmart.Serialization.Turtle
             }
         }
 
-        private void WriteListWithEntities(StreamWriter writer, int indent, Type t, FieldInfo f, System.Collections.IList list,
+        private void WriteListWithEntities(StreamWriter writer, int indent, Type t, PropertyInfo f, System.Collections.IList list,
             Dictionary<string, URIObject> valueObjects, Dictionary<string, ListObject> listObjects,
             Queue<object> queue, Dictionary<object, long> idmap, ref int nextID)
         {
             //Console.Out.WriteLine("\r\n++ writing attribute: " + f.Name);
-            ObjectProperty p = GetObjectProperty(f.Name.Substring(1) + "_" + t.Name);
+            ObjectProperty p = GetObjectProperty(f.Name + "_" + t.Name);
 
             if (p.setorlist == "SET")
             {
@@ -531,7 +531,7 @@ namespace BuildingSmart.Serialization.Turtle
             else
             {
                 //LIST
-                Type ft = f.FieldType;
+                Type ft = f.PropertyType;
                 ft = ft.GetGenericArguments()[0];
                 List<string> valuelist = new List<string>();
                 string ifcowlclass = "";
@@ -560,7 +560,7 @@ namespace BuildingSmart.Serialization.Turtle
                     //find out whether we have a list of lists; or a list of values
                     if (vt.IsValueType && !vt.IsPrimitive)
                     {
-                        FieldInfo fieldValue = vt.GetField("Value");
+                        PropertyInfo fieldValue = vt.GetProperty("Value");
                         if (fieldValue != null)
                         {
                             e = fieldValue.GetValue(e);
@@ -577,12 +577,12 @@ namespace BuildingSmart.Serialization.Turtle
                             vt = e.GetType();
                             while (vt.IsValueType && !vt.IsPrimitive)
                             {
-                                FieldInfo fieldValue1 = vt.GetField("Value");
+                                PropertyInfo fieldValue1 = vt.GetProperty("Value");
                                 if (fieldValue1 != null)
                                 {
                                     e = fieldValue1.GetValue(e);
                                     typewrap = vt;
-                                    vt = fieldValue1.FieldType;
+                                    vt = fieldValue1.PropertyType;
                                 }
                                 else
                                 {
@@ -594,7 +594,7 @@ namespace BuildingSmart.Serialization.Turtle
                             // e.g. IfcCompoundPlaneAngleMeasure (LIST)
                             System.Collections.IList innerlist1 = (System.Collections.IList)e;
                             vt = vt.GetGenericArguments()[0];
-                            FieldInfo fieldValue = vt.GetField("Value");
+                            PropertyInfo fieldValue = vt.GetProperty("Value");
 
                             if (typewrap.Name != "IfcBinary")
                             {
@@ -609,7 +609,7 @@ namespace BuildingSmart.Serialization.Turtle
                                         innerlist2.Add(encodedvalue);
                                     }
                                 }
-                                string s = fieldValue.FieldType.Name;
+                                string s = fieldValue.PropertyType.Name;
                                 if (s == "Int64" || s == "Double" || s == "String" || s == "Number" || s == "Real" || s == "Integer" || s == "Logical" || s == "Boolean" || s == "Binary")
                                     s = CheckForExpressPrimaryTypes(s);
                                 ListObject newInnerListObject = GetListObject(typewrap.Name + "_", vt.Name, innerlist2, s, valueObjects, listObjects, ref nextID);
@@ -652,7 +652,7 @@ namespace BuildingSmart.Serialization.Turtle
                             vt = e.GetType();
                             while (vt.IsValueType && !vt.IsPrimitive)
                             {
-                                FieldInfo fieldValue = vt.GetField("Value");
+                                PropertyInfo fieldValue = vt.GetProperty("Value");
                                 if (fieldValue != null)
                                 {
                                     e = fieldValue.GetValue(e);
@@ -660,7 +660,7 @@ namespace BuildingSmart.Serialization.Turtle
                                     {
                                         typewrap = vt;
                                     }
-                                    vt = fieldValue.FieldType;
+                                    vt = fieldValue.PropertyType;
                                 }
                                 else
                                 {
@@ -685,11 +685,11 @@ namespace BuildingSmart.Serialization.Turtle
             }
         }
 
-        private void WriteListWithValues(StreamWriter writer, int indent, Type t, FieldInfo f, System.Collections.IList list,
+        private void WriteListWithValues(StreamWriter writer, int indent, Type t, PropertyInfo f, System.Collections.IList list,
             Dictionary<string, URIObject> valueObjects, Dictionary<string, ListObject> listObjects, ref int nextID)
         {
             //Console.Out.WriteLine("\r\n++ writing attribute: " + f.Name);
-            ObjectProperty p = GetObjectProperty(f.Name.Substring(1) + "_" + t.Name);
+            ObjectProperty p = GetObjectProperty(f.Name + "_" + t.Name);
 
             if (p.setorlist == "SET")
             {
@@ -700,10 +700,10 @@ namespace BuildingSmart.Serialization.Turtle
             else
             {
                 //LIST, the most common option
-                Type ft = f.FieldType;
+                Type ft = f.PropertyType;
                 ft = ft.GetGenericArguments()[0];
                 List<string> valuelist = new List<string>();
-                FieldInfo fieldValue = ft.GetField("Value");
+                PropertyInfo fieldValue = ft.GetProperty("Value");
 
                 //Simply retrieving the values and putting them in valuelist
                 for (int i = 0; i < list.Count; i++)
@@ -741,7 +741,7 @@ namespace BuildingSmart.Serialization.Turtle
                 writer.Write(";" + "\r\n");
                 this.WriteIndent(writer, indent);
                 writer.Write("ifcowl:" + p.name + " ");
-                string s = fieldValue.FieldType.Name;
+                string s = fieldValue.PropertyType.Name;
                 if (s == "Int64" || s == "Double" || s == "String" || s == "Number" || s == "Real" || s == "Integer" || s == "Logical" || s == "Boolean" || s == "Binary" || s == "Byte[]")
                     s = CheckForExpressPrimaryTypes(s);
                 ListObject newListObject = GetListObject(ft.Name + "_List_", ft.Name, valuelist, s, valueObjects, listObjects, ref nextID);
@@ -749,10 +749,10 @@ namespace BuildingSmart.Serialization.Turtle
             }
         }
 
-        private void WriteTypeValue(StreamWriter writer, int indent, Type t, FieldInfo f, object v,
+        private void WriteTypeValue(StreamWriter writer, int indent, Type t, PropertyInfo f, object v,
             Dictionary<string, URIObject> valueObjects, Dictionary<string, ListObject> listObjects, ref int nextID)
         {
-            Type ft = f.FieldType;
+            Type ft = f.PropertyType;
             if (ft.IsGenericType && (ft.GetGenericTypeDefinition() == typeof(Nullable<>) || ft.GetGenericTypeDefinition() == typeof(List<>)))
             {
                 // special case for Nullable types
@@ -763,7 +763,7 @@ namespace BuildingSmart.Serialization.Turtle
             Type typewrap = null;
             while (ft.IsValueType && !ft.IsPrimitive)
             {
-                FieldInfo fieldValue = ft.GetField("Value");
+                PropertyInfo fieldValue = ft.GetProperty("Value");
                 if (fieldValue != null)
                 {
                     v = fieldValue.GetValue(v);
@@ -771,7 +771,7 @@ namespace BuildingSmart.Serialization.Turtle
                     {
                         typewrap = ft;
                     }
-                    ft = fieldValue.FieldType;
+                    ft = fieldValue.PropertyType;
                 }
                 else
                 {
@@ -784,7 +784,7 @@ namespace BuildingSmart.Serialization.Turtle
                 //Console.Out.WriteLine("\r\n++ writing attribute: " + f.Name);
                 writer.Write(";" + "\r\n");
                 this.WriteIndent(writer, indent);
-                ObjectProperty p = GetObjectProperty(f.Name.Substring(1) + "_" + t.Name);
+                ObjectProperty p = GetObjectProperty(f.Name + "_" + t.Name);
                 writer.Write("ifcowl:" + p.name + " ");
                 //write enumproperty
                 writer.Write("ifcowl:" + v);
@@ -820,7 +820,7 @@ namespace BuildingSmart.Serialization.Turtle
                     Console.Out.WriteLine("\r\n++ writing attribute: " + f.Name);
                     writer.Write(";" + "\r\n");
                     this.WriteIndent(writer, indent);
-                    ObjectProperty p = GetObjectProperty(f.Name.Substring(1) + "_" + t.Name);
+                    ObjectProperty p = GetObjectProperty(f.Name + "_" + t.Name);
                     writer.Write("ifcowl:" + p.name + " ");
                     ListObject newListObject = GetListObject(owlClass + "_", s, valuelist, ft.Name, valueObjects, listObjects, ref nextID);
                     writer.Write("inst:" + newListObject.URI);
@@ -840,7 +840,7 @@ namespace BuildingSmart.Serialization.Turtle
                     Console.Out.WriteLine("\r\n++ writing attribute: " + f.Name);
                     writer.Write(";" + "\r\n");
                     this.WriteIndent(writer, indent);
-                    ObjectProperty p = GetObjectProperty(f.Name.Substring(1) + "_" + t.Name);
+                    ObjectProperty p = GetObjectProperty(f.Name + "_" + t.Name);
                     writer.Write("ifcowl:" + p.name + " ");
 
                     string s = ft.Name;
@@ -862,7 +862,7 @@ namespace BuildingSmart.Serialization.Turtle
                 Console.Out.WriteLine("\r\n++ writing attribute: " + f.Name);
                 writer.Write(";" + "\r\n");
                 this.WriteIndent(writer, indent);
-                ObjectProperty p = GetObjectProperty(f.Name.Substring(1) + "_" + t.Name);
+                ObjectProperty p = GetObjectProperty(f.Name + "_" + t.Name);
                 if (p != null) // TimC: review this -- is null for csg-primitive example - GlobalId_IfcProject
                 {
                     writer.Write("ifcowl:" + p.name + " ");

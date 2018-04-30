@@ -49,8 +49,6 @@ namespace BuildingSmart.Serialization
         {
         }
 
-
-        // future:
         /// <summary>
         /// Reads header information (without reading entire file) to retrieve schema version, application, and exchanges.
         /// Schema identifier may be used to resolve source schema and automatically convert to target schema.
@@ -58,10 +56,8 @@ namespace BuildingSmart.Serialization
         /// Exchange identifiers may be used for validation purposes or for automatically converting to tabular formats (e.g. COBie).
         /// </summary>
         /// <param name="stream">Stream to read, which must be seekable; i.e. if web service, then must be cached as MemoryStream</param>
-        /// <param name="application">Application identifiers, for which application documentation may be retrieved at /IfcKit/applications/</param>
-        /// <param name="exchanges">Exchange identifiers, for which libraries may be retrieved at /IfcKit/exchanges/</param>
-        /// <returns>Schema identifier, for which library may be retrieved at /IfcKit/schemas/</returns>
-        //public abstract string ReadHeader(Stream stream, out string application, out string[] exchanges);
+        /// <returns>Header data about file.</returns>
+        //public abstract Header ReadHeader(Stream stream);
 
         /// <summary>
         /// Reads object from stream.

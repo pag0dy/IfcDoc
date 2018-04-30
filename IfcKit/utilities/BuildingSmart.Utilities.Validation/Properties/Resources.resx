@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -117,17 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="textBox1.Text" xml:space="preserve">
-    <value>IFC Documentation Generator
-Version 11.9 (April 30, 2018)
-© Copyright 2011-2017 buildingSMART International Ltd.
-
-Model Support Group (MSG)
-Thomas Liebich - MSG Leader (tl@aec3.com)
-
-Comments, issues or any other feedback may be posted at:
-https://github.com/BuildingSMART/IfcDoc
-
-MVD-XML Version 1.1, 1.2</value>
-  </data>
 </root>

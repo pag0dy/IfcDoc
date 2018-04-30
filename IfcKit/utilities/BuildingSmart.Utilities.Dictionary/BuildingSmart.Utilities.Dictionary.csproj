@@ -52,6 +52,10 @@
       <Project>{2ffe04f0-b6c2-405e-92a4-d1f3b6b037bc}</Project>
       <Name>BuildingSmart.IFC4X1</Name>
     </ProjectReference>
+    <ProjectReference Include="..\BuildingSmart.Utilities.Conversion\BuildingSmart.Utilities.Conversion.csproj">
+      <Project>{048106c1-7d68-4b3c-b7b1-eb437f2c15b0}</Project>
+      <Name>BuildingSmart.Utilities.Conversion</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

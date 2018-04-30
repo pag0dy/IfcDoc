@@ -144,7 +144,7 @@ namespace BuildingSmart.Utilities.Conversion
                     }
                 }
 
-                if (typeTarget == null || typeTarget.IsAbstract)
+                if (typeTarget == null || typeTarget.IsAbstract || oReplacement == null)
                 {
                     mapInstances.Add(o, null); // record null to void future conversion, report what didn't convert
                 }
@@ -158,10 +158,10 @@ namespace BuildingSmart.Utilities.Conversion
                     bool firstTime;
                     long id = gen.GetId(o, out firstTime);
 
-                    IList<FieldInfo> fieldsDirect = this.m_adapterSource.GetDirectFields(oReplacement.GetType());
-                    foreach (FieldInfo field in fieldsDirect)
+                    IList<PropertyInfo> fieldsDirect = this.m_adapterSource.GetDirectFields(oReplacement.GetType());
+                    foreach (PropertyInfo field in fieldsDirect)
                     {
-                        if (field != null && !field.FieldType.IsValueType)
+                        if (field != null && !field.PropertyType.IsValueType)
                         {
                             object inval = field.GetValue(oReplacement);
                             if (inval is IEnumerable)
@@ -194,8 +194,8 @@ namespace BuildingSmart.Utilities.Conversion
                     }
 
                     // capture inverse fields -- don't use properties, as those will allocate superflously
-                    IList<FieldInfo> fields = this.m_adapterSource.GetInverseFields(oReplacement.GetType());
-                    foreach (FieldInfo field in fields)
+                    IList<PropertyInfo> fields = this.m_adapterSource.GetInverseFields(oReplacement.GetType());
+                    foreach (PropertyInfo field in fields)
                     {
                         object inval = field.GetValue(oReplacement);
                         if (inval is IEnumerable)
@@ -234,32 +234,32 @@ namespace BuildingSmart.Utilities.Conversion
                         source = o;
                     }
 
-                    IList<FieldInfo> fieldsSource = this.m_adapterSource.GetDirectFields(source.GetType());
-                    IList<FieldInfo> fieldsTarget = this.m_adapterTarget.GetDirectFields(target.GetType());
+                    IList<PropertyInfo> fieldsSource = this.m_adapterSource.GetDirectFields(source.GetType());
+                    IList<PropertyInfo> fieldsTarget = this.m_adapterTarget.GetDirectFields(target.GetType());
                     for (int iField = 0; iField < fieldsSource.Count && iField < fieldsTarget.Count; iField++)
                     {
-                        FieldInfo fieldSource = fieldsSource[iField];
-                        FieldInfo fieldTarget = fieldsTarget[iField];
+                        PropertyInfo fieldSource = fieldsSource[iField];
+                        PropertyInfo fieldTarget = fieldsTarget[iField];
                         if (fieldSource != null && fieldTarget != null) // null if derived
                         {
                             object valueSource = fieldSource.GetValue(source);
                             if (valueSource != null)
                             {
-                                object valueTarget = ConvertValue(valueSource, fieldTarget.FieldType, mapInstances);
+                                object valueTarget = ConvertValue(valueSource, fieldTarget.PropertyType, mapInstances);
                                 if (valueTarget != null)
                                 {
                                     fieldTarget.SetValue(target, valueTarget);
                                     this.m_adapterTarget.UpdateInverseReferences(target, fieldTarget, valueTarget);
                                 }
                             }
-                            else if(fieldTarget.FieldType.IsEnum && !fieldTarget.FieldType.IsGenericType) // if non-nullable enum, must populate
+                            else if (fieldTarget.PropertyType.IsEnum && !fieldTarget.PropertyType.IsGenericType) // if non-nullable enum, must populate
                             {
                                 object valueTarget = null;
 
                                 // use NOTDEFINED if provided, otherwise pick first constant 
                                 // (e.g. IfcSpatialStructureElement.ElementCompositionType is required in IFC2x3, optional in IFC4, and there's no NOTDEFINED value) --> ELEMENT should be used in such case
-                                FieldInfo[] fieldConstants = fieldTarget.FieldType.GetFields(BindingFlags.Public | BindingFlags.Static);
-                                foreach(FieldInfo fieldConst in fieldConstants)
+                                FieldInfo[] fieldConstants = fieldTarget.PropertyType.GetFields(BindingFlags.Public | BindingFlags.Static);
+                                foreach (FieldInfo fieldConst in fieldConstants)
                                 {
                                     Enum enumvalue = (Enum)fieldConst.GetValue(null);
                                     int intvalue = (int)System.Convert.ChangeType(enumvalue, enumvalue.GetTypeCode());

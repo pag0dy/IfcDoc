@@ -22,6 +22,7 @@ using BuildingSmart.IFC.IfcMeasureResource;
 using BuildingSmart.IFC.IfcUtilityResource;
 */
 using BuildingSmart.IFC.IfcUtilityResource;
+using BuildingSmart.Utilities.Conversion;
 
 
 namespace BuildingSmart.Utilities.Dictionary
@@ -606,8 +607,7 @@ namespace BuildingSmart.Utilities.Dictionary
                 // custom attributes, e.g. guid
                 if (ifdConcept.guid != null)
                 {
-                    IfcGloballyUniqueId ifcGuid = IfcGloballyUniqueId.Parse(ifdConcept.guid);
-                    Guid guid = ifcGuid.ToGuid();
+                    Guid guid = GlobalId.Parse(ifdConcept.guid);
 
                     ConstructorInfo conReq = typeof(GuidAttribute).GetConstructor(new Type[] { typeof(string) });
                     CustomAttributeBuilder cabReq = new CustomAttributeBuilder(conReq, new object[] { guid.ToString() });

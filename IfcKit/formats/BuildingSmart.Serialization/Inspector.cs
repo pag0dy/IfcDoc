@@ -26,10 +26,10 @@ namespace BuildingSmart.Serialization
         string _release;
         string _application;
         Dictionary<string, Type> _typemap = new Dictionary<string, Type>();
-        Dictionary<Type, IList<FieldInfo>> _fieldmap = new Dictionary<Type, IList<FieldInfo>>(); // cached field lists in declaration order
-        Dictionary<Type, IList<FieldInfo>> _fieldinv = new Dictionary<Type, IList<FieldInfo>>(); // cached field lists for inverses
-        Dictionary<Type, IList<FieldInfo>> _fieldall = new Dictionary<Type, IList<FieldInfo>>(); // combined
-        Dictionary<FieldInfo, List<FieldInfo>> _inversemap = new Dictionary<FieldInfo, List<FieldInfo>>();
+        Dictionary<Type, IList<PropertyInfo>> _fieldmap = new Dictionary<Type, IList<PropertyInfo>>(); // cached field lists in declaration order
+        Dictionary<Type, IList<PropertyInfo>> _fieldinv = new Dictionary<Type, IList<PropertyInfo>>(); // cached field lists for inverses
+        Dictionary<Type, IList<PropertyInfo>> _fieldall = new Dictionary<Type, IList<PropertyInfo>>(); // combined
+        Dictionary<int, List<PropertyInfo>> _inversemap = new Dictionary<int, List<PropertyInfo>>();
 
         /// <summary>
         /// Creates serializer accepting all types within assembly.
@@ -125,32 +125,32 @@ namespace BuildingSmart.Serialization
             foreach (Type t in types)
             {
                 // map fields for quick loading of inverse fields
-                FieldInfo[] fields = t.GetFields(BindingFlags.DeclaredOnly | BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
-                foreach (FieldInfo fTarget in fields)
+                PropertyInfo[] fields = t.GetProperties(BindingFlags.DeclaredOnly | BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+                foreach (PropertyInfo fTarget in fields)
                 {
                     InversePropertyAttribute[] attrs = (InversePropertyAttribute[])fTarget.GetCustomAttributes(typeof(InversePropertyAttribute), false);
                     if (attrs.Length == 1)
                     {
                         Type typeElement;
-                        if (fTarget.FieldType.IsGenericType)
+                        if (fTarget.PropertyType.IsGenericType)
                         {
                             // inverse set (most common)
-                            typeElement = fTarget.FieldType.GetGenericArguments()[0];
+                            typeElement = fTarget.PropertyType.GetGenericArguments()[0];
                         }
                         else
                         {
                             // inverse scalar (more obscure)
-                            typeElement = fTarget.FieldType;
+                            typeElement = fTarget.PropertyType;
                         }
 
-                        FieldInfo fSource = this.GetFieldByName(typeElement, "_" + attrs[0].Property); // dictionary requires reference uniqueness
+                        PropertyInfo fSource = this.GetFieldByName(typeElement, attrs[0].Property); // dictionary requires reference uniqueness
                         if (fSource != null)
                         {
-                            List<FieldInfo> listField = null;
-                            if (!_inversemap.TryGetValue(fSource, out listField))
+                            List<PropertyInfo> listField = null;
+                            if (!_inversemap.TryGetValue(fSource.MetadataToken, out listField))
                             {
-                                listField = new List<FieldInfo>();
-                                _inversemap.Add(fSource, listField);
+                                listField = new List<PropertyInfo>();
+                                _inversemap.Add(fSource.MetadataToken, listField);
                             }
 
                             listField.Add(fTarget);
@@ -231,6 +231,14 @@ namespace BuildingSmart.Serialization
             get
             {
                 return "http://www.buildingsmart-tech.org/ifc/" + this.Schema + "/" + this.Release;
+            }
+        }
+
+        protected string Preprocessor
+        {
+            get
+            {
+                return "BuildingSmart IfcKit by Constructivity";
             }
         }
 
@@ -315,10 +323,10 @@ namespace BuildingSmart.Serialization
         /// <param name="type"></param>
         /// <param name="name"></param>
         /// <returns></returns>
-        protected FieldInfo GetFieldByName(Type type, string name)
+        protected PropertyInfo GetFieldByName(Type type, string name)
         {
-            IList<FieldInfo> fields = this.GetFieldsOrdered(type);
-            foreach (FieldInfo field in fields)
+            IList<PropertyInfo> fields = this.GetFieldsOrdered(type);
+            foreach (PropertyInfo field in fields)
             {
                 if (field != null && field.Name.Equals(name))
                     return field;
@@ -327,13 +335,13 @@ namespace BuildingSmart.Serialization
             return null;
         }
 
-        protected FieldInfo GetFieldInverse(FieldInfo field, Type t)
+        protected PropertyInfo GetFieldInverse(PropertyInfo field, Type t)
         {
-            List<FieldInfo> listFields = null;
+            List<PropertyInfo> listFields = null;
 
-            if (this._inversemap.TryGetValue(field, out listFields))
+            if (this._inversemap.TryGetValue(field.MetadataToken, out listFields))
             {
-                foreach (FieldInfo fieldTarget in listFields)
+                foreach (PropertyInfo fieldTarget in listFields)
                 {
                     if (fieldTarget.DeclaringType.IsAssignableFrom(t))
                     {
@@ -344,15 +352,15 @@ namespace BuildingSmart.Serialization
             return null;
         }
 
-        protected IList<FieldInfo> GetFieldsAll(Type type)
+        protected IList<PropertyInfo> GetFieldsAll(Type type)
         {
-            IList<FieldInfo> fields = null;
+            IList<PropertyInfo> fields = null;
             if (_fieldall.TryGetValue(type, out fields))
             {
                 return fields;
             }
 
-            fields = new List<FieldInfo>();
+            fields = new List<PropertyInfo>();
             BuildFieldList(type, fields, true, true);
             _fieldall.Add(type, fields);
 
@@ -364,15 +372,15 @@ namespace BuildingSmart.Serialization
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
-        protected IList<FieldInfo> GetFieldsOrdered(Type type)
+        protected IList<PropertyInfo> GetFieldsOrdered(Type type)
         {
-            IList<FieldInfo> fields = null;
+            IList<PropertyInfo> fields = null;
             if (_fieldmap.TryGetValue(type, out fields))
             {
                 return fields;
             }
 
-            fields = new List<FieldInfo>();
+            fields = new List<PropertyInfo>();
             BuildFieldList(type, fields, true, false);
             _fieldmap.Add(type, fields);
             return fields;
@@ -384,30 +392,30 @@ namespace BuildingSmart.Serialization
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
-        protected IList<FieldInfo> GetFieldsInverseAll(Type type)
+        protected IList<PropertyInfo> GetFieldsInverseAll(Type type)
         {
-            IList<FieldInfo> fields = null;
+            IList<PropertyInfo> fields = null;
             if (_fieldinv.TryGetValue(type, out fields))
             {
                 return fields;
             }
 
-            fields = new List<FieldInfo>();
+            fields = new List<PropertyInfo>();
             BuildInverseListAll(type, fields);
             _fieldinv.Add(type, fields);
 
             return fields;
         }
 
-        protected void BuildInverseListAll(Type type, IList<FieldInfo> list)
+        protected void BuildInverseListAll(Type type, IList<PropertyInfo> list)
         {
             if (type.BaseType != typeof(object) && type.BaseType != typeof(Serializer))
             {
                 BuildInverseListAll(type.BaseType, list);
             }
 
-            FieldInfo[] fields = type.GetFields(BindingFlags.DeclaredOnly | BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
-            foreach (FieldInfo field in fields)
+            PropertyInfo[] fields = type.GetProperties(BindingFlags.DeclaredOnly | BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+            foreach (PropertyInfo field in fields)
             {
                 if (field.IsDefined(typeof(InversePropertyAttribute), false))
                 {
@@ -424,7 +432,7 @@ namespace BuildingSmart.Serialization
         /// <param name="inherit"></param>
         /// <param name="inverse"></param>
         /// <param name="platform">Specific version, or UNSET to use default (latest)</param>
-        private void BuildFieldList(Type type, IList<FieldInfo> list, bool inherit, bool inverse)
+        private void BuildFieldList(Type type, IList<PropertyInfo> list, bool inherit, bool inverse)
         {
             if (inherit && type.BaseType != typeof(object) && type.BaseType != typeof(Serializer))
             {
@@ -433,10 +441,10 @@ namespace BuildingSmart.Serialization
                 // zero-out any fields that are overridden as derived at subtype (e.g. IfcSIUnit.Dimensions)
                 for (int iField = 0; iField < list.Count; iField++)
                 {
-                    FieldInfo field = list[iField];
+                    PropertyInfo field = list[iField];
                     if (field != null)
                     {
-                        PropertyInfo prop = type.GetProperty(field.Name.Substring(1), BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
+                        PropertyInfo prop = type.GetProperty(field.Name.Substring(1), BindingFlags.DeclaredOnly | BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
                         if (prop != null)
                         {
                             list[iField] = null; // hide derived fields
@@ -445,9 +453,9 @@ namespace BuildingSmart.Serialization
                 }
             }
 
-            FieldInfo[] fields = type.GetFields(BindingFlags.DeclaredOnly | BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
-            FieldInfo[] sorted = new FieldInfo[fields.Length];
-            foreach (FieldInfo field in fields)
+            PropertyInfo[] fields = type.GetProperties(BindingFlags.DeclaredOnly | BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+            PropertyInfo[] sorted = new PropertyInfo[fields.Length];
+            foreach (PropertyInfo field in fields)
             {
                 if (field.IsDefined(typeof(DataMemberAttribute), false))
                 {
@@ -456,7 +464,7 @@ namespace BuildingSmart.Serialization
                 }
             }
 
-            foreach (FieldInfo sort in sorted)
+            foreach (PropertyInfo sort in sorted)
             {
                 if (sort != null)
                 {
@@ -467,8 +475,8 @@ namespace BuildingSmart.Serialization
             // now inverse -- need particular order???
             if (inverse)
             {
-                fields = type.GetFields(BindingFlags.DeclaredOnly | BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
-                foreach (FieldInfo field in fields)
+                //fields = type.GetProperties(BindingFlags.DeclaredOnly | BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+                foreach (PropertyInfo field in fields)
                 {
                     if (field.IsDefined(typeof(InversePropertyAttribute), false))
                     {
@@ -478,7 +486,7 @@ namespace BuildingSmart.Serialization
             }
         }
 
-        protected void UpdateInverse(object instance, FieldInfo field, object value)
+        protected void UpdateInverse(object instance, PropertyInfo field, object value)
         {
             if (value is string || value is Byte[] || value is ValueType)
                 return;
@@ -486,7 +494,7 @@ namespace BuildingSmart.Serialization
             // set inverse link for singular references
             if (value is IEnumerable)
             {
-                Type typeelem = field.FieldType.GetGenericArguments()[0];
+                Type typeelem = field.PropertyType.GetGenericArguments()[0];
                 if (typeelem.IsInterface || typeelem.IsClass)
                 {
                     // set reverse field
@@ -496,14 +504,14 @@ namespace BuildingSmart.Serialization
                         if (listItem is object)
                         {
                             object itemSource = listItem;
-                            FieldInfo fieldInverse = this.GetFieldInverse(field, itemSource.GetType());
-                            if (fieldInverse != null && fieldInverse.FieldType.IsGenericType)
+                            PropertyInfo fieldInverse = this.GetFieldInverse(field, itemSource.GetType());
+                            if (fieldInverse != null && fieldInverse.PropertyType.IsGenericType)
                             {
                                 IEnumerable listTarget = (IEnumerable)fieldInverse.GetValue(itemSource);
                                 if (listTarget == null)
                                 {
                                     // must allocate list
-                                    Type typeList = GetCollectionInstanceType(fieldInverse.FieldType);
+                                    Type typeList = GetCollectionInstanceType(fieldInverse.PropertyType);
                                     listTarget = (IEnumerable)Activator.CreateInstance(typeList);
                                     fieldInverse.SetValue(itemSource, listTarget);
                                 }
@@ -516,23 +524,28 @@ namespace BuildingSmart.Serialization
                                 }
                                 //listTarget.Add(instance);
                             }
+                            else if(fieldInverse != null)
+                            {
+                                // scalar inverse
+                                fieldInverse.SetValue(listItem, instance);
+                            }
                         }
                     }
                 }
             }
             else if (value != null)
             {
-                FieldInfo fieldInverse = this.GetFieldInverse(field, value.GetType());
+                PropertyInfo fieldInverse = this.GetFieldInverse(field, value.GetType());
                 if (fieldInverse != null)
                 {
                     // set reverse field
-                    if (typeof(IEnumerable).IsAssignableFrom(fieldInverse.FieldType))
+                    if (typeof(IEnumerable).IsAssignableFrom(fieldInverse.PropertyType))
                     {
                         IEnumerable list = (IEnumerable)fieldInverse.GetValue(value);
                         if (list == null)
                         {
                             // must allocate list
-                            Type typeList = GetCollectionInstanceType(fieldInverse.FieldType);
+                            Type typeList = GetCollectionInstanceType(fieldInverse.PropertyType);
                             list = (IEnumerable)Activator.CreateInstance(typeList);
                             fieldInverse.SetValue(value, list);
                         }

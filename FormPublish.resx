@@ -174,31 +174,31 @@
   <data name="&gt;&gt;textBoxUrl.ZOrder" xml:space="preserve">
     <value>13</value>
   </data>
-  <data name="label1.AutoSize" type="System.Boolean, mscorlib">
+  <data name="labelServer.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 38</value>
+  <data name="labelServer.Location" type="System.Drawing.Point, System.Drawing">
+    <value>11, 50</value>
   </data>
-  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="labelServer.Size" type="System.Drawing.Size, System.Drawing">
     <value>41, 13</value>
   </data>
-  <data name="label1.TabIndex" type="System.Int32, mscorlib">
+  <data name="labelServer.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="label1.Text" xml:space="preserve">
+  <data name="labelServer.Text" xml:space="preserve">
     <value>Server:</value>
   </data>
-  <data name="&gt;&gt;label1.Name" xml:space="preserve">
-    <value>label1</value>
+  <data name="&gt;&gt;labelServer.Name" xml:space="preserve">
+    <value>labelServer</value>
   </data>
-  <data name="&gt;&gt;label1.Type" xml:space="preserve">
+  <data name="&gt;&gt;labelServer.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;label1.Parent" xml:space="preserve">
+  <data name="&gt;&gt;labelServer.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;labelServer.ZOrder" xml:space="preserve">
     <value>14</value>
   </data>
   <data name="buttonCancel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
@@ -211,7 +211,7 @@
     <value>75, 23</value>
   </data>
   <data name="buttonCancel.TabIndex" type="System.Int32, mscorlib">
-    <value>12</value>
+    <value>7</value>
   </data>
   <data name="buttonCancel.Text" xml:space="preserve">
     <value>Cancel</value>
@@ -241,7 +241,7 @@
     <value>75, 23</value>
   </data>
   <data name="buttonOK.TabIndex" type="System.Int32, mscorlib">
-    <value>11</value>
+    <value>6</value>
   </data>
   <data name="buttonOK.Text" xml:space="preserve">
     <value>OK</value>
@@ -262,16 +262,16 @@
     <value>True</value>
   </data>
   <data name="labelSummary.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 84</value>
+    <value>12, 143</value>
   </data>
   <data name="labelSummary.Size" type="System.Drawing.Size, System.Drawing">
-    <value>87, 13</value>
+    <value>138, 13</value>
   </data>
   <data name="labelSummary.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
   </data>
   <data name="labelSummary.Text" xml:space="preserve">
-    <value>Select container:</value>
+    <value>Check items to be included:</value>
   </data>
   <data name="&gt;&gt;labelSummary.Name" xml:space="preserve">
     <value>labelSummary</value>
@@ -300,6 +300,69 @@
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
     <value>784, 561</value>
   </data>
+  <data name="label1.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 95</value>
+  </data>
+  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>46, 13</value>
+  </data>
+  <data name="label1.TabIndex" type="System.Int32, mscorlib">
+    <value>17</value>
+  </data>
+  <data name="label1.Text" xml:space="preserve">
+    <value>Context:</value>
+  </data>
+  <data name="&gt;&gt;label1.Name" xml:space="preserve">
+    <value>label1</value>
+  </data>
+  <data name="&gt;&gt;label1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="comboBoxContext.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="comboBoxContext.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="comboBoxContext.Items" xml:space="preserve">
+    <value>buildingSmart Data Dictionary (Test Server)</value>
+  </data>
+  <data name="comboBoxContext.Items1" xml:space="preserve">
+    <value>buildingSmart Data Dictionary (Public Server)</value>
+  </data>
+  <data name="comboBoxContext.Location" type="System.Drawing.Point, System.Drawing">
+    <value>14, 111</value>
+  </data>
+  <data name="comboBoxContext.Size" type="System.Drawing.Size, System.Drawing">
+    <value>757, 21</value>
+  </data>
+  <data name="comboBoxContext.TabIndex" type="System.Int32, mscorlib">
+    <value>16</value>
+  </data>
+  <data name="&gt;&gt;comboBoxContext.Name" xml:space="preserve">
+    <value>comboBoxContext</value>
+  </data>
+  <data name="&gt;&gt;comboBoxContext.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;comboBoxContext.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;comboBoxContext.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
   <data name="treeViewContainer.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Bottom, Left, Right</value>
   </data>
@@ -314,7 +377,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAACs
-        kAAAAk1TRnQBSQFMAgEBLwEAAYgBBgGIAQYBEAEAARABAAT/ARkBAAj/AUIBTQE2BwABNgMAASgDAAFA
+        kAAAAk1TRnQBSQFMAgEBLwEAAcgBBgHIAQYBEAEAARABAAT/ARkBAAj/AUIBTQE2BwABNgMAASgDAAFA
         AwABwAMAAQEBAAEYBgABkBsAA/4D/AP2A/EG7wPxA/YD/AP+EgAD/gP8A/YD8QbvA/ED9gP8A/4SAAP+
         A/wD9gPxBu8D8QP2A/wD/j8AA/4D9gPiA8UDqwakA6sDxQPiA/YD/gwAA/4D9gPiA8UDqwakA6sDxQPi
         A/YD/gwAA/4D9gPiA8UDqwakA6sDxQPiA/YD/jkAA/4D8wG2AcIBqwFqAaIBPgFQAa8BEAFQAa8BDwFQ
@@ -935,16 +998,16 @@
 </value>
   </data>
   <data name="treeViewContainer.Location" type="System.Drawing.Point, System.Drawing">
-    <value>15, 101</value>
+    <value>15, 159</value>
   </data>
   <data name="treeViewContainer.SelectedImageIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
   <data name="treeViewContainer.Size" type="System.Drawing.Size, System.Drawing">
-    <value>757, 390</value>
+    <value>757, 332</value>
   </data>
   <data name="treeViewContainer.TabIndex" type="System.Int32, mscorlib">
-    <value>16</value>
+    <value>4</value>
   </data>
   <data name="&gt;&gt;treeViewContainer.Name" xml:space="preserve">
     <value>treeViewContainer</value>
@@ -956,47 +1019,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;treeViewContainer.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="textBoxWarning.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Top</value>
-  </data>
-  <data name="textBoxWarning.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 8.25pt</value>
-  </data>
-  <data name="textBoxWarning.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="textBoxWarning.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>5, 5, 5, 5</value>
-  </data>
-  <data name="textBoxWarning.Multiline" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="textBoxWarning.Size" type="System.Drawing.Size, System.Drawing">
-    <value>784, 29</value>
-  </data>
-  <data name="textBoxWarning.TabIndex" type="System.Int32, mscorlib">
-    <value>15</value>
-  </data>
-  <data name="textBoxWarning.Text" xml:space="preserve">
-    <value>Warning: The specified server does not support a secure connection, such that all information (including username and password) will be sent in the clear.
-It is strongly recommended that the username and password used for this site should not be used at any other websites.</value>
-  </data>
-  <data name="textBoxWarning.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="&gt;&gt;textBoxWarning.Name" xml:space="preserve">
-    <value>textBoxWarning</value>
-  </data>
-  <data name="&gt;&gt;textBoxWarning.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;textBoxWarning.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;textBoxWarning.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="checkBoxRemember.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left</value>
@@ -1005,13 +1028,13 @@ It is strongly recommended that the username and password used for this site sho
     <value>True</value>
   </data>
   <data name="checkBoxRemember.Location" type="System.Drawing.Point, System.Drawing">
-    <value>15, 534</value>
+    <value>15, 532</value>
   </data>
   <data name="checkBoxRemember.Size" type="System.Drawing.Size, System.Drawing">
     <value>459, 17</value>
   </data>
   <data name="checkBoxRemember.TabIndex" type="System.Int32, mscorlib">
-    <value>14</value>
+    <value>5</value>
   </data>
   <data name="checkBoxRemember.Text" xml:space="preserve">
     <value>Remember account and password on this computer (Warning: insecure, stored as clear text)</value>
@@ -1026,52 +1049,52 @@ It is strongly recommended that the username and password used for this site sho
     <value>$this</value>
   </data>
   <data name="&gt;&gt;checkBoxRemember.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
-  <data name="label3.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+  <data name="labelPassword.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
   </data>
-  <data name="label3.AutoSize" type="System.Boolean, mscorlib">
+  <data name="labelPassword.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="label3.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <data name="labelPassword.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="label3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>528, 38</value>
+  <data name="labelPassword.Location" type="System.Drawing.Point, System.Drawing">
+    <value>527, 50</value>
   </data>
-  <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="labelPassword.Size" type="System.Drawing.Size, System.Drawing">
     <value>56, 13</value>
   </data>
-  <data name="label3.TabIndex" type="System.Int32, mscorlib">
+  <data name="labelPassword.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
   </data>
-  <data name="label3.Text" xml:space="preserve">
+  <data name="labelPassword.Text" xml:space="preserve">
     <value>Password:</value>
   </data>
-  <data name="&gt;&gt;label3.Name" xml:space="preserve">
-    <value>label3</value>
+  <data name="&gt;&gt;labelPassword.Name" xml:space="preserve">
+    <value>labelPassword</value>
   </data>
-  <data name="&gt;&gt;label3.Type" xml:space="preserve">
+  <data name="&gt;&gt;labelPassword.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;label3.Parent" xml:space="preserve">
+  <data name="&gt;&gt;labelPassword.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
-    <value>3</value>
+  <data name="&gt;&gt;labelPassword.ZOrder" xml:space="preserve">
+    <value>4</value>
   </data>
   <data name="textBoxPassword.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
   </data>
   <data name="textBoxPassword.Location" type="System.Drawing.Point, System.Drawing">
-    <value>531, 53</value>
+    <value>530, 65</value>
   </data>
   <data name="textBoxPassword.Size" type="System.Drawing.Size, System.Drawing">
     <value>160, 20</value>
   </data>
   <data name="textBoxPassword.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
+    <value>2</value>
   </data>
   <data name="&gt;&gt;textBoxPassword.Name" xml:space="preserve">
     <value>textBoxPassword</value>
@@ -1083,19 +1106,19 @@ It is strongly recommended that the username and password used for this site sho
     <value>$this</value>
   </data>
   <data name="&gt;&gt;textBoxPassword.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="textBoxUsername.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
   </data>
   <data name="textBoxUsername.Location" type="System.Drawing.Point, System.Drawing">
-    <value>365, 53</value>
+    <value>364, 65</value>
   </data>
   <data name="textBoxUsername.Size" type="System.Drawing.Size, System.Drawing">
     <value>160, 20</value>
   </data>
   <data name="textBoxUsername.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
+    <value>1</value>
   </data>
   <data name="&gt;&gt;textBoxUsername.Name" xml:space="preserve">
     <value>textBoxUsername</value>
@@ -1107,52 +1130,52 @@ It is strongly recommended that the username and password used for this site sho
     <value>$this</value>
   </data>
   <data name="&gt;&gt;textBoxUsername.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>6</value>
   </data>
-  <data name="label2.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+  <data name="labelUsername.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
   </data>
-  <data name="label2.AutoSize" type="System.Boolean, mscorlib">
+  <data name="labelUsername.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="label2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <data name="labelUsername.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>362, 37</value>
+  <data name="labelUsername.Location" type="System.Drawing.Point, System.Drawing">
+    <value>361, 49</value>
   </data>
-  <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="labelUsername.Size" type="System.Drawing.Size, System.Drawing">
     <value>50, 13</value>
   </data>
-  <data name="label2.TabIndex" type="System.Int32, mscorlib">
+  <data name="labelUsername.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
-  <data name="label2.Text" xml:space="preserve">
+  <data name="labelUsername.Text" xml:space="preserve">
     <value>Account:</value>
   </data>
-  <data name="&gt;&gt;label2.Name" xml:space="preserve">
-    <value>label2</value>
+  <data name="&gt;&gt;labelUsername.Name" xml:space="preserve">
+    <value>labelUsername</value>
   </data>
-  <data name="&gt;&gt;label2.Type" xml:space="preserve">
+  <data name="&gt;&gt;labelUsername.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;label2.Parent" xml:space="preserve">
+  <data name="&gt;&gt;labelUsername.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
-    <value>6</value>
+  <data name="&gt;&gt;labelUsername.ZOrder" xml:space="preserve">
+    <value>7</value>
   </data>
   <data name="buttonLogin.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
   </data>
   <data name="buttonLogin.Location" type="System.Drawing.Point, System.Drawing">
-    <value>697, 51</value>
+    <value>696, 63</value>
   </data>
   <data name="buttonLogin.Size" type="System.Drawing.Size, System.Drawing">
     <value>75, 23</value>
   </data>
   <data name="buttonLogin.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
+    <value>3</value>
   </data>
   <data name="buttonLogin.Text" xml:space="preserve">
     <value>Login</value>
@@ -1167,55 +1190,25 @@ It is strongly recommended that the username and password used for this site sho
     <value>$this</value>
   </data>
   <data name="&gt;&gt;buttonLogin.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="listViewViews.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left, Right</value>
-  </data>
-  <data name="listViewViews.Location" type="System.Drawing.Point, System.Drawing">
-    <value>15, 311</value>
-  </data>
-  <data name="listViewViews.Size" type="System.Drawing.Size, System.Drawing">
-    <value>757, 180</value>
-  </data>
-  <data name="listViewViews.TabIndex" type="System.Int32, mscorlib">
-    <value>8</value>
-  </data>
-  <data name="listViewViews.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="&gt;&gt;listViewViews.Name" xml:space="preserve">
-    <value>listViewViews</value>
-  </data>
-  <data name="&gt;&gt;listViewViews.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ListView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;listViewViews.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;listViewViews.ZOrder" xml:space="preserve">
     <value>8</value>
   </data>
   <data name="comboBoxProtocol.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
   </data>
   <data name="comboBoxProtocol.Items" xml:space="preserve">
-    <value>Web Server</value>
-  </data>
-  <data name="comboBoxProtocol.Items1" xml:space="preserve">
     <value>buildingSmart Data Dictionary (Test Server)</value>
   </data>
-  <data name="comboBoxProtocol.Items2" xml:space="preserve">
+  <data name="comboBoxProtocol.Items1" xml:space="preserve">
     <value>buildingSmart Data Dictionary (Public Server)</value>
   </data>
   <data name="comboBoxProtocol.Location" type="System.Drawing.Point, System.Drawing">
-    <value>15, 53</value>
+    <value>14, 65</value>
   </data>
   <data name="comboBoxProtocol.Size" type="System.Drawing.Size, System.Drawing">
     <value>344, 21</value>
   </data>
   <data name="comboBoxProtocol.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
+    <value>0</value>
   </data>
   <data name="&gt;&gt;comboBoxProtocol.Name" xml:space="preserve">
     <value>comboBoxProtocol</value>
@@ -1236,7 +1229,7 @@ It is strongly recommended that the username and password used for this site sho
     <value>True</value>
   </data>
   <data name="labelError.Location" type="System.Drawing.Point, System.Drawing">
-    <value>16, 535</value>
+    <value>12, 9</value>
   </data>
   <data name="labelError.Size" type="System.Drawing.Size, System.Drawing">
     <value>0, 13</value>
@@ -1255,6 +1248,43 @@ It is strongly recommended that the username and password used for this site sho
   </data>
   <data name="&gt;&gt;labelError.ZOrder" xml:space="preserve">
     <value>10</value>
+  </data>
+  <data name="textBoxWarning.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 8.25pt</value>
+  </data>
+  <data name="textBoxWarning.Location" type="System.Drawing.Point, System.Drawing">
+    <value>14, 14</value>
+  </data>
+  <data name="textBoxWarning.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>5, 5, 5, 5</value>
+  </data>
+  <data name="textBoxWarning.Multiline" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="textBoxWarning.Size" type="System.Drawing.Size, System.Drawing">
+    <value>758, 29</value>
+  </data>
+  <data name="textBoxWarning.TabIndex" type="System.Int32, mscorlib">
+    <value>15</value>
+  </data>
+  <data name="textBoxWarning.Text" xml:space="preserve">
+    <value>Warning: The servers below do not support a secure connection, such that all information (including username and password) will be sent in the clear.
+It is strongly recommended that the username and password used for this site should not be used at any other websites.</value>
+  </data>
+  <data name="textBoxWarning.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;textBoxWarning.Name" xml:space="preserve">
+    <value>textBoxWarning</value>
+  </data>
+  <data name="&gt;&gt;textBoxWarning.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;textBoxWarning.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;textBoxWarning.ZOrder" xml:space="preserve">
+    <value>17</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -1699,46 +1729,10 @@ It is strongly recommended that the username and password used for this site sho
   <data name="&gt;&gt;errorProvider.Type" xml:space="preserve">
     <value>System.Windows.Forms.ErrorProvider, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;columnHeaderName.Name" xml:space="preserve">
-    <value>columnHeaderName</value>
-  </data>
-  <data name="&gt;&gt;columnHeaderName.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;columnHeaderVersion.Name" xml:space="preserve">
-    <value>columnHeaderVersion</value>
-  </data>
-  <data name="&gt;&gt;columnHeaderVersion.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;columnHeaderDate.Name" xml:space="preserve">
-    <value>columnHeaderDate</value>
-  </data>
-  <data name="&gt;&gt;columnHeaderDate.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;columnHeaderStatus.Name" xml:space="preserve">
-    <value>columnHeaderStatus</value>
-  </data>
-  <data name="&gt;&gt;columnHeaderStatus.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;columnHeaderAccess.Name" xml:space="preserve">
-    <value>columnHeaderAccess</value>
-  </data>
-  <data name="&gt;&gt;columnHeaderAccess.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="&gt;&gt;backgroundWorkerContexts.Name" xml:space="preserve">
     <value>backgroundWorkerContexts</value>
   </data>
   <data name="&gt;&gt;backgroundWorkerContexts.Type" xml:space="preserve">
-    <value>System.ComponentModel.BackgroundWorker, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;backgroundWorkerConcepts.Name" xml:space="preserve">
-    <value>backgroundWorkerConcepts</value>
-  </data>
-  <data name="&gt;&gt;backgroundWorkerConcepts.Type" xml:space="preserve">
     <value>System.ComponentModel.BackgroundWorker, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;imageListIcon.Name" xml:space="preserve">
@@ -1747,38 +1741,17 @@ It is strongly recommended that the username and password used for this site sho
   <data name="&gt;&gt;imageListIcon.Type" xml:space="preserve">
     <value>System.Windows.Forms.ImageList, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;backgroundWorkerConcepts.Name" xml:space="preserve">
+    <value>backgroundWorkerConcepts</value>
+  </data>
+  <data name="&gt;&gt;backgroundWorkerConcepts.Type" xml:space="preserve">
+    <value>System.ComponentModel.BackgroundWorker, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>FormPublish</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
     <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="columnHeaderName.Text" xml:space="preserve">
-    <value>Name</value>
-  </data>
-  <data name="columnHeaderName.Width" type="System.Int32, mscorlib">
-    <value>360</value>
-  </data>
-  <data name="columnHeaderVersion.Text" xml:space="preserve">
-    <value>Version</value>
-  </data>
-  <data name="columnHeaderDate.Text" xml:space="preserve">
-    <value>Date</value>
-  </data>
-  <data name="columnHeaderDate.Width" type="System.Int32, mscorlib">
-    <value>100</value>
-  </data>
-  <data name="columnHeaderStatus.Text" xml:space="preserve">
-    <value>Status</value>
-  </data>
-  <data name="columnHeaderStatus.Width" type="System.Int32, mscorlib">
-    <value>100</value>
-  </data>
-  <data name="columnHeaderAccess.Text" xml:space="preserve">
-    <value>Access</value>
-  </data>
-  <data name="columnHeaderAccess.Width" type="System.Int32, mscorlib">
-    <value>100</value>
   </data>
   <metadata name="backgroundWorkerContexts.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>336, 17</value>

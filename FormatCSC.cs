@@ -211,7 +211,10 @@ namespace IfcDoc.Format.CSC
                                 string filehtml = docSchema.Name + @"\" + docType.Name + ".htm";
                                 using (StreamWriter writerHtml = new StreamWriter(path + @"\" + filehtml, false, Encoding.UTF8))
                                 {
-                                    writerHtml.Write(docType.Documentation);
+                                    List<DocumentationISO.ContentRef> listFig = new List<DocumentationISO.ContentRef>();
+                                    List<DocumentationISO.ContentRef> listTab = new List<DocumentationISO.ContentRef>();
+                                    string doc = DocumentationISO.UpdateNumbering(docType.Documentation, listFig, listTab, docType);
+                                    writerHtml.Write(doc);
                                 }
                             }
 
@@ -255,7 +258,10 @@ namespace IfcDoc.Format.CSC
                                     string filehtml = docSchema.Name + @"\" + docType.Name + ".htm";
                                     using (StreamWriter writerHtml = new StreamWriter(path + @"\" + filehtml, false, Encoding.UTF8))
                                     {
-                                        writerHtml.Write(docType.Documentation);
+                                        List<DocumentationISO.ContentRef> listFig = new List<DocumentationISO.ContentRef>();
+                                        List<DocumentationISO.ContentRef> listTab = new List<DocumentationISO.ContentRef>();
+                                        string doc = DocumentationISO.UpdateNumbering(docType.Documentation, listFig, listTab, docType);
+                                        writerHtml.Write(doc);
                                     }
                                 }
                             }
@@ -417,7 +423,7 @@ namespace IfcDoc.Format.CSC
 
         private void WriteHeader(StreamWriter writer)
         {
-            writer.WriteLine("// This file was automatically generated from IFCDOC at www.buildingsmart-tech.org.");
+            writer.WriteLine("// This file may be edited manually or auto-generated using IfcKit at www.buildingsmart-tech.org.");
             writer.WriteLine("// IFC content is copyright (C) 1996-2018 BuildingSMART International Ltd.");
             writer.WriteLine();
 
@@ -436,6 +442,100 @@ namespace IfcDoc.Format.CSC
 
         private void WriteIncludes(StreamWriter writer)
         {
+            // new implementation: track dependencies 
+            SortedList<string, DocSchema> listSchema = new SortedList<string, DocSchema>();
+            if (this.m_definition is DocEntity)
+            {
+                DocEntity docEnt = (DocEntity)this.m_definition;
+                while (docEnt != null)
+                {
+                    if (docEnt.BaseDefinition != null)
+                    {
+                        DocDefinition docTarget = this.m_project.GetDefinition(docEnt.BaseDefinition);
+                        if (docTarget != null)
+                        {
+                            DocSchema docSchema = this.m_project.GetSchemaOfDefinition(docTarget);
+                            if (!listSchema.ContainsValue(docSchema))
+                            {
+                                listSchema.Add(docSchema.Name, docSchema);
+                            }
+                        }
+                    }
+
+                    // selects
+                    foreach (DocObject obj in this.m_map.Values)
+                    {
+                        if (obj is DocSelect)
+                        {
+                            DocSelect docSelect = (DocSelect)obj;
+                            foreach (DocSelectItem docItem in docSelect.Selects)
+                            {
+                                if (docItem.Name != null && docItem.Name.Equals(docEnt.Name))
+                                {
+                                    DocSchema docSchema = this.m_project.GetSchemaOfDefinition(docSelect);
+                                    if (!listSchema.ContainsValue(docSchema))
+                                    {
+                                        listSchema.Add(docSchema.Name, docSchema);
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    foreach (DocAttribute docAttr in docEnt.Attributes)
+                    {
+                        DocObject docRef = null;
+                        if (this.m_map.TryGetValue(docAttr.DefinedType, out docRef))
+                        {
+                            DocSchema docSchema = this.m_project.GetSchemaOfDefinition((DocDefinition)docRef);
+                            if (!listSchema.ContainsValue(docSchema))
+                            {
+                                listSchema.Add(docSchema.Name, docSchema);
+                            }
+                        }
+                    }
+
+                    // recurse
+                    if (docEnt.BaseDefinition != null)
+                    {
+                        docEnt = this.m_project.GetDefinition(docEnt.BaseDefinition) as DocEntity;
+                    }
+                    else
+                    {
+                        docEnt = null;
+                    }
+                }
+            }
+            else if(this.m_definition is DocDefined)
+            {
+                DocDefined docDef = (DocDefined)this.m_definition;
+                if(docDef.DefinedType != null)
+                {
+                    DocDefinition docTarget = this.m_project.GetDefinition(docDef.DefinedType);
+                    if(docTarget != null)
+                    {
+                        DocSchema docSchema = this.m_project.GetSchemaOfDefinition(docTarget);
+                        if (!listSchema.ContainsValue(docSchema))
+                        {
+                            listSchema.Add(docSchema.Name, docSchema);
+                        }
+                    }
+                }
+            }
+
+            // don't include our own schema
+            if (listSchema.ContainsKey(this.m_schema.Name))
+            {
+                listSchema.Remove(this.m_schema.Name);
+            }
+
+            foreach (DocSchema docSchemaRef in listSchema.Values)
+            {
+                writer.WriteLine("using BuildingSmart.IFC." + docSchemaRef.Name + ";");
+            }
+            writer.WriteLine();
+
+#if false
             // schema references
             if (this.m_schema != null)
             {
@@ -457,6 +557,7 @@ namespace IfcDoc.Format.CSC
 
                 writer.WriteLine();
             }
+#endif
         }
 
         public void Save()
@@ -721,13 +822,32 @@ namespace IfcDoc.Format.CSC
             }
         }
 
+        private static void BuildAttributeList(DocEntity docEntity, Dictionary<string, DocObject> map, List<DocAttribute> listAttr)
+        {
+            // recurse upwards -- base first
+            DocObject docBase = null;
+            if (docEntity.BaseDefinition != null && map.TryGetValue(docEntity.BaseDefinition, out docBase) && docBase is DocEntity)
+            {
+                DocEntity docBaseEntity = (DocEntity)docBase;
+                BuildAttributeList(docBaseEntity, map, listAttr);
+            }
+
+            foreach (DocAttribute docAttr in docEntity.Attributes)
+            {
+                if (docAttr.Inverse == null && docAttr.Derived == null)
+                {
+                    listAttr.Add(docAttr);
+                }
+            }
+        }
+
         public string FormatEntity(DocEntity docEntity, Dictionary<string, DocObject> map, Dictionary<DocObject, bool> included)
         {
             StringBuilder sb = new StringBuilder();
 
             using (CSharpCodeProvider prov = new CSharpCodeProvider())
             {
-                sb.AppendLine("[Guid(\"" + docEntity.Uuid.ToString() + "\")]");
+                // no  guidssb.AppendLine("[Guid(\"" + docEntity.Uuid.ToString() + "\")]");
 
                 sb.Append("public ");
                 if (docEntity.IsAbstract())
@@ -811,7 +931,7 @@ namespace IfcDoc.Format.CSC
                         if (docAttribute.Inverse == null)
                         {
                             // System.Runtime.Serialization -- used by Windows Communication Foundation formatters to indicate data serialization inclusion and order
-                            sbFields.AppendLine("\t[DataMember(Order=" + order + ")] ");
+                            sbFields.AppendLine("\t[DataMember(Order = " + order + ")] ");
                             order++;
                         }
                         else if (inscope)
@@ -848,14 +968,26 @@ namespace IfcDoc.Format.CSC
                             // documentation
                             if (!String.IsNullOrEmpty(docAttribute.Documentation))
                             {
-                                sbProperties.Append("\t[Description(");
-                                prov.GenerateCodeFromExpression(new CodePrimitiveExpression(docAttribute.Documentation), new StringWriter(sbProperties), null);
-                                sbProperties.AppendLine(")]");
+                                sbFields.Append("\t[Description(\""); // keep descriptions on one line
+                                string encodedoc = docAttribute.Documentation.Replace("\\", "\\\\"); // backslashes used for notes that relate to EXPRESS syntax
+                                encodedoc = encodedoc.Replace("\"", "\\\""); // escape any quotes
+                                encodedoc = encodedoc.Replace("\r", " "); // remove any return characters
+                                encodedoc = encodedoc.Replace("\n", " "); // remove any return characters
+                                sbFields.Append(encodedoc);
+                                
+                                //prov.GenerateCodeFromExpression(new CodePrimitiveExpression(docAttribute.Documentation), new StringWriter(sbFields), null); //... do this directly to avoid line splitting...
+                                sbFields.AppendLine("\")]");
                             }
 
                             if (docAttribute.Inverse == null && !docAttribute.IsOptional)
                             {
                                 sbFields.AppendLine("\t[Required()]");
+                            }
+
+                            if (docAttribute.IsUnique)
+                            {
+                                sbFields.AppendLine("\t[CustomValidation(typeof(" + docEntity.Name + "), \"Unique\")]"); // extent via partial class for implementation
+                                // MS Entity Framework 6.1 supports IndexAttribute for this purpose, however above is used for now to avoid additional dependency
                             }
 
                             string optional = "";
@@ -864,19 +996,14 @@ namespace IfcDoc.Format.CSC
                                 optional = "?";
                             }
 
-                            if(sbConstructor.Length > 0)
-                            {
-                                sbConstructor.Append(", ");
-                            }
-
                             int lower = 0;
-                            if (Int32.TryParse(docAttribute.AggregationLower, out lower))
+                            if (docAttribute.AggregationLower != null && Int32.TryParse(docAttribute.AggregationLower, out lower) && lower != 0)
                             {
                                 sbFields.AppendLine("\t[MinLength(" + lower + ")]");                                
                             }
 
                             int upper = 0;
-                            if (Int32.TryParse(docAttribute.AggregationUpper, out upper))
+                            if (docAttribute.AggregationUpper != null && Int32.TryParse(docAttribute.AggregationUpper, out upper) && upper != 0)
                             {
                                 sbFields.AppendLine("\t[MaxLength(" + upper + ")]");
                             }
@@ -884,28 +1011,52 @@ namespace IfcDoc.Format.CSC
                             switch (docAttribute.GetAggregation())
                             {
                                 case DocAggregationEnum.SET:
-                                    sbConstructor.Append(type + "[] __" + docAttribute.Name);
-                                    sbAssignment.AppendLine("\t\tthis._" + docAttribute.Name + " = new HashSet<" + type + ">(__" + docAttribute.Name + ");");
-                                    sbFields.AppendLine("\tISet<" + type + "> _" + docAttribute.Name + " = new HashSet<" + type + ">();");
-                                    sbProperties.AppendLine("\tpublic ISet<" + type + "> " + docAttribute.Name + " { get { return this._" + docAttribute.Name + "; } }");
+                                    if (docAttribute.Inverse == null)
+                                    {
+                                        sbAssignment.AppendLine("\t\tthis." + docAttribute.Name + " = new HashSet<" + type + ">(__" + docAttribute.Name + ");");
+                                    }
+                                    else
+                                    {
+                                        sbAssignment.AppendLine("\t\tthis." + docAttribute.Name + " = new HashSet<" + type + ">();");
+                                    }
+                                    sbFields.AppendLine("\tpublic ISet<" + type + "> " + docAttribute.Name + " { get; protected set; }");
+                                    //sbProperties.AppendLine("\tpublic ISet<" + type + "> " + docAttribute.Name + " { get { return this." + docAttribute.Name + "; } }");
                                     break;
+
                                 case DocAggregationEnum.LIST:
-                                    sbConstructor.Append(type + "[] __" + docAttribute.Name);
-                                    sbAssignment.AppendLine("\t\tthis._" + docAttribute.Name + " = new List<" + type + ">(__" + docAttribute.Name + ");");
-                                    sbFields.AppendLine("\tIList<" + type + "> _" + docAttribute.Name + " = new List<" + type + ">();");
-                                    sbProperties.AppendLine("\tpublic IList<" + type + "> " + docAttribute.Name + " { get { return this._" + docAttribute.Name + "; } }");
+                                    if (docAttribute.Inverse == null)
+                                    {
+                                        sbAssignment.AppendLine("\t\tthis." + docAttribute.Name + " = new List<" + type + ">(__" + docAttribute.Name + ");");
+                                    }
+                                    else
+                                    {
+                                        sbAssignment.AppendLine("\t\tthis." + docAttribute.Name + " = new List<" + type + ">();");
+                                    }
+                                    sbFields.AppendLine("\tpublic IList<" + type + "> " + docAttribute.Name + " { get; protected set; }");
+                                    //sbProperties.AppendLine("\tpublic IList<" + type + "> " + docAttribute.Name + " { get { return this." + docAttribute.Name + "; } }");
+                                    break;
+
+                                case DocAggregationEnum.ARRAY:
+                                    if (docAttribute.Inverse == null)
+                                    {
+                                        sbAssignment.AppendLine("\t\tthis." + docAttribute.Name + " = __" + docAttribute.Name + ";");
+                                    }
+                                    sbFields.AppendLine("\tpublic " + type + "[] " + docAttribute.Name + " { get; set; }");
+                                    //sbProperties.AppendLine("\tpublic " + type + "[] " + docAttribute.Name + " { get { return this." + docAttribute.Name + "; } }");
                                     break;
 
                                 default:
-                                    sbConstructor.Append(type + optional + " __" + docAttribute.Name);
-                                    sbAssignment.AppendLine("\t\tthis._" + docAttribute.Name + " = __" + docAttribute.Name + ";");
-                                    sbFields.AppendLine("\t" + type + optional + " _" + docAttribute.Name + ";");
-                                    sbProperties.AppendLine("\tpublic " + type + optional + " " + docAttribute.Name + " { get { return this._" + docAttribute.Name + "; } set { this._" + docAttribute.Name + " = value;} }");
+                                    if (docAttribute.Inverse == null)
+                                    {
+                                        sbAssignment.AppendLine("\t\tthis." + docAttribute.Name + " = __" + docAttribute.Name + ";");
+                                    }
+                                    sbFields.AppendLine("\tpublic " + type + optional + " " + docAttribute.Name + " { get; set; }");
+                                    //sbProperties.AppendLine("\tpublic " + type + optional + " " + docAttribute.Name + " { get { return this._" + docAttribute.Name + "; } set { this._" + docAttribute.Name + " = value;} }");
                                     break;
                             }
 
                             // helper constructors for x/y, x/y/z
-                            if (docAttribute.GetAggregation() == DocAggregationEnum.LIST && upper == 3 && docRef is DocDefined)
+                            if (docAttribute.Inverse == null && docAttribute.GetAggregation() == DocAggregationEnum.LIST && upper == 3 && docRef is DocDefined)
                             {
                                 DocDefined docDefined = (DocDefined)docRef;
                                 Type typePrim = GetNativeType(docDefined.DefinedType);
@@ -933,7 +1084,7 @@ namespace IfcDoc.Format.CSC
 
                             // todo: support special collections and properties that keep inverse properties in sync...
                             sbFields.AppendLine();
-                            sbProperties.AppendLine();
+                            //sbProperties.AppendLine();
                         }
                     }
                 }
@@ -943,23 +1094,89 @@ namespace IfcDoc.Format.CSC
 
                 // constructors
 
+#if false // no default constructors anymore
                 // default constructor
                 sb.AppendLine("\tpublic " + docEntity.Name + "()");
                 sb.AppendLine("\t{");
                 sb.AppendLine("\t}");
                 sb.AppendLine();
+#endif
 
-                if (sbConstructor.Length > 0)
+                // parameters for base constructor
+                List<DocAttribute> listAttr = new List<DocAttribute>();
+                BuildAttributeList(docEntity, map, listAttr);
+
+                List<DocAttribute> listBase = new List<DocAttribute>();
+                if(docEntity.BaseDefinition != null)
                 {
-                    // helper constructor -- expand fixed lists into separate parameters -- e.g. IfcCartesianPoint(IfcLengthMeasure, IfcLengthMeasure, IfcLengthMeasure)
-                    sb.AppendLine("\tpublic " + docEntity.Name + "(" + sbConstructor.ToString() + ")"); //.... also base class parameters....
-                    sb.AppendLine("\t{");
-                    sb.Append(sbAssignment.ToString());
-                    sb.AppendLine("\t}");
+                    DocEntity docBase = (DocEntity)map[docEntity.BaseDefinition];
+                    BuildAttributeList(docBase, map, listBase);
                 }
 
+                string constructorvisibility = "public";
+                if(docEntity.IsAbstract())
+                {
+                    constructorvisibility = "protected";
+                }
+
+                
+                // helper constructor -- expand fixed lists into separate parameters -- e.g. IfcCartesianPoint(IfcLengthMeasure, IfcLengthMeasure, IfcLengthMeasure)
+                sb.Append("\t" + constructorvisibility + " " + docEntity.Name + "(");
+                foreach (DocAttribute docAttr in listAttr)
+                {
+                    if(docAttr != listAttr[0])
+                    {
+                        sb.Append(", ");
+                    }
+
+                    string type = FormatIdentifier(docAttr.DefinedType);
+                    sb.Append(type);
+
+                    DocObject docRef = null;
+                    if (docAttr.DefinedType != null)
+                    {
+                        map.TryGetValue(docAttr.DefinedType, out docRef);
+                    }
+
+                    if(docAttr.GetAggregation() != DocAggregationEnum.NONE)
+                    {
+                        sb.Append("[]");
+                    }
+                    else if (docAttr.IsOptional && (docRef == null || docRef is DocDefined || docRef is DocEnumeration))
+                    {
+                        sb.Append("?");
+                    }
+
+                    sb.Append(" __"); // avoid conflict with member fields and properties
+                    sb.Append(docAttr.Name);
+                }
+                sb.AppendLine(sbConstructor.ToString() + ")");
+
+                if (listBase.Count > 0)
+                {
+                    sb.Append("\t\t: base(");
+                    foreach(DocAttribute docAttr in listBase)
+                    {
+                        if(docAttr != listBase[0])
+                        {
+                            sb.Append(", ");
+                        }
+
+                        sb.Append("__");
+                        sb.Append(docAttr.Name);
+                    }
+
+                    sb.AppendLine(")");
+                }
+
+                sb.AppendLine("\t{");
+                sb.Append(sbAssignment.ToString());
+                sb.AppendLine("\t}");
+                sb.AppendLine();
+                
+
                 // if only a single list attribute, then expand x, y, z (include IfcCartesianPoint, NOT IfcSurfaceReinforcementArea)
-                if (sbElemConstructor.Length > 0 && order == 1)
+                if (sbElemConstructor.Length > 0 && order == 1 && listBase.Count == 0)
                 {
                     sb.AppendLine(sbElemConstructor.ToString());
                 }
@@ -1084,7 +1301,7 @@ namespace IfcDoc.Format.CSC
             StringBuilder sb = new StringBuilder();
             using (CSharpCodeProvider prov = new CSharpCodeProvider())
             {
-                sb.AppendLine("[Guid(\"" + docEnumeration.Uuid.ToString() + "\")]");
+                //sb.AppendLine("[Guid(\"" + docEnumeration.Uuid.ToString() + "\")]");
                 sb.AppendLine("public enum " + docEnumeration.Name);
                 sb.AppendLine("{");
                 int counter = 0;
@@ -1126,7 +1343,7 @@ namespace IfcDoc.Format.CSC
         {
             StringBuilder sb = new StringBuilder();
 
-            sb.AppendLine("[Guid(\"" + docSelect.Uuid.ToString() + "\")]");
+            //sb.AppendLine("[Guid(\"" + docSelect.Uuid.ToString() + "\")]");
             sb.Append("public interface " + docSelect.Name);
                 
             BuildSelectEntries(sb, docSelect, map, included, false);
@@ -1142,7 +1359,7 @@ namespace IfcDoc.Format.CSC
         {
             StringBuilder sb = new StringBuilder();
 
-            sb.AppendLine("[Guid(\"" + docDefined.Uuid.ToString() + "\")]");
+            //sb.AppendLine("[Guid(\"" + docDefined.Uuid.ToString() + "\")]");
             sb.Append("public partial struct " + docDefined.Name);
 
             // implement any selects
@@ -1156,11 +1373,11 @@ namespace IfcDoc.Format.CSC
             {
                 sb.AppendLine("\t[MaxLength(" + docDefined.Length + ")]");
             }
-            sb.AppendLine("\tpublic " + FormatIdentifier(docDefined.DefinedType) + " Value;");
+            sb.AppendLine("\tpublic " + FormatIdentifier(docDefined.DefinedType) + " Value { get; private set; }");
             sb.AppendLine();
 
             // direct constructor for all types
-            sb.AppendLine("\tpublic " + docDefined.Name + "(" + FormatIdentifier(docDefined.DefinedType) + " value)");
+            sb.AppendLine("\tpublic " + docDefined.Name + "(" + FormatIdentifier(docDefined.DefinedType) + " value) : this()");
             sb.AppendLine("\t{");
             sb.AppendLine("\t\tthis.Value = value;");
             sb.AppendLine("\t}");
@@ -1169,7 +1386,7 @@ namespace IfcDoc.Format.CSC
             DocDefined docIndirect = this.m_project.GetDefinition(docDefined.DefinedType) as DocDefined;
             if (docIndirect != null)
             {
-                sb.AppendLine("\tpublic " + docDefined.Name + "(" + FormatIdentifier(docIndirect.DefinedType) + " value)");
+                sb.AppendLine("\tpublic " + docDefined.Name + "(" + FormatIdentifier(docIndirect.DefinedType) + " value) : this()");
                 sb.AppendLine("\t{");
                 sb.AppendLine("\t\tthis.Value = new " + docDefined.DefinedType + "(value);");
                 sb.AppendLine("\t}");
@@ -1399,11 +1616,11 @@ namespace IfcDoc.Format.CSC
 
                                                 if (vector)
                                                 {
-                                                    writerCode.WriteLine("    public IList<" + type + "> " + code + " { get { return (IList<" + type + opt + ">)this.GetValue(_" + code + "); } }");
+                                                    writerCode.WriteLine("    public IList<" + type + "> " + code + " { get { return this.GetValue(_" + code + ") as IList<" + type + ">; } }");
                                                 }
                                                 else
                                                 {
-                                                    writerCode.WriteLine("    public " + type + opt + " " + code + " { get { return (" + type + opt + ")this.GetValue(_" + code + "); } set { this.SetValue(_" + code + ", value); } }");
+                                                    writerCode.WriteLine("    public " + type + opt + " " + code + " { get { return this.GetValue(_" + code + ") as " + type + "; } set { this.SetValue(_" + code + ", value); } }");
                                                 }
                                                 writerCode.WriteLine();
                                             }
