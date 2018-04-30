@@ -1,2 +1,0 @@
-﻿(PredefinedType <> IfcReinforcingMeshTypeEnum.USERDEFINED) OR
-((PredefinedType = IfcReinforcingMeshTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcElementType.ElementType))

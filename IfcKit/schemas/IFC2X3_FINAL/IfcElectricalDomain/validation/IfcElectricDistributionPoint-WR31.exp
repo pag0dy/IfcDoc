@@ -1,2 +1,0 @@
-﻿(DistributionPointFunction <> IfcElectricDistributionPointFunctionEnum.USERDEFINED) OR
-((DistributionPointFunction = IfcElectricDistributionPointFunctionEnum.USERDEFINED) AND EXISTS(SELF\IfcElectricDistributionPoint.UserDefinedFunction))

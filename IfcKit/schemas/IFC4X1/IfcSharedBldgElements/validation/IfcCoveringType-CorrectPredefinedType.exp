@@ -1,2 +1,0 @@
-﻿(PredefinedType <> IfcCoveringTypeEnum.USERDEFINED) OR
-((PredefinedType = IfcCoveringTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcElementType.ElementType))

@@ -1,3 +1,0 @@
-﻿NOT(EXISTS(PredefinedType)) OR
-(PredefinedType <> IfcDiscreteAccessoryTypeEnum.USERDEFINED) OR
-((PredefinedType = IfcDiscreteAccessoryTypeEnum.USERDEFINED) AND EXISTS (SELF\IfcObject.ObjectType))

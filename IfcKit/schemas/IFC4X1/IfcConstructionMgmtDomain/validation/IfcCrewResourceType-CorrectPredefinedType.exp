@@ -1,2 +1,0 @@
-﻿(PredefinedType <> IfcCrewResourceTypeEnum.USERDEFINED) OR
-((PredefinedType = IfcCrewResourceTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcTypeResource.ResourceType))

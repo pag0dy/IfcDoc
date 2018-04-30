@@ -1,2 +1,0 @@
-﻿(Category <> IfcEnvironmentalImpactCategoryEnum.USERDEFINED) OR
-((Category = IfcEnvironmentalImpactCategoryEnum.USERDEFINED) AND EXISTS(SELF\IfcEnvironmentalImpactValue.UserDefinedCategory))

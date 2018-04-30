@@ -1,2 +1,0 @@
-﻿(PredefinedType <> IfcDoorTypeEnum.USERDEFINED) OR
-((PredefinedType = IfcDoorTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcElementType.ElementType))

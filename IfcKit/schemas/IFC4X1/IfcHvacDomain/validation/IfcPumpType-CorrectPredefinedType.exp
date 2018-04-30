@@ -1,2 +1,0 @@
-﻿(PredefinedType <> IfcPumpTypeEnum.USERDEFINED) OR
-((PredefinedType = IfcPumpTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcElementType.ElementType))

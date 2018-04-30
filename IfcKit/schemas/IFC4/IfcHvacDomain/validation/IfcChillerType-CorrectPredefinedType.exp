@@ -1,2 +1,0 @@
-﻿(PredefinedType <> IfcChillerTypeEnum.USERDEFINED) OR
-((PredefinedType = IfcChillerTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcElementType.ElementType))

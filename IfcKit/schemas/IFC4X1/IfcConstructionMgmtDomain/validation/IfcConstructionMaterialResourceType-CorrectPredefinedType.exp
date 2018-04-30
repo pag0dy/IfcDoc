@@ -1,2 +1,0 @@
-﻿(PredefinedType <> IfcConstructionMaterialResourceTypeEnum.USERDEFINED) OR
-((PredefinedType = IfcConstructionMaterialResourceTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcTypeResource.ResourceType))

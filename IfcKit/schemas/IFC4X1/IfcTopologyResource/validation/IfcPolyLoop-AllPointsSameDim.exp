@@ -1,1 +1,0 @@
-﻿SIZEOF(QUERY(Temp <* Polygon | Temp.Dim <> Polygon[1].Dim)) = 0

@@ -1,3 +1,0 @@
-﻿NOT EXISTS(PredefinedType) OR
-(PredefinedType <> IfcReinforcingBarTypeEnum.USERDEFINED) OR
-((PredefinedType = IfcReinforcingBarTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcObject.ObjectType))

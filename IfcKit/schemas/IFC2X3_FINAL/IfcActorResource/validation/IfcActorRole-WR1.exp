@@ -1,3 +1,0 @@
-﻿(Role <> IfcRoleEnum.USERDEFINED) OR
-((Role = IfcRoleEnum.USERDEFINED) AND
-  EXISTS(SELF.UserDefinedRole))

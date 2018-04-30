@@ -1,3 +1,0 @@
-﻿SIZEOF(QUERY(temp <* SELF.EnumerationValues | 
-  NOT(TYPEOF(SELF.EnumerationValues[1]) = TYPEOF(temp))
-  )) = 0

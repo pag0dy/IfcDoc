@@ -1,3 +1,0 @@
-﻿NOT(EXISTS(FilletRadius)) OR
-((FilletRadius <= (OverallWidth - WebThickness)/2.) AND 
- (FilletRadius <= (OverallDepth - (2. * FlangeThickness))/2.))

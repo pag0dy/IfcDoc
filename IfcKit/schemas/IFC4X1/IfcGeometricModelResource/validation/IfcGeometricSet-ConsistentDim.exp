@@ -1,3 +1,0 @@
-﻿SIZEOF(QUERY(Temp <* Elements |
-  Temp.Dim <> Elements[1].Dim))
-= 0
