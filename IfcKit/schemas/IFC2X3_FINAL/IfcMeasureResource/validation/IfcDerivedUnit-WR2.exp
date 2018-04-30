@@ -1,3 +1,0 @@
-﻿(UnitType <> IfcDerivedUnitEnum.USERDEFINED) OR
-((UnitType = IfcDerivedUnitEnum.USERDEFINED) AND 
- (EXISTS(SELF.UserDefinedType)))

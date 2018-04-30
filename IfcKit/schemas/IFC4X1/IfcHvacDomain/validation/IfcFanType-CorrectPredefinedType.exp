@@ -1,2 +1,0 @@
-﻿(PredefinedType <> IfcFanTypeEnum.USERDEFINED) OR
-((PredefinedType = IfcFanTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcElementType.ElementType))

@@ -1,1 +1,0 @@
-﻿NOT(NOT(EXISTS(LiningDepth)) AND EXISTS(LiningThickness))

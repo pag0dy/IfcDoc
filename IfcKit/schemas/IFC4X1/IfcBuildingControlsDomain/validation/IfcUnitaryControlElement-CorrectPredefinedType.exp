@@ -1,3 +1,0 @@
-﻿NOT(EXISTS(PredefinedType)) OR 
- (PredefinedType <> IfcUnitaryControlElementTypeEnum.USERDEFINED) OR 
- ((PredefinedType = IfcUnitaryControlElementTypeEnum.USERDEFINED) AND EXISTS (SELF\IfcObject.ObjectType))

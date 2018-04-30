@@ -1,4 +1,0 @@
-﻿NOT(EXISTS(SELF\IfcContext.RepresentationContexts)) OR
-(SIZEOF(QUERY(Temp <* SELF\IfcContext.RepresentationContexts |
- 'IFCREPRESENTATIONRESOURCE.IFCGEOMETRICREPRESENTATIONSUBCONTEXT' IN TYPEOF(Temp)
-  )) = 0)

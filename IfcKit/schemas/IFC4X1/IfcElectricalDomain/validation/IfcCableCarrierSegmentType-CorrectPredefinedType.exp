@@ -1,2 +1,0 @@
-﻿(PredefinedType <> IfcCableCarrierSegmentTypeEnum.USERDEFINED) OR
-((PredefinedType = IfcCableCarrierSegmentTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcElementType.ElementType))

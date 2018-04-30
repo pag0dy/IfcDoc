@@ -1,2 +1,0 @@
-﻿(PredefinedType <> IfcElectricGeneratorTypeEnum.USERDEFINED) OR
-((PredefinedType = IfcElectricGeneratorTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcElementType.ElementType))

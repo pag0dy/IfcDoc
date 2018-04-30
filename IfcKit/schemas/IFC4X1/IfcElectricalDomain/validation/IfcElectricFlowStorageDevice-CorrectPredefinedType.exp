@@ -1,3 +1,0 @@
-﻿NOT(EXISTS(PredefinedType)) OR 
- (PredefinedType <> IfcElectricFlowStorageDeviceTypeEnum.USERDEFINED) OR 
- ((PredefinedType = IfcElectricFlowStorageDeviceTypeEnum.USERDEFINED) AND EXISTS (SELF\IfcObject.ObjectType))

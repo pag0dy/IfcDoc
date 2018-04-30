@@ -1,3 +1,0 @@
-﻿NOT(EXISTS(PredefinedType)) OR
- (PredefinedType <> IfcTransportElementTypeEnum.USERDEFINED) OR
- ((PredefinedType = IfcTransportElementTypeEnum.USERDEFINED) AND EXISTS (SELF\IfcObject.ObjectType))

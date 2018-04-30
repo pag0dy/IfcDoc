@@ -1,2 +1,0 @@
-﻿(PredefinedType <> IfcFlowInstrumentTypeEnum.USERDEFINED) OR
-((PredefinedType = IfcFlowInstrumentTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcElementType.ElementType))

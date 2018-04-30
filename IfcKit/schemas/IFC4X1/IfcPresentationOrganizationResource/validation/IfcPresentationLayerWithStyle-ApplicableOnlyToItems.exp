@@ -1,1 +1,0 @@
-﻿SIZEOF(QUERY(temp <* AssignedItems | (SIZEOF(TYPEOF(temp) * ['IFCGEOMETRYRESOURCE.IfcGeometricRepresentationItem','IFCGEOMETRYRESOURCE.IfcMappedItem']) >= 1))) = SIZEOF(AssignedItems)

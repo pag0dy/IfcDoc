@@ -1,3 +1,0 @@
-﻿NOT(EXISTS(PredefinedType)) OR 
- (PredefinedType <> IfcProtectiveDeviceTypeEnum.USERDEFINED) OR 
- ((PredefinedType = IfcProtectiveDeviceTypeEnum.USERDEFINED) AND EXISTS (SELF\IfcObject.ObjectType))

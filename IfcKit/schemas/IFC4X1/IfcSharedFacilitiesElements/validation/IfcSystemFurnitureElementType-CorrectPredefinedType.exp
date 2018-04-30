@@ -1,2 +1,0 @@
-﻿(PredefinedType <> IfcSystemFurnitureElementTypeEnum.USERDEFINED) OR
-((PredefinedType = IfcSystemFurnitureElementTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcElementType.ElementType))
