@@ -1,0 +1,1 @@
+﻿SIZEOF(QUERY(temp <* SELF\IfcObjectDefinition.Decomposes | NOT('IFCKERNEL.IFCRELNESTS' IN TYPEOF(temp)))) = 0

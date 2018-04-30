@@ -1,0 +1,7 @@
+﻿(HIINDEX(SELF\IfcObjectDefinition.Decomposes) = 1) 
+AND
+('IFCKERNEL.IFCRELAGGREGATES' IN TYPEOF(SELF\IfcObjectDefinition.Decomposes[1])) 
+AND
+(('IFCKERNEL.IFCPROJECT' IN TYPEOF (SELF\IfcObjectDefinition.Decomposes[1].RelatingObject)) OR
+ ('IFCPRODUCTEXTENSION.IFCSPATIALSTRUCTUREELEMENT' IN TYPEOF (SELF\IfcObjectDefinition.Decomposes[1].RelatingObject))
+)

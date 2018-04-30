@@ -1,0 +1,2 @@
+﻿(WorkControlType <> IfcWorkControlTypeEnum.USERDEFINED) OR
+((WorkControlType = IfcWorkControlTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcWorkControl.UserDefinedControlType))

@@ -1,0 +1,1 @@
+﻿(NOT (EXISTS (Axis))) OR (Axis.Dim = 3)

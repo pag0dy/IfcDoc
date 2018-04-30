@@ -1,0 +1,1 @@
+﻿EXISTS(ItemReference) OR EXISTS(Location) OR EXISTS(Name)

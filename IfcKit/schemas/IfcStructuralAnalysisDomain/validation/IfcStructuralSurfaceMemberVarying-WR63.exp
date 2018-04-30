@@ -1,0 +1,5 @@
+﻿SIZEOF(QUERY(temp <* SELF.VaryingThicknessLocation.ShapeRepresentations |
+  NOT(('IFCGEOMETRYRESOURCE.IFCCARTESIANPOINT' IN TYPEOF(temp\IfcRepresentation.Items[1]))
+        OR
+      ('IFCGEOMETRYRESOURCE.IFCPOINTONSURFACE' IN TYPEOF(temp\IfcRepresentation.Items[1])))
+  )) = 0

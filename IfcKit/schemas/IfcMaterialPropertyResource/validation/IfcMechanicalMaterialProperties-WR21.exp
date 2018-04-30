@@ -1,0 +1,1 @@
+﻿NOT(EXISTS(YoungModulus)) OR (YoungModulus >= 0.0)

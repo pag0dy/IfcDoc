@@ -1,0 +1,107 @@
+<?xml version="1.0"?>
+<svg xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="1.1" width="600" height="888" xmlns="http://www.w3.org/2000/svg">
+  <g id="IfcPerformanceHistory" fill="yellow">
+    <rect x="13.999999875" y="171.04999875" width="153.75" height="41.50000125" stroke="black" />
+    <text x="90.874999875" y="191.799999375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcPerformanceHistory</text>
+    <g id="LifeCyclePhase">
+      <polyline points="90.87499875,212.55 90.87499875,471.03748875 " fill="none" stroke="black" />
+      <text x="130.7499975" y="360.037488" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">LifeCyclePhase</text>
+    </g>
+  </g>
+  <g id="IfcRelAssociatesApproval" fill="yellow">
+    <rect x="344.0000025" y="633.975" width="184.9875" height="48.49999875" stroke="black" />
+    <text x="436.4937525" y="658.224999375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcRelAssociatesApproval</text>
+    <g id="RelatingApproval">
+      <polyline points="436.4937375,682.4749875 436.4937375,738.012465 " fill="none" stroke="black" />
+      <text x="484.30623375" y="717.493720875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">RelatingApproval</text>
+    </g>
+  </g>
+  <g id="IfcRelAssociatesConstraint" fill="yellow">
+    <rect x="55.00000125" y="634.0000125" width="183.49999875" height="47.50000125" stroke="black" />
+    <text x="146.750000625" y="657.750013125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcRelAssociatesConstraint</text>
+    <g id="Intent">
+      <polyline points="91.62343875,634.0000125 91.62343875,555.28750125 " fill="none" stroke="black" />
+      <text x="111.248439375" y="580.931233125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">Intent</text>
+    </g>
+    <g id="RelatingConstraint">
+      <polyline points="146.7500025,681.500025 146.7500025,737.98752375 " fill="none" stroke="black" />
+      <text x="190.57500375" y="719.98752375" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">RelatingConstraint</text>
+    </g>
+  </g>
+  <g id="IfcTimeSeriesSchedule" fill="yellow">
+    <rect x="180" y="170.03749875" width="91.75000125" height="241.5" stroke="black" />
+    <text x="225.875000625" y="290.78749875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcTimeSeriesSchedule</text>
+    <g id="ApplicableDates">
+      <polyline points="271.75000125,271.7874975 411.9124875,271.7874975 " fill="none" stroke="black" stroke-dasharray="1,1" />
+      <text x="335.93124375" y="267.2874975" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">ApplicableDates L[1:?]</text>
+    </g>
+    <g id="TimeSeriesScheduleType">
+      <polyline points="271.75000125,196.5435975 454.00000125,196.5435975 " fill="none" stroke="black" />
+      <text x="355.50000675" y="192.775000125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">TimeSeriesScheduleType</text>
+    </g>
+    <g id="TimeSeries">
+      <polyline points="271.75000125,372.7875 412.1374875,372.7875 " fill="none" stroke="black" />
+      <text x="332.943744375" y="365.787499875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">TimeSeries</text>
+    </g>
+  </g>
+  <g id="IfcTimeSeriesScheduleTypeEnum" fill="green">
+    <rect x="454.0000125" y="180.64999875" width="133.75000125" height="33.250000125" stroke="black" />
+    <text x="520.875013125" y="197.2749988125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcTimeSeriesScheduleTypeEnum</text>
+  </g>
+  <g id="IFCKERNEL">
+    <g id="IfcControl" fill="grey">
+      <rect x="160.9875" y="34.99999875" width="130.5" height="51.75" stroke="black" />
+      <polyline points="224.98750125,86.74999875 224.98750125,135.3999975 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="224.98750125,135.3999975 90.87499875,135.40000125 90.87499875,171.049999875 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="224.98750125,135.3999975 225.87499875,135.40000125 225.87499875,170.037499875 " fill="none" stroke="black" stroke-width="3" />
+      <text x="226.2375" y="60.87499875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCKERNEL
+IfcControl</text>
+    </g>
+    <g id="IfcRelAssociates" fill="grey">
+      <rect x="227.97499875" y="506.6500125" width="157.875" height="46.75000125" stroke="black" />
+      <polyline points="306.91249875,553.400025 306.91249875,588.200025375 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="306.91249875,588.200025375 436.4937375,588.1999875 436.4937375,633.97498875 " fill="none" stroke="black" stroke-width="3" />
+      <polyline points="306.91249875,588.200025375 146.7500025,588.1999875 146.7500025,633.99999 " fill="none" stroke="black" stroke-width="3" />
+      <text x="306.91249875" y="530.025013125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCKERNEL
+IfcRelAssociates</text>
+    </g>
+  </g>
+  <g id="IFCMEASURERESOURCE">
+    <g id="IfcLabel" fill="grey">
+      <rect x="22.999999875" y="471.0375" width="174.25000125" height="85.2500025" stroke="black" />
+      <text x="110.1250005" y="513.66250125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCMEASURERESOURCE
+IfcLabel</text>
+    </g>
+  </g>
+  <g id="IFCDATETIMERESOURCE">
+    <g id="IfcDateTimeSelect" fill="grey">
+      <rect x="411.9124875" y="227.03749875" width="176.87500125" height="85.2500025" stroke="black" />
+      <text x="500.349988125" y="269.6625" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCDATETIMERESOURCE
+IfcDateTimeSelect</text>
+    </g>
+  </g>
+  <g id="IfcTimeSeriesResource">
+    <g id="IfcTimeSeries" fill="grey">
+      <rect x="412.1374875" y="323.03749875" width="176.625" height="85.7499975" stroke="black" />
+      <text x="500.4499875" y="365.9124975" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IfcTimeSeriesResource
+IfcTimeSeries</text>
+    </g>
+  </g>
+  <g id="IFCAPPROVALRESOURCE">
+    <g id="IfcApproval" fill="grey">
+      <rect x="344.025" y="738.0124875" width="219.9999975" height="83.74999875" stroke="black" />
+      <text x="454.02499875" y="779.887486875" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCAPPROVALRESOURCE
+IfcApproval</text>
+    </g>
+  </g>
+  <g id="IFCCONSTRAINTRESOURCE">
+    <g id="IfcConstraint" fill="grey">
+      <rect x="55.02499875" y="737.9875125" width="183.49999875" height="85.7499975" stroke="black" />
+      <text x="146.774998125" y="780.86251125" fill="black" font-family="Arial, Helvetica, sans-serif" font-size="10" alignment-baseline="middle" text-anchor="middle">IFCCONSTRAINTRESOURCE
+IfcConstraint</text>
+    </g>
+  </g>
+  <g>
+    <rect x="0" y="0" width="600" height="888" fill="none" stroke="lime" />
+  </g>
+</svg>

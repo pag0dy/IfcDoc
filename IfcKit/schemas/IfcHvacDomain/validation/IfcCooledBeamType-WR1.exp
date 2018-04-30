@@ -1,0 +1,2 @@
+﻿(PredefinedType <> IfcCooledBeamTypeEnum.USERDEFINED) OR
+((PredefinedType = IfcCooledBeamTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcElementType.ElementType))

@@ -1,0 +1,5 @@
+﻿EXISTS (TelephoneNumbers) OR
+EXISTS (PagerNumber) OR
+EXISTS (FacsimileNumbers) OR 
+EXISTS (ElectronicMailAddresses) OR 
+EXISTS (WWWHomePageURL)

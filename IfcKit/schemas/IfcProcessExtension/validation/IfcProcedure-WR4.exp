@@ -1,0 +1,2 @@
+﻿(ProcedureType <> IfcProcedureTypeEnum.USERDEFINED) OR
+((ProcedureType = IfcProcedureTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcProcedure.UserDefinedProcedureType))

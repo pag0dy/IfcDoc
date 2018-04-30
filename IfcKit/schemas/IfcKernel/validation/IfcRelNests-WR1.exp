@@ -1,0 +1,2 @@
+﻿SIZEOF(QUERY(Temp <* SELF\IfcRelDecomposes.RelatedObjects | 
+  NOT(TYPEOF(SELF\IfcRelDecomposes.RelatingObject) = TYPEOF(Temp)))) = 0
