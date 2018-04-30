@@ -1,3 +1,0 @@
-﻿NOT(EXISTS(PredefinedType)) OR
- (PredefinedType <> IfcStairFlightTypeEnum.USERDEFINED) OR
- ((PredefinedType = IfcStairFlightTypeEnum.USERDEFINED) AND EXISTS (SELF\IfcObject.ObjectType))

@@ -1,2 +1,0 @@
-﻿NOT(EXISTS(UpperBoundValue)) OR NOT(EXISTS(LowerBoundValue)) OR
-(TYPEOF(UpperBoundValue) = TYPEOF(LowerBoundValue))

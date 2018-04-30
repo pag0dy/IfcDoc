@@ -1,2 +1,0 @@
-﻿(PredefinedType <> IfcTubeBundleTypeEnum.USERDEFINED) OR
-((PredefinedType = IfcTubeBundleTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcElementType.ElementType))

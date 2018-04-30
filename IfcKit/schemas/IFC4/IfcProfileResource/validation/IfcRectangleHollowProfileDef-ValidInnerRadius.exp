@@ -1,3 +1,0 @@
-﻿NOT(EXISTS(InnerFilletRadius)) OR 
-((InnerFilletRadius <= (SELF\IfcRectangleProfileDef.XDim/2. - WallThickness)) AND 
- (InnerFilletRadius <= (SELF\IfcRectangleProfileDef.YDim/2. - WallThickness)))

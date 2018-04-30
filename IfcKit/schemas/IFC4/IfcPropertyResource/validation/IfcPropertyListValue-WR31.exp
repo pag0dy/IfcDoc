@@ -1,3 +1,0 @@
-﻿SIZEOF(QUERY(temp <* SELF.ListValues | 
-  NOT(TYPEOF(SELF.ListValues[1]) = TYPEOF(temp))
-  )) = 0

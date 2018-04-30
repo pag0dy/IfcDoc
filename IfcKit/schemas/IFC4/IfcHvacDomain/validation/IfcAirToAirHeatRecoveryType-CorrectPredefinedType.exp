@@ -1,2 +1,0 @@
-﻿(PredefinedType <> IfcAirToAirHeatRecoveryTypeEnum.USERDEFINED) OR
-((PredefinedType = IfcAirToAirHeatRecoveryTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcElementType.ElementType))

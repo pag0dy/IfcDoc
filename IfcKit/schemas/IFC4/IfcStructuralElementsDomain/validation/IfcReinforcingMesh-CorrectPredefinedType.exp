@@ -1,3 +1,0 @@
-﻿NOT EXISTS(PredefinedType) OR
-(PredefinedType <> IfcReinforcingMeshTypeEnum.USERDEFINED) OR
-((PredefinedType = IfcReinforcingMeshTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcObject.ObjectType))

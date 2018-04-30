@@ -1,5 +1,0 @@
-﻿SIZEOF (QUERY (Vsh <* Voids |
-  SIZEOF (QUERY (Afs <* Vsh.CfsFaces |
-  (NOT ('IFCTOPOLOGYRESOURCE.IFCADVANCEDFACE' IN TYPEOF(Afs)))
-  )) = 0
-)) = 0

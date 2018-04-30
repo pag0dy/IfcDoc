@@ -1,3 +1,0 @@
-﻿NOT(EXISTS(PredefinedType)) OR
- (PredefinedType <> IfcBuildingElementProxyTypeEnum.USERDEFINED) OR
- ((PredefinedType = IfcBuildingElementProxyTypeEnum.USERDEFINED) AND EXISTS (SELF\IfcObject.ObjectType))

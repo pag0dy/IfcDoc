@@ -1,3 +1,0 @@
-﻿NOT(EXISTS(PredefinedType)) OR
- (PredefinedType <> IfcColumnTypeEnum.USERDEFINED) OR
- ((PredefinedType = IfcColumnTypeEnum.USERDEFINED) AND EXISTS (SELF\IfcObject.ObjectType))

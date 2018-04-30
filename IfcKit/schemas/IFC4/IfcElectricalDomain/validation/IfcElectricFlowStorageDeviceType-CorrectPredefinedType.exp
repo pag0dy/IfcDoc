@@ -1,2 +1,0 @@
-﻿(PredefinedType <> IfcElectricFlowStorageDeviceTypeEnum.USERDEFINED) OR
-((PredefinedType = IfcElectricFlowStorageDeviceTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcElementType.ElementType))

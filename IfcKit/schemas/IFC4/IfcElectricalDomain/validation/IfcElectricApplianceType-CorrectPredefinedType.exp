@@ -1,2 +1,0 @@
-﻿(PredefinedType <> IfcElectricApplianceTypeEnum.USERDEFINED) OR
-((PredefinedType = IfcElectricApplianceTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcElementType.ElementType))

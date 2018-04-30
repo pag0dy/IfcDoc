@@ -1,2 +1,0 @@
-﻿(ConstraintGrade <> IfcConstraintEnum.USERDEFINED) OR
-((ConstraintGrade = IfcConstraintEnum.USERDEFINED) AND EXISTS(SELF\IfcConstraint.UserDefinedGrade))
