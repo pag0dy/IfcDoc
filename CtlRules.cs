@@ -258,7 +258,10 @@ namespace IfcDoc
             if(docRule is DocModelRuleConstraint)
             {
                 DocModelRuleConstraint docCon = (DocModelRuleConstraint)docRule;
-                tnRule.Text = docCon.Expression.ToString();
+                if (docCon.Expression != null)
+                {
+                    tnRule.Text = docCon.Expression.ToString();
+                }
             }
 
             if (this.m_parent != null)
