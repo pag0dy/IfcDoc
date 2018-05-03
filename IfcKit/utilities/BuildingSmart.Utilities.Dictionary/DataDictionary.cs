@@ -9,6 +9,7 @@ using System.Reflection;
 using System.Reflection.Emit;
 using System.Resources;
 using System.Runtime.InteropServices;
+using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
 using System.Security;
 using System.Text;
@@ -39,6 +40,7 @@ namespace BuildingSmart.Utilities.Dictionary
         private string m_username;
         private string m_password;
         private string m_session;
+        private string m_context; // active context guid, or null if none
 
         // cache mappings for efficiency (avoiding lookups)
         private Dictionary<Type, string> m_mapTypes = new Dictionary<Type, string>();
@@ -123,39 +125,93 @@ namespace BuildingSmart.Utilities.Dictionary
                     filter = "currentUserHasReadAccess";
                 }
 
-                string url = this.m_uri + "api/4.0/IfdContext/" + filter;
-                HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(url);
-                request.Method = "GET";
-                request.ContentType = "application/x-www-form-urlencoded";
-                request.ContentLength = 0;
-                request.Accept = "application/json";
-                request.Headers.Add("cookie", "peregrineapisessionid=" + this.m_session);
-                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-                Stream stream = response.GetResponseStream();
-
-                DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(ResponseContext));
-                ResponseContext context = (ResponseContext)ser.ReadObject(stream);
-                if (context != null && context.IfdContext != null)
+                string nextpage = null;
+                do
                 {
-                    Dictionary<string, string> map = new Dictionary<string,string>();
+                    string url = this.m_uri + "api/4.0/IfdContext/" + filter;
 
-                    foreach(IfdContext ifdContext in context.IfdContext)
+                    if (nextpage != null)
                     {
-                        if (ifdContext.fullNames != null)
-                        {
-                            foreach (IfdName ifdName in ifdContext.fullNames)
-                            {
-                                if (ifdName.language.guid.Equals(LanguageEN, StringComparison.InvariantCultureIgnoreCase))
-                                {
-                                    map.Add(ifdName.guid, ifdName.name);
-                                    break;
-                                }
-                            }
-                        }
+                        url += "?page=" + nextpage;
                     }
 
-                    return map;
+                    HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(url);
+                    request.Method = "GET";
+                    request.ContentType = "application/x-www-form-urlencoded";
+                    request.ContentLength = 0;
+                    request.Accept = "application/json";
+                    //request.Accept = "application/xml";
+                    request.Headers.Add("cookie", "peregrineapisessionid=" + this.m_session);
+                    HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                    nextpage = response.Headers.Get("Next-Page");
+                    Stream stream = response.GetResponseStream();
+
+                    byte[] buffer = new byte[response.ContentLength];
+                    int read = 0;
+                    do
+                    {
+                        read += stream.Read(buffer, read, (int)response.ContentLength - read);
+                    } while (read < response.ContentLength);
+                    MemoryStream ms = new MemoryStream(buffer);
+                    StreamReader reader = new StreamReader(ms, Encoding.UTF8);
+                    string jsondebug = reader.ReadToEnd();
+                    ms.Position = 0;
+
+                    DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(ifdContexts));
+                    //NetDataContractSerializer ser = new NetDataContractSerializer(typeof(ResponseContext).Name);
+                    //DataContractSerializer ser = new DataContractSerializer(typeof(ifdContexts), "ifdContexts", "http://peregrine.catenda.no/objects");
+                    
+                    ifdContexts context = (ifdContexts)ser.ReadObject(ms);
+                    if (context != null && context.IfdContext != null)
+                    {
+                        Dictionary<string, string> map = new Dictionary<string, string>();
+
+                        foreach (IfdContext ifdContext in context.IfdContext)
+                        {
+                            System.Diagnostics.Debug.Write("ReadContexts: " + ifdContext.guid + " ");
+
+                            if (ifdContext.fullNames != null)
+                            {
+
+                                string name = null;
+                                foreach (IfdName ifdName in ifdContext.fullNames)
+                                {
+                                    System.Diagnostics.Debug.Write("ifdname[" + ifdName.languageFamily + "]=" + ifdName.name + ", ");
+
+                                    if (ifdName.language.guid.Equals(LanguageEN, StringComparison.InvariantCultureIgnoreCase))
+                                    {
+                                        name = ifdName.name;// map.Add(ifdName.guid, ifdName.name);
+                                        //break;
+                                    }
+                                }
+
+                                if (name == null && ifdContext.fullNames.Length > 0)
+                                {
+                                    // try the first one
+                                    name = ifdContext.fullNames[0].name;
+                                }
+
+                                if (name != null)
+                                {
+                                    map.Add(ifdContext.guid, name);
+                                }
+                            }
+
+                            if (ifdContext.definitions != null)
+                            {
+                                System.Diagnostics.Debug.Write("def=" + ifdContext.definitions[0].description);
+                            }
+
+
+                            System.Diagnostics.Debug.WriteLine("");
+                        }
+
+                        return map;
+                    }
                 }
+                while (!String.IsNullOrEmpty(nextpage));
+
+
             }
             catch (Exception xx)
             {
@@ -190,10 +246,29 @@ namespace BuildingSmart.Utilities.Dictionary
             }
         }
 
+        public string GetActiveContext()
+        {
+            return this.m_context;
+        }
+
+        public void SetActiveContext(string context)
+        {
+            this.m_context = context;
+        }
+
         private IfdBase CreateDescription(string langid, string desc)
         {
             try
             {
+                // convert to form parameter...
+                if(desc.Length > 8000)
+                {
+                    //if (encodedesc.Length > 8000)//8192)
+                    //encodedesc = "!BSDD DATA TRANSFER ERROR -- description too large to encode within URL";
+
+                    desc = "[TRUNCATED] " + desc.Substring(0, 8000);// +"||TRUNCATED||";
+                }
+
                 string url = this.m_uri + "api/4.0/IfdDescription?languageGuid=" + langid + "&description=" + desc + "&descriptionType=DEFINITION";
                 HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(url);
                 request.Method = "POST";
@@ -289,9 +364,6 @@ namespace BuildingSmart.Utilities.Dictionary
 
             if (!hasEnglishDesc && !String.IsNullOrEmpty(desc))
             {
-                if (desc.Length > 8192)
-                    desc = "!BSDD DATA TRANSFER ERROR -- description too large to encode within URL";
-
                 string encodedesc = HttpUtility.UrlEncode(desc);
                 IfdBase ifdDescEN = CreateDescription(LanguageEN, encodedesc);
                 if (ifdDescEN == null)
@@ -350,8 +422,13 @@ namespace BuildingSmart.Utilities.Dictionary
 
         private void CreateRelationship(string idParent, string idChild, IfdRelationshipTypeEnum reltype)
         {
-            //// requires admin access: string url = baseurl + "api/4.0/IfdRelationship?relationshipType=" + reltype + "&parentGuid=" + idParent + "&childGuid=" + idChild; // contextGuids=,
             string url = this.m_uri + "api/4.0/IfdConcept/" + idParent + "/child?childGuid=" + idChild + "&relationshipType=" + reltype; // context guids???
+
+            if (this.m_context != null)
+            {
+                url += "&contextGuids=" + this.m_context; // verify...
+            }
+
             HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(url);
             request.Method = "POST";
             request.ContentType = "application/x-www-form-urlencoded";
@@ -394,7 +471,31 @@ namespace BuildingSmart.Utilities.Dictionary
                 DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(ResponseSearch));
                 ResponseSearch search = (ResponseSearch)ser.ReadObject(stream);
                 if (search != null && search.IfdConcept != null && search.IfdConcept.Length > 0)
-                    return search.IfdConcept[search.IfdConcept.Length-1]; // use last one
+                {
+                    // return latest one
+                    string lastversiondate = null;
+                    IfdConcept thatconc = null;
+                    foreach(IfdConcept conc in search.IfdConcept)
+                    {
+                        if(lastversiondate == null)
+                        {
+                            lastversiondate = conc.versionDate;
+                            thatconc = conc;
+                        }
+                        else
+                        {
+                            if (String.Compare(conc.versionDate, lastversiondate) > 0)
+                            {
+                                lastversiondate = conc.versionDate;
+                                thatconc = conc;
+                            }
+                        }
+                    }
+
+                    return thatconc;
+
+                    //return search.IfdConcept[search.IfdConcept.Length - 1]; // use last one
+                }
             }
             catch (Exception xx)
             {
@@ -801,11 +902,16 @@ namespace BuildingSmart.Utilities.Dictionary
             IfdConceptTypeEnum conctype = IfdConceptTypeEnum.SUBJECT;
             IfdRelationshipTypeEnum relbase = IfdRelationshipTypeEnum.SPECIALIZES;
 
-            if (type.Name.StartsWith("Pset") || type.Name.StartsWith("Qto"))
+            if (type.Name.StartsWith("Qto_"))
+            {
+                type.ToString();
+            }
+
+            if (type.Name.StartsWith("Pset_") || type.Name.StartsWith("Qto_"))
             {
                 // hack
-                conctype = IfdConceptTypeEnum.BAG;
-                relbase = IfdRelationshipTypeEnum.ASSIGNS_COLLECTIONS;
+                conctype = IfdConceptTypeEnum.NEST;
+                relbase = IfdRelationshipTypeEnum.ASSIGNS_COLLECTIONS;// ASSIGNS_PROPERTIES;// ASSIGNS_COLLECTIONS;
             }
             else if(type.IsValueType || type.IsEnum)
             {
@@ -888,16 +994,48 @@ namespace BuildingSmart.Utilities.Dictionary
                     CreateRelationship(guidbase, ifdThis.guid, relbase);
                 }
             }
+            else if(type.IsEnum)
+            {
+                FieldInfo[] enumvals = type.GetFields(BindingFlags.Public | BindingFlags.Static);
+                foreach (FieldInfo f in enumvals)
+                {
+                    if (f.Name != "USERDEFINED" && 
+                        f.Name != "NOTDEFINED" &&
+                        f.Name != "OTHER" &&
+                        f.Name != "NOTKNOWN" &&
+                        f.Name != "UNSET")
+                    {
+                        string fname = f.Name;
+                        DisplayNameAttribute attrFName = (DisplayNameAttribute)f.GetCustomAttribute<DisplayNameAttribute>();
+                        if (attrFName != null)
+                        {
+                            fname = attrFName.DisplayName;
+                        }
 
-            //PropertyInfo[] props = type.GetProperties(BindingFlags.DeclaredOnly | BindingFlags.Instance | BindingFlags.Public);
-            //foreach (PropertyInfo prop in props)
-            FieldInfo[] fields = type.GetFields(BindingFlags.DeclaredOnly | BindingFlags.Instance | BindingFlags.Public);
-            foreach(FieldInfo prop in fields)
+                        string fdesc = null;
+                        DescriptionAttribute attrFDesc = (DescriptionAttribute)f.GetCustomAttribute<DescriptionAttribute>();
+                        if (attrFDesc != null)
+                        {
+                            fdesc = attrFDesc.Description;
+                        }
+
+                        DisplayAttribute[] localizePredef = (DisplayAttribute[])f.GetCustomAttributes(typeof(DisplayAttribute), false);
+                        IfdBase ifdPredef = CreateConcept(type.Name + "." + f.Name, fname, fdesc, IfdConceptTypeEnum.VALUE, localizePredef);
+                        if (ifdPredef != null)
+                        {
+                            CreateRelationship(ifdThis.guid, ifdPredef.guid, IfdRelationshipTypeEnum.ASSIGNS_VALUES);
+                        }
+                    }
+                }
+            }
+
+            PropertyInfo[] fields = type.GetProperties(BindingFlags.DeclaredOnly | BindingFlags.Instance | BindingFlags.Public);
+            foreach (PropertyInfo prop in fields)
             {
                 // write the property itself
 
                 // resolve property type
-                Type typeProp = prop.FieldType;
+                Type typeProp = prop.PropertyType;
                 if (typeProp.IsGenericType && typeProp.GetGenericTypeDefinition() == typeof(Nullable<>))
                 {
                     typeProp = typeProp.GetGenericArguments()[0];
@@ -919,7 +1057,7 @@ namespace BuildingSmart.Utilities.Dictionary
                 }
 
                 // special case for specialization
-                if (prop.Name.Equals("_PredefinedType"))
+                if (prop.Name.Equals("PredefinedType"))
                 {
                     FieldInfo[] enumvals = typeProp.GetFields(BindingFlags.Public | BindingFlags.Static);
                     foreach (FieldInfo f in enumvals)
@@ -929,16 +1067,16 @@ namespace BuildingSmart.Utilities.Dictionary
 
                             string fname = f.Name;
                             DisplayNameAttribute attrFName = (DisplayNameAttribute)f.GetCustomAttribute<DisplayNameAttribute>();
-                            if (attrName != null)
+                            if (attrFName != null)
                             {
-                                fname = attrName.DisplayName;
+                                fname = attrFName.DisplayName;
                             }
 
                             string fdesc = null;
                             DescriptionAttribute attrFDesc = (DescriptionAttribute)f.GetCustomAttribute<DescriptionAttribute>();
-                            if (attrDesc != null)
+                            if (attrFDesc != null)
                             {
-                                fdesc = attrDesc.Description;
+                                fdesc = attrFDesc.Description;
                             }
 
                             DisplayAttribute[] localizePredef = (DisplayAttribute[])f.GetCustomAttributes(typeof(DisplayAttribute), false);
@@ -950,7 +1088,7 @@ namespace BuildingSmart.Utilities.Dictionary
                         }
                     }
                 }
-                else if (conctype == IfdConceptTypeEnum.BAG)// psetprop.FieldType.IsValueType) //!!!
+                else if (conctype == IfdConceptTypeEnum.NEST) // BAG// psetprop.FieldType.IsValueType) //!!!
                 {
 
                     name = type.Name;
@@ -967,7 +1105,7 @@ namespace BuildingSmart.Utilities.Dictionary
                         desc = attrDesc.Description;
                     }
 
-                    string propidentifier = type.Name + "." + prop.Name.Substring(1);
+                    string propidentifier = type.Name + "." + prop.Name;
                     IfdBase ifdProp = CreateConcept(propidentifier, name, desc, IfdConceptTypeEnum.PROPERTY, null);
                     if (ifdProp == null)
                         return;

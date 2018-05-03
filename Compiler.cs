@@ -36,6 +36,7 @@ namespace IfcDoc
         private Dictionary<Type, Dictionary<string, FieldInfo>> m_fields;
         private Dictionary<DocTemplateDefinition, MethodInfo> m_templates;
         private bool m_psets;
+        private string m_rootnamespace;
 
         public static Type CompileProject(DocProject docProject)
         {
@@ -79,8 +80,11 @@ namespace IfcDoc
             CustomAttributeBuilder cabAssemblyVersion = new CustomAttributeBuilder(conContract, new object[] { version } );
 
             string schemaid = project.GetSchemaIdentifier();
-            string assembly = "BuildingSmart." + schemaid;
+            string assembly = "buildingSmart." + schemaid;
             string module = assembly + ".dll";
+
+            this.m_rootnamespace = assembly + ".";
+
             this.m_assembly = AppDomain.CurrentDomain.DefineDynamicAssembly(new AssemblyName(assembly), AssemblyBuilderAccess.RunAndSave, new CustomAttributeBuilder[] { cabAssemblyVersion });
             this.m_module = this.m_assembly.DefineDynamicModule(module, module);
             this.m_definitions = new Dictionary<string, DocObject>();
@@ -617,7 +621,7 @@ namespace IfcDoc
                     return type;
                 }
 
-                TypeBuilder tb = this.m_module.DefineType("BuildingSmart.IFC4X1." + schema + "." + docType.Name, attr, typebase);
+                TypeBuilder tb = this.m_module.DefineType(this.m_rootnamespace + schema + "." + docType.Name, attr, typebase);
 
                 // add typebuilder to map temporarily in case referenced by an attribute within same class or base class
                 this.m_types.Add(strtype, tb);
@@ -815,7 +819,7 @@ namespace IfcDoc
             else if (docType is DocSelect)
             {
                 attr |= TypeAttributes.Interface | TypeAttributes.Abstract;
-                TypeBuilder tb = this.m_module.DefineType(schema + "." + docType.Name, attr);
+                TypeBuilder tb = this.m_module.DefineType(this.m_rootnamespace + schema + "." + docType.Name, attr);
 
                 // interfaces implemented by type (SELECTS)
                 foreach (DocDefinition docdef in this.m_definitions.Values)
@@ -847,7 +851,7 @@ namespace IfcDoc
                     DocConstant docConst = docEnum.Constants[i];
                     FieldBuilder fb = eb.DefineLiteral(docConst.Name, (int)i);
 
-                    foreach (DocLocalization docLocal in docEnum.Localization)
+                    foreach (DocLocalization docLocal in docConst.Localization)
                     {
                         CustomAttributeBuilder cab = docLocal.ToCustomAttributeBuilder();
                         if (cab != null)
@@ -867,7 +871,7 @@ namespace IfcDoc
                 if (docDef.DefinedType == docDef.Name)
                     return null;
 
-                TypeBuilder tb = this.m_module.DefineType(schema + "." + docType.Name, attr, typeof(ValueType));
+                TypeBuilder tb = this.m_module.DefineType(this.m_rootnamespace + schema + "." + docType.Name, attr, typeof(ValueType));
 
                 // interfaces implemented by type (SELECTS)
                 foreach (DocDefinition docdef in this.m_definitions.Values)

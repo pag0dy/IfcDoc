@@ -7552,12 +7552,20 @@ namespace IfcDoc.Schema.DOC
             DocAttribute docAttr = new DocAttribute();
             docAttr.CopyFrom(this);
 
-            docAttr.DefinedType = this.GetEntityName();
+            string quantityentity = this.GetEntityName();
 
+            // get type of nominal value, such that it is compatible with dictionary, C#
             DocObject docDef = null;
-            if (mapDefs.TryGetValue(docAttr.DefinedType, out docDef))
+            if (mapDefs.TryGetValue(quantityentity, out docDef) && docDef is DocEntity)
             {
-                docAttr.Definition = docDef as DocDefinition;
+                DocEntity docEnt = (DocEntity)docDef;
+
+                DocObject docVal = null;
+                if (docEnt.Attributes.Count > 0 && mapDefs.TryGetValue(docEnt.Attributes[0].DefinedType, out docVal) && docVal is DocDefined)
+                {
+                    docAttr.Definition = docVal as DocDefinition;
+                    docAttr.DefinedType = docVal.Name;
+                }
             }
 
             return docAttr;

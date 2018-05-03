@@ -9,11 +9,14 @@ using System.Windows.Forms;
 using IfcDoc.Schema;
 using IfcDoc.Schema.DOC;
 
+
 namespace IfcDoc
 {
     public partial class CtlRules : UserControl
     {
         DocProject m_project;
+        DocConceptRoot m_conceptroot; // optional concept root that holds reference to template or contains concept
+        DocTemplateUsage m_concept; // optional concept that holds reference to template
         DocTemplateDefinition m_parent;
         DocTemplateDefinition m_template;
         DocAttribute m_attribute;
@@ -40,6 +43,30 @@ namespace IfcDoc
             }
         }
 
+        public DocConceptRoot ConceptRoot
+        {
+            get
+            {
+                return this.m_conceptroot;
+            }
+            set
+            {
+                this.m_conceptroot = value;
+            }
+        }
+
+        public DocTemplateUsage Concept
+        {
+            get
+            {
+                return this.m_concept;
+            }
+            set
+            {
+                this.m_concept = value;
+            }
+        }
+
         public DocTemplateDefinition BaseTemplate
         {
             get
@@ -61,6 +88,14 @@ namespace IfcDoc
             set
             {
                 this.m_template = value;
+                if (this.m_template != null)
+                {
+                    this.toolStripLabelTemplate.Text = this.m_template.Name;
+                }
+                else
+                {
+                    this.toolStripLabelTemplate.Text = String.Empty;
+                }
                 LoadTemplateGraph();
                 UpdateCommands();
             }
@@ -220,6 +255,12 @@ namespace IfcDoc
             DocModelRule docRule = (DocModelRule)tnRule.Tag;
             tnRule.Text = docRule.Name;
 
+            if(docRule is DocModelRuleConstraint)
+            {
+                DocModelRuleConstraint docCon = (DocModelRuleConstraint)docRule;
+                tnRule.Text = docCon.Expression.ToString();
+            }
+
             if (this.m_parent != null)
             {
                 DocModelRule[] objpath = this.m_parent.GetRulePath(tnRule.FullPath);
@@ -268,6 +309,12 @@ namespace IfcDoc
             else if (tag is DocModelRuleConstraint)
             {
                 tn.ImageIndex = 2;
+                
+                DocModelRuleConstraint docCon = (DocModelRuleConstraint)tag;
+                if(docCon.Expression != null)
+                {
+                    tn.Text = docCon.Expression.ToString();
+                }
             }
             else if (tag is DocTemplateDefinition)
             {
@@ -308,6 +355,7 @@ namespace IfcDoc
                     if (res == DialogResult.OK && form.SelectedEntity != null)
                     {
                         this.m_template.Type = form.SelectedEntity.Name;
+                        this.ChangeTemplate(this.m_template);
                         this.LoadTemplateGraph();
                         this.ContentChanged(this, EventArgs.Empty);
                     }
@@ -443,22 +491,44 @@ namespace IfcDoc
                 DocEntity docEntity = this.m_project.GetDefinition(typename) as DocEntity;
                 if (docEntity == null)
                 {
-#if false // constraints now edited at operations
+#if true // constraints now edited at operations
                     // launch dialog for constraint
                     using (FormConstraint form = new FormConstraint())
                     {
+                        form.DataType = this.m_project.GetDefinition(typename) as DocType;
+
                         DialogResult res = form.ShowDialog(this);
                         if (res == DialogResult.OK)
                         {
                             DocModelRuleConstraint docRuleConstraint = new DocModelRuleConstraint();
                             rule.Rules.Add(docRuleConstraint);
-                            docRuleConstraint.Description = form.Expression;
-                            docRuleConstraint.Name = form.Expression; // for viewing
+                            //docRuleConstraint.Description = form.Expression;
+                            //docRuleConstraint.Name = form.Expression; // for viewing
+
+                            DocOpLiteral oplit = new DocOpLiteral();
+                            oplit.Operation = DocOpCode.LoadString;
+                            oplit.Literal = form.Literal;
+
+                            DocOpStatement op = new DocOpStatement();
+                            op.Operation = DocOpCode.CompareEqual;
+                            op.Value = oplit;
+
+                            DocOpReference opref = new DocOpReference();
+                            opref.Operation = DocOpCode.NoOperation; // ldfld...
+                            opref.EntityRule = rule as DocModelRuleEntity;
+                            op.Reference = opref;
+
+                            docRuleConstraint.Expression = op;
 
                             this.treeViewTemplate.SelectedNode = this.LoadTemplateGraph(this.treeViewTemplate.SelectedNode, docRuleConstraint);
 
+                            //update...this.upd
+
                             // copy to child templates
                             docTemplate.PropagateRule(this.treeViewTemplate.SelectedNode.FullPath);
+
+                            this.ContentChanged(this, EventArgs.Empty);
+
                         }
                     }
 #endif
@@ -724,6 +794,118 @@ namespace IfcDoc
             if (this.ContentChanged != null)
             {
                 this.ContentChanged(this, EventArgs.Empty);
+            }
+        }
+
+        private void toolStripButtonProperty_Click(object sender, EventArgs e)
+        {
+            DocEntity docBaseEntity = this.m_project.GetDefinition(this.m_template.Type) as DocEntity;
+            if (this.m_conceptroot != null && this.m_conceptroot.ApplicableEntity != null)
+            {
+                docBaseEntity = this.m_conceptroot.ApplicableEntity;
+            }
+
+            using (FormSelectProperty form = new FormSelectProperty(docBaseEntity, this.m_project, false))
+            {
+                if (form.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
+                {
+                    string value = form.GenerateValuePath();
+
+                    Dictionary<string, DocObject> mapEntity = new Dictionary<string, DocObject>();
+                    foreach (DocSection docSection in this.m_project.Sections)
+                    {
+                        foreach (DocSchema docSchema in docSection.Schemas)
+                        {
+                            foreach (DocEntity docEntity in docSchema.Entities)
+                            {
+                                mapEntity.Add(docEntity.Name, docEntity);
+                            }
+                            foreach(DocType docType in docSchema.Types)
+                            {
+                                mapEntity.Add(docType.Name, docType);
+                            }
+                        }
+                    }
+                    
+                    CvtValuePath valuepath = CvtValuePath.Parse(value, mapEntity);
+                    this.ChangeTemplate(valuepath.ToTemplateDefinition());
+                }
+            }
+        }
+
+        private void ChangeTemplate(DocTemplateDefinition docTemplateDefinition)
+        {
+            this.Template = docTemplateDefinition;
+
+            // update link to template on concept or concept root
+            if (this.Concept != null)
+            {
+                this.Concept.Definition = this.Template;
+            }
+            else if (this.ConceptRoot != null)
+            {
+                this.ConceptRoot.ApplicableTemplate = this.Template;
+                this.ConceptRoot.ApplicableEntity = this.Project.GetDefinition(this.Template.Type) as DocEntity;
+            }
+
+            this.LoadTemplateGraph();
+            this.ContentChanged(this, EventArgs.Empty);
+        }
+
+        private void toolStripButtonQuantity_Click(object sender, EventArgs e)
+        {
+            DocEntity docBaseEntity = this.m_project.GetDefinition(this.m_template.Type) as DocEntity;
+            if (this.m_conceptroot != null && this.m_conceptroot.ApplicableEntity != null)
+            {
+                docBaseEntity = this.m_conceptroot.ApplicableEntity;
+            }
+
+            using (FormSelectQuantity form = new FormSelectQuantity(docBaseEntity, this.m_project, false))
+            {
+                if (form.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
+                {
+                    string value = form.GenerateValuePath();
+
+                    Dictionary<string, DocObject> mapEntity = new Dictionary<string, DocObject>();
+                    foreach (DocSection docSection in this.m_project.Sections)
+                    {
+                        foreach (DocSchema docSchema in docSection.Schemas)
+                        {
+                            foreach (DocEntity docEntity in docSchema.Entities)
+                            {
+                                mapEntity.Add(docEntity.Name, docEntity);
+                            }
+                            foreach (DocType docType in docSchema.Types)
+                            {
+                                mapEntity.Add(docType.Name, docType);
+                            }
+                        }
+                    }
+
+                    CvtValuePath valuepath = CvtValuePath.Parse(value, mapEntity);
+
+                    this.ChangeTemplate(valuepath.ToTemplateDefinition());
+
+                    this.LoadTemplateGraph();
+                    this.ContentChanged(this, EventArgs.Empty);
+                }
+            }
+        }
+
+        private void toolStripButtonTemplate_Click(object sender, EventArgs e)
+        {
+            DocEntity docBaseEntity = this.m_project.GetDefinition(this.m_template.Type) as DocEntity;
+            if (this.m_conceptroot != null && this.m_conceptroot.ApplicableEntity != null)
+            {
+                docBaseEntity = this.m_conceptroot.ApplicableEntity;
+            }
+
+            using (FormSelectTemplate form = new FormSelectTemplate(this.Template, this.m_project, docBaseEntity))
+            {
+                if (form.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
+                {
+                    this.ChangeTemplate(form.SelectedTemplate);
+                }
             }
         }
 

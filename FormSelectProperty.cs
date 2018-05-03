@@ -397,5 +397,86 @@ namespace IfcDoc
             }
             this.LoadPropertySets();
         }
+
+        public string GenerateValuePath()
+        {
+            if (this.m_entity == null)
+                return @"\";
+
+            string portprefix = String.Empty;
+            if (this.SelectedPort != null)
+            {
+                portprefix = @".IsNestedBy[]\IfcRelNests.RelatedObjects['" + this.SelectedPort + @"']\IfcDistributionPort";
+            }
+
+            if (this.SelectedPropertySet != null && this.SelectedPropertySet.PropertySetType == "PSET_PERFORMANCEDRIVEN")
+            {
+                portprefix += @".HasAssignments[]\IfcRelAssignsToControl.RelatingControl\IfcPerformanceHistory";
+            }
+
+            string value = @"\" + this.m_entity.Name + portprefix;
+
+            if (this.SelectedProperty != null)
+            {
+                string valueprop = "NominalValue";
+                string datatype = this.SelectedProperty.PrimaryDataType;
+                switch (this.SelectedProperty.PropertyType)
+                {
+                    case DocPropertyTemplateTypeEnum.P_BOUNDEDVALUE:
+                        if (this.SelectedQualifier != null)
+                        {
+                            valueprop = this.SelectedQualifier;
+                        }
+                        else
+                        {
+                            valueprop = "SetPointValue";
+                        }
+                        break;
+
+                    case DocPropertyTemplateTypeEnum.P_ENUMERATEDVALUE:
+                        valueprop = "EnumerationValues";
+                        break;
+
+                    case DocPropertyTemplateTypeEnum.P_LISTVALUE:
+                        valueprop = "ListValues";
+                        break;
+
+                    case DocPropertyTemplateTypeEnum.P_REFERENCEVALUE:
+                        valueprop = "PropertyReference";
+                        datatype = "IfcIrregularTimeSeries.Values[]\\IfcIrregularTimeSeriesValue.ListValues[]\\" + this.SelectedProperty.SecondaryDataType;
+                        break;
+
+                    // other property types are not supported
+                }
+
+                if (this.SelectedProperty.PropertyType == DocPropertyTemplateTypeEnum.COMPLEX)
+                {
+                    value += @".IsDefinedBy['" + this.SelectedPropertySet +
+                        @"']\IfcRelDefinesByProperties.RelatingPropertyDefinition\IfcPropertySet.HasProperties['" + this.SelectedProperty +
+                        @"']\" + this.SelectedProperty.GetEntityName();
+                }
+                else
+                {
+                    value += @".IsDefinedBy['" + this.SelectedPropertySet +
+                        @"']\IfcRelDefinesByProperties.RelatingPropertyDefinition\IfcPropertySet.HasProperties['" + this.SelectedProperty +
+                        @"']\" + this.SelectedProperty.GetEntityName() + @"." + valueprop + @"\" + datatype;
+                }
+
+                // special cases
+                if (this.m_entity.Name.Equals("IfcMaterial"))
+                {
+                    value =
+                        @"\IfcMaterial.HasProperties['" + this.SelectedPropertySet +
+                        @"']\IfcMaterialProperties.Properties['" + this.SelectedProperty +
+                        @"']\" + this.SelectedProperty.GetEntityName() + @"." + valueprop + @"\" + datatype;
+                }
+            }
+            else
+            {
+                value += @".GlobalId\IfcGloballyUniqueId";
+            }
+
+            return value;
+        }
     }
 }

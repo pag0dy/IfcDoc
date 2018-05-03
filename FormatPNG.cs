@@ -231,6 +231,30 @@ namespace IfcDoc.Format.PNG
                                         string content = ruleEntity.Name;//docObj.Name;
                                         foreach (DocModelRule ruleConstraint in ruleEntity.Rules)
                                         {
+                                            if (ruleConstraint is DocModelRuleConstraint)
+                                            {
+                                                DocModelRuleConstraint docConstraint = (DocModelRuleConstraint)ruleConstraint;
+
+                                                // for now, we only support single direct rule -- future: recurse
+                                                if(docConstraint.Expression is DocOpStatement)
+                                                {
+                                                    DocOpStatement opStatement = (DocOpStatement)docConstraint.Expression;
+                                                    if (opStatement.Metric == DocOpCode.NoOperation &&
+                                                        opStatement.Value is DocOpLiteral)
+                                                    {
+                                                        //opStatement.Value
+                                                        DocOpLiteral opLiteral = (DocOpLiteral)opStatement.Value;
+                                                        content = opLiteral.Literal;
+                                                        using (StringFormat fmt = new StringFormat())
+                                                        {
+                                                            fmt.Alignment = StringAlignment.Far;
+                                                            g.DrawString(content, font, Brushes.White, new RectangleF(x + CX, targetY, CX - DX, CY), fmt);
+                                                        }
+                                                    }
+                                                }
+                                            }
+
+#if false // legacy
                                             if (ruleConstraint.Description != null && ruleConstraint.Description.StartsWith("Value="))
                                             {
                                                 content = ruleConstraint.Description.Substring(6);
@@ -241,6 +265,7 @@ namespace IfcDoc.Format.PNG
                                                     g.DrawString(content, font, Brushes.White, new RectangleF(x + CX, targetY, CX - DX, CY), fmt);
                                                 }
                                             }
+#endif
                                         }
 
                                         g.DrawString(ruleEntity.Name, font, Brushes.White, x + CX, targetY);

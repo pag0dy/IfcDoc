@@ -295,7 +295,7 @@ namespace IfcDoc
             List<SEntity> listDelete = new List<SEntity>();
             List<DocTemplateDefinition> listTemplate = new List<DocTemplateDefinition>();
 
-            foreach (object o in instances)
+            foreach (object o in instances.Values)
             {
                 if (o is DocSchema)
                 {
@@ -338,6 +338,25 @@ namespace IfcDoc
                     }
 
                     listTemplate.Add((DocTemplateDefinition)o);
+                }
+                else if (o is DocConceptRoot)
+                {
+                    // V12.0: ensure template is defined
+                    DocConceptRoot docConcRoot = (DocConceptRoot)o;
+                    if (docConcRoot.ApplicableTemplate == null && docConcRoot.ApplicableEntity != null)
+                    {
+                        docConcRoot.ApplicableTemplate = new DocTemplateDefinition();
+                        docConcRoot.ApplicableTemplate.Type = docConcRoot.ApplicableEntity.Name;
+                    }
+                }
+                else if (o is DocTemplateUsage) 
+                {
+                    // V12.0: ensure template is defined
+                    DocTemplateUsage docUsage = (DocTemplateUsage)o;
+                    if (docUsage.Definition == null)
+                    {
+                        docUsage.Definition = new DocTemplateDefinition();
+                    }
                 }
                 else if (o is DocChangeAction)
                 {
@@ -469,7 +488,7 @@ namespace IfcDoc
                         case ".ifcdoc":
                             using (FileStream streamDoc = new FileStream(this.m_file, FileMode.Create, FileAccess.ReadWrite))
                             {
-                                StepSerializer formatDoc = new StepSerializer(typeof(DocProject), SchemaDOC.Types, "IFCDOC_11_9", "IfcDoc 11.9", "BuildingSmart IFC Documentation Generator");
+                                StepSerializer formatDoc = new StepSerializer(typeof(DocProject), SchemaDOC.Types, "IFCDOC_12_0", "IfcDoc 12.0", "BuildingSmart IFC Documentation Generator");
                                 formatDoc.WriteObject(streamDoc, this.m_project); // ... specify header...IFCDOC_11_8
                             }
                             break;
@@ -3038,16 +3057,16 @@ namespace IfcDoc
                 this.toolStripMenuItemEditRename.Enabled = true;
 
                 this.toolStripMenuItemInsertConceptLeaf.Enabled = true;
-                this.toolStripMenuItemInsertConceptPset.Enabled = true;
-                this.toolStripMenuItemInsertConceptQset.Enabled = true;
-                this.toolStripMenuItemInsertConceptMapping.Enabled = true;
+                ////this.toolStripMenuItemInsertConceptPset.Enabled = true;
+                ////this.toolStripMenuItemInsertConceptQset.Enabled = true;
+                ////this.toolStripMenuItemInsertConceptMapping.Enabled = true;
 
                 this.toolStripMenuItemContextInsertLeaf.Visible = true;
                 this.toolStripMenuItemContextInsert.Visible = true;
                 this.toolStripMenuItemContextInsertLeaf.Visible = true;
-                this.toolStripMenuItemContextInsertConceptPset.Visible = true;
-                this.toolStripMenuItemContextInsertConceptQset.Visible = true;
-                this.toolStripMenuItemContextInsertConceptMapping.Visible = true;
+                ////this.toolStripMenuItemContextInsertConceptPset.Visible = true;
+                ////this.toolStripMenuItemContextInsertConceptQset.Visible = true;
+                ////this.toolStripMenuItemContextInsertConceptMapping.Visible = true;
 
                 this.toolStripMenuItemEditPaste.Enabled = (this.m_clipboard is DocTemplateUsage);
 
@@ -3630,8 +3649,8 @@ namespace IfcDoc
                 }
 
                 this.ctlConcept.Project = this.m_project;
-                this.ctlConcept.Template = null;
-                this.ctlConcept.ConceptRoot = docRoot;
+                this.ctlConcept.Template = docRoot.ApplicableTemplate; // V12: show template of root
+                // V12: no longer used: this.ctlConcept.ConceptRoot = docRoot;
                 this.ctlInheritance.Visible = false;
                 this.ctlExpressG.Visible = false;
                 this.ctlConcept.Visible = true;//!
@@ -3940,6 +3959,23 @@ namespace IfcDoc
             if (docConceptRoot == null)
                 return;
 
+            // V12.0: don't require binding
+
+            // create dummy template
+            DocTemplateDefinition docTemplate = new DocTemplateDefinition(); // not linked to anything
+            if (docConceptRoot.ApplicableEntity != null)
+            {
+                docTemplate.Type = docConceptRoot.ApplicableEntity.Name;
+            }
+
+            DocTemplateUsage docUsage = new DocTemplateUsage();
+            docUsage.Definition = docTemplate;
+            docConceptRoot.Concepts.Add(docUsage);
+            docUsage.Name = docUsage.Definition.Name;
+            this.treeView.SelectedNode = LoadNode(this.treeView.SelectedNode, docUsage, docUsage.Name, false);
+            toolStripMenuItemEditRename_Click(this, e);
+
+#if false
             DocEntity docEntity = docConceptRoot.ApplicableEntity;// (DocEntity)this.treeView.SelectedNode.Parent.Tag as DocEntity;
             if (docEntity == null)
                 return;
@@ -3958,7 +3994,7 @@ namespace IfcDoc
                     this.treeView.SelectedNode = LoadNode(this.treeView.SelectedNode, docUsage, docUsage.Name, false);
                 }
             }
-
+#endif
         }
 
 
@@ -4716,6 +4752,20 @@ namespace IfcDoc
             {
                 DocModelView docView = (DocModelView)this.treeView.SelectedNode.Tag;
 
+                // V12.0: don't require binding
+
+                // create generic template
+                DocTemplateDefinition docTemplate = new DocTemplateDefinition();
+                //docTemplate.Type = "IfcRoot";//...
+
+                DocConceptRoot docConceptRoot = new DocConceptRoot();
+                docView.ConceptRoots.Add(docConceptRoot);
+                docConceptRoot.ApplicableTemplate = docTemplate;
+                //docConceptRoot.ApplicableEntity = this.m_project.GetDefinition("IfcRoot") as DocEntity;
+                this.treeView.SelectedNode = this.LoadNode(this.treeView.SelectedNode, docConceptRoot, docConceptRoot.ToString(), false);
+                toolStripMenuItemEditRename_Click(this, e);
+
+#if false // prior
                 // pick the entity
                 using (FormSelectEntity form = new FormSelectEntity(null, null, this.m_project, SelectDefinitionOptions.Entity))
                 {
@@ -4729,6 +4779,7 @@ namespace IfcDoc
                         this.treeView.SelectedNode = this.LoadNode(this.treeView.SelectedNode, docConceptRoot, docConceptRoot.ToString(), false);
                     }
                 }
+#endif
 
             }
         }
@@ -8198,6 +8249,11 @@ namespace IfcDoc
 
         private void ctlConcept_MouseDoubleClick(object sender, MouseEventArgs e)
         {
+            // V12: modes are confusing: just insert rule
+            this.ctlProperties.DoInsert(this.ctlExpressG.Mode);
+
+#if false 
+ 
             // if link mode, insert a rule
             if (this.ctlExpressG.Mode == ToolMode.Select)
             {
@@ -8221,6 +8277,7 @@ namespace IfcDoc
             {
                 this.ctlProperties.DoInsert(this.ctlExpressG.Mode);
             }
+#endif
         }
 
         private void ctlConcept_SelectionChanged(object sender, EventArgs e)
@@ -8536,6 +8593,19 @@ namespace IfcDoc
 
         private void ctlProperties_RuleContentChanged(object sender, EventArgs e)
         {
+            // template may have changed
+            object selection = this.treeView.SelectedNode.Tag;
+            if (selection is DocConceptRoot)
+            {
+                DocConceptRoot docRoot = (DocConceptRoot)selection;
+                this.ctlConcept.Template = docRoot.ApplicableTemplate;
+            }
+            else if(selection is DocTemplateUsage)
+            {
+                DocTemplateUsage docConc = (DocTemplateUsage)selection;
+                this.ctlConcept.Template = docConc.Definition;
+            }
+
             this.ctlConcept.Redraw();
         }
 
@@ -9810,6 +9880,258 @@ namespace IfcDoc
                     }
                 }
             }
+        }
+
+        private void upgradeModelViewToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DialogResult res = MessageBox.Show(this, "Do you want to convert all Model View Definitions to use explicit rules for properties, quantities, and mappings?", "Upgrade View Definitions", MessageBoxButtons.OKCancel);
+            if (res != System.Windows.Forms.DialogResult.OK)
+                return;
+
+            Dictionary<string, DocObject> mapEntity = new Dictionary<string,DocObject>();
+            Dictionary<string, string> mapSchema = new Dictionary<string,string>();
+            this.BuildMaps(mapEntity, mapSchema);
+
+            foreach (DocModelView docView in this.m_project.ModelViews)
+            {
+                foreach (DocConceptRoot docRoot in docView.ConceptRoots)
+                {
+                    for (int iConc = docRoot.Concepts.Count-1; iConc >= 0; iConc--)
+                    {
+                        DocTemplateUsage docConc = docRoot.Concepts[iConc];
+
+                        // if mapping template, then convert
+                        if (docConc.Definition != null && docConc.Definition.Uuid == DocTemplateDefinition.guidTemplateMapping)
+                        {
+                            foreach (DocTemplateItem docItem in docConc.Items)
+                            {
+                                // generate a concept out of each...
+                                string table = docItem.GetParameterValue("Table");
+                                string column = docItem.GetParameterValue("Name");
+                                string mapping = docItem.GetParameterValue("Reference");
+
+                                DocTemplateUsage docUsage = new DocTemplateUsage();
+                                docUsage.Name = column;
+                                //docUsage.Code = docItem.Code;
+                                docUsage.Code = table + "." + column;
+                                docUsage.Status = docItem.Status;
+                                docUsage.Version = docItem.Version;
+                                docUsage.Owner = docItem.Owner;
+                                docUsage.Documentation = docItem.Documentation;
+                                docUsage.Copyright = docItem.Copyright;
+                                docRoot.Concepts.Add(docUsage);
+
+                                CvtValuePath valpath = CvtValuePath.Parse(mapping, mapEntity);
+                                if (valpath != null)
+                                {
+                                    docUsage.Definition = valpath.ToTemplateDefinition();
+                                }
+                                else
+                                {
+                                    docUsage.Definition = new DocTemplateDefinition(); // blank
+                                }
+
+                                foreach (DocExchangeItem docExchangeSource in docConc.Exchanges)
+                                {
+                                    DocExchangeItem docExchangeTarget = new DocExchangeItem();
+                                    docExchangeTarget.Applicability = docExchangeSource.Applicability;
+                                    docExchangeTarget.Exchange = docExchangeSource.Exchange;
+                                    docExchangeTarget.Requirement = docExchangeSource.Requirement;
+                                    docUsage.Exchanges.Add(docExchangeTarget);
+                                }
+
+                                if (docItem.Key)
+                                {
+                                    docUsage.Override = true;
+                                }
+
+                                if (docItem.Calculated)
+                                {
+                                    docUsage.Suppress = true;
+                                }
+
+                                if (docItem.Optional)
+                                {
+                                    docUsage.Operator = DocTemplateOperator.Or;
+                                }
+                                else
+                                {
+                                    docUsage.Operator = DocTemplateOperator.And;
+                                }
+
+                                // reference can be deduced from mapping
+
+
+                            }
+
+                            docRoot.Concepts.Remove(docConc);
+                        }
+
+                        // if property set template, then convert
+                        if (docConc.Definition != null && docConc.Definition.Uuid == DocTemplateDefinition.guidTemplatePsetObject)
+                        {
+                            foreach (DocTemplateItem docItemPset in docConc.Items)
+                            {
+                                string psetname = docItemPset.GetParameterValue("PsetName");
+
+                                // generate a concept out of each pset
+                                foreach(DocTemplateUsage docConcType in docItemPset.Concepts)
+                                {
+
+                                    if (docConcType.Definition != null)
+                                    {
+                                        foreach (DocTemplateItem docItemProp in docConcType.Items)
+                                        {
+                                            string propname = docItemProp.GetParameterValue("PropertyName");
+                                            string datatype = docItemProp.GetParameterValue("Value");
+
+                                            // each property
+                                            string mapping = null;
+                                            if (docConcType.Definition.Uuid == DocTemplateDefinition.guidTemplatePropertySingle)
+                                            {
+                                                mapping = 
+                                                @"\IfcObject.IsDefinedBy['" + psetname +
+                                                @"']\IfcRelDefinesByProperties.RelatingPropertyDefinition\IfcPropertySet.HasProperties['" + propname +
+                                                @"']\IfcPropertySingleValue.NominalValue\" + datatype;
+                                            }
+                                            else if(docConcType.Definition.Uuid == DocTemplateDefinition.guidTemplatePropertyEnumerated)
+                                            {
+                                                mapping =
+                                                @"\IfcObject.IsDefinedBy['" + psetname +
+                                                @"']\IfcRelDefinesByProperties.RelatingPropertyDefinition\IfcPropertySet.HasProperties['" + propname +
+                                                @"']\IfcPropertyEnumeratedValue.EnumerationValues[]\" + datatype;
+                                            }
+                                            else if (docConcType.Definition.Uuid == DocTemplateDefinition.guidTemplatePropertyBounded)
+                                            {
+                                                mapping =
+                                                @"\IfcObject.IsDefinedBy['" + psetname +
+                                                @"']\IfcRelDefinesByProperties.RelatingPropertyDefinition\IfcPropertySet.HasProperties['" + propname +
+                                                @"']\IfcPropertyBoundedValue.SetPointValue\" + datatype;
+                                            }
+                                            else if (docConcType.Definition.Uuid == DocTemplateDefinition.guidTemplatePropertyTable)
+                                            {
+                                                string reftype = docItemProp.GetParameterValue("Reference");
+
+                                                mapping =
+                                                @"\IfcObject.IsDefinedBy['" + psetname +
+                                                @"']\IfcRelDefinesByProperties.RelatingPropertyDefinition\IfcPropertySet.HasProperties['" + propname +
+                                                @"']\IfcPropertyTableValue.DefiningValues[]\" + datatype;
+                                            }
+                                            else if (docConcType.Definition.Uuid == DocTemplateDefinition.guidTemplatePropertyReference)
+                                            {
+                                                mapping =
+                                                @"\IfcObject.IsDefinedBy['" + psetname +
+                                                @"']\IfcRelDefinesByProperties.RelatingPropertyDefinition\IfcPropertySet.HasProperties['" + propname +
+                                                @"']\IfcPropertyReferenceValue.PropertyReference\IfcIrregularTimeSeries.Values[]\IfcIrregularTimeSeriesValue.ListValues[]\" + datatype;
+                                            }
+
+                                            if (mapping != null)
+                                            {
+                                                CvtValuePath valpath = CvtValuePath.Parse(mapping, mapEntity);
+                                                DocTemplateDefinition docTemplateProperty = valpath.ToTemplateDefinition();
+                                                if (docTemplateProperty != null)
+                                                {
+                                                    DocTemplateUsage docUsage = new DocTemplateUsage();
+                                                    docUsage.Definition = docTemplateProperty;
+                                                    docUsage.Name = propname;
+                                                    docRoot.Concepts.Add(docUsage);
+                                                }
+                                            }
+                                        }
+                                    }
+                                  
+                                }
+                            }
+
+                            docRoot.Concepts.Remove(docConc);
+                        }
+
+                        // if quantity set template, then convert
+                        if (docConc.Definition != null && docConc.Definition.Uuid == DocTemplateDefinition.guidTemplateQset)
+                        {
+                            foreach (DocTemplateItem docItemQset in docConc.Items)
+                            {
+                                string psetname = docItemQset.GetParameterValue("QsetName");
+
+                                // generate a concept out of each pset
+                                foreach (DocTemplateUsage docConcType in docItemQset.Concepts)
+                                {
+
+                                    if (docConcType.Definition != null)
+                                    {
+                                        foreach (DocTemplateItem docItemProp in docConcType.Items)
+                                        {
+                                            string propname = docItemProp.GetParameterValue("QuantityName");
+
+                                            // each property
+                                            string mapping = null;
+                                            if (docConcType.Definition.Uuid == Guid.Parse("dd8678e1-e300-4f70-9d63-e539db4bd11c"))
+                                            {
+                                                mapping =
+                                                @"\IfcObject.IsDefinedBy['" + psetname +
+                                                @"']\IfcRelDefinesByProperties.RelatingPropertyDefinition\IfcElementQuantity.Quantities['" + propname +
+                                                @"']\IfcQuantityLength.LengthValue\IfcLengthMeasure";
+                                            }
+                                            else if (docConcType.Definition.Uuid == Guid.Parse("65ac4747-6eff-437e-94e2-643fd4e3bf86"))
+                                            {
+                                                mapping =
+                                                @"\IfcObject.IsDefinedBy['" + psetname +
+                                                @"']\IfcRelDefinesByProperties.RelatingPropertyDefinition\IfcElementQuantity.Quantities['" + propname +
+                                                @"']\IfcQuantityArea.AreaValue\IfcAreaMeasure";
+                                            }
+                                            else if (docConcType.Definition.Uuid == Guid.Parse("6491a3b0-b7e9-412a-8226-bcd91c2b0b0e"))
+                                            {
+                                                mapping =
+                                                @"\IfcObject.IsDefinedBy['" + psetname +
+                                                @"']\IfcRelDefinesByProperties.RelatingPropertyDefinition\IfcElementQuantity.Quantities['" + propname +
+                                                @"']\IfcQuantityVolume.VolumeValue\IfcVolumeMeasure";
+                                            }
+                                            else if (docConcType.Definition.Uuid == Guid.Parse("e1016e56-3c89-4f42-9679-07e1db3c0afb"))
+                                            {
+                                                mapping =
+                                                @"\IfcObject.IsDefinedBy['" + psetname +
+                                                @"']\IfcRelDefinesByProperties.RelatingPropertyDefinition\IfcElementQuantity.Quantities['" + propname +
+                                                @"']\IfcQuantityWeight.WeightValue\IfcMassMeasure";
+                                            }
+                                            else if (docConcType.Definition.Uuid == Guid.Parse("8aaeff32-572c-4f6a-ac64-e2151663cbf1"))
+                                            {
+                                                mapping =
+                                                @"\IfcObject.IsDefinedBy['" + psetname +
+                                                @"']\IfcRelDefinesByProperties.RelatingPropertyDefinition\IfcElementQuantity.Quantities['" + propname +
+                                                @"']\IfcQuantityCount.CountValue\IfcCountMeasure";
+                                            }
+                                            else
+                                            {
+                                                this.ToString();
+                                            }
+
+                                            if (mapping != null)
+                                            {
+                                                CvtValuePath valpath = CvtValuePath.Parse(mapping, mapEntity);
+                                                DocTemplateDefinition docTemplateProperty = valpath.ToTemplateDefinition();
+                                                if (docTemplateProperty != null)
+                                                {
+                                                    DocTemplateUsage docUsage = new DocTemplateUsage();
+                                                    docUsage.Definition = docTemplateProperty;
+                                                    docUsage.Name = propname;
+                                                    docRoot.Concepts.Add(docUsage);
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                }
+                            }
+
+                            docRoot.Concepts.Remove(docConc);
+                        }
+
+
+                    }
+                }
+            }
+
+            this.LoadTree();
         }
     }
 

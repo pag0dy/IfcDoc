@@ -68,6 +68,9 @@ namespace IfcDoc
             }
             set
             {
+                if (this.m_template == value)
+                    return;
+
                 this.m_template = value;
                 this.m_hitmap = new Dictionary<Rectangle, SEntity>();
                 Redraw();
@@ -232,9 +235,10 @@ namespace IfcDoc
 
         protected override void OnPaint(PaintEventArgs pe)
         {
+            Graphics g = pe.Graphics;
+
             if (this.m_image != null)
             {
-                Graphics g = pe.Graphics;
                 g.TranslateTransform(this.AutoScrollPosition.X, this.AutoScrollPosition.Y);
                 g.DrawImage(this.m_image, Point.Empty);
 
@@ -275,6 +279,12 @@ namespace IfcDoc
                     }
                 }
             }
+
+            if (this.m_template == null || String.IsNullOrEmpty(this.m_template.Type))
+            {
+                g.DrawString("Double-click to create mapping.", this.Font, Brushes.Black, 0.0f, 0.0f, StringFormat.GenericDefault);
+            }
+
         }
 
         private SEntity Pick(Point pt, out int iAttr, out DocAttribute docAttribute, out Rectangle rc)
