@@ -103,6 +103,7 @@ namespace IfcDoc
                         this.comboBoxValue.Items.Add(docCon);
                     }
                     this.comboBoxValue.Enabled = true;
+                    this.comboBoxValue.Visible = true;
                     this.textBoxBenchmark.Enabled = false;
                 }
                 else if(this.m_datatype is DocDefined)
@@ -344,7 +345,7 @@ namespace IfcDoc
             {
                 case 0: // value
                     this.comboBoxOperator.Enabled = true;
-                    this.textBoxBenchmark.Enabled = true;
+                    this.textBoxBenchmark.Enabled = !(this.m_datatype is DocEnumeration);
                     this.textBoxExpression.Text = this.comboBoxMetric.Text + s_operators[this.comboBoxOperator.SelectedIndex] + value;            
                     break;
 

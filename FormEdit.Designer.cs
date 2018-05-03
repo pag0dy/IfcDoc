@@ -181,9 +181,7 @@
             this.toolStripMenuItemInsertProcessDefinition = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemInsertProcessInput = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemInsertProcessOutput = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem19 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemInsertConceptRoot = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem21 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemInsertConceptLeaf = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemInsertConceptPset = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemInsertConceptQset = new System.Windows.Forms.ToolStripMenuItem();
@@ -228,6 +226,7 @@
             this.toolStripMenuItemToolsValidate = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemToolsConvert = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemToolsMigrateExamples = new System.Windows.Forms.ToolStripMenuItem();
+            this.upgradeModelViewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemMergeProperties = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem8 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemToolsISO = new System.Windows.Forms.ToolStripMenuItem();
@@ -700,10 +699,6 @@
             this.ctlProperties.Name = "ctlProperties";
             this.ctlProperties.SelectedAttribute = null;
             this.ctlProperties.SelectedRule = null;
-            this.ctlProperties.Navigate += new System.EventHandler(this.ctlProperties_Navigate);
-            this.ctlProperties.RuleSelectionChanged += new System.EventHandler(this.ctlProperties_RuleSelectionChanged);
-            this.ctlProperties.RuleContentChanged += new System.EventHandler(this.ctlProperties_RuleContentChanged);
-            this.ctlProperties.SchemaChanged += new System.EventHandler(this.ctlProperties_SchemaChanged);
             // 
             // textBoxHTML
             // 
@@ -1415,9 +1410,7 @@
             this.toolStripMenuItemInsertProcessDefinition,
             this.toolStripMenuItemInsertProcessInput,
             this.toolStripMenuItemInsertProcessOutput,
-            this.toolStripMenuItem19,
             this.toolStripMenuItemInsertConceptRoot,
-            this.toolStripMenuItem21,
             this.toolStripMenuItemInsertConceptLeaf,
             this.toolStripMenuItemInsertConceptPset,
             this.toolStripMenuItemInsertConceptQset,
@@ -1466,21 +1459,11 @@
             this.toolStripMenuItemInsertProcessOutput.Name = "toolStripMenuItemInsertProcessOutput";
             this.toolStripMenuItemInsertProcessOutput.Click += new System.EventHandler(this.toolStripMenuItemInsertProcessOutput_Click);
             // 
-            // toolStripMenuItem19
-            // 
-            this.toolStripMenuItem19.Name = "toolStripMenuItem19";
-            resources.ApplyResources(this.toolStripMenuItem19, "toolStripMenuItem19");
-            // 
             // toolStripMenuItemInsertConceptRoot
             // 
             resources.ApplyResources(this.toolStripMenuItemInsertConceptRoot, "toolStripMenuItemInsertConceptRoot");
             this.toolStripMenuItemInsertConceptRoot.Name = "toolStripMenuItemInsertConceptRoot";
             this.toolStripMenuItemInsertConceptRoot.Click += new System.EventHandler(this.toolStripMenuItemInsertConceptRoot_Click);
-            // 
-            // toolStripMenuItem21
-            // 
-            this.toolStripMenuItem21.Name = "toolStripMenuItem21";
-            resources.ApplyResources(this.toolStripMenuItem21, "toolStripMenuItem21");
             // 
             // toolStripMenuItemInsertConceptLeaf
             // 
@@ -1759,6 +1742,7 @@
             this.toolStripMenuItemToolsValidate,
             this.toolStripMenuItemToolsConvert,
             this.toolStripMenuItemToolsMigrateExamples,
+            this.upgradeModelViewToolStripMenuItem,
             this.toolStripMenuItemMergeProperties,
             this.toolStripMenuItem8,
             this.toolStripMenuItemToolsISO});
@@ -1782,6 +1766,12 @@
             this.toolStripMenuItemToolsMigrateExamples.Name = "toolStripMenuItemToolsMigrateExamples";
             resources.ApplyResources(this.toolStripMenuItemToolsMigrateExamples, "toolStripMenuItemToolsMigrateExamples");
             this.toolStripMenuItemToolsMigrateExamples.Click += new System.EventHandler(this.toolStripMenuItemToolsMigrateExamples_Click);
+            // 
+            // upgradeModelViewToolStripMenuItem
+            // 
+            this.upgradeModelViewToolStripMenuItem.Name = "upgradeModelViewToolStripMenuItem";
+            resources.ApplyResources(this.upgradeModelViewToolStripMenuItem, "upgradeModelViewToolStripMenuItem");
+            this.upgradeModelViewToolStripMenuItem.Click += new System.EventHandler(this.upgradeModelViewToolStripMenuItem_Click);
             // 
             // toolStripMenuItemMergeProperties
             // 
@@ -2405,7 +2395,6 @@
         private System.Windows.Forms.SaveFileDialog saveFileDialogModule;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemEnableDisable;
-        private CtlProperties ctlProperties;
         private System.Windows.Forms.SplitContainer splitContainerEdit;
         private System.Windows.Forms.ListView listViewValidate;
         private System.Windows.Forms.ColumnHeader columnHeaderInstanceID;
@@ -2454,8 +2443,6 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemContextInsertConceptPset;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemContextInsertConceptQset;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemContextInsertConceptMapping;
-        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem19;
-        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem21;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemInsertProcessOutput;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemInsertProcessDefinition;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemInsertProcessInput;
@@ -2464,5 +2451,7 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemFileOpenFolder;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemFileSaveFolder;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemMergeProperties;
+        private System.Windows.Forms.ToolStripMenuItem upgradeModelViewToolStripMenuItem;
+        private CtlProperties ctlProperties;
     }
 }

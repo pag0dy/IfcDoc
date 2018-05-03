@@ -9,7 +9,7 @@ namespace BuildingSmart.Utilities.Dictionary
 {
 
     [DataContract]
-    internal class ResponseContext
+    internal class ifdContexts
     {
         [DataMember] public IfdContext[] IfdContext;
     }
@@ -29,7 +29,7 @@ namespace BuildingSmart.Utilities.Dictionary
     [DataContract]
     internal class IfdConceptInRelationship : IfdConcept
     {
-        //[DataMember(Order = 0)] public IfdContext[] contexts;
+        [DataMember(Order = 0)] public IfdContext contexts;//??single??
         [DataMember(Order = 1)] public string relationshipType;
     }
 

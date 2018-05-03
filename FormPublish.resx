@@ -130,7 +130,7 @@
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="progressBar.TabIndex" type="System.Int32, mscorlib">
-    <value>9</value>
+    <value>15</value>
   </data>
   <data name="&gt;&gt;progressBar.Name" xml:space="preserve">
     <value>progressBar</value>
@@ -142,7 +142,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;progressBar.ZOrder" xml:space="preserve">
-    <value>12</value>
+    <value>15</value>
   </data>
   <data name="textBoxUrl.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -172,7 +172,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;textBoxUrl.ZOrder" xml:space="preserve">
-    <value>13</value>
+    <value>16</value>
   </data>
   <data name="labelServer.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -184,7 +184,7 @@
     <value>41, 13</value>
   </data>
   <data name="labelServer.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
+    <value>2</value>
   </data>
   <data name="labelServer.Text" xml:space="preserve">
     <value>Server:</value>
@@ -199,7 +199,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;labelServer.ZOrder" xml:space="preserve">
-    <value>14</value>
+    <value>17</value>
   </data>
   <data name="buttonCancel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Right</value>
@@ -211,7 +211,7 @@
     <value>75, 23</value>
   </data>
   <data name="buttonCancel.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
+    <value>18</value>
   </data>
   <data name="buttonCancel.Text" xml:space="preserve">
     <value>Cancel</value>
@@ -226,7 +226,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;buttonCancel.ZOrder" xml:space="preserve">
-    <value>15</value>
+    <value>18</value>
   </data>
   <data name="buttonOK.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Right</value>
@@ -241,7 +241,7 @@
     <value>75, 23</value>
   </data>
   <data name="buttonOK.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
+    <value>17</value>
   </data>
   <data name="buttonOK.Text" xml:space="preserve">
     <value>OK</value>
@@ -256,7 +256,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;buttonOK.ZOrder" xml:space="preserve">
-    <value>16</value>
+    <value>19</value>
   </data>
   <data name="labelSummary.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -268,7 +268,7 @@
     <value>138, 13</value>
   </data>
   <data name="labelSummary.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
+    <value>13</value>
   </data>
   <data name="labelSummary.Text" xml:space="preserve">
     <value>Check items to be included:</value>
@@ -283,7 +283,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;labelSummary.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>14</value>
   </data>
   <metadata name="backgroundWorkerPublish.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
@@ -300,6 +300,102 @@
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
     <value>784, 561</value>
   </data>
+  <data name="buttonSearch.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="buttonSearch.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="buttonSearch.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="buttonSearch.Location" type="System.Drawing.Point, System.Drawing">
+    <value>696, 111</value>
+  </data>
+  <data name="buttonSearch.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 23</value>
+  </data>
+  <data name="buttonSearch.TabIndex" type="System.Int32, mscorlib">
+    <value>20</value>
+  </data>
+  <data name="buttonSearch.Text" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="&gt;&gt;buttonSearch.Name" xml:space="preserve">
+    <value>buttonSearch</value>
+  </data>
+  <data name="&gt;&gt;buttonSearch.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;buttonSearch.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;buttonSearch.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="label2.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="label2.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>361, 95</value>
+  </data>
+  <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>67, 13</value>
+  </data>
+  <data name="label2.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="label2.Text" xml:space="preserve">
+    <value>Namespace:</value>
+  </data>
+  <data name="&gt;&gt;label2.Name" xml:space="preserve">
+    <value>label2</value>
+  </data>
+  <data name="&gt;&gt;label2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label2.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="textBoxNamespace.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="textBoxNamespace.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="textBoxNamespace.Location" type="System.Drawing.Point, System.Drawing">
+    <value>364, 112</value>
+  </data>
+  <data name="textBoxNamespace.Size" type="System.Drawing.Size, System.Drawing">
+    <value>326, 20</value>
+  </data>
+  <data name="textBoxNamespace.TabIndex" type="System.Int32, mscorlib">
+    <value>12</value>
+  </data>
+  <data name="textBoxNamespace.Text" xml:space="preserve">
+    <value>BuildingSmart.IFC4X1</value>
+  </data>
+  <data name="&gt;&gt;textBoxNamespace.Name" xml:space="preserve">
+    <value>textBoxNamespace</value>
+  </data>
+  <data name="&gt;&gt;textBoxNamespace.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;textBoxNamespace.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;textBoxNamespace.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
   <data name="label1.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -313,7 +409,7 @@
     <value>46, 13</value>
   </data>
   <data name="label1.TabIndex" type="System.Int32, mscorlib">
-    <value>17</value>
+    <value>9</value>
   </data>
   <data name="label1.Text" xml:space="preserve">
     <value>Context:</value>
@@ -328,7 +424,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>3</value>
   </data>
   <data name="comboBoxContext.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -337,19 +433,19 @@
     <value>False</value>
   </data>
   <data name="comboBoxContext.Items" xml:space="preserve">
-    <value>buildingSmart Data Dictionary (Test Server)</value>
+    <value>buildingSmart Data Dictionary (Public Server)</value>
   </data>
   <data name="comboBoxContext.Items1" xml:space="preserve">
-    <value>buildingSmart Data Dictionary (Public Server)</value>
+    <value>buildingSmart Data Dictionary (Test Server)</value>
   </data>
   <data name="comboBoxContext.Location" type="System.Drawing.Point, System.Drawing">
     <value>14, 111</value>
   </data>
   <data name="comboBoxContext.Size" type="System.Drawing.Size, System.Drawing">
-    <value>757, 21</value>
+    <value>344, 21</value>
   </data>
   <data name="comboBoxContext.TabIndex" type="System.Int32, mscorlib">
-    <value>16</value>
+    <value>10</value>
   </data>
   <data name="&gt;&gt;comboBoxContext.Name" xml:space="preserve">
     <value>comboBoxContext</value>
@@ -361,7 +457,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;comboBoxContext.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>4</value>
   </data>
   <data name="treeViewContainer.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Bottom, Left, Right</value>
@@ -377,7 +473,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAACs
-        kAAAAk1TRnQBSQFMAgEBLwEAAcgBBgHIAQYBEAEAARABAAT/ARkBAAj/AUIBTQE2BwABNgMAASgDAAFA
+        kAAAAk1TRnQBSQFMAgEBLwEAAdABBgHQAQYBEAEAARABAAT/ARkBAAj/AUIBTQE2BwABNgMAASgDAAFA
         AwABwAMAAQEBAAEYBgABkBsAA/4D/AP2A/EG7wPxA/YD/AP+EgAD/gP8A/YD8QbvA/ED9gP8A/4SAAP+
         A/wD9gPxBu8D8QP2A/wD/j8AA/4D9gPiA8UDqwakA6sDxQPiA/YD/gwAA/4D9gPiA8UDqwakA6sDxQPi
         A/YD/gwAA/4D9gPiA8UDqwakA6sDxQPiA/YD/jkAA/4D8wG2AcIBqwFqAaIBPgFQAa8BEAFQAa8BDwFQ
@@ -1007,7 +1103,7 @@
     <value>757, 332</value>
   </data>
   <data name="treeViewContainer.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
+    <value>19</value>
   </data>
   <data name="&gt;&gt;treeViewContainer.Name" xml:space="preserve">
     <value>treeViewContainer</value>
@@ -1019,7 +1115,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;treeViewContainer.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>5</value>
   </data>
   <data name="checkBoxRemember.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left</value>
@@ -1034,7 +1130,7 @@
     <value>459, 17</value>
   </data>
   <data name="checkBoxRemember.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
+    <value>16</value>
   </data>
   <data name="checkBoxRemember.Text" xml:space="preserve">
     <value>Remember account and password on this computer (Warning: insecure, stored as clear text)</value>
@@ -1049,7 +1145,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;checkBoxRemember.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>6</value>
   </data>
   <data name="labelPassword.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
@@ -1067,7 +1163,7 @@
     <value>56, 13</value>
   </data>
   <data name="labelPassword.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
+    <value>6</value>
   </data>
   <data name="labelPassword.Text" xml:space="preserve">
     <value>Password:</value>
@@ -1082,7 +1178,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;labelPassword.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>7</value>
   </data>
   <data name="textBoxPassword.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
@@ -1094,7 +1190,7 @@
     <value>160, 20</value>
   </data>
   <data name="textBoxPassword.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
+    <value>7</value>
   </data>
   <data name="&gt;&gt;textBoxPassword.Name" xml:space="preserve">
     <value>textBoxPassword</value>
@@ -1106,7 +1202,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;textBoxPassword.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>8</value>
   </data>
   <data name="textBoxUsername.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
@@ -1118,7 +1214,7 @@
     <value>160, 20</value>
   </data>
   <data name="textBoxUsername.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
+    <value>5</value>
   </data>
   <data name="&gt;&gt;textBoxUsername.Name" xml:space="preserve">
     <value>textBoxUsername</value>
@@ -1130,7 +1226,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;textBoxUsername.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>9</value>
   </data>
   <data name="labelUsername.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
@@ -1148,7 +1244,7 @@
     <value>50, 13</value>
   </data>
   <data name="labelUsername.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
+    <value>4</value>
   </data>
   <data name="labelUsername.Text" xml:space="preserve">
     <value>Account:</value>
@@ -1163,7 +1259,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;labelUsername.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>10</value>
   </data>
   <data name="buttonLogin.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
@@ -1175,7 +1271,7 @@
     <value>75, 23</value>
   </data>
   <data name="buttonLogin.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
+    <value>8</value>
   </data>
   <data name="buttonLogin.Text" xml:space="preserve">
     <value>Login</value>
@@ -1190,7 +1286,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;buttonLogin.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>11</value>
   </data>
   <data name="comboBoxProtocol.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -1208,7 +1304,7 @@
     <value>344, 21</value>
   </data>
   <data name="comboBoxProtocol.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
+    <value>3</value>
   </data>
   <data name="&gt;&gt;comboBoxProtocol.Name" xml:space="preserve">
     <value>comboBoxProtocol</value>
@@ -1220,7 +1316,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;comboBoxProtocol.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>12</value>
   </data>
   <data name="labelError.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left</value>
@@ -1235,7 +1331,7 @@
     <value>0, 13</value>
   </data>
   <data name="labelError.TabIndex" type="System.Int32, mscorlib">
-    <value>13</value>
+    <value>0</value>
   </data>
   <data name="&gt;&gt;labelError.Name" xml:space="preserve">
     <value>labelError</value>
@@ -1247,7 +1343,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;labelError.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>13</value>
   </data>
   <data name="textBoxWarning.Font" type="System.Drawing.Font, System.Drawing">
     <value>Microsoft Sans Serif, 8.25pt</value>
@@ -1265,14 +1361,11 @@
     <value>758, 29</value>
   </data>
   <data name="textBoxWarning.TabIndex" type="System.Int32, mscorlib">
-    <value>15</value>
+    <value>1</value>
   </data>
   <data name="textBoxWarning.Text" xml:space="preserve">
-    <value>Warning: The servers below do not support a secure connection, such that all information (including username and password) will be sent in the clear.
+    <value>Warning: A secure connection is unavailable, such that all information (including username and password) will be sent in the clear.
 It is strongly recommended that the username and password used for this site should not be used at any other websites.</value>
-  </data>
-  <data name="textBoxWarning.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
   </data>
   <data name="&gt;&gt;textBoxWarning.Name" xml:space="preserve">
     <value>textBoxWarning</value>
@@ -1284,7 +1377,7 @@ It is strongly recommended that the username and password used for this site sho
     <value>$this</value>
   </data>
   <data name="&gt;&gt;textBoxWarning.ZOrder" xml:space="preserve">
-    <value>17</value>
+    <value>20</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

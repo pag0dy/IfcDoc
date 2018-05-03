@@ -210,10 +210,10 @@ namespace IfcDoc
                 }
                 else if (docObject is DocTemplateDefinition)
                 {
-                    this.tabControl.TabPages.Add(this.tabPageTemplate);
+                    this.tabControl.TabPages.Add(this.tabPageQuery);
                     DocTemplateDefinition docTemplate = (DocTemplateDefinition)docObject;
 
-                    this.tabControl.TabPages.Add(this.tabPageOperations);
+                    this.tabControl.TabPages.Add(this.tabPageConstraints);
 
                     this.tabControl.TabPages.Add(this.tabPageUsage);
                     this.listViewUsage.Items.Clear();
@@ -255,11 +255,24 @@ namespace IfcDoc
                 }
                 else if (docObject is DocConceptRoot)
                 {
-                    this.tabPageConcept.Text = "Applicability";
-                    this.tabControl.TabPages.Add(this.tabPageConcept);
-                    this.tabControl.TabPages.Add(this.tabPageConceptRoot);
-
                     DocConceptRoot docRoot = (DocConceptRoot)docObject;
+
+                    // V12: show template for item to allow one-off editing
+                    this.tabControl.TabPages.Add(this.tabPageQuery);
+                    this.ctlRules.Project = this.m_project;
+                    this.ctlRules.ConceptRoot = docRoot;
+                    this.ctlRules.Concept = null;
+                    this.ctlRules.BaseTemplate = null;
+                    this.ctlRules.Template = docRoot.ApplicableTemplate;
+
+                    this.tabControl.TabPages.Add(this.tabPageConstraints);
+                    this.ctlOperators.Project = this.m_project;
+                    this.ctlOperators.Template = docRoot.ApplicableTemplate;
+                    this.ctlOperators.Rule = null;
+
+
+                    this.tabControl.TabPages.Add(this.tabPageConcept); // note: while possible, not used
+                    this.tabControl.TabPages.Add(this.tabPageConceptRoot);
 
                     this.ctlParameters.Project = this.m_project;
                     this.ctlParameters.ConceptRoot = docRoot;
@@ -335,11 +348,26 @@ namespace IfcDoc
                 }
                 else if (docObject is DocTemplateUsage)
                 {
-                    this.tabPageConcept.Text = "Concept";
+                    DocTemplateUsage docUsage = (DocTemplateUsage)docObject;
+                    DocModelView docView = (DocModelView)this.m_path[this.m_path.Length - 3];
+                    DocConceptRoot docRoot = (DocConceptRoot)this.m_path[this.m_path.Length - 2];
+
+
+                    // V12: show template for item to allow one-off editing
+                    this.tabControl.TabPages.Add(this.tabPageQuery);
+                    this.ctlRules.Project = this.m_project;
+                    this.ctlRules.ConceptRoot = docRoot;
+                    this.ctlRules.Concept = docUsage;
+                    this.ctlRules.BaseTemplate = null;
+                    this.ctlRules.Template = docUsage.Definition;
+
+                    this.tabControl.TabPages.Add(this.tabPageConstraints);
+                    this.ctlOperators.Project = this.m_project;
+                    this.ctlOperators.Template = docUsage.Definition;
+                    this.ctlOperators.Rule = null;
+
                     this.tabControl.TabPages.Add(this.tabPageConcept);
                     this.tabControl.TabPages.Add(this.tabPageRequirements);
-
-                    DocTemplateUsage docUsage = (DocTemplateUsage)docObject;
 
                     this.ctlParameters.Project = this.m_project;
                     this.ctlParameters.ConceptRoot = this.m_path[this.m_path.Length - 2] as DocConceptRoot;
@@ -352,8 +380,6 @@ namespace IfcDoc
                         return; // should not occur -- View | Root | Concept; potentially multiple views nested
 
                     // find the view
-                    DocModelView docView = (DocModelView)this.m_path[this.m_path.Length - 3];
-                    DocConceptRoot docRoot = (DocConceptRoot)this.m_path[this.m_path.Length - 2];
                     if (docView == null)
                         return;
 
@@ -2244,18 +2270,7 @@ namespace IfcDoc
 
         public void DoInsert(ToolMode toolmode)
         {
-            switch (toolmode)
-            {
-
-                case ToolMode.Move:
-                    this.ctlRules.DoInsert();
-                    break;
-
-                case ToolMode.Link:
-                    //OPERATORS///this.ctlParameters.DoInsert();
-                    break;
-            }
-
+            this.ctlRules.DoInsert();
         }
 
         public object SelectedRule

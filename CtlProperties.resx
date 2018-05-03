@@ -1063,39 +1063,39 @@
     <value>ctlRules</value>
   </data>
   <data name="&gt;&gt;ctlRules.Type" xml:space="preserve">
-    <value>IfcDoc.CtlRules, IfcDoc, Version=11.7.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>IfcDoc.CtlRules, IfcDoc, Version=11.9.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;ctlRules.Parent" xml:space="preserve">
-    <value>tabPageTemplate</value>
+    <value>tabPageQuery</value>
   </data>
   <data name="&gt;&gt;ctlRules.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="tabPageTemplate.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="tabPageQuery.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 22</value>
   </data>
-  <data name="tabPageTemplate.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+  <data name="tabPageQuery.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 3, 3, 3</value>
   </data>
-  <data name="tabPageTemplate.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="tabPageQuery.Size" type="System.Drawing.Size, System.Drawing">
     <value>352, 394</value>
   </data>
-  <data name="tabPageTemplate.TabIndex" type="System.Int32, mscorlib">
+  <data name="tabPageQuery.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
   </data>
-  <data name="tabPageTemplate.Text" xml:space="preserve">
-    <value>Template</value>
+  <data name="tabPageQuery.Text" xml:space="preserve">
+    <value>Query</value>
   </data>
-  <data name="&gt;&gt;tabPageTemplate.Name" xml:space="preserve">
-    <value>tabPageTemplate</value>
+  <data name="&gt;&gt;tabPageQuery.Name" xml:space="preserve">
+    <value>tabPageQuery</value>
   </data>
-  <data name="&gt;&gt;tabPageTemplate.Type" xml:space="preserve">
+  <data name="&gt;&gt;tabPageQuery.Type" xml:space="preserve">
     <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;tabPageTemplate.Parent" xml:space="preserve">
+  <data name="&gt;&gt;tabPageQuery.Parent" xml:space="preserve">
     <value>tabControl</value>
   </data>
-  <data name="&gt;&gt;tabPageTemplate.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;tabPageQuery.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
   <data name="ctlParameters.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
@@ -1114,7 +1114,7 @@
     <value>ctlParameters</value>
   </data>
   <data name="&gt;&gt;ctlParameters.Type" xml:space="preserve">
-    <value>IfcDoc.CtlParameters, IfcDoc, Version=11.7.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>IfcDoc.CtlParameters, IfcDoc, Version=11.9.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;ctlParameters.Parent" xml:space="preserve">
     <value>tabPageConcept</value>
@@ -1135,7 +1135,7 @@
     <value>0</value>
   </data>
   <data name="tabPageConcept.Text" xml:space="preserve">
-    <value>Concept</value>
+    <value>Parameters</value>
   </data>
   <data name="&gt;&gt;tabPageConcept.Name" xml:space="preserve">
     <value>tabPageConcept</value>
@@ -4847,39 +4847,39 @@
     <value>ctlOperators</value>
   </data>
   <data name="&gt;&gt;ctlOperators.Type" xml:space="preserve">
-    <value>IfcDoc.CtlOperators, IfcDoc, Version=11.7.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>IfcDoc.CtlOperators, IfcDoc, Version=11.9.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;ctlOperators.Parent" xml:space="preserve">
-    <value>tabPageOperations</value>
+    <value>tabPageConstraints</value>
   </data>
   <data name="&gt;&gt;ctlOperators.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="tabPageOperations.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="tabPageConstraints.Location" type="System.Drawing.Point, System.Drawing">
     <value>4, 22</value>
   </data>
-  <data name="tabPageOperations.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+  <data name="tabPageConstraints.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 3, 3, 3</value>
   </data>
-  <data name="tabPageOperations.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="tabPageConstraints.Size" type="System.Drawing.Size, System.Drawing">
     <value>352, 394</value>
   </data>
-  <data name="tabPageOperations.TabIndex" type="System.Int32, mscorlib">
+  <data name="tabPageConstraints.TabIndex" type="System.Int32, mscorlib">
     <value>17</value>
   </data>
-  <data name="tabPageOperations.Text" xml:space="preserve">
-    <value>Operations</value>
+  <data name="tabPageConstraints.Text" xml:space="preserve">
+    <value>Constraints</value>
   </data>
-  <data name="&gt;&gt;tabPageOperations.Name" xml:space="preserve">
-    <value>tabPageOperations</value>
+  <data name="&gt;&gt;tabPageConstraints.Name" xml:space="preserve">
+    <value>tabPageConstraints</value>
   </data>
-  <data name="&gt;&gt;tabPageOperations.Type" xml:space="preserve">
+  <data name="&gt;&gt;tabPageConstraints.Type" xml:space="preserve">
     <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;tabPageOperations.Parent" xml:space="preserve">
+  <data name="&gt;&gt;tabPageConstraints.Parent" xml:space="preserve">
     <value>tabControl</value>
   </data>
-  <data name="&gt;&gt;tabPageOperations.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;tabPageConstraints.ZOrder" xml:space="preserve">
     <value>15</value>
   </data>
   <data name="columnHeaderRootTemplate.Text" xml:space="preserve">
@@ -4917,7 +4917,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAABy
-        CwAAAk1TRnQBSQFMAgEBBAEAAbwBAQG8AQEBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
+        CwAAAk1TRnQBSQFMAgEBBAEAAcwBAQHMAQEBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
         AwABQAMAASADAAEBAQABCAYAAQgYAAGAAgABgAMAAoABAAGAAwABgAEAAYABAAKAAgADwAEAAcAB3AHA
         AQAB8AHKAaYBAAEzBQABMwEAATMBAAEzAQACMwIAAxYBAAMcAQADIgEAAykBAANVAQADTQEAA0IBAAM5
         AQABgAF8Af8BAAJQAf8BAAGTAQAB1gEAAf8B7AHMAQABxgHWAe8BAAHWAucBAAGQAakBrQIAAf8BMwMA
@@ -6973,6 +6973,12 @@ The EXPRESS schema identifier is defined at the first node in the tree.</value>
   <data name="&gt;&gt;columnHeaderDesc.Type" xml:space="preserve">
     <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;columnHeaderURL.Name" xml:space="preserve">
+    <value>columnHeaderURL</value>
+  </data>
+  <data name="&gt;&gt;columnHeaderURL.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="&gt;&gt;toolStripButtonTranslationInsert.Name" xml:space="preserve">
     <value>toolStripButtonTranslationInsert</value>
   </data>
@@ -7308,12 +7314,6 @@ The EXPRESS schema identifier is defined at the first node in the tree.</value>
   </data>
   <data name="&gt;&gt;openFileDialogExample.Type" xml:space="preserve">
     <value>System.Windows.Forms.OpenFileDialog, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;columnHeaderURL.Name" xml:space="preserve">
-    <value>columnHeaderURL</value>
-  </data>
-  <data name="&gt;&gt;columnHeaderURL.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>CtlProperties</value>

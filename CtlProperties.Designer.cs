@@ -35,6 +35,7 @@
             this.columnHeaderLocale = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderDesc = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeaderURL = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.textBoxGeneralDescription = new System.Windows.Forms.TextBox();
             this.textBoxGeneralName = new System.Windows.Forms.TextBox();
             this.tabControl = new System.Windows.Forms.TabControl();
@@ -66,8 +67,10 @@
             this.label9 = new System.Windows.Forms.Label();
             this.textBoxIdentityUuid = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.tabPageTemplate = new System.Windows.Forms.TabPage();
+            this.tabPageQuery = new System.Windows.Forms.TabPage();
+            this.ctlRules = new IfcDoc.CtlRules();
             this.tabPageConcept = new System.Windows.Forms.TabPage();
+            this.ctlParameters = new IfcDoc.CtlParameters();
             this.tabPageRequirements = new System.Windows.Forms.TabPage();
             this.listViewExchange = new System.Windows.Forms.ListView();
             this.columnHeaderExchangeName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -184,7 +187,8 @@
             this.toolStripButtonExampleLoad = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonExampleLink = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonExampleClear = new System.Windows.Forms.ToolStripButton();
-            this.tabPageOperations = new System.Windows.Forms.TabPage();
+            this.tabPageConstraints = new System.Windows.Forms.TabPage();
+            this.ctlOperators = new IfcDoc.CtlOperators();
             this.tabPageConceptRoot = new System.Windows.Forms.TabPage();
             this.listViewConceptRoot = new System.Windows.Forms.ListView();
             this.columnHeaderRootTemplate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -243,10 +247,6 @@
             this.imageListRules = new System.Windows.Forms.ImageList(this.components);
             this.openFileDialogIcon = new System.Windows.Forms.OpenFileDialog();
             this.openFileDialogExample = new System.Windows.Forms.OpenFileDialog();
-            this.ctlRules = new IfcDoc.CtlRules();
-            this.ctlParameters = new IfcDoc.CtlParameters();
-            this.ctlOperators = new IfcDoc.CtlOperators();
-            this.columnHeaderURL = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerTranslation)).BeginInit();
             this.splitContainerTranslation.Panel1.SuspendLayout();
             this.splitContainerTranslation.Panel2.SuspendLayout();
@@ -256,7 +256,7 @@
             this.toolStripDocumentation.SuspendLayout();
             this.tabPageIdentity.SuspendLayout();
             this.panelIdentityIcon.SuspendLayout();
-            this.tabPageTemplate.SuspendLayout();
+            this.tabPageQuery.SuspendLayout();
             this.tabPageConcept.SuspendLayout();
             this.tabPageRequirements.SuspendLayout();
             this.toolStrip3.SuspendLayout();
@@ -272,7 +272,7 @@
             this.toolStrip2.SuspendLayout();
             this.tabPageExample.SuspendLayout();
             this.toolStrip4.SuspendLayout();
-            this.tabPageOperations.SuspendLayout();
+            this.tabPageConstraints.SuspendLayout();
             this.tabPageConceptRoot.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.tabPageChange.SuspendLayout();
@@ -326,6 +326,10 @@
             // 
             resources.ApplyResources(this.columnHeaderDesc, "columnHeaderDesc");
             // 
+            // columnHeaderURL
+            // 
+            resources.ApplyResources(this.columnHeaderURL, "columnHeaderURL");
+            // 
             // textBoxGeneralDescription
             // 
             resources.ApplyResources(this.textBoxGeneralDescription, "textBoxGeneralDescription");
@@ -342,7 +346,7 @@
             // 
             this.tabControl.Controls.Add(this.tabPageGeneral);
             this.tabControl.Controls.Add(this.tabPageIdentity);
-            this.tabControl.Controls.Add(this.tabPageTemplate);
+            this.tabControl.Controls.Add(this.tabPageQuery);
             this.tabControl.Controls.Add(this.tabPageConcept);
             this.tabControl.Controls.Add(this.tabPageRequirements);
             this.tabControl.Controls.Add(this.tabPagePropertySet);
@@ -355,7 +359,7 @@
             this.tabControl.Controls.Add(this.tabPageExchange);
             this.tabControl.Controls.Add(this.tabPageUsage);
             this.tabControl.Controls.Add(this.tabPageExample);
-            this.tabControl.Controls.Add(this.tabPageOperations);
+            this.tabControl.Controls.Add(this.tabPageConstraints);
             this.tabControl.Controls.Add(this.tabPageConceptRoot);
             this.tabControl.Controls.Add(this.tabPageChange);
             this.tabControl.Controls.Add(this.tabPageViews);
@@ -574,12 +578,27 @@
             resources.ApplyResources(this.label7, "label7");
             this.label7.Name = "label7";
             // 
-            // tabPageTemplate
+            // tabPageQuery
             // 
-            this.tabPageTemplate.Controls.Add(this.ctlRules);
-            resources.ApplyResources(this.tabPageTemplate, "tabPageTemplate");
-            this.tabPageTemplate.Name = "tabPageTemplate";
-            this.tabPageTemplate.UseVisualStyleBackColor = true;
+            this.tabPageQuery.Controls.Add(this.ctlRules);
+            resources.ApplyResources(this.tabPageQuery, "tabPageQuery");
+            this.tabPageQuery.Name = "tabPageQuery";
+            this.tabPageQuery.UseVisualStyleBackColor = true;
+            // 
+            // ctlRules
+            // 
+            this.ctlRules.Attribute = null;
+            this.ctlRules.BaseTemplate = null;
+            this.ctlRules.Concept = null;
+            this.ctlRules.ConceptRoot = null;
+            this.ctlRules.CurrentInstance = null;
+            resources.ApplyResources(this.ctlRules, "ctlRules");
+            this.ctlRules.Name = "ctlRules";
+            this.ctlRules.Project = null;
+            this.ctlRules.Selection = null;
+            this.ctlRules.Template = null;
+            this.ctlRules.SelectionChanged += new System.EventHandler(this.ctlRules_SelectionChanged);
+            this.ctlRules.ContentChanged += new System.EventHandler(this.ctlRules_ContentChanged);
             // 
             // tabPageConcept
             // 
@@ -587,6 +606,16 @@
             resources.ApplyResources(this.tabPageConcept, "tabPageConcept");
             this.tabPageConcept.Name = "tabPageConcept";
             this.tabPageConcept.UseVisualStyleBackColor = true;
+            // 
+            // ctlParameters
+            // 
+            this.ctlParameters.ConceptItem = null;
+            this.ctlParameters.ConceptLeaf = null;
+            this.ctlParameters.ConceptRoot = null;
+            this.ctlParameters.CurrentInstance = null;
+            resources.ApplyResources(this.ctlParameters, "ctlParameters");
+            this.ctlParameters.Name = "ctlParameters";
+            this.ctlParameters.Project = null;
             // 
             // tabPageRequirements
             // 
@@ -1712,12 +1741,22 @@
             this.toolStripButtonExampleClear.Name = "toolStripButtonExampleClear";
             this.toolStripButtonExampleClear.Click += new System.EventHandler(this.buttonExampleClear_Click);
             // 
-            // tabPageOperations
+            // tabPageConstraints
             // 
-            this.tabPageOperations.Controls.Add(this.ctlOperators);
-            resources.ApplyResources(this.tabPageOperations, "tabPageOperations");
-            this.tabPageOperations.Name = "tabPageOperations";
-            this.tabPageOperations.UseVisualStyleBackColor = true;
+            this.tabPageConstraints.Controls.Add(this.ctlOperators);
+            resources.ApplyResources(this.tabPageConstraints, "tabPageConstraints");
+            this.tabPageConstraints.Name = "tabPageConstraints";
+            this.tabPageConstraints.UseVisualStyleBackColor = true;
+            // 
+            // ctlOperators
+            // 
+            this.ctlOperators.CurrentInstance = null;
+            this.ctlOperators.CurrentPopulation = null;
+            resources.ApplyResources(this.ctlOperators, "ctlOperators");
+            this.ctlOperators.Name = "ctlOperators";
+            this.ctlOperators.Project = null;
+            this.ctlOperators.Rule = null;
+            this.ctlOperators.Template = null;
             // 
             // tabPageConceptRoot
             // 
@@ -2363,43 +2402,6 @@
             this.openFileDialogExample.DefaultExt = "ifc";
             resources.ApplyResources(this.openFileDialogExample, "openFileDialogExample");
             // 
-            // ctlRules
-            // 
-            this.ctlRules.Attribute = null;
-            this.ctlRules.BaseTemplate = null;
-            this.ctlRules.CurrentInstance = null;
-            resources.ApplyResources(this.ctlRules, "ctlRules");
-            this.ctlRules.Name = "ctlRules";
-            this.ctlRules.Project = null;
-            this.ctlRules.Selection = null;
-            this.ctlRules.Template = null;
-            this.ctlRules.SelectionChanged += new System.EventHandler(this.ctlRules_SelectionChanged);
-            this.ctlRules.ContentChanged += new System.EventHandler(this.ctlRules_ContentChanged);
-            // 
-            // ctlParameters
-            // 
-            this.ctlParameters.ConceptItem = null;
-            this.ctlParameters.ConceptLeaf = null;
-            this.ctlParameters.ConceptRoot = null;
-            this.ctlParameters.CurrentInstance = null;
-            resources.ApplyResources(this.ctlParameters, "ctlParameters");
-            this.ctlParameters.Name = "ctlParameters";
-            this.ctlParameters.Project = null;
-            // 
-            // ctlOperators
-            // 
-            this.ctlOperators.CurrentInstance = null;
-            this.ctlOperators.CurrentPopulation = null;
-            resources.ApplyResources(this.ctlOperators, "ctlOperators");
-            this.ctlOperators.Name = "ctlOperators";
-            this.ctlOperators.Project = null;
-            this.ctlOperators.Rule = null;
-            this.ctlOperators.Template = null;
-            // 
-            // columnHeaderURL
-            // 
-            resources.ApplyResources(this.columnHeaderURL, "columnHeaderURL");
-            // 
             // CtlProperties
             // 
             resources.ApplyResources(this, "$this");
@@ -2420,7 +2422,7 @@
             this.tabPageIdentity.PerformLayout();
             this.panelIdentityIcon.ResumeLayout(false);
             this.panelIdentityIcon.PerformLayout();
-            this.tabPageTemplate.ResumeLayout(false);
+            this.tabPageQuery.ResumeLayout(false);
             this.tabPageConcept.ResumeLayout(false);
             this.tabPageRequirements.ResumeLayout(false);
             this.tabPageRequirements.PerformLayout();
@@ -2450,7 +2452,7 @@
             this.tabPageExample.PerformLayout();
             this.toolStrip4.ResumeLayout(false);
             this.toolStrip4.PerformLayout();
-            this.tabPageOperations.ResumeLayout(false);
+            this.tabPageConstraints.ResumeLayout(false);
             this.tabPageConceptRoot.ResumeLayout(false);
             this.tabPageConceptRoot.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
@@ -2480,7 +2482,7 @@
         private System.Windows.Forms.TabControl tabControl;
         private System.Windows.Forms.TabPage tabPageConcept;
         private System.Windows.Forms.TabPage tabPageRequirements;
-        private System.Windows.Forms.TabPage tabPageTemplate;
+        private System.Windows.Forms.TabPage tabPageQuery;
         private System.Windows.Forms.TabPage tabPageGeneral;
         private System.Windows.Forms.TextBox textBoxGeneralDescription;
         private System.Windows.Forms.TextBox textBoxGeneralName;
@@ -2596,7 +2598,7 @@
         private System.Windows.Forms.Button buttonEntityBaseClear;
         private CtlRules ctlRules;
         private CtlParameters ctlParameters;
-        private System.Windows.Forms.TabPage tabPageOperations;
+        private System.Windows.Forms.TabPage tabPageConstraints;
         private CtlOperators ctlOperators;
         private System.Windows.Forms.ToolStrip toolStripDocumentation;
         private System.Windows.Forms.ToolStripButton toolStripButtonTranslationInsert;

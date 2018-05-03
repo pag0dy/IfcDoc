@@ -738,6 +738,93 @@ namespace IfcDoc
 
             return desc;
         }
+
+        public DocTemplateDefinition ToTemplateDefinition()
+        {
+            DocTemplateDefinition docTemplate = new DocTemplateDefinition();
+            DocModelRuleEntity docRule = this.ToModelRule();
+            if (docRule != null && docRule.Rules.Count > 0 && docRule.Rules[0] is DocModelRuleAttribute)
+            {
+                DocModelRuleAttribute docRuleAttr = (DocModelRuleAttribute)docRule.Rules[0];
+
+                docTemplate.Type = docRule.Name;
+                docTemplate.Rules.Add(docRuleAttr);
+            }
+            return docTemplate;
+        }
+
+        private DocModelRuleEntity ToModelRule()
+        {
+            if (this.Type == null)
+                return null;
+
+            DocModelRuleEntity docRuleEntity = new DocModelRuleEntity();
+            docRuleEntity.Name = this.Type.Name;
+
+            if (this.Property != null)
+            {
+                DocModelRuleAttribute docRuleAttr = new DocModelRuleAttribute();
+                docRuleAttr.Name = this.Property.Name;
+                docRuleEntity.Rules.Add(docRuleAttr);
+
+                if (this.InnerPath != null)
+                {
+                    DocModelRuleEntity docInner = this.InnerPath.ToModelRule();
+                    if (docInner != null)
+                    {
+                        docRuleAttr.Rules.Add(docInner);
+                    }
+
+                    if (this.Identifier != null)
+                    {
+                        // traverse to the default attribute
+
+                        DocModelRuleEntity docApplicableRule = docInner;
+                        if (this.InnerPath.Type.Name.Equals("IfcRelDefinesByProperties"))
+                        {
+                            // hack for back compat
+                            DocModelRuleAttribute docPsetAttr = docInner.Rules[0] as DocModelRuleAttribute;
+                            DocModelRuleEntity docPsetEnt = docPsetAttr.Rules[0] as DocModelRuleEntity;
+
+                            docApplicableRule = docPsetEnt;//docPsetEnt.Rules.Add(docRuleConstraint);//docRuleConstraint.Expression = 
+                        }
+                        
+                        DocModelRuleAttribute docWhereAttr = new DocModelRuleAttribute();
+                        docWhereAttr.Name = "Name";//... dynamically check...
+                        docApplicableRule.Rules.Add(docWhereAttr);
+
+                        DocModelRuleEntity docWhereEnt = new DocModelRuleEntity();
+                        docWhereEnt.Name = "IfcLabel";//... dynamically check...
+                        docWhereAttr.Rules.Add(docWhereEnt);
+
+                        DocModelRuleConstraint docRuleConstraint = new DocModelRuleConstraint();
+
+                        // general case
+                        docWhereEnt.Rules.Add(docRuleConstraint);//docRuleConstraint.Expression = 
+                        
+
+                        DocOpLiteral oplit = new DocOpLiteral();
+                        oplit.Operation = DocOpCode.LoadString;
+                        oplit.Literal = this.Identifier;
+
+                        DocOpStatement op = new DocOpStatement();
+                        op.Operation = DocOpCode.CompareEqual;
+                        op.Value = oplit;
+
+                        DocOpReference opref = new DocOpReference();
+                        opref.Operation = DocOpCode.NoOperation; // ldfld...
+                        opref.EntityRule = docWhereEnt;
+                        op.Reference = opref;
+
+                        docRuleConstraint.Expression = op;
+                    }
+                }
+
+            }
+
+
+            return docRuleEntity;
+        }
     }
 
 

@@ -153,5 +153,45 @@ namespace IfcDoc
             }
         }
 
+
+        public string GenerateValuePath()
+        {
+            if (this.m_entity == null)
+                return @"\\";
+
+            string suffix = null;
+            switch (this.SelectedQuantity.QuantityType)
+            {
+                case DocQuantityTemplateTypeEnum.Q_AREA:
+                    suffix = @"IfcQuantityArea.AreaValue\IfcAreaMeasure";
+                    break;
+
+                case DocQuantityTemplateTypeEnum.Q_COUNT:
+                    suffix = @"IfcQuantityCount.CountValue\IfcInteger";
+                    break;
+
+                case DocQuantityTemplateTypeEnum.Q_LENGTH:
+                    suffix = @"IfcQuantityLength.LengthValue\IfcLengthMeasure";
+                    break;
+
+                case DocQuantityTemplateTypeEnum.Q_TIME:
+                    suffix = @"IfcQuantityTime.TimeValue\IfcTimeMeasure";
+                    break;
+
+                case DocQuantityTemplateTypeEnum.Q_VOLUME:
+                    suffix = @"IfcQuantityVolume.VolumeValue\IfcVolumeMeasure";
+                    break;
+
+                case DocQuantityTemplateTypeEnum.Q_WEIGHT:
+                    suffix = @"IfcQuantityWeight.WeightValue\IfcWeightMeasure";
+                    break;
+            }
+
+            string value = @"\" + this.m_entity.Name + @".IsDefinedBy['" + this.SelectedQuantitySet +
+                @"']\IfcRelDefinesByProperties.RelatingPropertyDefinition\IfcElementQuantity.Quantities['" + this.SelectedQuantity +
+                @"']\" + suffix;
+
+            return value;
+        }
     }
 }

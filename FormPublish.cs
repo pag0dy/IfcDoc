@@ -80,7 +80,7 @@ namespace IfcDoc
 
             this.m_queueTypes = new Queue<Type>();
             this.m_mapTree = new Dictionary<Type, TreeNode>();
-            foreach(TreeNode tnNamespace in this.treeViewContainer.Nodes)
+            foreach (TreeNode tnNamespace in this.treeViewContainer.Nodes)
             {
                 foreach (TreeNode tnType in tnNamespace.Nodes)
                 {
@@ -114,22 +114,27 @@ namespace IfcDoc
                     if (m_queueTypes != null)
                     {
                         int i = 0;
-                        Type t = this.m_queueTypes.Peek();
-                        while(t != null)
+                        Type t;
+                        while (this.m_queueTypes.Count > 0)
                         {
-                            try
-                            {
-                                this.m_dictionary.WriteType(t);
-                            }
-                            catch (WebException webex)
-                            {
-                                this.backgroundWorkerPublish.ReportProgress(0, webex);
+                            t = this.m_queueTypes.Dequeue();
 
-                                // wait 5 seconds, keep retrying
-                                System.Threading.Thread.Sleep(5000);
+                            for (int retry = 0; retry < 10; retry++ )
+                            {
+                                try
+                                {
+                                    this.m_dictionary.WriteType(t);
+                                    break;
+                                }
+                                catch (WebException webex)
+                                {
+                                    this.backgroundWorkerPublish.ReportProgress(0, webex);
+
+                                    // wait 5 seconds, keep retrying
+                                    System.Threading.Thread.Sleep(5000);
+                                }
                             }
 
-                            this.m_queueTypes.Dequeue();
                             i++;
                             int prog = (int)((double)i * 100.0 / (double)this.m_count);
                             this.backgroundWorkerPublish.ReportProgress(prog, t);
@@ -207,6 +212,9 @@ namespace IfcDoc
         private void buttonLogin_Click(object sender, EventArgs e)
         {
             this.buttonLogin.Enabled = false;
+            this.comboBoxProtocol.Enabled = false;
+            this.textBoxUsername.Enabled = false;
+            this.textBoxPassword.Enabled = false;
 
             try
             {
@@ -228,6 +236,8 @@ namespace IfcDoc
                     {
                         this.comboBoxContext.SelectedIndex = 0;
                         this.comboBoxContext.Enabled = true;
+                        this.textBoxNamespace.Enabled = true;
+                        this.buttonSearch.Enabled = (this.m_download);
                     }
                 }
                 else
@@ -235,44 +245,10 @@ namespace IfcDoc
                     this.errorProvider.SetError(this.labelError, "The account provided does not have any write access.");
                 }
 
-                if (this.m_download)
+
+                if(this.m_download)
                 {
-                    this.progressBar.Style = ProgressBarStyle.Continuous;
-
-                    this.treeViewContainer.Nodes.Clear();
-
-                    Dictionary<string, object> objs = this.m_dictionary.ReadNamespace("BuildingSmart.IFC4X1");
-                    foreach (object o in objs.Values)
-                    {
-                        if (o is string)
-                        {
-                            TreeNode tnRoot = new TreeNode();
-                            tnRoot.Text = o.ToString();
-                            tnRoot.ImageIndex = 24;
-                            tnRoot.SelectedImageIndex = 24;
-                            this.treeViewContainer.Nodes.Add(tnRoot);
-
-                            Dictionary<string, object> subs = this.m_dictionary.ReadNamespace(tnRoot.Text);
-                            foreach(object s in subs.Values)
-                            {
-                                if (s is Type)
-                                {
-                                    Type t= (Type)s;
-                                    TreeNode tnSub = new TreeNode();
-                                    tnSub.Tag = s;
-                                    tnSub.Text = t.Name;
-                                    tnSub.ImageIndex = 5;
-                                    tnSub.SelectedImageIndex = 5;
-                                }
-                            }
-
-                            //TreeNode tnSub = new TreeNode();
-                            //tnSub.Text = "Loading...";
-                            //tnRoot.Nodes.Add(tnSub);
-
-                            //tnRoot.Expand(); // was trigger event notification to load
-                        }
-                    }
+                    Requery();
                 }
                 else
                 {
@@ -409,7 +385,10 @@ namespace IfcDoc
         {
             TreeNode tn = (TreeNode)e.Result;
 
-            object[] list = (object[])tn.Nodes[0].Tag;
+            object[] list = tn.Nodes[0].Tag as object[];
+            if (list == null)
+                return;
+
             tn.Nodes.Clear();
 
             if (list == null)
@@ -495,9 +474,100 @@ namespace IfcDoc
             //tn.Text += " (" + list.Count + ")";
         }
 
+        private void Requery()
+        {
+            if (this.m_download)
+            {
+                this.progressBar.Style = ProgressBarStyle.Continuous;
+
+                this.treeViewContainer.Nodes.Clear();
+
+                Dictionary<string, object> objs = this.m_dictionary.ReadNamespace(this.textBoxNamespace.Text);
+                if (objs == null)
+                    return;
+
+                foreach (object o in objs.Values)
+                {
+                    if (o is string)
+                    {
+                        TreeNode tnRoot = new TreeNode();
+                        tnRoot.Text = o.ToString();
+                        tnRoot.ImageIndex = 24;
+                        tnRoot.SelectedImageIndex = 24;
+                        this.treeViewContainer.Nodes.Add(tnRoot);
+
+                        Dictionary<string, object> subs = this.m_dictionary.ReadNamespace(tnRoot.Text);
+                        if (subs != null)
+                        {
+                            foreach (object s in subs.Values)
+                            {
+                                if (s is Type)
+                                {
+                                    Type t = (Type)s;
+                                    TreeNode tnSub = new TreeNode();
+                                    tnSub.Tag = s;
+                                    tnSub.Text = t.Name;
+                                    tnSub.ImageIndex = 5;
+                                    tnSub.SelectedImageIndex = 5;
+                                    tnRoot.Nodes.Add(tnSub);
+                                }
+                                else if (s is string)
+                                {
+                                    TreeNode tnSub = new TreeNode();
+                                    tnSub.Tag = null;// s;
+                                    tnSub.Text = (string)s;
+                                    tnSub.ImageIndex = 24;
+                                    tnSub.SelectedImageIndex = 24;
+                                    tnRoot.Nodes.Add(tnSub);
+
+                                    TreeNode tnExp = new TreeNode();
+                                    tnExp.Text = "Loading...";
+                                    tnSub.Nodes.Add(tnExp);
+                                }
+                            }
+                        }
+
+                        //TreeNode tnSub = new TreeNode();
+                        //tnSub.Text = "Loading...";
+                        //tnRoot.Nodes.Add(tnSub);
+
+                        //tnRoot.Expand(); // was trigger event notification to load
+                    }
+                }
+            }
+        }
+
         private void comboBoxContext_SelectedIndexChanged(object sender, EventArgs e)
         {
+            string item = this.comboBoxContext.SelectedItem as string;
+            foreach(string key in this.m_contexts.Keys)
+            {
+                string val = this.m_contexts[key];
+                if (item.Equals(val))
+                {
+                    // found the context -- now set it and requery...
+                    this.m_dictionary.SetActiveContext(key);
 
+                    // requery
+                    Requery();
+                }
+            }
+        }
+
+        private void textBoxNamespace_TextChanged(object sender, EventArgs e)
+        {
+        }
+
+        private void buttonSearch_Click(object sender, EventArgs e)
+        {
+            // requery
+            Requery();
+        }
+
+        private void textBoxNamespace_Validated(object sender, EventArgs e)
+        {
+            // requery
+            Requery();
         }
     }
 }

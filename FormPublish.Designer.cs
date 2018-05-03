@@ -53,6 +53,9 @@
             this.backgroundWorkerConcepts = new System.ComponentModel.BackgroundWorker();
             this.comboBoxContext = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.textBoxNamespace = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.buttonSearch = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
             this.SuspendLayout();
             // 
@@ -240,6 +243,7 @@
             resources.GetString("comboBoxContext.Items"),
             resources.GetString("comboBoxContext.Items1")});
             this.comboBoxContext.Name = "comboBoxContext";
+            this.comboBoxContext.Sorted = true;
             this.comboBoxContext.SelectedIndexChanged += new System.EventHandler(this.comboBoxContext_SelectedIndexChanged);
             // 
             // label1
@@ -247,12 +251,34 @@
             resources.ApplyResources(this.label1, "label1");
             this.label1.Name = "label1";
             // 
+            // textBoxNamespace
+            // 
+            resources.ApplyResources(this.textBoxNamespace, "textBoxNamespace");
+            this.textBoxNamespace.Name = "textBoxNamespace";
+            this.textBoxNamespace.TextChanged += new System.EventHandler(this.textBoxNamespace_TextChanged);
+            this.textBoxNamespace.Validated += new System.EventHandler(this.textBoxNamespace_Validated);
+            // 
+            // label2
+            // 
+            resources.ApplyResources(this.label2, "label2");
+            this.label2.Name = "label2";
+            // 
+            // buttonSearch
+            // 
+            resources.ApplyResources(this.buttonSearch, "buttonSearch");
+            this.buttonSearch.Name = "buttonSearch";
+            this.buttonSearch.UseVisualStyleBackColor = true;
+            this.buttonSearch.Click += new System.EventHandler(this.buttonSearch_Click);
+            // 
             // FormPublish
             // 
             this.AcceptButton = this.buttonOK;
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
+            this.Controls.Add(this.buttonSearch);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.textBoxNamespace);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.comboBoxContext);
             this.Controls.Add(this.treeViewContainer);
@@ -307,5 +333,8 @@
         private System.Windows.Forms.ImageList imageListIcon;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox comboBoxContext;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox textBoxNamespace;
+        private System.Windows.Forms.Button buttonSearch;
     }
 }

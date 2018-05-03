@@ -215,79 +215,7 @@ namespace IfcDoc
             {
                 if(form.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
                 {
-                    string portprefix = String.Empty;
-                    if (form.SelectedPort != null)
-                    {
-                        portprefix = @".IsNestedBy[]\IfcRelNests.RelatedObjects['" + form.SelectedPort + @"']\IfcDistributionPort";
-                    }
-
-                    if (form.SelectedPropertySet != null && form.SelectedPropertySet.PropertySetType == "PSET_PERFORMANCEDRIVEN")
-                    {
-                        portprefix += @".HasAssignments[]\IfcRelAssignsToControl.RelatingControl\IfcPerformanceHistory";
-                    }
-
-                    string value = @"\" + this.m_base.Name + portprefix;
-
-                    if (form.SelectedProperty != null)
-                    {
-                        string valueprop = "NominalValue";
-                        string datatype = form.SelectedProperty.PrimaryDataType;
-                        switch (form.SelectedProperty.PropertyType)
-                        {
-                            case DocPropertyTemplateTypeEnum.P_BOUNDEDVALUE:
-                                if(form.SelectedQualifier != null)
-                                {
-                                    valueprop = form.SelectedQualifier;
-                                }
-                                else
-                                {
-                                    valueprop = "SetPointValue";
-                                }
-                                break;
-
-                            case DocPropertyTemplateTypeEnum.P_ENUMERATEDVALUE:
-                                valueprop = "EnumerationValues";
-                                break;
-
-                            case DocPropertyTemplateTypeEnum.P_LISTVALUE:
-                                valueprop = "ListValues";
-                                break;
-
-                            case DocPropertyTemplateTypeEnum.P_REFERENCEVALUE:
-                                valueprop = "PropertyReference";
-                                datatype = "IfcIrregularTimeSeries.Values[]\\IfcIrregularTimeSeriesValue.ListValues[]\\" + form.SelectedProperty.SecondaryDataType;
-                                break;
-
-                            // other property types are not supported
-                        }
-
-                        if (form.SelectedProperty.PropertyType == DocPropertyTemplateTypeEnum.COMPLEX)
-                        {
-                            value += @".IsDefinedBy['" + form.SelectedPropertySet +
-                                @"']\IfcRelDefinesByProperties.RelatingPropertyDefinition\IfcPropertySet.HasProperties['" + form.SelectedProperty +
-                                @"']\" + form.SelectedProperty.GetEntityName();
-                        }
-                        else
-                        {
-                            value += @".IsDefinedBy['" + form.SelectedPropertySet +
-                                @"']\IfcRelDefinesByProperties.RelatingPropertyDefinition\IfcPropertySet.HasProperties['" + form.SelectedProperty +
-                                @"']\" + form.SelectedProperty.GetEntityName() + @"." + valueprop + @"\" + datatype;
-                        }
-
-                        // special cases
-                        if (this.m_base.Name.Equals("IfcMaterial"))
-                        {
-                            value =
-                                @"\IfcMaterial.HasProperties['" + form.SelectedPropertySet +
-                                @"']\IfcMaterialProperties.Properties['" + form.SelectedProperty +
-                                @"']\" + form.SelectedProperty.GetEntityName() + @"." + valueprop + @"\" + datatype;
-                        }
-                    }
-                    else
-                    {
-                        value += @".GlobalId\IfcGloballyUniqueId";
-                    }
-
+                    string value = form.GenerateValuePath();
                     CvtValuePath valuepath = CvtValuePath.Parse(value, this.m_map);
                     LoadValuePath(valuepath);
                 }
@@ -296,43 +224,11 @@ namespace IfcDoc
 
         private void buttonQuantity_Click(object sender, EventArgs e)
         {
-
             using (FormSelectQuantity form = new FormSelectQuantity(this.m_base as DocEntity, this.m_project, false))
             {
                 if (form.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
                 {
-                    string suffix = null;
-                    switch (form.SelectedQuantity.QuantityType)
-                    {
-                        case DocQuantityTemplateTypeEnum.Q_AREA:
-                            suffix = @"IfcQuantityArea.AreaValue\IfcAreaMeasure";
-                            break;
-
-                        case DocQuantityTemplateTypeEnum.Q_COUNT:
-                            suffix = @"IfcQuantityCount.CountValue\IfcInteger";
-                            break;
-
-                        case DocQuantityTemplateTypeEnum.Q_LENGTH:
-                            suffix = @"IfcQuantityLength.LengthValue\IfcLengthMeasure";
-                            break;
-
-                        case DocQuantityTemplateTypeEnum.Q_TIME:
-                            suffix = @"IfcQuantityTime.TimeValue\IfcTimeMeasure";
-                            break;
-
-                        case DocQuantityTemplateTypeEnum.Q_VOLUME:
-                            suffix = @"IfcQuantityVolume.VolumeValue\IfcVolumeMeasure";
-                            break;
-
-                        case DocQuantityTemplateTypeEnum.Q_WEIGHT:
-                            suffix = @"IfcQuantityWeight.WeightValue\IfcWeightMeasure";
-                            break;
-                    }
-
-                    string value = @"\" + this.m_base.Name + @".IsDefinedBy['" + form.SelectedQuantitySet +
-                        @"']\IfcRelDefinesByProperties.RelatingPropertyDefinition\IfcElementQuantity.Quantities['" + form.SelectedQuantity +
-                        @"']\" + suffix;
-
+                    string value = form.GenerateValuePath();
                     CvtValuePath valuepath = CvtValuePath.Parse(value, this.m_map);
                     LoadValuePath(valuepath);
                 }
