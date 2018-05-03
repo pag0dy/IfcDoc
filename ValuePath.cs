@@ -749,6 +749,7 @@ namespace IfcDoc
 
                 docTemplate.Type = docRule.Name;
                 docTemplate.Rules.Add(docRuleAttr);
+                docRuleAttr.ParentRule = null;
             }
             return docTemplate;
         }
@@ -766,6 +767,7 @@ namespace IfcDoc
                 DocModelRuleAttribute docRuleAttr = new DocModelRuleAttribute();
                 docRuleAttr.Name = this.Property.Name;
                 docRuleEntity.Rules.Add(docRuleAttr);
+                docRuleAttr.ParentRule = docRuleEntity;
 
                 if (this.InnerPath != null)
                 {
@@ -773,6 +775,7 @@ namespace IfcDoc
                     if (docInner != null)
                     {
                         docRuleAttr.Rules.Add(docInner);
+                        docInner.ParentRule = docRuleAttr;
                     }
 
                     if (this.Identifier != null)
@@ -786,21 +789,24 @@ namespace IfcDoc
                             DocModelRuleAttribute docPsetAttr = docInner.Rules[0] as DocModelRuleAttribute;
                             DocModelRuleEntity docPsetEnt = docPsetAttr.Rules[0] as DocModelRuleEntity;
 
-                            docApplicableRule = docPsetEnt;//docPsetEnt.Rules.Add(docRuleConstraint);//docRuleConstraint.Expression = 
+                            docApplicableRule = docPsetEnt;
                         }
                         
                         DocModelRuleAttribute docWhereAttr = new DocModelRuleAttribute();
                         docWhereAttr.Name = "Name";//... dynamically check...
                         docApplicableRule.Rules.Add(docWhereAttr);
+                        docWhereAttr.ParentRule = docApplicableRule;
 
                         DocModelRuleEntity docWhereEnt = new DocModelRuleEntity();
                         docWhereEnt.Name = "IfcLabel";//... dynamically check...
                         docWhereAttr.Rules.Add(docWhereEnt);
+                        docWhereEnt.ParentRule = docWhereAttr;
 
                         DocModelRuleConstraint docRuleConstraint = new DocModelRuleConstraint();
 
                         // general case
-                        docWhereEnt.Rules.Add(docRuleConstraint);//docRuleConstraint.Expression = 
+                        docWhereEnt.Rules.Add(docRuleConstraint);
+                        docRuleConstraint.ParentRule = docWhereEnt;
                         
 
                         DocOpLiteral oplit = new DocOpLiteral();

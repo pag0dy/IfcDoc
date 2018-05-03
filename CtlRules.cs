@@ -437,10 +437,12 @@ namespace IfcDoc
                         {
                             DocModelRuleEntity docRuleEnt = (DocModelRuleEntity)this.treeViewTemplate.SelectedNode.Tag;
                             docRuleEnt.Rules.Add(docRuleAtt);
+                            docRuleAtt.ParentRule = docRuleEnt;
                         }
                         else if (this.treeViewTemplate.SelectedNode.Tag is DocTemplateDefinition)
                         {
                             docTemplate.Rules.Add(docRuleAtt);
+                            docRuleAtt.ParentRule = null;
                         }
 
                         tn = this.LoadTemplateGraph(tn, docRuleAtt);
@@ -450,6 +452,7 @@ namespace IfcDoc
                     DocModelRuleEntity docRuleEntity = new DocModelRuleEntity();
                     docRuleEntity.Name = entityname;
                     docRuleAtt.Rules.Add(docRuleEntity);
+                    docRuleEntity.ParentRule = docRuleAtt;
                     this.treeViewTemplate.SelectedNode = this.LoadTemplateGraph(tn, docRuleEntity);
 
                     // copy to child templates
@@ -500,6 +503,7 @@ namespace IfcDoc
                         {
                             DocModelRuleConstraint docRuleConstraint = new DocModelRuleConstraint();
                             rule.Rules.Add(docRuleConstraint);
+                            docRuleConstraint.ParentRule = rule;
                             //docRuleConstraint.Description = form.Expression;
                             //docRuleConstraint.Name = form.Expression; // for viewing
 
@@ -545,10 +549,12 @@ namespace IfcDoc
                             if (rule != null)
                             {
                                 rule.Rules.Add(docRuleAttr);
+                                docRuleAttr.ParentRule = rule;
                             }
                             else
                             {
                                 docTemplate.Rules.Add(docRuleAttr);
+                                docRuleAttr.ParentRule = null;
                             }
                             this.treeViewTemplate.SelectedNode = this.LoadTemplateGraph(this.treeViewTemplate.SelectedNode, docRuleAttr);
 

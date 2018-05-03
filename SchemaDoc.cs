@@ -2565,10 +2565,12 @@ namespace IfcDoc.Schema.DOC
                         if (i > 0)
                         {
                             childpath[i - 1].Rules.Add(childpath[i]);
+                            childpath[i].ParentRule = childpath[i - 1];
                         }
                         else
                         {
                             docTemplate.Rules.Add(childpath[i]);
+                            childpath[i].ParentRule = null;
                         }
                     }
                     else if (objpath[i] == null && childpath[i] != null)
@@ -2905,7 +2907,9 @@ namespace IfcDoc.Schema.DOC
 
             foreach (DocModelRule sub in this.Rules)
             {
-                modelrule.Rules.Add((DocModelRule)sub.Clone());
+                DocModelRule clone = (DocModelRule)sub.Clone();
+                modelrule.Rules.Add(clone);
+                clone.ParentRule = modelrule;
             }
 
             return modelrule;
@@ -4734,7 +4738,7 @@ namespace IfcDoc.Schema.DOC
         public override string ToString()
         {
             string name = this.Name;
-            if (this.Definition != null)
+            if (this.Definition != null && !String.IsNullOrEmpty(this.Definition.Name))
             {
                 if ((String.IsNullOrEmpty(this.Name) || this.Name.Equals(this.Definition.Name)))
                 {

@@ -1746,6 +1746,7 @@ namespace IfcDoc
                     docRuleEntity.Identification = mvdEntityRule.RuleID;
                     //ImportMvdCardinality(docRule, mvdRule.Cardinality);
                     docRule.Rules.Add(docRuleEntity);
+                    docRuleEntity.ParentRule = docRule;
 
                     if (mvdEntityRule.AttributeRules != null)
                     {
@@ -1753,6 +1754,7 @@ namespace IfcDoc
                         {
                             DocModelRule docRuleAttribute = ImportMvdRule(mvdAttributeRule, fixups);
                             docRuleEntity.Rules.Add(docRuleAttribute);
+                            docRuleAttribute.ParentRule = docRuleEntity;
                         }
                     }
 
@@ -1763,6 +1765,7 @@ namespace IfcDoc
                             DocModelRuleConstraint docRuleConstraint = new DocModelRuleConstraint();
                             docRuleConstraint.Description = mvdConstraint.Expression;
                             docRuleEntity.Rules.Add(docRuleConstraint);
+                            docRuleConstraint.ParentRule = docRuleEntity;
                         }
                     }
 
@@ -1781,6 +1784,7 @@ namespace IfcDoc
                     DocModelRuleConstraint docRuleConstraint = new DocModelRuleConstraint();
                     docRuleConstraint.Description = mvdConstraint.Expression;
                     docRule.Rules.Add(docRuleConstraint);
+                    docRuleConstraint.ParentRule = docRule;
                 }
             }
 
@@ -2088,6 +2092,7 @@ namespace IfcDoc
                 {
                     DocModelRule docRule = ImportMvdRule(mvdRule, fixups);
                     docDef.Rules.Add(docRule);
+                    docRule.ParentRule = null;
                 }
             }
 
@@ -2413,6 +2418,7 @@ namespace IfcDoc
             mvd.Uuid = Guid.NewGuid(); // changes every time saved
             mvd.Name = String.Empty;
 
+            // export all referenced shared templates
             foreach (DocTemplateDefinition docTemplateDef in docProject.Templates)
             {
                 if (included == null || included.ContainsKey(docTemplateDef))
@@ -2423,6 +2429,8 @@ namespace IfcDoc
                 }
             }
 
+            // export all non-shared templates
+            //...
             foreach (DocModelView docModelView in docProject.ModelViews)
             {
                 if (included == null || included.ContainsKey(docModelView))
