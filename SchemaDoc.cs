@@ -9,6 +9,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.IO;
 using System.Reflection;
 using System.Reflection.Emit;
@@ -3525,6 +3527,14 @@ namespace IfcDoc.Schema.DOC
             set
             {
                 this._Identification = value;  // carefull -- when renaming, also check
+                foreach(DocModelRule rule in this._Rules)
+                {
+                    if (rule is DocModelRuleEntity)
+                    {
+                        DocModelRuleEntity docRule = rule as DocModelRuleEntity;
+                        docRule.AttributeRuleID = value;
+                    }
+                }
             }
         }
 
@@ -3676,6 +3686,20 @@ namespace IfcDoc.Schema.DOC
 
             // now update
             this.Identification = identification;
+            foreach (DocModelRule rule in this._Rules)
+            {
+                if (rule is DocModelRuleEntity)
+                {
+                    foreach (DocModelRule ruleC in rule.Rules)
+                    {
+                        if (ruleC is DocModelRuleConstraint)
+                        {
+                            DocModelRuleConstraint docRule = ruleC as DocModelRuleConstraint;
+                            docRule.FormatExpression(docTemplateDefinition);
+                        }
+                    }
+                }
+            }
 
         }
 
@@ -3692,6 +3716,13 @@ namespace IfcDoc.Schema.DOC
 
     public class DocModelRuleAttribute : DocModelRule
     {
+        [DataMember(Order = 0)] public ICollection<DocModelRuleEntity> EntityRules { get; set; }
+
+        public DocModelRuleAttribute()
+        {
+            this.EntityRules = new List<DocModelRuleEntity>();
+        }
+
         public override void BuildParameterList(IList<DocModelRule> list)
         {
             // add ourselves if marked as parameter
@@ -4089,6 +4120,8 @@ namespace IfcDoc.Schema.DOC
     {
         [DataMember(Order = 0)] private List<DocTemplateDefinition> _References; // IfcDoc 6.3: references to chained templates
         [DataMember(Order = 1)] private string _Prefix;
+        [DataMember(Order = 2)] private string _AttributeRuleID;
+        [InverseProperty("EntityRules")] DocModelRuleAttribute AttributeRule { get; set; }
 
         public List<DocTemplateDefinition> References
         {
@@ -4112,6 +4145,18 @@ namespace IfcDoc.Schema.DOC
             set
             {
                 this._Prefix = value;
+            }
+        }
+
+        public string AttributeRuleID
+        {
+            get
+            {
+                return this._AttributeRuleID;
+            }
+            set
+            {
+                this._AttributeRuleID = value;
             }
         }
 
@@ -4444,7 +4489,15 @@ namespace IfcDoc.Schema.DOC
                 //return metrichead + this.Reference.ToString(dtd) + metrictail + suffix;
 
                 // new: mvdXML syntax
-                return this.Reference.ToString(dtd) + "[" + metricname + "]" + suffix;
+                if (this.Reference.EntityRule.AttributeRuleID == null)
+                {
+                    return this.Reference.ToString(dtd) + "[" + metricname + "]" + suffix;
+                } else
+                {
+                    return this.Reference.EntityRule.AttributeRuleID + "[" + metricname + "]" + suffix;
+                }
+                
+                //return this.Reference.ToString(dtd) + "[" + metricname + "]" + suffix;
             }
 
             return null;
@@ -4965,10 +5018,66 @@ namespace IfcDoc.Schema.DOC
         {
             if (this.ExpressionA == null || this.ExpressionB == null)
                 return String.Empty;
+            string ea = this.ExpressionA.ToString(template);
+            string eb = this.ExpressionB.ToString(template);
+            string op = this.Operation.ToString().ToUpper();
 
-            return "(" + this.ExpressionA.ToString(template) + " " + this.Operation.ToString().ToUpper() + " " + this.ExpressionB.ToString(template) + ")";
+            string expr = "";
+
+            if (this.ExpressionA is DocOpLogical)
+            {
+                expr += "(" + this.ExpressionA.ToString(template) + " " + this.Operation.ToString().ToUpper() + " " + AssignRuleIDToExpression(this.ExpressionB) + ")";
+            }
+            else if (this.ExpressionB is DocOpLogical)
+            {
+                expr += "(" + AssignRuleIDToExpression(this.ExpressionA) + " " + this.Operation.ToString().ToUpper() + " " + this.ExpressionB.ToString(template) + ")";
+            }
+            else
+            {
+                string exprA = this.ExpressionA.ToString(template);
+                int bracketA = exprA.IndexOf('[');
+
+                if (this.ExpressionA is DocOpStatement)
+                {
+                    DocOpStatement statementA = (DocOpStatement)this.ExpressionA;
+                    exprA = statementA.Reference.EntityRule.AttributeRuleID + exprA.Substring(bracketA);
+                }
+
+                string exprB = this.ExpressionB.ToString(template);
+                int bracketB = exprB.IndexOf('[');
+
+                if (this.ExpressionB is DocOpStatement)
+                {
+                    DocOpStatement statementB = (DocOpStatement)this.ExpressionB;
+                    exprB = statementB.Reference.EntityRule.AttributeRuleID + exprB.Substring(bracketB);
+                }
+                
+                expr += "(" + exprA + " " + this.Operation.ToString().ToUpper() + " " + exprB + ")";
+            }
+
+            return expr;
         }
-        
+
+        private string AssignRuleIDToExpression(DocOpExpression expr)
+        {
+            string exprRuleID = expr.ToString();
+            int bracket = exprRuleID.IndexOf('[');
+
+            if (expr is DocOpStatement)
+            {
+                DocOpStatement statement = (DocOpStatement)expr;
+                exprRuleID = statement.Reference.EntityRule.AttributeRuleID + exprRuleID.Substring(bracket);
+            }
+
+            return exprRuleID;
+        }
+
+        private string NestedString(DocTemplateDefinition template, string opExpression)
+        {
+
+            return base.ToString();
+        }
+
     }
 
     /// <summary>
