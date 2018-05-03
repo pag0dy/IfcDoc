@@ -2979,7 +2979,7 @@ namespace IfcDoc.Schema.DOC
 
             // now update
             this.Identification = identification;
-            foreach (DocModelRule rule in this._Rules)
+            foreach (DocModelRule rule in this.Rules)
             {
                 if (rule is DocModelRuleEntity)
                 {
@@ -3411,45 +3411,27 @@ namespace IfcDoc.Schema.DOC
 
     public class DocModelRuleEntity : DocModelRule
     {
-        [DataMember(Order = 0)] private List<DocTemplateDefinition> _References; // IfcDoc 6.3: references to chained templates
-        [DataMember(Order = 1)] private string _Prefix;
-        [DataMember(Order = 2)] private string _AttributeRuleID;
-        [InverseProperty("EntityRules")] DocModelRuleAttribute AttributeRule { get; set; }
-
-        public List<DocTemplateDefinition> References
-        {
-            get
-            {
-                if(this._References == null)
-                {
-                    this._References = new List<DocTemplateDefinition>();
-                }
-
-                return this._References;
-            }
-        }
         [DataMember(Order = 0)] 
         public List<DocTemplateDefinition> References {get; protected set;} // IfcDoc 6.3: references to chained templates
         
         [DataMember(Order = 1)]
         public string Prefix { get; set; }
 
+        [DataMember(Order = 2)]
+        public string AttributeRuleID { get; set; }
+
+        [InverseProperty("EntityRules")]
+        DocModelRuleAttribute AttributeRule { get; set; }
+
+        [InverseProperty("Rules")]
+        DocModelRuleAttribute AttributeRuleR { get; set; }
+
+
         public DocModelRuleEntity()
         {
             this.References = new List<DocTemplateDefinition>();
         }
 
-        public string AttributeRuleID
-        {
-            get
-            {
-                return this._AttributeRuleID;
-            }
-            set
-            {
-                this._AttributeRuleID = value;
-            }
-        }
 
         public override bool IsTemplateReferenced(DocTemplateDefinition docTemplate)
         {
