@@ -1,0 +1,23 @@
+﻿<p>The <em>IfcWallElementedCase</em> defines a wall with certain constraints for the provision of its components. The <em>IfcWallElementedCase</em> handles all cases of walls, that are decomposed into parts: </p>
+<ul>
+ <li>having components being assigned to the <em>IfcWallElementedCase</em> using the <em>IfcRelAggregates</em> relationship accessible by the inverse relationship <em>IsDecomposedBy</em>.</li>
+</ul>
+<p>Parts within the decomposition are usually be of type:<p>
+<ul>
+ <li><em>IfcBuildingElementPart</em> for wall layer, insolation layers and similar</li>
+ <li><em>IfcMember</em> for studs, posts and similar elements,</li>
+ <li><em>IfcElementAssembly</em> for other aggregates, or</li> 
+ <li><em>IfcBuildingElementProxy</em>.</li>
+</ul>
+
+<blockquote class="example">EXAMPLE&nbsp;Elemented walls may extend the concepts of standard walls with the following features, as shown in Figure 2, including the <em>IfcRelConnectsWithRealizingElements</em> relationship to define fasteners and accessories.</blockquote>
+
+<table border="0" cellpadding="2" cellspacing="2" summary="voiding">
+<tr><td valign="top"><img src="../../../figures/ifcwallelementedcase-partitioning.png" alt="voiding" border="0"></td></tr>
+<tr><td><p class="figure">Figure 2 &mdash; Wall elemented case</p></td></tr>
+</table>
+
+<blockquote class="history">HISTORY&nbsp; New entity in IFC4.</blockquote>
+
+
+

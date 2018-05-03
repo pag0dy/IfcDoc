@@ -1,0 +1,91 @@
+﻿      <p>
+      The <em>IfcIndexedTriangleTextureMap</em> provides the
+      mapping of the 2-dimensional texture coordinates to the
+      surface onto which it is mapped. It is used for mapping the
+      texture to triangles of the <em>IfcTriangulatedFaceSet</em>.
+    </p>
+    <p>
+      The <em>IfcIndexedTriangleTextureMap</em> defines an index
+      into an indexed list of texture coordinates. The
+      <em>TexCoordIndex</em> is a two-dimensional list, where
+    </p>
+    <ul>
+      <li>first dimension is the unbounded list of faces
+      corresponding to the list of triangles defined by
+      <em>CoordIndex</em> at <em>IfcTriangulatedFaceSet</em>;
+      </li>
+      <li>second dimension is the fixed list of three indices to
+      texture vertices cooresponding to the fixed list of indices
+      to vertices at <em>IfcTriangulatedFaceSet</em>
+      </li>
+    </ul>
+    <p>
+      The <em>TexCoords</em> defined at supertype
+      <em>IfcIndexedTextureMap</em> are a two-dimensional list of
+      texture coordinates provided by two parameter values. Each
+      index of the second dimension list of <em>TexCoordIndex</em>
+      points to a texture vertex in <em>TexCoords</em>.
+    </p>
+    <p>
+      Figure 3 shows the use of <i>IfcTriangulatedFaceSet</i> with textures.
+    </p>
+    <table summary="">
+      <tr>
+        <td>
+          <img src="../../../figures/ifcindexedtriangletexturemap_01.png"
+          width="760" height="400" alt=
+          "IfcIndexedTriangleTextureMap_01">
+        </td>
+        <td>
+          &nbsp;
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p class="figure">Figure 3 &mdash; Indexed triangle texture map
+          </p>
+        </td>
+        <td>
+          &nbsp;
+        </td>
+      </tr>
+    </table>
+    <p>
+     Figure 4 illustrates an <i>IfcTriangulatedFaceSet</i> represented by <br/>
+      <em>IfcTriangulatedFaceSet.CoordIndex</em>: ((1,6,5), (1,2,6), (6,2,7), (7,2,3),
+      (7,8,6), (6,8,5), (5,8,1), (1,8,4), (4,2,1), (2,4,3),
+      (4,8,7), (7,3,4))<br>
+      <em>IfcCartesianPointList.CoordList</em>: ((0.,0.,0.), (1.,0.,0.),
+      (1.,1.,0.), (0.,1.,0.), (0.,0.,2.), (1.,0.,2.), (1.,1.,2.),
+      (0.,1.,2.))<br>
+      <em>IfcIndexedTriangleTextureMap.TexCoordsIndex</em>: ((1 4 3), (1 2 4), (3 1 4), (4 1 2), (8 7 6), (6 7 5), (4 3 2), (2 3 1), 
+      (5 8 7), (8 5 6), (2 4 3), (3 1 2))<br>
+      <em>IfcTextureVertexList.TexCoordsList</em>: ((0. -0.5), (1. -0.5), (0. 1.5), (1. 1.5), 
+      (0. 0.), (0. 1.), (1. 0.), (1. 1.))
+    </p>
+    <table summary="">
+      <tr>
+        <td>
+          <img src=
+          "../../../figures/ifcindexedtriangletexturemap_example-01.png"
+          width="500" height="350" alt=
+          "IfcIndexedTriangleTextureMap_example-01">
+        </td>
+        <td>
+          &nbsp;
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p class="figure">Figure 4 &mdash; Indexed triangle texture map geometry 
+          </p>
+        </td>
+        <td>
+          &nbsp;
+        </td>
+      </tr>
+    </table>
+    <blockquote class="history">
+      HISTORY&nbsp; New entity in IFC4.
+    </blockquote>
+  

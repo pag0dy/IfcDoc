@@ -1,0 +1,35 @@
+﻿<p>The entity <em>IfcRelConnectsStructuralMember</em> defines all needed properties describing the connection between structural members and structural connection objects (nodes or supports).</p>
+
+<blockquote class="history">HISTORY&nbsp; New entity in IFC2x2.</blockquote>
+
+<p><b>Use Definition</b></p>
+
+<p><em>Point Connection</em><br>
+Instances of the entity <em>IfcRelConnectsStructuralMember</em> shall be used to describe a connection between an instance of <em>IfcStructuralPointConnection</em> and either an instance of <em>IfcStructuralCurveMember</em> or <em>IfcStructuralSurfaceMember</em>.  The <em>RelatedStructuralConnection</em> for point connections has to be of type <em>IfcStructuralPointConnection</em>.</p>
+
+<p><em>Curve Connection</em><br>
+Instances of the entity <em>IfcRelConnectsStructuralMember</em> shall be used to describe a connection between an instance of <em>IfcStructuralCurveConnection</em> and an instance of either <em>IfcStructuralCurveMember</em> or <em>IfcStructuralSurfaceMember</em>.  The <em>RelatedStructuralConnection</em> for curve connections has to be of type <em>IfcStructuralCurveConnection</em>.</p>
+
+<p><em>Surface Connection</em><br>
+Instances of the entity <em>IfcRelConnectsStructuralMember</em> shall be used to describe a connection between an instance of <em>IfcStructuralSurfaceConnection</em> and an instance of <em>IfcStructuralSurfaceMember</em>.  The <em>RelatedStructuralConnection</em> for curve connections has to be of type <em>IfcStructuralSurfaceConnection</em>.</p>
+
+<p><em>Coordinate System for Applied Conditions</em><br>
+All values defined by <em>AppliedCondition</em> or <em>AdditionalConditions</em> are given within the coordinate system provided by <em>ConditionCoordinateSystem</em>, which is defined relative to the local coordinate system of the structural member.  If the <em>ConditionCoordinateSystem</em> is not defined, the local coordinate system of the structural member is used instead.</p>
+
+<p><em>Supported Length</em><br>
+Optionally a supported length can be given, which specifies the length (or width) of the physical connection along a curve connection.</p>
+
+<p>Figure 2 illustrates the appropriate definition of support lengths.</p>
+
+<table border="0" cellpadding="2" cellspacing="0">
+  <tr>
+    <td>
+      <p><img src="../../../figures/ifcrelconnectsstructuralmember-fig1.gif" alt="supported length" style="border: 0px solid ; width: 600px; height: 368px;" align="left"></p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <p class="figure">Figure 2 &mdash; Structural member support lengths</p>
+    </td>
+  </tr>
+</table>

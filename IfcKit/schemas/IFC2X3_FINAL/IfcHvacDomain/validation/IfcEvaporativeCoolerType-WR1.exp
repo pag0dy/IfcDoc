@@ -1,2 +1,0 @@
-﻿(PredefinedType <> IfcEvaporativeCoolerTypeEnum.USERDEFINED) OR
-((PredefinedType = IfcEvaporativeCoolerTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcElementType.ElementType))

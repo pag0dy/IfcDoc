@@ -1,0 +1,12 @@
+﻿<p><em>IfcUnitAssignment</em> indicates a set of units which may be assigned. Within an <em>IfcUnitAssigment</em> each unit definition shall be unique; that is, there shall be no redundant unit definitions for the same unit type such as length unit or area unit. For currencies, there shall be only a single <em>IfcMonetaryUnit</em> within an <em>IfcUnitAssignment</em>.</p>
+
+<blockquote class="note">
+NOTE&nbsp; A <em>IfcProject</em> has a unit assignment which establishes a set of units which will be used globally within the project, if not otherwise defined. Other objects may have local unit assignments if there is a requirement for them to make use of units which do not fall within the project unit assignment.
+</blockquote>
+
+<p>All measures used in the geometric representation items are directly defined by the <em>IfcUnitAssignment</em>. The minimum set of units that shall be declared by the unit assignment has to include length unit and plane angle units if the IFC data set includes shape representations.</p>
+</p>
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC1.5.1.
+</blockquote>

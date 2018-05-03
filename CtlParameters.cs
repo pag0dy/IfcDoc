@@ -306,7 +306,7 @@ namespace IfcDoc
                         if (docEntity != null)
                         {
                             DocAttribute docAttribute = docEntity.ResolveParameterAttribute(docRule, rule.Identification, m_map);
-                            if (docAttribute == null)
+                            if (docAttribute == null && docConceptRoot.ApplicableEntity != null)
                             {
                                 // try on type itself, e.g. PredefinedType
                                 docAttribute = docConceptRoot.ApplicableEntity.ResolveParameterAttribute(docRule, rule.Identification, m_map);

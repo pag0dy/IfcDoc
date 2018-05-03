@@ -7,11 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Reflection;
 using System.Reflection.Emit;
+using System.Resources;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 using IfcDoc.Schema;
@@ -31,10 +35,16 @@ namespace IfcDoc
         private Dictionary<string, string> m_namespaces;
         private Dictionary<Type, Dictionary<string, FieldInfo>> m_fields;
         private Dictionary<DocTemplateDefinition, MethodInfo> m_templates;
+        private bool m_psets;
 
         public static Type CompileProject(DocProject docProject)
         {
-            Compiler compiler = new Compiler(docProject, null, null);
+            return CompileProject(docProject, false);
+        }
+
+        public static Type CompileProject(DocProject docProject, bool psets)
+        {
+            Compiler compiler = new Compiler(docProject, null, null, psets);
             System.Reflection.Emit.AssemblyBuilder assembly = compiler.Assembly;
             Type[] types = null;
             try
@@ -56,11 +66,12 @@ namespace IfcDoc
             return null; // no root type
         }
 
-        public Compiler(DocProject project, DocModelView[] views, DocExchangeDefinition exchange)
+        public Compiler(DocProject project, DocModelView[] views, DocExchangeDefinition exchange, bool psets)
         {
             this.m_project = project;
             this.m_views = views;
             this.m_exchange = exchange;
+            this.m_psets = psets;
 
             // version needs to be included for extracting XML namespace (Major.Minor.Addendum.Corrigendum)
             string version = project.GetSchemaVersion();
@@ -115,13 +126,73 @@ namespace IfcDoc
                             }
                         }
                     }
+
+                    if (psets)
+                    {
+                        foreach (DocPropertyEnumeration docPropEnum in docSchema.PropertyEnums)
+                        {
+                            DocEnumeration docType = docPropEnum.ToEnumeration();
+                            if (!this.m_definitions.ContainsKey(docType.Name))
+                            {
+                                this.m_definitions.Add(docType.Name, docType);
+                                this.m_namespaces.Add(docType.Name, docSchema.Name);
+                            }
+                        }
+
+                    }
+                }
+            }
+
+            // second pass: 
+            if (psets)
+            {
+                foreach (DocSection docSection in project.Sections)
+                {
+                    foreach (DocSchema docSchema in docSection.Schemas)
+                    {
+                        foreach (DocPropertySet docPset in docSchema.PropertySets)
+                        {
+                            DocEntity docType = docPset.ToEntity(this.m_definitions);
+                            if (!this.m_definitions.ContainsKey(docType.Name))
+                            {
+                                this.m_definitions.Add(docType.Name, docType);
+                                this.m_namespaces.Add(docType.Name, docSchema.Name);
+                            }
+                        }
+
+                        foreach (DocQuantitySet docQset in docSchema.QuantitySets)
+                        {
+                            DocEntity docType = docQset.ToEntity(this.m_definitions);
+                            if (!this.m_definitions.ContainsKey(docType.Name))
+                            {
+                                this.m_definitions.Add(docType.Name, docType);
+                                this.m_namespaces.Add(docType.Name, docSchema.Name);
+                            }
+                        }      
+                    }
                 }
             }
 
             // first register types and fields
             foreach (string key in this.m_definitions.Keys)
             {
-                RegisterType(key);
+                Type typereg = RegisterType(key);
+
+                // localization -- use custom attributes for now -- ideal way would be to use assembly resources, though has bugs in .net 4.0
+                if (typereg is TypeBuilder)
+                {
+                    TypeBuilder tb = (TypeBuilder)typereg;
+
+                    DocObject docObj = this.m_definitions[key];
+                    foreach(DocLocalization docLocal in docObj.Localization)
+                    {
+                        CustomAttributeBuilder cab = docLocal.ToCustomAttributeBuilder();
+                        if(cab != null)
+                        {
+                            tb.SetCustomAttribute(cab);
+                        }
+                    }
+                }
             }
 
             // now register template functions (may depend on fields existing)
@@ -148,7 +219,8 @@ namespace IfcDoc
                 }
             }
 
-
+            //Dictionary<string, Stream> mapResStreams = new Dictionary<string, Stream>();
+            //Dictionary<string, ResXResourceWriter> mapResources = new Dictionary<string, ResXResourceWriter>();
 
             // seal types once all are built
             List<TypeBuilder> listBase = new List<TypeBuilder>();
@@ -184,9 +256,44 @@ namespace IfcDoc
                             docAttr.RuntimeField = docDef.RuntimeType.GetField(docAttr.Name);
                         }
                     }
+
+#if false // bug in .net framework 4.0+ -- can't read resources dynamically defined
+                    // capture localization
+                    foreach (DocLocalization docLocal in docDef.Localization)
+                    {
+                        if (!String.IsNullOrEmpty(docLocal.Locale))
+                        {
+                            string major = docLocal.Locale.Substring(0, 2).ToLower();
+
+                            ResXResourceWriter reswriter = null;
+                            if (!mapResources.TryGetValue(major, out reswriter))
+                            {
+                                MemoryStream stream = new MemoryStream();
+                                mapResStreams.Add(major, stream);
+
+                                reswriter = new ResXResourceWriter(stream);
+                                mapResources.Add(major, reswriter);
+                            }
+
+                            ResXDataNode node = new ResXDataNode(docDef.Name, docLocal.Name);
+                            node.Comment = docLocal.Documentation;
+                            reswriter.AddResource(node);
+                        }
+                    }
+#endif
                 }
             }
 
+#if false
+            foreach (string locale in mapResStreams.Keys)
+            {
+                ResXResourceWriter writer = mapResources[locale];
+                writer.Generate();
+                Stream stream = mapResStreams[locale];
+                stream.Seek(0, SeekOrigin.Begin);
+                m_module.DefineManifestResource("Resources." + locale + ".resx", stream, ResourceAttributes.Public);
+            }
+#endif
         }
 
         private void CompileConcept(DocTemplateUsage concept, DocModelView view, TypeBuilder tb)
@@ -397,6 +504,41 @@ namespace IfcDoc
             return null;
         }
 
+        private PropertyBuilder RegisterProperty(string name, Type typefield, TypeBuilder tb, FieldBuilder fb)
+        {
+
+            // The property set and property get methods require a special
+            // set of attributes.
+            MethodAttributes getSetAttr = MethodAttributes.Public | MethodAttributes.SpecialName | MethodAttributes.HideBySig;
+
+            // Define the "get" accessor method for CustomerName.
+            MethodBuilder custNameGetPropMthdBldr = tb.DefineMethod("get_" + name, getSetAttr, typefield, Type.EmptyTypes);
+
+            ILGenerator custNameGetIL = custNameGetPropMthdBldr.GetILGenerator();
+
+            custNameGetIL.Emit(OpCodes.Ldarg_0);
+            custNameGetIL.Emit(OpCodes.Ldfld, fb);
+            custNameGetIL.Emit(OpCodes.Ret);
+
+            // Define the "set" accessor method for CustomerName.
+            MethodBuilder custNameSetPropMthdBldr = tb.DefineMethod("set_" + name, getSetAttr, null, new Type[] { typefield });
+
+            ILGenerator custNameSetIL = custNameSetPropMthdBldr.GetILGenerator();
+
+            custNameSetIL.Emit(OpCodes.Ldarg_0);
+            custNameSetIL.Emit(OpCodes.Ldarg_1);
+            custNameSetIL.Emit(OpCodes.Stfld, fb);
+            custNameSetIL.Emit(OpCodes.Ret);
+
+            // Last, we must map the two methods created above to our PropertyBuilder to 
+            // their corresponding behaviors, "get" and "set" respectively. 
+            PropertyBuilder pb = tb.DefineProperty(name, PropertyAttributes.HasDefault, typefield, null);
+            pb.SetGetMethod(custNameGetPropMthdBldr);
+            pb.SetSetMethod(custNameSetPropMthdBldr);
+
+            return pb;
+        }
+
         /// <summary>
         /// Creates or returns emitted type, or NULL if no such type.
         /// </summary>
@@ -475,7 +617,7 @@ namespace IfcDoc
                     return type;
                 }
 
-                TypeBuilder tb = this.m_module.DefineType(schema + "." + docType.Name, attr, typebase);
+                TypeBuilder tb = this.m_module.DefineType("BuildingSmart.IFC4X1." + schema + "." + docType.Name, attr, typebase);
 
                 // add typebuilder to map temporarily in case referenced by an attribute within same class or base class
                 this.m_types.Add(strtype, tb);
@@ -485,6 +627,24 @@ namespace IfcDoc
                 PropertyInfo propContractReference = typeof(DataContractAttribute).GetProperty("IsReference");
                 CustomAttributeBuilder cbContract = new CustomAttributeBuilder(conContract, new object[] { }, new PropertyInfo[] { propContractReference }, new object[] { false }); // consider setting IsReference to true if/when serializers like JSON support such referencing
                 tb.SetCustomAttribute(cbContract);
+
+
+                string displayname = docType.Name;
+                if (displayname != null)
+                {
+                    ConstructorInfo conReq = typeof(DisplayNameAttribute).GetConstructor(new Type[] { typeof(string) });
+                    CustomAttributeBuilder cabReq = new CustomAttributeBuilder(conReq, new object[] { displayname });
+                    tb.SetCustomAttribute(cabReq);
+                }
+
+                string description = docType.Documentation;
+                if (description != null)
+                {
+                    ConstructorInfo conReq = typeof(DescriptionAttribute).GetConstructor(new Type[] { typeof(string) });
+                    CustomAttributeBuilder cabReq = new CustomAttributeBuilder(conReq, new object[] { description });
+                    tb.SetCustomAttribute(cabReq);
+                }
+
 
                 // interfaces implemented by type (SELECTS)
                 foreach (DocDefinition docdef in this.m_definitions.Values)
@@ -508,7 +668,7 @@ namespace IfcDoc
                 this.m_fields.Add(tb, mapField);
 
                 ConstructorInfo conMember = typeof(DataMemberAttribute).GetConstructor(new Type[] { /*typeof(int)*/ });
-                ConstructorInfo conLookup = typeof(InversePropertyAttribute).GetConstructor(new Type[] { typeof(string) });
+                ConstructorInfo conInverse = typeof(InversePropertyAttribute).GetConstructor(new Type[] { typeof(string) });
 
                 PropertyInfo propMemberOrder = typeof(DataMemberAttribute).GetProperty("Order");
 
@@ -563,30 +723,34 @@ namespace IfcDoc
                             typefield = typeof(Nullable<>).MakeGenericType(new Type[] { typefield });
                         }
 
-                        FieldBuilder fb = tb.DefineField("_" + docAttribute.Name, typefield, FieldAttributes.Public); // public for now                    
+                        FieldBuilder fb = tb.DefineField("_" + docAttribute.Name, typefield, FieldAttributes.Private);
                         mapField.Add(docAttribute.Name, fb);
+
+
+                        PropertyBuilder pb = RegisterProperty(docAttribute.Name, typefield, tb, fb);
+
 
                         if (String.IsNullOrEmpty(docAttribute.Inverse))
                         {
                             // direct attributes are fields marked for serialization
                             CustomAttributeBuilder cb = new CustomAttributeBuilder(conMember, new object[] {}, new PropertyInfo[] { propMemberOrder }, new object[] { order });
-                            fb.SetCustomAttribute(cb);
+                            pb.SetCustomAttribute(cb);
                             order++;
 
                             // mark if required
                             if (!docAttribute.IsOptional)
                             {
-                                ConstructorInfo conReq = typeof(System.ComponentModel.DataAnnotations.RequiredAttribute).GetConstructor(new Type[] { });
+                                ConstructorInfo conReq = typeof(RequiredAttribute).GetConstructor(new Type[] { });
                                 CustomAttributeBuilder cabReq = new CustomAttributeBuilder(conReq, new object[] { });
-                                fb.SetCustomAttribute(cabReq);
+                                pb.SetCustomAttribute(cabReq);
                             }
 
                         }
                         else
                         {
                             // inverse attributes are fields marked for lookup
-                            CustomAttributeBuilder cb = new CustomAttributeBuilder(conLookup, new object[] { docAttribute.Inverse });
-                            fb.SetCustomAttribute(cb);
+                            CustomAttributeBuilder cb = new CustomAttributeBuilder(conInverse, new object[] { docAttribute.Inverse });
+                            pb.SetCustomAttribute(cb);
                         }
 
                         // XML
@@ -596,7 +760,7 @@ namespace IfcDoc
                         {
                             conXSD = typeof(XmlAttributeAttribute).GetConstructor(new Type[] { });
                             cabXSD = new CustomAttributeBuilder(conXSD, new object[] { });
-                            fb.SetCustomAttribute(cabXSD);
+                            pb.SetCustomAttribute(cabXSD);
                         }
                         else
                         {
@@ -605,22 +769,40 @@ namespace IfcDoc
                                 case DocXsdFormatEnum.Element:
                                     conXSD = typeof(XmlElementAttribute).GetConstructor(new Type[] { typeof(string) });
                                     cabXSD = new CustomAttributeBuilder(conXSD, new object[] { docAttribute.DefinedType });
-                                    fb.SetCustomAttribute(cabXSD);
+                                    pb.SetCustomAttribute(cabXSD);
                                     break;
 
                                 case DocXsdFormatEnum.Attribute:
                                     conXSD = typeof(XmlElementAttribute).GetConstructor(new Type[] { });
                                     cabXSD = new CustomAttributeBuilder(conXSD, new object[] { });
-                                    fb.SetCustomAttribute(cabXSD);
+                                    pb.SetCustomAttribute(cabXSD);
                                     break;
 
                                 case DocXsdFormatEnum.Hidden:
                                     conXSD = typeof(XmlIgnoreAttribute).GetConstructor(new Type[] { });
                                     cabXSD = new CustomAttributeBuilder(conXSD, new object[] { });
-                                    fb.SetCustomAttribute(cabXSD);
+                                    pb.SetCustomAttribute(cabXSD);
                                     break;
                             }
                         }
+
+                        // documentation
+                        string fielddisplayname = docAttribute.Name;
+                        if (displayname != null)
+                        {
+                            ConstructorInfo conReq = typeof(DisplayNameAttribute).GetConstructor(new Type[] { typeof(string) });
+                            CustomAttributeBuilder cabReq = new CustomAttributeBuilder(conReq, new object[] { fielddisplayname });
+                            pb.SetCustomAttribute(cabReq);
+                        }
+
+                        string fielddescription = docAttribute.Documentation;
+                        if (description != null)
+                        {
+                            ConstructorInfo conReq = typeof(DescriptionAttribute).GetConstructor(new Type[] { typeof(string) });
+                            CustomAttributeBuilder cabReq = new CustomAttributeBuilder(conReq, new object[] { fielddescription });
+                            pb.SetCustomAttribute(cabReq);
+                        }
+
                     }
                 }
 
@@ -663,7 +845,16 @@ namespace IfcDoc
                 for (int i = 0; i < docEnum.Constants.Count; i++)
                 {
                     DocConstant docConst = docEnum.Constants[i];
-                    eb.DefineLiteral(docConst.Name, (int)i);
+                    FieldBuilder fb = eb.DefineLiteral(docConst.Name, (int)i);
+
+                    foreach (DocLocalization docLocal in docEnum.Localization)
+                    {
+                        CustomAttributeBuilder cab = docLocal.ToCustomAttributeBuilder();
+                        if (cab != null)
+                        {
+                            fb.SetCustomAttribute(cab);
+                        }
+                    }
                 }
 
                 type = eb.CreateType();
@@ -715,15 +906,21 @@ namespace IfcDoc
                     }
                     else
                     {
+#if false // now use direct type -- don't recurse
                         FieldInfo fieldval = typeliteral.GetField("Value");
                         while (fieldval != null)
                         {
                             typeliteral = fieldval.FieldType;
                             fieldval = typeliteral.GetField("Value");
                         }
+#endif
                     }
 
                     FieldBuilder fieldValue = tb.DefineField("Value", typeliteral, FieldAttributes.Public);
+
+                    RegisterProperty("Value", typeliteral, tb, fieldValue);
+                 
+
 
                     type = tb.CreateType();
 

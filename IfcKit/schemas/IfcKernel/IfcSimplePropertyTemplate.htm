@@ -1,0 +1,27 @@
+﻿<p>The <em>IfcSimplePropertyTemplate</em> defines the template for all dynamically extensible properties, either the subtypes of <em>IfcSimpleProperty</em>, or the subtypes of <em>IfcPhysicalSimpleQuantity</em>. The individual property templates are interpreted according to their <em>Name</em> attribute and may have a predefined template type, property units, and property measure types. The correct interpretation of the attributes:</p>
+<ul>
+ <li><em>PrimaryUnit</em></li>
+ <li><em>SecondaryUnit</em></li>
+ <li><em>PrimaryMeasureType</em></li>
+ <li><em>SecondaryMeasureType</em></li>
+</ul>
+<p>is determined by the <em>TemplateType</em>. The attributes Enumerators and Expression only apply to instances of <em>IfcSimplePropertyTemplate</em> having a particular <em>TemplateType</em>. The <em>TemplateType</em> also controls, which subtype of either <em>IfcSimpleProperty</em> or <em>IfcPhysicalSimpleQuantity</em> shall be used for property occurrences corresponding to this template.</p>
+
+<p>The <em>IfcSimplePropertyTemplate</em> is part of the set of templates included in the <em>IfcPropertySetTemplate</em>. The template can be accessed throught the inverse attribute <em>PartOfPsetTemplate</em> The <em>IfcPropertySetTemplate</em> may define one or several instances of <em>IfcPropertySet</em> (or <em>IfcElementQuantity</em>). The definition assignment is established by the objectified relationship <em>IfcRelDefinesByTemplate</em> as shown in Figure 2. There is no direct link between an <em>IfcSimplePropertyTemplate</em> and a subtype of either <em>IfcSimpleProperty</em> or <em>IfcPhysicalSimpleQuantity</em>. The definition relationship between the template and the individual properties (or quantities) is established by the <em>Name</em> attributes.</p>
+
+<blockquote class="note">
+NOTE&nbsp; Constraints at <em>IfcPropertySetTemplate</em> and <em>IfcPropertySet</em> (and <em>IfcElementQuantity</em>) guarantee that the <em>Name</em> attributes of included property templates and individual properties are unique.
+</blockquote>
+
+<table>
+ <tr>
+  <td><img src="../../../figures/ifcsimplepropertytemplate_fig-1.png" alt="IfcSimplePropertyTemplate figure 1"></td>
+ </tr>
+ <tr>
+  <td><p class="figure">Figure 2 &mdash; Property template relationships</p></td>
+ </tr>
+</table>
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC4.
+</blockquote>

@@ -1,0 +1,27 @@
+﻿<p>The <em>IfcLine</em> is an unbounded line parameterized by an <em>IfcCartesianPoint</em> and an <em>IfcVector</em>. The magnitude of the <em>IfcVector</em> affects the parameterization of the line, but it does not bound the line.</p>
+<blockquote class="note">NOTE&nbsp; A line segment is defined using either the <em>IfcPolyline</em> with two <em>Points</em>, or the <em>IfcTrimmedCurve</em> with <em>BasisCurve</em> being an <em>IfcLine</em>.</blockquote>
+<blockquote class="example">EXAMPLE&nbsp; Figure 2 illustrates an unbounded <i>IfcLine</i> and a bounded line. The bounded line starting at 0.,0. and ending at 0.,2. can be defined by:
+<ol>
+<li class="small"><em>IfcLine</em> with <em>IfcVector</em>.<em>Magnitude</em>: 2.0 AND <em>IfcTrimmedCurve</em> with <em>Trim1</em>: 0. and <em>Trim2</em>: 1. (and trimming preference being parameter);</li>
+<li class="small"><em>IfcLine</em> with <em>IfcVector</em>.<em>Magnitude</em>: 1.0 AND <em>IfcTrimmedCurve</em> with <em>Trim1</em>: 0. and <em>Trim2</em>: 2. (and trimming preference being parameter);</li>
+<li class="small"><em>IfcLine</em> AND <em>IfcTrimmedCurve</em> with <em>Trim1</em>::<em>IfcCartesianPoint</em> [0.,0.] and <em>Trim2</em>::<em>IfcCartesianPoint</em> [0.,2.] (and trimming preference being Cartesian) - the <em>IfcVector</em>.<em>Magnitude</em> has no effect;</li>
+<li class="small"><em>IfcPolyline</em> with <em>Points[1]</em> being 0.,0. and <em>Points[2]</em> being 0.,2.</li>
+<li class="small"><em>IfcIndexedPolyCurve</em> with two indices, pointing into a point list providing the coordinates (0.,0.) and (0.,2.).</li>
+</ol></blockquote>
+<table summary="illustration">
+ <tr>
+  <td style="vertical-align:top;"><img src="../../../figures/ifcline-fig1.png" alt="line examples"></td>
+ </tr>
+ <tr>
+  <td><p class="figure">Figure 2 &mdash; Unbounded <em>IfcLine</em> and bounded <em>IfcTrimmedCurve</em></p></td>
+ </tr>
+</table>
+<p>&nbsp;</p>
+<blockquote class="extDef">NOTE&nbsp; Definition according to ISO/CD 10303-42:1992<br>
+A line is an unbounded curve with constant tangent direction. A line is defined by a point and a direction. The positive direction of the line is in the direction of the dir vector. The curve is parameterized as follows:
+<blockquote style="font-size:inherit;"><b>P</b> = Pnt<br>
+<b>V</b> = Dir<br>
+&lambda;(<em>u</em>) = <b>P</b> + <em>u</em><b>V</b></blockquote>
+and the parametric range is: -&infin; &lt; <em>u</em> &lt; &infin;</blockquote>
+<blockquote class="extDef">NOTE&nbsp; Entity adapted from <strong>line</strong> defined in ISO 10303-42</blockquote>
+<blockquote class="history">HISTORY&nbsp; New entity in IFC1.0</blockquote>

@@ -1,0 +1,37 @@
+﻿<p>The 2nd level space boundary defines the physical or virtual delimiter of a space by the relationship <em>IfcRelSpaceBoundary2ndLevel</em> to the surrounding elements. 2nd level space boundaries are characterized by:</p>
+<ul>
+<li>2nd level space boundaries still represent building elements that bound the space, but are more granular in that they are subdivided in any of the following cases:
+<ul>
+<li>Differences in materials and/or material assemblies (for example, a wainscot or paneling on the lower portion of a wall).</li>
+<li>Differences in spaces or zones on the other side of the building element (or virtual boundary) represented by the space boundary (for example, two different spaces on the other side of a wall)</li>
+</ul>
+</li>
+<li>2nd level space boundaries are differentiated in two ways: virtual or physical and internal or external, whereby any space boundary that is both internal and external has to be split into segments being either or.</li>
+<li>2nd level space boundaries represent both sides of a heat transfer surface separated by the thickness of the building element. They can be further differentiated in:
+<ul>
+<li>Type 2a that occurs when there is a space on the opposite side of the building element providing the space boundary</li>
+<li>Type 2b occurs if there is a building element on the opposite side of the building element providing the space boundary.</li>
+</ul>
+</li>
+<li>The connection geometry of 2nd level space boundaries is restricted to planar surfaces only. This means that curved surfaces must be segmented.</li>
+</ul>
+<p>2nd level space boundaries define the heat transfer surfaces on both sides of building elements that separate spaces. The generation of 2nd level space boundaries has to take building elements and spaces on the other side into account.</p>
+<blockquote class="note">NOTE&nbsp; 2nd level space boundaries are used by many analysis packages that require a surface view of the building that can be transformed into the various simple topological models. Examples of such analysis packages include: (1) energy analysis, (2) lighting analysis, (3) fluid dynamics</blockquote>
+
+<blockquote class="history">HISTORY&nbsp; New entity in IFC4.</font></small></blockquote>
+
+<p class="use-head">Relationship Use Definitions</p>
+<p>As shown in Figure 2, the attribute <em>ParentBoundary</em> with inverse <em>InnerBoundaries</em> is provided to link the space boundaries of doors, windows, and openings to the parent boundary, such as of a wall or slab.</p>
+<blockquote class="note">NOTE&nbsp; The space boundary of the parent is not cut by the inner boundary - both overlap.</blockquote>
+<p>The attribute <em>CorrespondingBoundary</em> with inverse <em>Corresponds</em> is provided to link the pair of space boundaries on the opposite sides of the building element.</p>
+<blockquote class="note">NOTE&nbsp; Only 2nd level space boundaries of type A have corresponding boundaries.</blockquote>
+
+<table border="0" cellpadding="2" cellspacing="2" summary="parent/inner boundaries">
+<tr><td><img src="../../../figures/ifcrelspaceboundary2ndlevel-fig1.png" alt="IfcRelSpaceBoundary2ndLevel" height="650" width="600"></td></tr>
+<tr><td><p class="figure">Figure 2 &mdash; Space boundary second level relationships</p></td></tr>
+</table>
+
+<p class="use-head">Geometry Use Definitions</p>
+<p>See the definition at the supertype <em>IfcRelSpaceBoundary</em>
+for guidance on using the connection geometry for second level
+space boundaries.</p>

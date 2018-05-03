@@ -15,6 +15,7 @@ using Microsoft.CSharp;
 
 using IfcDoc.Format.CSC;
 using IfcDoc.Schema.DOC;
+using BuildingSmart.Serialization.Step;
 
 
 namespace IfcDoc
@@ -134,8 +135,8 @@ namespace IfcDoc
                     docSchema.Types.Add(docDefined);
                     docDef = docDefined;
 
-                    System.Reflection.FieldInfo[] fields = t.GetFields(System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public);
-                    docDefined.DefinedType = fields[0].FieldType.Name;
+                    PropertyInfo[] fields = t.GetProperties(System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public);
+                    docDefined.DefinedType = fields[0].PropertyType.Name;
                 }
                 else if(t.IsInterface)
                 {
@@ -161,13 +162,13 @@ namespace IfcDoc
 
                     Dictionary<int, DocAttribute> attrsDirect = new Dictionary<int, DocAttribute>();
                     List<DocAttribute> attrsInverse = new List<DocAttribute>();
-                    System.Reflection.FieldInfo[] fields = t.GetFields(System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic | BindingFlags.DeclaredOnly);
-                    foreach (System.Reflection.FieldInfo field in fields)
+                    PropertyInfo[] fields = t.GetProperties(System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic | BindingFlags.DeclaredOnly);
+                    foreach (PropertyInfo field in fields)
                     {
                         DocAttribute docAttr = new DocAttribute();
                         docAttr.Name = field.Name.Substring(1);
 
-                        Type typeField = field.FieldType;
+                        Type typeField = field.PropertyType;
                         if (typeField.IsGenericType)
                         {
                             Type typeGeneric = typeField.GetGenericTypeDefinition();
@@ -220,6 +221,12 @@ namespace IfcDoc
                             if (rqa == null)
                             {
                                 docAttr.IsOptional = true;
+                            }
+
+                            CustomValidationAttribute cva = (CustomValidationAttribute)field.GetCustomAttribute(typeof(CustomValidationAttribute));
+                            if(cva != null)
+                            {
+                                docAttr.IsUnique = true;
                             }
                         }
                         else
@@ -535,7 +542,7 @@ namespace IfcDoc
             bool bExportExamples = ((options & FolderStorageOptions.Examples) != 0);
             bool bExportLocalize = ((options & FolderStorageOptions.Localization) != 0);
 
-            Compiler compiler = new Compiler(project, null, null);
+            Compiler compiler = new Compiler(project, null, null, false);
             System.Reflection.Emit.AssemblyBuilder assembly = compiler.Assembly;
 
             // -exchanges (or mvd?)
@@ -684,7 +691,7 @@ namespace IfcDoc
                 {
                     using (MemoryStream streamSource = new MemoryStream(docExample.File))
                     {
-                        BuildingSmart.Serialization.Spf.StepSerializer serSource = new BuildingSmart.Serialization.Spf.StepSerializer(typeProject);
+                        StepSerializer serSource = new StepSerializer(typeProject);
                         object project = serSource.ReadObject(streamSource);
 
                         // write original IFC file as-is (including comments)  -- or could be normalized using StepSerializer

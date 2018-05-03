@@ -1,2 +1,0 @@
-﻿NOT(EXISTS(InternalFilletRadius)) OR
-((InternalFilletRadius <= Width/2. - WallThickness) AND (InternalFilletRadius <= Depth/2. - WallThickness))

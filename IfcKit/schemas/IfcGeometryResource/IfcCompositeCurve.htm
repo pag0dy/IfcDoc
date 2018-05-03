@@ -1,0 +1,58 @@
+﻿<p>An <em>IfcCompositeCurve</em> is a continuous curve composed of curve segments.</p>
+<p>Figure 2 illustrates an example of a composite curve.</p>
+<table summary="illustration">
+<tr>
+<td><img src="../../../figures/ifccompositecurve.png" alt="formula" width="600" height="260"></td>
+</tr>
+<tr>
+<td>
+<p class="figure">Figure 2 &mdash; Composite curve</p>
+</td>
+</tr>
+</table>
+<p>Consider an <em>IfcCompositeCurve</em> having line segment and an arc segment. The line should be parameterized:</p>
+<ul>
+<li><em>IfcPolyline</em> with start= 0.,0. end= 0.,1., <em>SameSense</em>= TRUE, parametric length = 1.</li>
+</ul>
+<p>The arch should be parameterized:</p>
+<ul>
+<li><em>IfcTrimmedCurve</em> with start= 180', end= 90', <em>SameSense</em>= FALSE, parametric length = 90.</li>
+</ul>
+<p>Then the parameterization of the composite curve is:</p>
+<ul>
+<li><em>IfcCompositeCurve</em> with 0. &le; T &le; 1. (line segment) and 1. &le; T &le; 91. (arc segment), parametric
+length = 91.</li>
+</ul>
+<p>&nbsp;</p>
+<blockquote class="extDef">
+<p style="font-size:inherit">NOTE Definition according to ISO 10303-42:<br>
+A composite curve is a collection of curves joined end-to-end. The individual segments of the curve are themselves
+defined as composite curve segments. The parameterization of the composite curve is an accumulation of the parametric
+ranges of the referenced bounded curves. The first segment is parameterized from <em>0</em> to
+<em>l<sub><small>1</small></sub></em> and for <em>i</em> <em>&le;</em> <em>2</em>, the
+<em>i<sup><small>th</small></sup></em> segment is parameterized from:</p>
+<blockquote><img src="../../../figures/ifccompositecurve-math1.gif" alt="formula" width="140" height="60"></blockquote>
+<p style="font-size:inherit">where <em>l<sub><small>k</small></sub></em> is the parametric length (i.e., difference
+between maximum and minimum parameter values) of the curve underlying the <em>k<sup><small>th</small></sup></em>
+segment. Let <em>T</em> denote the parameter for the composite curve. Then, if the <em>i</em>th segment is not a
+reparameterised composite curve segment, <em>T</em> is related to the parameter <em>t<sub>i</sub></em>;
+<em>t<sub>i0</sub></em> <em>&le;</em> <em>t<sub>i</sub></em> <em>&le;</em> <em>t<sub>i1</sub></em>; for the
+<em>i</em>th segment by the equation:</p>
+<blockquote><img src="../../../figures/ifccompositecurve-math2.gif" alt="formula" width="140" height="60"> if
+<em>Segments[i].SameSense</em> = TRUE;</blockquote>
+<p style="font-size:inherit">or by the equation:</p>
+<blockquote><img src="../../../figures/ifccompositecurve-math3.gif" alt="formula" width="140" height="60"> if
+<em>Segments[i].SameSense</em> = FALSE;</blockquote>
+<p style="font-size:inherit">If the segments[i] is of type reparameterised composite curve segment,</p>
+<blockquote><img src="../../../figures/ifccompositecurve-math4.gif" alt="formula" width="140" height="60"> where <em>&tau;</em>
+is defined at reparameterized composite curve segment (see
+<em>IfcReparameterizedCompositeCurveSegment</em>).</blockquote>
+</blockquote>
+<blockquote class="note">NOTE&nbsp; Entity adapted from <strong>composite_curve</strong>  defined in ISO
+10303-42.</blockquote>
+<blockquote class="history">HISTORY&nbsp; New entity in IFC1.0</blockquote>
+<p class="spec-head">Informal Propositions:</p>
+<ol>
+<li>The <em>SameSense</em> attribute of each segment correctly specifies the senses of the component curves. When
+traversed in the direction indicated by <em>SameSense</em>, the segments shall join end-to-end.</li>
+</ol>

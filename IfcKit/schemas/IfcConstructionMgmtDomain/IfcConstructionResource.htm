@@ -1,0 +1,39 @@
+﻿<p><em>IfcConstructionResource</em> is an abstract generalization of the different resources used in
+construction projects, mainly labour, material, equipment and product resources, plus subcontracted resources and aggregations such as a crew resource.</p>
+
+<p>A resource represents "use of something" and does not necessarily correspond to a single item such as a person or vehicle, but
+represents a pool of items having limited availability such as general labor or an equipment fleet. A resource can represent either a generic resource pool (not having any task assignment) or a task-specific resource allocation (having an <em>IfcTask</em>
+assignment).</p>
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC2x2.
+</blockquote>
+<blockquote class="change-ifc2x4">
+IFC4 CHANGE&nbsp; Modified in to promote <em>ResourceIdentifer</em> and <em>ResourceGroup</em> (renamed to <em>LongDescription</em>) to supertype <em>IfcResource</em> and add attributes as described.
+</blockquote>
+
+<p class="use-head">Declaration use definition</p>
+<p>A root-level resource (specifically <em>IfcCrewResource</em> or <em>IfcSubContractResource</em>) is declared within the project by <em>IfcRelDeclares</em> where <em>RelatingContext</em> refers to the single <em>IfcProject</em> and <em>RelatedObjects</em> refers to one or more <em>IfcConstructionResource</em>, and other root-level objects within the project.</p>
+
+<p class="use-head">Assignment use definition</p>
+<p>A resource may be assigned to an actor by <em>IfcRelAssignsToActor</em> where <em>RelatingActor</em> refers to an <em>IfcActor</em> and <em>RelatedObjects</em> refers to one or more <em>IfcConstructionResource</em> or other objects. Such relationship indicates the actor responsible for allocating the resource such as partitioning into task-specific allocations, delegating to other actors, and/or scheduling over time. Note that this assignment does not indicate the person or organization performing the work; that is indicated by <em>IfcRelAssignsToResource</em>. The actor responsible for the resource may or may not be the same as any actor(s) performing work.</p>
+<p>A resource may be assigned to a control by <em>IfcRelAssignsToControl</em> where <em>RelatingProduct</em> refers to an <em>IfcControl</em> and <em>RelatedObjects</em> refers to one or more <em>IfcConstructionResource</em> or other objects. Most commonly an <em>IfcWorkCalendar</em> is assigned indicating availability of the resource, where such calendar is nested within a base calendar or an <em>IfcWorkPlan</em> which in turn is assigned to the <em>IfcProject</em>.</p>
+<p>A resource may be assigned to a group by <em>IfcRelAssignsToGroup</em> where <em>RelatingGroup</em> refers to an <em>IfcGroup</em> and <em>RelatedObjects</em> refers to one or more <em>IfcConstructionResource</em> or other objects. Most commonly an <em>IfcAsset</em> is assigned indicating the asset to be tracked, where such asset is nested within an <em>IfcInventory</em> which in turn is assigned to the <em>IfcProject</em>.</p>
+<p>A resource may be assigned to a product by <em>IfcRelAssignsToProduct</em> where <em>RelatingProduct</em> refers to an <em>IfcProduct</em> and <em>RelatedObjects</em> refers to one or more <em>IfcConstructionResource</em> or other objects. Most commonly an <em>IfcElement</em> subtype is assigned indicating the product to be constructed, where such product is connected to a spatial
+structure which in turn is aggregated within the <em>IfcProject</em>.</p>
+<p>A resource may be assigned to a process by <em>IfcRelAssignsToProcess</em> where <em>RelatingProcess</em> refers to an <em>IfcProcess</em> and <em>RelatedObjects</em> refers to one or more <em>IfcConstructionResource</em> or other objects. Most commonly an <em>IfcTask</em> is assigned indicating the task to be performed by the resource, where such task is nested within a summary task which in turn is assigned to the <em>IfcProject</em>.</p> 
+<p>A resource may have assignments of other objects using <em>IfcRelAssignsToResource</em> where <em>RelatingResource</em> refers to the <em>IfcConstructionResource</em> and <em>RelatedObjects</em> refers to one or more objects such as <em>IfcActor</em> or <em>IfcProduct</em> subtypes. This relationship indicates specific objects assigned to fulfill resource usage.</p>
+<p>Figure 3 illustrates resource assignment.</p>
+<table>
+<tr><td><img alt="Assignment Use Definition" src="../../../figures/ifcconstructionresource-assignment.png"></td></tr>
+<tr><td><p class="figure">Figure 3 &mdash; Construction resource assignment use</p></td></tr>
+</table>
+
+<p class="use-head">Baseline use definition</p>
+<p>A resource may have any number of baselines defined using the relationship <em>IfcRelDefinesByObject</em> where <em>RelatingObject</em> is the "current" resource and <em>RelatedObjects</em> consists of multiple "baseline" resources, each representing a copy of the resource as it existed at an earlier point in time as shown in Figure 185. Each baseline <em>IfcConstructionResource</em> is identified by its nested <em>IfcRelAssignsToControl</em> relationship to an <em>IfcWorkSchedule</em> having
+<em>PredefinedType=BASELINE</em>, <em>IfcWorkSchedule.CreationDate</em> indicating the date of the baseline, and
+<em>IfcWorkSchedule.Name</em> indicating the name of the baseline.</p>
+<table>
+<tr><td><img alt="Baseline Use Definition" src="../../../figures/ifcconstructionresource-baseline.png"></td></tr>
+<tr><td><p class="figure">Figure 4 &mdash; Construction resource baseline use</p></td></tr>
+</table>

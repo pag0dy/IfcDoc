@@ -1,0 +1,23 @@
+﻿<p><em>IfcEllipseProfileDef</em> defines an ellipse as the profile definition used by the swept surface geometry
+or the swept area solid. It is given by its semi axis attributes and placed within the 2D position coordinate system, established by the <em>Position</em> attribute. </p>
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC2x
+</blockquote>
+
+<p>Figure 2 illustrates parameters for the ellipse profile definition. The parameterized profile defines its own position coordinate system.
+The underlying coordinate system is defined by the swept surface or swept area solid that uses the profile definition. It is the xy plane of either: </p>
+      <ul>
+        <li><em>IfcSweptSurface.Position</em></li>
+        <li><em>IfcSweptAreaSolid.Position</em></li>
+      </ul>
+<p>Or in case of sectioned spines it is the xy plane of each list member of <em>IfcSectionedSpine.CrossSectionPositions</em>. By using offsets of the position location, the parameterized profile can be positioned centric (using x,y offsets = 0.), or at any position relative to the profile. Explicit coordinate offsets are used to define cardinal points (for example, upper-left bound). The location of the position coordinate system defines the center of the ellipse. The <em>SemiAxis1</em> attribute defines the first radius of the ellipse in the direction of the X axis, the <em>SemiAxis2</em> attribute defines the second radius of the ellipse in the direction of the Y axis.</p>
+
+<blockquote class="note">
+NOTE&nbsp; The semi axes of the ellipse are rectangular to each other by definition.
+</blockquote>
+
+<table>
+<tr><td><img src="../../../figures/ifcellipseprofiledef-layout1.gif" alt="ellipse profile" border="0" height="300" width="400"></td></tr>
+<tr><td><p class="figure">Figure 2 &mdash; Ellipse profile</p></td></tr>
+</table>

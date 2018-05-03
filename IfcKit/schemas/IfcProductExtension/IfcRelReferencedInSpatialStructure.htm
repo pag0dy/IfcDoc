@@ -1,0 +1,43 @@
+﻿<p>The objectified relationship, <em>IfcRelReferencedInSpatialStructure</em> is used to assign elements in addition to those levels of the project       spatial structure, in which they are referenced, but not primarily contained. </p>
+
+<blockquote class="note">
+NOTE&nbsp; The primary containment relationship between an element and the spatial structure is handled by <em>IfcRelContainsInSpatialStructure</em>.
+</blockquote>
+
+<p>Any element can be referenced to zero, one or several levels of the spatial structure. Whereas the <em>IfcRelContainsInSpatialStructure</em> relationship is required to be hierarchical (an element can only be contained in exactly one spatial structure element), the <em>IfcRelReferencedInSpatialStructure</em> is not restricted to be hierarchical.</p>
+
+<blockquote class="example">
+EXAMPLE&nbsp; A wall might be normally contained within a storey, and since it does not span through several stories, it is not referenced in any additional storey. However a curtain wall might span through several stories, in this case it can be contained within the ground floor, but it would be referenced by all additional stories, it spans.
+</blockquote>
+
+<p>Predefined spatial structure elements to which elements can be assigned are</p>
+    <ul>
+      <li>site as <em>IfcSite</em>
+      </li>
+      <li>building as <em>IfcBuilding</em>
+      </li>
+      <li>storey as <em>IfcBuildingStorey</em>
+      </li>
+      <li>space as <em>IfcSpace</em>
+      </li>
+    </ul>
+
+<p>Elements can also be references in a spatial zone that is provided as <em>IfcSpatialZone</em>.</p>
+
+<p>Figure 2 shows the use of <em>IfcRelContainedInSpatialStructure</em> and <em>IfcRelReferencedInSpatialStructure</em> to assign an <em>IfcCurtainWall</em> to two different levels within the spatial structure. It is primarily contained within the ground floor, and additionally referenced within the first and second floor.</p>
+
+    <table cellpadding="2" cellspacing="2" width="80%">
+      <tbody>
+        <tr valign="top">
+          <td align="left" valign="top"><img src="../../../figures/ifcrelreferencedinspatialstructure-fig1.png" alt="reference and containment" height="601" width="601"><br>
+          </td>
+        </tr>
+        <tr>
+          <td><p class="figure">Figure 2 &mdash; Relationship for spatial structure referencing</p></td>
+        </tr>
+      </tbody>
+    </table>
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC2x3.
+</blockquote>

@@ -17,7 +17,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BuildingSmart.Serialization.Spf
+namespace BuildingSmart.Serialization.Step
 {
     public class StepSerializer : Serializer
     {
@@ -45,8 +45,8 @@ namespace BuildingSmart.Serialization.Spf
         /// </summary>
         /// <param name="roottype"></param>
         /// <param name="loadtypes"></param>
-        public StepSerializer(Type roottype, Type[] loadtypes, string schema, string release)
-            : base(roottype, loadtypes, schema, release)
+        public StepSerializer(Type roottype, Type[] loadtypes, string schema, string release, string application)
+            : base(roottype, loadtypes, schema, release, application)
         {
         }
 
@@ -86,14 +86,9 @@ namespace BuildingSmart.Serialization.Spf
             // third pass: read fields
             ReadContent(stream, instances, ParseScope.DataFields);
 
-            // find the single IfcProject -- perf
-            foreach (object o in instances.Values)
-            {
-                if (this.ProjectType.IsInstanceOfType(o))
-                    return o;
-            }
-
-            return null; // could not find the single project object
+            object root = null;
+            instances.TryGetValue(0, out root);
+            return root;
         }
 
         /// <summary>
@@ -109,27 +104,18 @@ namespace BuildingSmart.Serialization.Spf
             if (root == null)
                 throw new ArgumentNullException("root");
 
-            List<string> fileschema = new List<string>();
-            fileschema = new List<string>();
-            fileschema.Add(this.Schema);
-
-            List<string> filedesc = null;
-            filedesc = new List<string>();
-
             List<object> headertags = new List<object>();
 
             // generate a new header
             // specific order is required per 10303.11: Description, Name, Schema
 
-            FILE_DESCRIPTION tagFileDesc = new FILE_DESCRIPTION();
-            tagFileDesc.Description = filedesc;
+            FILE_DESCRIPTION tagFileDesc = new FILE_DESCRIPTION(new string[]{ "" });
             headertags.Add(tagFileDesc);
 
-            FILE_NAME tagFileName = new FILE_NAME("", "", "", "BuildingSmart", "BuildingSmart IfcKit 12.0");
+            FILE_NAME tagFileName = new FILE_NAME("", "", "", this.Preprocessor, this.Application);
             headertags.Add(tagFileName);
 
-            FILE_SCHEMA tagFileSchema = new FILE_SCHEMA();
-            tagFileSchema.schema = fileschema;
+            FILE_SCHEMA tagFileSchema = new FILE_SCHEMA(new string[] {this.Schema});
             headertags.Add(tagFileSchema);
 
             // write file
@@ -190,8 +176,8 @@ namespace BuildingSmart.Serialization.Spf
                     writer.WriteLine(";");
 
                     // capture inverse fields -- don't use properties, as those will allocate superflously
-                    IList<FieldInfo> fields = this.GetFieldsInverseAll(o.GetType());
-                    foreach (FieldInfo field in fields)
+                    IList<PropertyInfo> fields = this.GetFieldsInverseAll(o.GetType());
+                    foreach (PropertyInfo field in fields)
                     {
                         object inval = field.GetValue(o);
                         if (inval is IEnumerable)
@@ -250,7 +236,7 @@ namespace BuildingSmart.Serialization.Spf
 
             if (t.IsValueType)
             {
-                FieldInfo[] fields = t.GetFields(BindingFlags.Public | BindingFlags.Instance);
+                PropertyInfo[] fields = t.GetProperties(BindingFlags.Public | BindingFlags.Instance);
                 if(fields.Length == 1)
                 {
                     object val = fields[0].GetValue(o);
@@ -261,7 +247,7 @@ namespace BuildingSmart.Serialization.Spf
             else
             {
 
-                IList<FieldInfo> fields = this.GetFieldsOrdered(t);
+                IList<PropertyInfo> fields = this.GetFieldsOrdered(t);
                 for (int iField = 0; iField < fields.Count; iField++)
                 {
                     if (iField != 0)
@@ -269,7 +255,7 @@ namespace BuildingSmart.Serialization.Spf
                         sb.Append(",");
                     }
 
-                    System.Reflection.FieldInfo field = fields[iField];
+                    PropertyInfo field = fields[iField];
 
                     if (field == null)
                     {
@@ -279,7 +265,7 @@ namespace BuildingSmart.Serialization.Spf
                     else
                     {
                         object val = field.GetValue(o);
-                        if (field.FieldType.IsInterface && !field.FieldType.IsGenericType && val is ValueType)
+                        if (field.PropertyType.IsInterface && !field.PropertyType.IsGenericType && val is ValueType)
                         {
                             // may need to qualify constructor
                             if (val != null)
@@ -379,11 +365,17 @@ namespace BuildingSmart.Serialization.Spf
             }
             else if (t.IsEnum)
             {
+                // if converting enumeration that doesn't exist in target schema, then revert to default (0) value, which is typically NOTDEFINED for IFC
+                if (!Enum.IsDefined(t, o))
+                {
+                    o = Enum.ToObject(t, 0);
+                }
+
                 return "." + o.ToString() + ".";
             }
             else if (t.IsValueType)
             {
-                FieldInfo[] fields = t.GetFields();
+                PropertyInfo[] fields = t.GetProperties();
                 if (fields.Length == 1)
                 {
                     // drill into the field -- may be multiple steps, e.g. IfcPositiveInteger -> IfcInteger -> long
@@ -395,7 +387,7 @@ namespace BuildingSmart.Serialization.Spf
                     // wrap it, e.g. IfcCompositePlaneAngleMeasure for latitude/longitude
                     StringBuilder sb = new StringBuilder();
                     sb.Append("(");
-                    foreach (FieldInfo f in fields) //todo: verify order...
+                    foreach (PropertyInfo f in fields) //todo: verify order...
                     {
                         object v = f.GetValue(o);
                         string s = FormatValue(v, qRoot, qResource, idgen);
@@ -483,8 +475,12 @@ namespace BuildingSmart.Serialization.Spf
                 }
             }
 
-            sb.Append(")");
+            if (i == 0)
+            {
+                return "$"; // don't export empty collections; use null
+            }
 
+            sb.Append(")");
             return sb.ToString();
         }
 
@@ -928,10 +924,12 @@ namespace BuildingSmart.Serialization.Spf
             if (strval == "$" || strval == "*")
             {
                 // special case if list - create it
-                //if (typeof(IEnumerable).IsAssignableFrom(type))
-                //{
-                //    value = Activator.CreateInstance(type);
-                //}
+                if (type != typeof(string) && type != typeof(byte[]) &&
+                    typeof(IEnumerable).IsAssignableFrom(type))
+                {
+                    Type typeCollection = this.GetCollectionInstanceType(type);
+                    value = Activator.CreateInstance(typeCollection);
+                }
 
                 return value;
             }
@@ -959,14 +957,27 @@ namespace BuildingSmart.Serialization.Spf
             }
             else if(type.IsValueType)
             {
-                // defined type -- get the underlying field
-                FieldInfo[] fields = type.GetFields(BindingFlags.Instance | BindingFlags.Public); //perf: cache this
+                // defined type -- get the underlying field -- may recurse multiple times, e.g. IfcPositiveLengthMeasure
+                PropertyInfo[] fields = type.GetProperties(BindingFlags.Instance | BindingFlags.Public); //perf: cache this
                 if (fields.Length == 1)
                 {
-                    FieldInfo fieldValue = fields[0];
-                    object primval = ParsePrimitive(strval, fieldValue.FieldType);
-                    value = Activator.CreateInstance(type);
-                    fieldValue.SetValue(value, primval);
+                    PropertyInfo fieldValue = fields[0];
+
+                    object primval = ParsePrimitive(strval, fieldValue.PropertyType);
+                    if (primval != null)
+                    {
+                        value = Activator.CreateInstance(type);
+                        fieldValue.SetValue(value, primval);
+                    }
+                    else
+                    {
+                        object innerval = ParseValue(fieldValue.PropertyType, strval, idmap);
+                        if (innerval != null)
+                        {
+                            value = Activator.CreateInstance(type);
+                            fieldValue.SetValue(value, innerval);
+                        }
+                    }
                 }
             }
             else if (typeof(IEnumerable).IsAssignableFrom(type))
@@ -1118,7 +1129,13 @@ namespace BuildingSmart.Serialization.Spf
         private void ParseFields(object instance, string line, Dictionary<long, object> idmap)
         {
             Type t = instance.GetType();
-            IList<FieldInfo> fields = this.GetFieldsOrdered(t);
+
+            IList<PropertyInfo> fields = this.GetFieldsOrdered(t);
+            if (fields.Count == 0)
+            {
+                PropertyInfo f = t.GetProperty("Value"); //!!!!!REFACTOR: MUST USE FIELD!!!! -- no property encoding....
+                fields = new List<PropertyInfo>(new PropertyInfo[] { f });
+            }
 
             int iParam = line.IndexOf('(');
             try
@@ -1179,7 +1196,7 @@ namespace BuildingSmart.Serialization.Spf
                     if (bValue)
                     {
                         // parse it out
-                        System.Reflection.FieldInfo field = fields[n];
+                        PropertyInfo field = fields[n];
 
                         // if field is null, means derived
                         if (field != null)
@@ -1206,7 +1223,7 @@ namespace BuildingSmart.Serialization.Spf
         }
 
         private void ParseField(
-               FieldInfo field,
+               PropertyInfo field,
                object instance,
                string strval,
                Dictionary<long, object> idmap)
@@ -1222,7 +1239,7 @@ namespace BuildingSmart.Serialization.Spf
             object value = null;
             try
             {
-                value = ParseValue(field.FieldType, strval, idmap);
+                value = ParseValue(field.PropertyType, strval, idmap);
             }
             catch (Exception e)
             {
@@ -1230,8 +1247,13 @@ namespace BuildingSmart.Serialization.Spf
                 System.Diagnostics.Debug.WriteLine("StepSerializer: " + e.Message);
             }
 
-            if (value != null && field.FieldType.IsInstanceOfType(value))
+            if (value != null && field.PropertyType.IsInstanceOfType(value))
             {
+                if (strval.Length > 2 && field.Name.Equals("Rules") && field.DeclaringType.Name.Equals("DocModelRule"))
+                {
+                    field.ToString();
+                }
+
                 field.SetValue(instance, value);
                 
                 //... todo: use generated code for specialized collections to keep inverse properties in sync...
@@ -1304,15 +1326,15 @@ namespace BuildingSmart.Serialization.Spf
                             switch (strType)
                             {
                                 case "FILE_DESCRIPTION":
-                                    headertag = new FILE_DESCRIPTION();
+                                    headertag = new FILE_DESCRIPTION(new string[]{});
                                     break;
 
                                 case "FILE_SCHEMA":
-                                    headertag = new FILE_SCHEMA();
+                                    headertag = new FILE_SCHEMA(new string[]{});
                                     break;
 
                                 case "FILE_NAME":
-                                    headertag = new FILE_NAME();
+                                    headertag = new FILE_NAME("", "", "", "", "");
                                     break;
                             }
 
@@ -1401,9 +1423,14 @@ namespace BuildingSmart.Serialization.Spf
                         Type t = this.GetTypeByName(strType);
                         if (t != null)
                         {
-                            // can't create more than one IfcProject -- must encapsulate within IfcProjectLibrary
-                            object o = Activator.CreateInstance(t);// FormatterServices.GetUninitializedObject(t);
+                            object o = FormatterServices.GetUninitializedObject(t); // works if no parameterless constructor is defined
                             idmap.Add(id, o);
+
+                            // capture project
+                            if (this.RootType.IsInstanceOfType(o) && !idmap.ContainsKey(0))
+                            {
+                                idmap.Add(0, o);
+                            }
                         }
                     }
                     break;

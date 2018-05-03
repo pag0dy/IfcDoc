@@ -1,0 +1,109 @@
+﻿    <p>
+      A property with a bounded value, <em>IfcPropertyBoundedValue</em>, defines a property
+      object which has a maximum of two (numeric or descriptive) values assigned, the first value specifying the upper bound
+      and the second value specifying the lower bound. It defines a property - value bound (min-max) combination for which
+      the property <em>Name</em>, an optional <em>Description</em>, the optional <em>UpperBoundValue</em>
+      with measure type, the optional <em>LowerBoundValue</em> with measure type, and the optional <em>Unit</em> is given.
+      A set point value can be provided in addition to the upper and lower bound values for operational value setting.
+    </p>
+    <p>
+      The unit is handled by the <em>Unit</em> attribute, see Table 2 for an example of a bounded property:
+    </p>
+    <ul>
+      <li>If the <em>Unit</em> attribute is not given, then the unit is already implied by the type of
+      <em>IfcMeasureValue</em> or <em>IfcDerivedMeasureValue</em>. The associated unit can be found at the
+      <em>IfcUnitAssignment</em> globally defined at the project level (<em>IfcProject.UnitsInContext</em>).
+      </li>
+      <li>If the <em>Unit</em> attribute is given, then the unit assigned by the <em>Unit</em> attribute overrides the
+      globally assigned unit.
+      </li>
+    </ul>
+    <p>
+      The <em>IfcPropertyBoundedValue</em> allows for the specification of an interval for the value component of the
+      property description. If either the <em>LowerBoundValue</em> or the <em>UpperBoundValue</em> is not
+      given, then it indicates an open bound (either a minimum value or a maximum value). The interval is by definition
+      inclusive, that is, the value given for the <em>LowerBoundValue</em> or the <em>UpperBoundValue</em> is
+      included in the interval.
+    </p>
+    <blockquote class="note">
+      NOTE&nbsp; An <em>IfcPropertyBoundedValue</em> may be exchanged with no values assigned yet. In this case the
+      <em>LowerBoundValue</em> and the <em>UpperBoundValue</em> are set to NIL.
+    </blockquote>
+<blockquote>
+<p>&nbsp;</p>
+<table>
+ <tr>
+  <td>
+   <table class="gridtable">
+    <tr valign="top">
+     <th width="15%">Name</th>
+     <th width="15%">UpperBoundValue</th>
+     <th width="15%">LowerBoundValue</th>
+     <th width="15%">SetPointValue</th>
+     <th width="45%">Type<br></b> <span style="font-size:smaller">(through <em>IfcValue</em>)</span></th>
+     <th width="10%">Unit<br></th>
+    </tr>
+    <tr valign="top">
+     <td>OverallHeight</td>
+     <td>1930</td>
+     <td>2300</td>
+     <td>&lt;nil&gt;</td>
+     <td><em>IfcPositiveLengthMeasure</em></td>
+     <td>-</td>
+    </tr>
+    <tr valign="top">
+     <td>OverallWidth</td>
+     <td>0.9</td>
+     <td>1.25</td>
+     <td>&lt;nil&gt;</td>
+     <td><em>IfcPositiveLengthMeasure</em></td>
+     <td>m</td>
+    </tr>
+    <tr valign="top">
+     <td>MaxHeight</td>
+     <td>20.0</td>
+     <td>&lt;nil&gt;</td>
+     <td>&lt;nil&gt;</td>
+     <td><em>IfcPositiveLengthMeasure</em></td>
+     <td>-</td>
+    </tr>
+    <tr valign="top">
+     <td>MinWeight</td>
+     <td>&lt;nil&gt;</td>
+     <td>20</td>
+     <td>&lt;nil&gt;</td>
+     <td><em>IfcMassMeasure</em></td>
+     <td>kg</td>
+    </tr>
+    <tr>
+     <td colspan="6" align="right">* Where rules ensures same measure type for all values</td>
+    </tr>
+   </table>
+  </td>
+ </tr>
+ <tr>
+  <td><p class="table">Table 2 &mdash; Bounded property with values, measure types and units</td>
+ </tr>
+</table>
+</blockquote>
+
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC2x.
+</blockquote>
+
+<blockquote class="change-ifc2x2">
+IFC2x2 CHANGE&nbsp; The attribute type of the attribute <em>UpperBoundValue</em> and <em>LowerBoundValue</em> has been made optional with upward compatibility for file based exchange.
+</blockquote>
+
+<blockquote class="change-ifc2x4">
+IFC4 CHANGE&nbsp; The attribute <em>SetPointValue</em> has been added.
+</blockquote>
+
+    <p class="spec-head">Informal Propositions:</p>
+    <ol>
+      <li>If the measure type for the upper and lover bound value
+      is a numeric measure, then the following shall be true: <em>
+        UpperBoundValue</em> &gt; <em>LowerBoundValue</em>.
+      </li>
+    </ol>

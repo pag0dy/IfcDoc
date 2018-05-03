@@ -19,8 +19,17 @@ using BuildingSmart.Serialization;
 
 namespace BuildingSmart.Utilities.Conversion
 {
+    /// <summary>
+    /// Interface supporting updating or converting an object to conform to schema
+    /// </summary>
     public interface IConvert
     {
+        /// <summary>
+        /// Either updates the source object or returns a new object compatible with the target schema.
+        /// </summary>
+        /// <param name="source">The source object to process.</param>
+        /// <param name="type">The type of new object to convert, which may be within the same or different assembly as the source object's type.</param>
+        /// <returns>Either a new object of the specified type if converted, the same object if updated, or null if no conversion is available to remove the object.</returns>
         object Convert(object source, Type type);
     }
 
@@ -30,6 +39,7 @@ namespace BuildingSmart.Utilities.Conversion
         Type m_typeTarget;
         Dictionary<Type, Type> m_mapTypes;
         Dictionary<Type, IConvert> m_mapConverters;
+        Dictionary<Type, IConvert> m_mapHealers;
         Adapter m_adapterSource;
         Adapter m_adapterTarget;
 
@@ -48,7 +58,7 @@ namespace BuildingSmart.Utilities.Conversion
         /// <param name="sourceType">The source type (e.g. BuildingSmart.IFC4X1.IfcProject to capture everything)</param>
         /// <param name="targetType">The target type (e.g. BuildingSmart.IFC2X3_FINAL.IfcProject) -- must be equivalent to sourceType.</param>
         /// <param name="mapTypes">Mapping of conversions; if not found then inheritance is used to match the closest base type. Types may be of the same assembly or different assemblies.</param>
-        /// <param name="mapConverters">Custom conversion called for performing conversions of specific types</param>
+        /// <param name="mapConverters">Custom conversion called for performing conversions of specific types.</param>
         public Converter(Type sourceType, Type targetType, Dictionary<Type, Type> mapTypes, Dictionary<Type, IConvert> mapConverters)
         {
             this.m_typeSource = sourceType;
@@ -57,6 +67,19 @@ namespace BuildingSmart.Utilities.Conversion
             this.m_adapterTarget = new Adapter(targetType);
             this.m_mapTypes = mapTypes;
             this.m_mapConverters = mapConverters;
+
+            // separate abstract types into healers
+            this.m_mapHealers = new Dictionary<Type, IConvert>();
+            if(mapConverters != null)
+            {
+                foreach(Type t in mapConverters.Keys)
+                {
+                    if(t.IsAbstract)
+                    {
+                        this.m_mapHealers.Add(t, mapConverters[t]);
+                    }
+                }
+            }
         }
 
 
@@ -84,6 +107,19 @@ namespace BuildingSmart.Utilities.Conversion
                 Type typeSource = o.GetType();
                 Type typeTarget = this.m_adapterTarget.GetType(typeSource.Name);
 
+                // heal any objects first (before transforming)
+                Type t = typeSource.BaseType;
+                while(t != typeof(object))
+                {
+                    IConvert healer = null;
+                    if (this.m_mapHealers.TryGetValue(t, out healer))
+                    {
+                        healer.Convert(o, t);
+                    }
+
+                    t = t.BaseType;
+                }
+
                 Type typeOverride = null;
                 if (this.m_mapTypes != null && this.m_mapTypes.TryGetValue(typeSource, out typeOverride))
                 {
@@ -108,7 +144,7 @@ namespace BuildingSmart.Utilities.Conversion
                     }
                 }
 
-                if (typeTarget == null || typeTarget.IsAbstract)
+                if (typeTarget == null || typeTarget.IsAbstract || oReplacement == null)
                 {
                     mapInstances.Add(o, null); // record null to void future conversion, report what didn't convert
                 }
@@ -122,10 +158,10 @@ namespace BuildingSmart.Utilities.Conversion
                     bool firstTime;
                     long id = gen.GetId(o, out firstTime);
 
-                    IList<FieldInfo> fieldsDirect = this.m_adapterSource.GetDirectFields(oReplacement.GetType());
-                    foreach (FieldInfo field in fieldsDirect)
+                    IList<PropertyInfo> fieldsDirect = this.m_adapterSource.GetDirectFields(oReplacement.GetType());
+                    foreach (PropertyInfo field in fieldsDirect)
                     {
-                        if (field != null && !field.FieldType.IsValueType)
+                        if (field != null && !field.PropertyType.IsValueType)
                         {
                             object inval = field.GetValue(oReplacement);
                             if (inval is IEnumerable)
@@ -158,8 +194,8 @@ namespace BuildingSmart.Utilities.Conversion
                     }
 
                     // capture inverse fields -- don't use properties, as those will allocate superflously
-                    IList<FieldInfo> fields = this.m_adapterSource.GetInverseFields(oReplacement.GetType());
-                    foreach (FieldInfo field in fields)
+                    IList<PropertyInfo> fields = this.m_adapterSource.GetInverseFields(oReplacement.GetType());
+                    foreach (PropertyInfo field in fields)
                     {
                         object inval = field.GetValue(oReplacement);
                         if (inval is IEnumerable)
@@ -198,32 +234,32 @@ namespace BuildingSmart.Utilities.Conversion
                         source = o;
                     }
 
-                    IList<FieldInfo> fieldsSource = this.m_adapterSource.GetDirectFields(source.GetType());
-                    IList<FieldInfo> fieldsTarget = this.m_adapterTarget.GetDirectFields(target.GetType());
+                    IList<PropertyInfo> fieldsSource = this.m_adapterSource.GetDirectFields(source.GetType());
+                    IList<PropertyInfo> fieldsTarget = this.m_adapterTarget.GetDirectFields(target.GetType());
                     for (int iField = 0; iField < fieldsSource.Count && iField < fieldsTarget.Count; iField++)
                     {
-                        FieldInfo fieldSource = fieldsSource[iField];
-                        FieldInfo fieldTarget = fieldsTarget[iField];
+                        PropertyInfo fieldSource = fieldsSource[iField];
+                        PropertyInfo fieldTarget = fieldsTarget[iField];
                         if (fieldSource != null && fieldTarget != null) // null if derived
                         {
                             object valueSource = fieldSource.GetValue(source);
                             if (valueSource != null)
                             {
-                                object valueTarget = ConvertValue(valueSource, fieldTarget.FieldType, mapInstances);
+                                object valueTarget = ConvertValue(valueSource, fieldTarget.PropertyType, mapInstances);
                                 if (valueTarget != null)
                                 {
                                     fieldTarget.SetValue(target, valueTarget);
                                     this.m_adapterTarget.UpdateInverseReferences(target, fieldTarget, valueTarget);
                                 }
                             }
-                            else if(fieldTarget.FieldType.IsEnum && !fieldTarget.FieldType.IsGenericType) // if non-nullable enum, must populate
+                            else if (fieldTarget.PropertyType.IsEnum && !fieldTarget.PropertyType.IsGenericType) // if non-nullable enum, must populate
                             {
                                 object valueTarget = null;
 
                                 // use NOTDEFINED if provided, otherwise pick first constant 
                                 // (e.g. IfcSpatialStructureElement.ElementCompositionType is required in IFC2x3, optional in IFC4, and there's no NOTDEFINED value) --> ELEMENT should be used in such case
-                                FieldInfo[] fieldConstants = fieldTarget.FieldType.GetFields(BindingFlags.Public | BindingFlags.Static);
-                                foreach(FieldInfo fieldConst in fieldConstants)
+                                FieldInfo[] fieldConstants = fieldTarget.PropertyType.GetFields(BindingFlags.Public | BindingFlags.Static);
+                                foreach (FieldInfo fieldConst in fieldConstants)
                                 {
                                     Enum enumvalue = (Enum)fieldConst.GetValue(null);
                                     int intvalue = (int)System.Convert.ChangeType(enumvalue, enumvalue.GetTypeCode());
@@ -239,6 +275,12 @@ namespace BuildingSmart.Utilities.Conversion
                             }
                         }
                     }
+
+                    // populate any required fields on target object
+                    //for (int iField = 0; iField < fieldsTarget.Count; iField++)
+                    //{
+
+                    //}
                 }
             }
 

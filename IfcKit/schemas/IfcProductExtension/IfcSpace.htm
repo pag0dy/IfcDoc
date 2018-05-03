@@ -1,0 +1,58 @@
+﻿<p>A space represents an area or volume bounded actually or theoretically. Spaces are areas or volumes that provide for certain functions within a building.</p>
+<p>A space is associated to a building storey (or in case of exterior spaces to a site). A space may span over several connected spaces. Therefore a space group provides for a collection of spaces included in a storey. A space can also be decomposed in parts, where each part defines a partial space. This is defined by the <em>CompositionType</em> attribute of the supertype <em>IfcSpatialStructureElement</em> which is interpreted as
+follow:</p>
+<ul>
+<li>COMPLEX = space group</li>
+<li>ELEMENT = space</li>
+<li>PARTIAL = partial space</li>
+</ul>
+<blockquote class="note">
+NOTE&nbsp; View definitions and implementation agreements may restrict spaces with <em>CompositionType</em>=ELEMENT to be non-overlapping.</blockquote>
+<p>The <em>IfcSpace</em> is used to build the spatial structure of a
+building (that serves as the primary project breakdown and is
+required to be hierarchical). The spatial structure elements are
+linked together by using the objectified relationship
+<em>IfcRelAggregates</em>.</p>
+<p>Figure 3 shows the <em>IfcSpace</em> as part of the spatial structure. It also serves as the spatial container for space related elements.</p>
+
+<blockquote class="note">NOTE&nbsp; Detailed requirements on mandatory element containment and placement structure relationships are given in view definitions and implementer agreements.</blockquote>
+
+
+
+<table summary="spatial structure" cellpadding="2" cellspacing="2">
+
+<tr><td align="left" valign="top"><img src="../../../figures/ifcspace-spatialstructure.png" alt="spatial structure" border="0" height="350" width="800"></td></tr>
+
+<tr><td><p class="figure">Figure 3 &mdash; Space composition</p></td></tr>
+
+</table>
+
+
+
+<p>The following guidelines should apply for using the <em>Name</em>, <em>Description</em>, <em>LongName</em> and <em>ObjectType</em> attributes.</p>
+<ul>
+<li><em>Name</em> holds the unique name (or space number) from the plan.</li>
+<li><em>Description</em> holds any additional information field the user may have specified, there are no further recommendations.</li>
+<li><em>LongName</em> holds the full name of the space, it is often used in addition to the <em>Name</em>, if a number is assigned to the room, then the descriptive name is exchanged as <em>LongName</em>.</li>
+<li><em>ObjectType</em> holds the space type, i.e. usually the functional category of the space .</li>
+</ul>
+<blockquote class="note">NOTE&nbsp; In cases of inconsistency between the geometric representation of the <em>IfcSpace</em> and the combined geometric representations of the surrounding <em>IfcRelSpaceBoundary</em>, the geometric representation of the space should take priority over the geometric representation of the surrounding space boundaries.</blockquote>
+
+<p>Figure 4 describes the heights and elevations of the <em>IfcSpace</em>.</p>
+<ul>
+ <li>elevation of the space (top of construction slab) equals elevation of storey: provided by <em>IfcBuildingStorey.Elevation</em> relative to em>IfcBuilding.ElevationOfRefHeight</em></li>
+<li>elevation of the space flooring (top of flooring on top of slab): provided by <em>IfcSpace.ElevationWithFlooring</em> relative to <em>IfcBuilding.ElevationOfRefHeight</em></li>
+<li>height of space (top of slab below to bottom of slab above): provided by BaseQuantity with Name="Height"</li>
+<li>floor height of space (top of slab below to top of flooring): provided by BaseQuantity with Name="FinishFloorHeight"</li>
+<li>net height of space (top of flooring to bottom of suspended ceiling): provided by BaseQuantity with Name="FinishCeilingHeight"</li>
+</ul>
+
+<table summary="attributes" cellpadding="2" cellspacing="2">
+<tr><td align="left" valign="top"><img src="../../../figures/ifcspace_heights.png" alt="space heights" border="0"
+height="400" width="450"></td></tr>
+<tr><td><p class="figure">Figure 4 &mdash; Space elevations</p></td></tr>
+</table>
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC1.0
+</blockquote>

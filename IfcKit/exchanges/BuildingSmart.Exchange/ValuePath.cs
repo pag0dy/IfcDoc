@@ -310,6 +310,9 @@ namespace BuildingSmart.Exchange
         // TimC: there's no longer an explicit SEntity base class for entity-based types, so this replacement function used for code transition
         private static bool IsEntity(object o)
         {
+            if (o == null)
+                return false;
+
             Type t = o.GetType();
             if (t.IsValueType || o is string)
                 return false;
@@ -679,7 +682,7 @@ namespace BuildingSmart.Exchange
                     foreach (object eachelem in list)
                     {
                         // derived class may have its own specific property (e.g. IfcSIUnit, IfcConversionBasedUnit)
-                        if (this.m_identifier != null)
+                        if (!String.IsNullOrEmpty(this.m_identifier))
                         {
                             Type eachtype = eachelem.GetType();
                             DefaultPropertyAttribute[] attrs = (DefaultPropertyAttribute[])eachtype.GetCustomAttributes(typeof(DefaultPropertyAttribute), true);
@@ -691,6 +694,11 @@ namespace BuildingSmart.Exchange
                             else
                             {
                                 propElem = eachtype.GetProperty("Name");
+
+                                if(propElem == null)
+                                {
+                                    propElem = eachtype.GetProperty("RepresentationIdentifier");
+                                }
                             }
 
                             if (propElem != null)

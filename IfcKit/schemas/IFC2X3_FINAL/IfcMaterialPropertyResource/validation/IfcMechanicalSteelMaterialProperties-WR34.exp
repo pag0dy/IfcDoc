@@ -1,1 +1,0 @@
-﻿NOT(EXISTS(ProportionalStress)) OR (ProportionalStress >= 0.)

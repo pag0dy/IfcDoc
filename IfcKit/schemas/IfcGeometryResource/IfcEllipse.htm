@@ -1,0 +1,50 @@
+﻿<p>An <em>IfcEllipse</em> is a curve consisting of a set of points whose distances to two fixed points add to the same
+constant.</p>
+<p>The inherited <em>SELF\IfcConic.Position.Location</em> is the center of the <em>IfcEllipse</em>, and the inherited
+S<em>ELF\IfcConic.Position.Position.P[1]</em> is the direction of the <em>SemiAxis1</em>.</p>
+<table summary="example" cellpadding="2" cellspacing="2">
+<tr>
+<td><img src="../../../figures/ifcellipse-layout1.gif" alt="ellipse" width="400" height="300" border="0"></td>
+<td style="vertical-align:bottom; text-align:left;">
+<p><span style="font-size:smaller">Definition of the <em>IfcEllipse</em> within the a three-dimensional position
+coordinate system is shown in Figure 2.</span></p>
+<p><span style=" font-size:smaller;">It is placed within the object coordinate system of an element of which it is a
+representation.</span></p>
+</td>
+</tr>
+<tr>
+<td>
+<p class="figure">Figure 2 &mdash; Ellipse placement and parameterization</p>
+</td>
+<td>&nbsp;</td>
+</tr>
+</table>
+<blockquote class="note">NOTE&nbsp; An elliptical arc segment is defined by using the <em>IfcTrimmedCurve</em> with
+<em>BasisCurve</em></blockquote>
+<blockquote class="extDef">
+<p style=" font-size:inherit;">NOTE Definition according to ISO/CD 10303-42:1992<br>
+An ellipse is a conic section defined by the lengths of the semi-major and semi-minor diameters and the position
+(center or mid point of the line joining the foci) and orientation of the curve. Interpretation of the data shall be as
+follows:</p>
+<blockquote><code style="font-size:small;">C = position.location<br>
+x = position.p[1]<br>
+y = position.p[2]<br>
+z = position.p[3]<br>
+R1 = semi axis 1<br>
+R2 = semi axis 2</code></blockquote>
+<p style=" font-size:inherit;">and the ellipse is parameterized as:</p>
+<blockquote><img alt="formula" src="../../../figures/ifcellipse-math1.gif" width="220" height="22"></blockquote>
+<p style=" font-size:inherit;">The parameterization range is 0 &le; <i>u</i> &lt;&le; 2&pi; (0 &le; <i>u</i> &le; 360
+degree). In the placement coordinate system defined above, the ellipse is the equation <i>C</i> = 0, where</p>
+<blockquote>
+<p style=" font-size:inherit;"><img alt="formula" src="../../../figures/ifcellipse-math2.gif" width="193" height="24"></p>
+</blockquote>
+<p style=" font-size:inherit;">The positive sense of the ellipse at any point is in the tangent direction, T, to the
+curve at the point, where</p>
+<blockquote>
+<p style=" font-size:inherit;"><img alt="formula" src="../../../figures/ifcellipse-math3.gif" width="102" height="25"></p>
+</blockquote>
+</blockquote>
+<blockquote class="note">NOTE&nbsp; Entity adapted from <strong>ellipse</strong> defined in ISO
+10303-42</blockquote>
+<blockquote class="history">HISTORY&nbsp; New entity in IFC1.0</blockquote>

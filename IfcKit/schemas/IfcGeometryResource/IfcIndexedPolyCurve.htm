@@ -1,0 +1,44 @@
+﻿<p>The <em>IfcIndexedPolyCurve</em> is a bounded curve with only linear and circular arc segments defined by a Cartesian point list and an optional list of segments, providing indices into the Cartesian point list. In the case that the list of <em>Segments</em> is not provided, all points in the <em>IfcCartesianPointList</em> are connected by straight line segments in the order they appear in the <em>IfcCartesianPointList</em>.</p>
+
+<p>In the case that the list of <em>Segments</em> is provided, it is interpreted as such:</p>
+<ul>
+ <li>Segment of type <em>IfcLineIndex</em>: The first index is the start point of the poly line segment, the last index is the end point of the poly line segment. If more than two indices are included, then all intermediate indices define intermediate points of the polyline connected in the order of appearance of the indices;</p>
+ <li>Segment of type <em>IfcArcIndex</em>: The first index is the start point of the circular arc, the second index is a point on arc, the third index is the end point of the circular arc. The three points shall not be co-linear. In case that this informal proposition is not maintained, the arc segment shall be treated as a polyline segment.</li>
+</ul>
+
+<blockquote class="example">EXAMPLE&nbsp; Figure 3 illustrates a bounded open <i>IfcIndexedPolyCurve</i> having straight and arc segments. In this example, the straight segments only have two points and one edge, however more then two indices into the Cartesian point list can be includes, defining a multi edge polyline segment. The parametric length of the total poly curve is the sum of the parametric length of its segments, the parametric length of the arc segments are shown in radians, which applies, if the plane angle measure of the data set is Radians. In case that the plane angle measure is Degree, the parametric length of the arc segments has degree values with 90. being the parametric length of a quarter circle.</blockquote>
+<table summary="illustration">
+ <tr>
+  <td style="vertical-align:top;"><img src="../../../figures/ifcindexedpolycurve-fig1.png" alt="poly curve with arcs examples"></td>
+ </tr>
+ <tr>
+  <td><p class="figure">Figure 3 &mdash; Bounded open <em>IfcIndexedPolyCurve</em> with straight and arc segments</p></td>
+ </tr>
+</table>
+
+<blockquote class="example">EXAMPLE&nbsp; Figure 2 illustrates a bounded open <i>IfcIndexedPolyCurve</i> having only straight segments. In this example, no list of <em>Segments</em> is provided, hence the points are drawn in the order of their appearance in the <em>IfcCartesianPointList</em>. The parametric length of the total poly curve is the sum of the parametric length of its segments, with each line segment having the parametric length of 1.0.</blockquote>
+<table summary="illustration">
+<tr>
+<td style="vertical-align:top;"><img src="../../../figures/ifcindexedpolycurve-fig2.png" alt="poly curve examples"></td>
+</tr>
+<tr>
+<td>
+<p class="figure">Figure 3 &mdash; Bounded open <em>IfcIndexedPolyCurve</em> with only straight segments</p>
+</td>
+</tr>
+</table>
+
+<p>The <em>IfcIndexedPolyCurve</em> represents an open or a closed curve depending on the following condition:</p>
+<ul>
+ <li>In the case that the list of <em>Segments</em> is provided: If the last index of the last <em>Segment</em> and the first index of the first <em>Segment</em> are identical, then the poly curve is a closed curve, otherwise it is an open curve.</li>
+ <li>In the case that the list of <em>Segments</em> is not provided: If the first and the last Cartesian point in the Cartesian point list are identical, then the poly curve is a closed curve, otherwise it is an open curve.</li>
+</ul> 
+
+<blockquote class="history">HISTORY&nbsp; New entity in IFC4 ADD1</blockquote>
+
+<p class="spec-head">Informal Propositions:</p> 
+<ol> 
+<li>Any two consecutive points of the <em>IfcIndexedPolyCurve</em> shall not be coincident after taking the <em>Precision</em> factor into account, given by the applicable <em>IfcGeometricRepresentationContext</em>.</li> 
+<li>The three points of any <em>IfcArcIndex</em> segment of the <em>IfcIndexedPolyCurve</em> shall not be colinear after taking the <em>Precision</em> factor into account, given by the applicable <em>IfcGeometricRepresentationContext</em>.</li> 
+</ol> 
+</ol> 

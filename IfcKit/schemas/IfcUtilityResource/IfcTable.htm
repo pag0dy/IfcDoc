@@ -1,0 +1,28 @@
+﻿<epm-html>
+
+<p>An <em>IfcTable</em> is a data structure for the provision of information in the form of rows and columns. Each instance may have <em>IfcTableColumn</em> instances that define the name, description and units for each column. The rows of information are stored as a list of <em>IfcTableRow</em> objects.</p> 
+
+<p>Limitation: For backwards compatibility, the rows of an <em>IfcTable</em> object are constrained to have the same number of cells. The first row of the table provides the number of cells. All other rows are forced to include the same number of cells. This is enforced by the WR2.</p> 
+
+<p>Figure 3 illustrates table use.</p>
+<table>
+<tr><td><img src="../../../figures/ifctable_image1.gif" width="426" height="192"></td></tr>
+<tr><td><p class="figure">Figure 3 &mdash; Table use</p></td></tr>
+</table>
+
+<p>Figure 4 depicts how tables were structured prior to IFC4.</p>
+<table>
+<tr><td><img src="../../../figures/ifctable_image2.gif" width="426" height="192"></td></tr>
+<tr><td><p class="figure">Figure 4 &mdash; Table use alternative</p></td></tr>
+</table>
+
+<blockquote class="history"> 
+HISTORY&nbsp; New entity in IFC1.5.
+</blockquote>
+
+<blockquote class="change-ifc2x4">
+IFC4 CHANGE&nbsp; Columns attribute added.
+</blockquote>
+
+
+</epm-html>

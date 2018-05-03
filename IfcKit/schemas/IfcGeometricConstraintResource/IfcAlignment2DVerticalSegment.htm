@@ -1,0 +1,35 @@
+﻿<p>Individual segment along the <i>IfcAlignment2DVertical</i>, being defined in the distance-along/z coordinate space. </p>
+<p>The vertical alignment is defined by segments that connects end-to-start. The vertical alignment curve geometry is defined in a plane with x = distance along horizontal, the y = height (or elevation). The transition at the segment connection is not enforced to be tangential, if the “tangential continuity” flag is set to false, otherwise a tangential continuity shall be preserved.</p>
+<p>The following vertical segment types are defined:</p>
+<ul>
+<li>line segment - <i>IfcAlignment2DVerSegLine</i></li>
+<li>circular arc segment - <i>IfcAlignment2DVerSegCircularArc</i></li>
+<li>parabolic arc segment - <i>IfcAlignment2DVerSegParabolicArc</i> which can describe symmetric and unsymmetric parabolas</li>
+</ul>
+<p>For each vertical segment, the following non-redundant information is provided:</p>
+<ul>
+<li>the start point (in distance along/ height coordinates)</li>
+<li>the start gradient (as a ratio measure with horizontal being 0, uphill positive, and downhill negative) usually between 1 < n < -1 (equal to a percentage of 100% < n < -100%, or to a degree of 45&deg; < n < -45&deg; but higher values are possible)</li>
+<li>the length (as horizontal length along the distance along (not the curve segment length))</li>
+<li>the curve parameter needed for circular and parabolic arc segments</li>
+</ul>
+<p>The following information can be calculated (and is therefore not exchanged explicitly to avoid redundancy and inconsistencies)</p>
+<ul>
+<li>the end distance along (from the distance along and segment length)</li>
+<li>the end height (from start distance along, gradient, length and curve parameter)</li>
+<li>the end direction (from start direction, segment length and curve parameter)</li>
+<li>the point of vertical intersection (from start direction and end direction)</li>
+</ul>
+<p>The following checks can be done to validate the correct exchange:</p>
+<ul>
+<li>continuity – does the calculated end distance along of the previous segment matches with the provided start distance along of this segment</li>
+<li>tangential continuity – does the calculated end gradient of the previous segment matches with the provided start gradient of this segment</li>
+</ul>
+
+<blockquote class="note">NOTE&nbsp; Specific subtypes of the <span class="self-ref">IfcAlignment2DVerticalSegment</span> add specific geometric curve parameters. Connectivity between vertical segments is not necessarily tangential, but this can be enforced as a requirement through the attribute <i>TangentialContinuity</i>.</blockquote>
+
+<table>
+<tr><td><img src="../../../figures/ifcalignment2dverticalsegment.png" /></td></tr>
+<tr><td><p class="figure">Figure 2 &mdash; Alignment vertical segment</p></td></tr>
+</table>
+

@@ -1,0 +1,46 @@
+﻿<p><em>IfcProcess</em> is defined as one individual activity or event, that is ordered in time, that has sequence relationships with other processes, which transforms input in output, and may connect to other other processes through input output relationships. An <em>IfcProcess</em> can be an activity (or task), or an event. It takes usually place in building construction with the intent of designing, costing, acquiring, constructing, or maintaining products or other and
+similar tasks or procedures. Figure 2 illustrates process relationships.</p>
+
+<blockquote class="extDef">NOTE&nbsp; Definition according to ISO9000:<br> 
+A process is a set of activities that are interrelated or that interact with one another. Processes use resources to transform inputs 
+into outputs. Processes are interconnected because the output from one process becomes the input for another process. In effect,
+processes are "glued" together by means of such input output relationships.</blockquote>
+
+<table summary="">
+<tr valign="top">
+<td><img src="../../../figures/ifcprocess_icon_fig.png" alt="icon diagram"
+border="0"></td>
+</tr>
+<tr valign="top">
+<td>
+<p class="figure">Figure 2 &mdash; Process relationships and the ICON process diagram.</p>
+</td>
+</tr>
+</table>
+
+<p>Process information relates to other objects by establishing the following relationships:</p>
+<ul>
+<li><b>Nesting of processes</b> : <em>IfcRelNests</em> - A process can contain sub processes and thereby be nested.</li>
+<li><b>Sequencing of processes</b> : <em>IfcRelSequence</em> - Processes can be placed in sequence (including overlapping for parallel tasks), and have predecessors and successors.</li>
+<li><b>Assigning process to schedules</b> : <em>IfcRelAssignsToControl</em> - Activities such as tasks, and predominately summary tasks, are assigned to a work schedule.</li>
+<li><b>Having a product assigned to the process as input</b> :
+<em>IfcRelAssignsToProcess</em> - Products can be assigned as input to a process, such as for construction process planning.</li>
+<li><b>Having a product assigned to the process as output</b> :
+<em>IfcRelAssignsToProduct</em> - Products can be assigned as output to a process, such as for construction process planning.</li>
+<li><b>Having a control assigned to the process as process control</b> : <em>IfcRelAssignsToProcess</em> - Items that act as a
+control onto the process can be assigned to a process, such as for cost management (a cost item assigned to a work task).</li>
+<li><b>Having a resource assigned to the process as consumed by the process</b> : <em>IfcRelAssignsToProcess</em> - Items that act
+as a mechanism to a process, such as labor, material and equipment in cost calculations.</li>
+</ul>
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC1.0.
+</blockquote>
+
+<blockquote class="change-ifc2x">
+IFC2x CHANGE&nbsp; The attribute <em>Productivity</em> has been removed.
+</blockquote>
+
+<blockquote class="change-ifc2x4">
+IFC4 CHANGE&nbsp; The attribute <em>Identification</em> has been promoted from subtypes <em>IfcTask</em> and others.
+</blockquote>

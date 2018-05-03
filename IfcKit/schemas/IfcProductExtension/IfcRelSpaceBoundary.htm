@@ -1,0 +1,132 @@
+﻿<p>The space boundary defines the physical or virtual delimiter of a space by the relationship <em>IfcRelSpaceBoundary</em> to the surrounding elements.</p>
+<ul>
+ <li>In the case of a physical space boundary, the placement and shape of the boundary may be given, and the building element, providing the boundary, is referenced,</li>
+ <li>In the case of a virtual space boundary, the placement and shape of the boundary may be given, and a virtual element is referenced.</li>
+</ul>
+
+<p>The <em>IfcRelSpaceBoundary</em> is defined as an objectified relationship that handles the element to space relationship by objectifying the relationship between an element and the space it bounds. It is given as a one-to-one relationship, but allows each element (including virutal elements and openings) to define many such relationship and each space to be defined by many such relationships.</p>
+
+<p>Space boundaries are always defined as seen from the space. In general two basic types of space boundaries are distinguished:</p>
+<ul>
+ <li>1<sup><small>st</small></sup> level space boundary: defined as boundaries of the space, not taking into account any change in building element or spaces on the other side.</li>
+ <li>2<sup><small>nd</small></sup> level space boundary: defined as boundary taking any change in building element or spaces on the other side into account. It can be further distinguished into 
+ <ul>
+  <li>2<sup><small>nd</small></sup> level type A: There is a space on the other side.</li>
+  <li>2<sup><small>nd</small></sup> level type B: There is a building element on the other side.</li>
+ </ul>
+</li>
+</ul>
+<blockquote><small>The exact definition of how space boundaries are broken down depends on the view definition, more detailed conventions on how space boundaries are decomposed can only be given at the domain or application type level.</small>
+<ul>
+ <li><small>In an architectural or FM related view, a space boundary is defined totally from inside the space. This is a 1<sup><small>st</small></sup> level space boundary.</small></li>
+ <li><small>In a thermal view, the decomposition of the space boundary depends on the material of the providing building element and the adjacent spaces behind. This is a 2<sup><small>nd</small></sup> level space boundary.</small></li>
+</ul>
+</blockquote>
+
+<table summary="space boundary types" border="0">
+<tr>
+ <td><img src="../../../figures/ifcrelspaceboundary_1stlevel.png" alt="1st level"></td>
+ <td><img src="../../../figures/ifcrelspaceboundary_2ndlevel.png" alt="2nd level"></td>
+</tr>
+<tr>
+ <td><p class="figure">Figure 7 &mdash; Space boundary at first level</p></td>
+ <td><p class="figure">Figure 8 &mdash; Space boundary at second level</p></td>
+</tr>
+<tr>
+ <td><img src="../../../figures/ifcrelspaceboundary_2ndlevel_typea.png" alt="2nd level type a"></td>
+ <td><img src="../../../figures/ifcrelspaceboundary_2ndlevel_typeb.png" alt="2nd level type b"></td>
+</tr>
+<tr>
+ <td><p class="figure">Figure 9 &mdash; Space boundary at second level type A</p></td>
+ <td><p class="figure">Figure 10 &mdash; Space boundary at second level type B</p></td>
+</tr>
+</table>
+
+<p>The differences between the 1<sup><small>st</small></sup> and 2<sup><small>nd</small></sup> level space boundaries is identified by:</p>
+<ul>
+<li><b>1<sup><small>st</small></sup> level:</b><br> SELF\IfcRoot.Name = "1stLevel"<br> SELF\IfcRootDescription = NIL</li>
+<li><b>2<sup><small>nd</small></sup> level:</b><br> SELF\IfcRoot.Name = "2ndLevel"<br> SELF\IfcRootDescription = "2a", or "2b"</li>
+</ul>
+<p>Differentiation between physical and virtual space boundary is illustrated in Figure 7 and Figure 42.</p>
+
+<p>As shown in Figure 41, if the <em>IfcRelSpaceBoundary</em> is used to express a virtual boundary, the attribute <em>PhysicalOrVirtualBoundary</em> has to be set to VIRTUAL. The attribute <em>RelatedBuildingElement</em> shall point to an instance of <em>IfcVirtualElement</em>. If the correct location is of interest, the attribute <em>ConnectionGeometry</em> is required.</p>
+<blockquote class="note">NOTE&nbsp; The connection geometry, either by a 2D curve or a 3D surface, is used to describe the portion of the "virtual wall" that separates the two spaces. All instances of <em>IfcRelSpaceBoundary</em> given at the adjacent spaces share the same instance of <em>IfcVirtualElement</em>. Each instance of <em>IfcRelSpaceBoundary</em> provides in addition the <em>ConnectionGeometry</em> given within the local placement of each space.</blockquote>
+
+<table summary="virtual">
+<tr><td><img src="../../../figures/ifcrelspaceboundary_virtual.png"  alt="IfcRelSpaceBoundary_virtual (35K)"height="500" width="600"></td></tr>
+<tr><td><p class="figure">Figure 11 &mdash; Space boundary of virtual element</p></td></tr>
+</table>
+
+<p>As shown in Figure 42, if the <em>IfcRelSpaceBoundary</em> is used to express a physical boundary between two spaces, the attribute <em>PhysicalOrVirtualBoundary</em> has to be set to PHYSICAL. The attribute <em>RelatedBuildingElement</em> has to be given and points to the element providing the space boundary. The attribute <em>ConnectionGeometry</em> may be inserted, in this case it describes the physical space boundary geometically, or it may be omited, in that case it describes a physical space boundary logically.</p>
+
+<table summary="physical">
+<tr><td><img src="../../../figures/ifcrelspaceboundary_physical.png"  alt="IfcRelSpaceBoundary_physical (35K)" height="500" width="600"></td></tr>
+<tr><td><p class="figure">Figure 12 &mdash; Space boundary of physical element</p></td></tr>
+</table>
+
+<p>The <em>IfcRelSpaceBoundary</em> may have geometry attached. If geometry is not attached, the relationship between space and building element is handled only on a logical level. If geometry is attached, it is given within the local coordinate systems of the space.</p>
+
+<blockquote class="note">NOTE&nbsp; The attributes <em>CurveOnRelatingElement</em> at <em>IfcConnectionCurveGeometry</em> or <em>SurfaceOnRelatingElement</em> at <em>IfcConnectionSurfaceGeometry</em> provide the geometry within the local coordinate system of the <em>IfcSpace</em>, whereas the attributes <em>CurveOnRelatedElement</em> at <em>IfcConnectionCurveGeometry</em> or <em>SurfaceOnRelatedElement</em> at <em>IfcConnectionSurfaceGeometry</em> provide the geometry within the local coordinate system of the subtype of <em>IfcElement</em></blockquote> <blockquote class="note">NOTE&nbsp; In most view definitions the connection geometry for the related <em>IfcElement</em> is not provided.</blockquote>
+
+<p>The geometric representation (through the <em>ConnectionGeometry</em> attribute) is defined using either 2D curve geometry or 3D surface geometry for space boundaries. In most view definitions the 3D connection surface geometry is required.</p>
+<ul>
+<li>1<sup><small>st</small></sup> level space boundary:
+<ul>
+<li>only connection geometry for related space shall be provided</li>
+<li>only surface connection geometry shall be provided</li>
+<li>only the following surface representations are supported:
+<ul>
+<li><em>IfcSurfaceOfLinearExtrusion</em></li>
+<li><em>IfcCurveBoundedPlane</em></li>
+<li><em>IfcCurveBoundedSurface</em></li>
+<li><em>IfcFaceBasedSurfaceModel</em></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>2<sup><small>nd</small></sup> level space boundary:
+<ul>
+<li>only connection geometry for related space shall be provided</li>
+<li>only surface connection geometry shall be provided</li>
+<li>only the following surface representations are supported:
+<ul>
+<li><em>IfcCurveBoundedPlane</em> with restrictions to have
+polygonal boundaries only</li>
+<li><em>IfcFaceBasedSurfaceModel</em></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><b>Surface connection geometry</b></p>
+<p>The following constraints apply to the surface connection geometry representation:</p>
+<ul>
+<li>planar boundaries:
+<ul>
+<li><em>IfcSurfaceOfLinearExtrusion</em> defined by a <em>SweptCurve</em> being an <em>IfcArbitraryOpenProfileDef</em> with
+straight segements, or</li>
+<li><em>IfcCurveBoundedPlane</em></li>
+</ul>
+</li>
+<li>curved boundaries
+<ul>
+<li><em>IfcSurfaceOfLinearExtrusion</em> defined by a <em>SweptCurve</em> being an <em>IfcArbitraryOpenProfileDef</em> with curves segements, or</li>
+<li><em>IfcCurveBoundedSurface</em> with a <em>BasisSurface</em> being a non planar surface, such as <em>IfcCylindricalSurface</em>, or</li>
+<li><em>IfcFaceBasedSurfaceModel</em> if already faceted.</li>
+</ul>
+</li>
+</ul>
+<p><b>Curve connection geometry</b></p>
+<p>The following constraints apply to the 2D curve representation:</p>
+<ul>
+<li>Curve: <em>IfcPolyline</em>, <em>IfcTrimmedCurve</em> or <em>IfcCompositeCurve</em></li>
+</ul>
+
+
+<blockquote class="history">HISTORY&nbsp; New entity in IFC1.5, the entity has been modified in IFC2x.</blockquote>
+<blockquote class="change-ifc2x">IFC2x CHANGE The data type of the attribute<em>RelatedBuildingElement</em> has
+been changed from <em>IfcBuildingElement</em> to its supertype <em>IfcElement</em>. The data type of the attribute
+<em>ConnectionGeometry</em> has been changed from <em>IfcConnectionSurfaceGeometry</em> to its supertype
+<em>IfcConnectionGeometry</em>.</blockquote>
+<blockquote class="change-ifc2x4">IFC4 CHANGE The attribute <em>RelatedBuildingElement</em> has been made mandatory. For virtual boundaries the reference to <em>IfcVirtualElement</em> is now mandatory.</font></small></blockquote>
+

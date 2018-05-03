@@ -1,0 +1,14 @@
+﻿<p>The <em>IfcRelCoversBldgElements</em> relationship is an objectified relationship between an element and one to many coverings, which cover that element.</p>
+<blockquote class="note">NOTE&nbsp; The definition of <em>IfcCoverings</em> include both the coverings of building elements, such as flooring or cladding. and the covering of distribution elements, such as wrapping or sleeving.</blockquote>
+<p>The IFC specification provides two relationships:</p>
+<ul>
+<li><em>IfcRelCoversBldgElements</em> to assign coverings to elements.
+<blockquote class="note">NOTE&nbsp; This relationship is now deprecated and replaced by <em>IfcRelAggregates</em>.</blockquote>
+</li>
+<li><em>IfcRelCoversSpaces</em> to assign coverings to spaces<br>
+<blockquote class="note">NOTE&nbsp; This relationship is now deprecated and replaced by <em>IfcRelContainedInSpatialStructure</em>.</blockquote>
+</li>
+</ul>
+<p>Whether the relationship between the covering and the space, or between the covering and the element, is regarded as primary, has to be determined within the context of a model view definition.</p>
+<blockquote class="history">HISTORY&nbsp; New entity in IFC1.5</blockquote>
+<blockquote class="deprecated">DEPRECATION&nbsp; The relationship <em>IfcRelCoversBldgElements</em> shall not be used anymore, use <em>IfcRelAggregates</em> instead.</blockquote>

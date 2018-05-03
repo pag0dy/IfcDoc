@@ -1,0 +1,94 @@
+﻿    <p>
+      An <em>IfcTextureMap</em> provides the mapping of the
+      2-dimensional texture coordinates to the surface onto which
+      it is mapped. It is used for mapping the texture to surfaces
+      of vertex based geometry models, such as
+    </p>
+    <ul>
+      <li>
+        <em>IfcFacetedBrep</em>
+      </li>
+      <li>
+        <em>IfcFacetedBrepWithVoids</em>
+      </li>
+      <li>
+        <em>IfcFaceBasedSurfaceModel</em>
+      </li>
+      <li>
+        <em>IfcShellBasedSurfaceModel</em>
+      </li>
+    </ul>
+    <p>
+      The <em>IfcTextureMap</em> has a list of
+      <em>TextureVertex</em>, that corresponds to the points of the
+      outer face bound of the vertex based geometry item. The
+      corresponding pair of lists is:
+    </p>
+    <ol>
+      <li>the list of <em>Polygon</em> of the
+      <em>IfcFaceOuterBound</em> of type
+      <em>IfcCartesianPoint</em>, and
+      </li>
+      <li>the list of <em>Vertices</em> of type
+      <em>IfcTextureVertex</em>.
+      </li>
+    </ol>
+    <p>
+      Each <em>IfcTextureVertex</em> (given as S, T coordinates of
+      the 2-dimension texture coordinate system) corresponds to the
+      geometric coordinates of the <em>IfcCartesianPoint</em>
+      (given as 3-dimension X, Y, and Z coordinates within the
+      object coordinate system of the geometric item).
+    </p>
+    <blockquote class="extDef">
+        NOTE&nbsp; Definition according to
+        ISO/IEC 19775-1:<br>
+        The TextureCoordinate node is a geometry property node that
+        specifies a set of 2D texture coordinates used by
+        vertex-based geometry nodes to map textures to
+        vertices.
+    </blockquote>
+    <blockquote class="note">
+        NOTE&nbsp; In contrary to
+        the X3D vertext based geometry, for example IndexedFaceSet
+        and ElevationGrid, the vertext based geometry in IFC may
+        include inner loops. The areas of inner loops have to be
+        cut-out from the texture applied to the outer loop.
+    </blockquote>
+    <table summary="texture map use">
+      <tr>
+        <td>
+          <img src="../../../figures/ifctexturemap_fig-1.png" width="620"
+          height="600" alt="IfcTextureMap_fig-1.png 35,6 KB">
+        </td>
+				<td style=" vertical-align:bottom;"><span style=" font-size:x-small;">Figure 2 illustrates applying a texture map to a vertex
+      based geometry.</span>
+				</td>
+      </tr>
+      <tr>
+        <td>
+          <p class="figure">Figure 2 &mdash; Texture map</p>
+        </td>
+				<td>&nbsp;</td>
+      </tr>
+    </table>
+    <blockquote class="history">
+      HISTORY&nbsp; New entity in IFC2x2.
+    </blockquote>
+    <blockquote class="change-ifc2x3">
+      IFC2x3 CHANGE&nbsp; The attribute Texture is deleted, and the
+      attribute TextureMaps is added.
+    </blockquote>
+    <blockquote class="change-ifc2x4">
+      IFC4 CHANGE&nbsp; The attribute TextureMap is replaced by
+      <em>Vertices</em>, and the attribute <em>AppliedTo</em> is
+      added.
+    </blockquote>
+    <p class="spec-head">Informal Propositions:</p>
+    <ol>
+      <li>The <em>IfcFace</em> referenced in <em>AppliedTo</em>
+      shall be used by the vertex based geometry, to which this
+      texture map is assigned to by through the
+      <em>IfcStyledItem</em>.
+      </li>
+    </ol>

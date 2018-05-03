@@ -1,0 +1,63 @@
+﻿<p>An <em>IfcTrimmedCurve</em> is a bounded curve that is trimmed at both ends. The trimming points may be provided by a Cartesian point or by a parameter value, based on the parameterization of the <em>BasisCurve</em>. The <em>SenseAgreement</em> attribute indicates whether the direction of the <em>IfcTrimmedCurve</em> agrees with or is opposed to the direction of the <em>BasisCurve</em>.</p>
+<blockquote class="note">NOTE&nbsp; In case of the <em>BasisCurve</em> being a closed curve, such as an <em>IfcCircle</em> or <em>IfcEllipse</em>, the <em>SenseAgreement</em> affects the geometric shape of the <em>IfcTrimmedCurve</em>.</blockquote>
+<table summary="illustration">
+<tbody>
+ <tr>
+  <td><img src="../../../figures/ifctrimmedcurve_parameterization.png" alt="curve parameterization" border="0" height="500" width="700"></td>
+ </tr>
+ <tr>
+  <td><p class="figure">Figure 2 &mdash; Trimmed curve parameterization</p></td>
+ </tr>
+</tbody>
+</table>
+
+<blockquote class="example">EXAMPLE&nbsp; Figure 2 shows the four arcs (dashed blue and green lines with arrow showing different orientations) that can be defined by the same <em>BasisCurve</em> of type <em>IfcCircle</em> and the same trimming points (given by Cartesian points and parameter values) by using different assignments to <em>Trim1</em> and <em>Trim2</em> and <em>SenseAgreement</em>. The trim 1 and trim 2 values for TrimmingPreference=.PARAMETER. are shown as degree values, which applies if the plane area measure is 'Degree', in case of plane area measure 'Radians' those would be &frac12;&pi; and &pi;.</blockquote>
+<blockquote class="note">NOTE&nbsp; Since the <em>BasisCurve</em> is closed (type <em>IfcCircle</em>), the exception of the informal proposition IP3 applies, i.e. the sense flag is not required to be consistent with the parameter values of <em>Trim1</em> and <em>Trim1</em>, so the rule (sense = parameter 1 &lt; parameter 2) may not be fulfilled.</blockquote>
+<blockquote class="extDef">
+<p style="font-size:inherit">NOTE Definition according to ISO/CD 10303-42:1992<br>
+A trimmed curve is a bounded curve which is created by taking a selected portion, between two identified points, of the
+associated basis curve. The basis curve itself is unaltered and more than one trimmed curve may reference the same
+basis curve. Trimming points for the curve may be identified by:</p>
+<ul style="font-size:inherit">
+<li style="font-size:inherit">parametric value</li>
+<li style="font-size:inherit">geometric position</li>
+<li style="font-size:inherit">both of the above</li>
+</ul>
+<p style="font-size:inherit">At least one of these shall be specified at each end of the curve. The
+<em>SenseAgreement</em> makes it possible to unambiguously define any segment of a closed curve such as a circle. The
+combinations of sense and ordered end points make it possible to define four distinct directed segments connecting two
+different points on a circle or other closed curve. For this purpose cyclic properties of the parameter range are
+assumed; for example, 370 degrees is equivalent to 10 degrees.</p>
+<p style="font-size:inherit">The <em>IfcTrimmedCurve</em> has a parameterization which is inherited from the particular
+basis curve reference. More precisely the parameter s of the trimmed curve is derived from the parameter of the basis
+curve as follows:</p>
+<ul style="font-size:inherit">
+<li style="font-size:inherit">if <em>SenseAgreement</em> is TRUE: <em>s = t - t<sub>1</sub></em></li>
+<li style="font-size:inherit">if <em>SenseAgreement</em> is FALSE: <em>s = t<sub>2</sub> - t</em></li>
+</ul>
+<p style="font-size:inherit">In the above equations t<sub>1</sub> is the value given by <em>Trim1</em> or the parameter
+value corresponding to point 1 and t<sub>2</sub> is the value given by <em>Trim2</em> or the parameter value
+corresponding to point 2. The resultant <em>IfcTrimmedCurve</em> has a parameter ranging from 0 at the first trimming
+point to |t<sub>2</sub> - t<sub>1</sub>| at the second trimming point.</p>
+<blockquote class="note">NOTE&nbsp; In case of a closed curve, it may be necessary to increment t1 or t2 by the
+parametric length for consistency with the sense flag.</blockquote>
+</blockquote>
+<blockquote class="note">NOTE Entity adapted from <strong>trimmed_curve</strong> defined in ISO 10303-42</blockquote>
+<blockquote class="history">HISTORY&nbsp; New entity in IFC1.0</blockquote>
+<p class="spec-head">Informal Propositions:</p>
+<ol>
+<li>Where both the parameter value and the Cartesian point exist for <em>Trim1</em> and <em>Trim2</em> they shall be
+consistent. (i.e., the <em>BasisCurve</em> evaluated at the parameter value shall coincide with the specified
+point).</li>
+<li>When a Cartesian point is specified by <em>Trim1</em> or by <em>Trim2</em> it shall lie on the
+<em>BasisCurve</em>.</li>
+<li>Except the case of a closed <em>BasisCurve</em> where both parameter 1 and parameter 2 exist, they shall be
+consistent with the sense flag, i.e., (sense = parameter 1 &lt; parameter 2). Or, for every open curve where both
+parameter 1 and parameter 2 exist, they shall be consistent with the <em>SenseAgreement</em>, i.e.,
+<em>SenseAgreement</em> = (parameter 1 &lt; parameter 2).</li>
+<li>If both parameter 1 and parameter 2 exist, then parameter 1 &lt;&gt; parameter 2. For a closed base curve, e.g.
+<em>IfcCircle</em> or <em>IfcEllipse</em>, this also applies to the cyclic properties, as 360' is equal to 0',
+parameter 1 = 360' and parameter 2 = 0' are treated as being equal and therefore violating this proposition.</li>
+<li>When a parameter value is specified by <em>Trim1</em> or <em>Trim2</em> it shall lie within the parametric range of
+the <em>BasisCurve</em>.</li>
+</ol>

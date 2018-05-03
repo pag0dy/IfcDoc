@@ -19,51 +19,28 @@ namespace IfcDoc.Format.EXP
     {
         string m_filename;
         DocProject m_project;
+        DocSchema m_schema; // optional: only capture specific schema
         DocModelView[] m_views;
         Dictionary<DocObject, bool> m_included;
         bool m_oneof = true; // always use ONEOF, even if only one subtype -- was False for IFC2x3 and IFC4 final; True for IFC4 TC1.
-        bool m_longform = true; // convert all type references within rules into "IFC4" for longform schema -- was False for IFC2x3 and IFC4 final; True for IFC4 TC1.
 
-        public FormatEXP(string filename)
+        public FormatEXP(DocProject docProject, DocSchema docSchema, DocModelView[] modelviews, string filename)
         {
+            this.m_project = docProject;
+            this.m_schema = docSchema;
+            this.m_views = modelviews;
             this.m_filename = filename;
-        }
 
-        public DocProject Instance
-        {
-            get
+            this.m_included = null;
+            if (this.m_views != null)
             {
-                return this.m_project;
-            }
-            set
-            {
-                this.m_project = value;
-            }
-        }
-
-        /// <summary>
-        /// Optional model views for filtering definitions.
-        /// </summary>
-        public DocModelView[] ModelViews
-        {
-            get
-            {
-                return this.m_views;
-            }
-            set
-            {
-                this.m_views = value;
-
-                this.m_included = null;
-                if (this.m_views != null)
+                this.m_included = new Dictionary<DocObject, bool>();
+                foreach (DocModelView docView in this.m_views)
                 {
-                    this.m_included = new Dictionary<DocObject, bool>();
-                    foreach (DocModelView docView in this.m_views)
-                    {
-                        this.m_project.RegisterObjectsInScope(docView, this.m_included);
-                    }
+                    this.m_project.RegisterObjectsInScope(docView, this.m_included);
                 }
             }
+
         }
 
         /// <summary>
@@ -77,7 +54,8 @@ namespace IfcDoc.Format.EXP
             if (expression == null)
                 return null;
 
-            if (!this.m_longform)
+            // if schema defined, then short-form specific to schema; otherwise long-form
+            if (this.m_schema != null)
                 return expression;
 
             string replace = "'" + schemaidentifier.ToUpper() + ".";
@@ -112,63 +90,66 @@ namespace IfcDoc.Format.EXP
             {
                 foreach (DocSchema docSchema in docSection.Schemas)
                 {
-                    if (this.m_included == null || this.m_included.ContainsKey(docSchema))
+                    //if (this.m_schema == null || this.m_schema == docSchema)
                     {
-                        foreach (DocType docType in docSchema.Types)
+                        if (this.m_included == null || this.m_included.ContainsKey(docSchema))
                         {
-                            if (this.m_included == null || this.m_included.ContainsKey(docType))
+                            foreach (DocType docType in docSchema.Types)
                             {
-                                if (docType is DocDefined)
+                                if (this.m_included == null || this.m_included.ContainsKey(docType))
                                 {
-                                    if (!mapDefined.ContainsKey(docType.Name))
+                                    if (docType is DocDefined)
                                     {
-                                        mapDefined.Add(docType.Name, (DocDefined)docType);
+                                        if (!mapDefined.ContainsKey(docType.Name))
+                                        {
+                                            mapDefined.Add(docType.Name, (DocDefined)docType);
+                                        }
+                                    }
+                                    else if (docType is DocEnumeration)
+                                    {
+                                        mapEnum.Add(docType.Name, (DocEnumeration)docType);
+                                    }
+                                    else if (docType is DocSelect)
+                                    {
+                                        mapSelect.Add(docType.Name, (DocSelect)docType);
+                                    }
+
+                                    if (!mapGeneral.ContainsKey(docType.Name))
+                                    {
+                                        mapGeneral.Add(docType.Name, docType);
                                     }
                                 }
-                                else if (docType is DocEnumeration)
-                                {
-                                    mapEnum.Add(docType.Name, (DocEnumeration)docType);
-                                }
-                                else if (docType is DocSelect)
-                                {
-                                    mapSelect.Add(docType.Name, (DocSelect)docType);
-                                }
+                            }
 
-                                if (!mapGeneral.ContainsKey(docType.Name))
+                            foreach (DocEntity docEnt in docSchema.Entities)
+                            {
+                                if (this.m_included == null || this.m_included.ContainsKey(docEnt))
                                 {
-                                    mapGeneral.Add(docType.Name, docType);
+                                    if (!mapEntity.ContainsKey(docEnt.Name))
+                                    {
+                                        mapEntity.Add(docEnt.Name, docEnt);
+                                    }
+                                    if (!mapGeneral.ContainsKey(docEnt.Name))
+                                    {
+                                        mapGeneral.Add(docEnt.Name, docEnt);
+                                    }
                                 }
                             }
-                        }
 
-                        foreach (DocEntity docEnt in docSchema.Entities)
-                        {
-                            if (this.m_included == null || this.m_included.ContainsKey(docEnt))
+                            foreach (DocFunction docFunc in docSchema.Functions)
                             {
-                                if (!mapEntity.ContainsKey(docEnt.Name))
+                                if ((this.m_included == null || this.m_included.ContainsKey(docFunc)) && !mapFunction.ContainsKey(docFunc.Name))
                                 {
-                                    mapEntity.Add(docEnt.Name, docEnt);
-                                }
-                                if (!mapGeneral.ContainsKey(docEnt.Name))
-                                {
-                                    mapGeneral.Add(docEnt.Name, docEnt);
+                                    mapFunction.Add(docFunc.Name, docFunc);
                                 }
                             }
-                        }
 
-                        foreach (DocFunction docFunc in docSchema.Functions)
-                        {
-                            if ((this.m_included == null || this.m_included.ContainsKey(docFunc)) && !mapFunction.ContainsKey(docFunc.Name))
+                            foreach (DocGlobalRule docRule in docSchema.GlobalRules)
                             {
-                                mapFunction.Add(docFunc.Name, docFunc);
-                            }
-                        }
-
-                        foreach (DocGlobalRule docRule in docSchema.GlobalRules)
-                        {
-                            if (this.m_included == null || this.m_included.ContainsKey(docRule))
-                            {
-                                mapRule.Add(docRule.Name, docRule);
+                                if (this.m_included == null || this.m_included.ContainsKey(docRule))
+                                {
+                                    mapRule.Add(docRule.Name, docRule);
+                                }
                             }
                         }
                     }
@@ -189,6 +170,11 @@ namespace IfcDoc.Format.EXP
                 }
 
                 string schemaid = this.m_project.GetSchemaIdentifier();
+                if(this.m_schema != null)
+                {
+                    schemaid = this.m_schema.Name;
+                }
+
                 string org = "buildingSMART International Limited";
 
                 writer.Write("" + 
@@ -220,6 +206,32 @@ DateTime.Today.ToLongDateString() + "\r\n" + //"December 27, 2012\r\n" +
                 writer.WriteLine("SCHEMA " + schemaid.ToUpper() + ";");
                 writer.WriteLine();
 
+                if (this.m_schema != null)
+                {
+                    // references
+                    foreach(DocSchemaRef docSchemaRef in this.m_schema.SchemaRefs)
+                    {
+                        writer.Write("REFERENCE FROM ");
+                        writer.WriteLine(docSchemaRef.Name);
+                        writer.WriteLine("(");
+
+                        foreach (DocDefinitionRef docDefRef in docSchemaRef.Definitions)
+                        {
+                            writer.Write("  ");
+                            writer.Write(docDefRef.Name);
+
+                            if (docDefRef != docSchemaRef.Definitions[docSchemaRef.Definitions.Count-1])
+                            {
+                                writer.Write(",");
+                            }
+                            writer.WriteLine();
+                        }
+
+                        writer.WriteLine(");");
+                        writer.WriteLine();
+                    }
+                }
+
                 // stripped optional applicable if MVD is used
                 if (this.m_included != null)
                 {
@@ -231,410 +243,430 @@ DateTime.Today.ToLongDateString() + "\r\n" + //"December 27, 2012\r\n" +
                 // defined types
                 foreach (DocDefined docDef in mapDefined.Values)
                 {
-                    writer.Write("TYPE ");
-                    writer.Write(docDef.Name);
-                    writer.Write(" = ");
-
-                    if(docDef.Aggregation != null)
+                    if (this.m_schema == null || this.m_schema.Types.Contains(docDef))
                     {
-                        WriteExpressAggregation(writer, docDef.Aggregation);
-                    }
 
-                    writer.Write(docDef.DefinedType);
+                        writer.Write("TYPE ");
+                        writer.Write(docDef.Name);
+                        writer.Write(" = ");
 
-                    string length = "";
-                    if (docDef.Length > 0)
-                    {
-                        length = "(" + docDef.Length.ToString() + ")";
-                    }
-                    else if (docDef.Length < 0)
-                    {
-                        int len = -docDef.Length;
-                        length = "(" + len.ToString() + ") FIXED";
-                    }
-                    writer.Write(length);
-
-                    writer.WriteLine(";");
-
-                    if (docDef.WhereRules.Count > 0)
-                    {
-                        writer.WriteLine(" WHERE");
-                        foreach (DocWhereRule where in docDef.WhereRules)
+                        if (docDef.Aggregation != null)
                         {
-                            writer.Write("\t");
-                            writer.Write(where.Name);
-                            writer.Write(" : ");
-                            writer.Write(MakeLongFormExpression(where.Expression, schemaid));
-                            writer.WriteLine(";");
+                            WriteExpressAggregation(writer, docDef.Aggregation);
                         }
-                    }
 
-                    writer.WriteLine("END_TYPE;");
-                    writer.WriteLine();
+                        writer.Write(docDef.DefinedType);
+
+                        string length = "";
+                        if (docDef.Length > 0)
+                        {
+                            length = "(" + docDef.Length.ToString() + ")";
+                        }
+                        else if (docDef.Length < 0)
+                        {
+                            int len = -docDef.Length;
+                            length = "(" + len.ToString() + ") FIXED";
+                        }
+                        writer.Write(length);
+
+                        writer.WriteLine(";");
+
+                        if (docDef.WhereRules.Count > 0)
+                        {
+                            writer.WriteLine(" WHERE");
+                            foreach (DocWhereRule where in docDef.WhereRules)
+                            {
+                                writer.Write("\t");
+                                writer.Write(where.Name);
+                                writer.Write(" : ");
+                                writer.Write(MakeLongFormExpression(where.Expression, schemaid));
+                                writer.WriteLine(";");
+                            }
+                        }
+
+                        writer.WriteLine("END_TYPE;");
+                        writer.WriteLine();
+                    }
                 }
 
                 // enumerations
                 foreach (DocEnumeration docEnum in mapEnum.Values)
                 {
-                    writer.Write("TYPE ");
-                    writer.Write(docEnum.Name);
-                    writer.Write(" = ENUMERATION OF");
-                    writer.WriteLine();
-
-                    for(int i = 0; i < docEnum.Constants.Count; i++)
+                    if (this.m_schema == null || this.m_schema.Types.Contains(docEnum))
                     {
-                        DocConstant docConst = docEnum.Constants[i];
-                        if (i == 0)
+
+                        writer.Write("TYPE ");
+                        writer.Write(docEnum.Name);
+                        writer.Write(" = ENUMERATION OF");
+                        writer.WriteLine();
+
+                        for (int i = 0; i < docEnum.Constants.Count; i++)
                         {
-                            writer.Write("\t(");
-                        }
-                        else
-                        {
-                            writer.Write("\t,");
+                            DocConstant docConst = docEnum.Constants[i];
+                            if (i == 0)
+                            {
+                                writer.Write("\t(");
+                            }
+                            else
+                            {
+                                writer.Write("\t,");
+                            }
+
+                            writer.Write(docConst.Name);
+
+                            if (i == docEnum.Constants.Count - 1)
+                            {
+                                writer.WriteLine(");");
+                            }
+                            else
+                            {
+                                writer.WriteLine();
+                            }
                         }
 
-                        writer.Write(docConst.Name);
-
-                        if (i == docEnum.Constants.Count - 1)
-                        {
-                            writer.WriteLine(");");
-                        }
-                        else
-                        {
-                            writer.WriteLine();
-                        }
+                        writer.WriteLine("END_TYPE;");
+                        writer.WriteLine();
                     }
-
-                    writer.WriteLine("END_TYPE;");
-                    writer.WriteLine();
                 }
 
                 // selects
                 foreach (DocSelect docSelect in mapSelect.Values)
                 {
-                    writer.Write("TYPE ");
-                    writer.Write(docSelect.Name);
-                    writer.Write(" = SELECT");
-                    writer.WriteLine();
-
-
-                    SortedList<string, DocSelectItem> sortSelect = new SortedList<string, DocSelectItem>(this);
-                    foreach (DocSelectItem docSelectItem in docSelect.Selects)
+                    if (this.m_schema == null || this.m_schema.Types.Contains(docSelect))
                     {
-                        if (!sortSelect.ContainsKey(docSelectItem.Name))
-                        {
-                            sortSelect.Add(docSelectItem.Name, docSelectItem);
-                        }
-                        else
-                        {
-                            this.ToString();
-                        }
-                    }
+                        writer.Write("TYPE ");
+                        writer.Write(docSelect.Name);
+                        writer.Write(" = SELECT");
+                        writer.WriteLine();
 
-                    int nSelect = 0;
-                    for (int i = 0; i < sortSelect.Keys.Count; i++)
-                    {
-                        DocSelectItem docConst = sortSelect.Values[i];
-                        
-                        DocObject docRefEnt = null;                        
-                        if (mapGeneral.TryGetValue(docConst.Name, out docRefEnt))                            
+
+                        SortedList<string, DocSelectItem> sortSelect = new SortedList<string, DocSelectItem>(this);
+                        foreach (DocSelectItem docSelectItem in docSelect.Selects)
                         {
-                            if (this.m_included == null || this.m_included.ContainsKey(docRefEnt))
+                            if (!sortSelect.ContainsKey(docSelectItem.Name))
                             {
-                                if (nSelect == 0)
-                                {
-                                    writer.Write("\t(");
-                                }
-                                else
-                                {
-                                    writer.WriteLine();
-                                    writer.Write("\t,");
-                                }
-                                nSelect++;
-
-                                writer.Write(docConst.Name);
+                                sortSelect.Add(docSelectItem.Name, docSelectItem);
+                            }
+                            else
+                            {
+                                this.ToString();
                             }
                         }
+
+                        int nSelect = 0;
+                        for (int i = 0; i < sortSelect.Keys.Count; i++)
+                        {
+                            DocSelectItem docConst = sortSelect.Values[i];
+
+                            DocObject docRefEnt = null;
+                            if (mapGeneral.TryGetValue(docConst.Name, out docRefEnt))
+                            {
+                                if (this.m_included == null || this.m_included.ContainsKey(docRefEnt))
+                                {
+                                    if (nSelect == 0)
+                                    {
+                                        writer.Write("\t(");
+                                    }
+                                    else
+                                    {
+                                        writer.WriteLine();
+                                        writer.Write("\t,");
+                                    }
+                                    nSelect++;
+
+                                    writer.Write(docConst.Name);
+                                }
+                            }
+                        }
+
+                        writer.WriteLine(");");
+
+                        writer.WriteLine("END_TYPE;");
+                        writer.WriteLine();
                     }
-
-                    writer.WriteLine(");");
-
-                    writer.WriteLine("END_TYPE;");
-                    writer.WriteLine();
                 }
 
                 // entities
                 foreach (DocEntity docEntity in mapEntity.Values)
                 {
-                    writer.Write("ENTITY ");
-                    writer.Write(docEntity.Name);
-
-                    if ((docEntity.IsAbstract()))
+                    if (this.m_schema == null || this.m_schema.Entities.Contains(docEntity))
                     {
-                        writer.WriteLine();
-                        writer.Write(" ABSTRACT");
-                    }
-                    
-                    // build up list of subtypes from other schemas
-                    SortedList<string, DocEntity> subtypes = new SortedList<string, DocEntity>(this); // sort to match Visual Express
-                    foreach (DocEntity eachent in mapEntity.Values)
-                    {
-                        if (eachent.BaseDefinition != null && eachent.BaseDefinition.Equals(docEntity.Name))
-                        {
-                            subtypes.Add(eachent.Name, eachent);
-                        }
-                    }
-                    if (subtypes.Count > 0)
-                    {
-                        StringBuilder sb = new StringBuilder();
+                        writer.Write("ENTITY ");
+                        writer.Write(docEntity.Name);
 
-                        // Capture all subtypes, not just those within schema
-                        int countsub = 0;
-                        foreach (string ds in subtypes.Keys)
-                        {
-                            DocEntity refent = subtypes[ds];
-                            if (this.m_included == null || this.m_included.ContainsKey(refent))
-                            {
-                                countsub++;
-
-                                if (sb.Length != 0)
-                                {
-                                    sb.Append("\r\n    ,");
-                                }
-
-                                sb.Append(ds);
-                            }
-                        }
-
-                        if (!docEntity.IsAbstract())
+                        if ((docEntity.IsAbstract()))
                         {
                             writer.WriteLine();
+                            writer.Write(" ABSTRACT");
                         }
 
-                        if (countsub > 1 || this.m_oneof)
+                        // build up list of subtypes from other schemas
+                        SortedList<string, DocEntity> subtypes = new SortedList<string, DocEntity>(this); // sort to match Visual Express
+                        foreach (DocEntity eachent in mapEntity.Values)
                         {
-                            writer.Write(" SUPERTYPE OF (ONEOF\r\n    (" + sb.ToString() + "))");
-                        }
-                        else if (countsub == 1)
-                        {
-                            writer.Write(" SUPERTYPE OF (" + sb.ToString() + ")");
-                        }
-                    }
-
-                    if (docEntity.BaseDefinition != null)
-                    {
-                        writer.WriteLine();
-                        writer.Write(" SUBTYPE OF (");
-                        writer.Write(docEntity.BaseDefinition);
-                        writer.Write(")");
-                    }
-
-
-                    writer.WriteLine(";");
-
-                    // direct attributes
-                    bool hasinverse = false;
-                    bool hasderived = false;
-                    foreach (DocAttribute attr in docEntity.Attributes)
-                    {
-                        if (attr.Inverse == null && attr.Derived == null)
-                        {
-                            writer.Write("\t");
-                            writer.Write(attr.Name);
-                            writer.Write(" : ");
-
-                            if (attr.IsOptional)
+                            if (eachent.BaseDefinition != null && eachent.BaseDefinition.Equals(docEntity.Name))
                             {
-                                writer.Write("OPTIONAL ");
+                                subtypes.Add(eachent.Name, eachent);
                             }
-
-                            WriteExpressAggregation(writer, attr);
-
-                            if (this.m_included == null || this.m_included.ContainsKey(attr))
-                            {
-                                writer.Write(attr.DefinedType);
-                            }
-                            else
-                            {
-                                writer.Write("IfcStrippedOptional");
-                            }
-                            writer.WriteLine(";");
                         }
-                        else if (attr.Inverse != null && attr.Derived == null)
+                        if (subtypes.Count > 0)
                         {
-                            DocObject docref = null;
-                            if (mapGeneral.TryGetValue(attr.DefinedType, out docref))
+                            StringBuilder sb = new StringBuilder();
+
+                            // Capture all subtypes, not just those within schema
+                            int countsub = 0;
+                            foreach (string ds in subtypes.Keys)
                             {
-                                if (this.m_included == null || this.m_included.ContainsKey(docref))
+                                DocEntity refent = subtypes[ds];
+                                if (this.m_included == null || this.m_included.ContainsKey(refent))
                                 {
-                                    hasinverse = true;
+                                    countsub++;
+
+                                    if (sb.Length != 0)
+                                    {
+                                        sb.Append("\r\n    ,");
+                                    }
+
+                                    sb.Append(ds);
                                 }
                             }
+
+                            if (!docEntity.IsAbstract())
+                            {
+                                writer.WriteLine();
+                            }
+
+                            if (countsub > 1 || this.m_oneof)
+                            {
+                                writer.Write(" SUPERTYPE OF (ONEOF\r\n    (" + sb.ToString() + "))");
+                            }
+                            else if (countsub == 1)
+                            {
+                                writer.Write(" SUPERTYPE OF (" + sb.ToString() + ")");
+                            }
                         }
-                        else if (attr.Derived != null)
+
+                        if (docEntity.BaseDefinition != null)
                         {
-                            hasderived = true;
+                            writer.WriteLine();
+                            writer.Write(" SUBTYPE OF (");
+                            writer.Write(docEntity.BaseDefinition);
+                            writer.Write(")");
                         }
-                    }
 
-                    // derived attributes
-                    if (hasderived)
-                    {
-                        writer.WriteLine(" DERIVE");
 
+                        writer.WriteLine(";");
+
+                        // direct attributes
+                        bool hasinverse = false;
+                        bool hasderived = false;
                         foreach (DocAttribute attr in docEntity.Attributes)
                         {
-                            if (attr.Derived != null)
+                            if (attr.Inverse == null && attr.Derived == null)
                             {
-                                // determine the superclass having the attribute                        
-                                DocEntity found = null;
-
-                                DocEntity super = docEntity;
-                                while (super != null && found == null && super.BaseDefinition != null)
-                                {
-                                    super = mapEntity[super.BaseDefinition] as DocEntity;
-                                    if (super != null)
-                                    {
-                                        foreach (DocAttribute docattr in super.Attributes)
-                                        {
-                                            if (docattr.Name.Equals(attr.Name))
-                                            {
-                                                // found class
-                                                found = super;
-                                                break;
-                                            }
-                                        }
-                                    }
-                                }
-
                                 writer.Write("\t");
-                                if (found != null)
-                                {
-                                    // overridden attribute
-                                    writer.Write("SELF\\");
-                                    writer.Write(found.Name);
-                                    writer.Write(".");
-                                }
-
                                 writer.Write(attr.Name);
                                 writer.Write(" : ");
 
-                                WriteExpressAggregation(writer, attr);
-                                writer.Write(attr.DefinedType);
+                                if (attr.IsOptional)
+                                {
+                                    writer.Write("OPTIONAL ");
+                                }
 
-                                writer.Write(" := ");
-                                writer.Write(attr.Derived);
+                                WriteExpressAggregation(writer, attr);
+
+                                if (this.m_included == null || this.m_included.ContainsKey(attr))
+                                {
+                                    writer.Write(attr.DefinedType);
+                                }
+                                else
+                                {
+                                    writer.Write("IfcStrippedOptional");
+                                }
                                 writer.WriteLine(";");
                             }
-                        }
-
-                    }
-
-                    // inverse attributes
-                    if (hasinverse)
-                    {
-                        writer.WriteLine(" INVERSE");
-
-                        foreach (DocAttribute attr in docEntity.Attributes)
-                        {
-                            if (attr.Inverse != null && attr.Derived == null)
+                            else if (attr.Inverse != null && attr.Derived == null)
                             {
                                 DocObject docref = null;
                                 if (mapGeneral.TryGetValue(attr.DefinedType, out docref))
                                 {
                                     if (this.m_included == null || this.m_included.ContainsKey(docref))
                                     {
-                                        writer.Write("\t");
-                                        writer.Write(attr.Name);
-                                        writer.Write(" : ");
+                                        hasinverse = true;
+                                    }
+                                }
+                            }
+                            else if (attr.Derived != null)
+                            {
+                                hasderived = true;
+                            }
+                        }
 
-                                        WriteExpressAggregation(writer, attr);
+                        // derived attributes
+                        if (hasderived)
+                        {
+                            writer.WriteLine(" DERIVE");
 
-                                        writer.Write(attr.DefinedType);
-                                        writer.Write(" FOR ");
-                                        writer.Write(attr.Inverse);
-                                        writer.WriteLine(";");
+                            foreach (DocAttribute attr in docEntity.Attributes)
+                            {
+                                if (attr.Derived != null)
+                                {
+                                    // determine the superclass having the attribute                        
+                                    DocEntity found = null;
+
+                                    DocEntity super = docEntity;
+                                    while (super != null && found == null && super.BaseDefinition != null)
+                                    {
+                                        super = mapEntity[super.BaseDefinition] as DocEntity;
+                                        if (super != null)
+                                        {
+                                            foreach (DocAttribute docattr in super.Attributes)
+                                            {
+                                                if (docattr.Name.Equals(attr.Name))
+                                                {
+                                                    // found class
+                                                    found = super;
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    writer.Write("\t");
+                                    if (found != null)
+                                    {
+                                        // overridden attribute
+                                        writer.Write("SELF\\");
+                                        writer.Write(found.Name);
+                                        writer.Write(".");
+                                    }
+
+                                    writer.Write(attr.Name);
+                                    writer.Write(" : ");
+
+                                    WriteExpressAggregation(writer, attr);
+                                    writer.Write(attr.DefinedType);
+
+                                    writer.Write(" := ");
+                                    writer.Write(attr.Derived);
+                                    writer.WriteLine(";");
+                                }
+                            }
+
+                        }
+
+                        // inverse attributes
+                        if (hasinverse)
+                        {
+                            writer.WriteLine(" INVERSE");
+
+                            foreach (DocAttribute attr in docEntity.Attributes)
+                            {
+                                if (attr.Inverse != null && attr.Derived == null)
+                                {
+                                    DocObject docref = null;
+                                    if (mapGeneral.TryGetValue(attr.DefinedType, out docref))
+                                    {
+                                        if (this.m_included == null || this.m_included.ContainsKey(docref))
+                                        {
+                                            writer.Write("\t");
+                                            writer.Write(attr.Name);
+                                            writer.Write(" : ");
+
+                                            WriteExpressAggregation(writer, attr);
+
+                                            writer.Write(attr.DefinedType);
+                                            writer.Write(" FOR ");
+                                            writer.Write(attr.Inverse);
+                                            writer.WriteLine(";");
+                                        }
                                     }
                                 }
                             }
                         }
-                    }
 
-                    // unique rules
-                    if(docEntity.UniqueRules.Count > 0)
-                    {
-                        writer.WriteLine(" UNIQUE");
-                        foreach (DocUniqueRule where in docEntity.UniqueRules)
+                        // unique rules
+                        if (docEntity.UniqueRules.Count > 0)
                         {
-                            writer.Write("\t");
-                            writer.Write(where.Name);
-                            writer.Write(" : ");
-                            foreach (DocUniqueRuleItem ruleitem in where.Items)
+                            writer.WriteLine(" UNIQUE");
+                            foreach (DocUniqueRule where in docEntity.UniqueRules)
                             {
-                                if (ruleitem != where.Items[0])
+                                writer.Write("\t");
+                                writer.Write(where.Name);
+                                writer.Write(" : ");
+                                foreach (DocUniqueRuleItem ruleitem in where.Items)
                                 {
-                                    writer.Write(", ");
+                                    if (ruleitem != where.Items[0])
+                                    {
+                                        writer.Write(", ");
+                                    }
+
+                                    writer.Write(ruleitem.Name);
                                 }
-
-                                writer.Write(ruleitem.Name);
+                                writer.WriteLine(";");
                             }
-                            writer.WriteLine(";");
                         }
-                    }
 
-                    // where rules
-                    if (docEntity.WhereRules.Count > 0)
-                    {
-                        writer.WriteLine(" WHERE");
-                        foreach (DocWhereRule where in docEntity.WhereRules)
+                        // where rules
+                        if (docEntity.WhereRules.Count > 0)
                         {
-                            writer.Write("\t");
-                            writer.Write(where.Name);
-                            writer.Write(" : ");
-                            writer.Write(MakeLongFormExpression(where.Expression, schemaid));
-                            writer.WriteLine(";");
+                            writer.WriteLine(" WHERE");
+                            foreach (DocWhereRule where in docEntity.WhereRules)
+                            {
+                                writer.Write("\t");
+                                writer.Write(where.Name);
+                                writer.Write(" : ");
+                                writer.Write(MakeLongFormExpression(where.Expression, schemaid));
+                                writer.WriteLine(";");
+                            }
                         }
-                    }
 
-                    writer.WriteLine("END_ENTITY;");
-                    writer.WriteLine();
+                        writer.WriteLine("END_ENTITY;");
+                        writer.WriteLine();
+                    }
                 }
 
                 // functions
                 foreach (DocFunction docFunction in mapFunction.Values)
                 {
-                    writer.Write("FUNCTION ");
-                    writer.WriteLine(docFunction.Name);
-                    writer.WriteLine(MakeLongFormExpression(docFunction.Expression, schemaid));
-                    writer.WriteLine("END_FUNCTION;");
-                    writer.WriteLine();
+                    if (this.m_schema == null || this.m_schema.Functions.Contains(docFunction))
+                    {
+                        writer.Write("FUNCTION ");
+                        writer.WriteLine(docFunction.Name);
+                        writer.WriteLine(MakeLongFormExpression(docFunction.Expression, schemaid));
+                        writer.WriteLine("END_FUNCTION;");
+                        writer.WriteLine();
+                    }
                 }
 
                 // rules
                 foreach (DocGlobalRule docRule in mapRule.Values)
                 {
-                    writer.Write("RULE ");
-                    writer.Write(docRule.Name);
-                    writer.WriteLine(" FOR");
-                    writer.Write("\t(");
-                    writer.Write(docRule.ApplicableEntity);
-                    writer.WriteLine(");");
-
-                    writer.WriteLine(docRule.Expression);
-
-                    // where
-                    writer.WriteLine("    WHERE");
-                    foreach (DocWhereRule docWhere in docRule.WhereRules)
+                    if (this.m_schema == null || this.m_schema.GlobalRules.Contains(docRule))
                     {
-                        writer.Write("      ");
-                        writer.Write(docWhere.Name);
-                        writer.Write(" : ");
-                        writer.Write(MakeLongFormExpression(docWhere.Expression, schemaid));
-                        writer.WriteLine(";");
-                    }
+                        writer.Write("RULE ");
+                        writer.Write(docRule.Name);
+                        writer.WriteLine(" FOR");
+                        writer.Write("\t(");
+                        writer.Write(docRule.ApplicableEntity);
+                        writer.WriteLine(");");
 
-                    writer.WriteLine("END_RULE;");
-                    writer.WriteLine();
+                        writer.WriteLine(docRule.Expression);
+
+                        // where
+                        writer.WriteLine("    WHERE");
+                        foreach (DocWhereRule docWhere in docRule.WhereRules)
+                        {
+                            writer.Write("      ");
+                            writer.Write(docWhere.Name);
+                            writer.Write(" : ");
+                            writer.Write(MakeLongFormExpression(docWhere.Expression, schemaid));
+                            writer.WriteLine(";");
+                        }
+
+                        writer.WriteLine("END_RULE;");
+                        writer.WriteLine();
+                    }
                 }
 
                 writer.WriteLine("END_SCHEMA;");
@@ -681,7 +713,7 @@ DateTime.Today.ToLongDateString() + "\r\n" + //"December 27, 2012\r\n" +
                     writer.Write("[0:?] OF ");
                 }
 
-                if ((docAggregation.AggregationFlag & 2) != 0)
+                if (docAggregation.IsUnique)
                 {
                     // unique
                     writer.Write("UNIQUE ");

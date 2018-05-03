@@ -1,0 +1,19 @@
+﻿<epm-html>
+
+<p>A time series value is a list of values that comprise the time series. At least one value must be supplied. Applications are expected to normalize values by applying the following three rules:</p>
+<ul>
+<li>All time (universal, local, daylight savings, and solar) is normalized against the ISO 8601 standard GMT/UTC (Universal Coordinated Time).</li>
+<li>Any rollover is handled by the application providing the data.  Rollover occurs, for example, when the measurement device resets itself while measuring and the recording data do not include the data measured before the reset.</li>
+<li>The normalized data refer to the preceding time unit.  The time series example shown in Figure 2 below contains four time points: Time "a" indicates the beginning of the time series and the associated datum has no relevance.  Data at time points "b," "c" and "d" are associated with values 1, 2 and 3, respectively.</li>
+</ul>
+
+<table> 
+<tr><td valign="top" align="left"><img src="../../../figures/ifctimeseries_timeseriesvalue.gif" alt="time series values" width="575" height="95" border="0"></td></tr>
+<tr><td><p class="figure">Figure 2 &mdash; Time series value</p></td></tr> 
+</table> 
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC2x2.
+</blockquote>
+
+</epm-html>

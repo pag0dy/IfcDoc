@@ -1,0 +1,17 @@
+﻿<p><em>IfcRelFillsElement</em> is an objectified relationship between an opening element and an element that fills (or partially fills) the opening element. It is an one-to-one relationship.</p>
+
+<blockquote class="note">
+NOTE&nbsp; View definitions or implementer agreements may restrict an opening to be filled by one filling element only.
+</blockquote>
+
+
+<p>As shown in Figure 2, the insertion of a door into a wall is represented by two separate relationships. First the door opening is created within the wall by <em>IfcWall(StandardCase) &lt;-- IfcRelVoidsElement --&gt; IfcOpeningElement</em>, then the door is inserted within the opening by <em>IfcOpeningElement &lt;-- IfcRelFillsElement --&gt; IfcDoor</em>.</p> <p>&nbsp;</p>
+
+<table border="0" cellpadding="0" cellspacing="0" width="502" summary="example for filling">
+<tr><td><img src="../../../figures/ifcrelfillselements-fig1.png" alt="relationships for filling" width="501" height="401" border="0"></td></tr>
+<tr><td><p class="figure">Figure 2 &mdash; Relationships for element filling</p></td></tr>
+</table>
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC1.0
+</blockquote>

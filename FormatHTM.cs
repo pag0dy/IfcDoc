@@ -2772,14 +2772,18 @@ namespace IfcDoc.Format.HTM
 
             if (!String.IsNullOrEmpty(code))
             {
+                /*
                 this.WriteLine("<p>Schema files are provided that are filtered according to this view definition. " +
                     "Data exported by conforming applications shall conform to this schema subset (i.e. not include any definitions excluded from this schema subset). " +
                     "Applications importing data for this model view shall be able to read all data conforming to the full schema (i.e. allow for definitions outside of this schema subset without processing them).</p>");
+                */
+                this.WriteLine("<p>Computer intepretable files are provided specific to this view definition.</p>");
 
                 string key1 = "";// "A." + iCodeView + ".1";
                 string key2 = "";// "A." + iCodeView + ".2";
                 string key3 = "";// "A." + iCodeView + ".3";
 
+#if false // 2018-04-23: no longer publish filtered schema listings for model view -- use parent listing
                 // write table linking formatted listings
                 this.Write(
                     "<h4 class=\"annex\"><a>" + key1 + " Schema definitions</a></h4>" +
@@ -2823,7 +2827,7 @@ namespace IfcDoc.Format.HTM
 
 
                 this.Write("</table>");
-
+#endif
 
                 this.Write(
                     "<h4 class=\"annex\"><a>" + key2 + " Property and quantity templates</a></h4>" +

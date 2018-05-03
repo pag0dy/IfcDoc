@@ -1,2 +1,0 @@
-﻿(PredefinedType <> IfcFireSuppressionTerminalTypeEnum.USERDEFINED) OR
-((PredefinedType = IfcFireSuppressionTerminalTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcElementType.ElementType))

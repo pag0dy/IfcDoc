@@ -1,3 +1,0 @@
-﻿NOT(EXISTS(PredefinedType)) OR
- (PredefinedType <> IfcRoofTypeEnum.USERDEFINED) OR
- ((PredefinedType = IfcRoofTypeEnum.USERDEFINED) AND EXISTS (SELF\IfcObject.ObjectType))

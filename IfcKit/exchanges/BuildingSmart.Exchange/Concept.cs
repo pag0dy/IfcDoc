@@ -15,6 +15,14 @@ namespace BuildingSmart.Exchange
             this._target = target;
         }
 
+        public object Target
+        {
+            get
+            {
+                return this._target;
+            }
+        }
+
         protected object GetValue(string path)
         {
             ValuePath valpath = ValuePath.Parse(this._target.GetType().Assembly, path);

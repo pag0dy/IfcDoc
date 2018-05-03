@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
@@ -990,7 +989,7 @@ namespace IfcDoc
     }
 
     // 2018-01-05 Meeting Notes: don't encode property type in IFC description, but use type relationship with IfcPropertySingleValue, etc.
-    // Enclose entites within schema
+    // Enclose entities within schema
     // Enclose schema within IFC top node
 
     // Reference Value / Time Series

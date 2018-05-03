@@ -32,7 +32,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormPublish));
             this.progressBar = new System.Windows.Forms.ProgressBar();
             this.textBoxUrl = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.labelServer = new System.Windows.Forms.Label();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.buttonOK = new System.Windows.Forms.Button();
             this.labelSummary = new System.Windows.Forms.Label();
@@ -40,23 +40,19 @@
             this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.labelError = new System.Windows.Forms.Label();
             this.comboBoxProtocol = new System.Windows.Forms.ComboBox();
-            this.listViewViews = new System.Windows.Forms.ListView();
-            this.columnHeaderName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeaderVersion = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeaderDate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeaderStatus = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeaderAccess = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.buttonLogin = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
+            this.labelUsername = new System.Windows.Forms.Label();
             this.textBoxUsername = new System.Windows.Forms.TextBox();
             this.textBoxPassword = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
+            this.labelPassword = new System.Windows.Forms.Label();
             this.backgroundWorkerContexts = new System.ComponentModel.BackgroundWorker();
             this.checkBoxRemember = new System.Windows.Forms.CheckBox();
             this.textBoxWarning = new System.Windows.Forms.TextBox();
             this.treeViewContainer = new System.Windows.Forms.TreeView();
-            this.backgroundWorkerConcepts = new System.ComponentModel.BackgroundWorker();
             this.imageListIcon = new System.Windows.Forms.ImageList(this.components);
+            this.backgroundWorkerConcepts = new System.ComponentModel.BackgroundWorker();
+            this.comboBoxContext = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
             this.SuspendLayout();
             // 
@@ -71,10 +67,10 @@
             this.textBoxUrl.Name = "textBoxUrl";
             this.textBoxUrl.ReadOnly = true;
             // 
-            // label1
+            // labelServer
             // 
-            resources.ApplyResources(this.label1, "label1");
-            this.label1.Name = "label1";
+            resources.ApplyResources(this.labelServer, "labelServer");
+            this.labelServer.Name = "labelServer";
             // 
             // buttonCancel
             // 
@@ -119,46 +115,9 @@
             this.comboBoxProtocol.FormattingEnabled = true;
             this.comboBoxProtocol.Items.AddRange(new object[] {
             resources.GetString("comboBoxProtocol.Items"),
-            resources.GetString("comboBoxProtocol.Items1"),
-            resources.GetString("comboBoxProtocol.Items2")});
+            resources.GetString("comboBoxProtocol.Items1")});
             this.comboBoxProtocol.Name = "comboBoxProtocol";
             this.comboBoxProtocol.SelectedIndexChanged += new System.EventHandler(this.comboBoxProtocol_SelectedIndexChanged);
-            // 
-            // listViewViews
-            // 
-            resources.ApplyResources(this.listViewViews, "listViewViews");
-            this.listViewViews.CheckBoxes = true;
-            this.listViewViews.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeaderName,
-            this.columnHeaderVersion,
-            this.columnHeaderDate,
-            this.columnHeaderStatus,
-            this.columnHeaderAccess});
-            this.listViewViews.FullRowSelect = true;
-            this.listViewViews.Name = "listViewViews";
-            this.listViewViews.UseCompatibleStateImageBehavior = false;
-            this.listViewViews.View = System.Windows.Forms.View.Details;
-            this.listViewViews.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.listViewViews_ItemChecked);
-            // 
-            // columnHeaderName
-            // 
-            resources.ApplyResources(this.columnHeaderName, "columnHeaderName");
-            // 
-            // columnHeaderVersion
-            // 
-            resources.ApplyResources(this.columnHeaderVersion, "columnHeaderVersion");
-            // 
-            // columnHeaderDate
-            // 
-            resources.ApplyResources(this.columnHeaderDate, "columnHeaderDate");
-            // 
-            // columnHeaderStatus
-            // 
-            resources.ApplyResources(this.columnHeaderStatus, "columnHeaderStatus");
-            // 
-            // columnHeaderAccess
-            // 
-            resources.ApplyResources(this.columnHeaderAccess, "columnHeaderAccess");
             // 
             // buttonLogin
             // 
@@ -167,10 +126,10 @@
             this.buttonLogin.UseVisualStyleBackColor = true;
             this.buttonLogin.Click += new System.EventHandler(this.buttonLogin_Click);
             // 
-            // label2
+            // labelUsername
             // 
-            resources.ApplyResources(this.label2, "label2");
-            this.label2.Name = "label2";
+            resources.ApplyResources(this.labelUsername, "labelUsername");
+            this.labelUsername.Name = "labelUsername";
             // 
             // textBoxUsername
             // 
@@ -183,17 +142,15 @@
             this.textBoxPassword.Name = "textBoxPassword";
             this.textBoxPassword.UseSystemPasswordChar = true;
             // 
-            // label3
+            // labelPassword
             // 
-            resources.ApplyResources(this.label3, "label3");
-            this.label3.Name = "label3";
+            resources.ApplyResources(this.labelPassword, "labelPassword");
+            this.labelPassword.Name = "labelPassword";
             // 
             // backgroundWorkerContexts
             // 
             this.backgroundWorkerContexts.WorkerReportsProgress = true;
             this.backgroundWorkerContexts.WorkerSupportsCancellation = true;
-            this.backgroundWorkerContexts.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorkerContexts_DoWork);
-            this.backgroundWorkerContexts.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorkerContexts_RunWorkerCompleted);
             // 
             // checkBoxRemember
             // 
@@ -203,24 +160,19 @@
             // 
             // textBoxWarning
             // 
-            this.textBoxWarning.BackColor = System.Drawing.Color.Red;
             this.textBoxWarning.BorderStyle = System.Windows.Forms.BorderStyle.None;
             resources.ApplyResources(this.textBoxWarning, "textBoxWarning");
-            this.textBoxWarning.ForeColor = System.Drawing.Color.White;
+            this.textBoxWarning.ForeColor = System.Drawing.Color.Black;
             this.textBoxWarning.Name = "textBoxWarning";
             this.textBoxWarning.ReadOnly = true;
             // 
             // treeViewContainer
             // 
             resources.ApplyResources(this.treeViewContainer, "treeViewContainer");
+            this.treeViewContainer.CheckBoxes = true;
             this.treeViewContainer.ImageList = this.imageListIcon;
             this.treeViewContainer.Name = "treeViewContainer";
             this.treeViewContainer.BeforeExpand += new System.Windows.Forms.TreeViewCancelEventHandler(this.treeViewContainer_BeforeExpand);
-            // 
-            // backgroundWorkerConcepts
-            // 
-            this.backgroundWorkerConcepts.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorkerConcepts_DoWork);
-            this.backgroundWorkerConcepts.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorkerConcepts_RunWorkerCompleted);
             // 
             // imageListIcon
             // 
@@ -274,29 +226,51 @@
             this.imageListIcon.Images.SetKeyName(45, "ni0017-16.png");
             this.imageListIcon.Images.SetKeyName(46, "ni0019-16.png");
             // 
+            // backgroundWorkerConcepts
+            // 
+            this.backgroundWorkerConcepts.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorkerConcepts_DoWork);
+            this.backgroundWorkerConcepts.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorkerConcepts_RunWorkerCompleted);
+            // 
+            // comboBoxContext
+            // 
+            resources.ApplyResources(this.comboBoxContext, "comboBoxContext");
+            this.comboBoxContext.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxContext.FormattingEnabled = true;
+            this.comboBoxContext.Items.AddRange(new object[] {
+            resources.GetString("comboBoxContext.Items"),
+            resources.GetString("comboBoxContext.Items1")});
+            this.comboBoxContext.Name = "comboBoxContext";
+            this.comboBoxContext.SelectedIndexChanged += new System.EventHandler(this.comboBoxContext_SelectedIndexChanged);
+            // 
+            // label1
+            // 
+            resources.ApplyResources(this.label1, "label1");
+            this.label1.Name = "label1";
+            // 
             // FormPublish
             // 
             this.AcceptButton = this.buttonOK;
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.comboBoxContext);
             this.Controls.Add(this.treeViewContainer);
-            this.Controls.Add(this.textBoxWarning);
             this.Controls.Add(this.checkBoxRemember);
-            this.Controls.Add(this.label3);
+            this.Controls.Add(this.labelPassword);
             this.Controls.Add(this.textBoxPassword);
             this.Controls.Add(this.textBoxUsername);
-            this.Controls.Add(this.label2);
+            this.Controls.Add(this.labelUsername);
             this.Controls.Add(this.buttonLogin);
-            this.Controls.Add(this.listViewViews);
             this.Controls.Add(this.comboBoxProtocol);
             this.Controls.Add(this.labelError);
             this.Controls.Add(this.labelSummary);
             this.Controls.Add(this.progressBar);
             this.Controls.Add(this.textBoxUrl);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.labelServer);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonOK);
+            this.Controls.Add(this.textBoxWarning);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FormPublish";
@@ -312,7 +286,7 @@
 
         private System.Windows.Forms.ProgressBar progressBar;
         private System.Windows.Forms.TextBox textBoxUrl;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label labelServer;
         private System.Windows.Forms.Button buttonCancel;
         private System.Windows.Forms.Button buttonOK;
         private System.Windows.Forms.Label labelSummary;
@@ -320,22 +294,18 @@
         private System.Windows.Forms.ErrorProvider errorProvider;
         private System.Windows.Forms.Label labelError;
         private System.Windows.Forms.ComboBox comboBoxProtocol;
-        private System.Windows.Forms.ListView listViewViews;
-        private System.Windows.Forms.ColumnHeader columnHeaderName;
-        private System.Windows.Forms.ColumnHeader columnHeaderAccess;
         private System.Windows.Forms.Button buttonLogin;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label labelPassword;
         private System.Windows.Forms.TextBox textBoxPassword;
         private System.Windows.Forms.TextBox textBoxUsername;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label labelUsername;
         private System.ComponentModel.BackgroundWorker backgroundWorkerContexts;
-        private System.Windows.Forms.ColumnHeader columnHeaderVersion;
-        private System.Windows.Forms.ColumnHeader columnHeaderDate;
-        private System.Windows.Forms.ColumnHeader columnHeaderStatus;
         private System.Windows.Forms.CheckBox checkBoxRemember;
         private System.Windows.Forms.TextBox textBoxWarning;
         private System.Windows.Forms.TreeView treeViewContainer;
         private System.ComponentModel.BackgroundWorker backgroundWorkerConcepts;
         private System.Windows.Forms.ImageList imageListIcon;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox comboBoxContext;
     }
 }

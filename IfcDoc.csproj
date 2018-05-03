@@ -154,19 +154,12 @@
     <Compile Include="CtlRules.Designer.cs">
       <DependentUpon>CtlRules.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataDictionary.cs" />
     <Compile Include="DocumentationISO.cs" />
     <Compile Include="DifferenceEngine.cs" />
     <Compile Include="FolderStorage.cs" />
     <Compile Include="FormatOWL.cs" />
     <Compile Include="FormatSQL.cs" />
     <Compile Include="FormatZIP.cs" />
-    <Compile Include="FormCredentials.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormCredentials.Designer.cs">
-      <DependentUpon>FormCredentials.cs</DependentUpon>
-    </Compile>
     <Compile Include="FormDatabase.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -403,9 +396,6 @@
     <EmbeddedResource Include="FormConstraint.ja.resx">
       <DependentUpon>FormConstraint.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormCredentials.resx">
-      <DependentUpon>FormCredentials.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="FormDatabase.resx">
       <DependentUpon>FormDatabase.cs</DependentUpon>
     </EmbeddedResource>
@@ -420,9 +410,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormProperties.ja.resx">
       <DependentUpon>FormProperties.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormPublish.ja.resx">
-      <DependentUpon>FormPublish.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormReference.ja.resx">
       <DependentUpon>FormReference.cs</DependentUpon>
@@ -604,6 +591,14 @@
     <ProjectReference Include="IfcKit\schemas\IFC4x1\BuildingSmart.IFC4X1.csproj">
       <Project>{2ffe04f0-b6c2-405e-92a4-d1f3b6b037bc}</Project>
       <Name>BuildingSmart.IFC4X1</Name>
+    </ProjectReference>
+    <ProjectReference Include="IfcKit\utilities\BuildingSmart.Utilities.Conversion\BuildingSmart.Utilities.Conversion.csproj">
+      <Project>{048106c1-7d68-4b3c-b7b1-eb437f2c15b0}</Project>
+      <Name>BuildingSmart.Utilities.Conversion</Name>
+    </ProjectReference>
+    <ProjectReference Include="IfcKit\utilities\BuildingSmart.Utilities.Dictionary\BuildingSmart.Utilities.Dictionary.csproj">
+      <Project>{ecb9f199-28f2-48b9-82e9-b4edade8aebb}</Project>
+      <Name>BuildingSmart.Utilities.Dictionary</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

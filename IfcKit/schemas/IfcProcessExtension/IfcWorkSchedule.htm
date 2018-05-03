@@ -1,0 +1,29 @@
+﻿    <p>
+      An <em>IfcWorkSchedule</em>
+      represents a task schedule of a work plan, which in turn
+      can contain a set of schedules for different purposes.
+    </p>
+    <blockquote class="history">HISTORY&nbsp; New entity in IFC2.0.</blockquote>
+
+    <p class="use-head">Declaration Use Definition</p>
+    <p>
+      <em>IfcWorkSchedule</em> can reference a project (the
+      single <em>IfcProject</em> instance) via
+      <em>IfcRelDeclares</em>.</p>
+
+    <p>
+      Figure 2 shows the backbone structure of a work schedule
+      that defines (1) a context through <em>IfcRelDeclares</em>
+      (not necessarily the project) and (2) controls tasks
+      (typically the schedule summary task) and resources. Please
+      note that a work calendar shall be assigned to the summary
+      task and not the work schedule.
+    </p>
+
+<p>If an assigned <i>IfcTask</i> is a root-level task, such task must be declared on the <i>IfcProject</i> using the <i>IfcRelDeclares</i> relationship.</p>
+
+<table>
+<tr><td><img src="../../../figures/ifcworkschedule_instantiation_diagram.png" alt=
+      "work schedule instantiation diagram" border="0"></td></tr>
+<tr><td><p class="figure">Figure 2 &mdash; Work schedule relationships</p></td></tr>
+</table>

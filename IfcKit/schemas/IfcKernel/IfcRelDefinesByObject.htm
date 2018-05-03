@@ -1,0 +1,20 @@
+﻿<p>The objectified relationship <em>IfcRelDefinesByObject</em> defines the relationship between an object taking part in an object type decomposition and an object occurrences taking part in an occurrence decomposition of that type.</p>
+<p>The <em>IfcRelDefinesByObject</em> is a 1-to-N relationship, as it allows for the assignment of one declaring object information to a single or to many reflected objects. Those objects then share the same object property sets and, for subtypes of <em>IfcProduct</em>, the eventually assigned representation maps.</p>
+
+<p>Only objects that take part in a type decomposition and in an occurrence decomposition of the same type can be connected by the <em>IfcRelDefinesByObject</em> relationship. The <em>IfcRelDefinesByObject</em> links the decomposed object type part, also called the "declaring part" with the occurrence of that part inside the occurrence of the decomposed type, also called the "reflected part", as shown in Figure 3.</p> <p>&nbsp;</p>
+
+<table border="0" cellpadding="0" cellspacing="0" summary="relationship usage">
+<tr><td><img src="../../../figures/ifcreldefinesbyobject_fig-1.png" alt="instance diagram" border="0"></td></tr>
+<tr><td><p class="figure">Figure 3 &mdash; Part definition relationships</p></td></tr>
+</table>
+
+<p>The <em>IfcRelDefinesByObject</em> can be used together with the shape representations of the product type as shown in Figure 4. The <em>IfcShapeRepresentation</em> of the "declaring part" is referenced by the "reflected part". The <em>IfcObjectPlacement</em> of the model occurrence (the whole) determines the position within the project context.</p>
+
+<table border="0" cellpadding="0" cellspacing="0" summary="relationship usage">
+<tr><td><img src="../../../figures/ifcreldefinesbyobject_fig-2.png" alt="geometry diagram" border="0"></td></tr>
+<tr><td><p class="figure">Figure 4 &mdash; Part definition relationships with shape representation</td></tr>
+</table>
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC4.
+</blockquote>

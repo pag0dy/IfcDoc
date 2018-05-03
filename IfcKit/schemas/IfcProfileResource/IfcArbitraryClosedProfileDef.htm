@@ -1,0 +1,24 @@
+﻿<p>The closed profile <em>IfcArbitraryClosedProfileDef</em> defines an arbitrary two-dimensional profile for the use within the swept surface geometry, the swept area solid or a sectioned spine. It is given by an outer boundary from which the surface or solid can be constructed. </p>
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC1.5. Entity has been renamed from <em>IfcArbitraryProfileDef</em> in IFC2x.
+</blockquote>
+
+<p class="spec-head">Informal Propositions:</p>
+<ol>
+  <li>The <em>OuterCurve</em> has to be a closed curve.</li>
+  <li>The <em>OuterCurve</em> shall not intersect.</li>
+</ol>
+
+<p>Figure 2 illustrates the arbitrary closed profile definition. The <em>OuterCurve</em> is defined in the underlying coordinate system. The underlying coordinate system is defined by the swept surface or swept area solid that uses the profile definition. It is the xy plane of either:</p>
+      <ul>
+        <li style="font-style: italic;">IfcSweptSurface.Position</li>
+        <li style="font-style: italic;">IfcSweptAreaSolid.Position</li>
+      </ul>
+<p>or in case of sectioned spines the xy plane of each list member of <em>IfcSectionedSpine.CrossSectionPositions</em>. The <em>OuterCurve</em>
+attribute defines a two dimensional closed bounded curve.</p>
+
+<table>
+<tr><td><img src="../../../figures/ifcarbitraryprofiledef-layout1.gif" alt="arbitrary profile without boundaries" border="0" height="300" width="400"></td></tr>
+<tr><td><p class="figure">Figure 2 &mdash; Arbitrary closed profile</p></td></tr>
+</table>

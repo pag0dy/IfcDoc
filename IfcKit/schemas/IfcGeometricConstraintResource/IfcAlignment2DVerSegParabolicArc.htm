@@ -1,0 +1,37 @@
+﻿<p>The vertical parabolic segment is defined as a parabola using the inherited attributes from <i>IfcAlignment2DVerticalSegment</i> and the following additional curve parameters  <i>ParabolaConstant</i> as the minimum radius of the parabolic arc at its apex, and <i>IsConvex</i> to indicate the whether the parabolic arc defined a sag or a crest.</p>
+
+<p>The parabolic arc is described by (see figure 1):</p>
+<ul style="list-style-type: none">
+ <li>R = signed <i>ParabolaConstant</i>, if <i>IsConvex</i> = true, then -R, if <i>IsConvex</i> = false, then +R as length measure</li>
+ <li>s<sub>0</sub> = <i>StartDistAlong</i> as length measure</li>
+ <li>z<sub>0</sub> = <i>StartHeight</i> as length measure</li>
+ <li>g<sub>0</sub> = <i>StartGradient</i> as ratio measure<li>
+</ul>
+
+<p>The following equations are used for any point along the parabola:</p>
+<ul style="list-style-type: none">
+ <li>at any point s<sub>1</sub> along the <i>HorizontalLength</i>
+ <li>the gradient g<sub>1</sub> = (s<sub>1</sub>-s<sub>0</sub>) / R + g<sub>0</sub></i>
+ <li>the height z<sub>1</sub> = (s<sub>1</sub>-s<sub>0</sub>) * (g<sub>1</sub>+g<sub>0</sub>)/2 + z<sub>0</sub></i>
+</ul>
+
+<table>
+<tr><td><img src="../../../figures/ifcalignment2dversegparabolicarc_fig1.png" /></td></tr>
+<tr><td>
+Legend:<br>
+red: the parabolic curve with start point and calculated end point used as an vertical alignment</br>
+yellow: the underlying unbounded parabola definition</br>
+blue: the minimum circle defined by the parabola constant agreeing to the "is convex" fag, the constant, and the start gradient 
+</td></tr>
+<tr><td><p class="figure">Figure 4 &mdash; Alignment vertical segment parabola convex</p></td></tr>
+</table>
+<p>&nbsp;</p>
+<table>
+<tr><td><img src="../../../figures/ifcalignment2dversegparabolicarc-convex.png" /></td><td style="vertical-align: bottom">start point provided by <i>StartDistAlong</I> and <i>StartHeight</i><br>instanteneous gradient provided by <i>StartGradient</i>, <br>and length provided by <i>HorizontalLength</i></td></tr>
+<tr><td><p class="figure">Figure 5 &mdash; Alignment vertical parabolic arc segment convex</p></td><td>&nbsp;</td></tr>
+</table>
+<p>&nbsp;</p>
+<table>
+<tr><td><img src="../../../figures/ifcalignment2dversegparabolicarc-concave.png" /></td><td style="vertical-align: bottom">start point provided by <i>StartDistAlong</I> and <i>StartHeight</i><br>instanteneous gradient provided by <i>StartGradient</i>, <br>and length provided by <i>HorizontalLength</i></td></tr></tr>
+<tr><td><p class="figure">Figure 5 &mdash; Alignment vertical parabolic arc segment concave</p></td><td>&nbsp;</td></tr>
+</table>

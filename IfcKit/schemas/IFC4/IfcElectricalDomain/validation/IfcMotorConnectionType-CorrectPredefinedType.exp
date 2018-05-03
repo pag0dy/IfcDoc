@@ -1,2 +1,0 @@
-﻿(PredefinedType <> IfcMotorConnectionTypeEnum.USERDEFINED) OR
-((PredefinedType = IfcMotorConnectionTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcElementType.ElementType))

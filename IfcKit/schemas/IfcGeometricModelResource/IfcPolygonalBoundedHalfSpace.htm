@@ -1,0 +1,55 @@
+﻿<p>The polygonal bounded half space is a special subtype of a half space solid, where the material of the half space
+used in Boolean expressions is bounded by a polygonal boundary. The base surface of the half space is positioned by its
+normal relative to the object coordinate system (as defined at the supertype <em>IfcHalfSpaceSolid</em>),&nbsp;and its
+polygonal (with or without arc segments) boundary is defined in the XY plane of the position coordinate system
+established by the <em>Position</em> attribute, the subtraction body is extruded perpendicular to the XY plane of the
+position coordinate system, that is, into the direction of the positive Z axis defined by the <em>Position</em>
+attribute.</p>
+<p>The boundary is defined by a 2 dimensional polyline (or 2 dimensional composite curve, consisting of straight
+segments and circular arc segments) within the XY plane of the position coordinate system. The side of the surface
+which is in the half space is determined by the surface normal and the agreement flag. If the agreement flag is TRUE,
+then the subset is the one the normal points away from. If the agreement flag is FALSE, then the subset is the one the
+normal points into.</p>
+<blockquote class="note">NOTE&nbsp; A polygonal bounded half space is not a subtype of <em>IfcSolidModel</em>, half
+space solids are only useful as operands in Boolean expressions.</blockquote>
+<p>Figure 2 illustrates a polygonal bounded half space.</p>
+<table border="0" cellpadding="2" cellspacing="2" summary="illustration">
+<tr>
+<td width="650"><img src="../../../figures/ifcpolygonalboundedhalfspace-layout1.png" border=
+"0" height="480" width="640" alt="polygonal bounded halfspace"></td>
+<td>
+<ul>
+<li class="small">Black coordinates indicate the object coordinate system (usually provided by <em>IfcLocalPlacement</em>).</li>
+<li class="small">Green coordinates indicate the position coordinate system; the <em>PolygonalBoundary</em> is given within this
+coordinate system. It is provided by <em>IfcPolygonalBoundedHalfSpace.Position</em>. This coordinate system is relative
+to the object coordinate system. The extrusion direction of the subtraction body is the positive Z axis.</li>
+<li class="small">Red coordinates indicate the normal of the plane. It is provided by the <em>BaseSurface</em>
+(<em>IfcSurface.Position</em>). This normal is also relative to the object coordinate system.</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td>
+<p class="figure">Figure 2 &mdash; Polygonal half space geometry</p>
+</td>
+<td>&nbsp;</td>
+</tr>
+</table>
+<p>
+The polygonal bounded half space is used to limit the volume of the half space in Boolean difference expressions. Only
+the part that is defined by a theoretical intersection between the half space solid and an extruded area solid, defined
+by extruding the polygonal boundary, is used for Boolean expressions.</p>
+<p>
+The <em>PolygonalBoundary</em> defines the 2D polyline which bounds the effectiveness of the half space in Boolean
+expressions. The <em>BaseSurface</em> is defined by a plane, and the normal of the plane together with the
+<em>AgreementFlag</em> defines the side of the material of the half space.</p>
+<blockquote class="history">HISTORY&nbsp; New entity in IFC2x.</blockquote>
+<p class="spec-head">Informal Propositions:</p>
+<ol>
+<li>The <em>IfcPolyline</em> or the <em>IfcCompositeCurve</em> providing the <em>PolygonalBoundary</em> shall be closed.</li>
+<li>If the <em>PolygonalBoundary</em> is given by an <em>IfcCompositeCurve</em>, it shall only have
+<em>IfcCompositeCurveSegment</em>'s of type <em>IfcPolyline</em>, or <em>IfcTrimmedCurve</em> (having a
+<em>BasisCurve</em> of type <em>IfcLine</em>, or <em>IfcCircle</em>)</li>
+<li>The <em>BaseSurface</em> defined at supertype <em>IfcHalfSpaceSolid</em> shall be of type <em>IfcPlane</em></li>
+<li>The normal of the plane, being the <em>BaseSurface</em>, shall not be perpendicular to the z-axis of the position coordinate system</li>
+</ol>

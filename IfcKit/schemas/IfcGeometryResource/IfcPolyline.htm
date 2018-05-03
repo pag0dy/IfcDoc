@@ -1,0 +1,24 @@
+﻿<p>The <em>IfcPolyline</em> is a bounded curve with only linear segments defined by a list of Cartesian points. If the first and the last Cartesian point in the list are identical, then the polyline is a closed curve, otherwise it is an open curve.</p> 
+
+<blockquote class="example">EXAMPLE&nbsp; Figure 2 illustrates a bounded <i>IfcPolyline</i> and shows the parametric length of each segment and of the total polyline. The parametric length of the entire polyline is <em>n</em> - 1, where <em>n</em> is the number of <em>Points</em>.</blockquote>
+<table summary="illustration">
+<tr>
+<td style="vertical-align:top;"><img src="../../../figures/ifcpolyline-fig1.png" alt="polyline examples"></td>
+</tr>
+<tr>
+<td><p class="figure">Figure 2 &mdash; Bounded <em>IfcPolyline</em> with parametric length</p></td>
+</tr>
+</table>
+
+<blockquote class="extDef">
+NOTE&nbsp; Definition according to ISO/CD 10303-42:1992<br>
+A polyline is a bounded curve of <em>n</em> - 1 linear segments, defined by a list of <em>n</em> points, P<sub>1</sub>, P<sub>2</sub> ... P<sub>n</sub>. The <em>i</em> <sup>th</sup> segment of the curve is parameterized as follows:
+<blockquote class="extDef">
+<img src="../../../figures/ifcpolyline-math1.gif" width="190" height="24" align="middle">&nbsp;&nbsp;&nbsp;
+<em>for</em> 1 &le; <em>i</em> &le; <em>n</em> - 1
+</blockquote>
+where <em>i</em> - 1 &le; <em>u</em> &le; <em>i</em> and with parametric range of 0 &le; <em>u</em> &le; <em>n</em> - 1.
+</blockquote>
+<blockquote class="note">NOTE&nbsp; Entity adapted from <strong>polyline</strong> in ISO 10303-42.</blockquote>
+
+<blockquote class="history">HISTORY&nbsp; New entity in IFC1.0</blockquote>

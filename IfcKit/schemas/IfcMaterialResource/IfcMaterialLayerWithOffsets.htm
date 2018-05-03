@@ -1,0 +1,28 @@
+﻿<p><em>IfcMaterialLayerWithOffsets</em> is a specialization of <em>IfcMaterialLayer</em> enabling definition of offset values along edges (within the material layer set usage in parent layer set).</p>
+
+<p>It defines the assignment of two offset values for a material layer in its intended use within a material layer set. Offsets are applied to the edges of layered elements (that is, in directions perpendicular to the layer set direction). Offsets shall not be used in layer set direction, that is, for modelling gaps (or overlaps) between layers; gaps shall be modeled as layers with appropriate material assignment for the void.</p>
+
+<blockquote class="example">EXAMPLE&nbsp; At the top of a standard wall, with shape representation 'SweptSolid', offset of a given layer can be specified in the direction of the extrusion (positive Z axis), applied at the start or end (extruded from bottom to top), and with a positive (extending above extrusion) or negative (ending below extrusion).<br>
+<br>Take a standard wall with the outer material layer for the external isolation extending above extrusion by 100mm, but starting at the same base height. In this case the following values are set:
+<ul>
+<li class="small"><em>OffsetDirection</em> = .AXIS3.</li>
+<li class="small"><em>OffsetValues[1]</em> = 0.0</li>
+<li class="small"><em>OffsetValues[2]</em> = 100.0 (default unit assumed to be mm)</blockquote>
+
+<blockquote class="note">NOTE&nbsp; The 'Body' shape representation of an <em>IfcWall</em> or an <em>IfcWallStandardCase</em> may have multiple <em>Items</em> each being an <em>IfcExtrudedAreaSolid</em> corresponding to the <em>IfcMaterialLayer</em> and <em>IfcMaterialLayerWithOffsets</em>.
+
+<blockquote class="history">HISTORY&nbsp; New entity in IFC4.</blockquote>
+
+<p class="spec-head">Informal Propositions:</p>
+<ol>
+ <li>The <em>OffsetDirection</em> shall not be identical to the <em>LayerSetDirection</em> of the corresponding <em>IfcMaterialLayerSetUsage</em>.</li>
+ <li>The attribute ReferenceExtent shall be asserted at the corresponding <em>IfcMaterialLayerSetUsage</em>.</li>
+</ol>
+
+<p class="use-head">Attribute use definition</p>
+<p>The <em>OffsetValues</em> and <em>OffsetDirection</em> correspond to the definitions <em>ReferenceExtent</em> and <em>LayerSetDirection</em> at the <em>IfcMaterialLayerSetUsage</em>. Figure 2 shows an example of applying the <em>OffsetValues</em> to the material layers of a standard wall.</p>
+
+<table>
+<tr><td><img src="../../../figures/ifcmateriallayerwithoffsets_fig-1.png" width="600" height="600" alt="IfcMaterialLayerWithOffsets_fig-1"></td></tr>
+<tr><td><p class="figure">Figure 2 &mdash; Material layer with offsets</p></td></tr>
+</table>

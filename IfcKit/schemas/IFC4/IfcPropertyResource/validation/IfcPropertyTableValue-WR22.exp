@@ -1,3 +1,0 @@
-﻿NOT(EXISTS(DefiningValues)) OR 
-(SIZEOF(QUERY(temp <* SELF.DefiningValues | TYPEOF(temp) <> TYPEOF(SELF.DefiningValues[1])
-)) = 0)

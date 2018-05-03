@@ -1,0 +1,41 @@
+﻿<p>The <em>IfcAnnotationFillArea</em> defines an area by a definite
+<em>OuterBoundary</em>, that might include <em>InnerBoundaries</em>. The areas
+defined by the <em>InnerBoundaries</em> are excluded from applying the fill
+area style. The <em>InnerBoundaries</em> shall not intersect with the
+<em>OuterBoundary</em> nor being outside of the <em>OuterBoundary</em>.</p>
+<p>The fill area style that is applied to the <em>IfcAnnotationFillArea</em> is
+declared using the <em>IfcFillAreaStyle</em>, associated to the area by an
+<em>IfcStyledItem</em>. Applicable fill area styles are a solid color, a
+hatching, tiles, or a combination of those styles.</p>
+<blockquote class="extDef">NOTE&nbsp; Definition according to ISO 10303-46:<br>
+An annotation fill area is a set of curves that may be filled with hatching,
+colour or tiling. The annotation fill are is described by boundaries which
+consist of non-intersecting, non-self-intersecting closed curves. These curves
+form the boundary of planar areas to be filled according to the style for the
+annotation fill area.</blockquote>
+<p>Figure 2 illustrates annotation fill area.</p>
+<table>
+<tr>
+<td>&nbsp; &nbsp; <img src="../../../figures/ifcannotationfillarea_fig1.png" alt=
+"annotation fill area" border="0"></td>
+</tr>
+<tr>
+<td>
+<p class="figure">Figure 2 &mdash; Annotation fill area</p>
+</td>
+</tr>
+</table>
+<blockquote class="note">NOTE&nbsp; Entity adapted from
+<strong>annotation_fill_area</strong> defined in ISO10303-46</blockquote>
+<blockquote class="history">HISTORY&nbsp; New entity in IFC2x2.</blockquote>
+<blockquote class="change-ifc2x3">IFC2x3 CHANGE&nbsp; The two attributes
+<em>OuterBoundary</em> and <em>InnerBoundaries</em> are added and replace the
+previous single boundary.</blockquote>
+<p class="spec-head">Informal Propositions:</p>
+<ol>
+<li>Any curve that describes an inner boundary shall not intersect with, nor
+include, another curve defining an inner boundary.</li>
+<li>The curve defining the outer boundary shall not intersect with any curve
+defining an inner boundary, nor shall it be surrounded by a curve defining an
+inner boundary.</li>
+</ol>

@@ -1,8 +1,0 @@
-﻿FUNCTION IfcDotProduct
-  (Arg1, Arg2 : IfcDirection) 
-    : REAL;
-LOCAL
-tmp : GENERIC;
-END_LOCAL;
-RETURN(tmp);
-END_FUNCTION;

@@ -1,0 +1,37 @@
+﻿<p>An <em>IfcEdge</em> defines two vertices being connected topologically. The geometric representation of the connection between the two vertices defaults to a straight line if no curve geometry is assigned using the subtype <em>IfcEdgeCurve</em>. The <em>IfcEdge</em> can therefore be used to exchange straight edges
+without an associated geometry provided by <em>IfcLine</em> or <em>IfcPolyline</em> thought <em>IfcEdgeCurve.EdgeGeometry</em>.</p>
+<p>&nbsp;</p>
+<table>
+<tr><td><br><img src="../../../figures/ifcedge.png" alt="edge representation" border="0"></td>
+<td><blockquote class="example">EXAMPLE&nbsp; Figure 2 illustrates an example where the bounds of the <em>IfcEdge</em> are given by the <em>EdgeStart</em> and <em>EdgeEnd</em>; this also determines the direction of the edge. The location within a coordinate space is determined by the <em>IfcVertexPoint</em> type for <em>EdgeStart</em> and <em>EdgeEnd</em>. Since no edge geometry is assigned, it defaults to a straight line agreeing to the direction sense.</blockquote></td>
+</tr>
+<tr><td><p class="figure">Figure 2 &mdash; Edge representation</p></td><td>&nbsp;</td></tr>
+</table>
+
+<p>&nbsp;</p>
+<blockquote class="extDef">NOTE&nbsp; Definition according to ISO/CD 10303-42:1992<br>
+An edge is the topological construct corresponding to the connection of two
+vertices. More abstractly, it may stand for a logical relationship between two vertices. The domain of an edge, if
+present, is a finite, non-self-intersecting open curve in <em>R<sup>M</sup></em>, that is, a connected 1-dimensional
+manifold. The bounds of an edge are two vertices, which need not be distinct. The edge is oriented by choosing its traversal
+direction to run from the first to the second vertex. If the two vertices are the same, the edge is a self loop. The domain of the
+edge does not include its bounds, and 0 &le; &Xi; &le; &infin;. Associated with an edge may be a geometric curve to locate the
+edge in a coordinate space; this is represented by the edge curve subtype. The curve shall be finite and non-self-intersecting within 
+the domain of the edge. An edge is a graph, so its multiplicity M and graph genus <em>G<sup>e</sup></em> may be determined by the 
+graph traversal algorithm. Since <em>M</em> = <em>E</em> = 1, the Euler equation (1) reduces in the case to:
+<blockquote><img src="../../../figures/ifcedge-math1.gif" width="105" height="24"></blockquote>
+where <em>V</em> = 1 or 2, and <em>G<sup>e</sup></em> = 1 or 0. Specifically, the topological edge defining data shall satisfy:
+<ul>
+<li class="extDef">an edge has two vertices <br><img src="../../../figures/ifcedge-math2.gif" width="64" height="26"></li>
+<li class="extDef">the vertices need not be distinct <br><img src="../../../figures/ifcedge-math3.gif" width="88" height="26"></li>
+<li class="extDef">Equation shall hold <br><img src="../../../figures/ifcedge-math4.gif" width="120" height="26"></li>
+</ul>
+</blockquote>
+<blockquote class="note">NOTE&nbsp; Entity adapted from <strong>edge</strong> defined in ISO 10303-42.</blockquote>
+<blockquote class="history">HISTORY&nbsp; New entity in IFC2.0</blockquote>
+
+<p class="spec-head">Informal Propositions:</p>
+<ol>
+<li>The edge has dimensionality 1.</li>
+<li>The extent of an edge shall be finite and nonzero.</li>
+</ol>

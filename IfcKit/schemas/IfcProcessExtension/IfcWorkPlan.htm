@@ -1,0 +1,37 @@
+﻿    <p>
+      An <em>IfcWorkPlan</em> represents work plans in a construction or a facilities management project.
+    </p>
+    <blockquote class="history">
+      HISTORY&nbsp; New entity in IFC2.0
+    </blockquote>
+    <p>
+      A work plan contains a set of work schedules for different
+      purposes (including construction and facilities
+      management). Contained work schedules are defined through
+      the <em>IfcRelAggregates</em> relationship. Through
+      inheritance from <em>IfcWorkControl</em> it is also possible
+      to define references to activities (for example, <em>IfcTask</em>)
+      and resources used in the work plan.
+    </p>
+    <p>
+      A work plan has information such as start date, finish
+      date, total free float, and so on. <em>IfcWorkPlan</em> can
+      also refer to the construction project represented by the
+      single <em>IfcProject</em> instance (please also check the
+      definition of <em>IfcWorkControl</em>).
+    </p>
+    <p>
+      Figure 2 shows the backbone structure of a work plan that
+      defines (1) contained work schedules through
+      <em>IfcRelAggregates</em> and (2), if not assigned otherwise
+      to contained work schedules, assigned tasks and resources
+      through <em>IfcRelAssignsToControl</em>.
+    </p>
+
+<p>If an assigned <i>IfcTask</i> is a root-level task, such task must be declared on the <i>IfcProject</i> using the <i>IfcRelDeclares</i> relationship.</p>
+
+<table>
+<tr><td><img src="../../../figures/ifcworkplan_instantiation_diagram.png" alt=
+      "work plan instantiation diagram" border="0" width="500"></td></tr>
+<tr><td><p class="figure">Figure 2 &mdash; Work plan relationships</p><td></tr>
+</table>

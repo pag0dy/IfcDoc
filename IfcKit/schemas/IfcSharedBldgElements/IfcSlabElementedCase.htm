@@ -1,0 +1,27 @@
+﻿<p>The <em>IfcSlabElementedCase</em>
+defines a slab with certain constraints for the provision of its
+components. The <em>IfcSlabElementedCase</em> handles all cases of
+slabs, that are decomposed into parts: </p>
+<ul>
+<li>having components being assigned to the
+<em>IfcSlabElementedCase</em> using the <em>IfcRelAggregates</em>
+relationship accessible by the inverse relationship
+<em>IsDecomposedBy</em>.</li>
+<li>applying the constraint that the parts within the
+decomposition shall be of type <em>IfcElementAssembly</em>, <em>IfcBeam</em>, <em>IfcMember</em>,
+<em>IfcPlate</em>, <em>IfcBuildingElementPart</em> or
+<em>IfcBuildingElementProxy</em>.</li>
+</ul>
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC4.
+</blockquote>
+
+
+<p class="use-head">Voiding Use Definition</b></u>:</p>
+
+<p>As shown in Figure 2, openings within the composite slab are directly assigned to <em>IfcSlabElementedCase</em> using <em>IfcRelVoidsElement</em> pointing to <em>IfcOpeningElement</em> and apply to all aggregated parts. If individual parts have cutting and other voiding features, then the decomposed parts have a separate voiding relationship <em>IfcRelVoidsElement</em> pointing to <em>IfcVoidingFeature</em>.</p>
+
+<table border="0" cellpadding="2" cellspacing="2" summary="voiding">
+<tr><td valign="top"><img src="../../../figures/ifcslabelementedcase_fig01.png" alt="voiding" border="0"></td></tr>
+<tr><td><p class="figure">Figure 2 &mdash; Slab elemented voiding</p></td></tr>
+</table>

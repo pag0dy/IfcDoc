@@ -1,0 +1,42 @@
+﻿<p><em>IfcShapeAspect</em> allows for grouping of shape representation items
+that represent aspects (or components) of the shape of a product. Thereby shape
+representations of components of the product shape represent a distinctive part
+to a product that can be explicitly addressed.</p>
+<p>The <em>IfcShapeAspect</em>'s may have distinct material information or
+other distict characteristics that differs from other parts of the product
+shape representation.</p>
+<blockquote class="note">NOTE&nbsp; The <em>IfcShapeAspect</em> together with
+the <em>IfcMaterialConstituent</em> can be used to associate distict material
+information to parts of the product shape representation.</blockquote>
+<p>Figure 2 indicates the association of material characteristics to shape
+aspects.</p>
+<table>
+<tr>
+<td><img src="../../../figures/ifcshapeaspect_fig1.png" alt="shape"></td>
+</tr>
+<tr>
+<td>
+<p class="figure">Figure 2 &mdash; shape aspects for associating material</p>
+</td>
+</tr>
+</table>
+<blockquote class="extDef">NOTE&nbsp; Definition from ISO 10303-41:<br>
+A shape aspect is an identifiable element of the shape of an
+object.</blockquote>
+<blockquote class="note">NOTE&nbsp; Entity adapted from
+<strong>shape_aspect</strong> defined in ISO 10303-42.</blockquote>
+<blockquote class="history">HISTORY&nbsp; New entity in IFC2.0</blockquote>
+<blockquote class="change-ifc2x4">IFC4 CHANGE&nbsp; Attribute
+<em>PartOfProductDefinitionShape</em> declared OPTIONAL and extended to type
+<em>IfcProductRepresentationSelect</em> with upward compatibility for file
+based exchange.</blockquote>
+<p class="spec-head">Informal Propositions:</p>
+<ol>
+<li>If <em>ShapeRepresentations</em> points to shape representations that are
+part of an <em>IfcProductDefinitionShape</em>,
+<em>PartOfProductDefinitionShape</em> must refer to this instance of
+<em>IfcProductDefinitionShape</em>.</li>
+<li>If <em>ShapeRepresentations</em> points to shape representations that are
+part of an <em>IfcRepresentationMap</em>, <em>PartOfProductDefinitionShape</em>
+must refer to this instance of <em>IfcRepresentationMap</em>.</li>
+</ol>

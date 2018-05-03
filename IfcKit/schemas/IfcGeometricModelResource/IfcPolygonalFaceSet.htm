@@ -1,0 +1,61 @@
+﻿<p>The <em>IfcPolygonalFaceSet</em> is a tessellated face set with all faces being bound by polygons. The planar faces are constructed by implicit polylines defined by three or more Cartesian points. Each planar face is defined by an instance of <em>IfcIndexedPolygonalFace</em>, or in case of faces with inner loops by <em>IfcIndexedPolygonalFaceWithVoids</em>.</p>
+<p>Depending on the value of the attribute <em>Closed</em> the instance of <em>IfcPolygonalFaceSet</em> represents:</p>
+<ul>
+ <li>if TRUE, a boundary represention (or B-rep);</li>
+ <li>if FALSE, a face based surface representation.</li>
+</ul>
+
+The attribute <i>Faces</i> refers to a list of <em>IfcIndexedPolygonalFace</em>'s having an one-based <i>CoordIndex</i> that provides three or more indices. If the face has inner loops, the <em>IfcIndexedPolygonalFaceWithVoids</em> has a two-dimensional, one-based list, where:</p>
+<ul>
+ <li>the first dimension of the two-dimensional list addresses the list of inner loops;</li>
+ <li>the second dimension  of the two-dimensional list provides three or more indices each being a vertex of the planar polygon representing the inner loop.</li>
+</ul>
+<p>Depending on the provision of <i>PnIndex</i> the indices point either directly into the <em>IfcCartesianPointList3D</em> referenced by <i>Coordinates</i> defined at the supertype <em>IfcTessellatedFaceSet</em>, or they point into the <i>PnIndex</i> where the integer values at that position provides the location of the coordinate values within the <em>IfcCartesianPointList3D</em>. See Figure 3 for the handling of point index.</p>
+<table summary="tessellation">
+ <tr>
+  <td style="width: 600px"><img src="../../../figures/ifcpolygonalfaceset_01.png" alt="PnIndex"></td>
+ </tr>
+ <tr>
+  <td><p class="figure">Figure 3 &mdash; Use of <em>PnIndex</em> </p></td>
+ </tr>
+</table>
+
+<blockquote class="note">NOTE&nbsp; If the <em>IfcPolygonalFaceSet</em> is closed, the face vertices of the <em>IfcIndexedPolygonalFace</em>'s shall connect counterclock-wise when seen from the outside of the closed shell to guarantee that the face normal points away from the material of the shell. Inner loops, provided by the <em>IfcIndexedPolygonalFaceWithVoids</em>, shall connect clock-wise.</blockquote>
+<p>&nbsp;</p>
+<table summary="tessellation">
+ <tr><td style="width: 280px"><img src="../../../figures/ifcfacetedfaceset_example-01.png" width="275" height="350" alt="IfcFacetedFaceSet_Example-01">
+ </td>
+ <td>
+  <p>Figure 4 shows an <em>IfcFacetedFaceSet</em> represented by<br /><br /></p>
+<tt class="spf">
+#1 <em>IfcIndexedPolygonalFace</em>: ((1, 2, 3, 4)
+#2 <em>IfcIndexedPolygonalFace</em>: ((6, 2, 3, 7)
+#3 <em>IfcIndexedPolygonalFace</em>: ((7, 3, 4, 8)
+#4 <em>IfcIndexedPolygonalFace</em>: ((8, 4, 1, 5)
+#5 <em>IfcIndexedPolygonalFace</em>: ((1, 4, 3, 2)
+#6 <em>IfcIndexedPolygonalFace</em>: ((6, 7, 8, 5)
+#7 <em>IfcCartesianPointList3D</em>: ((0.,0.,0.), (1.,0.,0.), (1.,1.,0.), (0.,1.,0.), (0.,0.,2.), (1.,0.,2.), (1.,1.,2.), (0.,1.,2.))
+</tt>
+  </td>
+ </tr>
+ <tr>
+  <td><p class="figure">Figure 4 &mdash; Polygonal face set geometry</p></td>
+  <td>&nbsp;</td>
+ </tr>
+</table>
+<blockquote class="note">
+  NOTE&nbsp; The definition of <em>IfcFacetedFaceSet</em> is based on the <strong>indexedFaceSet</strong> defined in ISO/IEC 19775-1
+</blockquote>
+<blockquote class="history">HISTORY&nbsp; New entity in IFC4 Addendum 2.</blockquote>
+<p class="spec-head">Informal Propositions:</p>
+<ol>
+ <li>If <i>Closed</i> = TRUE, the same topological constraints as imposed by an faceted boundary representation shall be
+ safisfied. In particular:
+  <ul>
+   <li>each face shall be unique;</li>
+   <li>each edge shall be used by exactly two outer or inner boundaries of faces;</li>
+   <li>the topological normal at each point on the boundary of the polygonal face set shall point away from the material
+ of the solid.</li>
+  </ul>
+ </li>
+</ol>

@@ -1,0 +1,14 @@
+﻿<p>A virtual element is a special element used to provide imaginary boundaries, such as between two adjacent, but not separated, spaces. Virtual elements are usually not displayed and does not have quantities and other measures. Therefore <em>IfcVirtualElement</em> does not have material information and quantities attached.</p>
+
+<blockquote class="note">NOTE&nbsp; The main purpose of <em>IfcVirtualElement</em> is the provision of a virtual space boundary. The <em>IfcVirtualElement</em> may provide the 2D curve or 3D surface representation of the virtual space connection and is referenced by two instances of <em>IfcRelSpaceBoundary</em>, each pointing to one of the two adjacent <em>IfcSpaces</em>.</blockquote>
+
+<p>The <em>IfcVirtualElement</em> is mainly used to define a virtual boundary between two spaces. Figure 2 describes how to use <em>IfcRelSpaceBoundary</em> in conjunction with <em>IfcVirtualElement</em> to define space boundaries.</p>
+
+<table>
+<tr><td><img src="../../../figures/ifcvirtualelement_spaceboundaries.png" alt=
+"space boundary" width="800" height="300"></td></tr>
+<tr><td><p class="figure">Figure 2 &mdash; Virtual element space boundaries</p></td></tr>
+</table>
+
+<blockquote class="history">HISTORY&nbsp; New entity in IFC2x2 Addendum.</blockquote>
+<blockquote class="change-ifc2x3">IFC2x2 CHANGE&nbsp; The entity <em>IfcVirtualElement</em> has been added. Upward compatibility for file based exchange is guaranteed.</blockquote>

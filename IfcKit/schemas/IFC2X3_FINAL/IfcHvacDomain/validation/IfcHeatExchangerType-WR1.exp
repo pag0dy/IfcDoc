@@ -1,2 +1,0 @@
-﻿(PredefinedType <> IfcHeatExchangerTypeEnum.USERDEFINED) OR
-((PredefinedType = IfcHeatExchangerTypeEnum.USERDEFINED) AND EXISTS(SELF\IfcElementType.ElementType))

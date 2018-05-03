@@ -1,0 +1,53 @@
+﻿<p>An <em>IfcFillAreaStyle</em> provides the style table for presentation information assigned to annotation fill areas or surfaces for hatching and tiling. The <em>IfcFillAreaStyle </em>defines hatches as model hatches, that is, the distance between hatch lines, or the curve patterns of hatch lines are given in model space dimensions (that have to be scaled using the target plot scale). The <em>IfcFillAreaStyle</em> allows for the following combinations of defining the style of hatching and tiling:</p>
+
+<ul>
+<li>Solid fill for areas and surfaces by only assigning <em>IfcColour</em> to the set of <em>FillStyles</em>. It then provides the background colour for the filled area or surface.</li>
+</ul>
+
+<blockquote class="note">NOTE&nbsp; Color information of surfaces for rendering is assigned by using <em>IfcSurfaceStyle</em>, not by using <em>IfcFillAreaStyle</em>.</blockquote>
+
+<ul> 
+<li>Vector based hatching for areas and surfaces based on a single row of hatch lines by assigning a single instance of <em>IfcFillAreaStyleHatching</em> to the set of <em>FillStyles</em>.</li> <ul> <li>If an instance of <em>IfcColour</em> is assigned in addition to the set of <em>FillStyles</em>, it provides the background colour for the hatching.</li> </ul> <li>Vector based hatching for areas and surfaces based on two (potentially crossing) rows of hatch lines by assigning two instances of <em>IfcFillAreaStyleHatching</em> to the set of <em>FillStyles.</em></li> 
+
+<ul> <li>If an instance of <em>IfcColour</em> is assigned in addition to the set of <em>FillStyles</em>, it provides the background colour for the hatching.</li> </ul>
+</ul>
+
+<blockquote> <blockquote class="note">
+NOTE&nbsp; Assigning more then two instances of <em>IfcFillAreaStyleHatching</em> to define three or more rows of hatch lines is not encouraged.
+</blockquote> </blockquote>
+
+<ul>
+<li>Tiling for areas and surfaces by assigning a single instance of <em>IfcFillAreaStyleTiles</em> to the set of <em>FillStyles</em>.</li> <ul> <li>If an instance of <em>IfcColour</em> is assigned in addition to the set of <em>FillStyles</em>, it provides the background colour for the tiling.</li> </ul>
+</ul>
+
+<ul>
+<li>Externally defined hatch style by assigning a single instance of <em>IfcExternallyDefinedHatchStyle</em> to the set of <em>FillStyles</em>. 
+  <ul><li>If an instance of <em>IfcColour</em> is assigned in addition to the set of <em>FillStyles</em>, it provides the background colour for the hatching.</li></ul>
+</li>
+</ul>
+
+<p>Measures given to a hatch or tile pattern are given in global drawing length units.</p>
+
+<blockquote class="note">
+NOTE&nbsp; Global units are defined at the single <em>IfcProject</em> instance, given by <em>UnitsInContext:IfcUnitAssignment</em>, the same units are used for the geometric representation items and for the style definitions.
+</blockquote>
+
+<p>The measure values for hatch or tile pattern apply to the model space with a target plot scale provided for the correct appearance in the default plot scale. For different scale and projection dependent fill area styles a different instance of <em>IfcFillAreaStyle</em> needs to be used by <em>IfcPresentationStyleAssignment</em> for different <em>IfcGeometricRepresentationSubContext</em> dependent representations.</p>
+
+<blockquote class="note">
+NOTE&nbsp; the target plot scale is given by <em>IfcGeometricRepresentationSubContext.TargetScale</em>.
+</blockquote>
+
+<p>An <em>IfcFillAreaStyle</em> can be assigned to <em>IfcFillArea</em> via the <em>IfcPresentationStyleAssignment</em> through an intermediate <em>IfcStyledItem</em> or subtype <em>IfcAnnotationFillAreaOccurrence</em>.</p>
+
+
+<blockquote class="extDef">
+NOTE&nbsp; Definition according to ISO/CD 10303-46:1992<br>
+The style for filling visible curve segments, annotation fill areas or surfaces with tiles or hatches.</blockquote>
+<blockquote class="note">
+NOTE&nbsp; Corresponding ISO 10303 name: fill_area_style. Please refer to ISO/IS 10303-46:1994 for the final definition of the formal standard.
+</blockquote>
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC2x2.
+</blockquote>

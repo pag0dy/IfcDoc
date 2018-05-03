@@ -1,0 +1,24 @@
+﻿<p>The presentation layer assignment provides the layer name (and optionally a description and an identifier) for a collection of geometric representation items. The <em>IfcPresentationLayerAssignment</em> corresponds to the term "CAD Layer" and is used mainly for grouping and visibility control.</p>
+
+<blockquote class="note">
+NOTE&nbsp; The use of presentation layer shall be restricted to simple grouping and displaying purposes.
+</blockquote>
+
+<p>Visibility and access control and layer style assignment (colour, line style, line width) is handled by the subtype <em>IfcPresentationLayerAssignmentWithStyle</em>.</p>
+
+<blockquote class="note">
+NOTE&nbsp; Corresponding ISO 10303 name: presentation layer assignment. Please refer to ISO/IS 10303-46:1994, p. 36 for the final definition of the formal standard.
+</blockquote>
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC2x2.
+</blockquote>
+
+<p class="use-head">Attribute use definition</p>
+
+<p>Figure 2 illustrates assignment of items by shape representation or representation item. The set of <em>AssignedItems</em> can either include a whole shape representation, or individual geometric representation items. If both, the <em>IfcShapeRepresentation</em> has a layer assignment, and an individual geometric representation item in the set of <em>IfcShapeRepresentation</em>.Items, then the layer assignment of the <em>IfcGeometricRepresentationItem</em> overides the layer assignment of the <em>IfcShapeRepresentation</em>.</p>
+
+<table summary="overriding of layer assignment">
+<tr><td valign="top"><img src="../../../figures/ifcpresentationlayerassignment-fig1.png" alt="instantiation diagram"></td></tr>
+<tr><td><p class="figure">Figure 2 &mdash; Presentation layer assignment</p></td></tr>
+</table>

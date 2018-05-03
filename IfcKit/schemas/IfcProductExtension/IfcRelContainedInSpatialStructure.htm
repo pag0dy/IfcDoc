@@ -1,0 +1,46 @@
+﻿<p>This objectified relationship, <em>IfcRelContainedInSpatialStructure</em>, is used to assign elements to a certain level of the spatial project      structure. Any element can only be assigned once to a certain level of the spatial structure. The question, which level is relevant for which type of element, can only be answered within the context of a particular project and might vary within the various regions.</p>
+
+<blockquote class="example">
+EXAMPLE&nbsp; A multi-storey space is contained (or belongs to) the building storey at which its ground level is, but it is referenced by all the other building storeys, in which it spans. A lift shaft might be contained by the basement, but referenced by all storeys, through which it spans.
+</blockquote>
+
+<p>The containment relationship of an element within a spatial structure has to be a hierarchical relationship; an element can only be contained within a single spatial structure element. The reference relationship between an element and the spatial structure need not be hierarchical; that is, an element can reference many spatial structure elements.</p>
+
+<blockquote class="note">
+NOTE&nbsp; The reference relationship is expressed by <em>IfcRelReferencedInSpatialStructure</em>.
+</blockquote>
+
+<p>Predefined spatial structure elements to which elements can be assigned are</p>
+    <ul>
+      <li>site as <em>IfcSite</em>
+      </li>
+      <li>building as <em>IfcBuilding</em>
+      </li>
+      <li>storey as <em>IfcBuildingStorey</em>
+      </li>
+      <li>space as <em>IfcSpace</em>
+      </li>
+    </ul>
+<p>Occurrences of the same element type can be assigned to different spatial structure elements depending on the context of the occurrence.</p>
+
+<blockquote class="example">
+EXAMPLE&nbsp; A wall might be normally assigned to a storey, however the curtain wall might be assigned to the building and the retaining wall in the terrain might be assigned to the site.
+</blockquote>
+
+<p>Figure 2 shows the use of <em>IfcRelContainedInSpatialStructure</em> to assign a stair and two walls to two different levels within the spatial structure.</p>
+    <table cellpadding="2" cellspacing="2">
+      <tr valign="top">
+        <td valign="top" align="left">
+          <img src="../../../figures/ifcrelcontainedinspatialstructure-fig1.png"
+          alt="fig1" width="556" height="556" border="0"> 
+        </td>
+      </tr>
+      <tr><td><p class="figure">Figure 2 &mdash; Relationship for spatial structure containment</p></td></tr>
+    </table>
+
+<blockquote class="history">
+HISTORY&nbsp; New entity in IFC2x.
+</blockquote>
+<blockquote class="change-ifc2x">
+IFC2x CHANGE&nbsp; The data type of the attribute <em>RelatedElements</em> has been changed from <em>IfcElement</em> to its supertype <em>IfcProduct</em> with upward compatibility for file based exchange.
+</blockquote>

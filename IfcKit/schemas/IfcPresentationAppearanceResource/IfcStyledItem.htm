@@ -1,0 +1,42 @@
+﻿<p>The <em>IfcStyledItem</em> holds presentation style information for products, either explicitly for an <em>IfcGeometricRepresentationItem</em> being part of an <em>IfcShapeRepresentation</em> assigned to a product, or by assigning presentation information to <em>IfcMaterial</em> being assigned as other representation for a product.</p>
+<ul>
+<li>If the <em>IfcStyledItem</em> is used within a reference from an <em>IfcProductDefinitionShape</em> then one <em>Item</em> shall be provided.</li>
+<li>If the <em>IfcStyledItem</em> is used within a reference from an <em>IfcMaterialDefinitionRepresentation</em> then no <em>Item</em> shall be provided.</li>
+</ul>
+
+<blockquote class="extDef">NOTE&nbsp; Definition according to ISO/CD 10303-46:1992<br>
+The styled item is an assignment of style for presentation to a geometric representation item as it is used in a representation.</blockquote>
+<blockquote class="note"> 
+NOTE&nbsp; Entity adapted from <strong>styled_item</strong> defined in ISO10303-46.
+</blockquote>
+
+<blockquote class="history">
+HISTORY &nbsp;New entity in IFC2x2.
+</blockquote>
+
+<blockquote class="change-ifc2x2">
+IFC2x2 Addendum 1 CHANGE&nbsp; The entity <em>IfcStyledItem</em> has been made non abstract and the attribute <em>Name</em> added.
+</blockquote>
+
+<blockquote class="change-ifc2x3">
+IFC2x3 CHANGE The attribute <em>Item</em> has been made optional, upward compatibility for file
+based exchange is guaranteed.
+</blockquote>
+
+<blockquote class="change-ifc2x4">
+IFC4 CHANGE The subtype <em>IfcAnnotationOccurrence</em> and its subtypes are deleted. Use <em>IfcStyledItem</em> for all instantiations. The data type of <em>Styles</em> has been changed to <em>IfcStyleAssignmentSelect</em>
+</blockquote>
+
+<p class="use-head">Use Definition</p>
+
+<p>Figure 2 illustrates use of <em>IfcStyledItem</em> for the two usage examples:</p>
+<ul>
+<li><small>As a presentation for a geometric representation item</small></li>
+<li><small>As a presentation for a material definition</small></li>
+</ul>
+<blockquote class="note">NOTE&nbsp; The new <em>IfcStyleAssignmentSelect</em> allows the direct assignment styles, such as <em>IfcCurveStyle</em>, <em>IfcSurfaceStyle</em> without using the intermediate <em>IfcPresentationStyleAssignment</em></blockquote>
+
+<table summary="use diagram">
+<tr><td><img src="../../../figures/ifcstyleditem_fig-1.png" alt="2x4 example" border="0"></td></tr>
+<tr><td><p class="figure">Figure 2 &mdash; Styled item</p></td></tr>
+</table>
