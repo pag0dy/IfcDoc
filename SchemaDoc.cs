@@ -4279,6 +4279,7 @@ namespace IfcDoc.Schema.DOC
             if (expr is DocOpStatement)
             {
                 DocOpStatement statement = (DocOpStatement)expr;
+                string ident = statement.Reference.EntityRule.ParentRule.Identification;
                 exprRuleID = statement.Reference.EntityRule.AttributeRuleID + exprRuleID.Substring(bracket);
             }
 
