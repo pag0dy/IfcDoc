@@ -1746,6 +1746,7 @@ namespace IfcDoc
                     docRuleEntity.Identification = mvdEntityRule.RuleID;
                     //ImportMvdCardinality(docRule, mvdRule.Cardinality);
                     docRule.Rules.Add(docRuleEntity);
+                    docRuleEntity.ParentRule = docRule;
 
                     if (mvdEntityRule.AttributeRules != null)
                     {
@@ -1753,6 +1754,7 @@ namespace IfcDoc
                         {
                             DocModelRule docRuleAttribute = ImportMvdRule(mvdAttributeRule, fixups);
                             docRuleEntity.Rules.Add(docRuleAttribute);
+                            docRuleAttribute.ParentRule = docRuleEntity;
                         }
                     }
 
@@ -1763,6 +1765,7 @@ namespace IfcDoc
                             DocModelRuleConstraint docRuleConstraint = new DocModelRuleConstraint();
                             docRuleConstraint.Description = mvdConstraint.Expression;
                             docRuleEntity.Rules.Add(docRuleConstraint);
+                            docRuleConstraint.ParentRule = docRuleEntity;
                         }
                     }
 
@@ -1781,6 +1784,7 @@ namespace IfcDoc
                     DocModelRuleConstraint docRuleConstraint = new DocModelRuleConstraint();
                     docRuleConstraint.Description = mvdConstraint.Expression;
                     docRule.Rules.Add(docRuleConstraint);
+                    docRuleConstraint.ParentRule = docRule;
                 }
             }
 
@@ -1789,6 +1793,8 @@ namespace IfcDoc
 
         internal static void ImportMvd(mvdXML mvd, DocProject docProject, string filepath)
         {
+            List<DocTemplateDefinition> listPrivateTemplateRoots = new List<DocTemplateDefinition>();
+
             if (mvd.Templates != null)
             {
                 Dictionary<EntityRule, DocModelRuleEntity> fixups = new Dictionary<EntityRule, DocModelRuleEntity>();
@@ -1802,6 +1808,12 @@ namespace IfcDoc
                     }
 
                     ImportMvdTemplate(mvdTemplate, docDef, fixups);
+
+                    if(mvdTemplate.Name.StartsWith("_"))
+                    {
+                        // hidden -- treat as private template
+                        listPrivateTemplateRoots.Add(docDef);
+                    }
                 }
 
                 foreach(EntityRule er in fixups.Keys)
@@ -1834,6 +1846,11 @@ namespace IfcDoc
 
                     ImportMvdView(mvdView, docView, docProject, filepath);
                 }
+            }
+
+            foreach(DocTemplateDefinition docTemplatePrivate in listPrivateTemplateRoots)
+            {
+                docProject.Templates.Remove(docTemplatePrivate);
             }
         }
 
@@ -2088,6 +2105,7 @@ namespace IfcDoc
                 {
                     DocModelRule docRule = ImportMvdRule(mvdRule, fixups);
                     docDef.Rules.Add(docRule);
+                    docRule.ParentRule = null;
                 }
             }
 
@@ -2281,7 +2299,8 @@ namespace IfcDoc
             DocProject docProject, 
             string version,
             Dictionary<string, DocObject> map, 
-            bool documentation)
+            bool documentation,
+            List<DocTemplateDefinition> listPrivateTemplates)
         {
             ExportMvdObject(mvdConceptLeaf, docTemplateUsage, documentation);
 
@@ -2289,6 +2308,11 @@ namespace IfcDoc
             {
                 mvdConceptLeaf.Template = new TemplateRef();
                 mvdConceptLeaf.Template.Ref = docTemplateUsage.Definition.Uuid;
+
+                if (docProject.GetTemplate(docTemplateUsage.Definition.Uuid) == null)
+                {
+                    listPrivateTemplates.Add(docTemplateUsage.Definition);
+                }
             }
 
             mvdConceptLeaf.Override = docTemplateUsage.Override;
@@ -2333,7 +2357,7 @@ namespace IfcDoc
                         {
                             Concept mvdInner = new Concept();
                             ruleV12.References.Add(mvdInner);
-                            ExportMvdConcept(mvdInner, docInner, docProject, version, map, documentation);
+                            ExportMvdConcept(mvdInner, docInner, docProject, version, map, documentation, listPrivateTemplates);
                         }
                     }
                 }
@@ -2413,6 +2437,7 @@ namespace IfcDoc
             mvd.Uuid = Guid.NewGuid(); // changes every time saved
             mvd.Name = String.Empty;
 
+            // export all referenced shared templates
             foreach (DocTemplateDefinition docTemplateDef in docProject.Templates)
             {
                 if (included == null || included.ContainsKey(docTemplateDef))
@@ -2423,14 +2448,35 @@ namespace IfcDoc
                 }
             }
 
+            // export all non-shared templates
+            //...
             foreach (DocModelView docModelView in docProject.ModelViews)
             {
                 if (included == null || included.ContainsKey(docModelView))
                 {
                     ModelView mvdModelView = new ModelView();
                     mvd.Views.Add(mvdModelView);
-                    ExportMvdView(mvdModelView, docModelView, docProject, version, map, included);
+
+                    List<DocTemplateDefinition> listPrivateTemplates = new List<DocTemplateDefinition>();
+                    ExportMvdView(mvdModelView, docModelView, docProject, version, map, included, listPrivateTemplates);
+
+                    if (listPrivateTemplates.Count > 0)
+                    {
+                        ConceptTemplate mvdViewTemplate = new ConceptTemplate();
+                        mvdViewTemplate.Name = "_" + docModelView.Name; // underscore indicates hidden
+                        mvdViewTemplate.Code = docModelView.Uuid.ToString();
+                        mvdViewTemplate.SubTemplates = new List<ConceptTemplate>();
+                        mvd.Templates.Add(mvdViewTemplate);
+
+                        foreach (DocTemplateDefinition docTemp in listPrivateTemplates)
+                        {
+                            ConceptTemplate mvdConceptTemplate = new ConceptTemplate();
+                            ExportMvdTemplate(mvdConceptTemplate, docTemp, included, true);
+                            mvdViewTemplate.SubTemplates.Add(mvdConceptTemplate);
+                        }
+                    }
                 }
+
             }
         }
 
@@ -2440,7 +2486,8 @@ namespace IfcDoc
             DocProject docProject, 
             string version,
             Dictionary<string, DocObject> map, 
-            Dictionary<DocObject, bool> included)
+            Dictionary<DocObject, bool> included,
+            List<DocTemplateDefinition> listPrivateTemplates)
         {
             ExportMvdObject(mvdModelView, docModelView, true);
             mvdModelView.ApplicableSchema = docProject.GetSchemaIdentifier();
@@ -2472,7 +2519,7 @@ namespace IfcDoc
                     ConceptRoot mvdConceptRoot = new ConceptRoot();
                     mvdModelView.Roots.Add(mvdConceptRoot);
 
-                    Program.ExportMvdConceptRoot(mvdConceptRoot, docRoot, docProject, version, map, true);
+                    Program.ExportMvdConceptRoot(mvdConceptRoot, docRoot, docProject, version, map, true, listPrivateTemplates);
                 }
             }
 
@@ -2487,7 +2534,7 @@ namespace IfcDoc
                 {
                     ModelView mvdSubView = new ModelView();
                     mvdModelView.Views.Add(mvdSubView);
-                    Program.ExportMvdView(mvdSubView, docSubView, docProject, version, map, included);
+                    Program.ExportMvdView(mvdSubView, docSubView, docProject, version, map, included, listPrivateTemplates);
                 }
             }
         }
@@ -2498,7 +2545,8 @@ namespace IfcDoc
             DocProject docProject, 
             string version,
             Dictionary<string, DocObject> map, 
-            bool documentation)
+            bool documentation,
+            List<DocTemplateDefinition> listPrivateTemplates)
         {
             ExportMvdObject(mvdConceptRoot, docRoot, documentation);
 
@@ -2521,6 +2569,11 @@ namespace IfcDoc
                     TemplateRule rule = ExportMvdItem(docItem, docRoot.ApplicableTemplate, docProject, null, map);
                     mvdConceptRoot.Applicability.TemplateRules.TemplateRule.Add(rule);
                 }
+
+                if (docProject.GetTemplate(docRoot.ApplicableTemplate.Uuid) == null)
+                {
+                    listPrivateTemplates.Add(docRoot.ApplicableTemplate);
+                }
             }
 
             if (docRoot.Concepts.Count > 0)
@@ -2530,7 +2583,7 @@ namespace IfcDoc
                 {
                     Concept mvdConceptLeaf = new Concept();
                     mvdConceptRoot.Concepts.Add(mvdConceptLeaf);
-                    ExportMvdConcept(mvdConceptLeaf, docTemplateUsage, docProject, version, map, documentation);
+                    ExportMvdConcept(mvdConceptLeaf, docTemplateUsage, docProject, version, map, documentation, listPrivateTemplates);
                 }
             }
         }

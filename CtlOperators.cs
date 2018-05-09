@@ -175,6 +175,7 @@ namespace IfcDoc
                 DocModelRuleConstraint docCon = new DocModelRuleConstraint();
                 docCon.Expression = op;
                 docModelRule.Rules.Add(docCon);
+                docCon.ParentRule = docModelRule;
 
                 TreeNode tnCon = new TreeNode();
                 tnCon.Tag = docCon;

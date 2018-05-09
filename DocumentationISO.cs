@@ -3587,7 +3587,8 @@ namespace IfcDoc
 
                                         //... mvdXML for entire root
                                         ConceptRoot mvdConceptRoot = new ConceptRoot();
-                                        Program.ExportMvdConceptRoot(mvdConceptRoot, docRoot, docProject, null, mapEntity, false);
+                                        List<DocTemplateDefinition> listPrivateTemplates = new List<DocTemplateDefinition>();
+                                        Program.ExportMvdConceptRoot(mvdConceptRoot, docRoot, docProject, null, mapEntity, false, listPrivateTemplates);
                                         System.Xml.Serialization.XmlSerializer ser = new System.Xml.Serialization.XmlSerializer(typeof(ConceptRoot));
                                         StringBuilder mvdOutput = new StringBuilder();
                                         using (System.IO.Stream streamMVD = new System.IO.MemoryStream())

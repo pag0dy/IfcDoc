@@ -3588,7 +3588,7 @@ namespace IfcDoc
                 this.ctlExpressG.Visible = false;
                 this.ctlConcept.Visible = true;
 
-                this.ctlCheckGrid.CheckGridSource = new CheckGridConcept(docTemplate, null, this.m_project);
+                ////this.ctlCheckGrid.CheckGridSource = new CheckGridConcept(docTemplate, null, this.m_project);
             }
             else if (obj is DocModelView)
             {
@@ -3611,7 +3611,7 @@ namespace IfcDoc
                 this.ctlExpressG.Visible = false;
                 this.ctlConcept.Visible = false;
 
-                this.ctlCheckGrid.CheckGridSource = new CheckGridExchange(null, docView, this.m_project);
+                ////this.ctlCheckGrid.CheckGridSource = new CheckGridExchange(null, docView, this.m_project);
             }
             else if (obj is DocSection)
             {
@@ -3629,7 +3629,7 @@ namespace IfcDoc
             {
                 DocExchangeDefinition docExchange = (DocExchangeDefinition)obj;
                 DocModelView docView = (DocModelView)this.treeView.SelectedNode.Parent.Tag;
-                this.ctlCheckGrid.CheckGridSource = new CheckGridExchange(docExchange, docView, this.m_project);
+                ////this.ctlCheckGrid.CheckGridSource = new CheckGridExchange(docExchange, docView, this.m_project);
 
                 this.ctlInheritance.Visible = false;
                 this.ctlExpressG.Visible = false;
@@ -3654,7 +3654,7 @@ namespace IfcDoc
                 this.ctlInheritance.Visible = false;
                 this.ctlExpressG.Visible = false;
                 this.ctlConcept.Visible = true;//!
-                this.ctlCheckGrid.CheckGridSource = new CheckGridEntity(docRoot, docView, this.m_project);
+                ////this.ctlCheckGrid.CheckGridSource = new CheckGridEntity(docRoot, docView, this.m_project);
             }
             else if (obj is DocTemplateUsage)
             {
@@ -3683,7 +3683,7 @@ namespace IfcDoc
                 this.ctlInheritance.Visible = false;
                 this.ctlExpressG.Visible = false;
                 this.ctlConcept.Visible = true;
-                this.ctlCheckGrid.CheckGridSource = new CheckGridConcept(docUsage.Definition, docView, this.m_project);
+                ////this.ctlCheckGrid.CheckGridSource = new CheckGridConcept(docUsage.Definition, docView, this.m_project);
             }
             else if (obj is DocSchema)
             {
@@ -3893,7 +3893,9 @@ namespace IfcDoc
                 {
                     foreach (DocModelRule docRule in parent.Rules)
                     {
-                        doctemplate.Rules.Add((DocModelRule)docRule.Clone());
+                        DocModelRule ruleClone = (DocModelRule)docRule.Clone();
+                        doctemplate.Rules.Add(ruleClone);
+                        ruleClone.ParentRule = null;
                     }
                 }
 
