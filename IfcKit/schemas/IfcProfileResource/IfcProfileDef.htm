@@ -209,7 +209,7 @@ profile.</p>
 <p><em>IfcClassificationReference</em> is used to refer to a profile norm (a common standard or
 manufacturer's standard).  In this case,</p>
 <ul>
-<li><em>IfcClassificationReference.ItemReference</em>
+<li><em>IfcClassificationReference.Identification</em>
 contains the formal profile designation from the norm.
 (On the other hand, <em>IfcProfileDef.ProfileName</em> contains a displayable name which may
 not necessarily be the same as the formal designation.)</li>
@@ -221,7 +221,7 @@ not necessarily be the same as the formal designation.)</li>
 <p><em>IfcLibraryReference</em> is used to refer to a library which contains profile
 definitions. In this case,</p>
 <ul>
-<li><em>IfcLibraryReference.ItemReference</em> contains the identifier of the
+<li><em>IfcLibraryReference.Identification</em> contains the identifier of the
 profile within the library and is meant to be machine-readable (in contrast to
 <em>IfcProfileDef.ProfileName</em> which should be human-readable).</li>
 <li><em>IfcLibraryReference.Location</em> and <em>.Name</em> or <em>.ReferencedLibrary</em>

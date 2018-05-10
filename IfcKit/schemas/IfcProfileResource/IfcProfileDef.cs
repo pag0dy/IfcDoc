@@ -26,7 +26,7 @@ namespace BuildingSmart.IFC.IfcProfileResource
 	
 		[DataMember(Order = 1)] 
 		[XmlAttribute]
-		[Description("Human-readable name of the profile, for example according to a standard profile table. As noted above, machine-readable standardized profile designations should be provided in <em>IfcExternalReference.ItemReference</em>.  ")]
+		[Description("Human-readable name of the profile, for example according to a standard profile table. As noted above, machine-readable standardized profile designations should be provided in <em>IfcExternalReference.Identification</em>.  ")]
 		public IfcLabel? ProfileName { get; set; }
 	
 		[InverseProperty("RelatedResourceObjects")] 
