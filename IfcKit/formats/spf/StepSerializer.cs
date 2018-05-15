@@ -1426,6 +1426,21 @@ namespace BuildingSmart.Serialization.Step
                             object o = FormatterServices.GetUninitializedObject(t); // works if no parameterless constructor is defined
                             idmap.Add(id, o);
 
+                            // populate collections (catch case of older version where field may not be asserted)
+                            IList<PropertyInfo> listProp = GetFieldsOrdered(t);
+                            foreach (PropertyInfo prop in listProp)
+                            {
+                                Type type = prop.PropertyType;
+                                if (type != typeof(string) && type != typeof(byte[]) &&
+                                    typeof(IEnumerable).IsAssignableFrom(type))
+                                {
+                                    Type typeCollection = this.GetCollectionInstanceType(type);
+                                    object colval = Activator.CreateInstance(typeCollection);
+                                    prop.SetValue(o, colval);
+                                }
+
+                            }
+
                             // capture project
                             if (this.RootType.IsInstanceOfType(o) && !idmap.ContainsKey(0))
                             {
