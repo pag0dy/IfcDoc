@@ -3727,12 +3727,12 @@ namespace IfcDoc.Schema.DOC
                 //return metrichead + this.Reference.ToString(dtd) + metrictail + suffix;
 
                 // new: mvdXML syntax
-                if (this.Reference.EntityRule.AttributeRuleID == null)
+                if (this.Reference.EntityRule.ParentRule.Identification == "")
                 {
                     return this.Reference.ToString(dtd) + "[" + metricname + "]" + suffix;
                 } else
                 {
-                    return this.Reference.EntityRule.AttributeRuleID + "[" + metricname + "]" + suffix;
+                    return this.Reference.EntityRule.ParentRule.Identification + "[" + metricname + "]" + suffix;
                 }
                 
                 //return this.Reference.ToString(dtd) + "[" + metricname + "]" + suffix;
@@ -4241,50 +4241,39 @@ namespace IfcDoc.Schema.DOC
 
             string expr = "";
 
-            if (this.ExpressionA is DocOpLogical)
-            {
-                expr += "(" + this.ExpressionA.ToString(template) + " " + this.Operation.ToString().ToUpper() + " " + AssignRuleIDToExpression(this.ExpressionB) + ")";
-            }
-            else if (this.ExpressionB is DocOpLogical)
-            {
-                expr += "(" + AssignRuleIDToExpression(this.ExpressionA) + " " + this.Operation.ToString().ToUpper() + " " + this.ExpressionB.ToString(template) + ")";
-            }
-            else
-            {
-                string exprA = this.ExpressionA.ToString(template);
-                int bracketA = exprA.IndexOf('[');
+            expr = "(" + AssignRuleIDToExpression(this.ExpressionA, template) + " " + this.Operation.ToString().ToUpper() + " " + AssignRuleIDToExpression(this.ExpressionB, template) + ")";
 
-                if (this.ExpressionA is DocOpStatement)
-                {
-                    DocOpStatement statementA = (DocOpStatement)this.ExpressionA;
-                    exprA = statementA.Reference.EntityRule.AttributeRuleID + exprA.Substring(bracketA);
-                }
+            //if (this.ExpressionA is DocOpLogical)
+            //{
+            //    expr += "(" + this.ExpressionA.ToString(template) + " " + this.Operation.ToString().ToUpper() + " " + AssignRuleIDToExpression(this.ExpressionB, template) + ")";
+            //}
+            //else if (this.ExpressionB is DocOpLogical)
+            //{
+            //    expr += "(" + AssignRuleIDToExpression(this.ExpressionA, template) + " " + this.Operation.ToString().ToUpper() + " " + this.ExpressionB.ToString(template) + ")";
+            //}
+            //else
+            //{
+            //    string exprA = AssignRuleIDToExpression(this.ExpressionA);
+            //    int bracketA = exprA.IndexOf('[');
 
-                string exprB = this.ExpressionB.ToString(template);
-                int bracketB = exprB.IndexOf('[');
-
-                if (this.ExpressionB is DocOpStatement)
-                {
-                    DocOpStatement statementB = (DocOpStatement)this.ExpressionB;
-                    exprB = statementB.Reference.EntityRule.AttributeRuleID + exprB.Substring(bracketB);
-                }
+            //    string exprB = AssignRuleIDToExpression(this.ExpressionB);
+            //    int bracketB = exprB.IndexOf('[');
                 
-                expr += "(" + exprA + " " + this.Operation.ToString().ToUpper() + " " + exprB + ")";
-            }
+            //    expr += "(" + exprA + " " + this.Operation.ToString().ToUpper() + " " + exprB + ")";
+            //}
 
             return expr;
         }
 
-        private string AssignRuleIDToExpression(DocOpExpression expr)
+        private string AssignRuleIDToExpression(DocOpExpression expr, DocTemplateDefinition template)
         {
-            string exprRuleID = expr.ToString();
+            string exprRuleID = expr.ToString(template);
             int bracket = exprRuleID.IndexOf('[');
 
             if (expr is DocOpStatement)
             {
                 DocOpStatement statement = (DocOpStatement)expr;
-                string ident = statement.Reference.EntityRule.ParentRule.Identification;
-                exprRuleID = statement.Reference.EntityRule.AttributeRuleID + exprRuleID.Substring(bracket);
+                exprRuleID = statement.Reference.EntityRule.ParentRule.Identification + exprRuleID.Substring(bracket);
             }
 
             return exprRuleID;

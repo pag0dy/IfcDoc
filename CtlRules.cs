@@ -644,15 +644,25 @@ namespace IfcDoc
                 {
                     using (FormRule form = new FormRule(docRule, this.m_project, this.m_template))
                     {
-                        form.ShowDialog(this);
+                        DialogResult res = form.ShowDialog(this);
+                        if (res != DialogResult.OK)
+                        {
+                            return;
+                        }
                     }
                 }
 
                 // update text in treeview
                 this.UpdateTemplateGraph(this.treeViewTemplate.SelectedNode);
+                //IfcDoc.CtlOperators.
 
                 // propagate rule
                 this.m_template.PropagateRule(this.treeViewTemplate.SelectedNode.FullPath);
+
+                if (this.ContentChanged != null)
+                {
+                    this.ContentChanged(this, EventArgs.Empty);
+                }
             }
         }
 
