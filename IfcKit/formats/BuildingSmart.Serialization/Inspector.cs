@@ -280,6 +280,9 @@ namespace BuildingSmart.Serialization
         /// <returns></returns>
         protected Type GetCollectionInstanceType(Type typeDeclared)
         {
+            if (!typeDeclared.IsGenericType)
+                return null;
+
             // use instantiable collection type
             Type typeCollection = typeDeclared;
             Type typeGeneric = typeDeclared.GetGenericTypeDefinition();
