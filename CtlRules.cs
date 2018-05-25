@@ -455,7 +455,6 @@ namespace IfcDoc
                     // get and add entity rule
                     DocModelRuleEntity docRuleEntity = new DocModelRuleEntity();
                     docRuleEntity.Name = entityname;
-                    docRuleEntity.AttributeRuleID = docRuleAtt.Identification;
                     docRuleAtt.Rules.Add(docRuleEntity);
                     docRuleAtt.EntityRules.Add(docRuleEntity);
                     docRuleEntity.ParentRule = docRuleAtt;

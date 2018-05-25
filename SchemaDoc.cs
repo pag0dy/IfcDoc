@@ -2983,20 +2983,6 @@ namespace IfcDoc.Schema.DOC
 
             // now update
             this.Identification = identification;
-            foreach (DocModelRule rule in this.Rules)
-            {
-                if (rule is DocModelRuleEntity)
-                {
-                    foreach (DocModelRule ruleC in rule.Rules)
-                    {
-                        if (ruleC is DocModelRuleConstraint)
-                        {
-                            DocModelRuleConstraint docRule = ruleC as DocModelRuleConstraint;
-                            docRule.FormatExpression(docTemplateDefinition);
-                        }
-                    }
-                }
-            }
 
         }
 
@@ -3420,15 +3406,6 @@ namespace IfcDoc.Schema.DOC
         
         [DataMember(Order = 1)]
         public string Prefix { get; set; }
-
-        [DataMember(Order = 2)]
-        public string AttributeRuleID { get; set; }
-
-        [InverseProperty("EntityRules")]
-        DocModelRuleAttribute AttributeRule { get; set; }
-
-        [InverseProperty("Rules")]
-        DocModelRuleAttribute AttributeRuleR { get; set; }
 
 
         public DocModelRuleEntity()
