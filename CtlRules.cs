@@ -457,8 +457,8 @@ namespace IfcDoc
                     docRuleEntity.Name = entityname;
                     docRuleEntity.AttributeRuleID = docRuleAtt.Identification;
                     docRuleAtt.Rules.Add(docRuleEntity);
-                    docRuleEntity.ParentRule = docRuleAtt;
                     docRuleAtt.EntityRules.Add(docRuleEntity);
+                    docRuleEntity.ParentRule = docRuleAtt;
                     this.treeViewTemplate.SelectedNode = this.LoadTemplateGraph(tn, docRuleEntity);
 
                     // copy to child templates
