@@ -32,8 +32,7 @@ namespace BuildingSmart.IFC.IfcSharedBldgElements
 		[Description("A roof having a hipped end truncating a gable.")]
 		HIPPED_GABLE_ROOF = 5,
 	
-		[Description("A roof sloping downward in two parts from a central ridge, so as to form a\r\ngable" +
-	    " at each end.")]
+		[Description("A ridged roof divided on each side into a shallower slope above a steeper one.")]
 		GAMBREL_ROOF = 6,
 	
 		[Description("A roof having on each side a steeper lower part and a shallower upper\r\npart.")]
