@@ -2776,8 +2776,14 @@ namespace IfcDoc
                         else if (docRuleAttribute is DocModelRuleConstraint)
                         {
                             DocModelRuleConstraint mrc = (DocModelRuleConstraint)docRuleAttribute;
-
                             string expr = mrc.FormatExpression(docTemplate);
+                            if (docTemplate.Name == "Element Decomposition Precast")
+                            {
+                                string e = expr;
+                                DocOpExpression expression =  mrc.Expression;
+                                //expr = expression.ToString();
+                            }
+
                             // replace with attribute name
                             if (expr != null)
                             {
@@ -2794,9 +2800,11 @@ namespace IfcDoc
 
                                     if (expr.StartsWith("("))
                                     {
-                                        string toDelete = expr.Substring(1, (bracket - 1));
-                                        expr = expr.Substring(1).Replace(toDelete, "");
-                                        mvdConstraint.Expression = docRule.Identification + expr.Remove(expr.Length - 1);
+                                        //string toDelete = expr.Substring(1, (bracket - 1));
+                                        //expr = expr.Substring(1).Replace(toDelete, "");
+                                        //mvdConstraint.Expression = docRule.Identification + expr.Remove(expr.Length - 1);
+                                        //mvdConstraint.Expression = expr.Replace("(", "").Replace(")", "");
+                                        mvdConstraint.Expression = expr;
                                     } 
                                     else
                                     {

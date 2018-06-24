@@ -70,7 +70,7 @@ namespace BuildingSmart.IFC.IfcBuildingControlsDomain
 		[Description("A device that senses or detects pressure.")]
 		PRESSURESENSOR = 18,
 	
-		[Description("A device that senses or detects pressure.")]
+		[Description("A device that senses or detects radiation.")]
 		RADIATIONSENSOR = 19,
 	
 		[Description("A device that senses or detects atomic decay.")]

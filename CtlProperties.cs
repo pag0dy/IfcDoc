@@ -2320,6 +2320,10 @@ namespace IfcDoc
 
         private void ctlRules_ContentChanged(object sender, EventArgs e)
         {
+            this.ctlOperators.Project = this.m_project;
+            this.ctlOperators.Template = this.ctlRules.Template;
+            this.ctlOperators.Rule = null;
+
             if (this.RuleContentChanged != null)
             {
                 this.RuleContentChanged(this, e);

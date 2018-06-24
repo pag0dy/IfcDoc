@@ -2999,6 +2999,13 @@ namespace IfcDoc.Schema.DOC
 
     public class DocModelRuleAttribute : DocModelRule
     {
+        [DataMember(Order = 0)] public ICollection<DocModelRuleEntity> EntityRules { get; set; }
+
+        public DocModelRuleAttribute()
+        {
+            this.EntityRules = new List<DocModelRuleEntity>();
+        }
+
         public override void BuildParameterList(IList<DocModelRule> list)
         {
             // add ourselves if marked as parameter
@@ -3400,10 +3407,12 @@ namespace IfcDoc.Schema.DOC
         [DataMember(Order = 1)]
         public string Prefix { get; set; }
 
+
         public DocModelRuleEntity()
         {
             this.References = new List<DocTemplateDefinition>();
         }
+
 
         public override bool IsTemplateReferenced(DocTemplateDefinition docTemplate)
         {
@@ -3695,7 +3704,15 @@ namespace IfcDoc.Schema.DOC
                 //return metrichead + this.Reference.ToString(dtd) + metrictail + suffix;
 
                 // new: mvdXML syntax
-                return this.Reference.ToString(dtd) + "[" + metricname + "]" + suffix;
+                if (this.Reference.EntityRule.ParentRule.Identification == "")
+                {
+                    return this.Reference.ToString(dtd) + "[" + metricname + "]" + suffix;
+                } else
+                {
+                    return this.Reference.EntityRule.ParentRule.Identification + "[" + metricname + "]" + suffix;
+                }
+                
+                //return this.Reference.ToString(dtd) + "[" + metricname + "]" + suffix;
             }
 
             return null;
@@ -4195,10 +4212,56 @@ namespace IfcDoc.Schema.DOC
         {
             if (this.ExpressionA == null || this.ExpressionB == null)
                 return String.Empty;
+            string ea = this.ExpressionA.ToString(template);
+            string eb = this.ExpressionB.ToString(template);
+            string op = this.Operation.ToString().ToUpper();
 
-            return "(" + this.ExpressionA.ToString(template) + " " + this.Operation.ToString().ToUpper() + " " + this.ExpressionB.ToString(template) + ")";
+            string expr = "";
+
+            expr = "(" + AssignRuleIDToExpression(this.ExpressionA, template) + " " + this.Operation.ToString().ToUpper() + " " + AssignRuleIDToExpression(this.ExpressionB, template) + ")";
+
+            //if (this.ExpressionA is DocOpLogical)
+            //{
+            //    expr += "(" + this.ExpressionA.ToString(template) + " " + this.Operation.ToString().ToUpper() + " " + AssignRuleIDToExpression(this.ExpressionB, template) + ")";
+            //}
+            //else if (this.ExpressionB is DocOpLogical)
+            //{
+            //    expr += "(" + AssignRuleIDToExpression(this.ExpressionA, template) + " " + this.Operation.ToString().ToUpper() + " " + this.ExpressionB.ToString(template) + ")";
+            //}
+            //else
+            //{
+            //    string exprA = AssignRuleIDToExpression(this.ExpressionA);
+            //    int bracketA = exprA.IndexOf('[');
+
+            //    string exprB = AssignRuleIDToExpression(this.ExpressionB);
+            //    int bracketB = exprB.IndexOf('[');
+                
+            //    expr += "(" + exprA + " " + this.Operation.ToString().ToUpper() + " " + exprB + ")";
+            //}
+
+            return expr;
         }
-        
+
+        private string AssignRuleIDToExpression(DocOpExpression expr, DocTemplateDefinition template)
+        {
+            string exprRuleID = expr.ToString(template);
+            int bracket = exprRuleID.IndexOf('[');
+
+            if (expr is DocOpStatement)
+            {
+                DocOpStatement statement = (DocOpStatement)expr;
+                exprRuleID = statement.Reference.EntityRule.ParentRule.Identification + exprRuleID.Substring(bracket);
+            }
+
+            return exprRuleID;
+        }
+
+        private string NestedString(DocTemplateDefinition template, string opExpression)
+        {
+
+            return base.ToString();
+        }
+
     }
 
     /// <summary>

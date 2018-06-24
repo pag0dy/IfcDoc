@@ -430,6 +430,7 @@ namespace IfcDoc
                     if (this.treeViewTemplate.SelectedNode.Tag is DocModelRuleAttribute)
                     {
                         docRuleAtt = (DocModelRuleAttribute)this.treeViewTemplate.SelectedNode.Tag;
+                        docRuleAtt.EntityRules = new List<DocModelRuleEntity>();
                     }
                     else
                     {
@@ -455,6 +456,7 @@ namespace IfcDoc
                     DocModelRuleEntity docRuleEntity = new DocModelRuleEntity();
                     docRuleEntity.Name = entityname;
                     docRuleAtt.Rules.Add(docRuleEntity);
+                    docRuleAtt.EntityRules.Add(docRuleEntity);
                     docRuleEntity.ParentRule = docRuleAtt;
                     this.treeViewTemplate.SelectedNode = this.LoadTemplateGraph(tn, docRuleEntity);
 
@@ -641,15 +643,25 @@ namespace IfcDoc
                 {
                     using (FormRule form = new FormRule(docRule, this.m_project, this.m_template))
                     {
-                        form.ShowDialog(this);
+                        DialogResult res = form.ShowDialog(this);
+                        if (res != DialogResult.OK)
+                        {
+                            return;
+                        }
                     }
                 }
 
                 // update text in treeview
                 this.UpdateTemplateGraph(this.treeViewTemplate.SelectedNode);
+                //IfcDoc.CtlOperators.
 
                 // propagate rule
                 this.m_template.PropagateRule(this.treeViewTemplate.SelectedNode.FullPath);
+
+                if (this.ContentChanged != null)
+                {
+                    this.ContentChanged(this, EventArgs.Empty);
+                }
             }
         }
 
