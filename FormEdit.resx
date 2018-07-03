@@ -880,7 +880,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAACs
-        kAAAAk1TRnQBSQFMAgEBLwEAAWABBwFgAQcBEAEAARABAAT/ARkBAAj/AUIBTQE2BwABNgMAASgDAAFA
+        kAAAAk1TRnQBSQFMAgEBLwEAAXgBBwF4AQcBEAEAARABAAT/ARkBAAj/AUIBTQE2BwABNgMAASgDAAFA
         AwABwAMAAQEBAAEYBgABkBsAA/4D/AP2A/EG7wPxA/YD/AP+EgAD/gP8A/YD8QbvA/ED9gP8A/4SAAP+
         A/wD9gPxBu8D8QP2A/wD/j8AA/4D9gPiA8UDqwakA6sDxQPiA/YD/gwAA/4D9gPiA8UDqwakA6sDxQPi
         A/YD/gwAA/4D9gPiA8UDqwakA6sDxQPiA/YD/jkAA/4D8wG2AcIBqwFqAaIBPgFQAa8BEAFQAa8BDwFQ
@@ -1910,7 +1910,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAABy
-        CwAAAk1TRnQBSQFMAgEBBAEAASQBAwEkAQMBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
+        CwAAAk1TRnQBSQFMAgEBBAEAATwBAwE8AQMBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
         AwABQAMAASADAAEBAQABCAYAAQgYAAGAAgABgAMAAoABAAGAAwABgAEAAYABAAKAAgADwAEAAcAB3AHA
         AQAB8AHKAaYBAAEzBQABMwEAATMBAAEzAQACMwIAAxYBAAMcAQADIgEAAykBAANVAQADTQEAA0IBAAM5
         AQABgAF8Af8BAAJQAf8BAAGTAQAB1gEAAf8B7AHMAQABxgHWAe8BAAHWAucBAAGQAakBrQIAAf8BMwMA
@@ -4136,7 +4136,7 @@
     <value>552, 17</value>
   </metadata>
   <data name="openFileDialogImport.Filter" xml:space="preserve">
-    <value>Visual Express SPF (*.vex)|*.vex|XML Schema Definition (*.xsd)|*.xsd|Model View XML (*.mvdxml)|*.mvdxml|PSD/QTO XML (*.xml)|*.xml|IFC SPF (*.ifc)|*.ifc|Delimited Text (*.txt)|*.txt|IFD Mapping (*.ifd)|*.ifd|Express XSD Configuration (*.xml)|*.xml</value>
+    <value>Model View XML (*.mvdxml)|*.mvdxml|.NET Assembly (*.dll)|*.dll|.NET Executable (*.exe)|*.exe|Visual Express SPF (*.vex)|*.vex|XML Schema Definition (*.xsd)|*.xsd|PSD/QTO XML (*.xml)|*.xml|IFC SPF (*.ifc)|*.ifc|Delimited Text (*.txt)|*.txt|IFD Mapping (*.ifd)|*.ifd|Express XSD Configuration (*.xml)|*.xml</value>
   </data>
   <data name="openFileDialogImport.Title" xml:space="preserve">
     <value>Import VEX, PSD, MVD, IFC</value>
@@ -4837,7 +4837,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAABO
-        CwAAAk1TRnQBSQFMAgEBBQEAAcQBBQHEAQUBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
+        CwAAAk1TRnQBSQFMAgEBBQEAAdwBBQHcAQUBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
         AwABQAMAASADAAEBAQABCAYAAQgYAAGAAgABgAMAAoABAAGAAwABgAEAAYABAAKAAgADwAEAAcAB3AHA
         AQAB8AHKAaYBAAEzBQABMwEAATMBAAEzAQACMwIAAxYBAAMcAQADIgEAAykBAANVAQADTQEAA0IBAAM5
         AQABgAF8Af8BAAJQAf8BAAGTAQAB1gEAAf8B7AHMAQABxgHWAe8BAAHWAucBAAGQAakBrQIAAf8BMwMA
@@ -5142,9 +5142,6 @@
         f///gAAAAAD///+AAAAAAf///4AAAAAD////gAAAAAf///+AAAAAD////4AAAAAf////gAAAAD////+A
         AAAAf////4AAAAD//////////////w==
 </value>
-  </data>
-  <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>NoControl</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>IFC Documentation Generator</value>

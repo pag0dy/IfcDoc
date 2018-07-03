@@ -603,7 +603,7 @@ namespace IfcDoc.Format.XSD
             sb.Append("\" type=\"ifc:");
             sb.Append(docEntity.Name);
             sb.Append("\"");
-            if (docEntity.IsAbstract())
+            if (docEntity.IsAbstract)
             {
                 sb.Append(" abstract=\"true\"");
             }
@@ -616,7 +616,7 @@ namespace IfcDoc.Format.XSD
             sb.Append("\t<xs:complexType name=\"");
             sb.Append(docEntity.Name);
             sb.Append("\"");
-            if (docEntity.IsAbstract())
+            if (docEntity.IsAbstract)
             {
                 sb.Append(" abstract=\"true\"");
             }

@@ -842,6 +842,18 @@ namespace IfcDoc
                                 }
                             }
                             break;
+
+                        case ".dll":
+                        case ".exe":
+                            try
+                            {
+                                FolderStorage.LoadLibrary(this.m_project, filename);
+                            }
+                            catch (Exception xx)
+                            {
+                                MessageBox.Show(this, xx.Message, "Import DLL");
+                            }
+                            break;
                     }
 
                 }
@@ -1468,7 +1480,7 @@ namespace IfcDoc
                 DeleteReferencesForSchemaDefinition(docSchema, docTarget);
                 DeleteReferencesForDefinition(docTarget.Name);
 
-                //this.treeView.SelectedNode.Remove();
+                this.treeView.SelectedNode.Remove();
             }
             else if (this.treeView.SelectedNode.Tag is DocAttribute)
             {
@@ -1478,7 +1490,9 @@ namespace IfcDoc
                 docAttr.Delete();
                 DeleteReferencesForAttribute(docEntity.Name, docAttr.Name);
 
-                //this.treeView.SelectedNode.Remove();
+                this.ctlExpressG.Redraw();
+                this.treeView.SelectedNode.Remove();
+                
             }
             else if (this.treeView.SelectedNode.Tag is DocUniqueRule)
             {
@@ -2421,9 +2435,12 @@ namespace IfcDoc
                 {
                     TreeNode tnRef = LoadNode(tnTarget, docSource, docSource.Name, false);
 
-                    foreach (DocAttributeRef docAttr in docSource.AttributeRefs)
+                    if (docSource.AttributeRefs != null)
                     {
-                        LoadNode(tnRef, docAttr, docAttr.Attribute.Name, false);
+                        foreach (DocAttributeRef docAttr in docSource.AttributeRefs)
+                        {
+                            LoadNode(tnRef, docAttr, docAttr.Attribute.Name, false);
+                        }
                     }
                 }
             }
@@ -2566,9 +2583,12 @@ namespace IfcDoc
                             LoadTreeChange(tnSet, docChangeItem);
                         }
 
-                        foreach (DocChangeAction docChangeItem in docChangeSet.ChangesViews)
+                        if (docChangeSet.ChangesViews != null)
                         {
-                            LoadTreeChange(tnSet, docChangeItem);
+                            foreach (DocChangeAction docChangeItem in docChangeSet.ChangesViews)
+                            {
+                                LoadTreeChange(tnSet, docChangeItem);
+                            }
                         }
                     }
                 }
@@ -2616,9 +2636,12 @@ namespace IfcDoc
         {
             TreeNode tnModel = LoadNode(tnParent, docModel, docModel.Name, true);
 
-            foreach (DocModelView docView in docModel.ModelViews)
+            if (docModel.ModelViews != null)
             {
-                LoadTreeModelView(tnModel, docView);
+                foreach (DocModelView docView in docModel.ModelViews)
+                {
+                    LoadTreeModelView(tnModel, docView);
+                }
             }
 
             foreach (DocExchangeDefinition docExchange in docModel.Exchanges)
@@ -2626,16 +2649,19 @@ namespace IfcDoc
                 LoadNode(tnModel, docExchange, docExchange.Name, false);
             }
 
-            foreach (DocProcess docProcess in docModel.Processes)
+            if (docModel.Processes != null)
             {
-                TreeNode tnProcess = LoadNode(tnModel, docProcess, docProcess.Name, false);
-                foreach (DocExchangeItem docItem in docProcess.Inputs)
+                foreach (DocProcess docProcess in docModel.Processes)
                 {
-                    LoadNode(tnProcess, docItem, docItem.Exchange.Name, false);
-                }
-                foreach (DocExchangeItem docItem in docProcess.Outputs)
-                {
-                    LoadNode(tnProcess, docItem, docItem.Exchange.Name, false);
+                    TreeNode tnProcess = LoadNode(tnModel, docProcess, docProcess.Name, false);
+                    foreach (DocExchangeItem docItem in docProcess.Inputs)
+                    {
+                        LoadNode(tnProcess, docItem, docItem.Exchange.Name, false);
+                    }
+                    foreach (DocExchangeItem docItem in docProcess.Outputs)
+                    {
+                        LoadNode(tnProcess, docItem, docItem.Exchange.Name, false);
+                    }
                 }
             }
 
@@ -9077,6 +9103,10 @@ namespace IfcDoc
                                     }
 
                                     project = formatSource.ReadObject(streamSource);
+                                    if (project == null)
+                                    {
+                                        throw new InvalidDataException("Unable to read IfcProject.");
+                                    }
 
                                     Serializer formatTarget = null;
                                     switch (dlgExport.FilterIndex)
@@ -9449,7 +9479,7 @@ namespace IfcDoc
                                 docReplace = this.m_project.GetDefinition(docEntity.BaseDefinition) as DocEntity;
                             }
 
-                            if (docReplace != null && !docReplace.IsAbstract())
+                            if (docReplace != null && !docReplace.IsAbstract)
                             {
                                 mapMigration.Add(docEntity, docReplace);
                             }
@@ -9785,7 +9815,7 @@ namespace IfcDoc
 
             try
             {
-                FolderStorage.Load(this.m_project, folderBrowserDialog.SelectedPath);
+                FolderStorage.LoadFolder(this.m_project, folderBrowserDialog.SelectedPath);
             }
             catch(Exception xx)
             {

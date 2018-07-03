@@ -1274,6 +1274,115 @@ namespace IfcDoc
                 sb.Append(docView.Documentation);
             }
 
+            // V12.0: use concepts directly
+
+            foreach(DocConceptRoot docRoot in docView.ConceptRoots)
+            {
+                if (docRoot.Name != null)
+                {
+                    sb.AppendLine("<h5>" + docRoot.Name + "</h5>");
+                    sb.Append(docRoot.Documentation);
+                }
+
+
+                // now generate requirements table
+                sb.AppendLine("<table class=\"gridtable\">");
+                sb.AppendLine("<tr><th>Field</th><th>Mapping</th><th>Definition</th>");
+                foreach (DocExchangeDefinition docEachExchange in docView.Exchanges)
+                {
+                    sb.Append("<th>" + docEachExchange.Name + "</th>");
+                }
+                sb.AppendLine("</tr>");
+
+                // query row
+                sb.Append("<tr><th>(Query)</th><th>");
+                if (docRoot.ApplicableTemplate != null)
+                {
+                    CvtValuePath valpathFilter = CvtValuePath.FromTemplateDefinition(docRoot.ApplicableTemplate, docProject);
+                    if (valpathFilter != null)
+                    {
+                        string refv = valpathFilter.ToString();
+                        string mapp = FormatReference(docProject, refv);
+                        sb.Append(mapp);
+                    }
+                    else if (docRoot.ApplicableEntity != null)
+                    {
+                        string mapp = FormatReference(docProject, docRoot.ApplicableEntity.Name);
+                        sb.AppendLine(mapp);
+                    }
+                }
+                else if(docRoot.ApplicableEntity != null)
+                {
+                    string mapp = FormatReference(docProject, docRoot.ApplicableEntity.Name);
+                    sb.AppendLine(mapp);
+                }
+                sb.Append("</th><th>");
+                sb.Append(docRoot.Documentation);
+                sb.Append("</th>");
+                foreach (DocExchangeDefinition docEachExchange in docView.Exchanges)
+                {
+                    sb.Append("<th></th>");
+                }
+                sb.AppendLine("</tr>");
+
+                foreach (DocTemplateUsage docUsage in docRoot.Concepts)
+                {
+                    CvtValuePath valpath = null;
+                    if(docUsage.Definition != null && docUsage.Definition.Rules.Count > 0)
+                    {
+                        valpath = CvtValuePath.FromTemplateDefinition(docUsage.Definition, docProject);
+                    }
+
+                    string name = docUsage.Name;
+                    string refv = "";
+                    string disp = null;// "#" + docItem.GetColor().ToArgb().ToString("X8").Substring(2, 6);
+                    string desc = docUsage.Documentation;
+
+                    if(valpath != null)
+                    {
+                        refv = valpath.ToString();
+                    }
+                    string mapp = FormatReference(docProject, refv);
+
+                    if (valpath != null && String.IsNullOrEmpty(desc))
+                    {
+                        desc = valpath.GetDescription(mapEntity, docView);
+                    }
+
+                    string style = "";
+                    if (!String.IsNullOrEmpty(disp))
+                    {
+                        style = " style=\"background-color:" + disp + ";\"";
+                    }
+
+                    sb.Append("<tr><td" + style + ">" + name + "</td><td>" + mapp + "</td><td>" + desc + "</td>");
+
+                    for (int iExchange = 0; iExchange < docView.Exchanges.Count; iExchange++)
+                    {
+                        sb.Append("<td>");
+
+                        // check if exchange is referenced
+                        DocExchangeDefinition docExchange = docView.Exchanges[iExchange];
+                        foreach (DocExchangeItem docExchangeItem in docUsage.Exchanges)
+                        {
+                            if (docExchangeItem.Exchange == docExchange &&
+                                (docExchangeItem.Requirement == DocExchangeRequirementEnum.Mandatory || docExchangeItem.Requirement == DocExchangeRequirementEnum.Optional))
+                            {
+                                sb.Append("<img width=\"16\" src=\"../../../img/attr-mandatory.png\" title=\"\" />");
+                                break;
+                            }
+                        }
+                        sb.Append("</td>");
+                    }
+                    sb.Append("</tr>");
+                }
+                sb.AppendLine("</table>");
+            }
+
+            return sb.ToString();
+
+#if false
+
             List<DocModelView> listView = new List<DocModelView>();
             if (docView != null)
             {
@@ -1624,6 +1733,7 @@ namespace IfcDoc
             }
 
             return sb.ToString();
+#endif
         }
         
 
@@ -2137,7 +2247,7 @@ namespace IfcDoc
                 return null;
 
             StringBuilder sb = new StringBuilder();
-            string[] parts = value.Split('\\');
+            string[] parts = value.Split(new char[] {'\\'}, StringSplitOptions.RemoveEmptyEntries);
             foreach (string part in parts)
             {
                 string[] tokens = part.Split('.');
@@ -2167,12 +2277,15 @@ namespace IfcDoc
                         {
                             int bracketopen = suffix.IndexOf('[') + 2;
                             int bracketclose = suffix.IndexOf(']') - 1;
-                            string psetname = suffix.Substring(bracketopen, bracketclose - bracketopen);
-
-                            docPset = docProject.FindPropertySet(psetname, out docSchema);
-                            if (docPset == null)
+                            if (bracketclose - bracketopen > 0)
                             {
-                                docQset = docProject.FindQuantitySet(psetname, out docSchema);
+                                string psetname = suffix.Substring(bracketopen, bracketclose - bracketopen);
+
+                                docPset = docProject.FindPropertySet(psetname, out docSchema);
+                                if (docPset == null)
+                                {
+                                    docQset = docProject.FindQuantitySet(psetname, out docSchema);
+                                }
                             }
                         }
 
@@ -2428,8 +2541,8 @@ namespace IfcDoc
             FormatHTM htmTOC,
             FormatHTM htmSectionTOC,
             Dictionary<DocFormatSchemaEnum, Serializer> mapFormats,
-            Dictionary<long, SEntity> outerinstancemap, // instance data of parent example, if inherited
-            SEntity outerinstanceroot
+            Dictionary<long, object> outerinstancemap, // instance data of parent example, if inherited
+            object outerinstanceroot
             )
         {
             if (included == null || included.ContainsKey(docExample))
@@ -2516,7 +2629,7 @@ namespace IfcDoc
                         htmExample.Write("<th>Size</th></tr>");
 
 
-                        if (filecontents != null && !Properties.Settings.Default.SkipDiagrams)
+                        if (filecontents != null && filecontents.Length > 0 && !Properties.Settings.Default.SkipDiagrams)
                         {
                             string pathIFC = path + @"\annex\annex-e\" + MakeLinkName(docExample) + ".ifc";
 
@@ -2527,64 +2640,65 @@ namespace IfcDoc
 
                             using (Stream memstream = new MemoryStream(filecontents, false))
                             {
-                                Serializer spfExample = mapFormats[DocFormatSchemaEnum.STEP];
-                                object rootproject = spfExample.ReadObject(memstream);
-                                
-                                string pathListing = path + @"\annex\annex-e\" + MakeLinkName(docExample) + ".ifc.htm";
-
-                                foreach (DocFormat docFormat in docPublication.Formats)
+                                StepSerializer spfExample = (StepSerializer)mapFormats[DocFormatSchemaEnum.STEP];
+                                outerinstanceroot = spfExample.ReadObject(memstream, out outerinstancemap);
+                                if (outerinstanceroot != null)
                                 {
-                                    // generate example in other formats...
-                                    if (docFormat.FormatOptions == DocFormatOptionEnum.Examples && docFormat.FormatType != DocFormatSchemaEnum.SQL)
+                                    string pathListing = path + @"\annex\annex-e\" + MakeLinkName(docExample) + ".ifc.htm";
+
+                                    foreach (DocFormat docFormat in docPublication.Formats)
                                     {
-                                        long filesize = filecontents.LongLength;
-
-                                        Serializer formatext = null;
-                                        if (mapFormats.TryGetValue(docFormat.FormatType, out formatext))
+                                        // generate example in other formats...
+                                        if (docFormat.FormatOptions == DocFormatOptionEnum.Examples && docFormat.FormatType != DocFormatSchemaEnum.SQL)
                                         {
-                                            string pathRAW = path + @"\annex\annex-e\" + MakeLinkName(docExample) + "." + docFormat.ExtensionInstances;
-                                            using (Stream stream = new FileStream(pathRAW, FileMode.Create))
+                                            long filesize = filecontents.LongLength;
+
+                                            Serializer formatext = null;
+                                            if (mapFormats.TryGetValue(docFormat.FormatType, out formatext))
                                             {
-                                                try
+                                                string pathRAW = path + @"\annex\annex-e\" + MakeLinkName(docExample) + "." + docFormat.ExtensionInstances;
+                                                using (Stream stream = new FileStream(pathRAW, FileMode.Create))
                                                 {
-                                                    formatext.WriteObject(stream, rootproject);
-                                                }
-                                                catch(Exception xxx)
-                                                {
-                                                    xxx.ToString();
-                                                }
-                                                stream.Flush();
-                                                filesize = stream.Length;
-
-                                                if (docPublication.HtmlExamples)
-                                                {
-                                                    // markup output with hyperlinks
-                                                    string pathHTM = pathRAW + ".htm";
-                                                    using (FormatHTM fmtHTM = new FormatHTM(pathHTM, mapEntity, mapSchema, included))
+                                                    try
                                                     {
-                                                        stream.Position = 0;
-                                                        StreamReader reader = new StreamReader(stream);
-                                                        string sourcecontent = reader.ReadToEnd();
+                                                        formatext.WriteObject(stream, outerinstanceroot);
+                                                    }
+                                                    catch (Exception xxx)
+                                                    {
+                                                        xxx.ToString();
+                                                    }
+                                                    stream.Flush();
+                                                    filesize = stream.Length;
 
-                                                        fmtHTM.WriteHeader(docExample.Name, 2, docPublication.Header);
-                                                        fmtHTM.WriteExpression(sourcecontent, "../../schema/");
-                                                        fmtHTM.WriteFooter("");
+                                                    if (docPublication.HtmlExamples)
+                                                    {
+                                                        // markup output with hyperlinks
+                                                        string pathHTM = pathRAW + ".htm";
+                                                        using (FormatHTM fmtHTM = new FormatHTM(pathHTM, mapEntity, mapSchema, included))
+                                                        {
+                                                            stream.Position = 0;
+                                                            StreamReader reader = new StreamReader(stream);
+                                                            string sourcecontent = reader.ReadToEnd();
+
+                                                            fmtHTM.WriteHeader(docExample.Name, 2, docPublication.Header);
+                                                            fmtHTM.WriteExpression(sourcecontent, "../../schema/");
+                                                            fmtHTM.WriteFooter("");
+                                                        }
                                                     }
                                                 }
                                             }
-                                        }
 
-                                        string sizetext = filesize.ToString();
-                                        string ext = docFormat.ExtensionInstances;
-                                        htmExample.WriteLine("<tr><td>" + docFormat.FormatType.ToString() + "</td><td><a href=\"" + MakeLinkName(docExample) + "." + ext + "\" target=\"_blank\">File</a></td>");
-                                        if (docPublication.HtmlExamples)
-                                        {
-                                            htmExample.WriteLine("<td><a href=\"" + MakeLinkName(docExample) + "." + ext + ".htm\" target=\"_blank\">Markup</a></td>");
+                                            string sizetext = filesize.ToString();
+                                            string ext = docFormat.ExtensionInstances;
+                                            htmExample.WriteLine("<tr><td>" + docFormat.FormatType.ToString() + "</td><td><a href=\"" + MakeLinkName(docExample) + "." + ext + "\" target=\"_blank\">File</a></td>");
+                                            if (docPublication.HtmlExamples)
+                                            {
+                                                htmExample.WriteLine("<td><a href=\"" + MakeLinkName(docExample) + "." + ext + ".htm\" target=\"_blank\">Markup</a></td>");
+                                            }
+                                            htmExample.WriteLine("<td style=\"text-align:right\">" + sizetext + "</td></tr>");
                                         }
-                                        htmExample.WriteLine("<td style=\"text-align:right\">" + sizetext + "</td></tr>");
                                     }
                                 }
-
                             }
 
                         }
@@ -2623,6 +2737,12 @@ namespace IfcDoc
 
                     htmExample.WriteDocumentationMarkup(docExample.Documentation, docExample, docPublication);
 
+                    // generate tables --- if option selected...
+                    if (docPublication.GetFormatOption(DocFormatSchemaEnum.SQL) == DocFormatOptionEnum.Examples)
+                    {
+                        GenerateExampleExchange(docProject, docPublication, docExample, null, path, indexpath, mapEntity, mapSchema, included, outerinstancemap, outerinstanceroot, htmSectionTOC);
+                    }
+#if false
                     if (filecontents == null && outerinstancemap != null && docExample.Views.Count > 0)
                     {
                         // if specific to exchange, capture inline
@@ -2651,6 +2771,7 @@ namespace IfcDoc
 
                         GenerateExampleExchange(docProject, docPublication, docExample, docExchange, path, indexpath, mapEntity, mapSchema, included, outerinstancemap, outerinstanceroot, htmSectionTOC);
                     }
+#endif
 
                     htmExample.WriteLinkTo(docProject, docPublication, docExample);
                     htmExample.WriteFooter(docPublication.Footer);
@@ -2680,16 +2801,330 @@ namespace IfcDoc
         /// </summary>
         private static void GenerateExampleExchange(DocProject docProject, DocPublication docPublication, DocExample docExample, DocExchangeDefinition docExchange, 
             string path, List<int> indexpath, Dictionary<string, DocObject> mapEntity, Dictionary<string, string> mapSchema, Dictionary<DocObject, bool> mapIncluded, 
-            Dictionary<long, SEntity> instances, SEntity root, FormatHTM htmSectionTOC)
+            Dictionary<long, object> instances, object root, FormatHTM htmSectionTOC)
         {
+            if (instances == null)
+                return;
+
             indexpath.Add(0);
 
-            List<DocModelView> listView = new List<DocModelView>();
             foreach (DocModelView docView in docExample.Views)
             {
-                BuildViewList(docProject, listView, docView);
-            }
+                // V12.0
+                foreach(DocConceptRoot docRoot in docView.ConceptRoots)
+                {
+                    string pathExample = path + @"\annex\annex-e\" + MakeLinkName(docExample) + @"\" + MakeLinkName(docRoot) + ".htm";
+                    string urlExample = "annex-e/" + MakeLinkName(docExample) + "/" + MakeLinkName(docRoot) + ".htm";
 
+                    indexpath[indexpath.Count - 1]++;
+
+                    StringBuilder indexpathname = new StringBuilder();
+                    indexpathname.Append("E");
+                    foreach (int x in indexpath)
+                    {
+                        indexpathname.Append(".");
+                        indexpathname.Append(x);
+                    }
+                    string indexpathstring = indexpathname.ToString();
+
+
+                    using (FormatHTM htmExample = new FormatHTM(pathExample, mapEntity, mapSchema, mapIncluded))
+                    {
+                        htmExample.WriteHeader(docExample.Name, 3, docPublication.Header);
+                        htmExample.WriteScript(-5, indexpath[0], indexpath[1], 0);
+                        htmExample.WriteLine("<h3 class=\"std\">" + indexpathstring + " " + docRoot.Name + "</h3>");
+
+                        StringBuilder sb = new StringBuilder();
+                        sb.AppendLine("<table class=\"gridtable\">");
+                        List<string> colstyles = new List<string>();
+                        List<string> colformat = new List<string>();
+                        List<CvtValuePath> colmaps = new List<CvtValuePath>();
+
+                        // generate header row
+                        sb.AppendLine("<tr>");
+                        foreach (DocTemplateUsage docItem in docRoot.Concepts)
+                        {
+                            string name = docItem.Name;
+                            string disp = null;//"#" + docItem.GetColor().ToArgb().ToString("X8");
+                            string form = null;//docItem.GetParameterValue("Format");
+
+                            string style = "";
+                            if (!String.IsNullOrEmpty(disp))
+                            {
+                                style = " style=\"background-color:" + disp + ";\"";
+                            }
+                            colstyles.Add(style);
+
+                            string format = "";
+                            if (!String.IsNullOrEmpty(form))
+                            {
+                                format = form;
+                            }
+                            colformat.Add(format);
+
+                            string desc = "";
+                            CvtValuePath valpath = CvtValuePath.FromTemplateDefinition(docItem.Definition, docProject);
+                            colmaps.Add(valpath);
+                            if (valpath != null)
+                            {
+                                desc = valpath.ToString().Replace("\\", "&#10;");
+                            }
+
+                            sb.Append("<th title=\"" + desc + "\">");//<a href=\"../../schema/views/" + DocumentationISO.MakeLinkName(docView) + "/" + DocumentationISO.MakeLinkName(docExchange) + ".htm#" + DocumentationISO.MakeLinkName(docConcept) + "\" title=\"" + desc + "\">");
+                            sb.Append(name);
+                            sb.Append("</th>");
+                        };
+                        sb.AppendLine("</tr>");
+
+                        // generate data rows
+                        List<DocModelRule> trace = new List<DocModelRule>();
+
+
+                        CvtValuePath valpathQuery = null;
+                        if (docRoot.ApplicableTemplate != null)
+                        {
+                            valpathQuery = CvtValuePath.FromTemplateDefinition(docRoot.ApplicableTemplate, docProject);
+                        }
+
+                        int count = 0;
+                        foreach (object e in instances.Values)
+                        {
+                            string eachname = e.GetType().Name;
+                            if (docRoot.ApplicableEntity.IsInstanceOfType(e))
+                            {
+                                bool includerow = true;
+
+                                // check against query
+                                if (valpathQuery != null)
+                                {
+                                    object val = valpathQuery.GetValue(e, null);
+                                    if (val == null)
+                                        includerow = false;
+                                }
+
+                                if (includerow)
+                                {
+                                    count++;
+                                    if (count > 1000)
+                                    {
+                                        //...sb.Append("<tr><td colspan=\"" + listItems.Count + "\">...</td></tr>");
+                                        break; // max exceeded
+                                    }
+
+                                    StringBuilder sbRow = new StringBuilder();
+
+                                    sbRow.Append("<tr>");
+                                    int iCol = 0;
+                                    foreach (DocTemplateUsage docItem in docRoot.Concepts)
+                                    {
+                                        sbRow.Append("<td" + colstyles[iCol]);
+                                        CvtValuePath valpath = colmaps[iCol];
+                                        string format = colformat[iCol];
+
+                                        iCol++;
+
+                                        if(docItem.Name.Contains("Character"))
+                                        {
+                                            docItem.ToString();
+                                        }
+
+                                        if (valpath != null)
+                                        {
+                                            //...
+
+                                            string nn = docItem.Name;
+                                            object value = valpath.GetValue(e, null);
+
+                                            // special case for properties
+                                            if (value == null &&
+                                                valpath.Property != null && valpath.Property.Name == "IsDefinedBy" &&
+                                                valpath.Identifier != null && 
+                                                valpath.InnerPath != null &&
+                                                valpath.InnerPath.InnerPath != null && valpath.InnerPath.InnerPath.Identifier != null &&
+                                                valpath.InnerPath.InnerPath.InnerPath != null)
+                                            {
+                                                string pset = valpath.Identifier;
+                                                string prop = valpath.InnerPath.InnerPath.Identifier;
+                                                string suff = valpath.InnerPath.InnerPath.InnerPath.ToString();
+                                                CvtValuePath valpathtype = CvtValuePath.Parse(@"\" + valpath.Type + @".IsTypedBy\IfcRelDefinesByType.RelatingType\IfcTypeObject.HasPropertySets['" + pset + @"']\IfcPropertySet.HasProperties['"+ prop +"']" + suff, mapEntity);
+                                                if(valpathtype != null)
+                                                {
+                                                    value = valpathtype.GetValue(e, null);
+
+                                                    if(value != null)
+                                                    {
+                                                        value.ToString();
+                                                    }
+                                                }
+                                            }
+
+                                            if (value == e)
+                                            {
+                                                value = e.GetType().Name;
+                                            }
+                                            else if (CvtValuePath.IsEntity(value))
+                                            {
+                                                // special case for time series
+                                                if (value.GetType().Name.Equals("IfcIrregularTimeSeries"))
+                                                {
+                                                    System.Reflection.FieldInfo fieldValue = value.GetType().GetField("Values");
+                                                    if(fieldValue != null)
+                                                    {
+                                                        System.Collections.IList list = (System.Collections.IList)fieldValue.GetValue(value);
+
+                                                        if (list.Count > 0)
+                                                        {
+                                                            object elem = list[0];
+
+                                                            System.Reflection.FieldInfo fieldTSV = elem.GetType().GetField("ListValues");
+                                                            if (fieldTSV != null)
+                                                            {
+                                                                System.Collections.IList lv = (System.Collections.IList)fieldTSV.GetValue(elem);
+                                                                if (lv.Count > 0)
+                                                                {
+                                                                    System.Reflection.FieldInfo fn = lv[0].GetType().GetField("Value");
+                                                                    if (fn != null)
+                                                                    {
+                                                                        string vstr = fn.GetValue(lv[0]).ToString();
+                                                                        value = "Time Series[" + list.Count + "] {" + lv[0].GetType().Name + "(" + vstr + ")}";
+
+                                                                        System.Diagnostics.Debug.WriteLine(valpath.ToString() + " - " + value);
+                                                                    }
+                                                                }
+                                                            }                                                                    
+
+                                                        }
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    // use name
+                                                    System.Reflection.FieldInfo fieldValue = value.GetType().GetField("Name");
+                                                    if (fieldValue != null)
+                                                    {
+                                                        value = fieldValue.GetValue(value);
+                                                    }
+                                                }
+                                            }
+                                            else if (value is System.Collections.IEnumerable)
+                                            {
+                                                System.Collections.IEnumerable list = (System.Collections.IEnumerable)value;
+                                                StringBuilder sbList = new StringBuilder();
+                                                foreach (object elem in list)
+                                                {
+                                                    System.Reflection.PropertyInfo fieldName = elem.GetType().GetProperty("Name");
+                                                    if (fieldName != null)
+                                                    {
+                                                        object elemname = fieldName.GetValue(elem);
+                                                        if (elemname != null)
+                                                        {
+                                                            System.Reflection.PropertyInfo fieldValue = elemname.GetType().GetProperty("Value");
+                                                            if (fieldValue != null)
+                                                            {
+                                                                object elemval = fieldValue.GetValue(elemname);
+                                                                sbList.Append(elemval.ToString());
+                                                            }
+                                                        }
+                                                    }
+                                                    sbList.Append("; <br/>");
+                                                }
+                                                value = sbList.ToString();
+                                            }
+                                            else if (value is Type)
+                                            {
+                                                value = ((Type)value).Name;
+                                            }
+
+                                            if (!String.IsNullOrEmpty(format))
+                                            {
+                                                if (format.Equals("Required") && value == null)
+                                                {
+                                                    includerow = false; //  used for requiring classification for spaces
+                                                }
+                                            }
+
+                                            if (value != null)
+                                            {
+                                                System.Reflection.PropertyInfo fieldValue = value.GetType().GetProperty("Value");
+                                                while (fieldValue != null)
+                                                {
+                                                    value = fieldValue.GetValue(value);
+                                                    fieldValue = value.GetType().GetProperty("Value");
+                                                }
+
+                                                if (format != null && format.Equals("True") && (value == null || !value.ToString().Equals("True")))
+                                                {
+                                                    includerow = false; //  used for requiring exterior walls
+                                                }
+
+                                                if (value is Double)
+                                                {
+                                                    sbRow.Append(" align=\"right\">");
+
+                                                    sbRow.Append(((Double)value).ToString("N3"));
+                                                }
+                                                else if (value is List<Int64>)
+                                                {
+                                                    sbRow.Append(">");
+
+                                                    // latitude or longitude
+                                                    List<Int64> intlist = (List<Int64>)value;
+                                                    if (intlist.Count >= 3)
+                                                    {
+                                                        sbRow.Append(intlist[0] + "° " + intlist[1] + "' " + intlist[2] + "\"");
+                                                    }
+                                                }
+                                                else if (value != null)
+                                                {
+                                                    sbRow.Append(">");
+                                                    sbRow.Append(value.ToString()); // todo: html-encode
+                                                }
+                                            }
+                                            else
+                                            {
+                                                sbRow.Append(">");
+                                                sbRow.Append("&nbsp;");
+                                            }
+                                        }
+                                        else
+                                        {
+                                            sbRow.Append(">");
+                                        }
+
+                                        sbRow.Append("</td>");
+                                    }
+                                    sbRow.AppendLine("</tr>");
+
+                                    if (includerow)
+                                    {
+                                        sb.Append(sbRow.ToString());
+                                    }
+                                }
+                            }
+                        }
+
+                        sb.AppendLine("</table>");
+                        sb.AppendLine("<br/>");
+
+                        htmExample.Write(sb.ToString());
+
+
+
+                        //htmExample.WriteLine(dataconcept);
+
+                        htmExample.WriteFooter(docPublication.Footer);
+                    }
+
+                    string linkid = indexpath[0].ToString();//??
+                    string htmllink = "<a class=\"listing-link\" id=\"" + linkid + "\" href=\"" + urlExample + "\" target=\"info\">" + docRoot.Name + "</a>";
+                    htmSectionTOC.WriteLine("<tr class=\"std\"><td class=\"menu\">" + indexpathstring + " " + htmllink + "</td></tr>");
+
+                    // also populate contents on left
+                    //...
+
+                }
+            }
+#if false
             // new: show multiple views
             foreach (DocSection docSection in docProject.Sections)
             {
@@ -2715,6 +3150,8 @@ namespace IfcDoc
                                 {
                                     foreach (DocTemplateUsage docConcept in docRoot.Concepts)
                                     {
+                                        //...
+
                                         if (docConcept.Definition != null && docConcept.Definition.Uuid == DocTemplateDefinition.guidTemplateMapping)
                                         {
                                             foreach (DocTemplateItem docItem in docConcept.Items)
@@ -3097,8 +3534,9 @@ namespace IfcDoc
                     }
                 }
             }
+#endif
 
-#if false
+#if false // older
 
             foreach (DocModelView docView in docPublication.Views)
             {
@@ -3443,7 +3881,7 @@ namespace IfcDoc
 
                                                 sbSuper.Append("<tr><td colspan=\"3\">");
                                                 sbSuper.Append("<a href=\"../../" + schema + "/lexical/" + MakeLinkName(docSuper) + ".htm\">");
-                                                if (docSuper.IsAbstract())
+                                                if (docSuper.IsAbstract)
                                                 {
                                                     sbSuper.Append("<i>");
                                                     sbSuper.Append(docSuper.Name);

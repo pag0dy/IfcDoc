@@ -394,7 +394,7 @@ DateTime.Today.ToLongDateString() + "\r\n" + //"December 27, 2012\r\n" +
                         writer.Write("ENTITY ");
                         writer.Write(docEntity.Name);
 
-                        if ((docEntity.IsAbstract()))
+                        if ((docEntity.IsAbstract))
                         {
                             writer.WriteLine();
                             writer.Write(" ABSTRACT");
@@ -431,7 +431,7 @@ DateTime.Today.ToLongDateString() + "\r\n" + //"December 27, 2012\r\n" +
                                 }
                             }
 
-                            if (!docEntity.IsAbstract())
+                            if (!docEntity.IsAbstract)
                             {
                                 writer.WriteLine();
                             }
@@ -700,13 +700,19 @@ DateTime.Today.ToLongDateString() + "\r\n" + //"December 27, 2012\r\n" +
                         break;
                 }
 
+                string lower = docAggregation.AggregationLower;
+                if (String.IsNullOrEmpty(lower))
+                {
+                    lower = "0";
+                }
+
                 if (docAggregation.AggregationUpper != null && docAggregation.AggregationUpper != "0")
                 {
-                    writer.Write("[" + docAggregation.AggregationLower + ":" + docAggregation.AggregationUpper + "] OF ");
+                    writer.Write("[" + lower + ":" + docAggregation.AggregationUpper + "] OF ");
                 }
                 else if (docAggregation.AggregationLower != null)
                 {
-                    writer.Write("[" + docAggregation.AggregationLower + ":?] OF ");
+                    writer.Write("[" + lower + ":?] OF ");
                 }
                 else
                 {

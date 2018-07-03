@@ -3088,12 +3088,12 @@ namespace IfcDoc.Format.HTM
             }
 
             this.Write("<tr><td colspan=\"" + colspan + "\">");
-            if(entity.IsAbstract())
+            if(entity.IsAbstract)
             {
                 this.Write("<i>");
             }
             this.Write(FormatDefinition(entity.Name));
-            if (entity.IsAbstract())
+            if (entity.IsAbstract)
             {
                 this.Write("</i>");
             }

@@ -2118,7 +2118,7 @@
             // 
             this.ctlExpressG.AllowDrop = true;
             resources.ApplyResources(this.ctlExpressG, "ctlExpressG");
-            this.ctlExpressG.Format = IfcDoc.Format.PNG.DiagramFormat.ExpressG;
+            this.ctlExpressG.Format = IfcDoc.Schema.DOC.DiagramFormat.ExpressG;
             this.ctlExpressG.Marker = new System.Drawing.Point(0, 0);
             this.ctlExpressG.Mode = IfcDoc.ToolMode.Select;
             this.ctlExpressG.Name = "ctlExpressG";

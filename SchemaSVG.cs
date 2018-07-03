@@ -27,12 +27,21 @@ namespace IfcDoc.Schema.SVG
         string m_filename;
         DocSchema m_schema;
         DocProject m_project;
+        DiagramFormat m_format;
 
-        public SchemaSVG(string filename, DocSchema docSchema, DocProject docProject)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="filename">Local file path</param>
+        /// <param name="docSchema">Schema of diagram</param>
+        /// <param name="docProject">Project</param>
+        /// <param name="uml">Diagram format</param>
+        public SchemaSVG(string filename, DocSchema docSchema, DocProject docProject, DiagramFormat format)
         {
             this.m_filename = filename;
             this.m_schema = docSchema;
             this.m_project = docProject;
+            this.m_format = format;
         }
 
         private DocRectangle LoadRectangle(g group)
@@ -270,38 +279,227 @@ namespace IfcDoc.Schema.SVG
             {
                 t.value = docDef.Name;
             }
+
             group.text.Add(t);
 
-            if (docDef is DocEntity)
+            if (this.m_format == DiagramFormat.UML)
             {
-                group.fill = "yellow";
-            }
-            else if (docDef is DocType)
-            {
-                group.fill = "green";
-            }
-            else if (docDef is DocPageTarget)
-            {
-                group.fill = "blue";
-                r.rx = "10";
-                r.ry = "10";
-            }
-            else if (docDef is DocPageSource)
-            {
-                group.fill = "silver";
-                r.rx = "10";
-                r.ry = "10";
+                y += 10;
+
+                group.fill = "lightyellow";
+                t.y = y.ToString();
+                t.alignment_baseline = "top";
+                t.font_weight = "bold";
+                t.value = docDef.Name;
+
+                // separator line
+                y += 2;
+                List<DocPoint> listPoint = new List<DocPoint>();
+                listPoint.Add(new DocPoint(x / CtlExpressG.Factor, y / CtlExpressG.Factor));
+                listPoint.Add(new DocPoint((x + cx) / CtlExpressG.Factor, y / CtlExpressG.Factor));
+                SaveLine(group, listPoint, null, false);
+                y += 2;
+
+                // add attributes
+                if (docDef is DocDefinitionRef)
+                {
+                    DocDefinitionRef docDefRef = (DocDefinitionRef)docDef;
+
+                    DocObject docObjRef = this.m_project.GetDefinition(docDefRef.Name);
+                    if (docObjRef is DocEntity)
+                    {
+                        DocEntity docEnt = (DocEntity)docObjRef;
+                        foreach (DocAttribute docAtt in docEnt.Attributes)
+                        {
+                            if (docAtt.Derived == null && docAtt.Inverse == null)
+                            {
+                                DocObject docAttrType = this.m_project.GetDefinition(docAtt.DefinedType);
+
+                                // include native types, enumerations, and defined types
+                                if (docAttrType == null || docAttrType is DocEnumeration || docAttrType is DocDefined)
+                                {
+                                    y += 12;
+
+                                    string agg = "[1]";
+                                    if (docAtt.AggregationType != 0)
+                                    {
+                                        string lower = docAtt.AggregationLower;
+                                        string upper = docAtt.AggregationUpper;
+                                        if(String.IsNullOrEmpty(lower))
+                                        {
+                                            lower = "0";
+                                        }
+                                        if(String.IsNullOrEmpty(upper) || upper == "0")
+                                        {
+                                            upper = "*";
+                                        }
+
+                                        agg = "[" + lower + ".." + upper + "]";
+                                    }
+                                    else if (docAtt.IsOptional)
+                                    {
+                                        agg = "[0..1]";
+                                    }
+
+
+                                    text ta = new text();
+                                    ta.x = (x + 4).ToString();
+                                    ta.y = y.ToString();
+                                    ta.fill = "black";
+                                    ta.alignment_baseline = "top";
+                                    ta.text_anchor = "start";
+                                    ta.font_size = "9";
+                                    ta.font_family = "Arial, Helvetica, sans-serif";
+                                    ta.value = docAtt.Name + agg + " : " + docAtt.DefinedType;
+                                    group.text.Add(ta);
+                                }
+                            }
+                        }
+
+
+                        // UML only (not in original EXPRESS-G diagrams)
+                        foreach (DocAttributeRef docAttrRef in docDefRef.AttributeRefs)
+                        {
+                            DocAttribute docAtt = docAttrRef.Attribute;
+
+                            //if (docAtt.Inverse == null)
+                            {
+                                //... also need to capture attribute name...
+                                //DrawLine(g, Pens.Black, docAttrRef.DiagramLine, format);
+                                SaveLine(group, docAttrRef.DiagramLine, null, false);
+
+                                // draw diamond at beginning of line
+#if false /// not yet correct
+                            if (this.m_format == DiagramFormat.UML)
+                            {
+                                DocPoint ptHead = docAttrRef.DiagramLine[0];
+                                DocPoint ptNext = docAttrRef.DiagramLine[1];
+                                double ux = ptNext.X - ptHead.X;
+                                double uy = ptNext.Y - ptHead.Y;
+                                double uv = Math.Sqrt(ux * ux + uy * uy);
+                                ux = ux / uv;
+                                uy = uy / uv;
+                                DocPoint ptR = new DocPoint(ptHead.X + uy * 8, ptHead.Y + ux * 8);
+                                DocPoint ptF = new DocPoint(ptHead.X + ux * 16, ptHead.Y + uy * 8);
+                                DocPoint ptL = new DocPoint(ptHead.X + uy * 8, ptHead.Y - ux * 8);
+                                List<DocPoint> listP = new List<DocPoint>();
+                                listP.Add(ptHead);
+                                listP.Add(ptR);
+                                listP.Add(ptF);
+                                listP.Add(ptL);
+                                listP.Add(ptHead);
+                                SaveLine(group, listP, null, false);
+                            }
+#endif
+                                if(docAtt.Name == "Items")
+                                {
+                                    docAtt.ToString();
+                                }
+
+                                string agg = "[1]";
+                                if (docAtt.AggregationType != 0)
+                                {
+                                    string lower = docAtt.AggregationLower;
+                                    string upper = docAtt.AggregationUpper;
+                                    if (String.IsNullOrEmpty(lower))
+                                    {
+                                        lower = "0";
+                                    }
+                                    if (String.IsNullOrEmpty(upper))
+                                    {
+                                        upper = "*";
+                                    }
+
+                                    agg = "[" + lower + ".." + upper + "]";
+                                }
+                                else if (docAtt.IsOptional)
+                                {
+                                    agg = "[0..1]";
+                                }
+
+
+                                double ty = docAttrRef.DiagramLine[0].Y * CtlExpressG.Factor;
+                                if (docAttrRef.DiagramLine[1].Y > docAttrRef.DiagramLine[0].Y)
+                                {
+                                    ty -= 10;
+                                }
+                                else
+                                {
+                                    ty += 10;
+                                }
+
+                                text tr = new text();
+                                tr.x = (docAttrRef.DiagramLine[0].X * CtlExpressG.Factor + 4).ToString();
+                                tr.y = (ty).ToString();
+
+
+                                tr.fill = "black";
+                                tr.alignment_baseline = "top";
+                                tr.text_anchor = "start";
+                                tr.font_size = "9";
+                                tr.font_family = "Arial, Helvetica, sans-serif";
+                                tr.value = docAtt.Name + agg;
+                                group.text.Add(tr);
+                            }
+                        }
+                    }
+                }
             }
             else
             {
-                group.fill = "grey";
+                if (docDef is DocEntity)
+                {
+                    group.fill = "yellow";
+                }
+                else if (docDef is DocType)
+                {
+                    group.fill = "green";
+                }
+                else if (docDef is DocPageTarget)
+                {
+                    group.fill = "blue";
+                    r.rx = "10";
+                    r.ry = "10";
+                }
+                else if (docDef is DocPageSource)
+                {
+                    group.fill = "silver";
+                    r.rx = "10";
+                    r.ry = "10";
+                }
+                else
+                {
+                    group.fill = "grey";
+                }
             }
+
 
             return group;
         }
 
         private void SaveTree(g group, List<DocLine> tree, DocPoint prev, bool bold)
         {
+            if (this.m_format == DiagramFormat.UML && prev == null)
+            {
+                foreach (DocLine docLine in tree)
+                {
+                    if (docLine.DiagramLine != null && docLine.DiagramLine.Count > 0)
+                    {
+                        // arrow head
+                        double x = docLine.DiagramLine[0].X;
+                        double y = docLine.DiagramLine[0].Y;
+
+                        DocPoint ptArrowL = new DocPoint(x - 8, y + 16);
+                        DocPoint ptArrowR = new DocPoint(x + 8, y + 16);
+                        List<DocPoint> listPoint = new List<DocPoint>();
+                        listPoint.Add(ptArrowL);
+                        listPoint.Add(tree[0].DiagramLine[0]);
+                        listPoint.Add(ptArrowR);
+                        SaveLine(group, listPoint, null, false);
+                    }
+                }
+            }
+
             foreach(DocLine docLine in tree)
             {
                 SaveLine(group, docLine.DiagramLine, prev, bold);
@@ -350,7 +548,10 @@ namespace IfcDoc.Schema.SVG
 
             if (bold == true)
             {
-                p.stroke_width = "3";
+                if (this.m_format == DiagramFormat.ExpressG)
+                {
+                    p.stroke_width = "3";
+                }
             }
             else if(bold == null)
             {
@@ -459,20 +660,24 @@ namespace IfcDoc.Schema.SVG
                 }
             }
 
-            g grid = new g();
-            s.g.Add(grid);
-            for (int iPageY = 0; iPageY < m_schema.DiagramPagesVert; iPageY++)
+            // grid lines
+            if (this.m_format == DiagramFormat.ExpressG)
             {
-                for (int iPageX = 0; iPageX < m_schema.DiagramPagesHorz; iPageX++)
+                g grid = new g();
+                s.g.Add(grid);
+                for (int iPageY = 0; iPageY < m_schema.DiagramPagesVert; iPageY++)
                 {
-                    rect r = new rect();
-                    r.x = (iPageX * CtlExpressG.PageX).ToString();
-                    r.y = (iPageY * CtlExpressG.PageY).ToString();
-                    r.width = CtlExpressG.PageX.ToString();
-                    r.height = CtlExpressG.PageY.ToString();
-                    r.fill = "none";
-                    r.stroke = "lime";
-                    grid.rect.Add(r);
+                    for (int iPageX = 0; iPageX < m_schema.DiagramPagesHorz; iPageX++)
+                    {
+                        rect r = new rect();
+                        r.x = (iPageX * CtlExpressG.PageX).ToString();
+                        r.y = (iPageY * CtlExpressG.PageY).ToString();
+                        r.width = CtlExpressG.PageX.ToString();
+                        r.height = CtlExpressG.PageY.ToString();
+                        r.fill = "none";
+                        r.stroke = "lime";
+                        grid.rect.Add(r);
+                    }
                 }
             }
 
@@ -586,6 +791,9 @@ namespace IfcDoc.Schema.SVG
 
         [XmlAttribute("font-size")]
         public string font_size;
+
+        [XmlAttribute("font-weight")]
+        public string font_weight;
 
         [XmlAttribute("alignment-baseline")]
         public string alignment_baseline;

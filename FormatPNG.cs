@@ -460,7 +460,7 @@ namespace IfcDoc.Format.PNG
                 {
                     brush = Brushes.DarkRed;
                 }
-                else if (docEntity.IsAbstract())
+                else if (docEntity.IsAbstract)
                 {
                     brush = Brushes.Gray;
                 }
@@ -1015,7 +1015,7 @@ namespace IfcDoc.Format.PNG
                     {
                         caption = "*" + caption;
                     }
-                    if (docEntity.IsAbstract())
+                    if (docEntity.IsAbstract)
                     {
                         caption = "(ABS)\r\n" + caption;
                     }
@@ -1039,7 +1039,7 @@ namespace IfcDoc.Format.PNG
                     Rectangle rcTop = rc;
                     rcTop.Height = 16;
 
-                    if (docEntity.IsAbstract())
+                    if (docEntity.IsAbstract)
                     {
                         g.DrawString(caption, fontBoldItalic, Brushes.Black, rcTop, sf);
                     }
@@ -1878,7 +1878,7 @@ namespace IfcDoc.Format.PNG
             {
                 Brush brush = Brushes.Black;
                 
-                if(docEntity.IsAbstract())
+                if(docEntity.IsAbstract)
                 {
                     brush = Brushes.Gray;
                 }
@@ -1912,9 +1912,5 @@ namespace IfcDoc.Format.PNG
         }
     }
 
-    public enum DiagramFormat
-    {
-        ExpressG = 0,
-        UML = 1,
-    }
+
 }

@@ -69,7 +69,7 @@ namespace IfcDoc
             }
 
             // abstract class
-            if (docEntity.IsAbstract())
+            if (docEntity.IsAbstract)
             {
                 sb.AppendLine("\trdfs:subClassOf ");
                 sb.AppendLine("\t\t[ ");
