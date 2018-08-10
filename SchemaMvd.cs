@@ -74,7 +74,7 @@ namespace IfcDoc.Schema.MVD
             }
         }
     }
-    
+
     public enum StatusEnum
     {
         [XmlEnum("sample")] Sample = 0, // default
@@ -216,7 +216,7 @@ namespace IfcDoc.Schema.MVD
         [DataMember(Order = 0), XmlText] public string Content;
         [DataMember(Order = 1), XmlAttribute("lang")] public string Lang;
         [DataMember(Order = 2), XmlAttribute("tags")] public string Tags;
-      
+
         #region IXmlSerializable Members
 
         public System.Xml.Schema.XmlSchema GetSchema()
@@ -328,10 +328,10 @@ namespace IfcDoc.Schema.MVD
     [XmlType("TemplateItem")] // todo: update XSD
     public class TemplateItem : TemplateRule
     {
-        [DataMember(Order = 0), XmlAttribute("Order")] public int Order; // mvdXML 1.2
-        [DataMember(Order = 1), XmlAttribute("Usage")] public TemplateRuleUsage Usage; // mvdxml 1.2
-        [DataMember(Order = 2)] public List<ConceptRequirement> Requirements; // proposed for mvdxml 1.2
-        [DataMember(Order = 3)] public List<Concept> References; // proposed for mvdxml 1.2
+        //[DataMember(Order = 0), XmlAttribute("Order")] public int Order; // mvdXML 1.2
+        //[DataMember(Order = 1), XmlAttribute("Usage")] public TemplateRuleUsage Usage; // mvdxml 1.2
+        //[DataMember(Order = 2)] public List<ConceptRequirement> Requirements; // proposed for mvdxml 1.2
+        [DataMember(Order = 0)] public List<Concept> References; // proposed for mvdxml 1.2
     }
 
     public enum TemplateRuleUsage
@@ -354,12 +354,12 @@ namespace IfcDoc.Schema.MVD
 
     public enum TemplateOperator // added in mvdXML 1.1d
     {
-        [XmlEnum("and")]  And = 0,
-        [XmlEnum("or")]   Or = 1,
-        [XmlEnum("not")]  Not = 2,
+        [XmlEnum("and")] And = 0,
+        [XmlEnum("or")] Or = 1,
+        [XmlEnum("not")] Not = 2,
         [XmlEnum("nand")] Nand = 3,
-        [XmlEnum("nor")]  Nor = 4,
-        [XmlEnum("xor")]  Xor = 5,
+        [XmlEnum("nor")] Nor = 4,
+        [XmlEnum("xor")] Xor = 5,
         [XmlEnum("nxor")] Nxor = 6,
     }
 }

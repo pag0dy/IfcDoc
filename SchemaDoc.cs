@@ -2999,12 +2999,12 @@ namespace IfcDoc.Schema.DOC
 
     public class DocModelRuleAttribute : DocModelRule
     {
-        [DataMember(Order = 0)] public ICollection<DocModelRuleEntity> EntityRules { get; set; }
+        //[DataMember(Order = 0)] public ICollection<DocModelRuleEntity> EntityRules { get; set; }
 
-        public DocModelRuleAttribute()
-        {
-            this.EntityRules = new List<DocModelRuleEntity>();
-        }
+        //public DocModelRuleAttribute()
+        //{
+        //    this.EntityRules = new List<DocModelRuleEntity>();
+        //}
 
         public override void BuildParameterList(IList<DocModelRule> list)
         {
@@ -5426,8 +5426,15 @@ namespace IfcDoc.Schema.DOC
                     }
 
                     //...
-
-                    expr[i].Metric = DocMetricEnum.Value;
+                    if (args[1].Length > 3 && args[1].Substring(0,3) == "Ifc")
+                    {
+                        expr[i].Metric = DocMetricEnum.Type;
+                    }
+                    else
+                    {
+                        expr[i].Metric = DocMetricEnum.Value;
+                    }
+                    
                     expr[i].Operator = DocOperatorEnum.EQUAL;
                     expr[i].Value = args[1];
                 }
