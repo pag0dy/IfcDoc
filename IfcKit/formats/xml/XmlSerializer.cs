@@ -116,7 +116,16 @@ namespace BuildingSmart.Serialization.Xml
         private object ReadEntity(XmlReader reader, IDictionary<string, object> instances, string typename, bool parsefields)
         {
             object o = null;
-            Type t = this.GetTypeByName(typename);
+            Type t;
+            if (typename == "header")
+            {
+                t = typeof(header);
+            }
+            else
+            {
+                t = this.GetTypeByName(typename);
+            }
+
             if (t != null)
             {
                 // map instance id if used later
@@ -210,8 +219,15 @@ namespace BuildingSmart.Serialization.Xml
             if (o == null)
                 throw new ArgumentNullException("o");
 
+            System.Diagnostics.Debug.WriteLine(">>ReadAttribute: " + o.GetType().Name + "." + reader.LocalName);
+
             // read attribute of object
             string a = reader.LocalName;
+
+            if (a == "StyledByItem")
+            {
+                this.ToString();
+            }
 
             string match = a;
             PropertyInfo f = GetFieldByName(o.GetType(), match);
@@ -219,16 +235,7 @@ namespace BuildingSmart.Serialization.Xml
             // inverse
             if (f == null)
             {
-                //...f = GetFieldByNameInverse(o.GetType(), match);
-                IList<PropertyInfo> fields = this.GetFieldsInverseAll(o.GetType());
-                foreach (PropertyInfo field in fields)
-                {
-                    if (field != null && field.Name.Equals(match))
-                    {
-                        f = field;
-                        break;
-                    }
-                }
+                f = GetInverseByName(o.GetType(), match);
             }
 
             if (f == null)
@@ -241,10 +248,16 @@ namespace BuildingSmart.Serialization.Xml
             // read attribute properties
             string reftype = null;
 
-            if (!f.PropertyType.IsGenericType && !f.PropertyType.IsInterface)
+            if (!f.PropertyType.IsGenericType && 
+                !f.PropertyType.IsInterface &&
+                f.PropertyType != typeof(DateTime) &&
+                f.PropertyType != typeof(string))
             {
                 reftype = f.PropertyType.Name;
             }
+
+            // interface, e.g. IfcRepresentation.StyledByItem\IfcStyledItem
+
             string t = reader.GetAttribute("xsi:type");
             string r = reader.GetAttribute("href");
             if (t != null)
@@ -283,11 +296,15 @@ namespace BuildingSmart.Serialization.Xml
                                 break;
 
                             case XmlNodeType.EndElement:
+            System.Diagnostics.Debug.WriteLine("!!ReadAttribute: " + o.GetType().Name + "." + reader.LocalName);
                                 return;
                         }
                     }
                 }
             }
+
+            System.Diagnostics.Debug.WriteLine("<<ReadAttribute: " + o.GetType().Name + "." + reader.LocalName);
+
         }
 
         /// <summary>
@@ -384,6 +401,24 @@ namespace BuildingSmart.Serialization.Xml
             }
         }
 
+        private void LoadCollectionValue(IEnumerable list, object v)
+        {
+            if (list == null)
+                return;
+
+            Type typeCollection = list.GetType();
+
+            try
+            {
+                MethodInfo methodAdd = typeCollection.GetMethod("Add");
+                methodAdd.Invoke(list, new object[] { v }); // perf!!
+            }
+            catch (Exception)
+            {
+                // could be type that changed and is no longer compatible with schema -- try to keep going
+            }
+        }
+
         private void LoadEntityValue(object o, PropertyInfo f, object v)
         {
             if (v == null)
@@ -391,18 +426,28 @@ namespace BuildingSmart.Serialization.Xml
 
             if (!f.PropertyType.IsValueType &&
                 typeof(IEnumerable).IsAssignableFrom(f.PropertyType) &&
+                f.PropertyType.IsGenericType && 
                 f.PropertyType.GetGenericArguments()[0].IsInstanceOfType(v))
             {
-                if (false)//f.FieldType.GetGenericTypeDefinition() == typeof(SInverse<>))
+                if (f.IsDefined(typeof(InversePropertyAttribute), false))//f.FieldType.GetGenericTypeDefinition() == typeof(SInverse<>))
                 {
-#if false
+                    InversePropertyAttribute[] attrs = (InversePropertyAttribute[])f.GetCustomAttributes(typeof(InversePropertyAttribute), false);
+
                     // set the direct field, map to inverse
-                    DataLookupAttribute[] attrs = (DataLookupAttribute[])f.GetCustomAttributes(typeof(DataLookupAttribute), false);
-                    FieldInfo fieldDirect = SEntity.GetFieldByName(v.GetType(), attrs[0].Name);
-                    if (fieldDirect.FieldType.IsGenericType && typeof(IStepCollection).IsAssignableFrom(fieldDirect.FieldType))
+                    PropertyInfo fieldDirect = GetFieldByName(v.GetType(), attrs[0].Property);
+                    if (IsEntityCollection(fieldDirect.PropertyType))
                     {
-                        IStepCollection list = fieldDirect.GetValue(v) as IStepCollection;
-                        list.Load(o);
+                        System.Collections.IEnumerable list = fieldDirect.GetValue(v) as System.Collections.IEnumerable;
+                        try
+                        {
+                            Type typeCollection = this.GetCollectionInstanceType(fieldDirect.PropertyType);
+                            MethodInfo methodAdd = typeCollection.GetMethod("Add");
+                            methodAdd.Invoke(list, new object[] { o }); // perf!!
+                        }
+                        catch (Exception e)
+                        {
+                            // could be type that changed and is no longer compatible with schema -- try to keep going
+                        }
                     }
                     else
                     {
@@ -411,14 +456,28 @@ namespace BuildingSmart.Serialization.Xml
                     }
 
                     // also add to inverse
-                    System.Collections.IList listInv = (System.Collections.IList)f.GetValue(o);
+
+                    // allocate collection as needed
+                    System.Collections.IEnumerable listInv = (System.Collections.IEnumerable)f.GetValue(o);
                     if (listInv == null)
                     {
-                        listInv = (System.Collections.IList)System.Activator.CreateInstance(f.FieldType);
+                        Type typeCollection = this.GetCollectionInstanceType(f.PropertyType);
+                        listInv = (System.Collections.IEnumerable)System.Activator.CreateInstance(typeCollection);
                         f.SetValue(o, listInv);
                     }
-                    listInv.Add(v);
-#endif
+
+                    // add to inverse collection
+                    try
+                    {
+                        Type typeCollection = this.GetCollectionInstanceType(f.PropertyType);
+                        MethodInfo methodAdd = typeCollection.GetMethod("Add");
+                        methodAdd.Invoke(listInv, new object[] { v }); // perf!!
+                    }
+                    catch (Exception e)
+                    {
+                        // could be type that changed and is no longer compatible with schema -- try to keep going
+                    }
+
                 }
                 else
                 {
@@ -487,6 +546,12 @@ namespace BuildingSmart.Serialization.Xml
                     v = enumfield.GetValue(null);
                 }
             }
+            else if(
+                ft == typeof(DateTime) || 
+                ft == typeof(string))
+            {
+                v = ParsePrimitive(reader.Value, ft);
+            }
             else if (ft.IsValueType)
             {
                 // defined type -- get the underlying field
@@ -494,9 +559,33 @@ namespace BuildingSmart.Serialization.Xml
                 if (fields.Length == 1)
                 {
                     PropertyInfo fieldValue = fields[0];
-                    object primval = ParsePrimitive(reader, fieldValue.PropertyType);
+                    object primval = ParsePrimitive(reader.Value, fieldValue.PropertyType);
                     v = Activator.CreateInstance(ft);
                     fieldValue.SetValue(v, primval);
+                }
+            }
+            else if (IsEntityCollection(ft))
+            {
+                // IfcCartesianPoint.Coordinates
+
+                Type typeColl = GetCollectionInstanceType(ft);
+                v = System.Activator.CreateInstance(typeColl);
+
+                Type typeElem = ft.GetGenericArguments()[0];
+                PropertyInfo propValue = typeElem.GetProperty("Value");
+
+                if (propValue != null)
+                {
+                    string[] elements = reader.Value.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+                    IEnumerable list = (IEnumerable)v;
+                    foreach (string elem in elements)
+                    {
+                        object elemv = Activator.CreateInstance(typeElem);
+                        object primv = ParsePrimitive(elem, propValue.PropertyType);
+                        propValue.SetValue(elemv, primv);
+                        LoadCollectionValue(list, elemv);
+                    }
                 }
             }
 
@@ -505,43 +594,51 @@ namespace BuildingSmart.Serialization.Xml
             return endelement;
         }
 
-        private static object ParsePrimitive(XmlReader reader, Type type)
+        private static object ParsePrimitive(string readervalue, Type type)
         {
             object value = null;
             if (typeof(Int64) == type)
             {
                 // INTEGER
-                value = ParseInteger(reader.Value);
+                value = ParseInteger(readervalue);
             }
             else if(typeof(Int32) == type)
             {
-                value = (Int32)ParseInteger(reader.Value);
+                value = (Int32)ParseInteger(readervalue);
             }
             else if (typeof(Double) == type)
             {
                 // REAL
-                value = ParseReal(reader.Value);
+                value = ParseReal(readervalue);
             }
             else if (typeof(Single) == type)
             {
-                value = (Single)ParseReal(reader.Value);
+                value = (Single)ParseReal(readervalue);
             }
             else if (typeof(Boolean) == type)
             {
                 // BOOLEAN
-                value = ParseBoolean(reader.Value);
+                value = ParseBoolean(readervalue);
             }
             else if (typeof(String) == type)
             {
                 // STRING
-                value = reader.Value;
+                value = readervalue.Trim();
+            }
+            else if(typeof(DateTime) == type)
+            {
+                DateTime dtVal;
+                if (DateTime.TryParse(readervalue, out dtVal))
+                {
+                    value = dtVal;
+                }
             }
             else if (typeof(byte[]) == type)
             {
                 // BINARY
-                int bytecount = reader.Value.Length / 2;
+                int bytecount = readervalue.Length / 2;
                 byte[] bytes = new byte[bytecount];
-                reader.ReadContentAsBinHex(bytes, 0, bytes.Length);
+                //...reader.ReadContentAsBinHex(bytes, 0, bytes.Length);
                 value = bytes;
 
                 // modulo not supported for now
@@ -549,77 +646,6 @@ namespace BuildingSmart.Serialization.Xml
             }
 
             return value;
-
-            /*
-            else if (typeof(IStepValueLogical).IsAssignableFrom(ft))
-            {
-                v = (IStepValueLogical)Activator.CreateInstance(ft);
-                switch (reader.Value)
-                {
-                    case "unknown":
-                        ((IStepValueLogical)v).Value = SLogicalEnum.U;
-                        break;
-
-                    case "true":
-                        ((IStepValueLogical)v).Value = SLogicalEnum.T;
-                        break;
-
-                    case "false":
-                        ((IStepValueLogical)v).Value = SLogicalEnum.F;
-                        break;
-
-                    default:
-                        break;
-                }
-            }*/
-
-            /*
-            else if (ft.IsGenericType && ft.GetGenericTypeDefinition() == typeof(SList<>) && typeof(IStepValueReal).IsAssignableFrom(ft.GetGenericArguments()[0]))
-            {
-                // IfcMaterialLayerWithOffsets.OffsetValues
-                string[] elements = reader.Value.Split(' ');
-                v = System.Activator.CreateInstance(ft);
-
-                System.Collections.IList list = (System.Collections.IList)v;
-                foreach (string elem in elements)
-                {
-                    object elemv = Activator.CreateInstance(ft.GetGenericArguments()[0]);
-
-                    double dv;
-                    if (Double.TryParse(elem, out dv))
-                    {
-                        ((IStepValueReal)elemv).Value = dv;
-                    }
-
-                    list.Add(elemv);
-                }
-            }
-            else if (ft.IsGenericType && ft.GetGenericTypeDefinition() == typeof(SList<>) && typeof(IStepValueInteger).IsAssignableFrom(ft.GetGenericArguments()[0]))
-            {
-                // IfcReference.ListPositions
-                string[] elements = reader.Value.Split(' ');
-                v = System.Activator.CreateInstance(ft);
-
-                System.Collections.IList list = (System.Collections.IList)v;
-                foreach (string elem in elements)
-                {
-                    object elemv = Activator.CreateInstance(ft.GetGenericArguments()[0]);
-
-                    long dv;
-                    if (Int64.TryParse(elem, out dv))
-                    {
-                        ((IStepValueInteger)elemv).Value = dv;
-                    }
-
-                    list.Add(elemv);
-                }
-            }
-            else
-            {
-                //Log("IFCXML: #" + o.OID + "" + o.GetType() + "." + f.Name + ": '" + ft.Name + "' type is unsupported.");
-                this.ToString();
-            }
-            */
         }
 
         private static bool ParseBoolean(string strval)
@@ -692,14 +718,12 @@ namespace BuildingSmart.Serialization.Xml
 
             this.WriteHeader(writer);
 
-#if true
             // writer header info
             header h = new header();
             h.time_stamp = DateTime.UtcNow;
             h.preprocessor_version = this.Preprocessor;
             h.originating_system = this.Application;
             this.WriteEntity(writer, ref indent, h, saved, idmap, queue, ref nextID);
-#endif
 
             bool rootdelim = false;
             queue.Enqueue(root);
@@ -968,7 +992,7 @@ namespace BuildingSmart.Serialization.Xml
                                 }
 
                                 previousattribute = true;
-                                this.WriteStartAttribute(writer, indent, f.Name.TrimStart('_'));
+                                this.WriteStartAttribute(writer, indent, f.Name);
 
                                 if (isvaluelistlist)
                                 {
@@ -1008,7 +1032,6 @@ namespace BuildingSmart.Serialization.Xml
                                     PropertyInfo fieldValue = ft.GetProperty("Value");
 
                                     IEnumerable list = (IEnumerable)v;
-                                    //for (int i = 0; i < list.Count; i++)
                                     int i = 0;
                                     foreach (object e in list)
                                     {
@@ -1017,7 +1040,6 @@ namespace BuildingSmart.Serialization.Xml
                                             writer.Write(" ");
                                         }
 
-                                        //object elem = list[i];
                                         if (e != null) // should never be null, but be safe
                                         {
                                             object elem = e;
@@ -1121,7 +1143,6 @@ namespace BuildingSmart.Serialization.Xml
                     }
                     else
                     {
-                        // inverse
                         haselements = true;
                     }
                 }
@@ -1152,19 +1173,35 @@ namespace BuildingSmart.Serialization.Xml
                                 object value = f.GetValue(o);
                                 if (value != null)
                                 {
-                                    if (!open)
+                                    bool showit = true;
+
+                                    if(!f.IsDefined(typeof(System.ComponentModel.DataAnnotations.RequiredAttribute), false) && value is IEnumerable)
                                     {
-                                        WriteOpenElement(writer);
-                                        open = true;
+                                        showit = false;
+                                        IEnumerable en = (IEnumerable)value;
+                                        foreach(object sub in en)
+                                        {
+                                            showit = true;
+                                            break;
+                                        }
                                     }
 
-                                    if (previousattribute)
+                                    if (showit)
                                     {
-                                        this.WriteAttributeDelimiter(writer);
-                                    }
-                                    previousattribute = true;
+                                        if (!open)
+                                        {
+                                            WriteOpenElement(writer);
+                                            open = true;
+                                        }
 
-                                    WriteAttribute(writer, ref indent, o, f, saved, idmap, queue, ref nextID);
+                                        if (previousattribute)
+                                        {
+                                            this.WriteAttributeDelimiter(writer);
+                                        }
+                                        previousattribute = true;
+
+                                        WriteAttribute(writer, ref indent, o, f, saved, idmap, queue, ref nextID);
+                                    }
                                 }
                             }
                         }
@@ -1241,9 +1278,14 @@ namespace BuildingSmart.Serialization.Xml
             if (v == null)
                 return;
 
-            this.WriteStartElementAttribute(writer, ref indent, f.Name.TrimStart('_'));
+            this.WriteStartElementAttribute(writer, ref indent, f.Name);
 
             Type ft = f.PropertyType;
+            PropertyInfo fieldValue = null;
+            if (ft.IsValueType)
+            {
+                fieldValue = ft.GetProperty("Value"); // if it exists for value type
+            }
 
             DocXsdFormatEnum? format = GetXsdFormat(f);
             if (format == null || format != DocXsdFormatEnum.Attribute || f.Name.Equals("InnerCoordIndices")) //hackhack -- need to resolve...
@@ -1253,10 +1295,10 @@ namespace BuildingSmart.Serialization.Xml
 
             if (IsEntityCollection(ft))
             {
-                System.Collections.IEnumerable list = (System.Collections.IEnumerable)v;
+                IEnumerable list = (IEnumerable)v;
 
                 // for nested lists, flatten; e.g. IfcBSplineSurfaceWithKnots.ControlPointList
-                if (typeof(System.Collections.IEnumerable).IsAssignableFrom(ft.GetGenericArguments()[0]))
+                if (typeof(IEnumerable).IsAssignableFrom(ft.GetGenericArguments()[0]))
                 {
                     // special case
                     if (f.Name.Equals("InnerCoordIndices")) //hack
@@ -1276,12 +1318,12 @@ namespace BuildingSmart.Serialization.Xml
                             writer.WriteLine();
                             this.WriteEndElementEntity(writer, ref indent, entname);
                         }
-                        WriteEndElementAttribute(writer, ref indent, f.Name.TrimStart('_'));
+                        WriteEndElementAttribute(writer, ref indent, f.Name);
                         return;
                     }
 
-                    System.Collections.ArrayList flatlist = new System.Collections.ArrayList();
-                    foreach (System.Collections.ICollection innerlist in list)
+                    ArrayList flatlist = new ArrayList();
+                    foreach (IEnumerable innerlist in list)
                     {
                         foreach (object e in innerlist)
                         {
@@ -1292,10 +1334,12 @@ namespace BuildingSmart.Serialization.Xml
                     list = flatlist;
                 }
 
+                // required if stated or if populated.....
+
                 foreach (object e in list)
                 {
                     // if collection is non-zero and contains entity instances
-                    if (!e.GetType().IsValueType && !(e is string) && !(e is System.Collections.IEnumerable))
+                    if (e != null && !e.GetType().IsValueType && !(e is string) && !(e is System.Collections.IEnumerable))
                     {
                         this.WriteCollectionStart(writer, ref indent);
                     }
@@ -1307,21 +1351,21 @@ namespace BuildingSmart.Serialization.Xml
                 {
                     if (e != null) // could be null if buggy file -- not matching schema
                     {
-                        if (e is System.Collections.IList)
+                        if (e is IEnumerable)
                         {
-                            System.Collections.IList listInner = (System.Collections.IList)e;
-                            for (int j = 0; j < listInner.Count; j++)
+                            IEnumerable listInner = (IEnumerable)e;
+                            foreach (object oinner in listInner)//j = 0; j < listInner.Count; j++)
                             {
-                                object oi = listInner[j];
+                                object oi = oinner;//listInner[j];
 
                                 Type et = oi.GetType();
                                 while (et.IsValueType && !et.IsPrimitive)
                                 {
-                                    PropertyInfo fieldValue = et.GetProperty("Value");
-                                    if (fieldValue != null)
+                                    PropertyInfo fieldColValue = et.GetProperty("Value");
+                                    if (fieldColValue != null)
                                     {
-                                        oi = fieldValue.GetValue(oi);
-                                        et = fieldValue.PropertyType;
+                                        oi = fieldColValue.GetValue(oi);
+                                        et = fieldColValue.PropertyType;
                                     }
                                     else
                                     {
@@ -1350,9 +1394,13 @@ namespace BuildingSmart.Serialization.Xml
                                 if (!closeelem)
                                 {
                                     this.WriteCloseElementAttribute(writer, ref indent);
-                                    return;
+                                    /////?????return;//TWC:20180624
                                 }
-                                this.WriteEntityEnd(writer, ref indent);
+                                else
+                                {
+                                    this.WriteEntityEnd(writer, ref indent);
+                                }
+                                break; // if more items, skip them -- buggy input data; no way to encode
                             }
                             else
                             {
@@ -1377,34 +1425,43 @@ namespace BuildingSmart.Serialization.Xml
                     }
                     break;
                 }
-            }
-            else if (f.PropertyType.IsInterface && v is ValueType)
+            } // otherwise if not collection...
+            else if (ft.IsInterface && v is ValueType)
             {
                 this.WriteValueWrapper(writer, ref indent, v);
             }
-            else if (f.PropertyType.IsValueType) // must be IfcBinary
+            else if (ft == typeof(DateTime)) // header datetime
             {
-                PropertyInfo fieldValue = f.PropertyType.GetProperty("Value");
-                if (fieldValue != null)
+                this.WriteOpenElement(writer);
+                DateTime datetime = (DateTime)v;
+                string datetimeiso8601 = datetime.ToString("s", System.Globalization.CultureInfo.InvariantCulture);
+                writer.Write(datetimeiso8601);
+            }
+            else if(ft == typeof(string))
+            {
+                this.WriteOpenElement(writer);
+                string strval = (string)(v);
+                writer.Write(strval);
+            }
+            else if (fieldValue != null) // must be IfcBinary -- but not DateTime or other raw primitives
+            {
+                v = fieldValue.GetValue(v);
+                if (v is byte[])
                 {
-                    v = fieldValue.GetValue(v);
-                    if (v is byte[])
+                    this.WriteOpenElement(writer);
+
+                    // binary data type - we don't support anything other than 8-bit aligned, though IFC doesn't either so no point in supporting extraBits
+                    byte[] bytes = (byte[])v;
+
+                    StringBuilder sb = new StringBuilder(bytes.Length * 2);
+                    for (int i = 0; i < bytes.Length; i++)
                     {
-                        this.WriteOpenElement(writer);
-
-                        // binary data type - we don't support anything other than 8-bit aligned, though IFC doesn't either so no point in supporting extraBits
-                        byte[] bytes = (byte[])v;
-
-                        StringBuilder sb = new StringBuilder(bytes.Length * 2);
-                        for (int i = 0; i < bytes.Length; i++)
-                        {
-                            byte b = bytes[i];
-                            sb.Append(HexChars[b / 0x10]);
-                            sb.Append(HexChars[b % 0x10]);
-                        }
-                        v = sb.ToString();
-                        writer.WriteLine(v);
+                        byte b = bytes[i];
+                        sb.Append(HexChars[b / 0x10]);
+                        sb.Append(HexChars[b % 0x10]);
                     }
+                    v = sb.ToString();
+                    writer.WriteLine(v);
                 }
             }
             else
@@ -1436,14 +1493,14 @@ namespace BuildingSmart.Serialization.Xml
                 }
             }
 
-            WriteEndElementAttribute(writer, ref indent, f.Name.TrimStart('_'));
+            WriteEndElementAttribute(writer, ref indent, f.Name);
         }
 
         private void WriteValueWrapper(StreamWriter writer, ref int indent, object v)
         {
             Type vt = v.GetType();
             PropertyInfo fieldValue = vt.GetProperty("Value");
-            if (fieldValue != null)
+            while (fieldValue != null)
             {
                 v = fieldValue.GetValue(v);
                 if (v != null)
@@ -1453,14 +1510,20 @@ namespace BuildingSmart.Serialization.Xml
                     {
                         v = v.ToString().ToLowerInvariant();
                     }
+
+                    fieldValue = wt.GetProperty("Value");
+                }
+                else
+                {
+                    fieldValue = null;
                 }
             }
 
             string encodedvalue = String.Empty;
-            if (v is System.Collections.IList)
+            if (v is IEnumerable && !(v is string))
             {
                 // IfcIndexedPolyCurve.Segments
-                System.Collections.IList list = (System.Collections.IList)v;
+                IEnumerable list = (IEnumerable)v;
                 StringBuilder sb = new StringBuilder();
                 foreach (object o in list)
                 {
@@ -1472,6 +1535,7 @@ namespace BuildingSmart.Serialization.Xml
                     PropertyInfo fieldValueInner = o.GetType().GetProperty("Value");
                     if (fieldValueInner != null)
                     {
+                        //...todo: recurse for multiple levels of indirection, e.g. 
                         object vInner = fieldValueInner.GetValue(o);
                         sb.Append(vInner.ToString());
                     }
@@ -1522,254 +1586,12 @@ namespace BuildingSmart.Serialization.Xml
 
         private enum DocXsdFormatEnum
         {
-            //Default = 0,//IfcDoc.Schema.CNF.exp_attribute.unspecified,
             Hidden = 1,//IfcDoc.Schema.CNF.exp_attribute.no_tag,    // for direct attribute, don't include as inverse is defined instead
             Attribute = 2,//IfcDoc.Schema.CNF.exp_attribute.attribute_tag, // represent as attribute
             Element = 3,//IfcDoc.Schema.CNF.exp_attribute.double_tag,   // represent as element
-            //Content = 4,//IfcDoc.Schema.CNF.exp_attribute.attribute_content,   // represent as content
-            //Type = 5,//IfcDoc.Schema.CNF.exp_attribute.type_tag,
-            //Simple = 6,//IfcDoc.Schema.CNF.exp_attribute.no_tag_simple
         }
     }
 
 }
 
 
-
-
-/*
-
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
-using System.Reflection;
-using System.Runtime.Serialization;
-using System.Text;
-using System.Xml;
-using System.Xml.Serialization;
-
-using Constructivity.Data;
-using Constructivity.Schema;
-using Constructivity.Schema.IFC;
-
-
-namespace Constructivity.Format.ISO
-{
-    public class FormatIFX :
-        IDisposable,
-        IExtensionFormat,
-        IExtensionStream
-    {
-        Stream m_stream;
-        string m_url;
-        IBinder m_binder;
-        IBrokerExecute m_broker;
-        object m_target;
-        
-        long m_progressTotal;
-        long m_progressCurrent;
-
-        Dictionary<string, Type> m_typemap;
-        IList<SHeader> m_headers;
-
-        const string NamespaceXsi = "http://www.w3.org/2001/XMLSchema-instance";
-        const string NamespaceIfc = "http://www.buildingsmart-tech.org/ifcXML/IFC4/Add1";
-
-        const string PrefixXsi = "xsi";
-
-        public FormatIFX()
-        {
-            m_typemap = new Dictionary<string, Type>();
-            m_headers = new List<SHeader>();
-
-            System.Reflection.Assembly asm = typeof(IfcRoot).Assembly;
-            Type[] types = asm.GetTypes();
-            foreach (Type t in types)
-            {
-                if (t.IsPublic && !t.IsAbstract && 
-                    (typeof(SEntity).IsAssignableFrom(t) || typeof(IStepValue).IsAssignableFrom(t)))
-                {
-                    //TODO: check schema version...
-                    m_typemap.Add(t.Name, t);
-                }
-            }
-        }
-
-
-        public IExtensionError[] Load()
-        {            
-            List<Fixup> fixups = new List<Fixup>(8192);
-            Dictionary<string, SEntity> instances = new Dictionary<string,SEntity>();
-            this.m_progressTotal = this.m_stream.Length;
-
-            Type[] types = IfcRoot.GetSchemaTypes(SchemaPlatform.IFC4x1);
-            Dictionary<string, Type> typemap = new Dictionary<string, Type>();
-            Dictionary<FieldInfo, List<FieldInfo>> inversemap = new Dictionary<FieldInfo, List<FieldInfo>>();
-            SEntity.BuildSchemaMaps(types, typemap, inversemap);
-
-
-            // for now, use xml api directly
-            using (XmlReader reader = XmlReader.Create(this.m_stream))
-            {
-                while (reader.Read())
-                {
-                    switch (reader.NodeType)
-                    {
-                        case XmlNodeType.Element:
-                            if (reader.Name == "ex:iso_10303_28")
-                            {
-                                ReadIsoStep(reader, fixups, instances, inversemap);
-                            }
-                            else if (reader.LocalName.Equals("ifcXML"))
-                            {
-                                ReadPopulation(reader, fixups, instances, inversemap);
-                            }
-                            break;
-                    }
-                }
-            }
-
-            // now, fixup references -- danger: LIST ORDER MAY NOT BE PRESERVED!!!! TBD
-            foreach (Fixup fixup in fixups)
-            {
-                SEntity value = null;
-                if (instances.TryGetValue(fixup.ValueID, out value))
-                {
-                    LoadEntityValue(fixup.Entity, fixup.Field, value, inversemap);
-                }
-                else
-                {
-                    Log("IFCXML: " + fixup.ValueID + ": " + fixup.Entity.GetType().Name + "." + fixup.Field.Name + ": referenced entity does not exist.");                
-                }
-            }
-
-            return null;
-        }
-
-        private void ReadIsoStep(XmlReader reader, IList<Fixup> fixups, IDictionary<string, SEntity> instances, Dictionary<FieldInfo, List<FieldInfo>> inversemap)
-        {
-            while (reader.Read())
-            {
-                switch (reader.NodeType)
-                {
-                    case XmlNodeType.Element:
-                        if (reader.Name == "ex:uos")
-                        {
-                            string schema = reader.GetAttribute("configuration"); // e.g. 'i-ifc2x3'
-                            if (schema != null && schema.StartsWith("i-"))
-                            {
-                                schema = schema.Substring(2).ToUpper();
-                                switch (schema)
-                                {
-                                    case "IFC2X3":
-                                    case "IFC2X4_RC1":
-                                    case "IFC2X4_RC2":
-                                    case "IFC2X4_RC3":
-                                    case "IFC2X4":
-                                    case "IFC4_FINAL":
-                                        ReadPopulation(reader, fixups, instances, inversemap);
-                                        break;
-                                }
-                            }
-                        }
-                        else if (reader.Name == "ex:iso_10303_28_header")
-                        {
-                            ReadHeader(reader);
-                        }
-                        else if (reader.LocalName.StartsWith("Ifc"))
-                        {
-                            ReadEntity(reader, fixups, instances, inversemap, reader.LocalName);
-                            this.m_progressCurrent = this.m_stream.Position;
-                        }
-                        break;
-
-                    case XmlNodeType.EndElement:
-                        return;
-                }
-            }
-        }
-
-        private void ReadHeader(XmlReader reader)
-        {
-            FILE_NAME header = new FILE_NAME(null, null, null);
-
-            while (reader.Read())
-            {
-                switch (reader.NodeType)
-                {
-                    case XmlNodeType.Element:
-                        ReadAttribute(reader, header, null, null, null);
-                        break;
-
-                    case XmlNodeType.EndElement:
-                        return;
-                }
-            }
-
-            this.m_headers.Add(header);
-        }
-
-        private void ReadPopulation(XmlReader reader, IList<Fixup> fixups, IDictionary<string, SEntity> instances, Dictionary<FieldInfo, List<FieldInfo>> inversemap)
-        {
-            while (reader.Read())
-            {
-                switch (reader.NodeType)
-                {
-                    case XmlNodeType.Element:
-                        ReadEntity(reader, fixups, instances, inversemap, reader.LocalName);
-                        break;
-
-                    case XmlNodeType.EndElement:
-                        return;
-                }
-
-                this.m_progressCurrent = this.m_stream.Position;
-            }
-        }
-
-
-
-
-    /// <summary>
-    /// Holds deferred value reference
-    /// </summary>
-    internal struct Fixup
-    {
-        SRecord m_entity;
-        FieldInfo m_field;
-        string m_ref;
-
-        public Fixup(SRecord entity, FieldInfo field, string id)
-        {
-            this.m_entity = entity;
-            this.m_field = field;
-            this.m_ref = id;
-        }
-
-        public SRecord Entity
-        {
-            get
-            {
-                return this.m_entity;
-            }
-        }
-
-        public FieldInfo Field
-        {
-            get
-            {
-                return this.m_field;
-            }
-        }
-
-        public string ValueID
-        {
-            get
-            {
-                return this.m_ref;
-            }
-        }
-    }
-}
-*/

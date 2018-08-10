@@ -424,7 +424,7 @@ namespace IfcDoc
 
                     this.tabControl.TabPages.Add(this.tabPageEntity);
                     this.textBoxEntityBase.Text = docEntity.BaseDefinition;
-                    this.checkBoxEntityAbstract.Checked = docEntity.IsAbstract();
+                    this.checkBoxEntityAbstract.Checked = docEntity.IsAbstract;
                 }
                 else if (docObject is DocDefined)
                 {

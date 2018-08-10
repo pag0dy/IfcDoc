@@ -214,9 +214,25 @@ namespace IfcDoc
                         if (this.m_types.TryGetValue(root.ApplicableEntity.Name, out tOpen) && tOpen is TypeBuilder)
                         {
                             TypeBuilder tb = (TypeBuilder)tOpen;
-                            foreach (DocTemplateUsage concept in root.Concepts)
+
+
+                            // new: generate type for concept root
+                            //if (view.Name != null && root.Name != null)
                             {
-                                CompileConcept(concept, view, tb);
+                                /*
+                                string typename = this.m_rootnamespace + "." + view.Name.Replace(" ", "_") + "." + root.Name.Replace(" ", "_");
+                                //Type tbConceptRoot = RegisterType(typename);
+                                TypeBuilder tbRoot = this.m_module.DefineType(typename, attr, typebase);
+                                */
+
+                                // add typebuilder to map temporarily in case referenced by an attribute within same class or base class
+                                //this.m_types.Add(typename, tb);
+
+                                foreach (DocTemplateUsage concept in root.Concepts)
+                                {
+                                    CompileConcept(concept, view, tb);
+                                }
+                                 
                             }
                         }
                     }
@@ -257,7 +273,7 @@ namespace IfcDoc
                         DocEntity docEnt = (DocEntity)docDef;
                         foreach(DocAttribute docAttr in docEnt.Attributes)
                         {
-                            docAttr.RuntimeField = docDef.RuntimeType.GetField(docAttr.Name);
+                            docAttr.RuntimeField = docDef.RuntimeType.GetProperty(docAttr.Name);
                         }
                     }
 
@@ -349,6 +365,9 @@ namespace IfcDoc
             // }
 
             // compile a method for the template definition, where parameters are passed to the template
+
+
+#if true
             if (includeconcept && concept.Definition != null)
             {
                 MethodInfo methodTemplate = this.RegisterTemplate(concept.Definition);
@@ -357,6 +376,8 @@ namespace IfcDoc
                 if (methodTemplate != null && methodTemplate.DeclaringType.IsAssignableFrom(tb))
                 {
                     string methodname = DocumentationISO.MakeLinkName(view) + "_" + DocumentationISO.MakeLinkName(concept.Definition);
+
+
 
                     MethodBuilder method = tb.DefineMethod(methodname, MethodAttributes.Public, CallingConventions.HasThis, typeof(bool[]), null);
                     ILGenerator generator = method.GetILGenerator();
@@ -467,7 +488,7 @@ namespace IfcDoc
                     System.Diagnostics.Debug.WriteLine("Incompatible template: " + tb.Name + " - " + concept.Definition.Name);
                 }
             }
-
+#endif
             // recurse
             foreach (DocTemplateUsage docChild in concept.Concepts)
             {
@@ -608,7 +629,7 @@ namespace IfcDoc
                 attr |= TypeAttributes.Class;
 
                 DocEntity docEntity = (DocEntity)docType;
-                if (docEntity.IsAbstract())
+                if (docEntity.IsAbstract)
                 {
                     attr |= TypeAttributes.Abstract;
                 }
@@ -983,8 +1004,17 @@ namespace IfcDoc
             TypeBuilder tb = (System.Reflection.Emit.TypeBuilder)this.RegisterType(dtd.Type);
             if (tb == null)
                 return null;
-            
-            string methodname = dtd.Name.Replace(' ', '_').Replace(':', '_').Replace('-', '_');
+
+            string methodname;
+            if(dtd.Name != null)
+            {
+                methodname = dtd.Name;
+            }
+            else
+            {
+                methodname = dtd.UniqueId;
+            }
+            methodname = methodname.Replace(' ', '_').Replace(':', '_').Replace('-', '_');
             MethodBuilder method = tb.DefineMethod(methodname, MethodAttributes.Public, CallingConventions.HasThis, typeof(bool), paramtypes);
             ILGenerator generator = method.GetILGenerator();
             foreach (DocModelRule docRule in dtd.Rules)

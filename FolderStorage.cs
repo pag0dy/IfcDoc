@@ -34,17 +34,28 @@ namespace IfcDoc
     public static class FolderStorage
     {
         /// <summary>
+        /// Loads a .NET DLL
+        /// </summary>
+        /// <param name="project"></param>
+        /// <param name="path"></param>
+        public static void LoadLibrary(DocProject project, string path)
+        {
+            Assembly assem = Assembly.LoadFile(path);
+            LoadAssembly(project, assem);
+        }
+
+        /// <summary>
         /// Loads all content from a folder hierarchy (overlaying anything already existing)
         /// </summary>
         /// <param name="project"></param>
         /// <param name="path"></param>
-        public static void Load(DocProject project, string path)
+        public static void LoadFolder(DocProject project, string path)
         {
             // get all files within folder hierarchy
             string pathSchema = path + @"\schemas";
             IEnumerable<string> en = System.IO.Directory.EnumerateFiles(pathSchema, "*.cs", System.IO.SearchOption.AllDirectories);
             List<string> list = new List<string>();
-            foreach(string s in en)
+            foreach (string s in en)
             {
                 list.Add(s);
             }
@@ -65,257 +76,8 @@ namespace IfcDoc
 
             System.CodeDom.Compiler.CompilerResults results = prov.CompileAssemblyFromFile(parms, files);
             System.Reflection.Assembly assem = results.CompiledAssembly;
-            
-            // look through classes of assembly
-            foreach (Type t in assem.GetTypes())
-            {
-                string[] namespaceparts = t.Namespace.Split('.');
-                string schema = namespaceparts[namespaceparts.Length-1];
-                DocSection docSection = null;
-                if(t.Namespace.EndsWith("Resource"))
-                {
-                    docSection = project.Sections[7];
-                }
-                else if(t.Namespace.EndsWith("Domain"))
-                {
-                    docSection = project.Sections[6];
-                }
-                else if(t.Namespace.Contains("Shared"))
-                {
-                    docSection = project.Sections[5];
-                }
-                else
-                {
-                    docSection = project.Sections[4]; // kernel, extensions
-                }
 
-                // find schema
-                DocSchema docSchema = null;
-                foreach (DocSchema docEachSchema in docSection.Schemas)
-                {
-                    if (docEachSchema.Name.Equals(schema))
-                    {
-                        docSchema = docEachSchema;
-                        break;
-                    }
-                }
-
-                if (docSchema == null)
-                {
-                    docSchema = new DocSchema();
-                    docSchema.Name = schema;
-                    docSection.Schemas.Add(docSchema);
-                    docSection.SortSchemas();
-                }
-
-                DocDefinition docDef = null;
-                if (t.IsEnum)
-                {
-                    DocEnumeration docEnum = new DocEnumeration();
-                    docSchema.Types.Add(docEnum);
-                    docDef = docEnum;
-
-                    System.Reflection.FieldInfo[] fields = t.GetFields(System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public);
-                    foreach (System.Reflection.FieldInfo field in fields)
-                    {
-                        DocConstant docConst = new DocConstant();
-                        docEnum.Constants.Add(docConst);
-                        docConst.Name = field.Name;
-
-                        DescriptionAttribute[] attrs = (DescriptionAttribute[])field.GetCustomAttributes(typeof(DescriptionAttribute), false);
-                        if(attrs.Length == 1)
-                        {
-                            docConst.Documentation = attrs[0].Description;
-                        }
-                    }
-                }
-                else if(t.IsValueType)
-                {
-                    DocDefined docDefined = new DocDefined();
-                    docSchema.Types.Add(docDefined);
-                    docDef = docDefined;
-
-                    PropertyInfo[] fields = t.GetProperties(System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public);
-                    docDefined.DefinedType = fields[0].PropertyType.Name;
-                }
-                else if(t.IsInterface)
-                {
-                    DocSelect docSelect = new DocSelect();
-                    docSchema.Types.Add(docSelect);
-                    docDef = docSelect;
-                }
-                else if(t.IsClass)
-                {
-                    DocEntity docEntity = new DocEntity();
-                    docSchema.Entities.Add(docEntity);
-                    docDef = docEntity;
-
-                    if (t.BaseType != typeof(object))
-                    {
-                        docEntity.BaseDefinition = t.BaseType.Name;
-                    }
-
-                    if (!t.IsAbstract)
-                    {
-                        docEntity.EntityFlags = 0x20;
-                    }
-
-                    Dictionary<int, DocAttribute> attrsDirect = new Dictionary<int, DocAttribute>();
-                    List<DocAttribute> attrsInverse = new List<DocAttribute>();
-                    PropertyInfo[] fields = t.GetProperties(System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic | BindingFlags.DeclaredOnly);
-                    foreach (PropertyInfo field in fields)
-                    {
-                        DocAttribute docAttr = new DocAttribute();
-                        docAttr.Name = field.Name.Substring(1);
-
-                        Type typeField = field.PropertyType;
-                        if (typeField.IsGenericType)
-                        {
-                            Type typeGeneric = typeField.GetGenericTypeDefinition();
-                            typeField = typeField.GetGenericArguments()[0];
-                            if (typeGeneric == typeof(Nullable<>))
-                            {
-                                docAttr.IsOptional = true;
-                            }
-                            else if(typeGeneric == typeof(ISet<>))
-                            {
-                                docAttr.AggregationType = (int)DocAggregationEnum.SET;
-                            }
-                            else if(typeGeneric == typeof(IList<>))
-                            {
-                                docAttr.AggregationType = (int)DocAggregationEnum.LIST;
-                            }
-                        }
-
-                        docAttr.DefinedType = typeField.Name;
-
-
-                        MinLengthAttribute mla = (MinLengthAttribute)field.GetCustomAttribute(typeof(MinLengthAttribute));
-                        if (mla != null)
-                        {
-                            docAttr.AggregationLower = mla.Length.ToString();
-                        }
-
-                        MaxLengthAttribute mxa = (MaxLengthAttribute)field.GetCustomAttribute(typeof(MaxLengthAttribute));
-                        if (mxa != null)
-                        {
-                            docAttr.AggregationUpper = mxa.Length.ToString();
-                        }
-
-                        PropertyInfo propinfo = t.GetProperty(docAttr.Name);
-                        if(propinfo != null)
-                        {
-                            DescriptionAttribute da = (DescriptionAttribute)propinfo.GetCustomAttribute(typeof(DescriptionAttribute));
-                            if (da != null)
-                            {
-                                docAttr.Documentation = da.Description;
-                            }
-                        }
-
-                        DataMemberAttribute dma = (DataMemberAttribute)field.GetCustomAttribute(typeof(DataMemberAttribute));
-                        if(dma != null)
-                        {
-                            attrsDirect.Add(dma.Order, docAttr);
-
-                            RequiredAttribute rqa = (RequiredAttribute)field.GetCustomAttribute(typeof(RequiredAttribute));
-                            if (rqa == null)
-                            {
-                                docAttr.IsOptional = true;
-                            }
-
-                            CustomValidationAttribute cva = (CustomValidationAttribute)field.GetCustomAttribute(typeof(CustomValidationAttribute));
-                            if(cva != null)
-                            {
-                                docAttr.IsUnique = true;
-                            }
-                        }
-                        else
-                        {
-                            InversePropertyAttribute ipa = (InversePropertyAttribute)field.GetCustomAttribute(typeof(InversePropertyAttribute));
-                            if (ipa != null)
-                            {
-                                docAttr.Inverse = ipa.Property;
-                                attrsInverse.Add(docAttr);
-                            }
-                        }
-
-                        // xml
-                        XmlIgnoreAttribute xia = (XmlIgnoreAttribute)field.GetCustomAttribute(typeof(XmlIgnoreAttribute));
-                        if (xia != null)
-                        {
-                            docAttr.XsdFormat = DocXsdFormatEnum.Hidden;
-                        }
-                        else
-                        {
-                            XmlElementAttribute xea = (XmlElementAttribute)field.GetCustomAttribute(typeof(XmlElementAttribute));
-                            if (xea != null)
-                            {
-                                if (!String.IsNullOrEmpty(xea.ElementName))
-                                {
-                                    docAttr.XsdFormat = DocXsdFormatEnum.Element;
-                                }
-                                else
-                                {
-                                    docAttr.XsdFormat = DocXsdFormatEnum.Attribute;
-                                }
-                            }
-                        }
-                    }
-
-                    foreach(DocAttribute docAttr in attrsDirect.Values)
-                    {
-                        docEntity.Attributes.Add(docAttr);
-                    }
-
-                    foreach(DocAttribute docAttr in attrsInverse)
-                    {
-                        docEntity.Attributes.Add(docAttr);
-                    }
-
-                    // get derived attributes based on properties
-                    PropertyInfo[] props = t.GetProperties(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.Public);
-                    foreach (PropertyInfo prop in props)
-                    {
-                        // if no backing field, then derived
-                        FieldInfo field = t.GetField("_" + prop.Name, BindingFlags.NonPublic | BindingFlags.Instance);
-                        if (field == null)
-                        {
-                            DocAttribute docDerived = new DocAttribute();
-                            docDerived.Name = prop.Name;
-                            docEntity.Attributes.Add(docDerived);
-                        }
-                    }
-
-                }
-
-                if (docDef != null)
-                {
-                    docDef.Name = t.Name;
-                    docDef.Uuid = t.GUID;
-                }
-
-                docSchema.SortTypes();
-                docSchema.SortEntities();
-            }
-
-            // pass 2: hook up selects
-            foreach (Type t in assem.GetTypes())
-            {
-                Type[] typeInterfaces = t.GetInterfaces();
-                if (typeInterfaces.Length > 0)
-                {
-                    foreach (Type typeI in typeInterfaces)
-                    {
-                        DocSelect docSelect = project.GetDefinition(typeI.Name) as DocSelect;
-                        if(docSelect != null)
-                        {
-                            DocSelectItem docItem = new DocSelectItem();
-                            docItem.Name = t.Name;
-                            docSelect.Selects.Add(docItem);
-                        }
-                    }
-                }
-            }
+            LoadAssembly(project, assem);
 
             // EXPRESS rules (eventually in C#, though .exp file snippets for now)
             en = System.IO.Directory.EnumerateFiles(pathSchema, "*.exp", System.IO.SearchOption.AllDirectories);
@@ -325,7 +87,28 @@ namespace IfcDoc
                 string expr = null;
                 using (StreamReader readExpr = new StreamReader(file, Encoding.UTF8))
                 {
-                    expr = readExpr.ReadToEnd();
+                    if (name.Contains('-'))
+                    {
+                        // where rule
+                        expr = readExpr.ReadToEnd();
+                    }
+                    else
+                    {
+                        // function: skip first and last lines
+                        readExpr.ReadLine();
+
+                        StringBuilder sbExpr = new StringBuilder();
+                        while (!readExpr.EndOfStream)
+                        {
+                            string line = readExpr.ReadLine();
+                            if (!readExpr.EndOfStream)
+                            {
+                                sbExpr.AppendLine(line);
+                            }
+                        }
+
+                        expr = sbExpr.ToString();
+                    }
                 }
 
                 if (name.Contains('-'))
@@ -339,17 +122,17 @@ namespace IfcDoc
                         docWhere.Expression = expr;
 
                         DocDefinition docDef = project.GetDefinition(parts[0]);
-                        if(docDef is DocEntity)
+                        if (docDef is DocEntity)
                         {
                             DocEntity docEnt = (DocEntity)docDef;
                             docEnt.WhereRules.Add(docWhere);
                         }
-                        else if(docDef is DocDefined)
+                        else if (docDef is DocDefined)
                         {
                             DocDefined docEnt = (DocDefined)docDef;
                             docEnt.WhereRules.Add(docWhere);
                         }
-                        else if(docDef == null)
+                        else if (docDef == null)
                         {
                             //... global rule...
                         }
@@ -374,7 +157,7 @@ namespace IfcDoc
 
             // now, hook up html documentation
             en = System.IO.Directory.EnumerateFiles(pathSchema, "*.htm", System.IO.SearchOption.AllDirectories);
-            foreach(string file in en)
+            foreach (string file in en)
             {
                 string name = Path.GetFileNameWithoutExtension(file);
                 DocObject docObj = null;
@@ -384,26 +167,26 @@ namespace IfcDoc
                     schema = Path.GetFileName(schema);
                     docObj = project.GetSchema(schema);
                 }
-                else if(name.Contains('-'))
+                else if (name.Contains('-'))
                 {
                     // where rule 
                     string[] parts = name.Split('-');
-                    if(parts.Length == 2)
+                    if (parts.Length == 2)
                     {
                         DocDefinition docDef = project.GetDefinition(parts[0]);
-                        if(docDef is DocEntity)
+                        if (docDef is DocEntity)
                         {
                             DocEntity docEnt = (DocEntity)docDef;
-                            foreach(DocWhereRule docWhereRule in docEnt.WhereRules)
+                            foreach (DocWhereRule docWhereRule in docEnt.WhereRules)
                             {
-                                if(docWhereRule.Name.Equals(parts[1]))
+                                if (docWhereRule.Name.Equals(parts[1]))
                                 {
                                     docObj = docWhereRule;
                                     break;
                                 }
                             }
                         }
-                        else if(docDef is DocDefined)
+                        else if (docDef is DocDefined)
                         {
                             DocDefined docEnt = (DocDefined)docDef;
                             foreach (DocWhereRule docWhereRule in docEnt.WhereRules)
@@ -447,7 +230,7 @@ namespace IfcDoc
                 DocSchema docSchema = project.GetSchema(schema);
                 if (docSchema != null)
                 {
-                    using (IfcDoc.Schema.SVG.SchemaSVG schemaSVG = new IfcDoc.Schema.SVG.SchemaSVG(file, docSchema, project))
+                    using (IfcDoc.Schema.SVG.SchemaSVG schemaSVG = new IfcDoc.Schema.SVG.SchemaSVG(file, docSchema, project, DiagramFormat.UML))
                     {
                         schemaSVG.Load();
                     }
@@ -528,6 +311,302 @@ namespace IfcDoc
                     }
                 }
             }
+        }
+            
+        public static void LoadAssembly(DocProject project, Assembly assem)
+        {
+            // look through classes of assembly
+            foreach (Type t in assem.GetTypes())
+            {
+                if (t.Namespace != null)
+                {
+                    string[] namespaceparts = t.Namespace.Split('.');
+                    string schema = namespaceparts[namespaceparts.Length - 1];
+                    DocSection docSection = null;
+                    if (t.Namespace.EndsWith("Resource"))
+                    {
+                        docSection = project.Sections[7];
+                    }
+                    else if (t.Namespace.EndsWith("Domain"))
+                    {
+                        docSection = project.Sections[6];
+                    }
+                    else if (t.Namespace.Contains("Shared"))
+                    {
+                        docSection = project.Sections[5];
+                    }
+                    else
+                    {
+                        docSection = project.Sections[4]; // kernel, extensions
+                    }
+
+                    // find schema
+                    DocSchema docSchema = null;
+                    foreach (DocSchema docEachSchema in docSection.Schemas)
+                    {
+                        if (docEachSchema.Name.Equals(schema))
+                        {
+                            docSchema = docEachSchema;
+                            break;
+                        }
+                    }
+
+                    if (docSchema == null)
+                    {
+                        docSchema = new DocSchema();
+                        docSchema.Name = schema;
+                        docSection.Schemas.Add(docSchema);
+                        docSection.SortSchemas();
+                    }
+
+                    DocDefinition docDef = null;
+                    if (t.IsEnum)
+                    {
+                        DocEnumeration docEnum = new DocEnumeration();
+                        docSchema.Types.Add(docEnum);
+                        docDef = docEnum;
+
+                        System.Reflection.FieldInfo[] fields = t.GetFields(System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public);
+                        foreach (System.Reflection.FieldInfo field in fields)
+                        {
+                            DocConstant docConst = new DocConstant();
+                            docEnum.Constants.Add(docConst);
+                            docConst.Name = field.Name;
+
+                            DescriptionAttribute[] attrs = (DescriptionAttribute[])field.GetCustomAttributes(typeof(DescriptionAttribute), false);
+                            if (attrs.Length == 1)
+                            {
+                                docConst.Documentation = attrs[0].Description;
+                            }
+                        }
+                    }
+                    else if (t.IsValueType)
+                    {
+                        PropertyInfo[] fields = t.GetProperties(System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public);
+                        if (fields.Length > 0)
+                        {
+                            Type typeField = fields[0].PropertyType;
+
+                            DocDefined docDefined = new DocDefined();
+                            docSchema.Types.Add(docDefined);
+                            docDef = docDefined;
+                            docDefined.DefinedType = FormatCSC.GetExpressType(typeField);
+
+                            if (typeField.IsGenericType)
+                            {
+                                Type typeGeneric = typeField.GetGenericTypeDefinition();
+                                typeField = typeField.GetGenericArguments()[0];
+                                if (typeGeneric == typeof(ISet<>) ||
+                                    typeGeneric == typeof(HashSet<>))
+                                {
+                                    docDefined.Aggregation = new DocAttribute();
+                                    docDefined.Aggregation.AggregationType = (int)DocAggregationEnum.SET;
+                                }
+                                else if (typeGeneric == typeof(IList<>) ||
+                                    typeGeneric == typeof(List<>))
+                                {
+                                    docDefined.Aggregation = new DocAttribute();
+                                    docDefined.Aggregation.AggregationType = (int)DocAggregationEnum.LIST;
+                                }
+                            }
+
+                            MaxLengthAttribute mxa = (MaxLengthAttribute)fields[0].GetCustomAttribute(typeof(MaxLengthAttribute));
+                            if (mxa != null)
+                            {
+                                docDefined.Length = mxa.Length;
+                            }
+                        }
+                    }
+                    else if (t.IsInterface)
+                    {
+                        DocSelect docSelect = new DocSelect();
+                        docSchema.Types.Add(docSelect);
+                        docDef = docSelect;
+                    }
+                    else if (t.IsClass)
+                    {
+                        DocEntity docEntity = new DocEntity();
+                        docSchema.Entities.Add(docEntity);
+                        docDef = docEntity;
+
+                        if (t.BaseType != null)
+                        {
+                            if (t.BaseType != typeof(object) && t.BaseType.Name != "SEntity") // back-compat for reflecting on IfcDoc types to generate Express
+                            {
+                                docEntity.BaseDefinition = t.BaseType.Name;
+                            }
+                        }
+
+                        docEntity.IsAbstract = t.IsAbstract;
+
+                        Dictionary<int, DocAttribute> attrsDirect = new Dictionary<int, DocAttribute>();
+                        List<DocAttribute> attrsInverse = new List<DocAttribute>();
+                        PropertyInfo[] fields = t.GetProperties(System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public | BindingFlags.DeclaredOnly);
+                        foreach (PropertyInfo field in fields)
+                        {
+                            DocAttribute docAttr = new DocAttribute();
+                            docAttr.Name = field.Name;
+
+                            Type typeField = field.PropertyType;
+                            if (typeField.IsGenericType)
+                            {
+                                Type typeGeneric = typeField.GetGenericTypeDefinition();
+                                typeField = typeField.GetGenericArguments()[0];
+                                if (typeGeneric == typeof(Nullable<>))
+                                {
+                                    docAttr.IsOptional = true;
+                                }
+                                else if (typeGeneric == typeof(ISet<>) ||
+                                    typeGeneric == typeof(HashSet<>))
+                                {
+                                    docAttr.AggregationType = (int)DocAggregationEnum.SET;
+                                }
+                                else if (typeGeneric == typeof(IList<>) ||
+                                    typeGeneric == typeof(List<>))
+                                {
+                                    docAttr.AggregationType = (int)DocAggregationEnum.LIST;
+                                }
+                            }
+
+                            // primitives
+                            docAttr.DefinedType = FormatCSC.GetExpressType(typeField);
+
+                            MinLengthAttribute mla = (MinLengthAttribute)field.GetCustomAttribute(typeof(MinLengthAttribute));
+                            if (mla != null)
+                            {
+                                docAttr.AggregationLower = mla.Length.ToString();
+                            }
+
+                            MaxLengthAttribute mxa = (MaxLengthAttribute)field.GetCustomAttribute(typeof(MaxLengthAttribute));
+                            if (mxa != null)
+                            {
+                                docAttr.AggregationUpper = mxa.Length.ToString();
+                            }
+
+                            DescriptionAttribute da = (DescriptionAttribute)field.GetCustomAttribute(typeof(DescriptionAttribute));
+                            if (da != null)
+                            {
+                                docAttr.Documentation = da.Description;
+                            }
+
+                            DataMemberAttribute dma = (DataMemberAttribute)field.GetCustomAttribute(typeof(DataMemberAttribute));
+                            if (dma != null)
+                            {
+                                attrsDirect.Add(dma.Order, docAttr);
+
+                                RequiredAttribute rqa = (RequiredAttribute)field.GetCustomAttribute(typeof(RequiredAttribute));
+                                if (rqa == null)
+                                {
+                                    docAttr.IsOptional = true;
+                                }
+
+                                CustomValidationAttribute cva = (CustomValidationAttribute)field.GetCustomAttribute(typeof(CustomValidationAttribute));
+                                if (cva != null)
+                                {
+                                    docAttr.IsUnique = true;
+                                }
+                            }
+                            else
+                            {
+                                InversePropertyAttribute ipa = (InversePropertyAttribute)field.GetCustomAttribute(typeof(InversePropertyAttribute));
+                                if (ipa != null)
+                                {
+                                    docAttr.Inverse = ipa.Property;
+                                    attrsInverse.Add(docAttr);
+                                }
+                            }
+
+                            // xml
+                            XmlIgnoreAttribute xia = (XmlIgnoreAttribute)field.GetCustomAttribute(typeof(XmlIgnoreAttribute));
+                            if (xia != null)
+                            {
+                                docAttr.XsdFormat = DocXsdFormatEnum.Hidden;
+                            }
+                            else
+                            {
+                                XmlElementAttribute xea = (XmlElementAttribute)field.GetCustomAttribute(typeof(XmlElementAttribute));
+                                if (xea != null)
+                                {
+                                    if (!String.IsNullOrEmpty(xea.ElementName))
+                                    {
+                                        docAttr.XsdFormat = DocXsdFormatEnum.Element;
+                                    }
+                                    else
+                                    {
+                                        docAttr.XsdFormat = DocXsdFormatEnum.Attribute;
+                                    }
+                                }
+                            }
+                        }
+
+                        foreach (DocAttribute docAttr in attrsDirect.Values)
+                        {
+                            docEntity.Attributes.Add(docAttr);
+                        }
+
+                        foreach (DocAttribute docAttr in attrsInverse)
+                        {
+                            docEntity.Attributes.Add(docAttr);
+                        }
+
+                        // get derived attributes based on properties
+#if false
+                        PropertyInfo[] props = t.GetProperties(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.Public);
+                        foreach (PropertyInfo prop in props)
+                        {
+                            // if no backing field, then derived
+                            FieldInfo field = t.GetField("_" + prop.Name, BindingFlags.NonPublic | BindingFlags.Instance);
+                            if (field == null)
+                            {
+                                DocAttribute docDerived = new DocAttribute();
+                                docDerived.Name = prop.Name;
+                                docEntity.Attributes.Add(docDerived);
+                            }
+                        }
+#endif
+                    }
+
+                    if (docDef != null)
+                    {
+                        docDef.Name = t.Name;
+                        docDef.Uuid = t.GUID;
+                    }
+
+                    docSchema.SortTypes();
+                    docSchema.SortEntities();
+                }
+            }
+
+            // pass 2: hook up selects
+            foreach (Type t in assem.GetTypes())
+            {
+                Type[] typeInterfaces = t.GetInterfaces();
+
+                Type[] typeInherit = null;
+                if(t.BaseType != null)
+                {
+                    typeInherit = t.BaseType.GetInterfaces();
+                }
+
+                if (typeInterfaces.Length > 0)
+                {
+                    foreach (Type typeI in typeInterfaces)
+                    {
+                        if (typeInherit == null || !typeInherit.Contains<Type>(typeI))
+                        {
+                            DocSelect docSelect = project.GetDefinition(typeI.Name) as DocSelect;
+                            if (docSelect != null)
+                            {
+                                DocSelectItem docItem = new DocSelectItem();
+                                docItem.Name = t.Name;
+                                docSelect.Selects.Add(docItem);
+                            }
+                        }
+                    }
+                }
+            }
+
+
         }
 
         /// <summary>

@@ -84,7 +84,7 @@ namespace IfcDoc
             {
                 foreach (TreeNode tnType in tnNamespace.Nodes)
                 {
-                    if(tnType.Tag is Type && (tnType.Checked || tnNamespace.Checked))
+                    if(tnType.Tag is Type && (tnType.Checked || tnNamespace.Checked) && tnType.BackColor != Color.Lime)
                     {
                         Type t = (Type)tnType.Tag;
                         m_queueTypes.Enqueue(t);

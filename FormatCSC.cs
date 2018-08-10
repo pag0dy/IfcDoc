@@ -40,11 +40,54 @@ namespace IfcDoc.Format.CSC
         }
 
         /// <summary>
+        /// Given a .NET type, resolves to EXPRESS primitive if applicable, or else named type
+        /// </summary>
+        /// <param name="typeField"></param>
+        /// <returns></returns>
+        public static string GetExpressType(Type typeField)
+        {
+            if (typeField == typeof(string))
+            {
+                return "STRING";
+            }
+            else if (typeField == typeof(long) ||
+                typeField == typeof(int))
+            {
+                return "INTEGER";
+            }
+            else if (typeField == typeof(double) ||
+                typeField == typeof(float))
+            {
+                return "REAL";
+            }
+            else if(typeField == typeof(decimal))
+            {
+                return "NUMBER";
+            }
+            else if (typeField == typeof(bool))
+            {
+                return "BOOLEAN";
+            }
+            else if(typeField == typeof(bool?))
+            {
+                return "LOGICAL";
+            }
+            else if (typeField == typeof(byte[]))
+            {
+                return "BINARY";
+            }
+            else
+            {
+                return typeField.Name;
+            }
+        }
+
+        /// <summary>
         /// Returns the native .NET type to use for a given EXPRESS type.
         /// </summary>
         /// <param name="expresstype"></param>
         /// <returns></returns>
-        private static Type GetNativeType(string expresstype)
+        public static Type GetNativeType(string expresstype)
         {
             switch(expresstype)
             {
@@ -188,7 +231,7 @@ namespace IfcDoc.Format.CSC
                         {
                             // use SVG format
                             string filesvg = docSchema.Name + @"\schema.svg";
-                            using (SchemaSVG formatSVG = new SchemaSVG(path + @"\" + filesvg, docSchema, project))
+                            using (SchemaSVG formatSVG = new SchemaSVG(path + @"\" + filesvg, docSchema, project, DiagramFormat.UML))
                             {
                                 formatSVG.Save();
                             }
@@ -850,7 +893,7 @@ namespace IfcDoc.Format.CSC
                 // no  guidssb.AppendLine("[Guid(\"" + docEntity.Uuid.ToString() + "\")]");
 
                 sb.Append("public ");
-                if (docEntity.IsAbstract())
+                if (docEntity.IsAbstract)
                 {
                     sb.Append("abstract ");
                 }
@@ -1114,7 +1157,7 @@ namespace IfcDoc.Format.CSC
                 }
 
                 string constructorvisibility = "public";
-                if(docEntity.IsAbstract())
+                if(docEntity.IsAbstract)
                 {
                     constructorvisibility = "protected";
                 }

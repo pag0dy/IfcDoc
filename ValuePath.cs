@@ -296,7 +296,7 @@ namespace IfcDoc
         /// <param name="target">The relative object to retrieve the value.</param>
         /// <param name="parameters">Optional parameters for substitution.</param>
         /// <returns>The value on the object along the expression path.</returns>
-        public object GetValue(SEntity target, Dictionary<string, SEntity> parameters)
+        public object GetValue(object target, Dictionary<string, object> parameters)
         {
             if (target == null)
                 throw new ArgumentNullException("target");
@@ -316,11 +316,13 @@ namespace IfcDoc
 
             object value = null;
 
-            if (this.m_property.PropertyType.IsGenericType &&
-                typeof(System.Collections.IList).IsAssignableFrom(this.m_property.PropertyType))// &&
+            if (this.m_property.PropertyType != null && 
+                this.m_property.PropertyType.IsGenericType &&
+                typeof(System.Collections.IEnumerable).IsAssignableFrom(this.m_property.PropertyType) &&
+                IsEntity(this.m_property.PropertyType))
                // (typeof(SEntity).IsAssignableFrom(this.m_property.PropertyType.GetGenericArguments()[0]) || this.m_property.PropertyType.GetGenericArguments()[0].IsInterface))
             {
-                System.Collections.IList list = (System.Collections.IList)this.m_property.GetValue(target, null);
+                System.Collections.IEnumerable list = (System.Collections.IEnumerable)this.m_property.GetValue(target, null);
 
                 // if expecting array, then return it.
                 if (this.m_vector && (this.m_identifier == null && this.m_inner == null))
@@ -332,14 +334,14 @@ namespace IfcDoc
                     // return filtered list based on expected type -- may be none if no compatible types -- e.g. COBie properties only return IfcPropertyEnumeratedValue
                     if (this.InnerPath != null && this.InnerPath.Type != null)
                     {
-                        List<SEntity> listFilter = null;
-                        foreach (SEntity ent in list)
+                        List<object> listFilter = null;
+                        foreach (object ent in list)
                         {
                             if (this.InnerPath.Type.IsInstanceOfType(ent))
                             {
                                 if (listFilter == null)
                                 {
-                                    listFilter = new List<SEntity>();
+                                    listFilter = new List<object>();
                                 }
                                 listFilter.Add(ent);
                             }
@@ -356,22 +358,26 @@ namespace IfcDoc
                 if (list != null)
                 {
                     int listindex = 0; // identify by 1-based numeric index within list
-                    if(!String.IsNullOrEmpty(this.m_identifier) && Int32.TryParse(this.m_identifier, out listindex) && listindex > 0 && listindex <= list.Count)
+                    if(!String.IsNullOrEmpty(this.m_identifier) && Int32.TryParse(this.m_identifier, out listindex) && listindex > 0 && list is System.Collections.IList)// && listindex <= list.Count)
                     {
-                        object eachelem = list[listindex - 1];
+                        System.Collections.IList listlist = (System.Collections.IList)list;
+                        if (listindex <= listlist.Count)
+                        {
+                            object eachelem = listlist[listindex - 1];
 
-                        if (this.m_inner != null && eachelem is SEntity)
-                        {
-                            object eachvalue = this.m_inner.GetValue((SEntity)eachelem, parameters);
-                            if (eachvalue != null)
+                            if (this.m_inner != null && IsEntity(eachelem))
                             {
-                                return eachvalue;
+                                object eachvalue = this.m_inner.GetValue(eachelem, parameters);
+                                if (eachvalue != null)
+                                {
+                                    return eachvalue;
+                                }
                             }
+                            else
+                            {
+                                return eachelem;
+                            }                   
                         }
-                        else
-                        {
-                            return eachelem;
-                        }                        
                     }
 
                     foreach (object eachelem in list)
@@ -384,16 +390,16 @@ namespace IfcDoc
                             // special cases for properties and quantities
                             if (eachtype.Name.Equals("IfcRelDefinesByProperties"))
                             {
-                                FieldInfo fieldRelatingPropertyDefinition = eachtype.GetField("RelatingPropertyDefinition");
+                                PropertyInfo fieldRelatingPropertyDefinition = eachtype.GetProperty("RelatingPropertyDefinition");
                                 object ifcPropertySet = fieldRelatingPropertyDefinition.GetValue(eachelem);
                                 if (ifcPropertySet != null)
                                 {
                                     Type typePropertySet = ifcPropertySet.GetType();
-                                    FieldInfo fieldName = typePropertySet.GetField("Name");
+                                    PropertyInfo fieldName = typePropertySet.GetProperty("Name");
                                     object ifcLabel = fieldName.GetValue(ifcPropertySet);
                                     if (ifcLabel != null)
                                     {
-                                        FieldInfo fieldValue = ifcLabel.GetType().GetField("Value");
+                                        PropertyInfo fieldValue = ifcLabel.GetType().GetProperty("Value");
                                         if (fieldValue != null)
                                         {
                                             string sval = fieldValue.GetValue(ifcLabel) as string;
@@ -402,7 +408,7 @@ namespace IfcDoc
                                                 // matches!
                                                 if (this.m_inner != null)
                                                 {
-                                                    object eachvalue = this.m_inner.GetValue((SEntity)eachelem, parameters);
+                                                    object eachvalue = this.m_inner.GetValue(eachelem, parameters);
                                                     if (eachvalue != null)
                                                     {
                                                         return eachvalue;
@@ -421,22 +427,29 @@ namespace IfcDoc
                             else
                             {
                                 // fall back on Name field for properties or quantities
-                                FieldInfo fieldName = eachtype.GetField("Name");
+                                PropertyInfo fieldName = eachtype.GetProperty("Name");
                                 if (fieldName != null)
                                 {
                                     object ifcLabel = fieldName.GetValue(eachelem);
                                     if (ifcLabel != null)
                                     {
-                                        FieldInfo fieldValue = ifcLabel.GetType().GetField("Value");
+                                        PropertyInfo fieldValue = ifcLabel.GetType().GetProperty("Value");
                                         if (fieldValue != null)
                                         {
-                                            string sval = fieldValue.GetValue(ifcLabel) as string;
+                                            object ifcValue = fieldValue.GetValue(ifcLabel);
+                                            while(fieldValue.PropertyType.IsValueType && !fieldValue.PropertyType.IsPrimitive)
+                                            {
+                                                fieldValue = fieldValue.PropertyType.GetProperty("Value");
+                                                ifcValue = fieldValue.GetValue(ifcLabel);
+                                            }
+
+                                            string sval = ifcValue as string;
                                             if (this.m_identifier.Equals(sval))
                                             {
                                                 // matches!
                                                 if (this.m_inner != null)
                                                 {
-                                                    object eachvalue = this.m_inner.GetValue((SEntity)eachelem, parameters);
+                                                    object eachvalue = this.m_inner.GetValue(eachelem, parameters);
                                                     if (eachvalue != null)
                                                     {
                                                         return eachvalue;
@@ -456,9 +469,9 @@ namespace IfcDoc
                         else
                         {
                             // use first non-null item within inner reference
-                            if (this.m_inner != null && eachelem is SEntity)
+                            if (this.m_inner != null && IsEntity(eachelem))
                             {
-                                object eachvalue = this.m_inner.GetValue((SEntity)eachelem, parameters);
+                                object eachvalue = this.m_inner.GetValue(eachelem, parameters);
                                 if (eachvalue != null)
                                 {
                                     return eachvalue;
@@ -480,7 +493,7 @@ namespace IfcDoc
             else if (this.m_inner != null)
             {
                 value = this.m_property.GetValue(target, null);
-                if (value is SEntity)
+                if (IsEntity(value))
                 {
                     // hack for GSA
                     if(value.GetType().Name.Equals("IfcIrregularTimeSeries"))
@@ -488,7 +501,7 @@ namespace IfcDoc
                         return value;
                     }
 
-                    value = this.m_inner.GetValue((SEntity)value, parameters);
+                    value = this.m_inner.GetValue(value, parameters);
 
                     if (this.m_identifier != null && value != null)
                     {
@@ -524,6 +537,16 @@ namespace IfcDoc
             return value;
         }
 
+        public static bool IsEntity(object obj)
+        {
+            if (obj == null)
+                return false;
+
+            if (obj is System.Collections.IEnumerable || obj is ValueType) // not a collection or a string or value type
+                return false;
+
+            return true; // class or interface
+        }
 
         /// <summary>
         /// Extracts description of referenced data, using properties, quantities, and attributes.
@@ -539,7 +562,8 @@ namespace IfcDoc
             if (valpath != null &&
                 valpath.Property != null &&
                 valpath.Property.Name.Equals("IsDefinedBy") &&
-                valpath.InnerPath != null && valpath.InnerPath.Type.Name.Equals("IfcRelDefinesByProperties"))
+                valpath.InnerPath != null && valpath.InnerPath.Type.Name.Equals("IfcRelDefinesByProperties") &&
+                valpath.Identifier != null)
             {
                 DocObject docPset = null;
                 mapEntity.TryGetValue(valpath.Identifier, out docPset);
@@ -737,6 +761,118 @@ namespace IfcDoc
             }
 
             return desc;
+        }
+
+        public static CvtValuePath FromTemplateDefinition(DocTemplateDefinition dtd, DocProject docProject)
+        {
+            if (dtd.Rules.Count > 0 && dtd.Rules[0] is DocModelRuleAttribute)
+            {
+                DocModelRuleAttribute docRuleAtt = (DocModelRuleAttribute)dtd.Rules[0];
+
+                DocEntity docEnt = docProject.GetDefinition(dtd.Type) as DocEntity;
+                if (docEnt != null)
+                {
+                    CvtValuePath pathInner = null;
+                    if (docRuleAtt.Rules.Count > 0 && docRuleAtt.Rules[0] is DocModelRuleEntity)
+                    {
+                        pathInner = FromModelRule((DocModelRuleEntity)docRuleAtt.Rules[0], docProject);
+                    }
+
+                    DocAttribute docAtt = docEnt.ResolveAttribute(docRuleAtt.Name, docProject);
+                    string identifier = null;
+
+                    if (docRuleAtt.Name.Equals("IsDefinedBy"))
+                    {
+                        // hack for compat
+                        docRuleAtt.ToString();
+
+                        // look for identifier
+                        if (docRuleAtt.Rules.Count > 0)
+                        {
+                            try
+                            {
+                                DocModelRuleConstraint docRuleIndexCon = (DocModelRuleConstraint)docRuleAtt.Rules[0].Rules[0].Rules[0].Rules[1].Rules[0].Rules[0];
+
+                                if (docRuleIndexCon != null)
+                                {
+                                    if (docRuleIndexCon.Expression is DocOpStatement)
+                                    {
+                                        DocOpStatement docOpStatement = (DocOpStatement)docRuleIndexCon.Expression;
+                                        if (docOpStatement.Value != null)
+                                        {
+                                            identifier = docOpStatement.Value.ToString();
+                                            if (identifier.StartsWith("'") && identifier.EndsWith("'"))
+                                            {
+                                                identifier = identifier.Substring(1, identifier.Length - 2);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            catch
+                            {
+
+                            }
+                        }
+                    }
+
+                    CvtValuePath pathRoot = new CvtValuePath(docEnt, docAtt, identifier, pathInner);
+                    return pathRoot;
+                }
+            }
+
+            return null;
+        }
+
+        private static CvtValuePath FromModelRule(DocModelRuleEntity docRuleEntity, DocProject docProject)
+        {
+            DocDefinition docDef = docProject.GetDefinition(docRuleEntity.Name);
+            DocAttribute docAtt = null;
+            string identifier = null;
+            CvtValuePath pathInner = null;
+
+            if (docDef is DocEntity && docRuleEntity.Rules.Count > 0 && docRuleEntity.Rules[0] is DocModelRuleAttribute)
+            {
+                DocModelRuleAttribute docRuleAtt = (DocModelRuleAttribute)docRuleEntity.Rules[0];
+                DocEntity docEnt = (DocEntity)docDef;
+                docAtt = docEnt.ResolveAttribute(docRuleAtt.Name, docProject);
+
+                if (docRuleAtt.Rules.Count > 0 && docRuleAtt.Rules[0] is DocModelRuleEntity)
+                {
+                    DocModelRuleEntity docRuleInner = (DocModelRuleEntity)docRuleAtt.Rules[0];
+                    pathInner = FromModelRule(docRuleInner, docProject);
+
+
+                    // look for identifier
+                    if (docRuleInner.Rules.Count > 1 && docRuleInner.Rules[1] is DocModelRuleAttribute)
+                    {
+                        DocModelRuleAttribute docRuleIndexAtt = (DocModelRuleAttribute)docRuleInner.Rules[1];
+                        if (docRuleIndexAtt.Rules.Count > 0)
+                        {
+                            DocModelRuleEntity docRuleIndexEnt = (DocModelRuleEntity)docRuleIndexAtt.Rules[0];
+                            if (docRuleIndexEnt.Rules.Count > 0 && docRuleIndexEnt.Rules[0] is DocModelRuleConstraint)
+                            {
+                                DocModelRuleConstraint docRuleIndexCon = (DocModelRuleConstraint)docRuleIndexEnt.Rules[0];
+                                if (docRuleIndexCon.Expression is DocOpStatement)
+                                {
+                                    DocOpStatement docOpStatement = (DocOpStatement)docRuleIndexCon.Expression;
+                                    if (docOpStatement.Value != null)
+                                    {
+                                        identifier = docOpStatement.Value.ToString();
+                                        if (identifier.StartsWith("'") && identifier.EndsWith("'"))
+                                        {
+                                            identifier = identifier.Substring(1, identifier.Length - 2);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            CvtValuePath pathOuter = new CvtValuePath(docDef, docAtt, identifier, pathInner);
+            return pathOuter;
         }
 
         public DocTemplateDefinition ToTemplateDefinition()

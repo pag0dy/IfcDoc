@@ -702,10 +702,10 @@ namespace IfcDoc.Schema.DOC
                 draft = "review/";
             }
 
-            //return "http://www.buildingsmart-tech.org/ifc/" + draft + this.GetSchemaIdentifier() + "/" + release.ToLower();
+            return "http://www.buildingsmart-tech.org/ifc/" + draft + this.GetSchemaIdentifier() + "/" + release.ToLower();
 
             // for now...temp hack...
-            return "http://www.buildingsmart-tech.org/ifc/IFC4/Add2TC1";
+            //return "http://www.buildingsmart-tech.org/ifc/IFC4/Add2TC1";
         }
 
         public DocTemplateDefinition GetTemplate(Guid guid)
@@ -2999,13 +2999,6 @@ namespace IfcDoc.Schema.DOC
 
     public class DocModelRuleAttribute : DocModelRule
     {
-        //[DataMember(Order = 0)] public ICollection<DocModelRuleEntity> EntityRules { get; set; }
-
-        //public DocModelRuleAttribute()
-        //{
-        //    this.EntityRules = new List<DocModelRuleEntity>();
-        //}
-
         public override void BuildParameterList(IList<DocModelRule> list)
         {
             // add ourselves if marked as parameter
@@ -3407,12 +3400,10 @@ namespace IfcDoc.Schema.DOC
         [DataMember(Order = 1)]
         public string Prefix { get; set; }
 
-
         public DocModelRuleEntity()
         {
             this.References = new List<DocTemplateDefinition>();
         }
-
 
         public override bool IsTemplateReferenced(DocTemplateDefinition docTemplate)
         {
@@ -4212,6 +4203,7 @@ namespace IfcDoc.Schema.DOC
         {
             if (this.ExpressionA == null || this.ExpressionB == null)
                 return String.Empty;
+
             string ea = this.ExpressionA.ToString(template);
             string eb = this.ExpressionB.ToString(template);
             string op = this.Operation.ToString().ToUpper();
@@ -4242,7 +4234,7 @@ namespace IfcDoc.Schema.DOC
             return expr;
         }
 
-        private string AssignRuleIDToExpression(DocOpExpression expr, DocTemplateDefinition template)
+        private static string AssignRuleIDToExpression(DocOpExpression expr, DocTemplateDefinition template)
         {
             string exprRuleID = expr.ToString(template);
             int bracket = exprRuleID.IndexOf('[');
@@ -4261,8 +4253,6 @@ namespace IfcDoc.Schema.DOC
 
             return base.ToString();
         }
-
-    }
 
     /// <summary>
     /// A value which is either a literal or a variable
@@ -5714,7 +5704,8 @@ namespace IfcDoc.Schema.DOC
 
     public class DocTerm : DocObject
     {
-        [DataMember(Order = 0)] public List<DocTerm> Terms {get; protected set;} // added in V7.3  // sub-terms
+        [DataMember(Order = 0)] 
+        public List<DocTerm> Terms {get; protected set;} // added in V7.3  // sub-terms
     }
     
     public class DocAbbreviation : DocObject
@@ -5755,7 +5746,7 @@ namespace IfcDoc.Schema.DOC
         public List<DocLine> Tree { get; protected set; } // optional set of nested lines
 
         [DataMember(Order = 2)] 
-        public DocDefinition Definition {get;set;} // optional target that the line points to
+        public DocDefinition Definition {get; set;} // optional target that the line points to
 
         public DocLine()
         {
@@ -6567,9 +6558,23 @@ namespace IfcDoc.Schema.DOC
             return sb.ToString();
         }
 
-        public bool IsAbstract()
+        public bool IsAbstract
         {
-            return ((this.EntityFlags & 0x20) == 0);
+            get
+            {
+                return ((this.EntityFlags & 0x20) == 0);
+            }
+            set
+            {
+                if (value)
+                {
+                    this.EntityFlags &= ~0x20;
+                }
+                else
+                {
+                    this.EntityFlags |= 0x20;
+                }
+            }
         }
 
         public DocDefinition ResolveParameterType(DocModelRuleAttribute docRuleAttr, string parmname, Dictionary<string, DocObject> map)
@@ -6773,7 +6778,7 @@ namespace IfcDoc.Schema.DOC
         [DataMember(Order = 13)]
         public bool? XsdTagless { get; set; } // NEW in IfcDoc 5.0b: tagless; 8.7: NULLABLE
 
-        private FieldInfo m_runtimefield; // holds compiled property definition
+        private PropertyInfo m_runtimefield; // holds compiled property definition
 
         public DocAttribute()
         {
@@ -6812,7 +6817,7 @@ namespace IfcDoc.Schema.DOC
             }
             set
             {
-                if(value)
+                if (value)
                 {
                     this.AttributeFlags |= 2;
                 }
@@ -6890,7 +6895,7 @@ namespace IfcDoc.Schema.DOC
             return iUpper;
         }
 
-        public FieldInfo RuntimeField
+        public PropertyInfo RuntimeField
         {
             get
             {
@@ -6923,7 +6928,7 @@ namespace IfcDoc.Schema.DOC
                 if (this.m_runtimefield == null)
                     return null;
 
-                return this.m_runtimefield.FieldType;
+                return this.m_runtimefield.PropertyType;
             }
         }
     }
@@ -7089,7 +7094,8 @@ namespace IfcDoc.Schema.DOC
 
     public abstract class DocVariableSet : DocObject
     {
-        [DataMember(Order = 0)] public string ApplicableType {get; set;} // e.g. IfcSensor/TEMPERATURESENSOR
+        [DataMember(Order = 0)] 
+        public string ApplicableType {get; set;} // e.g. IfcSensor/TEMPERATURESENSOR
 
         public DocEntity[] GetApplicableTypeDefinitions(DocProject docProject)
         {
@@ -7113,7 +7119,8 @@ namespace IfcDoc.Schema.DOC
     /// </summary>
     public class DocPropertySet : DocVariableSet
     {
-        [DataMember(Order = 0)] public string PropertySetType {get; set;} // PSET_OCCURRENCEDRIVEN, PSET_TYPEDRIVENOVERRIDE, PSET_PERFORMANCEDRIVEN
+        [DataMember(Order = 0)] 
+        public string PropertySetType {get; set;} // PSET_OCCURRENCEDRIVEN, PSET_TYPEDRIVENOVERRIDE, PSET_PERFORMANCEDRIVEN
 
         [DataMember(Order = 1)]
         public List<DocProperty> Properties { get; protected set; }
@@ -7354,6 +7361,13 @@ namespace IfcDoc.Schema.DOC
                             docAttr.AggregationLower = "0";
                             docAttr.AggregationUpper = "?";
                         }
+                    }
+                    break;
+
+                case DocPropertyTemplateTypeEnum.COMPLEX:
+                    if(!String.IsNullOrEmpty(this.PrimaryDataType))
+                    {
+                        //...
                     }
                     break;
             }
@@ -7741,8 +7755,9 @@ namespace IfcDoc.Schema.DOC
         
         [DataMember(Order = 4)]
         public List<DocModelView> Views { get; protected set; } // added in 7.8
-        
-        [DataMember(Order = 5)] public string Path; // path to external file which may be IFC or some other format to be converted -- added in V11.2
+
+        [DataMember(Order = 5)]
+        public string Path { get; set; }  // path to external file which may be IFC or some other format to be converted -- added in V11.2
 
         public DocExample()
         {
@@ -7921,5 +7936,11 @@ namespace IfcDoc.Schema.DOC
         Examples = 0x1000,
 
         All = 0x7FFFFFFF,
+    }
+
+    public enum DiagramFormat
+    {
+        ExpressG = 0,
+        UML = 1,
     }
 }

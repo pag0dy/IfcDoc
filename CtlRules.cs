@@ -430,7 +430,6 @@ namespace IfcDoc
                     if (this.treeViewTemplate.SelectedNode.Tag is DocModelRuleAttribute)
                     {
                         docRuleAtt = (DocModelRuleAttribute)this.treeViewTemplate.SelectedNode.Tag;
-                        //docRuleAtt.EntityRules = new List<DocModelRuleEntity>();
                     }
                     else
                     {
@@ -456,7 +455,6 @@ namespace IfcDoc
                     DocModelRuleEntity docRuleEntity = new DocModelRuleEntity();
                     docRuleEntity.Name = entityname;
                     docRuleAtt.Rules.Add(docRuleEntity);
-                    //docRuleAtt.EntityRules.Add(docRuleEntity);
                     docRuleEntity.ParentRule = docRuleAtt;
                     this.treeViewTemplate.SelectedNode = this.LoadTemplateGraph(tn, docRuleEntity);
 

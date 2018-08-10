@@ -369,11 +369,11 @@ namespace IfcDoc
                                 // existing entity
 
                                 // compare abstract vs. non-abstract
-                                if (docEntity.IsAbstract() != docEntityBase.IsAbstract())
+                                if (docEntity.IsAbstract != docEntityBase.IsAbstract)
                                 {
                                     docChangeEntity.Action = DocChangeActionEnum.MODIFIED;
 
-                                    if (docEntityBase.IsAbstract())
+                                    if (docEntityBase.IsAbstract)
                                     {
                                         docChangeEntity.Aspects.Add(new DocChangeAspect(DocChangeAspectEnum.INSTANTIATION, "ABSTRACT", null));
                                     }
@@ -388,7 +388,7 @@ namespace IfcDoc
                                 // compare attributes by index
 
                                 // only report non-abstract entities; e.g. attributes may be demoted without file impact
-                                if (!docEntity.IsAbstract())
+                                if (!docEntity.IsAbstract)
                                 {
                                     List<DocAttribute> listAttributeNew = new List<DocAttribute>();
                                     List<DocAttribute> listAttributeOld = new List<DocAttribute>();
@@ -730,7 +730,7 @@ namespace IfcDoc
                                     docChangeEntity.Action = DocChangeActionEnum.DELETED;
 
                                     // if non-abstract, it impacts file
-                                    if (!docEntityBase.IsAbstract())
+                                    if (!docEntityBase.IsAbstract)
                                     {
                                         docChangeEntity.ImpactSPF = true;
                                         docChangeEntity.ImpactXML = true;
