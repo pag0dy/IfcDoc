@@ -1,6 +1,5 @@
-![Official repository by buildingSMART International](https://img.shields.io/badge/buildingSMART-Official%20Repository-orange.svg)
-![This repo is managed by the TechnicalRoom](https://img.shields.io/badge/buildingSMART-TechnicalRoom-blue.svg)
-
+[![Official repository by buildingSMART International](https://img.shields.io/badge/buildingSMART-Official%20Repository-orange.svg)](https://www.buildingsmart.org)
+[![This repo is managed by the TechnicalRoom](https://img.shields.io/badge/buildingSMART-TechnicalRoom-blue.svg)](https://www.buildingsmart.org/standards/rooms-and-groups/technical-room)
 
 IFC Documentation and Toolkit
 =============================
