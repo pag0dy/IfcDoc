@@ -3695,7 +3695,15 @@ namespace IfcDoc.Schema.DOC
                 //return metrichead + this.Reference.ToString(dtd) + metrictail + suffix;
 
                 // new: mvdXML syntax
-                return this.Reference.ToString(dtd) + "[" + metricname + "]" + suffix;
+                if (this.Reference.EntityRule.ParentRule.Identification == "")
+                {
+                    return this.Reference.ToString(dtd) + "[" + metricname + "]" + suffix;
+                } else
+                {
+                    return this.Reference.EntityRule.ParentRule.Identification + "[" + metricname + "]" + suffix;
+                }
+                
+                //return this.Reference.ToString(dtd) + "[" + metricname + "]" + suffix;
             }
 
             return null;
@@ -4121,9 +4129,9 @@ namespace IfcDoc.Schema.DOC
 
     public class DocOpLogical : DocOpExpression // and|or|xor
     {
-        [DataMember(Order = 0)] 
-        public DocOpExpression ExpressionA {get;set;}
-        
+        [DataMember(Order = 0)]
+        public DocOpExpression ExpressionA { get; set; }
+
         [DataMember(Order = 1)]
         public DocOpExpression ExpressionB { get; set; }
 
@@ -4204,6 +4212,25 @@ namespace IfcDoc.Schema.DOC
 
             expr = "(" + AssignRuleIDToExpression(this.ExpressionA, template) + " " + this.Operation.ToString().ToUpper() + " " + AssignRuleIDToExpression(this.ExpressionB, template) + ")";
 
+            //if (this.ExpressionA is DocOpLogical)
+            //{
+            //    expr += "(" + this.ExpressionA.ToString(template) + " " + this.Operation.ToString().ToUpper() + " " + AssignRuleIDToExpression(this.ExpressionB, template) + ")";
+            //}
+            //else if (this.ExpressionB is DocOpLogical)
+            //{
+            //    expr += "(" + AssignRuleIDToExpression(this.ExpressionA, template) + " " + this.Operation.ToString().ToUpper() + " " + this.ExpressionB.ToString(template) + ")";
+            //}
+            //else
+            //{
+            //    string exprA = AssignRuleIDToExpression(this.ExpressionA);
+            //    int bracketA = exprA.IndexOf('[');
+
+            //    string exprB = AssignRuleIDToExpression(this.ExpressionB);
+            //    int bracketB = exprB.IndexOf('[');
+
+            //    expr += "(" + exprA + " " + this.Operation.ToString().ToUpper() + " " + exprB + ")";
+            //}
+
             return expr;
         }
 
@@ -4220,9 +4247,13 @@ namespace IfcDoc.Schema.DOC
 
             return exprRuleID;
         }
-   
-    }
 
+        private string NestedString(DocTemplateDefinition template, string opExpression)
+        {
+
+            return base.ToString();
+        }
+    }
     /// <summary>
     /// A value which is either a literal or a variable
     /// </summary>
@@ -5385,8 +5416,15 @@ namespace IfcDoc.Schema.DOC
                     }
 
                     //...
-
-                    expr[i].Metric = DocMetricEnum.Value;
+                    if (args[1].Length > 3 && args[1].Substring(0,3) == "Ifc")
+                    {
+                        expr[i].Metric = DocMetricEnum.Type;
+                    }
+                    else
+                    {
+                        expr[i].Metric = DocMetricEnum.Value;
+                    }
+                    
                     expr[i].Operator = DocOperatorEnum.EQUAL;
                     expr[i].Value = args[1];
                 }

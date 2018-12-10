@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 using IfcDoc.Schema;
 using IfcDoc.Schema.DOC;
-
+using System.Text.RegularExpressions;
 
 namespace IfcDoc
 {
@@ -844,8 +844,115 @@ namespace IfcDoc
                         }
                     }
                     
-                    CvtValuePath valuepath = CvtValuePath.Parse(value, mapEntity);
-                    this.ChangeTemplate(valuepath.ToTemplateDefinition());
+                    if (docBaseEntity.BaseDefinition == "IfcElement" || docBaseEntity.BaseDefinition == "IfcElementComponent" || docBaseEntity.BaseDefinition == "IfcBuildingElement" ||
+                        docBaseEntity.BaseDefinition == "IfcReinforcingElement" || docBaseEntity.BaseDefinition == "IfcFlowSegment" || docBaseEntity.BaseDefinition == "IfcFeatureElement")
+                    {
+                        this.ChangeTemplate(this.m_project.GetTemplate(DocTemplateDefinition.guidTemplatePsetObject));
+
+                        string[] psetParamNames = this.Concept.Definition.GetParameterNames();
+                        DocTemplateItem pset = new DocTemplateItem();
+                        pset.Name = form.SelectedPropertySet.Name;
+
+                        if (form.SelectedPropertySet.Name == "Pset_ElementCommon")
+                        {
+                            pset.Name = form.SelectedPropertySet.Name.Replace("Element", docBaseEntity.Name);
+                        }
+
+                        pset.RuleParameters = "PsetName=" + pset.Name;
+                        if (this.Concept.Items.Count == 0)
+                        {
+                            this.Concept.Items.Add(pset);
+                        }
+                        else
+                        {
+                            bool addItem = true;
+                            foreach (DocTemplateItem existingPsetDefinition in this.Concept.Items)
+                            {
+                                if (existingPsetDefinition.Name == pset.Name)
+                                {
+                                    addItem = false;
+                                }
+                            }
+                            if (addItem)
+                            {
+                                this.Concept.Items.Add(pset);
+                            }
+                        }
+
+                        DocTemplateUsage propertyConcept = new DocTemplateUsage();
+                        DocPropertyTemplateTypeEnum propertyType = form.SelectedProperty.PropertyType;
+                        propertyConcept.Operator = DocTemplateOperator.And;
+                        DocTemplateItem property = new DocTemplateItem();
+                        string psetName = pset.Name;
+                        propertyConcept.Name = String.Join(" ", Regex.Split(form.SelectedProperty.Name, @"(?<!^)(?=[A-Z])"));
+                        switch (propertyType)
+                        {
+                            case DocPropertyTemplateTypeEnum.P_SINGLEVALUE:
+                                //propertyConcept.Name = "Single Value";
+                                //propertyRule.RuleParameters = parameterNames[0] + "[Value]=" + "'" + form.SelectedProperty.Name + "'" + parameterNames[1] + "[Type]=" + "'" + form.SelectedProperty.PrimaryDataType + "'";
+                                propertyConcept.Definition = this.m_project.GetTemplate(DocTemplateDefinition.guidTemplatePropertySingle);
+                                //parameterNames = property.Definition.GetParameterNames();
+                                property.RuleParameters = propertyConcept.Definition.GetParameterNames()[0] + "=" + form.SelectedProperty.Name + ";" + propertyConcept.Definition.GetParameterNames()[1] + "=" + form.SelectedProperty.PrimaryDataType + ";";
+                                CreateAndAssignProperty(form, propertyConcept, property, psetName);
+                                break;
+                            case DocPropertyTemplateTypeEnum.P_ENUMERATEDVALUE:
+                                //propertyConcept.Name = "Enumerated Value";
+                                propertyConcept.Definition = this.m_project.GetTemplate(DocTemplateDefinition.guidTemplatePropertyEnumerated);
+                                //parameterNames = property.Definition.GetParameterNames();
+                                property.RuleParameters = propertyConcept.Definition.GetParameterNames()[0] + "=" + form.SelectedProperty.Name + ";" + propertyConcept.Definition.GetParameterNames()[1] + "=" + form.SelectedProperty.PrimaryDataType + ";";
+                                CreateAndAssignProperty(form, propertyConcept, property, psetName);
+                                break;
+                        }
+
+                        //foreach(DocModelRule rule in property.Definition.Rules)
+                        //{
+                        //    if (!string.IsNullOrEmpty(rule.Identification))
+                        //    {
+
+                        //    }
+                        //}
+                    }
+                    else
+                    {
+                        CvtValuePath valuepath = CvtValuePath.Parse(value, mapEntity);
+                        this.ChangeTemplate(valuepath.ToTemplateDefinition());
+                    }
+                }
+            }
+        }
+
+        private void CreateAndAssignProperty(FormSelectProperty form, DocTemplateUsage propertyConcept, DocTemplateItem property, string psetName)
+        {
+            propertyConcept.Items.Add(property);
+
+            foreach (DocTemplateItem pset in this.Concept.Items)
+            {
+                if (pset.Name == psetName)
+                {
+                    pset.Concepts.Add(propertyConcept);
+                    //if (pset.Concepts.Count == 0)
+                    //{
+                    //    pset.Concepts.Add(propertyConcept);
+                    //}
+                    //else
+                    //{
+                    //    bool propertyAdded = false;
+                    //    foreach (DocTemplateUsage propConcept in pset.Concepts)
+                    //    {
+                    //        if (propConcept.Definition.Equals(propertyConcept.Definition))
+                    //        {
+                    //            propConcept.Items.Add(property);
+                    //            propertyAdded = true;
+                    //        }
+                    //        //if (form.SelectedProperty.PropertyType == prop.)
+                    //    }
+                    //    if (!propertyAdded)
+                    //    {
+                    //        pset.Concepts.Add(propertyConcept);
+                    //    }
+                    //}
+
+                    //this.Concept.Items.Add(propertySetProperty);
                 }
             }
         }

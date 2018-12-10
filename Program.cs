@@ -2036,19 +2036,19 @@ namespace IfcDoc
             if (ruleItem is TemplateItem)
             {
                 TemplateItem rule = (TemplateItem)ruleItem;
-                if (rule.Requirements != null)
-                {
-                    foreach (ConceptRequirement mvdReq in rule.Requirements)
-                    {
-                        ExchangeRequirement mvdExchange = null;
-                        if (mapExchange.TryGetValue(mvdReq.ExchangeRequirement, out mvdExchange))
-                        {
-                            DocExchangeItem docReq = new DocExchangeItem();
-                            docItem.Exchanges.Add(docReq);
-                            ImportMvdRequirement(mvdReq, docReq, docProject);
-                        }
-                    }
-                }
+                //if (rule.Requirements != null)
+                //{
+                //    foreach (ConceptRequirement mvdReq in rule.Requirements)
+                //    {
+                //        ExchangeRequirement mvdExchange = null;
+                //        if (mapExchange.TryGetValue(mvdReq.ExchangeRequirement, out mvdExchange))
+                //        {
+                //            DocExchangeItem docReq = new DocExchangeItem();
+                //            docItem.Exchanges.Add(docReq);
+                //            ImportMvdRequirement(mvdReq, docReq, docProject);
+                //        }
+                //    }
+                //}
 
                 if (rule.References != null)
                 {
@@ -2060,34 +2060,34 @@ namespace IfcDoc
                     }
                 }
 
-                docItem.Order = rule.Order;
-                switch (rule.Usage)
-                {
-                    case TemplateRuleUsage.System:
-                        docItem.Calculated = true;
-                        break;
+                //docItem.Order = rule.Order;
+                //switch (rule.Usage)
+                //{
+                //    case TemplateRuleUsage.System:
+                //        docItem.Calculated = true;
+                //        break;
 
-                    case TemplateRuleUsage.Calculation:
-                        docItem.Calculated = true;
-                        docItem.Optional = true;
-                        break;
+                //    case TemplateRuleUsage.Calculation:
+                //        docItem.Calculated = true;
+                //        docItem.Optional = true;
+                //        break;
 
-                    case TemplateRuleUsage.Reference:
-                        docItem.Reference = true;
-                        break;
+                //    case TemplateRuleUsage.Reference:
+                //        docItem.Reference = true;
+                //        break;
 
-                    case TemplateRuleUsage.Key:
-                        docItem.Key = true;
-                        break;
+                //    case TemplateRuleUsage.Key:
+                //        docItem.Key = true;
+                //        break;
 
-                    case TemplateRuleUsage.Optional:
-                        docItem.Optional = true;
-                        break;
+                //    case TemplateRuleUsage.Optional:
+                //        docItem.Optional = true;
+                //        break;
 
-                    case TemplateRuleUsage.Required:
-                        // default
-                        break;
-                }
+                //    case TemplateRuleUsage.Required:
+                //        // default
+                //        break;
+                //}
             }
 
             return docItem;
@@ -2377,40 +2377,40 @@ namespace IfcDoc
             {
                 TemplateItem mvdTemplateRule = new TemplateItem();
                 mvdRule = mvdTemplateRule;
-                if (docItem.Calculated)
-                {
-                    if (docItem.Optional)
-                    {
-                        mvdTemplateRule.Usage = TemplateRuleUsage.Calculation;
-                    }
-                    else
-                    {
-                        mvdTemplateRule.Usage = TemplateRuleUsage.System;
-                    }
-                }
-                else if (docItem.Key)
-                {
-                    mvdTemplateRule.Usage = TemplateRuleUsage.Key;
-                }
-                else if (docItem.Reference)
-                {
-                    mvdTemplateRule.Usage = TemplateRuleUsage.Reference;
-                }
-                else if (docItem.Optional)
-                {
-                    mvdTemplateRule.Usage = TemplateRuleUsage.Optional;
-                }
+                //if (docItem.Calculated)
+                //{
+                //    if (docItem.Optional)
+                //    {
+                //        mvdTemplateRule.Usage = TemplateRuleUsage.Calculation;
+                //    }
+                //    else
+                //    {
+                //        mvdTemplateRule.Usage = TemplateRuleUsage.System;
+                //    }
+                //}
+                //else if (docItem.Key)
+                //{
+                //    mvdTemplateRule.Usage = TemplateRuleUsage.Key;
+                //}
+                //else if (docItem.Reference)
+                //{
+                //    mvdTemplateRule.Usage = TemplateRuleUsage.Reference;
+                //}
+                //else if (docItem.Optional)
+                //{
+                //    mvdTemplateRule.Usage = TemplateRuleUsage.Optional;
+                //}
 
-                mvdTemplateRule.Order = docItem.Order;
+                //mvdTemplateRule.Order = docItem.Order;
 
                 // requirements -- not yet captured in user interface
                 if (docItem.Exchanges.Count > 0)
                 {
-                    mvdTemplateRule.Requirements = new List<ConceptRequirement>();
+                    //mvdTemplateRule.Requirements = new List<ConceptRequirement>();
                     foreach (DocExchangeItem docExchangeItem in docItem.Exchanges)
                     {
                         ConceptRequirement mvdRequirement = new ConceptRequirement();
-                        mvdTemplateRule.Requirements.Add(mvdRequirement);
+                        //mvdTemplateRule.Requirements.Add(mvdRequirement);
                         ExportMvdRequirement(mvdRequirement, docExchangeItem);
                     }
                 }

@@ -273,7 +273,7 @@ namespace IfcDoc
         /// <param name="entity"></param>
         /// <param name="template"></param>
         /// <param name="view"></param>
-        private static DocTemplateItem[] FindTemplateItems(DocProject docProject, DocEntity entity, DocTemplateDefinition template, DocModelView view)
+        private static DocTemplateItem[] FindTemplateItems(DocProject docProject, DocEntity entity, DocTemplateDefinition template, DocModelView view, DocConceptRoot root = null)
         {
             // inherited concepts first
 
@@ -289,7 +289,59 @@ namespace IfcDoc
                     {
                         foreach (DocConceptRoot docRoot in docView.ConceptRoots)
                         {
-                            if (docRoot.ApplicableEntity == basetype)
+                            if (docRoot.ApplicableEntity == basetype && root == null)
+                            {
+                                foreach (DocTemplateUsage eachusage in docRoot.Concepts)
+                                {
+                                    if (eachusage.Definition == template)
+                                    {
+                                        // found it
+
+                                        string[] parameters = template.GetParameterNames();
+
+                                        foreach (DocTemplateItem eachitem in eachusage.Items)
+                                        {
+                                            string[] values = new string[parameters.Length];
+                                            for (int iparam = 0; iparam < parameters.Length; iparam++)
+                                            {
+                                                values[iparam] = eachitem.GetParameterValue(parameters[iparam]);
+                                            }
+
+                                            // new (IfcDoc 4.9d): only add if we don't override by parameters matching exactly
+                                            bool include = true;
+                                            foreach (DocTemplateItem existitem in listItems)
+                                            {
+                                                bool samevalues = true;
+
+                                                for (int iparam = 0; iparam < parameters.Length; iparam++)
+                                                {
+                                                    string value = values[iparam];
+                                                    string match = existitem.GetParameterValue(parameters[iparam]);
+                                                    if (match != value || (match != null && !match.Equals(value, StringComparison.Ordinal)))
+                                                    {
+                                                        samevalues = false;
+                                                        break;
+                                                    }
+                                                }
+
+                                                if (samevalues)
+                                                {
+                                                    include = false;
+                                                    break;
+                                                }
+                                            }
+
+                                            if (include)
+                                            {
+                                                listItems.Add(eachitem);
+                                            }
+                                        }
+
+                                        inherit = !eachusage.Override;
+                                    }
+                                }
+                            }
+                            else if (docRoot.ApplicableEntity == basetype && root.Equals(docRoot))
                             {
                                 foreach (DocTemplateUsage eachusage in docRoot.Concepts)
                                 {
@@ -1946,7 +1998,7 @@ namespace IfcDoc
             if (usage != null)
             {
                 docTemplate = usage.Definition;
-                listItems = FindTemplateItems(docProject, entity, usage.Definition, docModelView);
+                listItems = FindTemplateItems(docProject, entity, usage.Definition, docModelView, root);
 
                 if (usage.Override)
                 {
