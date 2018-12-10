@@ -235,7 +235,7 @@ namespace BuildingSmart.Serialization.Xml
             // inverse
             if (f == null)
             {
-                f = GetInverseByName(o.GetType(), match);
+                //f = GetInverseByName(o.GetType(), match);
             }
 
             if (f == null)

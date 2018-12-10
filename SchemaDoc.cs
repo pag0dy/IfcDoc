@@ -4129,9 +4129,9 @@ namespace IfcDoc.Schema.DOC
 
     public class DocOpLogical : DocOpExpression // and|or|xor
     {
-        [DataMember(Order = 0)] 
-        public DocOpExpression ExpressionA {get;set;}
-        
+        [DataMember(Order = 0)]
+        public DocOpExpression ExpressionA { get; set; }
+
         [DataMember(Order = 1)]
         public DocOpExpression ExpressionB { get; set; }
 
@@ -4227,7 +4227,7 @@ namespace IfcDoc.Schema.DOC
 
             //    string exprB = AssignRuleIDToExpression(this.ExpressionB);
             //    int bracketB = exprB.IndexOf('[');
-                
+
             //    expr += "(" + exprA + " " + this.Operation.ToString().ToUpper() + " " + exprB + ")";
             //}
 
@@ -4253,7 +4253,7 @@ namespace IfcDoc.Schema.DOC
 
             return base.ToString();
         }
-
+    }
     /// <summary>
     /// A value which is either a literal or a variable
     /// </summary>
