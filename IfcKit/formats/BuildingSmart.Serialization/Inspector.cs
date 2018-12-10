@@ -338,6 +338,18 @@ namespace BuildingSmart.Serialization
 			return null;
 		}
 
+		protected PropertyInfo GetInverseByName(Type type, string name)
+		{
+			IList<PropertyInfo> fields = this.GetFieldsInverseAll(type);
+			foreach (PropertyInfo field in fields)
+			{
+				if (field != null && field.Name.Equals(name))
+					return field;
+			}
+
+			return null;
+		}
+
 		protected PropertyInfo GetFieldInverse(PropertyInfo field, Type t)
 		{
 			List<PropertyInfo> listFields = null;
