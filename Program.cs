@@ -2421,7 +2421,15 @@ namespace IfcDoc
 			}
 
 			mvdRule.Description = docItem.Documentation;
-			mvdRule.Parameters = docItem.FormatParameterExpressions(docTemplate, docProject, map); // was RuleParameters;
+			if (docItem.RuleParameters == null || docItem.RuleParameters == "")
+			{
+				mvdRule.Parameters = docItem.FormatParameterExpressions(docTemplate, docProject, map); // was RuleParameters;
+			}
+			else
+			{
+				mvdRule.Parameters = docItem.RuleParameters;
+			}
+			
 
 			return mvdRule;
 		}
