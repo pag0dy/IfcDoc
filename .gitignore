@@ -12,4 +12,6 @@
 /bin/x64/Debug
 /IfcKit
 *.suo
+*.user
 /.vs
+
