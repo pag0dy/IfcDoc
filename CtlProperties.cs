@@ -1097,7 +1097,8 @@ namespace IfcDoc
             DocProperty docTemplate = (DocProperty)this.m_target;
 
             DocSchema docSchema = null;
-            DocPropertyEnumeration docEnum = this.m_project.FindPropertyEnumeration(docTemplate.SecondaryDataType, out docSchema);
+			DocPropertyEnumeration docEnum = this.m_project.FindPropertyEnumeration(docTemplate.SecondaryDataType, out docSchema);
+			//DocPropertyEnumeration docEnum = this.m_project.FindPropertyEnumeration(docTemplate.SecondaryDataType.Split(':')[0], out docSchema);
 
             if (docTemplate.PropertyType == DocPropertyTemplateTypeEnum.P_ENUMERATEDVALUE)
             {
@@ -1109,7 +1110,12 @@ namespace IfcDoc
                         if (form.Selection != null)
                         {
                             docTemplate.PrimaryDataType = "IfcLabel";
-                            docTemplate.SecondaryDataType = form.Selection.Name;
+							docTemplate.SecondaryDataType = form.Selection.Name;/* + ":";
+							foreach(DocPropertyConstant enumValue in docEnum.Constants)
+							{
+								docTemplate.SecondaryDataType += enumValue.Name + ",";
+							}
+							docTemplate.SecondaryDataType.Remove(docTemplate.SecondaryDataType.Length - 1);*/
                         }
                         else
                         {
@@ -1117,7 +1123,8 @@ namespace IfcDoc
                             docTemplate.SecondaryDataType = String.Empty;
                         }
                         this.textBoxPropertyDataPrimary.Text = docTemplate.PrimaryDataType;
-                        this.textBoxPropertyDataSecondary.Text = docTemplate.SecondaryDataType;
+						this.textBoxPropertyDataSecondary.Text = docTemplate.SecondaryDataType;
+						//this.textBoxPropertyDataSecondary.Text = docTemplate.SecondaryDataType.Split(':')[0];
                     }
                 }
                 return;

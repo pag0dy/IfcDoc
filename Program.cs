@@ -1391,6 +1391,19 @@ namespace IfcDoc
 									eni.Value = eachenum.Trim();
 								}
 							}
+							else
+							{
+								//DocPropertyEnumeration docEnum = this.m_project.FindPropertyEnumeration(docTemplate.SecondaryDataType.Split(':')[0], out docSchema);
+								//mapPropEnum[parts]
+								prop.PropertyType.TypePropertyEnumeratedValue.EnumList.name = parts[0];
+								prop.PropertyType.TypePropertyEnumeratedValue.EnumList.Items = new List<EnumItem>();
+								foreach (DocPropertyConstant enumValue in mapPropEnum[parts[0]].Constants)
+								{
+									EnumItem enumConstant = new EnumItem();
+									enumConstant.Value = enumValue.Name.Trim();
+									prop.PropertyType.TypePropertyEnumeratedValue.EnumList.Items.Add(enumConstant);
+								}
+							}
 
 							string propenum = docProp.SecondaryDataType;
 							if (propenum != null)
@@ -1409,12 +1422,13 @@ namespace IfcDoc
 								foreach (DocPropertyConstant docPropConst in docPropEnum.Constants)
 								{
 									ConstantDef con = new ConstantDef();
-									prop.PropertyType.TypePropertyEnumeratedValue.ConstantList.Items.Add(con);
 
 									con.Name = docPropConst.Name.Trim();
 									con.Definition = docPropConst.Documentation;
 									con.NameAliases = new List<NameAlias>();
 									con.DefinitionAliases = new List<DefinitionAlias>();
+
+									prop.PropertyType.TypePropertyEnumeratedValue.ConstantList.Items.Add(con);
 
 									foreach (DocLocalization docLocal in docPropConst.Localization)
 									{
