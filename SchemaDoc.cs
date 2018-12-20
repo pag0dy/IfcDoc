@@ -16,7 +16,7 @@ using System.Reflection;
 using System.Reflection.Emit;
 using System.Runtime.Serialization;
 using System.Text;
-
+using System.Text.RegularExpressions;
 using BuildingSmart.Utilities.Conversion;
 
 namespace IfcDoc.Schema.DOC
@@ -5512,7 +5512,15 @@ namespace IfcDoc.Schema.DOC
 		/// <param name="encoding"></param>
 		public void ParseParameterExpressions(string encoding)
 		{
-			this.RuleParameters = encoding;//...
+			string[] rules = encoding.Split(new string[] { "AND" }, StringSplitOptions.RemoveEmptyEntries);
+			foreach (string rule in  rules)
+			{
+				string parsedRule = Regex.Replace(rule, @"\s+", "");
+				parsedRule = Regex.Replace(parsedRule, @"\[.*\]", "");
+				parsedRule = parsedRule.Replace("\'", "");
+
+				this.RuleParameters += parsedRule + ";";
+			}
 		}
 
 		public string GetParameterValue(string key)
