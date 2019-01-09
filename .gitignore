@@ -3,7 +3,7 @@
 ################################################################################
 
 /obj
-/obj/x86/Debug
+/bin
 /IfcKit/schemas/IFC4X1/obj/Debug
 /IfcKit/formats/xml/obj/Debug
 /IfcKit/formats/ttl/obj/Debug
