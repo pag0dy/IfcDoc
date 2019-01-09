@@ -1785,6 +1785,15 @@ namespace IfcDoc
                 lvi.SubItems.Add(docAttr.AggregationUpper);
                 this.listViewAttributeCardinality.Items.Add(lvi);
 
+				if (docAttr.IsUnique)
+				{
+					this.checkBoxAttributeUnique.Checked = true;
+				}
+				else
+				{
+					this.checkBoxAttributeUnique.Checked = false;
+				}
+
                 docAttr = docAttr.AggregationAttribute;
             }
             this.m_loadagg = false;

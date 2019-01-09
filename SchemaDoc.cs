@@ -6814,17 +6814,17 @@ namespace IfcDoc.Schema.DOC
 		{
 			get
 			{
-				return ((this.AttributeFlags & 2) != 0);
+				return ((this.AggregationFlag & 2) != 0);
 			}
 			set
 			{
 				if (value)
 				{
-					this.AttributeFlags |= 2;
+					this.AggregationFlag |= 2;
 				}
 				else
 				{
-					this.AttributeFlags &= ~2;
+					this.AggregationFlag &= ~2;
 				}
 			}
 		}
