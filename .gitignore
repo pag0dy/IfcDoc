@@ -2,6 +2,7 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
+/obj
 /obj/x86/Debug
 /IfcKit/schemas/IFC4X1/obj/Debug
 /IfcKit/formats/xml/obj/Debug
