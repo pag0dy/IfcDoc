@@ -4044,7 +4044,7 @@ namespace IfcDoc
             }
             catch (Exception x)
             {
-                MessageBox.Show(x.Message);
+                MessageBox.Show(x.Message + System.Environment.NewLine + x.StackTrace);
                 return;
             }
 
