@@ -5374,6 +5374,20 @@ namespace IfcDoc.Schema.DOC
 			return null;
 		}
 
+		public List<DocTemplateUsage> GetParameterConcepts(DocTemplateDefinition def)
+		{
+			List<DocTemplateUsage> docEachUsage = new List<DocTemplateUsage>();
+			foreach (DocTemplateUsage docUsage in this.Concepts)
+			{
+				if (def == null || docUsage.Definition == def)
+				{
+					docEachUsage.Add(docUsage);
+				}
+			}
+
+			return docEachUsage;
+		}
+
 		public DocTemplateUsage RegisterParameterConcept(string parameter, DocTemplateDefinition def)
 		{
 			DocTemplateUsage docUsage = this.GetParameterConcept(parameter, def);
@@ -5385,6 +5399,19 @@ namespace IfcDoc.Schema.DOC
 				this.Concepts.Add(docUsage);
 			}
 			return docUsage;
+		}
+
+		public List<DocTemplateUsage> RegisterParameterConcepts(DocTemplateDefinition def)
+		{
+			List<DocTemplateUsage> docUsages = this.GetParameterConcepts(def);
+			if (docUsages == null)
+			{
+				return null;
+			}
+			else
+			{
+				return docUsages;
+			}
 		}
 
 		/// <summary>

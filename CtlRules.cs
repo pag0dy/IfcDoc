@@ -845,7 +845,8 @@ namespace IfcDoc
                     }
                     
                     if (docBaseEntity.BaseDefinition == "IfcElement" || docBaseEntity.BaseDefinition == "IfcElementComponent" || docBaseEntity.BaseDefinition == "IfcBuildingElement" ||
-                        docBaseEntity.BaseDefinition == "IfcReinforcingElement" || docBaseEntity.BaseDefinition == "IfcFlowSegment" || docBaseEntity.BaseDefinition == "IfcFeatureElement")
+                        docBaseEntity.BaseDefinition == "IfcReinforcingElement" || docBaseEntity.BaseDefinition == "IfcFlowSegment" || docBaseEntity.BaseDefinition == "IfcFeatureElement" ||
+						docBaseEntity.BaseDefinition == "IfcContext")
                     {
                         this.ChangeTemplate(this.m_project.GetTemplate(DocTemplateDefinition.guidTemplatePsetObject));
 

@@ -90,6 +90,7 @@ namespace IfcDoc
             {
                 DocTemplateDefinition docTemplateInner = sel.References[0];
                 DocTemplateUsage docConceptInner = ((DocTemplateItem)this.ConceptItem).RegisterParameterConcept(this.ConceptAttr.Identification, docTemplateInner);
+				List<DocTemplateUsage> docConcepts = ((DocTemplateItem)this.ConceptItem).RegisterParameterConcepts(docTemplateInner);
                 this.ConceptLeaf = docConceptInner;
             }
         }

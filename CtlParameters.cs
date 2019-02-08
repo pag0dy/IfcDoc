@@ -257,7 +257,23 @@ namespace IfcDoc
             if (this.m_conceptleaf != null)
             {
                 docTemplate = this.m_conceptleaf.Definition;
-                listItems = this.m_conceptleaf.Items;
+				if (docTemplate.Uuid == DocTemplateDefinition.guidTemplatePropertyBounded || docTemplate.Uuid == DocTemplateDefinition.guidTemplatePropertyEnumerated ||
+					docTemplate.Uuid == DocTemplateDefinition.guidTemplatePropertyList || docTemplate.Uuid == DocTemplateDefinition.guidTemplatePropertyReference ||
+					docTemplate.Uuid == DocTemplateDefinition.guidTemplatePropertySingle || docTemplate.Uuid == DocTemplateDefinition.guidTemplatePropertyTable)
+				{
+					listItems = new List<DocTemplateItem>();
+					foreach(DocTemplateUsage concept in ((DocTemplateItem)this.ConceptItem).Concepts)
+					{
+						if (concept.Items.Count != 0 && concept.Definition.Equals(docTemplate))
+						{
+							listItems.Add(concept.Items[0]);
+						}
+					}
+				}
+				else
+				{
+					listItems = this.m_conceptleaf.Items;
+				}
             }
             else
             {
@@ -612,8 +628,38 @@ namespace IfcDoc
             int index = this.dataGridViewConceptRules.SelectedRows[0].Index;
             if(this.m_conceptleaf != null)
             {
-                this.m_conceptleaf.Items.RemoveAt(index);
-            }
+				if (((DocTemplateItem)this.ConceptItem).Concepts.Count != 0)
+				{
+					string propertyNameInTable = this.dataGridViewConceptRules.SelectedRows[0].Cells[1].Value.ToString();
+					List<DocTemplateUsage> propertyConcepts = ((DocTemplateItem)this.ConceptItem).Concepts;
+
+					for (int i = 0; i < ((DocTemplateItem)this.ConceptItem).Concepts.Count - 1; i++)
+					{
+						if (propertyConcepts[i].Items.Count != 0)
+						{
+							if (propertyConcepts[i].Items[0].GetParameterValue("PropertyName") == propertyNameInTable)
+							{
+								index = i;
+								break;
+							}
+						}
+					}
+
+					propertyConcepts.RemoveAt(index);
+					//foreach(DocTemplateUsage concept in ((DocTemplateItem)this.ConceptItem).Concepts)
+					//{
+					//	if (concept.Items[0].GetParameterValue("PropertyName") == this.dataGridViewConceptRules.SelectedRows[0].Cells[1].Value.ToString())
+					//	{
+					//		concept.in
+					//	}
+					//}
+					//((DocTemplateItem)this.ConceptItem).Concepts.RemoveAt();
+				}
+				else
+				{
+					this.m_conceptleaf.Items.RemoveAt(index);
+				}
+			}
             else
             {
                 this.m_conceptroot.ApplicableItems.RemoveAt(index);
