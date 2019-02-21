@@ -846,7 +846,8 @@ namespace IfcDoc
                     
                     if (docBaseEntity.BaseDefinition == "IfcElement" || docBaseEntity.BaseDefinition == "IfcElementComponent" || docBaseEntity.BaseDefinition == "IfcBuildingElement" ||
                         docBaseEntity.BaseDefinition == "IfcReinforcingElement" || docBaseEntity.BaseDefinition == "IfcFlowSegment" || docBaseEntity.BaseDefinition == "IfcFeatureElement" ||
-						docBaseEntity.BaseDefinition == "IfcContext")
+						docBaseEntity.BaseDefinition == "IfcContext" || docBaseEntity.BaseDefinition == "IfcSpatialStructureElement" || docBaseEntity.BaseDefinition == "IfcFacility" ||
+						docBaseEntity.BaseDefinition == "IfcFacilityPart")
                     {
                         this.ChangeTemplate(this.m_project.GetTemplate(DocTemplateDefinition.guidTemplatePsetObject));
 
@@ -903,7 +904,27 @@ namespace IfcDoc
                                 property.RuleParameters = propertyConcept.Definition.GetParameterNames()[0] + "=" + form.SelectedProperty.Name + ";" + propertyConcept.Definition.GetParameterNames()[1] + "=" + form.SelectedProperty.PrimaryDataType + ";";
                                 CreateAndAssignProperty(form, propertyConcept, property, psetName);
                                 break;
-                        }
+							case DocPropertyTemplateTypeEnum.P_LISTVALUE:
+								propertyConcept.Definition = this.m_project.GetTemplate(DocTemplateDefinition.guidTemplatePropertyList);
+								property.RuleParameters = propertyConcept.Definition.GetParameterNames()[0] + "=" + form.SelectedProperty.Name + ";" + propertyConcept.Definition.GetParameterNames()[1] + "=" + form.SelectedProperty.PrimaryDataType + ";";
+								CreateAndAssignProperty(form, propertyConcept, property, psetName);
+								break;
+							case DocPropertyTemplateTypeEnum.P_BOUNDEDVALUE:
+								propertyConcept.Definition = this.m_project.GetTemplate(DocTemplateDefinition.guidTemplatePropertyBounded);
+								property.RuleParameters = propertyConcept.Definition.GetParameterNames()[0] + "=" + form.SelectedProperty.Name + ";" + propertyConcept.Definition.GetParameterNames()[1] + "=" + form.SelectedProperty.PrimaryDataType + ";";
+								CreateAndAssignProperty(form, propertyConcept, property, psetName);
+								break;
+							case DocPropertyTemplateTypeEnum.P_REFERENCEVALUE:
+								propertyConcept.Definition = this.m_project.GetTemplate(DocTemplateDefinition.guidTemplatePropertyReference);
+								property.RuleParameters = propertyConcept.Definition.GetParameterNames()[0] + "=" + form.SelectedProperty.Name + ";" + propertyConcept.Definition.GetParameterNames()[1] + "=" + form.SelectedProperty.PrimaryDataType + ";";
+								CreateAndAssignProperty(form, propertyConcept, property, psetName);
+								break;
+							case DocPropertyTemplateTypeEnum.P_TABLEVALUE:
+								propertyConcept.Definition = this.m_project.GetTemplate(DocTemplateDefinition.guidTemplatePropertyTable);
+								property.RuleParameters = propertyConcept.Definition.GetParameterNames()[0] + "=" + form.SelectedProperty.Name + ";" + propertyConcept.Definition.GetParameterNames()[1] + "=" + form.SelectedProperty.PrimaryDataType + ";";
+								CreateAndAssignProperty(form, propertyConcept, property, psetName);
+								break;
+						}
 
                         //foreach(DocModelRule rule in property.Definition.Rules)
                         //{
