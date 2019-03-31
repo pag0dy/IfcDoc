@@ -1573,13 +1573,18 @@ namespace IfcDoc.Schema.DOC
 
 			foreach (DocConceptRoot docRoot in docView.ConceptRoots)
 			{
+				string docRootName = docRoot.ToString();
+				if (docRootName == "IfcBearing")
+				{
+					Console.WriteLine("Stop");
+				}
 				if (docRoot.ApplicableEntity != null)
 				{
 					RegisterEntity(included, docRoot.ApplicableEntity);
 
 					foreach (DocTemplateUsage docUsage in docRoot.Concepts)
 					{
-						RegisterConcept(docUsage, included, mapVirtualAttributes);
+						RegisterConcept(docUsage, included, mapVirtualAttributes, docRoot.ApplicableEntity);
 					}
 				}
 			}
@@ -1791,7 +1796,7 @@ namespace IfcDoc.Schema.DOC
 			}
 		}
 
-		private void RegisterConcept(DocTemplateUsage docUsage, Dictionary<DocObject, bool> included, Dictionary<DocModelRuleAttribute, DocEntity> mapVirtualAttributes)
+		private void RegisterConcept(DocTemplateUsage docUsage, Dictionary<DocObject, bool> included, Dictionary<DocModelRuleAttribute, DocEntity> mapVirtualAttributes, DocEntity applicableEntity)
 		{
 			if (docUsage.Definition != null)
 			{
@@ -1854,12 +1859,30 @@ namespace IfcDoc.Schema.DOC
 								}
 							}
 						}
+						else
+						{
+							DocModelRule[] paramRules = docUsage.Definition.GetParameterRules();
+							string parameterName = "";
+
+							for (int i = 0; i < paramRules.Length - 1; i++)
+							{
+								if (paramRules[i].Identification == param)
+								{
+									parameterName = paramRules[i].Name;
+								}
+							}
+							DocAttribute attributeParameter = GetEntityAttribute(applicableEntity, parameterName);
+							if (attributeParameter != null)
+							{
+								if (!included.ContainsKey(attributeParameter)) included[attributeParameter] = true;
+							}
+						}
 					}
 
 					// recurse
 					foreach (DocTemplateUsage docSub in docItem.Concepts)
 					{
-						RegisterConcept(docSub, included, mapVirtualAttributes);
+						RegisterConcept(docSub, included, mapVirtualAttributes, applicableEntity);
 					}
 
 				}
@@ -1868,7 +1891,7 @@ namespace IfcDoc.Schema.DOC
 			// recurse through nested concepts
 			foreach (DocTemplateUsage docChild in docUsage.Concepts)
 			{
-				RegisterConcept(docChild, included, mapVirtualAttributes);
+				RegisterConcept(docChild, included, mapVirtualAttributes, applicableEntity);
 			}
 		}
 
