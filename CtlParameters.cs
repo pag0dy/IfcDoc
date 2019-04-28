@@ -420,6 +420,25 @@ namespace IfcDoc
             if (this.m_editcon)
                 return;
 
+			//select template item
+			if (sender is DataGridView)
+			{
+				DataGridView sendingGridView = (DataGridView)sender;
+
+				if (sendingGridView.SelectedRows.Count > 0)
+				{
+					if (sendingGridView.SelectedRows[0].Tag is DocTemplateItem)
+					{
+						DocTemplateItem selectedTemplateItem = (DocTemplateItem)sendingGridView.SelectedRows[0].Tag;
+						this.ConceptItem = selectedTemplateItem;
+					}
+					else if (sendingGridView.SelectedRows[0].Tag == null)
+					{
+						return; 
+					}
+				}
+			}
+
             //toolStripButtonTemplateInsert
             this.toolStripButtonTemplateRemove.Enabled = (this.dataGridViewConceptRules.SelectedRows.Count == 1 && this.dataGridViewConceptRules.SelectedRows[0].Index < this.dataGridViewConceptRules.Rows.Count - 1);
             this.toolStripButtonMoveDown.Enabled = (this.dataGridViewConceptRules.SelectedRows.Count == 1 && this.dataGridViewConceptRules.SelectedRows[0].Index < this.dataGridViewConceptRules.Rows.Count - 2); // exclude New row

@@ -987,6 +987,7 @@ namespace IfcDoc
             if (this.Concept != null)
             {
                 this.Concept.Definition = this.Template;
+				this.Concept.Items.Add(new DocTemplateItem { Optional = false });
             }
             else if (this.ConceptRoot != null)
             {

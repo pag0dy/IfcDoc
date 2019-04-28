@@ -1574,7 +1574,7 @@ namespace IfcDoc.Schema.DOC
 			foreach (DocConceptRoot docRoot in docView.ConceptRoots)
 			{
 				string docRootName = docRoot.ToString();
-				if (docRootName == "IfcBearing")
+				if (docRootName == "IfcBridgePart")
 				{
 					Console.WriteLine("Stop");
 				}
