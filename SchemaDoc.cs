@@ -1574,7 +1574,7 @@ namespace IfcDoc.Schema.DOC
 			foreach (DocConceptRoot docRoot in docView.ConceptRoots)
 			{
 				string docRootName = docRoot.ToString();
-				if (docRootName == "IfcBridgePart")
+				if (docRootName == "IfcBridge")
 				{
 					Console.WriteLine("Stop");
 				}
@@ -1875,6 +1875,28 @@ namespace IfcDoc.Schema.DOC
 							if (attributeParameter != null)
 							{
 								if (!included.ContainsKey(attributeParameter)) included[attributeParameter] = true;
+
+								DocDefinition docAttrType = this.GetDefinition(attributeParameter.DefinedType);
+
+								if (docAttrType is DocEntity)
+								{
+									DocEntity docRefEntity = (DocEntity)docAttrType;
+									RegisterEntity(included, docRefEntity);
+								}
+								else if (docAttrType is DocType) // otherwise native EXPRESS type
+								{
+									included[docAttrType] = true;
+
+									if (docAttrType is DocDefined)
+									{
+										DocDefined docDefined = (DocDefined)docAttrType;
+										DocDefinition docDefRef = this.GetDefinition(docDefined.DefinedType);
+										if (docDefRef != null)
+										{
+											included[docDefRef] = true;
+										}
+									}
+								}
 							}
 						}
 					}
