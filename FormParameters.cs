@@ -93,6 +93,8 @@ namespace IfcDoc
 				List<DocTemplateUsage> docConcepts = ((DocTemplateItem)this.ConceptItem).RegisterParameterConcepts(docTemplateInner);
                 this.ConceptLeaf = docConceptInner;
             }
+
+			this.ctlParameters.ToolStripButtonVisibility();
         }
 
         public DocModelRuleAttribute ConceptAttr 

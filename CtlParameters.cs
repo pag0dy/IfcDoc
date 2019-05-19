@@ -412,13 +412,15 @@ namespace IfcDoc
                 this.dataGridViewConceptRules.SelectedCells[0].Selected = false;
             }
 
-            m_editcon = false;
+			ToolStripButtonVisibility();
+
+			m_editcon = false;
         }
 
         private void dataGridViewConceptRules_SelectionChanged(object sender, EventArgs e)
-        {
-            if (this.m_editcon)
-                return;
+		{
+			if (this.m_editcon)
+				return;
 
 			//select template item
 			if (sender is DataGridView)
@@ -430,22 +432,48 @@ namespace IfcDoc
 					if (sendingGridView.SelectedRows[0].Tag is DocTemplateItem)
 					{
 						DocTemplateItem selectedTemplateItem = (DocTemplateItem)sendingGridView.SelectedRows[0].Tag;
-						this.ConceptItem = selectedTemplateItem;
+						//this.ConceptItem = selectedTemplateItem;
 					}
 					else if (sendingGridView.SelectedRows[0].Tag == null)
 					{
-						return; 
+						return;
 					}
 				}
 			}
 
-            //toolStripButtonTemplateInsert
-            this.toolStripButtonTemplateRemove.Enabled = (this.dataGridViewConceptRules.SelectedRows.Count == 1 && this.dataGridViewConceptRules.SelectedRows[0].Index < this.dataGridViewConceptRules.Rows.Count - 1);
-            this.toolStripButtonMoveDown.Enabled = (this.dataGridViewConceptRules.SelectedRows.Count == 1 && this.dataGridViewConceptRules.SelectedRows[0].Index < this.dataGridViewConceptRules.Rows.Count - 2); // exclude New row
-            this.toolStripButtonMoveUp.Enabled = (this.dataGridViewConceptRules.SelectedRows.Count == 1 && this.dataGridViewConceptRules.SelectedRows[0].Index > 0 && this.dataGridViewConceptRules.SelectedRows[0].Index < this.dataGridViewConceptRules.Rows.Count - 1);
-        }
+			//toolStripButtonTemplateInsert
+			ToolStripButtonVisibility();
+		}
 
-        private void dataGridViewConceptRules_UserAddedRow(object sender, DataGridViewRowEventArgs e)
+		public void ToolStripButtonVisibility()
+		{
+			this.toolStripButtonTemplateRemove.Enabled = (this.dataGridViewConceptRules.SelectedRows.Count == 1 && this.dataGridViewConceptRules.SelectedRows[0].Index < this.dataGridViewConceptRules.Rows.Count - 1);
+			/*if (this.dataGridViewConceptRules.SelectedRows.Count > 0)
+			{
+				if (this.dataGridViewConceptRules.SelectedRows[0].Tag is DocTemplateItem)
+				{
+					DocTemplateItem selectedTemplateItem = (DocTemplateItem)this.dataGridViewConceptRules.SelectedRows[0].Tag;*/
+					/*bool isSelectedItemAProperty = selectedTemplateItem.Concepts[0].Definition.Uuid == DocTemplateDefinition.guidTemplatePropertyBounded ||
+						selectedTemplateItem.Concepts[0].Definition.Uuid == DocTemplateDefinition.guidTemplatePropertyEnumerated ||
+						selectedTemplateItem.Concepts[0].Definition.Uuid == DocTemplateDefinition.guidTemplatePropertyList ||
+						selectedTemplateItem.Concepts[0].Definition.Uuid == DocTemplateDefinition.guidTemplatePropertyReference ||
+						selectedTemplateItem.Concepts[0].Definition.Uuid == DocTemplateDefinition.guidTemplatePropertySingle ||
+						selectedTemplateItem.Concepts[0].Definition.Uuid == DocTemplateDefinition.guidTemplatePropertyTable;*/
+					bool isSelectedItemAProperty = this.ConceptLeaf.Definition.Uuid == DocTemplateDefinition.guidTemplatePropertyBounded || this.ConceptLeaf.Definition.Uuid == DocTemplateDefinition.guidTemplatePropertyEnumerated ||
+						this.ConceptLeaf.Definition.Uuid == DocTemplateDefinition.guidTemplatePropertyList || this.ConceptLeaf.Definition.Uuid == DocTemplateDefinition.guidTemplatePropertyReference ||
+						this.ConceptLeaf.Definition.Uuid == DocTemplateDefinition.guidTemplatePropertySingle || this.ConceptLeaf.Definition.Uuid == DocTemplateDefinition.guidTemplatePropertyTable;
+					if (isSelectedItemAProperty)
+					{
+						this.toolStripButtonTemplateInsert.Enabled = (this.dataGridViewConceptRules.SelectedRows.Count > 0 && this.dataGridViewConceptRules.SelectedRows[0].Index < this.dataGridViewConceptRules.Rows.Count - 1);
+					}
+				/*}
+			}*/
+
+			this.toolStripButtonMoveDown.Enabled = (this.dataGridViewConceptRules.SelectedRows.Count == 1 && this.dataGridViewConceptRules.SelectedRows[0].Index < this.dataGridViewConceptRules.Rows.Count - 2); // exclude New row
+			this.toolStripButtonMoveUp.Enabled = (this.dataGridViewConceptRules.SelectedRows.Count == 1 && this.dataGridViewConceptRules.SelectedRows[0].Index > 0 && this.dataGridViewConceptRules.SelectedRows[0].Index < this.dataGridViewConceptRules.Rows.Count - 1);
+		}
+
+		private void dataGridViewConceptRules_UserAddedRow(object sender, DataGridViewRowEventArgs e)
         {
             DocTemplateItem dti = new DocTemplateItem();
             if (this.m_conceptleaf != null)
@@ -635,8 +663,113 @@ namespace IfcDoc
 
         private void toolStripButtonTemplateInsert_Click(object sender, EventArgs e)
         {
+			if (this.dataGridViewConceptRules.SelectedRows.Count == 0)
+				return;
 
-        }
+			this.m_editcon = true;
+
+			DocPropertySet existingPropertySet = null;
+
+			bool isPsetDefined = false;
+			bool isPropertyDefined = false;
+
+			if (this.m_conceptleaf != null)
+			{
+				if (this.m_conceptleaf.Definition.Uuid == DocTemplateDefinition.guidTemplatePropertyList || this.m_conceptleaf.Definition.Uuid == DocTemplateDefinition.guidTemplatePropertyBounded ||
+					this.m_conceptleaf.Definition.Uuid == DocTemplateDefinition.guidTemplatePropertyEnumerated || this.m_conceptleaf.Definition.Uuid == DocTemplateDefinition.guidTemplatePropertyReference ||
+					this.m_conceptleaf.Definition.Uuid == DocTemplateDefinition.guidTemplatePropertySingle || this.m_conceptleaf.Definition.Uuid == DocTemplateDefinition.guidTemplatePropertyTable)
+				{
+					foreach (DocSection docSection in this.Project.Sections)
+					{
+						foreach (DocSchema docSchema in docSection.Schemas)
+						{
+							foreach (DocPropertySet docPset in docSchema.PropertySets)
+							{
+								if (docPset.Name == this.ConceptItem.Name)
+								{
+									isPsetDefined = true;
+									existingPropertySet = docPset;
+								}
+								// search properties
+								foreach (DocProperty docProp in docPset.Properties)
+								{
+									for (int i = 0; i < this.dataGridViewConceptRules.SelectedRows.Count; i++)
+									{
+										if (dataGridViewConceptRules.SelectedRows[i].Tag is DocTemplateItem)
+										{
+											DocTemplateItem propertyItem = (DocTemplateItem)dataGridViewConceptRules.SelectedRows[i].Tag;
+											if (docProp.Name == propertyItem.GetParameterValue("PropertyName"))
+											{
+												isPropertyDefined = true;
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+				else
+				{
+					//this.m_conceptroot.ApplicableItems.RemoveAt(index);
+				}
+
+				if (!isPsetDefined)
+				{
+					FormSelectSchema schemaSelect = new FormSelectSchema(this.Project);
+					schemaSelect.ShowDialog();
+
+					DocPropertySet pset = new DocPropertySet();
+					DocTemplateItem psetItem = (DocTemplateItem)this.ConceptItem;
+					pset.Name = psetItem.GetParameterValue("PsetName");
+					if (!isPropertyDefined)
+					{
+						for (int i = 0; i < this.dataGridViewConceptRules.SelectedRows.Count; i++)
+						{
+							DocProperty property = new DocProperty();
+							if (dataGridViewConceptRules.SelectedRows[i].Tag is DocTemplateItem)
+							{
+								DocTemplateItem propertyItem = (DocTemplateItem)dataGridViewConceptRules.SelectedRows[i].Tag;
+								property.Name = propertyItem.GetParameterValue("PropertyName");
+								//if (propertyItem.GetParameterValue("Value") != null)
+								//{
+									property.PrimaryDataType = propertyItem.GetParameterValue("Value");
+								//}
+								pset.Properties.Add(property);
+							}
+						}						
+					}
+					schemaSelect.Selection.PropertySets.Add(pset);
+				}
+				else
+				{
+					if (!isPropertyDefined)
+					{
+						for (int i = 0; i < this.dataGridViewConceptRules.SelectedRows.Count; i++)
+						{
+							DocProperty property = new DocProperty();
+							if (dataGridViewConceptRules.SelectedRows[i].Tag is DocTemplateItem)
+							{
+								DocTemplateItem propertyItem = (DocTemplateItem)dataGridViewConceptRules.SelectedRows[i].Tag;
+								property.Name = propertyItem.GetParameterValue("PropertyName");
+								//if (propertyItem.GetParameterValue("Value") != null)
+								//{
+								property.PrimaryDataType = propertyItem.GetParameterValue("Value");
+								//}
+								existingPropertySet.Properties.Add(property);
+							}
+						}
+					}
+				}
+
+				if (this.ParentForm.Owner is FormEdit)
+				{
+					FormEdit ownerForm = (FormEdit)this.ParentForm.Owner;
+					//ownerForm.i
+				}
+				this.m_editcon = false;
+			}
+		}
 
         private void toolStripButtonTemplateRemove_Click(object sender, EventArgs e)
         {
@@ -649,9 +782,24 @@ namespace IfcDoc
             {
 				if (((DocTemplateItem)this.ConceptItem).Concepts.Count != 0)
 				{
-					string propertyNameInTable = this.dataGridViewConceptRules.SelectedRows[0].Cells[1].Value.ToString();
+					//string propertyNameInTable = this.dataGridViewConceptRules.SelectedRows[0].Cells[1].Value.ToString();
 					List<DocTemplateUsage> propertyConcepts = ((DocTemplateItem)this.ConceptItem).Concepts;
-
+					
+					if (this.dataGridViewConceptRules.SelectedRows[0].Tag is DocTemplateItem)
+					{
+						for (int i = 0; i < propertyConcepts.Count; i++)
+						{
+							if (propertyConcepts[i].Items.Count > 0)
+							{
+								if (propertyConcepts[i].Items[0].Equals((DocTemplateItem)this.dataGridViewConceptRules.SelectedRows[0].Tag))
+								{
+									index = i;
+									break;
+								}
+							}
+						}
+					}
+					/*
 					for (int i = 0; i < ((DocTemplateItem)this.ConceptItem).Concepts.Count - 1; i++)
 					{
 						if (propertyConcepts[i].Items.Count != 0)
@@ -662,7 +810,7 @@ namespace IfcDoc
 								break;
 							}
 						}
-					}
+					}*/
 
 					propertyConcepts.RemoveAt(index);
 					//foreach(DocTemplateUsage concept in ((DocTemplateItem)this.ConceptItem).Concepts)
